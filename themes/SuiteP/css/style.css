@@ -84,15 +84,20 @@ div.p_login .p_login_middle {
     float: left;
     width: 100%;
 }
-
 div.p_login .p_login_bottom {
     background-color: #E6E6E6;
-    position: absolute;
     float: left;
     width: 100%;
     left: 0;
     bottom: 0;
     padding: 20px 2% 20px 2%;
+}
+
+@media (min-height: 400px) {
+
+    div.p_login .p_login_bottom {
+        position: absolute;
+    }
 }
 
 div.p_login .p_login_bottom a#powered_by {
@@ -538,26 +543,36 @@ li.recentlinks img {
 #content {
     width: 100%;
     padding: 30px 3% 40px 3%;
-    float: left;
 }
 
 #bootstrap-container.col-md-offset-2 {
+}
+
+#pagecontent:after {
+    clear:both;
+}
+
+footer * {
+    box-sizing: content-box;
 }
 
 footer {
     bottom: 0;
     margin: 0 0 0 0;
     background-color: #E6E6E6;
-    float: left;
+    clear: both;
     width: 100%;
+    height: 48px;
     border: 1px solid transparent;
     border-radius: 4px;
+    box-sizing: content-box;
+    line-height: 48px;
+    padding: 0 3% 0 3%;
 }
 
 .footer_left {
     float: left;
     width: 48%;
-    padding: 20px 0 20px 2%;
 }
 
 a#powered_by {
@@ -580,7 +595,6 @@ a#admin_options:hover, a#powered_by:hover {
     width: 48%;
     text-align: right;
     text-transform: uppercase;
-    padding: 20px 2% 20px 0;
 
 }
 
@@ -1154,30 +1168,6 @@ button#listViewEndButton_top img, button#listViewEndButton_bottom img {
     display: none;
 }
 
-#selectLinkTop {
-    min-height: 16px;
-    line-height: 16px;
-    position: relative;
-    padding: 1px;
-}
-
-#actionLinkTop {
-    font-size: 14px !important;
-    min-height: 16px !important;
-    line-height: 16px !important;
-    position: relative;
-    padding: 2px 5px 2px 5px !important;
-
-}
-
-#select_actions_disabled_top {
-    font-size: 14px !important;
-    min-height: 16px;
-    line-height: 16px;
-    position: relative;
-    padding: 6px 5px 6px 5px !important;
-}
-
 .list tr.pagination td table td {
     padding: 3px 7px 3px 5px !important;
 }
@@ -1257,6 +1247,10 @@ table#dashletPanel thead {
 .list tr.oddListRowS1 td[nowrap], .list tr.evenListRowS1 td[nowrap] {
     white-space: nowrap;
     word-wrap: normal;
+}
+
+a.listViewTdToolsS1 {
+    padding: 4px;
 }
 
 .list td a.listViewTdToolsS1, .list tr td.nowrap {
@@ -1415,6 +1409,98 @@ table#mass_update_table td select {
         line-height: 30px;
     }
 
+}
+
+
+#selectLinkTop,
+#actionLinkBottom {
+    min-height: 16px;
+    line-height: 16px;
+    position: relative;
+    padding: 1px;
+}
+#selectLinkTop input[type=checkbox],
+#actionLinkBottom input[type=checkbox] {
+    margin-top: 10px;
+}
+
+#actionLinkTop,
+#actionLinkBottom {
+    font-size: 14px;
+    min-height: 16px;
+    line-height: 16px;
+    position: relative;
+
+}
+
+#actionLinkTop li.sugar_action_button  a,
+#actionLinkBottom li.sugar_action_button  a{
+    margin-top: 5px;
+}
+
+#actionLinkTop li.sugar_action_button,
+#actionLinkBottom li.sugar_action_button {
+    min-width: 32px;
+    padding: 11px 10px 12px 10px;
+}
+
+#select_actions_disabled_top,
+#select_actions_disabled_bottom {
+    padding: 11px 10px 12px 10px;
+    text-transform: uppercase;
+}
+
+#selectLinkTop > .sugar_action_button > ul.subnav,
+#selectLinkBottom > .sugar_action_button > ul.subnav {
+    left: 0;
+    right: auto;
+}
+
+#selectLinkTop > .sugar_action_button > ul.subnav,
+#selectLinkTop > .sugar_action_button > ul.subnav li,
+#selectLinkTop > .sugar_action_button > ul.subnav a,
+#actionLinkTop ul.clickMenu li ul.subnav,
+#actionLinkTop > .sugar_action_button > ul.subnav,
+#actionLinkTop > .sugar_action_button > ul.subnav li,
+#actionLinkTop > .sugar_action_button > ul.subnav a
+#selectLinkBottom > .sugar_action_button > ul.subnav,
+#selectLinkBottom > .sugar_action_button > ul.subnav li,
+#selectLinkBottom > .sugar_action_button > ul.subnav a,
+#actionLinkBottom ul.clickMenu li ul.subnav,
+#actionLinkBottom > .sugar_action_button > ul.subnav,
+#actionLinkBottom > .sugar_action_button > ul.subnav li,
+#actionLinkBottom > .sugar_action_button > ul.subnav a ,
+#actionLinkTop .menuItem,
+#actionLinkBottom .menuItem {
+    background-color: #7b8a96;
+    width: auto;
+    line-height: 24px;
+    color: #ffffff;
+    padding: 0 5px 0 7px;
+}
+
+#actionLinkTop .menuItem,
+#actionLinkBottom .menuItem {
+    padding: 0;
+}
+
+#actionLinkTop li.sugar_action_button,
+#selectLinkTop > .sugar_action_button > ul.subnav a:hover,
+#actionLinkBottom > .sugar_action_button > ul.subnav a:hover,
+#actionLinkTop .menuItemHilite,
+#actionLinkBottom .menuItemHilite {
+    background-color: #7b8a96 !important;
+
+}
+
+#selectLinkTop > .sugar_action_button > ul.subnav a,
+#actionLinkBottom > .sugar_action_button > ul.subnav a {
+    color: #ffffff;
+}
+
+#map_listview_top, #export_listview_top {
+    float: none;
+    clear: both;
 }
 
 #wizard td {
@@ -2249,12 +2335,12 @@ div#content p.error {
     font-style: italic;
 }
 
-.pageNumbers {
-    color: white;
+.pageNumbers, .subpanel-table .pageNumbers{
     font-weight: bold;
     margin: 0 8px 0 8px;
     padding: 0 8px 0 8px;
     position: static;
+    color: #ffffff;
 }
 
 .contentBox {
@@ -2518,6 +2604,163 @@ embed {
     background-color: #fff;
 }
 
+#goto_date_trigger_div {
+    border: none;
+    padding: 0;
+}
+
+.yui-panel-container {
+    height: 384px;
+}
+
+div#goto_date_trigger_div, table#goto_date_trigger_div_t {
+    width: 256px;
+    height: auto;
+}
+
+.yui-calcontainer .yui-cal-nav .yui-cal-nav-btn {
+    background-color: inherit !important;
+    border: none !important;
+}
+
+#goto_date_trigger_div_nav_cancel {
+    background-color: #F08377;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px !important;
+    margin: 0 0 0 0;
+    padding: 0 10px 0 10px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 1px;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+#goto_date_trigger_div_nav_submit {
+    text-shadow: none !important;
+    background-color: #F08377;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px !important;
+    margin: 0 0 0 0;
+    padding: 0 10px 0 10px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 1px;
+    height: 40px;
+    line-height: 40px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+table#goto_date_trigger_div_t thead {
+    background: #BFCAD3;
+}
+
+.yui-calendar .calweekdaycell {
+    font-weight: normal;
+}
+
+.yui-calendar .calhead {
+    background: #66727D;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.yui-calendar a.calnav {
+    color: #ffffff;
+    background-color: #AA9DCC;
+    border: 1px solid #AA9DCC;
+    padding: 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: normal;
+    height: auto;
+    width: auto;
+}
+
+.yui-calendar a.calnavleft, .yui-calendar a.calnavright {
+    color: #ffffff;
+
+    background-color: #AA9DCC;
+    border: 1px solid #AA9DCC;
+    padding: 0;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: normal;
+    height: 32px;
+    width: 32px;
+    display: inline-block;
+    margin-top: 10px;
+    background-origin: padding-box;
+    background-position: 0 0;
+}
+
+.yui-calendar .calheader {
+    padding: 4px;
+    height: 48px;
+    line-height: 48px;
+}
+
+.yui-calendar .calnavleft {
+    left: 0px;
+    background-image: url("../../../../themes/SuiteP/images/p_left.svg");
+}
+
+.yui-calendar .calnavright {
+    right: 0px;
+    background-image: url("../../../../themes/SuiteP/images/p_right.svg");
+}
+.yui-module .hd {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.yui-module .ft {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.yui-module.yui-overlay.yui-panel.cal_panel {
+    border-radius: 4px;
+}
+.yui-panel .bd {
+    display: block;
+    padding: 0 10px 0 10px;
+}
+
+.yui-calendar .calbody td, .yui-calendar td.calcell a {
+    height: 32px;
+    width: 32px;
+    color: #F08377;
+    line-height: 32px;
+}
+
+.yui-calendar td.calcell.selected,
+.yui-calendar td.calcell.selected a,
+.yui-calendar td.calcell a:hover,
+.yui-calendar td.calcell.calcellhover,
+.yui-calendar td.calcell.calcellhover a {
+    background: #F08377;
+    color: #ffffff;
+}
+
+.yui-calendar .calweekdaycell {
+    color: #ffffff;
+}
+
+a#callnav_today {
+    clear:both !important;
+    line-height: 40px !important;
+    display: block !important;
+}
+
 div.confirmTable {
     overflow: auto;
     width: 1056px;
@@ -2694,7 +2937,7 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
 
 #globalLinks ul li a {
     max-width: 150px !important;
-    color: #3C8DBC;
+    color: #F08377;
 }
 
 #globalLinks ul li a:hover {
@@ -2964,7 +3207,7 @@ div.monthFooter {
 
 .yearCalBodyMonth {
     background-color: #efefef !important;
-    border-top: 2px solid #3C8DBC;
+    border-top: 2px solid #F08377;
     border-bottom: 2px solid #fff;
 }
 
@@ -2989,18 +3232,18 @@ h5.calSharedUser {
 }
 
 .subpanelTabForm {
-    border-color: #3C8DBC;
+    border-color: #F08377;
     color: #000000;
     background-color: #ffffff;
 }
 
 ul.tablist, ul.subpanelTablist {
-    border-bottom-color: #3C8DBC;
+    border-bottom-color: #F08377;
 }
 
 ul.tablist li a:hover, ul.subpanelTablist li a:hover {
     background: #fafafa;
-    border-color: #3C8DBC;
+    border-color: #F08377;
 }
 
 ul.tablist li a, ul.subpanelTablist li a {
@@ -3060,7 +3303,7 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
 }
 
 ul.yui-nav li.selected {
-    background: #3C8DBC;
+    background: #F08377;
 }
 
 ul.nav-tabs {
@@ -3266,7 +3509,6 @@ ul.clickMenu {
     color: #ffffff;
     display: inline-block;
     border-radius: 3px;
-    background: #94A6B5;
 }
 
 ul.clickMenu form {
@@ -3279,11 +3521,10 @@ ul.clickMenu form {
 ul.SugarActionMenuIESub li a:hover, ul.clickMenu.SugarActionMenu li a:hover, ul.clickMenu.SugarActionMenu li span.subhover:hover,
 ul#globalLinksSubnav li a:hover, ul#quickCreateULSubnav li a:hover,
 ul.clickMenu li ul.subnav li a:hover, ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover {
-    color: #3C8DBC;
+    color: #F08377;
 }
 
 ul.clickMenu > li, ul.SugarActionMenuIESub li {
-    background-color: #94A6B5;
     float: left;
     margin: 0;
     list-style: none;
@@ -3319,40 +3560,53 @@ ul.clickMenu li a:hover {
     text-decoration: none !important;
 }
 
-ul.clickMenu li span {
-    width: 20px;
+ul.clickMenu > li > span {
+    margin-top: 12px;
+
+    width: 16px;
     height: 16px;
-    float: left;
+    display: inline-block;
+
     background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
     background-repeat: no-repeat;
-    background-position: 9px 5px;
+    background-position: 0% 0%;
+    background-size: 16px auto;
 
     cursor: pointer;
 }
 
-ul.clickMenu li span.ab {
 
+#selectLinkTop, #selectLinkTop .sugar_action_button,
+#selectLinkTop, #selectLinkTop .selectActionsDisabled {
+    min-width: 32px;
 }
-
 ul.clickMenu li span.subhover {
     cursor: pointer;
 }
 
-ul.clickMenu li ul.subnav, ul.clickMenu ul.subnav-sub, ul.SugarActionMenuIESub {
+
+ul.clickMenu li ul.subnav,
+ul.clickMenu ul.subnav-sub,
+ul.SugarActionMenuIESub {
     list-style: none;
     position: absolute;
-    left: 0;
-    top: 28px;
-    background: #fff;
+    right: 0;
+    top: 20px;
     margin: 0;
     display: none;
     float: left;
     width: auto;
-    border: 1px solid #ccc;
-
+    border: 1px solid transparent;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
     padding: 8px 0;
     z-index: 10;
     overflow: hidden;
+}
+
+ul.clickMenu li ul.subnav {
+    margin-top: 12px;
+    min-width: 128px;
 }
 
 ul.clickMenu li ul.subnav li, ul.clickMenu ul.subnav-sub li, ul.SugarActionMenuIESub li {
@@ -3370,21 +3624,8 @@ ul.clickMenu.subpanel.records {
     background-image: none;
 }
 
-ul.clickMenu.subpanel.records li a {
-    color: #aaa;
-}
 
-ul.clickMenu.subpanel.records > li div:hover a {
-    color: #fff !important;
-}
 
-ul.clickMenu.subpanel.records li > span {
-    opacity: .5;
-    height: 16px;
-    width: 17px;
-    padding: 0 5px 0 0 !important;
-    background-position: 50% -28px;
-}
 
 ul.clickMenu.subpanel.records:hover li > span {
 
@@ -3398,17 +3639,6 @@ ul.clickMenu.subpanel.records li ul.subnav li a span {
 
 ul.clickMenu.button li span.ab:hover {
     background-position: 50% 0;
-
-}
-
-ul.clickMenu.button li > span {
-    width: auto;
-    background-position: 50% -20px;
-    padding: 3px 15px 3px 10px !important;
-    height: auto;
-}
-
-ul.clickMenu.button:hover li > span {
 
 }
 
@@ -3429,45 +3659,9 @@ ul.clickMenu li a.disabled {
     cursor: default !important;
 }
 
-.oddListRowS1:hover td ul.clickMenu.subpanel.records, .evenListRowS1:hover td ul.clickMenu.subpanel.records {
-    background: #dddddd;
-    border: 1px solid #AAAAAA;
-}
-
-.oddListRowS1:hover td ul.clickMenu.subpanel.records li a, .evenListRowS1:hover td ul.clickMenu.subpanel.records li a {
-    color: #000;
-}
 
 .oddListRowS1:hover td ul.clickMenu.subpanel.records li span, .evenListRowS1:hover td ul.clickMenu.subpanel.records li span {
     opacity: 1;
-}
-
-ul.clickMenu li ul.subnav li a, ul.clickMenu li ul.subnav li input, ul.subnav-sub li a, ul.SugarActionMenuIESub li a {
-    float: left;
-    background: #fff;
-    padding: 1px 10px !important;
-    border: 0 !important;
-    width: 100%;
-    text-align: left;
-    font-size: 12px !important;
-    color: #000;
-
-}
-
-ul.clickMenu li ul.subnav li input {
-    padding: 2px 10px !important;
-    width: 100%
-}
-
-ul.SugarActionMenuIESub li a:hover,
-ul.clickMenu li ul.subnav li a:hover, ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover {
-    background-color: #3C8DBC;
-    color: #fff;
-    font-weight: normal !important;
-    font-size: 12px !important;
-    cursor: pointer;
-    text-shadow: none;
-
 }
 
 td.paginationActionButtons ul.clickMenu .massall,
@@ -3487,7 +3681,8 @@ ul.clickMenu.showLess .moreOverflow, ul.clickMenu.showLess .moduleMenuOverFlowLe
 ul#selectLink.clickMenu {
     height: 17px;
     min-width: 20px;
-    background-image: none;
+    background-image:
+            none;
 }
 
 td.paginationActionButtons ul.clickMenu #massall,
@@ -3537,6 +3732,7 @@ ul#detailViewActions.clickMenu {
     float: left;
     background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
     background-repeat: no-repeat;
+    background-size: 16px auto;
     background-position: 9px 7px;
     opacity: .4;
 }
@@ -3555,6 +3751,13 @@ ul#detailViewActions.clickMenu {
     font-weight: normal;
     font-size: 14px;
 }
+
+.quickcreate {
+    margin: 5px;
+    padding: 5px 7px 5px 7px;
+    border: 1px solid #ddd;
+}
+
 
 #quickCreate {
     float: right;
@@ -3603,9 +3806,9 @@ ul#globalLinksSubnav, ul#quickCreateULSubnav,
 
 #globalLinksSubnav li a, #quickCreateULSubnav li a,
 #quickCreate ul.clickMenu li ul.subnav li a, #globalLinksModule ul.clickMenu li ul.subnav li a {
-    padding: 4px 10px !important;
-    font-size: 13px !important;
-    color: #666666 !important;
+    padding: 4px 10px;
+    font-size: 13px;
+    color: #666666;
     line-height: 1.45;
 }
 
@@ -3644,7 +3847,7 @@ ul.clickMenu li ul.subnav li a:hover .showLessArrow, ul.clickMenu li ul.subnav l
 
 a#create_link.utilsLink {
     color: #fff;
-    background-color: #3C8DBC;
+    background-color: #F08377;
     border: none;
     padding: 5px 8px 5px 8px;
     -webkit-transition: all 0.2s ease-out;
@@ -3826,7 +4029,7 @@ select, textarea {
 }
 
 select:focus {
-    border: 1px solid #3C8DBC;
+    border: 1px solid #F08377;
     padding: 4px;
 }
 
@@ -4147,7 +4350,7 @@ fieldset[disabled] .btn-primary.active {
 }
 
 .button-primary .badge {
-    color: #3C8DBC;
+    color: #F08377;
     background-color: #fff;
     padding: 5px;
 }
@@ -4202,7 +4405,6 @@ fieldset[disabled] .btn-primary.active {
 
 .btn-info, .btn-info:hover, .btn-info:active, .btn-info:focus {
     color: #ffffff;
-    background-color: #AA9DCC;
     background-color: #AA9DCC;
     border: 1px solid #AA9DCC;
 }
@@ -4487,7 +4689,7 @@ textarea#description {
 }
 
 .dropdown-menu em a {
-    color: #3C8DBC;
+    color: #F08377;
 }
 
 .dropdown-menu em a:hover {
@@ -4603,7 +4805,7 @@ li.topnav ul.dropdown-menu li:last-child a {
 }
 
 .moremenu ul li a {
-    color: #3C8DBC !important;
+    color: #F08377 !important;
     cursor: pointer;
     padding: 5px;
     font-size: 1.2em;
@@ -4619,10 +4821,10 @@ li.topnav ul.dropdown-menu li:last-child a {
     background: none !important;
     cursor: pointer;
     padding: 5px;
-    background: #3C8DBC !important;
+    background: #F08377 !important;
 }
 
-.button, input[type=submit], input[type=button] {
+.button, input[type=submit], input[type=button], input[type=reset] {
     background-color: #F08377;
     border: none;
     color: #fff;
@@ -4696,7 +4898,7 @@ button[disabled], input[type="submit"][disabled], input[type="reset"][disabled],
 }
 
 .button .badge {
-    color: #3C8DBC;
+    color: #F08377;
     background-color: #fff;
 }
 
@@ -4721,6 +4923,19 @@ div.search_fields_basic label {
 }
 
 
+.converted_account {
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.converted_account td {
+    background-color: #BFCAD3;
+}
+
+.converted_account > tbody > tr > td  {
+    border-radius: 4px;
+    padding: 10px;
+}
+
 
 /*xs-col-*/
 @media (max-width: 769px) {
@@ -4736,6 +4951,9 @@ div.search_fields_basic label {
 
     div.search_buttons_basic {
         margin: 0 8px 0 42px;
+    }
+    .tab-content {
+        overflow-x: scroll;
     }
 }
 
@@ -4755,9 +4973,11 @@ div.search_fields_basic label {
     div.search_buttons_basic {
         margin: 0 8px 0 42px;
     }
-
     #wizform #wizard {
-        width: 700px;
+            width: 700px;
+        }
+    .tab-content {
+        overflow-x: scroll;
     }
 }
 
@@ -4979,7 +5199,7 @@ ul::-webkit-resizer
 }
 
 .btn-success {
-    background: #3C8DBC;
+    background: #F08377;
     border: none;
 }
 
@@ -5035,7 +5255,7 @@ table legend {
 }
 
 .ui-widget-content a {
-    color: #3C8DBC;
+    color: #F08377;
 }
 
 .ui-widget-content a:hover {
@@ -5434,8 +5654,28 @@ li.recentlinks_top {
     width: 75%;
     overflow: hidden;
     margin-left: 2px;
+    line-height: 32px;
+    height: auto;
 }
 
+
+li.recentlinks_topedit, li.recentlinks_topedit > a {
+    line-height: 32px;
+    height: auto;
+
+}
+
+li.recentlinks_topedit > a {
+    padding: 0 15px 0 15px !important;
+}
+
+li.recentlinks_top > a {
+    padding: 0 15px 0 15px !important;
+    width: auto;
+    height: auto;
+    line-height: 32px;
+
+}
 li.recentlinks_topedit {
     float: right;
     width: 20%;
@@ -5489,7 +5729,7 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     width: 95%;
 }
 
-.popupBody .list .view {
+.popupBody .list.view {
     overflow: scroll;
     width: 95%;
 }
@@ -5497,6 +5737,21 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 .navbar-inverse .navbar-toggle {
     border: none;
 }
+
+.popupBody .list.view > thead > tr > th {
+    border: 1px solid transparent;
+    border-bottom-color: #778591;
+}
+
+.popupBody .list.view > thead > tr > th:first-of-type {
+    border-top-left-radius: 4px;
+}
+
+.popupBody .list.view > thead > tr > th:last-of-type {
+    border-top-right-radius: 4px;
+}
+
+
 
 .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
     background: none;
@@ -5652,7 +5907,7 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 }
 
 #dashletbuttons {
-    color: #3C8DBC;
+    color: #F08377;
     margin: 0 2px 0 2px;
 }
 
@@ -5666,14 +5921,6 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 
 .teamNoticeBox {
     border: none;
-}
-
-ul#selectLinkBottom {
-    background-color: red;
-}
-
-ul#actionLinkBottom {
-    background-color: green;
 }
 
 .list tr.oddListRowS1 td, .list tr.evenListRowS1 td {
@@ -5773,6 +6020,7 @@ div.action_buttons form {
     width: 100%;
     float: left;
     overflow: hidden;
+    margin-bottom: 16px;
 }
 
 h3 span {
@@ -6077,13 +6325,13 @@ h3 span {
 .inlineEditIcon {
     float: right;
     height: 10px;
-    color: #3c8dbc;
+    color: #F08377;
     width: 15px;
     padding-left: 3px;
 }
 
 .inlineEditIcon svg {
-    fill: #3c8dbc;
+    fill: #F08377;
     display: none;
 }
 
@@ -6102,11 +6350,11 @@ td.inlineEditActive {
 }
 
 #inlineEditSaveButton svg {
-    fill: #3c8dbc;
+    fill: #F08377;
 }
 
 #inlineEditSaveButton svg:hover {
-    fill: #3c8dbc;
+    fill: #F08377;
 }
 
 #inline_edit_field {
@@ -6214,10 +6462,10 @@ object {
 }
 
 .qtip-tipped .qtip-titlebar {
-    background-color: #3c8dbc;
+    background-color: #F08377;
     padding: 10px 40px 10px 10px;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#3c8dbc), to(#4286AD));
-    background-image: -webkit-linear-gradient(top, #3c8dbc, #4286AD);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#F08377), to(#4286AD));
+    background-image: -webkit-linear-gradient(top, #F08377, #4286AD);
 }
 
 #reminders .clear {
@@ -6317,6 +6565,14 @@ object {
     margin-right: 20px;
 }
 
+.panel {
+    margin-bottom: 0;
+}
+
+.panel-body {
+    padding: 0;
+}
+
 .panel-template {
     visibility: collapse;
 }
@@ -6327,6 +6583,8 @@ object {
     padding: 0px;
     vertical-align: middle;
     height: 52px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
 }
 
 .panel-default > .panel-heading > div {
@@ -6374,6 +6632,13 @@ object {
     font-size: 14px !important;
     background-color: #66727D;
     padding: 10px 10px 0 10px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.sub-panel  div.tab-content {
+    padding: 0 !important;
+    border: none;
 }
 
 
@@ -6667,7 +6932,7 @@ div.target-list-table {
 .icon-btn-lst .icon-btn {
     margin: 10px;
     list-style-type: none;
-    background-color: #3C8DBC;
+    background-color: #F08377;
     display: block;
     float: left;
     width: 150px;
@@ -6708,16 +6973,27 @@ tr#pagination {
     background: #f5f5f5;
 }
 
-table.subpanel-table,
-table.subpanel-table a:link,
-table.subpanel-table td,
+table.subpanel-table tr:last-of-type td {
+    border-bottom: 1px solid transparent;
+}
+
+
+table.subpanel-table {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+table.subpanel-table th {
+    border-bottom: 1px solid #ddd;
+}
+
 table.subpanel-table th,
-table.subpanel-table tr {
-    color: #534D64 !important;
+table.subpanel-table th a:link {
+    color: #000000;
+    font-weight: bold;
 }
 
 table.subpanel-table ul.clickMenu > li, ul.SugarActionMenuIESub li {
-    background: none;
     padding: 0;
     line-height: 24px;
 }
@@ -6730,40 +7006,73 @@ table.subpanel-table ul.subpanel {
 }
 
 
-table.subpanel-table ul.subpanel a,
+.sugar_action_button {
+    min-width: 132px;
+}
+
+
+.sugar_action_button a {
+    color: #fff;
+}
+
+.sugar_action_button a:hover {
+    color: #F08377;
+}
+
+table.subpanel-table .pagination li.sugar_action_button > form > a {
+    width: 100%;
+}
+
+table.subpanel-table ul.subpanel > a,
+.single  a,
+.single > a,
+#actionLinkTop li.sugar_action_button,
+table.subpanel-table li.sugar_action_button,
+#selectLinkTop li.sugar_action_button,
 table.subpanel-table .pagination .sugar_action_button,
 table.subpanel-table .pagination li.sugar_action_button > form > a,
 table.subpanel-table .pagination .sugar_action_button > form > a,
-table.subpanel-table .pagination .sugar_action_button > form > a,
-table.subpanel-table .pagination a {
+table.subpanel-table .pagination .sugar_action_button > form > a {
     padding: 4px !important;
     background-color: #94A6B5;
     border: 1px solid transparent;
     border-radius: 4px;
-    color: #fff !important;
     text-transform: uppercase;
 }
 
-
-table.subpanel-table .pagination ul.clickMenu > li > form > a {
-    color: #fff !important;
+/*calendar popup fix*/
+.calcell > a {
+    background-color: #fff;
 }
 
-table.subpanel-table .pagination ul.clickMenu ul > li > a {
-    color: #534D64 !important;
+li.sugar_action_button  > ul {
+    text-transform: capitalize;
 }
 
+
+table.subpanel-table ul.subpanel a:hover,
+table.subpanel-table li.sugar_action_button:hover,
+table.subpanel-table .pagination .sugar_action_button:hover,
+table.subpanel-table .pagination li.sugar_action_button:hover > form > a,
+table.subpanel-table .pagination .sugar_action_button:hover > form > a,
+table.subpanel-table .pagination .sugar_action_button:hover > form > a,
+table.subpanel-table .pagination a,
+.subpanel-table ul.subnav {
+    background-color: #7b8a96;
+
+}
+
+table.subpanel-table .pagination a {
+    padding-left: 8px;
+    padding-right: 8px;
+}
 
 table.subpanel-table .pagination ul.clickMenu li span {
-   float: right;
-    margin-top: 8px
+    float: right;
+    margin-top: 12px;
+    margin-left: 12px;
 }
 
-table.subpanel-table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > span,
-table.subpanel-table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > span a{
-    color: #534D64 !important;
-    font-weight: 700;
-}
 
 ul.SugarActionMenuIESub li a, ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .list tr.pagination td.buttons ul.clickMenu > li > a
 
@@ -6791,6 +7100,19 @@ div.list-view-rounded-corners > table th:last-of-type {
     border-bottom-right-radius: 4px;
 }
 
+
+#history_search table td {
+    width: auto !important;
+}
+
+#history_search table td:nth-of-type(2) select[multiple],
+#history_search table td:nth-of-type(2) select[size] {
+    height: 48px;
+}
+
+#history_search table td:nth-of-type(8) div {
+    display: inline-block;
+}
 /*////////////////////////////////////////////////////////////////////////////////////////// MEDIA QUERIES //////////*/
 
 @media (max-width: 3000px) {
@@ -7599,11 +7921,7 @@ div.list-view-rounded-corners > table th:last-of-type {
         padding-bottom: 10px;
     }
 
-    .footer_left {
-        padding: 20px 0 10px 0;
-    }
 }
-
 @media only screen and (max-width: 480px) {
     .detail table, .detail thead, .detail tbody, .detail th, .detail td, .detail tr {
         display: block;
@@ -7661,7 +7979,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     #searchmobile #query_string {
         width: 75% !important;
         outline: 0 !important;
-        background: #3C8DBC !important;
+        background: #F08377 !important;
         border: none !important;
         border-radius: 0 !important;
         border-bottom: 1px solid #cccccc !important;
@@ -7690,14 +8008,6 @@ div.list-view-rounded-corners > table th:last-of-type {
         max-width: 100px;
         float: left;
     }
-
-    ul.clickMenu li span {
-        width: 16px;
-        height: 16px;
-        float: left;
-        background: url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=actionMenuArrow.png") no-repeat scroll 6px -28px transparent;
-        cursor: pointer;
-    }
 }
 
 @media (min-width: 480px) and (max-width: 680px) {
@@ -7712,7 +8022,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     #searchmobile #query_string {
         width: 80% !important;
         outline: 0 !important;
-        background: #3C8DBC !important;
+        background: #F08377 !important;
         border: none !important;
         border-radius: 0 !important;
         border-bottom: 1px solid #cccccc !important;
@@ -7826,13 +8136,11 @@ div.list-view-rounded-corners > table th:last-of-type {
     .footer_left {
         width: 100%;
         text-align: center;
-        padding: 20px 0 20px 0;
     }
 
     .footer_right {
         width: 100%;
         text-align: center;
-        padding: 20px 0 20px 0;
     }
 }
 
