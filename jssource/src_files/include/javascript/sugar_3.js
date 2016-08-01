@@ -3320,9 +3320,9 @@ SUGAR.util = function () {
 						title: caption,
 						width: 300,
 						position: {
-						    my: 'right top',
-						    at: 'left top',
-						    of: $(el)
+						    my: 'right top-30',
+						    at: 'left-210 top',
+						    of: $(el),
 					  }
 					});
 				if(show_buttons) {
