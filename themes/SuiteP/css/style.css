@@ -1720,6 +1720,26 @@ div#responseTime {
     margin-bottom: 0;
 }
 
+div.row.monthHeader {
+    margin-left: 0;
+    margin-right: 0;
+    border-bottom: none;
+}
+
+td.fc-widget-header,
+td.fc-widget-header table > thead,
+td.fc-widget-header table > thead > tr > th {
+    padding: 0;
+    border: none !important;
+    background-color: #BFCAD3;
+}
+
+
+.fc-title {
+    font-size: 13px;
+    line-height: 24px;
+}
+
 .monthFooter td {
     padding-left: 7px;
     padding-right: 7px;
@@ -1732,9 +1752,14 @@ div#responseTime {
 .monthHeader {
     padding: 6px 5px 4px 3px;
     margin-top: 10px;
+    border: none;
+    background: #778591;
+    color: #ffffff;
     vertical-align: middle;
-    background-repeat: repeat-x;
-    background-position: top;
+    border: 1px solid transparent;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    line-height: 42px;
 }
 
 .monthHeader td {
@@ -1836,6 +1861,30 @@ div#responseTime {
     border-top: 1px;
 }
 
+div.fc-toolbar {
+    visibility: collapse;
+    display: none;
+    height: 0 ;
+}
+
+.monthCalBody > .calSharedUser {
+    padding: 20px 0 20px 0;
+    text-align: center;
+    color: #ffffff;
+}
+
+thead.fc-head {
+    background: #778591;
+    color: #ffffff;
+}
+
+thead.fc-head tr td {
+    padding: 8px;
+}
+
+.fc-day-number {
+    color: #ffffff;
+}
 .calendar {
     border: 1px solid #999;
 }
@@ -2865,10 +2914,9 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited {
     background-color: #abc3d7;
 }
 
-.monthFooter td {
-    border-top-color: #abc3d7;
-    border-bottom-color: #abc3d7;
-    background-color: #ffffff;
+div.monthFooter {
+    background-color: #BFCAD3;
+    line-height: 32px;
 }
 
 .monthHeader a:hover, .monthViewDayHeight a:hover {
@@ -2938,13 +2986,6 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited {
 
 h5.calSharedUser {
     color: #444444;
-}
-
-.monthHeader {
-    color: #444;
-    background-color: #fff;
-    border-color: #abc3d7;
-    background-image: url('../../../../index.php?entryPoint=getImage&imageName=bg.gif');
 }
 
 .subpanelTabForm {
@@ -3678,12 +3719,6 @@ iframe.teamNoticeBox {
 
 .evenListRowS1 {
     background: #efefef;
-}
-
-.monthHeader {
-    border: none;
-    background: #efefef;
-    padding: 5px;
 }
 
 .toggler {
@@ -4610,7 +4645,7 @@ td.submitButtons .button:hover {
 button[disabled], input[type="submit"][disabled], input[type="reset"][disabled], input[type="button"][disabled] {
     background-color: #777777;
     border: none;
-    color: #ffffff;
+    color: #d5d5d5;
     cursor: pointer;
     font-size: 13px !important;
     margin: 0 0 0 0;
@@ -5026,6 +5061,10 @@ table legend {
 
 .detail table, .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th {
     border: 1px solid #dddddd;
+}
+
+.table-responsive > tbody > tr > td {
+    padding: 4px;
 }
 
 #usermenucollapsed, #usermenucollapsed-mobile {
@@ -5491,6 +5530,13 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 
 .View {
     border: 1px solid #cccccc;
+}
+
+
+
+/* fix schedule bar popup on calendar */
+.ui-front, .ui-dialog {
+    z-index: 1100 !important;
 }
 
 @media (max-width: 768px) {
