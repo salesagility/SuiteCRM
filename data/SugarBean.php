@@ -593,7 +593,7 @@ class SugarBean
      * Internal Function, do not override.
      */
     public static function get_union_related_list($parentbean, $order_by = "", $sort_order = '', $where = "",
-                                           $row_offset = 0, $limit = -1, $max = -1, $show_deleted = 0, $subpanel_def)
+                                                  $row_offset = 0, $limit = -1, $max = -1, $show_deleted = 0, $subpanel_def)
     {
         $secondary_queries = array();
         global $layout_edit_mode;
@@ -672,6 +672,24 @@ class SugarBean
                     }
                 }
                 $subquery['select'] = substr($subquery['select'], 0, strlen($subquery['select']) - 1);
+
+                // Find related email address for sub panel ordering
+                if( $order_by && isset($subpanel_def->panel_definition['list_fields'][$order_by]['widget_class']) &&
+                    $subpanel_def->panel_definition['list_fields'][$order_by]['widget_class'] == 'SubPanelEmailLink' &&
+                    !in_array($order_by, array_keys($subquery['query_fields']))) {
+                    $relatedBeanTable = $subpanel_def->table_name;
+                    $relatedBeanModule = $subpanel_def->get_module_name();
+                    $subquery['select'] .= ",
+                    (SELECT email_addresses.email_address
+                     FROM email_addr_bean_rel
+                     JOIN email_addresses ON email_addresses.id = email_addr_bean_rel.email_address_id
+                     WHERE
+                        email_addr_bean_rel.primary_address = 1 AND
+                        email_addr_bean_rel.deleted = 0 AND
+                        email_addr_bean_rel.bean_id = $relatedBeanTable.id AND
+                        email_addr_bean_rel.bean_module = '$relatedBeanModule') as $order_by";
+                }
+
                 //Put the query into the final_query
                 $query = $subquery['select'] . " " . $subquery['from'] . " " . $subquery['where'];
                 if (!$first) {
@@ -859,7 +877,7 @@ class SugarBean
      * @return array $fetched data.
      */
     public function process_union_list_query($parent_bean, $query,
-                                      $row_offset, $limit = -1, $max_per_page = -1, $where = '', $subpanel_def, $query_row_count = '', $secondary_queries = array())
+                                             $row_offset, $limit = -1, $max_per_page = -1, $where = '', $subpanel_def, $query_row_count = '', $secondary_queries = array())
     {
         $db = DBManagerFactory::getInstance('listviews');
         /**
@@ -1870,16 +1888,6 @@ class SugarBean
         // use the db independent query generator
         $this->preprocess_fields_on_save();
 
-        //construct the SQL to create the audit record if auditing is enabled.
-        $auditDataChanges = array();
-        if ($this->is_AuditEnabled()) {
-            if ($isUpdate && !isset($this->fetched_row)) {
-                $GLOBALS['log']->debug('Auditing: Retrieve was not called, audit record will not be created.');
-            } else {
-                $auditDataChanges = $this->db->getAuditDataChanges($this);
-            }
-        }
-
         $this->_sendNotifications($check_notify);
 
         if ($isUpdate) {
@@ -1888,22 +1896,9 @@ class SugarBean
             $this->db->insert($this);
         }
 
-        if (!empty($auditDataChanges) && is_array($auditDataChanges)) {
-            foreach ($auditDataChanges as $change) {
-                $this->db->save_audit_records($this, $change);
-            }
-        }
-
-
         if (empty($GLOBALS['resavingRelatedBeans'])) {
             SugarRelationship::resaveRelatedBeans();
         }
-
-        // populate fetched row with current bean values
-        foreach ($auditDataChanges as $change) {
-            $this->fetched_row[$change['field_name']] = $change['after'];
-        }
-
 
         /* BEGIN - SECURITY GROUPS - inheritance */
         require_once('modules/SecurityGroups/SecurityGroup.php');
@@ -1915,6 +1910,8 @@ class SugarBean
         }
 
         $this->call_custom_logic('after_save', '');
+
+        $this->auditBean($isUpdate);
 
         //Now that the record has been saved, we don't want to insert again on further saves
         $this->new_with_id = false;
@@ -3359,16 +3356,16 @@ class SugarBean
         return $ret_array['select'] . $ret_array['from'] . $ret_array['where'] . $ret_array['order_by'];
     }
 
-	public function get_relationship_field($field)
-	{
-		foreach ($this->field_defs as $field_def => $value) {
-			if (isset($value['relationship_fields']) && 
-				in_array($field, $value['relationship_fields']) &&
+    public function get_relationship_field($field)
+    {
+        foreach ($this->field_defs as $field_def => $value) {
+            if (isset($value['relationship_fields']) &&
+                in_array($field, $value['relationship_fields']) &&
                 (!isset($value['link_type']) || $value['link_type'] != 'relationship_info')
             ) {
                 return $field_def;
             }
-		}
+        }
 
         return false;
     }
@@ -4340,7 +4337,7 @@ class SugarBean
      * Internal function, do not override.
      */
     public function get_related_list($child_seed, $related_field_name, $order_by = "", $where = "",
-                              $row_offset = 0, $limit = -1, $max = -1, $show_deleted = 0)
+                                     $row_offset = 0, $limit = -1, $max = -1, $show_deleted = 0)
     {
         global $layout_edit_mode;
 
@@ -5514,5 +5511,38 @@ class SugarBean
     public function create_export_query($order_by, $where)
     {
         return $this->create_new_list_query($order_by, $where, array(), array(), 0, '', false, $this, true, true);
+    }
+
+    /**
+     * Checks auditing is enables and then carrys out an audit on the current bean.
+     *
+     * @param $isUpdate
+     */
+    public function auditBean($isUpdate)
+    {
+        if ($this->is_AuditEnabled() && $isUpdate) {
+
+            $auditDataChanges = $this->db->getAuditDataChanges($this);
+
+            if (!empty($auditDataChanges)) {
+                $this->createAuditRecord($auditDataChanges);
+            } else {
+                $GLOBALS['log']->debug('Auditing: createAuditRecord was not called, audit record will not be created.');
+            }
+        }
+    }
+
+    /**
+     * Takes the audit changes array and creates entries in audit table.
+     * Reset's the bean fetched row so changes are not duplicated.
+     *
+     * @param array $auditDataChanges
+     */
+    protected function createAuditRecord(array $auditDataChanges)
+    {
+        foreach ($auditDataChanges as $change) {
+            $this->db->save_audit_records($this, $change);
+            $this->fetched_row[$change['field_name']] = $change['after'];
+        }
     }
 }
