@@ -204,7 +204,7 @@ function validateFormAndSave(field,id,module,type){
         var valid_form = check_form("EditView");
         if(valid_form){
             handleSave(field, id, module, type)
-            $(document).off('click');
+            clickListenerActive = false;
         }else{
             return false
         };
@@ -229,9 +229,11 @@ function validateFormAndSave(field,id,module,type){
  * @param module - the module we are editing
  */
 
+var ie_field, ie_id, ie_module, ie_type, ie_message_field;
+var clickListenerActive = false;
 function clickedawayclose(field,id,module, type){
     // Fix for issue #373 get name from system field name.
-    var message_field = 'LBL_' + field.toUpperCase();
+    message_field = 'LBL_' + field.toUpperCase();
     message_field = SUGAR.language.get(module, message_field);
 
     // Fix for issue #373 remove ':'
@@ -239,19 +241,30 @@ function clickedawayclose(field,id,module, type){
     if (':'.toUpperCase() === last_charachter.toUpperCase()) {
         message_field = message_field.substring(0, message_field.length - 1);
     }
-
-    $(document).on('click', function (e) {
-
-        if(!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")){
-            var output_value = loadFieldHTMLValue(field,id,module);
+    ie_field = field;
+    ie_id = id;
+    ie_module = module;
+    ie_type = type;
+    ie_message_field = message_field;
+    clickListenerActive = true;
+}
+$(document).on('click', function (e) {
+    if(clickListenerActive) {
+        var field = ie_field;
+        var id = ie_id;
+        var module = ie_module;
+        var type = ie_type;
+        var message_field = ie_message_field;
+        if (!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")) {
+            var output_value = loadFieldHTMLValue(field, id, module);
             var user_value = getInputValue(field, type);
             // Fix for issue #373 strip HTML tags for correct comparison
             var output_value_compare = $(output_value).text();
-            if(user_value != output_value_compare) {
-                var r = confirm( SUGAR.language.translate('app_strings', 'LBL_CONFIRM_CANCEL_INLINE_EDITING') + message_field);
-                if(r == true) {
+            if (user_value != output_value_compare) {
+                var r = confirm(SUGAR.language.translate('app_strings', 'LBL_CONFIRM_CANCEL_INLINE_EDITING') + message_field);
+                if (r == true) {
                     var output = setValueClose(output_value);
-                    $(document).off('click');
+                    clickListenerActive = false;
                 } else {
                     $("#" + field).focus();
                     e.preventDefault();
@@ -259,13 +272,11 @@ function clickedawayclose(field,id,module, type){
             } else {
                 // user hasn't changed value so can close field without warning them first
                 var output = setValueClose(output_value);
-                $(document).off('click');
+                clickListenerActive = false;
             }
         }
-
-    });
-}
-
+    }
+});
 
 /**
  * Depending on what type of field we are editing the parts of the field may differ and need different jquery to pickup the values
