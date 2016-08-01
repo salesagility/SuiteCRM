@@ -7111,7 +7111,6 @@ div.list-view-rounded-corners > table th:last-of-type {
     border-bottom-right-radius: 4px;
 }
 
-
 #history_search table td {
     width: auto !important;
 }
@@ -7124,6 +7123,15 @@ div.list-view-rounded-corners > table th:last-of-type {
 #history_search table td:nth-of-type(8) div {
     display: inline-block;
 }
+.col-advanced-search {
+    margin-bottom: 16px;
+
+}
+
+.col-advanced-search label {
+    font-weight: 700;
+}
+
 /*////////////////////////////////////////////////////////////////////////////////////////// MEDIA QUERIES //////////*/
 
 @media (max-width: 3000px) {
