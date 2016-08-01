@@ -97,12 +97,15 @@ function buildEditField(){
             }
         }
     });
-    $(".inlineEdit").dblclick(function(e) {
+
+
+    var onInlineEditDblClick = function(elem, e) {
+        var _this = elem;
         e.preventDefault();
-        //depending on what view you are using will find the id,module,type of field, and field name from the view
+        // depending on what view you are using will find the id,module,type of field, and field name from the view
         if(view == "DetailView"){
-            var field = $(this).attr( "field" );
-            var type = $(this).attr( "type" );
+            var field = $(_this).attr( "field" );
+            var type = $(_this).attr( "type" );
 
             if(currentModule){
                 var module = currentModule;
@@ -112,10 +115,10 @@ function buildEditField(){
 
             var id = $("input[name=record]").attr( "value" );
         }else{
-            var field = $(this).attr( "field" );
-            var type = $(this).attr( "type" );
+            var field = $(_this).attr( "field" );
+            var type = $(_this).attr( "type" );
             var module = $("#displayMassUpdate input[name=module]").val();
-            var id = $(this).closest('tr').find('[type=checkbox]').attr( "value" );
+            var id = $(_this).closest('tr').find('[type=checkbox]').attr( "value" );
         }
 
         //If we find all the required variables to do inline editing.
@@ -128,19 +131,19 @@ function buildEditField(){
 
             //If we have the field html append it to the div we clicked.
             if(html){
-                $(this).html(validation + "<form name='EditView' id='EditView'><div id='inline_edit_field'>" + html + "</div><a id='inlineEditSaveButton'></a></form>");
+                $(_this).html(validation + "<form name='EditView' id='EditView'><div id='inline_edit_field'>" + html + "</div><a id='inlineEditSaveButton'></a></form>");
                 $("#inlineEditSaveButton").load(inlineEditSaveButtonImg);
                 //If the field is a relate field we will need to retrieve the extra js required to make the field work.
                 if(type == "relate" || type == "parent") {
                     var relate_js = getRelateFieldJS(field, module, id);
-                    $(this).append(relate_js);
-                    SUGAR.util.evalScript($(this).html());
+                    $(_this).append(relate_js);
+                    SUGAR.util.evalScript($(_this).html());
                     //Needs to be called to enable quicksearch/typeahead functionality on the field.
                     enableQS(true);
                 }
 
                 //Add the active class so we know which td we are editing as they all have the inlineEdit class.
-                $(this).addClass("inlineEditActive");
+                $(_this).addClass("inlineEditActive");
 
                 //Put the cursor in the field if possible.
                 $("#" + field).focus();
@@ -151,6 +154,7 @@ function buildEditField(){
                 }
 
                 //We can only edit one field at a time currently so turn off the on dblclick event
+                $(".inlineEdit").off('click');
                 $(".inlineEdit").off('dblclick');
 
                 //Call the click away function to handle if the user has clicked off the field, if they have it will close the form.
@@ -161,8 +165,31 @@ function buildEditField(){
 
             }
         }
+    };
 
+    var touchtime = 0;
+    $('.inlineEdit').on('click', function(e) {
+        if(touchtime == 0) {
+            //set first click
+            touchtime = new Date().getTime();
+        } else {
+            //compare first click to this click and see if they occurred within double click threshold
+            if(((new Date().getTime())-touchtime) < 800) {
+                //double click occurred
+                //alert("double clicked");
+                touchtime = 0;
+                onInlineEditDblClick(this, e);
+            } else {
+                //not a double click so set as a new first click
+                touchtime = new Date().getTime();
+            }
+        }
     });
+
+    $(".inlineEdit").dblclick(function(e) {
+        onInlineEditDblClick(this, e);
+    });
+
 }
 
 /**
