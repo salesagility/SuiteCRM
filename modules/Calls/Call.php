@@ -46,6 +46,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
+
 class Call extends SugarBean {
 	var $field_name_map;
 	// Stored fields
@@ -231,10 +232,54 @@ class Call extends SugarBean {
         }
 
 		if(isset($_REQUEST['reminders_data'])) {
-			Reminder::saveRemindersDataJson('Calls', $return_id, html_entity_decode($_REQUEST['reminders_data']));
+			$reminderData = json_encode(
+				$this->removeUnInvitedFromReminders(json_decode(html_entity_decode($_REQUEST['reminders_data']), true))
+			);
+			Reminder::saveRemindersDataJson('Calls', $return_id, $reminderData);
 		}
 
         return $return_id;
+	}
+
+	/**
+	 * @param array $reminders
+	 * @return array
+     */
+	public function removeUnInvitedFromReminders($reminders) {
+
+		$reminderData = $reminders;
+		$uninvited = array();
+		foreach($reminders as $r => $reminder) {
+			foreach($reminder['invitees'] as $i => $invitee) {
+				switch($invitee['module']) {
+					case "Users":
+						if(in_array($invitee['module_id'], $this->users_arr) === false) {
+							// add to uninvited
+							$uninvited[] = $reminderData[$r]['invitees'][$i];
+							// remove user
+							unset($reminderData[$r]['invitees'][$i]);
+						}
+						break;
+					case "Contacts":
+						if(in_array($invitee['module_id'], $this->contacts_arr) === false) {
+							// add to uninvited
+							$uninvited[] = $reminderData[$r]['invitees'][$i];
+							// remove contact
+							unset($reminderData[$r]['invitees'][$i]);
+						}
+						break;
+					case "Leads":
+						if(in_array($invitee['module_id'], $this->leads_arr) === false) {
+							// add to uninvited
+							$uninvited[] = $reminderData[$r]['invitees'][$i];
+							// remove lead
+							unset($reminderData[$r]['invitees'][$i]);
+						}
+						break;
+				}
+			}
+		}
+		return $reminderData;
 	}
 
 	/** Returns a list of the associated contacts

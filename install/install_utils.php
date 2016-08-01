@@ -591,6 +591,8 @@ function getDbConnection()
     );
     if(empty($_SESSION['setup_db_create_database'])) {
             $dbconfig["db_name"] = $_SESSION['setup_db_database_name'];
+            $dbconfig["db_user_name"] = $_SESSION['setup_db_sugarsales_user'];
+            $dbconfig["db_password"] = $_SESSION['setup_db_sugarsales_password'];
     }
 
     $db = getInstallDbInstance();

@@ -321,7 +321,14 @@ function saveField($field, $id, $module, $value)
             $bean->$field = $value;
         }
 
-        $bean->save();
+        if (($bean->fetched_row['assigned_user_id'] != $value) && ($bean->isOwner($bean->created_by))) {
+            $check_notify = TRUE;
+        }
+        else {
+            $check_notify = FALSE;
+        }
+
+        $bean->save($check_notify);
         return getDisplayValue($bean, $field);
     } else {
         return false;
@@ -427,7 +434,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
     }
 
     //if field is of type radio.
-    if ($vardef['type'] == "radioenum" || $vardef['type'] == "enum") {
+     if ($vardef['type'] == "radioenum" || $vardef['type'] == "enum" || $vardef['type'] == "dynamicenum") {
         $value = $app_list_strings[$vardef['options']][$value];
     }
 
@@ -465,7 +472,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 
             $value .= getFieldValueFromModule($fieldName,$vardef['ext2'],$record);
 
-        }else if(!empty($vardef['rname'])){
+        } else if(!empty($vardef['rname']) || $vardef['name'] == "related_doc_name") {
             $value .= getFieldValueFromModule($fieldName,$vardef['module'],$record);
 
         } else {
@@ -476,7 +483,10 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
             $value .= "</a>";
         }
     }
-
+	if($vardef['type'] == "url")
+	{
+		$value = '<a href='.$value.' target="_blank">'.$value.'</a>';
+	}
 
     return $value;
 }

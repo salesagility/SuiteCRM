@@ -4360,8 +4360,16 @@ function html_entity_decode_utf8($string)
     static $trans_tbl;
     // replace numeric entities
     //php will have issues with numbers with leading zeros, so do not include them in what we send to code2utf.
-    $string = preg_replace('~&#x0*([0-9a-f]+);~ei', 'code2utf(hexdec("\\1"))', $string);
-    $string = preg_replace('~&#0*([0-9]+);~e', 'code2utf(\\1)', $string);
+
+    $string = preg_replace_callback('~&#x0*([0-9a-f]+);~i',
+        function($matches) {
+            return code2utf(hexdec($matches[1]));
+        }, $string);
+    $string = preg_replace_callback('~&#0*([0-9]+);~',
+        function($matches) {
+            return code2utf($matches[1]);
+        }, $string);
+
     // replace literal entities
     if (!isset($trans_tbl)) {
         $trans_tbl = array();

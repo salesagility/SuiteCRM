@@ -312,13 +312,13 @@ $moduleList[] = 'AOK_KnowledgeBase';
 
 $beanList['Reminders'] = 'Reminder';
 $beanFiles['Reminder'] = 'modules/Reminders/Reminder.php';
-$moduleList[] = 'Reminders';
 $modInvisList[] = 'Reminders';
+$modules_exempt_from_availability_check['Reminders'] = 'Reminders';
 
 $beanList['Reminders_Invitees'] = 'Reminder_Invitee';
 $beanFiles['Reminder_Invitee'] = 'modules/Reminders_Invitees/Reminder_Invitee.php';
-$moduleList[] = 'Reminders_Invitees';
 $modInvisList[] = 'Reminders_Invitees';
+$modules_exempt_from_availability_check['Reminders_Invitees'] = 'Reminder_Invitee';
 
 $beanList['FP_events'] = 'FP_events';
 $beanFiles['FP_events'] = 'modules/FP_events/FP_events.php';

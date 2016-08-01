@@ -1,7 +1,4 @@
 <?php
-// created: 2015-02-17 15:14:28
-global $current_user;
-$module_name = "Documents";
 $searchFields['Documents'] = array (
   'document_name' => 
   array (
@@ -82,9 +79,10 @@ $searchFields['Documents'] = array (
     'favorites_only' => array(
         'query_type'=>'format',
         'operator' => 'subquery',
-        'subquery' => 'SELECT favorites.parent_id FROM favorites
+        'checked_only' => true,
+        'subquery' => "SELECT favorites.parent_id FROM favorites
 			                    WHERE favorites.deleted = 0
-			                        and favorites.parent_type = "'.$module_name.'"
-			                        and favorites.assigned_user_id = "' .$current_user->id . '") OR NOT ({0}',
+			                        and favorites.parent_type = 'Documents'
+			                        and favorites.assigned_user_id = '{1}'",
         'db_field'=>array('id')),
 );
