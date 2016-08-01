@@ -473,14 +473,9 @@ function insertGroup()
 	a.colSpan="100";
     var table = document.createElement("table");
 	table.id = "group"+groupn;
-    if(enable_groups){
-	    //table.style.border = '1px grey solid';
-	    //table.style.borderRadius = '4px';
-        //table.border="1";
-    }
+    
 	table.style.whiteSpace = 'nowrap';
 
-	//table.width = '950';
 	a.appendChild(table);
 
 
