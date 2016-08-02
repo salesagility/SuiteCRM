@@ -39,7 +39,7 @@
 
 *}
 
-{assign var=preForm value="<table width='100%' border='1' cellspacing='0' cellpadding='0'><tr><td><table width='100%'><tr><td>"}
+{assign var=preForm value="<table width='100%' border='1' cellspacing='0' cellpadding='0' class='converted_account'><tr><td><table width='100%'><tr><td>"}
 {assign var=displayPreform value=false}
 {if isset($bean->contact_id) && !empty($bean->contact_id)}
 {assign var=displayPreform value=true}
@@ -81,4 +81,4 @@
 <br>
 {/if}
 
-{{include file='include/DetailView/header.tpl'}}
+{{sugar_include type="smarty" file='include/DetailView/header.tpl'}}

@@ -207,9 +207,38 @@ function insertProductLine(tableid, groupid) {
     i.innerHTML += "<textarea tabindex='116' name='product_description[" + prodln + "]' id='product_description" + prodln + "' rows='2' cols='23'></textarea>&nbsp;&nbsp;";
 
     addToValidate('EditView','product_product_id'+prodln,'id',true,"Please choose a product");
+
+  addAlignedLabels(prodln, 'product');
+
     prodln++;
 
     return prodln - 1;
+}
+
+var addAlignedLabels = function(ln, type) {
+  if(typeof type == 'undefined') {
+    type = 'product';
+  }
+  if(type != 'product' && type != 'service') {
+    console.error('type could be "product" or "service" only');
+  }
+  var labels = [];
+  $('tr#'+type+'_head td').each(function(i,e){
+    if(type=='product' && $(e).attr('colspan')>1) {
+      for(var i=0; i<parseInt($(e).attr('colspan')); i++) {
+        if(i==0) {
+          labels.push($(e).html());
+        } else {
+          labels.push('');
+        }
+      }
+    } else {
+      labels.push($(e).html());
+    }
+  });
+  $('tr#'+type+'_line'+ln+' td').each(function(i,e){
+    $(e).prepend('<span class="hidden alignedLabel">'+labels[i]+'</span>');
+  });
 }
 
 
@@ -322,6 +351,8 @@ function insertServiceLine(tableid, groupid) {
     }
     var f = x.insertCell(6);
     f.innerHTML = "<input type='hidden' name='service_deleted[" + servln + "]' id='service_deleted" + servln + "' value='0'><input type='hidden' name='service_id[" + servln + "]' id='service_id" + servln + "' value=''><button type='button' class='button' id='service_delete_line" + servln + "' value='" + SUGAR.language.get(module_sugar_grp1, 'LBL_REMOVE_PRODUCT_LINE') + "' tabindex='116' onclick='markLineDeleted(" + servln + ",\"service_\")'><img src='themes/default/images/id-ff-clear.png' alt='" + SUGAR.language.get(module_sugar_grp1, 'LBL_REMOVE_PRODUCT_LINE') + "'></button><br>";
+
+  addAlignedLabels(servln, 'service');
 
     servln++;
 
@@ -442,14 +473,9 @@ function insertGroup()
 	a.colSpan="100";
     var table = document.createElement("table");
 	table.id = "group"+groupn;
-    if(enable_groups){
-	    table.style.border = '1px grey solid';
-	    table.style.borderRadius = '4px';
-        table.border="1";
-    }
+    
 	table.style.whiteSpace = 'nowrap';
 
-	table.width = '950';
 	a.appendChild(table);
 
 
