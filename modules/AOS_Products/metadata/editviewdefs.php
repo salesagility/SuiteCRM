@@ -20,11 +20,6 @@ array (
           'field' => '30',
         ),
       ),
-      'form' => 
-      array (
-        'enctype' => 'multipart/form-data',
-        'headerTpl' => 'modules/AOS_Products/tpls/EditViewHeader.tpl',
-      ),
       'includes' => 
       array (
         0 => 
@@ -120,7 +115,6 @@ array (
           0 => 
           array (
             'name' => 'product_image',
-            'customCode' => '{$PRODUCT_IMAGE}',
           ),
         ),
       ),
