@@ -5307,7 +5307,7 @@ function assignConcatenatedValue(SugarBean $bean, $fieldDef, $value)
  */
 function sugar_unserialize($value)
 {
-    preg_match('/[oc]:\d+:/i', $value, $matches);
+    preg_match('/[oc]:[^:]*\d+:/i', $value, $matches);
 
     if (count($matches)) {
         return false;
