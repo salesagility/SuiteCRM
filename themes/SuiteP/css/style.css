@@ -278,6 +278,11 @@ div#pageContainer td.dashletcontainer th.footable-visible a {
     padding-right: 20px;
 }
 
+div#searchResults {
+    overflow-y: auto;
+    padding-bottom: 50px;
+}
+
 div#pageContainer td.dashletcontainer div.hd .icon {
     fill: #fff;
 }
@@ -8703,7 +8708,7 @@ table tr#delegates_search {
 #wizform .other.view img, .other.view svg {
     width: initial;
     height: initial;
-    margin: 17px 5px 5px 5px;
+
 }
 
 #wizform select.input-sm {
