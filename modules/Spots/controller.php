@@ -60,6 +60,9 @@ class SpotsController extends SugarController
     protected $quotesFileName = 'quotes';
     protected $fileSuffix = 'json';
 
+    //This is to allow for the data and key values to be separated
+    protected $keySeparator = '___';
+
     //This is when to consider a data file as stale and replace it (should not be an issue if the scheduler is running)
     //This is the time in seconds, so an hour is 3600
     protected $spotsStaleTime = 3600;
@@ -999,9 +1002,20 @@ EOF;
         $queryString = $query.$aclWhereOpps.$aclWhereQuotes.$aclWhereAccounts.$aclWhereContacts.$aclWhereProductQuotes.$aclWhereUsers.$aclWhereProductCategories.$aclWhereProducts;
         $result = $db->query($queryString);
 
+        global $app_list_strings;
+
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->LBL_AN_QUOTES_OPPORTUNITY_NAME = $row['opportunityName'];
+            //$x->LBL_AN_QUOTES_OPPORTUNITY_NAME = [$row['opportunityName'],$row['opportunityName']];
+            if($opps->field_defs['opportunity_type']['type'] === 'enum'){
+                $options = $opps->field_defs['opportunity_type']['options'];
+                $label = $app_list_strings[$options][$row['opportunityType']];
+                $x->LBL_AN_QUOTES_OPPORTUNITY_TYPE = $row['opportunityType'].$this->keySeparator.$label;
+            }else{
+                $x->LBL_AN_QUOTES_OPPORTUNITY_TYPE = $row['opportunityType'].$this->keySeparator.$row['opportunityType'];
+
+            }
+            /*
             $x->LBL_AN_QUOTES_OPPORTUNITY_TYPE = $row['opportunityType'];
             $x->LBL_AN_QUOTES_OPPORTUNITY_LEAD_SOURCE = $row['opportunityLeadSource'];
             $x->LBL_AN_QUOTES_OPPORTUNITY_SALES_STAGE = $row['opportunitySalesStage'];
@@ -1025,7 +1039,7 @@ EOF;
             $x->LBL_AN_QUOTES_MONTH_CREATED = $row['dateCreatedMonth'];
             $x->LBL_AN_QUOTES_QUARTER_CREATED = $row['dateCreatedQuarter'];
             $x->LBL_AN_QUOTES_YEAR_CREATED = $row['dateCreatedYear'];
-
+            */
             $returnArray[] = $x;
         }
         file_put_contents($filepath, json_encode($returnArray));

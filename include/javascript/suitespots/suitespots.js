@@ -676,14 +676,19 @@ c.hasArcType()&&c.expandArc(a),c.toggleFocusLegend(a,!0),c.focusedTargetIds=a,c.
         ref = this.colAttrs;
         for (l = 0, len1 = ref.length; l < len1; l++) {
           x = ref[l];
-          colKey.push((ref1 = record[x]) != null ? ref1 : "null");
+          var splitItems = record[x].split("___");
+          //colKey.push((ref1 = record[x]+"_COL") != null ? ref1 : "null");
+          colKey.push((ref1 = splitItems[1]) != null ? ref1 : "null");
         }
         ref2 = this.rowAttrs;
         for (n = 0, len2 = ref2.length; n < len2; n++) {
           x = ref2[n];
-          rowKey.push((ref3 = record[x]) != null ? ref3 : "null");
+          var splitItems = record[x].split("___");
+          //rowKey.push((ref3 = record[x]+"_ROW") != null ? ref3 : "null");
+          rowKey.push((ref3 = splitItems[1]) != null ? ref3 : "null");
         }
         flatRowKey = rowKey.join(String.fromCharCode(0));
+        //flatRowKey = rowKey[0][1];
         flatColKey = colKey.join(String.fromCharCode(0));
         this.allTotal.push(record);
         if (rowKey.length !== 0) {
@@ -1165,14 +1170,22 @@ c.hasArcType()&&c.expandArc(a),c.toggleFocusLegend(a,!0),c.focusedTargetIds=a,c.
               v = axisValues[c][k];
               filterItem = $("<label>");
               filterItemExcluded = false;
+
+              var keyValueSplit = k.split("___");
+
+
               if (opts.inclusions[c]) {
-                filterItemExcluded = (indexOf.call(opts.inclusions[c], k) < 0);
+                filterItemExcluded = (indexOf.call(opts.inclusions[c], keyValueSplit[0]) < 0);
               } else if (opts.exclusions[c]) {
-                filterItemExcluded = (indexOf.call(opts.exclusions[c], k) >= 0);
+                filterItemExcluded = (indexOf.call(opts.exclusions[c], keyValueSplit[0]) >= 0);
               }
               hasExcludedItem || (hasExcludedItem = filterItemExcluded);
+              //k is the display label for the data item (and c is the label key for the parent category)
+              //PG create a pseudo-key for testing
+              //var testKey = k+'1';
+              //$("<input>").attr("type", "checkbox").addClass('pvtFilter').attr("checked", !filterItemExcluded).data("filter", [c, k,testKey]).appendTo(filterItem);
               $("<input>").attr("type", "checkbox").addClass('pvtFilter').attr("checked", !filterItemExcluded).data("filter", [c, k]).appendTo(filterItem);
-              filterItem.append($("<span>").text(k));
+              filterItem.append($("<span>").text(keyValueSplit[1]));
               filterItem.append($("<span>").text(" (" + v + ")"));
               checkContainer.append($("<p>").append(filterItem));
             }
@@ -1314,10 +1327,11 @@ c.hasArcType()&&c.expandArc(a),c.toggleFocusLegend(a,!0),c.focusedTargetIds=a,c.
             _this.find('input.pvtFilter').not(':checked').each(function() {
               var filter;
               filter = $(this).data("filter");
+              var filterParts = filter[1].split("___");
               if (exclusions[filter[0]] != null) {
-                return exclusions[filter[0]].push(filter[1]);
+                return exclusions[filter[0]].push(filterParts[0]);
               } else {
-                return exclusions[filter[0]] = [filter[1]];
+                return exclusions[filter[0]] = [filterParts[0]];
               }
             });
             inclusions = {};
@@ -1326,9 +1340,9 @@ c.hasArcType()&&c.expandArc(a),c.toggleFocusLegend(a,!0),c.focusedTargetIds=a,c.
               filter = $(this).data("filter");
               if (exclusions[filter[0]] != null) {
                 if (inclusions[filter[0]] != null) {
-                  return inclusions[filter[0]].push(filter[1]);
+                  return inclusions[filter[0]].push(filter[2]);
                 } else {
-                  return inclusions[filter[0]] = [filter[1]];
+                  return inclusions[filter[0]] = [filter[2]];
                 }
               }
             });
@@ -1339,7 +1353,9 @@ c.hasArcType()&&c.expandArc(a),c.toggleFocusLegend(a,!0),c.focusedTargetIds=a,c.
               }
               for (k in exclusions) {
                 excludedItems = exclusions[k];
-                if (ref7 = "" + record[k], indexOf.call(excludedItems, ref7) >= 0) {
+                //var keyValueSplit = k.split("___");
+                //http://stackoverflow.com/a/5348007
+                if (ref7 = "" + record[k].split("___")[0], indexOf.call(excludedItems, ref7) >= 0) {
                   return false;
                 }
               }
