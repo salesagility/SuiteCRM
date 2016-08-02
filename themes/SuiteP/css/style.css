@@ -2330,12 +2330,30 @@ div#content p.error {
     padding-right: 10px;
 }
 
+
+
+table.dateTime {
+    width: 100%;
+}
+
+.dateTime td {
+    display: block;
+}
+
 .dateFormat {
     font-weight: normal;
     font-style: italic;
 }
 
-.pageNumbers, .subpanel-table .pageNumbers{
+#parent_name, input.sqsEnabled {
+    display: block;
+    clear: both;
+    margin-top: 8px;
+    width: 50%;
+}
+
+.pageNumbers {
+    color: white;
     font-weight: bold;
     margin: 0 8px 0 8px;
     padding: 0 8px 0 8px;
@@ -3372,9 +3390,7 @@ ul.nav-tabs > li:first-of-type > a:hover {
     margin: 0 2px 0 0;
 }
 
-ul.nav-tabs > li:only-child {
-    float: right;
-}
+
 
 ul.nav-tabs > li > a:hover {
     background-color: #BFCAD3;
@@ -4500,7 +4516,7 @@ input#btn_ActionLine.button[type="button"] {
 }
 
 .col-sm-6 .edit-view-field input[type="text"] {
-    width: 50% !important;
+    width: 50%;
 }
 
 
@@ -4665,10 +4681,6 @@ table#lineItems tr td table thead tr td table tbody tr td {
     #wizform #wizard {
         width: 900px;
     }
-}
-
-input[type="text"].sqsEnabled {
-    width: 30% !important;
 }
 
 textarea#billing_address_street, textarea#shipping_address_street {
