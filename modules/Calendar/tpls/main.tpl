@@ -268,13 +268,13 @@ YAHOO.util.Event.onDOMReady(function(){
 
 
 
-<link type="text/css" href="{sugar_getjspath file="modules/Calendar/fullcalendar-2.3.2/fullcalendar.css"}" rel="stylesheet" />
-<link type="text/css" href="{sugar_getjspath file="modules/Calendar/fullcalendar-2.3.2/fullcalendar.print.css"}" media='print' rel="stylesheet" />
+<link type="text/css" href="{sugar_getjspath file="modules/Calendar/fullcalendar/fullcalendar.css"}" rel="stylesheet" />
+<link type="text/css" href="{sugar_getjspath file="modules/Calendar/fullcalendar/fullcalendar.print.css"}" media='print' rel="stylesheet" />
 
 <script src='{sugar_getjspath file="include/javascript/qtip/jquery.qtip.min.js"}'></script>
-<script src='{sugar_getjspath file="modules/Calendar/fullcalendar-2.3.2/lib/moment.min.js"}'></script>
-<script src='{sugar_getjspath file="modules/Calendar/fullcalendar-2.3.2/fullcalendar.min.js"}'></script>
-<script src='{sugar_getjspath file="modules/Calendar/fullcalendar-2.3.2/lang-all.js"}'></script>
+<script src='{sugar_getjspath file="modules/Calendar/fullcalendar/lib/moment.min.js"}'></script>
+<script src='{sugar_getjspath file="modules/Calendar/fullcalendar/fullcalendar.min.js"}'></script>
+<script src='{sugar_getjspath file="modules/Calendar/fullcalendar/lang-all.js"}'></script>
 
 <div class='monthCalBody'><h5 class='calSharedUser' id='user_name1'></h5></div>
 <div id='calendar1'></div>
