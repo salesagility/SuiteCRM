@@ -32,8 +32,6 @@ $theme_path = "themes/".$theme."/";
 $image_path = $theme_path."images/";
 
 
-require_once($theme_path.'layout_utils.php');
-
 $focus = new Administration();
 $focus->retrieveSettings(); //retrieve all admin settings.
 $GLOBALS['log']->info("SecuritySuite Configure Settings view");
