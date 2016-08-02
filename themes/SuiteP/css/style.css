@@ -8609,9 +8609,16 @@ table tr#delegates_search {
     width: 100%;
 }
 
-#wizform .other.view td:nth-of-type(1) {
-    width: initial;
+#wizform .other.view td:nth-of-type(1),
+#wizform .other.view td:nth-of-type(2),
+#wizform .other.view td {
+    display: table-cell;
+    float: none;
+    width: auto;
     background: none;
+}
+#wizform .other.view td {
+    height: auto;
 }
 
 /* campaign wizard home start page */
@@ -8733,6 +8740,10 @@ table tr#delegates_search {
     width: 100%;
 }
 
+#wizform .wizard-box span.helpmsg {
+    bottom: -36px;
+}
+
 /* summary page */
 
 #wizform #target_message br,
@@ -8746,9 +8757,147 @@ table tr#delegates_search {
     display: none;
 }
 
-#wizform #step3 ul li {
+#wizform #step3 ul li.li-tick,
+#wizform #step3 ul li.li-cross {
     margin-left: 50px;
 }
 #wizform #step3 .button-group a.btn img {
     margin-top: 0px;
+}
+
+/* non-email campaign / budget page */
+
+#wizform #wizard #step2 .other.view td:nth-of-type(1),
+#wizform #wizard #step2 .other.view td:nth-of-type(2) {
+    display: table-cell;
+    float: none;
+}
+#wizform #wizard #step2 table tr td {
+    width: auto;
+    display: table-cell;
+    float: none;
+}
+
+/* desktop / tablet / mobile fix */
+
+@media (max-width: 1024px) {
+
+    #wizform table.other.view tr td.edit.view table tr td input,
+    #wizform table.other.view tr td.edit.view table tr td textarea {
+        max-width: 355px;
+    }
+
+    @media (max-width: 980px) {
+
+        #wizform table.other.view tr td.edit.view table tr td {
+            display: block;
+            float: left;
+        }
+        #wizform table.other.view tr td.edit.view table tr td:nth-of-type(odd) {
+            min-width: 300px;
+            max-width: 300px;
+            width: 300px;
+        }
+        #wizform table.other.view tr td.edit.view table tr td:nth-of-type(even) {
+            min-width: 500px;
+            max-width: 500px;
+            width: 500px;
+        }
+
+        /* a common fix */
+
+        #wizform .edit tr {
+            border-bottom: none;
+        }
+
+        /* Subscriptions fix */
+
+        #wizform #wizard #step2 table tr td {
+            float: left;
+        }
+
+        #wizform #wizard #step2 table tr th h4,
+        #wizform #wizard #step2 table tr td h4{
+            max-width: 255px;
+        }
+
+        /* marketing fix */
+
+        #wizform table.other.view tr td #wizard #step2 table {
+            background: none;
+        }
+        #wizform table.other.view tr td #wizard #step2 table.edit.view tr td {
+            display: block;
+            float: left;
+        }
+        #wizform table.other.view tr td #wizard #step2 table.edit.view tr td:nth-of-type(odd) {
+            min-width: 300px;
+            max-width: 300px;
+            width: 300px;
+        }
+        #wizform table.other.view tr td #wizard #step2 table.edit.view tr td:nth-of-type(even) {
+            min-width: 500px;
+            max-width: 500px;
+            width: 500px;
+        }
+
+        /* Target List fix */
+
+        #wizform table.other.view tr td.edit.view #wizard #step2 .row .col-xs-12.col-sm-4 {
+            width: auto;
+        }
+
+        #wizform table.other.view tr td.edit.view #wizard #step2 table.detail.view tr td table tr.detail.view td,
+        #wizform table.other.view tr td.edit.view #wizard #step2 table.detail.view tr td table tr.detail.view th {
+            float: left;
+        }
+        #wizform table.other.view tr td.edit.view #wizard #step2 .target-list-table {
+            min-width: 335px;
+        }
+
+        @media (max-width: 480px) {
+            #wizform table.other.view tr td.edit.view table tr td input,
+            #wizform table.other.view tr td.edit.view table tr td textarea {
+                max-width: 255px;
+            }
+
+            #wizform .wizard-box {
+                width: auto;
+                min-width: 0px;
+            }
+
+            /* target-list fix */
+
+            #wizform table.other.view tr td.edit.view #wizard #step2 .target-list-table {
+                min-width: 255px;
+            }
+
+        }
+
+    }
+
+}
+
+/* align quote lines */
+
+@media (max-width: 1700px) {
+
+    #product_head {
+        display: none;
+    }
+    #service_head {
+        display: none;
+    }
+
+    table#lineItems table tr td table tbody tr td span.hidden.alignedLabel {
+        display: inline!important;
+    }
+
+    table#lineItems tr td table thead tr td table tbody tr td {
+        display: block;
+        float: left;
+    }
+
+
+
 }
