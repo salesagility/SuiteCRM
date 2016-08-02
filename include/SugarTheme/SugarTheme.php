@@ -711,6 +711,7 @@ EOHTML;
      * @return string HTML image tag or sprite
      */
     public function getImage($imageName, $other_attributes = '', $width = null, $height = null, $ext = null, $alt = '') {
+        $imgPath = SugarThemeRegistry::current()->getImagePath();
         static $cached_results = array();
 
 		// trap deprecated use of image extension
