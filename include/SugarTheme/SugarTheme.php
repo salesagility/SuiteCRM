@@ -710,15 +710,7 @@ EOHTML;
      * @param  string $alt optional, only used when image contains something useful, i.e. "Sally's profile pic"
      * @return string HTML image tag or sprite
      */
-    public function getImage(
-        $imageName,
-        $other_attributes = '',
-		$width = null,
-		$height = null,
-		$ext = null,
-        $alt = ''
-    )
-    {
+    public function getImage($imageName, $other_attributes = '', $width = null, $height = null, $ext = null, $alt = '') {
         static $cached_results = array();
 
 		// trap deprecated use of image extension
