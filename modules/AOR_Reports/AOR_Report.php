@@ -692,14 +692,14 @@ class AOR_Report extends Basic {
             foreach($fields as $name => $att){
                 if($att['display']){
                     $html .= "<td class='' valign='top' align='left'>";
-                    if($att['link'] && $links){
+                    if(!empty($att['link']) && $links){
                         if(
                             !empty(array_key_exists($att['field'], $field_bean->field_name_map)) AND
                             !empty($field_bean->field_name_map[$field->field]['type']) AND
                             $field_bean->field_name_map[$att['field']]['type'] == 'relate' AND
                             $field_bean->field_name_map[$att['field']]['source'] == 'non-db'
                         ) {
-                            $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$field_bean->field_name_map[$field->field]['module']."&action=DetailView&record=".$row[$name]."'>";
+                            $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$field_bean->field_name_map[$att['field']]['module']."&action=DetailView&record=".$row[$name]."'>";
                         }
                         else {
                             $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$att['module']."&action=DetailView&record=".$row[$att['alias'].'_id']."'>";
