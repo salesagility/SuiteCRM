@@ -4876,6 +4876,13 @@ object{
 /* report layout */
 #report-editview-footer {width: 70%; float: left;}
 
+#detailpanel_fields,
+#detailpanel_conditions,
+#detailpanel_charts {
+    border-top: 1px solid lightgray;
+}
+
+
 #detailpanel_fields_select {float: left; width: 20%; height: 640px; overflow-y: auto; margin-right: 20px;}
 .aor_dragbox {height: 250px; overflow: scroll;}
 #report-editview-footer .tab-togglers {width: 80%;}
@@ -5173,6 +5180,18 @@ div.target-list-table {
     padding: 10px;
 }
 
+table tr#delegates_search {
+    background:#FAFAFA !important;
+}
+
+/* fix schedule bar popup on calendar */
+.ui-front, .ui-dialog {
+    z-index: 1100 !important;
+}
+
+.panel-heading {
+    padding-bottom: 25px;
+}
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */

@@ -2318,6 +2318,14 @@ function getImagePath($image_name)
 
 function getWebPath($relative_path)
 {
+    $current_theme = SugarThemeRegistry::current();
+    $theme_directory = $current_theme->dirName;
+    if(strpos($relative_path, "themes".DIRECTORY_SEPARATOR.$theme_directory) === false) {
+        $test_path = SUGAR_PATH.DIRECTORY_SEPARATOR."themes".DIRECTORY_SEPARATOR.$theme_directory.DIRECTORY_SEPARATOR.$relative_path;
+        if(file_exists($test_path)) {
+            $resource_name = "themes".DIRECTORY_SEPARATOR.$theme_directory.DIRECTORY_SEPARATOR.$relative_path;
+        }
+    }
     //if it has  a :// then it isn't a relative path
     if (substr_count($relative_path, '://') > 0) {
         return $relative_path;
@@ -5299,7 +5307,7 @@ function assignConcatenatedValue(SugarBean $bean, $fieldDef, $value)
  */
 function sugar_unserialize($value)
 {
-    preg_match('/[oc]:\d+:/i', $value, $matches);
+    preg_match('/[oc]:[^:]*\d+:/i', $value, $matches);
 
     if (count($matches)) {
         return false;

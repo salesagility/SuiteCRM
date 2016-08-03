@@ -206,10 +206,10 @@ function select_targets(){
 
     htmltext = "<table style='width: 100%;text-align:left;'>";
 
-    htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='custom/themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><b><a href='#' onclick='handle_targetlists();return false;'>"+SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_TARGET_LIST')+"</a></b><td></tr>";
-    htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='custom/themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><strong><a href='#' onclick='handle_targets();return false;'>"+SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_TARGETS')+"</a></strong><td></tr>";
-    htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='custom/themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><strong><a href='#' onclick='handle_contacts();return false;'>"+SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_CONTACTS')+"</a></strong><td></tr>";
-    htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='custom/themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><strong><a href='#' onclick='handle_leads();return false;'>"+SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_LEADS')+"</a></strong><td></tr>";
+    htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><b><a href='#' onclick='handle_targetlists();return false;'>"+SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_TARGET_LIST')+"</a></b><td></tr>";
+    htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><strong><a href='#' onclick='handle_targets();return false;'>"+SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_TARGETS')+"</a></strong><td></tr>";
+    htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><strong><a href='#' onclick='handle_contacts();return false;'>"+SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_CONTACTS')+"</a></strong><td></tr>";
+    htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><strong><a href='#' onclick='handle_leads();return false;'>"+SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_LEADS')+"</a></strong><td></tr>";
 
     htmltext += "</table>";
     //initialise dialog       
@@ -275,10 +275,10 @@ function manage_delegates(){
         htmltext = "<div id='no_check' style='display:none;color:#FF0000;' >"+SUGAR.language.get('FP_events', 'LBL_MANAGE_POPUP_ERROR')+"</div>";
 
         htmltext += "<table style='width: 100%;text-align:left;'>";
-        htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='custom/themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><b><a href='#' onclick='handle_invited();return false;'>"+SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES_INVITED')+"</a></b><td></tr>";
-        htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='custom/themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><strong><a href='#' onclick='handle_not_invited();return false;'>"+SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES_NOT_INVITED')+"</a></strong><td></tr>";
-        htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='custom/themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><strong><a href='#' onclick='handle_attended();return false;'>"+SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES_ATTENDED')+"</a></strong><td></tr>";
-        htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='custom/themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><strong><a href='#' onclick='handle_not_attended();return false;'>"+SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES_NOT_ATTENDED')+"</a></strong><td></tr>";
+        htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><b><a href='#' onclick='handle_invited();return false;'>"+SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES_INVITED')+"</a></b><td></tr>";
+        htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><strong><a href='#' onclick='handle_not_invited();return false;'>"+SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES_NOT_INVITED')+"</a></strong><td></tr>";
+        htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><strong><a href='#' onclick='handle_attended();return false;'>"+SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES_ATTENDED')+"</a></strong><td></tr>";
+        htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><strong><a href='#' onclick='handle_not_attended();return false;'>"+SUGAR.language.get('FP_events', 'LBL_MANAGE_DELEGATES_NOT_ATTENDED')+"</a></strong><td></tr>";
 
         htmltext += "</table>";
         //initialise dialog       
@@ -467,8 +467,8 @@ function manage_acceptances(){
 
         htmltext += "<table style='width: 100%;text-align:left;'>";
         //ID's from removed buttons now applied to links in this pop-up example : #MarkAsAcceptedForm
-        htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='custom/themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><b><a id='MarkAsAcceptedForm' onclick='handle_accepted();return false;' href='#'>"+SUGAR.language.get('FP_events', 'LBL_MANAGE_ACCEPTANCES_ACCEPTED')+"</a></b><td></tr>";
-        htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='custom/themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><strong><a id='MarkAsDeclinedForm' onclick='handle_declined();return false;' href='#'>"+SUGAR.language.get('FP_events', 'LBL_MANAGE_ACCEPTANCES_DECLINED')+"</a></strong><td></tr>";
+        htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><b><a id='MarkAsAcceptedForm' onclick='handle_accepted();return false;' href='#'>"+SUGAR.language.get('FP_events', 'LBL_MANAGE_ACCEPTANCES_ACCEPTED')+"</a></b><td></tr>";
+        htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><strong><a id='MarkAsDeclinedForm' onclick='handle_declined();return false;' href='#'>"+SUGAR.language.get('FP_events', 'LBL_MANAGE_ACCEPTANCES_DECLINED')+"</a></strong><td></tr>";
         
         htmltext += "</table>";
         //initialise dialog       

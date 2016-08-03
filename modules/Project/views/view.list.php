@@ -87,7 +87,7 @@ class ProjectViewList extends ViewList{
 
         if(empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false)
         {
-            $this->lv->setup($this->seed, 'include/ListView/ListViewGeneric.tpl', $this->where, $this->params);
+            $this->lv->setup($this->seed, 'modules/Project/tpls/ListViewGeneric.tpl', $this->where, $this->params);
             $savedSearchName = empty($_REQUEST['saved_search_select_name']) ? '' : (' - ' . $_REQUEST['saved_search_select_name']);
             echo $this->lv->display();
         }

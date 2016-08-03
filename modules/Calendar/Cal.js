@@ -1,37 +1,4 @@
-/*********************************************************************************
- * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License version 3 as published by the
- * Free Software Foundation with the addition of the following permission added
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
- * details.
- *
- * You should have received a copy of the GNU Affero General Public License along with
- * this program; if not, see http://www.gnu.org/licenses or write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- *
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- *
- * The interactive user interfaces in modified source and object code versions
- * of this program must display Appropriate Legal Notices, as required under
- * Section 5 of the GNU Affero General Public License version 3.
- *
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
- * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
+
 var CAL = {};
 CAL.slot_height = 14;
 CAL.dropped = 0;
@@ -57,449 +24,8 @@ CAL.print = false;
 CAL.dom = YAHOO.util.Dom;
 CAL.get = YAHOO.util.Dom.get;
 CAL.query = YAHOO.util.Selector.query;
-CAL.arrange_slot = function (cell_id) {
-    if (!cell_id)
-        return;
-    cellElm = document.getElementById(cell_id);
-    if (cellElm) {
-        var total_height = 0;
-        var prev_i = 0;
-        var first = 1;
-        var top = 0;
-        var height = 0;
-        var cnt = 0;
-        var child_cnt = cellElm.childNodes.length;
-        for (var i = 0; i < child_cnt; i++) {
-            var width_p = (92 / child_cnt);
-            width = width_p.toString() + "%";
-            if (cellElm.childNodes[i].tagName == "DIV") {
-                cellElm.childNodes[i].style.top = "-1px";
-                cellElm.childNodes[i].style.left = "-" + (cnt + 1) + "px";
-                cellElm.childNodes[i].style.width = width
-                cnt++;
-                prev_i = i;
-            }
-        }
-    }
-}
-CAL.arrange_column = function (column) {
-    for (var i = 0; i < column.childNodes.length; i++) {
-        for (var j = 0; j < column.childNodes[i].childNodes.length; j++) {
-            var el = column.childNodes[i].childNodes[j];
-            if (YAHOO.util.Dom.hasClass(el, "empty")) {
-                el.parentNode.removeChild(el);
-                j--;
-            }
-        }
-    }
-    var slots = column.childNodes;
-    var start = 0;
-    var end = slots.length;
-    var slot_count = end;
-    var level = 0;
-    var affected_slots = new Array();
-    var affected_items = Array();
-    var ol = new Array();
-    find_overlapping(null, start, end, level, null);
-    for (var i = 0; i < ol.length; i++) {
-        var ol_group = ol[i];
-        var depth = ol_group.depth;
-        for (var j = 0; j < ol_group.items.length; j++) {
-            var el_id = ol_group.items[j]['id'];
-            var level = ol_group.items[j]['level'];
-            var el = CAL.get(el_id);
-            var node = el;
-            var pos = 0;
-            while (node.previousSibling) {
-                pos++;
-                node = node.previousSibling;
-            }
-            insert_empty_items(el, level - 1 - pos, false);
-        }
-    }
-    for (var i = 0; i < ol.length; i++) {
-        var ol_group = ol[i];
-        var depth = ol_group.depth;
-        for (var j = 0; j < ol_group.items.length; j++) {
-            var el_id = ol_group.items[j]['id'];
-            var el = CAL.get(el_id);
-            var cnt = el.parentNode.childNodes.length;
-            insert_empty_items(el, depth - cnt, true);
-        }
-    }
-    CAL.each(affected_slots, function (i, v) {
-        CAL.arrange_slot(affected_slots[i]);
-    });
-    function find_overlapping(el, start, end, level, ol_group) {
-        if (level > 20)
-            return;
-        var depth = level;
-        if (el != null) {
-            if (level == 1) {
-                ol_group = {};
-                ol_group.items = new Array();
-            }
-            ol_group.items.push({id: el.id, level: level});
-            affected_items.push(el.id);
-        }
-        for (var i = start; i < end; i++) {
-            if (i >= slot_count)
-                break;
-            if (typeof slots[i].childNodes != 'undefined' && typeof slots[i].childNodes[0] != 'undefined') {
-                var pos = 0;
-                if (i == start) {
-                    var node = slots[i].childNodes[0];
-                    while (node.nextSibling && CAL.contains(affected_items, node.id)) {
-                        node = node.nextSibling;
-                        pos++;
-                    }
-                }
-                var current = slots[i].childNodes[pos];
-                var slots_takes = parseInt(current.getAttribute('duration_coef'));
-                if (CAL.contains(affected_items, current.id))
-                    continue;
-                if (pos == 0) {
-                    var slot_id = current.parentNode.id;
-                    if (!CAL.contains(affected_slots, slot_id))
-                        affected_slots.push(slot_id);
-                }
-                if (slots_takes > 0) {
-                    var k = find_overlapping(current, i, i + slots_takes, level + 1, ol_group);
-                    if (k > depth)
-                        depth = k;
-                }
-            }
-        }
-        if (level == 1) {
-            ol_group.depth = depth;
-            ol.push(ol_group);
-        }
-        return depth;
-    }
 
-    function insert_empty_items(el, count, to_end) {
-        var slot = el.parentNode;
-        for (var i = 0; i < count; i++) {
-            var empty = document.createElement("div");
-            empty.className = "act_item empty";
-            empty.style.zIndex = "-1";
-            empty.style.width = "1px";
-            if (to_end == true) {
-                slot.appendChild(empty);
-            } else {
-                slot.insertBefore(empty, slot.firstChild);
-            }
-        }
-    }
-}
-CAL.arrange_advanced = function () {
-    var nodes = CAL.query("#cal-grid .col");
-    for (var i = 0; i < nodes.length; i++) {
-        CAL.arrange_column(nodes[i]);
-    }
-    CAL.update_dd.fire();
-}
-CAL.create_item = function (params) {
-    var item = params.item;
-    var id = params.id + params.id_suffix;
-    var el = document.createElement("div");
-    var elHead = document.createElement("div");
-    elHead.setAttribute("class", "head");
-    var elHeadInfo = document.createElement("div");
-    elHeadInfo.setAttribute("class", "adicon");
-    elHeadInfo.setAttribute("id", "div_" + id);
-    var params_click = new Object();
-    params_click.id = id;
-    YAHOO.util.Event.on(elHeadInfo, "click", function (e) {
-        YAHOO.util.Event.stopPropagation(e);
-        CAL.show_additional_details(params_click.id);
-    }, params_click);
-    var head_text = document.createElement("div");
-    head_text.innerHTML = params.head_text;
-    elHead.appendChild(elHeadInfo);
-    elHead.appendChild(head_text);
-    el.appendChild(elHead);
-    if (params.type == "advanced") {
-        var elContent = document.createElement("div");
-        elContent.setAttribute("class", "content");
-        if (params.content_style != "") {
-            elContent.style[params.content_style] = params.content_style_value;
-        }
-        elContent.innerHTML = params.item_text;
-        el.appendChild(elContent);
-        var related_to = document.createElement("div");
-        related_to.setAttribute("class", "content");
-        if (params.content_style != "") {
-            related_to.style[params.content_style] = params.content_style_value;
-        }
-        if (params.related_to) {
-            related_to.innerHTML = params.related_to;
-        }
-        el.appendChild(related_to);
-    }
-    el.setAttribute("id", id);
-    el.className = "act_item" + " " + item.type + "_item";
-    el.style.backgroundColor = CAL.activity_colors[item.module_name]['body'];
-    el.style.borderColor = CAL.activity_colors[item.module_name]['border'];
-    el.setAttribute("record", params.id);
-    el.setAttribute("module_name", item.module_name);
-    el.setAttribute("record", item.record);
-    el.setAttribute("status", item.status);
-    el.setAttribute("detail", item.detail);
-    el.setAttribute("edit", item.edit);
-    if (typeof item.repeat_parent_id != "undefined" && item.repeat_parent_id != "")
-        el.setAttribute("repeat_parent_id", item.repeat_parent_id);
-    if (params.type == "basic") {
-        el.style.left = "-1px";
-        el.style.display = "block";
-        el.setAttribute("days", params.days);
-        el.style.width = ((params.days) * 100) + "%";
-        el.style.top = parseInt(params.position * CAL.slot_height - params.slot.childNodes.length * (CAL.slot_height + 1)) + "px";
-    } else {
-        el.style.height = parseInt((CAL.slot_height + 1) * params.duration_coef - 1) + "px";
-        el.setAttribute("duration_coef", params.duration_coef);
-    }
-    YAHOO.util.Event.on(el, "mouseover", function () {
-        if (!CAL.records_openable)
-            return;
-        CAL.disable_creating = true;
-        var e;
-        if (e = CAL.get(el.id))
-            e.style.zIndex = 2;
-    });
-    YAHOO.util.Event.on(el, "mouseout", function (event) {
-        if (!CAL.records_openable)
-            return;
-        var node = event.toElement || event.relatedTarget;
-        var i = 3;
-        while (i > 0) {
-            if (node == this)
-                return; else
-                node = node.parentNode;
-            i--;
-        }
-        CAL.get(el.id).style.zIndex = '';
-        CAL.disable_creating = false;
-    });
-    CAL.clear_additional_details(params.id);
-    return el;
-}
-CAL.make_draggable = function (id, type) {
-    var border;
-    var prefix;
-    var id_prefix;
-    border = "cal-grid";
-    if (type == "basic") {
-        if (CAL.view != "month" && CAL.view != "shared")
-            border = "cal-multiday-bar";
-        prefix = "basic_";
-        id_prefix = "b_";
-    } else {
-        if (CAL.view != "month")
-            border = "cal-scrollable";
-        prefix = "";
-        id_prefix = "t_";
-    }
-    var dd = new YAHOO.util.DDCAL(id, prefix + "cal", {isTarget: false, cont: border});
-    CAL.dd_registry[id] = dd;
-    dd.onInvalidDrop = function (e) {
-        if (type == "basic") {
-            CAL.basic.populate_grid();
-            CAL.fit_grid();
-        } else {
-            CAL.arrange_slot(this.el.parentNode.getAttribute("id"));
-            if (CAL.dropped == 0) {
-                this.el.childNodes[0].innerHTML = CAL.tmp_header;
-            }
-        }
-        CAL.records_openable = true;
-        CAL.disable_creating = false;
-    }
-    dd.onMouseDown = function (e) {
-        YAHOO.util.DDM.mode = YAHOO.util.DDM.POINT;
-        YAHOO.util.DDM.clickPixelThresh = 20;
-    }
-    dd.onMouseUp = function (e) {
-        YAHOO.util.DDM.mode = YAHOO.util.DDM.INTERSECT;
-        YAHOO.util.DDM.clickPixelThresh = 3;
-    }
-    dd.startDrag = function (x, y) {
-        this.el = document.getElementById(this.id);
-        this.el.style.zIndex = 5;
-        CAL.dropped = 0;
-        CAL.records_openable = false;
-        CAL.disable_creating = true;
-        CAL.tmp_header = this.el.childNodes[0].innerHTML;
-        CAL.moved_from_cell = this.el.parentNode.id;
-        this.setDelta(2, 2);
-    }
-    dd.endDrag = function (x, y) {
-        this.el = document.getElementById(this.id);
-        this.el.style.zIndex = "";
-        var nodes = CAL.query("#cal-grid div." + prefix + "slot");
-        CAL.each(nodes, function (i, v) {
-            YAHOO.util.Dom.removeClass(nodes[i], "slot_active");
-        });
-    }
-    dd.onDragDrop = function (e, id) {
-        var slot = document.getElementById(id);
-        YAHOO.util.Dom.removeClass(slot, "slot_active");
-        if (CAL.dropped)
-            return;
-        CAL.dropped = 1;
-        this.el.style.position = "relative";
-        this.el.style.cssFloat = "none";
-        if (type == "advanced") {
-            if (CAL.view != 'shared') {
-                var box_id = this.id;
-                var slot_id = id;
-                var ex_slot_id = CAL.moved_from_cell;
-                CAL.move_activity(box_id, slot_id, ex_slot_id);
-            } else {
-                var record = this.el.getAttribute("record");
-                var tid = id;
-                var tar = tid.split("_");
-                var timestamp = tar[1];
-                var tid = CAL.moved_from_cell;
-                var tar = tid.split("_");
-                var ex_timestamp = tar[1];
-                for (i = 0; i < CAL.shared_users_count; i++) {
-                    var box_id = record + "____" + i;
-                    var slot_id = id_prefix + timestamp + "_" + i;
-                    var ex_slot_id = id_prefix + ex_timestamp + "_" + i;
-                    CAL.move_activity(box_id, slot_id, ex_slot_id);
-                }
-            }
-        }
-        var callback = {
-            success: function (o) {
-                try {
-                    res = eval("(" + o.responseText + ")");
-                } catch (err) {
-                    alert(CAL.lbl_error_saving);
-                    ajaxStatus.hideStatus();
-                    return;
-                }
-                if (res.access == 'yes') {
-                    CAL.add_item(res);
-                    CAL.disable_creating = false;
-                    CAL.records_openable = true;
-                    CAL.update_vcal();
-                    ajaxStatus.hideStatus();
-                } else {
-                    if (res.errorMessage != 'undefined') {
-                        alert(res.errorMessage);
-                    }
-                    CAL.refresh();
-                    ajaxStatus.hideStatus();
-                }
-            }
-        };
-        ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_SAVING'));
-        var url = "index.php?module=Calendar&action=Reschedule&sugar_body_only=true";
-        var data = {
-            "current_module": this.el.getAttribute("module_name"),
-            "record": this.el.getAttribute("record"),
-            "datetime": slot.getAttribute("datetime"),
-            "calendar_style": type
-        };
-        YAHOO.util.Connect.asyncRequest('POST', url, callback, CAL.toURI(data));
-        YAHOO.util.Dom.removeClass(slot, "slot_active");
-    }
-    dd.onDragOver = function (e, id) {
-        var slot = document.getElementById(id);
-        if (!YAHOO.util.Dom.hasClass(slot, "slot_active"))
-            YAHOO.util.Dom.addClass(slot, "slot_active");
-        if (type == "advanced")
-            this.el.childNodes[0].childNodes[1].childNodes[0].innerHTML = slot.getAttribute('time');
-    }
-    dd.onDragOut = function (e, id) {
-        var slot = document.getElementById(id);
-        YAHOO.util.Dom.removeClass(slot, "slot_active");
-    }
-}
-CAL.make_resizable = function (id, slot) {
-    var pos = 0, e = slot;
-    while (e = e.previousSibling) {
-        pos++;
-    }
-    var max_height = (CAL.cells_per_day - pos) * (CAL.slot_height + 1) - 1;
-    var old_width;
-    var resize = new YAHOO.util.Resize(id, {handles: ['b'], maxHeight: max_height});
-    CAL.resize_registry[id] = resize;
-    resize.on('startResize', function (e) {
-        var el = CAL.get(id);
-        if (el) {
-            el.style.zIndex = 3;
-        }
-        CAL.records_openable = false;
-        CAL.disable_creating = true;
-    });
-    resize.on('endResize', function (e) {
-        elm_id = id;
-        var duration = e.height / (CAL.slot_height + 1) * CAL.t_step;
-        var remainder = duration % 15;
-        if (remainder > 7.5)
-            remainder = (-1) * (15 - remainder);
-        duration = duration - remainder;
-        var duration_hours = parseInt(duration / 60);
-        var duration_minutes = duration % 60;
-        var new_size = (duration / CAL.t_step) * (CAL.slot_height + 1) - 1;
-        var el = CAL.get(elm_id);
-        if (el) {
-            el.style.zIndex = '';
-            el.style.height = new_size + "px";
-            CAL.arrange_slot(slot.id);
-            var nodes = CAL.query("#cal-grid div.act_item");
-            CAL.each(nodes, function (i, v) {
-                nodes[i].style.zIndex = '';
-            });
-            var duration_coef = duration / CAL.t_step;
-            el.setAttribute("duration_coef", duration_coef);
-            if (duration_coef < 1.75) {
-                el.childNodes[1].style.display = "none";
-                if (el.childNodes[2]) {
-                    el.childNodes[2].style.display = "none";
-                }
-            }
-            else {
-                el.childNodes[1].style.display = "";
-                if (el.childNodes[2]) {
-                    el.childNodes[2].style.display = "";
-                }
-            }
-            var callback = {
-                success: function (o) {
-                    try {
-                        res = eval("(" + o.responseText + ")");
-                    } catch (err) {
-                        alert(CAL.lbl_error_saving);
-                        ajaxStatus.hideStatus();
-                        return;
-                    }
-                    if (res.access == 'yes') {
-                        CAL.update_vcal();
-                        CAL.clear_additional_details(el.getAttribute("record"));
-                        CAL.arrange_column(slot.parentNode);
-                        CAL.update_dd.fire();
-                        ajaxStatus.hideStatus();
-                        CAL.disable_creating = false;
-                        CAL.records_openable = true;
-                    }
-                }
-            };
-            ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_SAVING'));
-            var url = "index.php?module=Calendar&action=Resize&sugar_body_only=true";
-            var data = {
-                "current_module": el.getAttribute("module_name"),
-                "record": el.getAttribute("record"),
-                "duration_hours": duration_hours,
-                "duration_minutes": duration_minutes
-            };
-            YAHOO.util.Connect.asyncRequest('POST', url, callback, CAL.toURI(data));
-        }
-    });
-}
+
 CAL.destroy_ui = function (id) {
     if (CAL.items_resizable && typeof CAL.resize_registry[id] != "undefined") {
         CAL.resize_registry[id].destroy();
@@ -509,284 +35,27 @@ CAL.destroy_ui = function (id) {
         CAL.dd_registry[id].unreg();
     delete CAL.dd_registry[id];
 }
+
 CAL.basic.remove = function (item) {
     if (typeof CAL.basic.items[item.user_id] == 'undefined')
         CAL.basic.items[item.user_id] = new Object();
     delete CAL.basic.items[item.user_id][item.record];
 }
+
 CAL.basic.add = function (item) {
     if (typeof CAL.basic.items[item.user_id] == 'undefined')
         CAL.basic.items[item.user_id] = new Object();
     CAL.basic.items[item.user_id][item.record] = item;
 }
-CAL.basic.populate_grid = function () {
-    var nodes = CAL.query("#cal-grid .cal-basic .col .act_item");
-    CAL.each(nodes, function (i, v) {
-        nodes[i].parentNode.removeChild(nodes[i]);
-    });
-    var users_arr = new Array();
-    if (CAL.view != "shared") {
-        users_arr.push(CAL.current_user_id);
-    } else {
-        CAL.each(CAL.shared_users, function (i, v) {
-            users_arr.push(i);
-        });
-    }
-    for (ui = 0; ui < users_arr.length; ui++) {
-        var user_id = users_arr[ui];
-        suffix = "";
-        id_suffix = "";
-        if (CAL.view == 'shared') {
-            suffix = "_" + CAL.shared_users[user_id];
-            id_suffix = '____' + CAL.shared_users[user_id];
-        }
-        var step = 7;
-        if (CAL.view == "day")
-            step = 1;
-        var portions_count = 1;
-        if (CAL.view == "month") {
-            var e = CAL.get("b_" + CAL.grid_start_ts + suffix);
-            if (e)
-                portions_count = e.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes.length; else
-                continue;
-        }
-        var start = CAL.grid_start_ts;
-        for (w = 0; w < portions_count; w++) {
-            var end = start + step * 3600 * 24;
-            var portion = Array();
-            CAL.each(CAL.basic.items[user_id], function (id, item) {
-                var c = !((item.ts_start < start && item.ts_end <= start) || (end <= item.ts_start && end <= item.ts_end));
-                if (c) {
-                    if (item.ts_start < start)
-                        var from = start; else
-                        var from = item.ts_start;
-                    if (end <= item.ts_end)
-                        var to = end; else
-                        var to = item.ts_end;
-                    portion.push({id: id, offset: item.offset, from: from, to: to});
-                }
-            });
-            portion.sort(function (a, b) {
-                return a.offset - b.offset;
-            });
-            var equalizer = Array();
-            for (i = 0; i < step; i++) {
-                equalizer[i] = 0;
-            }
-            var max_pos = 0;
-            CAL.each(portion, function (i, v) {
-                var from = (portion[i].from - start) / (3600 * 24);
-                var to = (portion[i].to - start) / (3600 * 24);
-                var pos = 0;
-                for (d = from; d < to; d++) {
-                    if (equalizer[d] > pos)
-                        pos = equalizer[d];
-                }
-                for (d = from; d < to; d++) {
-                    equalizer[d] = pos + 1;
-                }
-                portion[i].position = pos;
-                portion[i].days = to - from;
-                if (pos > max_pos)
-                    max_pos = pos;
-                var item = CAL.basic.items[user_id][portion[i].id];
-                var slot = CAL.get("b_" + portion[i].from + suffix);
-                if (slot) {
-                    var time_start = item.time_start;
-                    if (item.ts_start < start)
-                        time_start = "...&nbsp;";
-                    var head_text = CAL.get_header_text(item.type, time_start, item.name, item.record);
-                    var el = CAL.create_item({
-                        item: item,
-                        type: 'basic',
-                        head_text: head_text,
-                        id: portion[i].id,
-                        position: portion[i].position,
-                        slot: slot,
-                        id_suffix: id_suffix,
-                        days: portion[i].days
-                    });
-                    YAHOO.util.Event.on(el, "click", function () {
-                        if (this.getAttribute('detail') == "1")
-                            CAL.load_form(this.getAttribute('module_name'), this.getAttribute('record'), false);
-                    });
-                    slot.appendChild(el);
-                    if (CAL.items_draggable && item.edit == 1) {
-                        CAL.make_draggable(el.getAttribute("id"), "basic");
-                    }
-                }
-            });
-            h = parseInt((max_pos + 1) * CAL.slot_height + (CAL.slot_height + 1));
-            if (h < CAL.basic.min_height)
-                h = CAL.basic.min_height;
-            var height_string = h + "px";
-            if(CAL.get("b_" + start + suffix)){
-                var row = CAL.get("b_" + start + suffix).parentNode.parentNode;
-                row.parentNode.childNodes[0].childNodes[0].style.height = height_string;
-                CAL.each(row.childNodes, function (i, v) {
-                    if (typeof row.childNodes[i] == 'object')
-                        row.childNodes[i].childNodes[0].style.height = height_string;
-                });
-            }
-            start = start + step * 3600 * 24;
-        }
-    }
-}
-CAL.add_item_to_grid = function (item) {
-    var suffix = "";
-    var id_suffix = "";
-    if (item.user_id != "" && CAL.view == 'shared') {
-        suffix = "_" + CAL.shared_users[item.user_id];
-        id_suffix = '____' + CAL.shared_users[item.user_id];
-    }
-    var e = CAL.get(item.record + id_suffix);
-    if (e) {
-        e.parentNode.removeChild(e);
-        CAL.destroy_ui(item.record + id_suffix);
-    }
-    CAL.basic.remove(item);
-    if (CAL.style == "basic" || item.days > 1) {
-        CAL.basic.add(item);
-        return;
-    }
-    var head_text = CAL.get_header_text(item.type, item.time_start, item.name, item.record);
-    var time_cell = item.timestamp - item.timestamp % (CAL.t_step * 60);
-    var duration_coef;
-    if (item.module_name == 'Tasks') {
-        duration_coef = 1;
-    } else {
-        if ((item.duration_minutes < CAL.t_step) && (item.duration_hours == 0))
-            duration_coef = 1; else
-            duration_coef = (parseInt(item.duration_hours) * 60 + parseInt(item.duration_minutes)) / CAL.t_step;
-    }
-    var item_text = SUGAR.language.languages.app_list_strings[item.type + '_status_dom'][item.status];
-    var related_to = item.related_to;
-    var content_style = "";
-    var content_style_value = "";
-    if (duration_coef < 1.75) {
-        content_style = "display";
-        content_style_value = "none";
-    }
-    var elm_id = item.record + id_suffix;
-    var el = CAL.create_item({
-        item: item,
-        type: 'advanced',
-        head_text: head_text,
-        duration_coef: duration_coef,
-        id: item.record,
-        id_suffix: id_suffix,
-        item_text: item_text,
-        content_style: content_style,
-        content_style_value: content_style_value,
-        related_to: related_to
-    });
-    YAHOO.util.Event.on(el, "click", function () {
-        if (this.getAttribute('detail') == "1")
-            CAL.load_form(this.getAttribute('module_name'), this.getAttribute('record'), false);
-    });
-    var slot;
-    if (slot = CAL.get("t_" + time_cell + suffix)) {
-        slot.appendChild(el);
-        if (item.edit == 1) {
-            if (CAL.items_draggable)
-                CAL.make_draggable(elm_id, "advanced");
-            if (item.module_name != "Tasks" && CAL.items_resizable)
-                CAL.make_resizable(elm_id, slot);
-        }
-        CAL.cut_record(item.record + id_suffix);
-        if (CAL.view == "shared") {
-            var end_time = $("#" + slot.id).parents("div:first").children("div:last").attr("time");
-            var end_time_id = $("#" + slot.id).parents("div:first").children("div:last").attr("id");
-            if (end_time && end_time_id) {
-                var end_timestamp = parseInt(end_time_id.match(/t_([0-9]+)_.*/)[1]) + 1800;
-                var share_coef = (end_timestamp - parseInt(item.timestamp)) / 1800;
-                if (share_coef < duration_coef)
-                    el.style.height = parseInt((CAL.slot_height + 1) * share_coef - 1) + "px";
-            }
-        }
-    }
-}
-CAL.get_header_text = function (type, time_start, text, record) {
-    var start_text = (CAL.view == 'month') ? ("<span class='start_time'>" + time_start + "</span> " + text) : text;
-    return start_text;
-}
-CAL.cut_record = function (id) {
-    var el = CAL.get(id);
-    if (!el)
-        return;
-    var duration_coef = el.getAttribute("duration_coef");
-    real_celcount = CAL.cells_per_day;
-    var celpos = 0;
-    var s = el.parentNode;
-    while (s.previousSibling) {
-        celpos++;
-        s = s.previousSibling;
-    }
-    celpos = celpos + 1;
-    if (real_celcount - celpos - duration_coef < 0)
-        duration_coef = real_celcount - celpos + 1;
-    el.style.height = parseInt((CAL.slot_height + 1) * duration_coef - 1) + "px";
-}
+
 CAL.init_edit_dialog = function (params) {
     CAL.editDialog = false;
     var rd = CAL.get("cal-edit");
-    var content = CAL.get("edit-dialog-content");
-    if (CAL.dashlet && rd) {
-        document.getElementById("content").appendChild(rd);
-    }
-    rd.style.width = params.width + "px";
-    content.style.height = params.height + "px";
-    content.style.overflow = "auto";
-    content.style.padding = "0";
-    CAL.editDialog = new YAHOO.widget.Dialog("cal-edit", {
-        draggable: true,
-        visible: false,
-        modal: true,
-        close: true,
-        y: 1,
-        zIndex: 10
-    });
-    var listeners = new YAHOO.util.KeyListener(document, {keys: 27}, {
-        fn: function () {
-            CAL.editDialog.cancel();
-        }
-    });
-    CAL.editDialog.cfg.queueProperty("keylisteners", listeners);
-    CAL.editDialog.cancelEvent.subscribe(function (e, a, o) {
-        CAL.close_edit_dialog();
-    });
-    rd.style.display = "block";
-    CAL.editDialog.render();
-    rd.style.overflow = "auto";
-    rd.style.overflowX = "hidden";
-    rd.style.outline = "0 none";
-    rd.style.height = "auto";
 }
 CAL.open_edit_dialog = function (params) {
-    document.getElementById("form_content").innerHTML = "";
-    CAL.editDialog.center();
-    CAL.editDialog.show();
-    var nodes = CAL.query("#cal-tabs li a");
-    CAL.each(nodes, function (i, v) {
-        YAHOO.util.Event.on(nodes[i], 'click', function () {
-            CAL.select_tab(this.getAttribute("tabname"));
-        });
-    });
-    stay_on_tab = false
-    if (typeof params != "undefined" && typeof params.stay_on_tab != "undefined" && params.stay_on_tab)
-        stay_on_tab = true;
-    if (!stay_on_tab) {
-        var nodes_li = CAL.query("#cal-tabs li");
-        CAL.each(nodes_li, function (j, v) {
-            CAL.dom.removeClass(nodes_li[j], "selected");
-            if (j == 0)
-                CAL.dom.addClass(nodes_li[j], "selected");
-        });
-        var nodes = CAL.query(".yui-nav");
-        CAL.each(nodes, function (i, v) {
-            nodes[i].style.overflowX = "visible";
-        });
-    }
+    // Open modal dialog
+    $('.modal-cal-edit').modal('show');
+    console.log('open_edit_dialog');
 }
 CAL.close_edit_dialog = function () {
     CAL.reset_edit_dialog();
@@ -834,21 +103,7 @@ CAL.reset_repeat_form = function () {
     CAL.get("edit_all_recurrences_block").style.display = "none";
     CAL.get("cal-repeat-block").style.display = "none";
 }
-CAL.select_tab = function (tid) {
-    var nodes_li = CAL.query("#cal-tabs li");
-    CAL.each(nodes_li, function (j, v) {
-        CAL.dom.removeClass(nodes_li[j], "selected");
-    });
-    CAL.dom.addClass(CAL.get(tid + "-link").parentNode, "selected");
-    var nodes = CAL.query("#cal-tabs .yui-content");
-    CAL.each(nodes, function (i, v) {
-        nodes[i].style.display = "none";
-    });
-    var nodes = CAL.query("#cal-tabs #" + tid);
-    CAL.each(nodes, function (i, v) {
-        nodes[i].style.display = "block";
-    });
-}
+CAL.select_tab = function (tid) {}
 CAL.fill_repeat_data = function () {
     if (CAL.enable_repeat && (CAL.get("current_module").value == "Meetings" || CAL.get("current_module").value == "Calls")) {
         if (repeat_type = document.forms['CalendarRepeatForm'].repeat_type.value) {
@@ -915,17 +170,10 @@ CAL.fill_repeat_tab = function (data) {
         CAL.get("repeat_until_input").value = data.default_repeat_until;
 }
 CAL.repeat_tab_handle = function (module_name) {
-    if (!CAL.enable_repeat)
-        return;
-    CAL.reset_repeat_form();
-    if (module_name == "Meetings" || module_name == "Calls") {
-        CAL.get("tab_repeat").style.display = "";
-    } else {
-        CAL.get("tab_repeat").style.display = "none";
-    }
     clear_all_errors();
     toggle_repeat_type();
 }
+
 CAL.GR_update_user = function (user_id) {
     var callback = {
         success: function (o) {
@@ -955,30 +203,11 @@ CAL.GR_update_focus = function (module, record) {
         YAHOO.util.Connect.asyncRequest('POST', url, callback, false);
     }
 }
+
 CAL.toggle_settings = function () {
-    var sd = CAL.get("settings_dialog");
-    if (!CAL.settingsDialog) {
-        CAL.settingsDialog = new YAHOO.widget.Dialog("settings_dialog", {
-            fixedcenter: true,
-            draggable: false,
-            visible: false,
-            modal: true,
-            close: true
-        });
-        var listeners = new YAHOO.util.KeyListener(document, {keys: 27}, {
-            fn: function () {
-                CAL.settingsDialog.cancel();
-            }
-        });
-        CAL.settingsDialog.cfg.queueProperty("keylisteners", listeners);
-    }
-    CAL.settingsDialog.cancelEvent.subscribe(function (e, a, o) {
-        CAL.get("form_settings").reset();
-    });
-    sd.style.display = "block";
-    CAL.settingsDialog.render();
-    CAL.settingsDialog.show();
+    $('.modal-calendar-settings').modal('toggle')
 }
+
 CAL.fill_invitees = function () {
     CAL.get("user_invitees").value = "";
     CAL.get("contact_invitees").value = "";
@@ -1022,7 +251,7 @@ CAL.load_form = function (module_name, record, edit_all_recurrences) {
     CAL.disable_creating = true;
     var e;
     var to_open = true;
-    if (module_name == "Tasks")
+    if (module_name != "Meetings" && module_name != "Calls")
         to_open = false;
     if (to_open && CAL.records_openable) {
         CAL.get("form_content").style.display = "none";
@@ -1111,105 +340,32 @@ CAL.edit_all_recurrences = function () {
         CAL.load_form(module, record, true);
     }
 }
-CAL.remove_shared = function (record_id, edit_all_recurrences) {
-    if (typeof edit_all_recurrences == "undefined")
-        edit_all_recurrences = false;
-    var e;
-    var arr = new Array();
-    if (CAL.enable_repeat && edit_all_recurrences) {
-        var nodes = CAL.query("div.act_item[repeat_parent_id='" + record_id + "']");
-        CAL.each(nodes, function (i, v) {
-            var record = nodes[i].getAttribute("record");
-            if (!CAL.contains(arr, record))
-                arr.push(record);
-            nodes[i].parentNode.removeChild(nodes[i]);
-            CAL.destroy_ui(nodes[i].id);
-        });
-    }
-    CAL.each(CAL.shared_users, function (user_id, v) {
-        if (e = CAL.get(record_id + '____' + v)) {
-            CAL.destroy_ui(e.id);
-            e.parentNode.removeChild(e);
-        }
-        CAL.basic.remove({record: record_id, user_id: user_id});
-        CAL.each(arr, function (i, id) {
-            CAL.basic.remove({record: id, user_id: user_id});
-        });
-    });
-}
-CAL.add_item = function (item) {
-    var edit_all_recurrences = false;
-    if (typeof item.edit_all_recurrences != "undefined" && item.edit_all_recurrences == 'true')
-        edit_all_recurrences = true;
-    if (CAL.view != 'shared') {
-        var arr = new Array();
-        if (CAL.enable_repeat && edit_all_recurrences) {
-            var nodes = CAL.query("div.act_item[repeat_parent_id='" + item.record + "']");
-            CAL.each(nodes, function (i, v) {
-                var record = nodes[i].getAttribute("record");
-                if (!CAL.contains(arr, record))
-                    arr.push(record);
-                nodes[i].parentNode.removeChild(nodes[i]);
-            });
-        }
-        CAL.each(arr, function (i, id) {
-            CAL.basic.remove({record: id, user_id: CAL.current_user_id});
-        });
-        CAL.add_item_to_grid(item);
-        var record_id = item.record;
-        if (CAL.enable_repeat && typeof item.repeat != "undefined") {
-            CAL.each(item.repeat, function (j, r) {
-                var clone = CAL.clone(item);
-                clone.record = r.id;
-                clone.timestamp = r.timestamp;
-                clone.ts_start = r.ts_start;
-                clone.ts_end = r.ts_end;
-                clone.repeat_parent_id = record_id;
-                CAL.add_item_to_grid(clone);
-            });
-        }
-    } else {
-        CAL.remove_shared(item.record, edit_all_recurrences);
-        record_id = item.record;
-        CAL.each(item.users, function (i, user_id) {
-            item.user_id = user_id;
-            CAL.add_item_to_grid(item);
-            if (CAL.enable_repeat && typeof item.repeat != "undefined") {
-                CAL.each(item.repeat, function (j, r) {
-                    var clone = CAL.clone(item);
-                    clone.record = r.id;
-                    clone.timestamp = r.timestamp;
-                    clone.ts_start = r.ts_start;
-                    clone.ts_end = r.ts_end;
-                    clone.repeat_parent_id = record_id;
-                    CAL.add_item_to_grid(clone);
-                });
-            }
-        });
-    }
-    CAL.arrange_advanced();
-    CAL.basic.populate_grid();
-    CAL.fit_grid();
-}
-CAL.move_activity = function (box_id, slot_id, ex_slot_id) {
-    var u, s;
-    if (u = CAL.get(box_id)) {
-        if (s = CAL.get(slot_id)) {
-            s.appendChild(u);
-            CAL.destroy_ui(box_id);
-            CAL.arrange_column(document.getElementById(slot_id).parentNode);
-            CAL.arrange_column(document.getElementById(ex_slot_id).parentNode);
-            CAL.update_dd.fire();
-            CAL.cut_record(box_id);
-            var start_text = CAL.get_header_text(CAL.act_types[u.getAttribute('module_name')], s.getAttribute('time'), ' ... ', u.getAttribute('record'));
-            var date_field = "date_start";
-            if (u.getAttribute('module_name') == "Tasks")
-                date_field = "date_due";
-            u.setAttribute(date_field, s.getAttribute("datetime"));
-            u.childNodes[0].childNodes[1].innerHTML = start_text;
-        }
-    }
-}
+// CAL.remove_shared = function (record_id, edit_all_recurrences) {
+//     if (typeof edit_all_recurrences == "undefined")
+//         edit_all_recurrences = false;
+//     var e;
+//     var arr = new Array();
+//     if (CAL.enable_repeat && edit_all_recurrences) {
+//         var nodes = CAL.query("div.act_item[repeat_parent_id='" + record_id + "']");
+//         CAL.each(nodes, function (i, v) {
+//             var record = nodes[i].getAttribute("record");
+//             if (!CAL.contains(arr, record))
+//                 arr.push(record);
+//             nodes[i].parentNode.removeChild(nodes[i]);
+//             CAL.destroy_ui(nodes[i].id);
+//         });
+//     }
+//     CAL.each(CAL.shared_users, function (user_id, v) {
+//         if (e = CAL.get(record_id + '____' + v)) {
+//             CAL.destroy_ui(e.id);
+//             e.parentNode.removeChild(e);
+//         }
+//         CAL.basic.remove({record: record_id, user_id: user_id});
+//         CAL.each(arr, function (i, id) {
+//             CAL.basic.remove({record: id, user_id: user_id});
+//         });
+//     });
+// }
 CAL.change_activity_type = function (mod_name) {
     if (typeof CAL.current_params.module_name != "undefined")
         if (CAL.current_params.module_name == mod_name)
@@ -1232,7 +388,7 @@ CAL.load_create_form = function (params) {
                 res = eval("(" + o.responseText + ")");
             } catch (err) {
                 alert(CAL.lbl_error_loading);
-                CAL.editDialog.cancel();
+               $('.modal-cal-edit').modal('hide');
                 ajaxStatus.hideStatus();
                 return;
             }
@@ -1278,6 +434,10 @@ CAL.load_create_form = function (params) {
         "assigned_user_name": params.user_name,
         "date_start": params.date_start
     };
+
+    if( "date_end" in params && params.date_end != ""){
+        data['date_end'] = params.date_end;
+    }
     YAHOO.util.Connect.asyncRequest('POST', url, callback, CAL.toURI(data));
 }
 CAL.full_form = function () {
@@ -1316,49 +476,47 @@ CAL.enable_buttons = function () {
         CAL.get("btn-remove-all-recurrences").removeAttribute("disabled");
     }
 }
-CAL.dialog_create = function (cell) {
+CAL.dialog_create = function (date, end_date, user_id) {
     var e, user_id, user_name;
     CAL.get("title-cal-edit").innerHTML = CAL.lbl_loading;
     CAL.open_edit_dialog();
     CAL.disable_buttons();
     var module_name = CAL.get("current_module").value;
-    if (CAL.view == 'shared') {
-        parentWithUserValues = $('div[user_id][user_name]');
-        user_name = parentWithUserValues.attr('user_name');
-        user_id = parentWithUserValues.attr('user_id');
-        if (parentWithUserValues.length > 1) {
-            var theUserName, theUserId;
-            var theUser = cell.parentNode;
-            while (theUser) {
-                if (theUser.getAttribute("user_name") && theUser.getAttribute("user_id")) {
-                    theUserName = theUser.getAttribute("user_name");
-                    theUserId = theUser.getAttribute("user_id");
-                    break;
-                }
-                else {
-                    theUser = theUser.parentNode;
-                }
-            }
-            if (theUserName && theUserId) {
-                user_name = theUserName;
-                user_id = theUserId;
-            }
-        }
+    if (CAL.view == 'sharedWeek' || CAL.view == 'sharedMonth') {
+        user_name = "";
         CAL.GR_update_user(user_id);
+        $.ajax({
+            url: "index.php?module=Calendar&action=getUser&record=" + user_id,
+        }).done(function(data) {
+            data = jQuery.parseJSON( data );
+            user_name = data.user_name;
+            callback(user_name, user_id, module_name, date, end_date);
+        });
     } else {
         user_id = CAL.current_user_id;
         user_name = CAL.current_user_name;
         CAL.GR_update_user(CAL.current_user_id);
+
+        callback(user_name, user_id, module_name, date, end_date);
     }
-    var params = {
-        'module_name': module_name,
-        'user_id': user_id,
-        'user_name': user_name,
-        'date_start': cell.getAttribute("datetime")
-    };
-    CAL.current_params = params;
-    CAL.load_create_form(CAL.current_params);
+
+   function callback(user_name, user_id, module_name, date, end_date){
+       var params = {
+           'module_name': module_name,
+           'user_id': user_id,
+           'user_name': user_name,
+           'date_start': date,
+           'date_end': ""
+
+       };
+       if( end_date != ""){
+           params.date_end = end_date;
+       }
+       CAL.current_params = params;
+       CAL.load_create_form(CAL.current_params);
+   }
 }
+
 CAL.dialog_save = function () {
     CAL.disable_buttons();
     ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_SAVING'));
@@ -1375,7 +533,7 @@ CAL.dialog_save = function () {
                 res = eval("(" + o.responseText + ")");
             } catch (err) {
                 alert(CAL.lbl_error_saving);
-                CAL.editDialog.cancel();
+               $('.modal-cal-edit').modal('hide');
                 ajaxStatus.hideStatus();
                 return;
             }
@@ -1388,9 +546,43 @@ CAL.dialog_save = function () {
                     CAL.enable_buttons();
                     return;
                 }
-                CAL.add_item(res);
-                CAL.editDialog.cancel();
+               $('.modal-cal-edit').modal('hide');
                 CAL.update_vcal();
+
+                var newEvent = new Object();
+                $("#calendar"  + res.user_id).fullCalendar("removeEvents", res['record']);
+                newEvent.module = res['module_name'];
+                newEvent.title = res['name'];
+                newEvent.record = res['record'];
+                newEvent.id = res['record'];
+                if(undefined !== global_colorList[res.module_name]) {
+                    newEvent.backgroundColor = '#' + global_colorList[res.module_name].body;
+                    newEvent.borderColor = '#' + global_colorList[res.module_name].border;
+                    newEvent.textColor = '#' +  global_colorList[res.module_name].text;
+                }
+                newEvent.start = new Date(moment.unix(res['ts_start']).format("MM/DD/YYYY") + " " + moment(res['time_start'], 'hh:mma').format("HH:mm"));
+                newEvent.end = moment(new Date(moment.unix(res['ts_start']).format("MM/DD/YYYY") + " " + moment(res['time_start'], 'hh:mma').format("HH:mm"))).add(res['duration_hours'], 'hours').add(res['duration_minutes'], 'minutes');
+                if ((res['duration_hours'] % 24 === 0) && (res['time_start'] == "12:00am")) {
+                    newEvent.allDay = "true";
+                }
+                $('#calendar' + res.user_id).fullCalendar('renderEvent', newEvent);
+
+                if(res['repeat']) {
+                    $.each( res['repeat'], function( key, value ) {
+                        var newEvent = new Object();
+                        newEvent.module = res['module_name'];
+                        newEvent.title = res['name'];
+                        newEvent.record = value['id'];
+                        newEvent.id = value['id'];
+                        newEvent.start = new Date(moment.unix(value['ts_start']).format("MM/DD/YYYY") + " " + moment(res['time_start'], 'hh:mma').format("HH:mm"));
+                        newEvent.end = moment(new Date(moment.unix(value['ts_start']).format("MM/DD/YYYY") + " " + moment(res['time_start'], 'hh:mma').format("HH:mm"))).add(res['duration_hours'], 'hours').add(res['duration_minutes'], 'minutes');
+                        if ((res['duration_hours'] % 24 === 0) && (res['time_start'] == "12:00am")) {
+                            newEvent.allDay = "true";
+                        }
+                        $('#calendar'  + res.user_id).fullCalendar('renderEvent', newEvent);
+                    });
+                }
+
                 ajaxStatus.hideStatus();
             } else {
                 alert(CAL.lbl_error_saving);
@@ -1414,6 +606,8 @@ CAL.remove_all_recurrences = function () {
         CAL.dialog_remove();
     }
 }
+
+/** Current remove dialog.  **/
 CAL.dialog_remove = function () {
     CAL.deleted_id = CAL.get("record").value;
     CAL.deleted_module = CAL.get("current_module").value;
@@ -1430,38 +624,7 @@ CAL.dialog_remove = function () {
     }
     var callback = {
         success: function (o) {
-            try {
-                res = eval("(" + o.responseText + ")");
-            } catch (err) {
-                alert(CAL.lbl_error_saving);
-                CAL.editDialog.cancel();
-                ajaxStatus.hideStatus();
-                return;
-            }
-            var e, cell_id;
-            if (e = CAL.get(CAL.deleted_id))
-                cell_id = e.parentNode.id;
-            if (CAL.view == 'shared') {
-                if (remove_all_recurrences && isRecurrence) {
-                    CAL.refresh();
-                } else {
-                    CAL.remove_shared(CAL.deleted_id, remove_all_recurrences);
-                }
-            } else {
-                if (e = CAL.get(CAL.deleted_id)) {
-                    e.parentNode.removeChild(e);
-                    CAL.destroy_ui(CAL.deleted_id);
-                }
-                CAL.basic.remove({record: CAL.deleted_id, user_id: CAL.current_user_id});
-                if (CAL.enable_repeat && remove_all_recurrences && isRecurrence) {
-                    CAL.refresh();
-                }
-            }
-            CAL.records_openable = true;
-            CAL.disable_creating = false;
-            CAL.arrange_advanced();
-            CAL.basic.populate_grid();
-            CAL.fit_grid();
+            $('#calendar1').fullCalendar('removeEvents',CAL.deleted_id);
         }, failure: function () {
             alert(CAL.lbl_error_saving);
         }
@@ -1473,7 +636,7 @@ CAL.dialog_remove = function () {
     };
     var url = "index.php?module=Calendar&action=Remove&sugar_body_only=true";
     YAHOO.util.Connect.asyncRequest('POST', url, callback, CAL.toURI(data));
-    CAL.editDialog.cancel();
+   $('.modal-cal-edit').modal('hide');
 }
 CAL.refresh = function () {
     var callback = {
@@ -1485,12 +648,7 @@ CAL.refresh = function () {
                 ajaxStatus.hideStatus();
                 return;
             }
-            CAL.each(activities, function (i, v) {
-                CAL.add_item_to_grid(activities[i]);
-            });
-            CAL.arrange_advanced();
-            CAL.basic.populate_grid();
-            CAL.fit_grid();
+            //CAL.basic.populate_grid();
             CAL.update_dd.fire();
         }
     }
@@ -1520,27 +678,7 @@ CAL.clear_additional_details = function (id) {
         SUGAR.util.additionalDetailsCalls[id] = undefined;
 }
 CAL.toggle_shared_edit = function () {
-    var sd = CAL.get("shared_cal_edit");
-    if (!CAL.sharedDialog) {
-        CAL.sharedDialog = new YAHOO.widget.Dialog("shared_cal_edit", {
-            fixedcenter: true,
-            draggable: false,
-            visible: false,
-            modal: true,
-            close: true
-        });
-        var listeners = new YAHOO.util.KeyListener(document, {keys: 27}, {
-            fn: function () {
-                CAL.sharedDialog.cancel();
-            }
-        });
-        CAL.sharedDialog.cfg.queueProperty("keylisteners", listeners);
-    }
-    CAL.sharedDialog.cancelEvent.subscribe(function (e, a, o) {
-    });
-    sd.style.display = "block";
-    CAL.sharedDialog.render();
-    CAL.sharedDialog.show();
+    $('.modal-calendar-user-list').modal('toggle');
 }
 CAL.goto_date_call = function () {
     var date_string = CAL.get("goto_date").value;
@@ -1549,26 +687,15 @@ CAL.goto_date_call = function () {
     window.location.href = "index.php?module=Calendar&view=" + CAL.view + "&day=" + date_arr[1] + "&month=" + date_arr[0] + "&year=" + date_arr[2];
 }
 CAL.check_forms = function () {
-    if (!(check_form('CalendarEditView') && cal_isValidDuration())) {
-        CAL.select_tab("cal-tab-1");
-        return false;
-    }
+    //
     if (CAL.enable_repeat && CAL.get("edit_all_recurrences").value != "") {
         lastSubmitTime = lastSubmitTime - 2001;
-        if (!check_form('CalendarRepeatForm')) {
-            CAL.select_tab("cal-tab-3");
-            return false;
-        }
     }
     return true;
 }
 CAL.toURI = function (a) {
     t = [];
     for (x in a) {
-        if (!(a[x].constructor.toString().indexOf('Array') == -1)) {
-            for (i in a[x])
-                t.push(x + "[]=" + encodeURIComponent(a[x][i]));
-        } else
             t.push(x + "=" + encodeURIComponent(a[x]));
     }
     return t.join("&");
@@ -1591,12 +718,6 @@ CAL.each = function (object, callback) {
         }
     }
     return object;
-}
-CAL.clone = function (o) {
-    var c = new Object();
-    for (var e in o)
-        c[e] = o[e];
-    return c;
 }
 CAL.contains = function (a, obj) {
     var i = a.length;
@@ -1623,90 +744,187 @@ CAL.update_vcal = function () {
     var url = "vcal_server.php?type=vfb&source=outlook&user_id=" + v;
     YAHOO.util.Connect.asyncRequest('GET', url, callback, false);
 }
-CAL.fit_grid = function (control_call) {
-    if (CAL.view == 'year') {
-        return;
-    }
-    var container_width = document.getElementById("cal-width-helper").offsetWidth;
-    var left_column_width = 53;
-    var scroll_padding = 0;
-    if (CAL.print) {
-        if (CAL.view == "day")
-            container_width = 720; else
-            container_width = 800;
-    }
-    else {
-        var is_scrollable = document.getElementById("cal-scrollable");
-        if (is_scrollable) {
-            scroll_padding = 30;
-        }
-    }
-    var data_width = container_width - left_column_width - scroll_padding;
-    var num_columns;
-    if (CAL.view == "day") {
-        num_columns = 1;
-        if (typeof control_call == "undefined" || !control_call) {
-            setTimeout(function () {
-                CAL.fit_grid(true);
-                setTimeout(function () {
-                    CAL.fit_grid(true);
-                }, 100);
-            }, 100);
-        }
-    } else {
-        num_columns = 7;
-    }
-    var columns_width = CAL.calculate_columns_width(data_width, num_columns);
-    var cell_nodes = CAL.query("#cal-grid div.col");
-    CAL.each(cell_nodes, function (i) {
-        cell_nodes[i].style.width = columns_width[i % num_columns] + "px";
-    });
-    if(document.getElementById("cal-grid")){
-        document.getElementById("cal-grid").style.visibility = "";
-    }
-};
-CAL.calculate_columns_width = function (width, count) {
-    var result = [];
-    var integer = Math.floor(width / count);
-    var remainder = width - count * integer;
-    var dispensed = 0;
-    for (var i = 1, value; i <= count; i++) {
-        value = integer;
-        if (dispensed * count < i * remainder) {
-            value++;
-            dispensed++;
-        }
-        result.push(value);
-    }
-    return result;
-};
-YAHOO.util.DDCAL = function (id, sGroup, config) {
-    this.cont = config.cont;
-    YAHOO.util.DDCAL.superclass.constructor.apply(this, arguments);
-}
-YAHOO.extend(YAHOO.util.DDCAL, YAHOO.util.DD, {
-    cont: null, init: function () {
-        YAHOO.util.DDCAL.superclass.init.apply(this, arguments);
-        this.initConstraints();
-        CAL.update_dd.subscribe(function (type, args, dd) {
-            dd.resetConstraints();
-            dd.initConstraints();
-        }, this);
-    }, initConstraints: function () {
-        var region = YAHOO.util.Dom.getRegion(this.cont);
-        var el = this.getEl();
-        var xy = YAHOO.util.Dom.getXY(el);
-        var width = parseInt(YAHOO.util.Dom.getStyle(el, 'width'), 10);
-        var height = parseInt(YAHOO.util.Dom.getStyle(el, 'height'), 10);
-        var left = xy[0] - region.left;
-        var right = region.right - xy[0] - width;
-        var top = xy[1] - region.top;
-        var bottom = region.bottom - xy[1] - height;
-        if (xy) {
-            this.setXConstraint(left, right);
-            this.setYConstraint(top, bottom);
-        }
-    }
-});
+
 CAL.remove_edit_dialog();
 var cal_loaded = true;
+
+/** new items **/
+$(document).ready(function() {
+    var i = 1;
+    if(calendar_items != ""){
+        $.each(calendar_items, function(index, user_list) {
+            var all_events = [];
+            if(global_view == "sharedWeek" || global_view == "sharedMonth") {
+                if (index != global_current_user_id) {
+                    $("#calendar" + global_current_user_id).after("<div class='monthCalBody'><h5 class='calSharedUser' id='user_name" + index + "'></h5></div><div id='calendar" + index + "'></div>");
+                    $.ajax({
+                        url: "index.php?module=Calendar&action=getUser&record=" + index,
+                    }).done(function (data) {
+                        data = jQuery.parseJSON(data);
+                        $("#user_name" + index).html(data.full_name);
+                    });
+                } else {
+                    $("#user_name1").html(global_current_user_name);
+                }
+            }
+
+            $.each(user_list, function (index, element) {
+                var valueToPush = {};
+                valueToPush["title"] = element['name'];
+                valueToPush["id"] = element['record'];
+                valueToPush["record"] = element['record'];
+                valueToPush['module'] = element['module_name'];
+                valueToPush["start"] = new Date(moment.unix(element['ts_start']).format("MM/DD/YYYY") + " " + moment(element['time_start'], 'hh:mma').format("HH:mm"));
+                valueToPush["end"] = moment(new Date(moment.unix(element['ts_start']).format("MM/DD/YYYY") + " " + moment(element['time_start'], 'hh:mma').format("HH:mm"))).add(element['duration_hours'], 'hours').add(element['duration_minutes'], 'minutes');
+
+                if(element.module_name != "Meetings" && element.module_name != "Calls"){
+                    valueToPush['editable'] = false;
+                }
+                if(undefined !== global_colorList[element.module_name]){
+
+                    valueToPush["backgroundColor"] = '#' + global_colorList[element.module_name].body;
+                    valueToPush["borderColor"] = '#' + global_colorList[element.module_name].border;
+                    valueToPush["textColor"] = '#' + global_colorList[element.module_name].text;
+                }
+                if ((element['duration_hours'] % 24 === 0) && (element['time_start'] == "12:00am" || element['time_start'] == "00:00")) {
+                    valueToPush['allDay'] = true;
+                }
+                all_events.push(valueToPush);
+            });
+
+            get_cal(index, all_events);
+            i++;
+        });
+    }else{
+        var all_events = [];
+        $("#user_name1").html(global_current_user_name);
+        get_cal(CAL.current_user_id, all_events);
+    }
+
+
+
+
+
+
+    function get_cal(i, all_events){
+        $('#calendar' + i).fullCalendar({
+            header: {
+                left: '',
+                center: '',
+                right: ''
+            },
+            lang: global_langPrefix,
+            views: views,
+            minTime: global_start_time,
+            maxTime: global_end_time,
+            selectHelper: true,
+            selectable: true,
+            selectOverlap: true, //overlap of events !
+            slotMinutes: global_timeslots,
+            defaultDate: global_year + "-" + global_month + "-" + global_day,
+            editable: global_edit,
+            //weekNumbers: true,
+            disableDragging: global_items_draggable,
+            eventLimit: true, // allow "more" link when too many events
+            defaultView: global_view,
+            firstDay: global_start_week_day,
+            height: global_basic_min_height,
+            columnFormat: 'dddd D',
+            select: function(date, jsEvent, view) {
+                if (global_edit == true) {
+                    var date_start = date.format(global_datetime_format);
+                    var date_end = jsEvent.format(global_datetime_format);
+                    if (date.hasTime() == false) {
+                        var date_end = date.add(1, 'days').format(global_datetime_format);
+                    }
+
+                    CAL.dialog_create(date_start, date_end, i);
+                }
+            },
+            eventClick: function (calEvent, jsEvent, view) {
+                if (global_edit == true) {
+                    CAL.load_form(calEvent.module, calEvent.record);
+                }
+            },
+            eventDrop: function (event, delta, revertFunc) {
+                //event_datetime = event.start.format("YYYY-MM-DD HH:mm:ss");
+                event_datetime = event.start.format(global_datetime_format);
+                var data = {
+                    "current_module": event.module,
+                    "record": event.record,
+                    "datetime": event_datetime,
+                    "calendar_style": "basic"
+                };
+
+                if (event.allDay == true) {
+                    //this is a full day aevent. @todo we need to add the end date here.
+                    data.allDay = true;
+                    data.enddatetime = event.start.add(1, 'days').format(global_datetime_format);
+                }
+                var url = "index.php?module=Calendar&action=Reschedule&sugar_body_only=true";
+
+                $.ajax({
+                    method: "POST",
+                    url: url,
+                    data: data
+                })
+
+            },
+            eventResize: function (event, delta, revertFunc) {
+
+                var url = "index.php?module=Calendar&action=Resize&sugar_body_only=true";
+
+                var hours = Math.floor(event.end.diff(event.start, 'minutes') / 60);
+                var minutes = event.end.diff(event.start, 'minutes') % 60;
+
+                var data = {
+                    "current_module": event.module,
+                    "record": event.record,
+                    "duration_hours": hours,
+                    "duration_minutes": minutes
+                };
+                $.ajax({
+                    method: "POST",
+                    url: url,
+                    data: data
+                })
+            },
+            events: all_events,
+            eventRender: function(event, element) {
+
+                if($('#cal_module').val() != "Home") {
+                    element.qtip({
+                        content: {
+                            title: {text: event.title},
+                            text: '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</span>: ' + (event.start.format(global_datetime_format) ) + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_SUBJECT') + ': </span>' + ( (event.title) ? event.title : '')
+                        },
+                        position: {
+                            my: 'bottom left',
+                            at: 'top right'
+                        },
+                        show: {solo: true},
+                        hide: {when: 'inactive', delay: 50},
+                        style: {
+                            width: 250,
+                            padding: 5,
+                            color: 'black',
+                            textAlign: 'left',
+                            border: {
+                                width: 1,
+                                radius: 3
+                            },
+                            tip: 'bottomLeft',
+                            classes: {
+                                tooltip: 'ui-widget',
+                                tip: 'ui-widget',
+                                title: 'ui-widget-header',
+                                content: 'ui-widget-content'
+                            }
+                        }
+                    });
+                }
+            },
+        });
+    }
+});
+

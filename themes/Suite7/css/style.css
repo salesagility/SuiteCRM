@@ -73,6 +73,15 @@ body
     border-bottom: 1px solid #c0c0c0;
 }
 
+.dashboardTabList {
+    height: 40px !important;
+}
+
+.addButton {
+    height: 32px !important;
+    line-height: 32px !important;
+}
+
 .menuItem {
     background-color:#f6f6f6;
 }
@@ -427,7 +436,12 @@ div#content .noLeftColumn
 #newRecord form button,
 #newRecord form input[type=button],
 #newRecord form input[type=submit],
-#newRecord form input[type=reset]
+#newRecord form input[type=reset],
+.btn-success,
+.btn-default,
+.btn-danger,
+.btn-info,
+.btn-warning
 {
     padding-top: 0px;
     vertical-align: bottom;
@@ -2441,7 +2455,12 @@ input, select, textarea, button, .button
 {
     border: 1px solid;
 }
-button, input[type=submit], input[type=reset], input[type=button], .button
+button, input[type=submit], input[type=reset], input[type=button], .button,
+.btn-success,
+.btn-default,
+.btn-danger,
+.btn-info,
+.btn-warning
 {
     font-weight: normal;
     background-repeat: repeat-x;
@@ -2457,8 +2476,7 @@ button, input[type=submit], input[type=reset], input[type=button], .button
     padding-right: 3px;
     padding-left: 3px;
 }
-button:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover,
-
+button:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover
 {
     color: #fff;
     background-image: none;
@@ -3130,15 +3148,19 @@ a:hover
     color: #000000;
 }
 
-button, input[type=submit], input[type=reset], input[type=button], .button
+button, input[type=submit], input[type=reset], input[type=button], .button,
+.btn-success,
+.btn-default,
+.btn-danger,
+.btn-info,
+.btn-warning
 {
     border-color: #cccccc;
     background-color: #ecf1f4;
     color: #000;
     background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtn.gif');
 }
-button:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover,
-
+button:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover
 {
     background-color: #f10202;
     border-color: #f10202;
@@ -5777,4 +5799,16 @@ div.target-list-table {
     width: 100%;
     height: 100%;
     padding: 10px;
+}
+table tr#delegates_search {
+    background:#FAFAFA !important;
+}
+
+/* fix schedule bar popup on calendar */
+.ui-front, .ui-dialog {
+    z-index: 1100 !important;
+}
+
+.panel-heading {
+    padding-bottom: 20px;
 }

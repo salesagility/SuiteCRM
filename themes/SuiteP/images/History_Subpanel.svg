@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>admin_history_subpanel</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="admin_history_subpanel">
+            <circle id="Oval-7" stroke="#534D64" cx="14" cy="14" r="13"></circle>
+            <g id="Group-5" transform="translate(4.519531, 6.000000)" fill="#5C566C">
+                <path d="M18,8.28 C18,12.74256 14.35968,16.38288 9.89712,16.38288 C7.65384,16.38288 5.60904,15.46032 4.16352,13.98936 L5.41032,12.74256 C6.5568,13.8648 8.15256,14.58744 9.89808,14.58744 C13.3884,14.58744 16.20552,11.77032 16.20552,8.28 C16.20552,4.78968 13.38744,1.97256 9.89712,1.97256 C6.83064,1.97256 4.26288,4.09128 3.68904,6.98352 L5.7084,6.68448 L2.8416,10.69776 L0,6.68448 L1.8948,6.95808 C2.49288,3.0948 5.83416,0.17712 9.89712,0.17712 C14.35968,0.17712 18,3.79224 18,8.28 L18,8.28 Z" id="Fill-1"></path>
+                <path d="M12.86448,5.63712 C13.9116,5.18808 14.60904,6.80904 13.58712,7.28256 L10.34616,8.57904 L9.6732,10.39872 C9.2748,11.5452 7.6284,10.79808 8.00256,9.7752 L8.77488,7.63128 C8.87448,7.40712 8.99904,7.23288 9.19872,7.15776 L12.86448,5.63712 Z" id="Fill-2"></path>
+            </g>
+        </g>
+    </g>
+</svg>

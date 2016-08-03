@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -34,7 +35,7 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
 
 
@@ -127,9 +128,19 @@ SUGAR.mySugar = function() {
 				ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_SAVED_LAYOUT'));
 				window.setTimeout('ajaxStatus.hideStatus()', 2000);
 			}
-			
-			url = 'index.php?to_pdf=1&module='+module+'&action=DynamicAction&DynamicAction=saveLayout&layout=' + order + '&selectedPage=' + activeTab;
-			var cObj = YAHOO.util.Connect.asyncRequest('GET', url, {success: success, failure: success});					  
+
+            YAHOO.util.Connect.asyncRequest('POST', 'index.php?' + SUGAR.util.paramsToUrl({
+                    'module': module,
+                    'action': 'DynamicAction',
+                    'DynamicAction': 'saveLayout',
+                    'selectedPage': activeTab,
+                    'to_pdf': 1
+                }), {
+                success: success,
+                failure: success
+            }, SUGAR.util.paramsToUrl({
+                'layout': order
+            }));
 		},
 
 
@@ -384,10 +395,20 @@ SUGAR.mySugar = function() {
 				SUGAR.mySugar.retrieveDashlet(data.responseText, url, finishRetrieve, true); // retrieve it from the server
 			}
 
-			var cObj = YAHOO.util.Connect.asyncRequest('GET','index.php?to_pdf=1&module='+module+'&action=DynamicAction&DynamicAction=addDashlet&activeTab=' + activeTab + '&id=' + id+'&type=' + type + '&type_module=' + encodeURIComponent(type_module), 
-													  {success: success, failure: success}, null);
-
-			SUGAR.mySugar.sugarCharts.loadSugarCharts();
+            YAHOO.util.Connect.asyncRequest('POST', 'index.php?' + SUGAR.util.paramsToUrl({
+                'module': module,
+                'action': 'DynamicAction',
+                'DynamicAction': 'addDashlet',
+                'activeTab': activeTab,
+                'id': id,
+                'to_pdf': 1
+            }), {
+                success: success,
+                failure: success
+            }, SUGAR.util.paramsToUrl({
+                'type': type,
+                'type_module': type_module
+            }));
 
 			return false;
 		},
@@ -617,9 +638,13 @@ SUGAR.mySugar = function() {
 			return false;
 		},
 
-		
-		
-		
+
+		refreshPageForAnalytics: function() {
+			window.location.reload();
+			return false;
+		},
+
+
 		renderDashletsDialog: function(){	
             var minHeight = 120;
             var maxHeight = 520;

@@ -65,6 +65,11 @@ $moduleList[] = 'Documents';
 $moduleList[] = 'Cases';
 $moduleList[] = 'Project';
 $moduleList[] = 'Bugs';
+$moduleList[] = 'ResourceCalendar';
+$moduleList[] = 'AOBH_BusinessHours';
+
+
+$moduleList[] = 'Spots';
 
 // this list defines all of the module names and bean names in the app
 // to create a new module's bean class, add the bean definition here
@@ -112,11 +117,11 @@ $beanList['vCals'] = 'vCal';
 $beanList['CustomFields'] = 'CustomFields';
 $beanList['Alerts'] = 'Alert';
 
-$beanList['Documents'] = 'Document';
-$beanList['DocumentRevisions'] = 'DocumentRevision';
-$beanList['Roles'] = 'Role';
+$beanList['Documents']  = 'Document';
+$beanList['DocumentRevisions']  = 'DocumentRevision';
+$beanList['Roles']  = 'Role';
 
-$beanList['Audit'] = 'Audit';
+$beanList['Audit']  = 'Audit';
 
 // deferred
 //$beanList['Queues'] = 'Queue';
@@ -130,6 +135,9 @@ $beanList['EmailAddresses'] = 'EmailAddress';
 $beanList['EmailText'] = 'EmailText';
 $beanList['Relationships'] = 'Relationship';
 $beanList['Employees'] = 'Employee';
+
+$beanList['Spots'] = 'Spots';
+$beanList['AOBH_BusinessHours'] = 'AOBH_BusinessHours';
 
 // this list defines all of the files that contain the SugarBean class definitions from $beanList
 // to create a new module's bean class, add the file definition here
@@ -197,6 +205,10 @@ $beanFiles['EmailText'] = 'modules/EmailText/EmailText.php';
 
 $beanFiles['Configurator'] = 'modules/Configurator/Configurator.php';
 
+$beanFiles['Spots'] = 'modules/Spots/Spots.php';
+$beanFiles['AOBH_BusinessHours'] = 'modules/AOBH_BusinessHours/AOBH_BusinessHours.php';
+
+
 // added these lists for security settings for tabs
 $modInvisList = array('Administration', 'Currencies', 'CustomFields', 'Connectors',
     'Dropdown', 'Dynamic', 'DynamicFields', 'DynamicLayout', 'EditCustomFields',
@@ -206,13 +218,15 @@ $modInvisList = array('Administration', 'Currencies', 'CustomFields', 'Connector
     'Users', 'Versions', 'LabelEditor', 'Roles', 'EmailMarketing', 'OptimisticLock', 'TeamMemberships', 'TeamSets', 'TeamSetModule', 'Audit', 'MailMerge', 'MergeRecords', 'EmailAddresses', 'EmailText',
     'Schedulers', 'Schedulers_jobs', /*'Queues', 'EmailTemplates',*/
     'CampaignTrackers', 'CampaignLog', 'EmailMan', 'Prospects', 'ProspectLists',
-    'Groups', 'InboundEmail',
+    'Groups','InboundEmail',
     'ACLActions', 'ACLRoles',
     'DocumentRevisions',
     'ProjectTask',
     'ModuleBuilder',
     'Alert',
-);
+	'ResourceCalendar',
+	'AOBH_BusinessHours',
+    );
 $adminOnlyList = array(
     //module => list of actions  (all says all actions are admin only)
     //'Administration'=>array('all'=>1, 'SupportPortal'=>'allow'),
@@ -458,5 +472,6 @@ if (file_exists('include/modules_override.php')) {
     include 'include/modules_override.php';
 }
 if (file_exists('custom/application/Ext/Include/modules.ext.php')) {
-    include 'custom/application/Ext/Include/modules.ext.php';
+    include('custom/application/Ext/Include/modules.ext.php');
 }
+?>

@@ -1262,5 +1262,11 @@ $mod_strings = array(
     'LBL_SECURITYGROUPS_SUGAROUTFITTERS_TITLE' => "SugarOutfitters",
     'LBL_SECURITYGROUPS_SUGAROUTFITTERS' => "Grab the latest version of SecuritySuite and find other SuiteCRM modules, themes, and integrations along with reviews, docs, support, and community verified versions.",
 
+    'LBL_BUSINESS_HOURS' => 'Business hours',
+    'LBL_BUSINESS_HOURS_DESC' => "Manage Business Hours",
+	'LBL_BUSINESS_HOURS_FROM' => 'From',
+	'LBL_BUSINESS_HOURS_TO' => 'To',
+	'LBL_BUSINESS_HOURS_OPEN' => "Open",
+
 );
 

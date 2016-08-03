@@ -383,6 +383,10 @@ class SugarTheme
 			if (is_file("$cachedir/spriteCache.php"))
 				unlink("$cachedir/spriteCache.php");
 
+            if(strlen($cachedir)>1) {
+                rmdir_recursive($cachedir.'/modules');
+            }
+
         }
         elseif ( !inDeveloperMode() ) {
             // only update the caches if they have been changed in this request
@@ -715,7 +719,6 @@ EOHTML;
         $alt = ''
     )
     {
-
         static $cached_results = array();
 
 		// trap deprecated use of image extension
