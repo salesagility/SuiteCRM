@@ -1338,11 +1338,12 @@ c.hasArcType()&&c.expandArc(a),c.toggleFocusLegend(a,!0),c.focusedTargetIds=a,c.
             _this.find('input.pvtFilter:checked').each(function() {
               var filter;
               filter = $(this).data("filter");
+              var filterParts = filter[1].split("___");
               if (exclusions[filter[0]] != null) {
                 if (inclusions[filter[0]] != null) {
-                  return inclusions[filter[0]].push(filter[2]);
+                  return inclusions[filter[0]].push(filterParts[0]);
                 } else {
-                  return inclusions[filter[0]] = [filter[2]];
+                  return inclusions[filter[0]] = [filterParts[0]];
                 }
               }
             });

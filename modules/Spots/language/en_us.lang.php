@@ -230,4 +230,8 @@ $mod_strings = array(
     'LBL_LOCALE_STRINGS_VS' => 'vs',
     'LBL_LOCALE_STRINGS_BY' => 'by',
     'LBL_LOCALE_STRINGS_OK' => 'OK',
+
+    'LBL_ACTIVITIES_CALL'=>'Call',
+    'LBL_ACTIVITIES_MEETING'=>'Meeting',
+    'LBL_ACTIVITIES_TASK'=>'Task',
 );
