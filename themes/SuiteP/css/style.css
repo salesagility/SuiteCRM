@@ -134,10 +134,14 @@ div.p_login #loginform .input-group input#user_name, #user_name:-webkit-autofill
 
 div.p_login #loginform .input-group input#user_name {
     background-position: 12px 9px;
+	background-repeat: no-repeat;
+    background-image: none, url("../../../../themes/SuiteP/images/login_bg.svg");
 }
 
 div.p_login #loginform .input-group input#user_password {
     background-position: 12px -51px;
+	background-repeat: no-repeat;
+    background-image: none, url("../../../../themes/SuiteP/images/login_bg.png");
 }
 
 div.p_login #loginform .glyphicon {
