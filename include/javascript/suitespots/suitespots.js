@@ -1650,6 +1650,19 @@ c.hasArcType()&&c.expandArc(a),c.toggleFocusLegend(a,!0),c.focusedTargetIds=a,c.
           hAxisTitle = (ref1 = attrs[1]) != null ? ref1 : "";
           groupByTitle = attrs.slice(2).join("-");
           titleText = vAxisTitle;
+
+          //Scatter axis
+          var translatedHAxis = '';
+          if(pivotData.colAttrs.length > 0)
+          {
+            var translations = [];
+            $.each(pivotData.colAttrs,function(i,v){
+              translations.push(getTranslationOfSpotsFullLabel(v));
+            });
+            translatedHAxis = translations.join("-");
+          }
+          var translatedVAxis = $('select.pvtAggregator option:selected').text();
+
           if (hAxisTitle !== "") {
             titleText += " " + getTranslation('LOCALE_STRINGS','VS'); + " " + hAxisTitle;
           }
@@ -1711,7 +1724,21 @@ c.hasArcType()&&c.expandArc(a),c.toggleFocusLegend(a,!0),c.focusedTargetIds=a,c.
             }
             columns.push(row);
           }
+          //Need to translate the label values
+          var translatedVAxis = $('select.pvtAggregator option:selected').text();
+          getTranslationOfSpotsFullLabel(pivotData.rowAttrs[0]);
           vAxisTitle = pivotData.aggregatorName + (pivotData.valAttrs.length ? "(" + (pivotData.valAttrs.join(", ")) + ")" : "");
+
+          var translatedHAxis = '';
+          if(pivotData.colAttrs.length > 0)
+          {
+            var translations = [];
+            $.each(pivotData.colAttrs,function(i,v){
+              translations.push(getTranslationOfSpotsFullLabel(v));
+            });
+            translatedHAxis = translations.join("-");
+          }
+
           hAxisTitle = pivotData.colAttrs.join("-");
           titleText = fullAggName;
           if (hAxisTitle !== "") {
@@ -1726,14 +1753,14 @@ c.hasArcType()&&c.expandArc(a),c.toggleFocusLegend(a,!0),c.focusedTargetIds=a,c.
         title = $("<p>", {
           style: "text-align: center; font-weight: bold"
         });
-        title.text(titleText);
+        title.text('');
         params = {
           axis: {
             y: {
-              label: vAxisTitle
+              label: translatedVAxis
             },
             x: {
-              label: hAxisTitle,
+              label: translatedHAxis,
               tick: {
                 rotate: rotationAngle,
                 multiline: false
