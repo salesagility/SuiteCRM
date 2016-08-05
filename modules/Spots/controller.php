@@ -50,14 +50,18 @@ class SpotsController extends SugarController
 
     //These are the file paths for the cached results of the spot data sets
     protected $spotFilePath = 'cache/modules/Spots/';
-    protected $accountsFilName = 'accounts.json';
-    protected $servicesFileName = 'service.json';
-    protected $salesFileName = 'sales.json';
-    protected $leadsFileName = 'leads.json';
-    protected $marketingsFileName = 'marketing.json';
-    protected $marketingActivitiesFileName = 'marketingActivity.json';
-    protected $activitiesFileName = 'activities.json';
-    protected $quotesFileName = 'quotes.json';
+    protected $accountsFilName = 'accounts';
+    protected $servicesFileName = 'service';
+    protected $salesFileName = 'sales';
+    protected $leadsFileName = 'leads';
+    protected $marketingsFileName = 'marketing';
+    protected $marketingActivitiesFileName = 'marketingActivity';
+    protected $activitiesFileName = 'activities';
+    protected $quotesFileName = 'quotes';
+    protected $fileSuffix = 'json';
+
+    //This is to allow for the data and key values to be separated
+    protected $keySeparator = '___';
 
     //This is when to consider a data file as stale and replace it (should not be an issue if the scheduler is running)
     //This is the time in seconds, so an hour is 3600
@@ -79,6 +83,20 @@ class SpotsController extends SugarController
         }
 
         return $dbType;
+    }
+
+    /**
+     * This takes in a type and checks if it is one of the enum types
+     */
+    public function isEnumType($type)
+    {
+        if($type === 'enum' || $type === 'dynamicenum' || $type === 'multienum'){
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     /**
@@ -124,8 +142,9 @@ class SpotsController extends SugarController
      */
     public function action_getAccountsSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->accountsFilName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->accountsFilName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -142,6 +161,8 @@ class SpotsController extends SugarController
     public function action_createAccountsSpotsData($filepath)
     {
         global $mod_strings;
+        global $app_list_strings;
+
         $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
@@ -164,10 +185,24 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_NAME'] = $row['accountName'];
-            $x->$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_TYPE'] = $row['account_type'];
-            $x->$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_INDUSTRY'] = $row['industry'];
-            $x->$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_BILLING_COUNTRY'] = $row['billing_address_country'];
+            $x->LBL_AN_ACCOUNTS_ACCOUNT_NAME = $row['accountName'].$this->keySeparator.$row['accountName'];
+            if($this->isEnumType($accounts->field_defs['account_type']['type'])){
+                $options = $accounts->field_defs['account_type']['options'];
+                $label = $app_list_strings[$options][$row['account_type']];
+                $x->LBL_AN_ACCOUNTS_ACCOUNT_TYPE = $row['account_type'].$this->keySeparator.$label;
+            }else{
+                $x->LBL_AN_ACCOUNTS_ACCOUNT_TYPE = $row['account_type'].$this->keySeparator.$row['account_type'];
+
+            }
+            if($this->isEnumType($accounts->field_defs['industry']['type'])){
+                $options = $accounts->field_defs['industry']['options'];
+                $label = $app_list_strings[$options][$row['industry']];
+                $x->LBL_AN_ACCOUNTS_ACCOUNT_INDUSTRY = $row['industry'].$this->keySeparator.$label;
+            }else{
+                $x->LBL_AN_ACCOUNTS_ACCOUNT_INDUSTRY = $row['industry'].$this->keySeparator.$row['industry'];
+
+            }
+            $x->LBL_AN_ACCOUNTS_ACCOUNT_BILLING_COUNTRY = $row['billing_address_country'].$this->keySeparator.$row['billing_address_country'];
             $returnArray[] = $x;
         }
         file_put_contents($filepath, json_encode($returnArray));
@@ -180,8 +215,9 @@ EOF;
      */
     public function action_getLeadsSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->leadsFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->leadsFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -198,6 +234,7 @@ EOF;
     public function action_createLeadsSpotsData($filepath)
     {
         global $mod_strings;
+        global $app_list_strings;
         $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
@@ -263,15 +300,29 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_LEADS_ASSIGNED_USER'] = $row['assignedUser'];
-            $x->$mod_strings['LBL_AN_LEADS_STATUS'] = $row['status'];
-            $x->$mod_strings['LBL_AN_LEADS_LEAD_SOURCE'] = $row['leadSource'];
-            $x->$mod_strings['LBL_AN_LEADS_CAMPAIGN_NAME'] = $row['campaignName'];
-            $x->$mod_strings['LBL_AN_LEADS_YEAR'] = $row['year'];
-            $x->$mod_strings['LBL_AN_LEADS_QUARTER'] = $row['quarter'];
-            $x->$mod_strings['LBL_AN_LEADS_MONTH'] = $row['month'];
-            $x->$mod_strings['LBL_AN_LEADS_WEEK'] = $row['week'];
-            $x->$mod_strings['LBL_AN_LEADS_DAY'] = $row['day'];
+            $x->LBL_AN_LEADS_ASSIGNED_USER = $row['assignedUser'].$this->keySeparator.$row['assignedUser'];
+            if($this->isEnumType($leads->field_defs['status']['type'])){
+                $options = $leads->field_defs['status']['options'];
+                $label = $app_list_strings[$options][$row['status']];
+                $x->LBL_AN_LEADS_STATUS = $row['status'].$this->keySeparator.$label;
+            }else{
+                $x->LBL_AN_LEADS_STATUS = $row['status'].$this->keySeparator.$row['status'];
+
+            }
+            if($this->isEnumType($leads->field_defs['lead_source']['type'])){
+                $options = $leads->field_defs['lead_source']['options'];
+                $label = $app_list_strings[$options][$row['leadSource']];
+                $x->LBL_AN_LEADS_LEAD_SOURCE = $row['leadSource'].$this->keySeparator.$label;
+            }else{
+                $x->LBL_AN_LEADS_LEAD_SOURCE = $row['leadSource'].$this->keySeparator.$row['leadSource'];
+
+            }
+            $x->LBL_AN_LEADS_CAMPAIGN_NAME = $row['campaignName'].$this->keySeparator.$row['campaignName'];
+            $x->LBL_AN_LEADS_YEAR = $row['year'].$this->keySeparator.$row['year'];
+            $x->LBL_AN_LEADS_QUARTER = $row['quarter'].$this->keySeparator.$row['quarter'];
+            $x->LBL_AN_LEADS_MONTH = $row['month'].$this->keySeparator.$row['month'];
+            $x->LBL_AN_LEADS_WEEK = $row['week'].$this->keySeparator.$row['week'];
+            $x->LBL_AN_LEADS_DAY = $row['day'].$this->keySeparator.$row['day'];
 
             $returnArray[] = $x;
         }
@@ -285,8 +336,9 @@ EOF;
      */
     public function action_getSalesSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->salesFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->salesFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -303,6 +355,7 @@ EOF;
     public function action_createSalesSpotsData($filepath)
     {
         global $mod_strings;
+        global $app_list_strings;
         $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
@@ -311,7 +364,7 @@ EOF;
 			accounts.name as accountName,
             opportunities.name as opportunityName,
             RTRIM(LTRIM(CONCAT(COALESCE(first_name,''),' ',COALESCE(last_name,'')))) as assignedUser,
-            COALESCE(opportunity_type,'$this->nullSqlPlaceholder') as opportunity_type,
+            COALESCE(opportunity_type,'$this->nullSqlPlaceholder') as opportunityType,
             lead_source,
             amount,
             sales_stage,
@@ -330,7 +383,7 @@ EOF;
 			accounts.name as accountName,
             opportunities.name as opportunityName,
             RTRIM(LTRIM(COALESCE(first_name,'')+' '+COALESCE(last_name,''))) as assignedUser,
-            COALESCE(opportunity_type,'$this->nullSqlPlaceholder') as opportunity_type,
+            COALESCE(opportunity_type,'$this->nullSqlPlaceholder') as opportunityType,
             lead_source,
             amount,
             sales_stage,
@@ -388,22 +441,43 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_SALES_ACCOUNT_NAME'] = $row['accountName'];
-            $x->$mod_strings['LBL_AN_SALES_OPPORTUNITY_NAME'] = $row['opportunityName'];
-            $x->$mod_strings['LBL_AN_SALES_ASSIGNED_USER'] = $row['assignedUser'];
-            $x->$mod_strings['LBL_AN_SALES_OPPORTUNITY_TYPE'] = $row['opportunity_type'];
-            $x->$mod_strings['LBL_AN_SALES_LEAD_SOURCE'] = $row['lead_source'];
-            $x->$mod_strings['LBL_AN_SALES_AMOUNT'] = $row['amount'];
-            $x->$mod_strings['LBL_AN_SALES_STAGE'] = $row['sales_stage'];
-            $x->$mod_strings['LBL_AN_SALES_PROBABILITY'] = $row['probability'];
-            $x->$mod_strings['LBL_AN_SALES_DATE'] = $row['date_closed'];
+            $x->LBL_AN_SALES_ACCOUNT_NAME = $row['accountName'].$this->keySeparator.$row['accountName'];
+            $x->LBL_AN_SALES_OPPORTUNITY_NAME = $row['opportunityName'].$this->keySeparator.$row['opportunityName'];
+            $x->LBL_AN_SALES_ASSIGNED_USER = $row['assignedUser'].$this->keySeparator.$row['assignedUser'];
+            if($this->isEnumType($opps->field_defs['opportunity_type']['type'])){
+                $options = $opps->field_defs['opportunity_type']['options'];
+                $label = $app_list_strings[$options][$row['opportunityType']];
+                $x->LBL_AN_SALES_OPPORTUNITY_TYPE = $row['opportunityType'].$this->keySeparator.$label;
+            }else{
+                $x->LBL_AN_SALES_OPPORTUNITY_TYPE = $row['opportunityType'].$this->keySeparator.$row['opportunityType'];
+            }
+            if($this->isEnumType($opps->field_defs['lead_source']['type'])){
+                $options = $opps->field_defs['lead_source']['options'];
+                $label = $app_list_strings[$options][$row['lead_source']];
+                $x->LBL_AN_SALES_LEAD_SOURCE = $row['lead_source'].$this->keySeparator.$label;
+            }else{
+                $x->LBL_AN_SALES_LEAD_SOURCE = $row['lead_source'].$this->keySeparator.$row['lead_source'];
+            }
 
-            $x->$mod_strings['LBL_AN_SALES_QUARTER'] = $row['salesQuarter'];
-            $x->$mod_strings['LBL_AN_SALES_MONTH'] = $row['salesMonth'];
-            $x->$mod_strings['LBL_AN_SALES_WEEK'] = $row['salesWeek'];
-            $x->$mod_strings['LBL_AN_SALES_DAY'] = $row['salesDay'];
-            $x->$mod_strings['LBL_AN_SALES_YEAR'] = $row['salesYear'];
-            $x->$mod_strings['LBL_AN_SALES_CAMPAIGN'] = $row['campaign'];
+            $x->LBL_AN_SALES_AMOUNT = $row['amount'].$this->keySeparator.$row['amount'];
+
+            if($this->isEnumType($opps->field_defs['sales_stage']['type'])){
+                $options = $opps->field_defs['sales_stage']['options'];
+                $label = $app_list_strings[$options][$row['sales_stage']];
+                $x->LBL_AN_SALES_STAGE = $row['sales_stage'].$this->keySeparator.$label;
+            }else{
+                $x->LBL_AN_SALES_STAGE = $row['sales_stage'].$this->keySeparator.$row['sales_stage'];
+            }
+
+            $x->LBL_AN_SALES_PROBABILITY = $row['probability'].$this->keySeparator.$row['probability'];
+            $x->LBL_AN_SALES_DATE = $row['date_closed'].$this->keySeparator.$row['date_closed'];
+
+            $x->LBL_AN_SALES_QUARTER = $row['salesQuarter'].$this->keySeparator.$row['salesQuarter'];
+            $x->LBL_AN_SALES_MONTH = $row['salesMonth'].$this->keySeparator.$row['salesMonth'];
+            $x->LBL_AN_SALES_WEEK = $row['salesWeek'].$this->keySeparator.$row['salesWeek'];
+            $x->LBL_AN_SALES_DAY = $row['salesDay'].$this->keySeparator.$row['salesDay'];
+            $x->LBL_AN_SALES_YEAR = $row['salesYear'].$this->keySeparator.$row['salesYear'];
+            $x->LBL_AN_SALES_CAMPAIGN = $row['campaign'].$this->keySeparator.$row['campaign'];
 
             $returnArray[] = $x;
         }
@@ -417,8 +491,9 @@ EOF;
      */
     public function action_getServiceSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->servicesFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->servicesFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -435,6 +510,7 @@ EOF;
     public function action_createServiceSpotsData($filepath)
     {
         global $mod_strings;
+        global $app_list_strings;
         $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
@@ -506,17 +582,38 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_SERVICE_ACCOUNT_NAME'] = $row['name'];
-            $x->$mod_strings['LBL_AN_SERVICE_STATE'] = $row['state'];
-            $x->$mod_strings['LBL_AN_SERVICE_STATUS'] = $row['status'];
-            $x->$mod_strings['LBL_AN_SERVICE_PRIORITY'] = $row['priority'];
-            $x->$mod_strings['LBL_AN_SERVICE_CREATED_DAY'] = $row['day'];
-            $x->$mod_strings['LBL_AN_SERVICE_CREATED_WEEK'] = $row['week'];
-            $x->$mod_strings['LBL_AN_SERVICE_CREATED_MONTH'] = $row['month'];
-            $x->$mod_strings['LBL_AN_SERVICE_CREATED_QUARTER'] = $row['quarter'];
-            $x->$mod_strings['LBL_AN_SERVICE_CREATED_YEAR'] = $row['year'];
-            $x->$mod_strings['LBL_AN_SERVICE_CONTACT_NAME'] = $row['contactName'];
-            $x->$mod_strings['LBL_AN_SERVICE_ASSIGNED_TO'] = $row['assignedUser'];
+            $x->LBL_AN_SERVICE_ACCOUNT_NAME = $row['name'].$this->keySeparator.$row['name'];
+            if($this->isEnumType($cases->field_defs['state']['type'])){
+                $options = $cases->field_defs['state']['options'];
+                $label = $app_list_strings[$options][$row['state']];
+                $x->LBL_AN_SERVICE_STATE = $row['state'].$this->keySeparator.$label;
+            }else{
+                $x->LBL_AN_SERVICE_STATE = $row['state'].$this->keySeparator.$row['state'];
+            }
+
+            if($this->isEnumType($cases->field_defs['status']['type'])){
+                $options = $cases->field_defs['status']['options'];
+                $label = $app_list_strings[$options][$row['status']];
+                $x->LBL_AN_SERVICE_STATUS = $row['status'].$this->keySeparator.$label;
+            }else{
+                $x->LBL_AN_SERVICE_STATUS = $row['status'].$this->keySeparator.$row['status'];
+            }
+
+            if($this->isEnumType($cases->field_defs['priority']['type'])){
+                $options = $cases->field_defs['priority']['options'];
+                $label = $app_list_strings[$options][$row['priority']];
+                $x->LBL_AN_SERVICE_PRIORITY = $row['priority'].$this->keySeparator.$label;
+            }else{
+                $x->LBL_AN_SERVICE_PRIORITY = $row['priority'].$this->keySeparator.$row['priority'];
+            }
+
+            $x->LBL_AN_SERVICE_CREATED_DAY = $row['day'].$this->keySeparator.$row['day'];
+            $x->LBL_AN_SERVICE_CREATED_WEEK = $row['week'].$this->keySeparator.$row['week'];
+            $x->LBL_AN_SERVICE_CREATED_MONTH = $row['month'].$this->keySeparator.$row['month'];
+            $x->LBL_AN_SERVICE_CREATED_QUARTER = $row['quarter'].$this->keySeparator.$row['quarter'];
+            $x->LBL_AN_SERVICE_CREATED_YEAR = $row['year'].$this->keySeparator.$row['year'];
+            $x->LBL_AN_SERVICE_CONTACT_NAME = $row['contactName'].$this->keySeparator.$row['contactName'];
+            $x->LBL_AN_SERVICE_ASSIGNED_TO = $row['assignedUser'].$this->keySeparator.$row['assignedUser'];
 
             $returnArray[] = $x;
         }
@@ -530,8 +627,9 @@ EOF;
      */
     public function action_getActivitiesSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->activitiesFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->activitiesFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -548,12 +646,14 @@ EOF;
     public function action_createActivitiesSpotsData($filepath)
     {
         global $mod_strings;
+        global $app_list_strings;
+
         $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
         $mysqlQueryCalls = <<<EOF
         SELECT
-            'call' as type
+            'LBL_ACTIVITIES_CALL' as type
             , calls.name
             , calls.status
             , RTRIM(LTRIM(CONCAT(COALESCE(users.first_name,''),' ',COALESCE(users.last_name,'')))) as assignedUser
@@ -567,7 +667,7 @@ EOF;
         $mysqlQueryMeetings = <<<EOF
         UNION
         SELECT
-            'meeting' as type
+            'LBL_ACTIVITIES_MEETING' as type
             , meetings.name
             , meetings.status
             , RTRIM(LTRIM(CONCAT(COALESCE(users.first_name,''),' ',COALESCE(users.last_name,'')))) as assignedUser
@@ -581,7 +681,7 @@ EOF;
         $mysqlQueryTasks = <<<EOF
         UNION
         SELECT
-            'task' as type
+            'LBL_ACTIVITIES_TASK' as type
             , tasks.name
             , tasks.status
             , RTRIM(LTRIM(CONCAT(COALESCE(users.first_name,''),' ',COALESCE(users.last_name,'')))) as assignedUser
@@ -594,7 +694,7 @@ EOF;
 
         $mssqlQueryCalls = <<<EOF
         SELECT
-            'call' as type
+            'LBL_ACTIVITIES_CALL' as type
             , calls.name
             , calls.status
             , RTRIM(LTRIM(COALESCE(users.first_name,'') + ' ' + COALESCE(users.last_name,''))) as assignedUser
@@ -607,7 +707,7 @@ EOF;
         $mssqlQueryMeetings = <<<EOF
         UNION
         SELECT
-            'meeting' as type
+            'LBL_ACTIVITIES_MEETING' as type
             , meetings.name
             , meetings.status
             , RTRIM(LTRIM(COALESCE(users.first_name,'') + ' ' + COALESCE(users.last_name,''))) as assignedUser
@@ -620,7 +720,7 @@ EOF;
         $mssqlQueryTasks = <<<EOF
         UNION
         SELECT
-            'task' as type
+            'LBL_ACTIVITIES_TASK' as type
             , tasks.name
             , tasks.status
             , RTRIM(LTRIM(COALESCE(users.first_name,'') + ' ' + COALESCE(users.last_name,''))) as assignedUser
@@ -653,10 +753,44 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_ACTIVITIES_TYPE'] = $row['type'];
-            $x->$mod_strings['LBL_AN_ACTIVITIES_NAME'] = $row['name'];
-            $x->$mod_strings['LBL_AN_ACTIVITIES_STATUS'] = $row['status'];
-            $x->$mod_strings['LBL_AN_ACTIVITIES_ASSIGNED_TO'] = $row['assignedUser'];
+            //Translate the hard-coded type value
+            $type = $row['type'];
+            $x->LBL_AN_ACTIVITIES_TYPE = $row['type'].$this->keySeparator.translate($row['type'],'Spots');;
+
+            if($type === 'LBL_ACTIVITIES_CALL')
+            {//Calls
+                if($this->isEnumType($calls->field_defs['status']['type'])){
+                    $options = $calls->field_defs['status']['options'];
+                    $label = $app_list_strings[$options][$row['status']];
+                    $x->LBL_AN_ACTIVITIES_STATUS = $row['status'].$this->keySeparator.$label;
+                }else{
+                    $x->LBL_AN_ACTIVITIES_STATUS = $row['status'].$this->keySeparator.$row['status'];
+                }
+            }
+            elseif($type === 'LBL_ACTIVITIES_MEETING')
+            {//Meetings
+                if($this->isEnumType($meetings->field_defs['status']['type'])){
+                    $options = $meetings->field_defs['status']['options'];
+                    $label = $app_list_strings[$options][$row['status']];
+                    $x->LBL_AN_ACTIVITIES_STATUS = $row['status'].$this->keySeparator.$label;
+                }else{
+                    $x->LBL_AN_ACTIVITIES_STATUS = $row['status'].$this->keySeparator.$row['status'];
+                }
+            }
+            else
+            {//Tasks
+                if($this->isEnumType($tasks->field_defs['status']['type'])){
+                    $options = $tasks->field_defs['status']['options'];
+                    $label = $app_list_strings[$options][$row['status']];
+                    $x->LBL_AN_ACTIVITIES_STATUS = $row['status'].$this->keySeparator.$label;
+                }else{
+                    $x->LBL_AN_ACTIVITIES_STATUS = $row['status'].$this->keySeparator.$row['status'];
+                }
+            }
+
+            $x->LBL_AN_ACTIVITIES_NAME = $row['name'].$this->keySeparator.$row['name'];
+            //$x->LBL_AN_ACTIVITIES_STATUS = $row['status'].$this->keySeparator.$row['status'];
+            $x->LBL_AN_ACTIVITIES_ASSIGNED_TO = $row['assignedUser'].$this->keySeparator.$row['assignedUser'];
 
             $returnArray[] = $x;
         }
@@ -670,8 +804,9 @@ EOF;
      */
     public function action_getMarketingSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->marketingsFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->marketingsFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -688,6 +823,7 @@ EOF;
     public function action_createMarketingSpotsData($filepath)
     {
         global $mod_strings;
+        global $app_list_strings;
         $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
@@ -762,16 +898,35 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_MARKETING_STATUS'] = $row['campaignStatus'];
-            $x->$mod_strings['LBL_AN_MARKETING_TYPE'] = $row['campaignType'];
-            $x->$mod_strings['LBL_AN_MARKETING_BUDGET'] = $row['campaignBudget'];
-            $x->$mod_strings['LBL_AN_MARKETING_EXPECTED_COST'] = $row['campaignExpectedCost'];
-            $x->$mod_strings['LBL_AN_MARKETING_EXPECTED_REVENUE'] = $row['campaignExpectedRevenue'];
-            $x->$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_NAME'] = $row['opportunityName'];
-            $x->$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_AMOUNT'] = $row['opportunityAmount'];
-            $x->$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_SALES_STAGE'] = $row['opportunitySalesStage'];
-            $x->$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_ASSIGNED_TO'] = $row['assignedUser'];
-            $x->$mod_strings['LBL_AN_MARKETING_ACCOUNT_NAME'] = $row['accountsName'];
+            if($this->isEnumType($campaigns->field_defs['status']['type'])){
+                $options = $campaigns->field_defs['status']['options'];
+                $label = $app_list_strings[$options][$row['campaignStatus']];
+                $x->LBL_AN_MARKETING_STATUS = $row['campaignStatus'].$this->keySeparator.$label;
+            }else{
+                $x->LBL_AN_MARKETING_STATUS = $row['campaignStatus'].$this->keySeparator.$row['campaignStatus'];
+            }
+            if($this->isEnumType($campaigns->field_defs['campaign_type']['type'])){
+                $options = $campaigns->field_defs['campaign_type']['options'];
+                $label = $app_list_strings[$options][$row['campaignType']];
+                $x->LBL_AN_MARKETING_TYPE = $row['campaignType'].$this->keySeparator.$label;
+            }else{
+                $x->LBL_AN_MARKETING_TYPE = $row['campaignType'].$this->keySeparator.$row['campaignType'];
+            }
+
+            $x->LBL_AN_MARKETING_BUDGET = $row['campaignBudget'].$this->keySeparator.$row['campaignBudget'];
+            $x->LBL_AN_MARKETING_EXPECTED_COST = $row['campaignExpectedCost'].$this->keySeparator.$row['campaignExpectedCost'];
+            $x->LBL_AN_MARKETING_EXPECTED_REVENUE = $row['campaignExpectedRevenue'].$this->keySeparator.$row['campaignExpectedRevenue'];
+            $x->LBL_AN_MARKETING_OPPORTUNITY_NAME = $row['opportunityName'].$this->keySeparator.$row['opportunityName'];
+            $x->LBL_AN_MARKETING_OPPORTUNITY_AMOUNT = $row['opportunityAmount'].$this->keySeparator.$row['opportunityAmount'];
+            if($this->isEnumType($opps->field_defs['sales_stage']['type'])){
+                $options = $opps->field_defs['sales_stage']['options'];
+                $label = $app_list_strings[$options][$row['opportunitySalesStage']];
+                $x->LBL_AN_MARKETING_OPPORTUNITY_SALES_STAGE = $row['opportunitySalesStage'].$this->keySeparator.$label;
+            }else{
+                $x->LBL_AN_MARKETING_OPPORTUNITY_SALES_STAGE = $row['opportunitySalesStage'].$this->keySeparator.$row['opportunitySalesStage'];
+            }
+            $x->LBL_AN_MARKETING_OPPORTUNITY_ASSIGNED_TO = $row['assignedUser'].$this->keySeparator.$row['assignedUser'];
+            $x->LBL_AN_MARKETING_ACCOUNT_NAME = $row['accountsName'].$this->keySeparator.$row['accountsName'];
 
             $returnArray[] = $x;
         }
@@ -785,8 +940,9 @@ EOF;
      */
     public function action_getMarketingActivitySpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->marketingActivitiesFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->marketingActivitiesFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -803,6 +959,7 @@ EOF;
     public function action_createMarketingActivitySpotsData($filepath)
     {
         global $mod_strings;
+        global $app_list_strings;
         $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
@@ -822,6 +979,7 @@ EOF;
 EOF;
 
         $campaigns = BeanFactory::getBean('Campaigns');
+        $campaignLog = BeanFactory::getBean('CampaignLog');
         $aclWhereCampaigns = $this->buildSpotsAccessQuery($campaigns, $campaigns->table_name);
 
         $queryString = $query.$aclWhereCampaigns;
@@ -829,11 +987,18 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_CAMPAIGN_NAME'] = $row['name'];
-            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_ACTIVITY_DATE'] = $row['activity_date'];
-            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_ACTIVITY_TYPE'] = $row['activity_type'];
-            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_RELATED_TYPE'] = $row['related_type'];
-            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_RELATED_ID'] = $row['related_id'];
+            $x->LBL_AN_MARKETINGACTIVITY_CAMPAIGN_NAME = $row['name'].$this->keySeparator.$row['name'];
+            $x->LBL_AN_MARKETINGACTIVITY_ACTIVITY_DATE = $row['activity_date'].$this->keySeparator.$row['activity_date'];
+            if($this->isEnumType($campaignLog->field_defs['activity_type']['type'])){
+                $options = $campaignLog->field_defs['activity_type']['options'];
+                $label = $app_list_strings[$options][$row['activity_type']];
+                $x->LBL_AN_MARKETINGACTIVITY_ACTIVITY_TYPE = $row['activity_type'].$this->keySeparator.$label;
+            }else{
+                $x->LBL_AN_MARKETINGACTIVITY_ACTIVITY_TYPE = $row['activity_type'].$this->keySeparator.$row['activity_type'];
+            }
+
+            $x->LBL_AN_MARKETINGACTIVITY_RELATED_TYPE = $row['related_type'].$this->keySeparator.$row['related_type'];
+            $x->LBL_AN_MARKETINGACTIVITY_RELATED_ID = $row['related_id'].$this->keySeparator.$row['related_id'];
 
             $returnArray[] = $x;
         }
@@ -847,8 +1012,9 @@ EOF;
      */
     public function action_getQuotesSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->quotesFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->quotesFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -865,6 +1031,8 @@ EOF;
     public function action_createQuotesSpotsData($filepath)
     {
         global $mod_strings;
+        global $app_list_strings;
+
         $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
@@ -990,32 +1158,54 @@ EOF;
         $queryString = $query.$aclWhereOpps.$aclWhereQuotes.$aclWhereAccounts.$aclWhereContacts.$aclWhereProductQuotes.$aclWhereUsers.$aclWhereProductCategories.$aclWhereProducts;
         $result = $db->query($queryString);
 
+
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_NAME'] = $row['opportunityName'];
-            $x->$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_TYPE'] = $row['opportunityType'];
-            $x->$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_LEAD_SOURCE'] = $row['opportunityLeadSource'];
-            $x->$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_SALES_STAGE'] = $row['opportunitySalesStage'];
-            $x->$mod_strings['LBL_AN_QUOTES_ACCOUNT_NAME'] = $row['accountName'];
-            $x->$mod_strings['LBL_AN_QUOTES_CONTACT_NAME'] = $row['contactName'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_NAME'] = $row['productName'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_TYPE'] = $row['itemType'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_CATEGORY'] = $row['categoryName'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_QTY'] = $row['productQty'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_LIST_PRICE'] = $row['productListPrice'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_SALE_PRICE'] = $row['productPrice'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_COST_PRICE'] = $row['productCostPrice'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_DISCOUNT_PRICE'] = $row['productDiscount'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_DISCOUNT_AMOUNT'] = $row['discountAmount'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_TOTAL'] = $row['productTotal'];
-            $x->$mod_strings['LBL_AN_QUOTES_GRAND_TOTAL'] = $row['grandTotal'];
-            $x->$mod_strings['LBL_AN_QUOTES_ASSIGNED_TO'] = $row['assignedUser'];
-            $x->$mod_strings['LBL_AN_QUOTES_DATE_CREATED'] = $row['dateCreated'];
-            $x->$mod_strings['LBL_AN_QUOTES_DAY_CREATED'] = $row['dateCreatedDay'];
-            $x->$mod_strings['LBL_AN_QUOTES_WEEK_CREATED'] = $row['dateCreatedWeek'];
-            $x->$mod_strings['LBL_AN_QUOTES_MONTH_CREATED'] = $row['dateCreatedMonth'];
-            $x->$mod_strings['LBL_AN_QUOTES_QUARTER_CREATED'] = $row['dateCreatedQuarter'];
-            $x->$mod_strings['LBL_AN_QUOTES_YEAR_CREATED'] = $row['dateCreatedYear'];
+            $x->LBL_AN_QUOTES_OPPORTUNITY_NAME = $row['opportunityName'].$this->keySeparator.$row['opportunityName'];
+            if($this->isEnumType($opps->field_defs['opportunity_type']['type'])){
+                $options = $opps->field_defs['opportunity_type']['options'];
+                $label = $app_list_strings[$options][$row['opportunityType']];
+                $x->LBL_AN_QUOTES_OPPORTUNITY_TYPE = $row['opportunityType'].$this->keySeparator.$label;
+            }else{
+                $x->LBL_AN_QUOTES_OPPORTUNITY_TYPE = $row['opportunityType'].$this->keySeparator.$row['opportunityType'];
+            }
+
+            if($this->isEnumType($opps->field_defs['lead_source']['type'])){
+                $options = $opps->field_defs['lead_source']['options'];
+                $label = $app_list_strings[$options][$row['opportunityLeadSource']];
+                $x->LBL_AN_QUOTES_OPPORTUNITY_LEAD_SOURCE = $row['opportunityLeadSource'].$this->keySeparator.$label;
+            }else{
+                $x->LBL_AN_QUOTES_OPPORTUNITY_LEAD_SOURCE = $row['opportunityLeadSource'].$this->keySeparator.$row['opportunityLeadSource'];
+            }
+
+            if($this->isEnumType($opps->field_defs['sales_stage']['type'])){
+                $options = $opps->field_defs['sales_stage']['options'];
+                $label = $app_list_strings[$options][$row['opportunitySalesStage']];
+                $x->LBL_AN_QUOTES_OPPORTUNITY_SALES_STAGE = $row['opportunitySalesStage'].$this->keySeparator.$label;
+            }else{
+                $x->LBL_AN_QUOTES_OPPORTUNITY_SALES_STAGE = $row['opportunitySalesStage'].$this->keySeparator.$row['opportunitySalesStage'];
+            }
+
+            $x->LBL_AN_QUOTES_ACCOUNT_NAME = $row['accountName'].$this->keySeparator.$row['accountName'];
+            $x->LBL_AN_QUOTES_CONTACT_NAME = $row['contactName'].$this->keySeparator.$row['contactName'];
+            $x->LBL_AN_QUOTES_ITEM_NAME = $row['productName'].$this->keySeparator.$row['productName'];
+            $x->LBL_AN_QUOTES_ITEM_TYPE = $row['itemType'].$this->keySeparator.$row['itemType'];
+            $x->LBL_AN_QUOTES_ITEM_CATEGORY = $row['categoryName'].$this->keySeparator.$row['categoryName'];
+            $x->LBL_AN_QUOTES_ITEM_QTY = $row['productQty'].$this->keySeparator.$row['productQty'];
+            $x->LBL_AN_QUOTES_ITEM_LIST_PRICE = $row['productListPrice'].$this->keySeparator.$row['productListPrice'];
+            $x->LBL_AN_QUOTES_ITEM_SALE_PRICE = $row['productPrice'].$this->keySeparator.$row['productPrice'];
+            $x->LBL_AN_QUOTES_ITEM_COST_PRICE = $row['productCostPrice'].$this->keySeparator.$row['productCostPrice'];
+            $x->LBL_AN_QUOTES_ITEM_DISCOUNT_PRICE = $row['productDiscount'].$this->keySeparator.$row['productDiscount'];
+            $x->LBL_AN_QUOTES_ITEM_DISCOUNT_AMOUNT = $row['discountAmount'].$this->keySeparator.$row['discountAmount'];
+            $x->LBL_AN_QUOTES_ITEM_TOTAL = $row['productTotal'].$this->keySeparator.$row['productTotal'];
+            $x->LBL_AN_QUOTES_GRAND_TOTAL = $row['grandTotal'].$this->keySeparator.$row['grandTotal'];
+            $x->LBL_AN_QUOTES_ASSIGNED_TO = $row['assignedUser'].$this->keySeparator.$row['assignedUser'];
+            $x->LBL_AN_QUOTES_DATE_CREATED = $row['dateCreated'].$this->keySeparator.$row['dateCreated'];
+            $x->LBL_AN_QUOTES_DAY_CREATED = $row['dateCreatedDay'].$this->keySeparator.$row['dateCreatedDay'];
+            $x->LBL_AN_QUOTES_WEEK_CREATED = $row['dateCreatedWeek'].$this->keySeparator.$row['dateCreatedWeek'];
+            $x->LBL_AN_QUOTES_MONTH_CREATED = $row['dateCreatedMonth'].$this->keySeparator.$row['dateCreatedMonth'];
+            $x->LBL_AN_QUOTES_QUARTER_CREATED = $row['dateCreatedQuarter'].$this->keySeparator.$row['dateCreatedQuarter'];
+            $x->LBL_AN_QUOTES_YEAR_CREATED = $row['dateCreatedYear'].$this->keySeparator.$row['dateCreatedYear'];
 
             $returnArray[] = $x;
         }
