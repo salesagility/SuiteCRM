@@ -261,12 +261,32 @@ class AOD_Index extends AOD_Index_sugar {
     }
 
     public static function isModuleSearchable($module,$beanName){
+
+        require_once('modules/Home/UnifiedSearchAdvanced.php');
+        $usa = new UnifiedSearchAdvanced();
+        $modules = $usa->retrieveEnabledAndDisabledModules();
+
         $whiteList = array("DocumentRevisions","Cases");
-        if(in_array($module,$whiteList)){
+        $enabledModules = [];
+        foreach( $modules['enabled'] as $mod)
+        {
+            $enabledModules[] = $mod['module'];
+        }
+
+        $whiteListMerge = array_merge($whiteList,$enabledModules);
+        if(in_array($module,$whiteListMerge)){
             return true;
         }
         $blackList = array("AOD_IndexEvent","AOD_Index","AOW_Actions","AOW_Conditions","AOW_Processed","SchedulersJobs");
-        if(in_array($module,$blackList)){
+
+        $disabledModules = [];
+        foreach( $modules['disabled'] as $mod)
+        {
+            $disabledModules[] = $mod['module'];
+        }
+
+        $blackListMerge = array_merge($blackList,$disabledModules);
+        if(in_array($module,$blackListMerge)){
             return false;
         }
         $manager = new VardefManager();
