@@ -143,9 +143,9 @@ class vCal extends SugarBean {
 		    $GLOBALS['current_user'] = $user_bean;
 		}
         // get activities.. queries Meetings and Calls
-        $activityList = array("Meeting" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
-            "Call" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
-            "Task" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_due"));
+        $activityList = array("Meetings" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
+            "Calls" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
+            "Tasks" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_due"));
 
         $acts_arr =
             CalendarActivity::get_activities($activityList , $user_bean->id,

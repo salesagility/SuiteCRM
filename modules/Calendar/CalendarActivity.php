@@ -146,6 +146,7 @@ class CalendarActivity {
 
 	/**
 	 * Get array of activities
+	 * @param array $activities
 	 * @param string $user_id
 	 * @param boolean $show_tasks
 	 * @param SugarDateTime $view_start_time start date
@@ -155,10 +156,11 @@ class CalendarActivity {
 	 * @param boolean $show_completed use to allow filtering completed events 
 	 * @return array
 	 */
-	function get_activities($acivitites, $user_id, $show_tasks, $view_start_time, $view_end_time, $view, $show_calls = true, $show_completed = true)
+	function get_activities($activities, $user_id, $show_tasks, $view_start_time, $view_end_time, $view, $show_calls = true, $show_completed = true)
 	{
 
 		global $current_user;
+		global $beanList;
 		$act_list = array();
 		$seen_ids = array();
 
@@ -172,10 +174,12 @@ class CalendarActivity {
 			$completedTasks = " AND tasks.status != 'Completed' ";
 		}
 
-		foreach($acivitites as $key => $activity){
+		foreach($activities as $key => $activity){
+
 			if(ACLController::checkAccess($key, 'list', true)  ) {
 				/* END - SECURITY GROUPS */
-				$bean = new $key();
+				$class = $beanList[$key];
+				$bean = new $class();
 
 				if($current_user->id  == $user_id) {
 					$bean->disable_row_level_security = true;
