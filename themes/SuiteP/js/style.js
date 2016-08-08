@@ -359,3 +359,79 @@ function changeFirstTab(src) {
     return true;
 }
 // End of custom jQuery
+
+
+// fix for tab navigation on user profile for SuiteP theme
+var isUserProfileEditViewPage = function() {
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+          results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+    var module = getParameterByName('module');
+    var action = getParameterByName('action');
+    return module == 'Users' && action == 'EditView';
+};
+
+if(isUserProfileEditViewPage()) {
+    var tabsRefresh = function() {
+        var tabFrames = {
+            // User Profile
+            'tab1': [
+                // User Profile & Employee Information
+                'form#EditView div#EditView_tabs.yui-navset.yui-navset-top div.yui-content div div#EditView_tabs',
+                // Email Settings
+                '#email_options'
+            ],
+            // Password
+            'tab2': [
+                // Password
+                '#generate_password'
+            ],
+            // Themes
+            'tab3': [
+                // Themes
+                '#themepicker'
+            ],
+            // Advanced
+            'tab4': [
+                // User Settings
+                '#settings',
+                // Layout Options
+                '#layout',
+                // Locale Settings
+                '#locale',
+                // Calendar Options
+                '#calendar_options'
+            ],
+            // External Account
+            'tab5': [
+                '#eapm_area'
+            ]
+        };
+        // hide all tabs..
+        for(var i=1; i<=5; i++) {
+            for(var j=0; j<tabFrames['tab'+i].length; j++) {
+                $(tabFrames['tab'+i][j]).hide();
+            }
+        }
+
+        // show the active only
+        var activeTab = $('#EditView_tabs.yui-navset.yui-navset-top ul.yui-nav li.selected a').first().attr('id');
+        for(i=0; i<tabFrames[activeTab].length; i++) {
+            $(tabFrames[activeTab][i]).show();
+        }
+    }
+    $(function () {
+        for(var i=1; i<=5; i++) {
+            $('#tab'+i).click(function () {
+                setTimeout(function(){tabsRefresh();}, 300);
+            });
+        }
+        setTimeout(function(){tabsRefresh();}, 300);
+    });
+}
