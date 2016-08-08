@@ -154,7 +154,11 @@
                 </a>
 
             </div>
-            <div class="panel-body {{$collapse}}" id="top-panel-{{$panelCount}}">
+            {{if $label != "LBL_AOP_CASE_UPDATES"}}
+                <div class="panel-body {{$collapse}}" id="top-panel-{{$panelCount}}">
+            {{else}}
+                <div class="panel-body {{$collapse}}" id="LBL_AOP_CASE_UPDATES">
+            {{/if}}
                 <div class="tab-content">
                     {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
                 </div>
