@@ -639,7 +639,7 @@ class SubPanelDefinitions
 	 * @param boolean 	Optional - include the subpanel title label in the return array (false)
 	 * @return array	All tabs that pass an ACL check
 	 */
-	function get_available_tabs ($FromGetModuleSubpanels=false)
+	function get_available_tabs ($FromGetModuleSubpanels = false)
 	{
 		global $modListHeader ;
 		global $modules_exempt_from_availability_check ;

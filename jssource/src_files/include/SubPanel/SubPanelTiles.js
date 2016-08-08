@@ -658,7 +658,7 @@ SUGAR.subpanelUtils = function() {
 		/* call setGroupCookie */
 
 		loadSubpanelGroup: function(group){
-			if(group == SUGAR.subpanelUtils.currentSubpanelGroup) return;
+			//if(group == SUGAR.subpanelUtils.currentSubpanelGroup) return;
 
 			if(SUGAR.subpanelUtils.loadedGroups[group]){
 				SUGAR.subpanelUtils.updateSubpanel(group);

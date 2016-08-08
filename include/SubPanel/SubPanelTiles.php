@@ -154,6 +154,9 @@ class SubPanelTiles
         //get all the "tabs" - this actually means all the subpanels available for display within a tab
         $tabs = $this->subpanel_definitions->get_available_tabs();
 
+
+
+
         if(!empty($selectedGroup))
         {
             // Bug #44344 : Custom relationships under same module only show once in subpanel tabs
