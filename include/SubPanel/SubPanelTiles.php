@@ -337,10 +337,10 @@ class SubPanelTiles
 
             if($div_display == 'none'){
                 $opp_display  = 'inline';
-                $tabs_properties[$t]['expanded_subpanels'] = true;
+                $tabs_properties[$t]['expanded_subpanels'] = false;
             } else{
                 $opp_display  = 'none';
-                $tabs_properties[$t]['expanded_subpanels'] = false;
+                $tabs_properties[$t]['expanded_subpanels'] = true;
             }
 
             if (!empty($this->layout_def_key) ) {
