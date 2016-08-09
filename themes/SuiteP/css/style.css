@@ -5933,7 +5933,9 @@ hr {
     border: 1px solid transparent;
 }
 
-#pagecontent {
+#pagecontent > table td {padding: 8px;}
+
+#fieldChoices  {
     padding: 16px 8px 8px 8px;
     background: #ffffff;
     border: 1px solid transparent;
