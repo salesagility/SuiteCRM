@@ -5810,8 +5810,123 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     border: 1px solid #cccccc;
 }
 
+/*Form to Person section*/
+#fieldChoices .field {
+    margin: 0;
+    padding: 0;
+}
 
+#fieldChoices #fieldcontainer {
+    background-color: transparent;
+}
 
+#fieldChoices .field-list {
+    background-color: #F5F5F5;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    min-height: 240px;
+    width: 30%;
+    display: inline-block;
+    padding: 8px;
+    margin-right: 1%;
+}
+
+#fieldChoices .field-list input, .field-list textarea {
+    width: 100%;
+    display: block;
+    float: none;
+    clear: both;
+}
+
+#fieldChoices .field-list input {
+    height: 30px;
+}
+
+#fieldChoices .field {
+
+}
+
+#fieldChoices .field-header {
+    background-clip: padding-box;
+    background-color: #BFCAD3;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 14px;
+    padding: 8px;
+    display: inherit;
+    height: 48px;
+    line-height: 32px;
+}
+
+#fieldChoices .required  > .field-header {
+    border: 1px solid transparent;
+    background-color: #F08377;
+    color: #ffffff;
+    padding: 8px !important;
+    margin: 0;
+}
+
+#fieldChoices .field-type {
+    float: none;
+}
+
+#fieldChoices .field-list input[type="button"] {
+    width: 100px;
+}
+
+#fieldChoices .field > .field-header {
+    font-weight: bold;
+}
+
+#fieldChoices .field-container{
+    max-height: 300px;
+    min-height: 300px;
+    height: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#fieldChoices .optionButtonsHolder {
+    margin-top: 5px;
+}
+
+#fieldChoices .title {
+    display: inline-block;
+    width: 30%;
+    text-align: center;
+    font-weight: 300;
+    font-size: 20px;
+    color: #F08377;
+    padding-bottom: 8px;
+}
+
+#fieldChoices #personTypeSelect {
+    margin-bottom: 20px;
+}
+
+.ui-state-highlight {
+    height: 48px;
+    border: 1px solid #778591;
+    border-radius: 4px;
+    background: #E6E6E6;
+
+}
+
+hr {
+    border: none;
+}
+
+.pagecontent {
+    border: 1px solid transparent;
+}
+
+#pagecontent {
+    padding: 16px 8px 8px 8px;
+    background: #ffffff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
 /* fix schedule bar popup on calendar */
 .ui-front, .ui-dialog {
     z-index: 1100 !important;
