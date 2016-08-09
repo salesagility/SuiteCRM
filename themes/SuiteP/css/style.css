@@ -896,6 +896,18 @@ th, td {
 
 }
 
+slot, #lead_queries_Div td {
+      color: #534D64;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 48px;
+      text-align: left;
+      white-space: nowrap;
+      vertical-align: baseline;
+
+}
+
+
 .dataField {
     min-height: 48px;
     line-height: 48px;
