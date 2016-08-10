@@ -95,7 +95,7 @@ class aSubPanel
 			}
 		}
 
-		if ($instance_properties['type'] != 'collection' && !empty($collections)) {
+		if (isset($instance_properties['type']) && $instance_properties['type'] != 'collection' && !empty($collections)) {
 			$instance = $this->_instance_properties;
 			$BreakDownCollections = $collections;
 			$newTable = strtolower($instance['module']);
