@@ -624,7 +624,7 @@ CAL.dialog_remove = function () {
     }
     var callback = {
         success: function (o) {
-            $('#calendar1').fullCalendar('removeEvents',CAL.deleted_id);
+            $("#calendar" + global_current_user_id).fullCalendar('removeEvents',CAL.deleted_id);
         }, failure: function () {
             alert(CAL.lbl_error_saving);
         }
