@@ -145,7 +145,7 @@
             {{assign var='panelHeadingCollapse' value=""}}
         {{/if}}
         {{if $label != "LBL_AOP_CASE_UPDATES"}}
-            {{assign var='panelId' value="top-panel-{{$panelCount}}"}}
+            {{assign var='panelId' value="top-panel-$panelCount"}}
         {{else}}
             {{assign var='panelId' value="LBL_AOP_CASE_UPDATES"}}
         {{/if}}
