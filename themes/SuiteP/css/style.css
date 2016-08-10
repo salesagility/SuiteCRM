@@ -1450,11 +1450,15 @@ table#mass_update_table td select {
 
 }
 
+#detail_header_action_menu li.sugar_action_button a#edit_button,
+#userEditActions li.sugar_action_button  a,
 #actionLinkTop li.sugar_action_button  a,
 #actionLinkBottom li.sugar_action_button  a{
     margin-top: 5px;
 }
 
+#detail_header_action_menu li.sugar_action_button,
+#userEditActions li.sugar_action_button,
 #actionLinkTop li.sugar_action_button,
 #actionLinkBottom li.sugar_action_button {
     min-width: 32px;
@@ -1467,12 +1471,21 @@ table#mass_update_table td select {
     text-transform: uppercase;
 }
 
+#detail_header_action_menu > .sugar_action_button > ul.subnav,
+#userEditActions > .sugar_action_button > ul.subnav,
 #selectLinkTop > .sugar_action_button > ul.subnav,
 #selectLinkBottom > .sugar_action_button > ul.subnav {
     left: 0;
     right: auto;
 }
 
+#detail_header_action_menu > .sugar_action_button > ul.subnav,
+#detail_header_action_menu > .sugar_action_button > ul.subnav li,
+#detail_header_action_menu > .sugar_action_button > ul.subnav a,
+#userEditActions > .sugar_action_button > ul.subnav,
+#userEditActions > .sugar_action_button > ul.subnav li,
+#userEditActions > .sugar_action_button > ul.subnav a,
+#userEditActions ul.clickMenu li ul.subnav,
 #selectLinkTop > .sugar_action_button > ul.subnav,
 #selectLinkTop > .sugar_action_button > ul.subnav li,
 #selectLinkTop > .sugar_action_button > ul.subnav a,
@@ -1508,6 +1521,23 @@ table#mass_update_table td select {
 #actionLinkBottom .menuItemHilite {
     background-color: #7b8a96 !important;
 
+}
+
+#detail_header_action_menu li.sugar_action_button,
+#detail_header_action_menu > .sugar_action_button > ul.subnav a:hover,
+#detail_header_action_menu > .sugar_action_button > ul.subnav,
+#detail_header_action_menu > .sugar_action_button > ul.subnav li,
+#detail_header_action_menu > .sugar_action_button > ul.subnav a,
+#userEditActions li.sugar_action_button,
+#userEditActions > .sugar_action_button > ul.subnav a:hover,
+#userEditActions > .sugar_action_button > ul.subnav,
+#userEditActions > .sugar_action_button > ul.subnav li,
+#userEditActions > .sugar_action_button > ul.subnav a {
+    background-color: #F08377;
+}
+#detail_header_action_menu li.sugar_action_button,
+#userEditActions li.sugar_action_button {
+    padding: 5px 20px;
 }
 
 #selectLinkTop > .sugar_action_button > ul.subnav a,
