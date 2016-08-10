@@ -73,6 +73,22 @@
 {/if}
 <script>
     var ModuleSubPanels = {$module_sub_panels};
+    {literal}
+
+    var updateSubpanelGroup = function() {
+        // Filter subpanels to show the current tab
+        if (typeof SUGAR.subpanelUtils.currentSubpanelGroup !== "undefined") {
+            SUGAR.subpanelUtils.loadSubpanelGroup(SUGAR.subpanelUtils.currentSubpanelGroup);
+            clearCheckSubpanelGroup();
+        }
+    };
+
+    var checkSubpanelGroup =  setInterval(updateSubpanelGroup, 100);
+
+    var clearCheckSubpanelGroup = function() {
+        clearInterval(checkSubpanelGroup);
+    };
+    {/literal}
 </script>
 
     {*{/if}*}

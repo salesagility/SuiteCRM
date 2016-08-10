@@ -2,7 +2,6 @@
 
 <script type="text/javascript" src="{sugar_getjspath file='include/SubPanel/SubPanelTiles.js'}"></script>
 
-
 <ul class="noBullet" id="subpanel_list">
 {foreach from=$subpanel_tabs key=i item=subpanel_tab}
     <li class="noBullet" id="whole_subpanel_{$subpanel_tab}">
@@ -70,6 +69,13 @@
 {/if}
 <script>
     var ModuleSubPanels = {$module_sub_panels};
+    {literal}
+    setTimeout(function() {
+        if(typeof SUGAR.subpanelUtils.currentSubpanelGroup !== "undefined") {
+            SUGAR.subpanelUtils.loadSubpanelGroup(SUGAR.subpanelUtils.currentSubpanelGroup);
+        }
+    }, 500);
+    {/literal}
 </script>
 
 
