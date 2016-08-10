@@ -1248,6 +1248,7 @@ class AOR_Report extends Basic {
                 }
                 if(isset($app_list_strings['aor_sql_operator_list'][$condition->operator])) {
                     $where_set = false;
+                    $where_operator = $app_list_strings['aor_sql_operator_list'][$condition->operator];
 
                     $data = $condition_module->field_defs[$condition->field];
 
@@ -1373,7 +1374,7 @@ class AOR_Report extends Basic {
                                 $value = '(';
                                 foreach ($multi_values as $multi_value) {
                                     if ($value != '(') $value .= $sep;
-                                    $value .= $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . " '" . $multi_value . "'";
+                                    $value .= $field . ' ' . $where_operator . " '" . $multi_value . "'";
                                 }
                                 $value .= ')';
                             }
@@ -1398,16 +1399,19 @@ class AOR_Report extends Basic {
                             break;
                     }
 
-                    //handle like conditions
+                    //handle like conditions and dealing with language translations
                     Switch($condition->operator) {
                         case 'Contains':
                             $value = "CONCAT('%', ".$value." ,'%')";
+                            $where_operator = 'LIKE';
                             break;
                         case 'Starts_With':
                             $value = "CONCAT(".$value." ,'%')";
+                            $where_operator = 'LIKE';
                             break;
                         case 'Ends_With':
                             $value = "CONCAT('%', ".$value.")";
+                            $where_operator = 'LIKE';
                             break;
                     }
 
@@ -1428,7 +1432,7 @@ class AOR_Report extends Basic {
                             $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND '));
                             $tiltLogicOp = false;
 
-                            switch ($app_list_strings['aor_sql_operator_list'][$condition->operator]) {
+                            switch ($where_operator) {
                                 case "=":
                                     $query['where'][] = $field . ' BETWEEN ' . $value .  ' AND ' . '"' . $date . '"';
                                     break;
@@ -1439,11 +1443,11 @@ class AOR_Report extends Basic {
                                 case "<":
                                 case ">=":
                                 case "<=":
-                                    $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                                    $query['where'][] = $field . ' ' . $where_operator . ' ' . $value;
                                     break;
                             }
                         } else {
-                            if (!$where_set) $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                            if (!$where_set) $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $field . ' ' . $where_operator . ' ' . $value;
                         }
                     }
                     $tiltLogicOp = false;
