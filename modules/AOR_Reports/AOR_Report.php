@@ -1032,6 +1032,7 @@ class AOR_Report extends Basic {
 
         if($beanList[$this->report_module]){
             $module = new $beanList[$this->report_module]();
+            $query['select'][] = $this->db->quoteIdentifier($module->table_name).".id AS '".$module->table_name."_id'";
 
             $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND deleted = 0 ORDER BY field_order ASC";
 
@@ -1159,6 +1160,7 @@ class AOR_Report extends Basic {
                         if($rel_module != null) {
                             $query['join'][$alias] .= $this->build_report_access_query($rel_module, $name);
                         }
+                        $query['select'][] = $join['select']." AS '".$alias."_id'";
                     }
                     break;
                 default:
