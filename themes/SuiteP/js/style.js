@@ -378,9 +378,10 @@ var isUserProfilePage = function() {
         module = $('#EditView_tabs').closest('form#EditView').find('input[name="module"]').val()
     }
     if(!module) {
-        module = module_sugar_grp1;
+        // ISSUE: breaks detailview and list views
+        // module = module_sugar_grp1;
     }
-    return module == 'Users';;
+    return module == 'Users';
 };
 
 var isEditViewPage = function() {
