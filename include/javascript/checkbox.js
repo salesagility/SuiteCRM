@@ -412,7 +412,7 @@ function manage_delegates() {
 function handle_invited() {
   var ids = $("#custom_hidden_1").val();
   var list = $("#select_entire_list").val();
-  var eventid = $("[name='fp_events_id']").val();
+  var eventid = $("[name='record']").val();
   var data = 'id=' + ids;
   data += '&event_id=' + eventid;
   data += '&entire_list=' + list;
@@ -439,7 +439,7 @@ function handle_invited() {
 function handle_not_invited() {
   var ids = $("#custom_hidden_1").val();
   var list = $("#select_entire_list").val();
-  var eventid = $("[name='fp_events_id']").val();
+  var eventid = $("[name='record']").val();
   var data = 'id=' + ids;
   data += '&event_id=' + eventid;
   data += '&entire_list=' + list;
@@ -466,7 +466,7 @@ function handle_not_invited() {
 function handle_attended() {
   var ids = $("#custom_hidden_1").val();
   var list = $("#select_entire_list").val();
-  var eventid = $("[name='fp_events_id']").val();
+  var eventid = $("[name='record']").val();
   var data = 'id=' + ids;
   data += '&event_id=' + eventid;
   data += '&entire_list=' + list;
@@ -494,7 +494,7 @@ function handle_attended() {
 function handle_not_attended() {
   var ids = $("#custom_hidden_1").val();
   var list = $("#select_entire_list").val();
-  var eventid = $("[name='fp_events_id']").val();
+  var eventid = $("[name='record']").val();
   var data = 'id=' + ids;
   data += '&event_id=' + eventid;
   data += '&entire_list=' + list;
@@ -597,7 +597,7 @@ function handle_accepted() {
 
   var ids = $("#custom_hidden_1").val();
   var list = $("#select_entire_list").val();
-  var eventid = $("[name='fp_events_id']").val();
+  var eventid = $("[name='record']").val();
   var data = 'id=' + ids;
   data += '&event_id=' + eventid;
   data += '&entire_list=' + list;
@@ -624,7 +624,7 @@ function handle_declined() {
 
   var ids = $("#custom_hidden_1").val();
   var list = $("#select_entire_list").val();
-  var eventid = $("[name='fp_events_id']").val();
+  var eventid = $("[name='record']").val();
   var data = 'id=' + ids;
   data += '&event_id=' + eventid;
   data += '&entire_list=' + list;
