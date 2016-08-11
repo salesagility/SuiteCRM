@@ -187,7 +187,7 @@ function set_return_and_save_background2(popup_reply_data) {
   if (select_entire_list == 1) {
     query_array.push('current_query_by_page=' + current_query_by_page);
   }
-  //var refresh_page = escape(passthru_data['refresh_page']);
+
   var refresh_page = 1;
   for (prop in passthru_data) {
     if (prop == 'link_field_name') {
@@ -207,7 +207,7 @@ function set_return_and_save_background2(popup_reply_data) {
 
   var query_string = query_array.join('&');
   request_map[request_id] = passthru_data['child_field'];
-  // alert(query_string);
+
   var returnstuff = http_fetch_sync('index.php', query_string);
   request_id++;
 
@@ -387,7 +387,7 @@ function manage_delegates() {
       fixedcenter: "contained",
       visible: false,
       draggable: true,
-      effect: [//{effect:YAHOO.widget.ContainerEffect.SLIDE, duration:0.2},
+      effect: [
         {effect: YAHOO.widget.ContainerEffect.FADE, duration: 0.1}],
       modal: true
     });
