@@ -1895,6 +1895,14 @@ td.fc-widget-header table > thead > tr > th {
     line-height: 42px;
 }
 
+#pagecontent > div.row.monthHeader > div > a {
+    color: #ffffff;
+}
+
+#pagecontent > div.row.monthHeader {
+    margin-bottom: 0;
+}
+
 .monthHeader td {
     padding-left: 5px;
 }
