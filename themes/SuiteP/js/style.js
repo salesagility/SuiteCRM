@@ -375,18 +375,18 @@ var getParameterByName = function(name, url) {
 var isUserProfilePage = function() {
     var module = getParameterByName('module');
     if(!module) {
-        module = $('#EditView_tabs').closest('form#EditView').find('input[name="module"]').val()
+        module = $('#EditView_tabs').closest('form#EditView').find('input[name="module"]').val();
     }
-    if(!module) {
+    if(!module && typeof module_sugar_grp1 != 'undefined' && module_sugar_grp1) {
         module = module_sugar_grp1;
     }
-    return module == 'Users';;
+    return module == 'Users';
 };
 
 var isEditViewPage = function() {
     var action = getParameterByName('action');
     if(!action) {
-        action = $('#EditView_tabs').closest('form#EditView').find('input[name="page"]').val()
+        action = $('#EditView_tabs').closest('form#EditView').find('input[name="page"]').val();
     }
     return action == 'EditView';
 };
