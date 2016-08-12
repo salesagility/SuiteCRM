@@ -915,5 +915,14 @@ class ModuleBuilderController extends SugarController
         }
     }
 
+    function action_getModuleFields ()
+    {
+        $bean = BeanFactory::getBean('Accounts');
+        $field_defs = $bean->getFieldDefinitions();
+        $keys = array_keys($field_defs);
+
+        echo json_encode($keys);
+    }
+
 }
 ?>
