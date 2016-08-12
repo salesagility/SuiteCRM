@@ -55,7 +55,7 @@
         {{counter name="tabCount" print=false}}
         {{if $tabCount == '0'}}
         <li role="presentation" class="active">
-            <a id="tab{{$tabCount}}" href="#detailpanel_{{$tabCount}}" data-toggle="tab" class="hidden-xs">
+            <a id="tab{{$tabCount}}" data-toggle="tab" class="hidden-xs">
                 {sugar_translate label='{{$label}}' module='{{$module}}'}
             </a>
             <a id="xstab{{$tabCount}}" href="#" class="visible-xs first-tab-xs dropdown-toggle" data-toggle="dropdown">
@@ -66,7 +66,7 @@
                 {{foreach name=sectionXS from=$sectionPanels key=label item=panelXS}}
                 {{counter name="tabCountXS" print=false}}
                 <li role="presentation">
-                    <a id="tab{{$tabCountXS}}" href="#detailpanel_{{$tabCountXS}}" data-toggle="tab" onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
+                    <a id="tab{{$tabCountXS}}"  data-toggle="tab" onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
                         {sugar_translate label='{{$label}}' module='{{$module}}'}
                     </a>
                 </li>
@@ -75,7 +75,7 @@
         </li>
         {{else}}
         <li role="presentation" class="hidden-xs">
-            <a id="tab{{$tabCount}}" href="#detailpanel_{{$tabCount}}" data-toggle="tab">
+            <a id="tab{{$tabCount}}"  data-toggle="tab">
                 {sugar_translate label='{{$label}}' module='{{$module}}'}
             </a>
         </li>
@@ -143,7 +143,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading {{$panelHeadingCollapse}}">
-                    <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#detailpanel_{{$panelCount}}" aria-expanded="false">
+                    <a class="{{$collapsed}}" role="button" data-toggle="collapse"  aria-expanded="false">
                         <div class="col-xs-10 col-sm-11 col-md-11">
                             {sugar_translate label='{{$label}}' module='{{$module}}'}</div>
                         </div>
