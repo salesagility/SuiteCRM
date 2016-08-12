@@ -3534,15 +3534,22 @@ div.tab-content {
 
 #ajaxStatusDiv {
     background: #ffffff;
-    color: #c60c30;
-    position: fixed;
-    opacity: .8;
-    filter: alpha(opacity=80);
+    color: #F08377;
+    position: absolute;
     z-index: 20;
-    top: 7px;
+    opacity: 1;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+    top: 50%;
+    left: 50%;
+    width: 256px;
+    height: 32px;
     border: 1px solid #aaa;
     padding: 5px;
+    text-align: center;
+
 }
+
 
 div#chartDashlets {
     overflow-y: auto;
