@@ -78,8 +78,8 @@ class CasesViewEdit extends ViewEdit {
             </script>
         <?php
         }
-        $tiny = new SugarTinyMCE();
-        echo $tiny->getInstance('update_text,description', 'email_compose_light');
+//        $tiny = new SugarTinyMCE();
+//        echo $tiny->getInstance('update_text', 'email_compose_light');
     }
 
 }
