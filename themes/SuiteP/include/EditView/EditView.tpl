@@ -113,7 +113,7 @@
             {{counter name="tabCount" print=false}}
             {{/foreach}}
             {{else}}
-            <div class="tab-pane-NOBOOTSTRAPTOGGLER panel-collapse">test</div>
+            <div class="tab-pane panel-collapse">test</div>
             {{/if}}
         </div>
         {*display panels*}
