@@ -167,7 +167,7 @@ $admin_option_defs['jjwg_Maps']['config'] = array(
     './index.php?module=jjwg_Maps&action=config'
 );
 $admin_option_defs['jjwg_Maps']['geocoded_counts'] = array(
-    'Contacts',
+    'Geocoded_Counts',
     'LBL_JJWG_MAPS_ADMIN_GEOCODED_COUNTS_TITLE',
     'LBL_JJWG_MAPS_ADMIN_GEOCODED_COUNTS_DESC',
     './index.php?module=jjwg_Maps&action=geocoded_counts'
@@ -185,13 +185,13 @@ $admin_option_defs['jjwg_Maps']['geocode_addresses'] = array(
     './index.php?module=jjwg_Maps&action=geocode_addresses'
 );
 $admin_option_defs['jjwg_Maps']['donate'] = array(
-    'Opportunities',
+    'Donate',
     'LBL_JJWG_MAPS_ADMIN_DONATE_TITLE',
     'LBL_JJWG_MAPS_ADMIN_DONATE_DESC',
     './index.php?module=jjwg_Maps&action=donate'
 );
 $admin_option_defs['jjwg_Maps']['address_cache'] = array(
-    'Contacts',
+    'Address_Cache',
     'LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_TITLE',
     'LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_DESC',
     './index.php?module=jjwg_Address_Cache&action=index'
@@ -261,17 +261,17 @@ $admin_group_header[]= array('LBL_BUG_TITLE','',false,$admin_option_defs, 'LBL_B
 //Business Hours
 $admin_option_defs = array();
 $admin_option_defs['Administration']['business_hours'] = array(
-    'BusinessHours',
-    'Business Hours',
-    'Change the business hours',
+    'AOBH_BusinessHours',
+    'LBL_BUSINESS_HOURS',
+    'LBL_AOP_BUSINESS_HOURS_DESC',
     './index.php?module=Administration&action=BusinessHours'
 );
 $admin_group_header[] = array(
-    'Business Hours',
-    '',
+    'LBL_AOP_BUSINESS_HOURS_SETTINGS',
+    'LBL_AOP_BUSINESS_HOURS_SETTINGS',
     false,
     $admin_option_defs,
-    'Change the business hours'
+    'LBL_AOP_BUSINESS_HOURS_DESC'
 );
 
 
