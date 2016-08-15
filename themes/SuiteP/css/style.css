@@ -55,6 +55,12 @@ body {
     height: 100%;
 }
 
+img {
+    image-rendering: auto;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+
 /* LOGIN */
 div.p_login {
     background-color: #F5F5F5;
