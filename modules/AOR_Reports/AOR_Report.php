@@ -374,10 +374,11 @@ class AOR_Report extends Basic {
     }
 
 
-    function build_group_report($offset = -1, $links = true, $extra = array()){
+    function build_group_report($offset = -1, $links = true, $extra = array(),$forCSV = false){
         global $beanList;
 
         $html = '';
+        $csv = '';
         $query = '';
         $query_array = array();
         $module = new $beanList[$this->report_module]();
@@ -505,15 +506,24 @@ class AOR_Report extends Basic {
             $result = $this->db->query($query);
 
             while ($row = $this->db->fetchByAssoc($result)) {
-                if($html != '') $html .= '<br />';
-
-               $html .= $this->build_report_html($offset, $links, $row[$field_label], '', $extra);
+                if($forCSV) {
+                    if($csv != '') $csv .= "\r\n";
+                    $csv .= $this->build_report_csv($links, $row[$field_label], '', $extra);
+                } else {
+                    if($html != '') $html .= '<br />';
+                    $html .= $this->build_report_html($offset, $links, $row[$field_label], '', $extra);
+                }
 
             }
         }
 
-        if($html == '') $html = $this->build_report_html($offset, $links);
-        return $html;
+        if($forCSV) {
+            if($csv == '') $csv = $this->build_report_csv($links);
+            return $csv;
+        } else {
+            if($html == '') $html = $this->build_report_html($offset, $links);
+            return $html;
+        }
 
     }
 
@@ -748,6 +758,111 @@ class AOR_Report extends Basic {
         return $html;
     }
 
+    function build_report_csv($links = true, $group_value = '', $tableIdentifier = '', $extra = array()){
+
+        global $beanList, $sugar_config;
+
+        $delimiter = getDelimiter();
+
+        $report_sql = $this->build_report_query($group_value, $extra);
+
+        $total_rows = 0;
+        $count_sql = explode('ORDER BY', $report_sql);
+        $count_query = 'SELECT count(*) c FROM ('.$count_sql[0].') as n';
+
+        // We have a count query.  Run it and get the results.
+        $result = $this->db->query($count_query);
+        $assoc = $this->db->fetchByAssoc($result);
+        if(!empty($assoc['c']))
+        {
+            $total_rows = $assoc['c'];
+        }
+        $moduleFieldByGroupValue = $this->getModuleFieldByGroupValue($beanList, $group_value);
+        // moduleFieldByGroupValue returns what is displayed in the detail view (which is could for formatting dates, finding correct label, but does sometimes return html so need to strip tags)
+        $csv = $this->encloseForCSV(strip_tags($moduleFieldByGroupValue));
+        $csv .= "\r\n";
+
+
+
+        $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND deleted = 0 ORDER BY field_order ASC";
+        $result = $this->db->query($sql);
+
+
+
+        $fields = array();
+        $i = 0;
+        while ($row = $this->db->fetchByAssoc($result)) {
+
+            $field = new AOR_Field();
+            $field->retrieve($row['id']);
+
+            $path = unserialize(base64_decode($field->module_path));
+
+            $field_bean = new $beanList[$this->report_module]();
+
+            $field_module = $this->report_module;
+            $field_alias = $field_bean->table_name;
+            if($path[0] != $this->report_module){
+                foreach($path as $rel){
+                    if(empty($rel)){
+                        continue;
+                    }
+                    $field_module = getRelatedModule($field_module,$rel);
+                    $field_alias = $field_alias . ':'.$rel;
+                }
+            }
+            $label = str_replace(' ','_',$field->label).$i;
+            $fields[$label]['field'] = $field->field;
+            $fields[$label]['label'] = $field->label;
+            $fields[$label]['display'] = $field->display;
+            $fields[$label]['function'] = $field->field_function;
+            $fields[$label]['module'] = $field_module;
+            $fields[$label]['alias'] = $field_alias;
+            $fields[$label]['link'] = $field->link;
+            $fields[$label]['total'] = $field->total;
+
+            $fields[$label]['params'] = array("date_format" => $field->format);
+
+
+            if($fields[$label]['display']){
+                $csv.= $this->encloseForCSV($field->label);
+                $csv .= $delimiter;
+
+            }
+            ++$i;
+        }
+
+        $csv .= "\r\n";
+
+        $result = $this->db->query($report_sql);
+
+        $totals = array();
+        while ($row = $this->db->fetchByAssoc($result)) {
+
+            foreach($fields as $name => $att){
+                if($att['display']){
+                    if($att['function'] != '' )
+                        $csv .= $this->encloseForCSV($row[$name]);
+                    else
+                        $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name]))));
+                    $csv .= $delimiter;
+                    if($att['total']){
+                        $totals[$name][] = $row[$name];
+                    }
+                }
+            }
+            $csv .= "\r\n";
+
+
+        }
+
+
+        $csv .= $this->getTotalCSV($fields,$totals);
+
+
+        return $csv;
+    }
+    
     private function getModuleFieldByGroupValue($beanList, $group_value) {
         $moduleFieldByGroupValues = array();
 
@@ -851,6 +966,74 @@ class AOR_Report extends Basic {
         return $html;
     }
 
+    function getTotalCSV($fields,$totals) {
+        global $app_list_strings;
+
+        $currency = new Currency();
+        $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
+
+        $csv = "";
+        $delimiter = getDelimiter();
+
+        foreach($fields as $label => $field){
+            if(!$field['display']){
+                continue;
+            }
+            if($field['total']){
+                $totalLabel = $field['label'] ." ".$app_list_strings['aor_total_options'][$field['total']];
+                $csv .= $this->encloseForCSV($totalLabel);
+                $csv .= $delimiter;
+            }else{
+                $csv .= $delimiter;
+            }
+        }
+        $csv .= "\r\n";
+        foreach($fields as $label => $field){
+            if(!$field['display']){
+                continue;
+            }
+            if($field['total'] && isset($totals[$label])){
+                $type = $field['total'];
+                $total = $this->calculateTotal($type, $totals[$label]);
+                // Customise display based on the field type
+                $moduleBean = BeanFactory::newBean($field['module']);
+                $fieldDefinition = $moduleBean->field_defs[$field['field']];
+                $fieldDefinitionType = $fieldDefinition['type'];
+                switch($fieldDefinitionType) {
+                    case "currency":
+                        // Customise based on type of function
+                        switch($type){
+                            case 'SUM':
+                                if($currency->id == -99) {
+                                    $total = $currency->symbol.format_number($total, null, null);
+                                } else {
+                                    $total = $currency->symbol.format_number($total, null, null, array('convert' => true));
+                                }
+                            case 'COUNT':
+                                break;
+                            case 'AVG':
+                                if($currency->id == -99) {
+                                    $total = $currency->symbol.format_number($total, null, null);
+                                } else {
+                                    $total = $currency->symbol.format_number($total, null, null, array('convert' => true));
+                                }
+                            default:
+                                break;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                $csv .= $this->encloseForCSV($total);
+                $csv .= $delimiter;
+            }else{
+                $csv .= $delimiter;
+            }
+        }
+        $csv .= "\r\n";
+        return $csv;
+    }
+    
     function calculateTotal($type, $totals){
         switch($type){
             case 'SUM':
@@ -868,64 +1051,14 @@ class AOR_Report extends Basic {
         return '"'.$field.'"';
     }
 
-    function build_report_csv(){
+    function build_group_report_csv(){
 
         ini_set('zlib.output_compression', 'Off');
 
         ob_start();
         require_once('include/export_utils.php');
 
-        $delimiter = getDelimiter();
-        $csv = '';
-        //text/comma-separated-values
-
-        $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND deleted = 0 ORDER BY field_order ASC";
-        $result = $this->db->query($sql);
-
-        $fields = array();
-        $i = 0;
-        while ($row = $this->db->fetchByAssoc($result)) {
-
-            $field = new AOR_Field();
-            $field->retrieve($row['id']);
-
-            $path = unserialize(base64_decode($field->module_path));
-
-            $field_module = $this->report_module;
-            if($path[0] != $this->report_module){
-                foreach($path as $rel){
-                    $field_module = getRelatedModule($field_module,$rel);
-                }
-            }
-            $label = str_replace(' ','_',$field->label).$i;
-            $fields[$label]['field'] = $field->field;
-            $fields[$label]['display'] = $field->display;
-            $fields[$label]['function'] = $field->field_function;
-            $fields[$label]['module'] = $field_module;
-
-
-            if($field->display){
-                $csv.= $this->encloseForCSV($field->label);
-                $csv .= $delimiter;
-            }
-            ++$i;
-        }
-
-        $sql = $this->build_report_query();
-        $result = $this->db->query($sql);
-
-        while ($row = $this->db->fetchByAssoc($result)) {
-            $csv .= "\r\n";
-            foreach($fields as $name => $att){
-                if($att['display']){
-                    if($att['function'] != '' )
-                        $csv .= $this->encloseForCSV($row[$name]);
-                    else
-                        $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name]))));
-                    $csv .= $delimiter;
-                }
-            }
-        }
+        $csv = $this->build_group_report(-1,false, array(),true);
 
         $csv= $GLOBALS['locale']->translateCharset($csv, 'UTF-8', $GLOBALS['locale']->getExportCharset());
 
