@@ -76,7 +76,6 @@
                         {$dashboardPages.$tabNum.pageTitle}
                     </a>
 
-
                     <a id="xstab{$tabNum}" href="#" class="visible-xs first-tab-xs dropdown-toggle" data-toggle="dropdown">
                         {$dashboardPages.$tabNum.pageTitle}
                     </a>
@@ -103,7 +102,7 @@
 
         {if !$lock_homepage}
             <li id="tab-actions" class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Actions{$APP.LBL_LINK_ACTIONS}</a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">{$dashboardActions}{$APP.LBL_LINK_ACTIONS}</a>
                 {include file='themes/SuiteP/include/MySugar/tpls/actions_menu.tpl'}
             </li>
         {/if}

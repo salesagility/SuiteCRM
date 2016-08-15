@@ -3904,6 +3904,7 @@ $app_strings['LBL_DELETE_DASHBOARD2'] = 'dashboard?';
 $app_strings['LBL_ADD_DASHBOARD_PAGE'] = 'Add a Dashboard Page';
 $app_strings['LBL_DELETE_DASHBOARD_PAGE'] = 'Remove Current Dashboard Page';
 $app_strings['LBL_RENAME_DASHBOARD_PAGE'] = 'Rename Dashboard Page';
+$app_strings['LBL_SUITE_DASHBOARD_ACTIONS'] = 'Actions';
 
 $app_strings['LBL_DISCOVER_SUITECRM'] = 'Discover SuiteCRM';
 
