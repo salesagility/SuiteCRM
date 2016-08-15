@@ -101,11 +101,11 @@
             {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
             {{if isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true}}
             {{if $tabCount == '0'}}
-            <div class="tab-pane active fade in" id='detailpanel_{{$tabCount}}'>
+            <div class="tab-pane-NOBOOTSTRAPTOGGLER active fade in" id='detailpanel_{{$tabCount}}'>
                 {{include file='themes/SuiteP/include/EditView/tab_panel_content.tpl'}}
             </div>
             {{else}}
-            <div class="tab-pane fade" id='detailpanel_{{$tabCount}}'>
+            <div class="tab-pane-NOBOOTSTRAPTOGGLER fade" id='detailpanel_{{$tabCount}}'>
                 {{include file='themes/SuiteP/include/EditView/tab_panel_content.tpl'}}
             </div>
             {{/if}}
@@ -113,7 +113,7 @@
             {{counter name="tabCount" print=false}}
             {{/foreach}}
             {{else}}
-            <div class="tab-pane panel-collapse">test</div>
+            <div class="tab-pane-NOBOOTSTRAPTOGGLER panel-collapse">test</div>
             {{/if}}
         </div>
         {*display panels*}
@@ -187,3 +187,39 @@ $(document).ready(function() {ldelim}
   {rdelim});
 {rdelim}
 </script>
+
+{literal}
+
+    <script type="text/javascript">
+
+    var selectTab = function(tab) {
+        $('#EditView_tabs div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').hide();
+        $('#EditView_tabs div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').eq(tab).show().addClass('active').addClass('in');
+    };
+
+    var selectTabOnError = function(tab) {
+        selectTab(tab);
+        $('#EditView_tabs ul.nav.nav-tabs li').removeClass('active');
+        $('#EditView_tabs ul.nav.nav-tabs li a').css('color', '');
+
+        $('#EditView_tabs ul.nav.nav-tabs li').eq(tab).find('a').first().css('color', 'red');
+        $('#EditView_tabs ul.nav.nav-tabs li').eq(tab).addClass('active');
+
+    };
+
+    var selectTabOnErrorInputHandle = function(inputHandle) {
+        var tab = $(inputHandle).closest('.tab-pane-NOBOOTSTRAPTOGGLER').attr('id').match(/^detailpanel_(.*)$/)[1];
+        selectTabOnError(tab);
+    };
+
+
+    $(function(){
+        $('#EditView_tabs ul.nav.nav-tabs li').click(function(e){
+            var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
+            selectTab(tab);
+        });
+    });
+
+    </script>
+
+{/literal}
