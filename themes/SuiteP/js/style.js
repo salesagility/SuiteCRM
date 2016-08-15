@@ -359,3 +359,151 @@ function changeFirstTab(src) {
     return true;
 }
 // End of custom jQuery
+
+
+// fix for tab navigation on user profile for SuiteP theme
+
+var getParameterByName = function(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+var isUserProfilePage = function() {
+    var module = getParameterByName('module');
+    if(!module) {
+        module = $('#EditView_tabs').closest('form#EditView').find('input[name="module"]').val();
+    }
+    if(!module && typeof module_sugar_grp1 != 'undefined' && module_sugar_grp1) {
+        module = module_sugar_grp1;
+    }
+    return module == 'Users';
+};
+
+var isEditViewPage = function() {
+    var action = getParameterByName('action');
+    if(!action) {
+        action = $('#EditView_tabs').closest('form#EditView').find('input[name="page"]').val();
+    }
+    return action == 'EditView';
+};
+
+var isDetailViewPage = function() {
+    var action = getParameterByName('action');
+    if(!action) {
+        action = action_sugar_grp1;
+    }
+    return action == 'DetailView';
+};
+
+$(function () {
+    if(isUserProfilePage()) {
+
+        var tabActiveSelector;
+        var tabFramesLength;
+        var tabFrames;
+
+        if (isEditViewPage()) {
+            tabActiveSelector = '#EditView_tabs.yui-navset.yui-navset-top ul.yui-nav li.selected a';
+            tabFramesLength = 5;
+            tabFrames = {
+                // User Profile
+                'tab1': [
+                    // User Profile & Employee Information
+                    'form#EditView div#EditView_tabs.yui-navset.yui-navset-top div.yui-content div div#EditView_tabs',
+                    // Email Settings
+                    '#email_options'
+                ],
+                // Password
+                'tab2': [
+                    // Password
+                    '#generate_password'
+                ],
+                // Themes
+                'tab3': [
+                    // Themes
+                    '#themepicker'
+                ],
+                // Advanced
+                'tab4': [
+                    // User Settings
+                    '#settings',
+                    // Layout Options
+                    '#layout',
+                    // Locale Settings
+                    '#locale',
+                    // Calendar Options
+                    '#calendar_options'
+                ],
+                // External Account
+                'tab5': [
+                    '#eapm_area'
+                ]
+            };
+
+        }
+        if (isDetailViewPage()) {
+            tabActiveSelector = '#user_detailview_tabs.yui-navset.detailview_tabs.yui-navset-top ul.yui-nav li.selected a';
+            tabFramesLength = 3;
+            tabFrames = {
+                // User Profile
+                'tab1': [
+                    // User Profile & Employee Information
+                    'div#user_detailview_tabs.yui-navset.detailview_tabs.yui-navset-top div.yui-content',
+                    // Email Settings
+                    '#email_options',
+                    // Security Groups Management etc..
+                    '#subpanel_list'
+                ],
+                // Advanced
+                'tab2': [
+                    // User Settings
+                    '#settings',
+                    // Locale Settings
+                    '#locale',
+                    // Calendar Options
+                    '#calendar_options',
+                    // Layout Options
+                    '#edit_tabs',
+                    // Security Groups Management etc..
+                    '#subpanel_list'
+                ],
+                // Access
+                'tab3': [
+                    // Security Groups Management etc..
+                    '#subpanel_list'
+                ]
+            };
+        }
+
+        var tabsRefresh = function () {
+            // hide all tabs..
+            for (var i = 1; i <= tabFramesLength; i++) {
+                for (var j = 0; j < tabFrames['tab' + i].length; j++) {
+                    $(tabFrames['tab' + i][j]).hide();
+                }
+            }
+
+            // show the active only
+            var activeTab = $(tabActiveSelector).first().attr('id');
+            for (i = 0; i < tabFrames[activeTab].length; i++) {
+                $(tabFrames[activeTab][i]).show();
+            }
+        }
+
+        for (var i = 1; i <= tabFramesLength; i++) {
+            $('#tab' + i).click(function () {
+                setTimeout(function () {
+                    tabsRefresh();
+                }, 300);
+            });
+        }
+        setTimeout(function () {
+            tabsRefresh();
+        }, 300);
+
+    }
+});

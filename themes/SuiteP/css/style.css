@@ -278,6 +278,11 @@ div#pageContainer td.dashletcontainer th.footable-visible a {
     padding-right: 20px;
 }
 
+div#searchResults {
+    overflow-y: auto;
+    padding-bottom: 50px;
+}
+
 div#pageContainer td.dashletcontainer div.hd .icon {
     fill: #fff;
 }
@@ -896,6 +901,18 @@ th, td {
 
 }
 
+slot, #lead_queries_Div td {
+      color: #534D64;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 48px;
+      text-align: left;
+      white-space: nowrap;
+      vertical-align: baseline;
+
+}
+
+
 .dataField {
     min-height: 48px;
     line-height: 48px;
@@ -1433,11 +1450,15 @@ table#mass_update_table td select {
 
 }
 
+#detail_header_action_menu li.sugar_action_button a#edit_button,
+#userEditActions li.sugar_action_button  a,
 #actionLinkTop li.sugar_action_button  a,
 #actionLinkBottom li.sugar_action_button  a{
     margin-top: 5px;
 }
 
+#detail_header_action_menu li.sugar_action_button,
+#userEditActions li.sugar_action_button,
 #actionLinkTop li.sugar_action_button,
 #actionLinkBottom li.sugar_action_button {
     min-width: 32px;
@@ -1450,12 +1471,21 @@ table#mass_update_table td select {
     text-transform: uppercase;
 }
 
+#detail_header_action_menu > .sugar_action_button > ul.subnav,
+#userEditActions > .sugar_action_button > ul.subnav,
 #selectLinkTop > .sugar_action_button > ul.subnav,
 #selectLinkBottom > .sugar_action_button > ul.subnav {
     left: 0;
     right: auto;
 }
 
+#detail_header_action_menu > .sugar_action_button > ul.subnav,
+#detail_header_action_menu > .sugar_action_button > ul.subnav li,
+#detail_header_action_menu > .sugar_action_button > ul.subnav a,
+#userEditActions > .sugar_action_button > ul.subnav,
+#userEditActions > .sugar_action_button > ul.subnav li,
+#userEditActions > .sugar_action_button > ul.subnav a,
+#userEditActions ul.clickMenu li ul.subnav,
 #selectLinkTop > .sugar_action_button > ul.subnav,
 #selectLinkTop > .sugar_action_button > ul.subnav li,
 #selectLinkTop > .sugar_action_button > ul.subnav a,
@@ -1491,6 +1521,23 @@ table#mass_update_table td select {
 #actionLinkBottom .menuItemHilite {
     background-color: #7b8a96 !important;
 
+}
+
+#detail_header_action_menu li.sugar_action_button,
+#detail_header_action_menu > .sugar_action_button > ul.subnav a:hover,
+#detail_header_action_menu > .sugar_action_button > ul.subnav,
+#detail_header_action_menu > .sugar_action_button > ul.subnav li,
+#detail_header_action_menu > .sugar_action_button > ul.subnav a,
+#userEditActions li.sugar_action_button,
+#userEditActions > .sugar_action_button > ul.subnav a:hover,
+#userEditActions > .sugar_action_button > ul.subnav,
+#userEditActions > .sugar_action_button > ul.subnav li,
+#userEditActions > .sugar_action_button > ul.subnav a {
+    background-color: #F08377;
+}
+#detail_header_action_menu li.sugar_action_button,
+#userEditActions li.sugar_action_button {
+    padding: 5px 20px;
 }
 
 #selectLinkTop > .sugar_action_button > ul.subnav a,
@@ -4148,7 +4195,7 @@ input[type=text].cstm_code {
 }
 
 #moduleDashletsList a, #basicChartDashletsList a, #toolsDashletsList a, #webDashletsList a {
-    color: #ffffff;
+    color: #D66C60;
     margin: 5px;
 }
 
@@ -4160,7 +4207,7 @@ input[type=text].cstm_code {
 #moduleDashletsList, #basicChartDashletsList, #toolsDashletsList, #webDashletsList {
     padding: 10px;
     max-height: 375px !important;
-    background: #778591;
+    /*background: #778591;*/
     border: 1px solid transparent;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
@@ -4924,7 +4971,7 @@ button[disabled], input[type="submit"][disabled], input[type="reset"][disabled],
     background-color: #fff;
 }
 
-input[type=text], input[type=password], textarea {
+input[type=text], input[type=password], input:not([type]), textarea {
     background: #d8f5ee;
     border: 1px solid #a5e8d6;
     border-radius: 4px;
@@ -5810,10 +5857,127 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     border: 1px solid #cccccc;
 }
 
+/*Form to Person section*/
+#fieldChoices .field {
+    margin: 0;
+    padding: 0;
+}
 
+#fieldChoices #fieldcontainer {
+    background-color: transparent;
+}
 
+#fieldChoices .field-list {
+    background-color: #F5F5F5;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    min-height: 240px;
+    width: 30%;
+    display: inline-block;
+    padding: 8px;
+    margin-right: 1%;
+}
+
+#fieldChoices .field-list input, .field-list textarea {
+    width: 100%;
+    display: block;
+    float: none;
+    clear: both;
+}
+
+#fieldChoices .field-list input {
+    height: 30px;
+}
+
+#fieldChoices .field {
+
+}
+
+#fieldChoices .field-header {
+    background-clip: padding-box;
+    background-color: #BFCAD3;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 14px;
+    padding: 8px;
+    display: inherit;
+    height: 48px;
+    line-height: 32px;
+}
+
+#fieldChoices .required  > .field-header {
+    border: 1px solid transparent;
+    background-color: #F08377;
+    color: #ffffff;
+    padding: 8px !important;
+    margin: 0;
+}
+
+#fieldChoices .field-type {
+    float: none;
+}
+
+#fieldChoices .field-list input[type="button"] {
+    width: 100px;
+}
+
+#fieldChoices .field > .field-header {
+    font-weight: bold;
+}
+
+#fieldChoices .field-container{
+    max-height: 300px;
+    min-height: 300px;
+    height: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#fieldChoices .optionButtonsHolder {
+    margin-top: 5px;
+}
+
+#fieldChoices .title {
+    display: inline-block;
+    width: 30%;
+    text-align: center;
+    font-weight: 300;
+    font-size: 20px;
+    color: #F08377;
+    padding-bottom: 8px;
+}
+
+#fieldChoices #personTypeSelect {
+    margin-bottom: 20px;
+}
+
+.ui-state-highlight {
+    height: 48px;
+    border: 1px solid #778591;
+    border-radius: 4px;
+    background: #E6E6E6;
+
+}
+
+hr {
+    border: none;
+}
+
+.pagecontent {
+    border: 1px solid transparent;
+}
+
+#pagecontent > table td {padding: 8px;}
+
+#fieldChoices  {
+    padding: 16px 8px 8px 8px;
+    background: #ffffff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
 /* fix schedule bar popup on calendar */
-.ui-front, .ui-dialog {
+.ui-dialog {
     z-index: 1100 !important;
 }
 
@@ -8703,7 +8867,7 @@ table tr#delegates_search {
 #wizform .other.view img, .other.view svg {
     width: initial;
     height: initial;
-    margin: 17px 5px 5px 5px;
+
 }
 
 #wizform select.input-sm {

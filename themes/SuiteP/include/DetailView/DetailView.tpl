@@ -144,17 +144,21 @@
             {{assign var='collapseIcon' value="glyphicon glyphicon-minus"}}
             {{assign var='panelHeadingCollapse' value=""}}
         {{/if}}
-
+        {{if $label != "LBL_AOP_CASE_UPDATES"}}
+            {{assign var='panelId' value="top-panel-$panelCount"}}
+        {{else}}
+            {{assign var='panelId' value="LBL_AOP_CASE_UPDATES"}}
+        {{/if}}
         <div class="panel panel-default">
             <div class="panel-heading {{$panelHeadingCollapse}}">
-                <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#top-panel-{{$panelCount}}" aria-expanded="false">
+                <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#{{$panelId}}" aria-expanded="false">
                     <div class="col-xs-10 col-sm-11 col-md-11">
                          {sugar_translate label='{{$label}}' module='{{$module}}'}</div>
                     </div>
                 </a>
 
             </div>
-            <div class="panel-body {{$collapse}}" id="top-panel-{{$panelCount}}">
+            <div class="panel-body {{$collapse}}" id="{{$panelId}}">
                 <div class="tab-content">
                     {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
                 </div>

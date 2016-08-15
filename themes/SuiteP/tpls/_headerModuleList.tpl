@@ -466,7 +466,7 @@
             </form>
             <div id="quickcreatetop" class="create dropdown nav navbar-nav navbar-right">
                 <a class="dropdown-toggle" aria-expanded="false">
-                    Create
+                    {$APP.LBL_CREATE_BUTTON_LABEL}
                 </a>
                 <ul class="dropdown-menu" role="menu">
                     <li>

@@ -216,8 +216,7 @@ class SubPanelTiles
                 unset($_COOKIE[$this->focus->module_dir . '_divs']);
                 $_SESSION['visited_details'][$this->focus->module_dir] = true;
             }
-            $default_div_display = 'none';
-        }
+            $default_div_display = 'none';}
         $div_cookies = get_sub_cookies($this->focus->module_dir . '_divs');
 
 
@@ -338,8 +337,10 @@ class SubPanelTiles
 
             if($div_display == 'none'){
                 $opp_display  = 'inline';
+                $tabs_properties[$t]['expanded_subpanels'] = false;
             } else{
                 $opp_display  = 'none';
+                $tabs_properties[$t]['expanded_subpanels'] = true;
             }
 
             if (!empty($this->layout_def_key) ) {

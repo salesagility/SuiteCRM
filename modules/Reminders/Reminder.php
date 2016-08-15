@@ -532,16 +532,17 @@ class Reminder extends Basic
         }
     }
 
-    /**
-     * @param string $eventModule 'Calls' or 'Meetings'
-     */
+	/**
+	 * @param string $eventModule 'Calls' or 'Meetings'
+	 */
     private static function upgradeEventReminders($eventModule)
     {
+        global $db;
 
         $eventBean = BeanFactory::getBean($eventModule);
-        $events = BeanFactory::getBean($eventModule)->get_full_list('', "{$eventBean->table_name}.date_start >  '2015-11-01 00:00:00' AND ({$eventBean->table_name}.reminder_time != -1 OR ({$eventBean->table_name}.email_reminder_time != -1 AND {$eventBean->table_name}.email_reminder_sent != 1))");
+        $events = $eventBean->get_full_list('', "{$eventBean->table_name}.date_start >  {$db->convert('', 'today')} AND ({$eventBean->table_name}.reminder_time != -1 OR ({$eventBean->table_name}.email_reminder_time != -1 AND {$eventBean->table_name}.email_reminder_sent != 1))");
         if ($events) {
-            foreach ($events as $event) {
+			foreach ($events as $event) {
 
                 $oldReminderPopupChecked = false;
                 $oldReminderPopupTimer = null;
