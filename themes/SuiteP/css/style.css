@@ -2317,8 +2317,8 @@ li.noBullet {
 }
 
 .required, .error {
-    background-color: #f08377;
-    color: #fff;
+    background-color: transparent;
+    color: #f08377;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid transparent;
@@ -5908,8 +5908,8 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 
 #fieldChoices .required  > .field-header {
     border: 1px solid transparent;
-    background-color: #F08377;
-    color: #ffffff;
+    background-color: transparent;
+    color: #F08377;
     padding: 8px !important;
     margin: 0;
 }
