@@ -1727,6 +1727,7 @@ $app_strings = array(
     'LBL_CAMPAIGNLOG' => 'CampaignLog',
     'LBL_CAMPAIGN_CONTACT' => 'Campaigns',
     'LBL_CAMPAIGN_ID' => 'campaign_id',
+    'LBL_CAMPAIGN_NONE' => 'None',
     'LBL_SITEMAP' => 'Sitemap',
     'LBL_THEME' => 'Theme:',
     'LBL_THEME_PICKER' => 'Page Style',
@@ -1946,6 +1947,11 @@ $app_strings = array(
 
     'LBL_SUGAR_COPYRIGHT_SUB' => '&copy; 2004-2013 <a href="http://www.sugarcrm.com" target="_blank" class="copyRightLink">SugarCRM Inc.</a> All Rights Reserved.<br />SugarCRM is a trademark of SugarCRM, Inc. All other company and product names may be trademarks of the respective companies with which they are associated.',
 
+    'LBL_SCENARIO_SALES' => 'Sales',
+    'LBL_SCENARIO_MARKETING' => 'Marketing',
+    'LBL_SCENARIO_FINANCE' => 'Finance',
+    'LBL_SCENARIO_SERVICE' => 'Service',
+    'LBL_SCENARIO_PROJECT' => 'Project Management',
 
     'LBL_SCENARIO_SALES_DESCRIPTION'=>'This scenario facilitates the management of sales items',
     'LBL_SCENARIO_MAKETING_DESCRIPTION'=>'This scenario facilitates the management of marketing items',
@@ -2123,7 +2129,9 @@ $app_strings = array(
     'LBL_REDIRECT_URL' => 'Redirect URL',
     'LBL_RELATED_CAMPAIGN' => 'Related campaign',
     'LBL_ADD_ALL_LEAD_FIELDS' => 'Add All Fields',
+    'LBL_RESET_ALL_LEAD_FIELDS' => 'Reset all Fields',
     'LBL_REMOVE_ALL_LEAD_FIELDS' => 'Remove All Fields',
+    'LBL_NEXT_BTN' => 'Next',
     'LBL_ONLY_IMAGE_ATTACHMENT' => 'Only the following supported image type attachments can be embedded: JPG, PNG.',
     'LBL_TRAINING' => 'Support',
     'ERR_DATABASE_CONN_DROPPED' => 'Error executing a query. Possibly, your database dropped the connection. Please refresh this page, you may need to restart you web server.',
@@ -3263,6 +3271,8 @@ $app_list_strings['moduleList']['AOP_AOP_Case_Updates'] = 'Case Updates';
 $app_list_strings['moduleList']['AOP_Case_Events'] = 'Case Events';
 $app_list_strings['moduleList']['AOP_Case_Updates'] = 'Case Updates';
 $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] = '========== Please reply above this line ==========';
+
+
 
 //aop
 $app_list_strings['case_state_default_key'] = 'Open';
