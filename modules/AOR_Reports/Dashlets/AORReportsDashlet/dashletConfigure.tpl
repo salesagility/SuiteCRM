@@ -137,6 +137,18 @@
                 </td>
             </tr>
             {/foreach}
+            <script>
+                {literal}
+                // Make sure to change dates back to the user format
+                $(document).ready(function() {
+                    $('.date_input').each(function(index, elem) {
+                        var formatString = cal_date_format.replace(/%/g, '').toLowerCase().replace(/y/g, 'yy').replace(/m/g, 'mm').replace(/d/g, 'dd');
+                        var fieldInput = $.datepicker.formatDate(formatString, new Date($(this).val()) );
+                        $(this).val(fieldInput);
+                    });
+                });
+                {/literal}
+            </script>
             <tr>
                 <td scope='row'>
 
