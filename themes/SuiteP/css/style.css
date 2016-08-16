@@ -3511,7 +3511,6 @@ li#tab-actions > ul.dropdown-menu .button:focus,
 li#tab-actions > ul.dropdown-menu .button:active,
 li#tab-actions > ul.dropdown-menu .open > .dropdown-toggle.btn-primary {
     background-color: #F08377;
-    text-transform: capitalize !important;
 }
 
 li#tab-actions > ul.dropdown-menu li:last-of-type a {
@@ -4907,6 +4906,14 @@ li.topnav ul.dropdown-menu li:last-child a {
     letter-spacing: 1px;
     height: 40px;
     line-height: 40px;
+}
+
+/* Remove Text Transformations for action menu*/
+#tab-actions .button,
+#tab-actions input[type=submit],
+#tab-actions input[type=button],
+#tab-actions input[type=reset] {
+    text-transform: none;
 }
 
 td.submitButtons .button:hover {
@@ -7232,9 +7239,6 @@ table.subpanel-table .pagination .sugar_action_button > form > a {
     background-color: #fff;
 }
 
-li.sugar_action_button  > ul {
-    text-transform: capitalize;
-}
 
 
 table.subpanel-table ul.subpanel a:hover,
