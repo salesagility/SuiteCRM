@@ -886,6 +886,7 @@ th, td {
 .detail-view-row, .detail-view-row-item, .edit-view-row, .edit-view-row-item {
     margin: 0 0 16px 0;
     min-width: 48px;
+    min-height: 74px;
 }
 
 .detail-view-row .label, .edit-view-row .label {

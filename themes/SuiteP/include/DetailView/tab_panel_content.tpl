@@ -38,13 +38,15 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
  *}
+    <!-- tab_panel_content.tpl START -->
     <div class="row detail-view-row">
         {{foreach name=rowIteration from=$panel key=row item=rowData}}
             {*row*}
+        <!-- ROW -->
         {{counter name="columnCount" start=0 print=false assign="columnCount"}}
         {{foreach name=colIteration from=$rowData key=col item=colData}}
                 {*column*}
-
+                <!-- COLUMN -->
                 {{if $smarty.foreach.colIteration.total > 1}}
                     <div class="col-xs-12 col-sm-6 detail-view-row-item">
                 {{else}}
@@ -61,6 +63,7 @@
                             <div class="col-xs-12 col-sm-2 label">
                         {{/if}}
                             {*label*}
+                            <!-- LABEL -->
                             {{if isset($colData.field.customLabel)}}
                                 {{$colData.field.customLabel}}
                                 {{elseif isset($colData.field.label) && strpos($colData.field.label, '$')}}
