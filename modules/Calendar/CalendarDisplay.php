@@ -229,16 +229,20 @@ class CalendarDisplay {
 
 		}
 		foreach($activity as $key => $activityItem){
-			$activity[ $key ]['label'] = $GLOBALS['app_list_strings']['moduleList'][ $key ];
+			if(isset($GLOBALS['app_list_strings']['moduleList'][ $key ]) && !empty($GLOBALS['app_list_strings']['moduleList'][ $key ]) && !empty($this->cal->activityList[ $key ]) ){
+				$activity[ $key ]['label'] = $GLOBALS['app_list_strings']['moduleList'][ $key ];
+			}else{
+				unset($activity[ $key ]);
+			}
 		}
 		if(isset($activity) && !empty($activity)){
 			$this->activity_colors = $activity;
 		}
 		if(!empty($this->cal->activityList)){
 			foreach($this->cal->activityList as $key=>$value ){
-				if(isset($GLOBALS['beanList'][$key]) && !empty($GLOBALS['beanList'][$key]) && !isset($this->activity_colors[ $GLOBALS['beanList'][$key] ])){
-					$this->activity_colors[ $GLOBALS['beanList'][$key] ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
-					$activity[ $GLOBALS['beanList'][$key] ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
+				if(isset($GLOBALS['beanList'][$key]) && !empty($GLOBALS['beanList'][$key]) && !isset($this->activity_colors[ $key ])){
+					$this->activity_colors[ $key ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
+					$activity[ $key ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
 				}
 			}
 		}
