@@ -1032,7 +1032,7 @@ class AOR_Report extends Basic {
 
         if($beanList[$this->report_module]){
             $module = new $beanList[$this->report_module]();
-
+            $query['select'][] = $this->db->quoteIdentifier($module->table_name).".id AS '".$module->table_name."_id'";
             $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND deleted = 0 ORDER BY field_order ASC";
 
             $result = $this->db->query($sql);
