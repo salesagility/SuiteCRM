@@ -379,7 +379,9 @@ var isUserProfilePage = function() {
     }
     if(!module) {
         // ISSUE: breaks detailview and list views
-        // module = module_sugar_grp1;
+        if(typeof module_sugar_grp1 !== "undefined") {
+            module = module_sugar_grp1;
+        }
     }
     return module == 'Users';
 };
