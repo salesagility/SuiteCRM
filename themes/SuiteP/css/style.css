@@ -567,7 +567,6 @@ footer {
     background-color: #E6E6E6;
     clear: both;
     width: 100%;
-    height: 48px;
     border: 1px solid transparent;
     border-radius: 4px;
     box-sizing: content-box;
@@ -7435,6 +7434,10 @@ div.list-view-rounded-corners > table th:last-of-type {
         max-height: 90px;
     }
 
+    footer.expandedSidebar {
+        width: 74%;
+    }
+
 
 }
 
@@ -7559,6 +7562,10 @@ div.list-view-rounded-corners > table th:last-of-type {
         left: 0%;
     }
 
+    footer.expandedSidebar {
+        width: 76%;
+    }
+
 }
 
 @media (max-width: 1400px) {
@@ -7609,6 +7616,9 @@ div.list-view-rounded-corners > table th:last-of-type {
         left: 0%;
     }
 
+    footer.expandedSidebar {
+        width: 74%;
+    }
 
 }
 
@@ -7657,6 +7667,9 @@ div.list-view-rounded-corners > table th:last-of-type {
         left: 0%;
     }
 
+    footer.expandedSidebar {
+        width: 70%;
+    }
 
 }
 
@@ -7679,6 +7692,10 @@ div.list-view-rounded-corners > table th:last-of-type {
 
     .button-toggle-collapsed {
         display: none;
+    }
+
+    footer.expandedSidebar {
+        width: 94%;
     }
 
 }
