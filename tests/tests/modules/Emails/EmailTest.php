@@ -770,7 +770,7 @@ class EmailTest extends PHPUnit_Framework_TestCase
                 'FROM_ADDR' => null,
                 'QUICK_REPLY' => '<a  href="index.php?module=Emails&action=Compose&replyForward=true&reply=reply&record=1&inbound_email_id=1">Reply</a>',
                 'STATUS' => null,
-                'CREATE_RELATED' => '~'.preg_quote('<a href="index.php?module=Cases&action=EditView&inbound_email_id=1" ><img src="themes/'.$current_theme.'/images/CreateCases.gif?v=').'[\w-]+'.preg_quote('"    border="0" alt="Create Cases" />Create Case</a>').'~',
+                'CREATE_RELATED' => '~'.preg_quote('<a href="index.php?module=Cases&action=EditView&inbound_email_id=1" ><img src="themes/'.$current_theme.'/images/CreateCases').'\.\w+\?v='.'[\w-]+'.preg_quote('"    border="0" alt="Create Cases" />Create Case</a>').'~',
                 'CONTACT_NAME' => '</a>abc@email.com<a>',
                 'CONTACT_ID' => '',
                 'ATTACHMENT_IMAGE' => null,
@@ -793,7 +793,7 @@ class EmailTest extends PHPUnit_Framework_TestCase
         $email = new Email();
         $sugar_theme = SugarThemeRegistry::current();
 
-        $expected = '~'.preg_quote("Quick Create&nbsp;<a id='' onclick='return quick_create_overlib(\"\", \"$sugar_theme\", this);' href=\"#\" ><img src=\"themes/".$sugar_theme."/images/advanced_search.gif?v=")
+        $expected = '~'.preg_quote("Quick Create&nbsp;<a id='' onclick='return quick_create_overlib(\"\", \"$sugar_theme\", this);' href=\"#\" ><img src=\"themes/".$sugar_theme."/images/advanced_search").'\.\w+\?v='
             .'[\w-]+'
             .preg_quote("\"    border='0' align='absmiddle' alt=\"Quick Create\" /></a>")
             .'~';
