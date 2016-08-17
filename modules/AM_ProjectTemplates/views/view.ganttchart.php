@@ -22,8 +22,8 @@
 if (!defined('sugarEntry') || !sugarEntry)
     die('Not A Valid Entry Point');
 
-
-class AM_ProjectTemplatesViewGanttChart extends SugarView {
+require_once('include/MVC/View/views/view.detail.php');
+class AM_ProjectTemplatesViewGanttChart extends ViewDetail {
 
     //Constructor
     public function __construct() {
@@ -73,6 +73,9 @@ class AM_ProjectTemplatesViewGanttChart extends SugarView {
         //Get the start and end date of the project in database format
 		$start_date =  Date('Y-m-d');
 		$end_date = Date('Y-m-d', strtotime("+30 days"));
+
+		parent::display();
+
 ?>
         <!--Create task pop-up-->
         <div style="display: none;">
@@ -87,6 +90,9 @@ class AM_ProjectTemplatesViewGanttChart extends SugarView {
 						
 							<input type="hidden" name="project_template_id" id="project_template_id" value="<?php echo $project_template->id; ?>">
 							<input type="hidden" name="override_business_hours" id="override_business_hours" value="<?php echo $project_template->override_business_hours; ?>">
+							<input type="hidden" name="Start" id="Start" value="">
+							<input type="hidden" name="Actual_duration" id="Actual_duration" value="0">
+							
 							<input type="text" style="display: none;" name="task_id" id="task_id" value="">
 							<input type="radio" name="Milestone" value="Subtask" checked="checked" id="Subtask" />
 							<label id="Subtask_label" for="Subtask"><?php echo $mod_strings['LBL_SUBTASK'];?></label>
@@ -94,8 +100,8 @@ class AM_ProjectTemplatesViewGanttChart extends SugarView {
 							<label id="Milestone_label" for="Milestone"><?php echo $mod_strings['LBL_MILESTONE_FLAG'];?></label>&nbsp;<br /><br />
 							<label id="parent_task_id" for="parent_task" style="display: none;"><?php echo $mod_strings['LBL_PARENT_TASK_ID']; ?></label>
 							<input id="parent_task" class="text ui-widget-content ui-corner-all" style="display: none;" type="text" name="parent_task" value="" />
-							<label for="name"><?php echo $mod_strings['LBL_TASK_NAME']; ?></label>
-							<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+							<label for="task_name"><?php echo $mod_strings['LBL_TASK_NAME']; ?></label>
+							<input type="text" name="task_name" id="task_name" class="text ui-widget-content ui-corner-all" />
 							<label for="Predecessor"><?php echo $mod_strings['LBL_PREDECESSORS'];?></label>
 							<?php
 							echo '<select id="Predecessor" name="Predecessor" class="text ui-widget-content ui-corner-all" />';
@@ -153,7 +159,7 @@ class AM_ProjectTemplatesViewGanttChart extends SugarView {
 
         <!--Mark-up for the main body of the view-->
         
-			<div class="moduleTitle">
+			<!-- div class="moduleTitle">
 				<h2> <?php echo $project_template->name;?> </h2>
 				<div class="clear"></div><br>
 				<a class="utilsLink" href="index.php?module=AM_ProjectTemplates&action=DetailView&record=<?php echo $_REQUEST["record"];?>&return_module=AM_ProjectTemplates&return_action=view_GanttChart" id="create_link"><?php echo $mod_strings['LBL_VIEW_DETAIL'];?></a></span>
@@ -163,7 +169,7 @@ class AM_ProjectTemplatesViewGanttChart extends SugarView {
 			</div>
 
 			<div class="yui-navset detailview_tabs yui-navset-top" id="Project_detailview_tabs">
-				<!--ul class="yui-nav"-->
+				< !--ul class="yui-nav"-- >
 				<div class="yui-content">    
 					<div id="tabcontent0">
 						<div id="detailpanel_1" class="detail view  detail508 expanded">
@@ -181,26 +187,27 @@ class AM_ProjectTemplatesViewGanttChart extends SugarView {
 							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_PRIORITY'];?></td>
 							<td class="" width="37.5%"><?php echo $project_template->priority ;?></td>
 							</tr>
-							<!--tr>
+							< !--tr>
 							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_DESCRIPTION'];?></td>
 							<td class="inlineEdit" type="text" colspan="3" width="87.5%"><?php echo $project_template->description;?></td>
-							</tr-->
+							</tr-- >
 							</tbody></table>
 						</div>
 					</div>
 				</div>
 				<br>
-				<?php
-					if(ACLController::checkAccess('AM_ProjectTemplates', 'edit', true)){
-						echo '<button id="add_button" class="gantt_button">' . $mod_strings['LBL_ADD_NEW_TASK'] . '</button>';
-						echo '<input id="is_editable" name="is_editable" type="hidden" value="1" >';
-					}
-				?>
-			</div>
+
+			</div -->
 
 
         <div id="wrapper" >
 
+			<?php
+				if(ACLController::checkAccess('AM_ProjectTemplates', 'edit', true)){
+					echo '<div style="clear:both;padding:10px;"><button id="add_button" class="gantt_button">' . $mod_strings['LBL_ADD_NEW_TASK'] . '</button></div>';
+					echo '<input id="is_editable" name="is_editable" type="hidden" value="1" >';
+				}
+			?>
             <input id="record" type="hidden" name="record" value="<?php echo $_REQUEST["record"];?>" />
             <div id="project_wrapper">
 

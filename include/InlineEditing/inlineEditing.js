@@ -100,7 +100,13 @@ function buildEditField(){
     $(".inlineEdit").dblclick(function(e) {
         e.preventDefault();
         //depending on what view you are using will find the id,module,type of field, and field name from the view
-        if(view == "DetailView"){
+    
+		//make the gantt chart view look like the detail view
+		if(view == "view_GanttChart" )
+			view = "DetailView"; 
+
+		if(view == "DetailView" ){
+
             var field = $(this).attr( "field" );
             var type = $(this).attr( "type" );
 
@@ -110,15 +116,17 @@ function buildEditField(){
                 var module = module_sugar_grp1;
             }
 
+
             var id = $("input[name=record]").attr( "value" );
         }else{
+
             var field = $(this).attr( "field" );
             var type = $(this).attr( "type" );
             var module = $("#displayMassUpdate input[name=module]").val();
             var id = $(this).closest('tr').find('[type=checkbox]').attr( "value" );
         }
 
-        //If we find all the required variables to do inline editing.
+		//If we find all the required variables to do inline editing.
         if(field && id && module){
 
             //Do ajax call to retrieve the validation for the field.
