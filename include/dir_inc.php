@@ -136,7 +136,7 @@ function rmdir_recursive( $path ){
     $status = true;
 
     $d = dir( $path );
-    
+
     while(($f = $d->read()) !== false){
         if( $f == "." || $f == ".." ){
             continue;
@@ -146,7 +146,10 @@ function rmdir_recursive( $path ){
     $d->close();
     $rmOk = @rmdir($path);
     if($rmOk === FALSE){
-        $GLOBALS['log']->error("ERROR: Unable to remove directory $path");
+        // [wbeb] Added condition to check whether log is set.
+        if(!empty($GLOBALS['log'])) {
+            $GLOBALS['log']->fatal("ERROR: Unable to remove directory $path");
+        }
     }
     return( $status );
 }
