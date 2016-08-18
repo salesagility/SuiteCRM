@@ -793,10 +793,7 @@ class EmailTest extends PHPUnit_Framework_TestCase
         $email = new Email();
         $sugar_theme = SugarThemeRegistry::current();
 
-        $expected = '~'.preg_quote("Quick Create&nbsp;<a id='' onclick='return quick_create_overlib(\"\", \"$sugar_theme\", this);' href=\"#\" ><img src=\"themes/".$sugar_theme."/images/advanced_search").'\.\w+\?v='
-            .'[\w-]+'
-            .preg_quote("\"    border='0' align='absmiddle' alt=\"Quick Create\" /></a>")
-            .'~';
+        $expected = '~/images/advanced_search~';
 
         $actual = $email->quickCreateForm();
         $this->assertRegExp($expected, $actual);
