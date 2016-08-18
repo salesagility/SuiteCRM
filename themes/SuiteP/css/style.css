@@ -2316,7 +2316,7 @@ li.noBullet {
     color: #ff0000;
 }
 
-.required, .error {
+.required {
     background-color: transparent;
     color: #f08377;
     padding: 10px;
@@ -2324,6 +2324,16 @@ li.noBullet {
     border: 1px solid transparent;
     border-radius: 4px;
 }
+
+.error {
+    background-color: #f08377;
+    color: #ffffff;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
 
 /*The nonPaddedError class is to remove the padding from interal error messages during the upgrade wizard*/
 span.error.nonPaddedError{
@@ -2352,7 +2362,7 @@ div#content p.error {
     border-radius: 3px;
 }
 
-.required a:link, .error a:link {
+.required a:link, .error a, .error a:link {
     color: #fff;
     font-weight: 600;
     text-decoration: underline;
