@@ -396,7 +396,7 @@ EOF;
             $x->{$mod_strings['LBL_AN_SALES_AMOUNT']} = $row['amount'];
             $x->{$mod_strings['LBL_AN_SALES_STAGE']} = $row['sales_stage'];
             $x->{$mod_strings['LBL_AN_SALES_PROBABILITY']} = $row['probability'];
-            $x->{$mod_strings['LBL_AN_SALES_DATE']} = $row['date_closed'];
+            $x->{$mod_strings['LBL_AN_SALES_DATE']} = $row['expectedCloseDate'];
 
             $x->{$mod_strings['LBL_AN_SALES_QUARTER']} = $row['salesQuarter'];
             $x->{$mod_strings['LBL_AN_SALES_MONTH']} = $row['salesMonth'];
