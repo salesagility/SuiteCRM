@@ -138,9 +138,11 @@ class CampaignTest extends PHPUnit_Framework_TestCase
                 'IMPRESSIONS' => '0',
                 'OPTIONAL_LINK' => 'display:none',
                 'TRACK_CAMPAIGN_TITLE' => 'View Status',
-                'TRACK_CAMPAIGN_IMAGE' => '~'.preg_quote('themes/'.$current_theme.'/images/view_status').'\.\w+\?v=[\w-]+~',
+            // The theme may fallback to default so we only care that the icon is the same.
+                'TRACK_CAMPAIGN_IMAGE' => '/images/view_status/',
                 'LAUNCH_WIZARD_TITLE' => 'Launch Wizard',
-                'LAUNCH_WIZARD_IMAGE' => '~'.preg_quote('themes/'.$current_theme.'/images/edit_wizard').'\.\w+\?v=[\w-]+~',
+            // The theme may fallback to default so we only care that the icon is the same.
+                'LAUNCH_WIZARD_IMAGE' => '/images/edit_wizard/',
                 'TRACK_VIEW_ALT_TEXT' => 'View Status',
                 'LAUNCH_WIZ_ALT_TEXT' => 'Launch Wizard',
         );
