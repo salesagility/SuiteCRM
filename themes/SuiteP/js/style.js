@@ -385,8 +385,10 @@ var isUserProfilePage = function() {
     if(!module) {
         module = $('#EditView_tabs').closest('form#EditView').find('input[name="module"]').val();
     }
-    if(!module && typeof module_sugar_grp1 != 'undefined' && module_sugar_grp1) {
-        module = module_sugar_grp1;
+    if(!module) {
+        if(typeof module_sugar_grp1 !== "undefined") {
+            module = module_sugar_grp1;
+        }
     }
     return module == 'Users';
 };
