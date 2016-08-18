@@ -305,12 +305,16 @@ function loadSidebar() {
                 $('#buttontoggle').removeClass('button-toggle-collapsed');
                 $('#buttontoggle').addClass('button-toggle-expanded');
                 $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2');
+                $('footer').removeClass('collapsedSidebar');
+                $('footer').addClass('expandedSidebar');
             }
             if ($('.sidebar').is(':hidden')) {
                 $.cookie('sidebartoggle', 'collapsed');
                 $('#buttontoggle').removeClass('button-toggle-expanded');
                 $('#buttontoggle').addClass('button-toggle-collapsed');
                 $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-3 col-md-2 sidebar');
+                $('footer').removeClass('expandedSidebar');
+                $('footer').addClass('collapsedSidebar');
             }
         });
 
@@ -320,11 +324,15 @@ function loadSidebar() {
             $('#buttontoggle').removeClass('button-toggle-expanded');
             $('#buttontoggle').addClass('button-toggle-collapsed');
             $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-3 col-md-2 sidebar');
+            $('footer').removeClass('expandedSidebar');
+            $('footer').addClass('collapsedSidebar');
         }
         else {
             $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2');
             $('#buttontoggle').removeClass('button-toggle-collapsed');
             $('#buttontoggle').addClass('button-toggle-expanded');
+            $('footer').removeClass('collapsedSidebar');
+            $('footer').addClass('expandedSidebar');
         }
     }
 }
@@ -506,4 +514,12 @@ $(function () {
         }, 300);
 
     }
+
+    // Fix for footer position
+    if($('#bootstrap-container footer').length>0) {
+        var clazz = $('#bootstrap-container footer').attr('class');
+        $('body').append('<footer class="' + clazz + '">' + $('#bootstrap-container footer').html() + '</footer>');
+        $('#bootstrap-container footer').remove();
+    }
+
 });
