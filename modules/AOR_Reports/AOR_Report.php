@@ -532,7 +532,7 @@ class AOR_Report extends Basic {
         } else {
             $max_rows = 20;
         }
-        
+
         $total_rows = 0;
         $count_sql = explode('ORDER BY', $report_sql);
         $count_query = 'SELECT count(*) c FROM ('.$count_sql[0].') as n';
@@ -568,7 +568,7 @@ class AOR_Report extends Basic {
             }
 
             $html .= "<thead><tr class='pagination'>";
-            
+
 
             $moduleFieldByGroupValue = $this->getModuleFieldByGroupValue($beanList, $group_value);
 
@@ -1155,7 +1155,32 @@ class AOR_Report extends Basic {
                 $query['group_by'][] = $select['field'];
             }
         }
+
+        $this->injectParentModuleIDField($module->table_name, $query);
+
         return $query;
+    }
+
+    /**
+     * Injects the parent/root table id into the query['select'] key.
+     *
+     * Ensures that all fields which display as hyperlinks have an id/record to link to
+     *
+     * @param $table_name - (string) table name
+     * @param $query - (array) used to build up query
+     */
+    function injectParentModuleIDField ($table_name, &$query) {
+        $needle = $this->db->quoteIdentifier($table_name).".id";
+        $found = false;
+
+        // find if the key already exists
+        foreach($query['select'] as $select) {
+            if(!empty(stristr($select, $needle))) { $found = true; break; }
+        }
+
+        if(!$found) {
+            $query['select'][] = $this->db->quoteIdentifier($table_name).".id AS ".$table_name."_id";
+        }
     }
 
 
