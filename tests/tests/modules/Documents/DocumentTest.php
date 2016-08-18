@@ -98,7 +98,7 @@ class DocumentTest extends PHPUnit_Framework_TestCase
         // test the urls instead of the a tag itself
         $this->assertRegExp('~/images/def_image_inline~', $document->file_url);
         $this->assertRegExp('~index.php\?entryPoint=download&id=&type=Documents~', $document->file_url);
-        $this->assertEquals('index.php\?entryPoint=download&type=Documents&id=', $document->file_url_noimage);
+        $this->assertEquals('index.php?entryPoint=download&type=Documents&id=', $document->file_url_noimage);
     }
 
     public function testlist_view_parse_additional_sections()
