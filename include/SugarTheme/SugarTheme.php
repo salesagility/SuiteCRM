@@ -764,7 +764,7 @@ EOHTML;
 		$attr_width = (is_null($width)) ? "" : "width=\"$width\"";
 		$attr_height = (is_null($height)) ? "" : "height=\"$height\"";
 
-        if(strpos($imageURL, '.svg', strlen($imageURL)-4) !== false){
+        if($imageURL && strpos($imageURL, '.svg', strlen($imageURL)-4) !== false){
             return $SVG2JSONEncode ? json_encode($cached_results[$imageName]) : $cached_results[$imageName];
         }
 		return $cached_results[$imageName] . " $attr_width $attr_height $other_attributes alt=\"$alt\" />";
