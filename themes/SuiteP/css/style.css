@@ -6586,7 +6586,7 @@ td.inlineEditActive {
 
 @media (min-width: 993px) {
     #settingsDialog_c {
-        left: 30% !important;
+        left: 22.5% !important;
     }
 
     #settingsDialog .yui-content {
