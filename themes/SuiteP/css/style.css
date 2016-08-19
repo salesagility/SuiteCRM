@@ -6569,7 +6569,6 @@ td.inlineEditActive {
 }
 
 #settingsDialog_c {
-    position: fixed;
     top: 120px !important;
     z-index: 20000;
 }
