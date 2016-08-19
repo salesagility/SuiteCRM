@@ -753,7 +753,7 @@ EOHTML;
 			$imageURL = $this->getImageURL($imageName,false);
 			if ( empty($imageURL) )
 				return false;
-            if(strpos($imageURL, '.svg', strlen($imageURL)-4) !== false){
+            if(strpos($imageURL, '.svg', strlen($imageURL)-4)){
                 $cached_results[$imageName] = file_get_contents($imageURL);
             } else {
                 $cached_results[$imageName] = '<img src="'.getJSPath($imageURL).'" ';
@@ -764,7 +764,7 @@ EOHTML;
 		$attr_width = (is_null($width)) ? "" : "width=\"$width\"";
 		$attr_height = (is_null($height)) ? "" : "height=\"$height\"";
 
-        if($imageURL && strpos($imageURL, '.svg', strlen($imageURL)-4) !== false){
+        if(strpos($cached_results[$imageName], 'svg') !== false){
             return $SVG2JSONEncode ? json_encode($cached_results[$imageName]) : $cached_results[$imageName];
         }
 		return $cached_results[$imageName] . " $attr_width $attr_height $other_attributes alt=\"$alt\" />";
