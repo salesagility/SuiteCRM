@@ -69,8 +69,8 @@ class ViewDropdown extends SugarView
 
         global $mod_strings;
 
- 		$smarty->assign('deleteImage', json_encode(SugarThemeRegistry::current()->getImage( 'delete_inline', '',null,null,'.gif',$mod_strings['LBL_MB_DELETE'])));
-		$smarty->assign('editImage', json_encode(SugarThemeRegistry::current()->getImage( 'edit_inline', '',null,null,'.gif',$mod_strings['LBL_EDIT'])));
+ 		$smarty->assign('deleteImage', SugarThemeRegistry::current()->getImage( 'delete_inline', '',null,null,'.gif',$mod_strings['LBL_MB_DELETE']));
+		$smarty->assign('editImage', SugarThemeRegistry::current()->getImage( 'edit_inline', '',null,null,'.gif',$mod_strings['LBL_EDIT'], true));
 		$smarty->assign('action', 'savedropdown');
 		$body = $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/dropdown.tpl');
 		$ajax->addSection('east2', $mod_strings['LBL_SECTION_DROPDOWNED'], $body );
