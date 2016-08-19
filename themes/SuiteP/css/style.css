@@ -6563,15 +6563,38 @@ td.inlineEditActive {
     overflow: auto !important;
 }
 
-#settingsDialog_c {
-    top: 0 !important;
-    left: 64px !important;
-}
 
 #settingsDialog .yui-content {
-    height: 384px;
     overflow-y: auto;
 }
+
+#settingsDialog_c {
+    position: fixed;
+    top: 120px !important;
+    z-index: 20000;
+}
+
+@media (max-width: 992px) {
+    #settingsDialog_c {
+        left: 1% !important;
+    }
+
+    #settingsDialog .yui-content {
+        height: 320px;
+    }
+}
+
+@media (min-width: 993px) {
+    #settingsDialog_c {
+        left: 30% !important;
+    }
+
+    #settingsDialog .yui-content {
+        height: 384px;
+    }
+}
+
+
 
 /* stop child elements of a hidden dialog from showing up above other elements */
 .yui-overlay-hidden * {
