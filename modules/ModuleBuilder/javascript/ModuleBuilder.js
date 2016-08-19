@@ -526,11 +526,7 @@ if (typeof(ModuleBuilder) == 'undefined') {
 			try {
 				var ajaxResponse = YAHOO.lang.JSON.parse((o.responseText));
 			} catch (err) {
-				YAHOO.SUGAR.MessageBox.show({
-                    title: SUGAR.language.get('ModuleBuilder', 'ERROR_GENERIC_TITLE'),
-                    msg: o.responseText,
-                    width: 500
-                });
+
 				return false;
 			}
 			
@@ -607,11 +603,7 @@ if (typeof(ModuleBuilder) == 'undefined') {
 			if (SUGAR.util.isLoginPage(o.responseText))
 				return true;
 			if (o.responseText.substr(0, 1) == "<") {
-                YAHOO.SUGAR.MessageBox.show({
-					title: SUGAR.language.get('ModuleBuilder', 'ERROR_GENERIC_TITLE'),
-					msg: o.responseText,
-					width: 500
-				});
+
 				return true;
             }
 			
@@ -649,14 +641,6 @@ if (typeof(ModuleBuilder) == 'undefined') {
 						// switch off preloader
 						ModuleBuilder.preloader.off();
 						// call the original callback
-						if(ModuleBuilder.updateContent(o)) {
-							// show results
-							YAHOO.SUGAR.MessageBox.show({
-								title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_TITLE'), // Result
-								msg: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_MESSAGE'), // This operation is completed successfully
-								width: 500
-							});
-						}
 						// refresh page content
 						ModuleBuilder.asyncRequest(YUI_HistoryBookmarkedState, ModuleBuilder.updateContent);
 					};
@@ -701,13 +685,7 @@ if (typeof(ModuleBuilder) == 'undefined') {
 				}
 				// switch off preloader, maybe was another one
 				ModuleBuilder.preloader.off();
-				// show message
-				YAHOO.SUGAR.MessageBox.show({
-					title: title,
-					msg: message,
-					width: 500,
-					close: false
-				});
+
 			},
 
 			/**
