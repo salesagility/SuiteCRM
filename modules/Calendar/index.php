@@ -59,7 +59,7 @@ if(empty($_REQUEST['view'])){
     }
     else
     {
-        $_REQUEST['view'] = SugarConfig::getInstance()->get('calendar.default_view','week');
+        $_REQUEST['view'] = SugarConfig::getInstance()->get('calendar.default_view','agendaWeek');
     }
 }
 

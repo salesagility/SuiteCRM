@@ -807,6 +807,8 @@ $(document).ready(function() {
 
 
     function get_cal(i, all_events){
+        console.log(global_view);
+        console.log(views);
         $('#calendar' + i).fullCalendar({
             header: {
                 left: '',
