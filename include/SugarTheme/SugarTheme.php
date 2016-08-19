@@ -708,10 +708,10 @@ EOHTML;
 	 * @param  string $height optional, defaults to the actual image's height
 	 * @param  string $ext optional, image extension (TODO can we deprecate this one ?)
      * @param  string $alt optional, only used when image contains something useful, i.e. "Sally's profile pic"
-     * @param  string $SVG2JSONEncode optional, some of template javascript need the exact SVG-string to build HTML contents so this parameter make a json_encode call on the return SVG source
+     * @param  string $imageJSONEncode optional, some of template javascript need the exact SVG-string to build HTML contents so this parameter make a json_encode call on the return SVG source
      * @return string HTML image tag or sprite
      */
-    public function getImage($imageName, $other_attributes = '', $width = null, $height = null, $ext = null, $alt = '', $SVG2JSONEncode = false) {
+    public function getImage($imageName, $other_attributes = '', $width = null, $height = null, $ext = null, $alt = '', $imageJSONEncode = false) {
         static $cached_results = array();
         // Look for SVG first
         $imagePath = SugarThemeRegistry::current()->getImagePath().DIRECTORY_SEPARATOR.$imageName.'.svg';
@@ -766,9 +766,10 @@ EOHTML;
 		$attr_height = (is_null($height)) ? "" : "height=\"$height\"";
 
         if(strpos($cached_results[$imageName], 'svg') !== false){
-            return $SVG2JSONEncode ? json_encode($cached_results[$imageName]) : $cached_results[$imageName];
+            return $imageJSONEncode ? json_encode($cached_results[$imageName]) : $cached_results[$imageName];
         }
-		return $cached_results[$imageName] . " $attr_width $attr_height $other_attributes alt=\"$alt\" />";
+        $ret = $cached_results[$imageName] . " $attr_width $attr_height $other_attributes alt=\"$alt\" />";
+		return $imageJSONEncode ? json_encode($ret) : $ret;
     }
 
 	/**
