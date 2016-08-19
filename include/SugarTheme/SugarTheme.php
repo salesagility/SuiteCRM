@@ -708,7 +708,7 @@ EOHTML;
 	 * @param  string $height optional, defaults to the actual image's height
 	 * @param  string $ext optional, image extension (TODO can we deprecate this one ?)
      * @param  string $alt optional, only used when image contains something useful, i.e. "Sally's profile pic"
-     * @param  string $imageJSONEncode optional, some of template javascript need the exact SVG-string to build HTML contents so this parameter make a json_encode call on the return SVG source
+     * @param  string $imageJSONEncode optional, some of template javascript need the exact image-html-string to build HTML contents so this parameter make a json_encode call on the return SVG or image source
      * @return string HTML image tag or sprite
      */
     public function getImage($imageName, $other_attributes = '', $width = null, $height = null, $ext = null, $alt = '', $imageJSONEncode = false) {
