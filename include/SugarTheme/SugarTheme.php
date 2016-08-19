@@ -710,7 +710,7 @@ EOHTML;
      * @param  string $alt optional, only used when image contains something useful, i.e. "Sally's profile pic"
      * @return string HTML image tag or sprite
      */
-    public function getImage($imageName, $other_attributes = '', $width = null, $height = null, $ext = null, $alt = '') {
+    public function getImage($imageName, $other_attributes = '', $width = null, $height = null, $ext = null, $alt = '', $SVG2JSONEncode = false) {
         static $cached_results = array();
         // Look for SVG first
         $imagePath = SugarThemeRegistry::current()->getImagePath().DIRECTORY_SEPARATOR.$imageName.'.svg';
@@ -765,7 +765,7 @@ EOHTML;
 		$attr_height = (is_null($height)) ? "" : "height=\"$height\"";
 
         if(strpos($imageURL, '.svg', strlen($imageURL)-4) !== false){
-            return $cached_results[$imageName];
+            return $SVG2JSONEncode ? json_encode($cached_results[$imageName]) : $cached_results[$imageName];
         }
 		return $cached_results[$imageName] . " $attr_width $attr_height $other_attributes alt=\"$alt\" />";
     }
