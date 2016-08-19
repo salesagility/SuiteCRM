@@ -159,9 +159,15 @@ class CalendarDisplay {
 		$ss->assign('a_str',json_encode($cal->items));
 
 		$start = $current_user->getPreference('day_start_time');
+		if(is_null($start)) {
+			$start = SugarConfig::getInstance()->get('calendar.default_day_start',"08:00");
+		}
 		$ss->assign('day_start_time',$start);
 
 		$end = $current_user->getPreference('day_end_time');
+		if(is_null($end)) {
+			$end = SugarConfig::getInstance()->get('calendar.default_day_end',"19:00");
+		}
 		$ss->assign('day_end_time',$end);
 
 		$ss->assign('sugar_body_only',(isset($_REQUEST['to_pdf']) && $_REQUEST['to_pdf'] || isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only']));
