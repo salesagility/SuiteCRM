@@ -3367,6 +3367,10 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
     background: transparent url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=sugar-yui-sprites.png') no-repeat scroll 0 -70px;
 }
 
+.yui-nav {
+    overflow-y: hidden;
+}
+
 ul.yui-nav li.selected {
     background: #F08377;
 }
@@ -6559,12 +6563,21 @@ td.inlineEditActive {
     overflow: auto !important;
 }
 
-#settingsDialog_c, #settingsDialog {
-    width: 90% !important;
+#settingsDialog_c {
+    top: 0 !important;
+    left: 64px !important;
 }
 
-#formEmailSettingsGeneral {
-    overflow: scroll;
+#settingsDialog .yui-content {
+    height: 384px;
+    overflow-y: auto;
+}
+
+/* stop child elements of a hidden dialog from showing up above other elements */
+.yui-overlay-hidden * {
+    display: none;
+    visibility: collapse;
+    height: 0;
 }
 
 object {
