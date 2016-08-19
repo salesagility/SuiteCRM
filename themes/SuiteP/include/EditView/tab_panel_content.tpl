@@ -16,10 +16,8 @@
                 {{counter name="addressCount" start=0 print=false assign="addressCount"}}
                 {{foreach name=fieldIteration from=$colData key=field item=subField}}
 
-                    {{if !isset($subField.name) || !$subField.name}}
+                    {{if !(!isset($subField.name) || !$subField.name)}}
                         <!-- [hide!!] -->
-                        <div class="hidden REMOVAL-ELEMENT" style="display: none;">
-                    {{/if}}
 
                     {{if $fieldCount < $smarty.foreach.colIteration.total && $addressCount < 1 && !empty($colData.field.name) && empty($colData.field.hideIf)}}
                         {{if !empty($colData.field.hideLabel) && $colData.field.hideLabel == true}}
@@ -131,18 +129,7 @@
                         {{/if}}
                     {{/if}}
 
-                    {{if !isset($subField.name) || !$subField.name}}
-                        </div>
-                        {{literal}}
-                                 {literal}
-                        <script type="text/javascript">
-                        $(function(){
-                            $('.REMOVAL-ELEMENT').remove();
-                        });
-                        </script>
-                                 {/literal}
-                        {{/literal}}
-                        <!-- [/hide!!] -->
+                        <!-- [/hide] -->
                     {{/if}}
 
                     {{counter name="fieldCount" print=false}}
