@@ -532,7 +532,7 @@ class AOR_Report extends Basic {
         } else {
             $max_rows = 20;
         }
-        
+
         $total_rows = 0;
         $count_sql = explode('ORDER BY', $report_sql);
         $count_query = 'SELECT count(*) c FROM ('.$count_sql[0].') as n';
@@ -568,7 +568,7 @@ class AOR_Report extends Basic {
             }
 
             $html .= "<thead><tr class='pagination'>";
-            
+
 
             $moduleFieldByGroupValue = $this->getModuleFieldByGroupValue($beanList, $group_value);
 
@@ -692,8 +692,20 @@ class AOR_Report extends Basic {
             foreach($fields as $name => $att){
                 if($att['display']){
                     $html .= "<td class='' valign='top' align='left'>";
-                    if($att['link'] && $links){
-                        $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$att['module']."&action=DetailView&record=".$row[$att['alias'].'_id']."'>";
+                    if(!empty($att['link']) && $links){
+                        // Create named conditions to check for
+                        $field_key_exists = array_key_exists($att['field'], $field_bean->field_name_map);
+                        $field_has_type = ! empty($field_bean->field_name_map[$field->field]['type']);
+                        $field_type_is_relate = ($field_bean->field_name_map[$att['field']]['type'] == 'relate');
+                        $field_source_is_non_db = ($field_bean->field_name_map[$att['field']]['source'] == 'non-db');
+
+                        // Check for conditions
+                        if($field_key_exists AND $field_has_type AND $field_type_is_relate AND $field_source_is_non_db) {
+                            $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$field_bean->field_name_map[$att['field']]['module']."&action=DetailView&record=".$row[$name]."'>";
+                        }
+                        else {
+                            $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$att['module']."&action=DetailView&record=".$row[$att['alias'].'_id']."'>";
+                        }
                     }
 
                     $currency_id = isset($row[$att['alias'].'_currency_id']) ? $row[$att['alias'].'_currency_id'] : '';
@@ -1030,6 +1042,8 @@ class AOR_Report extends Basic {
     function build_report_query_select($query = array(), $group_value =''){
         global $beanList;
 
+        $has_group_by = false;
+
         if($beanList[$this->report_module]){
             $module = new $beanList[$this->report_module]();
 
@@ -1055,6 +1069,18 @@ class AOR_Report extends Basic {
                         $oldAlias = $table_alias;
                         $table_alias = $table_alias.":".$rel;
                         $query = $this->build_report_query_join($rel, $table_alias, $oldAlias, $field_module, 'relationship', $query, $new_field_module);
+                        $_id_query = $this->db->quoteIdentifier($module->table_name.':'.implode(':', $path)).".id AS '".$module->table_name.':'.implode(':', $path)."_id'";
+                        // Add the id field to the select query if field is a link
+                        // Run  a duplicate check - prevents SQL errors
+                        if(array_search($_id_query, $query['select']) === FALSE) {
+                            if($field->link == '1') {
+                                $query['select'][] = $_id_query;
+                                $query['select_id'][] = array(
+                                    "field" =>$this->db->quoteIdentifier($module->table_name.':'.implode(':', $path)).".id",
+                                    "alias" => $module->table_name.':'.implode(':', $path)."_id"
+                                );
+                            }
+                        }
 
                         $field_module = $new_field_module;
                     }
@@ -1097,30 +1123,66 @@ class AOR_Report extends Basic {
                     $select_field= $this->db->quoteIdentifier($table_alias).'.'.$field->field;
                 }
 
-                if ($field->group_by == 1) {
-                    if ($field->format) {
-                        $query['group_by'][] = str_replace('(%1)', '(' . $select_field . ')', preg_replace(array('/\s+/', '/Y/', '/m/', '/d/'), array(', ', 'YEAR(%1)', 'MONTH(%1)', 'DAY(%1)'), trim(preg_replace('/[^Ymd]/', ' ', $field->format))));
-                        $query['second_group_by'][] = $select_field;
-                    } else {
-                        $query['group_by'][] = $select_field;
-                    }
-                } elseif ($field->field_function != null) {
-                    $select_field = $field->field_function . '(' . $select_field . ')';
-                } else {
-                    $query['second_group_by'][] = $select_field;
+                if($field->group_by == 1) {
+                    $has_group_by = true;
+                    $query['group_by'][] = $field->format ? str_replace('(%1)', '(' . $select_field . ')', preg_replace(array('/\s+/', '/Y/', '/m/', '/d/'), array(', ', 'YEAR(%1)', 'MONTH(%1)', 'DAY(%1)'), trim(preg_replace('/[^Ymd]/', ' ', $field->format)))) : $select_field;
+                }
+                else {
+                    $query['second_group_by'][] = $field->format ? str_replace('(%1)', '(' . $select_field . ')', preg_replace(array('/\s+/', '/Y/', '/m/', '/d/'), array(', ', 'YEAR(%1)', 'MONTH(%1)', 'DAY(%1)'), trim(preg_replace('/[^Ymd]/', ' ', $field->format)))) : $select_field;
+                }
+
+                if($field->field_function != null){
+                    $select_field = $field->field_function.'('.$select_field.')';
                 }
 
                 if($field->sort_by != ''){
                     $query['sort_by'][] = $select_field." ".$field->sort_by;
                 }
 
+
+
                 $query['select'][] = $select_field ." AS '".$field->label."'";
 
-                if($field->group_display == 1 && $group_value) $query['where'][] = $select_field." = '".$group_value."' AND ";
-                    ++$i;
+                if($field->group_display == 1 && $group_value) {
+                    $query['where'][] = $select_field." = '".$group_value."' AND ";
+                }
+
+                ++$i;
             }
         }
+
+        if($has_group_by) {
+            // add fields to the group by MS SQL Requirement
+            foreach($query['select_id'] as $s => $select) {
+                $query['group_by'][] = $select['field'];
+            }
+        }
+
+        $this->injectParentModuleIDField($module->table_name, $query);
+
         return $query;
+    }
+
+    /**
+     * Injects the parent/root table id into the query['select'] key.
+     *
+     * Ensures that all fields which display as hyperlinks have an id/record to link to
+     *
+     * @param $table_name - (string) table name
+     * @param $query - (array) used to build up query
+     */
+    function injectParentModuleIDField ($table_name, &$query) {
+        $needle = $this->db->quoteIdentifier($table_name).".id";
+        $found = false;
+
+        // find if the key already exists
+        foreach($query['select'] as $select) {
+            if(stristr($select, $needle) !== FALSE) { $found = true; break; }
+        }
+
+        if(!$found) {
+            $query['select'][] = $this->db->quoteIdentifier($table_name).".id AS ".$table_name."_id";
+        }
     }
 
 
@@ -1209,16 +1271,6 @@ class AOR_Report extends Basic {
     function build_report_query_where($query = array()){
         global $beanList, $app_list_strings, $sugar_config;
 
-        $aor_sql_operator_list['Equal_To'] = '=';
-        $aor_sql_operator_list['Not_Equal_To'] = '!=';
-        $aor_sql_operator_list['Greater_Than'] = '>';
-        $aor_sql_operator_list['Less_Than'] = '<';
-        $aor_sql_operator_list['Greater_Than_or_Equal_To'] = '>=';
-        $aor_sql_operator_list['Less_Than_or_Equal_To'] = '<=';
-        $aor_sql_operator_list['Contains'] = 'LIKE';
-        $aor_sql_operator_list['Starts_With'] = 'LIKE';
-        $aor_sql_operator_list['Ends_With'] = 'LIKE';        
-
         $closure = false;
         if(!empty($query['where'])) {
             $query['where'][] = '(';
@@ -1256,7 +1308,7 @@ class AOR_Report extends Basic {
                         $condition_module = $new_condition_module;
                     }
                 }
-                if(isset($aor_sql_operator_list[$condition->operator])) {
+                if(isset($app_list_strings['aor_sql_operator_list'][$condition->operator])) {
                     $where_set = false;
 
                     $data = $condition_module->field_defs[$condition->field];
@@ -1286,7 +1338,7 @@ class AOR_Report extends Basic {
                     }
                     if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                         $field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $condition->field;
-                        $query = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm', $table_alias, $condition_module, 'custom', $query);
+                        $query = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm', $oldAlias, $condition_module, 'custom', $query);
                     } else {
                         $field = $this->db->quoteIdentifier($table_alias) . '.' . $condition->field;
                     }
@@ -1383,7 +1435,7 @@ class AOR_Report extends Basic {
                                 $value = '(';
                                 foreach ($multi_values as $multi_value) {
                                     if ($value != '(') $value .= $sep;
-                                    $value .= $field . ' ' . $aor_sql_operator_list[$condition->operator] . " '" . $multi_value . "'";
+                                    $value .= $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . " '" . $multi_value . "'";
                                 }
                                 $value .= ')';
                             }
@@ -1438,7 +1490,7 @@ class AOR_Report extends Basic {
                             $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND '));
                             $tiltLogicOp = false;
 
-                            switch ($aor_sql_operator_list[$condition->operator]) {
+                            switch ($app_list_strings['aor_sql_operator_list'][$condition->operator]) {
                                 case "=":
                                     $query['where'][] = $field . ' BETWEEN ' . $value .  ' AND ' . '"' . $date . '"';
                                     break;
@@ -1449,11 +1501,11 @@ class AOR_Report extends Basic {
                                 case "<":
                                 case ">=":
                                 case "<=":
-                                    $query['where'][] = $field . ' ' . $aor_sql_operator_list[$condition->operator] . ' ' . $value;
+                                    $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
                                     break;
                             }
                         } else {
-                            if (!$where_set) $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $field . ' ' . $aor_sql_operator_list[$condition->operator] . ' ' . $value;
+                            if (!$where_set) $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
                         }
                     }
                     $tiltLogicOp = false;
