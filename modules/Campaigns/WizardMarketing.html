@@ -515,7 +515,6 @@
 								$('#template_id_name_space_separator').hide();
 								$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').show();
 								$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').hide();
-								$('input[name="update_exists_template"]').prop('checked', true);
 							});
 
 							$('#template_option_create').click(function(){
@@ -524,8 +523,6 @@
 								$('#template_id_name_space_separator').hide();
 								$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').hide();
 								$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').show();
-								$('input[name="update_exists_template"]').prop('checked', false);
-								emailTemplateCopyId = null;
 							});
 
 							$('#template_option_copy').click(function(){
@@ -534,7 +531,6 @@
 								$('#template_id_name_space_separator').show();
 								$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').hide();
 								$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').show();
-								$('input[name="update_exists_template"]').prop('checked', false);
 							});
 
 
@@ -548,7 +544,7 @@
 								$('#template_option_select').click();
 							}
 							else {
-								$('#template_option_select').click();
+								$('#template_option_create').click();
 							}
 
 							// fix lost buttons
@@ -1309,12 +1305,12 @@
 				<div style="margin-bottom: 16px;">
 					{if $WARNING_MESSAGE}
 					<div id='target_message'><font color='red'><b>{$WARNING_MESSAGE}</b></font></div>
-					<br class="emptyRow">
+					<br>
 					{/if}
 					<div id="alert_messages"></div>
 					{if $diagnose}
 					{$diagnose}
-					<br class="emptyRow">
+					<br>
 					{/if}
 					<div id="marketing_errors" class="error">
 						{if $error_on_marketing_name}{$error_on_marketing_name}<br>{/if}
@@ -1329,7 +1325,7 @@
 					<li class="{if $error_on_target_list}li-cross{else}li-tick{/if}"><a href="{$link_to_target_list}">{$MOD.LBL_CHOOSE_TARGETS}</a></li>
 					{if $campaign_type=='NewsLetter' || $campaign_type=='Email'}
 					<li class="{if $error_on_templates}li-cross{else}li-tick{/if}"><a href="{$link_to_choose_template}">{$MOD.LBL_CHOOSE_TEMPLATES}</a></li>
-					<li class="{if $error_on_marketing}li-cross{else}li-tick{/if}"><a id="marketing_status_lnk" href="{$link_to_sender_details}">{$MOD.LBL_SENDER_DETAILS}</a></li>
+					<li class="{if $link_to_sender_details}li-cross{else}li-tick{/if}"><a id="marketing_status_lnk" href="{$link_to_sender_details}">{$MOD.LBL_SENDER_DETAILS}</a></li>
 					<li class="{if $error_on_scheduler2 || $error_on_mailbox2}li-cross{else}li-tick{/if}"><a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">{$MOD.LBL_PROCESS_CAMPAIGN_EMAILS}</a></li>
 					<li class="{if $error_on_scheduler1 || $error_on_mailbox1}li-cross{else}li-tick{/if}"><a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">{$MOD.LBL_PROCESS_BOUNCED_EMAILS}</a></li>
 					{/if}
