@@ -179,7 +179,8 @@ class CalendarDisplay {
 		foreach($this->views as $view){
 			$location_array[] = $view;
 		}
-		$ss->assign("langprefix", explode("_",$GLOBALS['current_language'])[0] );
+		$current_language = explode("_",$GLOBALS['current_language']);
+		$ss->assign("langprefix", $current_language[0]);
 
 		$ss->assign('custom_views',$location_array);
 		if($_REQUEST['module'] == "Calendar"){
@@ -576,7 +577,7 @@ class CalendarDisplay {
 
 	public function convertPHPToMomentFormat($format)
 	{
-		$replacements = [
+		$replacements = array(
 			'd' => 'DD',
 			'D' => 'ddd',
 			'j' => 'D',
@@ -614,7 +615,7 @@ class CalendarDisplay {
 			'c' => '', // no equivalent
 			'r' => '', // no equivalent
 			'U' => 'X',
-		];
+		);
 		$momentFormat = strtr($format, $replacements);
 		return $momentFormat;
 	}
