@@ -101,11 +101,11 @@
             {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
             {{if isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true}}
             {{if $tabCount == '0'}}
-            <div class="tab-pane-NOBOOTSTRAPTOGGLER active fade in" id='detailpanel_{{$tabCount}}'>
+            <div class="tab-pane-NOBOOTSTRAPTOGGLER active fade in" id='detailpanel_{{$tabCount}}' style="display: block;">
                 {{include file='themes/SuiteP/include/EditView/tab_panel_content.tpl'}}
             </div>
             {{else}}
-            <div class="tab-pane-NOBOOTSTRAPTOGGLER fade" id='detailpanel_{{$tabCount}}'>
+            <div class="tab-pane-NOBOOTSTRAPTOGGLER fade active in" id='detailpanel_{{$tabCount}}' style="display: none;">
                 {{include file='themes/SuiteP/include/EditView/tab_panel_content.tpl'}}
             </div>
             {{/if}}
@@ -220,12 +220,25 @@ $(document).ready(function() {ldelim}
         });
 
         $('a[data-toggle="collapse"]').click(function(e){
+            var content;
             if($(this).hasClass('collapsed')) {
                 $(this).removeClass('collapsed');
-                $(this).closest('.panel-content').find('.panel-body.panel-collapse.collapse').addClass('in');
+                if($(this).closest('.panel-content').length) {
+                    content = $(this).closest('.panel-content').find('.panel-body.panel-collapse.collapse');
+                }
+                else if($(this).closest('.panel.panel-default').length){
+                    content = $(this).closest('.panel.panel-default').next();
+                }
+                content.addClass('in');
             } else {
                 $(this).addClass('collapsed');
-                $(this).closest('.panel-content').find('.panel-body.panel-collapse.collapse').removeClass('in');
+                if($(this).closest('.panel-content').length) {
+                    content = $(this).closest('.panel-content').find('.panel-body.panel-collapse.collapse');
+                }
+                else if($(this).closest('.panel.panel-default').length){
+                    content = $(this).closest('.panel.panel-default').next();
+                }
+                content.removeClass('in');
             }
         });
     });
