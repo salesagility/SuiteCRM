@@ -192,9 +192,12 @@
 
         {{/foreach}}
 
-
         </div>
         <!-- /DIV column -->
+        {{if $fieldCount==0}}
+        <div class="clear"></div>
+        {{/if}}
+
 
     {{/foreach}}
     {{counter name="columnCount" print=false}}
