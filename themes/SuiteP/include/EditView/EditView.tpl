@@ -143,7 +143,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading {{$panelHeadingCollapse}}">
-                    <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#detailpanel_{{$panelCount}}" aria-expanded="false">
+                    <a class="{{$collapsed}}" role="button" data-toggle="collapse" aria-expanded="false">
                         <div class="col-xs-10 col-sm-11 col-md-11">
                             {sugar_translate label='{{$label}}' module='{{$module}}'}</div>
                         </div>
@@ -217,6 +217,16 @@ $(document).ready(function() {ldelim}
         $('#EditView_tabs ul.nav.nav-tabs li').click(function(e){
             var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
             selectTab(tab);
+        });
+
+        $('a[data-toggle="collapse"]').click(function(e){
+            if($(this).hasClass('collapsed')) {
+                $(this).removeClass('collapsed');
+                $(this).closest('.panel-content').find('.panel-body.panel-collapse.collapse').addClass('in');
+            } else {
+                $(this).addClass('collapsed');
+                $(this).closest('.panel-content').find('.panel-body.panel-collapse.collapse').removeClass('in');
+            }
         });
     });
 
