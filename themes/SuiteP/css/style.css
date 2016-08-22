@@ -497,6 +497,132 @@ div#pageContainer td.dashletcontainer div.hd .icon {
     border-bottom-right-radius: 3px;
 }
 
+
+#edittabs {}
+
+#edittabs  table:nth-of-type(2),
+#edittabs  table:nth-of-type(2) > tbody,
+#edittabs  table:nth-of-type(2) tbody > tr
+{
+    width: 100%;
+}
+
+#edittabs  table:nth-of-type(2) tbody > tr > td {
+    display: inline-block;
+}
+
+#edittabs .edit {
+    display: inline-block;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin: 0 16px 0 0;
+    width: 16% !important;
+}
+
+#edittabs  table:nth-of-type(2) tbody > tr > td:nth-of-type(2) {
+    width: 80%;
+}
+
+#s_field_delete > tbody > tr > td,
+#trash,
+#trashcan,
+#trashcan table,
+#trashcan table > tbody,
+#trashcan table > tbody > tr
+{
+    width: 100%!important;
+}
+
+#edittabs #trash {
+    height: 64px;
+    overflow: visible;
+}
+
+
+#edittabs .listContainer {
+    height: 384px;
+    overflow-y: auto;
+}
+
+#edittabs .listContainer li span {
+    display: block;
+    padding: 8px 0 8px 8px;
+    background: #f5f5f5;
+    margin-bottom: 4px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    width: 98%;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+#edittabs #groupTable,
+#edittabs #groupTable > tbody,
+#edittabs #groupTable > tbody > tr {
+    width: 100%;
+}
+
+#edittabs #groupTable {
+    background: #ffffff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+#edittabs #groupTable * {
+    border: none;
+}
+
+
+#edittabs #groupTable .tdContainer {
+    display: inline-block;
+    width: 16%
+}
+
+.slotB {
+    border-width:0;cursor:move;
+
+}
+
+span.error:empty{
+    padding:0;
+}
+
+
+#groupTable > tbody > tr:nth-child(1) > td {
+    margin: 0 8px 8px 16px;
+}
+
+#edittabs #groupTable .tdContainer h2 {
+    margin: 16px 0 8px 0px;
+}
+
+#edittabs #groupTable .tdContainer h2 > span:nth-of-type(1) {
+    display: inline-block;
+    width: 80%;
+}
+
+#edittabs #groupTable .tdContainer h2 > span:nth-of-type(2) {
+    display: inline-block;
+    width: 10%;
+}
+
+#ygddfdiv {
+    background: #B29Eb5 !important;
+    opacity: 1 !important;
+    padding: 8px;
+}
+
+.slotSub {
+    background: #00AA00;
+}
+
+div.noBullet li, .nobullet
+{
+    list-style-type: none;
+}
+
+
 #recentlyViewedSidebar {
     margin-bottom: 30px;
     float: left;
@@ -1469,6 +1595,7 @@ table#mass_update_table td select {
     margin-top: 5px;
 }
 
+.buttonOn,
 #detail_header_action_menu li.sugar_action_button,
 #userEditActions li.sugar_action_button,
 #actionLinkTop li.sugar_action_button,
@@ -4480,6 +4607,8 @@ fieldset[disabled] .btn-primary.active {
     border: 1px solid #F08377;
     border-radius: 4px;
 }
+
+.buttonOn,
 .btn .btn:hover {
     cursor: pointer;
     font-size: 13px;
