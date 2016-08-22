@@ -195,7 +195,7 @@ $admin_group_header[0] = array('LBL_USERS_TITLE', '', false, array_merge((array)
 
 $admin_option_defs=array();
 $admin_option_defs['Administration']['aos'] = array(
-    'edit',
+    'AOS',
     'LBL_AOS_SETTINGS',
     'LBL_CHANGE_SETTINGS',
     './index.php?module=Administration&action=AOSAdmin'
