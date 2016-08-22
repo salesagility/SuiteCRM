@@ -94,8 +94,10 @@
 
     <div class="clearfix"></div>
     {{if $useTabs}}
+        <!-- TAB CONTENT USE TABS -->
         <div class="tab-content">
     {{else}}
+            <!-- TAB CONTENT DOESN'T USE TABS -->
         <div class="tab-content" style="padding: 0; border: 0;">
     {{/if}}
         {* Loop through all top level panels first *}
@@ -105,10 +107,12 @@
             {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
                 {{if isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true}}
                     {{if $tabCount == '0'}}
+                        <!-- TAB PANE - USE TABS & TAB COUNT = 0 -->
                         <div class="tab-pane active fade in" id='tab-content-{{$tabCount}}'>
                             {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
                         </div>
                     {{else}}
+                        <!-- TAB PANE - USE TABS & TAB COUNT != 0 -->
                         <div class="tab-pane fade" id='tab-content-{{$tabCount}}'>
                             {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
                         </div>
@@ -117,6 +121,7 @@
                 {{counter name="tabCount" print=false}}
             {{/foreach}}
         {{else}}
+            <!-- TAB PANE - !USE TABS -->
             <div class="tab-pane panel-collapse">test</div>
         {{/if}}
     </div>
@@ -160,6 +165,7 @@
             </div>
             <div class="panel-body {{$collapse}}" id="{{$panelId}}">
                 <div class="tab-content">
+                    <!-- TAB CONTENT -->
                     {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
                 </div>
             </div>
