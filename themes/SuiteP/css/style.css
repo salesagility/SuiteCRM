@@ -363,9 +363,9 @@ div#pageContainer td.dashletcontainer div.hd .icon {
     background-image: url("../../../../themes/SuiteP/images/sidebar/List_Maps.svg");
 }
 
-#actionMenuSidebar li a.side-bar-Quick_Radius_Maps {
-    background-image: url("../../../../themes/SuiteP/images/sidebar/Quick_Radius_Maps.png");
-    background-image: url("../../../../themes/SuiteP/images/sidebar/Quick_Radius_Maps.svg");
+#actionMenuSidebar li a.side-bar-Quick_Radius_Map {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/Quick_Radius_Map.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/Quick_Radius_Map.svg");
 }
 
 #actionMenuSidebar li a.side-bar-Resource_Chart {
