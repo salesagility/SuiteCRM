@@ -52,9 +52,8 @@ CAL.init_edit_dialog = function (params) {
   var rd = CAL.get("cal-edit");
 }
 CAL.open_edit_dialog = function (params) {
-  // Open modal dialog
-  $('.modal-cal-edit').modal('show');
-  console.log('open_edit_dialog');
+// Open modal dialog
+    $('.modal-cal-edit').modal('show');
 }
 CAL.close_edit_dialog = function () {
   CAL.reset_edit_dialog();
