@@ -55,7 +55,7 @@
         {{counter name="tabCount" print=false}}
         {{if $tabCount == '0'}}
         <li role="presentation" class="active">
-            <a id="tab{{$tabCount}}" href="#detailpanel_{{$tabCount}}" data-toggle="tab" class="hidden-xs">
+            <a id="tab{{$tabCount}}" data-toggle="tab" class="hidden-xs">
                 {sugar_translate label='{{$label}}' module='{{$module}}'}
             </a>
             <a id="xstab{{$tabCount}}" href="#" class="visible-xs first-tab-xs dropdown-toggle" data-toggle="dropdown">
@@ -66,7 +66,7 @@
                 {{foreach name=sectionXS from=$sectionPanels key=label item=panelXS}}
                 {{counter name="tabCountXS" print=false}}
                 <li role="presentation">
-                    <a id="tab{{$tabCountXS}}" href="#detailpanel_{{$tabCountXS}}" data-toggle="tab" onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
+                    <a id="tab{{$tabCountXS}}"  data-toggle="tab" onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
                         {sugar_translate label='{{$label}}' module='{{$module}}'}
                     </a>
                 </li>
@@ -75,7 +75,7 @@
         </li>
         {{else}}
         <li role="presentation" class="hidden-xs">
-            <a id="tab{{$tabCount}}" href="#detailpanel_{{$tabCount}}" data-toggle="tab">
+            <a id="tab{{$tabCount}}"  data-toggle="tab">
                 {sugar_translate label='{{$label}}' module='{{$module}}'}
             </a>
         </li>
@@ -101,11 +101,11 @@
             {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
             {{if isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true}}
             {{if $tabCount == '0'}}
-            <div class="tab-pane active fade in" id='detailpanel_{{$tabCount}}'>
+            <div class="tab-pane-NOBOOTSTRAPTOGGLER active fade in" id='detailpanel_{{$tabCount}}' style="display: block;">
                 {{include file='themes/SuiteP/include/EditView/tab_panel_content.tpl'}}
             </div>
             {{else}}
-            <div class="tab-pane fade" id='detailpanel_{{$tabCount}}'>
+            <div class="tab-pane-NOBOOTSTRAPTOGGLER fade active in" id='detailpanel_{{$tabCount}}' style="display: none;">
                 {{include file='themes/SuiteP/include/EditView/tab_panel_content.tpl'}}
             </div>
             {{/if}}
@@ -143,7 +143,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading {{$panelHeadingCollapse}}">
-                    <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#detailpanel_{{$panelCount}}" aria-expanded="false">
+                    <a class="{{$collapsed}}" role="button" data-toggle="collapse" aria-expanded="false">
                         <div class="col-xs-10 col-sm-11 col-md-11">
                             {sugar_translate label='{{$label}}' module='{{$module}}'}</div>
                         </div>
@@ -187,3 +187,62 @@ $(document).ready(function() {ldelim}
   {rdelim});
 {rdelim}
 </script>
+
+{literal}
+
+    <script type="text/javascript">
+
+    var selectTab = function(tab) {
+        $('#EditView_tabs div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').hide();
+        $('#EditView_tabs div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').eq(tab).show().addClass('active').addClass('in');
+    };
+
+    var selectTabOnError = function(tab) {
+        selectTab(tab);
+        $('#EditView_tabs ul.nav.nav-tabs li').removeClass('active');
+        $('#EditView_tabs ul.nav.nav-tabs li a').css('color', '');
+
+        $('#EditView_tabs ul.nav.nav-tabs li').eq(tab).find('a').first().css('color', 'red');
+        $('#EditView_tabs ul.nav.nav-tabs li').eq(tab).addClass('active');
+
+    };
+
+    var selectTabOnErrorInputHandle = function(inputHandle) {
+        var tab = $(inputHandle).closest('.tab-pane-NOBOOTSTRAPTOGGLER').attr('id').match(/^detailpanel_(.*)$/)[1];
+        selectTabOnError(tab);
+    };
+
+
+    $(function(){
+        $('#EditView_tabs ul.nav.nav-tabs li').click(function(e){
+            var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
+            selectTab(tab);
+        });
+
+        $('a[data-toggle="collapse"]').click(function(e){
+            var content;
+            if($(this).hasClass('collapsed')) {
+                $(this).removeClass('collapsed');
+                if($(this).closest('.panel-content').length) {
+                    content = $(this).closest('.panel-content').find('.panel-body.panel-collapse.collapse');
+                }
+                else if($(this).closest('.panel.panel-default').length){
+                    content = $(this).closest('.panel.panel-default').next();
+                }
+                content.addClass('in');
+            } else {
+                $(this).addClass('collapsed');
+                if($(this).closest('.panel-content').length) {
+                    content = $(this).closest('.panel-content').find('.panel-body.panel-collapse.collapse');
+                }
+                else if($(this).closest('.panel.panel-default').length){
+                    content = $(this).closest('.panel.panel-default').next();
+                }
+                content.removeClass('in');
+            }
+        });
+    });
+
+    </script>
+
+{/literal}

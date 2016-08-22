@@ -400,8 +400,9 @@ class SubPanel
 
 		require_once('include/SubPanel/SubPanelSearchForm.php');
 
-		if ($subpanel_defs['type'] == 'collection') {
-			$collection = array_shift(array_values($subpanel_defs['collection_list']));
+		if (isset($subpanel_defs['type']) && $subpanel_defs['type'] == 'collection') {
+			$arrayValues = array_values($subpanel_defs['collection_list']);
+			$collection = array_shift($arrayValues);
 			$module = $collection['module'];
 		} else {
 			$module = $subpanel_defs['module'];
@@ -447,8 +448,9 @@ class SubPanel
 		$subpanel_defs = $thisPanel->_instance_properties;
 		require_once('include/SubPanel/SubPanelSearchForm.php');
 
-		if ($subpanel_defs['type'] == 'collection') {
-			$collection = array_shift(array_values($subpanel_defs['collection_list']));
+		if (isset($subpanel_defs['type']) && $subpanel_defs['type'] == 'collection') {
+			$arrayValues = array_values($subpanel_defs['collection_list']);
+			$collection = array_shift($arrayValues);
 			$module = $collection['module'];
 		} else {
 			$module = $subpanel_defs['module'];

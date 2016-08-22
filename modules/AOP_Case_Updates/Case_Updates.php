@@ -299,7 +299,7 @@ function quick_edit_case_updates($case){
         return;
     }
     $internalChecked = '';
-    if($case->internal){
+    if(isset($case->internal) && $case->internal){
         $internalChecked = "checked='checked'";
     }
     $html = <<< EOD
