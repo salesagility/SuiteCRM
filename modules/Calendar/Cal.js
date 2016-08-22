@@ -55,7 +55,6 @@ CAL.init_edit_dialog = function (params) {
 CAL.open_edit_dialog = function (params) {
     // Open modal dialog
     $('.modal-cal-edit').modal('show');
-    console.log('open_edit_dialog');
 }
 CAL.close_edit_dialog = function () {
     CAL.reset_edit_dialog();
@@ -807,8 +806,6 @@ $(document).ready(function() {
 
 
     function get_cal(i, all_events){
-        console.log(global_view);
-        console.log(views);
         $('#calendar' + i).fullCalendar({
             header: {
                 left: '',
