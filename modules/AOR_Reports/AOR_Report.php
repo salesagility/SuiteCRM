@@ -1175,7 +1175,7 @@ class AOR_Report extends Basic {
 
         // find if the key already exists
         foreach($query['select'] as $select) {
-            if(!empty(stristr($select, $needle))) { $found = true; break; }
+            if(stristr($select, $needle) !== FALSE) { $found = true; break; }
         }
 
         if(!$found) {
