@@ -189,12 +189,12 @@ class CalendarActivity {
 
 				if($key == "Meeting"){
 					$where .= $completedMeetings;
-				}elseif($key == "Call"){
+				}elseif($key == "Calls"){
 					$where .= $completedCalls;
 					if(!$show_calls){
 						continue;
 					}
-				}elseif($key == "Task"){
+				}elseif($key == "Tasks"){
 					$where .= $completedTasks;
 					if(!$show_tasks){
 						continue;
