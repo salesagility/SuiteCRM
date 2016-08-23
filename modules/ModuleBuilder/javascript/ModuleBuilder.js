@@ -696,7 +696,16 @@ if (typeof(ModuleBuilder) == 'undefined') {
 			}
 			else {
 				ModuleBuilder.callLock = true;
-				onSuccess = successCall;
+				onSuccess = function(o) {
+						YAHOO.SUGAR.MessageBox.hide();
+						YAHOO.SUGAR.MessageBox.show({
+							title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_TITLE'),
+							msg:  SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_MESSAGE'),
+							width: 500,
+							close: true
+						});
+						successCall(o);
+				}
 			}
 			Connect.setForm(document.getElementById(formname) || document.forms[formname]);
 			Connect.asyncRequest(
