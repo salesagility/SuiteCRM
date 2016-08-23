@@ -815,6 +815,9 @@ function add_error_style(formname, input, txt, flash) {
 	                        tabView.selectTab(i);
 	                }
 	            }
+						  if(typeof selectTabOnErrorInputHandle == 'function') {
+								selectTabOnErrorInputHandle(inputHandle);
+							}
 	        }
 		}
 		window.setTimeout("inputsWithErrors[" + (inputsWithErrors.length - 1) + "].style.backgroundColor = '';", 2000);

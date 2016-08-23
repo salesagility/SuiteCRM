@@ -1765,6 +1765,9 @@ EOQ;
 		// always return as array for post-processing
 		$ref = parent::oneColumnSQLRep($fieldDef, $ignoreRequired, $table, true);
 
+		// Quote the column name (fixes problems with names like 'open', as found in aobh_businesshours)
+		$ref['name'] = $this->quoteIdentifier($ref['name']);
+
 		// Bug 24307 - Don't add precision for float fields.
 		if ( stristr($ref['colType'],'float') )
 			$ref['colType'] = preg_replace('/(,\d+)/','',$ref['colType']);
