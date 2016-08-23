@@ -713,11 +713,18 @@ EOHTML;
      */
     public function getImage($imageName, $other_attributes = '', $width = null, $height = null, $ext = null, $alt = '', $imageJSONEncode = false) {
         static $cached_results = array();
-        // Look for SVG first
-        $imagePath = SugarThemeRegistry::current()->getImagePath().DIRECTORY_SEPARATOR.$imageName.'.svg';
-        if(file_exists($imagePath)) {
-            $ext = '.svg';
+
+        // look for .svg first
+        if(strpos($imageName, '.svg') !== false) {
+            $ext = '';
+        } else {
+            // Look for SVG first
+            $imagePath = SugarThemeRegistry::current()->getImagePath().DIRECTORY_SEPARATOR.$imageName.'.svg';
+            if(file_exists($imagePath)) {
+                $ext = '.svg';
+            }
         }
+
 
 		// trap deprecated use of image extension
 		if(is_null($ext)) {

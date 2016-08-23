@@ -149,7 +149,7 @@ $admin_option_defs['jjwg_Maps']['config'] = array(
     './index.php?module=jjwg_Maps&action=config'
 );
 $admin_option_defs['jjwg_Maps']['geocoded_counts'] = array(
-    'Contacts',
+    'Geocoded_Counts',
     'LBL_JJWG_MAPS_ADMIN_GEOCODED_COUNTS_TITLE',
     'LBL_JJWG_MAPS_ADMIN_GEOCODED_COUNTS_DESC',
     './index.php?module=jjwg_Maps&action=geocoded_counts'
@@ -167,7 +167,7 @@ $admin_option_defs['jjwg_Maps']['geocode_addresses'] = array(
     './index.php?module=jjwg_Maps&action=geocode_addresses'
 );
 $admin_option_defs['jjwg_Maps']['address_cache'] = array(
-    'Contacts',
+    'Address_Cache',
     'LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_TITLE',
     'LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_DESC',
     './index.php?module=jjwg_Address_Cache&action=index'
@@ -215,11 +215,12 @@ $admin_option_defs['Administration']['aop'] = array(
 );
 
 $admin_option_defs['Administration']['business_hours'] = array(
-    'edit',
+    'AOBH_BusinessHours',
     'LBL_BUSINESS_HOURS',
-    'LBL_BUSINESS_HOURS_DESC',
+    'LBL_AOP_BUSINESS_HOURS_DESC',
     './index.php?module=Administration&action=BusinessHours'
 );
+
 $admin_group_header['sagility'] = array(
     'LBL_SALESAGILITY_ADMIN',
     '',
@@ -232,7 +233,6 @@ $admin_group_header['sagility'] = array(
 $admin_option_defs=array();
 $admin_option_defs['Bugs']['bug_tracker']= array('Releases','LBL_MANAGE_RELEASES','LBL_RELEASE','./index.php?module=Releases&action=index');
 $admin_group_header[]= array('LBL_BUG_TITLE','',false,$admin_option_defs, 'LBL_BUG_DESC');
-
 
 
 if(file_exists('custom/modules/Administration/Ext/Administration/administration.ext.php')){
