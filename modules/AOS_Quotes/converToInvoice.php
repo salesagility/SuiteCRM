@@ -101,7 +101,29 @@
 	//Setting Line Items
 	$sql = "SELECT * FROM aos_products_quotes WHERE parent_type = 'AOS_Quotes' AND parent_id = '".$quote->id."' AND deleted = 0";
   	$result = $this->bean->db->query($sql);
+  	$count = 0;
+	$groupId = "";
+	$previousGroupId = array();
 	while ($row = $this->bean->db->fetchByAssoc($result)) {
+		$tempGroupId = $row['group_id'];
+		if($count == 0 || (!isset($previousGroupId[$row['group_id']]) )) {
+			//Create a new Group so that changes to a quote do not update an invoice.
+			$group = BeanFactory::getBean("AOS_Line_Item_Groups", $row['group_id']);
+			$group->id = "";
+			$group->save();
+			$row['group_id'] = $group->id;
+			$groupId = $group->id;
+			$previousGroupId[$tempGroupId] = $groupId;
+		}
+		else {
+			//Ensure line items are grouped correctly in new groups
+			if(isset($previousGroupId[$tempGroupId])){
+				$groupId = $previousGroupId[$tempGroupId];
+			}
+			$row['group_id'] = $groupId;
+		}
+		$count++;
+		
 		$row['id'] = '';
 		$row['parent_id'] = $invoice->id;
 		$row['parent_type'] = 'AOS_Invoices';
