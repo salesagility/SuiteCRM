@@ -413,7 +413,7 @@ function setValueClose(value){
 
 function saveFieldHTML(field,module,id,value, parent_type) {
     $.ajaxSetup({"async": false});
-    var result = $.getJSON('index.php',
+    var result = $.post('index.php',
         {
             'module': 'Home',
             'action': 'saveHTMLField',
@@ -424,7 +424,7 @@ function saveFieldHTML(field,module,id,value, parent_type) {
             'view' : view,
             'parent_type': parent_type,
             'to_pdf': true
-        }
+        }, null, "json"
     );
     $.ajaxSetup({"async": true});
     return(result.responseText);
