@@ -3714,7 +3714,9 @@ div.tab-content {
     top: 7px;
     border: 1px solid #aaa;
     padding: 5px;
+
 }
+
 
 div#chartDashlets {
     overflow-y: auto;
