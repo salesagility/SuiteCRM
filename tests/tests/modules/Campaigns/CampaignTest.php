@@ -129,7 +129,7 @@ class CampaignTest extends PHPUnit_Framework_TestCase
         $campaign = new Campaign();
 
         $current_theme = SugarThemeRegistry::current();
-        //execute the method and verify that it retunrs expected results
+        //execute the method and verify that it returns expected results
 
         $expected = array(
                 'DELETED' => 0,
@@ -138,9 +138,11 @@ class CampaignTest extends PHPUnit_Framework_TestCase
                 'IMPRESSIONS' => '0',
                 'OPTIONAL_LINK' => 'display:none',
                 'TRACK_CAMPAIGN_TITLE' => 'View Status',
-                'TRACK_CAMPAIGN_IMAGE' => '~'.preg_quote('themes/'.$current_theme.'/images/view_status.gif?v=').'[\w-]+~',
+            // The theme may fallback to default so we only care that the icon is the same.
+                'TRACK_CAMPAIGN_IMAGE' => '~images/view_status~',
                 'LAUNCH_WIZARD_TITLE' => 'Launch Wizard',
-                'LAUNCH_WIZARD_IMAGE' => '~'.preg_quote('themes/'.$current_theme.'/images/edit_wizard.gif?v=').'[\w-]+~',
+            // The theme may fallback to default so we only care that the icon is the same.
+                'LAUNCH_WIZARD_IMAGE' => '~images/edit_wizard~',
                 'TRACK_VIEW_ALT_TEXT' => 'View Status',
                 'LAUNCH_WIZ_ALT_TEXT' => 'Launch Wizard',
         );

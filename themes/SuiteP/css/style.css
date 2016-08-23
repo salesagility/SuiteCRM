@@ -55,6 +55,17 @@ body {
     height: 100%;
 }
 
+img, svg {
+    image-rendering: auto;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+
+.studiolink svg, .studiolink img {
+    width: 30px;
+    height: auto;
+}
+
 /* LOGIN */
 div.p_login {
     background-color: #F5F5F5;
@@ -356,9 +367,9 @@ div#pageContainer td.dashletcontainer div.hd .icon {
     background-image: url("../../../../themes/SuiteP/images/sidebar/List_Maps.svg");
 }
 
-#actionMenuSidebar li a.side-bar-Quick_Radius_Maps {
-    background-image: url("../../../../themes/SuiteP/images/sidebar/Quick_Radius_Maps.png");
-    background-image: url("../../../../themes/SuiteP/images/sidebar/Quick_Radius_Maps.svg");
+#actionMenuSidebar li a.side-bar-Quick_Radius_Map {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/Quick_Radius_Map.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/Quick_Radius_Map.svg");
 }
 
 #actionMenuSidebar li a.side-bar-Resource_Chart {
@@ -4208,6 +4219,10 @@ iframe.teamNoticeBox {
 td.dashlet-title {
     height: 52px;
     line-height: 48px;
+}
+
+td.dashlet-title > h3 > span {
+    margin-left: 8px;
 }
 
 button[disabled]:hover, input[type=submit][disabled]:hover, input[type=reset][disabled]:hover, input[type=button][disabled]:hover {
