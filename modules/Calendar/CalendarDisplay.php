@@ -159,9 +159,15 @@ class CalendarDisplay {
 		$ss->assign('a_str',json_encode($cal->items));
 
 		$start = $current_user->getPreference('day_start_time');
+		if(is_null($start)) {
+			$start = SugarConfig::getInstance()->get('calendar.default_day_start',"08:00");
+		}
 		$ss->assign('day_start_time',$start);
 
 		$end = $current_user->getPreference('day_end_time');
+		if(is_null($end)) {
+			$end = SugarConfig::getInstance()->get('calendar.default_day_end',"19:00");
+		}
 		$ss->assign('day_end_time',$end);
 
 		$ss->assign('sugar_body_only',(isset($_REQUEST['to_pdf']) && $_REQUEST['to_pdf'] || isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only']));
@@ -179,7 +185,8 @@ class CalendarDisplay {
 		foreach($this->views as $view){
 			$location_array[] = $view;
 		}
-		$ss->assign("langprefix", explode("_",$GLOBALS['current_language'])[0] );
+		$current_language = explode("_",$GLOBALS['current_language']);
+		$ss->assign("langprefix", $current_language[0]);
 
 		$ss->assign('custom_views',$location_array);
 		if($_REQUEST['module'] == "Calendar"){
@@ -229,16 +236,20 @@ class CalendarDisplay {
 
 		}
 		foreach($activity as $key => $activityItem){
-			$activity[ $key ]['label'] = $GLOBALS['app_list_strings']['moduleList'][ $key ];
+			if(isset($GLOBALS['app_list_strings']['moduleList'][ $key ]) && !empty($GLOBALS['app_list_strings']['moduleList'][ $key ]) && !empty($this->cal->activityList[ $key ]) ){
+				$activity[ $key ]['label'] = $GLOBALS['app_list_strings']['moduleList'][ $key ];
+			}else{
+				unset($activity[ $key ]);
+			}
 		}
 		if(isset($activity) && !empty($activity)){
 			$this->activity_colors = $activity;
 		}
 		if(!empty($this->cal->activityList)){
 			foreach($this->cal->activityList as $key=>$value ){
-				if(isset($GLOBALS['beanList'][$key]) && !empty($GLOBALS['beanList'][$key]) && !isset($this->activity_colors[ $GLOBALS['beanList'][$key] ])){
-					$this->activity_colors[ $GLOBALS['beanList'][$key] ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
-					$activity[ $GLOBALS['beanList'][$key] ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
+				if(isset($GLOBALS['beanList'][$key]) && !empty($GLOBALS['beanList'][$key]) && !isset($this->activity_colors[ $key ])){
+					$this->activity_colors[ $key ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
+					$activity[ $key ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
 				}
 			}
 		}
@@ -576,7 +587,7 @@ class CalendarDisplay {
 
 	public function convertPHPToMomentFormat($format)
 	{
-		$replacements = [
+		$replacements = array(
 			'd' => 'DD',
 			'D' => 'ddd',
 			'j' => 'D',
@@ -614,7 +625,7 @@ class CalendarDisplay {
 			'c' => '', // no equivalent
 			'r' => '', // no equivalent
 			'U' => 'X',
-		];
+		);
 		$momentFormat = strtr($format, $replacements);
 		return $momentFormat;
 	}
