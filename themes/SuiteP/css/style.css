@@ -1759,7 +1759,7 @@ table#mass_update_table td select {
     border: none;
 }
 
-.sugar_field
+.sugar_field,
 .aop_case_updates_threaded_span * {
     text-wrap: normal;
     white-space: normal;
