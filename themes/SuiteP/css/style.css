@@ -1500,7 +1500,6 @@ a.listViewTdToolsS1 {
     float: right;
     width: 100%;
     background-color: #fff;
-    text-wrap: normal;
     padding-left: 52px;
     padding-bottom: 10px;
     height: auto;
@@ -1521,17 +1520,22 @@ a.listViewTdToolsS1 {
     float: right;
     width: 100%;
     background-color: #f5f5f5;
-    text-wrap: normal;
-    padding-left: 52px;
+    padding-left: 52px !important;
     padding-bottom: 10px;
     height: auto;
     line-height: 24px;
 }
 
-@media (min-width: 1350px) {
+@media (min-width: 1250px) {
     /* left admin panel column */
+    .other.view td a {
+        white-space: normal;
+        height: 100%;
+        line-height: 100%;
+    }
+
     .other.view td:nth-of-type(1),
-    .other.view td:nth-of-type(3){
+    .other.view td:nth-of-type(3) {
         display: block;
         float: left;
         width: 25%;
@@ -1548,19 +1552,6 @@ a.listViewTdToolsS1 {
     }
 }
 
-@media (min-width: 1600px) {
-    /* left admin panel column */
-    .other.view td:nth-of-type(1),
-    .other.view td:nth-of-type(3){
-        width: 20%;
-    }
-
-    /* right admin panel column */
-    .other.view td:nth-of-type(2),
-    .other.view td:nth-of-type(4) {
-        width: 80%;
-    }
-}
 
 /*///// MASS ASSIGN /////*/
 
@@ -1768,7 +1759,8 @@ table#mass_update_table td select {
     border: none;
 }
 
-.sugar_field {
+.sugar_field
+.aop_case_updates_threaded_span * {
     text-wrap: normal;
     white-space: normal;
 }
