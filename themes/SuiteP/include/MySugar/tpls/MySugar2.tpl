@@ -61,10 +61,6 @@
 
 {sugar_getscript file="cache/include/javascript/sugar_grp_yui_widgets.js"}
 {sugar_getscript file='include/javascript/dashlets.js'}
-{*
-{$chartResources}
-{$mySugarChartResources}
-*}
 
 <div class="clear"></div>
 
@@ -100,62 +96,8 @@
             </tr>
         </table>
     </div>
-    {*
-    {foreach from=$divPages key=divPageIndex item=divPageNum}
-        <div id="pageNum_{$divPageNum}_div" style="display:none;">
-        </div>
-    {/foreach}
-    *}
-{*
-    <div id="dashletsDialog" style="display:none;">
-        <div class="hd" id="dashletsDialogHeader">
-            <a href="javascript:void(0)" onClick="javascript:SUGAR.mySugar.closeDashletsDialog();">
-                <div class="container-close">&nbsp;</div>
-            </a>{$lblAdd}
-        </div>
-        <div class="bd" id="dashletsList">
-            <form></form>
-        </div>
-    </div>
-*}
 </div>
-{*
-<script type="text/javascript" src="include/MySugar/javascript/AddRemoveDashboardPages.js"></script>
-<script type="text/javascript" src="include/MySugar/javascript/retrievePage.js"></script>
-<link rel="stylesheet" type="text/css" href="themes/SuiteP/css/dashboardstyle.css">
-*}
-{*
-<div class="row" id="pageNum_{$tabNum}_div">
-    {counter assign=hiddenCounter start=0 print=false}
-    {counter assign=totalColumns start=0 print=false}
-    {foreach from=$columns key=colNum item=data}
-        {counter assign=totalColumns print=false}
-    {/foreach}
-    {assign var=maxColumnWidth value=12}
-    {assign var=columnWidth value=$maxColumnWidth/$totalColumns}
 
-    {foreach from=$columns key=colNum item=data}
-        <div class="dashletcontainer drop-location col-xs-12 col-sm-12 col-md-{$columnWidth}" valign='top'>
-            <ul class='noBullet' id='col_{$activePage}_{$colNum}' >
-                <li id='page_{$activePage}_hidden{$hiddenCounter}' class='noBullet'>
-                </li>
-                {foreach from=$data.dashlets key=id item=dashlet}
-                    <li class='noBullet' id='dashlet_{$id}'>
-                        <div id='dashlet_entire_{$id}' class='dashletPanel'>
-                            {$dashlet.script}
-                            {$dashlet.displayHeader}
-                            {$dashlet.display}
-                            {$dashlet.displayFooter}
-                        </div>
-                    </li>
-                {/foreach}
-
-            </ul>
-        </div>
-        {counter}
-    {/foreach}
-</div>
-*}
 <script type="text/javascript">
     var activePage = {$activePage};
     var theme = '{$theme}';
@@ -221,10 +163,6 @@
         requires: []
     });
     mySugarLoader.insert();
-
-    // TODO: call this line on drop dashlet
-    // $('ul.nav.nav-tabs.nav-dashboard li.active a').first().click();
-
 
     {/literal}
 </script>
