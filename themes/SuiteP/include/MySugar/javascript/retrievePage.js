@@ -4,11 +4,12 @@
 
 
 
-function retrievePage(page_id){
-     retrieveData(page_id);
+function retrievePage(page_id, callback){
+     retrieveData(page_id, callback);
 }
 
-function retrieveData(page_id){
+function retrieveData(page_id, callback){
+    var _cb = typeof callback != 'undefined' ? callback : false;
     $.ajax({
 
         url : "index.php?entryPoint=retrieve_dash_page",
@@ -21,11 +22,12 @@ function retrieveData(page_id){
         success : function(data) {
             var pageContent = data;
 
-            outputPage(page_id,pageContent)
+            outputPage(page_id,pageContent);
+            if(_cb) _cb();
         },
         error : function(request,error)
         {
-
+            if(_cb) _cb();
         }
     })
 }
@@ -34,9 +36,7 @@ function outputPage(page_id,pageContent) {
     $('#tab_content_'+page_id).html(pageContent);
 }
 
-$(document).ready(function () {
-    console.log('retrievePage')
-    retrievePage(0);
+var dashletsPageInit = function() {
     // events
 
     $('.modal-add-dashlet').on('show.bs.modal', function (e) {
@@ -128,7 +128,18 @@ $(document).ready(function () {
         }
 
         $('.modal-edit-dashboard .modal-body').html(render);
-    })
+    });
+};
+
+$(document).ready(function () {
+    console.log('retrievePage');
+    retrievePage(0, function(){
+        dashletsPageInit();
+        setTimeout(function(){
+            retrievePage(0);
+        }, 500);
+    });
+
 });
 
 
