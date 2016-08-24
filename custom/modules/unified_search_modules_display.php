@@ -1,6 +1,42 @@
 <?php
-// created: 2014-01-29 09:59:23
+// created: 2016-08-23 15:59:11
 $unified_search_modules_display = array (
+  'Accounts' => 
+  array (
+    'visible' => true,
+  ),
+  'Calls' => 
+  array (
+    'visible' => true,
+  ),
+  'Cases' => 
+  array (
+    'visible' => true,
+  ),
+  'Contacts' => 
+  array (
+    'visible' => true,
+  ),
+  'Documents' => 
+  array (
+    'visible' => true,
+  ),
+  'Leads' => 
+  array (
+    'visible' => true,
+  ),
+  'Meetings' => 
+  array (
+    'visible' => true,
+  ),
+  'Notes' => 
+  array (
+    'visible' => true,
+  ),
+  'Opportunities' => 
+  array (
+    'visible' => true,
+  ),
   'AOP_Case_Events' => 
   array (
     'visible' => false,
@@ -45,17 +81,9 @@ $unified_search_modules_display = array (
   array (
     'visible' => false,
   ),
-  'Accounts' => 
-  array (
-    'visible' => true,
-  ),
   'Bugs' => 
   array (
     'visible' => false,
-  ),
-  'Calls' => 
-  array (
-    'visible' => true,
   ),
   'Calls_Reschedule' => 
   array (
@@ -65,18 +93,6 @@ $unified_search_modules_display = array (
   array (
     'visible' => false,
   ),
-  'Cases' => 
-  array (
-    'visible' => true,
-  ),
-  'Contacts' => 
-  array (
-    'visible' => true,
-  ),
-  'Documents' => 
-  array (
-    'visible' => true,
-  ),
   'FP_Event_Locations' => 
   array (
     'visible' => false,
@@ -84,22 +100,6 @@ $unified_search_modules_display = array (
   'FP_events' => 
   array (
     'visible' => false,
-  ),
-  'Leads' => 
-  array (
-    'visible' => true,
-  ),
-  'Meetings' => 
-  array (
-    'visible' => true,
-  ),
-  'Notes' => 
-  array (
-    'visible' => true,
-  ),
-  'Opportunities' => 
-  array (
-    'visible' => true,
   ),
   'Project' => 
   array (
