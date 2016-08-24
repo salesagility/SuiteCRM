@@ -1768,6 +1768,11 @@ table#mass_update_table td select {
     border: none;
 }
 
+.sugar_field {
+    text-wrap: normal;
+    white-space: normal;
+}
+
 .small {
     width: 100%;
 }
