@@ -1431,6 +1431,7 @@ a.listViewTdToolsS1 {
 
 .other {
     border: none !important;
+    margin-top: 20px !important;
     margin-bottom: 20px !important;
     padding: 0 !important;
     width: 100%;
@@ -1489,15 +1490,21 @@ a.listViewTdToolsS1 {
 .other.view td:nth-of-type(1) {
     display: block;
     float: left;
-    width: 20%;
+    width: 100%;
     background-color: #fff;
+    text-wrap: normal;
 
 }
 .other.view td:nth-of-type(2) {
     display: block;
     float: right;
-    width: 80%;
+    width: 100%;
     background-color: #fff;
+    text-wrap: normal;
+    padding-left: 52px;
+    padding-bottom: 10px;
+    height: auto;
+    line-height: 24px;
 
 }
 .other.view td:nth-of-type(2):after {
@@ -1506,16 +1513,53 @@ a.listViewTdToolsS1 {
 .other.view td:nth-of-type(3) {
     display: block;
     float: left;
-    width: 20%;
+    width: 100%;
     background-color: #f5f5f5;
 }
 .other.view td:nth-of-type(4) {
     display: block;
     float: right;
-    width: 80%;
+    width: 100%;
     background-color: #f5f5f5;
+    text-wrap: normal;
+    padding-left: 52px;
+    padding-bottom: 10px;
+    height: auto;
+    line-height: 24px;
+}
 
+@media (min-width: 1350px) {
+    /* left admin panel column */
+    .other.view td:nth-of-type(1),
+    .other.view td:nth-of-type(3){
+        display: block;
+        float: left;
+        width: 25%;
+    }
 
+    /* right admin panel column */
+    .other.view td:nth-of-type(2),
+    .other.view td:nth-of-type(4) {
+        display: block;
+        float: right;
+        width: 75%;
+        line-height: 48px;
+        height: 48px;
+    }
+}
+
+@media (min-width: 1600px) {
+    /* left admin panel column */
+    .other.view td:nth-of-type(1),
+    .other.view td:nth-of-type(3){
+        width: 20%;
+    }
+
+    /* right admin panel column */
+    .other.view td:nth-of-type(2),
+    .other.view td:nth-of-type(4) {
+        width: 80%;
+    }
 }
 
 /*///// MASS ASSIGN /////*/
