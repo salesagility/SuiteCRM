@@ -247,16 +247,13 @@ div#pageContainer {
 }
 
 .dashletcontainer, .drop-location {
-    min-height: 32px;
-}
-div#pageContainer td.dashletcontainer {
-    width: auto !important;
-    padding-right: 1%;
+    min-height: 132px;
 }
 
 div#pageContainer td.dashletcontainer div.hd {
     background-color: #66727d;
-    padding: 10px;
+    padding: 0;
+    margin: 0;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
