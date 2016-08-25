@@ -142,7 +142,7 @@ class SpotsController extends SugarController
     public function action_createAccountsSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = [];
+        $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
         $query = <<<EOF
@@ -198,7 +198,7 @@ EOF;
     public function action_createLeadsSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = [];
+        $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
         $mysqlSelect = <<<EOF
@@ -303,7 +303,7 @@ EOF;
     public function action_createSalesSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = [];
+        $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
         $mysqlSelect = <<<EOF
@@ -435,7 +435,7 @@ EOF;
     public function action_createServiceSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = [];
+        $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
         $mysqlSelect = <<<EOF
@@ -548,7 +548,7 @@ EOF;
     public function action_createActivitiesSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = [];
+        $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
         $mysqlQueryCalls = <<<EOF
@@ -688,7 +688,7 @@ EOF;
     public function action_createMarketingSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = [];
+        $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
         $mysqlSelect = <<<EOF
@@ -803,7 +803,7 @@ EOF;
     public function action_createMarketingActivitySpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = [];
+        $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
         $query = <<<EOF
@@ -865,7 +865,7 @@ EOF;
     public function action_createQuotesSpotsData($filepath)
     {
         global $mod_strings;
-        $returnArray = [];
+        $returnArray = array();
         $db = DBManagerFactory::getInstance();
 
         $mysqlSelect = <<<EOF
