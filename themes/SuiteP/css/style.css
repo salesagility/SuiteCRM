@@ -1061,6 +1061,9 @@ slot, #lead_queries_Div td {
 
 }
 
+#html_div {
+    white-space: normal;
+}
 
 .dataField {
     min-height: 48px;
