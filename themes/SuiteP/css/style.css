@@ -3566,6 +3566,33 @@ ul.nav-tabs > li:first-of-type > a {
     color: #ffffff;
 }
 
+
+#overflow-menu {
+    height: 300px;
+}
+
+#overflow-menu > li {
+    line-height: normal;
+    height: auto;
+}
+
+#overflow-menu > li a {
+    margin: 0;
+    padding: 12px 15px 12px 15px;
+    font-size: 14px;
+    font-weight: normal;
+    clear: both;
+}
+
+#overflow-menu > li > ul,
+#overflow-menu > li > ul > li {
+    display: none;
+    visibility: collapse;
+    height: 0;
+    padding: 0;
+    margin: 0;
+}
+
 a.first-tab-xs {
     /*TODO: fix long tabs*/
     background-color: #778591 !important;

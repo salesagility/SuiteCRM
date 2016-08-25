@@ -228,143 +228,67 @@
                     {/foreach}
                 </ul>
             {else}
-                <ul class="nav navbar-nav">
-                    {foreach from=$moduleTopMenu item=module key=name name=moduleList}
-                        {if $name == $MODULE_TAB}
-                            <li class="topnav">
-                                {if $name !='Home'}
-                                    <span class="currentTabLeft">&nbsp;</span>
-                                    <span class="dropdown-toggle headerlinks currentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span>
-                                    <span>&nbsp;</span>
-                                {/if}
-                                <ul class="dropdown-menu" role="menu">
-                                    {if count($shortcutTopMenu.$name) > 0}
-                                        <h3 class="home_h3">{$APP.LBL_LINK_ACTIONS}</h3>
-                                        {foreach from=$shortcutTopMenu.$name item=item}
-                                            {if $item.URL == "-"}
-                                                <li><a></a><span>&nbsp;</span></li>
-                                            {else}
-                                                <li><a href="{$item.URL}" class=""><span>{$item.LABEL}</span></a></li>
-                                            {/if}
-                                        {/foreach}
-                                    {/if}
-                                    <h3 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h3>
-                                    {foreach from=$recentRecords item=item name=lastViewed}
-                                        {if $item.module_name == $name}
-                                            <div class="recently_viewed_link_container">
-                                                <li class="recentlinks_topedit"><a
-                                                            href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}"
-                                                            style="margin-left:10px;"><span
-                                                                class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
-                                                </li>
-                                                <li class="recentlinks_top" role="presentation">
-                                                    <a title="{$item.module_name}"
-                                                       accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                                       href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
-                                                        {$item.item_summary_short}
-                                                    </a>
-                                                </li>
-                                            </div>
-                                        {/if}
-                                        {foreachelse}
-                                        {$APP.NTC_NO_ITEMS_DISPLAY}
-                                    {/foreach}
-                                    <h3 class="recent_h3">{$APP.LBL_FAVORITES}</h3>
-                                    {foreach from=$favoriteRecords item=item name=lastViewed}
-                                        {if $item.module_name == $name}
-                                            <div class="recently_viewed_link_container">
-                                                <li class="recentlinks_topedit">
-                                                    <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}"
-                                                       style="margin-left:10px;"><span
-                                                                class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
-                                                </li>
-                                                <li class="recentlinks_top" role="presentation">
-                                                    <a title="{$item.module_name}"
-                                                       accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                                       href="{sugar_link module=$item.module action='DetailView' record=$item.id link_only=1}">{$item.item_summary_short}</a>
-                                                </li>
-                                            </div>
-                                        {/if}
-                                        {foreachelse}
-                                        {$APP.NTC_NO_ITEMS_DISPLAY}
-                                    {/foreach}
-                                </ul>
-                            </li>
-                        {else}
-                            <li class="topnav">
-                                {if $name != 'Home'}
-                                    <span class="notCurrentTabLeft">&nbsp;</span>
-                                    <span class="dropdown-toggle headerlinks notCurrentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span>
-                                    <span class="notCurrentTabRight">&nbsp;</span>
-                                {/if}
-                                <ul class="dropdown-menu" role="menu">
-                                    {if count($shortcutTopMenu.$name) > 0}
-                                        <h3 class="home_h3">{$APP.LBL_LINK_ACTIONS}</h3>
-                                        {foreach from=$shortcutTopMenu.$name item=item}
-                                            {if $item.URL == "-"}
-                                                <li><a></a><span>&nbsp;</span></li>
-                                            {else}
-                                                <li><a href="{$item.URL}">{$item.LABEL}</a></li>
-                                            {/if}
-                                        {/foreach}
-                                    {/if}
-                                    <h3 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h3>
-                                    {foreach from=$recentRecords item=item name=lastViewed}
-                                        {if $item.module_name == $name}
-                                            <div class="recently_viewed_link_container">
-                                                <li class="recentlinks_topedit"><a
-                                                            href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}"
-                                                            style="margin-left:10px;"><span
-                                                                class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
-                                                </li>
-                                                <li class="recentlinks_top" role="presentation">
-                                                    <a title="{$item.module_name}"
-                                                       accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                                       href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
-                                                        {$item.item_summary_short}
-                                                    </a>
-                                                </li>
-                                            </div>
-                                        {/if}
-                                        {foreachelse}
-                                        {$APP.NTC_NO_ITEMS_DISPLAY}
-                                    {/foreach}
-                                    <h3 class="recent_h3">{$APP.LBL_FAVORITES}</h3>
-                                    {foreach from=$favoriteRecords item=item name=lastViewed}
-                                        {if $item.module_name == $name}
-                                            <div class="recently_viewed_link_container">
-                                                <li class="recentlinks_topedit">
-                                                    <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}"
-                                                       style="margin-left:10px;"><span
-                                                                class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
-                                                </li>
-                                                <li class="recentlinks_top" role="presentation">
-                                                    <a title="{$item.module_name}"
-                                                       accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                                       href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}">{$item.item_summary_short}</a>
-                                                </li>
-                                            </div>
-                                        {/if}
-                                        {foreachelse}
-                                        {$APP.NTC_NO_ITEMS_DISPLAY}
-                                    {/foreach}
-                                </ul>
-                            </li>
-                        {/if}
+
+                <ul class="nav navbar-nav navbar-horizontal-fluid">
+                    <li class="topnav">
+                        <span class="notCurrentTabLeft">&nbsp;</span>
+                        <span class="modulename"><a href="{sugar_link module=$MODULE_TAB link_only=1 }">{sugar_translate module=$MODULE_TAB label='LBL_MODULE_NAME'}</a></span>
+                        <span class="notCurrentTabRight">&nbsp;</span>
+                    </li>
+                    {foreach from=$groupTabs item=modules key=group name=groupList}
+                        {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
                     {/foreach}
-                    {if count($moduleExtraMenu) > 0}
-                        <li class="dropdown-toggle moremenu ">
-                            <a class="dropdown-toggle" data-toggle="dropdown">{$APP.LBL_MORE} &raquo;</a>
-                            <ul class="dropdown-menu" role="menu">
-                                <div class="bigmenu">
-                                    {foreach from=$moduleExtraMenu item=module key=name name=moduleList}
-                                        <li>{sugar_link id="moduleTab_$name" module=$name data=$module}</li>
-                                    {/foreach}
-                                </div>
-                            </ul>
+                    {foreach from=$modules.extra item=submodulename key=submodule}
+                        <li class="topnav">
+                            <span class="notCurrentTabLeft">&nbsp;</span>
+                            <span class="dropdown-toggle headerlinks notCurrentTab"> <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a> </span>
+                            <span class="notCurrentTabRight">&nbsp;</span>
                         </li>
-                    {/if}
+                    {/foreach}
+                    <li class="topnav overflow-toggle-menu">
+                        <span class="notCurrentTabLeft">&nbsp;</span>
+                        <span class="dropdown-toggle headerlinks notCurrentTab"><a href="#">{$APP.LBL_MORE}</a></span>
+                        <span class="notCurrentTabRight">&nbsp;</span>
+                        <ul id="overflow-menu" class="dropdown-menu" role="menu"></ul>
+                    </li>
                 </ul>
+
+
+                {literal}
+                    <script>
+                        var windowResize = function() {
+
+                            var $navItemMore = $('.navbar-horizontal-fluid > li.overflow-toggle-menu'),
+                                    $navItems = $('.navbar-horizontal-fluid > li:not(.overflow-toggle-menu)'),
+                                    navItemMoreWidth = navItemWidth = $navItemMore.width(),
+                                    windowWidth = $(window).width(),
+                                    navItemMoreLeft, offset, navOverflowWidth;
+
+                            $navItems.each(function() {
+                                navItemWidth += $(this).width();
+                            });
+
+//                            navItemWidth > (windowWidth - (windowWidth * 0.55)) ? $navItemMore.show() : $navItemMore.hide();
+
+                            while (navItemWidth > windowWidth - (windowWidth * 0.55)) {
+                                navItemWidth -= $navItems.last().width();
+                                $navItems.last().removeClass('topnav');
+                                $navItems.last().find('ul').remove();
+                                $navItems.last().find('.notCurrentTabLeft').remove();
+                                $navItems.last().find('.notCurrentTabRight').remove();
+                                $navItems.last().prependTo('#overflow-menu');
+                                $navItems.splice(-1,1);
+                            }
+
+                            navItemMoreLeft = $('.navbar-horizontal-fluid .overflow-toggle-menu').offset().left;
+                            navOverflowWidth = $('#overflow-menu').width();
+                            offset = navItemMoreLeft + navItemMoreWidth - navOverflowWidth;
+                        };
+                        $(window).resize(windowResize);
+                        windowResize();
+                    </script>
+                {/literal}
+
             {/if}
             <div id="globalLinks" class="dropdown nav navbar-nav navbar-right globalLinks-desktop">
                 <li id="usermenu" class="user-dropdown" aria-expanded="false">
