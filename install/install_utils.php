@@ -790,6 +790,7 @@ function handleSugarConfig() {
     $sugar_config['log_file']                       = $setup_site_log_file;
     $sugar_config['enable_line_editing_detail']     = true;
     $sugar_config['enable_line_editing_list']       = true;
+    $sugar_config['hide_subpanels']       = true;
 
     // Setup FTS
     if (!empty($_SESSION['setup_fts_type'])) {
