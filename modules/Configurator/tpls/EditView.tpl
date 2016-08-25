@@ -216,7 +216,7 @@
 
 	<tr>
 		<td  scope="row" nowrap>{$MOD.LBL_HIDE_SUBPANELS}: &nbsp;{sugar_help text=$MOD.LBL_HIDE_SUBPANELS}</td>
-		{if isset($config.hide_subpanels) && $config.hide_subpanels != "true" }
+		{if (isset($config.hide_subpanels) && $config.hide_subpanels != "true") || !isset($config.hide_subpanels)}
 			{assign var='hide_subpanels' value=''}
 		{else}
 			{assign var='hide_subpanels' value='CHECKED'}
