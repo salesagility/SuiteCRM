@@ -246,6 +246,13 @@ li#usermenu a:hover span.user_icon {
 div#pageContainer {
 }
 
+.dashletcontainer.col-50 {
+    width: 50%;
+}
+.dashletcontainer.col-33 {
+    width: 33.333%;
+}
+
 .dashletcontainer, .drop-location {
     min-height: 132px;
 }

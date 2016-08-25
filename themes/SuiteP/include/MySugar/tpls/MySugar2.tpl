@@ -109,8 +109,8 @@
     {literal}
 
     $(function(){
-        var percent = 100/(colNum+1);
-        $('#pageContainer #pageNum_'+activePage+'_div .dashletcontainer').css('width', percent+'%');
+        var percent = Math.round(100/(colNum+1));
+        $('#pageContainer #pageNum_'+activePage+'_div .dashletcontainer').addClass('col-'+percent);
     });
 
     var mySugarLoader = new YAHOO.util.YUILoader({
