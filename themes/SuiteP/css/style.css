@@ -1761,9 +1761,9 @@ table#mass_update_table td select {
 
 .sugar_field,
 #description *,
-.aop_case_updates_threaded_span * {
+.caseUpdate {
     text-wrap: normal;
-    white-space: normal;
+    white-space: normal !important;
 }
 
 .small {
