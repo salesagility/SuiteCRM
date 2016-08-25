@@ -63,7 +63,6 @@ $(function() {
 				<h4 class="modal-title">{$MOD.LBL_SETTINGS_TITLE}</h4>
 			</div>
 			<div class="modal-body">
-				<!--->
 				<div class="container-fluid">
 					<form name="settings" id="form_settings" method="POST" action="index.php?module=Calendar&action=SaveSettings">
 
@@ -218,7 +217,7 @@ $(function() {
 				<button data-dismiss="modal" class="btn btn-default" type="button">{$MOD.LBL_CANCEL_BUTTON}</button>
 				<button id="btn-save-settings" onclick="$('#form_settings).submit();" class="btn btn-danger" type="button">{$MOD.LBL_APPLY_BUTTON}</button>
 			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
+		</div>
+	</div>
 </div>
 

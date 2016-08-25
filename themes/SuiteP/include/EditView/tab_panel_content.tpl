@@ -1,11 +1,9 @@
-    <!-- tab_panel_content.tpl -->
     <div class="row edit-view-row">
         {{foreach name=rowIteration from=$panel key=row item=rowData}}
             {*row*}
             {{counter name="columnCount" start=0 print=false assign="columnCount"}}
             {{foreach name=colIteration from=$rowData key=col item=colData}}
                 {*column*}
-                <!-- COLUMN -->
                 {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
                     <div class="col-xs-12 col-sm-6 edit-view-row-item">
                 {{else}}
@@ -17,14 +15,12 @@
                 {{foreach name=fieldIteration from=$colData key=field item=subField}}
 
                     {{if !(!isset($subField.name) || !$subField.name)}}
-                        <!-- [hide!!] -->
 
                     {{if $fieldCount < $smarty.foreach.colIteration.total && $addressCount < 1 && !empty($colData.field.name) && empty($colData.field.hideIf)}}
                         {{if !empty($colData.field.hideLabel) && $colData.field.hideLabel == true}}
                         {*hide label*}
                         {{else}}
 
-                        <!-- LABEL -->
                         {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
                             <div class="col-xs-12 col-sm-4 label">
                         {{else}}
@@ -62,7 +58,6 @@
                             </div>
                         {{/if}}
 
-                        <!-- VALUE -->
                         {{if !empty($colData.field.hideLabel) && $colData.field.hideLabel == true && $colData.colspan != 3}}
                             {{assign var="fieldClasses" value="col-xs-12 col-sm-12"}}
                         {{else}}
@@ -129,7 +124,6 @@
                         {{/if}}
                     {{/if}}
 
-                        <!-- [/hide] -->
                     {{/if}}
 
                     {{counter name="fieldCount" print=false}}

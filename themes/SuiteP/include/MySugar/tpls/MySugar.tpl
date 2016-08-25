@@ -134,9 +134,9 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{$app.LBL_CLOSE_BUTTON_TITLE}</button>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade modal-add-dashboard" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -152,9 +152,9 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">{$app.LBL_CANCEL_BUTTON_LABEL}</button>
                     <button type="button" class="btn btn-danger btn-add-dashboard" data-dismiss="modal">{$lblAddTab}</button>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+            </div>
+        </div>
+    </div>
 
 
     <div class="modal fade modal-edit-dashboard" tabindex="-1" role="dialog">
@@ -182,11 +182,9 @@
                     </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{$app.LBL_CLOSE_BUTTON_TITLE}</button></div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
-    <!-- fix errors in mysugar.js -->
+            </div>
+        </div>
+    </div>
     <div style="visibility: collapse">
         <div id="dashletsDialog"></div>
         <div id="dashletsDialog_c"></div>

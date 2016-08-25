@@ -49,7 +49,7 @@
     }, SUGAR.themes.actionMenu);
     {/literal}
 </script>
-{assign var='place' value="_FOOTER"} <!-- to be used for id for buttons with custom code in def files-->
+{assign var='place' value="_FOOTER"}
 {{if empty($form.button_location) || $form.button_location == 'bottom'}}
 
 {{include file='themes/SuiteP/include/EditView/actions_buttons.tpl'}}
@@ -63,9 +63,9 @@
 {$set_focus_block}
 
 {{if isset($scriptBlocks)}}
-<!-- Begin Meta-Data Javascript -->
+
 {{$scriptBlocks}}
-<!-- End Meta-Data Javascript -->
+
 {{/if}}
 <script>SUGAR.util.doWhen("document.getElementById('EditView') != null",
             function(){ldelim}SUGAR.util.buildAccessKeyLabels();{rdelim});

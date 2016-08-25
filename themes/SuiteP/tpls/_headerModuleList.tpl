@@ -38,7 +38,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
-<!--Start Responsive Top Navigation Menu -->
+
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -429,7 +429,7 @@
             <div id="search" class="dropdown nav navbar-nav navbar-right">
                 <button id="searchbutton" class="dropdown-toggle btn btn-default" data-toggle="dropdown"
                         aria-expanded="true">
-                    <!--<span class="glyphicon glyphicon-search"> </span>-->Search
+                    Search
                 </button>
                 <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                     <form id="searchformdropdown" name='UnifiedSearch' action='index.php'
@@ -459,8 +459,7 @@
                     <input type="text" class="form-control" name="query_string" id="query_string"
                            placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
-                                                                            aria-hidden="true"></span>-->Search</button>
+                        <button type="submit" class="btn btn-default">Search</button>
                     </span>
                 </div>
             </form>
@@ -525,16 +524,12 @@
             {/foreach}            
         </div>
 </nav>
-<!--End Responsive Top Navigation Menu -->
+
 {if $THEME_CONFIG.display_sidebar}
-    <!--Start Page Container and Responsive Sidebar -->
     <div id='sidebar_container' class="container-fluid">
 
         <a id="buttontoggle"><span></span></a>
-                
-        <!--<div class="row">-->
-            <!--<div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}
-                 class="col-sm-3 col-md-2 sidebar">-->
+
              <div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}
              class="sidebar">
                 
@@ -587,10 +582,6 @@
                     <ul class="nav nav-pills nav-stacked">
                         {foreach from=$favoriteRecords item=item name=lastViewed}
                             <div class="recently_viewed_link_container_sidebar" id="{$item.id}_favorite">
-                                <!--<li class="recentlinks_edit"><a
-                                            href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}"
-                                            style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil"
-                                                                            aria-hidden="true"></a></li>-->
                                 <li class="recentlinks" role="presentation">
                                     <a title="{$item.module_name}"
                                        accessKey="{$smarty.foreach.lastViewed.iteration}"
@@ -606,8 +597,5 @@
                 
                 
             </div>
-        <!--</div>-->
     </div>
-    <!--End Responsive Sidebar -->
 {/if}
-<!--Start Page content -->

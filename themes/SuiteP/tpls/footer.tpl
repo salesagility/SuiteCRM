@@ -40,10 +40,7 @@
 *}
 </div>
 </div>
-<!-- END of container-fluid, pageContainer divs -->
-<!-- Start Footer Section -->
 {if $AUTHENTICATED}
-    <!-- Start generic footer -->
     <footer>
     	<div class="footer_left">
     		<a id="admin_options">&copy; {$MOD.LBL_SUITE_SUPERCHARGED}</a>
@@ -67,9 +64,7 @@
             </div>
         </div>
     </footer>
-    <!-- END Generic Footer -->
 {/if}
-<!-- END Footer Section -->
 {literal}
     <script>
 
