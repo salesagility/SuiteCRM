@@ -45,8 +45,6 @@
     var LBL_HIDEOPTIONS = '{sugar_translate module="Users" label="LBL_HIDEOPTIONS"}';
 </script>
 
-<!-- Start login container -->
-
 <div class="p_login">
 
 	<div class="p_login_top">
@@ -89,14 +87,12 @@
             {/if}
             <br>
             <div class="input-group">
-                <!--<span class="input-group-addon logininput glyphicon glyphicon-user"></span>-->
                 <input type="text" class="form-control"
                        placeholder="{sugar_translate module="Users" label="LBL_USER_NAME"}" required autofocus
                        tabindex="1" id="user_name" name="user_name" value='{$LOGIN_USER_NAME}'/>
             </div>
             <br>
             <div class="input-group">
-                <!--<span class="input-group-addon logininput glyphicon glyphicon-lock"></span>-->
                 <input type="password" class="form-control"
                        placeholder="{sugar_translate module="Users" label="LBL_PASSWORD"}" tabindex="2"
                        id="user_password" name="user_password" value='{$LOGIN_PASSWORD}'/>

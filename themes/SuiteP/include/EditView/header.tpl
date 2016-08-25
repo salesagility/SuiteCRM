@@ -73,7 +73,7 @@
 <input type="hidden" name="relate_id" value="{$smarty.request.return_id}">
 {/if}
 <input type="hidden" name="offset" value="{$offset}">
-{assign var='place' value="_HEADER"} <!-- to be used for id for buttons with custom code in def files-->
+{assign var='place' value="_HEADER"}
 {{if isset($form.hidden)}}
 {{foreach from=$form.hidden item=field}}
 {{$field}}   

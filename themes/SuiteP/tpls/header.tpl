@@ -59,7 +59,7 @@
     }
 </script>
 {/literal}
-<!-- Start of page content -->
+
 {if $AUTHENTICATED}
 <div id="bootstrap-container"
      class="{if $THEME_CONFIG.display_sidebar && $smarty.cookies.sidebartoggle != 'collapsed'}col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2{/if} main">
