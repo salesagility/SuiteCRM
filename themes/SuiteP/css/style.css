@@ -1121,9 +1121,15 @@ slot, #lead_queries_Div td {
     color: #534D64;
 }
 
-#EditView .edit input, #EditView .edit textarea, #EditView .edit select {
+#EditView .edit input,
+#EditView .edit textarea,
+#EditView .edit select,
+#EditView .edit option,
+select,
+option[selected],
+.sqsEnabled {
     font-weight: normal;
-    color: #534D64
+    color: #534D64;
 }
 
 .edit {
