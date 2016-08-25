@@ -246,17 +246,21 @@ li#usermenu a:hover span.user_icon {
 div#pageContainer {
 }
 
-.dashletcontainer, .drop-location {
-    min-height: 32px;
+.dashletcontainer.col-50 {
+    width: 50%;
 }
-div#pageContainer td.dashletcontainer {
-    width: auto !important;
-    padding-right: 1%;
+.dashletcontainer.col-33 {
+    width: 33.333%;
+}
+
+.dashletcontainer, .drop-location {
+    min-height: 132px;
 }
 
 div#pageContainer td.dashletcontainer div.hd {
     background-color: #66727d;
-    padding: 10px;
+    padding: 0;
+    margin: 0;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
@@ -2414,10 +2418,15 @@ ul.noBullet {
     padding-left: 0;
 }
 
+li.noBullet:first-child {
+    min-height: initial;
+}
+
 li.noBullet {
     list-style-type: none;
     padding: 0;
     margin: 0;
+    min-height: 100px;
 }
 
 #MorePanelHandle {
@@ -7851,6 +7860,11 @@ div.list-view-rounded-corners > table th:last-of-type {
         left: 0%;
     }
 
+    #bootstrap-container.expandedSidebar .dashletcontainer {
+        display: block;
+        float: left;
+        width: 100%;
+    }
 
 }
 
@@ -7904,6 +7918,12 @@ div.list-view-rounded-corners > table th:last-of-type {
 
     footer.expandedSidebar {
         width: 94%;
+    }
+
+    #bootstrap-container.collapsedSidebar .dashletcontainer {
+        display: block;
+        float: left;
+        width: 100%;
     }
 
 }
