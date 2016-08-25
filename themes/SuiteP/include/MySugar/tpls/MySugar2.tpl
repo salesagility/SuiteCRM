@@ -100,12 +100,19 @@
 
 <script type="text/javascript">
     var activePage = {$activePage};
+    var colNum = {$colNum};
     var theme = '{$theme}';
     current_user_id = '{$current_user}';
     jsChartsArray = new Array();
     var moduleName = '{$module}';
     document.body.setAttribute("class", "yui-skin-sam");
     {literal}
+
+    $(function(){
+        var percent = 100/(colNum+1);
+        $('#pageContainer #pageNum_'+activePage+'_div .dashletcontainer').css('width', percent+'%');
+    });
+
     var mySugarLoader = new YAHOO.util.YUILoader({
         require : ["my_sugar", "sugar_charts"],
         // Bug #48940 Skin always must be blank
@@ -163,6 +170,5 @@
         requires: []
     });
     mySugarLoader.insert();
-
     {/literal}
 </script>
