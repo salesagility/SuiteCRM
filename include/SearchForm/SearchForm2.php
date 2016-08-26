@@ -126,6 +126,7 @@ require_once('include/EditView/EditView2.php');
  		$this->displayView = $displayView;
  		$this->view = $this->view.'_'.$displayView;
  		$tokens = explode('_', $this->displayView);
+        $this->searchFields = $searchFields[$this->module];
  		$this->parsedView = $tokens[0];
  		if($this->displayView != 'saved_views'){
  			$this->_build_field_defs();

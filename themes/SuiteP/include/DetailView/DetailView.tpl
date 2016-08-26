@@ -216,6 +216,10 @@
                 var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
                 selectTab(tab);
             });
+            $('#content ul.nav.nav-tabs li.active').each(function(e){
+                var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
+                selectTab(tab);
+            });
         });
 
     </script>
