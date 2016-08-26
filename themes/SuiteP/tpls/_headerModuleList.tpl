@@ -230,73 +230,19 @@
             {else}
 
                 <ul class="nav navbar-nav navbar-horizontal-fluid">
-                    <li class="topnav">
-                        <span class="notCurrentTabLeft">&nbsp;</span>
-                        <span class="modulename"><a href="{sugar_link module=$MODULE_TAB link_only=1 }">{sugar_translate module=$MODULE_TAB label='LBL_MODULE_NAME'}</a></span>
-                        <span class="notCurrentTabRight">&nbsp;</span>
-                        {foreach from=$moduleTopMenu item=module key=name name=moduleList}
-                                {if $name == $MODULE_TAB}
-                                    <ul class="dropdown-menu" role="menu">
-                                        {if count($shortcutTopMenu.$name) > 0}
-                                            <h3 class="home_h3">{$APP.LBL_LINK_ACTIONS}</h3>
-                                            {foreach from=$shortcutTopMenu.$name item=item}
-                                                {if $item.URL == "-"}
-                                                    <li><a></a><span>&nbsp;</span></li>
-                                                {else}
-                                                    <li><a href="{$item.URL}">{$item.LABEL}</a></li>
-                                                {/if}
-                                            {/foreach}
-                                        {/if}
-                                        {*<h3 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h3>*}
-                                        {*{foreach from=$recentRecords item=item name=lastViewed}*}
-                                            {*<div class="recently_viewed_link_container_sidebar">*}
-                                                {*<!--<li class="recentlinks_edit"><a*}
-                                            {*href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}"*}
-                                            {*style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil"*}
-                                                                            {*aria-hidden="true"></a></li>-->*}
-                                                {*<li class="topnav" role="presentation">*}
-                                                    {*<a title="{$item.module_name}"*}
-                                                       {*accessKey="{$smarty.foreach.lastViewed.iteration}"*}
-                                                       {*href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">*}
-                                                        {*<img src="{sugar_getimagepath directory='sidebar/modules'  file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"/><span aria-hidden="true">{$item.item_summary_short}</span>*}
-                                                    {*</a>*}
-                                                {*</li>*}
-                                            {*</div>*}
-                                        {*{/foreach}*}
-                                        {*<h3 class="recent_h3">{$APP.LBL_FAVORITES}</h3>*}
-                                        {*{foreach from=$favoriteRecords item=item name=lastViewed}*}
-                                            {*<div class="recently_viewed_link_container_sidebar" id="{$item.id}_favorite">*}
-                                                {*<!--<li class="recentlinks_edit"><a*}
-                                            {*href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}"*}
-                                            {*style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil"*}
-                                                                            {*aria-hidden="true"></a></li>-->*}
-                                                {*<li class="recentlinks" role="presentation">*}
-                                                    {*<a title="{$item.module_name}"*}
-                                                       {*accessKey="{$smarty.foreach.lastViewed.iteration}"*}
-                                                       {*href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}">*}
-                                                        {*<img src="{sugar_getimagepath  directory='sidebar/modules' file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"/><span aria-hidden="true">{$item.item_summary_short}</span>*}
-                                                    {*</a>*}
-                                                {*</li>*}
-                                            {*</div>*}
-                                        {*{/foreach}*}
-                                    </ul>
-                                {/if}
-                            {/foreach}
-                    </li>
                     {foreach from=$groupTabs item=modules key=group name=groupList}
                         {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
                     {/foreach}
 
-
+                    <!--nav items with actions -->
                     {foreach from=$modules.modules item=submodulename key=submodule}
                         {if $submodule != "Home"}
-                            <li class="topnav">
+                            <li class="topnav with-actions">
                                 <span class="notCurrentTabLeft">&nbsp;</span>
                                 <span class="dropdown-toggle headerlinks notCurrentTab"> <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a> </span>
                                 <span class="notCurrentTabRight">&nbsp;</span>
                                 <ul class="dropdown-menu" role="menu">
                                     {if count($shortcutTopMenu.$submodule) > 0}
-                                        <h3 class="home_h3">{$APP.LBL_LINK_ACTIONS}</h3>
                                         {foreach from=$shortcutTopMenu.$submodule item=item}
                                             {if $item.URL == "-"}
                                                 <li><a></a><span>&nbsp;</span></li>
@@ -309,17 +255,18 @@
                             </li>
                         {/if}
                     {/foreach}
-
-                    {foreach from=$modules.extra item=submodulename key=submodule}
-                        <li class="topnav">
-                            <span class=" notCurrentTab"> <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a> </span>
-                        </li>
-                    {/foreach}
                     <li class="topnav overflow-toggle-menu">
                         <span class="notCurrentTabLeft">&nbsp;</span>
                         <span class="dropdown-toggle headerlinks notCurrentTab"><a href="#">{$APP.LBL_MORE}</a></span>
                         <span class="notCurrentTabRight">&nbsp;</span>
-                        <ul id="overflow-menu" class="dropdown-menu" role="menu"></ul>
+                        <ul id="overflow-menu" class="dropdown-menu" role="menu">
+                            <!--nav items without actions -->
+                            {foreach from=$modules.extra item=submodulename key=submodule}
+                                <li class="topnav without-actions">
+                                    <span class=" notCurrentTab"> <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a> </span>
+                                </li>
+                            {/foreach}
+                        </ul>
                     </li>
                 </ul>
 
@@ -329,18 +276,16 @@
                         var windowResize = function() {
 
                             var $navItemMore = $('.navbar-horizontal-fluid > li.overflow-toggle-menu'),
-                                    $navItems = $('.navbar-horizontal-fluid > li:not(.overflow-toggle-menu)'),
-                                    navItemMoreWidth = navItemWidth = $navItemMore.width(),
-                                    windowWidth = $(window).width(),
-                                    navItemMoreLeft, offset, navOverflowWidth;
+                            $navItems = $('.navbar-horizontal-fluid > li.with-actions'),
+                            navItemMoreWidth = navItemWidth = $navItemMore.width(),
+                            windowWidth = $(window).width() - ($(window).width()  * 0.55),
+                            navItemMoreLeft, offset, navOverflowWidth;
 
                             $navItems.each(function() {
                                 navItemWidth += $(this).width();
                             });
 
-//                            navItemWidth > (windowWidth - (windowWidth * 0.55)) ? $navItemMore.show() : $navItemMore.hide();
-
-                            while (navItemWidth > windowWidth - (windowWidth * 0.55)) {
+                            while (navItemWidth > windowWidth) {
                                 navItemWidth -= $navItems.last().width();
                                 $navItems.last().removeClass('topnav');
                                 $navItems.last().find('ul').remove();
