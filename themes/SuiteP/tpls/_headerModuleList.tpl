@@ -251,6 +251,28 @@
                                             {/if}
                                         {/foreach}
                                     {/if}
+
+                                    <li class="recent_h3"><strong>{$APP.LBL_LAST_VIEWED}</strong></li>
+                                    {foreach from=$recentRecords item=item name=lastViewed}
+                                            <li class="recentlinks" role="presentation">
+                                                <a title="{$item.module_name}"
+                                                   accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                                   href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
+                                                    <img src="{sugar_getimagepath directory='sidebar/modules'  file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"/><span aria-hidden="true">{$item.item_summary_short}</span>
+                                                </a>
+                                            </li>
+                                    {/foreach}
+                                    <li class="recent_h3"><strong>{$APP.LBL_FAVORITES}</strong></li>
+                                    {foreach from=$favoriteRecords item=item name=lastViewed}
+                                            <li class="recentlinks" role="presentation">
+                                                <a title="{$item.module_name}"
+                                                   accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                                   href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}">
+                                                    <img src="{sugar_getimagepath  directory='sidebar/modules' file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"/><span aria-hidden="true">{$item.item_summary_short}</span>
+                                                </a>
+                                            </li>
+                                    {/foreach}
+
                                 </ul>
                             </li>
                         {/if}

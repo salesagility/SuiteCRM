@@ -634,6 +634,10 @@ div.noBullet li, .nobullet
 }
 
 
+.with-actions > .dropdown-menu {
+    height: 292px;
+}
+
 #recentlyViewedSidebar {
     margin-bottom: 30px;
     float: left;
@@ -648,8 +652,10 @@ li.recentlinks_edit {
     background-color: yellow;
 }
 
-li.recentlinks {
-    width: 100%;}
+li.recentlinks, li.recentlinks a {
+    width: 100%;
+    clear: both;
+}
 
 li.recentlinks img {
     margin-right: 5px;
@@ -5009,6 +5015,11 @@ textarea#description {
 .recent_h3 {
     color: #ffffff;
 }
+
+.recent_h3 > strong {
+    text-transform: none;
+}
+
 
 ul.nav li.topnav a {
     border-top: 3px solid #534d64;
