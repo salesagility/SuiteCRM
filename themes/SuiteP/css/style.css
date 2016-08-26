@@ -5014,6 +5014,7 @@ textarea#description {
 }
 .recent_h3 {
     color: #ffffff;
+    line-height:42px;
 }
 
 .recent_h3 > strong {
