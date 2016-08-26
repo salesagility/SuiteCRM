@@ -55,7 +55,7 @@ $dictionary['Case'] = array('table' => 'cases', 'audited' => true, 'unified_sear
                 'vname' => 'LBL_DESCRIPTION',
                 'type' => 'text',
                 'editor' => 'html',
-                'comment' => 'Full text of the note',
+                'comment' => 'Full text of the description',
                 'rows' => 6,
                 'cols' => 80,
             ),
