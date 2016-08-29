@@ -648,10 +648,6 @@ div.noBullet li, .nobullet
     font-size: 13px;
 }
 
-li.recentlinks_edit {
-    background-color: yellow;
-}
-
 li.recentlinks {
     width: 100%;}
 
