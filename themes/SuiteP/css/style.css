@@ -6132,7 +6132,9 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 #fieldChoices .field-list input {
     height: 30px;
 }
-
+.recentlinks_edit {
+    visibility: collapse;
+}
 #fieldChoices .field {
 
 }
