@@ -278,8 +278,8 @@ jQuery(function($){
             "x-small": 480,
             "small": 768,
             "medium": 992,
-            "large": 1200,
-            "x-large": 1400
+            "large": 1130,
+            "x-large": 1250
         }
     });
 })
