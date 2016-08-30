@@ -5389,6 +5389,7 @@ select, select:focus, select::selection, .saved_search_select {
 select[multiple] {
     background-image: none !important;
     overflow: auto !important;
+    vertical-align: text-top;
 }
 
 div::-webkit-scrollbar,
