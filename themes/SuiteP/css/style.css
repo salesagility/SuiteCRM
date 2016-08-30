@@ -3444,6 +3444,9 @@ ul.subpanelTablist li a.activeSubTab:hover {
 
 a.tabFormAdvLink:link, a.tabFormAdvLink:visited {
     color: #444444;
+    float: left;
+    padding-top: 32px;
+    padding-right: 32px;
 }
 
 .monthCalBody {

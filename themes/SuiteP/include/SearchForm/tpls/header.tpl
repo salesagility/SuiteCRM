@@ -49,6 +49,20 @@
 {{/if}}
 {literal}
 <script>
+
+    $(function(){
+        setInterval(function(){
+            $('.col-advanced-search').each(function (i, e) {
+                if ($(e).prev().hasClass('col-advanced-search')) {
+                    $(e).css('min-height', $(e).prev().height() + 'px');
+                }
+            });
+            $('.search_form textarea').each(function(i, e) {
+                $(e).css('max-width', $(e).parent().width());
+            })
+        }, 300);
+    });
+
 function submitOnEnter(e)
 {
     var characterCode = (e && e.which) ? e.which : event.keyCode;
