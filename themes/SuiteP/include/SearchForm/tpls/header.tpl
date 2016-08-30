@@ -49,6 +49,67 @@
 {{/if}}
 {literal}
 <script>
+
+
+
+    function addXMLRequestCallback(callback){
+        var oldSend, i;
+        if( XMLHttpRequest.callbacks ) {
+            // we've already overridden send() so just add the callback
+            XMLHttpRequest.callbacks.push( callback );
+        } else {
+            // create a callback queue
+            XMLHttpRequest.callbacks = [callback];
+            // store the native send()
+            oldSend = XMLHttpRequest.prototype.send;
+            // override the native send()
+            XMLHttpRequest.prototype.send = function(){
+                // process the callback queue
+                for( i = XMLHttpRequest.callbacks.length-1; i >= 0; i-- ) {
+                    XMLHttpRequest.callbacks[i]( this );
+                }
+                // call the native send()
+                oldSend.apply(this, arguments);
+            }
+        }
+    }
+
+    function refreshSearchForm() {
+        $('.col-advanced-search').each(function (i, e) {
+            if ($(e).prev().hasClass('col-advanced-search')) {
+                $(e).css('min-height', $(e).prev().height() + 'px');
+            }
+        });
+        $('.search_form textarea').each(function(i, e) {
+            $(e).css('max-width', $(e).parent().width());
+        });
+        if(!$('#search_form .tabFormAdvLink').prev().hasClass('clear')) {
+            $('#search_form .tabFormAdvLink').before('<div class="clear"></div>');
+        }
+        $('#search_form .dateTimeRangeChoice').css({
+            'white-space': 'initial',
+            'display': 'block'
+        });
+    }
+
+    $(function(){
+        var refreshSearchFormIntervals = [];
+        var refreshSearchFormIntervalsCountDown = 100;
+        addXMLRequestCallback( function( xhr ) {
+            refreshSearchFormIntervalsCountDown = 100;
+            refreshSearchFormIntervals.push(setInterval(function () {
+                refreshSearchForm();
+                refreshSearchFormIntervalsCountDown -= 1 / refreshSearchFormIntervals.length;
+                if (refreshSearchFormIntervalsCountDown <= 0) {
+                    $.each(refreshSearchFormIntervals, function (i, e) {
+                        clearInterval(e);
+                    });
+                    refreshSearchFormIntervals = [];
+                }
+            }, 100));
+        });
+    });
+
 function submitOnEnter(e)
 {
     var characterCode = (e && e.which) ? e.which : event.keyCode;

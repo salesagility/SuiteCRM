@@ -1020,6 +1020,11 @@ th, td {
     vertical-align: middle;
 }
 
+#search_form .dateTimeRangeChoice {
+    width: initial;
+    display: none;
+}
+
 .collapsed .panelContainer, .collapsed .collapseLink, .expanded .expandLink {
     display: none;
 }
@@ -3444,6 +3449,9 @@ ul.subpanelTablist li a.activeSubTab:hover {
 
 a.tabFormAdvLink:link, a.tabFormAdvLink:visited {
     color: #444444;
+    float: left;
+    padding-top: 32px;
+    padding-right: 32px;
 }
 
 .monthCalBody {
@@ -5389,6 +5397,7 @@ select, select:focus, select::selection, .saved_search_select {
 select[multiple] {
     background-image: none !important;
     overflow: auto !important;
+    vertical-align: text-top;
 }
 
 div::-webkit-scrollbar,
