@@ -63,8 +63,11 @@
             if(!$('#search_form .tabFormAdvLink').prev().hasClass('clear')) {
                 $('#search_form .tabFormAdvLink').before('<div class="clear"></div>');
             }
-            $('#search_form .dateTimeRangeChoice').css('white-space', 'initial');
-        }, 300);
+            $('#search_form .dateTimeRangeChoice').css({
+                'white-space': 'initial',
+                'display': 'block'
+            });
+        }, 100);
     });
 
 function submitOnEnter(e)
