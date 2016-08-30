@@ -298,10 +298,13 @@
                         var windowResize = function() {
                             // reset navbar
                             var $navCollapsedItems = $('ul#overflow-menu > li.with-actions');
-                            $($navCollapsedItems).each(function() {
-                                $(this).addClass('topnav');
-                                $(navItem).insertBefore('.overflow-menu');
-                            });
+                            if(typeof $navCollapsedItems !== "undefined") {
+                                $($navCollapsedItems).each(function() {
+                                    $(this).addClass('topnav');
+                                    $(this).insertBefore('.overflow-toggle-menu');
+                                });
+                            }
+
 
 
                             var $navItemMore = $('.navbar-horizontal-fluid > li.overflow-toggle-menu'),
