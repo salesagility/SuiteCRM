@@ -709,9 +709,10 @@ EOHTML;
 	 * @param  string $ext optional, image extension (TODO can we deprecate this one ?)
      * @param  string $alt optional, only used when image contains something useful, i.e. "Sally's profile pic"
      * @param  string $imageJSONEncode optional, some of template javascript need the exact image-html-string to build HTML contents so this parameter make a json_encode call on the return SVG or image source
+     * @param  string $forceExt optional, force image extension
      * @return string HTML image tag or sprite
      */
-    public function getImage($imageName, $other_attributes = '', $width = null, $height = null, $ext = null, $alt = '', $imageJSONEncode = false) {
+    public function getImage($imageName, $other_attributes = '', $width = null, $height = null, $ext = null, $alt = '', $imageJSONEncode = false, $forceExt = null) {
         static $cached_results = array();
 
         // look for .svg first
@@ -723,6 +724,10 @@ EOHTML;
             if(file_exists($imagePath)) {
                 $ext = '.svg';
             }
+        }
+
+        if($forceExt) {
+            $ext = $forceExt;
         }
 
 
