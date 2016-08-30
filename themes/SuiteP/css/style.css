@@ -3577,6 +3577,11 @@ ul.nav-tabs > li:first-of-type > a {
     height: 300px;
 }
 
+#overflow-menu > li > span.notCurrentTabLeft, #overflow-menu > li > span.notCurrentTabRight {
+    visibility: collapse;
+    display: none;
+}
+
 #overflow-menu > li {
     line-height: normal;
     height: auto;

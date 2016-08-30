@@ -291,28 +291,33 @@
                         </ul>
                     </li>
                 </ul>
-
+                <div class="hidden hidden-actions">black cat</div>
 
                 {literal}
                     <script>
                         var windowResize = function() {
+                            // reset navbar
+                            var $navCollapsedItems = $('ul#overflow-menu > li.with-actions');
+                            $($navCollapsedItems).each(function() {
+                                $(this).addClass('topnav');
+                                $(navItem).insertBefore('.overflow-menu');
+                            });
+
 
                             var $navItemMore = $('.navbar-horizontal-fluid > li.overflow-toggle-menu'),
-                            $navItems = $('.navbar-horizontal-fluid > li.with-actions'),
-                            navItemMoreWidth = navItemWidth = $navItemMore.width(),
-                            windowWidth = $(window).width() - ($(window).width()  * 0.55),
-                            navItemMoreLeft, offset, navOverflowWidth;
+                                    $navItems = $('.navbar-horizontal-fluid > li.with-actions'),
+                                    navItemMoreWidth = navItemWidth = $navItemMore.width(),
+                                    windowWidth = $(window).width() - ($(window).width()  * 0.55),
+                                    navItemMoreLeft, offset, navOverflowWidth;
 
                             $navItems.each(function() {
                                 navItemWidth += $(this).width();
                             });
 
+                            // Remove nav items that are cause the right hand nav-bar items to wrap
                             while (navItemWidth > windowWidth) {
                                 navItemWidth -= $navItems.last().width();
                                 $navItems.last().removeClass('topnav');
-                                $navItems.last().find('ul').remove();
-                                $navItems.last().find('.notCurrentTabLeft').remove();
-                                $navItems.last().find('.notCurrentTabRight').remove();
                                 $navItems.last().prependTo('#overflow-menu');
                                 $navItems.splice(-1,1);
                             }
