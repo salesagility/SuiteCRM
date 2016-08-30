@@ -112,7 +112,7 @@ $dictionary['AOS_Products_Quotes'] = array(
     'required' => false,
     'name' => 'product_qty',
     'vname' => 'LBL_PRODUCT_QTY',
-    'type' => 'decimal',
+    'type' => 'int',
     'massupdate' => 0,
     'comments' => '',
     'help' => '',
@@ -124,7 +124,6 @@ $dictionary['AOS_Products_Quotes'] = array(
     'len' => '18',
     'size' => '20',
     'enable_range_search' => false,
-    'precision' => '4',
   ),
   'product_cost_price' => 
   array (
