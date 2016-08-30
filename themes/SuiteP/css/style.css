@@ -6133,7 +6133,10 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     height: 30px;
 }
 .recentlinks_edit {
-    visibility: collapse;
+    visibility: collapse !important;
+    display: none !important;
+    height: 0 !important;
+    width: 0 !important;
 }
 #fieldChoices .field {
 
