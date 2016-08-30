@@ -98,7 +98,6 @@
         addXMLRequestCallback( function( xhr ) {
             refreshSearchFormIntervalsCountDown = 100;
             refreshSearchFormIntervals.push(setInterval(function () {
-                console.log(refreshSearchFormIntervalsCountDown);
                 refreshSearchForm();
                 refreshSearchFormIntervalsCountDown -= 1 / refreshSearchFormIntervals.length;
                 if (refreshSearchFormIntervalsCountDown <= 0) {
