@@ -1020,6 +1020,10 @@ th, td {
     vertical-align: middle;
 }
 
+#search_form .dateTimeRangeChoice {
+    width: initial;
+}
+
 .collapsed .panelContainer, .collapsed .collapseLink, .expanded .expandLink {
     display: none;
 }
