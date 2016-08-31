@@ -105,7 +105,15 @@ class Favorites extends Favorites_sugar
             $return_array[$i]['item_summary_short'] = to_html(getTrackerSubstring($bean->name));
             $return_array[$i]['id'] = $row['parent_id'];
             $return_array[$i]['module_name'] = $row['parent_type'];
-            $return_array[$i]['image'] = SugarThemeRegistry::current() ->getImage($row['parent_type'],'border="0" align="absmiddle"',null,null,'.gif',$bean->name);
+
+
+            // Change since 7.7 side bar icons can exist in images/sidebar.
+            $sidebarPath = 'themes/'.SugarThemeRegistry::current().'/images/sidebar/modules/';
+            if(file_exists($sidebarPath)) {
+                $return_array[$i]['image'] = SugarThemeRegistry::current()->getImage('sidebar/modules/'.$row['parent_type'],'border="0" align="absmiddle"',null,null,'.gif',$bean->name);
+            } else {
+                $return_array[$i]['image'] = SugarThemeRegistry::current()->getImage($row['parent_type'],'border="0" align="absmiddle"',null,null,'.gif',$bean->name);
+            }
 
             $i++;
         }
