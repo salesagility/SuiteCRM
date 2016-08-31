@@ -102,7 +102,7 @@
           assign=modVal
     }
 	{{if $fields[$colData.field.name] AND $colData.field.name != 'search_name_basic' AND $colData.field.name != 'name_basic'}}
-	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 search_fields_basic">
+	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 search_fields_basic">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
 			{{if isset($colData.field.label)}}
 			<label for='{{$colData.field.name}}' >{sugar_translate label='{{$colData.field.label}}' module='{{$module}}'}</label>

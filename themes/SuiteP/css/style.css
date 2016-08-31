@@ -8398,6 +8398,9 @@ div.list-view-rounded-corners > table th:last-of-type {
 }
 
 @media (min-width: 320px) and (max-width: 978px) {
+    .search_fields_basic.col-sm-3 {
+        display: block;
+    }
     .col-sm-3 {
         display: none;
     }
