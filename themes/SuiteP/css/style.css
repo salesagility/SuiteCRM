@@ -1026,6 +1026,11 @@ th, td {
     vertical-align: middle;
 }
 
+.basic textarea {
+    height: 48px;
+    width: 100%;
+}
+
 .collapsed .panelContainer, .collapsed .collapseLink, .expanded .expandLink {
     display: none;
 }
@@ -3450,6 +3455,9 @@ ul.subpanelTablist li a.activeSubTab:hover {
 
 a.tabFormAdvLink:link, a.tabFormAdvLink:visited {
     color: #444444;
+    float: left;
+    padding-top: 32px;
+    padding-right: 32px;
 }
 
 .monthCalBody {
@@ -5279,8 +5287,13 @@ div.search_fields_basic {
     line-height: 48px;
 }
 
-div.search_fields_basic label {
-    margin: 0 8px 0 4px;
+div.search_fields_basic select[multiple] {
+    display: block;
+    width: 100% !important;
+}
+
+div.search_fields_basic:nth-of-type(3n+1) {
+    clear: both;
 }
 
 
@@ -5297,6 +5310,14 @@ div.search_fields_basic label {
     padding: 10px;
 }
 
+div.search_name_basic input {
+    width: 75%;
+}
+
+div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeRangeChoice + div {
+    display: inline-block;
+}
+
 
 /*xs-col-*/
 @media (max-width: 769px) {
@@ -5304,7 +5325,7 @@ div.search_fields_basic label {
         margin: 0 8px 0 8px;
     }
     div.search_name_basic input {
-        width: 85% !important;
+        width: 90% !important;
     }
     div.search_fields_basic {
         margin: 0 8px 0 42px;
@@ -5324,7 +5345,7 @@ div.search_fields_basic label {
         margin: 0 8px 0 8px;
     }
     div.search_name_basic input {
-        width: 80% !important;
+        width: 94% !important;
     }
 
     div.search_fields_basic {
@@ -5359,10 +5380,6 @@ div.search_fields_basic label {
         width: 90%;
     }
 
-    div.search_fields_basic {
-        width: 100%;
-    }
-
     div.search_buttons_basic {
         position: absolute;
         right: 0;
@@ -5391,9 +5408,6 @@ div.search_fields_basic label {
 }
 
 @media (min-width: 1200px) {
-    div.search_name_basic, div.search_fields_basic, div.search_buttons_basic {
-        width: auto;
-    }
 
     div.search_name_basic img {
         margin: 0 8px 0 8px;
@@ -5407,8 +5421,18 @@ div.search_fields_basic label {
         margin: 4px 8px 0 8px;
     }
 
+    div.search_fields_basic .col-lg-3 {
+        width: 100% !important;
+    }
+
     #wizform #wizard {
         width: 1100px;
+    }
+}
+
+@media (min-width: 1600px) {
+    div.search_fields_basic .col-lg-3 {
+        width: 25% !important;
     }
 }
 
@@ -5439,6 +5463,7 @@ select, select:focus, select::selection, .saved_search_select {
 select[multiple] {
     background-image: none !important;
     overflow: auto !important;
+    vertical-align: text-top;
 }
 
 div::-webkit-scrollbar,
@@ -8423,6 +8448,9 @@ div.list-view-rounded-corners > table th:last-of-type {
 }
 
 @media (min-width: 320px) and (max-width: 978px) {
+    .search_fields_basic.col-sm-3 {
+        display: block;
+    }
     .col-sm-3 {
         display: none;
     }
