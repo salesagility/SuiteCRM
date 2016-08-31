@@ -638,6 +638,10 @@ div.noBullet li, .nobullet
 }
 
 
+.with-actions > .dropdown-menu {
+    height: 292px;
+}
+
 #recentlyViewedSidebar {
     margin-bottom: 30px;
     float: left;
@@ -648,12 +652,10 @@ div.noBullet li, .nobullet
     font-size: 13px;
 }
 
-li.recentlinks_edit {
-    background-color: yellow;
-}
 
 li.recentlinks {
     width: 100%;}
+
 
 li.recentlinks img {
     margin-right: 5px;
@@ -1018,6 +1020,11 @@ th, td {
 
 #search_form > div  tr td input[type=checkbox] {
     vertical-align: middle;
+}
+
+.basic textarea {
+    height: 48px;
+    width: 100%;
 }
 
 .collapsed .panelContainer, .collapsed .collapseLink, .expanded .expandLink {
@@ -3444,6 +3451,9 @@ ul.subpanelTablist li a.activeSubTab:hover {
 
 a.tabFormAdvLink:link, a.tabFormAdvLink:visited {
     color: #444444;
+    float: left;
+    padding-top: 32px;
+    padding-right: 32px;
 }
 
 .monthCalBody {
@@ -3624,6 +3634,38 @@ ul.nav-tabs > li:first-of-type > a {
     background-color: #BFCAD3;
     margin: 0 2px 0 0;
     color: #ffffff;
+}
+
+
+#overflow-menu {
+    height: 300px;
+}
+
+#overflow-menu > li > span.notCurrentTabLeft, #overflow-menu > li > span.notCurrentTabRight {
+    visibility: collapse;
+    display: none;
+}
+
+#overflow-menu > li {
+    line-height: normal;
+    height: auto;
+}
+
+#overflow-menu > li a {
+    margin: 0;
+    padding: 12px 15px 12px 15px;
+    font-size: 14px;
+    font-weight: normal;
+    clear: both;
+}
+
+#overflow-menu > li > ul,
+#overflow-menu > li > ul > li {
+    display: none;
+    visibility: collapse;
+    height: 0;
+    padding: 0;
+    margin: 0;
 }
 
 a.first-tab-xs {
@@ -5041,7 +5083,13 @@ textarea#description {
 }
 .recent_h3 {
     color: #ffffff;
+    line-height:42px;
 }
+
+.recent_h3 > strong {
+    text-transform: none;
+}
+
 
 ul.nav li.topnav a {
     border-top: 3px solid #534d64;
@@ -5070,7 +5118,7 @@ li.topnav {
     height: 90px;
     letter-spacing: 2px;
     line-height: 90px;
-    padding: 0 10px 0 10px;
+    padding: 0 5px 0 5px;
     text-transform: uppercase;
 }
 
@@ -5235,8 +5283,13 @@ div.search_fields_basic {
     line-height: 48px;
 }
 
-div.search_fields_basic label {
-    margin: 0 8px 0 4px;
+div.search_fields_basic select[multiple] {
+    display: block;
+    width: 100% !important;
+}
+
+div.search_fields_basic:nth-of-type(3n+1) {
+    clear: both;
 }
 
 
@@ -5253,6 +5306,14 @@ div.search_fields_basic label {
     padding: 10px;
 }
 
+div.search_name_basic input {
+    width: 75%;
+}
+
+div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeRangeChoice + div {
+    display: inline-block;
+}
+
 
 /*xs-col-*/
 @media (max-width: 769px) {
@@ -5260,7 +5321,7 @@ div.search_fields_basic label {
         margin: 0 8px 0 8px;
     }
     div.search_name_basic input {
-        width: 85% !important;
+        width: 90% !important;
     }
     div.search_fields_basic {
         margin: 0 8px 0 42px;
@@ -5280,7 +5341,7 @@ div.search_fields_basic label {
         margin: 0 8px 0 8px;
     }
     div.search_name_basic input {
-        width: 80% !important;
+        width: 94% !important;
     }
 
     div.search_fields_basic {
@@ -5315,10 +5376,6 @@ div.search_fields_basic label {
         width: 90%;
     }
 
-    div.search_fields_basic {
-        width: 100%;
-    }
-
     div.search_buttons_basic {
         position: absolute;
         right: 0;
@@ -5340,10 +5397,13 @@ div.search_fields_basic label {
     }
 }
 /*lg-col-*/
-@media (min-width: 1200px) {
-    div.search_name_basic, div.search_fields_basic, div.search_buttons_basic {
-        width: auto;
+@media (min-width: 1260px) {
+    li.topnav {
+        padding: 0 10px 0 10px;
     }
+}
+
+@media (min-width: 1200px) {
 
     div.search_name_basic img {
         margin: 0 8px 0 8px;
@@ -5357,8 +5417,18 @@ div.search_fields_basic label {
         margin: 4px 8px 0 8px;
     }
 
+    div.search_fields_basic .col-lg-3 {
+        width: 100% !important;
+    }
+
     #wizform #wizard {
         width: 1100px;
+    }
+}
+
+@media (min-width: 1600px) {
+    div.search_fields_basic .col-lg-3 {
+        width: 25% !important;
     }
 }
 
@@ -5389,6 +5459,7 @@ select, select:focus, select::selection, .saved_search_select {
 select[multiple] {
     background-image: none !important;
     overflow: auto !important;
+    vertical-align: text-top;
 }
 
 div::-webkit-scrollbar,
@@ -6136,7 +6207,12 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 #fieldChoices .field-list input {
     height: 30px;
 }
-
+.recentlinks_edit {
+    visibility: collapse !important;
+    display: none !important;
+    height: 0 !important;
+    width: 0 !important;
+}
 #fieldChoices .field {
 
 }
@@ -8199,7 +8275,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 }
 
-@media (min-width: 1251px) {
+@media (min-width: 1131px) {
     #mobile_menu {
         position: absolute;
         overflow-y: scroll;
@@ -8222,7 +8298,7 @@ div.list-view-rounded-corners > table th:last-of-type {
         width: 1200px;
     }
 }
-@media (max-width: 1250px) {
+@media (max-width: 1130px) {
     #usermenu {
         display: none;
     }
@@ -8246,7 +8322,7 @@ div.list-view-rounded-corners > table th:last-of-type {
             float: left;
             text-align: left !important;
             margin: 0 auto 0 15px !important;
-            width: 8sc
+            width: 8px;
         }
 
     }
@@ -8373,6 +8449,9 @@ div.list-view-rounded-corners > table th:last-of-type {
 }
 
 @media (min-width: 320px) and (max-width: 978px) {
+    .search_fields_basic.col-sm-3 {
+        display: block;
+    }
     .col-sm-3 {
         display: none;
     }
