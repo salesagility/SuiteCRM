@@ -652,14 +652,10 @@ div.noBullet li, .nobullet
     font-size: 13px;
 }
 
-li.recentlinks_edit {
-    background-color: yellow;
-}
 
-li.recentlinks, li.recentlinks a {
-    width: 100%;
-    clear: both;
-}
+li.recentlinks {
+    width: 100%;}
+
 
 li.recentlinks img {
     margin-right: 5px;
@@ -6211,7 +6207,12 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 #fieldChoices .field-list input {
     height: 30px;
 }
-
+.recentlinks_edit {
+    visibility: collapse !important;
+    display: none !important;
+    height: 0 !important;
+    width: 0 !important;
+}
 #fieldChoices .field {
 
 }
