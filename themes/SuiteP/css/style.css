@@ -4891,7 +4891,7 @@ table#lineItems tr td table thead tr td table tbody tr td {
 #email1_span table > tbody,
 #email1_span table > tbody > tr,
 #email1_span table > tbody > tr > td {
-    width: 100%;
+    width: 98%;
     display: block;
 }
 
@@ -8080,6 +8080,11 @@ div.list-view-rounded-corners > table th:last-of-type {
 }
 
 @media (max-width: 600px) {
+
+    table tr td {
+        display: block;
+        float: left;
+    }
 
     #bootstrap-container {
         margin-top: 110px !important;
