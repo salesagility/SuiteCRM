@@ -311,7 +311,7 @@ function quick_edit_case_updates($case){
 
     <textarea id="update_text" name="update_text" cols="80" rows="4"></textarea>
 
-    <input id='internal' type='checkbox' name='$internalLabel' tabindex=0 title='' value='1' $internalChecked > $internalLabel</input>
+    <input id='internal' type='checkbox' name='internal' title='$internalLabel' tabindex=0 title='' value='1' $internalChecked > $internalLabel</input>
     </br>
     <input type='button' value='Save' onclick="caseUpdates('$record')" title="Save" name="button"> </input>
 
