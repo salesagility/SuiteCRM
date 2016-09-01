@@ -806,8 +806,8 @@ $(document).ready(function () {
 			valueToPush["id"] = element['record'];
 			valueToPush["record"] = element['record'];
 			valueToPush['module'] = element['module_name'];
-			valueToPush["start"] = new Date(moment.unix(element['ts_start']).format("MM/DD/YYYY") + " " + moment(element['time_start'], 'hh:mma').format("HH:mm"));
-			valueToPush["end"] = moment(new Date(moment.unix(element['ts_start']).format("MM/DD/YYYY") + " " + moment(element['time_start'], 'hh:mma').format("HH:mm"))).add(element['duration_hours'], 'hours').add(element['duration_minutes'], 'minutes');
+			valueToPush["start"] = new Date(moment.utc(moment.unix(element['ts_start'])).format("MM/DD/YYYY") + " " + moment(element['time_start'], 'hh:mma').format("HH:mm"));
+			valueToPush["end"] = moment(new Date(moment.utc(moment.unix(element['ts_start'])).format("MM/DD/YYYY") + " " + moment(element['time_start'], 'hh:mma').format("HH:mm"))).add(element['duration_hours'], 'hours').add(element['duration_minutes'], 'minutes');
 
 			if (element.module_name != "Meetings" && element.module_name != "Calls") {
 				valueToPush['editable'] = false;
