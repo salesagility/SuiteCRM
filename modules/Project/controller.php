@@ -35,14 +35,24 @@ class ProjectController extends SugarController {
 
         $project = new Project();
         $project->retrieve($_POST["pid"]);
-        //Get project tasks
+        
+		//Get project tasks
         $Task = BeanFactory::getBean('ProjectTask');
         $tasks = $Task->get_full_list("order_number", "project_task.project_id = '".$project->id."'");
-        //Get the start and end date of the project in database format
-        $query = "SELECT estimated_start_date FROM project WHERE id = '{$project->id}'";
+        
+		//Get the start and end date of the project in database format
+		$query = "SELECT min(date_start) FROM project_task WHERE project_id = '{$project->id}'";
         $start_date = $db->getOne($query);
-        $query = "SELECT estimated_end_date FROM project WHERE id = '{$project->id}'";
+        
+		$query = "SELECT max(date_finish) FROM project_task WHERE project_id = '{$project->id}'";
         $end_date = $db->getOne($query);
+		
+		$duration = $this->count_days($start_date, $end_date );
+		if( $duration < 30 ){		
+			$query = "SELECT max(date_finish) + INTERVAL " . (30 - $duration ) . " DAY FROM project_task WHERE project_id = '{$project->id}'";
+			$end_date = $db->getOne($query);
+		}
+		
 ?>
 
         <script type="text/javascript">
@@ -299,7 +309,8 @@ class ProjectController extends SugarController {
         $task->actual_duration = $actual_duration;
         $task->order_number = $order_number;
         $task->save();
-    }
+
+	}
 
     function update_task($id, $name, $start, $end, $project_id, $milestone_flag, $status, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description,$actual_duration){
 
@@ -321,6 +332,7 @@ class ProjectController extends SugarController {
         $task->actual_duration = $actual_duration;
         $task->description = $description;
         $task->save();
+
     }
 
 

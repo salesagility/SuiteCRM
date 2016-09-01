@@ -180,15 +180,27 @@ class AM_ProjectTemplatesController extends SugarController {
         include_once('modules/AM_ProjectTemplates/project_table.php');
 
         $project_template = new AM_ProjectTemplates();
-        $project_template->retrieve($_POST["pid"]);
+		$pid = $_POST["pid"];
+        $project_template->retrieve($pid);
         
 		//Get project tasks
 		$project_template->load_relationship('am_tasktemplates_am_projecttemplates');
 		$tasks = $project_template->get_linked_beans('am_tasktemplates_am_projecttemplates','AM_TaskTemplates');
 
-		$start_date =  Date('Y-m-d');
-		$end_date = Date('Y-m-d', strtotime("+30 days"));
+		//--- get the gantt chart start and end
 
+		$start_date =  Date('Y-m-d');
+		
+		$query = "select max(duration) +1 from am_tasktemplates inner join am_tasktemplates_am_projecttemplates_c on am_tasktemplates_am_projecttemplatesam_tasktemplates_idb = am_tasktemplates.id and am_tasktemplates_am_projecttemplatesam_projecttemplates_ida = '{$pid}'";
+        
+		$duration = $db->getOne($query);
+		
+		if( $duration < 31 )
+			$end_date = Date('Y-m-d', strtotime("+30 days"));
+		else
+			$end_date = Date('Y-m-d', strtotime("+ " . $duration . " days"));
+
+		//-------------------------------------------
 ?>
 
         <script type="text/javascript">
