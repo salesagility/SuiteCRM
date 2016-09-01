@@ -227,7 +227,7 @@ class iCal extends vCal {
             ),
             "Tasks" => array(
                 "showCompleted" => true,
-                "start" =>  "date_start",
+                "start" =>  "date_due",
                 "end" => "date_due"
             )
         );
