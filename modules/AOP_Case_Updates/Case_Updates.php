@@ -302,13 +302,16 @@ function quick_edit_case_updates($case){
     if(isset($case->internal) && $case->internal){
         $internalChecked = "checked='checked'";
     }
+
+    require_once('include/utils.php');
+    $internalLabel = translate('LBL_INTERNAL', 'Cases');
     $html = <<< EOD
     <form id='case_updates' enctype="multipart/form-data">
 
 
     <textarea id="update_text" name="update_text" cols="80" rows="4"></textarea>
 
-    <input id='internal' type='checkbox' name='internal' tabindex=0 title='' value='1' $internalChecked > Internal</input>
+    <input id='internal' type='checkbox' name='internal' title='$internalLabel' tabindex=0 title='' value='1' $internalChecked > $internalLabel</input>
     </br>
     <input type='button' value='Save' onclick="caseUpdates('$record')" title="Save" name="button"> </input>
 
