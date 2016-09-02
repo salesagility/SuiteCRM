@@ -241,12 +241,15 @@ foreach($pages[$activePage]['columns'] as $colNum => $column) {
                 array_push($dashletIds, $id);
 
                 $dashlets = $current_user->getPreference('dashlets', 'Home'); // Using hardcoded 'Home' because DynamicAction.php $_REQUEST['module'] value is always Home
+
+                // TODO : add order-by fix here..
+
                 $lvsParams = array();
                 if(!empty($dashlets[$id]['sort_options'])){
                     $lvsParams = $dashlets[$id]['sort_options'];
                 }
 
-                $dashlet->process($lvsParams);
+                $dashlet->process($lvsParams, $id);
                 try {
                     $display[$colNum]['dashlets'][$id]['display'] = $dashlet->display();
                     $display[$colNum]['dashlets'][$id]['displayHeader'] = $dashlet->getHeader();
