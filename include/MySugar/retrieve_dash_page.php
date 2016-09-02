@@ -242,7 +242,22 @@ foreach($pages[$activePage]['columns'] as $colNum => $column) {
 
                 $dashlets = $current_user->getPreference('dashlets', 'Home'); // Using hardcoded 'Home' because DynamicAction.php $_REQUEST['module'] value is always Home
 
-                // TODO : add order-by fix here..
+                if(!empty($_REQUEST['id']) && $_REQUEST['id'] == $id) {
+                    $sortOrder = '';
+                    $orderBy = '';
+                    foreach($_REQUEST as $k => $v){
+                        if($k == 'lvso'){
+                            $sortOrder = $v;
+                        }
+                        else if(preg_match('/Home2_.+_ORDER_BY/', $k)){
+                            $orderBy = $v;
+                        }
+                    }
+                    if(!empty($sortOrder) && !empty($orderBy)){
+                        $dashlets[$id]['sort_options'] = array('sortOrder' => $sortOrder, 'orderBy' => $orderBy);
+                        $current_user->setPreference('dashlets', $dashlets, 0, 'Home');
+                    }
+                }
 
                 $lvsParams = array();
                 if(!empty($dashlets[$id]['sort_options'])){

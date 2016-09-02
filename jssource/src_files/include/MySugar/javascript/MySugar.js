@@ -72,7 +72,7 @@ SUGAR.mySugar = function() {
 		
 
 		
-		
+
 
 		
 		
@@ -206,8 +206,8 @@ SUGAR.mySugar = function() {
 		 * @param function callback callback function after refresh
 		 * @param bool dynamic does the script load dynamic javascript, set to true if you user needs to refresh the dashlet after load
 		 */
-		retrieveDashlet: function(id, url, callback, dynamic, isPagination) {
-			var _isPagination = typeof isPagination == 'undefined' ? false : isPagination;
+		retrieveDashlet: function(id, url, callback, dynamic, pageReload) {
+			var _pageReload = typeof pageReload == 'undefined' ? false : pageReload;
 			ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_LOADING'));
 					
 			if(!url) {
@@ -242,7 +242,7 @@ SUGAR.mySugar = function() {
                         //guid id was not found in the returned html, that means we have stale dashlet info due to an auto refresh, do not update
                         return false;
                     }
-					if(_isPagination) {
+					if(_pageReload) {
 						$('#' + SUGAR.mySugar.currentDashlet.id).closest('.tab-pane').html(data.responseText);
 					} else {
 						SUGAR.mySugar.currentDashlet.innerHTML = data.responseText;
