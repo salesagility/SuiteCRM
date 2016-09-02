@@ -5264,6 +5264,14 @@ input[type=text], input[type=password], input:not([type]), textarea {
     line-height: 40px;
 }
 
+div[type="relate"] input[type=text],
+div[type="relate"] input[type=password],
+div[type="relate"] input:not([type]),
+div[type="relate"] textarea {
+    float: left;
+    margin-right: 5px;
+}
+
 .search_form input[type=text], .search_form textarea {
     background: #ffffff;
 }
