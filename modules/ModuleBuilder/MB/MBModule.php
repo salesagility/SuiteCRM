@@ -420,8 +420,7 @@ class MBModule
         if (mkdir_recursive ( $path ))
         {
             $this->createClasses ( $path ) ;
-            if( $this->config['importable'] || in_array ( 'person', array_keys($this->config[ 'templates' ]) ) )
-                $this->createMenu ( $path ) ;
+            $this->createMenu ( $path );
             $this->copyCustomFiles ( $this->path , $path ) ;
             $this->copyMetaRecursive ( $this->path . '/metadata/', $path . '/metadata/', true ) ;
             $this->copyMetaRecursive ( $this->path . '/Dashlets/' . $this->key_name . 'Dashlet/',
