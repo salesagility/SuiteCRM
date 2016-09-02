@@ -814,7 +814,7 @@ class MBModule
         }
 
         // GIF Version
-            copy("themes/default/images/icon_$template.gif", "$icondir/icon_" . ucfirst($this->key_name) . ".gif");
+            copy("include/SugarObjects/templates/$template/icons/$template.gif", "$icondir/icon_" . ucfirst($this->key_name) . ".gif");
             copy("include/SugarObjects/templates/$template/icons/$template.gif", "$icondir/" . $this->key_name . ".gif");
             // SVG Version
             if (file_exists("include/SugarObjects/templates/$template/icons/$template.svg")) {
