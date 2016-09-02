@@ -5194,6 +5194,13 @@ li.topnav ul.dropdown-menu li:last-child a {
     text-transform: none;
 }
 
+form[name=DetailView] .button,
+form[name=DetailView] input[type=submit],
+form[name=DetailView] input[type=button],
+form[name=DetailView] input[type=reset] {
+    float: left;
+}
+
 td.submitButtons .button:hover {
     background-color: #D66C60;
 }
@@ -8085,6 +8092,11 @@ div.list-view-rounded-corners > table th:last-of-type {
         display: block;
         float: left;
     }
+
+    table tr td.buttons {
+        width: initial;
+    }
+
 
     #bootstrap-container {
         margin-top: 110px !important;
