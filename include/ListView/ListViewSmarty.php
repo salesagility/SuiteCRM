@@ -125,6 +125,10 @@ class ListViewSmarty extends ListViewDisplay{
             $this->ss->assign('inline_edit', true);
         }
 
+        if(!isset($sugar_config['hide_subpanels']) || $sugar_config['hide_subpanels']){
+            $this->ss->assign('hide_subpanels', true);
+        }
+
 		$this->ss->assign('sugarconfig', $this->displayColumns);
 		$this->ss->assign('displayColumns', $this->displayColumns);
 		$this->ss->assign('APP',$app_strings);

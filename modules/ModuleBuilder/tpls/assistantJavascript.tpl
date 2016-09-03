@@ -44,10 +44,10 @@ if(typeof(Assistant)!="undefined" && Assistant.mbAssistant){
 	//Assistant.mbAssistant.render(document.body);
 {/literal}
 {if $userPref }
-	Assistant.processUserPref("{$userPref}");
+	{literal}Assistant.processUserPref("{/literal}{$userPref}{literal}");{/literal}
 {/if}
 {if $assistant.key && $assistant.group}
-	Assistant.mbAssistant.setBody(SUGAR.language.get('ModuleBuilder','assistantHelp').{$assistant.group}.{$assistant.key});
+	{literal}Assistant.mbAssistant.setBody(SUGAR.language.get('ModuleBuilder','assistantHelp').{/literal}{$assistant.group}{literal}.{/literal}{$assistant.key}{literal});{/literal}
 {/if}
 {literal}
 	if(Assistant.mbAssistant.visible){

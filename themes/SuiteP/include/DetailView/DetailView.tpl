@@ -54,7 +54,7 @@
                     {{counter name="tabCount" print=false}}
                     {{if $tabCount == '0'}}
                         <li role="presentation" class="active">
-                            <a id="tab{{$tabCount}}" href="#tab-content-{{$tabCount}}" data-toggle="tab" class="hidden-xs">
+                            <a id="tab{{$tabCount}}" data-toggle="tab" class="hidden-xs">
                                 {sugar_translate label='{{$label}}' module='{{$module}}'}
                             </a>
                             <a id="xstab{{$tabCount}}" href="#" class="visible-xs first-tab-xs dropdown-toggle" data-toggle="dropdown">
@@ -65,7 +65,7 @@
                                 {{foreach name=sectionXS from=$sectionPanels key=label item=panelXS}}
                                 {{counter name="tabCountXS" print=false}}
                                 <li role="presentation">
-                                    <a id="tab{{$tabCountXS}}" href="#tab-content-{{$tabCountXS}}" data-toggle="tab" onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
+                                    <a id="tab{{$tabCountXS}}" data-toggle="tab" onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
                                         {sugar_translate label='{{$label}}' module='{{$module}}'}
                                     </a>
                                 </li>
@@ -74,7 +74,7 @@
                         </li>
                     {{else}}
                         <li role="presentation" class="hidden-xs">
-                            <a id="tab{{$tabCount}}" href="#tab-content-{{$tabCount}}" data-toggle="tab">
+                            <a id="tab{{$tabCount}}" data-toggle="tab">
                                 {sugar_translate label='{{$label}}' module='{{$module}}'}
                             </a>
                         </li>
@@ -94,8 +94,10 @@
 
     <div class="clearfix"></div>
     {{if $useTabs}}
+        <!-- TAB CONTENT USE TABS -->
         <div class="tab-content">
     {{else}}
+            <!-- TAB CONTENT DOESN'T USE TABS -->
         <div class="tab-content" style="padding: 0; border: 0;">
     {{/if}}
         {* Loop through all top level panels first *}
@@ -105,11 +107,11 @@
             {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
                 {{if isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true}}
                     {{if $tabCount == '0'}}
-                        <div class="tab-pane active fade in" id='tab-content-{{$tabCount}}'>
+                        <div class="tab-pane-NOBOOTSTRAPTOGGLER active fade in" id='tab-content-{{$tabCount}}'>
                             {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
                         </div>
                     {{else}}
-                        <div class="tab-pane fade" id='tab-content-{{$tabCount}}'>
+                        <div class="tab-pane-NOBOOTSTRAPTOGGLER fade" id='tab-content-{{$tabCount}}'>
                             {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
                         </div>
                     {{/if}}
@@ -117,7 +119,7 @@
                 {{counter name="tabCount" print=false}}
             {{/foreach}}
         {{else}}
-            <div class="tab-pane panel-collapse">test</div>
+            <div class="tab-pane-NOBOOTSTRAPTOGGLER panel-collapse"></div>
         {{/if}}
     </div>
     {*display panels*}
@@ -160,6 +162,7 @@
             </div>
             <div class="panel-body {{$collapse}}" id="{{$panelId}}">
                 <div class="tab-content">
+                    <!-- TAB CONTENT -->
                     {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
                 </div>
             </div>
@@ -182,4 +185,44 @@
 {*{{/if}}*}
 <script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>
 <script type="text/javascript" src="modules/Favorites/favorites.js"></script>
+
+{literal}
+
+    <script type="text/javascript">
+
+        var selectTab = function(tab) {
+            $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').hide();
+            $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').eq(tab).show().addClass('active').addClass('in');
+        };
+
+        var selectTabOnError = function(tab) {
+            selectTab(tab);
+            $('#content ul.nav.nav-tabs li').removeClass('active');
+            $('#content ul.nav.nav-tabs li a').css('color', '');
+
+            $('#content ul.nav.nav-tabs li').eq(tab).find('a').first().css('color', 'red');
+            $('#content ul.nav.nav-tabs li').eq(tab).addClass('active');
+
+        };
+
+        var selectTabOnErrorInputHandle = function(inputHandle) {
+            var tab = $(inputHandle).closest('.tab-pane-NOBOOTSTRAPTOGGLER').attr('id').match(/^detailpanel_(.*)$/)[1];
+            selectTabOnError(tab);
+        };
+
+
+        $(function(){
+            $('#content ul.nav.nav-tabs li').click(function(e){
+                var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
+                selectTab(tab);
+            });
+            $('#content ul.nav.nav-tabs li.active').each(function(e){
+                var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
+                selectTab(tab);
+            });
+        });
+
+    </script>
+
+{/literal}
 

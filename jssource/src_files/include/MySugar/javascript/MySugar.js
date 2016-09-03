@@ -206,7 +206,8 @@ SUGAR.mySugar = function() {
 		 * @param function callback callback function after refresh
 		 * @param bool dynamic does the script load dynamic javascript, set to true if you user needs to refresh the dashlet after load
 		 */
-		retrieveDashlet: function(id, url, callback, dynamic) {
+		retrieveDashlet: function(id, url, callback, dynamic, isPagination) {
+			var _isPagination = typeof isPagination == 'undefined' ? false : isPagination;
 			ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_LOADING'));
 					
 			if(!url) {
@@ -234,14 +235,18 @@ SUGAR.mySugar = function() {
                     current_dashlet_id = SUGAR.mySugar.currentDashlet.getAttribute('id');
 
                     //lets extract the guid portion of the id, to use as a reference
-                    dashlet_guid =  current_dashlet_id.substr('dashlet_entire'.length);
+                    dashlet_guid =  current_dashlet_id.substr('dashlet_entire_'.length);
 
                     //now that we have the guid portion, let's search the returned text for it.  There should be many references to it.
                     if(data.responseText.indexOf(dashlet_guid)<0 &&  data.responseText != SUGAR.language.get('app_strings', 'LBL_RELOAD_PAGE') ){
                         //guid id was not found in the returned html, that means we have stale dashlet info due to an auto refresh, do not update
                         return false;
                     }
-					SUGAR.mySugar.currentDashlet.innerHTML = data.responseText;			
+					if(_isPagination) {
+						$('#' + SUGAR.mySugar.currentDashlet.id).closest('.tab-pane').html(data.responseText);
+					} else {
+						SUGAR.mySugar.currentDashlet.innerHTML = data.responseText;
+					}
 				}
 
 				SUGAR.util.evalScript(data.responseText);
@@ -375,7 +380,8 @@ SUGAR.mySugar = function() {
 					anim.animate();
 					
 					newLayout =	SUGAR.mySugar.getLayout(true);
-					SUGAR.mySugar.saveLayout(newLayout);	
+					SUGAR.mySugar.saveLayout(newLayout);
+					SUGAR.mySugar.retrieveCurrentPage();
 //					window.setTimeout('ajaxStatus.hideStatus()', 2000);
 				}
 				
@@ -411,6 +417,11 @@ SUGAR.mySugar = function() {
             }));
 
 			return false;
+		},
+
+		retrieveCurrentPage: function() {
+			var pageNum = parseInt($('ul.nav.nav-tabs.nav-dashboard li.active a').first().attr('id').substring(3));
+			retrievePage(pageNum);
 		},
 		
 		showDashletsDialog: function() {                                             

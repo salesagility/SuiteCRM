@@ -276,6 +276,5 @@ YAHOO.util.Event.onDOMReady(function(){
 <script src='{sugar_getjspath file="modules/Calendar/fullcalendar/fullcalendar.min.js"}'></script>
 <script src='{sugar_getjspath file="modules/Calendar/fullcalendar/lang-all.js"}'></script>
 
-<div class='monthCalBody'><h5 class='calSharedUser' id='user_name1'></h5></div>
-<div id='calendar{$current_user_id}'></div>
+<div id='calendarContainer'></div>
 {sugar_getscript file="modules/Calendar/Cal.js"}
