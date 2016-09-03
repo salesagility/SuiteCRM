@@ -70,8 +70,6 @@ abstract class SugarRelationship
     protected $self_referencing = false; //A relationship is self referencing when LHS module = RHS Module
     public $type;
     public $name;
-    public $relationship_role_column;
-    public $relationship_role_column_value;
 
     /**
      * @var SugarBean[]
