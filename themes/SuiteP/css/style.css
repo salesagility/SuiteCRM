@@ -1634,6 +1634,7 @@ table#mass_update_table td select {
 
 
 #selectLinkTop,
+#selectLinkBottom,
 #actionLinkBottom {
     min-height: 16px;
     line-height: 16px;
@@ -1641,6 +1642,7 @@ table#mass_update_table td select {
     padding: 1px;
 }
 #selectLinkTop input[type=checkbox],
+#selectLinkBottom input[type=checkbox],
 #actionLinkBottom input[type=checkbox] {
     margin-top: 10px;
 }
@@ -1720,7 +1722,9 @@ table#mass_update_table td select {
 }
 
 #actionLinkTop li.sugar_action_button,
+#actionLinkBottom li.sugar_action_button,
 #selectLinkTop > .sugar_action_button > ul.subnav a:hover,
+#selectLinkBottom > .sugar_action_button > ul.subnav a:hover,
 #actionLinkBottom > .sugar_action_button > ul.subnav a:hover,
 #actionLinkTop .menuItemHilite,
 #actionLinkBottom .menuItemHilite {
@@ -3916,6 +3920,7 @@ ul.clickMenu > li > span {
 
 
 #selectLinkTop, #selectLinkTop .sugar_action_button,
+#selectLinkBottom, #selectLinkBottom .sugar_action_button,
 #selectLinkTop, #selectLinkTop .selectActionsDisabled {
     min-width: 32px;
 }
@@ -7598,8 +7603,10 @@ table.subpanel-table ul.subpanel > a,
 .single  a,
 .single > a,
 #actionLinkTop li.sugar_action_button,
+#actionLinkBottom li.sugar_action_button,
 table.subpanel-table li.sugar_action_button,
 #selectLinkTop li.sugar_action_button,
+#selectLinkBottom li.sugar_action_button,
 table.subpanel-table .pagination .sugar_action_button,
 table.subpanel-table .pagination li.sugar_action_button > form > a,
 table.subpanel-table .pagination .sugar_action_button > form > a,
