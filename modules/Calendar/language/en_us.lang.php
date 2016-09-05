@@ -168,7 +168,10 @@ $mod_strings = array (
     'LBL_NO_ITEMS_MOBILE' => 'Your calendar is clear for the week.',
     'LBL_GENERAL_SETTINGS' => 'General Settings',
     'LBL_COLOR_SETTINGS' => 'Colour Settings',
-
+	'LBL_MODULE' => 'Module',
+	'LBL_BODY' => 'Body',
+	'LBL_BORDER' => 'Border',
+	'LBL_TEXT' => 'Text',
 );
 
 $mod_list_strings = array(

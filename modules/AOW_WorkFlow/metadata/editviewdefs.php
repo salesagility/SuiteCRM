@@ -114,14 +114,14 @@ $viewdefs ['AOW_WorkFlow'] =
                         0 => 'description',
                     ),
                 ),
-                'Conditions' =>
+                'LBL_CONDITION_LINES' =>
                 array (
                     0 =>
                     array (
                         0 => 'condition_lines',
                     ),
                 ),
-                'Actions' =>
+                'LBL_ACTION_LINES' =>
                 array (
                     0 =>
                     array (

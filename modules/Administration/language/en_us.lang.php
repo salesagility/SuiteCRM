@@ -82,6 +82,14 @@ $mod_strings = array(
     'LBL_WEEKS' => 'Weeks',
     'LBL_MONTHS' => 'Months',
 
+    'LBL_MONDAY' => 'Monday',
+    'LBL_TUESDAY' => 'Tuesday',
+    'LBL_WEDNESDAY' => 'Wednesday',
+    'LBL_THURSDAY' => 'Thursday',
+    'LBL_FRIDAY' => 'Friday',
+    'LBL_SATURDAY' => 'Saturday',
+    'LBL_SUNDAY' => 'Sunday',
+
     'LBL_PUBLIC_KEY' => 'Public Key',
     'LBL_PRIVATE_KEY' => 'Private Key',
 
