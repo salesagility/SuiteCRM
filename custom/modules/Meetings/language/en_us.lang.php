@@ -1,0 +1,25 @@
+<?php
+// created: 2016-09-02 15:20:30
+$mod_strings = array (
+  'LNK_NEW_MEETING' => 'Schedule MeetingAAA',
+  'LNK_MEETING_LIST' => 'View MeetingsAAA',
+  'LNK_IMPORT_MEETINGS' => 'Import MeetingsAAA',
+  'LBL_LIST_FORM_TITLE' => 'MeetingAAA List',
+  'LBL_SEARCH_FORM_TITLE' => 'MeetingAAA Search',
+  'LBL_CONTACT_NAME' => 'ContactAAA:',
+  'LBL_CONTACTS' => 'ContactsAAA',
+  'LBL_ACCOUNT' => 'AccountAAA',
+  'LBL_LEADS' => 'LeadsyzxAAA',
+  'LBL_OPPORTUNITY' => 'OpportunityAAA',
+  'LBL_CASE' => 'CaseAAA',
+  'LBL_NOTES' => 'NotesAAA',
+  'LBL_CONTACTS_SUBPANEL_TITLE' => 'ContactsAAA',
+  'LBL_LEADS_SUBPANEL_TITLE' => 'LeadsyzxAAA',
+  'LBL_LIST_MY_MEETINGS' => 'My MeetingsAAA',
+  'LBL_LIST_CONTACT' => 'ContactAAA',
+  'LBL_LIST_JOIN_MEETING' => 'Join MeetingAAA',
+  'LBL_PASSWORD' => 'MeetingAAA Password',
+  'LBL_TYPE' => 'MeetingAAA Type',
+  'LBL_URL' => 'Start/Join MeetingAAA',
+  'LBL_MODULE_NAME' => 'MeetingsAAA',
+);

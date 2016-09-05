@@ -1,0 +1,10 @@
+<?php
+// created: 2016-09-02 15:20:29
+$mod_strings = array (
+  'LBL_LEADS' => 'LeadsyzxAAA',
+  'LBL_ACCOUNTS_SUBPANEL_TITLE' => 'AccountsAAAAAA',
+  'LBL_CONTACTS_SUBPANEL_TITLE' => 'ContactsAAAAAA',
+  'LBL_OPPORTUNITIES_SUBPANEL_TITLE' => 'OpportunitiesAAAAAA',
+  'LBL_CASES_SUBPANEL_TITLE' => 'CasesAAAAAA',
+  'LBL_BUGS_SUBPANEL_TITLE' => 'BugsAAAAAAAAA',
+);
