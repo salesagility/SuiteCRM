@@ -393,7 +393,7 @@ SUGAR.mySugar = function() {
 					
 					newLayout =	SUGAR.mySugar.getLayout(true);
 					SUGAR.mySugar.saveLayout(newLayout);
-					SUGAR.mySugar.retrieveCurrentPage(_pageNum);
+					SUGAR.mySugar.retrieveCurrentPage();
 //					window.setTimeout('ajaxStatus.hideStatus()', 2000);
 				}
 				
