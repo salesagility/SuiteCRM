@@ -1722,6 +1722,7 @@ table#mass_update_table td select {
 }
 
 #actionLinkTop li.sugar_action_button,
+#actionLinkBottom li.sugar_action_button,
 #selectLinkTop > .sugar_action_button > ul.subnav a:hover,
 #selectLinkBottom > .sugar_action_button > ul.subnav a:hover,
 #actionLinkBottom > .sugar_action_button > ul.subnav a:hover,
@@ -7594,6 +7595,7 @@ table.subpanel-table ul.subpanel > a,
 .single  a,
 .single > a,
 #actionLinkTop li.sugar_action_button,
+#actionLinkBottom li.sugar_action_button,
 table.subpanel-table li.sugar_action_button,
 #selectLinkTop li.sugar_action_button,
 #selectLinkBottom li.sugar_action_button,
