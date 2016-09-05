@@ -289,6 +289,7 @@ function checkAlerts() {
                     }
                 }
             }
+			alertList[mj]['time'] -= 1;
 		}
 	}
 
