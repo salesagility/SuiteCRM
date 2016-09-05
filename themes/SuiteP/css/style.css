@@ -4891,7 +4891,7 @@ table#lineItems tr td table thead tr td table tbody tr td {
 #email1_span table > tbody,
 #email1_span table > tbody > tr,
 #email1_span table > tbody > tr > td {
-    width: 100%;
+    width: 98%;
     display: block;
 }
 
@@ -5192,6 +5192,14 @@ li.topnav ul.dropdown-menu li:last-child a {
 #tab-actions input[type=button],
 #tab-actions input[type=reset] {
     text-transform: none;
+}
+
+form[name=DetailView] .button,
+form[name=DetailView] input[type=submit],
+form[name=DetailView] input[type=button],
+form[name=DetailView] input[type=reset] {
+    float: left;
+    margin: 0 4px 4px 0;
 }
 
 td.submitButtons .button:hover {
@@ -7693,7 +7701,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 91%;
+        width: 90%;
     }
 
     .button-toggle-expanded {
@@ -7737,7 +7745,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 89%;
+        width: 85%;
     }
 
     .button-toggle-expanded {
@@ -7760,7 +7768,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 88%;
+        width: 85%;
     }
 
     .button-toggle-expanded {
@@ -7784,7 +7792,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 87%;
+        width: 80%;
     }
 
     .button-toggle-expanded {
@@ -7901,7 +7909,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     #content {
-        width: 90%;
+        width: 99%;
         margin-left: 1%;
     }
 }
@@ -7916,7 +7924,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 86%;
+        width: 82%;
     }
 
     .button-toggle-expanded {
@@ -7943,7 +7951,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 85%;
+        width: 82%;
     }
 
     .button-toggle-expanded {
@@ -7955,7 +7963,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     #content {
-        width: 95%;
+        width: 99%;
         margin-left: 1%;
     }
 }
@@ -7970,7 +7978,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 84%;
+        width: 80%;
     }
 
     .button-toggle-expanded {
@@ -7997,7 +8005,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 83%;
+        width: 80%;
     }
 
     .button-toggle-expanded {
@@ -8026,7 +8034,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 82%;
+        width: 74%;
     }
 
     .button-toggle-expanded {
@@ -8041,6 +8049,9 @@ div.list-view-rounded-corners > table th:last-of-type {
         width: 70%;
     }
 
+    #content {
+        width: 97%;
+    }
 }
 
 @media (max-width: 1000px) {
@@ -8077,6 +8088,16 @@ div.list-view-rounded-corners > table th:last-of-type {
 }
 
 @media (max-width: 600px) {
+
+    table tr td {
+        display: block;
+        float: left;
+    }
+
+    table tr td.buttons {
+        width: initial;
+    }
+
 
     #bootstrap-container {
         margin-top: 110px !important;
@@ -8894,7 +8915,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-sm-9 {
-        width: 88%;
+        width: 75%;
     }
 
     #wizform #wizard {
