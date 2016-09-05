@@ -459,9 +459,20 @@ class AOW_WorkFlow extends Basic {
 
             // database time correction with user's time-zone (using user's date format)
             $userDateFormat = $timedate->get_date_time_format();
-            $beanDateEnteredTimestamp = date_create_from_format($userDateFormat,$timedate->asUser(new DateTime($timedate->fromDb($bean->date_entered))))->getTimestamp();
-            $beanDateModifiedTimestamp = date_create_from_format($userDateFormat,$timedate->asUser(new DateTime($timedate->fromDb($bean->date_modified))))->getTimestamp();
-            $thisDateEnteredTimestamp = date_create_from_format($userDateFormat,$this->date_entered)->getTimestamp();
+            $beanDateEnteredTimestampTemp = date_create_from_format($userDateFormat,$timedate->asUser(new DateTime($timedate->fromDb($bean->date_entered))));
+            if (($beanDateEnteredTimestampTemp instanceof DateTime) != null){
+                $beanDateEnteredTimestamp = $beanDateEnteredTimestampTemp->getTimestamp();
+            }
+
+            $beanDateModifiedTimestampTemp = date_create_from_format($userDateFormat,$timedate->asUser(new DateTime($timedate->fromDb($bean->date_modified))));
+            if (($beanDateModifiedTimestampTemp instanceof DateTime) != null){
+                $beanDateModifiedTimestamp = $beanDateModifiedTimestampTemp->getTimestamp();
+            }
+
+            $thisDateEnteredTimestampTemp = date_create_from_format($userDateFormat,$this->date_entered);
+            if (($thisDateEnteredTimestampTemp instanceof DateTime) != null){
+                $thisDateEnteredTimestamp = $thisDateEnteredTimestampTemp->getTimestamp();
+            }
 
             switch($this->flow_run_on){
                 case'New_Records':
