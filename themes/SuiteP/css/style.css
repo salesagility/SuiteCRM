@@ -5199,6 +5199,7 @@ form[name=DetailView] input[type=submit],
 form[name=DetailView] input[type=button],
 form[name=DetailView] input[type=reset] {
     float: left;
+    margin: 0 4px 4px 0;
 }
 
 td.submitButtons .button:hover {
