@@ -4,3 +4,4 @@ $dictionary['Account']['fields']['custom_text_c']['inline_edit']='1';
 $dictionary['Account']['fields']['custom_text_c']['labelValue']='custom text';
 
  ?>
+

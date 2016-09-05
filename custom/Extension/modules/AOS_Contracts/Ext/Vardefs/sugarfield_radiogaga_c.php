@@ -4,3 +4,4 @@ $dictionary['AOS_Contracts']['fields']['radiogaga_c']['inline_edit']='1';
 $dictionary['AOS_Contracts']['fields']['radiogaga_c']['labelValue']='Radio Gaga';
 
  ?>
+
