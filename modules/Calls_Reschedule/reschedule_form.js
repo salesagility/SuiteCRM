@@ -71,8 +71,11 @@ function get_form(){
                 }
 
             };
-            var myButtons = [{ text: "Save", handler: handleSubmit, isDefault: true },
-                             { text: "Cancel", handler:handleCancel }];
+
+            var save = SUGAR.language.get('Calls', 'LBL_SAVE');
+            var cancel = SUGAR.language.get('Calls', 'LBL_CANCEL');
+            var myButtons = [{ text: save, handler: handleSubmit, isDefault: true },
+                             { text: cancel, handler:handleCancel }];
 
             dialog.cfg.queueProperty("buttons", myButtons);
             dialog.render(document.body);

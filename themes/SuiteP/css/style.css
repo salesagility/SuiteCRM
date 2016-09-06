@@ -1634,6 +1634,7 @@ table#mass_update_table td select {
 
 
 #selectLinkTop,
+#selectLinkBottom,
 #actionLinkBottom {
     min-height: 16px;
     line-height: 16px;
@@ -1641,6 +1642,7 @@ table#mass_update_table td select {
     padding: 1px;
 }
 #selectLinkTop input[type=checkbox],
+#selectLinkBottom input[type=checkbox],
 #actionLinkBottom input[type=checkbox] {
     margin-top: 10px;
 }
@@ -1720,7 +1722,9 @@ table#mass_update_table td select {
 }
 
 #actionLinkTop li.sugar_action_button,
+#actionLinkBottom li.sugar_action_button,
 #selectLinkTop > .sugar_action_button > ul.subnav a:hover,
+#selectLinkBottom > .sugar_action_button > ul.subnav a:hover,
 #actionLinkBottom > .sugar_action_button > ul.subnav a:hover,
 #actionLinkTop .menuItemHilite,
 #actionLinkBottom .menuItemHilite {
@@ -2484,7 +2488,7 @@ li.noBullet {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    min-height: 100px;
+    min-height: initial;
 }
 
 #MorePanelHandle {
@@ -3916,6 +3920,7 @@ ul.clickMenu > li > span {
 
 
 #selectLinkTop, #selectLinkTop .sugar_action_button,
+#selectLinkBottom, #selectLinkBottom .sugar_action_button,
 #selectLinkTop, #selectLinkTop .selectActionsDisabled {
     min-width: 32px;
 }
@@ -4891,7 +4896,7 @@ table#lineItems tr td table thead tr td table tbody tr td {
 #email1_span table > tbody,
 #email1_span table > tbody > tr,
 #email1_span table > tbody > tr > td {
-    width: 100%;
+    width: 98%;
     display: block;
 }
 
@@ -5192,6 +5197,14 @@ li.topnav ul.dropdown-menu li:last-child a {
 #tab-actions input[type=button],
 #tab-actions input[type=reset] {
     text-transform: none;
+}
+
+form[name=DetailView] .button,
+form[name=DetailView] input[type=submit],
+form[name=DetailView] input[type=button],
+form[name=DetailView] input[type=reset] {
+    float: left;
+    margin: 0 4px 4px 0;
 }
 
 td.submitButtons .button:hover {
@@ -7590,8 +7603,10 @@ table.subpanel-table ul.subpanel > a,
 .single  a,
 .single > a,
 #actionLinkTop li.sugar_action_button,
+#actionLinkBottom li.sugar_action_button,
 table.subpanel-table li.sugar_action_button,
 #selectLinkTop li.sugar_action_button,
+#selectLinkBottom li.sugar_action_button,
 table.subpanel-table .pagination .sugar_action_button,
 table.subpanel-table .pagination li.sugar_action_button > form > a,
 table.subpanel-table .pagination .sugar_action_button > form > a,
@@ -7693,7 +7708,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 91%;
+        width: 90%;
     }
 
     .button-toggle-expanded {
@@ -7737,7 +7752,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 89%;
+        width: 85%;
     }
 
     .button-toggle-expanded {
@@ -7760,7 +7775,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 88%;
+        width: 85%;
     }
 
     .button-toggle-expanded {
@@ -7784,7 +7799,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 87%;
+        width: 80%;
     }
 
     .button-toggle-expanded {
@@ -7901,7 +7916,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     #content {
-        width: 90%;
+        width: 99%;
         margin-left: 1%;
     }
 }
@@ -7916,7 +7931,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 86%;
+        width: 82%;
     }
 
     .button-toggle-expanded {
@@ -7943,7 +7958,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 85%;
+        width: 82%;
     }
 
     .button-toggle-expanded {
@@ -7955,7 +7970,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     #content {
-        width: 95%;
+        width: 99%;
         margin-left: 1%;
     }
 }
@@ -7970,7 +7985,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 84%;
+        width: 80%;
     }
 
     .button-toggle-expanded {
@@ -7997,7 +8012,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 83%;
+        width: 80%;
     }
 
     .button-toggle-expanded {
@@ -8026,7 +8041,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 82%;
+        width: 74%;
     }
 
     .button-toggle-expanded {
@@ -8041,6 +8056,9 @@ div.list-view-rounded-corners > table th:last-of-type {
         width: 70%;
     }
 
+    #content {
+        width: 97%;
+    }
 }
 
 @media (max-width: 1000px) {
@@ -8077,6 +8095,16 @@ div.list-view-rounded-corners > table th:last-of-type {
 }
 
 @media (max-width: 600px) {
+
+    table tr td {
+        display: block;
+        float: left;
+    }
+
+    table tr td.buttons {
+        width: initial;
+    }
+
 
     #bootstrap-container {
         margin-top: 110px !important;
@@ -8894,7 +8922,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-sm-9 {
-        width: 88%;
+        width: 75%;
     }
 
     #wizform #wizard {

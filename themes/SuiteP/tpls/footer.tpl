@@ -51,7 +51,7 @@
     	</div>
     	<div class="footer_right">
     		
-    		<a onclick="SUGAR.util.top();" href="javascript:void(0)">Back to top</a>
+    		<a onclick="SUGAR.util.top();" href="javascript:void(0)">{$MOD.LBL_SUITE_TOP}</a>
     	</div>
         <div id="copyright_data">
             <div id="dialog2" title="{$MOD.LBL_SUITE_SUPERCHARGED}">
