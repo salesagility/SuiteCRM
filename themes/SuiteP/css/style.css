@@ -2632,10 +2632,10 @@ table.dateTime {
 }
 
 #parent_name, input.sqsEnabled {
-    display: block;
     clear: both;
     margin-top: 8px;
     width: 50%;
+    margin-right: 8px;
 }
 
 .pageNumbers {
@@ -4791,6 +4791,10 @@ fieldset[disabled] .btn-primary.active {
     content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
 }
 
+#search_form span.id-ff.multiple {
+    top: 10px;
+    position: relative;
+}
 #EditView_tabs span.id-ff.multiple [type="button"] img,
 #conditionLines span.id-ff.multiple [type="button"] img {
     content: none;
