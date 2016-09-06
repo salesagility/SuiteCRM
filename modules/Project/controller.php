@@ -391,8 +391,12 @@ class ProjectController extends SugarController {
         $end = $end->format('Y-m-d');
 
         $project_where = "";
+        $project_resource_where = "";
+        $project_contact_where = "";
 		if( count($projects) > 1 || $projects[0] != '' ){
 			$project_where = " AND project_id IN( '" . implode("','", $projects) . "' )";
+			$project_user_where = " AND project_users_1project_ida IN( '" . implode("','", $projects) . "' )";
+			$project_contact_where = " AND project_contacts_1project_ida IN( '" . implode("','", $projects) . "' )";
 		}
 
         $user_where = "";
@@ -409,12 +413,12 @@ class ProjectController extends SugarController {
 		$resource_query = "SELECT project_users_1users_idb as id, first_name, last_name, 'project_users_1_c' AS type
 							  FROM project_users_1_c
 							  JOIN users ON users.id = project_users_1users_idb
-							  WHERE project_users_1_c.deleted =0 " . $user_where . "
+							  WHERE project_users_1_c.deleted =0 " . $user_where . $project_user_where . "
 						   UNION
 						   SELECT project_contacts_1contacts_idb AS id, first_name, last_name, 'project_contacts_1_c' AS type
 							  FROM project_contacts_1_c
 							  JOIN contacts ON contacts.id = project_contacts_1contacts_idb
-							  WHERE project_contacts_1_c.deleted =0 " . $contacts_where ;
+							  WHERE project_contacts_1_c.deleted =0 " . $contacts_where  . $project_contact_where;
 
 
         $resources = $db->query($resource_query);
