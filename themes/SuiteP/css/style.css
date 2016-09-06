@@ -1056,7 +1056,7 @@ th, td {
     font-weight: 700;
     line-height: 48px;
     text-align: left;
-    white-space: nowrap;
+    white-space: normal;
     vertical-align: baseline;
 
 }
