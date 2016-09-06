@@ -70,16 +70,15 @@
 
 
 <!-- CSS Files -->
-<link type="text/css" href="{sugar_getjspath file='custom/include/SugarCharts/js/Jit/Examples/css/base.css'}"
       rel="stylesheet"/>
-<link type="text/css" href="{sugar_getjspath file='custom/include/SugarCharts/js/Jit/css/Examples/BarChart.css'}"
+<link type="text/css" href="{sugar_getjspath file='include/SugarCharts/js/Jit/css/Examples/BarChart.css'}"
       rel="stylesheet"/>
 <!--[if IE]>
 <script language="javascript" type="text/javascript"
-        src="{sugar_getjspath file='custom/include/SugarCharts/js/Jit/Extras/excanvas.js'}"></script><![endif]-->
+        src="{sugar_getjspath file='include/SugarCharts/js/Jit/Extras/excanvas.js'}"></script><![endif]-->
 <!-- JIT Library File -->
 <script language="javascript" type="text/javascript"
-        src="{sugar_getjspath file='custom/include/SugarCharts/js/Jit/jit.js'}"></script>
+        src="{sugar_getjspath file='include/SugarCharts/js/Jit/jit.js'}"></script>
 
 
 <div id="pageContainer">
