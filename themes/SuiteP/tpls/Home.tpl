@@ -70,7 +70,6 @@
 
 
 <!-- CSS Files -->
-<link type="text/css" href="{sugar_getjspath file='include/SugarCharts/js/Jit/Examples/css/base.css'}"
       rel="stylesheet"/>
 <link type="text/css" href="{sugar_getjspath file='include/SugarCharts/js/Jit/css/Examples/BarChart.css'}"
       rel="stylesheet"/>
