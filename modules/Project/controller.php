@@ -475,7 +475,7 @@ class ProjectController extends SugarController {
         //$resource_type = $_REQUEST['type'];
 
         $Task = BeanFactory::getBean('ProjectTask');
-        $tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$resource_id."' AND project_task.date_start <= '".$start_date."' AND project_task.date_finish >= '".$end_date."'");
+        $tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$resource_id."' AND project_task.date_start <= '".$start_date."' AND project_task.date_finish >= '".$end_date."' AND (project_id is not null OR project_id <> ''");
         echo '<table class="qtip_table">';
         echo '<tr><th>'.$mod_strings['LBL_TOOLTIP_PROJECT_NAME'].'</th><th>'.$mod_strings['LBL_TOOLTIP_TASK_NAME'].'</th><th>'.$mod_strings['LBL_TOOLTIP_TASK_DURATION'].'</th></tr>';
 		if(is_array($tasks)){
