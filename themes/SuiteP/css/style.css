@@ -5420,12 +5420,61 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     }
 
     div.search_fields_basic .col-lg-3 {
-        width: 100% !important;
+        float: left;
+        display: block;
+        width: initial;
     }
 
     #wizform #wizard {
         width: 1100px;
     }
+}
+
+
+
+@media (min-width: 1130px) {
+
+    div.search_fields_basic .col-lg-3 {
+        float: left;
+        display: block;
+        width: initial;
+    }
+
+    #search_form .col-lg-9 {
+        float: left;
+        display: block;
+        width: initial;
+        margin: 0 5px;
+    }
+
+}
+
+@media (min-width: 992px) {
+    div.search_fields_basic .col-lg-3,
+    #search_form .col-lg-9 {
+        float: left;
+        display: block;
+        width: initial;
+        margin: 0 5px;
+    }
+}
+
+@media (min-width: 768px) {
+    div.search_fields_basic .col-lg-3,
+    #search_form .col-lg-9  {
+        float: left;
+        display: block;
+        width: initial;
+        margin: 0 5px;
+    }
+}
+
+div.search_fields_basic .col-lg-3,
+#search_form .col-lg-9  {
+    float: left;
+    display: block;
+    width: initial;
+    margin: 0 5px;
 }
 
 @media (min-width: 1600px) {
