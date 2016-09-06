@@ -5,7 +5,13 @@
             <tr>
                 <td class="dashlet-title" colspan="2">
                     <h3>
-                        <img src="{sugar_getimagepath file_name=$DASHLET_MODULE file_extension='svg' directory='sidebar/modules'}"><span>{$DASHLET_TITLE}</span>
+                        {capture name="dashlet_img_capture" assign="dashlet_img"}{sugar_getimagepath file_name=$DASHLET_MODULE file_extension='svg' directory='sidebar/modules'}{/capture}
+                        {if !empty($dashlet_img)}
+                            <img src="{$dashlet_img}"/>
+                        {else}
+                            <img src="themes/SuiteP/images/sidebar/modules/basic.svg"/>
+                        {/if}
+                       <span>{$DASHLET_TITLE}</span>
                     </h3>
                 </td>
                 <td style="padding-right: 0px;" nowrap="" width="1%">

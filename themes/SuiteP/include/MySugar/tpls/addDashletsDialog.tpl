@@ -74,7 +74,14 @@
 		{if $rowCounter % 2 == 0}
 		<tr>
 		{/if}
-			<td width="50%" align="left"><a id="{$module.id}_icon" href="javascript:void(0)" onclick="{$module.onclick}" style="text-decoration:none"><img  class="module_icon" src="{sugar_getimagepath file_name=$module.module_name file_extension='svg'}"><span id="mbLBLL" class="mbLBLL">{$module.title}</span></a><br /></td>
+			<td width="50%" align="left"><a id="{$module.id}_icon" href="javascript:void(0)" onclick="{$module.onclick}" style="text-decoration:none">
+					{capture name="dashlet_img_capture" assign="dashlet_img"}{sugar_getimagepath file_name=$module.module_name file_extension='svg'}{/capture}
+					{if !empty($dashlet_img)}
+						<img src="{$dashlet_img}"/>
+					{else}
+						<img src="themes/SuiteP/images/basic.svg"/>
+					{/if}
+					<span id="mbLBLL" class="mbLBLL">{$module.title}</span></a><br /></td>
 		{if $rowCounter % 2 == 1}
 		</tr>
 		{/if}
