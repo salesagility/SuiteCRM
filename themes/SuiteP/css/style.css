@@ -2628,7 +2628,6 @@ table.dateTime {
 }
 
 #parent_name, input.sqsEnabled {
-    /* display: block; */
     clear: both;
     margin-top: 8px;
     width: 50%;
