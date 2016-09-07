@@ -195,13 +195,13 @@ function insertProductLine(tableid, groupid) {
   y.id = 'product_note_line' + prodln;
 
   var h1 = y.insertCell(0);
-  h1.colSpan = "3";
+  h1.colSpan = "5";
   h1.style.color = "rgb(68,68,68)";
   h1.innerHTML = "<span style='vertical-align: top;'>" + SUGAR.language.get(module_sugar_grp1, 'LBL_PRODUCT_DESCRIPTION') + " :&nbsp;&nbsp;</span>";
   h1.innerHTML += "<textarea tabindex='116' name='product_item_description[" + prodln + "]' id='product_item_description" + prodln + "' rows='2' cols='23' class='product_item_description'></textarea>&nbsp;&nbsp;";
 
   var i = y.insertCell(1);
-  i.colSpan = "3";
+  i.colSpan = "5";
   i.style.color = "rgb(68,68,68)";
   i.innerHTML = "<span style='vertical-align: top;'>"  + SUGAR.language.get(module_sugar_grp1, 'LBL_PRODUCT_NOTE') + " :&nbsp;</span>";
   i.innerHTML += "<textarea tabindex='116' name='product_description[" + prodln + "]' id='product_description" + prodln + "' rows='2' cols='23' class='product_description'></textarea>&nbsp;&nbsp;"
