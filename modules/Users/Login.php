@@ -65,13 +65,6 @@ global $app_language, $sugar_config;
 global $current_language;
 
 // Get the login page image
-if ( sugar_is_file('custom/include/images/sugar_md.png') ) {
-    $login_image = '<IMG src="custom/include/images/sugar_md.png" alt="Sugar" width="340" height="25">';
-}
-else {
-    $login_image = '<IMG src="include/images/sugar_md_open.png" alt="Sugar" width="340" height="25" style="margin: 5px 0;">';
-}
-
 $login_image_url = SugarThemeRegistry::current()->getImageURL('company_logo.png');
 $login_image = '<IMG src="'.$login_image_url.'" alt="SuiteCRM" style="margin: 5px 0;">';
 
