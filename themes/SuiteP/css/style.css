@@ -4960,6 +4960,7 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 #lineItems .group > thead > tr,
 #lineItems .group > thead > tr > td {
     background-color: #CBDAE6;
+    min-height: 52px;
 }
 
 #lineItems .group > thead > tr > td:nth-of-type(1) {
