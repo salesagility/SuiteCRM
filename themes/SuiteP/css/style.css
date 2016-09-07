@@ -4854,17 +4854,17 @@ input#btn_ActionLine.button[type="button"] {
 }
 
 #primary_address_street, #alt_address_street {
-    width: 60% !important;
+    width: 60%;
 }
 
 
 .col-sm-6 .edit-view-field[field="billing_address_street"] input[type="text"],
 .col-sm-6 .edit-view-field[field="shipping_address_street"] input[type="text"] {
-    width: 88% !important;
+    width: 88%;
 }
 
  .col-sm-12 .edit-view-field input[type="text"]:not(.sqsEnabled) {
-    width: 100% !important;
+    width: 100%;
 }
 
 table#lineItems tr td table tfoot tr td span {
@@ -4877,8 +4877,8 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 table#lineItems tr td table thead tr td table tbody tr td input,
 table#lineItems tr td table thead tr td table tbody tr td select,
 table#lineItems tr td table thead tr td table tbody tr td textarea {
-    display: block;
-    min-width: 80px;
+    display: inline-block;
+    width: 50px;
 }
 
 table#lineItems tr td table thead tr td table tbody tr td {
@@ -4886,12 +4886,74 @@ table#lineItems tr td table thead tr td table tbody tr td {
     padding: 10px;
 }
 
-#total_amt,
-#discount_amount,
-#subtotal_amount,
-#shipping_amount,
-#shipping_tax_amt,
-#tax_amount {
+/*totals*/
+#lineItems .totals {
+    float: right;
+}
+
+#lineItems  #shipping_tax_amt_span {}
+#lineItems  #shipping_tax_amt {
+    /*Text*/
+}
+
+#lineItems  #shipping_tax {
+    /*Select*/
+}
+
+
+/*Group*/
+#lineItems .group_name {}
+#lineItems .delete_group {}
+#lineItems .product_group {}
+#lineItems .service_group {}
+#lineItems .add_product_line {}
+#lineItems .add_service_line {}
+#lineItems .group_total_amt {}
+#lineItems .group_discount_amount {}
+#lineItems .group_subtotal_amount {}
+#lineItems .group_tax_amount {}
+#lineItems .group_subtotal_tax_amount {}
+#lineItems .group_total_amount {}
+#lineItems  #addGroup {}
+/*Labels Next to Fields*/
+#lineItems  .alignedLabel {
+    display: none;
+    visibility: collapse;
+}
+
+/*Product Lines*/
+#product_head {}
+#lineItems .product_qty { width: 40px;}
+#lineItems .product_name {}
+#lineItems .product_part_number {}
+#lineItems .product_part_number_button {}
+#lineItems .product_list_price {}
+#lineItems .product_discount_text {}
+#lineItems .product_discount_amount_select {}
+#lineItems .product_unit_price {}
+#lineItems .product_vat_amt_text {}
+#lineItems .product_vat_amt_select {}
+#lineItems .product_total_price {}
+#lineItems .product_delete_line {}
+/*Service Lines*/
+#lineItems  #service_head {}
+#lineItems .service_name {}
+#lineItems .service_list_price {}
+#lineItems .service_discount_text {}
+#lineItems .service_discount_select {}
+#lineItems .service_unit_price {}
+#lineItems .service_vat_text {}
+#lineItems .service_vat_select {}
+#lineItems .service_total_price {}
+#lineItems .service_delete_line {}
+
+/*Grand Total*/
+#lineItems #total_amt,
+#lineItems #discount_amount,
+#lineItems #subtotal_amount,
+#lineItems #shipping_amount,
+#lineItems #shipping_tax_amt,
+#lineItems #tax_amount {
     max-width: 40%;
 }
 
