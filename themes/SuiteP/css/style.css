@@ -9551,7 +9551,7 @@ table tr#delegates_search {
 
 /* basic search form on mobile */
 
-@media (min-width: 310px) and (max-width: 600px) {
+@media (max-width: 600px) {
 
     #search_form .button, input[type=submit],
     #search_form input[type=button],
@@ -9607,4 +9607,30 @@ table tr#delegates_search {
     #search_form .submitButtons {
         font-size: 0;
     }
+}
+
+
+/* basic search form on mobile (very small screen) */
+
+@media (max-width: 310px) {
+
+    #search_form div.search_name_basic input {
+        width: 75% !important;
+    }
+
+    #search_form a#advanced_search_link {
+        background-position: 90% 2px;
+        text-align: left;
+    }
+
+    #search_form .button, input[type=submit], #search_form input[type=button], #search_form input[type=reset],
+    #search_form a#advanced_search_link
+    {
+        font-size: 10px !important;
+    }
+
+    #search_form div.search_fields_basic:nth-of-type(3n+1) {
+        margin: 0;
+    }
+
 }
