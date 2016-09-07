@@ -9759,4 +9759,8 @@ table tr#delegates_search {
         clear: both;
     }
 
+    #search_form .edit.view.search.basic {
+        padding-bottom: 10px !important;
+    }
+
 }
