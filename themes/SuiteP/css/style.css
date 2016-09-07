@@ -9547,3 +9547,64 @@ table tr#delegates_search {
 
 
 }
+
+
+/* basic search form on mobile */
+
+@media (min-width: 310px) and (max-width: 600px) {
+
+    #search_form .button, input[type=submit],
+    #search_form input[type=button],
+    #search_form input[type=reset] {
+        margin: 0 2px;
+        width: 48%;
+    }
+
+    #search_form.search_form input[type=text],
+    #search_form.search_form input[type=password],
+    #search_form.search_form input:not([type]),
+    #search_form.search_form textarea {
+        border: none;
+        padding: 0 5px;
+    }
+
+    #search_form div.search_fields_basic {
+        line-height: 18px;
+    }
+
+    #search_form div.search_fields_basic:nth-of-type(3n+1) {
+        /* clear: both; */
+        float: left;
+        display: block;
+        width: initial;
+        margin: 0 0 0 35px;
+        padding: 0 0 10px 0;
+    }
+
+    #search_form div.search_name_basic input {
+        width: 84% !important;
+    }
+
+    #search_form div.search_fields_basic {
+        margin: 0;
+        float: left;
+        display: block;
+        width: initial;
+    }
+
+    #search_form div.search_fields_basic .col-lg-3,
+    #search_form .col-lg-9 {
+        float: right;
+    }
+
+    #search_form a#advanced_search_link {
+        margin: 4px 2px;
+        background-position: 78% 2px;
+        width: 97%;
+        text-align: center;
+    }
+
+    #search_form .submitButtons {
+        font-size: 0;
+    }
+}
