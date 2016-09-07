@@ -391,7 +391,7 @@ class ProjectController extends SugarController {
         $end = $end->format('Y-m-d');
 
         $project_where = "";
-        $project_resource_where = "";
+        $project_user_where = "";
         $project_contact_where = "";
 		if( count($projects) > 1 || $projects[0] != '' ){
 			$project_where = " AND project_id IN( '" . implode("','", $projects) . "' )";
@@ -410,16 +410,27 @@ class ProjectController extends SugarController {
 		}
 	
 		//Get the users data from the database
-		$resource_query = "SELECT project_users_1users_idb as id, first_name, last_name, 'project_users_1_c' AS type
+
+		$users_resource_query = "SELECT distinct project_users_1users_idb as id, first_name, last_name, 'project_users_1_c' AS type
 							  FROM project_users_1_c
 							  JOIN users ON users.id = project_users_1users_idb
-							  WHERE project_users_1_c.deleted =0 " . $user_where . $project_user_where . "
-						   UNION
-						   SELECT project_contacts_1contacts_idb AS id, first_name, last_name, 'project_contacts_1_c' AS type
+							  WHERE project_users_1_c.deleted =0 " . $user_where . $project_user_where ;
+
+
+		$contacts_resource_query = "SELECT distinct project_contacts_1contacts_idb AS id, first_name, last_name, 'project_contacts_1_c' AS type
 							  FROM project_contacts_1_c
 							  JOIN contacts ON contacts.id = project_contacts_1contacts_idb
 							  WHERE project_contacts_1_c.deleted =0 " . $contacts_where  . $project_contact_where;
 
+
+		if( $users[0] != 'none'  && $contacts[0] != 'none' )
+			$resource_query = $users_resource_query . '  UNION ' . $contacts_resource_query;
+		elseif( $users[0] == 'none')
+			$resource_query = $contacts_resource_query;
+		elseif( $contacts[0] == 'none')				  
+			$resource_query = $users_resource_query ;
+		else
+			$resource_query = "SELECT '0' as id, ' ' as first_name, ' ' as last_name, 'project_users_1_c' AS type";
 
         $resources = $db->query($resource_query);
 

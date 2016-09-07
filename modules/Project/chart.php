@@ -143,8 +143,8 @@ class chart {
 							</td>
                             <td scope="row_val" nowrap="nowrap" >
                                 <select id="users" name="users" multiple size="6" style="width: 250px" >
-                                <option value="">All Users</option>';
-
+                                <option ' . ( $sel_users[0] == ''? "selected='selected'" : "" ) . ' value="">All Users</option>
+                                <option ' . ( $sel_users[0] == 'none'? "selected='selected'" : "" ) . ' value="none">None</option>';
                                 //From the query above, populates the select box
                                 foreach( $user_list as $user)
                                 {
@@ -169,8 +169,8 @@ class chart {
 							</td>
 						  <td scope="row_val" nowrap="nowrap" >
                                 <select id="contacts" name="contacts" multiple size="6" style="width: 250px" >
-                                <option value="">All Contacts</option>';
-
+                                <option ' . ( $sel_contacts[0] == ''? "selected='selected'" : "" ) . ' value="">All Contacts</option>
+                                <option ' . ( $sel_contacts[0] == 'none'? "selected='selected'" : "" ) . ' value="none">None</option>';
                                 //From the query above, populates the select box
                                 foreach( $contact_list as $contact)
                                 {
