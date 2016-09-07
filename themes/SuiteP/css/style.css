@@ -8162,6 +8162,7 @@ div.list-view-rounded-corners > table th:last-of-type {
 }
 
 @media (max-width: 1300px) {
+
     .sidebar {
         width: 20%;
     }
@@ -8521,25 +8522,6 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 }
 @media (max-width: 1130px) {
-
-    #lineItems #product_head *, #lineItems #service_head {
-        display: none;
-        visibility: collapse;
-    }
-
-    #lineItems .alignedLabel,
-    #lineItems .product_item_description_label,
-    #lineItems .product_description_label
-    {
-        display: block;
-        visibility: visible;
-        width: 100%;
-    }
-
-    #lineItems .product_group td, #lineItems .service_group td {
-        display: block;
-        width: 50%;
-    }
 
     #usermenu {
         display: none;
