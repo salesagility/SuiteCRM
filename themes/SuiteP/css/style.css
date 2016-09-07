@@ -1048,7 +1048,7 @@ th, td {
     min-height: 74px;
 }
 
-.detail-view-row .label, .edit-view-row .label {
+.detail-view-row .label, .edit-view-row .label, #lineItems {
     color: #534D64;
     display: inline;
     padding: 0 0 0 8px;
@@ -4866,6 +4866,74 @@ input#btn_ActionLine.button[type="button"] {
  .col-sm-12 .edit-view-field input[type="text"]:not(.sqsEnabled) {
     width: 100%;
 }
+/*Line Items*/
+
+#conditionLines_head,
+#fieldLines_head, #lineItems,
+table#lineItems,
+#lineItems table,
+#lineItems thead,
+#lineItems tr,
+#lineItems td {
+    background: none !important;
+}
+
+#actionLines,
+#actionLines table,
+#actionLines tr,
+#actionLines td {
+    border: 1px solid transparent !important;
+}
+
+#actionLines,
+#actionLines table,
+#line_items table {
+    clear: both;
+    border-radius: 4px;
+    width: 100%;
+}
+
+table#actionLines > tr > td > table td {
+    padding: 4px;
+}
+
+table#actionLines > tr > td > table td:first-of-type {
+    padding-left: 16px;
+}
+
+
+table#actionLines > tr > td > table, #line_items table > tr > td > table {
+    background: #F5F5F5;
+    margin: 16px 0 0 0 !important;
+    clear: both;
+    display: block;
+}
+
+#conditionLines td,  #fieldLines td {
+    padding: 8px;
+}
+
+
+#lineItems table > thead:nth-child(1) > tr > td:nth-child(1) [type="text"] {
+    width: 50% !important;
+}
+
+
+[field=line_items] {
+    float: none;
+    width: 100%;
+    clear: both;
+}
+
+[field=line_items]
+#line_items_span,
+table#lineItems {
+    display: block;
+}
+
+#line_items_span {
+    width: 100%;
+}
 
 table#lineItems tr td table tfoot tr td span {
     width: 20%;
@@ -4874,17 +4942,8 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
     display: block;
     float: none;
 }
-table#lineItems tr td table thead tr td table tbody tr td input,
-table#lineItems tr td table thead tr td table tbody tr td select,
-table#lineItems tr td table thead tr td table tbody tr td textarea {
-    display: inline-block;
-    width: 50px;
-}
 
-table#lineItems tr td table thead tr td table tbody tr td {
-    white-space: nowrap;
-    padding: 10px;
-}
+
 
 /*totals*/
 #lineItems .totals {
@@ -4900,8 +4959,36 @@ table#lineItems tr td table thead tr td table tbody tr td {
     /*Select*/
 }
 
-
 /*Group*/
+#lineItems .group {
+    width: 100%;
+}
+
+#lineItems .group_body,
+#lineItems .group_body > td,
+#lineItems .group > thead,
+#lineItems .group > thead > tr {
+    width: 100%;
+    display: block;
+}
+
+#lineItems .group > thead > tr > td:nth-of-type(1) {
+    width: 80%;
+    display: inline-block;
+}
+
+#lineItems .group > thead > tr > td:nth-of-type(2) {
+    width: 20%;
+    display: inline-block;
+}
+
+#lineItems .group button {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    line-height: 0;
+}
+
 #lineItems .group_name {}
 #lineItems .delete_group {}
 #lineItems .product_group {}
@@ -4922,30 +5009,120 @@ table#lineItems tr td table thead tr td table tbody tr td {
 }
 
 /*Product Lines*/
-#product_head {}
-#lineItems .product_qty { width: 40px;}
-#lineItems .product_name {}
-#lineItems .product_part_number {}
-#lineItems .product_part_number_button {}
-#lineItems .product_list_price {}
-#lineItems .product_discount_text {}
-#lineItems .product_discount_amount_select {}
-#lineItems .product_unit_price {}
-#lineItems .product_vat_amt_text {}
-#lineItems .product_vat_amt_select {}
-#lineItems .product_total_price {}
-#lineItems .product_delete_line {}
+
+#lineItems #product_head > td{
+    padding: 32px 0 8px 0;
+}
+
+#lineItems  .product_group {
+    width: 1000px;
+}
+
+#lineItems  .product_group  > tbody > tr:nth-of-type(1) > td {
+    padding-bottom: 16px;
+}
+
+#lineItems  .product_group  > tbody > tr:nth-of-type(2) > td {
+    padding-bottom: 16px;
+}
+
+#lineItems .product_qty {
+    width: 40px;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_name {
+    width: 98%;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_part_number {
+    width: 100%;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_part_number_button {
+    margin: 0 15px 0 5px;
+}
+#lineItems .product_list_price {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_discount_text {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_discount_amount_select {
+    margin: 0 5px 0 0;
+}
+#lineItems .product_unit_price {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_vat_amt_text {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_vat_amt_select {
+    margin: 0 5px 0 0;
+}
+#lineItems .product_total_price {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_delete_line {
+    margin: 0 15px 0 5px;
+}
+#lineItems .product_item_description {
+    height: 50px;
+}
+#lineItems .product_description {
+    height: 50px;
+}
+
 /*Service Lines*/
-#lineItems  #service_head {}
-#lineItems .service_name {}
-#lineItems .service_list_price {}
-#lineItems .service_discount_text {}
-#lineItems .service_discount_select {}
-#lineItems .service_unit_price {}
-#lineItems .service_vat_text {}
-#lineItems .service_vat_select {}
-#lineItems .service_total_price {}
-#lineItems .service_delete_line {}
+#lineItems  #service_head td {
+    padding: 32px 0 8px 0;
+}
+
+#lineItems  .service_group  > tbody > tr > td {
+    padding-bottom: 16px;
+}
+
+
+#lineItems .service_group {
+    width: 1000px;
+}
+#lineItems .service_name {
+    width: 100px;
+    height: 50px;
+    margin: 0 5px 0 0;
+}
+#lineItems .service_list_price {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .service_discount_text {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .service_discount_select {
+    margin: 0 5px 0 0;
+}
+#lineItems .service_unit_price {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .service_vat_text {
+    width: 80px;
+}
+#lineItems .service_vat_select {
+    margin: 0 5px 0 5px;
+}
+#lineItems .service_total_price {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .service_delete_line {
+    margin: 0 5px 0 0;
+}
 
 /*Grand Total*/
 #lineItems #total_amt,
@@ -6043,56 +6220,6 @@ span#quickcreateplus {
 .placeholder img {
     display: inline-block;
     border-radius: 50%;
-}
-
-#conditionLines_head,
-#fieldLines_head, #lineItems,
-table#lineItems,
-#lineItems table,
-#lineItems thead,
-#lineItems tr,
-#lineItems td {
-    background: none !important;
-}
-
-#actionLines,
-#actionLines table,
-#actionLines tr,
-#actionLines td {
-    border: 1px solid transparent !important;
-}
-
-#actionLines,
-#actionLines table,
-#line_items table {
-    clear: both;
-    border-radius: 4px;
-    width: 100%;
-}
-
-table#actionLines > tr > td > table td {
-    padding: 4px;
-}
-
-table#actionLines > tr > td > table td:first-of-type {
-    padding-left: 16px;
-}
-
-
-table#actionLines > tr > td > table, #line_items table > tr > td > table {
-    background: #F5F5F5;
-    margin: 16px 0 0 0 !important;
-    clear: both;
-    display: block;
-}
-
-#conditionLines td,  #fieldLines td {
-    padding: 8px;
-}
-
-
-#lineItems table > thead:nth-child(1) > tr > td:nth-child(1) [type="text"] {
-    width: 50% !important;
 }
 
 li.moremenu {
@@ -8361,6 +8488,26 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 }
 @media (max-width: 1130px) {
+
+    #lineItems #product_head *, #lineItems #service_head {
+        display: none;
+        visibility: collapse;
+    }
+
+    #lineItems .alignedLabel,
+    #lineItems .product_item_description_label,
+    #lineItems .product_description_label
+    {
+        display: block;
+        visibility: visible;
+        width: 100%;
+    }
+
+    #lineItems .product_group td, #lineItems .service_group td {
+        display: block;
+        width: 50%;
+    }
+
     #usermenu {
         display: none;
     }
@@ -9491,13 +9638,6 @@ table tr#delegates_search {
 /* align quote lines */
 
 @media (max-width: 1700px) {
-
-    #product_head {
-        display: none;
-    }
-    #service_head {
-        display: none;
-    }
 
     table#lineItems table tr td table tbody tr td span.hidden.alignedLabel {
         display: inline!important;

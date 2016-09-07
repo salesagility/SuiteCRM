@@ -197,13 +197,13 @@ function insertProductLine(tableid, groupid) {
   var h1 = y.insertCell(0);
   h1.colSpan = "5";
   h1.style.color = "rgb(68,68,68)";
-  h1.innerHTML = "<span style='vertical-align: top;'>" + SUGAR.language.get(module_sugar_grp1, 'LBL_PRODUCT_DESCRIPTION') + " :&nbsp;&nbsp;</span>";
+  h1.innerHTML = "<span style='vertical-align: top;' class='product_item_description_label'>" + SUGAR.language.get(module_sugar_grp1, 'LBL_PRODUCT_DESCRIPTION') + " :&nbsp;&nbsp;</span>";
   h1.innerHTML += "<textarea tabindex='116' name='product_item_description[" + prodln + "]' id='product_item_description" + prodln + "' rows='2' cols='23' class='product_item_description'></textarea>&nbsp;&nbsp;";
 
   var i = y.insertCell(1);
   i.colSpan = "5";
   i.style.color = "rgb(68,68,68)";
-  i.innerHTML = "<span style='vertical-align: top;'>"  + SUGAR.language.get(module_sugar_grp1, 'LBL_PRODUCT_NOTE') + " :&nbsp;</span>";
+  i.innerHTML = "<span style='vertical-align: top;' class='product_description_label'>"  + SUGAR.language.get(module_sugar_grp1, 'LBL_PRODUCT_NOTE') + " :&nbsp;</span>";
   i.innerHTML += "<textarea tabindex='116' name='product_description[" + prodln + "]' id='product_description" + prodln + "' rows='2' cols='23' class='product_description'></textarea>&nbsp;&nbsp;"
 
   addToValidate('EditView','product_product_id'+prodln,'id',true,"Please choose a product");
@@ -467,12 +467,14 @@ function insertGroup()
   }
   var tableBody = document.createElement("tr");
   tableBody.id = "group_body"+groupn;
+  tableBody.className = "group_body";
   document.getElementById('lineItems').appendChild(tableBody);
 
   var a=tableBody.insertCell(0);
   a.colSpan="100";
   var table = document.createElement("table");
   table.id = "group"+groupn;
+  table.className = "group";
 
   table.style.whiteSpace = 'nowrap';
 
@@ -493,31 +495,32 @@ function insertGroup()
 
     var header_cell_del = header_row.insertCell(1);
     header_cell_del.scope="row";
+    header_cell_del.colSpan="2";
     header_cell_del.innerHTML="<span title='" + SUGAR.language.get(module_sugar_grp1, 'LBL_DELETE_GROUP') + "' style='float: right;'><a style='cursor: pointer;' id='deleteGroup' tabindex='116' onclick='markGroupDeleted("+groupn+")' class='delete_group'><img src='themes/default/images/id-ff-clear.png' alt='X'></a></span><input type='hidden' name='group_deleted[]' id='"+ table.id +"deleted' value='0'>";
   }
 
 
 
-  var productTableHeader = document.createElement("thead");
+  var productTableHeader = document.createElement("tbody");
   table.appendChild(productTableHeader);
   var productHeader_row=productTableHeader.insertRow(-1);
   var productHeader_cell = productHeader_row.insertCell(0);
   productHeader_cell.colSpan="100";
   var productTable = document.createElement("table");
   productTable.id = "product_group"+groupn;
-  productTable.class = "product_group";
+  productTable.className = "product_group";
   productHeader_cell.appendChild(productTable);
 
   insertProductHeader(productTable.id);
 
-  var serviceTableHeader = document.createElement("thead");
+  var serviceTableHeader = document.createElement("tbody");
   table.appendChild(serviceTableHeader);
   var serviceHeader_row=serviceTableHeader.insertRow(-1);
   var serviceHeader_cell = serviceHeader_row.insertCell(0);
   serviceHeader_cell.colSpan="100";
   var serviceTable = document.createElement("table");
   serviceTable.id = "service_group"+groupn;
-  serviceTable.class = "service_group";
+  serviceTable.className = "service_group";
   serviceHeader_cell.appendChild(serviceTable);
 
   insertServiceHeader(serviceTable.id);
