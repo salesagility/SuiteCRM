@@ -4866,15 +4866,9 @@ input#btn_ActionLine.button[type="button"] {
  .col-sm-12 .edit-view-field input[type="text"]:not(.sqsEnabled) {
     width: 100%;
 }
-/*Line Items*/
 
 #conditionLines_head,
-#fieldLines_head, #lineItems,
-table#lineItems,
-#lineItems table,
-#lineItems thead,
-#lineItems tr,
-#lineItems td {
+#fieldLines_head {
     background: none !important;
 }
 
@@ -4886,31 +4880,19 @@ table#lineItems,
 }
 
 #actionLines,
-#actionLines table,
-#line_items table {
+#actionLines table {
     clear: both;
     border-radius: 4px;
     width: 100%;
 }
 
-table#actionLines > tr > td > table td {
-    padding: 4px;
-}
-
-table#actionLines > tr > td > table td:first-of-type {
-    padding-left: 16px;
-}
 
 
-table#actionLines > tr > td > table, #line_items table > tr > td > table {
-    background: #F5F5F5;
-    margin: 16px 0 0 0 !important;
-    clear: both;
-    display: block;
-}
 
-#conditionLines td,  #fieldLines td {
-    padding: 8px;
+/*Line Items*/
+#lineItems #service_head,
+#lineItems #product_head {
+    background: none;
 }
 
 
@@ -4944,7 +4926,6 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 
-
 /*totals*/
 #lineItems .totals {
     float: right;
@@ -4970,6 +4951,15 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 #lineItems .group > thead > tr {
     width: 100%;
     display: block;
+    padding: 2px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+#lineItems .group > thead ,
+#lineItems .group > thead > tr,
+#lineItems .group > thead > tr > td {
+    background-color: #CBDAE6;
 }
 
 #lineItems .group > thead > tr > td:nth-of-type(1) {
@@ -5011,6 +5001,14 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 /*Product Lines*/
 #lineItems #product_head > td {
     padding: 32px 0 8px 0;
+    border-bottom: 1px solid #F5F5F5;
+}
+
+#lineItems .product_group,
+#lineItems .product_group thead,
+#lineItems .product_group tr,
+#lineItems .product_group td {
+    background: none;
 }
 
 #lineItems #product_head > td:nth-of-type(1) {
@@ -5022,11 +5020,13 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems  .product_group  > tbody > tr:nth-of-type(1) > td {
+    padding-top: 16px;
     padding-bottom: 16px;
 }
 
 #lineItems  .product_group  > tbody > tr:nth-of-type(2) > td {
-    padding-bottom: 16px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid #F5F5F5;
 }
 
 #lineItems .product_qty {
@@ -5080,6 +5080,7 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 #lineItems .product_item_description {
     height: 50px;
+    width: 95%;
 }
 
 #lineItems .product_description_label {
@@ -5088,15 +5089,27 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 #lineItems .product_description {
     height: 50px;
+    width: 95%;
 }
 
 /*Service Lines*/
 #lineItems  #service_head td {
     padding: 32px 0 8px 0;
+    border-bottom: 1px solid #F5F5F5;
 }
 
 #lineItems  .service_group  > tbody > tr > td {
+    padding-top: 16px;
     padding-bottom: 16px;
+    border-bottom: 1px solid #F5F5F5;
+}
+
+
+#lineItems .service_group,
+#lineItems .service_group thead,
+#lineItems .service_group tr,
+#lineItems .service_group td {
+    background: none;
 }
 
 
@@ -5104,7 +5117,7 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
     width: 1000px;
 }
 #lineItems .service_name {
-    width: 100px;
+    width: 95%;
     height: 50px;
     margin: 0 5px 0 0;
 }
@@ -5138,14 +5151,21 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 /*Grand Total*/
-#lineItems #total_amt,
-#lineItems #discount_amount,
-#lineItems #subtotal_amount,
-#lineItems #shipping_amount,
-#lineItems #shipping_tax_amt,
-#lineItems #tax_amount {
+#EditView #total_amt,
+#EditView #discount_amount,
+#EditView #subtotal_amount,
+#EditView #shipping_amount,
+#EditView #shipping_tax_amt,
+#EditView #tax_amount,
+#EditView #total_amount {
     max-width: 40%;
+    width: 40%;
 }
+
+#EditView #shipping_tax {
+    margin-left: 8px;
+}
+/*End of lineItems*/
 
 #email1_span,
 #email1_span > table,
