@@ -9642,7 +9642,7 @@ table tr#delegates_search {
 
 /* basic search on tablet view */
 
-@media(min-width: 601px) and (max-width: 1024px) {
+@media(min-width: 601px) and (max-width: 1080px) {
 
     #search_form .edit.view.search.basic {
         position: relative;
@@ -9703,6 +9703,53 @@ table tr#delegates_search {
 
     #search_form .edit.view.search.basic div.search_name_basic img {
         margin: 5px 8px -6px 8px;
+    }
+
+    #search_form .edit.view.search.basic .clear.hidden {
+        display: block !important;
+        float: none;
+        clear: both;
+    }
+
+}
+
+
+/* basic search form on desktop screen */
+
+@media (min-width: 1081px) {
+
+    #search_form .edit.view.search.basic .col-md-3 {
+        width: initial;
+    }
+
+    #search_form .edit.view.search.basic div.search_name_basic input {
+        width: initial;
+        border: none;
+        padding: 0 5px;
+    }
+
+    #search_form .edit.view.search.basic .row {
+        display: block;
+        float: left;
+    }
+
+    #search_form .edit.view.search.basic .row:nth-of-type(3n+2) {
+        margin-left: 20px;
+        margin-right: 0;
+    }
+
+    #search_form .edit.view.search.basic .row:nth-of-type(3n+3) {
+        margin-left: 20px;
+        margin-right: 0;
+    }
+
+    #search_form .edit.view.search.basic div.search_fields_basic {
+        margin: 0 8px;
+        line-height: 40px;
+    }
+
+    #search_form .edit.view.search.basic div.search_fields_basic .col-lg-3 {
+        width: initial !important;
     }
 
     #search_form .edit.view.search.basic .clear.hidden {
