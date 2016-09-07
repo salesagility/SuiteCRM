@@ -141,3 +141,4 @@
 	});
 	{/literal}
 </script>
+<div class="clear hidden"></div>

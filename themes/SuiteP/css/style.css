@@ -5048,7 +5048,7 @@ textarea#description {
 
 .dropdown-menu li {
     margin: 0 !important;
-    padding: 0 !important;;
+    padding: 0 !important;
 }
 
 .dropdown-menu li a {
@@ -6603,7 +6603,7 @@ div.action_buttons form {
 }
 
 #mobile_menu {
-    border-top: none;;
+    border-top: none;
 }
 
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
@@ -9549,30 +9549,59 @@ table tr#delegates_search {
 }
 
 
+/* basic search form on mobile (very small screen) */
+
+@media (max-width: 310px) {
+
+    #search_form .edit.view.search.basic div.search_name_basic input {
+        width: 75% !important;
+    }
+
+    #search_form .edit.view.search.basic a#advanced_search_link {
+        background-position: 90% 2px;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    #search_form .edit.view.search.basic .button, input[type=submit],
+    #search_form .edit.view.search.basic input[type=button],
+    #search_form .edit.view.search.basic input[type=reset],
+    #search_form .edit.view.search.basic a#advanced_search_link
+    {
+        font-size: 10px !important;
+    }
+
+    #search_form .edit.view.search.basic div.search_fields_basic:nth-of-type(3n+1) {
+        margin: 0;
+    }
+
+}
+
 /* basic search form on mobile */
 
 @media (max-width: 600px) {
 
-    #search_form .button, input[type=submit],
-    #search_form input[type=button],
-    #search_form input[type=reset] {
+    #search_form .edit.view.search.basic .button,
+    #search_form .edit.view.search.basic input[type=submit],
+    #search_form .edit.view.search.basic input[type=button],
+    #search_form .edit.view.search.basic input[type=reset] {
         margin: 0 2px;
         width: 48%;
     }
 
-    #search_form.search_form input[type=text],
-    #search_form.search_form input[type=password],
-    #search_form.search_form input:not([type]),
-    #search_form.search_form textarea {
+    #search_form.search_form .edit.view.search.basic input[type=text],
+    #search_form.search_form .edit.view.search.basic input[type=password],
+    #search_form.search_form .edit.view.search.basic input:not([type]),
+    #search_form.search_form .edit.view.search.basic textarea {
         border: none;
         padding: 0 5px;
     }
 
-    #search_form div.search_fields_basic {
+    #search_form .edit.view.search.basic div.search_fields_basic {
         line-height: 18px;
     }
 
-    #search_form div.search_fields_basic:nth-of-type(3n+1) {
+    #search_form .edit.view.search.basic div.search_fields_basic:nth-of-type(3n+1) {
         /* clear: both; */
         float: left;
         display: block;
@@ -9581,56 +9610,105 @@ table tr#delegates_search {
         padding: 0 0 10px 0;
     }
 
-    #search_form div.search_name_basic input {
+    #search_form .edit.view.search.basic div.search_name_basic input {
         width: 84% !important;
     }
 
-    #search_form div.search_fields_basic {
+    #search_form .edit.view.search.basic div.search_fields_basic {
         margin: 0;
         float: left;
         display: block;
         width: initial;
     }
 
-    #search_form div.search_fields_basic .col-lg-3,
-    #search_form .col-lg-9 {
+    #search_form .edit.view.search.basic div.search_fields_basic .col-lg-3,
+    #search_form .edit.view.search.basic .col-lg-9 {
         float: right;
     }
 
-    #search_form a#advanced_search_link {
+    #search_form .edit.view.search.basic a#advanced_search_link {
         margin: 4px 2px;
-        background-position: 78% 2px;
+        background-position: 90% 2px;
         width: 97%;
         text-align: center;
+        white-space: nowrap;
     }
 
-    #search_form .submitButtons {
+    #search_form .edit.view.search.basic .submitButtons {
         font-size: 0;
     }
 }
 
 
-/* basic search form on mobile (very small screen) */
+/* basic search on tablet view */
 
-@media (max-width: 310px) {
+@media(min-width: 601px) and (max-width: 1024px) {
 
-    #search_form div.search_name_basic input {
-        width: 75% !important;
+    #search_form .edit.view.search.basic {
+        position: relative;
     }
 
-    #search_form a#advanced_search_link {
+    #search_form .edit.view.search.basic div.search_name_basic input {
+        width: 54% !important;
+        position: absolute;
+        top: 20px;
+        left: 48px;
+        border: none;
+        padding: 0 5px;
+    }
+
+    #search_form .edit.view.search.basic .row:nth-of-type(3n) {
+        width: 34% !important;
+        top: 20px;
+        position: absolute;
+        right: 0;
+        min-width: 215px;
+    }
+    #search_form .edit.view.search.basic .row:nth-of-type(3n) .button, input[type=submit],
+    #search_form .edit.view.search.basic .row:nth-of-type(3n) input[type=button],
+    #search_form .edit.view.search.basic .row:nth-of-type(3n) input[type=reset] {
+        width: 43%;
+    }
+
+    #search_form .edit.view.search.basic .row {
+        width: 60% !important;
+        display: block;
+        float: left;
+    }
+
+    #search_form .edit.view.search.basic a#advanced_search_link {
+        width: 88.5%;
+        min-width: initial;
         background-position: 90% 2px;
-        text-align: left;
+        white-space: nowrap;
     }
 
-    #search_form .button, input[type=submit], #search_form input[type=button], #search_form input[type=reset],
-    #search_form a#advanced_search_link
-    {
-        font-size: 10px !important;
+    #search_form .edit.view.search.basic .button,
+    #search_form .edit.view.search.basic input[type=submit],
+    #search_form .edit.view.search.basic input[type=button],
+    #search_form .edit.view.search.basic input[type=reset] {
+        margin: 0 2px 0 0;
+        padding: initial;
     }
 
-    #search_form div.search_fields_basic:nth-of-type(3n+1) {
-        margin: 0;
+    #search_form .edit.view.search.basic div.search_fields_basic .col-lg-3,
+    #search_form .edit.view.search.basic .col-lg-9 {
+        float: right;
+    }
+
+    #search_form .edit.view.search.basic div.search_fields_basic {
+        margin: 10px 0 -12px 37px;
+        width: initial;
+    }
+
+    #search_form .edit.view.search.basic div.search_name_basic img {
+        margin: 5px 8px -6px 8px;
+    }
+
+    #search_form .edit.view.search.basic .clear.hidden {
+        display: block !important;
+        float: none;
+        clear: both;
     }
 
 }
