@@ -5000,8 +5000,8 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 /*Product Lines*/
-#lineItems #product_head > td {
-    padding: 32px 0 8px 0;
+#lineItems #product_head  td {
+    padding: 0;
     border-bottom: 1px solid #F5F5F5;
 }
 
@@ -5021,8 +5021,8 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems  .product_group  > tbody > tr:nth-of-type(1) > td {
-    padding-top: 16px;
-    padding-bottom: 16px;
+    padding-top: 32px;
+    padding-bottom: 8px;
 }
 
 #lineItems  .product_group  > tbody > tr:nth-of-type(2) > td {
@@ -5095,13 +5095,13 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 /*Service Lines*/
 #lineItems  #service_head td {
-    padding: 32px 0 8px 0;
+    padding: 0;
     border-bottom: 1px solid #F5F5F5;
 }
 
 #lineItems  .service_group  > tbody > tr > td {
-    padding-top: 16px;
-    padding-bottom: 16px;
+    padding-top: 32px;
+    padding-bottom: 32px;
     border-bottom: 1px solid #F5F5F5;
 }
 
