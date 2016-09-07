@@ -5434,13 +5434,13 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
 
 @media (min-width: 1130px) {
 
-    div.search_fields_basic .col-lg-3 {
+    #search_form .edit.view.search.basic div.search_fields_basic .col-lg-3 {
         float: left;
         display: block;
         width: initial;
     }
 
-    #search_form .col-lg-9 {
+    #search_form .edit.view.search.basic .col-lg-9 {
         float: left;
         display: block;
         width: initial;
@@ -5450,8 +5450,8 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
 }
 
 @media (min-width: 992px) {
-    div.search_fields_basic .col-lg-3,
-    #search_form .col-lg-9 {
+    #search_form .edit.view.search.basic div.search_fields_basic .col-lg-3,
+    #search_form .edit.view.search.basic .col-lg-9 {
         float: left;
         display: block;
         width: initial;
@@ -5460,8 +5460,8 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
 }
 
 @media (min-width: 768px) {
-    div.search_fields_basic .col-lg-3,
-    #search_form .col-lg-9  {
+    #search_form .edit.view.search.basic div.search_fields_basic .col-lg-3,
+    #search_form .edit.view.search.basic .col-lg-9  {
         float: left;
         display: block;
         width: initial;
@@ -5469,8 +5469,8 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     }
 }
 
-div.search_fields_basic .col-lg-3,
-#search_form .col-lg-9  {
+#search_form .edit.view.search.basic div.search_fields_basic .col-lg-3,
+#search_form .edit.view.search.basic .col-lg-9  {
     float: left;
     display: block;
     width: initial;
