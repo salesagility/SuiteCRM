@@ -5009,9 +5009,12 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 /*Product Lines*/
-
-#lineItems #product_head > td{
+#lineItems #product_head > td {
     padding: 32px 0 8px 0;
+}
+
+#lineItems #product_head > td:nth-of-type(1) {
+    width: 75px;
 }
 
 #lineItems  .product_group {
@@ -5070,9 +5073,19 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 #lineItems .product_delete_line {
     margin: 0 15px 0 5px;
 }
+
+#lineItems .product_item_description_label {
+    display: block;
+}
+
 #lineItems .product_item_description {
     height: 50px;
 }
+
+#lineItems .product_description_label {
+    display: block;
+}
+
 #lineItems .product_description {
     height: 50px;
 }
@@ -9535,6 +9548,10 @@ table tr#delegates_search {
     float: none;
 }
 
+
+
+
+
 /* desktop / tablet / mobile fix */
 
 @media (max-width: 1024px) {
@@ -9651,3 +9668,5 @@ table tr#delegates_search {
 
 
 }
+
+
