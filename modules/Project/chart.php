@@ -148,13 +148,16 @@ class chart {
                                 //From the query above, populates the select box
                                 foreach( $user_list as $user)
                                 {
+									$user_obj = new User();
+									$user_obj->retrieve($user->id);
+									var_dump($user_obj->id);
 									if( in_array($user->id, $sel_users) ){//Check if the select box option matches the resource passed in.
 										$selected = "selected='selected'"; //if so set it to selected
 									}
 									else {
 										$selected = "";
 									}
-                                    echo '<option '.$selected.' data-type="'.$user->type.'" value="'.$user->id.'">'.$user->last_name.'</option>';
+                                    echo '<option '.$selected.' data-type="'.$user->type.'" value="'.$user->id.'">'. $user_obj->full_name .'</option>'; //$user->last_name
                                 }
 
                            echo '</select><br /><br />';
@@ -174,6 +177,9 @@ class chart {
                                 //From the query above, populates the select box
                                 foreach( $contact_list as $contact)
                                 {
+									$contact_obj = new Contact();
+									$contact_obj->retrieve($contact->id);
+									
 									if( in_array($contact->id, $sel_contacts) ){//Check if the select box option matches the resource passed in.
 										$selected = "selected='selected'"; //if so set it to selected
 									}
@@ -181,7 +187,7 @@ class chart {
 										$selected = "";
 									}
 
-                                    echo '<option '.$selected.' data-type="'.$contact->type.'" value="'.$contact->id.'">'.$contact->last_name.'</option>';
+                                    echo '<option '.$selected.' data-type="'.$contact->type.'" value="'.$contact->id.'">'.$contact_obj->full_name.'</option>';
                                 }
 
                            echo '</select><br /><br />';
@@ -317,10 +323,18 @@ class chart {
 				$count = $resource->task_count;
 
 				if($resource->type == 'project_users_1_c'){
-					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$resource->last_name.'</a></td>';
+
+					$user_obj = new User();
+					$user_obj->retrieve($resource->id);
+
+					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$user_obj->full_name.'</a></td>';
 				}
 				else if($resource->type == 'project_contacts_1_c') {
-					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$resource->last_name.'</a></td>';
+
+					$contact_obj = new Contact();
+					$contact_obj->retrieve($resource->id);
+
+					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$contact_obj->full_name.'</a></td>';
 				}
 
 				$i=0;
