@@ -549,6 +549,9 @@ $(function () {
             $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').closest('.search_fields_basic')
               .attr('style', 'width: initial !important;');
 
+
+            $('#search_form.search_form .edit.view.search.basic select').attr('style', '');
+
         }
 
     }, 100);
