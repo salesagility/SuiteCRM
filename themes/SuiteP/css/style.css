@@ -1106,6 +1106,17 @@ slot, #lead_queries_Div td {
     padding: 16px 16px 32px 16px;
 }
 
+[field="shipping_address_street"].detail-view-field .button,
+[field="billing_address_street"].detail-view-field .button {
+    background-color: #AA9DCC;
+}
+
+[field="shipping_address_street"].detail-view-field .button:hover,
+[field="billing_address_street"].detail-view-field .button:hover {
+    background-color: #9589b3;
+}
+
+
 .edit-view-field textarea,
 .inline_edit_field textarea {
     line-height: 24px;
