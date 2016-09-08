@@ -45,8 +45,11 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
+require_once('include/Trait/RemoveUnInvitedFromReminders.php');
+
 
 class Call extends SugarBean {
+	use RemoveUnInvitedFromReminders;
 	var $field_name_map;
 	// Stored fields
 	var $id;
@@ -121,8 +124,8 @@ class Call extends SugarBean {
                                         'lead_id'			=> 'leads',
 								);
 
-	function Call() {
-		parent::SugarBean();
+	public function __construct() {
+		parent::__construct();
 		global $app_list_strings;
 
        	$this->setupCustomFields('Calls');
@@ -136,6 +139,20 @@ class Call extends SugarBean {
 
          if(!empty($GLOBALS['app_list_strings']['duration_intervals']))
         	$this->minutes_values = $GLOBALS['app_list_strings']['duration_intervals'];
+	}
+
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	public function Call(){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct();
 	}
 
 	/**
@@ -217,7 +234,10 @@ class Call extends SugarBean {
         }
 
 		if(isset($_REQUEST['reminders_data'])) {
-			Reminder::saveRemindersDataJson('Calls', $return_id, html_entity_decode($_REQUEST['reminders_data']));
+			$reminderData = json_encode(
+				$this->removeUnInvitedFromReminders(json_decode(html_entity_decode($_REQUEST['reminders_data']), true))
+			);
+			Reminder::saveRemindersDataJson('Calls', $return_id, $reminderData);
 		}
 
         return $return_id;
@@ -679,7 +699,7 @@ class Call extends SugarBean {
                 }
 			}
 			require_once("modules/SecurityGroups/SecurityGroup.php");
-			$in_group = SecurityGroup::groupHasAccess($this->parent_type, $this->parent_id, 'view'); 
+			$in_group = SecurityGroup::groupHasAccess($this->parent_type, $this->parent_id, 'view');
         	/* END - SECURITY GROUPS */
 		}
 
@@ -711,7 +731,7 @@ class Call extends SugarBean {
                 }
 			}
 			require_once("modules/SecurityGroups/SecurityGroup.php");
-			$in_group = SecurityGroup::groupHasAccess('Contacts', $this->contact_id, 'view'); 
+			$in_group = SecurityGroup::groupHasAccess('Contacts', $this->contact_id, 'view');
         	/* END - SECURITY GROUPS */
 		}
 			/* BEGIN - SECURITY GROUPS */

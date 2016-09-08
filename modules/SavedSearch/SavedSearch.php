@@ -73,8 +73,8 @@ class SavedSearch extends SugarBean {
 
     var $columns;
 
-	function SavedSearch($columns = array(), $orderBy = null, $sortOrder = 'DESC') {
-		parent::SugarBean();
+    public function __construct($columns = array(), $orderBy = null, $sortOrder = 'DESC') {
+		parent::__construct();
         $this->columns = $columns;
         $this->orderBy = $orderBy;
         $this->sortOrder = $sortOrder;
@@ -83,6 +83,20 @@ class SavedSearch extends SugarBean {
 			$this->field_name_map[$field['name']] = $field;
 		}
 
+	}
+
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	public function SavedSearch($columns = array(), $orderBy = null, $sortOrder = 'DESC'){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct($columns, $orderBy, $sortOrder);
 	}
 
 	// Saved Search Form

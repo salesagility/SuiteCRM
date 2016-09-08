@@ -54,10 +54,25 @@ class SugarWidgetReportField extends SugarWidgetField
      */
     protected $reporter;
 
-	function SugarWidgetReportField(&$layout_manager) {
-        parent::SugarWidgetField($layout_manager);
+	function __construct(&$layout_manager) {
+        parent::__construct($layout_manager);
         $this->reporter = $this->layout_manager->getAttribute("reporter");
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function SugarWidgetReportField(&$layout_manager){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($layout_manager);
+    }
+
 
 	function  getSubClass($layout_def)
 	{

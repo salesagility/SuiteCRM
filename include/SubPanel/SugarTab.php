@@ -44,11 +44,26 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 class SugarTab
 {
-    function SugarTab($type='singletabmenu')
+    function __construct($type='singletabmenu')
     {
         $this->type = $type;
         $this->ss = new Sugar_Smarty();
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function SugarTab($type='singletabmenu'){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($type);
+    }
+
 
     function setup($mainTabs, $otherTabs=array(), $subTabs=array(), $selected_group='All')
     {
@@ -56,7 +71,7 @@ class SugarTab
 
         $max_tabs = $current_user->getPreference('max_tabs');
         if(!isset($max_tabs) || $max_tabs <= 0) $max_tabs = $GLOBALS['sugar_config']['default_max_tabs'];
-				
+
 				$key_all = translate('LBL_TABGROUP_ALL');
 				if ($selected_group == 'All') {
 						$selected_group = $key_all;

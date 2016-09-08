@@ -41,7 +41,12 @@ buildEditField();
 //Global Variables.
 
 var inlineEditSaveButtonImg = "themes/SuiteR/images/inline_edit_save_icon.svg";
-var inlineEditIcon = $("#inline_edit_icon")[0].outerHTML;
+if($("#inline_edit_icon").length) {
+    var inlineEditIcon = $("#inline_edit_icon")[0].outerHTML;
+} else {
+    var inlineEditIcon = "";
+}
+
 var view = action_sugar_grp1;
 var currentModule = module_sugar_grp1;
 
@@ -95,7 +100,13 @@ function buildEditField(){
     $(".inlineEdit").dblclick(function(e) {
         e.preventDefault();
         //depending on what view you are using will find the id,module,type of field, and field name from the view
-        if(view == "DetailView"){
+    
+		//make the gantt chart view look like the detail view
+		if(view == "view_GanttChart" )
+			view = "DetailView"; 
+
+		if(view == "DetailView" ){
+
             var field = $(this).attr( "field" );
             var type = $(this).attr( "type" );
 
@@ -105,15 +116,17 @@ function buildEditField(){
                 var module = module_sugar_grp1;
             }
 
+
             var id = $("input[name=record]").attr( "value" );
         }else{
+
             var field = $(this).attr( "field" );
             var type = $(this).attr( "type" );
             var module = $("#displayMassUpdate input[name=module]").val();
             var id = $(this).closest('tr').find('[type=checkbox]').attr( "value" );
         }
 
-        //If we find all the required variables to do inline editing.
+		//If we find all the required variables to do inline editing.
         if(field && id && module){
 
             //Do ajax call to retrieve the validation for the field.
@@ -198,13 +211,25 @@ function validateFormAndSave(field,id,module,type){
  */
 
 function clickedawayclose(field,id,module, type){
+    // Fix for issue #373 get name from system field name.
+    var message_field = 'LBL_' + field.toUpperCase();
+    message_field = SUGAR.language.get(module, message_field);
+
+    // Fix for issue #373 remove ':'
+    var last_charachter = message_field.substring(message_field.length, message_field.length - 1);
+    if (':'.toUpperCase() === last_charachter.toUpperCase()) {
+        message_field = message_field.substring(0, message_field.length - 1);
+    }
+
     $(document).on('click', function (e) {
 
         if(!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")){
             var output_value = loadFieldHTMLValue(field,id,module);
             var user_value = getInputValue(field, type);
-            if(user_value != output_value) {
-                var r = confirm("You have clicked away from the field you were editing without saving it. Click ok if you're happy to lose your change, or cancel if you would like to continue editing " + field);
+            // Fix for issue #373 strip HTML tags for correct comparison
+            var output_value_compare = $(output_value).text();
+            if(user_value != output_value_compare) {
+                var r = confirm( SUGAR.language.translate('app_strings', 'LBL_CONFIRM_CANCEL_INLINE_EDITING') + message_field);
                 if(r == true) {
                     var output = setValueClose(output_value);
                     $(document).off('click');
@@ -470,7 +495,7 @@ function getValidationRules(field,module,id){
     try {
         var validation = JSON.parse(result.responseText);
     } catch(e) {
-        alert("There was an error loading the field. Your session may have timed out. Please log in again to fix this");
+        alert(SUGAR.language.translate('app_strings', 'LBL_LOADING_ERROR_INLINE_EDITING'));
         return false;
     }
 

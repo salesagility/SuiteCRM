@@ -17,13 +17,28 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar {
     /**
      * Constructor
      */
-    function jjwg_Address_Cache($init=true) {
-        
-        parent::jjwg_Address_Cache_sugar();
+    function __construct($init=true) {
+
+        parent::__construct();
         // Admin Config Setting
         if($init) $this->configuration();
     }
-    
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function jjwg_Address_Cache($init=true){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($init);
+    }
+
+
     /**
      * Load Configuration Settings using Administration Module
      * See jjwg_Maps module for setting config
@@ -47,9 +62,9 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar {
         } else {
             $address = (string)$aInfo;
         }
-        
+
         if (!empty($this->settings['address_cache_get_enabled']) && !empty($address)) {
-            
+
             $query = "SELECT " . $this->table_name . ".* FROM " . $this->table_name . " WHERE " .
                     $this->table_name . ".deleted = 0 AND " .
                     $this->table_name . ".name='" . $this->db->quote($address) . "'";
@@ -81,12 +96,12 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar {
      * @param $aInfo array of geocode info (lng, lat, status, address)
      */
     function saveAddressCacheInfo($aInfo = array()) {
-        
+
         // Bug: $current_user object not properly set for some reason
         if (empty($GLOBALS['current_user']->id) && !empty($_SESSION['authenticated_user_id'])) {
             $GLOBALS['current_user']->id = $_SESSION['authenticated_user_id'];
         }
-        
+
         if (!empty($this->settings['address_cache_save_enabled'])) {
 
             // Check for existing address cache data (prevent duplicates)
@@ -115,22 +130,22 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar {
     }
 
     /**
-     * 
+     *
      * Delete all Address Cache records
-     * Complete delete, not a soft delete 
+     * Complete delete, not a soft delete
      */
     function deleteAllAddressCache() {
-        
+
         // Delete all from jjwg_address_cache
         $query = "TRUNCATE TABLE jjwg_address_cache;";
         $delete_result = $this->db->query($query);
         $query = "TRUNCATE TABLE jjwg_address_cache_audit;";
         $delete_audit_result = $this->db->query($query);
-        
+
     }
-    
+
     /**
-     * 
+     *
      * Check for valid longitude
      * @param $lng float
      */
@@ -139,7 +154,7 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar {
     }
 
     /**
-     * 
+     *
      * Check for valid latitude
      * @param $lat float
      */

@@ -112,5 +112,7 @@ $mod_strings = array(
     'LBL_FP_EVENTS_LEADS_1_FROM_LEADS_TITLE' => 'Leads',
     'LBL_FP_EVENTS_PROSPECTS_1_FROM_PROSPECTS_TITLE' => 'Targets',
     'LBL_FP_EVENTS_FP_EVENT_DELEGATES_1_FROM_FP_EVENT_DELEGATES_TITLE' => 'Delegates',
+	'LBL_HOURS_ABBREV' => 'h',
+	'LBL_MINSS_ABBREV' => 'm',
 );
 //LBL_ERROR_MSG_4 Begins with a number(controller.php line 581) for example 10 emails have failed to send. 

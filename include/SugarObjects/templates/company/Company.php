@@ -40,25 +40,40 @@
 require_once('include/SugarObjects/templates/basic/Basic.php');
 
 class Company extends Basic
-{ 	
+{
  	/**
  	 * Constructor
  	 */
-    public function Company()
+    public function __construct()
  	{
- 		parent::Basic();	
+ 		parent::__construct();
  		$this->emailAddress = new SugarEmailAddress();
  	}
- 	
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function Company(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
  	/**
  	 * @see parent::save()
  	 */
-	public function save($check_notify=false) 
+	public function save($check_notify=false)
  	{
  	    if(!empty($GLOBALS['resavingRelatedBeans']))
  	    {
  	        return parent::save($check_notify);
- 	    } 	    
+ 	    }
 		$this->add_address_streets('billing_address_street');
 		$this->add_address_streets('shipping_address_street');
     	$ori_in_workflow = empty($this->in_workflow) ? false : true;
@@ -79,7 +94,7 @@ class Company extends Basic
         }
 		return $record_id;
 	}
-	
+
  	/**
  	 * Populate email address fields here instead of retrieve() so that they are properly available for logic hooks
  	 *
@@ -90,12 +105,12 @@ class Company extends Basic
 	    parent::fill_in_relationship_fields();
 	    $this->emailAddress->handleLegacyRetrieve($this);
 	}
-	
+
 	/**
  	 * @see parent::get_list_view_data()
  	 */
-	public function get_list_view_data() 
-	{	
+	public function get_list_view_data()
+	{
 		global $system_config;
 		global $current_user;
 

@@ -141,6 +141,7 @@ $admin_option_defs['Emails']['mass_Email_config']= array('EmailMan','LBL_MASS_EM
 $admin_option_defs['Campaigns']['campaignconfig']= array('Campaigns','LBL_CAMPAIGN_CONFIG_TITLE','LBL_CAMPAIGN_CONFIG_DESC','./index.php?module=EmailMan&action=campaignconfig');
 
 $admin_option_defs['Emails']['mailboxes']= array('InboundEmail','LBL_MANAGE_MAILBOX','LBL_MAILBOX_DESC','./index.php?module=InboundEmail&action=index');
+$admin_option_defs['Emails']['mailboxes_outbound']= array('EmailMan','LBL_MANAGE_MAILBOX_OUTBOUND','LBL_MAILBOX_OUTBOUND_DESC','./index.php?module=OutboundEmailAccounts&action=index');
 $admin_option_defs['Campaigns']['mass_Email']= array('EmailMan','LBL_MASS_EMAIL_MANAGER_TITLE','LBL_MASS_EMAIL_MANAGER_DESC','./index.php?module=EmailMan&action=index');
 
 
@@ -253,7 +254,7 @@ $admin_option_defs = array();
 $admin_option_defs['Administration']['aod'] = array(
     'edit',
     'LBL_AOD_SETTINGS',
-    'Change settings for Advanced OpenDiscovery',
+    'LBL_CHANGE_SETTINGS_AOD',
     './index.php?module=Administration&action=AODAdmin'
 );
 if (isset($admin_group_header['sagility'])) $admin_option_defs['Administration'] = array_merge((array)$admin_option_defs['Administration'], (array)$admin_group_header['sagility'][3]['Administration']);
@@ -270,7 +271,7 @@ $admin_option_defs = array();
 $admin_option_defs['Administration']['aop'] = array(
     'edit',
     'LBL_AOP_SETTINGS',
-    'Change settings for Advanced OpenPortal',
+    'LBL_CHANGE_SETTINGS_AOP',
     './index.php?module=Administration&action=AOPAdmin'
 );
 if (isset($admin_group_header['sagility'])) $admin_option_defs['Administration'] = array_merge((array)$admin_option_defs['Administration'], (array)$admin_group_header['sagility'][3]['Administration']);
@@ -290,7 +291,21 @@ $admin_group_header[]= array('LBL_BUG_TITLE','',false,$admin_option_defs, 'LBL_B
 
 
 
-
+//Business Hours
+$admin_option_defs = array();
+$admin_option_defs['Administration']['business_hours'] = array(
+    'edit',
+    'Business Hours',
+    'Change the business hours',
+    './index.php?module=Administration&action=BusinessHours'
+);
+$admin_group_header[] = array(
+    'Business Hours',
+    '',
+    false,
+    $admin_option_defs,
+    'Change the business hours'
+);
 
 
 if(file_exists('custom/modules/Administration/Ext/Administration/administration.ext.php')){

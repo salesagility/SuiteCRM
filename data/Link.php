@@ -82,7 +82,7 @@ class Link {
 	 * 		$_table_name: optional, fetch from the bean's table name property.
 	 * 		$_key_name: optional, name of the primary key column for _table_name
 	 */
-	function Link($_rel_name, &$_bean, $fieldDef, $_table_name='', $_key_name=''){
+	function __construct($_rel_name, &$_bean, $fieldDef, $_table_name='', $_key_name=''){
 		global $dictionary;
         require_once("modules/TableDictionary.php");
         $GLOBALS['log']->debug("Link Constructor, relationship name: ".$_rel_name);
@@ -1051,10 +1051,17 @@ class Link {
 		}
 	}
 
-	/*
-	 */
+
 	function _get_link_table_definition($table_name,$def_name) {
 	    global $dictionary;
+
+        /*
+         * If this method is called statically will throw FATAL error on php7 because of the $this usage
+         */
+        $staticContext = !isset($this);
+        if($staticContext) {
+            return null;
+        }
 
 		include_once('modules/TableDictionary.php');
 	    // first check to see if already loaded - assumes hasn't changed in the meantime

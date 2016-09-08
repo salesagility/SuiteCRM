@@ -323,7 +323,7 @@ $dictionary['AOR_Field'] = array(
         array (
             'name' => 'aor_reports',
             'type' => 'link',
-            'relationship' => 'aor_report_aor_fields',
+            'relationship' => 'aor_reports_aor_fields',
             'module'=>'AOR_Reports',
             'bean_name'=>'AOR_Reports',
             'source'=>'non-db',

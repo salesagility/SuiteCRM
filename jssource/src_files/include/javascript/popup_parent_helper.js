@@ -218,6 +218,14 @@ function set_return_and_save_targetlist(popup_reply_data)
             SUGAR.util.callOnChangeListers(window.document.forms[form_index].elements[get_element_index(form_index,the_key)]);
 		}
 	}
+
+	if(popup_reply_data.passthru_data.do_contacts)
+	{
+		var form = window.document.forms[form_index];
+		var do_contacts = $('<input type="hidden" name="do_contacts" value="1"/>');
+		$(form).append(do_contacts);
+	}
+
 	window.document.forms[form_index].elements[get_element_index(form_index,"return_module")].value = window.document.forms[form_index].elements[get_element_index(form_index,"module")].value;
 	window.document.forms[form_index].elements[get_element_index(form_index,"return_action")].value = 'ListView';
 	window.document.forms[form_index].elements[get_element_index(form_index,"uids")].value = uids;

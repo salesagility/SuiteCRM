@@ -53,11 +53,26 @@ class Person extends Basic
      */
     public $email_addresses;
 
-	public function Person()
+	public function __construct()
 	{
-		parent::Basic();
+		parent::__construct();
 		$this->emailAddress = new SugarEmailAddress();
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function Person(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 	/**
 	 * need to override to have a name field created for this class
@@ -127,12 +142,12 @@ class Person extends Basic
 		$this->name = $full_name;
 		$this->full_name = $full_name; //used by campaigns
 	}
-	
+
 
 	/**
  	 * @see parent::save()
  	 */
-	public function save($check_notify=false) 
+	public function save($check_notify=false)
 	{
 		//If we are saving due to relationship changes, don't bother trying to update the emails
         if(!empty($GLOBALS['resavingRelatedBeans']))
@@ -168,7 +183,7 @@ class Person extends Basic
 	/**
  	 * @see parent::get_summary_text()
  	 */
-	public function get_summary_text() 
+	public function get_summary_text()
 	{
 		$this->_create_proper_name_field();
         return $this->name;
@@ -177,7 +192,7 @@ class Person extends Basic
 	/**
  	 * @see parent::get_list_view_data()
  	 */
-	public function get_list_view_data() 
+	public function get_list_view_data()
 	{
 		global $system_config;
 		global $current_user;

@@ -46,16 +46,16 @@ class ViewFavorites extends SugarView
  	{
  		$this->options['show_title'] = false;
 		$this->options['show_header'] = false;
-		$this->options['show_footer'] = false; 	  
-		$this->options['show_javascript'] = false; 
-		$this->options['show_subpanels'] = false; 
-		$this->options['show_search'] = false; 
- 		parent::SugarView();
- 	}	
- 	
+		$this->options['show_footer'] = false;
+		$this->options['show_javascript'] = false;
+		$this->options['show_subpanels'] = false;
+		$this->options['show_search'] = false;
+ 		parent::__construct();
+ 	}
+
  	public function display()
  	{
- 		
+
  		$favorites = new SugarFavorites();
         $favorites_max_viewed = (!empty($GLOBALS['sugar_config']['favorites_max_viewed']))? $GLOBALS['sugar_config']['favorites_max_viewed'] : 10;
  		$results = $favorites->getUserFavoritesByModule($this->module,$GLOBALS['current_user'], "sugarfavorites.date_modified DESC ", $favorites_max_viewed);

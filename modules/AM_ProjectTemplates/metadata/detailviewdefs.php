@@ -22,6 +22,10 @@ array (
 			  array (
 				'customCode' => '<input title="{$APP.LBL_VIEW_GANTT_TITLE}" class="button" type="button" name="view_gantt" id="view_gantt" value="{$APP.LBL_GANTT_BUTTON_LABEL}" onclick="javascript:window.location.href=\'index.php?module=AM_ProjectTemplates&action=view_GanttChart&record={$id}\'"/>',
 			  ),
+          6 => 
+          array (
+            'customCode' => '<input title="{$APP.LBL_VIEW_DETAIL}" class="button" type="button" name="view_detail" id="view_detail" value="{$APP.LBL_DETAIL_BUTTON_LABEL}" onclick="javascript:window.location.href=\'index.php?module=AM_ProjectTemplates&action=DetailView&record={$id}\'"/>',
+          ),
         ),
       ),
       'maxColumns' => '2',

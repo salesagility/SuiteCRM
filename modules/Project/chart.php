@@ -105,20 +105,17 @@ class chart {
         }
 
         //Generate main table and the first row containing the months
-        echo '<table class="main_table">
-                <tr class="select_row">
-                    <td colspan="100%">
-                        <table id="header_table_chart">
+        
+		echo '<div class="moduleTitle"><h2> ' . $mod_strings["LBL_RESOURCE_CHART"] . ' </h2></div>
+
+		          <table id="header_table_chart" border="0" cellpadding="0" cellspacing="0" width="100%">
+
                         <tr>
-							<td class="heading_chart">'.$mod_strings["LBL_PROJECTS_SEARCH"].'</td>
-                            <td class="heading_chart">'.$mod_strings["LBL_USERS_SEARCH"].'</td>
-							<td class="heading_chart">'.$mod_strings["LBL_CONTACTS_SEARCH"].'</td>
-							<td class="heading_chart">'.$mod_strings["LBL_CHART_TYPE"].'</td>	
-							<td class="heading_chart">'.$mod_strings["LBL_DATE_START"].'</td>						
-                        </tr>
-                        <tr>
-                            <td class="field_chart">
-                                <select id="projects" name="projects" multiple>
+							<td scope="row_label" nowrap="nowrap" >
+								<label for="projects">'.$mod_strings["LBL_PROJECTS_SEARCH"].'</label>
+							</td>
+                            <td scope="row_val" nowrap="nowrap" >
+                                <select id="projects" name="projects" multiple size="6" style="width: 250px" >
                                 <option value="">All Projects</option>';
 
                                 //From the query above, populates the select box
@@ -141,20 +138,26 @@ class chart {
                             }
 
                           echo '</td>
-                            <td class="field_chart">
-                                <select id="users" name="users" multiple>
-                                <option value="">All Users</option>';
-
+							<td scope="row_label" nowrap="nowrap" >
+								<label for="users">'.$mod_strings["LBL_USERS_SEARCH"].'</label>
+							</td>
+                            <td scope="row_val" nowrap="nowrap" >
+                                <select id="users" name="users" multiple size="6" style="width: 250px" >
+                                <option ' . ( $sel_users[0] == ''? "selected='selected'" : "" ) . ' value="">All Users</option>
+                                <option ' . ( $sel_users[0] == 'none'? "selected='selected'" : "" ) . ' value="none">None</option>';
                                 //From the query above, populates the select box
                                 foreach( $user_list as $user)
                                 {
+									$user_obj = new User();
+									$user_obj->retrieve($user->id);
+									var_dump($user_obj->id);
 									if( in_array($user->id, $sel_users) ){//Check if the select box option matches the resource passed in.
 										$selected = "selected='selected'"; //if so set it to selected
 									}
 									else {
 										$selected = "";
 									}
-                                    echo '<option '.$selected.' data-type="'.$user->type.'" value="'.$user->id.'">'.$user->last_name.'</option>';
+                                    echo '<option '.$selected.' data-type="'.$user->type.'" value="'.$user->id.'">'. $user_obj->full_name .'</option>'; //$user->last_name
                                 }
 
                            echo '</select><br /><br />';
@@ -164,13 +167,19 @@ class chart {
                             }
 
                           echo '</td>
-						  <td class="field_chart">
-                                <select id="contacts" name="contacts" multiple>
-                                <option value="">All Contacts</option>';
-
+							<td scope="row_label" nowrap="nowrap" >
+								<label for="contacts">'.$mod_strings["LBL_CONTACTS_SEARCH"].'</label>
+							</td>
+						  <td scope="row_val" nowrap="nowrap" >
+                                <select id="contacts" name="contacts" multiple size="6" style="width: 250px" >
+                                <option ' . ( $sel_contacts[0] == ''? "selected='selected'" : "" ) . ' value="">All Contacts</option>
+                                <option ' . ( $sel_contacts[0] == 'none'? "selected='selected'" : "" ) . ' value="none">None</option>';
                                 //From the query above, populates the select box
                                 foreach( $contact_list as $contact)
                                 {
+									$contact_obj = new Contact();
+									$contact_obj->retrieve($contact->id);
+									
 									if( in_array($contact->id, $sel_contacts) ){//Check if the select box option matches the resource passed in.
 										$selected = "selected='selected'"; //if so set it to selected
 									}
@@ -178,7 +187,7 @@ class chart {
 										$selected = "";
 									}
 
-                                    echo '<option '.$selected.' data-type="'.$contact->type.'" value="'.$contact->id.'">'.$contact->last_name.'</option>';
+                                    echo '<option '.$selected.' data-type="'.$contact->type.'" value="'.$contact->id.'">'.$contact_obj->full_name.'</option>';
                                 }
 
                            echo '</select><br /><br />';
@@ -188,17 +197,33 @@ class chart {
                             }
 
  
-                          echo '</td>
-						  <td class="field_chart">
-                                <select id="chart_type" name="chart_type" >';
+                          echo '</td></tr>';
+						  echo '<tr>
+							<td scope="row_label" nowrap="nowrap" >
+								<label for="chart_type">'.$mod_strings["LBL_CHART_TYPE"].'</label>
+							</td>
+						  <td scope="row_val" nowrap="nowrap" >
+                                <select id="chart_type" name="chart_type" style="width: 250px">';
                                     echo '<option '. ( $chart_type == "weekly" ? "selected" : "" ) .'  value="weekly">'.$mod_strings['LBL_CHART_WEEKLY'].'</option>';
                                     echo '<option '. ( $chart_type == "monthly" ? "selected" : "") .'  value="monthly">'.$mod_strings['LBL_CHART_MONTHLY'].'</option>';
                                     echo '<option '. ($chart_type == "quarterly" ? "selected" : "") .'  value="quarterly">'.$mod_strings['LBL_CHART_QUARTERLY'].'</option>';
                           echo '</select><br /><br />';
                           echo '</td>';
  						  
-						  echo '<td class="field_chart"><input id="date_start" type="text" name="date_start" value="'.$start_date.'" size=8 readonly/></td>
-								<td class="field_chart"><input id="date_end" class="date_chart" type="hidden" name="date_end" value="'.$end_date.'" /></td>';
+						  echo '
+						  		<td scope="row_label" nowrap="nowrap" >
+									<label for="field_chart">'.$mod_strings["LBL_DATE_START"].'</label>
+								</td>
+								<td scope="row_val" nowrap="nowrap" >
+									<input id="date_start" type="text" name="date_start" value="'.$start_date.'" size=8 readonly/>
+									<img border="0" id="date_start_trigger" style="position:relative; top:0px" alt="Enter Date" src="themes/SuiteR/images/jscalendar.gif?v=bkg9uGiXORNgnseXwmsUqg">
+								</td>
+						  		<td scope="row_label" nowrap="nowrap" >
+									<label for="field_chart">&nbsp;</label>
+								</td>
+								<td scope="row_val" nowrap="nowrap" >
+									<input id="date_end" class="date_chart" type="hidden" name="date_end" value="'.$end_date.'" />
+								</td>';
 							
 						  echo
 							'<script type="text/javascript">
@@ -207,7 +232,7 @@ class chart {
 									inputField : "date_start",
 									ifFormat : cal_date_format,
 									daFormat : "%m/%d/%Y %I:%M%P",
-									button : "date_start",
+									button : "date_start_trigger",
 									singleClick : true,
 									step : 1,
 									weekNumbers: false,
@@ -216,13 +241,23 @@ class chart {
 								
 							</script>';
 
-						 echo	'<td class="field_chart">							 
-									&nbsp;<a class="utilsLink" href="#" id="create_link">'.$mod_strings['LBL_RESOURCE_CHART_SEARCH_BUTTON'].'</a>
-								</td>
-
+						 echo '
 							</tr>
-						
-                        </table>
+							<tr>
+								<td style="padding:5px;">							 
+										&nbsp;<a class="utilsLink" href="#" id="create_link">'.$mod_strings['LBL_RESOURCE_CHART_SEARCH_BUTTON'].'</a>
+								</td>
+							</tr>
+				
+                        </table>';
+		
+		
+		
+		
+		echo '<table class="main_table">
+                <tr class="select_row">
+                    <td colspan="100%">
+
                     </td>
                 </tr>	
 				<tr>
@@ -288,10 +323,18 @@ class chart {
 				$count = $resource->task_count;
 
 				if($resource->type == 'project_users_1_c'){
-					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$resource->last_name.'</a></td>';
+
+					$user_obj = new User();
+					$user_obj->retrieve($resource->id);
+
+					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$user_obj->full_name.'</a></td>';
 				}
 				else if($resource->type == 'project_contacts_1_c') {
-					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$resource->last_name.'</a></td>';
+
+					$contact_obj = new Contact();
+					$contact_obj->retrieve($resource->id);
+
+					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$contact_obj->full_name.'</a></td>';
 				}
 
 				$i=0;
@@ -396,10 +439,16 @@ class chart {
 				$count = $resource->task_count;
 
 				if($resource->type == 'project_users_1_c'){
-					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$resource->last_name.'</a></td>';
+					$user_obj = new User();
+					$user_obj->retrieve($resource->id);
+
+					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$user_obj->full_name.'</a></td>';
 				}
 				else if($resource->type == 'project_contacts_1_c') {
-					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$resource->last_name.'</a></td>';
+					$contact_obj = new Contact();
+					$contact_obj->retrieve($resource->id);
+
+					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$contact_obj->full_name.'</a></td>';
 				}
 
 				$i=0;
@@ -487,10 +536,18 @@ class chart {
 				$count = $resource->task_count;
 
 				if($resource->type == 'project_users_1_c'){
-					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$resource->last_name.'</a></td>';
+
+					$user_obj = new User();
+					$user_obj->retrieve($resource->id);
+
+					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$user_obj->full_name.'</a></td>';
 				}
 				else if($resource->type == 'project_contacts_1_c') {
-					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$resource->last_name.'</a></td>';
+
+					$contact_obj = new Contact();
+					$contact_obj->retrieve($resource->id);
+
+					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$contact_obj->full_name.'</a></td>';
 				}
 
 

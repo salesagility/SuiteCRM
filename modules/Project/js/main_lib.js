@@ -105,7 +105,7 @@ $(function() {
     $("#popup_form").validate({
 
         rules: {
-            name: "required",
+            task_name: "required",
             Start: {
                 required: true
             },
@@ -120,7 +120,7 @@ $(function() {
             }
         },
         messages: {
-            name: "The task name is required",
+            task_name: "The task name is required",
             Start: "Start date is required",
             Duration: {
                 required: "The duration is required",
@@ -165,7 +165,7 @@ $(function() {
                         var Project_id = $('#project_id').val();
 						var override_business_hours = $('#override_business_hours').val();
                         //var Parent_task = $('#parent_task').val();
-                        var Task_name = $('#name').val();
+                        var Task_name = $('#task_name').val();
                         var milestone = milestone_flag;
                         var Task_pre = $('#Predecessor').val();
                         var rel_type = $('#relation_type').val();
@@ -422,8 +422,9 @@ function edit_task(task){
     var data = task.attr('data').split(",");
     var milestone_flag ='Task';
 
+
     $('#task_id').val(data[0]);
-    $('#name').val(task.text());
+    $('#task_name').val(task.text());
     $('#Start').val(data[3]);
     if(data[7] == '1'){
         $('#Subtask').prop('checked', false);
@@ -464,7 +465,7 @@ function edit_task(task){
                 var override_business_hours = $('#override_business_hours').val();
 				var Task_id = $('#task_id').val();
                 //var Parent_task = $('#parent_task').val();
-                var Task_name = $('#name').val();
+                var Task_name = $('#task_name').val();
 
                 if($('[name="Milestone"]:checked').val() == 'Milestone'){
                     milestone_flag = 'Milestone'

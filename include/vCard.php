@@ -148,7 +148,7 @@ class vCard
 	function saveVCard(){
 		global $locale;
 		$content = $this->toString();
-		if ( !defined('SUGAR_PHPUNIT_RUNNER') ) {
+		if ( !defined('SUITE_PHPUNIT_RUNNER') ) {
             header("Content-Disposition: attachment; filename={$this->name}.vcf");
             header("Content-Type: text/x-vcard; charset=".$locale->getExportCharset());
             header("Expires: Mon, 26 Jul 1997 05:00:00 GMT" );

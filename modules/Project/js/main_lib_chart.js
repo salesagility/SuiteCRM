@@ -211,3 +211,29 @@ $(function() {
     });
 }
 
+$(document.body).on('change','#users', function(e) {
+
+	$('#users option:selected').each(function(i, selected){
+		if($(selected).val() == '' || $(selected).val() == 'none' ){
+			$('#users option:selected').removeAttr("selected");	
+			$("#users").val(new Array($(selected).val()));
+			return 0;
+		}
+
+	});
+
+});
+
+
+$(document.body).on('change','#contacts', function(e) {
+
+	$('#contacts option:selected').each(function(i, selected){
+		if($(selected).val() == ''  || $(selected).val() == 'none' ){
+			$('#contacts option:selected').removeAttr("selected");
+			$("#contacts").val(new Array($(selected).val()));
+			return 0;
+		}
+
+	});
+
+});

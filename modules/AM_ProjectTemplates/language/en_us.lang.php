@@ -122,7 +122,7 @@ $mod_strings = array(
     'LBL_PERCENT_COMPLETE' => '% Complete',
 	'LBL_EDIT_TASK_PROPERTIES' => 'Edit task properties.',
 
-	'LBL_OVERRIDE_BUSINESS_HOURS' => 'Override Business Hours',
+	'LBL_OVERRIDE_BUSINESS_HOURS' => 'Consider Working days',
 	'LBL_COPY_ALL_TASKS' => 'Copy All Tasks With Resources',
 	'LBL_COPY_SEL_TASKS' => 'Copy Selected Tasks With Resources',
 	'LBL_TOOLTIP_TITLE' => 'Hint',

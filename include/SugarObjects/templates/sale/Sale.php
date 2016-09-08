@@ -45,15 +45,30 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
- 
+
  require_once('include/SugarObjects/templates/basic/Basic.php');
  class Sale extends Basic{
 
- 	function Sale(){
- 		parent::Basic();
+ 	function __construct(){
+ 		parent::__construct();
 
  	}
- 	
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function Sale(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
  	function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false)
  	{
  		//Ensure that amount is always on list view queries if amount_usdollar is as well.
@@ -63,20 +78,20 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  		}
  		return parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type, $return_array, $parentbean, $singleSelect);
  	}
- 	
+
  	function fill_in_additional_list_fields()
 	{
     	parent::fill_in_additional_list_fields();
-    		
+
 		//Ensure that the amount_usdollar field is not null.
 		if (empty($this->amount_usdollar) && !empty($this->amount))
 		{
 			$this->amount_usdollar = $this->amount;
 		}
 	}
- 	
+
  	function fill_in_additional_detail_fields()
-	{		
+	{
 		parent::fill_in_additional_detail_fields();
 		//Ensure that the amount_usdollar field is not null.
 		if (empty($this->amount_usdollar) && !empty($this->amount))
@@ -85,7 +100,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 		}
 	}
 
- 	
+
  	function save($check_notify = FALSE) {
  		//"amount_usdollar" is really amount_basecurrency. We need to save a copy of the amount in the base currency.
 		if(isset($this->amount) && !number_empty($this->amount)){
@@ -95,12 +110,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                 $currency->retrieve($this->currency_id);
                 $this->amount_usdollar = $currency->convertToDollar($this->amount);
 			}
-			else 
+			else
 			{
 			$this->amount_usdollar = $this->amount;
 			}
 		}
-		
+
 		return parent::save($check_notify);
  	}
  }
