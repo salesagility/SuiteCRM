@@ -9642,7 +9642,15 @@ table tr#delegates_search {
 
     #search_form .edit.view.search.basic label {
         width: 100% !important;
-        text-align: right;
+    }
+
+    #search_form .edit.view.search.basic #parent_name,
+    #search_form .edit.view.search.basic input.sqsEnabled {
+        margin-top: 0px;
+    }
+
+    #search_form .edit.view.search.basic span.id-ff.multiple {
+        top: 0px;
     }
 }
 
