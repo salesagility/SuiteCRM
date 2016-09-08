@@ -1084,11 +1084,11 @@ slot, #lead_queries_Div td {
 .detail-view-field {
     color: #534D64;
     display: inline;
-    padding:  16px;
-    font-size: 12px;
-    font-weight: 700;
+    padding:  12px;
+    font-size: 14px;
+    font-weight: 400;
     line-height: 24px;
-    min-height: 41px;
+    min-height: 48px;
     text-align: left;
     white-space: nowrap;
     vertical-align: baseline;
@@ -1096,6 +1096,17 @@ slot, #lead_queries_Div td {
     border: 1px solid transparent;
     border-radius: 4px;
 }
+
+.detail-view-field a
+{
+    font-weight: 700;
+}
+
+[field="billing_address_street"].detail-view-field,
+[field="shipping_address_street"].detail-view-field {
+    padding: 16px 16px 32px 16px;
+}
+
 
 #no-tab-actions > ul > li {
     margin: 8px 8px 8px 0px;
@@ -5324,13 +5335,6 @@ div.search_name_basic input {
 div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeRangeChoice + div {
     display: inline-block;
 }
-
-
-[field="billing_address_street"].detail-view-field,
-[field="shipping_address_street"].detail-view-field {
-    padding: 16px 16px 32px 16px;
-}
-
 
 
 /*xs-col-*/
