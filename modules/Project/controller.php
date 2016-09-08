@@ -445,25 +445,32 @@ class ProjectController extends SugarController {
             //put users tasks in an array
             $taskarr = array();
             $t = 0;
+			$skipped = 0;
             if(!is_null($tasks)){
                 foreach($tasks as $task){
-                    $taskarr[$t]['id'] = $task->id;
-                    $taskarr[$t]['name'] = $task->name;
-                    $taskarr[$t]['status'] = $task->status;
-                    $taskarr[$t]['% cpl'] = $task->percent_complete;
-                    $taskarr[$t]['start_day'] = $this->count_days($start, $task->date_start);//Works out how many days into the chart the task starts
-                    $taskarr[$t]['duration'] = $task->duration;//how many days long is the task
-                    $taskarr[$t]['end_day'] = $this->count_days($start, $task->date_finish);//Works out how many days from start of the chart the task end day is.
-                    $taskarr[$t]['start_date'] = $task->date_start;
-                    $taskarr[$t]['end_date'] = $task->date_finish;
-                    $taskarr[$t]['project_id'] = $task->project_id;//parent projects id
-                    //get the project name (don't think this is really necessary)
-                    $project = new Project();
-                    $project->retrieve($task->project_id);
-                    $taskarr[$t]['project_name'] = $project->name;//parent projects id
-                    $t ++;
+                    if( $this->count_days($start, $task->date_start) == -1 && $this->count_days($start, $task->date_finish) == -1 )
+						$skipped++;	
+					else{
+						$taskarr[$t]['id'] = $task->id;
+						$taskarr[$t]['name'] = $task->name;
+						$taskarr[$t]['status'] = $task->status;
+						$taskarr[$t]['% cpl'] = $task->percent_complete;
+						$taskarr[$t]['start_day'] = $this->count_days($start, $task->date_start);//Works out how many days into the chart the task starts
+						$taskarr[$t]['duration'] = $task->duration;//how many days long is the task
+						$taskarr[$t]['end_day'] = $this->count_days($start, $task->date_finish);//Works out how many days from start of the chart the task end day is.
+						$taskarr[$t]['start_date'] = $task->date_start;
+						$taskarr[$t]['end_date'] = $task->date_finish;
+						$taskarr[$t]['project_id'] = $task->project_id;//parent projects id
+						//get the project name (don't think this is really necessary)
+						$project = new Project();
+						$project->retrieve($task->project_id);
+						$taskarr[$t]['project_name'] = $project->name;//parent projects id
+						
+						$t ++;
+					}
                 }
             }
+
             $row['task_count'] = $t;//the number of tasks for the user
             $row['tasks'] = $taskarr;//add users tasks to main user array
             //convert user array to an array of user objects
@@ -490,7 +497,8 @@ class ProjectController extends SugarController {
         //$resource_type = $_REQUEST['type'];
 
         $Task = BeanFactory::getBean('ProjectTask');
-        $tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$resource_id."' AND project_task.date_start <= '".$start_date."' AND project_task.date_finish >= '".$end_date."' AND (project_id is not null OR project_id <> ''");
+
+        $tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$resource_id."' AND ( (project_task.date_start >= '".$start_date."' AND project_task.date_start <= '".$end_date."') OR ( project_task.date_finish >= '".$start_date."' AND project_task.date_finish <= '".$end_date."' ) ) AND (project_id is not null AND project_id <> '')");
         echo '<table class="qtip_table">';
         echo '<tr><th>'.$mod_strings['LBL_TOOLTIP_PROJECT_NAME'].'</th><th>'.$mod_strings['LBL_TOOLTIP_TASK_NAME'].'</th><th>'.$mod_strings['LBL_TOOLTIP_TASK_DURATION'].'</th></tr>';
 		if(is_array($tasks)){
