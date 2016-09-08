@@ -3934,7 +3934,6 @@ ul.clickMenu ul.subnav-sub,
 ul.SugarActionMenuIESub {
     list-style: none;
     position: absolute;
-    right: 0;
     top: 20px;
     margin: 0;
     display: none;
@@ -3948,9 +3947,15 @@ ul.SugarActionMenuIESub {
     overflow: hidden;
 }
 
+ul.clickMenu ul.subnav-sub,
+ul.SugarActionMenuIESub {
+    right: 0;
+}
+
 ul.clickMenu li ul.subnav {
     margin-top: 12px;
     min-width: 128px;
+    right: auto;
 }
 
 ul.clickMenu li ul.subnav li, ul.clickMenu ul.subnav-sub li, ul.SugarActionMenuIESub li {
