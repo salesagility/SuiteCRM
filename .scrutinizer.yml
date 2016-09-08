@@ -1,0 +1,46 @@
+filter:
+  excluded_paths:
+    - 'cache/*'
+    - 'examples/*'
+    - 'tests/*'
+    - 'upload/*'
+    - 'vendor/*'
+    - 'Zend/*'
+
+tools:
+  php_sim: true
+  php_analyzer: true
+  php_pdepend: true
+  sensiolabs_security_checker: true
+  php_changetracking: true
+  php_mess_detector: true
+  php_cs_fixer: true
+  php_code_sniffer: true
+  php_loc:
+      enabled: true
+      excluded_dirs: [cache, examples, tests, upload, vendor, Zend]
+  php_cpd:
+      enabled: true
+      excluded_dirs: [cache, examples, tests, upload, vendor, Zend]
+  php_code_coverage: false
+  external_code_coverage:
+      timeout: 1800
+      #should be 3 to wait for all 3 tests from travis - but travis for 5.5. and 5.6 fails to generate code coverage
+      runs: 1
+
+checks:
+    php:
+        code_rating: true
+        duplication: true
+
+build:
+  environment:
+    php:
+      version: 7.0.0 #other versions: 5.4.41, 5.5.25, 5.6.9, 5.6.16, 7.0.0 and hhvm
+      ini:
+        'date.timezone': 'Europe/Rome'
+  tests:
+    override:
+      - { command: 'true' } #we are doing phpunit tests on travis so not necessary to repeat here
+application:
+  type: none

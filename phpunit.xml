@@ -1,0 +1,35 @@
+<phpunit
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation   = "http://schema.phpunit.de/3.7/phpunit.xsd"
+backupGlobals                   = "true"
+backupStaticAttributes          = "false"
+colors                          = "false"
+convertNoticesToExceptions      = "true"
+convertWarningsToExceptions     = "true"
+convertErrorsToExceptions       = "true"
+processIsolation                = "false"
+stopOnFailure                   = "false"
+syntaxCheck                     = "false"
+bootstrap                       = "tests/bootstrap.php"
+        >
+
+    <testsuites>
+        <testsuite name="AllTests">
+            <directory suffix="Test.php">tests/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./</directory>
+            <exclude>
+                <directory>cache</directory>
+                <directory>custom</directory>
+                <directory>tests</directory>
+                <directory>upload</directory>
+                <directory>vendor</directory>
+                <directory>Zend</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>
