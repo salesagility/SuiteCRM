@@ -5326,6 +5326,20 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
 }
 
 
+[field="billing_address_street"].detail-view-field,
+[field="shipping_address_street"].detail-view-field {
+    padding: 16px 16px 32px 16px;
+}
+
+[field="billing_address_street"].detail-view-field > table > tbody > tr > td:nth-of-type(1) {
+    line-height: 24px;
+}
+
+[field="shipping_address_street"].detail-view-field > table > tbody > tr > td:nth-of-type(1) {
+    line-height: 24px;
+}
+
+
 /*xs-col-*/
 @media (max-width: 769px) {
     div.search_name_basic img {
