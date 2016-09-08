@@ -1097,8 +1097,7 @@ slot, #lead_queries_Div td {
     border-radius: 4px;
 }
 
-.detail-view-field a
-{
+.detail-view-field a {
     font-weight: 700;
 }
 
@@ -1107,6 +1106,11 @@ slot, #lead_queries_Div td {
     padding: 16px 16px 32px 16px;
 }
 
+.edit-view-field textarea,
+.inline_edit_field textarea {
+    line-height: 24px;
+    padding-top: 14px;
+}
 
 #no-tab-actions > ul > li {
     margin: 8px 8px 8px 0px;
@@ -5294,6 +5298,9 @@ input[type=text], input[type=password], input:not([type]), textarea {
     border: 1px solid #a5e8d6;
     border-radius: 4px;
     padding: 5px;
+}
+
+input[type=text], input[type=password], input:not([type]) {
     line-height: 40px;
 }
 
