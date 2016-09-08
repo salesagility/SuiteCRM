@@ -547,7 +547,7 @@ $(function () {
 
                 var windowWidth = $(window).width();
 
-                if (windowWidth <= 1080) {
+                if (windowWidth > 310) {
 
                     $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').parent()
                       .attr('style', 'width: 16px !important; margin-left: 42px;');
@@ -567,6 +567,9 @@ $(function () {
                     if (windowWidth > 600) {
                         $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').closest('.search_fields_basic').find('.col-xs-12.col-sm-12.col-md-12.col-lg-3, .col-xs-12.col-sm-12.col-md-12.col-lg-9').css({float: 'right'});
 
+
+                        $('#search_form .edit.view.search.basic .clear.hidden').removeClass('hidden');
+
                         var marginNeeded = false;
                         $('#search_form.search_form .edit.view.search.basic .row').each(function (i, e) {
                             if (i == 1) {
@@ -582,6 +585,29 @@ $(function () {
                                 $(e).css('margin-top', '40px');
                             }
                         });
+
+                        if (windowWidth > 1080) {
+
+                            var revertNeeded = 0;
+                            $('#search_form.search_form .edit.view.search.basic .row').each(function (i, e) {
+                                if(i == 1) {
+                                    $(e).find('.search_fields_basic').each(function (j, c) {
+                                        if (j == 0 || j == 1) {
+                                            if ($(c).find('input[type="checkbox"]').length == 1) {
+                                                revertNeeded++;
+                                            }
+                                        }
+                                    });
+                                }
+                                if (i == 1 && revertNeeded == 2) {
+                                    $('#search_form .edit.view.search.basic .row').css('float', 'left');
+                                    $('#search_form .edit.view.search.basic div.search_fields_basic').css('min-width', 'initial');
+                                    $('#search_form .edit.view.search.basic div.search_fields_basic .col-lg-3').css('min-width', 'initial');
+                                }
+                            });
+
+
+                        }
 
                     }
 

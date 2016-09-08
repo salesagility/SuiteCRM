@@ -9751,7 +9751,7 @@ table tr#delegates_search {
 
     #search_form .edit.view.search.basic .row {
         display: block;
-        float: left;
+        float: none;
     }
 
     #search_form .edit.view.search.basic .row:nth-of-type(3n+2) {
@@ -9767,10 +9767,12 @@ table tr#delegates_search {
     #search_form .edit.view.search.basic div.search_fields_basic {
         margin: 0 8px;
         line-height: 40px;
+        min-width: 400px;
     }
 
     #search_form .edit.view.search.basic div.search_fields_basic .col-lg-3 {
         width: initial !important;
+        min-width: 150px;
     }
 
     #search_form .edit.view.search.basic .clear.hidden {
