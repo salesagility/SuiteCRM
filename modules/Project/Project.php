@@ -325,7 +325,7 @@ class Project extends SugarBean {
 			(isset($_POST['return_action']) && $_POST['return_action'] == 'SubPanelViewer') && !empty($focus->id))||
 			 !isset($_POST['user_invitees']) // we need to check that user_invitees exists before processing, it is ok to be empty
 		){
-			parent::save(true) ; //$focus->save(true);
+			parent::save($check_notify) ; //$focus->save(true);
 			$return_id = $focus->id;
 		}else{
 
