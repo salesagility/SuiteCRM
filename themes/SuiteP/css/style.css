@@ -9592,30 +9592,27 @@ table tr#delegates_search {
     #search_form.search_form .edit.view.search.basic input[type=text],
     #search_form.search_form .edit.view.search.basic input[type=password],
     #search_form.search_form .edit.view.search.basic input:not([type]),
-    #search_form.search_form .edit.view.search.basic textarea {
+    #search_form.search_form .edit.view.search.basic textarea,
+    #search_form.search_form .edit.view.search.basic select {
         border: none;
         padding: 0 5px;
+        width: 100% !important;
     }
-
-    #search_form .edit.view.search.basic div.search_fields_basic {
-        line-height: 18px;
-    }
-
-    #search_form .edit.view.search.basic div.search_fields_basic:nth-of-type(3n+1) {
-        /* clear: both; */
-        float: left;
-        display: block;
-        width: initial;
-        margin: 0 0 0 35px;
-        padding: 0 0 10px 0;
-    }
-
-    #search_form .edit.view.search.basic div.search_name_basic input {
+    #search_form.search_form .edit.view.search.basic input[type=text][name="name_basic"],
+    #search_form.search_form .edit.view.search.basic input[type=text][name="search_name_basic"] {
         width: 84% !important;
     }
 
     #search_form .edit.view.search.basic div.search_fields_basic {
+        line-height: 18px;
         margin: 0;
+        float: left;
+        display: block;
+        width: 100% !important;
+        padding: 0 0 10px 0;
+    }
+
+    #search_form .edit.view.search.basic div.search_fields_basic:nth-of-type(3n+1) {
         float: left;
         display: block;
         width: initial;
@@ -9624,6 +9621,7 @@ table tr#delegates_search {
     #search_form .edit.view.search.basic div.search_fields_basic .col-lg-3,
     #search_form .edit.view.search.basic .col-lg-9 {
         float: right;
+        width: 98% !important;
     }
 
     #search_form .edit.view.search.basic a#advanced_search_link {
@@ -9636,6 +9634,12 @@ table tr#delegates_search {
 
     #search_form .edit.view.search.basic .submitButtons {
         font-size: 0;
+    }
+
+
+    #search_form .edit.view.search.basic label {
+        width: 100% !important;
+        text-align: right;
     }
 }
 

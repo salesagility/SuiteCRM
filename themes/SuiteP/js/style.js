@@ -532,4 +532,25 @@ $(function () {
         $('#bootstrap-container footer').remove();
     }
 
+    // Basic search layout
+    setInterval(function(){
+
+        if($(window).width()<600) {
+
+            $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').parent()
+              .attr('style', 'width: 16px !important; margin-left: 42px;');
+
+            $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').closest('.search_fields_basic').find('label')
+              .attr('style', 'width: auto !important;');
+
+            $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').closest('.search_fields_basic').find('label').parent()
+              .attr('style', 'width: auto !important;');
+
+            $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').closest('.search_fields_basic')
+              .attr('style', 'width: initial !important;');
+
+        }
+
+    }, 100);
+
 });
