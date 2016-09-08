@@ -292,7 +292,8 @@ function checkAlerts() {
 		}
 	}
 
-    alertsTimeoutId = setTimeout("checkAlerts()", 1000);
+	// check alerts again
+	alertsTimeoutId = setTimeout("checkAlerts()", 1000);
 }
 
 function toggleDisplay(id) {
