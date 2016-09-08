@@ -1084,11 +1084,11 @@ slot, #lead_queries_Div td {
 .detail-view-field {
     color: #534D64;
     display: inline;
-    padding:  0px 16px 0px 16px;
+    padding:  16px;
     font-size: 12px;
     font-weight: 700;
-    min-height: 48px;
-    line-height: 48px;
+    line-height: 24px;
+    min-height: 41px;
     text-align: left;
     white-space: nowrap;
     vertical-align: baseline;
@@ -5331,13 +5331,6 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     padding: 16px 16px 32px 16px;
 }
 
-[field="billing_address_street"].detail-view-field > table > tbody > tr > td:nth-of-type(1) {
-    line-height: 24px;
-}
-
-[field="shipping_address_street"].detail-view-field > table > tbody > tr > td:nth-of-type(1) {
-    line-height: 24px;
-}
 
 
 /*xs-col-*/
