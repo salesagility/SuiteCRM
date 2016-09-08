@@ -292,7 +292,7 @@ function checkAlerts() {
 			alertList[mj]['time'] -= 1;
 		}
 	}
-
+    //
     alertsTimeoutId = setTimeout("checkAlerts()", 1000);
 }
 
