@@ -9687,7 +9687,7 @@ table tr#delegates_search {
     }
 
     #search_form .edit.view.search.basic .row {
-        width: 60% !important;
+        width: 100% !important;
         display: block;
         float: left;
     }
@@ -9709,12 +9709,17 @@ table tr#delegates_search {
 
     #search_form .edit.view.search.basic div.search_fields_basic .col-lg-3,
     #search_form .edit.view.search.basic .col-lg-9 {
-        float: right;
+        float: left;
+        width: 100%;
+    }
+    #search_form .edit.view.search.basic .col-lg-9 input[type=text],
+    #search_form .edit.view.search.basic .col-lg-9 textarea {
+        width: 99%;
     }
 
     #search_form .edit.view.search.basic div.search_fields_basic {
         margin: 10px 0 -12px 37px;
-        width: initial;
+        width: 42%;
     }
 
     #search_form .edit.view.search.basic div.search_name_basic img {

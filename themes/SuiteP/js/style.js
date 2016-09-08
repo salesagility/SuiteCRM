@@ -537,28 +537,92 @@ $(function () {
         initFooterPopups();
     }
 
-    // Basic search layout
-    setInterval(function(){
-
-        if($(window).width()<600) {
-
-            $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').parent()
-              .attr('style', 'width: 16px !important; margin-left: 42px;');
-
-            $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').closest('.search_fields_basic').find('label')
-              .attr('style', 'width: auto !important;');
-
-            $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').closest('.search_fields_basic').find('label').parent()
-              .attr('style', 'width: auto !important;');
-
-            $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').closest('.search_fields_basic')
-              .attr('style', 'width: initial !important;');
+    // Basic search form layout (it should be synchronized with media queries)
+    var basicSearchFromRestyle = function(){
 
 
-            $('#search_form.search_form .edit.view.search.basic select').attr('style', '');
+        var i = setInterval(function () {
 
-        }
+            if($('#search_form.search_form .edit.view.search.basic').length) {
 
-    }, 100);
+                var windowWidth = $(window).width();
+
+                if (windowWidth <= 1080) {
+
+                    $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').parent()
+                      .attr('style', 'width: 16px !important; margin-left: 42px;');
+
+                    $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').closest('.search_fields_basic').find('label')
+                      .attr('style', 'width: auto !important;');
+
+                    $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').closest('.search_fields_basic').find('label').parent()
+                      .attr('style', 'width: auto !important;');
+
+                    $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').closest('.search_fields_basic')
+                      .attr('style', 'width: initial !important;');
+
+
+                    $('#search_form.search_form .edit.view.search.basic select').attr('style', '');
+
+                    if (windowWidth > 600) {
+                        $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').closest('.search_fields_basic').find('.col-xs-12.col-sm-12.col-md-12.col-lg-3, .col-xs-12.col-sm-12.col-md-12.col-lg-9').css({float: 'right'});
+
+                        var marginNeeded = false;
+                        $('#search_form.search_form .edit.view.search.basic .row').each(function (i, e) {
+                            if (i == 1) {
+                                $(e).find('.search_fields_basic').each(function (j, c) {
+                                    if (j == 0 || j == 1) {
+                                        if ($(c).find('input[type="checkbox"]').length == 0) {
+                                            marginNeeded = true;
+                                        }
+                                    }
+                                });
+                            }
+                            if (i == 1 && marginNeeded) {
+                                $(e).css('margin-top', '40px');
+                            }
+                        });
+
+                    }
+
+                }
+
+            }
+
+
+        }, 100);
+
+        setTimeout(function () {
+            clearInterval(i);
+        }, 5000);
+
+    };
+
+    $(window).click(function(){
+        basicSearchFromRestyle();
+    });
+
+    $(window).resize(function(){
+        basicSearchFromRestyle();
+    });
+
+    $(window).ready(function(){
+        basicSearchFromRestyle();
+    });
+
+    $(document).ready(function(){
+        basicSearchFromRestyle();
+    });
+
+    $(window).load(function(){
+        basicSearchFromRestyle();
+    });
+
+    $(document).load(function(){
+        basicSearchFromRestyle();
+    });
+
+    basicSearchFromRestyle();
+
 
 });
