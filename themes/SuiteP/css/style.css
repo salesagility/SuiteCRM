@@ -8100,16 +8100,6 @@ div.list-view-rounded-corners > table th:last-of-type {
 
 @media (max-width: 600px) {
 
-    table tr td {
-        display: block;
-        float: left;
-    }
-
-    table tr td.buttons {
-        width: initial;
-    }
-
-
     #bootstrap-container {
         margin-top: 110px !important;
     }
