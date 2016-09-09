@@ -9733,6 +9733,10 @@ table tr#delegates_search {
         width: 140px !important;
     }
 
+    #search_form .edit.view.search.basic .dateTimeRangeChoice select {
+        padding: 0 38px 0 8px;
+    }
+
 }
 
 
@@ -9790,6 +9794,10 @@ table tr#delegates_search {
     #search_form .edit.view.search.basic input.sqsEnabled {
         margin-top: 0px;
         width: 140px !important;
+    }
+
+    #search_form .edit.view.search.basic .dateTimeRangeChoice select {
+        padding: 0 38px 0 8px;
     }
 
 }
