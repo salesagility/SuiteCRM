@@ -41,13 +41,13 @@
 <!-- tab_panel_content.tpl START -->
 
 <!-- tab panel main div -->
-<div class="row detail-view-row">
 
 {{foreach name=rowIteration from=$panel key=row item=rowData}}
 
     {*row*}
 
     <!-- ROW -->
+<div class="row detail-view-row">
 
     {{counter name="columnCount" start=0 print=false assign="columnCount"}}
 
@@ -77,10 +77,15 @@
 
                     {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
                         <!-- DIV inside - colspan != 3 -->
-                        <div class="col-xs-12 col-sm-4 label">
+
+                    {{if $smarty.foreach.colIteration.index == 0}}
+                        <div class="col-xs-12 col-sm-4 label col-1-label">
+                    {{else}}
+                        <div class="col-xs-12 col-sm-4 label col-2-label">
+                    {{/if}}
                     {{else}}
                         <!-- DIV inside - colspan = 3 -->
-                        <div class="col-xs-12 col-sm-2 label">
+                        <div class="col-xs-12 col-sm-2 label col-1-label">
                     {{/if}}
 
                     {*label*}
@@ -180,7 +185,7 @@
                 {{/if}}
 
                 {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}
-                    <div class="inlineEditIcon col-xs-1">
+                    <div class="inlineEditIcon col-xs-hidden">
                         {sugar_getimage name="inline_edit_icon.svg" attr='border="0" ' alt="$alt_edit"}
                     </div>
                 {{/if}}
@@ -202,7 +207,7 @@
     {{/foreach}}
     {{counter name="columnCount" print=false}}
 
+</div>
 {{/foreach}}
 
-</div>
 <!-- /tab panel main div -->

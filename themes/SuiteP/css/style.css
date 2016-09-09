@@ -1042,10 +1042,16 @@ th, td {
     padding-left: 0;
 }
 
-.detail-view-row, .detail-view-row-item, .edit-view-row, .edit-view-row-item {
-    margin: 0 0 16px 0;
+.detail-view-row, .detail-view-row-item {
+    margin: 0 0 2px 0;
     min-width: 48px;
-    min-height: 74px;
+    min-height: 24px;
+}
+
+.edit-view-row, .edit-view-row-item {
+    margin: 0 0 8px 0;
+    min-width: 48px;
+    min-height: 24px;
 }
 
 .detail-view-row .label, .edit-view-row .label {
@@ -1084,17 +1090,43 @@ slot, #lead_queries_Div td {
 .detail-view-field {
     color: #534D64;
     display: inline;
-    padding:  0px 16px 0px 16px;
-    font-size: 12px;
-    font-weight: 700;
+    padding:  12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
     min-height: 48px;
-    line-height: 48px;
     text-align: left;
     white-space: nowrap;
     vertical-align: baseline;
     background-color: #F5F5F5;
     border: 1px solid transparent;
     border-radius: 4px;
+}
+
+.detail-view-field a {
+    font-weight: 700;
+}
+
+[field="billing_address_street"].detail-view-field,
+[field="shipping_address_street"].detail-view-field {
+    padding: 16px 16px 32px 16px;
+}
+
+[field="shipping_address_street"].detail-view-field .button,
+[field="billing_address_street"].detail-view-field .button {
+    background-color: #AA9DCC;
+}
+
+[field="shipping_address_street"].detail-view-field .button:hover,
+[field="billing_address_street"].detail-view-field .button:hover {
+    background-color: #9589b3;
+}
+
+
+.edit-view-field textarea,
+.inline_edit_field textarea {
+    line-height: 24px;
+    padding-top: 14px;
 }
 
 #no-tab-actions > ul > li {
@@ -3632,6 +3664,7 @@ ul.nav-tabs > li > a, ul.nav-tabs > li.active > a:focus {
     color: #ffffff;
     line-height: 32px;
     border-color: #eee #eee #fff;
+    cursor: pointer;
 }
 
 ul.nav-tabs > li:first-of-type > a {
@@ -4974,9 +5007,19 @@ table#lineItems tr td table thead tr td table tbody tr td {
 
 
 .row {
-    margin-bottom: 8px;
+    margin-top: 1px;
+    margin-bottom: 1px;
 }
 
+#btn_vCardButton {
+    background: none;
+    margin: 0;
+}
+
+#btn_vCardButton, #btn_vCardButton img {
+    height: 14px;
+    width: auto;
+}
 
 @media (min-width: 922px) {
     #email1_span table.emailaddresses > tbody:first-of-type > tr > td:nth-of-type(2) {
@@ -5283,6 +5326,9 @@ input[type=text], input[type=password], input:not([type]), textarea {
     border: 1px solid #a5e8d6;
     border-radius: 4px;
     padding: 5px;
+}
+
+input[type=text], input[type=password], input:not([type]) {
     line-height: 40px;
 }
 
@@ -5341,10 +5387,13 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     div.search_buttons_basic {
         margin: 0 8px 0 42px;
     }
-    .tab-content {
-        overflow-x: scroll;
-    }
+
 }
+
+.detail-view-row .label.col-2-label {
+    padding-left: 32px;
+}
+
 
 /*sm-col-*/
 @media (min-width: 768px) and (max-width: 991px) {
@@ -5365,9 +5414,7 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     #wizform #wizard {
             width: 700px;
         }
-    .tab-content {
-        overflow-x: scroll;
-    }
+
 }
 
 /*md-col-*/
@@ -5942,6 +5989,9 @@ select#sales_stage_advanced {
 }
 
 @media (max-width: 768px) {
+    .detail-view-row .label.col-2-label {
+        padding-left: 8px;
+    }
     .col-xs-6 input[type="text"]#first_name, .col-sm-6 input[type="text"]#first_name {
         width: 48.5% !important;
     }
