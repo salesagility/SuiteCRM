@@ -9715,6 +9715,7 @@ table tr#delegates_search {
     #search_form .edit.view.search.basic div.search_fields_basic {
         margin: 10px 0 -12px 37px;
         width: 42%;
+        min-height: 110px;
     }
 
     #search_form .edit.view.search.basic div.search_name_basic img {
@@ -9725,6 +9726,11 @@ table tr#delegates_search {
         display: block !important;
         float: none;
         clear: both;
+    }
+
+    #search_form .edit.view.search.basic input.sqsEnabled {
+        margin-top: 0px;
+        width: 140px !important;
     }
 
 }
@@ -9763,6 +9769,7 @@ table tr#delegates_search {
         margin: 0 8px;
         line-height: 40px;
         min-width: 400px;
+        min-height: 110px;
     }
 
     #search_form .edit.view.search.basic div.search_fields_basic .col-lg-3 {
@@ -9778,6 +9785,11 @@ table tr#delegates_search {
 
     #search_form .edit.view.search.basic {
         padding-bottom: 10px !important;
+    }
+
+    #search_form .edit.view.search.basic input.sqsEnabled {
+        margin-top: 0px;
+        width: 140px !important;
     }
 
 }
