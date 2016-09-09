@@ -123,7 +123,7 @@ class Call extends SugarBean {
 								);
 
 	public function __construct() {
-		parent::__construct();
+	    parent::__construct();
 		global $app_list_strings;
 
        	$this->setupCustomFields('Calls');
@@ -474,8 +474,8 @@ class Call extends SugarBean {
 		}
 		$this->email_reminder_checked = $this->email_reminder_time == -1 ? false : true;
 
-		if (isset ($_REQUEST['parent_type']) && (!isset($_REQUEST['action']) || $_REQUEST['action'] != 'SubpanelEdits')) {
-			$this->parent_type = $_REQUEST['parent_type'];
+        if (isset ($_REQUEST['parent_type']) && empty($this->parent_type)) {
+                $this->parent_type = $_REQUEST['parent_type'];
 		} elseif (is_null($this->parent_type)) {
 			$this->parent_type = $app_list_strings['record_type_default_key'];
 		}
