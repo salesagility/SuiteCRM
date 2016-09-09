@@ -1042,7 +1042,13 @@ th, td {
     padding-left: 0;
 }
 
-.detail-view-row, .detail-view-row-item, .edit-view-row, .edit-view-row-item {
+.detail-view-row, .detail-view-row-item {
+    margin: 0 0 2px 0;
+    min-width: 48px;
+    min-height: 24px;
+}
+
+.edit-view-row, .edit-view-row-item {
     margin: 0 0 8px 0;
     min-width: 48px;
     min-height: 24px;
