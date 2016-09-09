@@ -9318,6 +9318,15 @@ table tr#delegates_search {
     border-left-color: #F08377;
 }
 
+#wizform .progression li::after {
+    border-left-color: #F08377;
+}
+
+#wizform .progression li::before {
+    border-left-color: #F5F5F5;
+}
+
+
 /* campaign wizard (top) buttons */
 
 #wizform input[type="button"],
