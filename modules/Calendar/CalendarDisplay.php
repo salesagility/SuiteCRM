@@ -130,16 +130,8 @@ class CalendarDisplay {
 		$ss->assign('CALENDAR_FDOW',$GLOBALS['current_user']->get_first_day_of_week());
 
 
-			switch($cal->view){
-				case "agendaDay":
-				case "agendaWeek":
-				case "sharedMonth":
-				case "sharedWeek":
-					$height = 650; break;
-				default:
-					$height = 650; break;
-			}
-		$ss->assign('basic_min_height',$height);
+
+		$ss->assign('basic_min_height',"'auto'");
 		
 		$ss->assign('isPrint', $this->cal->isPrint() ? 'true': 'false');
 

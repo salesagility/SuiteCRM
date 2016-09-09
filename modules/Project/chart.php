@@ -119,7 +119,7 @@ class chart {
                         <tr>
                             <td class="field_chart">
                                 <select id="projects" name="projects" multiple>
-                                <option value="">All Projects</option>';
+                                <option value="">'.$mod_strings["LBL_ALL_PROJECTS"].'</option>';
 
                                 //From the query above, populates the select box
                                 foreach( $project_list as $project)
@@ -143,7 +143,7 @@ class chart {
                           echo '</td>
                             <td class="field_chart">
                                 <select id="users" name="users" multiple>
-                                <option value="">All Users</option>';
+                                <option value="">'.$mod_strings['LBL_ALL_USERS'].'</option>';
 
                                 //From the query above, populates the select box
                                 foreach( $user_list as $user)
@@ -166,8 +166,7 @@ class chart {
                           echo '</td>
 						  <td class="field_chart">
                                 <select id="contacts" name="contacts" multiple>
-                                <option value="">All Contacts</option>';
-
+                                <option value="">'.$mod_strings['LBL_ALL_CONTACTS'].'</option>';
                                 //From the query above, populates the select box
                                 foreach( $contact_list as $contact)
                                 {
@@ -297,7 +296,6 @@ class chart {
 				$i=0;
 				for ($x=0; $x< $day_count; $x++)
 				{
-					//Get date for each day
 					$dateq = $this->get_date($start_date, $i);
 
 					$class = '';
@@ -311,7 +309,6 @@ class chart {
 					elseif($this->check_weekend($dateq) == 'weekend-today'){
 						$class = 'weekend-today';
 					}
-
 					$square = '';
 					$dup = 0;
 
@@ -501,7 +498,6 @@ class chart {
 					$dateq = $this->get_month_dates($start_date,$x);
 
 					$class = '';
-
 					$square = '';
 					$dup = 0;
 					

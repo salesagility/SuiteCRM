@@ -1634,6 +1634,7 @@ table#mass_update_table td select {
 
 
 #selectLinkTop,
+#selectLinkBottom,
 #actionLinkBottom {
     min-height: 16px;
     line-height: 16px;
@@ -1641,6 +1642,7 @@ table#mass_update_table td select {
     padding: 1px;
 }
 #selectLinkTop input[type=checkbox],
+#selectLinkBottom input[type=checkbox],
 #actionLinkBottom input[type=checkbox] {
     margin-top: 10px;
 }
@@ -1720,7 +1722,9 @@ table#mass_update_table td select {
 }
 
 #actionLinkTop li.sugar_action_button,
+#actionLinkBottom li.sugar_action_button,
 #selectLinkTop > .sugar_action_button > ul.subnav a:hover,
+#selectLinkBottom > .sugar_action_button > ul.subnav a:hover,
 #actionLinkBottom > .sugar_action_button > ul.subnav a:hover,
 #actionLinkTop .menuItemHilite,
 #actionLinkBottom .menuItemHilite {
@@ -2484,7 +2488,7 @@ li.noBullet {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    min-height: 100px;
+    min-height: initial;
 }
 
 #MorePanelHandle {
@@ -2631,6 +2635,8 @@ table.dateTime {
     display: inline-block;
     clear: both;
     margin-top: 8px;
+    width: 50%;
+    margin-right: 8px;
 }
 
 .pageNumbers {
@@ -3915,6 +3921,7 @@ ul.clickMenu > li > span {
 
 
 #selectLinkTop, #selectLinkTop .sugar_action_button,
+#selectLinkBottom, #selectLinkBottom .sugar_action_button,
 #selectLinkTop, #selectLinkTop .selectActionsDisabled {
     min-width: 32px;
 }
@@ -3928,7 +3935,6 @@ ul.clickMenu ul.subnav-sub,
 ul.SugarActionMenuIESub {
     list-style: none;
     position: absolute;
-    right: 0;
     top: 20px;
     margin: 0;
     display: none;
@@ -3942,9 +3948,15 @@ ul.SugarActionMenuIESub {
     overflow: hidden;
 }
 
+ul.clickMenu ul.subnav-sub,
+ul.SugarActionMenuIESub {
+    right: 0;
+}
+
 ul.clickMenu li ul.subnav {
     margin-top: 12px;
     min-width: 128px;
+    right: auto;
 }
 
 ul.clickMenu li ul.subnav li, ul.clickMenu ul.subnav-sub li, ul.SugarActionMenuIESub li {
@@ -4363,16 +4375,6 @@ span.crumbLink {
 
 #mbfooter .yui-layout-hd td {
     background: none;
-}
-
-select, textarea {
-    border: 1px solid #ccc;
-    padding: 4px;
-}
-
-select:focus {
-    border: 1px solid #F08377;
-    padding: 4px;
 }
 
 .chartContainer table tr td {
@@ -4795,6 +4797,10 @@ fieldset[disabled] .btn-primary.active {
     content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
 }
 
+#search_form span.id-ff.multiple {
+    top: 10px;
+    position: relative;
+}
 #EditView_tabs span.id-ff.multiple [type="button"] img,
 #conditionLines span.id-ff.multiple [type="button"] img {
     content: none;
@@ -5173,7 +5179,7 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 #email1_span table > tbody,
 #email1_span table > tbody > tr,
 #email1_span table > tbody > tr > td {
-    width: 100%;
+    width: 98%;
     display: block;
 }
 
@@ -5386,7 +5392,6 @@ li.topnav {
     margin: 0;
     font-size: 1.1em;
     font-size: 12px;
-    font-weight: 300;
     height: 90px;
     letter-spacing: 2px;
     line-height: 90px;
@@ -5475,6 +5480,14 @@ li.topnav ul.dropdown-menu li:last-child a {
 #tab-actions input[type=button],
 #tab-actions input[type=reset] {
     text-transform: none;
+}
+
+form[name=DetailView] .button,
+form[name=DetailView] input[type=submit],
+form[name=DetailView] input[type=button],
+form[name=DetailView] input[type=reset] {
+    float: left;
+    margin: 0 4px 4px 0;
 }
 
 td.submitButtons .button:hover {
@@ -5709,23 +5722,55 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     border: 1px solid #e2e7eb;
     background: #f8f8f8;
 }
+textarea {
+    width: 50%;
+}
 
-select, select:focus, select::selection, .saved_search_select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    overflow: hidden;
-    background-color: #ffffff;
+select {
+    background-color: #FFFFFF;
+    border-style: solid;
+    border-size: 1px;
+    border-color: #A5E8D6;
+    border-radius: 4px;
+    padding: 16px 55px 16px 5px;
     background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right #ffffff;
     background-size: 52px 52px;
-    border: 3px solid #a5e8d6;
-    border-radius: 4px;
-    padding: 5px 50px 5px 5px;
-
-    line-height: 40px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
     outline: 0;
     scrollbar-base-color: #A5E8D6;
     scrollbar-arrow-color: #A5E8D6;
+}
+
+select:focus {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    border-style: solid;
+    border-size: 1px;
+    border-color: #A5E8D6;
+    border-radius: 4px;
+}
+select::selection {
+    border-style: solid;
+    border-size: 1px;
+    border-color: #A5E8D6;
+    border-radius: 4px;
+}
+
+.saved_search_select {
+    background-color: #FFFFFF;
+    border-style: solid;
+    border-size: 1px;
+    border-color: #A5E8D6;
+    border-radius: 4px;
+    padding: 16px 55px 16px 5px;
+    background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right #ffffff;
+    background-size: 52px 52px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 select[multiple] {
@@ -7791,8 +7836,10 @@ table.subpanel-table ul.subpanel > a,
 .single  a,
 .single > a,
 #actionLinkTop li.sugar_action_button,
+#actionLinkBottom li.sugar_action_button,
 table.subpanel-table li.sugar_action_button,
 #selectLinkTop li.sugar_action_button,
+#selectLinkBottom li.sugar_action_button,
 table.subpanel-table .pagination .sugar_action_button,
 table.subpanel-table .pagination li.sugar_action_button > form > a,
 table.subpanel-table .pagination .sugar_action_button > form > a,
@@ -7894,7 +7941,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 91%;
+        width: 90%;
     }
 
     .button-toggle-expanded {
@@ -7938,7 +7985,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 89%;
+        width: 85%;
     }
 
     .button-toggle-expanded {
@@ -7961,7 +8008,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 88%;
+        width: 85%;
     }
 
     .button-toggle-expanded {
@@ -7985,7 +8032,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 87%;
+        width: 80%;
     }
 
     .button-toggle-expanded {
@@ -8102,7 +8149,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     #content {
-        width: 90%;
+        width: 99%;
         margin-left: 1%;
     }
 }
@@ -8117,7 +8164,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 86%;
+        width: 82%;
     }
 
     .button-toggle-expanded {
@@ -8144,7 +8191,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 85%;
+        width: 82%;
     }
 
     .button-toggle-expanded {
@@ -8156,7 +8203,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     #content {
-        width: 95%;
+        width: 99%;
         margin-left: 1%;
     }
 }
@@ -8172,7 +8219,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 84%;
+        width: 80%;
     }
 
     .button-toggle-expanded {
@@ -8199,7 +8246,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 83%;
+        width: 80%;
     }
 
     .button-toggle-expanded {
@@ -8228,7 +8275,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 82%;
+        width: 74%;
     }
 
     .button-toggle-expanded {
@@ -8243,6 +8290,9 @@ div.list-view-rounded-corners > table th:last-of-type {
         width: 70%;
     }
 
+    #content {
+        width: 97%;
+    }
 }
 
 @media (max-width: 1000px) {
@@ -9097,7 +9147,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-sm-9 {
-        width: 88%;
+        width: 75%;
     }
 
     #wizform #wizard {
