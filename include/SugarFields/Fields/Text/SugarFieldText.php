@@ -91,6 +91,7 @@ class SugarFieldText extends SugarFieldBase {
                 $displayParams['htmlescape'] = false;
             }
             if($_REQUEST['action'] == "EditView") {
+                require_once ("include/SugarTinyMCE.php");
                 $tiny = new SugarTinyMCE();
                 $editor = $tiny->getInstance($vardef['name'], 'email_compose_light');
             }
