@@ -3664,6 +3664,7 @@ ul.nav-tabs > li > a, ul.nav-tabs > li.active > a:focus {
     color: #ffffff;
     line-height: 32px;
     border-color: #eee #eee #fff;
+    cursor: pointer;
 }
 
 ul.nav-tabs > li:first-of-type > a {
