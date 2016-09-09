@@ -150,7 +150,7 @@ class ListViewDisplay {
 
         $filter_fields = $this->setupFilterFields($filter_fields);
 
-        $data = $this->lvd->getListViewData($seed, $where, $offset, $limit, $filter_fields, $params, $id_field, null, $id);
+        $data = $this->lvd->getListViewData($seed, $where, $offset, $limit, $filter_fields, $params, $id_field, true, $id);
 
         $this->fillDisplayColumnsWithVardefs();
 
