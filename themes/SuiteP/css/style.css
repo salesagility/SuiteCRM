@@ -5007,7 +5007,8 @@ table#lineItems tr td table thead tr td table tbody tr td {
 
 
 .row {
-    margin-bottom: 8px;
+    margin-top: 1px;
+    margin-bottom: 1px;
 }
 
 
