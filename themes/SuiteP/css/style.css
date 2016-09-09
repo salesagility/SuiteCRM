@@ -5387,9 +5387,7 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     div.search_buttons_basic {
         margin: 0 8px 0 42px;
     }
-    .tab-content {
-        overflow-x: scroll;
-    }
+
 }
 
 .detail-view-row .label.col-2-label {
@@ -5416,9 +5414,7 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     #wizform #wizard {
             width: 700px;
         }
-    .tab-content {
-        overflow-x: scroll;
-    }
+
 }
 
 /*md-col-*/
