@@ -1127,9 +1127,6 @@ class AOR_Report extends Basic {
                     $has_group_by = true;
                     $query['group_by'][] = $field->format ? str_replace('(%1)', '(' . $select_field . ')', preg_replace(array('/\s+/', '/Y/', '/m/', '/d/'), array(', ', 'YEAR(%1)', 'MONTH(%1)', 'DAY(%1)'), trim(preg_replace('/[^Ymd]/', ' ', $field->format)))) : $select_field;
                 }
-                else {
-                    $query['second_group_by'][] = $field->format ? str_replace('(%1)', '(' . $select_field . ')', preg_replace(array('/\s+/', '/Y/', '/m/', '/d/'), array(', ', 'YEAR(%1)', 'MONTH(%1)', 'DAY(%1)'), trim(preg_replace('/[^Ymd]/', ' ', $field->format)))) : $select_field;
-                }
 
                 if($field->field_function != null){
                     $select_field = $field->field_function.'('.$select_field.')';
