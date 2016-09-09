@@ -5011,6 +5011,15 @@ table#lineItems tr td table thead tr td table tbody tr td {
     margin-bottom: 1px;
 }
 
+#btn_vCardButton {
+    background: none;
+    margin: 0;
+}
+
+#btn_vCardButton, #btn_vCardButton img {
+    height: 14px;
+    width: auto;
+}
 
 @media (min-width: 922px) {
     #email1_span table.emailaddresses > tbody:first-of-type > tr > td:nth-of-type(2) {
