@@ -101,17 +101,19 @@ function populateFromRow(&$focus,$row){
     // Also add custom fields
     foreach ($focus->field_defs as $fieldName => $field ) {
         if ( isset($field['source']) && $field['source'] == 'custom_fields' ) {
-            $e_fields[] = $fieldName;
+
+            $type = !empty($field['custom_type']) ? $field['custom_type'] : $field['type'];
+            $sf = $sfh->getSugarField($type);
+            if ($sf != null)
+            {
+                $sf->save($focus, $_POST, $fieldName, $field, '');
+            }
+            else
+            {
+                $GLOBALS['log']->fatal("Field '$fieldName' does not have a SugarField handler");
+            }
         }
     }
     $nullvalue='';
-	foreach($e_fields as $field)
-	{
-		$rfield = $field; // fetch returns it in lowercase only
-		if(isset($row[$rfield]))
-		{
-			$focus->$field = $row[$rfield];
-		}
-	}
 }
 ?>
