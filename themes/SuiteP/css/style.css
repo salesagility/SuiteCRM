@@ -5299,11 +5299,6 @@ div.search_fields_basic select[multiple] {
     width: 100% !important;
 }
 
-div.search_fields_basic:nth-of-type(3n+1) {
-    clear: both;
-}
-
-
 .converted_account {
     border: 1px solid transparent;
     border-radius: 4px;
