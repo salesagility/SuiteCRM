@@ -5382,6 +5382,11 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     }
 }
 
+.detail-view-row .label.col-2-label {
+    padding-left: 32px;
+}
+
+
 /*sm-col-*/
 @media (min-width: 768px) and (max-width: 991px) {
     div.search_name_basic img {
