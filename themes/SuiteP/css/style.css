@@ -5989,6 +5989,9 @@ select#sales_stage_advanced {
 }
 
 @media (max-width: 768px) {
+    .detail-view-row .label.col-2-label {
+        padding-left: 8px;
+    }
     .col-xs-6 input[type="text"]#first_name, .col-sm-6 input[type="text"]#first_name {
         width: 48.5% !important;
     }
