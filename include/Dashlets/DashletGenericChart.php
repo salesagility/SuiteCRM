@@ -111,6 +111,10 @@ abstract class DashletGenericChart extends Dashlet
             }
         }
 
+        //
+        $this->seedBean = $this->getSeedBean();
+        $this->seedBean->module_name = "Charts";
+
         // load searchfields
         $classname = get_class($this);
         if ( is_file("modules/Charts/Dashlets/$classname/$classname.data.php") ) {
