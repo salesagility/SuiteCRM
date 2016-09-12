@@ -82,11 +82,6 @@
 			assign=modVal
 			}
 
-			{{if $fields[$colData.field.name] AND ($colData.field.name == 'search_name_basic' OR $colData.field.name == 'name_basic')}}
-
-			{{sugar_field parentFieldArray='fields' vardef=$fields[$colData.field.name] accesskey=$ACCKEY displayType='searchView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name}}
-
-			{{/if}}
 		{{/foreach}}
 	</div>
 </div>
@@ -101,7 +96,7 @@
           right=$basicMaxColumns
           assign=modVal
     }
-	{{if $fields[$colData.field.name] AND $colData.field.name != 'search_name_basic' AND $colData.field.name != 'name_basic'}}
+	{{if $fields[$colData.field.name]}}
 	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 search_fields_basic">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
 			{{if isset($colData.field.label)}}
