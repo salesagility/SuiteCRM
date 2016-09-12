@@ -624,7 +624,10 @@ $(function () {
                                 $('#search_form .edit.view.search.basic div.search_fields_basic .col-lg-3').css('min-width', 'initial');
                                 $('#search_form .edit.view.search.basic div.search_fields_basic').css('min-width', 'initial');
                                 $('#search_form .edit.view.search.basic div.search_fields_basic .submitButtons').parent().css('width', 'initial');
-                                $('#search_form .edit.view.search.basic .row').css('float', 'left');
+                                $('#search_form .edit.view.search.basic .row').css({
+                                    float: 'left',
+                                    height: '50px'
+                                });
 
                             }
 
