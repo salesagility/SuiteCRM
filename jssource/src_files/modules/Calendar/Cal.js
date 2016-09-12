@@ -284,12 +284,27 @@ CAL.repeat_type_selected = function () {
 		}
 	}
 }
-CAL.load_form = function (module_name, record, edit_all_recurrences) {
+CAL.load_form = function (module_name, record, edit_all_recurrences, cal_event) {
 	CAL.disable_creating = true;
 	var e;
 	var to_open = true;
-	if (module_name != "Meetings" && module_name != "Calls")
+
+	if (module_name != "Meetings" && module_name != "Calls") {
 		to_open = false;
+	}
+
+
+	if(module_name == "Tasks") {
+		$('.modal-cal-tasks-edit .modal-body .container-fluid').html('<span class="title"><strong>' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</strong></span>: ' + (cal_event.start.format(global_datetime_format) ) + '<br><span class="title"><strong>' + SUGAR.language.get('Calendar', 'LBL_SUBJECT') + ': </strong></span>' + ( (cal_event.title) ? cal_event.title : ''));
+		$('.modal-cal-tasks-edit').modal('show');
+		$('#btn-view-task').unbind().click(function(){
+			window.location.assign('index.php?module='+cal_event.module+'&action=DetailView&record='+cal_event.record);
+		});
+		$('#btn-tasks-full-form').unbind().click(function(){
+			window.location.assign('index.php?module='+cal_event.module+'&action=EditView&record='+cal_event.record);
+		});
+	}
+
 	if (to_open && CAL.records_openable) {
 		CAL.get("form_content").style.display = "none";
 		CAL.disable_buttons();
@@ -297,12 +312,18 @@ CAL.load_form = function (module_name, record, edit_all_recurrences) {
 		CAL.repeat_tab_handle(module_name);
 		ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_LOADING'));
 		params = {};
-		if (edit_all_recurrences)
+
+		if (edit_all_recurrences) {
 			params = {stay_on_tab: true};
+		}
+
 		CAL.open_edit_dialog(params);
 		CAL.get("record").value = "";
-		if (!edit_all_recurrences)
+
+		if (!edit_all_recurrences) {
 			edit_all_recurrences = "";
+		}
+
 		var callback = {
 			success: function (o) {
 				try {
@@ -871,7 +892,7 @@ $(document).ready(function () {
 			},
 			eventClick: function (calEvent, jsEvent, view) {
 				if (global_edit == true) {
-					CAL.load_form(calEvent.module, calEvent.record);
+					CAL.load_form(calEvent.module, calEvent.record, false, calEvent);
 				}
 			},
 			eventDrop: function (event, delta, revertFunc) {
