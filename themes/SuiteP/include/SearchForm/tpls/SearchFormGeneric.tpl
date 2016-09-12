@@ -65,26 +65,7 @@
 	});
 {/literal}
 </script>
-<div class="row">
-	<div class=" search_name_basic">
 
-		<img src="themes/SuiteP/images/p_list_search.png">
-		{{assign var='accesskeycount' value=0}}  {{assign var='ACCKEY' value=''}}
-
-		{{foreach name=colIteration from=$formData key=col item=colData}}
-			{{math assign="accesskeycount" equation="$accesskeycount + 1"}}
-			{{if $accesskeycount==1}} {{assign var='ACCKEY' value=$APP.LBL_FIRST_INPUT_SEARCH_KEY}} {{else}} {{assign var='ACCKEY' value=''}} {{/if}}
-
-			{counter assign=index}
-			{math equation="left % right"
-			left=$index
-			right=$basicMaxColumns
-			assign=modVal
-			}
-
-		{{/foreach}}
-	</div>
-</div>
 <div class="row">
 {{foreach name=colIteration from=$formData key=col item=colData}}
     {{math assign="accesskeycount" equation="$accesskeycount + 1"}}
