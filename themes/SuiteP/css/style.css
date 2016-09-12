@@ -5157,7 +5157,7 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems select {
-    line-height: 20px;
+    line-height: 18px;
 }
 
 /*Grand Total*/
