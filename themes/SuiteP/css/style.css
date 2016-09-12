@@ -5562,6 +5562,7 @@ input[type=text], input[type=password], input:not([type]), textarea {
     border-radius: 4px;
     padding: 5px;
     line-height: 40px;
+    min-height: 48px;
 }
 
 .search_form input[type=text], .search_form textarea {
