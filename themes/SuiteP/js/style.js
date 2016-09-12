@@ -578,6 +578,9 @@ $(function () {
                         if (windowWidth > 600) {
                             $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').closest('.search_fields_basic').find('.col-xs-12.col-sm-12.col-md-12.col-lg-3, .col-xs-12.col-sm-12.col-md-12.col-lg-9').css({float: 'right'});
 
+                            $('#search_form.search_form .edit.view.search.basic input[name="name_basic"]').closest('.search_fields_basic').find('.col-xs-12.col-sm-12.col-md-12.col-lg-3').css({width: '25%'});
+                            $('#search_form.search_form .edit.view.search.basic input[name="name_basic"]').closest('.search_fields_basic').find('.col-xs-12.col-sm-12.col-md-12.col-lg-9').css({width: '65%'});
+                            $('#search_form .edit.view.search.basic div.search_fields_basic').css({'min-height':'65px'});
 
                             $('#search_form .edit.view.search.basic .clear.hidden').removeClass('hidden');
 
@@ -617,6 +620,11 @@ $(function () {
                                     }
                                 });
 
+                                $('#search_form .edit.view.search.basic div.search_fields_basic').first().css('min-width', '500px');
+                                $('#search_form .edit.view.search.basic div.search_fields_basic .col-lg-3').css('min-width', 'initial');
+                                $('#search_form .edit.view.search.basic div.search_fields_basic').css('min-width', 'initial');
+                                $('#search_form .edit.view.search.basic div.search_fields_basic .submitButtons').parent().css('width', 'initial');
+                                $('#search_form .edit.view.search.basic .row').css('float', 'left');
 
                             }
 
