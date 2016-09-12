@@ -464,8 +464,15 @@ SUGAR.mySugar = function() {
 			
 			var success = function(data) {		
 				eval(data.responseText);
-				dashletsListDiv = document.getElementById('dashletsList');
-				dashletsListDiv.innerHTML = response['html'];
+
+				if($('*[id=dashletsList]').length>1) {
+					dashletsListDiv = $('*[id=dashletsList].modal-body');
+				}
+				else {
+					dashletsListDiv = $('#dashletsList');
+				}
+
+				dashletsListDiv.html(response['html']);
 				
 				document.getElementById('dashletsDialog_c').style.display = '';
                 SUGAR.mySugar.dashletsDialog.show();
