@@ -537,6 +537,7 @@ $(function () {
         initFooterPopups();
     }
 
+    /*
     // Basic search form layout (it should be synchronized with media queries)
     var basicSearchFromRestyle = function(){
 
@@ -649,6 +650,6 @@ $(function () {
     });
 
     basicSearchFromRestyle();
-
+    */
 
 });
