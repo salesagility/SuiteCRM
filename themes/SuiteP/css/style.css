@@ -5156,6 +5156,10 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
     margin: 0 5px 0 0;
 }
 
+#lineItems select {
+    line-height: 20px;
+}
+
 /*Grand Total*/
 #EditView #total_amt,
 #EditView #discount_amount,
