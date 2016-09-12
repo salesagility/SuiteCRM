@@ -9546,11 +9546,7 @@ table tr#delegates_search {
 /* basic search form on mobile (very small screen) */
 
 @media (max-width: 310px) {
-/*
-    #search_form .edit.view.search.basic div.search_name_basic input {
-        width: 75% !important;
-    }
-*/
+
     #search_form .edit.view.search.basic a#advanced_search_link {
         background-position: 90% 2px;
         text-align: left;
@@ -9594,14 +9590,7 @@ table tr#delegates_search {
         line-height: 40px;
         margin-bottom: 2px;
     }
-    /*
-    #search_form.search_form .edit.view.search.basic input[type=text][name="name_basic"],
-    #search_form.search_form .edit.view.search.basic input[type=text][name="search_name_basic"] {
-        width: 82% !important;
-        float: right;
-        margin-right: 6px;
-    }
-    */
+
     #search_form .edit.view.search.basic div.search_fields_basic {
         line-height: 18px;
         margin: 0;
@@ -9658,16 +9647,7 @@ table tr#delegates_search {
     #search_form .edit.view.search.basic {
         position: relative;
     }
-/*
-    #search_form .edit.view.search.basic div.search_name_basic input {
-        width: 54% !important;
-        position: absolute;
-        top: 20px;
-        left: 48px;
-        border: none;
-        padding: 0 5px;
-    }
-*/
+
     #search_form .edit.view.search.basic .row:nth-of-type(3n) {
         width: 34% !important;
         top: 20px;
@@ -9718,11 +9698,7 @@ table tr#delegates_search {
         width: 42%;
         min-height: 110px;
     }
-/*
-    #search_form .edit.view.search.basic div.search_name_basic img {
-        margin: 5px 8px -6px 8px;
-    }
-*/
+
     #search_form .edit.view.search.basic .clear.hidden {
         display: block !important;
         float: none;
@@ -9792,13 +9768,7 @@ table tr#delegates_search {
     #search_form .edit.view.search.basic .col-md-3 {
         width: initial;
     }
-/*
-    #search_form .edit.view.search.basic div.search_name_basic input {
-        width: initial;
-        border: none;
-        padding: 0 5px;
-    }
-*/
+
     #search_form .edit.view.search.basic .row {
         display: block;
         float: none;
