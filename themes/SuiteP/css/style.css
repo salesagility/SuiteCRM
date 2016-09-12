@@ -9750,8 +9750,36 @@ table tr#delegates_search {
         padding-right: 20px;
         padding-top: 0px;
     }
+
     #search_form .edit.view.search.basic .submitButtons {
         padding-left: 42px;
+    }
+
+    #search_form .edit.view.search.basic .col-lg-9 input[type=text],
+    #search_form .edit.view.search.basic .col-lg-9 textarea,
+    #search_form .edit.view.search.basic div.search_fields_basic select[multiple] {
+        border: none;
+        padding: 0 5px;
+    }
+
+    #search_form .edit.view.search.basic div.search_fields_basic select[multiple] {
+        padding: 5px 5px;
+    }
+
+    #search_form .edit.view.search.basic .date_input {
+        width: 80% !important;
+    }
+    #search_form .edit.view.search.basic img {
+        top: 0px !important;
+    }
+
+    #search_form .edit.view.search.basic label {
+        line-height: 20px;
+    }
+
+    #search_form .edit.view.search.basic .button.firstChild,
+    #search_form .edit.view.search.basic .button.lastChild {
+        padding-left: 0px;
     }
 
 }
