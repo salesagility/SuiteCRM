@@ -537,4 +537,49 @@ $(function () {
         initFooterPopups();
     }
 
+    // do not able to resize textarea if it's too large (on editview)
+    var textareaResizeHandler = function() {
+
+        var textareaCounter = 0;
+
+        var textareaId = false;
+
+        $('textarea').mousedown(function(e){
+
+            if(!$(this).attr('id')) {
+                textareaCounter++;
+                $(this).attr(id, 'textarea-'+textareaCounter);
+            }
+
+            var id = $(this).attr('id');
+
+            textareaId = id;
+
+
+        });
+
+        $(window).mousemove(function(e){
+
+            if(textareaId && $('#'+textareaId).closest('table.edit').length>0) {
+
+                var closestWidth = $('#'+textareaId).closest('table.edit').width();
+                var parentWidth = $('#'+textareaId).closest('table.edit').parent().width();
+
+                if(closestWidth > parentWidth) {
+                    $('#'+textareaId).width( $('#'+textareaId).width() - (closestWidth-parentWidth) - 10 );
+                }
+            }
+
+        });
+
+        $('textarea').mouseup(function(e){
+
+            textareaId = false;
+
+        });
+
+    };
+
+    textareaResizeHandler();
+
 });
