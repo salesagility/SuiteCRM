@@ -2655,7 +2655,7 @@ table.dateTime {
 }
 
 .dateTime td {
-    display: block;
+    display: inline-block;
 }
 
 .dateFormat {
@@ -4888,6 +4888,13 @@ input#btn_ActionLine.button[type="button"] {
 .edit-view-field #duration_hours {
     width: 80px;
     margin-right: 8px;
+}
+
+.col-sm-6 .edit-view-field input[type="text"].datetimecombo_date {
+    width: 84px;
+}
+.col-sm-6 .edit-view-field .datetimecombo_time_section {
+    display: inline-block;
 }
 
 
