@@ -233,8 +233,7 @@ $( "button" ).click(function() {
 
 });
 
-// Custom JavaScript for copyright pop-ups
-$(function() {
+var initFooterPopups = function() {
     $( "#dialog, #dialog2" ).dialog({
         autoOpen: false,
         show: {
@@ -253,6 +252,11 @@ $(function() {
     $( "#admin_options" ).click(function() {
         $( "#dialog2" ).dialog( "open" );
     });
+};
+
+// Custom JavaScript for copyright pop-ups
+$(function() {
+    initFooterPopups();
 });
 
 // Back to top animation
@@ -530,6 +534,7 @@ $(function () {
         var clazz = $('#bootstrap-container footer').attr('class');
         $('body').append('<footer class="' + clazz + '">' + $('#bootstrap-container footer').html() + '</footer>');
         $('#bootstrap-container footer').remove();
+        initFooterPopups();
     }
 
 });
