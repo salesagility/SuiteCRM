@@ -5249,6 +5249,10 @@ li.topnav ul.dropdown-menu li:last-child a {
     height: 40px;
     line-height: 40px;
 }
+button, html input[type=button], input[type=reset], input[type=submit],
+.button, input[type=button], input[type=reset]{
+    margin-right: 4px !important;
+}
 
 /* Remove Text Transformations for action menu*/
 #tab-actions .button,
