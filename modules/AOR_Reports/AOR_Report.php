@@ -976,8 +976,7 @@ class AOR_Report extends Basic {
         $query_array = array();
 
         //Check if the user has access to the target module
-        if(!(ACLController::checkAccess($this->report_module, 'list', true)))
-        {
+        if(!(ACLController::checkAccess($this->report_module, 'list', true))) {
             return false;
         }
 
