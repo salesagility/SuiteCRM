@@ -1187,6 +1187,7 @@ class AOR_Report extends Basic {
 
         if(!$found) {
             $query['select'][] = $this->db->quoteIdentifier($table_name).".id AS ".$table_name."_id";
+            $query['second_group_by'][] = $this->db->quoteIdentifier($table_name).".id";
         }
     }
 
