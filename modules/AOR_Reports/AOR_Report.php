@@ -975,6 +975,12 @@ class AOR_Report extends Basic {
         $query = '';
         $query_array = array();
 
+        //Check if the user has access to the target module
+        if(!(ACLController::checkAccess($this->report_module, 'list', true)))
+        {
+            return false;
+        }
+
         $query_array = $this->build_report_query_select($query_array, $group_value);
         if(isset($extra['where']) && $extra['where']) {
             $query_array['where'][] = implode(' AND ', $extra['where']) . ' AND ';
