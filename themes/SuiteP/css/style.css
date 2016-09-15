@@ -5252,6 +5252,7 @@ li.topnav ul.dropdown-menu li:last-child a {
 button, html input[type=button], input[type=reset], input[type=submit],
 .button, input[type=button], input[type=reset]{
     margin-right: 4px !important;
+    margin-bottom: 4px !important;
 }
 
 /* Remove Text Transformations for action menu*/
@@ -6612,6 +6613,13 @@ tr:hover img.info {
 
 div.action_buttons form {
     float: left;
+}
+
+div.action_buttons .button {
+    background-color: #94A6B5;
+}
+div.action_buttons .button:hover {
+    background-color: #7B8A96;
 }
 
 .paginationWrapper {
