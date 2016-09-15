@@ -6615,6 +6615,13 @@ div.action_buttons form {
     float: left;
 }
 
+div.action_buttons .button {
+    background-color: #94A6B5;
+}
+div.action_buttons .button:hover {
+    background-color: #7B8A96;
+}
+
 .paginationWrapper {
     float: right;
 }
