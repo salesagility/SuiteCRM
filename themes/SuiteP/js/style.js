@@ -517,7 +517,7 @@ $(function () {
         }
 
         for (var i = 1; i <= tabFramesLength; i++) {
-            $('#tab' + i).click(function () {
+            $('#tab' + i + ', input[type="button"]').click(function () {
                 setTimeout(function () {
                     tabsRefresh();
                 }, 300);
