@@ -827,6 +827,11 @@ $(document).ready(function () {
 			valueToPush["id"] = element['record'];
 			valueToPush["record"] = element['record'];
 			valueToPush['module'] = element['module_name'];
+			valueToPush['related_to'] = element['related_to'];
+      valueToPush['parent_id'] = element['parent_id'];
+      valueToPush['parent_name'] = element['parent_name'];
+      valueToPush['parent_type'] = element['parent_type'];
+      valueToPush['status'] = element['status'];
 			valueToPush["start"] = new Date(moment.unix(element['ts_start']).format("MM/DD/YYYY") + " " + moment(element['time_start'], 'hh:mma').format("HH:mm"));
 			valueToPush["end"] = moment(new Date(moment.unix(element['ts_start']).format("MM/DD/YYYY") + " " + moment(element['time_start'], 'hh:mma').format("HH:mm"))).add(element['duration_hours'], 'hours').add(element['duration_minutes'], 'minutes');
 
@@ -940,21 +945,44 @@ $(document).ready(function () {
 			},
 			events: all_events,
 			eventRender: function (event, element) {
+        var title = '<div class="qtip-title-text">'
+          + event.title + '</div><div class="qtip-title-buttons">'
+          + '<a href="index.php?action=DetailView&module='+ event.module +'&record='+event.id+'" class="btn btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a>'
+          +'<a href="index.php?action=EditView&module='+event.module+'&record='+ event.id +'" class="btn btn-xs"><span class="glyphicon glyphicon-pencil"></span></a></div>';
+
+				var body = '<span class="title">'
+            + SUGAR.language.get('Calendar', 'LBL_DATE') + '</span>: '
+            + (event.start.format(global_datetime_format) )
+            + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_SUBJECT') + ': </span>' + ( (event.title) ? event.title : '')
+            + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_STATUS') + ': </span>' + ( (event.status) ? event.status : '')
+            + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_PRIORITY') + ': </span>' + ( (event.priority) ? event.priority : '');
+
+        if(event.parent_name != "") {
+          body = body
+            + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '<a href="index.php?action=DetailView&module='+event.parent_type+'&record='+event.parent_id+'">' + event.parent_name + '</a>';
+        } else {
+          body = body
+            + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '';
+        }
 
 				if ($('#cal_module').val() != "Home") {
 					element.qtip({
 						content: {
-							title: {text: event.title},
-							text: '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</span>: ' + (event.start.format(global_datetime_format) ) + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_SUBJECT') + ': </span>' + ( (event.title) ? event.title : '')
+							title: {
+								text: title,
+								button: true,
+							},
+
+							text: body,
 						},
 						position: {
 							my: 'bottom left',
-							at: 'top right'
+							at: 'top left'
 						},
 						show: {solo: true},
-						hide: {when: 'inactive', delay: 50},
+						hide: {event: false},
 						style: {
-							width: 250,
+							width: 224,
 							padding: 5,
 							color: 'black',
 							textAlign: 'left',

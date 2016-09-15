@@ -126,6 +126,7 @@ $mod_strings = array (
 	'LBL_SUBJECT' => 'Subject',
 	'LBL_DURATION' => 'Duration',
 	'LBL_STATUS' => 'Status',
+	'LBL_PRIORITY' => 'Priority',
 	'LBL_DATE_TIME' => 'Date and Time',
 
 
