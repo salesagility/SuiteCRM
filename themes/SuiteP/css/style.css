@@ -9849,3 +9849,45 @@ table tr#delegates_search {
         min-height: initial;
     }
 }
+
+
+/* advanced search form on all of devices */
+
+#search_form.search_form .edit.view.search.advanced .col-xs-12.col-advanced-search input[type=text],
+#search_form.search_form .edit.view.search.advanced .col-xs-12.col-advanced-search input[type=password],
+#search_form.search_form .edit.view.search.advanced .col-xs-12.col-advanced-search input:not([type]),
+#search_form.search_form .edit.view.search.advanced .col-xs-12.col-advanced-search textarea,
+#search_form.search_form .edit.view.search.advanced .col-xs-12.col-advanced-search select {
+    border: none;
+    padding: 0 5px;
+    width: 100% !important;
+    line-height: 40px;
+    margin-bottom: 2px;
+}
+
+
+#search_form.search_form .edit.view.search.advanced .col-xs-12.col-advanced-search {
+    float: left;
+    padding: 10px;
+}
+
+/* advanced search on tablet view */
+
+@media(min-width: 601px) and (max-width: 1080px) {
+
+    #search_form.search_form .edit.view.search.advanced .col-xs-12.col-advanced-search {
+        width: 50%;
+    }
+
+}
+
+
+/* advanced search form on desktop screen */
+
+@media (min-width: 1081px) {
+
+    #search_form.search_form .edit.view.search.advanced .col-xs-12.col-advanced-search {
+        width: 33%;
+    }
+
+}
