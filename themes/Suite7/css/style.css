@@ -5812,3 +5812,7 @@ table tr#delegates_search {
 .panel-heading {
     padding-bottom: 20px;
 }
+
+.yui-dialog {
+    z-index: 20000;
+}

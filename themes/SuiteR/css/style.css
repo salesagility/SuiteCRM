@@ -5193,5 +5193,8 @@ table tr#delegates_search {
     padding-bottom: 25px;
 }
 
+.yui-dialog {
+    z-index: 20000;
+}
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
