@@ -537,4 +537,14 @@ $(function () {
         initFooterPopups();
     }
 
+    // Fix responsive dashlets on Home page
+    setInterval(function(){
+        $('#pageContainer div[id^=pageNum_] table tbody tr td[valign="top"][width="60%"], ' +
+          '#pageContainer div[id^=pageNum_] table tbody tr td[valign="top"][width="40%"]').each(function(i,e){
+            $(e).removeAttr('width');
+            $(e).addClass('dashletcontainer');
+            $(e).addClass('col-50');
+        });
+    }, 100);
+
 });
