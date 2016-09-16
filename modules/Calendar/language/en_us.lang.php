@@ -57,6 +57,7 @@ $mod_strings = array (
 	'LNK_CALL_LIST' => 'Calls',
 	'LNK_MEETING_LIST' => 'Meetings',
 	'LNK_TASK_LIST' => 'Tasks',
+	'LNK_TASK' => 'Task',
 	'LNK_TASK_VIEW' => 'View Task',
 	'LNK_VIEW_CALENDAR' => 'Today',
 	'LNK_IMPORT_CALLS' => 'Import Calls',

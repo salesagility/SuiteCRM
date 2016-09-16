@@ -295,7 +295,29 @@ CAL.load_form = function (module_name, record, edit_all_recurrences, cal_event) 
 
 
 	if(module_name == "Tasks") {
-		$('.modal-cal-tasks-edit .modal-body .container-fluid').html('<span class="title"><strong>' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</strong></span>: ' + (cal_event.start.format(global_datetime_format) ) + '<br><span class="title"><strong>' + SUGAR.language.get('Calendar', 'LBL_SUBJECT') + ': </strong></span>' + ( (cal_event.title) ? cal_event.title : ''));
+
+		var body = '<span class="title"><strong>' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</strong></span>: ' + (cal_event.start.format(global_datetime_format) ) + '<br><span class="title"><strong>' + SUGAR.language.get('Calendar', 'LBL_SUBJECT') + ': </strong></span>' + ( (cal_event.title) ? cal_event.title : '');
+		if(typeof cal_event.date_due !== "undefined") {
+			body = body
+				+ '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_DUE_DT') + '</span>: ' + cal_event.date_due;
+		} else {
+			body = body
+				+ '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</span>: ' + (cal_event.start.format(global_datetime_format) )
+		}
+
+		body = body
+			+ '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_STATUS') + ': </span>' + ( (cal_event.status) ? cal_event.status : '')
+			+ '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_PRIORITY') + ': </span>' + ( (cal_event.priority) ? cal_event.priority : '');
+
+		if(event.parent_name != "") {
+			body = body
+				+ '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '<a href="index.php?action=DetailView&module='+cal_event.parent_type+'&record='+cal_event.parent_id+'">' + cal_event.parent_name + '</a>';
+		} else {
+			body = body
+				+ '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '';
+		}
+
+		$('.modal-cal-tasks-edit .modal-body .container-fluid').html(body);
 		$('.modal-cal-tasks-edit').modal('show');
 		$('#btn-view-task').unbind().click(function(){
 			window.location.assign('index.php?module='+cal_event.module+'&action=DetailView&record='+cal_event.record);
@@ -962,7 +984,7 @@ $(document).ready(function () {
 						+ '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</span>: ' + (event.start.format(global_datetime_format) )
 				}
 
-				var body = body
+				body = body
 						+ '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_STATUS') + ': </span>' + ( (event.status) ? event.status : '')
             + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_PRIORITY') + ': </span>' + ( (event.priority) ? event.priority : '');
 
