@@ -81,7 +81,7 @@ if(module_name=="Tasks"){var body='<span class="title"><strong>'+SUGAR.language.
 +'<span class="title">'+SUGAR.language.get('Calendar','LBL_DATE')+'</span>: '+(cal_event.start.format(global_datetime_format))}
 body=body
 +'<br><span class="title">'+SUGAR.language.get('Calendar','LBL_STATUS')+': </span>'+((cal_event.status)?cal_event.status:'')
-+'<br><span class="title">'+SUGAR.language.get('Calendar','LBL_PRIORITY')+': </span>'+((cal_event.priority)?cal_event.priority:'');if(event.parent_name!=""){body=body
++'<br><span class="title">'+SUGAR.language.get('Calendar','LBL_PRIORITY')+': </span>'+((cal_event.priority)?cal_event.priority:'');if(cal_event.parent_name!=""){body=body
 +'<br><span class="title">'+SUGAR.language.get('Calendar','LBL_INFO_RELATED_TO')+': </span>'+'<a href="index.php?action=DetailView&module='+cal_event.parent_type+'&record='+cal_event.parent_id+'">'+cal_event.parent_name+'</a>';}else{body=body
 +'<br><span class="title">'+SUGAR.language.get('Calendar','LBL_INFO_RELATED_TO')+': </span>'+'';}
 $('.modal-cal-tasks-edit .modal-body .container-fluid').html(body);$('.modal-cal-tasks-edit').modal('show');$('#btn-view-task').unbind().click(function(){window.location.assign('index.php?module='+cal_event.module+'&action=DetailView&record='+cal_event.record);});$('#btn-tasks-full-form').unbind().click(function(){window.location.assign('index.php?module='+cal_event.module+'&action=EditView&record='+cal_event.record);});}
