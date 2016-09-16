@@ -518,8 +518,9 @@
                                             <li><a></a><span>&nbsp;</span></li>
                                         {else}
                                             <li class="actionmenulinks" role="presentation">
-                                                <a href="{$item.URL}" class="side-bar-{$item.MODULE_NAME}">
-                                                    <span class="actionmenulink">{$item.LABEL}</span>
+                                                <a href="{$item.URL}" >
+                                                    <div class="side-bar-{$item.MODULE_NAME} side-bar-action-icon"></div>
+                                                    <div class="actionmenulink">{$item.LABEL}</div>
                                                 </a>
                                             </li>
                                         {/if}

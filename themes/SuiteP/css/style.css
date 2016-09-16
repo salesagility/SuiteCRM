@@ -330,99 +330,102 @@ div#pageContainer td.dashletcontainer div.hd .icon {
     display: none;
 }
 
+#actionMenuSidebar ul {
+    list-style-type: none;
+}
 
-#actionMenuSidebar li a.side-bar-Create, #actionMenuSidebar li a.side-bar-Add {
+#actionMenuSidebar li a .side-bar-Create, #actionMenuSidebar li a .side-bar-Add {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Add.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Add.svg");
 }
 
-#actionMenuSidebar li a.side-bar-Create_Contact_Vcard, #actionMenuSidebar li a.side-bar-Create_Lead_Vcard {
+#actionMenuSidebar li a .side-bar-Create_Contact_Vcard, #actionMenuSidebar li a .side-bar-Create_Lead_Vcard {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Contact_Vcard.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Contact_Vcard.svg");
 }
 
-#actionMenuSidebar li a.side-bar-Create_Group_User {
+#actionMenuSidebar li a .side-bar-Create_Group_User {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Group_User.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Group_User.svg");
 }
 
-#actionMenuSidebar li a.side-bar-Create_Person_Form {
+#actionMenuSidebar li a .side-bar-Create_Person_Form {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Person_Form.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Person_Form.svg");
 }
 
-#actionMenuSidebar li a.side-bar-Create_Security_Group {
+#actionMenuSidebar li a .side-bar-Create_Security_Group {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Security_Group.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Security_Group.svg");
 }
 
-#actionMenuSidebar li a.side-bar-Import {
+#actionMenuSidebar li a .side-bar-Import {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Import.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Import.svg");
 }
 
-#actionMenuSidebar li a.side-bar-Import_Line_Item {
+#actionMenuSidebar li a .side-bar-Import_Line_Item {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Import_Line_Item.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Import_Line_Item.svg");
 }
 
-#actionMenuSidebar li a.side-bar-List_Maps {
+#actionMenuSidebar li a .side-bar-List_Maps {
     background-image: url("../../../../themes/SuiteP/images/sidebar/List_Maps.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/List_Maps.svg");
 }
 
-#actionMenuSidebar li a.side-bar-Quick_Radius_Map {
+#actionMenuSidebar li a .side-bar-Quick_Radius_Map {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Quick_Radius_Map.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Quick_Radius_Map.svg");
 }
 
-#actionMenuSidebar li a.side-bar-Resource_Chart {
+#actionMenuSidebar li a .side-bar-Resource_Chart {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Resource_Chart.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Resource_Chart.svg");
 }
 
-#actionMenuSidebar li a.side-bar-Role_Management {
+#actionMenuSidebar li a .side-bar-Role_Management {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Role_Management.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Role_Management.svg");
 }
 
-#actionMenuSidebar li a.side-bar-Schedule_Call {
+#actionMenuSidebar li a .side-bar-Schedule_Call {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Schedule_Call.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Schedule_Call.svg");
 }
 
-#actionMenuSidebar li a.side-bar-Schedule_Meeting {
+#actionMenuSidebar li a .side-bar-Schedule_Meeting {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Schedule_Meeting.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Schedule_Meeting.svg");
 }
 
-#actionMenuSidebar li a.side-bar-Security_Groups {
+#actionMenuSidebar li a .side-bar-Security_Groups {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Security_Groups.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Security_Groups.svg");
 }
 
-#actionMenuSidebar li a.side-bar-Security_Suite_Settings {
+#actionMenuSidebar li a .side-bar-Security_Suite_Settings {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Security_Suite_Settings.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Security_Suite_Settings.svg");
 }
 
-#actionMenuSidebar li a.side-bar-Setup_Email {
+#actionMenuSidebar li a .side-bar-Setup_Email {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Setup_Email.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Setup_Email.svg");
 }
 
-#actionMenuSidebar li a.side-bar-Today {
+#actionMenuSidebar li a .side-bar-Today {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Today.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Today.svg");
 }
 
-#actionMenuSidebar li a.side-bar-View_Project_Tasks {
+#actionMenuSidebar li a .side-bar-View_Project_Tasks {
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Project_Tasks.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Project_Tasks.svg");
 }
 
 
-#actionMenuSidebar li a.side-bar-View_Create_Email_Templates {
+#actionMenuSidebar li a .side-bar-View_Create_Email_Templates {
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Create_Email_Templates.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Create_Email_Templates.svg");
 }
@@ -430,49 +433,72 @@ div#pageContainer td.dashletcontainer div.hd .icon {
 
 
 
-#actionMenuSidebar li a.side-bar-View, #actionMenuSidebar li a.side-bar-List {
+#actionMenuSidebar li a.side-bar-View, #actionMenuSidebar li a .side-bar-List {
     background-image: url("../../../../themes/SuiteP/images/sidebar/View.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/View.svg");
 }
 
 
-#actionMenuSidebar li a.side-bar-View_Diagnostics {
+#actionMenuSidebar li a .side-bar-View_Diagnostics {
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Diagnostics.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Diagnostics.svg");
 }
 
-#actionMenuSidebar li a.side-bar-View_Email_Templates {
+#actionMenuSidebar li a .side-bar-View_Email_Templates {
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Email_Templates.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Email_Templates.svg");
 }
 
-#actionMenuSidebar li a.side-bar-View_Process_Audit {
+#actionMenuSidebar li a .side-bar-View_Process_Audit {
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Process_Audit.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Process_Audit.svg");
 }
 
-#actionMenuSidebar li a.side-bar-View_Process_Tasks {
+#actionMenuSidebar li a .side-bar-View_Process_Tasks {
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Process_Tasks.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Process_Tasks.svg");
 }
 
 #actionMenuSidebar li a {
-    background-repeat: no-repeat;
-    background-position: 17px 8px;
-    background-size: 32px;
     background-color: #94A6B5;
     color: #f5f5f5;
     display: block;
     font-size: 13px;
     margin: 0 0 1px 0;
-    line-height: 48px;
-    padding-left: 55px;
+    clear: both;
 }
 
 #actionMenuSidebar ul li a:hover {
     color: #fff;
     background-color: #8499AB;
-    background-position: 17px -72px;
+}
+
+#actionMenuSidebar ul li a:hover .side-bar-action-icon {
+    background-position: 0px -72px;
+}
+
+#actionMenuSidebar li a div {
+    display: block;
+    text-wrap: normal;
+}
+
+
+#actionMenuSidebar li a .actionmenulink {
+    width: 220px;
+    min-height: 48px;
+    padding: 16px 0 16px 16px;
+    line-height: 24px;
+}
+
+.side-bar-action-icon {
+    width: 48px;
+    height: 48px;
+    background-repeat: no-repeat;
+    background-position: 0px 8px;
+    background-size: 32px;
+    vertical-align: middle;
+    margin-left: 16px;
+    float: left;
 }
 
 .sidebar_top {
@@ -7850,7 +7876,7 @@ div.list-view-rounded-corners > table th:last-of-type {
 
 @media (max-width: 1600px) {
     .sidebar {
-        width: 20%;
+        width: 18%;
     }
 
     #bootstrap-container.col-md-offset-2 {
