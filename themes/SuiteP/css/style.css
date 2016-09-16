@@ -2545,6 +2545,13 @@ li.noBullet {
     color: #ff0000;
 }
 
+.product_group .required {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    line-height: 32px;
+}
+
 .required {
     background-color: transparent;
     color: #f08377;

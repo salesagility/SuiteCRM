@@ -96,7 +96,7 @@ function insertProductLine(tableid, groupid) {
     "method": "query",
     "modules": ["AOS_Products"],
     "group": "or",
-    "field_list": ["name", "id","part_number", "cost", "price","description","currency_id"],
+    "field_list": ["name", "id", "part_number", "cost", "price", "description", "currency_id"],
     "populate_list": ["product_name[" + prodln + "]", "product_product_id[" + prodln + "]", "product_part_number[" + prodln + "]", "product_product_cost_price[" + prodln + "]", "product_product_list_price[" + prodln + "]", "product_item_description[" + prodln + "]", "product_currency[" + prodln + "]"],
     "required_list": ["product_id[" + prodln + "]"],
     "conditions": [{
@@ -724,17 +724,18 @@ function calculateLine(ln, key){
 
 }
 
-function calculateAllLines(){
+function calculateAllLines() {
+  $('.product_group').each(function(productGroupkey, productGroupValue) {
+      $(productGroupValue).find('tbody').each(function(productKey, productValue) {
+        calculateLine(productKey, "product_");
+      });
+  });
 
-  var row = document.getElementById('lineItems').getElementsByTagName('tbody');
-  var length = row.length;
-  for (k=0; k < length; k++) {
-    var input = row[k].getElementsByTagName('input');
-    var key = input[0].id.split('_')[0]+'_';
-    var ln = input[0].id.slice(-1);
-    calculateLine(ln, key);
-  }
-
+  $('.service_group').each(function(serviceGroupkey, serviceGroupValue) {
+    $(serviceGroupValue).find('tbody').each(function(serviceKey, serviceValue) {
+      calculateLine(serviceKey, "service_");
+    });
+  });
 }
 
 /**
