@@ -4185,7 +4185,7 @@ header {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#121212',GradientType=0 ); /* IE6-8 */
     height:35px;
     border-bottom:2px solid #f10202;
-    z-index:50;
+    z-index: 15030;
 }
 
 /* Table CSS */

@@ -155,7 +155,7 @@ var url="index.php?module=Calendar&action=Reschedule&sugar_body_only=true";$.aja
 +'<span class="title">'+SUGAR.language.get('Calendar','LBL_INFO_DUE_DT')+'</span>: '+event.date_due;}else{body=body
 +'<span class="title">'+SUGAR.language.get('Calendar','LBL_DATE')+'</span>: '+(event.start.format(global_datetime_format))}
 var body=body
-+'<span class="title">'+SUGAR.language.get('Calendar','LBL_STATUS')+': </span>'+((event.status)?event.status:'')
++'<br><span class="title">'+SUGAR.language.get('Calendar','LBL_STATUS')+': </span>'+((event.status)?event.status:'')
 +'<br><span class="title">'+SUGAR.language.get('Calendar','LBL_PRIORITY')+': </span>'+((event.priority)?event.priority:'');if(event.parent_name!=""){body=body
 +'<br><span class="title">'+SUGAR.language.get('Calendar','LBL_INFO_RELATED_TO')+': </span>'+'<a href="index.php?action=DetailView&module='+event.parent_type+'&record='+event.parent_id+'">'+event.parent_name+'</a>';}else{body=body
 +'<br><span class="title">'+SUGAR.language.get('Calendar','LBL_INFO_RELATED_TO')+': </span>'+'';}
