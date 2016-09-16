@@ -5137,6 +5137,9 @@ textarea#description {
     text-transform: none;
 }
 
+.navbar-fixed-bottom, .navbar-fixed-top {
+    z-index: 15030;
+}
 
 ul.nav li.topnav a {
     border-top: 3px solid #534d64;
@@ -7141,6 +7144,10 @@ object {
     overflow-y: auto;
 }
 
+.qtip-content .title {
+    font-weight: bold;
+}
+
 .qtip {
     font-family: 'Lato', Lato, Arial, sans-serif;
     font-size: 12px;
@@ -7156,6 +7163,9 @@ object {
     background-image: -webkit-gradient(linear, left top, left bottom, from(#F08377), to(#4286AD));
     background-image: -webkit-linear-gradient(top, #F08377, #4286AD);
 }
+
+
+
 
 #reminders .clear {
     clear: both;

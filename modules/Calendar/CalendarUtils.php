@@ -89,7 +89,8 @@ class CalendarUtils {
 				'parent_name',
 				'parent_id',
 				'parent_type',
-				'priority'
+				'priority',
+				'date_due'
 			),
 		);
 	}
