@@ -537,4 +537,26 @@ $(function () {
         initFooterPopups();
     }
 
+    // Fix for main sub-panels on detail view
+    var resetTopSubpanelSpacing = function() {
+        $('.panel.panel-default').css('margin-bottom', '0');
+        $('.panel-body.panel-collapse.collapse.in').closest('.panel.panel-default').css('margin-bottom', '30px');
+        $('.panel-body.panel-collapse.collapse.in').closest('.panel.panel-default').prev('.panel.panel-default').css('margin-bottom', '30px');
+    };
+
+    $('li.noBullet').click(function(){
+        setTimeout(function(){
+            resetTopSubpanelSpacing();
+        }, 400);
+    });
+
+    $(window).click(function(){
+        setTimeout(function(){
+            resetTopSubpanelSpacing();
+        }, 400);
+    });
+
+    resetTopSubpanelSpacing();
+
+
 });
