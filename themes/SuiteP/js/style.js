@@ -537,4 +537,25 @@ $(function () {
         initFooterPopups();
     }
 
+    // Fix for sub-panel spacing
+    var resetSubpanelSpacing = function() {
+        $('li.noBullet').css('margin-bottom', '0');
+        $('.panel-body.panel-collapse.collapse.in').closest('li.noBullet').css('margin-bottom', '30px');
+        $('.panel-body.panel-collapse.collapse.in').closest('li.noBullet').prev('li.noBullet').css('margin-bottom', '30px');
+    };
+
+    $('li.noBullet').click(function(){
+        setTimeout(function(){
+            resetSubpanelSpacing();
+        }, 400);
+    });
+
+    $(window).click(function(){
+        setTimeout(function(){
+            resetSubpanelSpacing();
+        }, 400);
+    });
+
+    resetSubpanelSpacing();
+
 });
