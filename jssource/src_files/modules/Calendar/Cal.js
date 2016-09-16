@@ -309,7 +309,7 @@ CAL.load_form = function (module_name, record, edit_all_recurrences, cal_event) 
 			+ '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_STATUS') + ': </span>' + ( (cal_event.status) ? cal_event.status : '')
 			+ '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_PRIORITY') + ': </span>' + ( (cal_event.priority) ? cal_event.priority : '');
 
-		if(event.parent_name != "") {
+		if(cal_event.parent_name != "") {
 			body = body
 				+ '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '<a href="index.php?action=DetailView&module='+cal_event.parent_type+'&record='+cal_event.parent_id+'">' + cal_event.parent_name + '</a>';
 		} else {
