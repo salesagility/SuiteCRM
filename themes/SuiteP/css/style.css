@@ -7786,27 +7786,54 @@ div.list-view-rounded-corners > table th:last-of-type {
 @media (max-width: 3000px) {
 
     .sidebar {
-        width: 14%;
+        width: 10%;
     }
 
     #bootstrap-container.col-md-offset-2 {
-        margin-left: 14%;
+        margin-left: 10%;
     }
 
     #bootstrap-container {
-        width: 84%;
+        width: 90%;
     }
 
     .button-toggle-expanded {
-        left: 14% !important;
+        left: 10% !important;
     }
 
     .button-toggle-collapsed {
         left: 0%;
     }
+
+    footer.expandedSidebar {
+        width: 85%;
+    }
 }
 
 @media (max-width: 2000px) {
+    .sidebar {
+        width: 16%;
+    }
+
+    #bootstrap-container.col-md-offset-2 {
+        margin-left: 16%;
+    }
+
+    #bootstrap-container {
+        width: 82%;
+    }
+
+    .button-toggle-expanded {
+        left: 16% !important;
+    }
+
+    .button-toggle-collapsed {
+        left: 0%;
+    }
+
+    footer.expandedSidebar {
+        width: 80%;
+    }
 
 }
 
