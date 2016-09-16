@@ -537,4 +537,141 @@ $(function () {
         initFooterPopups();
     }
 
+
+    // Basic search form layout (it should be synchronized with media queries)
+    var basicSearchFromRestyle = function(){
+
+
+        var i = setInterval(function () {
+
+            if($('#search_form.search_form .edit.view.search.basic').length && $('#search_form .row .search_fields_basic').length == 3) {
+
+                var doNotRestyle = false;
+                var uncustumizedFormFields = ['name_basic', 'current_user_only_basic', 'favorites_only_basic'];
+                $('#search_form .row .search_fields_basic input[type!="hidden"]').each(function(i,e){
+                    if($(e).attr('name') != uncustumizedFormFields[i]) {
+                        doNotRestyle = true;
+                    }
+                });
+
+                if(!doNotRestyle) {
+
+                    var windowWidth = $(window).width();
+
+                    if (windowWidth > 310) {
+
+                        $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').parent()
+                          .attr('style', 'width: 16px !important; margin-left: 2px;');
+
+                        $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').closest('.search_fields_basic').find('label')
+                          .attr('style', 'width: auto !important;');
+
+                        $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').closest('.search_fields_basic').find('label').parent()
+                          .attr('style', 'width: auto !important;');
+
+                        $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').closest('.search_fields_basic')
+                          .attr('style', 'width: initial !important;');
+
+
+                        $('#search_form.search_form .edit.view.search.basic select').attr('style', '');
+
+                        if (windowWidth > 600) {
+                            $('#search_form.search_form .edit.view.search.basic input[type="checkbox"]').closest('.search_fields_basic').find('.col-xs-12.col-sm-12.col-md-12.col-lg-3, .col-xs-12.col-sm-12.col-md-12.col-lg-9').css({float: 'right'});
+
+                            $('#search_form.search_form .edit.view.search.basic input[name="name_basic"]').closest('.search_fields_basic').find('.col-xs-12.col-sm-12.col-md-12.col-lg-3').css({width: '25%'});
+                            $('#search_form.search_form .edit.view.search.basic input[name="name_basic"]').closest('.search_fields_basic').find('.col-xs-12.col-sm-12.col-md-12.col-lg-9').css({width: '65%'});
+                            $('#search_form .edit.view.search.basic div.search_fields_basic').css({'min-height':'65px'});
+
+                            $('#search_form .edit.view.search.basic .clear.hidden').removeClass('hidden');
+
+                            var marginNeeded = false;
+                            $('#search_form.search_form .edit.view.search.basic .row').each(function (i, e) {
+                                if (i == 1) {
+                                    $(e).find('.search_fields_basic').each(function (j, c) {
+                                        if (j == 0 || j == 1) {
+                                            if ($(c).find('input[type="checkbox"]').length == 0) {
+                                                marginNeeded = true;
+                                            }
+                                        }
+                                    });
+                                }
+                                if (i == 1 && marginNeeded) {
+                                    $(e).css('margin-top', '40px');
+                                }
+                            });
+
+                            if (windowWidth > 1080) {
+
+                                var revertNeeded = 0;
+                                $('#search_form.search_form .edit.view.search.basic .row').each(function (i, e) {
+                                    if (i == 1) {
+                                        $(e).find('.search_fields_basic').each(function (j, c) {
+                                            if (j == 0 || j == 1) {
+                                                if ($(c).find('input[type="checkbox"]').length == 1) {
+                                                    revertNeeded++;
+                                                }
+                                            }
+                                        });
+                                    }
+                                    if (i == 1 && revertNeeded == 2) {
+                                        $('#search_form .edit.view.search.basic .row').css('float', 'left');
+                                        $('#search_form .edit.view.search.basic div.search_fields_basic').css('min-width', 'initial');
+                                        $('#search_form .edit.view.search.basic div.search_fields_basic .col-lg-3').css('min-width', 'initial');
+                                    }
+                                });
+
+                                $('#search_form .edit.view.search.basic div.search_fields_basic').first().css('min-width', '500px');
+                                $('#search_form .edit.view.search.basic div.search_fields_basic .col-lg-3').css('min-width', 'initial');
+                                $('#search_form .edit.view.search.basic div.search_fields_basic').css('min-width', 'initial');
+                                $('#search_form .edit.view.search.basic div.search_fields_basic .submitButtons').parent().css('width', 'initial');
+                                $('#search_form .edit.view.search.basic .row').css({
+                                    float: 'left',
+                                    height: '50px'
+                                });
+
+                            }
+
+                        }
+
+                    }
+                }
+
+            }
+
+
+        }, 100);
+
+        setTimeout(function () {
+            clearInterval(i);
+        }, 5000);
+
+    };
+
+    $(window).click(function(){
+        basicSearchFromRestyle();
+    });
+
+    $(window).resize(function(){
+        basicSearchFromRestyle();
+    });
+
+    $(window).ready(function(){
+        basicSearchFromRestyle();
+    });
+
+    $(document).ready(function(){
+        basicSearchFromRestyle();
+    });
+
+    $(window).load(function(){
+        basicSearchFromRestyle();
+    });
+
+    $(document).load(function(){
+        basicSearchFromRestyle();
+    });
+
+
+    basicSearchFromRestyle();
+
 });

@@ -5107,7 +5107,7 @@ textarea#description {
 
 .dropdown-menu li {
     margin: 0 !important;
-    padding: 0 !important;;
+    padding: 0 !important;
 }
 
 .dropdown-menu li a {
@@ -5363,11 +5363,6 @@ div.search_fields_basic select[multiple] {
     width: 100% !important;
 }
 
-div.search_fields_basic:nth-of-type(3n+1) {
-    clear: both;
-}
-
-
 .converted_account {
     border: 1px solid transparent;
     border-radius: 4px;
@@ -5494,12 +5489,61 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     }
 
     div.search_fields_basic .col-lg-3 {
-        width: 100% !important;
+        float: left;
+        display: block;
+        width: initial;
     }
 
     #wizform #wizard {
         width: 1100px;
     }
+}
+
+
+
+@media (min-width: 1130px) {
+
+    #search_form .edit.view.search.basic div.search_fields_basic .col-lg-3 {
+        float: left;
+        display: block;
+        width: initial;
+    }
+
+    #search_form .edit.view.search.basic .col-lg-9 {
+        float: left;
+        display: block;
+        width: initial;
+        margin: 0 5px;
+    }
+
+}
+
+@media (min-width: 992px) {
+    #search_form .edit.view.search.basic div.search_fields_basic .col-lg-3,
+    #search_form .edit.view.search.basic .col-lg-9 {
+        float: left;
+        display: block;
+        width: initial;
+        margin: 0 5px;
+    }
+}
+
+@media (min-width: 768px) {
+    #search_form .edit.view.search.basic div.search_fields_basic .col-lg-3,
+    #search_form .edit.view.search.basic .col-lg-9  {
+        float: left;
+        display: block;
+        width: initial;
+        margin: 0 5px;
+    }
+}
+
+#search_form .edit.view.search.basic div.search_fields_basic .col-lg-3,
+#search_form .edit.view.search.basic .col-lg-9  {
+    float: left;
+    display: block;
+    width: initial;
+    margin: 0 5px;
 }
 
 @media (min-width: 1600px) {
@@ -6638,7 +6682,7 @@ div.action_buttons .button:hover {
 }
 
 #mobile_menu {
-    border-top: none;;
+    border-top: none;
 }
 
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
@@ -9579,5 +9623,355 @@ table tr#delegates_search {
     }
 
 
+
+}
+
+
+/* basic search form on mobile (very small screen) */
+
+@media (max-width: 310px) {
+
+    #search_form .edit.view.search.basic a#advanced_search_link {
+        background-position: 90% 2px;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    #search_form .edit.view.search.basic .button, input[type=submit],
+    #search_form .edit.view.search.basic input[type=button],
+    #search_form .edit.view.search.basic input[type=reset],
+    #search_form .edit.view.search.basic a#advanced_search_link
+    {
+        font-size: 10px !important;
+    }
+
+    #search_form .edit.view.search.basic div.search_fields_basic:nth-of-type(3n+1) {
+        margin: 0;
+    }
+
+}
+
+/* basic search form on mobile */
+
+@media (max-width: 600px) {
+
+    #search_form .edit.view.search.basic .submitButtons .button,
+    #search_form .edit.view.search.basic .submitButtons input[type=submit],
+    #search_form .edit.view.search.basic .submitButtons input[type=button],
+    #search_form .edit.view.search.basic .submitButtons input[type=reset] {
+        margin: 0 2px;
+        width: 48%;
+    }
+
+    #search_form.search_form .edit.view.search.basic input[type=text],
+    #search_form.search_form .edit.view.search.basic input[type=password],
+    #search_form.search_form .edit.view.search.basic input:not([type]),
+    #search_form.search_form .edit.view.search.basic textarea,
+    #search_form.search_form .edit.view.search.basic select {
+        border: none;
+        padding: 0 5px;
+        width: 100% !important;
+        line-height: 40px;
+        margin-bottom: 2px;
+    }
+
+    #search_form .edit.view.search.basic div.search_fields_basic {
+        line-height: 18px;
+        margin: 0;
+        float: left;
+        display: block;
+        width: 100% !important;
+        padding: 0 0 10px 0;
+    }
+
+    #search_form .edit.view.search.basic div.search_fields_basic:nth-of-type(3n+1) {
+        float: left;
+        display: block;
+        width: initial;
+    }
+
+    #search_form .edit.view.search.basic div.search_fields_basic .col-lg-3,
+    #search_form .edit.view.search.basic .col-lg-9 {
+        float: right;
+        width: 98% !important;
+    }
+
+    #search_form .edit.view.search.basic a#advanced_search_link {
+        margin: 4px 2px;
+        background-position: 90% 2px;
+        width: 97%;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    #search_form .edit.view.search.basic .submitButtons {
+        font-size: 0;
+    }
+
+
+    #search_form .edit.view.search.basic label {
+        width: 100% !important;
+    }
+
+    #search_form .edit.view.search.basic #parent_name,
+    #search_form .edit.view.search.basic input.sqsEnabled {
+        margin-top: 0px;
+    }
+
+    #search_form .edit.view.search.basic span.id-ff.multiple {
+        top: 0px;
+    }
+}
+
+
+/* basic search on tablet view */
+
+@media(min-width: 601px) and (max-width: 1080px) {
+
+    #search_form .edit.view.search.basic {
+        position: relative;
+    }
+
+    #search_form .edit.view.search.basic .row:nth-of-type(3n) {
+        width: 34% !important;
+        top: 20px;
+        position: absolute;
+        right: 0;
+        min-width: 215px;
+    }
+    #search_form .edit.view.search.basic .row:nth-of-type(3n) .button,
+    #search_form .edit.view.search.basic .row:nth-of-type(3n) input[type=submit],
+    #search_form .edit.view.search.basic .row:nth-of-type(3n) input[type=button],
+    #search_form .edit.view.search.basic .row:nth-of-type(3n) input[type=reset] {
+        width: 43%;
+    }
+
+    #search_form .edit.view.search.basic .row {
+        width: 100% !important;
+        display: block;
+        float: left;
+    }
+
+    #search_form .edit.view.search.basic a#advanced_search_link {
+        width: 88.5%;
+        min-width: initial;
+        background-position: 90% 2px;
+        white-space: nowrap;
+    }
+
+    #search_form .edit.view.search.basic .button,
+    #search_form .edit.view.search.basic input[type=submit],
+    #search_form .edit.view.search.basic input[type=button],
+    #search_form .edit.view.search.basic input[type=reset] {
+        margin: 0 2px 0 0;
+        padding: initial;
+    }
+
+    #search_form .edit.view.search.basic div.search_fields_basic .col-lg-3,
+    #search_form .edit.view.search.basic .col-lg-9 {
+        float: left;
+        width: 100%;
+    }
+    #search_form .edit.view.search.basic .col-lg-9 input[type=text],
+    #search_form .edit.view.search.basic .col-lg-9 textarea {
+        width: 99%;
+    }
+
+    #search_form .edit.view.search.basic div.search_fields_basic {
+        margin: 10px 0 -12px 37px;
+        width: 42%;
+        min-height: 110px;
+    }
+
+    #search_form .edit.view.search.basic .clear.hidden {
+        display: block !important;
+        float: none;
+        clear: both;
+    }
+
+    #search_form .edit.view.search.basic input.sqsEnabled {
+        margin-top: 0px;
+        width: 140px !important;
+    }
+
+    #search_form .edit.view.search.basic .dateTimeRangeChoice select {
+        padding: 0 38px 0 8px;
+    }
+
+    #search_form .edit.view.search.basic a#advanced_search_link {
+        width: initial;
+    }
+    #search_form .edit.view.search.basic .button,
+    #search_form .edit.view.search.basic input[type=submit],
+    #search_form .edit.view.search.basic input[type=button],
+    #search_form .edit.view.search.basic input[type=reset] {
+        padding-bottom: 0px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 0px;
+    }
+
+    #search_form .edit.view.search.basic .submitButtons {
+        padding-left: 42px;
+    }
+
+    #search_form .edit.view.search.basic .col-lg-9 input[type=text],
+    #search_form .edit.view.search.basic .col-lg-9 textarea,
+    #search_form .edit.view.search.basic div.search_fields_basic select[multiple] {
+        border: none;
+        padding: 0 5px;
+    }
+
+    #search_form .edit.view.search.basic div.search_fields_basic select[multiple] {
+        padding: 5px 5px;
+    }
+
+    #search_form .edit.view.search.basic .date_input {
+        width: 80% !important;
+    }
+    #search_form .edit.view.search.basic img {
+        top: 0px !important;
+    }
+
+    #search_form .edit.view.search.basic label {
+        line-height: 20px;
+    }
+
+    #search_form .edit.view.search.basic .button.firstChild,
+    #search_form .edit.view.search.basic .button.lastChild {
+        padding-left: 0px;
+    }
+
+}
+
+
+/* basic search form on desktop screen */
+
+@media (min-width: 1081px) {
+
+    #search_form .edit.view.search.basic .col-md-3 {
+        width: initial;
+    }
+
+    #search_form .edit.view.search.basic .row {
+        display: block;
+        float: none;
+    }
+
+    #search_form .edit.view.search.basic .row:nth-of-type(3n+2) {
+        margin-left: 20px;
+        margin-right: 0;
+    }
+
+    #search_form .edit.view.search.basic .row:nth-of-type(3n+3) {
+        margin-left: 20px;
+        margin-right: 0;
+    }
+
+    #search_form .edit.view.search.basic div.search_fields_basic {
+        margin: 0 8px;
+        line-height: 40px;
+        min-width: 400px;
+        min-height: 110px;
+    }
+
+    #search_form .edit.view.search.basic div.search_fields_basic .col-lg-3 {
+        width: initial !important;
+        min-width: 150px;
+    }
+
+    #search_form .edit.view.search.basic .clear.hidden {
+        display: block !important;
+        float: none;
+        clear: both;
+    }
+
+    #search_form .edit.view.search.basic {
+        padding-bottom: 10px !important;
+    }
+
+    #search_form .edit.view.search.basic input.sqsEnabled {
+        margin-top: 0px;
+        width: 140px !important;
+    }
+
+    #search_form .edit.view.search.basic .dateTimeRangeChoice select {
+        padding: 0 38px 0 8px;
+    }
+
+
+    #search_form .edit.view.search.basic .col-lg-9 input[type=text],
+    #search_form .edit.view.search.basic .col-lg-9 textarea,
+    #search_form .edit.view.search.basic div.search_fields_basic select[multiple] {
+        border: none;
+        padding: 0 5px;
+    }
+
+
+    #search_form .edit.view.search.basic div.search_fields_basic select[multiple] {
+        padding: 5px 5px;
+        width: 229px !important;
+    }
+
+    #search_form .edit.view.search.basic .date_input {
+        width: 80% !important;
+    }
+    #search_form .edit.view.search.basic img {
+        top: 0px !important;
+    }
+
+    #search_form .edit.view.search.basic label {
+        line-height: 20px;
+    }
+
+    #search_form .edit.view.search.basic .button.firstChild,
+    #search_form .edit.view.search.basic .button.lastChild {
+        padding-left: 0px;
+    }
+    #search_form .edit.view.search.basic div.search_fields_basic {
+        margin: 0 8px 5px 0;
+        min-height: initial;
+    }
+}
+
+
+/* advanced search form on all of devices */
+
+#search_form.search_form .edit.view.search.advanced .col-xs-12.col-advanced-search input[type=text],
+#search_form.search_form .edit.view.search.advanced .col-xs-12.col-advanced-search input[type=password],
+#search_form.search_form .edit.view.search.advanced .col-xs-12.col-advanced-search input:not([type]),
+#search_form.search_form .edit.view.search.advanced .col-xs-12.col-advanced-search textarea,
+#search_form.search_form .edit.view.search.advanced .col-xs-12.col-advanced-search select {
+    border: none;
+    padding: 0 5px;
+    width: 100% !important;
+    line-height: 40px;
+    margin-bottom: 2px;
+}
+
+
+#search_form.search_form .edit.view.search.advanced .col-xs-12.col-advanced-search {
+    float: left;
+    padding: 10px;
+}
+
+/* advanced search on tablet view */
+
+@media(min-width: 601px) and (max-width: 1080px) {
+
+    #search_form.search_form .edit.view.search.advanced .col-xs-12.col-advanced-search {
+        width: 50%;
+    }
+
+}
+
+
+/* advanced search form on desktop screen */
+
+@media (min-width: 1081px) {
+
+    #search_form.search_form .edit.view.search.advanced .col-xs-12.col-advanced-search {
+        width: 33%;
+    }
 
 }
