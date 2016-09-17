@@ -79,7 +79,7 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail {
 ?>
         <!--Create task pop-up-->
         <div style="display: none;">
-            <div id="dialog"  title="<?php echo $mod_strings['LBL_ADD_NEW_TASK']; ?>">
+            <div id="template_dialog"  title="<?php echo $mod_strings['LBL_ADD_NEW_TASK']; ?>">
                 <p>
                     <?php echo $mod_strings['LBL_EDIT_TASK_PROPERTIES']; ?>
                 </p>

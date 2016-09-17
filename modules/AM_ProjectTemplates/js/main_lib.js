@@ -148,7 +148,7 @@ $(document).ready(function() {
             $('#Duration').val('0').attr('readonly', false);
             $('#Duration_unit').attr('readonly', false);
 
-            $( "#dialog" ).dialog({
+            $( "#template_dialog" ).dialog({
                 autoOpen: true,
                 show: {
                     effect: "none",
@@ -451,7 +451,7 @@ function edit_task(task){
     $('#Notes').val(data[9]);
     $('#Actual_duration').val(data[10]);
 
-    $( "#dialog" ).dialog({
+    $( "#template_dialog" ).dialog({
         autoOpen: true,
         show: {
             effect: "none",
