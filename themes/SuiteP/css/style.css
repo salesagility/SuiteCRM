@@ -319,7 +319,7 @@ div#pageContainer td.dashletcontainer div.hd .icon {
 }
 
 #actionMenuSidebar {
-    margin-bottom: 40px;
+    margin-bottom: 25px;
 }
 
 #actionMenuSidebar_top {
@@ -643,7 +643,7 @@ div.noBullet li, .nobullet
 }
 
 #recentlyViewedSidebar {
-    margin-bottom: 30px;
+    margin-bottom: 12px;
     float: left;
     width: 100%;
 }
@@ -667,8 +667,8 @@ li.recentlinks img {
 }
 
 #recentlyViewedSidebar li a, #favoritesSidebar li a {
-    color: #fff;
-    padding: 10px 30px 10px 30px;
+    color: #f5f5f5;
+    padding: 7px 30px 7px 30px;
     width: 100%;
     display: block;
 }
@@ -680,8 +680,8 @@ li.recentlinks img {
 #recentlyViewedSidebar h2, #favoritesSidebar h2 {
     font-size: 16px;
     font-weight: bold;
-    color: #fff;
-    margin: 0 0 15px 0;
+    color: #f5f5f5;
+    margin: 0 0 5px 0;
     padding: 0 30px 0 30px;
 }
 
