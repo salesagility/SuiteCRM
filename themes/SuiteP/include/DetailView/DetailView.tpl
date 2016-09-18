@@ -155,7 +155,7 @@
             <div class="panel-heading {{$panelHeadingCollapse}}">
                 <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#{{$panelId}}" aria-expanded="false">
                     <div class="col-xs-10 col-sm-11 col-md-11">
-                         {sugar_translate label='{{$label}}' module='{{$module}}'}</div>
+                         {sugar_translate label='{{$label}}' module='{{$module}}'}
                     </div>
                 </a>
 
