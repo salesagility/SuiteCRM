@@ -316,7 +316,23 @@ class Project extends SugarBean {
 
 	function save($check_notify = FALSE) {
 
-		$focus = $this; //new Project();
+		global $current_user, $db;
+		
+		$focus = $this; 
+
+		//--- check if project template is same or changed.
+        $new_template_id = $focus->am_projecttemplates_project_1am_projecttemplates_ida;
+        $current_template_id = "";
+
+		$focus->load_relationship('am_projecttemplates_project_1');
+		$project_template = $focus->get_linked_beans('am_projecttemplates_project_1','AM_ProjectTemplates');
+		foreach($project_template as $ptemplate){
+			$current_template_id = $ptemplate->id;
+		}				
+		//----------------------------------------------------------------
+
+
+
 		//if(!empty($this->id))
 		//	$focus->retrieve($this->id);
 
@@ -402,14 +418,14 @@ class Project extends SugarBean {
 					echo $sql;
 				}
 		
-				////	END REMOVE
+				////END REMOVE
 				
 			}
 			
 			$return_id = parent::save($check_notify);
 			$focus->retrieve($return_id);
 
-			////	REBUILD INVITEE RELATIONSHIPS
+			////REBUILD INVITEE RELATIONSHIPS
 			
 			// Process users
 			$focus->load_relationship('users');
@@ -434,6 +450,121 @@ class Project extends SugarBean {
 			////	END REBUILD INVITEE RELATIONSHIPS
 			///////////////////////////////////////////////////////////////////////////
 		}
+
+		
+
+		///////////////////////////////
+		// Code Block to handle the template selection at project edit.
+		////////////////////////////////////////
+
+		if($current_template_id != $new_template_id){
+			
+			$project_start = $focus->estimated_start_date;			
+			//Get project start date
+			if($project_start!='')
+			{
+				$dateformat = $current_user->getPreference('datef');
+				$startdate = DateTime::createFromFormat($dateformat, $project_start);
+				$start = $startdate->format('Y-m-d');
+			}
+
+			$duration_unit = 'Days';
+
+			//Get the project template
+			$template = new AM_ProjectTemplates();
+			$template->retrieve($new_template_id);
+
+			
+			//copy all resources from template to project
+			$template->load_relationship('am_projecttemplates_users_1');
+			$template_users = $template->get_linked_beans('am_projecttemplates_users_1','User');
+
+			$template->load_relationship('am_projecttemplates_contacts_1');
+			$template_contacts = $template->get_linked_beans('am_projecttemplates_contacts_1','Contact');
+			
+
+			foreach($template_users as $user){
+				$focus->project_users_1->add($user->id);
+			}
+			
+			foreach($template_contacts as $contact){
+				$focus->project_contacts_1->add($contact->id);
+			}
+
+
+			//Get related project template tasks. Using sql query so that the results can be ordered.
+			$get_tasks_sql = "SELECT * FROM am_tasktemplates
+							WHERE id
+							IN (
+								SELECT am_tasktemplates_am_projecttemplatesam_tasktemplates_idb
+								FROM am_tasktemplates_am_projecttemplates_c
+								WHERE am_tasktemplates_am_projecttemplatesam_projecttemplates_ida = '".$new_template_id."'
+								AND deleted =0
+							)
+							AND deleted =0
+							ORDER BY am_tasktemplates.order_number ASC";
+			$tasks = $db->query($get_tasks_sql);
+
+			//Create new project tasks from the template tasks
+			$count=1;
+			while($row = $db->fetchByAssoc($tasks))
+			{
+				$project_task = new ProjectTask();
+				$project_task->name = $row['name'];
+				$project_task->status = $row['status'];
+				$project_task->priority = strtolower($row['priority']);
+				$project_task->percent_complete = $row['percent_complete'];
+				$project_task->predecessors = $row['predecessors'];
+				$project_task->milestone_flag = $row['milestone_flag'];
+				$project_task->relationship_type = $row['relationship_type'];
+				$project_task->task_number = $row['task_number'];
+				$project_task->order_number = $row['order_number'];
+				$project_task->estimated_effort = $row['estimated_effort'];
+				$project_task->utilization = $row['utilization'];
+				$project_task->assigned_user_id = $row['assigned_user_id'];
+				$project_task->description = $row['description'];
+				$project_task->duration = $row['duration'];
+				$project_task->duration_unit = $duration_unit;
+				$project_task->project_task_id = $count;
+				
+				//Flag to prevent after save logichook running when project_tasks are created (see custom/modules/ProjectTask/updateProject.php)
+				$project_task->set_project_end_date = 0;
+
+				if($count == '1'){
+					$project_task->date_start = $start;
+					$enddate = $startdate->modify('+'.$row['duration'].' '.$duration_unit);
+					$end = $enddate->format('Y-m-d');
+					$project_task->date_finish = $end;
+					$enddate_array[$count] = $end;
+					//$GLOBALS['log']->fatal("DATE:". $end);
+				}
+				else {
+					$start_date = $count - 1;
+					$startdate = DateTime::createFromFormat('Y-m-d', $enddate_array[$start_date]);
+					//$GLOBALS['log']->fatal("DATE:". $enddate_array[$start_date]);
+					$start = $startdate->format('Y-m-d');
+					$project_task->date_start = $start;
+					$enddate = $startdate->modify('+'.$row['duration'].' '.$duration_unit);
+					$end = $enddate->format('Y-m-d');
+					$project_task->date_finish = $end;
+					$enddate = $end;
+					$enddate_array[$count] = $end;
+				}
+				$project_task->save();
+				
+				//link tasks to the newly created project
+				$project_task->load_relationship('projects');
+				$project_task->projects->add($focus->id);
+				
+				//Add assinged users from each task to the project resourses subpanel
+				$focus->load_relationship('project_users_1');
+				$focus->project_users_1->add($row['assigned_user_id']);
+				$count++;
+			}
+			
+		}
+		/// End Template Selection handling
+		////////////////////////////////////////////////////////////
 	
 	}
 
