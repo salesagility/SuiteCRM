@@ -66,6 +66,10 @@ class CalendarUtils {
 				'duration_minutes',
 				'status',
 				'related_to',
+				'parent_name',
+				'parent_id',
+				'parent_type',
+				'priority'
 			),
 			'Calls' => array(
 				'name',
@@ -73,11 +77,20 @@ class CalendarUtils {
 				'duration_minutes',
 				'status',
 				'related_to',
+				'parent_name',
+				'parent_id',
+				'parent_type',
+				'priority'
 			),
 			'Tasks' => array(
 				'name',
 				'status',
 				'related_to',
+				'parent_name',
+				'parent_id',
+				'parent_type',
+				'priority',
+				'date_due'
 			),
 		);
 	}

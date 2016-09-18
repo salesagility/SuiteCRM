@@ -881,7 +881,7 @@ class AOR_Report extends Basic {
     }
 
     function build_report_csv(){
-
+        global $beanList;
         ini_set('zlib.output_compression', 'Off');
 
         ob_start();
@@ -902,11 +902,17 @@ class AOR_Report extends Basic {
             $field->retrieve($row['id']);
 
             $path = unserialize(base64_decode($field->module_path));
-
+            $field_bean = new $beanList[$this->report_module]();
             $field_module = $this->report_module;
+            $field_alias = $field_bean->table_name;
+
             if($path[0] != $this->report_module){
                 foreach($path as $rel){
+                    if(empty($rel)){
+                        continue;
+                    }
                     $field_module = getRelatedModule($field_module,$rel);
+                    $field_alias = $field_alias . ':'.$rel;
                 }
             }
             $label = str_replace(' ','_',$field->label).$i;
@@ -914,7 +920,7 @@ class AOR_Report extends Basic {
             $fields[$label]['display'] = $field->display;
             $fields[$label]['function'] = $field->field_function;
             $fields[$label]['module'] = $field_module;
-
+            $fields[$label]['alias'] = $field_alias;
 
             if($field->display){
                 $csv.= $this->encloseForCSV($field->label);
@@ -929,11 +935,12 @@ class AOR_Report extends Basic {
         while ($row = $this->db->fetchByAssoc($result)) {
             $csv .= "\r\n";
             foreach($fields as $name => $att){
+                $currency_id = isset($row[$att['alias'].'_currency_id']) ? $row[$att['alias'].'_currency_id'] : '';
                 if($att['display']){
                     if($att['function'] != '' )
                         $csv .= $this->encloseForCSV($row[$name]);
                     else
-                        $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name]))));
+                        $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name],'',$currency_id))));
                     $csv .= $delimiter;
                 }
             }

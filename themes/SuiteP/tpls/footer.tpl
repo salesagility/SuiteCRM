@@ -45,14 +45,6 @@
 {if $AUTHENTICATED}
     <!-- Start generic footer -->
     <footer>
-    	<div class="footer_left">
-    		<a id="admin_options">&copy; {$MOD.LBL_SUITE_SUPERCHARGED}</a>
-            <a id="powered_by">&copy; {$MOD.LBL_SUITE_POWERED_BY}</a>
-    	</div>
-    	<div class="footer_right">
-    		
-    		<a onclick="SUGAR.util.top();" href="javascript:void(0)">Back to top</a>
-    	</div>
         <div id="copyright_data">
             <div id="dialog2" title="{$MOD.LBL_SUITE_SUPERCHARGED}">
                 <p>{$MOD.LBL_SUITE_DESC1}</p>
@@ -65,7 +57,15 @@
             <div id="dialog" title="&copy; {$MOD.LBL_SUITE_POWERED_BY}">
                 <p>{$COPYRIGHT}</p>
             </div>
+            <div id="copyrightbuttons" class="footer_left">
+                <a id="admin_options">&copy; {$MOD.LBL_SUITE_SUPERCHARGED}</a>
+                <a id="powered_by">&copy; {$MOD.LBL_SUITE_POWERED_BY}</a>
+            </div>
         </div>
+    	<div class="footer_right">
+    		
+    		<a onclick="SUGAR.util.top();" href="javascript:void(0)">{$MOD.LBL_SUITE_TOP}</a>
+    	</div>
     </footer>
     <!-- END Generic Footer -->
 {/if}
