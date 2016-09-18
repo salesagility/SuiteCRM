@@ -215,8 +215,10 @@ $(document).ready(function() {ldelim}
 
     $(function(){
         $('#EditView_tabs ul.nav.nav-tabs li').click(function(e){
-            var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
-            selectTab(tab);
+            if(typeof $(this).find('a').first().attr('id') != 'undefined') {
+                var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
+                selectTab(tab);
+            }
         });
 
         $('a[data-toggle="collapse"]').click(function(e){

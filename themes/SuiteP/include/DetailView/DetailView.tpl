@@ -213,12 +213,16 @@
 
         $(function(){
             $('#content ul.nav.nav-tabs li').click(function(e){
-                var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
-                selectTab(tab);
+                if(typeof $(this).find('a').first().attr('id') != 'undefined') {
+                    var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
+                    selectTab(tab);
+                }
             });
             $('#content ul.nav.nav-tabs li.active').each(function(e){
-                var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
-                selectTab(tab);
+                if(typeof $(this).find('a').first().attr('id') != 'undefined') {
+                    var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
+                    selectTab(tab);
+                }
             });
         });
 
