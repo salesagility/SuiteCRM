@@ -71,7 +71,6 @@
 
 <!-- CSS Files -->
       rel="stylesheet"/>
-<link type="text/css" href="{sugar_getjspath file='include/SugarCharts/js/Jit/css/Examples/BarChart.css'}"
       rel="stylesheet"/>
 <!--[if IE]>
 <script language="javascript" type="text/javascript"
