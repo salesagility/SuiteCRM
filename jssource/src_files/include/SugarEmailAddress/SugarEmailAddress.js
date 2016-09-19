@@ -372,10 +372,10 @@
 		    td3.setAttribute("align", "center");
 		    td3.setAttribute("class", "email-address-primary");
 		    td4.setAttribute("align", "center");
-				td4.setAttribute("class", "email-address-opt-out");
 				td5.setAttribute("align", "center");
-				td5.setAttribute("class", "email-address-opt-invalid");
-		    td6.setAttribute("align", "center");
+				td5.setAttribute("class", "email-address-opt-out");
+				td6.setAttribute("align", "center");
+				td6.setAttribute("class", "email-address-invalid");
 
 		    td1.appendChild(newContent);
 		    td1.appendChild(newContentRecordId);
