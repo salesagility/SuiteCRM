@@ -41,7 +41,15 @@ require_once('include/SugarFields/Fields/File/SugarFieldFile.php');
 
 class SugarFieldImage extends SugarFieldFile
 {
+    function getListViewSmarty($parentFieldArray, $vardef, $displayParams, $col) {
 
+        if(isset($displayParams['module']) && !empty($displayParams['module'])){
+            $this->ss->assign("module", $displayParams['module']);
+        }else{
+            $this->ss->assign("module", $_REQUEST['module']);
+        }
+        return parent::getListViewSmarty($parentFieldArray, $vardef, $displayParams, $col);
+    }
     public function save(&$bean, $params, $field, $vardef, $prefix = '')
     {
 

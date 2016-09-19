@@ -125,6 +125,7 @@ $vardefs =array(
             'dbType' => 'varchar',
             'width' => '160',
             'height' => '160',
+			'studio' => array('listview' => true),
         ),
 	'department' =>
 		array (
