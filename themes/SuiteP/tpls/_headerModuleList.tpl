@@ -569,6 +569,7 @@
                     <h2 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h2>
                     <ul class="nav nav-pills nav-stacked">
                         {foreach from=$recentRecords item=item name=lastViewed}
+                            {if $smarty.foreach.lastViewed.index < 5}
                             <div class="recently_viewed_link_container_sidebar">
                                 <!--<li class="recentlinks_edit"><a
                                             href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}"
@@ -582,6 +583,7 @@
                                     </a>
                                 </li>
                             </div>
+                            {/if}
                         {/foreach}
                     </ul>
                 </div>
@@ -590,6 +592,7 @@
                     <h2 class="recent_h3">{$APP.LBL_FAVORITES}</h2>
                     <ul class="nav nav-pills nav-stacked">
                         {foreach from=$favoriteRecords item=item name=lastViewed}
+                            {if $smarty.foreach.lastViewed.index < 5}
                             <div class="recently_viewed_link_container_sidebar" id="{$item.id}_favorite">
                                 <!--<li class="recentlinks_edit"><a
                                             href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}"
@@ -603,6 +606,7 @@
                                     </a>
                                 </li>
                             </div>
+                            {/if}
                         {/foreach}
                     </ul>
                 </div>

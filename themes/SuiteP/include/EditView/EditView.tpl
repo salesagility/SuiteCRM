@@ -145,7 +145,7 @@
                 <div class="panel-heading {{$panelHeadingCollapse}}">
                     <a class="{{$collapsed}}" role="button" data-toggle="collapse" aria-expanded="false">
                         <div class="col-xs-10 col-sm-11 col-md-11">
-                            {sugar_translate label='{{$label}}' module='{{$module}}'}</div>
+                            {sugar_translate label='{{$label}}' module='{{$module}}'}
                         </div>
                     </a>
 
@@ -215,8 +215,10 @@ $(document).ready(function() {ldelim}
 
     $(function(){
         $('#EditView_tabs ul.nav.nav-tabs li').click(function(e){
-            var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
-            selectTab(tab);
+            if(typeof $(this).find('a').first().attr('id') != 'undefined') {
+                var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
+                selectTab(tab);
+            }
         });
 
         $('a[data-toggle="collapse"]').click(function(e){

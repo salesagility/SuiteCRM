@@ -214,7 +214,6 @@ $mod_strings = array(
             'relationshipHelp' => '<b>Relationships</b> can be created between the module and another deployed module.<br><br> Relationships are visually expressed through subpanels and relate fields in the module records.<br><br>Select one of the following relationship <b>Types</b> for the module:<br><br> <b>One-to-One</b> - Both modules\' records will contain relate fields.<br><br> <b>One-to-Many</b> - The Primary Module\'s record will contain a subpanel, and the Related Module\'s record will contain a relate field.<br><br> <b>Many-to-Many</b> - Both modules\' records will display subpanels.<br><br> Select the <b>Related Module</b> for the relationship. <br><br>If the relationship type involves subpanels, select the subpanel view for the appropriate modules.<br><br> Click <b>Save</b> to create the relationship.',
             'convertLeadHelp' => 'Here you can add modules to the convert layout screen and modify the layouts of existing ones.<br/>
 		You can re-order the modules by dragging their rows in the table.<br/><br/>
-
 		<b>Module:</b> The name of the module.<br/><br/>
 		<b>Required:</b> Required modules must be created or selected before the lead can be converted.<br/><br/>
 		<b>Copy Data:</b> If checked, fields from the lead will be copied to fields with the same name in the newly created records.<br/><br/>
@@ -682,7 +681,7 @@ $mod_strings = array(
     'LBL_REMOVE_CUSTOM' => 'Remove Customizations',
     'LBL_CLEAR_RELATIONSHIPS' => 'Clear Relationships',
     'LBL_RESET_LABELS' => 'Reset Labels',
-    'LBL_RESET_LAYOUTS' => 'Reset Layouts"',
+    'LBL_RESET_LAYOUTS' => 'Reset Layouts',
     'LBL_REMOVE_FIELDS' => 'Remove Custom Fields',
     'LBL_CLEAR_EXTENSIONS' => 'Clear Extensions',
     'LBL_HISTORY_TIMESTAMP' => 'TimeStamp',
