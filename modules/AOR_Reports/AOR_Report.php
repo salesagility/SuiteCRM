@@ -1322,6 +1322,10 @@ class AOR_Report extends Basic {
                         // Bug: Prevents relationships from loading.
                         //$rel = strtolower($rel);
                         $new_condition_module = new $beanList[getRelatedModule($condition_module->module_dir,$rel)];
+                        //Check if the user has access to the related module
+                        if(!(ACLController::checkAccess($new_condition_module->module_name, 'list', true))) {
+                            return false;
+                        }
                         $oldAlias = $table_alias;
                         $table_alias = $table_alias.":".$rel;
                         $query = $this->build_report_query_join($rel, $table_alias, $oldAlias, $condition_module, 'relationship', $query, $new_condition_module);
