@@ -75,7 +75,8 @@
                                         <li role="presentation">
                                             <a style="padding-top: 32px !important; border-bottom: none"><strong>{$APP.LBL_LAST_VIEWED}</strong></a>
                                         </li>
-                                    {foreach from=$recentRecords item=item name=lastViewed}
+                                    {foreach from=$recentRecords item=item name=lastViewed key=recentKey }
+                                        {if $recentKey < 3} {* limit to 3 results *}
                                             <li class="recentlinks" role="presentation">
                                                 <a title="{$item.module_name}"
                                                    accessKey="{$smarty.foreach.lastViewed.iteration}"
@@ -83,6 +84,7 @@
                                                     <img src="{sugar_getimagepath directory='sidebar/modules' file_name=$item.module_name file_extension='svg' file='sidebar/modules/'.$item.module_name.'.svg' }"><span aria-hidden="true">{$item.item_summary_short}</span>
                                                 </a>
                                             </li>
+                                        {/if}
                                     {/foreach}
                                     {/if}
 
@@ -90,7 +92,8 @@
                                         <li role="presentation">
                                             <a style="padding-top: 32px !important; border-bottom: none"><strong>{$APP.LBL_FAVORITES}</strong></a>
                                         </li>
-                                    {foreach from=$favoriteRecords item=item name=lastViewed}
+                                    {foreach from=$favoriteRecords item=item name=lastViewed key=favoriteKey}
+                                        {if $favoriteKey < 3} {* limit to 3 results *}
                                             <li class="recentlinks" role="presentation">
                                                 <a title="{$item.module_name}"
                                                    accessKey="{$smarty.foreach.lastViewed.iteration}"
@@ -98,6 +101,7 @@
                                                     <img src="{sugar_getimagepath directory='sidebar/modules' file_name=$item.module_name file_extension='svg' file='sidebar/modules/'.$item.module_name.'.svg'}"><span aria-hidden="true">{$item.item_summary_short}</span>
                                                 </a>
                                             </li>
+                                        {/if}
                                     {/foreach}
                                     {/if}
                                 </ul>
