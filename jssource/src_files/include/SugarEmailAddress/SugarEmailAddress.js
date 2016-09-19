@@ -364,11 +364,17 @@
 		    addToValidateVerified(this.emailView, this.id + "emailAddressVerifiedFlag" + this.numberEmailAddresses, 'bool', false, SUGAR.language.get('app_strings', 'LBL_VERIFY_EMAIL_ADDRESS'));
 		    
 		    tr.setAttribute("id", this.id + "emailAddressRow" + this.numberEmailAddresses);
-		    
+		    tr.setAttribute("class", "email-address-row");
+
 		    td1.setAttribute("nowrap", "NOWRAP");
+		    td1.setAttribute("class", "email-address-input");
+		    td2.setAttribute("class", "email-address-remove-button");
 		    td3.setAttribute("align", "center");
+		    td3.setAttribute("class", "email-address-primary");
 		    td4.setAttribute("align", "center");
-		    td5.setAttribute("align", "center");
+				td4.setAttribute("class", "email-address-opt-out");
+				td5.setAttribute("align", "center");
+				td5.setAttribute("class", "email-address-opt-invalid");
 		    td6.setAttribute("align", "center");
 
 		    td1.appendChild(newContent);
