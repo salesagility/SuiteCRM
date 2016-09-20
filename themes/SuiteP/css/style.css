@@ -9865,6 +9865,12 @@ ul.dropdown-menu,
 .navbar-fixed-top .navbar-collapse {
     max-height: 200px;
     height: 200px;
+}
+
+.navbar-fixed-bottom .navbar-collapse,
+.navbar-fixed-top .navbar-collapse {
+    max-height: 200px;
+    height: 200px;
     overflow-y: scroll;
 }
 
@@ -9946,6 +9952,13 @@ ul.dropdown-menu,
     ul.dropdown-menu {
         max-height: 700px;
         height: auto;
+        overflow-y: auto;
+    }
+    .navbar-fixed-bottom .navbar-collapse,
+    .navbar-fixed-top .navbar-collapse{
+        max-height: 620px;
+        height: 620px;
+        overflow-y: auto;
     }
 }
 
@@ -9958,7 +9971,6 @@ ul.dropdown-menu,
     ul.dropdown-menu {
         max-height: 820px;
         height: auto;
-        overflow-y: auto;
     }
 }
 
@@ -9968,7 +9980,7 @@ ul.dropdown-menu,
     .topnav .dropdown-menu,
     .with-actions > .dropdown-menu,
     .moremenu ul, ul.dropdown-menu {
-        max-height: auto;
+        max-height: inherit;
         height: auto;
     }
 }
