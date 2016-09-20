@@ -5564,7 +5564,7 @@ li.topnav > ul > li > ul > li a span.topnav-fake-icon {
 
 .with-actions .dropdown-menu ul li a {
     padding-top: 12px !important;
-    padding-bottom: 16px !important;
+    padding-bottom: 12px !important;
 }
 
 #mobileheader .dropdown-menu ul li a.recent-links-detail,
