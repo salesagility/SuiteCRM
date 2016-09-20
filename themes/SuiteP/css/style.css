@@ -9584,8 +9584,6 @@ table tr#delegates_search {
 
 /* popup dialog on home page */
 
-
-
 body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shadow {
     top: 0 !important;
     left: 0 !important;
@@ -9629,16 +9627,13 @@ body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui
 body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd {
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
-    /*max-height: initial;*/
-    /*overflow-y: initial;*/
     max-height: 600px;
     overflow: hidden;
     overflow-y: scroll;
 }
 
 body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form {
-    /*max-height: 80%;*/
-    /*overflow-y: scroll;*/
+    /* form looking good. */
 }
 
 body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table td input[type="checkbox"] {
