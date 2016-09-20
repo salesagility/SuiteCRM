@@ -9865,6 +9865,7 @@ ul.dropdown-menu,
 .navbar-fixed-top .navbar-collapse {
     max-height: 200px;
     height: 200px;
+    overflow-y: scroll;
 }
 
 /*mobile medium*/
@@ -9957,6 +9958,7 @@ ul.dropdown-menu,
     ul.dropdown-menu {
         max-height: 820px;
         height: auto;
+        overflow-y: auto;
     }
 }
 
