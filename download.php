@@ -156,6 +156,10 @@ else {
         } elseif( !isset($_REQUEST['isTempFile']) && !isset($_REQUEST['tempName'] ) && isset($_REQUEST['type']) && $file_type!='temp' && isset($image_field) ) { //make sure not email temp file.
             //$query = "SELECT " . $image_field ." FROM " . $file_type . " LEFT JOIN " . $file_type . "_cstm cstm ON cstm.id_c = " . $file_type . ".id ";
 
+
+                $checkBean = BeanFactory::getBean($module);
+                $file_type = $checkBean->table_name;
+
             // Fix for issue #1195: because the module was created using Module Builder and it does not create any _cstm table,
             // there is a need to check whether the field has _c extension.
             $query = "SELECT " . $image_field ." FROM " . $file_type . " ";
