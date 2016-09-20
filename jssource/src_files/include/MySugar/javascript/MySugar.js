@@ -160,15 +160,20 @@ SUGAR.mySugar = function() {
 		// call to configure a Dashlet
 		configureDashlet: function(id) {
 			ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_LOADING'));
-			configureDlg = new YAHOO.widget.SimpleDialog("dlg",
-				{ visible:false, 
-				  width:"510", 
-				  effect:[{effect:YAHOO.widget.ContainerEffect.FADE,duration:0.5}],
-				  fixedcenter:true, 
-				  modal:true, 
-				  draggable:false }
-			);
-			
+      configureDlg = new YAHOO.widget.SimpleDialog("dlg", {
+        visible:false,
+        width:"510",
+        effect:[{effect:YAHOO.widget.ContainerEffect.FADE,duration:0.5}],
+        fixedcenter:true,
+        modal:true,
+        draggable:false
+      });
+
+      
+      configureDlg.hideEvent.subscribe(function(){
+        $('#dlg').removeClass('SuiteP-configureDashlet');
+      });
+
 			fillInConfigureDiv = function(data){
 				ajaxStatus.hideStatus();
 				// uncomment the line below to debug w/ FireBug
@@ -188,6 +193,7 @@ SUGAR.mySugar = function() {
 
 				configureDlg.render(document.body);
 				configureDlg.show();
+        $('#dlg').addClass('SuiteP-configureDashlet');
 				configureDlg.configFixedCenter(null, false) ;
 				SUGAR.util.evalScript(result['body']);
 			}
@@ -195,6 +201,8 @@ SUGAR.mySugar = function() {
 			SUGAR.mySugar.configureDashletId = id; // save the id of the dashlet being configured
 			var cObj = YAHOO.util.Connect.asyncRequest('GET','index.php?to_pdf=1&module='+module+'&action=DynamicAction&DynamicAction=configureDashlet&id=' + id, 
 													  {success: fillInConfigureDiv, failure: fillInConfigureDiv}, null);
+
+
 		},
 		
 				
