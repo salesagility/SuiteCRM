@@ -9627,7 +9627,7 @@ body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui
 body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd {
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
-    max-height: 600px;
+    max-height: 650px;
     overflow: hidden;
     overflow-y: scroll;
 }
@@ -9707,5 +9707,14 @@ body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui
         clear: both;
     }
 
+    body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit {
+        position: relative;
+    }
+
+    body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit #edit_tabs {
+        position: absolute;
+        top: 20px;
+        right: 40px;
+    }
 }
 
