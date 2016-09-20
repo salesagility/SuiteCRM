@@ -660,11 +660,13 @@ ul.dropdown-menu,
 }
 
 
-li.recentlinks, li.faviritelinks {
-    width: 100%;}
+li.recentlinks, li.favoritelinks {
+    width: 100%;
+}
 
 
-li.recentlinks img {
+li.recentlinks img,
+li.favoritelinks img {
     margin-right: 5px;
 }
 
@@ -675,9 +677,23 @@ li.recentlinks img {
 
 #recentlyViewedSidebar li a, #favoritesSidebar li a {
     color: #f5f5f5;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+#recentlyViewedSidebar .recent-links-detail,
+#favoritesSidebar .favorite-links-detail {
+    width: 85%;
+    display: inline-block;
     padding: 7px 30px 7px 30px;
-    width: 100%;
-    display: block;
+}
+
+
+#recentlyViewedSidebar .recent-links-edit,
+#favoritesSidebar .favorite-links-edit {
+    height: 20px;
+    width: 20px;
+    display: inline-block;
 }
 
 #recentlyViewedSidebar li:hover, #favoritesSidebar li:hover {
@@ -5425,6 +5441,7 @@ textarea#description {
     transition: all 0.3s ease-out;
 }
 
+
 #mobileheader .dropdown-menu li:last-of-type a {
     border-bottom: none;
 }
@@ -5509,6 +5526,58 @@ li.topnav > ul > li > ul > li a span.topnav-fake-icon {
 
 .with-actions .dropdown-menu {
     padding: 0;
+}
+
+#mobileheader  .dropdown-menu{
+    width: 200px;
+}
+
+#mobileheader .dropdown-menu li,
+.with-actions .dropdown-menu li {
+    line-height: normal;
+}
+
+#mobileheader .dropdown-menu ul li.recentlinks:last-of-type,
+#mobileheader .dropdown-menu ul li.favoritelinks:last-of-type,
+.with-actions .dropdown-menu li.recentlinks:last-of-type,
+.with-actions .dropdown-menu li.favoritelinks:last-of-type {
+    border-bottom: none;
+}
+
+#mobileheader .dropdown-menu li.recentlinks,
+#mobileheader .dropdown-menu li.favoritelinks,
+.with-actions .dropdown-menu li.recentlinks,
+.with-actions .dropdown-menu li.favoritelinks {
+    border-bottom: 1px solid #757083;
+}
+
+#mobileheader .dropdown-menu ul li a.recent-links-detail,
+#mobileheader .dropdown-menu ul li a.favorite-links-detail,
+#mobileheader .dropdown-menu ul li a.recent-links-edit,
+#mobileheader .dropdown-menu ul li a.favorite-links-edit {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+#mobileheader .dropdown-menu ul li a.recent-links-detail,
+#mobileheader .dropdown-menu ul li a.favorite-links-detail,
+.with-actions .dropdown-menu li a.recent-links-detail,
+.with-actions .dropdown-menu li a.favorite-links-detail {
+    border: none;
+    width: 85%;
+    display: inline-block;
+    padding-right: 0px !important;
+}
+
+#mobileheader .dropdown-menu ul li a.recent-links-edit,
+#mobileheader .dropdown-menu ul li a.favorite-links-edit,
+.with-actions .dropdown-menu li a.recent-links-edit,
+.with-actions .dropdown-menu li a.favorite-links-edit {
+    border: none;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    padding: 0px !important;
 }
 
 li.topnav:hover {
@@ -6538,17 +6607,8 @@ li.recentlinks_topedit a:focus {
     height: 100%;
 }
 
-li.recentlinks a {
+li.recentlinks, li.favoritelinks {
    display: block;
-
-}
-
-li.recentlinks_edit a {
-    float: right;
-}
-
-li.recentlinks_edit a:hover {
-    background: none !important;
 }
 
 a[id^=grouptab], a[id^=moduleTab] {
@@ -6666,11 +6726,10 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 #fieldChoices .field-list input {
     height: 30px;
 }
-.recentlinks_edit {
-    visibility: collapse !important;
-    display: none !important;
-    height: 0 !important;
-    width: 0 !important;
+
+.recent-links-edit-button,
+.favorite-links-edit-button {
+    display: inline-block;
 }
 #fieldChoices .field {
 
