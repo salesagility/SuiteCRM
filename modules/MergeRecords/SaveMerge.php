@@ -45,9 +45,40 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
+if (empty($_REQUEST['record'])) {
+    sugar_die("No record provided.");
+}
 
 $focus = new MergeRecord();
 $focus->load_merge_bean($_REQUEST['merge_module'], true, $_REQUEST['record']);
+if (empty($focus->merge_bean->id)) {
+    sugar_die("No record provided.");
+}
+if (empty($dictionary[$focus->merge_bean->object_name]['duplicate_merge'])) {
+    sugar_die("You do not have access to merge this module.");
+}
+if (!$focus->merge_bean->ACLAccess('edit')) {
+    sugar_die("You do not have access to merge this module.");
+}
+
+if (empty($_REQUEST['merged_ids'])) {
+    sugar_die("No merge records provided.");
+}
+require_once $focus->merge_bean_file_path;
+
+foreach ($_REQUEST['merged_ids'] as $mergeId) {
+    $mergesource = new $focus->merge_bean_class();
+    if (!$mergesource->retrieve($mergeId)) {
+        continue;
+    }
+    if (!$mergesource->ACLAccess('edit')) {
+        sugar_die("You do not have access to merge this module.");
+    }
+    if (!$mergesource->ACLAccess('delete')) {
+        sugar_die("You do not have access to merge this module.");
+    }
+}
+
 
 foreach($focus->merge_bean->column_fields as $field)
 {
