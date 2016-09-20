@@ -5414,9 +5414,15 @@ textarea#description {
     transition: all 0.3s ease-out;
 }
 
+
+.topnav .dropdown-menu {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 .dropdown-menu li {
     margin: 0 !important;
-    padding: 0 !important;;
+    padding: 0 !important;
 }
 
 .dropdown-menu li a {
@@ -5525,10 +5531,11 @@ li.topnav > ul > li > ul > li a span.topnav-fake-icon {
 }
 
 .with-actions .dropdown-menu {
-    padding: 0;
+    padding: 0 10px 0 10px;
+    width: 200px
 }
 
-#mobileheader  .dropdown-menu{
+#mobileheader .dropdown-menu{
     width: 200px;
 }
 
