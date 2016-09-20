@@ -292,9 +292,10 @@
                                 <span class="dropdown-toggle headerlinks notCurrentTab"> <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a> </span>
                                 <span class="notCurrentTabRight">&nbsp;</span>
                                 <ul class="dropdown-menu" role="menu">
+                                    {*<li class="action-links-title"><a><strong>{$APP.LBL_LINK_ACTIONS}</strong></a></li>*}
                                     <li>
                                         <ul>
-                                            {if count($shortcutTopMenu.$submodule) > 0}
+                                            {if count($shortcutTopMenu) > 0}
                                                 {foreach from=$shortcutTopMenu.$submodule item=item}
                                                     {if $item.URL == "-"}
                                                         {*<li><a></a><span>&nbsp;</span></li>*}
@@ -305,7 +306,9 @@
                                             {/if}
                                         </ul>
                                     </li>
-                                    <li class="recent-links-title"><a><strong>{$APP.LBL_LAST_VIEWED}</strong></a></li>
+                                    {if count($recentRecords) > 0}
+                                        <li class="recent-links-title"><a><strong>{$APP.LBL_LAST_VIEWED}</strong></a></li>
+                                    {/if}
                                     <li>
                                         <ul>
                                             {foreach from=$recentRecords item=item name=lastViewed}
@@ -321,20 +324,22 @@
                                             {/foreach}
                                         </ul>
                                     </li>
-                                    <li class="favorite-links-title"><a><strong>{$APP.LBL_FAVORITES}</strong></a></li>
+                                    {if count($favoriteRecords) > 0}
+                                            <li class="favorite-links-title"><a><strong>{$APP.LBL_FAVORITES}</strong></a></li>
+                                    {/if}
                                     <li>
                                         <ul>
-                                            {foreach from=$favoriteRecords item=item name=lastViewed}
-                                                {if $smarty.foreach.lastViewed.iteration < 4}
-                                                    <li class="favoritelinks" role="presentation">
-                                                        <a title="{$item.module_name}"
-                                                           accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                                           href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}">
-                                                            <img src="{sugar_getimagepath  directory='sidebar/modules' file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"/><span aria-hidden="true">{$item.item_summary_short}</span>
-                                                        </a>
-                                                    </li>
-                                                {/if}
-                                            {/foreach}
+                                        {foreach from=$favoriteRecords item=item name=lastViewed}
+                                            {if $smarty.foreach.lastViewed.iteration < 4}
+                                                <li class="favoritelinks" role="presentation">
+                                                    <a title="{$item.module_name}"
+                                                       accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                                       href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}">
+                                                        <img src="{sugar_getimagepath  directory='sidebar/modules' file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"/><span aria-hidden="true">{$item.item_summary_short}</span>
+                                                    </a>
+                                                </li>
+                                            {/if}
+                                        {/foreach}
                                         </ul>
                                     </li>
                                 </ul>

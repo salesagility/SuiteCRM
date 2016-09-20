@@ -5492,11 +5492,13 @@ li.topnav > ul > li > ul > li a span.topnav-fake-icon {
 }
 
 
+.dropdown-menu li.action-links-title a:hover,
 .dropdown-menu li.recent-links-title a:hover,
 .dropdown-menu li.favotite-links-title a:hover {
     color: #ffffff;
 }
 
+.dropdown-menu li.action-links-title > a,
 .dropdown-menu li.recent-links-title > a,
 .dropdown-menu li.favorite-links-title > a {
     padding-bottom: 5px !important;
