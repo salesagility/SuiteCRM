@@ -675,6 +675,13 @@ li.favoritelinks img {
     width: 100%;
 }
 
+#favoritesSidebar .new,
+#favoritesSidebar .new * {
+    visibility: collapse;
+    width: 0;
+    height: 0;
+}
+
 #recentlyViewedSidebar li a, #favoritesSidebar li a {
     color: #f5f5f5;
     padding-top: 12px;
