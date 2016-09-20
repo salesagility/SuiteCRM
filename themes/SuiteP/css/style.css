@@ -5505,18 +5505,12 @@ li.topnav > li {
     padding: 0;
 }
 
-li.topnav > ul > li > ul > li a,
-li.topnav  > ul > li > ul > li a {
-    line-height: normal;
-    padding: 15px 12px 15px 12px;
-}
 
 /* fakes the space the icon takes */
 li.topnav > ul > li > ul > li a span.topnav-fake-icon {
     display: inline;
     height: 20px;
 }
-
 
 .dropdown-menu li.action-links-title a:hover,
 .dropdown-menu li.recent-links-title a:hover,
@@ -5564,6 +5558,13 @@ li.topnav > ul > li > ul > li a span.topnav-fake-icon {
 #mobileheader .dropdown-menu ul li a.favorite-links-edit {
     padding-top: 16px;
     padding-bottom: 16px;
+}
+
+
+
+.with-actions .dropdown-menu ul li a {
+    padding-top: 12px !important;
+    padding-bottom: 16px !important;
 }
 
 #mobileheader .dropdown-menu ul li a.recent-links-detail,
