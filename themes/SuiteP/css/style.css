@@ -6381,21 +6381,28 @@ select#sales_stage_advanced {
     }
 
 
+    /* next styles made specifically for standard EditView forms, remove or change 'body #bootstrap-container #content #pagecontent #EditView #EditView_tabs' prefix to apply this change anywhere else */
+
     body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-4.label {
-        width: 20%;
+        width: 25%;
     }
 
     body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-8.edit-view-field {
-        width: 79%;
+        width: 75%;
     }
 
     body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-8.edit-view-field input[type="text"] {
         width: 90%;
     }
 
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-8.edit-view-field select {
+        border-width: 3px;
+        height: 52px;
+        font-size: 12px;
+    }
 
     body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-12.edit-view-row-item .col-xs-12.col-sm-2.label {
-        width: 10%;
+        width: 12.5%;
     }
 
     body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-12.edit-view-row-item span table tbody tr td table.emailaddresses tbody tr {
@@ -6404,7 +6411,7 @@ select#sales_stage_advanced {
 
 
     body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-12.edit-view-row-item span table tbody tr td table.emailaddresses tbody:nth-child(1) tr td[scope="row"]:nth-child(2) {
-        width: 63.5% !important;
+        width: 60.3% !important;
     }
 
     body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-12.edit-view-row-item span table tbody tr td table.emailaddresses tbody:nth-child(1) tr td[scope="row"] {
@@ -6420,7 +6427,7 @@ select#sales_stage_advanced {
     }
 
     body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-12.edit-view-row-item span table tbody tr td table.emailaddresses tbody tr td[nowrap="NOWRAP"] {
-        width: 62.5% !important;
+        width: 59.2% !important;
         margin-right: 7px
     }
 
@@ -6432,8 +6439,70 @@ select#sales_stage_advanced {
         margin-left: 10px !important;
     }
 
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-12.edit-view-field fieldset>table tr>td:first-of-type {
+        width: 25%;
+    }
+
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-12.edit-view-field fieldset legend {
+        padding-left: 25%;
+    }
+
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-12.edit-view-field fieldset table.edit {
+        table-layout: fixed;
+    }
+
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-12.edit-view-field fieldset table.edit tr td textarea,
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-12.edit-view-field fieldset table.edit tr td input[type="text"] {
+        width: 90%;
+    }
+
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-8.edit-view-field.yui-ac {
+        width: 71%;
+        padding-right: 100px;
+        position: relative;
+    }
+
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-8.edit-view-field.yui-ac span.id-ff.multiple {
+        position: absolute;
+        top: 8px;
+        right: 4%;
+    }
+
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-8.edit-view-field.yui-ac input[type="text"].sqsEnabled.yui-ac-input {
+        width: 100% !important;
+        margin-top: 4px;
+    }
 
 
+    /* checkbox */
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-12.edit-view-field fieldset>table tr.checkbox-row,
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-12.edit-view-field fieldset>table tr.checkbox-row tr,
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-12.edit-view-field fieldset>table tr.checkbox-row tr td {
+        display: block;
+        float: left;
+        margin: 0;
+        padding: 0;
+        width: initial;
+    }
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-12.edit-view-field fieldset>table tr.checkbox-row {
+        padding-left: 100%;
+        height: 52px;
+    }
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-12.edit-view-field fieldset>table tr.checkbox-row td {
+        font-size: 12px;
+        font-weight: normal;
+        padding-left: 0px !important;
+        margin-left: 0px !important;
+    }
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-12.edit-view-field fieldset>table tr.checkbox-row td input[type="checkbox"] {
+        margin-top: 11px;
+    }
+
+
+    /* textarea */
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-8.edit-view-field textarea {
+        width: 90%;
+    }
 
 }
 

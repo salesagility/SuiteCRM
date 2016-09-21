@@ -522,4 +522,8 @@ $(function () {
         initFooterPopups();
     }
 
+    // Fix for edit view layout match for layout design
+    $('body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-12.edit-view-field fieldset>table tr>td:nth-of-type(2) input[type="checkbox"]').closest('tr').addClass('checkbox-row');
+
+
 });
