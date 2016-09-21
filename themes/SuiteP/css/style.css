@@ -4721,6 +4721,32 @@ ol, ul, dl {
     font-size: 16px;
 }
 
+
+.form-control {
+    box-shadow: none;
+}
+
+.input-group-btn {
+    height: 100%;
+}
+
+.input-group-btn .btn {
+    height: 48px;
+}
+
+.text-sm {
+    font-size: 10px;
+}
+.email-address-line-container {
+    margin: 8px 0 8px 0;
+}
+.email-address-option label {
+    height: 24px;
+}
+
+.email-address-add-line-container {
+    margin: 8px 0 8px 0;
+}
 #bigbutton {
     border-radius: 0;
     padding: 10px 0 10px 0;
@@ -5799,14 +5825,14 @@ button[disabled], input[type="submit"][disabled], input[type="reset"][disabled],
     background-color: #fff;
 }
 
-input[type=text], input[type=password], input:not([type]), textarea {
+input[type=text], input[type=password], input[type=email], input:not([type]), textarea {
     background: #d8f5ee;
     border: 1px solid #a5e8d6;
     border-radius: 4px;
     padding: 5px;
 }
 
-input[type=text], input[type=password], input:not([type]) {
+input[type=text], input[type=password], input[type=email], input:not([type]) {
     line-height: 40px;
     min-height: 48px;
 }
