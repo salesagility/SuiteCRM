@@ -21,7 +21,7 @@
     </h4>
     <div id="conditionLines" class="panelContainer" style="min-height: 50px;">
     </div>
-    <button id='updateParametersButton' class="panelContainer" type="button">{sugar_translate label='LBL_UPDATE_PARAMETERS' module='AOR_Reports'}</button>
+    <input id='updateParametersButton' class="panelContainer" type="button" value="{sugar_translate label='LBL_UPDATE_PARAMETERS' module='AOR_Reports'}"/>
         <script>
             {literal}
             $.each(reportParameters,function(key,val){

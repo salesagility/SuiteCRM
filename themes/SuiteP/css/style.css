@@ -38,7 +38,7 @@
  */
 
 /* Start Global CSS */
-/* Base SugarCRM Styles */
+/* Base SuiteCRM Styles */
 
 html {
     height: 100%;
@@ -319,7 +319,7 @@ div#pageContainer td.dashletcontainer div.hd .icon {
 }
 
 #actionMenuSidebar {
-    margin-bottom: 40px;
+    margin-bottom: 25px;
 }
 
 #actionMenuSidebar_top {
@@ -669,7 +669,7 @@ div.noBullet li, .nobullet
 }
 
 #recentlyViewedSidebar {
-    margin-bottom: 30px;
+    margin-bottom: 12px;
     float: left;
     width: 100%;
 }
@@ -693,8 +693,8 @@ li.recentlinks img {
 }
 
 #recentlyViewedSidebar li a, #favoritesSidebar li a {
-    color: #fff;
-    padding: 10px 30px 10px 30px;
+    color: #f5f5f5;
+    padding: 7px 30px 7px 30px;
     width: 100%;
     display: block;
 }
@@ -706,8 +706,8 @@ li.recentlinks img {
 #recentlyViewedSidebar h2, #favoritesSidebar h2 {
     font-size: 16px;
     font-weight: bold;
-    color: #fff;
-    margin: 0 0 15px 0;
+    color: #f5f5f5;
+    margin: 0 0 5px 0;
     padding: 0 30px 0 30px;
 }
 
@@ -1080,7 +1080,7 @@ th, td {
     min-height: 24px;
 }
 
-.detail-view-row .label, .edit-view-row .label {
+.detail-view-row .label, .edit-view-row .label, #lineItems {
     color: #534D64;
     display: inline;
     padding: 0 0 0 8px;
@@ -2603,6 +2603,13 @@ li.noBullet {
     color: #ff0000;
 }
 
+.product_group .required {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    line-height: 32px;
+}
+
 .required {
     background-color: transparent;
     color: #f08377;
@@ -2681,7 +2688,7 @@ table.dateTime {
 }
 
 .dateTime td {
-    display: block;
+    display: inline-block;
 }
 
 .dateFormat {
@@ -2690,6 +2697,7 @@ table.dateTime {
 }
 
 #parent_name, input.sqsEnabled {
+    display: inline-block;
     clear: both;
     margin-top: 8px;
     width: 50%;
@@ -4911,23 +4919,86 @@ input#btn_ActionLine.button[type="button"] {
     width: 50%;
 }
 
+.edit-view-field #duration_hours {
+    width: 80px;
+    margin-right: 8px;
+}
+
+.col-sm-6 .edit-view-field input[type="text"].datetimecombo_date {
+    width: 84px;
+}
+.col-sm-6 .edit-view-field .datetimecombo_time_section {
+    display: inline-block;
+}
+
 
 #billing_address_street, #shipping_address_street, #primary_address_street, #alt_address_street {
     height: 54px;
 }
 
 #primary_address_street, #alt_address_street {
-    width: 60% !important;
+    width: 60%;
 }
 
 
 .col-sm-6 .edit-view-field[field="billing_address_street"] input[type="text"],
 .col-sm-6 .edit-view-field[field="shipping_address_street"] input[type="text"] {
-    width: 88% !important;
+    width: 88%;
 }
 
  .col-sm-12 .edit-view-field input[type="text"]:not(.sqsEnabled) {
-    width: 100% !important;
+    width: 100%;
+}
+
+#conditionLines_head,
+#fieldLines_head {
+    background: none !important;
+}
+
+#actionLines,
+#actionLines table,
+#actionLines tr,
+#actionLines td {
+    border: 1px solid transparent !important;
+}
+
+#actionLines,
+#actionLines table {
+    clear: both;
+    border-radius: 4px;
+    width: 100%;
+}
+
+
+
+
+/*Line Items*/
+#lineItems #service_head,
+#lineItems #product_head {
+    background: none;
+}
+
+
+#lineItems table > thead:nth-child(1) > tr > td:nth-child(1) [type="text"] {
+    width: 50% !important;
+}
+
+
+[field=line_items] {
+    float: none;
+    width: 100%;
+    clear: both;
+}
+
+[field=line_items]
+#line_items_span,
+table#lineItems {
+    display: block;
+}
+
+#line_items_span {
+    width: 100%;
+    white-space: normal;
 }
 
 table#lineItems tr td table tfoot tr td span {
@@ -4937,26 +5008,253 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
     display: block;
     float: none;
 }
-table#lineItems tr td table thead tr td table tbody tr td input,
-table#lineItems tr td table thead tr td table tbody tr td select,
-table#lineItems tr td table thead tr td table tbody tr td textarea {
+
+
+/*totals*/
+#lineItems .totals {
+    float: right;
+}
+
+#lineItems  #shipping_tax_amt_span {}
+#lineItems  #shipping_tax_amt {
+    /*Text*/
+}
+
+#lineItems  #shipping_tax {
+    /*Select*/
+}
+
+/*Group*/
+#lineItems .group {
+    width: 100%;
+}
+
+#lineItems .group_body,
+#lineItems .group_body > td,
+#lineItems .group > thead,
+#lineItems .group > thead > tr {
+    width: 100%;
     display: block;
-    min-width: 80px;
+    padding: 2px;
+    border: 1px solid transparent;
+    border-radius: 4px;
 }
 
-table#lineItems tr td table thead tr td table tbody tr td {
-    white-space: nowrap;
-    padding: 10px;
+#lineItems .group > thead ,
+#lineItems .group > thead > tr,
+#lineItems .group > thead > tr > td {
+    background-color: #f5f5f5;
+    min-height: 52px;
 }
 
-#total_amt,
-#discount_amount,
-#subtotal_amount,
-#shipping_amount,
-#shipping_tax_amt,
-#tax_amount {
+#lineItems .group > thead > tr > td:nth-of-type(1) {
+    width: 80%;
+    display: inline-block;
+}
+
+#lineItems .group > thead > tr > td:nth-of-type(2) {
+    width: 20%;
+    display: inline-block;
+}
+
+#lineItems .group button {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    line-height: 0;
+}
+
+#lineItems .group_name {}
+#lineItems .delete_group {}
+#lineItems .product_group {}
+#lineItems .service_group {}
+#lineItems .add_product_line {}
+#lineItems .add_service_line {}
+#lineItems .group_total_amt {}
+#lineItems .group_discount_amount {}
+#lineItems .group_subtotal_amount {}
+#lineItems .group_tax_amount {}
+#lineItems .group_subtotal_tax_amount {}
+#lineItems .group_total_amount {}
+#lineItems  #addGroup {}
+/*Labels Next to Fields*/
+#lineItems  .alignedLabel {
+    display: none;
+    visibility: collapse;
+}
+
+/*Product Lines*/
+#lineItems #product_head  td {
+    padding: 0;
+    border-bottom: 1px solid #F5F5F5;
+}
+
+#lineItems .product_group,
+#lineItems .product_group thead,
+#lineItems .product_group tr,
+#lineItems .product_group td {
+    background: none;
+}
+
+#lineItems #product_head > td:nth-of-type(1) {
+    width: 75px;
+}
+
+#lineItems  .product_group {
+    width: 1000px;
+}
+
+#lineItems  .product_group  > tbody > tr:nth-of-type(1) > td {
+    padding-top: 32px;
+    padding-bottom: 8px;
+}
+
+#lineItems  .product_group  > tbody > tr:nth-of-type(2) > td {
+    padding-bottom: 32px;
+    border-bottom: 1px solid #F5F5F5;
+}
+
+#lineItems .product_qty {
+    width: 40px;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_name {
+    width: 98%;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_part_number {
+    width: 100%;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_part_number_button {
+    margin: 0 15px 0 5px;
+}
+#lineItems .product_list_price {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_discount_text {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_discount_amount_select {
+    margin: 0 5px 0 0;
+}
+#lineItems .product_unit_price {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_vat_amt_text {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_vat_amt_select {
+    margin: 0 5px 0 0;
+}
+#lineItems .product_total_price {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_delete_line {
+    margin: 0 15px 0 5px;
+}
+
+#lineItems .product_item_description_label {
+    display: block;
+}
+
+#lineItems .product_item_description {
+    height: 50px;
+    width: 95%;
+}
+
+#lineItems .product_description_label {
+    display: block;
+}
+
+#lineItems .product_description {
+    height: 50px;
+    width: 95%;
+}
+
+/*Service Lines*/
+#lineItems  #service_head td {
+    padding: 0;
+    border-bottom: 1px solid #F5F5F5;
+}
+
+#lineItems  .service_group  > tbody > tr > td {
+    padding-top: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid #F5F5F5;
+}
+
+
+#lineItems .service_group,
+#lineItems .service_group thead,
+#lineItems .service_group tr,
+#lineItems .service_group td {
+    background: none;
+}
+
+
+#lineItems .service_group {
+    width: 1000px;
+}
+#lineItems .service_name {
+    width: 95%;
+    height: 50px;
+    margin: 0 5px 0 0;
+}
+#lineItems .service_list_price {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .service_discount_text {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .service_discount_select {
+    margin: 0 5px 0 0;
+}
+#lineItems .service_unit_price {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .service_vat_text {
+    width: 80px;
+}
+#lineItems .service_vat_select {
+    margin: 0 5px 0 5px;
+}
+#lineItems .service_total_price {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .service_delete_line {
+    margin: 0 5px 0 0;
+}
+
+#lineItems select {
+    line-height: 18px;
+}
+
+/*Grand Total*/
+#EditView #total_amt,
+#EditView #discount_amount,
+#EditView #subtotal_amount,
+#EditView #shipping_amount,
+#EditView #shipping_tax_amt,
+#EditView #tax_amount,
+#EditView #total_amount {
     max-width: 40%;
+    width: 40%;
 }
+
+#EditView #shipping_tax {
+    margin-left: 8px;
+}
+/*End of lineItems*/
 
 #email1_span,
 #email1_span > table,
@@ -5100,7 +5398,7 @@ textarea#description {
     margin-top: 0px !important;
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
-    font-size: 14px;
+    font-size: 10px;
 }
 
 .navbar-right .dropdown-menu {
@@ -5163,6 +5461,9 @@ textarea#description {
     text-transform: none;
 }
 
+.navbar-fixed-bottom, .navbar-fixed-top {
+    z-index: 15030;
+}
 
 ul.nav li.topnav a {
     border-top: 3px solid #534d64;
@@ -5254,7 +5555,7 @@ li.topnav ul.dropdown-menu li:last-child a {
 }
 
 .button, input[type=submit], input[type=button], input[type=reset] {
-    background-color: #F08377;
+    background: #F08377;
     border: none;
     color: #fff;
     cursor: pointer;
@@ -5267,6 +5568,17 @@ li.topnav ul.dropdown-menu li:last-child a {
     letter-spacing: 1px;
     height: 40px;
     line-height: 40px;
+}
+button, html input[type=button], input[type=reset], input[type=submit],
+.button, input[type=button], input[type=reset]{
+    margin-right: 4px !important;
+    margin-bottom: 4px !important;
+}
+
+input[type=submit]:hover, input[type=button]:hover, input[type=reset]:hover,
+input[type=submit]:active, input[type=button]:active, input[type=reset]:active,
+input[type=submit]:focus, input[type=button]:focus, input[type=reset]:focus {
+    background: #D66C60;
 }
 
 /* Remove Text Transformations for action menu*/
@@ -5356,6 +5668,7 @@ input[type=text], input[type=password], input:not([type]), textarea {
 
 input[type=text], input[type=password], input:not([type]) {
     line-height: 40px;
+    min-height: 48px;
 }
 
 .search_form input[type=text], .search_form textarea {
@@ -5397,6 +5710,60 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     display: inline-block;
 }
 
+.modal {
+    z-index: 16000;
+}
+
+.qtip-titlebar {
+    padding:  5px 24px 5px 10px;
+}
+
+.qtip-title-text {
+    display: block;
+    float: left;
+    width: 128px;
+    color: #ffffff;
+}
+
+.qtip-title-buttons {
+    display: inline-block;
+    width: 48px;
+    float: right;
+    vertical-align: middle;
+    padding: 0 0 0 4px;
+}
+
+.qtip-title-buttons a {
+    padding-left: 8px;
+    color: #ffffff;
+    margin: 0 4px 0 4px;
+    padding: 0;
+}
+
+.qtip-title-buttons a:hover {
+    color: #B29Eb5;
+}
+
+.qtip-default .qtip-titlebar {
+    background-color: #5D5670;
+}
+
+.qtip-default .qtip-icon {
+    background-color: transparent;
+    border: none;
+    top: 16px;
+}
+
+.qtip-default .qtip-titlebar .qtip-close {
+    color: #ffffff;
+    font-size: 22px;
+}
+
+.qtip-default .qtip-titlebar .qtip-close:hover {
+    color: #B29Eb5;
+    font-size: 22px;
+    font-weight: bold;
+}
 
 /*xs-col-*/
 @media (max-width: 769px) {
@@ -5440,7 +5807,6 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     #wizform #wizard {
             width: 700px;
         }
-
 }
 
 /*md-col-*/
@@ -5531,7 +5897,7 @@ select {
     border-size: 1px;
     border-color: #A5E8D6;
     border-radius: 4px;
-    padding: 16px 55px 16px 5px;
+    padding: 16px 35px 16px 5px;
     background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right #ffffff;
     background-size: 52px 52px;
     -moz-appearance: none;
@@ -6102,56 +6468,6 @@ span#quickcreateplus {
     border-radius: 50%;
 }
 
-#conditionLines_head,
-#fieldLines_head, #lineItems,
-table#lineItems,
-#lineItems table,
-#lineItems thead,
-#lineItems tr,
-#lineItems td {
-    background: none !important;
-}
-
-#actionLines,
-#actionLines table,
-#actionLines tr,
-#actionLines td {
-    border: 1px solid transparent !important;
-}
-
-#actionLines,
-#actionLines table,
-#line_items table {
-    clear: both;
-    border-radius: 4px;
-    width: 100%;
-}
-
-table#actionLines > tr > td > table td {
-    padding: 4px;
-}
-
-table#actionLines > tr > td > table td:first-of-type {
-    padding-left: 16px;
-}
-
-
-table#actionLines > tr > td > table, #line_items table > tr > td > table {
-    background: #F5F5F5;
-    margin: 16px 0 0 0 !important;
-    clear: both;
-    display: block;
-}
-
-#conditionLines td,  #fieldLines td {
-    padding: 8px;
-}
-
-
-#lineItems table > thead:nth-child(1) > tr > td:nth-child(1) [type="text"] {
-    width: 50% !important;
-}
-
 li.moremenu {
     padding: 8px 10px 8px 10px;
 }
@@ -6627,6 +6943,13 @@ tr:hover img.info {
 
 div.action_buttons form {
     float: left;
+}
+
+div.action_buttons .button {
+    background-color: #94A6B5;
+}
+div.action_buttons .button:hover {
+    background-color: #7B8A96;
 }
 
 .paginationWrapper {
@@ -7113,6 +7436,10 @@ object {
     overflow-y: auto;
 }
 
+.qtip-content .title {
+    font-weight: bold;
+}
+
 .qtip {
     font-family: 'Lato', Lato, Arial, sans-serif;
     font-size: 12px;
@@ -7128,6 +7455,9 @@ object {
     background-image: -webkit-gradient(linear, left top, left bottom, from(#F08377), to(#4286AD));
     background-image: -webkit-linear-gradient(top, #F08377, #4286AD);
 }
+
+
+
 
 #reminders .clear {
     clear: both;
@@ -9364,6 +9694,10 @@ table tr#delegates_search {
     float: none;
 }
 
+
+
+
+
 /* desktop / tablet / mobile fix */
 
 @media (max-width: 1024px) {
@@ -9468,13 +9802,6 @@ table tr#delegates_search {
 
 @media (max-width: 1700px) {
 
-    #product_head {
-        display: none;
-    }
-    #service_head {
-        display: none;
-    }
-
     table#lineItems table tr td table tbody tr td span.hidden.alignedLabel {
         display: inline!important;
     }
@@ -9487,3 +9814,5 @@ table tr#delegates_search {
 
 
 }
+
+
