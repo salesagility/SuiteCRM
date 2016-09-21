@@ -75,12 +75,25 @@ $viewdefs [$module_name] =
                     array (
                         0 =>
                         array (
+                            'name' => 'page_size',
+                            'label' => 'LBL_PAGE_SIZE',
+                        ),
+                        1 =>
+                        array (
+                            'name' => 'orientation',
+                            'label' => 'LBL_ORIENTATION',
+                        ),
+                    ),
+                    3 =>
+                    array (
+                        0 =>
+                        array (
                             'name' => 'pdfheader',
                             'label' => 'LBL_HEADER',
                             'customCode' => '{$fields.pdfheader.value}',
                         ),
                     ),
-                    3 =>
+                    4 =>
                     array (
                         0 =>
                         array (
@@ -89,7 +102,7 @@ $viewdefs [$module_name] =
                             'customCode' => '{$fields.description.value}',
                         ),
                     ),
-                    4 =>
+                    5 =>
                     array (
                         0 =>
                         array (
