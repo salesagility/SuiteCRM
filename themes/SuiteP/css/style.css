@@ -4972,6 +4972,7 @@ table#lineItems {
 
 #line_items_span {
     width: 100%;
+    white-space: normal;
 }
 
 table#lineItems tr td table tfoot tr td span {
