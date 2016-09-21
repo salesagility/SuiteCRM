@@ -66,31 +66,6 @@
 {/literal}
 </script>
 <div class="row">
-	<div class=" search_name_basic">
-
-		<img src="themes/SuiteP/images/p_list_search.png">
-		{{assign var='accesskeycount' value=0}}  {{assign var='ACCKEY' value=''}}
-
-		{{foreach name=colIteration from=$formData key=col item=colData}}
-			{{math assign="accesskeycount" equation="$accesskeycount + 1"}}
-			{{if $accesskeycount==1}} {{assign var='ACCKEY' value=$APP.LBL_FIRST_INPUT_SEARCH_KEY}} {{else}} {{assign var='ACCKEY' value=''}} {{/if}}
-
-			{counter assign=index}
-			{math equation="left % right"
-			left=$index
-			right=$basicMaxColumns
-			assign=modVal
-			}
-
-			{{if $fields[$colData.field.name] AND ($colData.field.name == 'search_name_basic' OR $colData.field.name == 'name_basic')}}
-
-			{{sugar_field parentFieldArray='fields' vardef=$fields[$colData.field.name] accesskey=$ACCKEY displayType='searchView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name}}
-
-			{{/if}}
-		{{/foreach}}
-	</div>
-</div>
-<div class="row">
 {{foreach name=colIteration from=$formData key=col item=colData}}
     {{math assign="accesskeycount" equation="$accesskeycount + 1"}}
     {{if $accesskeycount==1}} {{assign var='ACCKEY' value=$APP.LBL_FIRST_INPUT_SEARCH_KEY}} {{else}} {{assign var='ACCKEY' value=''}} {{/if}}
@@ -101,7 +76,6 @@
           right=$basicMaxColumns
           assign=modVal
     }
-	{{if $fields[$colData.field.name] AND $colData.field.name != 'search_name_basic' AND $colData.field.name != 'name_basic'}}
 	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 search_fields_basic">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
 			{{if isset($colData.field.label)}}
@@ -114,9 +88,6 @@
 		{{sugar_field parentFieldArray='fields' vardef=$fields[$colData.field.name] accesskey=$ACCKEY displayType='searchView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name}}
 		</div>
 	</div>
-	{{else}}
-
-   	{{/if}}
 {{/foreach}}
 </div>
 <div class="row">
