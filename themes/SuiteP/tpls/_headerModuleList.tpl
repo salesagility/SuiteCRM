@@ -163,8 +163,7 @@
                             {if $name != 'Home'}
                                 <li class="topnav">
                                     <span class="currentTabLeft">&nbsp;</span>
-                                    <span class="currentTab"
-                                          style="color:#F08377 !important;">{sugar_link id="moduleTab_$name" module=$name data=$module}</span>
+                                    <span class="currentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span>
                                     <span>&nbsp;</span>
 
 
@@ -185,7 +184,84 @@
                                             {assign var=foundFavorits value=true}
                                         {/if}
                                     {/foreach}
+                                    {if $foundRecents || $foundFavorits || count($shortcutTopMenu.$name) > 0}
 
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <ul>
+                                                    {if count($shortcutTopMenu.$name) > 0}
+                                                        {foreach from=$shortcutTopMenu.$name item=item}
+                                                            {if $item.URL == "-"}
+                                                                {*<li><a></a><span>&nbsp;</span></li>*}
+                                                            {else}
+                                                                <li><a href="{$item.URL}"><span class="topnav-fake-icon">{* fakes the space the icon takes *}</span><span aria-hidden="true">{$item.LABEL}</span></a></li>
+                                                            {/if}
+                                                        {/foreach}
+                                                    {/if}
+                                                </ul>
+                                            </li>
+
+                                            {* when records are found for the current submodule show recent header *}
+                                            {counter start=0 name="submoduleRecentRecordsTotal" assign="submoduleRecentRecordsTotal"  print=false}
+                                            {foreach from=$recentRecords item=item name=lastViewed}
+                                                {if $item.module_name == $name and $submoduleRecentRecordsTotal == 0}
+                                                    <li class="recent-links-title"><a><strong>{$APP.LBL_LAST_VIEWED}</strong></a></li>
+                                                    {counter name="submoduleRecentRecordsTotal" print=false}
+                                                {/if}
+                                            {/foreach}
+                                                <li>
+                                                    <ul>
+                                                        {* when records are found for the current submodule show the first 3 records *}
+                                                        {counter start=0 name="submoduleRecentRecords" assign="submoduleRecentRecords"  print=false}
+                                                        {foreach from=$recentRecords item=item name=lastViewed}
+                                                            {if $item.module_name == $name and $submoduleRecentRecords < 3}
+                                                                <li class="recentlinks" role="presentation">
+                                                                    <a title="{$item.module_name}"
+                                                                       accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                                                       href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}" class="recent-links-detail">
+                                                                        <img src="{sugar_getimagepath directory='sidebar/modules'  file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"><span aria-hidden="true">{$item.item_summary_short}</span>
+                                                                    </a>
+                                                                    <a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" class="recent-links-edit"><span class=" glyphicon glyphicon-pencil"></a>
+                                                                </li>
+                                                                {counter name="submoduleRecentRecords" print=false}
+                                                            {/if}
+                                                        {/foreach}
+                                                    </ul>
+                                                </li>
+
+
+
+
+
+                                            {counter start=0 name="submoduleFavoriteRecordsTotal" assign="submoduleFavoriteRecordsTotal"  print=false}
+                                            {foreach from=$favoriteRecords item=item name=lastViewed}
+                                                {if $item.module_name == $name and $submoduleFavoriteRecordsTotal == 0}
+                                                    <li class="favorite-links-title"><a><strong>{$APP.LBL_FAVORITES}</strong></a></li>
+                                                    {counter name="submoduleFavoriteRecordsTotal" print=false}
+                                                {/if}
+                                            {/foreach}
+                                            <li>
+                                                <ul>
+                                                    {* when records are found for the current submodule show the first 3 records *}
+                                                    {counter start=0 name="submoduleFavoriteRecords" assign="submoduleFavoriteRecords" print=false}
+                                                    {foreach from=$favoriteRecords item=item name=lastViewed}
+                                                        {if $item.module_name == $name and $submoduleFavoriteRecords < 3}
+                                                            <li class="favoritelinks" role="presentation">
+                                                                <a title="{$item.module_name}"
+                                                                   accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                                                   href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}" class="favorite-links-detail">
+                                                                    <img src="{sugar_getimagepath  directory='sidebar/modules' file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"><span aria-hidden="true">{$item.item_summary_short}</span>
+                                                                </a>
+                                                                <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}" class="favorite-links-edit"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
+                                                            </li>
+                                                            {counter name="submoduleFavoriteRecords" print=false}
+                                                        {/if}
+                                                    {/foreach}
+                                                </ul>
+                                            </li>
+                                        </ul>
+
+                                    {/if}
                                  </li>
                             {/if}
 
@@ -243,40 +319,56 @@
                                             {/if}
                                         </ul>
                                     </li>
-                                    {if count($recentRecords) > 0}
-                                        <li class="recent-links-title"><a><strong>{$APP.LBL_LAST_VIEWED}</strong></a></li>
-                                    {/if}
+                                    {* when records are found for the current submodule show recent header *}
+                                    {counter start=0 name="submoduleRecentRecordsTotal" assign="submoduleRecentRecordsTotal"  print=false}
+                                    {foreach from=$recentRecords item=item name=lastViewed}
+                                        {if $item.module_name == $submodule and $submoduleRecentRecordsTotal == 0}
+                                            <li class="recent-links-title"><a><strong>{$APP.LBL_LAST_VIEWED}</strong></a></li>
+                                            {counter name="submoduleRecentRecordsTotal" print=false}
+                                        {/if}
+                                    {/foreach}
                                     <li>
                                         <ul>
+                                            {* when records are found for the current submodule show the first 3 records *}
+                                            {counter start=0 name="submoduleRecentRecords" assign="submoduleRecentRecords"  print=false}
                                             {foreach from=$recentRecords item=item name=lastViewed}
-                                                {if $smarty.foreach.lastViewed.iteration < 4}
+                                                {if $item.module_name == $submodule and $submoduleRecentRecords < 3}
                                                     <li class="recentlinks" role="presentation">
                                                         <a title="{$item.module_name}"
                                                            accessKey="{$smarty.foreach.lastViewed.iteration}"
                                                            href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}" class="recent-links-detail">
-                                                            <img src="{sugar_getimagepath directory='sidebar/modules'  file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"/><span aria-hidden="true">{$item.item_summary_short}</span>
+                                                            <img src="{sugar_getimagepath directory='sidebar/modules'  file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"><span aria-hidden="true">{$item.item_summary_short}</span>
                                                         </a>
                                                         <a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" class="recent-links-edit"><span class=" glyphicon glyphicon-pencil"></a>
                                                     </li>
+                                                    {counter name="submoduleRecentRecords" print=false}
                                                 {/if}
                                             {/foreach}
                                         </ul>
                                     </li>
-                                    {if count($favoriteRecords) > 0}
+                                    {* when records are found for the current submodule show favorites header *}
+                                    {counter start=0 name="submoduleFavoriteRecordsTotal" assign="submoduleFavoriteRecordsTotal"  print=false}
+                                    {foreach from=$favoriteRecords item=item name=lastViewed}
+                                        {if $item.module_name == $submodule and $submoduleFavoriteRecordsTotal == 0}
                                             <li class="favorite-links-title"><a><strong>{$APP.LBL_FAVORITES}</strong></a></li>
-                                    {/if}
+                                            {counter name="submoduleFavoriteRecordsTotal" print=false}
+                                        {/if}
+                                    {/foreach}
                                     <li>
                                         <ul>
+                                        {* when records are found for the current submodule show the first 3 records *}
+                                        {counter start=0 name="submoduleFavoriteRecords" assign="submoduleFavoriteRecords" print=false}
                                         {foreach from=$favoriteRecords item=item name=lastViewed}
-                                            {if $smarty.foreach.lastViewed.iteration < 4}
+                                            {if $item.module_name == $submodule and $submoduleFavoriteRecords < 3}
                                                 <li class="favoritelinks" role="presentation">
                                                     <a title="{$item.module_name}"
                                                        accessKey="{$smarty.foreach.lastViewed.iteration}"
                                                        href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}" class="favorite-links-detail">
-                                                        <img src="{sugar_getimagepath  directory='sidebar/modules' file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"/><span aria-hidden="true">{$item.item_summary_short}</span>
+                                                        <img src="{sugar_getimagepath  directory='sidebar/modules' file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"><span aria-hidden="true">{$item.item_summary_short}</span>
                                                     </a>
                                                     <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}" class="favorite-links-edit"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
                                                 </li>
+                                                {counter name="submoduleFavoriteRecords" print=false}
                                             {/if}
                                         {/foreach}
                                         </ul>
@@ -539,7 +631,9 @@
                 </div>
                 
                 <div id="recentlyViewedSidebar">
+                {if count($recentRecords) > 0}
                     <h2 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h2>
+                {/if}
                     <ul class="nav nav-pills nav-stacked">
                         {foreach from=$recentRecords item=item name=lastViewed}
                             {if $smarty.foreach.lastViewed.index < 5}
@@ -557,7 +651,9 @@
                 </div>
      
                 <div id="favoritesSidebar">
+                {if count($favoriteRecords) > 0}
                     <h2 class="recent_h3">{$APP.LBL_FAVORITES}</h2>
+                {/if}
                     <ul class="nav nav-pills nav-stacked">
                         {foreach from=$favoriteRecords item=item name=lastViewed}
                             {if $smarty.foreach.lastViewed.index < 5}

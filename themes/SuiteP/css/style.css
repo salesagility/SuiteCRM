@@ -5393,7 +5393,7 @@ textarea#description {
 .dropdown-menu {
     background: #5d5670;
     padding: 4px 10px 4px 10px;
-    min-width: 185px;
+    min-width: 200px;
     margin-top: 0px !important;
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
@@ -5541,19 +5541,30 @@ li.topnav > ul > li > ul > li a span.topnav-fake-icon {
 }
 
 #mobileheader .dropdown-menu li,
+.topnav .dropdown-menu li,
 .with-actions .dropdown-menu li {
     line-height: normal;
 }
 
 #mobileheader .dropdown-menu ul li.recentlinks:last-of-type,
 #mobileheader .dropdown-menu ul li.favoritelinks:last-of-type,
+#mobileheader .dropdown-menu ul li.recentlinks:only-child,
+#mobileheader .dropdown-menu ul li.favoritelinks:only-child,
+.topnav .dropdown-menu li.recentlinks:last-of-type,
+.topnav .dropdown-menu li.favoritelinks:last-of-type,
+.topnav .dropdown-menu li.recentlinks:only-child,
+.topnav .dropdown-menu li.favoritelinks:only-child,
 .with-actions .dropdown-menu li.recentlinks:last-of-type,
-.with-actions .dropdown-menu li.favoritelinks:last-of-type {
+.with-actions .dropdown-menu li.favoritelinks:last-of-type,
+.with-actions .dropdown-menu li.recentlinks:only-child,
+.with-actions .dropdown-menu li.favoritelinks:only-child {
     border-bottom: none;
 }
 
 #mobileheader .dropdown-menu li.recentlinks,
 #mobileheader .dropdown-menu li.favoritelinks,
+.topnav .dropdown-menu li.recentlinks,
+.topnav .dropdown-menu li.favoritelinks,
 .with-actions .dropdown-menu li.recentlinks,
 .with-actions .dropdown-menu li.favoritelinks {
     border-bottom: 1px solid #757083;
@@ -5576,6 +5587,8 @@ li.topnav > ul > li > ul > li a span.topnav-fake-icon {
 
 #mobileheader .dropdown-menu ul li a.recent-links-detail,
 #mobileheader .dropdown-menu ul li a.favorite-links-detail,
+.topnav .dropdown-menu li a.recent-links-detail,
+.topnav .dropdown-menu li a.favorite-links-detail,
 .with-actions .dropdown-menu li a.recent-links-detail,
 .with-actions .dropdown-menu li a.favorite-links-detail {
     border: none;
@@ -5586,6 +5599,8 @@ li.topnav > ul > li > ul > li a span.topnav-fake-icon {
 
 #mobileheader .dropdown-menu ul li a.recent-links-edit,
 #mobileheader .dropdown-menu ul li a.favorite-links-edit,
+.topnav .dropdown-menu li a.recent-links-edit,
+.topnav .dropdown-menu li a.favorite-links-edit,
 .with-actions .dropdown-menu li a.recent-links-edit,
 .with-actions .dropdown-menu li a.favorite-links-edit {
     border: none;
