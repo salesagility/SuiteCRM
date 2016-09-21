@@ -4972,6 +4972,7 @@ table#lineItems {
 
 #line_items_span {
     width: 100%;
+    white-space: normal;
 }
 
 table#lineItems tr td table tfoot tr td span {
@@ -6378,6 +6379,62 @@ select#sales_stage_advanced {
     #wizform #wizard {
         width: 700px;
     }
+
+
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-4.label {
+        width: 20%;
+    }
+
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-8.edit-view-field {
+        width: 79%;
+    }
+
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-8.edit-view-field input[type="text"] {
+        width: 90%;
+    }
+
+
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-12.edit-view-row-item .col-xs-12.col-sm-2.label {
+        width: 10%;
+    }
+
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-12.edit-view-row-item span table tbody tr td table.emailaddresses tbody tr {
+        margin: 0;
+    }
+
+
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-12.edit-view-row-item span table tbody tr td table.emailaddresses tbody:nth-child(1) tr td[scope="row"]:nth-child(2) {
+        width: 63.5% !important;
+    }
+
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-12.edit-view-row-item span table tbody tr td table.emailaddresses tbody:nth-child(1) tr td[scope="row"] {
+        font-size: 11px;
+        position: relative;
+        top: 35px;
+        width: 55px !important;
+    }
+
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-12.edit-view-row-item span table tbody tr td table.emailaddresses tbody:nth-child(1) tr td[scope="row"]:nth-child(1) {
+        top: 8px;
+        margin-left: -10px;
+    }
+
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-12.edit-view-row-item span table tbody tr td table.emailaddresses tbody tr td[nowrap="NOWRAP"] {
+        width: 62.5% !important;
+        margin-right: 7px
+    }
+
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-12.edit-view-row-item span table tbody tr td table.emailaddresses tbody tr td[align="center"] {
+        width: 58px !important
+    }
+
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .panel-content .panel.panel-default .panel-body .tab-content .row.edit-view-row .col-xs-12.col-sm-12.edit-view-row-item span table tbody tr td table.emailaddresses tbody tr td[align="center"]:nth-child(3) {
+        margin-left: 10px !important;
+    }
+
+
+
+
 }
 
 .sub-header {
