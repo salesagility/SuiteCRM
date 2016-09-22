@@ -41,6 +41,16 @@ $dictionary['AOS_PDF_Templates'] = array(
 	'table'=>'aos_pdf_templates',
 	'audited'=>true,
 	'fields'=>array (
+        'description' =>
+            array (
+                'name' => 'description',
+                'vname' => 'LBL_DESCRIPTION',
+                'type' => 'text',
+                'comment' => 'Full text of the note',
+                'rows' => 6,
+                'cols' => 80,
+                'dbType' => 'mediumtext',
+            ),
   'active' =>
   array (
     'name' => 'active',
