@@ -9567,3 +9567,8 @@ table tr#delegates_search {
 
 
 }
+
+.ui-dialog {
+    left: 30px !important;
+    top: 1080px !important;
+}

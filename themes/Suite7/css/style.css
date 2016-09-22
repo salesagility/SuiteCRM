@@ -5812,3 +5812,8 @@ table tr#delegates_search {
 .panel-heading {
     padding-bottom: 20px;
 }
+
+.ui-dialog {
+    left: 30px !important;
+    top: 480px !important;
+}
