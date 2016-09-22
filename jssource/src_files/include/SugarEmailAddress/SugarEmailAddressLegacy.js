@@ -254,7 +254,7 @@
 		    newContent.setAttribute("id", this.id + "emailAddress" + this.numberEmailAddresses);
 		    newContent.setAttribute("tabindex", tabIndexCount);
 		    newContent.setAttribute("size", "30");
-            newContent.setAttribute("title", SUGAR.language.get('app_strings', 'LBL_EMAIL_TITLE'));
+				newContent.setAttribute("title", SUGAR.language.get('app_strings', 'LBL_EMAIL_TITLE'));
 		
 		    if(address != '') {
 		        newContent.setAttribute("value", address);
@@ -265,10 +265,10 @@
 		    
 		    // remove button
 		    removeButton.setAttribute("id", this.id + "removeButton" + this.numberEmailAddresses);
-			removeButton.setAttribute("class", "id-ff-remove");
+				removeButton.setAttribute("class", "id-ff-remove");
 		    removeButton.setAttribute("name", this.numberEmailAddresses);
 		    removeButton.setAttribute("type", "button");
-            removeButton.setAttribute("tabindex", tabIndexCount);
+				removeButton.setAttribute("tabindex", tabIndexCount);
             removeButton.onclick = (function(eaw) {
                 return function() {
                     eaw.removeEmailAddress(this.name);
@@ -289,7 +289,7 @@
 		    newContentPrimaryFlag.setAttribute("id", this.id + "emailAddressPrimaryFlag" + this.numberEmailAddresses);
 		    newContentPrimaryFlag.setAttribute("value", this.id + "emailAddress" + this.numberEmailAddresses);
 		    newContentPrimaryFlag.setAttribute("enabled", "true");
-            newContentPrimaryFlag.setAttribute("tabindex", tabIndexCount);
+        newContentPrimaryFlag.setAttribute("tabindex", tabIndexCount);
 
 		    // set reply-to flag
 		    newContentReplyToFlag.setAttribute("type", "radio");
@@ -297,37 +297,9 @@
 		    newContentReplyToFlag.setAttribute("id", this.id + "emailAddressReplyToFlag" + this.numberEmailAddresses);
 		    newContentReplyToFlag.setAttribute("value", this.id + "emailAddress" + this.numberEmailAddresses);
 		    newContentReplyToFlag.setAttribute("enabled", "true");
-            newContentReplyToFlag.setAttribute("tabindex", tabIndexCount);
+				newContentReplyToFlag.setAttribute("tabindex", tabIndexCount);
 		    newContentReplyToFlag.eaw = this;
-		    newContentReplyToFlag['onclick']= function() {
-		    	var form = document.forms[this.eaw.emailView];
-		        if (!form) {
-		            form = document.forms['editContactForm'];
-		        }
-		        var nav = new String(navigator.appVersion);
-		
-		        if(nav.match(/MSIE/gim)) {
-		            for(i=0; i<form.elements.length; i++) {
-		                var id = new String(form.elements[i].id);
-		                if(id.match(/emailAddressReplyToFlag/gim) && form.elements[i].type == 'radio' && id != this.eaw.id) {
-		                    form.elements[i].checked = false;
-		                }
-		            }           
-		        }
-		        for(i=0; i<form.elements.length; i++) {
-		            var id = new String(form.elements[i].id);
-		            if(id.match(/emailAddressReplyToFlag/gim) && form.elements[i].type == 'radio' && id != this.eaw.id) {
-		                this.eaw.replyToFlagObject[this.eaw.id] = false;
-		            }
-		        } // for        
-		        if (this.eaw.replyToFlagObject[this.id]) {
-		            this.eaw.replyToFlagObject[this.id] = false;
-		            this.checked = false;
-		        } else {
-		            this.eaw.replyToFlagObject[this.id] = true;
-		            this.checked = true;
-		        } // else
-		    }
+		    newContentReplyToFlag['onclick']=
 
 		    // set opt-out flag
 		    newContentOptOutFlag.setAttribute("type", "checkbox");
@@ -335,8 +307,8 @@
 		    newContentOptOutFlag.setAttribute("id", this.id + "emailAddressOptOutFlag" + this.numberEmailAddresses);
 		    newContentOptOutFlag.setAttribute("value", this.id + "emailAddress" + this.numberEmailAddresses);
 		    newContentOptOutFlag.setAttribute("enabled", "true");
-			newContentOptOutFlag.eaw = this;
-            newContentOptOutFlag.setAttribute("tabindex", tabIndexCount);
+				newContentOptOutFlag.eaw = this;
+				newContentOptOutFlag.setAttribute("tabindex", tabIndexCount);
 		    newContentOptOutFlag['onClick'] = function(){this.eaw.toggleCheckbox(this)};
 	
 		    // set invalid flag
@@ -445,7 +417,9 @@
 		    newContent.eaw = this;
 		    newContent.onblur = function(e){this.eaw.retrieveEmailAddress(e)};
 		    newContent.onkeydown = function(e){this.eaw.handleKeyDown(e)};
-            if (YAHOO.env.ua.ie > 0) {
+
+
+			if (YAHOO.env.ua.ie > 0) {
                 // IE doesn't bubble up "change" events through the DOM.
                 // So we need to fire onChange events on the parent span when the input changes
                 var emailcontainer = Dom.getAncestorByTagName(insertInto,'span');

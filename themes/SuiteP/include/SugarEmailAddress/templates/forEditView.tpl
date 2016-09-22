@@ -94,13 +94,34 @@ var emailAddressWidgetLoaded = false;
 {*</table>*}
 
 <div class="col-xs-12">
+	<div class="col-xs-12 email-address-add-line-container">
+		{capture assign="add_button_attributes"}id="{$module}{$index}_email_widget_add" onclick="SUGAR.EmailAddressWidget.instances.{$module}{$index}.addEmailAddress('{$module}emailAddressesTable{$index}','','');"{/capture}
+		<button type="button" class="btn btn-info email-address-add-button" title="{$app_strings.LBL_ID_FF_ADD} " {$add_button_attributes}>
+			<span class="glyphicon glyphicon-plus"></span><span></span>
+		</button>
+	</div>
 	<div class="col-xs-12 email-address-lines-container">
+		{*
+		@version > 7.7.5
+		@description Template represents a single email line item
+
+		To customise:
+		 ** keep the .template class in the most parent container of a line item
+		 ** don't remove the elements with id's
+		 ** don't change the id's of the elements.
+		 ** don't add js events inline. Instead bind the event in javascript.
+	 	*}
 		<div class="col-xs-12 template email-address-line-container hidden">
 			<div class="col-xs-12 col-sm-6  email-address-input-container">
 				<div class="input-group email-address-input-group">
-					<input type="email" name="" id="email-address-input" value="" class="form-control" placeholder="email@example.com">
-				<span class="input-group-btn">
-					<button type="button" id="email-address-remove-button" class="btn btn-danger email-address-remove-button" name="" type="button">
+					<input type="email" id="email-address-input" value="" class="form-control" placeholder="email@example.com" title="{$app_strings.LBL_EMAIL_TITLE}">
+					<input type="hidden" id="record-id">
+					<input type="hidden" id="verified-flag" value="true"/>
+					<input type="hidden" id="verified-email-value" value=""/>
+					<input type=hidden id="{$module}_email_widget_id" name="{$module}_email_widget_id" value="">
+					<input type=hidden id='emailAddressWidget' name='emailAddressWidget' value='1'>
+					<span class="input-group-btn">
+					<button type="button" id="email-address-remove-button" class="btn btn-danger email-address-remove-button" name="" title="{$app_strings.LBL_ID_FF_REMOVE}" type="button">
 						<span class="glyphicon glyphicon-minus"></span>
 					</button>
 				</span>
@@ -129,17 +150,12 @@ var emailAddressWidgetLoaded = false;
 				{if $useInvalid == true}
 				<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
 					<label class="text-sm col-xs-12">{$app_strings.LBL_EMAIL_INVALID}</label>
-					<div><input type="checkbox" name="" id="email-address-opt-out-flag" value="" enabled="true"></div>
+					<div><input type="checkbox" name="" id="email-address-invalid-flag" value="" enabled="true"></div>
 				</div>
 				{/if}
 			</div>
 		</div>
-	</div>
-	<div class="col-xs-12 email-address-add-line-container">
-		{capture assign="add_button_attributes"}id="{$module}{$index}_email_widget_add" onclick="SUGAR.EmailAddressWidget.instances.{$module}{$index}.addEmailAddress('{$module}emailAddressesTable{$index}','','');"{/capture}
-		<button type="button" class="btn btn-info email-address-add-button" {$add_button_attributes}>
-			<span class="glyphicon glyphicon-plus"></span><span> {$app_strings.LBL_ID_FF_ADD}</span>
-		</button>
+
 	</div>
 </div>
 <input type="hidden" name="useEmailWidget" value="true">
