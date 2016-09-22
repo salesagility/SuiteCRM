@@ -538,6 +538,13 @@ $(function () {
         }
     };
 
+    $(window).click(function(){
+        resizeRelatedFields();
+        setTimeout(function(){
+            resizeRelatedFields();
+        }, 500);
+    });
+
     $(window).resize(function(){
         resizeRelatedFields();
     });
