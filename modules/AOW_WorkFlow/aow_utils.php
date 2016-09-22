@@ -333,7 +333,10 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
             $contents = str_replace('"'.$vardef['id_name'].'"','{/literal}"{$fields.'.$vardef['name'].'.id_name}"{literal}', $contents);
             $contents = str_replace('"'.$vardef['name'].'"','{/literal}"{$fields.'.$vardef['name'].'.name}"{literal}', $contents);
         }
-
+		if ($view == 'DetailView' && $vardef['type'] == 'image')
+		{
+			$contents = str_replace('{$fields.id.value}','{$record_id}', $contents);
+		}
         // hack to disable one of the js calls in this control
         if ( isset($vardef['function']) && ( $vardef['function'] == 'getCurrencyDropDown' || $vardef['function']['name'] == 'getCurrencyDropDown' ) )
             $contents .= "{literal}<script>function CurrencyConvertAll() { return; }</script>{/literal}";
@@ -509,6 +512,10 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
     // add in any additional strings
     $ss->assign("MOD", $mod_strings);
     $ss->assign("APP", $app_strings);
+	
+	$ss->assign("module", $module);
+	if ($params['record_id'])
+	$ss->assign("record_id", $params['record_id']);
 
     //$return = str_replace($fieldname,$ss->fetch($file));
 
