@@ -228,9 +228,6 @@
         address = "";
       }
 
-      // TODO Remove
-      console.log(_eaw);
-      console.log(tableId, address, primaryFlag, replyToFlag, optOutFlag, invalidFlag, emailId);
 
       // Clone from hidden template on the page
       var lineContainer = $('.template.email-address-line-container').clone();
@@ -396,13 +393,11 @@
       _eaw.addInProgress = false;
     }, //addEmailAddress
 
-
-
     EmailAddressValidation: function (ev, fn, r, stR) {
       $(document).ready(function() {
         addToValidate(ev, fn, 'email', r, stR);
       });
-    },
+    },//EmailAddressValidation
 
     removeEmailAddress: function (index) {
       removeFromValidate(this.emailView, this.id + 'emailAddress' + index);
@@ -462,7 +457,7 @@
         $('#' +this.id + 'emailAddressPrimaryFlag0').value = this.id + 'emailAddress0';
       }
 
-    },
+    },//removeEmailAddress
 
     toggleCheckbox: function (el) {
       var form = document.forms[this.emailView];
