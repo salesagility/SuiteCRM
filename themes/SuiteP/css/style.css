@@ -6418,6 +6418,11 @@ select#sales_stage_advanced {
         left: 10px;
     }
 
+    body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .tab-content .row.edit-view-row .col-xs-12.col-sm-12.edit-view-row-item .col-xs-12.col-sm-8.edit-view-field .datetimecombo_time_section span {
+        top: 0px !important;
+        left: 20px;
+    }
+
     /* labels on full size */
     body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .tab-content .row.edit-view-row .col-xs-12.col-sm-12.edit-view-row-item .col-xs-12.col-sm-2.label {
         width: 12.5%;
