@@ -579,7 +579,13 @@
                                     <a title="{$item.module_name}"
                                        accessKey="{$smarty.foreach.lastViewed.iteration}"
                                        href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
-                                        <img src="{sugar_getimagepath directory='sidebar/modules'  file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"/><span aria-hidden="true">{$item.item_summary_short}</span>
+                                        {capture name="side_bar_img_capture" assign="side_bar_img"}{sugar_getimagepath  directory='sidebar/modules' file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}{/capture}
+                                        {if !empty($side_bar_img)}
+                                              <img src="{$side_bar_img}"/>
+                                        {else}
+                                            <img src="themes/SuiteP/images/sidebar/modules/basic.svg"/>
+                                        {/if}
+                                        <span aria-hidden="true">{$item.item_summary_short}</span>
                                     </a>
                                 </li>
                             </div>
@@ -602,7 +608,13 @@
                                     <a title="{$item.module_name}"
                                        accessKey="{$smarty.foreach.lastViewed.iteration}"
                                        href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}">
-                                        <img src="{sugar_getimagepath  directory='sidebar/modules' file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"/><span aria-hidden="true">{$item.item_summary_short}</span>
+                                        {capture name="side_bar_img_capture" assign="side_bar_img"}{sugar_getimagepath  directory='sidebar/modules' file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}{/capture}
+                                        {if !empty($side_bar_img)}
+                                            <img src="{$side_bar_img}"/>
+                                        {else}
+                                            <img src="themes/SuiteP/images/sidebar/modules/basic.svg"/>
+                                        {/if}
+                                        <span aria-hidden="true">{$item.item_summary_short}</span>
                                     </a>
                                 </li>
                             </div>
