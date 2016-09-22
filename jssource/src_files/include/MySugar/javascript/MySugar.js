@@ -194,6 +194,7 @@ SUGAR.mySugar = function() {
 				configureDlg.render(document.body);
 				configureDlg.show();
         $('#dlg').addClass('SuiteP-configureDashlet');
+				$('#dlg.SuiteP-configureDashlet').draggable();
 				configureDlg.configFixedCenter(null, false) ;
 				SUGAR.util.evalScript(result['body']);
 			}
