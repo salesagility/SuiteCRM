@@ -159,6 +159,27 @@ SUGAR.mySugar = function() {
 		
 		// call to configure a Dashlet
 		configureDashlet: function(id) {
+
+
+			var configureDlgSlideEffectUp = function() {
+				var to = 100;
+				var top = parseInt($('.SuiteP-configureDashlet').css('top'));
+				$('.SuiteP-configureDashlet').animate({'top': top-to});
+			};
+
+			var configureDlgSlideEffectDown = function() {
+				var from = 100;
+				var top = parseInt($('.SuiteP-configureDashlet').css('top'));
+				$('.SuiteP-configureDashlet').css('top', (top-from) + 'px');
+				$('.SuiteP-configureDashlet').animate({'top': 0});
+				$('.SuiteP-configureDashlet a.container-close').each(function(i,e) {
+					$(e).click(function () {
+						configureDlgSlideEffectUp();
+					});
+				});
+			};
+
+
 			ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_LOADING'));
       configureDlg = new YAHOO.widget.SimpleDialog("dlg", {
         visible:false,
@@ -194,6 +215,7 @@ SUGAR.mySugar = function() {
 				configureDlg.render(document.body);
 				configureDlg.show();
         $('#dlg').addClass('SuiteP-configureDashlet');
+				configureDlgSlideEffectDown();
 				configureDlg.configFixedCenter(null, false) ;
 				SUGAR.util.evalScript(result['body']);
 			}
