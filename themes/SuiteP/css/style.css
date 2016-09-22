@@ -9585,7 +9585,7 @@ table tr#delegates_search {
 /* popup dialog on home page */
 
 body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shadow {
-    top: 0 !important;
+    top: 100px !important;
     left: 0 !important;
     z-index: 1031 !important;
     width: 100%;
