@@ -154,7 +154,6 @@ class AOD_IndexTest extends PHPUnit_Framework_TestCase
         $expected = array(
                 'AM_ProjectTemplates' => 'AM_ProjectTemplates',
                 'AM_TaskTemplates' => 'AM_TaskTemplates',
-				'AOBH_BusinessHours' => 'AOBH_BusinessHours',
                 'AOK_KnowledgeBase' => 'AOK_KnowledgeBase',
                 'AOK_Knowledge_Base_Categories' => 'AOK_Knowledge_Base_Categories',
                 'AOP_Case_Events' => 'AOP_Case_Events',
@@ -167,7 +166,6 @@ class AOD_IndexTest extends PHPUnit_Framework_TestCase
                 'AOS_Product_Categories' => 'AOS_Product_Categories',
                 'AOW_WorkFlow' => 'AOW_WorkFlow',
                 'Accounts' => 'Account',
-                'Alerts' => 'Alert',
                 'Bugs' => 'Bug',
                 'Calls' => 'Call',
                 'Calls_Reschedule' => 'Calls_Reschedule',
@@ -177,7 +175,6 @@ class AOD_IndexTest extends PHPUnit_Framework_TestCase
                 'DocumentRevisions' => 'DocumentRevision',
                 'Documents' => 'Document',
                 'FP_events' => 'FP_events',
-                'Favorites' => 'Favorites',
                 'Leads' => 'Lead',
                 'Meetings' => 'Meeting',
                 'Notes' => 'Note',
@@ -187,9 +184,7 @@ class AOD_IndexTest extends PHPUnit_Framework_TestCase
                 'ProjectTask' => 'ProjectTask',
                 'ProspectLists' => 'ProspectList',
                 'Prospects' => 'Prospect',
-                'Spots' => 'Spots',
-                'Tasks' => 'Task',
-                'TemplateSectionLine' => 'TemplateSectionLine',
+                'Tasks' => 'Task'
         );
 
         $aod_index = new AOD_Index();
