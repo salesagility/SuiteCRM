@@ -45,9 +45,10 @@
     this.count = SUGAR.EmailAddressWidget.count[module];
     SUGAR.EmailAddressWidget.count[module]++;
     this.module = module;
-    this.id = this.module + this.count;
-    if (document.getElementById(module + '_email_widget_id'))
+    this.id = this.count;
+    if (document.getElementById(module + '_email_widget_id')) {
       document.getElementById(module + '_email_widget_id').value = this.id;
+    }
     SUGAR.EmailAddressWidget.instances[this.id] = this;
   }
 
@@ -55,14 +56,6 @@
   SUGAR.EmailAddressWidget.count = {};
 
   SUGAR.EmailAddressWidget.prototype = {
-    emailTemplate: '<tr id="emailAddressRow">' +
-    '<td nowrap="NOWRAP"><input type="text" title="email address 0" name="emailAddress{$index}" id="emailAddress0" size="30"/></td>' +
-    '<td><span>&nbsp;</span><img id="removeButton0" name="0" src="index.php?entryPoint=getImage&amp;themeName=Sugar&amp;imageName=delete_inline.gif"/></td>' +
-    '<td align="center"><input type="radio" name="emailAddressPrimaryFlag" id="emailAddressPrimaryFlag0" value="emailAddress0" enabled="true" checked="true"/></td>' +
-    '<td align="center"><input type="checkbox" name="emailAddressOptOutFlag[]" id="emailAddressOptOutFlag0" value="emailAddress0" enabled="true"/></td>' +
-    '<td align="center"><input type="checkbox" name="emailAddressInvalidFlag[]" id="emailAddressInvalidFlag0" value="emailAddress0" enabled="true"/></td>' +
-    '<td><input type="hidden" name="emailAddressVerifiedFlag0" id="emailAddressVerifiedFlag0" value="true"/></td>' +
-    '<td><input type="hidden" name="emailAddressVerifiedValue0" id="emailAddressVerifiedValue0" value=""/></td></tr>',
     totalEmailAddresses: 0,
     replyToFlagObject: new Object(),
     verifying: false,
@@ -72,24 +65,24 @@
     emailIsRequired: false,
     tabIndex: -1,
 
-    isIE: function() {
+    isIE: function () {
+      var ua = window.navigator.userAgent;
+      var msie = ua.indexOf("MSIE ");
 
-    var ua = window.navigator.userAgent;
-    var msie = ua.indexOf("MSIE ");
+      if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))  // If Internet Explorer, return version number
+      {
+        return true;
+      }
 
-    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))  // If Internet Explorer, return version number
-    {
-      return true;
-    }
+      return false;
+    },//isIE
 
-    return false;
-  },
     prefillEmailAddresses: function (tableId, o) {
       for (i = 0; i < o.length; i++) {
         o[i].email_address = o[i].email_address.replace('&#039;', "'");
         this.addEmailAddress(tableId, o[i].email_address, o[i].primary_address, o[i].reply_to_address, o[i].opt_out, o[i].invalid_email, o[i].email_address_id);
       }
-    },
+    },//prefillEmailAddresses
 
     retrieveEmailAddress: function (event) {
       var callbackFunction = function success(data) {
@@ -102,11 +95,11 @@
           if (email != '' && /\d+$/.test(target)) {
             var matches = target.match(/\d+$/);
             var targetNumber = matches[0];
-            var optOutEl = $('#' + this.id + 'emailAddressOptOutFlag' + targetNumber);
+            var optOutEl = $('#' + this.module + this.id + 'emailAddressOptOutFlag' + targetNumber);
             if (optOutEl) {
               optOutEl.checked = email['opt_out'] == 1 ? true : false;
             }
-            var invalidEl = $('#' + this.id + 'emailAddressInvalidFlag' + targetNumber);
+            var invalidEl = $('#' + this.module + this.id + 'emailAddressInvalidFlag' + targetNumber);
             if (invalidEl) {
               invalidEl.checked = email['invalid_email'] == 1 ? true : false;
             }
@@ -115,7 +108,7 @@
         //Set the verified flag to true
         var index = /[a-z]*\d?emailAddress(\d+)/i.exec(target)[1];
 
-        var verifyElementFlag = $('#' + this.id + 'emailAddressVerifiedFlag' + index);
+        var verifyElementFlag = $('#' + this.module + this.id + 'emailAddressVerifiedFlag' + index);
 
         if (verifyElementFlag.parentNode.childNodes.length > 1) {
           verifyElementFlag.parentNode.removeChild(verifyElementFlag.parentNode.lastChild);
@@ -125,8 +118,8 @@
         verifiedTextNode.innerHTML = '';
         verifyElementFlag.parentNode.appendChild(verifiedTextNode);
         verifyElementFlag.value = "true";
-        this.verifyElementValue = $('#' +this.id + 'emailAddressVerifiedValue' + index);
-        this.verifyElementValue.value = $('#' +this.id + 'emailAddress' + index).value;
+        this.verifyElementValue = $('#' + this.module + this.id + 'emailAddressVerifiedValue' + index);
+        this.verifyElementValue.value = $('#' + this.module + this.id + 'emailAddress' + index).value;
         this.verifying = false;
 
         // If Enter key or Save button was pressed then we proceed to attempt a form submission
@@ -150,23 +143,23 @@
 
 
         if (savePressed || this.enterPressed) {
-          setTimeout("SUGAR.EmailAddressWidget.instances." + this.id + ".forceSubmit()", 2100);
+          setTimeout("SUGAR.EmailAddressWidget.instances." + this.module + this.id + ".forceSubmit()", 2100);
         } else if (this.tabPressed) {
-          $('#' +this.id + 'emailAddressPrimaryFlag' + index).focus();
+          $('#' + this.module + this.id + 'emailAddressPrimaryFlag' + index).focus();
         }
       }
 
       var event = this.getEvent(event);
       var targetEl = this.getEventElement(event);
       var index = /[a-z]*\d?emailAddress(\d+)/i.exec(targetEl.id)[1];
-      var verifyElementFlag = $('#' +this.id + 'emailAddressVerifiedFlag' + index);
+      var verifyElementFlag = $('#' + this.module + this.id + 'emailAddressVerifiedFlag' + index);
 
       if (this.verifyElementValue == null || typeof(this.verifyElementValue) == 'undefined') {
         //we can't do anything without this value, so just return
         return false;
       }
 
-      this.verifyElementValue = $('#' +this.id + 'emailAddressVerifiedValue' + index);
+      this.verifyElementValue = $('#' + this.module + this.id + 'emailAddressVerifiedValue' + index);
       verifyElementFlag.value = (trim(targetEl.value) == '' || targetEl.value == this.verifyElementValue.value) ? "true" : "false"
 
       //Remove the span element if it is present
@@ -183,7 +176,7 @@
           .done(callbackFunction)
           .fail(callbackFunction);
       }
-    },
+    },//retrieveEmailAddress
 
     handleKeyDown: function (event) {
       var e = this.getEvent(event);
@@ -233,98 +226,99 @@
       var lineContainer = $('.template.email-address-line-container').clone();
       lineContainer.removeClass('template');
       lineContainer.removeClass('hidden');
+      lineContainer.attr('id', this.module + _eaw.id + 'emailAddressRow' + _eaw.totalEmailAddresses);
+      lineContainer.attr('name', this.module + _eaw.id + 'emailAddressRow' + _eaw.totalEmailAddresses);
 
 
       // Set up line item
       // use the value if the tabindex value for email has been passed in from metadata (defined in include/EditView/EditView.tpl
       // else default to 0
       var tabIndexCount = 0;
-      if(typeof(SUGAR.TabFields) !='undefined' && typeof(SUGAR.TabFields['email1']) != 'undefined'){
+      if (typeof(SUGAR.TabFields) != 'undefined' && typeof(SUGAR.TabFields['email1']) != 'undefined') {
         tabIndexCount = SUGAR.TabFields['email1'];
       }
 
 
       // Email Field
       var emailField = lineContainer.find('input[type=email]');
-      emailField.attr('name', _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
-      emailField.attr('id', _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
+      emailField.attr('name', this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
+      emailField.attr('id', this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
       emailField.attr('tabindex', tabIndexCount);
       emailField.attr('enabled', "true");
-      if(address != '') {
-        emailField.attr('value', address);
+      if (address != '') {
+        emailField.prop('value', address);
       }
       emailField.eaw = _eaw;
-      emailField.on('blur', function(e) {
+      emailField.on('blur', function (e) {
         emailField.eaw.retrieveEmailAddress(e);
       });
-      emailField.on('keydown', function(e) {
+      emailField.on('keydown', function (e) {
         emailField.eaw.handleKeyDown(e);
       });
 
       // Remove button
       var removeButton = lineContainer.find('button#email-address-remove-button');
       removeButton.attr('name', _eaw.totalEmailAddresses);
-      removeButton.attr('id', _eaw.id + "removeButton" + _eaw.totalEmailAddresses);
+      removeButton.attr('id', this.module + _eaw.id + "removeButton" + _eaw.totalEmailAddresses);
       removeButton.attr('tabindex', tabIndexCount);
       removeButton.attr('enabled', "true");
-      removeButton.click((function(eaw) {
-        return function() {
-          eaw.removeEmailAddress(_eaw.name);
-        }
-      })(_eaw));
+      removeButton.attr('data-row', this.module + _eaw.id + 'emailAddressRow' + _eaw.totalEmailAddresses);
+      removeButton.attr('id', _eaw.id);
+      removeButton.attr('module', this.module);
+      removeButton.click(_eaw.removeEmailAddress);
 
 
       // Record id
       var recordId = lineContainer.find('input#record-id');
-      recordId.attr('name', _eaw.id + "emailAddressId" + _eaw.totalEmailAddresses);
-      recordId.attr('id', _eaw.id + 'emailAddressId' + _eaw.totalEmailAddresses);
+      recordId.attr('name', this.module + _eaw.id + "emailAddressId" + _eaw.totalEmailAddresses);
+      recordId.attr('id', this.module + _eaw.id + 'emailAddressId' + _eaw.totalEmailAddresses);
       recordId.attr('value', typeof(emailId) != 'undefined' ? emailId : '');
       recordId.attr('enabled', "true");
 
 
       // Primary checkbox
       var primaryCheckbox = lineContainer.find('input#email-address-primary-flag');
-      primaryCheckbox.attr('name', _eaw.id + 'emailAddressPrimaryFlag');
-      primaryCheckbox.attr('id', _eaw.id + 'emailAddressPrimaryFlag' + _eaw.totalEmailAddresses);
-      primaryCheckbox.attr('value',  _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
+      primaryCheckbox.attr('name', this.module + _eaw.id + 'emailAddressPrimaryFlag');
+      primaryCheckbox.attr('id', this.module + _eaw.id + 'emailAddressPrimaryFlag' + _eaw.totalEmailAddresses);
+      primaryCheckbox.attr('value', this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
       primaryCheckbox.attr('tabindex', tabIndexCount);
       primaryCheckbox.attr('enabled', "true");
-      primaryCheckbox.prop("checked", (primaryFlag == '1'));
+      primaryCheckbox.attr("checked", (primaryFlag == '1'));
 
-      // CL Fix for 17651 (added OR condition check to see if this is the first email added)
-      if(primaryFlag == '1' || (_eaw.totalEmailAddresses == 0)) {
-        primaryCheckbox.attr("checked", 'true');("checked", 'true');
-        primaryCheckbox.attr("title", SUGAR.language.get('app_strings', 'LBL_EMAIL_PRIM_TITLE'));
-      }
+      //// CL Fix for 17651 (added OR condition check to see if this is the first email added)
+      //if (primaryFlag == '0' || (_eaw.totalEmailAddresses == 0)) {
+      //  primaryCheckbox.prop("checked", primaryFlag == '1');
+      //}
 
       // Reply to checkbox
       var replyToCheckbox = lineContainer.find('input#email-address-reply-to-flag');
-      if(replyToCheckbox.length == 1) {
-        replyToCheckbox.attr('name', _eaw.id + '"emailAddressReplyToFlag');
-        replyToCheckbox.attr('id', _eaw.id + 'emailAddressReplyToFlag' + _eaw.totalEmailAddresses);
-        replyToCheckbox.attr('value',  _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
+      if (replyToCheckbox.length == 1) {
+        replyToCheckbox.attr('name', this.module + _eaw.id + '"emailAddressReplyToFlag');
+        replyToCheckbox.attr('id', this.module + _eaw.id + 'emailAddressReplyToFlag' + _eaw.totalEmailAddresses);
+        replyToCheckbox.attr('value', this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
         replyToCheckbox.attr('tabindex', tabIndexCount);
         replyToCheckbox.attr('enabled', "true");
+        replyToCheckbox.eaw = _eaw;
         replyToCheckbox.prop("checked", (replyToFlag == '1'));
         _eaw.replyToFlagObject[replyToCheckbox.attr('id')] = (replyToFlag == '1');
-        replyToCheckbox.click(function() {
+        replyToCheckbox.click(function () {
           var form = document.forms[_eaw.emailView];
           if (!form) {
             form = document.forms['editContactForm'];
           }
           var nav = new String(navigator.appVersion);
 
-          if(nav.match(/MSIE/gim)) {
-            for(i=0; i<form.elements.length; i++) {
+          if (nav.match(/MSIE/gim)) {
+            for (i = 0; i < form.elements.length; i++) {
               var id = new String(form.elements[i].id);
-              if(id.match(/emailAddressReplyToFlag/gim) && form.elements[i].type == 'radio' && id != _eaw.id) {
+              if (id.match(/emailAddressReplyToFlag/gim) && form.elements[i].type == 'radio' && id != _eaw.id) {
                 form.elements[i].checked = false;
               }
             }
           }
-          for(i=0; i<form.elements.length; i++) {
+          for (i = 0; i < form.elements.length; i++) {
             var id = new String(form.elements[i].id);
-            if(id.match(/emailAddressReplyToFlag/gim) && form.elements[i].type == 'radio' && id != _eaw.id) {
+            if (id.match(/emailAddressReplyToFlag/gim) && form.elements[i].type == 'radio' && id != _eaw.id) {
               _eaw.replyToFlagObject[_eaw.id] = false;
             }
           } // for
@@ -341,14 +335,15 @@
 
       // Opt Out checkbox
       var optOutCheckbox = lineContainer.find('input#email-address-opt-out-flag');
-      if(optOutCheckbox.length == 1) {
-        optOutCheckbox.attr('name', _eaw.id + 'emailAddressOptOutFlag[]');
-        optOutCheckbox.attr('id', _eaw.id + 'emailAddressOptOutFlag' + _eaw.totalEmailAddresses);
-        optOutCheckbox.attr('value',  _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
+      if (optOutCheckbox.length == 1) {
+        optOutCheckbox.attr('name', this.module + _eaw.id + 'emailAddressOptOutFlag[]');
+        optOutCheckbox.attr('id', this.module + _eaw.id + 'emailAddressOptOutFlag' + _eaw.totalEmailAddresses);
+        optOutCheckbox.attr('value', this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
         optOutCheckbox.attr('tabindex', tabIndexCount);
         optOutCheckbox.attr('enabled', "true");
+        optOutCheckbox.eaw = _eaw;
         optOutCheckbox.prop("checked", (optOutFlag == '1'));
-        optOutCheckbox.click(function() {
+        optOutCheckbox.click(function () {
           _eaw.toggleCheckbox(this);
         });
       }
@@ -356,14 +351,15 @@
 
       // Invalid checkbox
       var invalidCheckbox = lineContainer.find('input#email-address-invalid-flag');
-      if(invalidCheckbox.length == 1) {
-        invalidCheckbox.attr('name', _eaw.id + 'emailAddressInvalidFlag[]');
-        invalidCheckbox.attr('id', _eaw.id + 'emailAddressInvalidFlag' + _eaw.totalEmailAddresses);
-        invalidCheckbox.attr('value',  _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
+      if (invalidCheckbox.length == 1) {
+        invalidCheckbox.attr('name', this.module + _eaw.id + 'emailAddressInvalidFlag[]');
+        invalidCheckbox.attr('id', this.module + _eaw.id + 'emailAddressInvalidFlag' + _eaw.totalEmailAddresses);
+        invalidCheckbox.attr('value', this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
         invalidCheckbox.attr('tabindex', tabIndexCount);
         invalidCheckbox.attr('enabled', "true");
+        invalidCheckbox.eaw = _eaw;
         invalidCheckbox.prop("checked", (invalidFlag == '1'));
-        invalidCheckbox.click(function() {
+        invalidCheckbox.click(function () {
           _eaw.toggleCheckbox(this);
         });
       }
@@ -371,15 +367,15 @@
 
       // Verified flag
       var verifiedField = lineContainer.find('input#verired-flag');
-      verifiedField.attr('name', _eaw.id + 'emailAddressVerifiedFlag');
-      verifiedField.attr('id', _eaw.id + 'emailAddressVerifiedFlag' + _eaw.totalEmailAddresses);
+      verifiedField.attr('name', this.module + _eaw.id + 'emailAddressVerifiedFlag');
+      verifiedField.attr('id', this.module + _eaw.id + 'emailAddressVerifiedFlag' + _eaw.totalEmailAddresses);
       verifiedField.attr('value', 'true');
 
 
       //  Verified email value
       var verifiedEmailValueField = lineContainer.find('input#verired-email-value');
-      verifiedEmailValueField.attr('name', _eaw.id + 'emailAddressVerifiedFlag');
-      verifiedEmailValueField.attr('id', _eaw.id + 'emailAddressVerifiedFlag' + _eaw.totalEmailAddresses);
+      verifiedEmailValueField.attr('name', this.module + _eaw.id + 'emailAddressVerifiedFlag');
+      verifiedEmailValueField.attr('id', this.module + _eaw.id + 'emailAddressVerifiedFlag' + _eaw.totalEmailAddresses);
       verifiedEmailValueField.attr('value', 'true');
 
 
@@ -387,74 +383,73 @@
       $(lineContainer).appendTo('.email-address-lines-container');
 
       // Add validation to field
-      _eaw.EmailAddressValidation(_eaw.emailView, _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses, _eaw.emailIsRequired, SUGAR.language.get('app_strings', 'LBL_EMAIL_ADDRESS_BOOK_EMAIL_ADDR'));
-      _eaw.totalEmailAddresses += 1;
+      _eaw.EmailAddressValidation(_eaw.emailView, this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses, _eaw.emailIsRequired, SUGAR.language.get('app_strings', 'LBL_EMAIL_ADDRESS_BOOK_EMAIL_ADDR'));
+      SUGAR.EmailAddressWidget.prototype.totalEmailAddresses = _eaw.totalEmailAddresses += 1;
       _eaw.numberEmailAddresses = _eaw.totalEmailAddresses;
       _eaw.addInProgress = false;
     }, //addEmailAddress
 
     EmailAddressValidation: function (ev, fn, r, stR) {
-      $(document).ready(function() {
+      $(document).ready(function () {
         addToValidate(ev, fn, 'email', r, stR);
       });
     },//EmailAddressValidation
 
-    removeEmailAddress: function (index) {
-      removeFromValidate(this.emailView, this.id + 'emailAddress' + index);
-      var oNodeToRemove = $('#' +this.id + 'emailAddressRow' + index);
-      // var form = Dom.getAncestorByTagName(oNodeToRemove, "form");
-      var form = $(this).closest("form");
-      oNodeToRemove.parentNode.removeChild(oNodeToRemove);
+    removeEmailAddress: function () {
+      var _eaw = SUGAR.EmailAddressWidget.prototype;
+      var module = $(this).attr('module');
+      var id = $(this).attr('id');
+      var rowId = $(this).attr('data-row');
+      var index = this.name;
 
+      removeFromValidate($(this).parents('form').attr('name'), rowId);
+      $('#' + rowId).remove();
+
+      var form = $(this).closest("form");
       var removedIndex = parseInt(index);
       //If we are not deleting the last email address, we need to shift the numbering to fill the gap
-      if (this.totalEmailAddresses != removedIndex) {
-        for (var x = removedIndex + 1; x < this.totalEmailAddresses; x++) {
-          $('#' +this.id + 'emailAddress' + x).setAttribute("name", this.id + "emailAddress" + (x - 1));
-          $('#' +this.id + 'emailAddress' + x).setAttribute("id", this.id + "emailAddress" + (x - 1));
+      if (_eaw.totalEmailAddresses != removedIndex) {
+        for (var x = removedIndex + 1; x < _eaw.totalEmailAddresses; x++) {
+          $('#' + module + id + 'emailAddress' + x).attr("name", module + id + "emailAddress" + (x - 1));
+          $('#' + module + id + 'emailAddress' + x).attr("id", module + id + "emailAddress" + (x - 1));
 
-          if ($('#' +this.id + 'emailAddressInvalidFlag' + x)) {
-            $('#' +this.id + 'emailAddressInvalidFlag' + x).setAttribute("value", this.id + "emailAddress" + (x - 1));
-            $('#' +this.id + 'emailAddressInvalidFlag' + x).setAttribute("id", this.id + "emailAddressInvalidFlag" + (x - 1));
+          if ($('#' + module + id + 'emailAddressInvalidFlag' + x)) {
+            $('#' + module + id + 'emailAddressInvalidFlag' + x).attr("value", module + id + "emailAddress" + (x - 1));
+            $('#' + module + id + 'emailAddressInvalidFlag' + x).attr("id", module + id + "emailAddressInvalidFlag" + (x - 1));
           }
 
-          if ($('#' +this.id + 'emailAddressOptOutFlag' + x)) {
-            $('#' +this.id + 'emailAddressOptOutFlag' + x).setAttribute("value", this.id + "emailAddress" + (x - 1));
-            $('#' +this.id + 'emailAddressOptOutFlag' + x).setAttribute("id", this.id + "emailAddressOptOutFlag" + (x - 1));
+          if ($('#' + module + id + 'emailAddressOptOutFlag' + x)) {
+            $('#' + module + id + 'emailAddressOptOutFlag' + x).attr("value", module + id + "emailAddress" + (x - 1));
+            $('#' + module + id + 'emailAddressOptOutFlag' + x).attr("id", module + id + "emailAddressOptOutFlag" + (x - 1));
           }
 
-          if ($('#' +this.id + 'emailAddressPrimaryFlag' + x)) {
-            $('#' +this.id + 'emailAddressPrimaryFlag' + x).setAttribute("id", this.id + "emailAddressPrimaryFlag" + (x - 1));
+          if ($('#' + module + id + 'emailAddressPrimaryFlag' + x)) {
+            $('#' + module + id + 'emailAddressPrimaryFlag' + x).attr("id", module + id + "emailAddressPrimaryFlag" + (x - 1));
           }
 
-          $('#' +this.id + 'emailAddressVerifiedValue' + x).setAttribute("id", this.id + "emailAddressVerifiedValue" + (x - 1));
-          $('#' +this.id + 'emailAddressVerifiedFlag' + x).setAttribute("id", this.id + "emailAddressVerifiedFlag" + (x - 1));
+          $('#' + module + id + 'emailAddressVerifiedValue' + x).attr("id", module + id + "emailAddressVerifiedValue" + (x - 1));
+          $('#' + module + id + 'emailAddressVerifiedFlag' + x).attr("id", module + id + "emailAddressVerifiedFlag" + (x - 1));
 
-          var rButton = $('#' +this.id + 'removeButton' + x);
-          rButton.setAttribute("name", (x - 1));
-          rButton.setAttribute("id", this.id + "removeButton" + (x - 1));
-          $('#' +this.id + 'emailAddressRow' + x).setAttribute("id", this.id + 'emailAddressRow' + (x - 1));
+          var rButton = $('#' + module + id + 'removeButton' + x);
+          rButton.attr("name", (x - 1));
+          rButton.attr("id", module + id + "removeButton" + (x - 1));
+          $('#' + module + id + 'emailAddressRow' + x).attr("id", module + id + 'emailAddressRow' + (x - 1));
         }
       }
 
-      this.totalEmailAddresses--;
+      _eaw.totalEmailAddresses--;
 
 
       // CL Fix for 17651
-      if (this.totalEmailAddresses == 0) {
+      if (_eaw.totalEmailAddresses == 0) {
         return;
       }
 
-      var primaryFound = false;
-      for (x = 0; x < this.totalEmailAddresses; x++) {
-        if ($('#' +this.id + 'emailAddressPrimaryFlag' + x).checked) {
-          primaryFound = true;
-        }
-      }
-
-      if (!primaryFound) {
-        $('#' +this.id + 'emailAddressPrimaryFlag0').checked = true;
-        $('#' +this.id + 'emailAddressPrimaryFlag0').value = this.id + 'emailAddress0';
+      var primaryFound = ($('[name='+ module + id +'emailAddressPrimaryFlag]:checked').length != 0);
+      console.log("primaryFound", primaryFound);
+      if (primaryFound == false) {
+        $('#' + module + id + 'emailAddressPrimaryFlag0').prop('checked', true);
+        $('#' + module + id + 'emailAddressPrimaryFlag0').val(module + id + 'emailAddress0');
       }
 
     },//removeEmailAddress
@@ -478,7 +473,7 @@
     },
 
     forceSubmit: function () {
-      var theForm = $('#' +this.emailView);
+      var theForm = $('#' + this.emailView);
       if (theForm) {
         theForm.action.value = 'Save';
         if (!check_form(this.emailView)) {

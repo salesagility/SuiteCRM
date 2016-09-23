@@ -94,20 +94,20 @@ var emailAddressWidgetLoaded = false;
 {*</table>*}
 
 <div class="col-xs-12">
-	<div class="col-xs-12 email-address-add-line-container">
-		{capture assign="add_button_attributes"}id="{$module}{$index}_email_widget_add" onclick="SUGAR.EmailAddressWidget.instances.{$module}{$index}.addEmailAddress('{$module}emailAddressesTable{$index}','','');"{/capture}
-		<button type="button" class="btn btn-info email-address-add-button" title="{$app_strings.LBL_ID_FF_ADD} " {$add_button_attributes}>
+	<div class="col-xs-12 email-address-add-line-container emailaddresses" id="{$module}emailAddressesTable{$index}">
+		{capture assign="other_attributes"}id="{$module}{$index}_email_widget_add" onclick="SUGAR.EmailAddressWidget.instances.{$module}{$index}.addEmailAddress('{$module}emailAddressesTable{$index}','','');"{/capture}
+		<button type="button" class="btn btn-info email-address-add-button" title="{$app_strings.LBL_ID_FF_ADD} " {$other_attributes}>
 			<span class="glyphicon glyphicon-plus"></span><span></span>
 		</button>
 	</div>
 	<div class="col-xs-12 email-address-lines-container">
 		{*
-		@version > 7.7.5
+		@version > SuiteCRM 7.7.5
 		@description Template represents a single email line item
 
-		To customise:
+		To customise the layout:
 		 ** keep the .template class in the most parent container of a line item
-		 ** don't remove the elements with id's
+		 ** keep the elements with id's
 		 ** don't change the id's of the elements.
 		 ** don't add js events inline. Instead bind the event in javascript.
 	 	*}
@@ -128,9 +128,11 @@ var emailAddressWidgetLoaded = false;
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-6 email-address-options-container">
+
+
 				<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
 					<label class="text-sm col-xs-12">{$app_strings.LBL_EMAIL_PRIMARY}</label>
-					<div><input type="radio" name="" id="email-address-primary-flag" value="" enabled="true" tabindex="0" checked="true"></div>
+					<div><input type="radio" name="" id="email-address-primary-flag" value="" enabled="true" tabindex="0" checked="true" title="{$app_strings.LBL_EMAIL_PRIM_TITLE}"></div>
 				</div>
 
 				{if $useReplyTo == true}
@@ -163,7 +165,7 @@ var emailAddressWidgetLoaded = false;
 SUGAR_callsInProgress++;
 function init{$module}Email{$index}(){ldelim}
 	if(emailAddressWidgetLoaded || SUGAR.EmailAddressWidget){ldelim}
-		var table = YAHOO.util.Dom.get("{$module}emailAddressesTable{$index}");
+		{*var table = YAHOO.util.Dom.get("{$module}emailAddressesTable{$index}");*}
 	    var eaw = SUGAR.EmailAddressWidget.instances.{$module}{$index} = new SUGAR.EmailAddressWidget("{$module}");
 		eaw.emailView = '{$emailView}';
 	    eaw.emailIsRequired = "{$required}";

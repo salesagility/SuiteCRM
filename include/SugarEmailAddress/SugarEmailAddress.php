@@ -409,8 +409,8 @@ class SugarEmailAddress extends SugarBean {
                    $fromRequest = true;
                    break;
                 }
-            $widget_id = $_REQUEST[$module .'_email_widget_id'];
-    }
+                $widget_id = $_REQUEST[$module .'_email_widget_id'];
+            }
 
             //Iterate over the widgets for this module, in case there are multiple email widgets for this module
             while(isset($_REQUEST[$module . $widget_id . "emailAddress" . $widgetCount]))

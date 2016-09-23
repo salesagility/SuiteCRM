@@ -4747,6 +4747,13 @@ ol, ul, dl {
 .email-address-add-line-container {
     margin: 8px 0 8px 0;
 }
+
+.email-address-input-group .validation-message {
+    display: table-cell;
+    margin: 0;
+    padding: 0;
+}
+
 #bigbutton {
     border-radius: 0;
     padding: 10px 0 10px 0;
