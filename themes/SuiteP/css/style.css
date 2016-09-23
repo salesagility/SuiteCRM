@@ -9887,3 +9887,140 @@ table tr#delegates_search {
 }
 
 
+
+/* popup dialog on home page */
+
+body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shadow {
+    top: 100px !important;
+    left: 0 !important;
+    z-index: 1031 !important;
+    width: 100%;
+    padding: 20px;
+}
+
+body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel {
+    top: initial;
+    left:initial;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .container-close {
+    color: #aaa;
+    text-indent: initial;
+    top: 15px;
+    right: 30px;
+    width: initial;
+}
+
+body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .hd {
+    background: white;
+    color: #534d64;
+    font-family: Lato, Lato, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    height: 25px;
+    line-height: 25.7143px;
+    margin: 0px;
+    padding: 15px 15px 42px 19px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom: solid 1px #ddd;
+}
+
+body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    max-height: 650px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form {
+    /* form looking good. */
+}
+
+body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table td input[type="checkbox"] {
+    height: 30px;
+    margin-top: 10px;
+}
+
+body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr,
+body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.view td tr {
+    display: block;
+    float: none;
+    width: auto;
+    border-bottom: none;
+}
+
+body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td[scope=row],
+body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.view td tr td {
+    display: block;
+    float: left;
+    width: auto;
+}
+
+body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td[scope=row] {
+    width: 30%;
+}
+
+body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table tr td[scope=row][colspan="4"] {
+    float: none;
+}
+
+body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table tr td[scope=row][colspan="4"] br {
+    display: none;
+}
+
+
+body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td table {
+
+}
+
+body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td table tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+    float: initial;
+}
+
+body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td table tbody tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+    float: initial;
+}
+
+body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td table tbody tr td {
+    display: table-cell;
+    vertical-align: inherit;
+    float: initial;
+}
+
+@media(min-width: 800px) {
+
+    body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td[scope=row] {
+        width: 20%;
+    }
+    body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td[valign=top] {
+        float: left;
+        width: 25%;
+
+    }
+    body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr:last-child {
+        clear: both;
+    }
+
+    body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit {
+        position: relative;
+    }
+
+    body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit #edit_tabs {
+        position: absolute;
+        top: 20px;
+        right: 40px;
+    }
+}
+
