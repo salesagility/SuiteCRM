@@ -90,7 +90,7 @@ class SubPanel
 			sugar_die($app_strings['ERROR_NO_RECORD']);
 		}
 		$this->buildSearchQuery();
-		if (!empty($subpanelDef)) {
+		if (empty($subpanelDef)) {
 			//load the subpanel by name.
 			$panelsdef=new SubPanelDefinitions($result,$layout_def_key);
 			$subpanelDef=$panelsdef->load_subpanel($subpanel_id, false, false, $this->search_query,$collections);
@@ -407,8 +407,11 @@ class SubPanel
 		} else {
 			$module = $subpanel_defs['module'];
 		}
-		$seed = BeanFactory::getBean($module);
-
+		if($module) {
+			$seed = BeanFactory::getBean($module);
+		} else {
+			$seed = new Meeting();
+		}
 
 		$_REQUEST['searchFormTab'] = 'basic_search';
 		$searchForm = new SubPanelSearchForm($seed, $module, $this);

@@ -16,7 +16,12 @@
             {/if}
                     <div class="col-xs-10 col-sm-11 col-md-11">
                         <div>
-                           <img src="{sugar_getimagepath directory='sub_panel' file_name=$subpanel_tabs_properties.$i.module_name file_extension='svg'}">
+                            {capture name="sub_panel_img_capture" assign="side_bar_img"}{sugar_getimagepath directory='sub_panel' file_name=$subpanel_tabs_properties.$i.module_name file_extension='svg'}{/capture}
+                            {if !empty($side_bar_img)}
+                                <img src="{$side_bar_img}"/>
+                            {else}
+                                <img src="themes/SuiteP/images/sub_panel/basic.svg"/>
+                            {/if}
                             {$subpanel_tabs_properties.$i.title}
                         </div>
                     </div>
