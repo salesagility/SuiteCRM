@@ -65,8 +65,6 @@ $GLOBALS['log']->info('EmailTemplate detail view');
 ////	OUTPUT 
 echo insert_popup_header();
 echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_SIGNATURE'].' '.$focus->name), true);
-echo 'test';
-
 
 $xtpl = new XTemplate ('modules/Users/UserSignatureEditView.html');
 $xtpl->assign('MOD', $mod_strings);
