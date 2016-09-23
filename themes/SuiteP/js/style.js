@@ -560,14 +560,24 @@ $(function () {
 
         $(window).mousemove(function(e){
 
-            if(textareaId && $('#'+textareaId).closest('table.edit').length>0) {
+            if(textareaId) {
 
-                var closestWidth = $('#'+textareaId).closest('table.edit').width();
-                var parentWidth = $('#'+textareaId).closest('table.edit').parent().width();
+                if ($('#' + textareaId).closest('table.edit').length > 0) {
 
-                if(closestWidth > parentWidth) {
-                    $('#'+textareaId).width( $('#'+textareaId).width() - (closestWidth-parentWidth) - 10 );
+                    var closestWidth = $('#' + textareaId).closest('table.edit').width();
+                    var parentWidth = $('#' + textareaId).closest('table.edit').parent().width();
+
+                } else if ($('#' + textareaId).closest('div.edit-view-row-item').length > 0) {
+
+                    var closestWidth = $('#' + textareaId).width();
+                    var parentWidth = $('#' + textareaId).closest('div.edit-view-field').width();
+
                 }
+                
+                if (closestWidth > parentWidth) {
+                    $('#' + textareaId).width($('#' + textareaId).width() - (closestWidth - parentWidth) - 10);
+                }
+
             }
 
         });
