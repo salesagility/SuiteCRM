@@ -159,6 +159,7 @@ SUGAR.mySugar = function() {
 		
 		// call to configure a Dashlet
 		configureDashlet: function(id) {
+			var dashletId = id;
 			ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_LOADING'));
       configureDlg = new YAHOO.widget.SimpleDialog("dlg", {
         visible:false,
@@ -196,6 +197,22 @@ SUGAR.mySugar = function() {
         $('#dlg').addClass('SuiteP-configureDashlet');
 				configureDlg.configFixedCenter(null, false) ;
 				SUGAR.util.evalScript(result['body']);
+
+				// calculate the scroll and dashlet popup positions
+				var rlTop = 200;
+				var newTop = $("#dashlet_" + dashletId).offset().top - rlTop;
+				if(newTop+$('#dlg').outerHeight(true) > $('#dlg_mask').height()) {
+					newTop-= (newTop+$('#dlg').outerHeight(true) - $('#dlg_mask').height() + rlTop);
+				}
+
+				// animate to position
+				$('html, body').animate({
+					scrollTop: newTop
+				});
+				$('#dlg').animate({
+					top: (newTop) + 'px'
+				});
+
 			}
 
 			SUGAR.mySugar.configureDashletId = id; // save the id of the dashlet being configured
