@@ -72,7 +72,7 @@ SUGAR.mySugar = function() {
 		
 
 		
-		
+
 
 		
 		
@@ -159,16 +159,22 @@ SUGAR.mySugar = function() {
 		
 		// call to configure a Dashlet
 		configureDashlet: function(id) {
+			var dashletId = id;
 			ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_LOADING'));
-			configureDlg = new YAHOO.widget.SimpleDialog("dlg", 
-				{ visible:false, 
-				  width:"510", 
-				  effect:[{effect:YAHOO.widget.ContainerEffect.FADE,duration:0.5}],
-				  fixedcenter:true, 
-				  modal:true, 
-				  draggable:false }
-			);
-			
+      configureDlg = new YAHOO.widget.SimpleDialog("dlg", {
+        visible:false,
+        width:"510",
+        effect:[{effect:YAHOO.widget.ContainerEffect.FADE,duration:0.5}],
+        fixedcenter:true,
+        modal:true,
+        draggable:false
+      });
+
+      
+      configureDlg.hideEvent.subscribe(function(){
+        $('#dlg').removeClass('SuiteP-configureDashlet');
+      });
+
 			fillInConfigureDiv = function(data){
 				ajaxStatus.hideStatus();
 				// uncomment the line below to debug w/ FireBug
@@ -188,13 +194,32 @@ SUGAR.mySugar = function() {
 
 				configureDlg.render(document.body);
 				configureDlg.show();
+        $('#dlg').addClass('SuiteP-configureDashlet');
 				configureDlg.configFixedCenter(null, false) ;
 				SUGAR.util.evalScript(result['body']);
+
+				// calculate the scroll and dashlet popup positions
+				var rlTop = 200;
+				var newTop = $("#dashlet_" + dashletId).offset().top - rlTop;
+				if(newTop+$('#dlg').outerHeight(true) > $('#dlg_mask').height()) {
+					newTop-= (newTop+$('#dlg').outerHeight(true) - $('#dlg_mask').height() + rlTop);
+				}
+
+				// animate to position
+				$('html, body').animate({
+					scrollTop: newTop
+				});
+				$('#dlg').animate({
+					top: (newTop) + 'px'
+				});
+
 			}
 
 			SUGAR.mySugar.configureDashletId = id; // save the id of the dashlet being configured
 			var cObj = YAHOO.util.Connect.asyncRequest('GET','index.php?to_pdf=1&module='+module+'&action=DynamicAction&DynamicAction=configureDashlet&id=' + id, 
 													  {success: fillInConfigureDiv, failure: fillInConfigureDiv}, null);
+
+
 		},
 		
 				
@@ -206,8 +231,14 @@ SUGAR.mySugar = function() {
 		 * @param function callback callback function after refresh
 		 * @param bool dynamic does the script load dynamic javascript, set to true if you user needs to refresh the dashlet after load
 		 */
-		retrieveDashlet: function(id, url, callback, dynamic, isPagination) {
-			var _isPagination = typeof isPagination == 'undefined' ? false : isPagination;
+		retrieveDashlet: function(id, url, callback, dynamic, pageReload, pageTabElement) {
+
+			var _pageReload = typeof pageReload == 'undefined' ? false : pageReload;
+      var _pageTabElement = typeof pageTabElement == 'undefined' || pageTabElement.length == 0 ? false : pageTabElement;
+      if(!_pageTabElement && SUGAR.mySugar.currentDashlet && $('#' + SUGAR.mySugar.currentDashlet.id).closest('.tab-pane').length > 0) {
+        _pageTabElement = $('#' + SUGAR.mySugar.currentDashlet.id).closest('.tab-pane');
+      }
+
 			ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_LOADING'));
 					
 			if(!url) {
@@ -229,21 +260,23 @@ SUGAR.mySugar = function() {
 
 		 		ajaxStatus.hideStatus();
 				if(data) {
-                    
-                    // before we refresh, lets make sure that the returned data is for the current dashlet in focus
-                    // AND that it is not the initial 'please reload' verbage, start by grabbing the current dashlet id
-                    current_dashlet_id = SUGAR.mySugar.currentDashlet.getAttribute('id');
+					dashlet_guid = false;
+					if(SUGAR.mySugar.currentDashlet) {
 
-                    //lets extract the guid portion of the id, to use as a reference
-                    dashlet_guid =  current_dashlet_id.substr('dashlet_entire_'.length);
+						// before we refresh, lets make sure that the returned data is for the current dashlet in focus
+						// AND that it is not the initial 'please reload' verbage, start by grabbing the current dashlet id
+						current_dashlet_id = SUGAR.mySugar.currentDashlet.getAttribute('id');
 
+						//lets extract the guid portion of the id, to use as a reference
+						dashlet_guid = current_dashlet_id.substr('dashlet_entire_'.length);
+					}
                     //now that we have the guid portion, let's search the returned text for it.  There should be many references to it.
-                    if(data.responseText.indexOf(dashlet_guid)<0 &&  data.responseText != SUGAR.language.get('app_strings', 'LBL_RELOAD_PAGE') ){
+                    if((!dashlet_guid || data.responseText.indexOf(dashlet_guid)<0) &&  data.responseText != SUGAR.language.get('app_strings', 'LBL_RELOAD_PAGE') ){
                         //guid id was not found in the returned html, that means we have stale dashlet info due to an auto refresh, do not update
                         return false;
                     }
-					if(_isPagination) {
-						$('#' + SUGAR.mySugar.currentDashlet.id).closest('.tab-pane').html(data.responseText);
+					if((_pageReload && _pageTabElement) || !dashlet_guid) {
+						_pageTabElement.html(data.responseText);
 					} else {
 						SUGAR.mySugar.currentDashlet.innerHTML = data.responseText;
 					}
@@ -328,7 +361,11 @@ SUGAR.mySugar = function() {
 		},
 		
 		
-		addDashlet: function(id, type, type_module) {
+		addDashlet: function(id, type, type_module, pageNum, pageTabElement) {
+
+      var _pageNum = typeof pageNum == 'undefined' ? false : pageNum;
+      var _pageTabElement = typeof pageTabElement == 'undefined' ? false : pageTabElement;
+
 			ajaxStatus.hideStatus();
 			columns = SUGAR.mySugar.getLayout();
 						
@@ -398,7 +435,7 @@ SUGAR.mySugar = function() {
 					type = 'chart';
 				}
 				
-				SUGAR.mySugar.retrieveDashlet(data.responseText, url, finishRetrieve, true); // retrieve it from the server
+				SUGAR.mySugar.retrieveDashlet(data.responseText, url, finishRetrieve, true, _pageTabElement); // retrieve it from the server
 			}
 
             YAHOO.util.Connect.asyncRequest('POST', 'index.php?' + SUGAR.util.paramsToUrl({
@@ -419,8 +456,13 @@ SUGAR.mySugar = function() {
 			return false;
 		},
 
-		retrieveCurrentPage: function() {
-			var pageNum = parseInt($('ul.nav.nav-tabs.nav-dashboard li.active a').first().attr('id').substring(3));
+		retrieveCurrentPage: function(pageNum) {
+      if(typeof pageNum == 'undefined' && $('ul.nav.nav-tabs.nav-dashboard li.active a').length > 0) {
+        var pageNum = parseInt($('ul.nav.nav-tabs.nav-dashboard li.active a').first().attr('id').substring(3));
+      }
+      else {
+        pageNum = 0;
+      }
 			retrievePage(pageNum);
 		},
 		
@@ -447,8 +489,15 @@ SUGAR.mySugar = function() {
 			
 			var success = function(data) {		
 				eval(data.responseText);
-				dashletsListDiv = document.getElementById('dashletsList');
-				dashletsListDiv.innerHTML = response['html'];
+
+				if($('*[id=dashletsList]').length>1) {
+					dashletsListDiv = $('*[id=dashletsList].modal-body');
+				}
+				else {
+					dashletsListDiv = $('#dashletsList');
+				}
+
+				dashletsListDiv.html(response['html']);
 				
 				document.getElementById('dashletsDialog_c').style.display = '';
                 SUGAR.mySugar.dashletsDialog.show();

@@ -57,6 +57,8 @@ $mod_strings = array (
 	'LNK_CALL_LIST' => 'Calls',
 	'LNK_MEETING_LIST' => 'Meetings',
 	'LNK_TASK_LIST' => 'Tasks',
+	'LNK_TASK' => 'Task',
+	'LNK_TASK_VIEW' => 'View Task',
 	'LNK_VIEW_CALENDAR' => 'Today',
 	'LNK_IMPORT_CALLS' => 'Import Calls',
 	'LNK_IMPORT_MEETINGS' => 'Import Meetings',
@@ -116,7 +118,7 @@ $mod_strings = array (
 	'LBL_INFO_TITLE' => 'Additional Details',
 	'LBL_INFO_DESC' => 'Description',
 	'LBL_INFO_START_DT' => 'Start Date',
-	'LBL_INFO_DUE_DT' => 'Due Date',
+	'LBL_INFO_DUE_DT' => 'Due Date & Time',
 	'LBL_INFO_DURATION' => 'Duration',
 	'LBL_INFO_NAME' => 'Subject',
 	'LBL_INFO_RELATED_TO' => 'Related to',
@@ -125,6 +127,7 @@ $mod_strings = array (
 	'LBL_SUBJECT' => 'Subject',
 	'LBL_DURATION' => 'Duration',
 	'LBL_STATUS' => 'Status',
+	'LBL_PRIORITY' => 'Priority',
 	'LBL_DATE_TIME' => 'Date and Time',
 
 
@@ -168,7 +171,10 @@ $mod_strings = array (
     'LBL_NO_ITEMS_MOBILE' => 'Your calendar is clear for the week.',
     'LBL_GENERAL_SETTINGS' => 'General Settings',
     'LBL_COLOR_SETTINGS' => 'Colour Settings',
-
+	'LBL_MODULE' => 'Module',
+	'LBL_BODY' => 'Body',
+	'LBL_BORDER' => 'Border',
+	'LBL_TEXT' => 'Text',
 );
 
 $mod_list_strings = array(
