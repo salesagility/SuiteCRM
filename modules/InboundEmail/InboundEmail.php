@@ -3939,12 +3939,13 @@ class InboundEmail extends SugarBean {
 			}
 
 			$q = "";
+            $queryUID = $this->db->quote($uid);
 			if ($this->isPop3Protocol()) {
 				$this->email->name = $app_strings['LBL_EMAIL_ERROR_MESSAGE_DELETED'];
-				$q = "DELETE FROM email_cache WHERE message_id = '{$uid}' AND ie_id = '{$this->id}' AND mbox = '{$this->mailbox}'";
+				$q = "DELETE FROM email_cache WHERE message_id = '{$queryUID}' AND ie_id = '{$this->id}' AND mbox = '{$this->mailbox}'";
 			} else {
 				$this->email->name = $app_strings['LBL_EMAIL_ERROR_IMAP_MESSAGE_DELETED'];
-				$q = "DELETE FROM email_cache WHERE imap_uid = {$uid} AND ie_id = '{$this->id}' AND mbox = '{$this->mailbox}'";
+				$q = "DELETE FROM email_cache WHERE imap_uid = {$queryUID} AND ie_id = '{$this->id}' AND mbox = '{$this->mailbox}'";
 			} // else
 			// delete local cache
 			$r = $this->db->query($q);
@@ -5566,10 +5567,11 @@ eoq;
 
 		foreach($exUids as $uid) {
 			// local cache
+            $queryUID = $this->db->quote($uid);
 			if ($this->isPop3Protocol()) {
-				$q = "DELETE FROM email_cache WHERE message_id = '{$uid}' AND ie_id = '{$this->id}'";
+				$q = "DELETE FROM email_cache WHERE message_id = '{$queryUID}' AND ie_id = '{$this->id}'";
 			} else {
-				$q = "DELETE FROM email_cache WHERE imap_uid = {$uid} AND ie_id = '{$this->id}'";
+				$q = "DELETE FROM email_cache WHERE imap_uid = {$queryUID} AND ie_id = '{$this->id}'";
 			}
 			$r = $this->db->query($q);
 			if ($this->isPop3Protocol()) {
