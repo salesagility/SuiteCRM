@@ -60,7 +60,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
   $json = getJSONobj();
 
 
-  $showFolders = unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+  $showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
  if (isset($_REQUEST['emailUIAction'])) {
   switch($_REQUEST['emailUIAction']) {
