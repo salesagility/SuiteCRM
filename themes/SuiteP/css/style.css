@@ -4784,34 +4784,42 @@ fieldset[disabled] .btn-primary.active {
 .btn-default, .btn-default:hover, .btn-default:active, .btn-default:focus {
     color: #ffffff;
     background-color: #94A6B5;
-    background-color: #94A6B5;
     border: 1px solid #94A6B5;
 }
 
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:focus {
     color: #ffffff;
     background-color: #778591;
-    background-color: #778591;
     border: 1px solid #778591;
 }
 
-.btn-info, .btn-info:hover, .btn-info:active, .btn-info:focus {
+.btn-info, input[type=button].btn-info{
     color: #ffffff;
     background-color: #AA9DCC;
     border: 1px solid #AA9DCC;
 }
 
+.btn-info:hover, .btn-info:active, .btn-info:focus, input[type=button].btn-info:hover,
+input[type=button].btn-info:active, input[type=button].btn-info:focus {
+    color: #ffffff;
+    background-color: #9589b3;
+    border: 1px solid #9589b3;
+}
+
 .btn-success, .btn-success:hover, .btn-success:active, .btn-success:focus {
     color: #ffffff;
-    background-color: #66996B;
     background-color: #66996B;
     border: 1px solid #66996B;
 }
 
-.btn-danger, .btn-danger:hover, .btn-danger:active, .btn-danger:focus {
-    background-color: #F08377;
+.btn-danger{
     background-color: #F08377;
     border: 1px solid #F08377;
+}
+
+.btn-danger:hover, .btn-danger:active, .btn-danger:focus {
+    background-color: #D66C60;
+    border: 1px solid #D66C60;
 }
 
 #EditView_tabs .id-ff-remove, #EditView_tabs .edit [type="radio"]  {
