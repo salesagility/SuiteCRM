@@ -4730,7 +4730,7 @@ ol, ul, dl {
     }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 480px) {
 
     .email-address-options-container {
         width: 50%;
