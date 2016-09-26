@@ -850,13 +850,13 @@ $(document).ready(function () {
 			valueToPush["record"] = element['record'];
 			valueToPush['module'] = element['module_name'];
 			valueToPush['related_to'] = element['related_to'];
-      valueToPush['parent_id'] = element['parent_id'];
-      valueToPush['parent_name'] = element['parent_name'];
-      valueToPush['parent_type'] = element['parent_type'];
-      valueToPush['status'] = element['status'];
-      valueToPush['date_due'] = element['date_due'];
-			valueToPush["start"] = new Date(moment.unix(element['ts_start']).format("MM/DD/YYYY") + " " + moment(element['time_start'], 'hh:mma').format("HH:mm"));
-			valueToPush["end"] = moment(new Date(moment.unix(element['ts_start']).format("MM/DD/YYYY") + " " + moment(element['time_start'], 'hh:mma').format("HH:mm"))).add(element['duration_hours'], 'hours').add(element['duration_minutes'], 'minutes');
+            valueToPush['parent_id'] = element['parent_id'];
+            valueToPush['parent_name'] = element['parent_name'];
+            valueToPush['parent_type'] = element['parent_type'];
+            valueToPush['status'] = element['status'];
+            valueToPush['date_due'] = element['date_due'];
+            valueToPush["start"] = new Date(moment.utc(moment.unix(element['ts_start'])).format("MM/DD/YYYY") + " " + moment(element['time_start'], 'hh:mma').format("HH:mm"));
+            valueToPush["end"] = moment(new Date(moment.utc(moment.unix(element['ts_start'])).format("MM/DD/YYYY") + " " + moment(element['time_start'], 'hh:mma').format("HH:mm"))).add(element['duration_hours'], 'hours').add(element['duration_minutes'], 'minutes');
 
 			if (element.module_name != "Meetings" && element.module_name != "Calls") {
 				valueToPush['editable'] = false;
