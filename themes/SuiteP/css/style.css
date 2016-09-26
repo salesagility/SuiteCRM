@@ -4711,7 +4711,6 @@ ol, ul, dl {
 }
 
 .email-address-input-group .email-address-remove-button {
-.email-address-input-group .email-address-remove-button {
     border-top-left-radius: 4px !important;
     border-bottom-left-radius: 4px !important;
     padding: 6px 9px 6px 9px;
