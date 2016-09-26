@@ -91,20 +91,20 @@
 			<div class="col-xs-12 col-sm-6 email-address-options-container">
 
 
-				<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
+				<div class="col-xs-3  text-center email-address-option">
 					<label class="text-sm col-xs-12">{$app_strings.LBL_EMAIL_PRIMARY}</label>
 					<div><input type="radio" name="" id="email-address-primary-flag" value="" enabled="true" tabindex="0" checked="true" title="{$app_strings.LBL_EMAIL_PRIM_TITLE}"></div>
 				</div>
 
 				{if $useReplyTo == true}
-					<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
+					<div class="col-xs-3  text-center email-address-option">
 						<label class="text-sm  col-xs-12">{$app_strings.LBL_EMAIL_REPLY_TO}</label>
 						<div><input type="checkbox" name="" id="email-address-reply-to-flag" value="" enabled="true"></div>
 					</div>
 				{/if}
 
 				{if $useOptOut == true}
-					<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
+					<div class="col-xs-3 text-center email-address-option">
 						<label class="text-sm col-xs-12">{$app_strings.LBL_EMAIL_OPT_OUT}</label>
 						<div><input type="checkbox" name="" id="email-address-opt-out-flag" value="" enabled="true"></div>
 					</div>
