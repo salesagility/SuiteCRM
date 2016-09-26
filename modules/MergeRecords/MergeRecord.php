@@ -241,7 +241,11 @@ class MergeRecord extends SugarBean
      */
     public function ACLAccess($view, $is_owner = 'not_set', $in_group = 'not_set')
     {
-        return $this->merge_bean->ACLAccess($view,$is_owner,$in_group);
+        if (empty($this->merge_bean) || !$this->merge_bean->bean_implements('ACL')) {
+            return true;
+        }
+
+        return $this->merge_bean->ACLAccess($view, $is_owner, $in_group);
     }
 
     /**
