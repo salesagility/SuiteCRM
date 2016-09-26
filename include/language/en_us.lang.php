@@ -378,17 +378,6 @@ $app_list_strings = array(
             'male' => 'Male',
             'female' => 'Female',
         ),
-    //Note:  do not translate case_status_default_key
-//       it is the key for the default case_status_dom value
-    'case_status_default_key' => 'New',
-    'case_status_dom' => array(
-            'New' => 'New',
-            'Assigned' => 'Assigned',
-            'Closed' => 'Closed',
-            'Pending Input' => 'Pending Input',
-            'Rejected' => 'Rejected',
-            'Duplicate' => 'Duplicate',
-        ),
     'case_priority_default_key' => 'P2',
     'case_priority_dom' => array(
             'P1' => 'High',
