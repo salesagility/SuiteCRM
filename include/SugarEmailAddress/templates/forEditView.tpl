@@ -137,7 +137,7 @@
 			if(prefillEmailAddress == 'true') {ldelim}
 				eaw.prefillEmailAddresses('{$module}emailAddressesTable{$index}', prefillData);
 				{rdelim} else if(addDefaultAddress == 'true') {ldelim}
-				eaw.addEmailAddress('{$module}emailAddressesTable{$index}');
+				eaw.addEmailAddress('{$module}emailAddressesTable{$index}','',1);
 				{rdelim}
 			if('{$module}_email_widget_id') {ldelim}
 				document.getElementById('{$module}_email_widget_id').value = eaw.count;
