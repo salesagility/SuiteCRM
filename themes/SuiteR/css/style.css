@@ -1381,10 +1381,6 @@ td.edit.view td[align=right] {
     padding-right:0;
 }
 
-.emailaddresses tr td[scope=row] {
-    padding-left:0 !important;
-    padding-top:0 !important;
-}
 
 /*System Settings*/
 #container_upload {
@@ -3958,11 +3954,7 @@ li.moremenu {
     .edit input[type=text] {
         font-size:1em;
     }
-    /* Fix for how email section/table shows */
-    .emailaddresses tr, .emailaddresses td {
-        display:inline;
-        border:none;
-    }
+
     /* Responsive dashlet styles */
     .dashletcontainer {
         float:left;
@@ -4375,6 +4367,39 @@ div.action_buttons form {
 
 .actionmenulinks a span{
     padding:5px;
+}
+
+.email-address-line-container {
+    margin: 4px 0 16px 0;
+}
+
+.email-address-add-line-container .email-address-add-button {
+    border-radius: 0;
+    margin-bottom: 8px;
+    font-size: 12px;
+}
+
+
+.email-address-input-group input[type=email] {
+    border-radius: 0;
+}
+
+.email-address-input-group .email-address-remove-button {
+    border-radius: 0;
+    margin-left: 4px !important;
+    font-size: 12px;
+
+}
+
+.email-address-option {
+    width: 33%;
+    font-size: 9px;
+}
+
+@media  (min-width: 1400px) {
+    .email-address-option {
+        width: 25%;
+    }
 }
 
 /* Fix to make Boostrap drop down hover on larger screens */
