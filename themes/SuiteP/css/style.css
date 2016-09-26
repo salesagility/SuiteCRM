@@ -4691,32 +4691,68 @@ ol, ul, dl {
     box-shadow: none;
 }
 
-.input-group-btn {
-    height: 100%;
-}
-
-.input-group-btn .btn {
-    height: 48px;
-}
-
-.text-sm {
-    font-size: 10px;
-}
 .email-address-line-container {
-    margin: 8px 0 8px 0;
-}
-.email-address-option label {
-    height: 24px;
+    margin-bottom: 8px;
 }
 
-.email-address-add-line-container {
-    margin: 8px 0 8px 0;
+.email-address-input-group {
+    background: #d8f5ee;
+    border: 1px solid #a5e8d6;
+    border-radius: 4px;
 }
 
-.email-address-input-group .validation-message {
-    display: table-cell;
-    margin: 0;
-    padding: 0;
+.email-address-input-group input[type=email] {
+    border: none;
+
+}
+
+.email-address-add-line-container .email-address-add-button {
+    padding: 6px 9px 6px 9px;
+}
+
+.email-address-input-group .email-address-remove-button {
+    border-top-left-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
+    padding: 6px 9px 6px 9px;
+}
+
+@media (max-width: 768px) {
+    .email-address-options-container {
+        width: 100%;
+        margin: 16px 0 16px 0;
+    }
+
+}
+
+@media (max-width: 1400px) {
+    .email-address-option {
+        width: 33%;
+    }
+}
+
+@media (min-width: 1024px) {
+
+    .email-address-options-container {
+        width: 50%;
+    }
+
+    .email-address-input-group {
+        background: transparent;
+        border: none;
+        border-radius: 4px;
+    }
+
+    .email-address-input-group input[type=email] {
+        background: #d8f5ee;
+        border: 1px solid #a5e8d6;
+        border-radius: 4px;
+        border-top-right-radius: 4px !important;
+        border-bottom-right-radius: 4px !important;
+    }
+
+    .email-address-input-group .email-address-remove-button {
+        margin-left: 8px !important;
+    }
 }
 
 #bigbutton {
@@ -5225,91 +5261,6 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
     margin-left: 8px;
 }
 /*End of lineItems*/
-
-/*Email Address*/
-#email1_span,
-#email1_span table,
-#email1_span tbody,
-#email1_span tr,
-#email1_span td {
-    display: block;
-}
-
-
-#email1_span tr {
-    margin-bottom: 8px;
-}
-
-div.col-sm-12 #email1_span td.email-address-input {
-    width: 25%;
-}
-
-div.col-sm-6 #email1_span td.email-address-input {
-    width: 50%;
-}
-
-#email1_span td.email-address-input {
-    display: inline-block;
-}
-
-.edit-view-field .email-address-input input[type=text] {
-    width: 100%;
-}
-
-#email1_span td.email-address-remove-button,
-#email1_span td.email-address-primary,
-#email1_span td.email-address-opt-out,
-#email1_span td.email-address-invalid {
-    width: 52px;
-    height: 52px; /* same height as td.email-address-input */
-    display: inline-block;
-    line-height: 48px;
-}
-
-div.col-sm-12 #email1_span td.email-address-add-button {
-    width: 25%; /* is the same width as td.email-address-input */
-}
-
-div.col-sm-6 #email1_span td.email-address-add-button {
-    width: 50%; /* is the same width as td.email-address-input */
-}
-
-#email1_span  td.email-address-add-button {
-    display: inline-block;
-}
-
-#email1_span  td.email-address-title {
-    width: 52px; /* same widths as td.email-address-remove-button */
-    font-size: 10px;
-    display: inline-block;
-    padding-top: 42px;
-}
-
-.emailaddresses > tbody:nth-child(1) > tr > td:nth-child(1) button img {
-    content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
-    height: 32px;
-    width: 32px;
-}
-
-
-.emailaddresses button {
-    content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
-    height: 34px;
-    width: 34px;
-    line-height: 0;
-}
-
-
-.emailaddresses button {
-    border: 1px solid transparent;
-    border-radius: 4px;
-    background-color: #F08377;
-}
-
-
-.emailaddresses button:hover {
-    background-color: #D66C60;
-}
 
 .row {
     margin-top: 1px;
