@@ -4703,7 +4703,9 @@ ol, ul, dl {
 
 .email-address-input-group input[type=email] {
     border: none;
-
+    line-height: 40px;
+    min-height: 48px;
+    height: 100%;
 }
 
 .email-address-add-line-container .email-address-add-button {
