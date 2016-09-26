@@ -2884,10 +2884,19 @@ td.edit.view td[align=right] {
     height: auto;
 }
 
-.sugarFeedDashlet .byLineBox {
-    width: 100%;
-    position: relative;
+.sugarFeedDashlet .byLineBox,
+.sugarFeedDashlet blockquote
+{
+    width:100%;
+    position:relative;
     overflow: hidden;
+    font-size:12px !important;
+}
+
+.sugarFeedDashlet blockquote img
+{
+    width: 30px;
+    height: 30px;
 }
 
 .sugarFeedDashlet .byLineBox .byLineLeft {
