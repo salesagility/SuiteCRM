@@ -446,7 +446,6 @@
       }
 
       var primaryFound = ($('[name='+ module + id +'emailAddressPrimaryFlag]:checked').length != 0);
-      console.log("primaryFound", primaryFound);
       if (primaryFound == false) {
         $('#' + module + id + 'emailAddressPrimaryFlag0').prop('checked', true);
         $('#' + module + id + 'emailAddressPrimaryFlag0').val(module + id + 'emailAddress0');
