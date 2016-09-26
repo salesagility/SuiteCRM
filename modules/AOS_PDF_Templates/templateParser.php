@@ -67,6 +67,9 @@ class templateParser
                 } //Fix for Windows Server as it needed to be converted to a string.
                 else if ($field_def['type'] == 'int') {
                     $repl_arr[$key . "_" . $fieldName] = strval($focus->$fieldName);
+                } else if ($field_def['type'] == 'image') {
+                    $link = str_replace('index.php?entryPoint=generatePdf', '', "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]") . 'upload/' . $focus->id .  '_' . $fieldName;
+                    $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="50" height="50"/>';
                 } else {
                     $repl_arr[$key . "_" . $fieldName] = $focus->$fieldName;
                 }
