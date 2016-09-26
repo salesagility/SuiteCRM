@@ -4711,9 +4711,15 @@ ol, ul, dl {
 }
 
 .email-address-input-group .email-address-remove-button {
+.email-address-input-group .email-address-remove-button {
     border-top-left-radius: 4px !important;
     border-bottom-left-radius: 4px !important;
     padding: 6px 9px 6px 9px;
+}
+
+
+.email-address-options-container {
+    font-size: 10px;
 }
 
 @media (max-width: 768px) {

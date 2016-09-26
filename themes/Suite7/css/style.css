@@ -2232,6 +2232,43 @@ td.edit.view td[align=right]
     padding-top:0 !important;
 }
 
+
+.email-address-line-container {
+    margin: 4px 0 16px 0;
+}
+
+.email-address-add-line-container .email-address-add-button {
+    margin-bottom: 8px;
+    font-size: 12px;
+    padding: 3px 8px 3px 8px;
+}
+
+
+.email-address-input-group input[type=email] {
+    border-radius: 0;
+}
+
+.email-address-input-group .email-address-remove-button {
+    border-radius: 0;
+    margin-left: 4px !important;
+    font-size: 12px;
+    padding: 3px 8px 3px 8px;
+}
+
+.email-address-option {
+    width: 33%;
+    font-size: 9px;
+    margin-top: 8px;
+    font-size: 10px  !important;
+}
+
+@media  (min-width: 1400px) {
+    .email-address-option {
+        width: 25%;
+    }
+}
+
+
 /*System Settings*/
 #container_upload
 {
