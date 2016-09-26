@@ -69,6 +69,10 @@ function buildEditField(){
                 clicks = 0;
             }
             clicks++;
+            
+            if(e.ctrlKey && clicks == 1){
+                return;
+            }
 
             e.preventDefault();
             // if single click just want default action of following link, but want to wait in case user is actually trying to double click to edit field
