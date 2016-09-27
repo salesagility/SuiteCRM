@@ -3306,6 +3306,7 @@ $app_list_strings['aor_operator_list']['Less_Than'] = 'Less Than';
 $app_list_strings['aor_operator_list']['Greater_Than_or_Equal_To'] = 'Greater Than or Equal To';
 $app_list_strings['aor_operator_list']['Less_Than_or_Equal_To'] = 'Less Than or Equal To';
 $app_list_strings['aor_operator_list']['Contains'] = 'Contains';
+$app_list_strings['aor_operator_list']['Not_Contains'] = 'Not Contains';
 $app_list_strings['aor_operator_list']['Starts_With'] = 'Starts With';
 $app_list_strings['aor_operator_list']['Ends_With'] = 'Ends With';
 $app_list_strings['aor_format_options'][''] = '';
