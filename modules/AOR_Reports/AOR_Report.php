@@ -197,7 +197,7 @@ class AOR_Report extends Basic {
             $fields[$label]['total'] = $field->total;
 
 
-            $fields[$label]['params'] = array("date_format" => $field->format);
+            $fields[$label]['params'] = $field->format;
 
             // get the main group
 
@@ -225,15 +225,8 @@ class AOR_Report extends Basic {
 
                 $currency_id = isset($row[$att['alias'].'_currency_id']) ? $row[$att['alias'].'_currency_id'] : '';
 
-                switch ($att['function']){
-                    case 'COUNT':
-                        break;
-                    default:
-                        if(!is_numeric($row[$name])) {
-                            $row[$name] = trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView', $row[$name], '', $currency_id,$att['params'])));
-
-                        }
-                        break;
+                if($att['function'] != 'COUNT' && empty($att['params']) && !is_numeric($row[$name])){
+                    $row[$name] = trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView', $row[$name], '', $currency_id)));
                 }
             }
             $data[] = $row;
@@ -248,8 +241,9 @@ class AOR_Report extends Basic {
                 $html = '<script src="modules/AOR_Reports/js/Chart.js"></script>';
                 break;
             case self::CHART_TYPE_RGRAPH:
-                if($_REQUEST['module']!= 'Home')//Need the require_once for the rgraphincludes as they are only loaded when the home page is hit
+                if($_REQUEST['module']!= 'Home') {
                     require_once('include/SuiteGraphs/RGraphIncludes.php');
+                }
 
                 break;
         }
@@ -302,12 +296,9 @@ class AOR_Report extends Basic {
                     $values = $this->dbSelect($query);
 
                     foreach($values as $value) {
-
-                        //$where = [ $this->db->quote($pth['module_path'][0]) . '.' . $_fieldIdName . ' = \'' . $this->db->quote($value[$pth['field_id_name']]) . '\'' ];
-
                         $moduleFieldByGroupValue = $this->getModuleFieldByGroupValue($beanList, $value[$pth['field_id_name']]);
                         $moduleFieldByGroupValue = $this->addDataIdValueToInnertext($moduleFieldByGroupValue);
-                        $html .= $this->getMultiGroupFrameHTML($moduleFieldByGroupValue, $this->build_group_report($offset, $links/*, ['where' => $where]*/));
+                        $html .= $this->getMultiGroupFrameHTML($moduleFieldByGroupValue, $this->build_group_report($offset, $links));
                     }
                 }
                 return $html;
@@ -375,7 +366,7 @@ class AOR_Report extends Basic {
 
 
     function build_group_report($offset = -1, $links = true, $extra = array()){
-        global $beanList;
+        global $beanList, $timedate;
 
         $html = '';
         $query = '';
@@ -436,12 +427,19 @@ class AOR_Report extends Basic {
                 $query_array['sort_by'][] = $field_label.' '.$field->sort_by;
             }
 
-            if($field->group_by == 1){
-                $query_array['group_by'][] = $select_field;
+            if ($field->format && in_array($data['type'], array('date', 'datetime', 'datetimecombo'))) {
+                if (in_array($data['type'], array('datetime', 'datetimecombo'))){
+                    $select_field = $this->db->convert($select_field, 'add_tz_offset');
+                }
+                $select_field = $this->db->convert($select_field, 'date_format', array($timedate->getCalFormat($field->format)));
             }
 
             if($field->field_function != null){
                 $select_field = $field->field_function.'('.$select_field.')';
+            }
+
+            if($field->group_by == 1){
+                $query_array['group_by'][] = $select_field;
             }
 
             $query_array['select'][] = $select_field ." AS '".$field_label."'";
@@ -659,7 +657,7 @@ class AOR_Report extends Basic {
             $fields[$label]['link'] = $field->link;
             $fields[$label]['total'] = $field->total;
 
-            $fields[$label]['params'] = array("date_format" => $field->format);
+            $fields[$label]['params'] = $field->format;
 
 
             if($fields[$label]['display']){
@@ -697,16 +695,12 @@ class AOR_Report extends Basic {
 
                     $currency_id = isset($row[$att['alias'].'_currency_id']) ? $row[$att['alias'].'_currency_id'] : '';
 
-                    switch ($att['function']){
-                        case 'COUNT':
-                            //case 'SUM':
-                            $html .= $row[$name];
-                            break;
-                        default:
-
-                            $html .= getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name],'',$currency_id, $att['params']);
-                            break;
+                    if($att['function'] == 'COUNT' || !empty($att['params'])){
+                        $html .= $row[$name];
+                    } else {
+                        $html .= getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name],'',$currency_id);
                     }
+
                     if($att['total']){
                         $totals[$name][] = $row[$name];
                     }
@@ -757,6 +751,11 @@ class AOR_Report extends Basic {
             $field = new AOR_Field();
             $field->retrieve($row['id']);
 
+            if($field->field_function != 'COUNT' || $field->format != ''){
+                $moduleFieldByGroupValues[] = $group_value;
+                continue;
+            }
+
             $path = unserialize(base64_decode($field->module_path));
 
             $field_bean = new $beanList[$this->report_module]();
@@ -774,7 +773,7 @@ class AOR_Report extends Basic {
             }
 
             $currency_id = isset($row[$field_alias.'_currency_id']) ? $row[$field_alias.'_currency_id'] : '';
-            $moduleFieldByGroupValues[] = getModuleField($this->report_module, $field->field, $field->field, 'DetailView', $group_value, '', $currency_id, array("date_format" => $field->format));
+            $moduleFieldByGroupValues[] = getModuleField($this->report_module, $field->field, $field->field, 'DetailView', $group_value, '', $currency_id);
 
         }
 
@@ -820,19 +819,14 @@ class AOR_Report extends Basic {
                         // Customise based on type of function
                         switch($type){
                             case 'SUM':
-                                if($currency->id == -99) {
-                                    $total = $currency->symbol.format_number($total, null, null);
-                                } else {
-                                    $total = $currency->symbol.format_number($total, null, null, array('convert' => true));
-                                }
-                            case 'COUNT':
-                                break;
                             case 'AVG':
                                 if($currency->id == -99) {
                                     $total = $currency->symbol.format_number($total, null, null);
                                 } else {
                                     $total = $currency->symbol.format_number($total, null, null, array('convert' => true));
                                 }
+                                break;
+                            case 'COUNT':
                             default:
                                 break;
                         }
@@ -908,6 +902,7 @@ class AOR_Report extends Basic {
             $fields[$label]['function'] = $field->field_function;
             $fields[$label]['module'] = $field_module;
             $fields[$label]['alias'] = $field_alias;
+            $fields[$label]['params'] = $field->format;
 
             if($field->display){
                 $csv.= $this->encloseForCSV($field->label);
@@ -924,7 +919,7 @@ class AOR_Report extends Basic {
             foreach($fields as $name => $att){
                 $currency_id = isset($row[$att['alias'].'_currency_id']) ? $row[$att['alias'].'_currency_id'] : '';
                 if($att['display']){
-                    if($att['function'] != '' )
+                    if($att['function'] != '' ||  $att['params'] != '')
                         $csv .= $this->encloseForCSV($row[$name]);
                     else
                         $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name],'',$currency_id))));
@@ -1001,7 +996,7 @@ class AOR_Report extends Basic {
             foreach ($query_array['group_by'] as $group_by){
                 $query_group_by .=  ($query_group_by == '' ? 'GROUP BY ' : ', ').$group_by;
             }
-            if($query_group_by != '') {
+            if(isset($query_array['second_group_by']) && $query_group_by != '') {
                 foreach ($query_array['second_group_by'] as $group_by) {
                     $query_group_by .= ', ' . $group_by;
                 }
@@ -1040,7 +1035,7 @@ class AOR_Report extends Basic {
     }
 
     function build_report_query_select($query = array(), $group_value =''){
-        global $beanList;
+        global $beanList, $timedate;
 
         if($beanList[$this->report_module]){
             $module = new $beanList[$this->report_module]();
@@ -1117,16 +1112,21 @@ class AOR_Report extends Basic {
                     $select_field= $this->db->quoteIdentifier($table_alias).'.'.$field->field;
                 }
 
-                if ($field->group_by == 1) {
-                    if ($field->format) {
-                        $query['group_by'][] = str_replace('(%1)', '(' . $select_field . ')', preg_replace(array('/\s+/', '/Y/', '/m/', '/d/'), array(', ', 'YEAR(%1)', 'MONTH(%1)', 'DAY(%1)'), trim(preg_replace('/[^Ymd]/', ' ', $field->format))));
-                        $query['second_group_by'][] = $select_field;
-                    } else {
-                        $query['group_by'][] = $select_field;
+                if ($field->format && in_array($data['type'], array('date', 'datetime', 'datetimecombo'))) {
+                    if (in_array($data['type'], array('datetime', 'datetimecombo'))){
+                        $select_field = $this->db->convert($select_field, 'add_tz_offset');
                     }
-                } elseif ($field->field_function != null) {
+                    $select_field = $this->db->convert($select_field, 'date_format', array($timedate->getCalFormat($field->format)));
+                }
+
+
+                if ($field->group_by == 1) {
+                    $query['group_by'][] = $select_field;
+                }
+                elseif ($field->field_function != null) {
                     $select_field = $field->field_function . '(' . $select_field . ')';
-                } else {
+                }
+                else {
                     $query['second_group_by'][] = $select_field;
                 }
 
@@ -1272,7 +1272,6 @@ class AOR_Report extends Basic {
                             continue;
                         }
                         // Bug: Prevents relationships from loading.
-                        //$rel = strtolower($rel);
                         $new_condition_module = new $beanList[getRelatedModule($condition_module->module_dir,$rel)];
                         $oldAlias = $table_alias;
                         $table_alias = $table_alias.":".$rel;
