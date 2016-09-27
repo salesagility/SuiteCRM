@@ -1284,6 +1284,7 @@ class AOR_Report extends Basic {
         $aor_sql_operator_list['Greater_Than_or_Equal_To'] = '>=';
         $aor_sql_operator_list['Less_Than_or_Equal_To'] = '<=';
         $aor_sql_operator_list['Contains'] = 'LIKE';
+        $aor_sql_operator_list['Not_Contains'] = 'NOT LIKE';
         $aor_sql_operator_list['Starts_With'] = 'LIKE';
         $aor_sql_operator_list['Ends_With'] = 'LIKE';
 
@@ -1479,6 +1480,7 @@ class AOR_Report extends Basic {
                     //handle like conditions
                     Switch($condition->operator) {
                         case 'Contains':
+                        case 'Not_Contains':
                             $value = "CONCAT('%', ".$value." ,'%')";
                             break;
                         case 'Starts_With':
