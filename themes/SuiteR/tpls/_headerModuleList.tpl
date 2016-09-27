@@ -345,13 +345,13 @@
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_ACCOUNT}</a></li>
-                    <li><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{$APP.LBL_QUICK_CONTACT}</a></li>
-                    <li><a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">{$APP.LBL_QUICK_OPPORTUNITY}</a></li>
-                    <li><a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">{$APP.LBL_QUICK_LEAD}</a></li>
-                    <li><a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">{$APP.LBL_QUICK_DOCUMENT}</a></li>
-                    <li><a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{$APP.LBL_QUICK_CALL}</a></li>
-                    <li><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a></li>
+                    <li><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{sugar_translate module="Accounts" label="LBL_MODULE_NAME"}</a></li>
+                    <li><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{sugar_translate module="Contacts" label="LBL_MODULE_NAME"}</a></li>
+                    <li><a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">{sugar_translate module="Opportunities" label="LBL_MODULE_NAME"}</a></li>
+                    <li><a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">{sugar_translate module="Leads" label="LBL_MODULE_NAME"}</a></li>
+                    <li><a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">{sugar_translate module="Documents" label="LBL_MODULE_NAME"}</a></li>
+                    <li><a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{sugar_translate module="Calls" label="LBL_MODULE_NAME"}</a></li>
+                    <li><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{sugar_translate module="Tasks" label="LBL_MODULE_NAME"}</a></li>
                 </ul>
             </div>
             <div id="desktop_notifications" class="dropdown nav navbar-nav navbar-right">
