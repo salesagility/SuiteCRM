@@ -220,6 +220,28 @@
 	</div><!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade modal-cal-tasks-edit" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+				<h4 class="modal-title" id="title-cal-tasks-edit">{$MOD.LNK_TASK}</h4>
+			</div>
+			<div class="modal-body">
+				<!--->
+				<div class="container-fluid">
+
+				</div>
+				<!--->
+			</div>
+			<div class="modal-footer">
+				<button id="btn-view-task" class="button" type="button">{$MOD.LNK_TASK_VIEW}</button>
+				<button id="btn-tasks-full-form" class="button" type="button">{$APP.LBL_FULL_FORM_BUTTON_LABEL}</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
+
 {if $settings}
 {sugar_include type="smarty" file=$settings}
 {/if}

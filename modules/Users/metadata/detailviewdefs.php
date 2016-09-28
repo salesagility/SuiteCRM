@@ -57,7 +57,7 @@ $viewdefs['Users']['DetailView'] = array(
                       'customCode'=>'{$USER_TYPE_READONLY}',
                   ),
             ),
-            array('picture'),
+            array('photo'),
         ),
         'LBL_EMPLOYEE_INFORMATION' => array(
             array('employee_status','show_on_employees'),

@@ -2261,11 +2261,19 @@ td.edit.view td[align=right]
     height:auto;
 }
 
-.sugarFeedDashlet .byLineBox
+.sugarFeedDashlet .byLineBox,
+.sugarFeedDashlet blockquote
 {
     width:100%;
     position:relative;
     overflow: hidden;
+    font-size:12px !important;
+}
+
+.sugarFeedDashlet blockquote img
+{
+    width: 30px;
+    height: 30px;
 }
 
 .sugarFeedDashlet .byLineBox .byLineLeft
@@ -4185,7 +4193,7 @@ header {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#121212',GradientType=0 ); /* IE6-8 */
     height:35px;
     border-bottom:2px solid #f10202;
-    z-index:50;
+    z-index: 15030;
 }
 
 /* Table CSS */
@@ -5811,4 +5819,333 @@ table tr#delegates_search {
 
 .panel-heading {
     padding-bottom: 20px;
+}
+
+
+.modal {
+    z-index: 16000;
+}
+
+.qtip-titlebar {
+    padding:  5px 24px 5px 10px;
+}
+
+.qtip-title-text {
+    display: block;
+    float: left;
+    width: 128px;
+    color: #ffffff;
+}
+
+.qtip-title-buttons {
+    display: inline-block;
+    width: 48px;
+    float: right;
+    vertical-align: middle;
+    padding: 0 0 0 4px;
+}
+
+.qtip-title-buttons a {
+    padding-left: 8px;
+    color: #ffffff;
+    margin: 0 4px 0 4px;
+    padding: 0;
+}
+
+.qtip-title-buttons a:hover {
+    color: #F10202;
+}
+
+.qtip-default .qtip-titlebar {
+    background-color: #000000;
+}
+
+.qtip-default .qtip-icon {
+    background-color: transparent;
+    border: none;
+    top: 16px;
+}
+
+.qtip-default .qtip-titlebar .qtip-close {
+    color: #ffffff;
+    font-size: 22px;
+}
+
+.qtip-default .qtip-titlebar .qtip-close:hover {
+    color: #F10202;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+
+
+/*Line Items*/
+
+#conditionLines_head,
+#fieldLines_head, #lineItems,
+table#lineItems,
+#lineItems table,
+#lineItems thead,
+#lineItems tr,
+#lineItems td {
+    background: none !important;
+}
+
+#actionLines,
+#actionLines table,
+#actionLines tr,
+#actionLines td {
+    border: 1px solid transparent !important;
+}
+
+#actionLines,
+#actionLines table,
+#line_items table {
+    clear: both;
+    border-radius: 4px;
+    width: 100%;
+}
+
+table#actionLines > tr > td > table td {
+    padding: 4px;
+}
+
+table#actionLines > tr > td > table td:first-of-type {
+    padding-left: 16px;
+}
+
+
+table#actionLines > tr > td > table, #line_items table > tr > td > table {
+    background: #F5F5F5;
+    margin: 16px 0 0 0 !important;
+    clear: both;
+    display: block;
+}
+
+#conditionLines td,  #fieldLines td {
+    padding: 8px;
+}
+
+
+#lineItems table > thead:nth-child(1) > tr > td:nth-child(1) [type="text"] {
+    width: 50% !important;
+}
+
+
+[field=line_items] {
+    float: none;
+    width: 100%;
+    clear: both;
+}
+
+[field=line_items]
+#line_items_span,
+table#lineItems {
+    display: block;
+}
+
+#line_items_span {
+    width: 100%;
+}
+
+table#lineItems tr td table tfoot tr td span {
+    width: 20%;
+}
+table#lineItems tr td table tfoot tr td span input[type="text"] {
+    display: block;
+    float: none;
+}
+
+
+
+/*totals*/
+#lineItems .totals {
+    float: right;
+}
+
+#lineItems  #shipping_tax_amt_span {}
+#lineItems  #shipping_tax_amt {
+    /*Text*/
+}
+
+#lineItems  #shipping_tax {
+    /*Select*/
+}
+
+/*Group*/
+#lineItems .group {
+    width: 100%;
+}
+
+#lineItems .group_body,
+#lineItems .group_body > td,
+#lineItems .group > thead,
+#lineItems .group > thead > tr {
+    width: 100%;
+    display: block;
+}
+
+#lineItems .group > thead > tr > td:nth-of-type(1) {
+    width: 80%;
+    display: inline-block;
+}
+
+#lineItems .group > thead > tr > td:nth-of-type(2) {
+    width: 20%;
+    display: inline-block;
+}
+
+#lineItems .group button {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    line-height: 0;
+}
+
+#lineItems .group_name {}
+#lineItems .delete_group {}
+#lineItems .product_group {}
+#lineItems .service_group {}
+#lineItems .add_product_line {}
+#lineItems .add_service_line {}
+#lineItems .group_total_amt {}
+#lineItems .group_discount_amount {}
+#lineItems .group_subtotal_amount {}
+#lineItems .group_tax_amount {}
+#lineItems .group_subtotal_tax_amount {}
+#lineItems .group_total_amount {}
+#lineItems  #addGroup {}
+/*Labels Next to Fields*/
+#lineItems  .alignedLabel {
+    display: none;
+    visibility: collapse;
+}
+
+/*Product Lines*/
+#lineItems #product_head > td {
+    padding: 32px 0 8px 0;
+}
+
+#lineItems #product_head > td:nth-of-type(1) {
+    width: 75px;
+}
+
+#lineItems  .product_group {
+    width: 1000px;
+}
+
+#lineItems  .product_group  > tbody > tr:nth-of-type(1) > td {
+    padding-bottom: 16px;
+}
+
+#lineItems  .product_group  > tbody > tr:nth-of-type(2) > td {
+    padding-bottom: 16px;
+}
+
+#lineItems .product_qty {
+    width: 40px;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_name {
+    width: 98%;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_part_number {
+    width: 100%;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_part_number_button {
+    margin: 0 15px 0 5px;
+}
+#lineItems .product_list_price {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_discount_text {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_discount_amount_select {
+    margin: 0 5px 0 0;
+}
+#lineItems .product_unit_price {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_vat_amt_text {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_vat_amt_select {
+    margin: 0 5px 0 0;
+}
+#lineItems .product_total_price {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .product_delete_line {
+    margin: 0 15px 0 5px;
+}
+
+#lineItems .product_item_description_label {
+    display: block;
+}
+
+#lineItems .product_item_description {
+    height: 50px;
+}
+
+#lineItems .product_description_label {
+    display: block;
+}
+
+#lineItems .product_description {
+    height: 50px;
+}
+
+/*Service Lines*/
+#lineItems  #service_head td {
+    padding: 32px 0 8px 0;
+}
+
+#lineItems  .service_group  > tbody > tr > td {
+    padding-bottom: 16px;
+}
+
+
+#lineItems .service_group {
+    width: 1000px;
+}
+#lineItems .service_name {
+    width: 100px;
+    height: 50px;
+    margin: 0 5px 0 0;
+}
+#lineItems .service_list_price {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .service_discount_text {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .service_discount_select {
+    margin: 0 5px 0 0;
+}
+#lineItems .service_unit_price {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .service_vat_text {
+    width: 80px;
+}
+#lineItems .service_vat_select {
+    margin: 0 5px 0 5px;
+}
+#lineItems .service_total_price {
+    width: 80px;
+    margin: 0 5px 0 0;
+}
+#lineItems .service_delete_line {
+    margin: 0 5px 0 0;
 }

@@ -76,7 +76,10 @@ $mod_strings = array(
     'LBL_AM_TASKTEMPLATES_AM_PROJECTTEMPLATES_FROM_AM_TASKTEMPLATES_TITLE' => 'Task Templates',
 	'LBL_AM_PROJECTTEMPLATES_USERS_1_TITLE' => 'Users',
 	'LBL_AM_PROJECTTEMPLATES_CONTACTS_1_TITLE' => 'Contacts',
-	'LBL_AM_PROJECTTEMPLATES_RESOURCES_TITLE' => 'Select Resources',	
+	'LBL_AM_PROJECTTEMPLATES_RESOURCES_TITLE' => 'Select Resources',
+	'LBL_NEW_PROJECT_CREATED' => 'New Project Created',
+	'LBL_NEW_PROJECT' => 'Create Project',
+	'LBL_CANCEL_PROJECT' => 'Cancel',
 
 	'LBL_SUBTASK' => 'Task',
 	'LBL_MILESTONE_FLAG' => 'Milestone',
@@ -144,6 +147,7 @@ $mod_strings = array(
 	'LBL_NO_ACCESS' => 'You have no access to create $module',
 	'LBL_SCHEDULING_FORM_TITLE' => 'Resource List',
 	'LBL_REMOVE' => 'rem',
+	'LBL_NONE' => 'None',
 
 
 );

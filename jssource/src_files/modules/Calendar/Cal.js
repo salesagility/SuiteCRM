@@ -284,12 +284,49 @@ CAL.repeat_type_selected = function () {
 		}
 	}
 }
-CAL.load_form = function (module_name, record, edit_all_recurrences) {
+CAL.load_form = function (module_name, record, edit_all_recurrences, cal_event) {
 	CAL.disable_creating = true;
 	var e;
 	var to_open = true;
-	if (module_name != "Meetings" && module_name != "Calls")
+
+	if (module_name != "Meetings" && module_name != "Calls") {
 		to_open = false;
+	}
+
+
+	if(module_name == "Tasks") {
+
+		var body = '<span class="title"><strong>' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</strong></span>: ' + (cal_event.start.format(global_datetime_format) ) + '<br><span class="title"><strong>' + SUGAR.language.get('Calendar', 'LBL_SUBJECT') + ': </strong></span>' + ( (cal_event.title) ? cal_event.title : '');
+		if(typeof cal_event.date_due !== "undefined") {
+			body = body
+				+ '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_DUE_DT') + '</span>: ' + cal_event.date_due;
+		} else {
+			body = body
+				+ '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</span>: ' + (cal_event.start.format(global_datetime_format) )
+		}
+
+		body = body
+			+ '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_STATUS') + ': </span>' + ( (cal_event.status) ? cal_event.status : '')
+			+ '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_PRIORITY') + ': </span>' + ( (cal_event.priority) ? cal_event.priority : '');
+
+		if(cal_event.parent_name != "") {
+			body = body
+				+ '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '<a href="index.php?action=DetailView&module='+cal_event.parent_type+'&record='+cal_event.parent_id+'">' + cal_event.parent_name + '</a>';
+		} else {
+			body = body
+				+ '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '';
+		}
+
+		$('.modal-cal-tasks-edit .modal-body .container-fluid').html(body);
+		$('.modal-cal-tasks-edit').modal('show');
+		$('#btn-view-task').unbind().click(function(){
+			window.location.assign('index.php?module='+cal_event.module+'&action=DetailView&record='+cal_event.record);
+		});
+		$('#btn-tasks-full-form').unbind().click(function(){
+			window.location.assign('index.php?module='+cal_event.module+'&action=EditView&record='+cal_event.record);
+		});
+	}
+
 	if (to_open && CAL.records_openable) {
 		CAL.get("form_content").style.display = "none";
 		CAL.disable_buttons();
@@ -297,12 +334,18 @@ CAL.load_form = function (module_name, record, edit_all_recurrences) {
 		CAL.repeat_tab_handle(module_name);
 		ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_LOADING'));
 		params = {};
-		if (edit_all_recurrences)
+
+		if (edit_all_recurrences) {
 			params = {stay_on_tab: true};
+		}
+
 		CAL.open_edit_dialog(params);
 		CAL.get("record").value = "";
-		if (!edit_all_recurrences)
+
+		if (!edit_all_recurrences) {
 			edit_all_recurrences = "";
+		}
+
 		var callback = {
 			success: function (o) {
 				try {
@@ -806,8 +849,14 @@ $(document).ready(function () {
 			valueToPush["id"] = element['record'];
 			valueToPush["record"] = element['record'];
 			valueToPush['module'] = element['module_name'];
-			valueToPush["start"] = new Date(moment.unix(element['ts_start']).format("MM/DD/YYYY") + " " + moment(element['time_start'], 'hh:mma').format("HH:mm"));
-			valueToPush["end"] = moment(new Date(moment.unix(element['ts_start']).format("MM/DD/YYYY") + " " + moment(element['time_start'], 'hh:mma').format("HH:mm"))).add(element['duration_hours'], 'hours').add(element['duration_minutes'], 'minutes');
+			valueToPush['related_to'] = element['related_to'];
+            valueToPush['parent_id'] = element['parent_id'];
+            valueToPush['parent_name'] = element['parent_name'];
+            valueToPush['parent_type'] = element['parent_type'];
+            valueToPush['status'] = element['status'];
+            valueToPush['date_due'] = element['date_due'];
+            valueToPush["start"] = new Date(moment.utc(moment.unix(element['ts_start'])).format("MM/DD/YYYY") + " " + moment(element['time_start'], 'hh:mma').format("HH:mm"));
+            valueToPush["end"] = moment(new Date(moment.utc(moment.unix(element['ts_start'])).format("MM/DD/YYYY") + " " + moment(element['time_start'], 'hh:mma').format("HH:mm"))).add(element['duration_hours'], 'hours').add(element['duration_minutes'], 'minutes');
 
 			if (element.module_name != "Meetings" && element.module_name != "Calls") {
 				valueToPush['editable'] = false;
@@ -871,7 +920,7 @@ $(document).ready(function () {
 			},
 			eventClick: function (calEvent, jsEvent, view) {
 				if (global_edit == true) {
-					CAL.load_form(calEvent.module, calEvent.record);
+					CAL.load_form(calEvent.module, calEvent.record, false, calEvent);
 				}
 			},
 			eventDrop: function (event, delta, revertFunc) {
@@ -919,21 +968,53 @@ $(document).ready(function () {
 			},
 			events: all_events,
 			eventRender: function (event, element) {
+        var title = '<div class="qtip-title-text">' + event.title + '</div>'
+					+ '<div class="qtip-title-buttons">'
+          + '<a href="index.php?action=DetailView&module='+ event.module +'&record='+event.id+'" class="btn btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a>'
+          + '<a href="index.php?action=EditView&module='+event.module+'&record='+ event.id +'" class="btn btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>'
+					+ '</div>';
+
+
+				var body = '';
+				if(typeof event.date_due !== "undefined") {
+					body = body
+						+ '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_DUE_DT') + '</span>: ' + event.date_due;
+				} else {
+					body = body
+						+ '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</span>: ' + (event.start.format(global_datetime_format) )
+				}
+
+				body = body
+						+ '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_STATUS') + ': </span>' + ( (event.status) ? event.status : '')
+            + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_PRIORITY') + ': </span>' + ( (event.priority) ? event.priority : '');
+
+        if(event.parent_name != "") {
+          body = body
+            + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '<a href="index.php?action=DetailView&module='+event.parent_type+'&record='+event.parent_id+'">' + event.parent_name + '</a>';
+        } else {
+          body = body
+            + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '';
+        }
+
 
 				if ($('#cal_module').val() != "Home") {
 					element.qtip({
 						content: {
-							title: {text: event.title},
-							text: '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</span>: ' + (event.start.format(global_datetime_format) ) + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_SUBJECT') + ': </span>' + ( (event.title) ? event.title : '')
+							title: {
+								text: title,
+								button: true,
+							},
+
+							text: body,
 						},
 						position: {
 							my: 'bottom left',
-							at: 'top right'
+							at: 'top left'
 						},
 						show: {solo: true},
-						hide: {when: 'inactive', delay: 50},
+						hide: {event: false},
 						style: {
-							width: 250,
+							width: 224,
 							padding: 5,
 							color: 'black',
 							textAlign: 'left',

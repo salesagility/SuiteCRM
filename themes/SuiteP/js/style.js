@@ -233,8 +233,7 @@ $( "button" ).click(function() {
 
 });
 
-// Custom JavaScript for copyright pop-ups
-$(function() {
+var initFooterPopups = function() {
     $( "#dialog, #dialog2" ).dialog({
         autoOpen: false,
         show: {
@@ -253,6 +252,11 @@ $(function() {
     $( "#admin_options" ).click(function() {
         $( "#dialog2" ).dialog( "open" );
     });
+};
+
+// Custom JavaScript for copyright pop-ups
+$(function() {
+    initFooterPopups();
 });
 
 // Back to top animation
@@ -343,21 +347,6 @@ function loadSidebar() {
             $('#bootstrap-container').addClass('expandedSidebar');
         }
     }
-}
-
-
-update_screen_resolution();
-
-    $(window).resize(function () {
-        update_screen_resolution();
-    });
-
-function update_screen_resolution(){
-    $.ajax({
-        url: 'index.php?module=Calendar&action=processScreenSize',
-        type: 'post',
-        data: { 'width' : $( window ).width(), 'height' : $( window ).height(), 'to_pdf': true}
-    });
 }
 
 // Alerts Notification
@@ -513,7 +502,7 @@ $(function () {
         }
 
         for (var i = 1; i <= tabFramesLength; i++) {
-            $('#tab' + i).click(function () {
+            $('#tab' + i + ', input[type="button"]').click(function () {
                 setTimeout(function () {
                     tabsRefresh();
                 }, 300);
@@ -530,6 +519,11 @@ $(function () {
         var clazz = $('#bootstrap-container footer').attr('class');
         $('body').append('<footer class="' + clazz + '">' + $('#bootstrap-container footer').html() + '</footer>');
         $('#bootstrap-container footer').remove();
+        initFooterPopups();
     }
+
+    setInterval(function(){
+        $('#alerts').css({left: 16-$('#alerts').width()+'px'});
+    },100);
 
 });

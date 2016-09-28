@@ -313,6 +313,20 @@ class Project extends SugarBean {
 		return $projectTasks;
 	}
 
+	public function getDefaultStatus()
+	{
+		$def = $this->field_defs['status'];
+		if (isset($def['default'])) {
+			return $def['default'];
+		} else {
+			$app = return_app_list_strings_language($GLOBALS['current_language']);
+			if (isset($def['options']) && isset($app[$def['options']])) {
+				$keys = array_keys($app[$def['options']]);
+				return $keys[0];
+			}
+		}
+		return '';
+	}
 
 	function save($check_notify = FALSE) {
 
@@ -325,7 +339,7 @@ class Project extends SugarBean {
 			(isset($_POST['return_action']) && $_POST['return_action'] == 'SubPanelViewer') && !empty($focus->id))||
 			 !isset($_POST['user_invitees']) // we need to check that user_invitees exists before processing, it is ok to be empty
 		){
-			parent::save(true) ; //$focus->save(true);
+			parent::save($check_notify) ; //$focus->save(true);
 			$return_id = $focus->id;
 		}else{
 

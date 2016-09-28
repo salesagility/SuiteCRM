@@ -265,13 +265,13 @@ class ProjectController extends SugarController {
     }
    //returns tasks for predecessor in the add task pop-up form
     function action_get_predecessors(){
-
+        global $mod_strings;
         $project = new Project();
         $project->retrieve($_REQUEST["project_id"]);
         //Get project tasks
         $Task = BeanFactory::getBean('ProjectTask');
         $tasks = $Task->get_full_list("order_number", "project_task.project_id = '".$project->id."'");
-        echo '<option rel="0" value="0">None</option>';
+        echo '<option rel="0" value="0">'.$mod_strings['LBL_PROJECT_PREDECESSOR_NONE'].'</option>';
         foreach ($tasks as $task) {
             echo '<option rel="'.$task->id.'" value="'.$task->project_task_id.'">'.$task->name.'</opion>';
         }
