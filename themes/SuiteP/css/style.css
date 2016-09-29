@@ -6885,7 +6885,7 @@ hr {
     border: none;
 }
 
-@media (max-width: 980px) {
+@media (max-width:380px) {
     .dashletNonTable {
         display: none;
     }
