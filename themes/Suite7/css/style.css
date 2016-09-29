@@ -437,7 +437,7 @@ div#content .noLeftColumn
 #newRecord form input[type=button],
 #newRecord form input[type=submit],
 #newRecord form input[type=reset],
-.btn-success,
+
 .btn-default,
 .btn-danger,
 .btn-info,
@@ -445,6 +445,8 @@ div#content .noLeftColumn
 {
     padding-top: 0px;
     vertical-align: bottom;
+    width: 60px;
+    possition: 150px;
 }
 
 #newRecord form .dataLabel {
@@ -473,6 +475,14 @@ div#content .noLeftColumn
     text-decoration: underline;
     border-bottom: 0px;
     padding-left: 0px;
+}
+
+.btn-success {
+    border: none;
+    position:absolute;
+    size: 200px;
+    Top: -6px;
+    Left: -35px;
 }
 
 /* css dropdown menu */
@@ -2464,7 +2474,7 @@ input, select, textarea, button, .button
     border: 1px solid;
 }
 button, input[type=submit], input[type=reset], input[type=button], .button,
-.btn-success,
+
 .btn-default,
 .btn-danger,
 .btn-info,
@@ -3157,7 +3167,7 @@ a:hover
 }
 
 button, input[type=submit], input[type=reset], input[type=button], .button,
-.btn-success,
+
 .btn-default,
 .btn-danger,
 .btn-info,
@@ -4943,7 +4953,7 @@ ul#quick-nav ul li:hover {
     -webkit-box-shadow: 0 0 5px#888;
     box-shadow: 0 0 5px #888;
     right:5px;
-    width: 185px;
+    width: 485px;
     color: #cccccc;
 }
 
@@ -5624,7 +5634,7 @@ div.password {
 
 #detailpanel_fields_select {float: left; width: 20%; height: 640px; overflow-y: auto; margin-right: 20px;}
 .aor_dragbox {height: 250px; overflow: scroll;}
-#report-editview-footer .tab-togglers {width: 80%;}
+#report-editview-footer .tab-togglers {width: 70%;}
 #report-editview-footer .tab-toggler {display: block; float: left;}
 #report-editview-footer .tab-toggler.active .button {background-color: #286090;}
 #report-editview-footer .parentheses-btn {display: block; width: 100%; min-height: 30px; border: 1px solid lightgray;}
