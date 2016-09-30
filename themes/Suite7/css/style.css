@@ -5116,8 +5116,12 @@ select:focus {
     margin:0 10px 0 0;
 }
 
+
 .chartContainer table tr td {
     padding:3px;
+    font-weight: bold;
+    font-size: 12px;
+    color: black;
 }
 
 .tabForm {
