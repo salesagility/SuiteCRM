@@ -1668,7 +1668,6 @@ table#mass_update_table td {
 }
 
 table#mass_update_table td select {
-    border: none;
     border-radius: 3px;
 }
 
@@ -6030,7 +6029,7 @@ select {
     border-size: 1px;
     border-color: #A5E8D6;
     border-radius: 4px;
-    padding: 16px 35px 16px 5px;
+    padding: 0px 35px 0px 5px;
     background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right #ffffff;
     background-size: 52px 52px;
     -moz-appearance: none;
@@ -6039,6 +6038,7 @@ select {
     outline: 0;
     scrollbar-base-color: #A5E8D6;
     scrollbar-arrow-color: #A5E8D6;
+    height: 52px;
 }
 
 select:focus {
