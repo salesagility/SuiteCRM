@@ -79,7 +79,6 @@ $mod_strings = array (
   'LBL_OUTBOUNDEMAILACCOUNTS_SUBPANEL_TITLE' => 'Outbound Email Accounts',
   'LBL_OUTBOUNDEMAILACCOUNT_CAMPA' => 'outboundemailaccount_campaigns_name',
     'LBL_CHANGE_PASSWORD' => 'Change password',
-    'LBL_CHOOSE_EMAIL_PROVIDER' => 'Choose your Email provider',
     'LBL_SEND_TEST_EMAIL' => 'Send Test Email',
 
     // for outbound email dialog
