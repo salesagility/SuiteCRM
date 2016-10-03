@@ -968,34 +968,13 @@ $(document).ready(function () {
 			},
 			events: all_events,
 			eventRender: function (event, element) {
+				var url = 'index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean=' + event.module + '&id=' + event.id + '&show_buttons=false';
         var title = '<div class="qtip-title-text">' + event.title + '</div>'
 					+ '<div class="qtip-title-buttons">'
           + '<a href="index.php?action=DetailView&module='+ event.module +'&record='+event.id+'" class="btn btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a>'
           + '<a href="index.php?action=EditView&module='+event.module+'&record='+ event.id +'" class="btn btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>'
 					+ '</div>';
-
-
-				var body = '';
-				if(typeof event.date_due !== "undefined") {
-					body = body
-						+ '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_DUE_DT') + '</span>: ' + event.date_due;
-				} else {
-					body = body
-						+ '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</span>: ' + (event.start.format(global_datetime_format) )
-				}
-
-				body = body
-						+ '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_STATUS') + ': </span>' + ( (event.status) ? event.status : '')
-            + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_PRIORITY') + ': </span>' + ( (event.priority) ? event.priority : '');
-
-        if(event.parent_name != "") {
-          body = body
-            + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '<a href="index.php?action=DetailView&module='+event.parent_type+'&record='+event.parent_id+'">' + event.parent_name + '</a>';
-        } else {
-          body = body
-            + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '';
-        }
-
+				var body = '...';
 
 				if ($('#cal_module').val() != "Home") {
 					element.qtip({
@@ -1006,6 +985,22 @@ $(document).ready(function () {
 							},
 
 							text: body,
+						},
+						events: {
+							render: function(event, api) {
+								$.ajax(url)
+									.done(function (data) {
+										eval(data); // produces var result = {body:{}, caption:"", width:300}
+										var div = "#qtip-"+api.id+"-content";
+										$(div).html(result.body);
+									})
+									.fail(function () {
+										//console.log("error");
+									})
+									.always(function () {
+										//console.log("complete");
+									});
+							}
 						},
 						position: {
 							my: 'bottom left',
