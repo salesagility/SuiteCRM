@@ -6039,6 +6039,8 @@ select {
     scrollbar-base-color: #A5E8D6;
     scrollbar-arrow-color: #A5E8D6;
     height: 52px;
+    line-height: 52px;
+    color: #534D64;
 }
 
 select:focus {
@@ -6055,6 +6057,17 @@ select::selection {
     border-size: 1px;
     border-color: #A5E8D6;
     border-radius: 4px;
+}
+
+
+select#user_theme_picker {
+    background-image: none;
+}
+
+select:checked,
+option:checked {
+    color: #534D64;
+    background: #A5E8D6;
 }
 
 .saved_search_select {
