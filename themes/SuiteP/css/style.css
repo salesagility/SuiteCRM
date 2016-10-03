@@ -7083,10 +7083,12 @@ div.action_buttons .button:hover {
     background-color: #7B8A96;
 }
 
-#EditView div.action_buttons .button {
+#EditView div.action_buttons .button,
+#save_and_continue.button {
     background-color: #F08377;
 }
-#EditView div.action_buttons .button:hover {
+#EditView div.action_buttons .button:hover,
+#save_and_continue.button:hover  {
     background-color: #D66C60;
 }
 
