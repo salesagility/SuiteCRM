@@ -7083,6 +7083,13 @@ div.action_buttons .button:hover {
     background-color: #7B8A96;
 }
 
+#EditView div.action_buttons .button {
+    background-color: #F08377;
+}
+#EditView div.action_buttons .button:hover {
+    background-color: #D66C60;
+}
+
 .paginationWrapper {
     float: right;
 }
