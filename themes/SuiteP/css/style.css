@@ -1783,6 +1783,13 @@ table#mass_update_table td select {
     padding: 0;
 }
 
+#actionLinkTop .sugar_action_button .subnav.ddopen a,
+#actionLinkTop .sugar_action_button .subnav.ddopen a:hover,
+#actionLinkBottom .sugar_action_button .subnav.ddopen a,
+#actionLinkBottom .sugar_action_button .subnav.ddopen a:hover {
+    color: #ffffff;
+}
+
 #actionLinkTop li.sugar_action_button,
 #actionLinkBottom li.sugar_action_button,
 #selectLinkTop > .sugar_action_button > ul.subnav a:hover,
