@@ -900,12 +900,12 @@ EOHTML;
         $imageName,
         $addJSPath = true
         ){
-        if ( isset($this->_imageCache[$imageName]) ) {
+      /*  if ( isset($this->_imageCache[$imageName]) ) {
             if ( $addJSPath )
                 return getJSPath($this->_imageCache[$imageName]);
             else
                 return $this->_imageCache[$imageName];
-        }
+        }*/
         $imagePath = '';
         if (($filename = $this->_getImageFileName('custom/'.$this->getImagePath().'/'.$imageName)) != '')
             $imagePath = $filename;

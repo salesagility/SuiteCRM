@@ -6133,3 +6133,12 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
 .yui-layout .yui-layout-clip {
     padding:10px 000;
 }
+
+.yui-dt-label .image {
+    width: 16px;
+    height: auto;
+}
+
+#yui-dt15-th-hasAttach-liner {
+    width: 32px;
+}

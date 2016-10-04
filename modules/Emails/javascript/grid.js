@@ -71,14 +71,14 @@ function gridInit() {
 			}
 	        function attachIcon(cell, record, column, value) {
 				if(value == "1") {
-					cell.innerHTML = "<img src='index.php?entryPoint=getImage&themeName="+SUGAR.themes.theme_name+"&imageName=attachment.gif' class='image' border='0' width='10' align='absmiddle'>";
+					cell.innerHTML = "<img src='index.php?entryPoint=getImage&themeName="+SUGAR.themes.theme_name+"&imageName=attachment.svg' class='image' border='0' width='10' align='absmiddle'>";
 				}
 			}
 
 			var colModel =
 				[
 					{
-						label: "<h2><img src='index.php?entryPoint=getImage&themeName="+SUGAR.themes.theme_name+"&imageName=attachment.gif' class='image' border='0' width='10' align='absmiddle'></h2>",
+						label: "<h2><img src='index.php?entryPoint=getImage&themeName="+SUGAR.themes.theme_name+"&imageName=attachment.svg' class='image' border='0' width='10' align='absmiddle'></h2>",
 						width: 10,
 						sortable: false,
 						fixed: true,

@@ -1818,7 +1818,7 @@ SE.composeLayout = {
 					"style='cursor:pointer' align='absmiddle' onclick='SUGAR.email2.composeLayout.deleteTemplateAttachmentField(\"" +
 					idx + "\",\"" + index + "\");'/>" +
 				// file icon
-				"<img src='index.php?entryPoint=getImage&themeName=" + SUGAR.themes.theme_name + "&imageName=attachment.gif' " + "align='absmiddle' />" +
+				"<img src='index.php?entryPoint=getImage&themeName=" + SUGAR.themes.theme_name + "&imageName=attachment.svg' " + "align='absmiddle' />" +
 				// templateAttachment field
 				"<input type='hidden' value='" + "' name='templateAttachment" + idx + index + "' id='templateAttachment" + idx + index + "' />" +
 				// docId field
