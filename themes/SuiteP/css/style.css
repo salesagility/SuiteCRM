@@ -5866,7 +5866,7 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
 
 .qtip-title-buttons {
     display: inline-block;
-    width: 52px;
+    width: 46px;
     float: right;
     vertical-align: middle;
     padding: 0 0 0 4px;
@@ -5875,7 +5875,7 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
 .qtip-title-buttons a {
     padding-left: 8px;
     color: #ffffff;
-    margin: 0 4px 0 4px;
+    margin: 0 0 0 4px;
     padding: 0;
 }
 
