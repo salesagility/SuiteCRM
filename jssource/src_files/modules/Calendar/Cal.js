@@ -337,7 +337,7 @@ CAL.load_form = function (module_name, record, edit_all_recurrences, cal_event) 
 		$('#btn-view-events').unbind().click(function(){
 			window.location.assign('index.php?module='+cal_event.module+'&action=DetailView&record='+cal_event.record);
 		});
-		$('#btn-tasks-full-form').unbind().click(function(){
+		$('#btn-events-full-form').unbind().click(function(){
 			window.location.assign('index.php?module='+cal_event.module+'&action=EditView&record='+cal_event.record);
 		});
 	}
