@@ -7566,7 +7566,7 @@ object {
     font-family: 'Lato', Lato, Arial, sans-serif;
     font-size: 12px;
     background: #ffffff;
-    border: 1px solid #cccccc;
+    border: none;
     -webkit-border-radius: 0px;
     border-radius: 4px;
 }
