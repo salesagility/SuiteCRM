@@ -295,7 +295,7 @@ CAL.load_form = function (module_name, record, edit_all_recurrences, cal_event) 
 
 
 	if(module_name == "Tasks") {
-
+		var url = 'index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean=' + cal_event.module + '&id=' + cal_event.record;
 		var body = '<span class="title"><strong>' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</strong></span>: ' + (cal_event.start.format(global_datetime_format) ) + '<br><span class="title"><strong>' + SUGAR.language.get('Calendar', 'LBL_SUBJECT') + ': </strong></span>' + ( (cal_event.title) ? cal_event.title : '');
 		if(typeof cal_event.date_due !== "undefined") {
 			body = body
@@ -974,7 +974,7 @@ $(document).ready(function () {
           + '<a href="index.php?action=DetailView&module='+ event.module +'&record='+event.id+'" class="btn btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a>'
           + '<a href="index.php?action=EditView&module='+event.module+'&record='+ event.id +'" class="btn btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>'
 					+ '</div>';
-				var body = '...';
+				var body = SUGAR.language.translate('app_strings', 'LBL_LOADING_PAGE');
 
 				if ($('#cal_module').val() != "Home") {
 					element.qtip({
@@ -997,10 +997,11 @@ $(document).ready(function () {
 											$(divCaption).html(result.caption);
 										}
 										$(divBody).html(result.body);
-
 									})
 									.fail(function () {
 										//console.log("error");
+
+										$(divBody).html(SUGAR.language.translate('app_strings', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
 									})
 									.always(function () {
 										//console.log("complete");
