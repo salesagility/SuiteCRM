@@ -986,8 +986,6 @@ $(document).ready(function () {
 				var url = 'index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean=' + event.module + '&id=' + event.id;
         var title = '<div class="qtip-title-text">' + event.title + '</div>'
 					+ '<div class="qtip-title-buttons">'
-          + '<a href="index.php?action=DetailView&module='+ event.module +'&record='+event.id+'" class="btn btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a>'
-          + '<a href="index.php?action=EditView&module='+event.module+'&record='+ event.id +'" class="btn btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>'
 					+ '</div>';
 				var body = SUGAR.language.translate('app_strings', 'LBL_LOADING_PAGE');
 
