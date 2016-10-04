@@ -4752,10 +4752,22 @@ ol, ul, dl {
     padding: 6px 9px 6px 9px !important;
 }
 
+.email-address-option label {
+    font-size: 10px;
+    font-weight: 600;
+}
+
+div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
+    visibility: hidden;
+}
+
 @media (max-width: 768px) {
     .email-address-options-container {
         width: 100%;
         margin: 16px 0 16px 0;
+    }
+    div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
+        visibility: visible;
     }
 
 }
