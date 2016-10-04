@@ -130,8 +130,8 @@ HTML;
 						EmailMan.testOutboundDialog = new YAHOO.widget.Dialog("testOutboundDialog", {
 							modal:true,
 							visible:true,
-							fixedcenter:true,
-							constraintoviewport: true,
+							fixedcenter: false,
+							constraintoviewport: false,
 							width   : 600,
 							shadow  : false
 						});
