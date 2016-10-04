@@ -78,6 +78,7 @@
         $templateBody->assign('MOD', $mod_strings);
         $templateBody->assign('FIELD', $fields);
         $templateBody->assign('ACL_EDIT_VIEW', $bean->ACLAccess('EditView'));
+        $templateBody->assign('ACL_DETAIL_VIEW', $bean->ACLAccess('DetailView'));
         $templateBody->assign('PARAM', $params);
         $templateBody->assign('MODULE_NAME', $bean->module_name);
         $templateBody->assign('OBJECT_NAME', $bean->object_name);
