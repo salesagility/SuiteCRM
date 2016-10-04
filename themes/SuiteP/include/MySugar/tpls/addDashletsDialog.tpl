@@ -134,7 +134,7 @@
 	<table width="95%">
 	    <tr>
 	        <td scope="row"></td>
-	        <td><input type="text" id="web_address" value="http://" style="width: 400px"   title="{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}"/></td>
+	        <td>{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}<br /><input type="text" id="web_address" value="http://" style="width: 400px"   title="{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}"/></td>
         </tr>
         <tr>
             <td colspan="2">
@@ -147,7 +147,7 @@
 	<table width="95%">
         <tr>
 	        <td scope="row"></td>
-	        <td><input type="text" id="rss_address" value="http://" style="width: 400px"  title="{sugar_translate label='LBL_RSS_TITLE' module='Home'}" /></td>
+	        <td>{sugar_translate label='LBL_RSS_TITLE' module='Home'}<br /><input type="text" id="rss_address" value="http://" style="width: 400px"  title="{sugar_translate label='LBL_RSS_TITLE' module='Home'}" /></td>
         </tr>
         <tr>
             <td colspan="2">
