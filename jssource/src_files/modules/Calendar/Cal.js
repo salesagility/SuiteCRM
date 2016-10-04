@@ -296,7 +296,7 @@ CAL.load_form = function (module_name, record, edit_all_recurrences, cal_event) 
 
 	if(module_name == "Tasks") {
 		var url = 'index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean=' + cal_event.module + '&id=' + cal_event.record;
-		var body = '<span class="title"><strong>' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</strong></span>: ' + (cal_event.start.format(global_datetime_format) ) + '<br><span class="title"><strong>' + SUGAR.language.get('Calendar', 'LBL_SUBJECT') + ': </strong></span>' + ( (cal_event.title) ? cal_event.title : '');
+		var body = SUGAR.language.translate('app_strings', 'LBL_LOADING_PAGE');
 
 		$.ajax(url)
 			.done(function (data) {
@@ -312,6 +312,29 @@ CAL.load_form = function (module_name, record, edit_all_recurrences, cal_event) 
 		$('.modal-cal-tasks-edit .modal-body .container-fluid').html(body);
 		$('.modal-cal-tasks-edit').modal('show');
 		$('#btn-view-task').unbind().click(function(){
+			window.location.assign('index.php?module='+cal_event.module+'&action=DetailView&record='+cal_event.record);
+		});
+		$('#btn-tasks-full-form').unbind().click(function(){
+			window.location.assign('index.php?module='+cal_event.module+'&action=EditView&record='+cal_event.record);
+		});
+	} else if(module_name == "FP_events") {
+		var url = 'index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean=' + cal_event.module + '&id=' + cal_event.record;
+		var body =  SUGAR.language.translate('app_strings', 'LBL_LOADING_PAGE');
+
+		$.ajax(url)
+			.done(function (data) {
+				eval(data); // produces var result = {body:{}, caption:"", width:300}
+				$('.modal-cal-events-edit .modal-body .container-fluid').html(result.body);
+			})
+			.fail(function () {
+				$('.modal-cal-events-edit .modal-body .container-fluid').html(SUGAR.language.translate('app_strings', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
+			}).always(function () {
+			//console.log("complete");
+		});
+
+		$('.modal-cal-events-edit .modal-body .container-fluid').html(body);
+		$('.modal-cal-events-edit').modal('show');
+		$('#btn-view-events').unbind().click(function(){
 			window.location.assign('index.php?module='+cal_event.module+'&action=DetailView&record='+cal_event.record);
 		});
 		$('#btn-tasks-full-form').unbind().click(function(){
