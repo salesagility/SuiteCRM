@@ -968,7 +968,7 @@ $(document).ready(function () {
 			},
 			events: all_events,
 			eventRender: function (event, element) {
-				var url = 'index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean=' + event.module + '&id=' + event.id + '&show_buttons=false';
+				var url = 'index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean=' + event.module + '&id=' + event.id;
         var title = '<div class="qtip-title-text">' + event.title + '</div>'
 					+ '<div class="qtip-title-buttons">'
           + '<a href="index.php?action=DetailView&module='+ event.module +'&record='+event.id+'" class="btn btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a>'
@@ -991,8 +991,13 @@ $(document).ready(function () {
 								$.ajax(url)
 									.done(function (data) {
 										eval(data); // produces var result = {body:{}, caption:"", width:300}
-										var div = "#qtip-"+api.id+"-content";
-										$(div).html(result.body);
+										var divCaption = "#qtip-"+api.id+"-title";
+										var divBody = "#qtip-"+api.id+"-content";
+										if(data.caption != "") {
+											$(divCaption).html(result.caption);
+										}
+										$(divBody).html(result.body);
+
 									})
 									.fail(function () {
 										//console.log("error");

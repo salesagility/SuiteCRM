@@ -5856,11 +5856,12 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     float: left;
     width: 128px;
     color: #ffffff;
+    line-height: 18px;
 }
 
 .qtip-title-buttons {
     display: inline-block;
-    width: 48px;
+    width: 52px;
     float: right;
     vertical-align: middle;
     padding: 0 0 0 4px;
@@ -5898,6 +5899,13 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     font-weight: bold;
 }
 
+.qtip-content {
+    line-height: 16px;
+}
+
+.qtip-content a {
+    font-weight: bold;
+}
 /*xs-col-*/
 @media (max-width: 769px) {
     div.search_name_basic img {
