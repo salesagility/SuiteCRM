@@ -53,17 +53,17 @@ class CasesController extends SugarController {
         $search = $_POST['search'];
         $status_list = $app_list_strings['aok_status_list'];
 
-        $query = "SELECT id, name, description, status, sum(relevance)
+        $query = "SELECT id, sum(relevance)
                   FROM (
-                        SELECT id, name, description, status, 10 AS relevance
+                        SELECT id, 10 AS relevance
                         FROM aok_knowledgebase
                         WHERE name = '".$search."'
                         AND deleted = '0'
-                        UNION SELECT id, name, description, status, 5 AS relevance
+                        UNION SELECT id, 5 AS relevance
                         FROM aok_knowledgebase
                         WHERE name LIKE '%".$search."%'
                         AND deleted = '0'
-                        UNION SELECT id, name, description, status, 2 AS relevance
+                        UNION SELECT id, 2 AS relevance
                         FROM aok_knowledgebase
                         WHERE description LIKE '%".$search."%'
                         AND deleted = '0'
@@ -82,10 +82,11 @@ class CasesController extends SugarController {
             $count =1;
             while($row = $GLOBALS['db']->fetchByAssoc($result) )
             {
-                echo '<tr class="kb_article" data-id="'.$row['id'].'">';
+                $kb = BeanFactory::getBean('AOK_KnowledgeBase', $row['id']);
+                echo '<tr class="kb_article" data-id="'.$kb->id.'">';
                 echo '<td> &nbsp;'.$count.'</td>';
-                echo '<td>'.$row['name'].'</td>';
-                echo '<td>'.$status_list = $app_list_strings['aok_status_list'][$row['status']].'</td>';
+                echo '<td>'.$kb->name.'</td>';
+                echo '<td>'.$status_list = $app_list_strings['aok_status_list'][$kb->status].'</td>';
                 echo '</tr>';
                 $count++;
             }
