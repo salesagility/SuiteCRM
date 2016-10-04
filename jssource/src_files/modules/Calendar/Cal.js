@@ -1009,7 +1009,7 @@ $(document).ready(function () {
 										if(data.caption != "") {
 											$(divCaption).html(result.caption);
 										}
-										$(divBody).html(result.body);
+										api.set('content.text', result.body);
 									})
 									.fail(function () {
 										$(divBody).html(SUGAR.language.translate('app_strings', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
