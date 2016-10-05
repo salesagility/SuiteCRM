@@ -107,6 +107,7 @@
             <span id="select{{$module}}">
                 {{sugar_field parentFieldArray='contact_def' vardef=$contact_def[$selectRelation] displayType='EditView' displayParams=$displayParams formName=$form_name call_back_function='set_return_lead_conv'}}
                 <script>
+                    console.log("{$selectFields.{{$module}}}");
                     if (typeof(sqs_objects) == "undefined") sqs_objects = [];
                     sqs_objects['{{$form_name}}_{$selectFields.{{$module}}}'] = {ldelim}
                         form: '{{$form_name}}',
@@ -115,7 +116,7 @@
                         group: 'or',
                         field_list: ['name', 'id'],
                         populate_list: ['{$selectFields.{{$module}}}', '{$contact_def[$selectFields.{{$module}}].id_name}'],
-                        conditions: [{ldelim}'name': 'name', 'op': 'like', 'end': '%', 'value': ''{rdelim}],
+                        conditions: [{ldelim}'name': 'name', 'op': 'like_custom', 'end': '%', 'value': ''{rdelim}],
                         required_list: ['{$contact_def[$selectFields.{{$module}}].id_name}'],
                         order: 'name',
                         limit: '10'
