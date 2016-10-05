@@ -2622,6 +2622,11 @@ li.noBullet {
     border-radius: 4px;
 }
 
+input.reqired {
+    color: #222;
+}
+
+
 .error {
     background-color: #f08377;
     color: #ffffff;
@@ -2631,6 +2636,9 @@ li.noBullet {
     border-radius: 4px;
 }
 
+input.error, input.required {
+    color: #222;
+}
 
 /*The nonPaddedError class is to remove the padding from interal error messages during the upgrade wizard*/
 span.error.nonPaddedError{
@@ -7090,10 +7098,10 @@ div.action_buttons form {
 }
 
 div.action_buttons .button {
-    background-color: #94A6B5;
+    background-color: #F08377;
 }
 div.action_buttons .button:hover {
-    background-color: #7B8A96;
+    background-color: #d66c60;
 }
 
 .paginationWrapper {
