@@ -517,7 +517,7 @@ function insertGroup()
 
 
 
-  var productTableHeader = document.createElement("tbody");
+  var productTableHeader = document.createElement("thead");
   table.appendChild(productTableHeader);
   var productHeader_row=productTableHeader.insertRow(-1);
   var productHeader_cell = productHeader_row.insertCell(0);
@@ -529,7 +529,7 @@ function insertGroup()
 
   insertProductHeader(productTable.id);
 
-  var serviceTableHeader = document.createElement("tbody");
+  var serviceTableHeader = document.createElement("thead");
   table.appendChild(serviceTableHeader);
   var serviceHeader_row=serviceTableHeader.insertRow(-1);
   var serviceHeader_cell = serviceHeader_row.insertCell(0);
@@ -541,12 +541,6 @@ function insertGroup()
 
   insertServiceHeader(serviceTable.id);
 
-
-  /*tablebody = document.createElement("tbody");
-   table.appendChild(tablebody);
-   var body_row=tablebody.insertRow(-1);
-   var body_cell = body_row.insertCell(0);
-   body_cell.innerHTML+="&nbsp;";*/
 
   tablefooter = document.createElement("tfoot");
   table.appendChild(tablefooter);

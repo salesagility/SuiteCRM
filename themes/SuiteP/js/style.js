@@ -349,21 +349,6 @@ function loadSidebar() {
     }
 }
 
-
-update_screen_resolution();
-
-    $(window).resize(function () {
-        update_screen_resolution();
-    });
-
-function update_screen_resolution(){
-    $.ajax({
-        url: 'index.php?module=Calendar&action=processScreenSize',
-        type: 'post',
-        data: { 'width' : $( window ).width(), 'height' : $( window ).height(), 'to_pdf': true}
-    });
-}
-
 // Alerts Notification
 $(document).ready(function() {
     $('#alert-nav').click(function() {
@@ -536,5 +521,9 @@ $(function () {
         $('#bootstrap-container footer').remove();
         initFooterPopups();
     }
+
+    setInterval(function(){
+        $('#alerts').css({left: 16-$('#alerts').width()+'px'});
+    },100);
 
 });
