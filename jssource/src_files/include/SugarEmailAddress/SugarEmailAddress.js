@@ -447,10 +447,10 @@
       });
       _eaw.totalEmailAddresses = c;
 
-      var primaryFound = ($('[name='+ module + id +'emailAddressPrimaryFlag]:checked').length != 0);
+      var primaryFound = ($('[name='+ module + '0emailAddressPrimaryFlag]:checked').length != 0);
       if (primaryFound == false) {
         $('[name='+module + '0emailAddressPrimaryFlag]').first().prop('checked', true);
-        $('[name='+module + '0emailAddressPrimaryFlag]').first().val(this.id + 'emailAddress0');
+        $('[name='+module + '0emailAddressPrimaryFlag]:checked').val(this.id + 'emailAddress0');
       }
     },//removeEmailAddress
 
