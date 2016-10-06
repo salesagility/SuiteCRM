@@ -3271,7 +3271,7 @@ SUGAR.util = function () {
 					var width = $dialog.dialog( "option", "width" );
 
 					if((pos.left + ofWidth) - 40 < width) {
-						$dialog.dialog("option","position",{my: 'left top',at: 'right top',of: $(el)})	;
+						$dialog.dialog("option","position",{my: 'right top',at: 'right top',of: $(el)})	;
 					}
 					$dialog.dialog('open');
 					$(".ui-dialog").appendTo("#content");
@@ -3293,7 +3293,7 @@ SUGAR.util = function () {
 				width: 300,
 				position: {
 				    my: 'right top',
-				    at: 'left top',
+				    at: 'right top',
 				    of: $(el)
 			  }
 			});
@@ -3339,9 +3339,9 @@ SUGAR.util = function () {
 						title: caption,
 						width: 300,
 						position: {
-						    my: 'right top',
-						    at: 'left top',
-						    of: $(el)
+						    my: 'right top-30',
+						    at: 'left-210 top',
+						    of: $(el),
 					  }
 					});
 				if(show_buttons) {
@@ -3354,7 +3354,7 @@ SUGAR.util = function () {
 					var ofWidth = $(el).width();
 
 					if((pos.left + ofWidth) - 40 < width) {
-						$dialog.dialog("option","position",{my: 'left top',at: 'right top',of: $(el)})	;
+						$dialog.dialog("option","position",{my: 'right top',at: 'right top',of: $(el)})	;
 					}
 
 					$dialog.dialog('open');
