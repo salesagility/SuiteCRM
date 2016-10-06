@@ -59,7 +59,7 @@ var emailAddressWidgetLoaded = false;
 
 <div class="col-xs-12">
 	<div class="col-xs-12 email-address-add-line-container emailaddresses" id="{$module}emailAddressesTable{$index}">
-		{capture assign="other_attributes"}id="{$module}{$index}_email_widget_add" onclick="SUGAR.EmailAddressWidget.instances.{$module}{$index}.addEmailAddress('{$module}emailAddressesTable{$index}','','');"{/capture}
+		{capture assign="other_attributes"}id="{$module}{$index}_email_widget_add" onclick="SUGAR.EmailAddressWidget.instances.{$module}{$index}.addEmailAddress('{$module}emailAddressesTable{$index}','', false);"{/capture}
 		<button type="button" class="btn btn-info email-address-add-button" title="{$app_strings.LBL_ID_FF_ADD} " {$other_attributes}>
 			<span class="glyphicon glyphicon-plus"></span><span></span>
 		</button>

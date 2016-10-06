@@ -278,12 +278,13 @@
 
       // Primary checkbox
       var primaryCheckbox = lineContainer.find('input#email-address-primary-flag');
-      primaryCheckbox.attr('name', this.module + _eaw.id + 'emailAddressPrimaryFlag');
+      primaryCheckbox.attr('name', _eaw.module + '0emailAddressPrimaryFlag');
       primaryCheckbox.attr('id', this.module + _eaw.id + 'emailAddressPrimaryFlag' + _eaw.totalEmailAddresses);
       primaryCheckbox.attr('value', this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
       primaryCheckbox.attr('tabindex', tabIndexCount);
       primaryCheckbox.attr('enabled', "true");
       primaryCheckbox.attr("checked", (primaryFlag == '1'));
+
 
       if (_eaw.totalEmailAddresses == 0 && primaryFlag != '1') {
         primaryCheckbox.prop("checked", true);
@@ -409,19 +410,13 @@
       //removeFromValidate($(this).parents('form').attr('name'), rowId);
       $('#' + rowId).remove();
 
-      var c = 0;
-      $('.email-address-line-container').each(function() {
-        if(!$(this).hasClass('template')) c++;
-      });
-      _eaw.totalEmailAddresses = c;
-
       var form = $(this).closest("form");
       var removedIndex = parseInt(index);
       // If we are not deleting the last email address, we need to shift the numbering to fill the gap
 
       $('.email-address-line-container').each(function(index, value) {
         // skip template
-        if(!$(value).hasClass('template')) return true;
+        if($(value).hasClass('template')) return true;
 
         // email input
         $(value).find('input[type=email]').prop('name', module + id + "emailAddress" + index);
@@ -445,6 +440,12 @@
         $(value).find('.verified-flag').prop('id', module + id + "emailAddressVerifiedFlag" + index);
         $(value).find('.verified-email-value').prop('id', module + id + "emailAddressVerifiedValue" + index);
       });
+
+      var c = 0;
+      $('.email-address-line-container').each(function() {
+        if(!$(this).hasClass('template')) c++;
+      });
+      _eaw.totalEmailAddresses = c;
 
       var primaryFound = ($('[name='+ module + '0emailAddressPrimaryFlag]:checked').length != 0);
       if (primaryFound == false) {
