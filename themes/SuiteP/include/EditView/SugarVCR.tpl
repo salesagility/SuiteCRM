@@ -40,9 +40,9 @@
 *}
 <table border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>
-        <td nowrap class="paginationWrapper">
+        <td nowrap class="paginationWrapper SuiteP">
             {if !empty($list_link)}
-            <button type="button" id="save_and_continue" class="button" title="{$app_strings.LBL_SAVE_AND_CONTINUE}" onClick="this.form.action.value='Save';if(check_form('EditView')){ldelim}sendAndRedirect('EditView', '{$app_strings.LBL_SAVING} {$module}...', '{$list_link}');{rdelim}">
+            <button type="button" id="save_and_continue" class="button vcr-right" title="{$app_strings.LBL_SAVE_AND_CONTINUE}" onClick="this.form.action.value='Save';if(check_form('EditView')){ldelim}sendAndRedirect('EditView', '{$app_strings.LBL_SAVING} {$module}...', '{$list_link}');{rdelim}">
                 {$app_strings.LBL_SAVE_AND_CONTINUE}
             </button>
             &nbsp;&nbsp;&nbsp;&nbsp;

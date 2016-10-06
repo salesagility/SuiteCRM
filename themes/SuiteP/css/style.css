@@ -7081,6 +7081,11 @@ tr:hover img.info {
     padding: 0;
 }
 
+
+#EditView .paginationWrapper {
+    padding-top: 4px;
+}
+
 .paginationWrapper span, .paginationWrapper span {
     padding: 0;
     margin: 0;
@@ -10258,3 +10263,20 @@ body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui
     }
 }
 
+@media(max-width: 600px) {
+
+    #EditView table.dcQuickEdit,
+    #EditView table.dcQuickEdit tr,
+    #EditView table.dcQuickEdit tr td,
+    #EditView table.dcQuickEdit tr td[align="right"] table,
+    #EditView table.dcQuickEdit tr td[align="right"] table tr,
+    #EditView table.dcQuickEdit tr td[align="right"] table tr td.paginationWrapper.SuiteP {
+        display: block;
+        float: left;
+    }
+
+    #EditView table.dcQuickEdit tr td[align="right"] table tr td.paginationWrapper.SuiteP span.pagination {
+        float: right;
+    }
+
+}
