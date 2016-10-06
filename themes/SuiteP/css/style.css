@@ -4752,6 +4752,14 @@ ol, ul, dl {
     padding: 6px 9px 6px 9px !important;
 }
 
+.email-address-input-group button[disabled].email-address-remove-button {
+    margin: 0;
+    padding: 6px 9px 6px 9px !important;
+    line-height: 20px;
+    height: 36px;
+    font-size: 14px !important;
+}
+
 .email-address-option label {
     font-size: 10px;
     font-weight: 600;
@@ -6048,6 +6056,7 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     border: 1px solid #e2e7eb;
     background: #f8f8f8;
 }
+
 textarea {
     width: 50%;
 }
