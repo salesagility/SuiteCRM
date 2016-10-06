@@ -233,7 +233,7 @@
 }
 
 .sqsFloater, #smartInputFloaterContent {
-    z-index: 11000; 
+    z-index: 1100;
 }
 
 .input-error {
@@ -359,7 +359,9 @@ td.yui-dt-col-bean_id {
 }
 
 #listViewDiv .pagination {
-    margin-bottom: 10px;	
+    possition: relative;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 
