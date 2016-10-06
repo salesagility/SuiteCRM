@@ -1189,7 +1189,23 @@ slot, #lead_queries_Div td {
 
 #EditView > table {
     overflow: auto;
-    margin-bottom: 2px;
+    margin-bottom: 0px;
+}
+
+#EditView_tabs.yui-navset.yui-navset-top {
+    padding: 0px 5px 5px 5px;
+}
+
+#EditView_tabs.yui-navset.yui-navset-top .nav.nav-tabs {
+    margin-top: 15px;
+}
+
+#EditView_tabs .nav.nav-tabs {
+    margin: 0;
+}
+
+#EditView_tabs .tab-content {
+    margin: 0;
 }
 
 #EditView .edit tr td {
