@@ -76,7 +76,7 @@ var emailAddressWidgetLoaded = false;
 		 ** don't add js events inline. Instead bind the event in javascript.
 	 	*}
 		<div class="col-xs-12 template email-address-line-container hidden">
-			<div class="col-xs-12 col-sm-6  email-address-input-container">
+			<div class="col-xs-12 col-sm-6  email-address-input-container {if $module == "Users"} email-address-users-profile{/if}">
 				<div class="input-group email-address-input-group">
 					<input type="email" id="email-address-input" value="" class="form-control" placeholder="email@example.com" title="{$app_strings.LBL_EMAIL_TITLE}">
 					<input type="hidden" id="record-id">

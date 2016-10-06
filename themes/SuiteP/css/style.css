@@ -4789,6 +4789,10 @@ ol, ul, dl {
     display: inline-block;
 }
 
+.email-address-users-profile {
+    width: 248px !important;
+}
+
 div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
     visibility: collapse;
 }
@@ -4800,6 +4804,11 @@ div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option l
     }
     div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
         visibility: visible;
+    }
+
+
+    .email-address-users-profile {
+        width: 200px !important;
     }
 }
 

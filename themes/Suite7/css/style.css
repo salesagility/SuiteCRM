@@ -6176,7 +6176,7 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
     width: 20%;
 }
 
-.email-address-input-group [type=email]{
+.email-address-input-group [type=email] {
     margin-top: 7px;
 }
 
