@@ -107,7 +107,6 @@
             <span id="select{{$module}}">
                 {{sugar_field parentFieldArray='contact_def' vardef=$contact_def[$selectRelation] displayType='EditView' displayParams=$displayParams formName=$form_name call_back_function='set_return_lead_conv'}}
                 <script>
-                    console.log("{$selectFields.{{$module}}}");
                     if (typeof(sqs_objects) == "undefined") sqs_objects = [];
                     sqs_objects['{{$form_name}}_{$selectFields.{{$module}}}'] = {ldelim}
                         form: '{{$form_name}}',
