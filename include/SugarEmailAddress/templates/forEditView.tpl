@@ -80,8 +80,8 @@ var emailAddressWidgetLoaded = false;
 				<div class="input-group email-address-input-group">
 					<input type="email" id="email-address-input" value="" class="form-control" placeholder="email@example.com" title="{$app_strings.LBL_EMAIL_TITLE}">
 					<input type="hidden" id="record-id">
-					<input type="hidden" id="verified-flag" value="true"/>
-					<input type="hidden" id="verified-email-value" value=""/>
+					<input type="hidden" id="verified-flag" class="verified-flag" value="true"/>
+					<input type="hidden" id="verified-email-value" class="verified-email-value" value=""/>
 					<input type=hidden id="{$module}_email_widget_id" name="{$module}_email_widget_id" value="">
 					<input type=hidden id='emailAddressWidget' name='emailAddressWidget' value='1'>
 					<span class="input-group-btn">
@@ -96,27 +96,27 @@ var emailAddressWidgetLoaded = false;
 
 				<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
 					<label class="text-sm col-xs-12">{$app_strings.LBL_EMAIL_PRIMARY}</label>
-					<div><input type="radio" name="" id="email-address-primary-flag" value="" enabled="true" tabindex="0" checked="true" title="{$app_strings.LBL_EMAIL_PRIM_TITLE}"></div>
+					<div><input type="radio" name="" id="email-address-primary-flag" class="email-address-primary-flag" value="" enabled="true" tabindex="0" checked="true" title="{$app_strings.LBL_EMAIL_PRIM_TITLE}"></div>
 				</div>
 
 				{if $useReplyTo == true}
 				<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
 					<label class="text-sm  col-xs-12">{$app_strings.LBL_EMAIL_REPLY_TO}</label>
-					<div><input type="checkbox" name="" id="email-address-reply-to-flag" value="" enabled="true"></div>
+					<div><input type="checkbox" name="" id="email-address-reply-to-flag" class="email-address-reply-to-flag" value="" enabled="true"></div>
 				</div>
 				{/if}
 
 				{if $useOptOut == true}
 				<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
 					<label class="text-sm col-xs-12">{$app_strings.LBL_EMAIL_OPT_OUT}</label>
-					<div><input type="checkbox" name="" id="email-address-opt-out-flag" value="" enabled="true"></div>
+					<div><input type="checkbox" name="" id="email-address-opt-out-flag" class="email-address-opt-out-flag" value="" enabled="true"></div>
 				</div>
 				{/if}
 
 				{if $useInvalid == true}
 				<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
 					<label class="text-sm col-xs-12">{$app_strings.LBL_EMAIL_INVALID}</label>
-					<div><input type="checkbox" name="" id="email-address-invalid-flag" value="" enabled="true"></div>
+					<div><input type="checkbox" name="" id="email-address-invalid-flag" class="email-address-invalid-flag" value="" enabled="true"></div>
 				</div>
 				{/if}
 			</div>

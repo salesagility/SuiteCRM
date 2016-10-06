@@ -305,35 +305,35 @@
         replyToCheckbox.eaw = _eaw;
         replyToCheckbox.prop("checked", (replyToFlag == '1'));
         _eaw.replyToFlagObject[replyToCheckbox.attr('id')] = (replyToFlag == '1');
-        replyToCheckbox.click(function () {
-          var form = document.forms[_eaw.emailView];
-          if (!form) {
-            form = document.forms['editContactForm'];
-          }
-          var nav = new String(navigator.appVersion);
-
-          if (nav.match(/MSIE/gim)) {
-            for (i = 0; i < form.elements.length; i++) {
-              var id = new String(form.elements[i].id);
-              if (id.match(/emailAddressReplyToFlag/gim) && form.elements[i].type == 'radio' && id != _eaw.id) {
-                form.elements[i].checked = false;
-              }
-            }
-          }
-          for (i = 0; i < form.elements.length; i++) {
-            var id = new String(form.elements[i].id);
-            if (id.match(/emailAddressReplyToFlag/gim) && form.elements[i].type == 'radio' && id != _eaw.id) {
-              _eaw.replyToFlagObject[_eaw.id] = false;
-            }
-          } // for
-          if (_eaw.replyToFlagObject[this.id]) {
-            _eaw.replyToFlagObject[this.id] = false;
-            this.checked = false;
-          } else {
-            _eaw.replyToFlagObject[this.id] = true;
-            this.checked = true;
-          } // else
-        });
+        //replyToCheckbox.click(function () {
+        //  var form = document.forms[_eaw.emailView];
+        //  if (!form) {
+        //    form = document.forms['editContactForm'];
+        //  }
+        //  var nav = new String(navigator.appVersion);
+        //
+        //  if (nav.match(/MSIE/gim)) {
+        //    for (i = 0; i < form.elements.length; i++) {
+        //      var id = new String(form.elements[i].id);
+        //      if (id.match(/emailAddressReplyToFlag/gim) && form.elements[i].type == 'radio' && id != _eaw.id) {
+        //        form.elements[i].checked = false;
+        //      }
+        //    }
+        //  }
+        //  for (i = 0; i < form.elements.length; i++) {
+        //    var id = new String(form.elements[i].id);
+        //    if (id.match(/emailAddressReplyToFlag/gim) && form.elements[i].type == 'radio' && id != _eaw.id) {
+        //      _eaw.replyToFlagObject[_eaw.id] = false;
+        //    }
+        //  } // for
+        //  if (_eaw.replyToFlagObject[this.id]) {
+        //    _eaw.replyToFlagObject[this.id] = false;
+        //    this.checked = false;
+        //  } else {
+        //    _eaw.replyToFlagObject[this.id] = true;
+        //    this.checked = true;
+        //  } // else
+        //});
       }
 
 
@@ -347,9 +347,9 @@
         optOutCheckbox.attr('enabled', "true");
         optOutCheckbox.eaw = _eaw;
         optOutCheckbox.prop("checked", (optOutFlag == '1'));
-        optOutCheckbox.click(function () {
-          _eaw.toggleCheckbox(this);
-        });
+        //optOutCheckbox.click(function () {
+        //  _eaw.toggleCheckbox(this);
+        //});
       }
 
 
@@ -363,9 +363,9 @@
         invalidCheckbox.attr('enabled', "true");
         invalidCheckbox.eaw = _eaw;
         invalidCheckbox.prop("checked", (invalidFlag == '1'));
-        invalidCheckbox.click(function () {
-          _eaw.toggleCheckbox(this);
-        });
+        //invalidCheckbox.click(function () {
+        //  _eaw.toggleCheckbox(this);
+        //});
       }
 
 
@@ -406,71 +406,55 @@
       var rowId = $(this).attr('data-row');
       var index = this.name;
 
-      removeFromValidate($(this).parents('form').attr('name'), rowId);
+      //removeFromValidate($(this).parents('form').attr('name'), rowId);
       $('#' + rowId).remove();
+
+      var c = 0;
+      $('.email-address-line-container').each(function() {
+        if(!$(this).hasClass('template')) c++;
+      });
+      _eaw.totalEmailAddresses = c;
 
       var form = $(this).closest("form");
       var removedIndex = parseInt(index);
       // If we are not deleting the last email address, we need to shift the numbering to fill the gap
-      if (_eaw.totalEmailAddresses != removedIndex) {
-        for (var x = removedIndex + 1; x < _eaw.totalEmailAddresses; x++) {
-          $('#' + module + id + 'emailAddress' + x).attr("name", module + id + "emailAddress" + (x - 1));
-          $('#' + module + id + 'emailAddress' + x).attr("id", module + id + "emailAddress" + (x - 1));
 
-          if ($('#' + module + id + 'emailAddressInvalidFlag' + x)) {
-            $('#' + module + id + 'emailAddressInvalidFlag' + x).attr("value", module + id + "emailAddress" + (x - 1));
-            $('#' + module + id + 'emailAddressInvalidFlag' + x).attr("id", module + id + "emailAddressInvalidFlag" + (x - 1));
-          }
+      $('.email-address-line-container').each(function(index, value) {
+        // skip template
+        if(!$(value).hasClass('template')) return true;
 
-          if ($('#' + module + id + 'emailAddressOptOutFlag' + x)) {
-            $('#' + module + id + 'emailAddressOptOutFlag' + x).attr("value", module + id + "emailAddress" + (x - 1));
-            $('#' + module + id + 'emailAddressOptOutFlag' + x).attr("id", module + id + "emailAddressOptOutFlag" + (x - 1));
-          }
+        // email input
+        $(value).find('input[type=email]').prop('name', module + id + "emailAddress" + index);
+        $(value).find('input[type=email]').prop('id', module + id + "emailAddressPrimaryFlag" + index);
 
-          if ($('#' + module + id + 'emailAddressPrimaryFlag' + x)) {
-            $('#' + module + id + 'emailAddressPrimaryFlag' + x).attr("id", module + id + "emailAddressPrimaryFlag" + (x - 1));
-          }
+        // primary flag
+        $(value).find('input.email-address-primary-flag').prop('id', module + id + "emailAddressPrimaryFlag" + index);
 
-          $('#' + module + id + 'emailAddressVerifiedValue' + x).attr("id", module + id + "emailAddressVerifiedValue" + (x - 1));
-          $('#' + module + id + 'emailAddressVerifiedFlag' + x).attr("id", module + id + "emailAddressVerifiedFlag" + (x - 1));
+        // invalid
+        $(value).find('input.email-address-invalid-flag').prop('name', module + id + "emailAddress" + index);
+        $(value).find('input.email-address-invalid-flag').prop('id', module + id + "emailAddressInvalidFlag" + index);
 
-          var rButton = $('#' + module + id + 'removeButton' + x);
-          rButton.attr("name", (x - 1));
-          rButton.attr("data-row", module + id + "removeButton" + (x - 1));
-          $('#' + module + id + 'emailAddressRow' + x).attr("id", module + id + 'emailAddressRow' + (x - 1));
-        }
-      }
+        // opt-out flag
+        $(value).find('input.email-address-opt-out-flag').prop('name', module + id + "emailAddress" + index);
+        $(value).find('input.email-address-opt-out-flag').prop('id', module + id + "emailAddressOptOutFlag" + index);
 
-      var c = 0;
-      $('.email-address-line-container').each(function() {
-          if(!$(this).hasClass('template')) c++;
+        // remove button
+        $(value).find('.email-address-remove-button').prop('name', index);
+        $(value).find('.email-address-remove-button').prop('data-row', module + id + "emailAddressRow" + index);
+
+        $(value).find('.verified-flag').prop('id', module + id + "emailAddressVerifiedFlag" + index);
+        $(value).find('.verified-email-value').prop('id', module + id + "emailAddressVerifiedValue" + index);
       });
-      _eaw.totalEmailAddresses = c;
 
       var primaryFound = ($('[name='+ module + '0emailAddressPrimaryFlag]:checked').length != 0);
       if (primaryFound == false) {
+        $('.email-address-remove-button').bind( "click", _eaw.removeEmailAddress);
         $('[name='+module + '0emailAddressPrimaryFlag]').first().prop('checked', true);
         $('[name='+module + '0emailAddressPrimaryFlag]:checked').val(this.id + 'emailAddress0');
       }
+
+      return false;
     },//removeEmailAddress
-
-    toggleCheckbox: function (el) {
-      var form = document.forms[this.emailView];
-      if (!form) {
-        form = document.forms['editContactForm'];
-      }
-
-      if (SUGAR.EmailAddressWidget.prototype.isIE()) {
-        for (var i = 0; i < form.elements.length; i++) {
-          var id = new String(form.elements[i].id);
-          if (id.match(/emailAddressInvalidFlag/gim) && form.elements[i].type == 'checkbox' && id != el.id) {
-            form.elements[i].checked = false;
-          }
-        }
-
-        el.checked = true;
-      }
-    },
 
     forceSubmit: function () {
       var theForm = $('#' + this.emailView);
