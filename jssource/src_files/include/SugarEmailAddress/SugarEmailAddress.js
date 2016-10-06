@@ -210,7 +210,8 @@
     },//freezeEvent
 
     addEmailAddress: function (tableId, address, primaryFlag, replyToFlag, optOutFlag, invalidFlag, emailId) {
-      var _eaw = this;
+      _eaw = this;
+
       if (_eaw.addInProgress) {
         return;
       }
@@ -263,10 +264,9 @@
       removeButton.attr('tabindex', tabIndexCount);
       removeButton.attr('enabled', "true");
       removeButton.attr('data-row', this.module + _eaw.id + 'emailAddressRow' + _eaw.totalEmailAddresses);
-      removeButton.attr('id', _eaw.id);
+      removeButton.attr('id', _eaw.totalEmailAddresses);
       removeButton.attr('module', this.module);
       removeButton.click(_eaw.removeEmailAddress);
-
 
       // Record id
       var recordId = lineContainer.find('input#record-id');
@@ -285,10 +285,14 @@
       primaryCheckbox.attr('enabled', "true");
       primaryCheckbox.attr("checked", (primaryFlag == '1'));
 
-      //// CL Fix for 17651 (added OR condition check to see if this is the first email added)
-      //if (primaryFlag == '0' || (_eaw.totalEmailAddresses == 0)) {
-      //  primaryCheckbox.prop("checked", primaryFlag == '1');
-      //}
+      if (_eaw.totalEmailAddresses == 0 && primaryFlag != '1') {
+        primaryCheckbox.prop("checked", true);
+      }
+
+      // Prevent users from removing their primary email address
+      if (this.module == 'Users' &&  primaryCheckbox.attr("checked")) {
+        removeButton.prop('disabled', true);
+      }
 
       // Reply to checkbox
       var replyToCheckbox = lineContainer.find('input#email-address-reply-to-flag');
@@ -384,9 +388,10 @@
 
       // Add validation to field
       _eaw.EmailAddressValidation(_eaw.emailView, this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses, _eaw.emailIsRequired, SUGAR.language.get('app_strings', 'LBL_EMAIL_ADDRESS_BOOK_EMAIL_ADDR'));
-      SUGAR.EmailAddressWidget.prototype.totalEmailAddresses = _eaw.totalEmailAddresses += 1;
+      _eaw.totalEmailAddresses += 1;
       _eaw.numberEmailAddresses = _eaw.totalEmailAddresses;
       _eaw.addInProgress = false;
+
     }, //addEmailAddress
 
     EmailAddressValidation: function (ev, fn, r, stR) {
@@ -396,7 +401,6 @@
     },//EmailAddressValidation
 
     removeEmailAddress: function () {
-      var _eaw = SUGAR.EmailAddressWidget.prototype;
       var module = $(this).attr('module');
       var id = $(this).attr('id');
       var rowId = $(this).attr('data-row');
@@ -407,7 +411,7 @@
 
       var form = $(this).closest("form");
       var removedIndex = parseInt(index);
-      //If we are not deleting the last email address, we need to shift the numbering to fill the gap
+      // If we are not deleting the last email address, we need to shift the numbering to fill the gap
       if (_eaw.totalEmailAddresses != removedIndex) {
         for (var x = removedIndex + 1; x < _eaw.totalEmailAddresses; x++) {
           $('#' + module + id + 'emailAddress' + x).attr("name", module + id + "emailAddress" + (x - 1));
@@ -432,25 +436,22 @@
 
           var rButton = $('#' + module + id + 'removeButton' + x);
           rButton.attr("name", (x - 1));
-          rButton.attr("id", module + id + "removeButton" + (x - 1));
+          rButton.attr("data-row", module + id + "removeButton" + (x - 1));
           $('#' + module + id + 'emailAddressRow' + x).attr("id", module + id + 'emailAddressRow' + (x - 1));
         }
       }
 
-      _eaw.totalEmailAddresses--;
-
-
-      // CL Fix for 17651
-      if (_eaw.totalEmailAddresses == 0) {
-        return;
-      }
+      var c = 0;
+      $('.email-address-line-container').each(function() {
+          if(!$(this).hasClass('template')) c++;
+      });
+      _eaw.totalEmailAddresses = c;
 
       var primaryFound = ($('[name='+ module + id +'emailAddressPrimaryFlag]:checked').length != 0);
       if (primaryFound == false) {
-        $('#' + module + id + 'emailAddressPrimaryFlag0').prop('checked', true);
-        $('#' + module + id + 'emailAddressPrimaryFlag0').val(module + id + 'emailAddress0');
+        $('[name='+module + '0emailAddressPrimaryFlag]').first().prop('checked', true);
+        $('[name='+module + '0emailAddressPrimaryFlag]').first().val(this.id + 'emailAddress0');
       }
-
     },//removeEmailAddress
 
     toggleCheckbox: function (el) {

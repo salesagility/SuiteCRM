@@ -198,14 +198,15 @@ class SugarEmailAddress extends SugarBean {
             $GLOBALS['log']->fatal('SugarEmailAddress::save() Invalid arguments - Parent method SugarBean::save($checknotify) is not implemented. Please pass the correct arguments into SugarEmailAddress::save()');
         }
 
-        if(empty($this->addresses) || $in_workflow){
-            $this->populateAddresses($id, $module, $new_addrs,$primary);
+        if(empty($this->addresses) || $in_workflow) {
+            $this->populateAddresses($id, $module, $new_addrs, $primary);
         }
 
-        //find all email addresses..
-        $current_links = array();
-        // Need to correct this to handle the Employee/User split
+        // handle the Employee/User split
         $module = $this->getCorrectedModule($module);
+
+        // find all email addresses
+        $current_links = array();
         $q2="select *  from email_addr_bean_rel eabr WHERE eabr.bean_id = '".$this->db->quote($id)."' AND eabr.bean_module = '".$this->db->quote($module)."' and eabr.deleted=0";
         $r2 = $this->db->query($q2);
         while(($row2=$this->db->fetchByAssoc($r2)) != null ) {
