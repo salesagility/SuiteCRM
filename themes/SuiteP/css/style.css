@@ -4736,14 +4736,33 @@ ol, ul, dl {
     border-radius: 4px;
 }
 
-.email-address-input-group input[type=email] {
+.email-address-input-group input[type=email].form-control {
     border: none;
     line-height: 40px;
-    min-height: 48px
+    font-size: 14px;
+    display: inline-block;
+}
+
+.email-address-input-group .form-control:focus,
+.email-address-input-group .form-control {
+    box-shadow: none!important;
+    -webkit-box-shadow: none !important;
+    border-color: #66afe9;
+    outline: 0;
 }
 
 .email-address-add-line-container .email-address-add-button {
     padding: 6px 9px 6px 9px;
+}
+
+.email-address-add-line-container .email-address-add-button:focus {
+    background-color: #F08377;
+    border: 1px solid #F08377;
+}
+
+.email-address-add-line-container .email-address-add-button:hover {
+    background-color: #D66C60;
+    border: 1px solid #D66C60;
 }
 
 .email-address-input-group .email-address-remove-button {
@@ -4765,8 +4784,13 @@ ol, ul, dl {
     font-weight: 600;
 }
 
+
+.email-address-input-group .validation-message {
+    display: inline-block;
+}
+
 div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
-    visibility: hidden;
+    visibility: collapse;
 }
 
 @media (max-width: 768px) {
@@ -4777,7 +4801,6 @@ div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option l
     div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
         visibility: visible;
     }
-
 }
 
 @media (max-width: 1400px) {
@@ -4786,7 +4809,7 @@ div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option l
     }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
 
     .email-address-options-container {
         width: 50%;
@@ -4798,21 +4821,20 @@ div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option l
         border-radius: 4px;
     }
 
-    .email-address-input-group input[type=email] {
+    .email-address-input-group input[type=email].form-control {
         background: #d8f5ee;
         border: 1px solid #a5e8d6;
         border-radius: 4px;
         border-top-right-radius: 4px !important;
         border-bottom-right-radius: 4px !important;
-        line-height: 40px;
-        min-height: 48px;
-        height: 40px;
     }
 
     .email-address-input-group .email-address-remove-button {
         margin-left: 8px !important;
     }
 }
+
+
 
 #bigbutton {
     border-radius: 0;

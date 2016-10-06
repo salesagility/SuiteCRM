@@ -3771,6 +3771,60 @@ li.moremenu {
     padding:8px 10px 8px 10px;
 }
 
+.email-address-add-line-container {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.email-address-option,
+.email-address-lines-container,
+.email-address-input-container,
+.email-address-line-container {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.email-address-option label {
+    font-size: 10px;
+    font-weight: 600;
+    padding-left: 1%;
+    padding-right: 1%;
+    width: 96%;
+}
+
+.email-address-option {
+    width: 20%;
+}
+
+.email-address-input-group [type=email]{
+    margin-top: 7px;
+}
+
+.email-address-input-group {
+    height: 48px;
+    line-height: 48px;
+}
+
+
+.email-address-remove-button {
+    margin-top: 0;
+}
+
+div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
+    visibility: collapse;
+
+}
+
+@media (max-width: 640px) {
+    .email-address-options-container {
+        width: 100%;
+        margin: 16px 0 16px 0;
+    }
+    div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
+        visibility: visible;
+    }
+}
+
 /* Fix so that sidebar does not oversize on larger screens */
 
 @media (min-width:320px) and (max-width:978px){
