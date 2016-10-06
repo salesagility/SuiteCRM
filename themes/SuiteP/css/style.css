@@ -10266,12 +10266,12 @@ body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui
     #EditView table.dcQuickEdit tr td,
     #EditView table.dcQuickEdit tr td[align="right"] table,
     #EditView table.dcQuickEdit tr td[align="right"] table tr,
-    #EditView table.dcQuickEdit tr td[align="right"] table tr td.paginationWrapper.SuiteP {
+    #EditView table.dcQuickEdit tr td[align="right"] table tr td.paginationWrapper {
         display: block;
         float: left;
     }
 
-    #EditView table.dcQuickEdit tr td[align="right"] table tr td.paginationWrapper.SuiteP span.pagination {
+    #EditView table.dcQuickEdit tr td[align="right"] table tr td.paginationWrapper span.pagination {
         float: right;
     }
 
