@@ -1182,10 +1182,6 @@ slot, #lead_queries_Div td {
     margin-left: 1.5em;
 }
 
-#EditView .action_buttons {
-    margin-top: 16px;
-    margin-bottom: 16px;
-}
 
 #EditView > table {
     overflow: auto;
