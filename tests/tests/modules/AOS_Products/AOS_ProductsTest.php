@@ -28,7 +28,7 @@ class AOS_ProductsTest extends PHPUnit_Framework_TestCase
         $aosProducts->name = 'test';
         $aosProducts->category = 1;
         $aosProducts->product_image = 'test img';
-        $_POST['deleteAttachment'] = '1';
+        $_POST['remove_file_product_image'] = '1';
 
         $aosProducts->save();
 
