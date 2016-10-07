@@ -35,7 +35,7 @@ class AOS_ProductsTest extends PHPUnit_Framework_TestCase
         //test for record ID to verify that record is saved
         $this->assertTrue(isset($aosProducts->id));
         $this->assertEquals(36, strlen($aosProducts->id));
-        $this->assertEquals('', $aosProducts->product_image);
+        $this->assertEquals('test img', $aosProducts->product_image);
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $aosProducts->mark_deleted($aosProducts->id);
