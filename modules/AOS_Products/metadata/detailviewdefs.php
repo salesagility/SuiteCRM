@@ -118,7 +118,6 @@ array (
           array (
             'name' => 'product_image',
             'label' => 'LBL_PRODUCT_IMAGE',
-            'customCode' => '<img src="{$fields.product_image.value}"/>',
           ),
         ),
       ),
