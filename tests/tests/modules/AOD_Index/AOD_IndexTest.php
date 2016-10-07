@@ -152,16 +152,16 @@ class AOD_IndexTest extends PHPUnit_Framework_TestCase
     public function testgetIndexableModules()
     {
         $expected = array(
-            'Accounts' => 'Account',
-            'Calls' => 'Call',
-            'Cases' => 'aCase',
-            'Contacts' => 'Contact',
-            'DocumentRevisions' => 'DocumentRevision',
-            'Documents' => 'Document',
-            'Leads' => 'Lead',
-            'Meetings' => 'Meeting',
-            'Notes' => 'Note',
-            'Opportunities' => 'Opportunity',
+                'Accounts' => 'Account',
+                'Calls' => 'Call',
+                'Cases' => 'aCase',
+                'Contacts' => 'Contact',
+                'DocumentRevisions' => 'DocumentRevision',
+                'Documents' => 'Document',
+                'Leads' => 'Lead',
+                'Meetings' => 'Meeting',
+                'Notes' => 'Note',
+                'Opportunities' => 'Opportunity',
         );
 
         $aod_index = new AOD_Index();
