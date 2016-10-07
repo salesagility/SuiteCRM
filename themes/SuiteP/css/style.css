@@ -10108,17 +10108,26 @@ ul.dropdown-menu,
 
 /* popup dialog on home page */
 
-body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shadow {
+body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shadow#dlg_c {
     top: 100px !important;
-    left: 0 !important;
-    z-index: 1031 !important;
+    z-index: 103100 !important;
     width: 100%;
     padding: 20px;
 }
 
+
+body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shadow[id="container_pbss_date_start_trigger_c"],
+body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shadow[id="container_pbss_date_end_trigger_c"],
+body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shadow[id="container_mypbss_date_start_trigger_c"],
+body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shadow[id="container_mypbss_date_end_trigger_c"]{
+    z-index: 103200 !important;
+}
+
+
+
 body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel {
     top: initial;
-    left:initial;
+    left: -50%;
     border: none;
     box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
     max-width: 900px;
