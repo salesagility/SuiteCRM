@@ -1182,14 +1182,26 @@ slot, #lead_queries_Div td {
     margin-left: 1.5em;
 }
 
-#EditView .action_buttons {
-    margin-top: 16px;
-    margin-bottom: 16px;
-}
 
 #EditView > table {
     overflow: auto;
-    margin-bottom: 2px;
+    margin-bottom: 0px;
+}
+
+#EditView_tabs.yui-navset.yui-navset-top {
+    padding: 0px 5px 5px 5px;
+}
+
+#EditView_tabs.yui-navset.yui-navset-top .nav.nav-tabs {
+    margin-top: 15px;
+}
+
+#EditView_tabs .nav.nav-tabs {
+    margin: 0;
+}
+
+#EditView_tabs .tab-content {
+    margin: 0;
 }
 
 #EditView .edit tr td {
@@ -7065,6 +7077,11 @@ tr:hover img.info {
     padding: 0;
 }
 
+
+#EditView .paginationWrapper {
+    padding-top: 4px;
+}
+
 .paginationWrapper span, .paginationWrapper span {
     padding: 0;
     margin: 0;
@@ -10242,3 +10259,20 @@ body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui
     }
 }
 
+@media(max-width: 600px) {
+
+    #EditView table.dcQuickEdit,
+    #EditView table.dcQuickEdit tr,
+    #EditView table.dcQuickEdit tr td,
+    #EditView table.dcQuickEdit tr td[align="right"] table,
+    #EditView table.dcQuickEdit tr td[align="right"] table tr,
+    #EditView table.dcQuickEdit tr td[align="right"] table tr td.paginationWrapper {
+        display: block;
+        float: left;
+    }
+
+    #EditView table.dcQuickEdit tr td[align="right"] table tr td.paginationWrapper span.pagination {
+        float: right;
+    }
+
+}
