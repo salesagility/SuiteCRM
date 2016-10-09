@@ -6316,7 +6316,7 @@ TimeGrid.mixin({
 						) +
 					(event.title ?
 						'<div class="fc-title">' +
-							htmlEscape(event.title) +
+							event.title +
 						'</div>' :
 						''
 						) +
