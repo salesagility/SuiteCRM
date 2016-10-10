@@ -812,7 +812,7 @@ a#admin_options:hover, a#powered_by:hover {
 .menuItem:active, .menuItemHilite:active, .menuItem:link, .menuItemHilite:link,
 .menuItemX:visited, .menuItemHiliteX:visited, .menuItemX:hover, .menuItemHiliteX:hover,
 .menuItemX:active, .menuItemHiliteX:active, .menuItemX:link, .menuItemHiliteX:link {
-    line-height: 18px;
+    line-height: 24px;
     color: #000;
     text-decoration: none;
     width: 120px;
@@ -1787,6 +1787,41 @@ table#mass_update_table td select {
 #actionLinkBottom .sugar_action_button .subnav.ddopen a,
 #actionLinkBottom .sugar_action_button .subnav.ddopen a:hover {
     color: #ffffff;
+    display: block;
+    float: none;
+}
+
+#actionLinkTop .sugar_action_button .subnav.ddopen a:hover,
+#actionLinkBottom .sugar_action_button .subnav.ddopen a:hover,
+#actionLinkTop .sugar_action_button .subnav.ddopen li a.menuItemHilite,
+#actionLinkBottom .sugar_action_button .subnav.ddopen li a.menuItemHilite {
+    background-color: #677785 !important;
+    width: 100% !important;
+}
+
+#actionLinkTop .sugar_action_button .subnav.ddopen,
+#actionLinkBottom .sugar_action_button .subnav.ddopen,
+#actionLinkTop .sugar_action_button .subnav.ddopen li,
+#actionLinkBottom .sugar_action_button .subnav.ddopen li,
+#actionLinkTop .sugar_action_button .subnav.ddopen li a,
+#actionLinkBottom .sugar_action_button .subnav.ddopen li a {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+}
+
+/*
+#actionLinkTop .sugar_action_button .subnav.ddopen,
+#actionLinkBottom .sugar_action_button .subnav.ddopen {
+    margin-top: 0px !important;
+}
+*/
+
+#actionLinkTop .sugar_action_button .subnav li a,
+#actionLinkBottom .sugar_action_button .subnav li a,
+#actionLinkTop .sugar_action_button .subnav.ddopen li a,
+#actionLinkBottom .sugar_action_button .subnav.ddopen li a {
+    padding: 5px 15px !important;
 }
 
 #actionLinkTop li.sugar_action_button,
