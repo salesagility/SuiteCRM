@@ -239,6 +239,9 @@ li#usermenu a span.user_icon {
     margin-top: -10px;
 }
 
+li#usermenu a:hover span.user_icon {
+    background-position: 0 -99px;
+}
 
 div#pageContainer {
 }
