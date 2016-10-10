@@ -8137,7 +8137,7 @@ table.subpanel-table .pagination li.sugar_action_button > form > a,
 table.subpanel-table .pagination .sugar_action_button > form > a,
 table.subpanel-table .pagination .sugar_action_button > form > a {
     padding: 4px !important;
-    background-color: #94A6B5;
+    background-color: #94A6B5 !important;
     border: 1px solid transparent;
     border-radius: 4px;
     text-transform: uppercase;
