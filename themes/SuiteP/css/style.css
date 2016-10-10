@@ -3981,7 +3981,21 @@ ul.clickMenu form {
 ul.SugarActionMenuIESub li a:hover, ul.clickMenu.SugarActionMenu li a:hover, ul.clickMenu.SugarActionMenu li span.subhover:hover,
 ul#globalLinksSubnav li a:hover, ul#quickCreateULSubnav li a:hover,
 ul.clickMenu li ul.subnav li a:hover, ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover {
-    color: #F08377;
+    /* color: #F08377; */
+}
+
+
+ul.clickMenu.SugarActionMenu li.sugar_action_button ul.subnav.ddopen li form,
+ul.clickMenu.SugarActionMenu li.sugar_action_button ul.subnav.ddopen li form a {
+    width: 100%;
+}
+
+ul.clickMenu li ul.subnav li a:hover,
+ul.clickMenu li ul.subnav li input:hover,
+ul.clickMenu.subpanel.records li ul.subnav li a:hover,
+ul.clickMenu ul.subnav-sub li a:hover {
+    background-color: #677785 !important;
+    width: 100%;
 }
 
 ul.clickMenu > li, ul.SugarActionMenuIESub li {
@@ -3990,10 +4004,12 @@ ul.clickMenu > li, ul.SugarActionMenuIESub li {
     list-style: none;
     position: relative;
     cursor: pointer;
+    /*
     -webkit-transition: all 0.3s ease-out;
     -moz-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
     transition: all 0.3s ease-out;
+    */
     padding: 5px;
     color: #ffffff;
     border-radius: 3px;
@@ -8152,7 +8168,7 @@ table.subpanel-table ul.subpanel {
 }
 
 .sugar_action_button a:hover {
-    color: #F08377;
+    /* color: #F08377; */
 }
 
 table.subpanel-table .pagination li.sugar_action_button > form > a {
