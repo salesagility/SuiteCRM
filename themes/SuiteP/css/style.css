@@ -8149,6 +8149,15 @@ table.subpanel-table .pagination .sugar_action_button > form > a {
 }
 
 
+#actionLinkTop li.sugar_action_button:hover,
+#actionLinkBottom li.sugar_action_button:hover,
+table.subpanel-table li.sugar_action_button:hover,
+#selectLinkTop li.sugar_action_button:hover,
+#selectLinkBottom li.sugar_action_button:hover,
+table.subpanel-table .pagination .sugar_action_button:hover,
+table.subpanel-table .pagination li.sugar_action_button:hover > form > a,
+table.subpanel-table .pagination .sugar_action_button:hover > form > a,
+table.subpanel-table .pagination .sugar_action_button:hover > form > a,
 
 table.subpanel-table ul.subpanel a:hover,
 table.subpanel-table li.sugar_action_button:hover,
@@ -8158,7 +8167,7 @@ table.subpanel-table .pagination .sugar_action_button:hover > form > a,
 table.subpanel-table .pagination .sugar_action_button:hover > form > a,
 table.subpanel-table .pagination a,
 .subpanel-table ul.subnav {
-    background-color: #7b8a96;
+    background-color: #778591 !important;
 
 }
 
