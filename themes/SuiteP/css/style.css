@@ -4476,6 +4476,11 @@ a#delete_listview_top:hover {
     font-size: 14px;
 }
 
+a#delete_listview_bottom:hover {
+    color: #ffffff;
+    font-size: 14px;
+}
+
 #add_dashlets {
     display: none;
 }
