@@ -1665,7 +1665,7 @@ class InboundEmail extends SugarBean {
 		global $sugar_config;
 		global $current_user;
 
-		$showFolders = unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+		$showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
 		if(empty($showFolders)) {
 			$showFolders = array();
@@ -2034,7 +2034,7 @@ class InboundEmail extends SugarBean {
 		$criteria .= (!empty($dateTo)) ? ' BEFORE "'.$timedate->fromString($dateTo)->format('d-M-Y').'"' : "";
 		//$criteria .= (!empty($from)) ? ' FROM "'.$from.'"' : "";
 
-		$showFolders = unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+		$showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
 		$out = array();
 
@@ -5034,7 +5034,7 @@ eoq;
 		if(empty($user)) $user = $current_user;
 
 		$emailSettings = $current_user->getPreference('emailSettings', 'Emails');
-		$emailSettings = is_string($emailSettings) ? unserialize($emailSettings) : $emailSettings;
+		$emailSettings = is_string($emailSettings) ? sugar_unserialize($emailSettings) : $emailSettings;
 
 		$this->autoImport = (isset($emailSettings['autoImport']) && !empty($emailSettings['autoImport'])) ? true : false;
 		return $this->autoImport;
@@ -5975,7 +5975,7 @@ eoq;
 	    $usersList = $team->get_team_members(true);
 	    foreach($usersList as $userObject)
 	    {
-	        $previousSubscriptions = unserialize(base64_decode($userObject->getPreference('showFolders', 'Emails',$userObject)));
+	        $previousSubscriptions = sugar_unserialize(base64_decode($userObject->getPreference('showFolders', 'Emails',$userObject)));
 	        if($previousSubscriptions === FALSE)
 	            $previousSubscriptions = array();
 
