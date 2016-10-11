@@ -4040,7 +4040,6 @@ ul.clickMenu li a:hover {
 
 ul.clickMenu > li > span {
     margin-top: 9px;
-
     width: 16px;
     height: 16px;
     display: inline-block;
@@ -4051,6 +4050,11 @@ ul.clickMenu > li > span {
     background-size: 12px auto;
 
     cursor: pointer;
+}
+
+.inlineButtons ul.clickMenu > li > span {
+    margin-top: 13px;
+    height: 13px;
 }
 
 
@@ -4315,6 +4319,15 @@ ul.clickMenu li ul.subnav li a:hover .showLessArrow, ul.clickMenu li ul.subnav l
 
 #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowMore a img, #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowLess a img {
     opacity: .6;
+}
+
+ul.clickMenu.SugarActionMenu li.single a {
+    background-color: #94A6B5 !important;
+    padding: 0px 8px !important;
+}
+
+ul.clickMenu.SugarActionMenu li.single a:hover {
+    background-color: #778591 !important;
 }
 
 .view, table.view td {
