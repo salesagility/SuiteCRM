@@ -10309,3 +10309,70 @@ body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui
     }
 }
 
+
+/* pagination on list view subpanel-table */
+
+table.list.view.subpanel-table tr.pagination span.pageNumbers {
+    position: relative;
+    top: -7px;
+}
+
+table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"] img,
+table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"] img,
+table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"] img,
+table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"] img {
+    display: none;
+}
+
+table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"] {
+    width: 26px;
+    height: 26px;
+    margin: 0;
+    padding: 0;
+    background-image: none,url("../../../../themes/SuiteP/images/p_pag_tools.svg"),url("../../../../themes/SuiteP/images/p_pag_tools.png");
+    background-repeat: no-repeat;
+}
+table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"]:hover,
+table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"]:hover,
+table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"]:hover,
+table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"]:hover {
+    background-color: #808F9C;
+}
+
+table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"] {
+    background-position: 9px -29px;
+}
+
+table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"] {
+    background-position: 9px -50px;
+}
+
+table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"] {
+    background-position: 10px -132px;
+}
+
+table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"] {
+    background-position: 10px -112px;
+}
+
+table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"][disabled],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"][disabled],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"][disabled],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"][disabled] {
+    opacity: .5;
+    cursor: default;
+}
+
+table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"][disabled]:hover,
+table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"][disabled]:hover,
+table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"][disabled]:hover,
+table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"][disabled]:hover {
+    background-color: #94A6B5;
+}
