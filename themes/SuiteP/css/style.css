@@ -1810,13 +1810,6 @@ table#mass_update_table td select {
     border: 0 !important;
 }
 
-/*
-#actionLinkTop .sugar_action_button .subnav.ddopen,
-#actionLinkBottom .sugar_action_button .subnav.ddopen {
-    margin-top: 0px !important;
-}
-*/
-
 #actionLinkTop .sugar_action_button .subnav li a,
 #actionLinkBottom .sugar_action_button .subnav li a,
 #actionLinkTop .sugar_action_button .subnav.ddopen li a,
@@ -3976,15 +3969,6 @@ ul.clickMenu form {
     display: block;
 }
 
-#globalLinksModule ul.clickMenu.SugarActionMenu li a:hover,
-#globalLinksModule ul.clickMenu li:hover span,
-ul.SugarActionMenuIESub li a:hover, ul.clickMenu.SugarActionMenu li a:hover, ul.clickMenu.SugarActionMenu li span.subhover:hover,
-ul#globalLinksSubnav li a:hover, ul#quickCreateULSubnav li a:hover,
-ul.clickMenu li ul.subnav li a:hover, ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover {
-    /* color: #F08377; */
-}
-
-
 ul.clickMenu.SugarActionMenu li.sugar_action_button ul.subnav.ddopen li form,
 ul.clickMenu.SugarActionMenu li.sugar_action_button ul.subnav.ddopen li form a {
     width: 100%;
@@ -4005,12 +3989,6 @@ ul.clickMenu > li, ul.SugarActionMenuIESub li {
     list-style: none;
     position: relative;
     cursor: pointer;
-    /*
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
-    */
     padding: 5px;
     color: #ffffff;
     border-radius: 3px;
