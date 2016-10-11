@@ -258,7 +258,7 @@ $('#backtotop').click(function(event) {
 });
 
 // Tabs jQuery for Admin panel
-$(function() {j
+$(function() {
     var tabs = $( "#tabs" ).tabs();
     tabs.find( ".ui-tabs-nav" ).sortable({
         axis: "x",
