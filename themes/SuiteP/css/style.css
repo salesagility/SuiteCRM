@@ -1709,30 +1709,37 @@ table#mass_update_table td select {
 #selectLinkBottom,
 #actionLinkBottom {
     min-height: 16px;
-    line-height: 16px;
+    line-height: 0px;
     position: relative;
     padding: 1px;
 }
 #selectLinkTop input[type=checkbox],
 #selectLinkBottom input[type=checkbox],
 #actionLinkBottom input[type=checkbox] {
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 #actionLinkTop,
 #actionLinkBottom {
     font-size: 14px;
     min-height: 16px;
-    line-height: 16px;
+    line-height: 11px;
     position: relative;
+}
 
+#actionLinkTop {
+    top: -1px;
+}
+
+#actionLinkBottom {
+    left: -1px;
 }
 
 #detail_header_action_menu li.sugar_action_button a#edit_button,
 #userEditActions li.sugar_action_button  a,
 #actionLinkTop li.sugar_action_button  a,
-#actionLinkBottom li.sugar_action_button  a{
-    margin-top: 5px;
+#actionLinkBottom li.sugar_action_button  a {
+    margin: 5px 10px 5px 9px;
 }
 
 .buttonOn,
@@ -1740,14 +1747,16 @@ table#mass_update_table td select {
 #userEditActions li.sugar_action_button,
 #actionLinkTop li.sugar_action_button,
 #actionLinkBottom li.sugar_action_button {
-    min-width: 32px;
+    min-width: 32px;.sugar_action_button>form>a
     padding: 11px 10px 12px 10px;
 }
 
 #select_actions_disabled_top,
 #select_actions_disabled_bottom {
-    padding: 11px 10px 12px 10px;
-    text-transform: uppercase;
+    padding: 4px 10px 4px 10px;
+    top: -1px;
+    position: relative;
+    /* text-transform: uppercase; */
 }
 
 #detail_header_action_menu > .sugar_action_button > ul.subnav,
@@ -3980,6 +3989,10 @@ ul.clickMenu form {
     display: block;
 }
 
+ul.clickMenu li.sugar_action_button > form:first-child {
+    padding: 0px 15px;
+}
+
 ul.clickMenu.SugarActionMenu li.sugar_action_button ul.subnav.ddopen li form,
 ul.clickMenu.SugarActionMenu li.sugar_action_button ul.subnav.ddopen li form a {
     width: 100%;
@@ -4027,7 +4040,7 @@ ul.clickMenu li a:hover {
 }
 
 ul.clickMenu > li > span {
-    margin-top: 12px;
+    margin-top: 9px;
 
     width: 16px;
     height: 16px;
@@ -4036,7 +4049,7 @@ ul.clickMenu > li > span {
     background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
     background-repeat: no-repeat;
     background-position: 0% 0%;
-    background-size: 16px auto;
+    background-size: 12px auto;
 
     cursor: pointer;
 }
@@ -4204,13 +4217,14 @@ ul#detailViewActions.clickMenu {
     float: left;
     background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
     background-repeat: no-repeat;
-    background-size: 16px auto;
+    background-size: 12px auto;
     background-position: 9px 7px;
     opacity: .4;
 }
 
 .selectActionsDisabled span.ab {
     padding-left: 5px;
+    margin: -1px 1px 0px 1px;
 }
 
 .selectActionsDisabled a, #selectActionsDisabled a:hover {
@@ -4222,6 +4236,8 @@ ul#detailViewActions.clickMenu {
     padding: 1px !important;
     font-weight: normal;
     font-size: 14px;
+    top: -1px;
+    position: relative;
 }
 
 .quickcreate {
@@ -8166,11 +8182,11 @@ table.subpanel-table ul.subpanel {
     border: none;
 }
 
-
+/*
 .sugar_action_button {
     min-width: 132px;
 }
-
+*/
 
 .sugar_action_button a {
     color: #fff;
@@ -8192,11 +8208,13 @@ table.subpanel-table .pagination .sugar_action_button,
 table.subpanel-table .pagination li.sugar_action_button > form > a,
 table.subpanel-table .pagination .sugar_action_button > form > a,
 table.subpanel-table .pagination .sugar_action_button > form > a {
-    padding: 4px !important;
+    padding: 0px !important;
     background-color: #94A6B5 !important;
     border: 1px solid transparent;
     border-radius: 4px;
-    text-transform: uppercase;
+    /* top: -1px; */
+    /* text-transform: uppercase; */
+    padding-right: 4px !important;
 }
 
 /*calendar popup fix*/
@@ -8224,7 +8242,6 @@ table.subpanel-table .pagination .sugar_action_button:hover > form > a,
 table.subpanel-table .pagination a,
 .subpanel-table ul.subnav {
     background-color: #778591 !important;
-
 }
 
 table.subpanel-table .pagination a {
@@ -8234,8 +8251,9 @@ table.subpanel-table .pagination a {
 
 table.subpanel-table .pagination ul.clickMenu li span {
     float: right;
-    margin-top: 12px;
-    margin-left: 12px;
+    margin-top: 9px;
+    margin-left: 0px;
+    margin-right: 5px;
 }
 
 
@@ -8245,7 +8263,7 @@ ul.SugarActionMenuIESub li a, ul.clickMenu li a, .list tr.pagination td.buttons 
 
 div.list-view-rounded-corners > table > thead > th,
 .pagination-bottom {
-    border: 2px solid transparent !important;
+    border: 1px solid transparent !important;
     overflow: hidden;
 }
 
