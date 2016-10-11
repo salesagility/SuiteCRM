@@ -1756,7 +1756,6 @@ table#mass_update_table td select {
     padding: 4px 10px 4px 10px;
     top: -1px;
     position: relative;
-    /* text-transform: uppercase; */
 }
 
 #detail_header_action_menu > .sugar_action_button > ul.subnav,
@@ -8182,12 +8181,6 @@ table.subpanel-table ul.subpanel {
     border: none;
 }
 
-/*
-.sugar_action_button {
-    min-width: 132px;
-}
-*/
-
 .sugar_action_button a {
     color: #fff;
 }
@@ -8212,8 +8205,6 @@ table.subpanel-table .pagination .sugar_action_button > form > a {
     background-color: #94A6B5 !important;
     border: 1px solid transparent;
     border-radius: 4px;
-    /* top: -1px; */
-    /* text-transform: uppercase; */
     padding-right: 4px !important;
 }
 
