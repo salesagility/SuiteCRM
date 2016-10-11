@@ -3996,6 +3996,7 @@ ul.clickMenu.subpanel.records li ul.subnav li a:hover,
 ul.clickMenu ul.subnav-sub li a:hover {
     background-color: #677785 !important;
     width: 100%;
+    text-align: left;
 }
 
 ul.clickMenu > li, ul.SugarActionMenuIESub li {
