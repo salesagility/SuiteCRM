@@ -3018,6 +3018,7 @@ div.yui-layout-hd h2 {
 }
 
 .yui-layout .yui-layout-wrap {
+    top: 50px;
     height: 100%;
     width: 100%;
     position: absolute;
@@ -3177,10 +3178,6 @@ div.yui-layout-hd h2 {
     text-align: left;
 }
 
-.yui-layout .yui-layout-unit div.yui-layout-bd-noft {
-    /* border-bottom: 1px solid #808080;*/
-}
-
 .yui-layout .yui-layout-unit div.yui-layout-bd-nohd {
     border-top: 1px solid #808080;
 }
@@ -3202,7 +3199,6 @@ div.yui-layout-hd h2 {
 
 .yui-layout-unit .yui-resize-handle {
     background-color: transparent;
-    top:-10% !important;
 }
 
 .yui-layout-unit .yui-resize-handle-r {
@@ -3660,46 +3656,36 @@ a.yuimenuitemlabel:hover {
     z-index: 99999 !important;
 }
 
-.yui-pg-first, .yui-pg-previous, .yui-pg-next, .yui-pg-last, .yui-pg-current, .yui-pg-pages, .yui-pg-page
+.yui-pg-first, .yui-pg-previous, .yui-pg-next, .yui-pg-last, .yui-pg-current, .yui-pg-page
 {
-    display: inline-block;
     font-family: arial, helvetica, clean, sans-serif;
-    padding: 3px 6px;
+    padding: 0px 0px;
     zoom: 1;
 }
 
 .yui-pg-pages {
-    padding: 0;
+    font-family: arial, helvetica, clean, sans-serif;
+    zoom: 1;
 }
 
 .yui-pg-current {
-    padding: 3px 0;
-}
 
-/* a.yui-pg-first:link, a.yui-pg-first:visited, a.yui-pg-first:active, a.yui-pg-first:hover, a.yui-pg-previous:link, a.yui-pg-previous:visited, a.yui-pg-previous:active, a.yui-pg-previous:hover, a.yui-pg-next:link, a.yui-pg-next:visited, a.yui-pg-next:active, a.yui-pg-next:hover, a.yui-pg-last:link, a.yui-pg-last:visited, a.yui-pg-last:active, a.yui-pg-last:hover, a.yui-pg-page:link, a.yui-pg-page:visited, a.yui-pg-page:active, a.yui-pg-page:hover
-    {
-    color: #06c;
-    text-decoration: underline;
-    outline: 0;
 }
-
- span.yui-pg-first, span.yui-pg-previous, span.yui-pg-next, span.yui-pg-last
-    {
-    color: #a6a6a6;
-}*/
 
 .yui-pg-page {
-    background-color: #fff;
-    border: 1px solid #CBCBCB;
-    padding: 2px 6px;
+    background-color: rgb(246, 246, 246);
+    padding: 0px 0px;
     text-decoration: none;
 }
 
 .yui-pg-current-page {
-    background-color: transparent;
+    background-color: #c8cec4;
     border: none;
     font-weight: bold;
-    padding: 3px 6px;
+    padding-top: 3px;
+    padding-right: 6px;
+    padding-bottom: 3px;
+    padding-left: 6px;
 }
 
 .yui-pg-page {
@@ -4077,9 +4063,6 @@ a.yuimenuitemlabel:hover {
     font-style: normal;
     padding: 1px;
     zoom: 1;
-}
-
-.yui-resize .yui-resize-handle {
 }
 
 .yui-resize .yui-resize-handle-active {
@@ -6100,12 +6083,11 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
 
     margin:10px 0 10px 0;
 }
-
 .bodywrapper div {
 
     #padding:0 10px 0 10px;
 }
 
 .yui-layout .yui-layout-clip {
-    padding:10px 000;
+    padding:10px;
 }
