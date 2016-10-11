@@ -1764,6 +1764,7 @@ table#mass_update_table td select {
 #selectLinkBottom > .sugar_action_button > ul.subnav {
     left: 0;
     right: auto;
+    background-color: #7B8A96;
 }
 
 #detail_header_action_menu > .sugar_action_button > ul.subnav,
@@ -1790,11 +1791,12 @@ table#mass_update_table td select {
 #actionLinkTop .menuItem,
 #actionLinkBottom .menuItem {
     background-color: #7b8a96;
-    width: auto;
+    width: 100%;
     line-height: 24px;
     color: #ffffff;
     padding: 0 5px 0 7px;
 }
+
 
 #actionLinkTop .menuItem,
 #actionLinkBottom .menuItem {
@@ -1838,13 +1840,35 @@ table#mass_update_table td select {
 
 #actionLinkTop li.sugar_action_button,
 #actionLinkBottom li.sugar_action_button,
-#selectLinkTop > .sugar_action_button > ul.subnav a:hover,
-#selectLinkBottom > .sugar_action_button > ul.subnav a:hover,
 #actionLinkBottom > .sugar_action_button > ul.subnav a:hover,
 #actionLinkTop .menuItemHilite,
 #actionLinkBottom .menuItemHilite {
     background-color: #7b8a96 !important;
 
+}
+
+#selectLinkTop>.sugar_action_button>ul.subnav a:hover,
+#selectLinkBottom>.sugar_action_button>ul.subnav a:hover {
+    background-color: #677785 !important;
+}
+
+
+#selectLinkTop>.sugar_action_button>ul.subnav
+#selectLinkBottom>.sugar_action_button>ul.subnav,
+#selectLinkTop>.sugar_action_button>ul.subnav li,
+#selectLinkBottom>.sugar_action_button>ul.subnav li {
+    padding: 0;
+}
+
+#selectLinkTop>.sugar_action_button>ul.subnav,
+#selectLinkBottom>.sugar_action_button>ul.subnav {
+    padding: 0 !important;
+    width: auto;
+}
+
+#actionLinkTop>.sugar_action_button>ul.subnav,
+#actionLinkBottom>.sugar_action_button>ul.subnav {
+    width: auto;
 }
 
 #detail_header_action_menu li.sugar_action_button,
@@ -1867,6 +1891,7 @@ table#mass_update_table td select {
 #selectLinkTop > .sugar_action_button > ul.subnav a,
 #actionLinkBottom > .sugar_action_button > ul.subnav a {
     color: #ffffff;
+    width: 100%;
 }
 
 #map_listview_top, #export_listview_top {
@@ -4055,6 +4080,12 @@ ul.clickMenu > li > span {
 .inlineButtons ul.clickMenu > li > span {
     margin-top: 13px;
     height: 13px;
+}
+
+.inlineButtons ul.clickMenu.SugarActionMenu li.sugar_action_button ul.subnav.ddopen li a {
+    width: 100%;
+    text-align: left;
+    padding: 4px;
 }
 
 
