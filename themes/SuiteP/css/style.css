@@ -8176,10 +8176,6 @@ table.subpanel-table ul.subpanel {
     color: #fff;
 }
 
-.sugar_action_button a:hover {
-    /* color: #F08377; */
-}
-
 table.subpanel-table .pagination li.sugar_action_button > form > a {
     width: 100%;
 }
