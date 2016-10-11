@@ -10398,3 +10398,15 @@ table.list.view.subpanel-table tr.pagination button.button[name="listViewNextBut
 table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"][disabled]:hover {
     background-color: #94A6B5;
 }
+
+
+/* top create button and dropdown menu */
+
+#quickcreatetop ul.dropdown-menu li a {
+    opacity: 0.6;
+}
+
+#quickcreatetop ul.dropdown-menu li a:hover {
+    opacity: 1;
+}
+
