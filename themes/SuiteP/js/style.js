@@ -532,7 +532,7 @@ $(function () {
             $('.sugar_action_button span').click(function (e) {
                 var hsum = 0;
                 if(!$(this).closest('.sugar_action_button').find('.subnav').hasClass('upper')) {
-                    hsum+= 30;
+                    hsum+= 22;
                 }
                 else {
                     $(this).closest('.sugar_action_button').find('.subnav li').each(function (e) {
