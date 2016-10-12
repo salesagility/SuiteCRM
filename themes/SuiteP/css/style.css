@@ -1368,7 +1368,7 @@ td.submitButtons input {
 
 .list tr#pagination td table.paginationTable td.paginationActionButtons {
     background-color: #BFCAD3;
-    padding: 5px 0px 5px 5px !important;
+    padding: 5px 0px 5px 0px !important;
 }
 
 .list tr#pagination td table.paginationTable td.paginationChangeButtons {
@@ -2789,8 +2789,8 @@ table.dateTime {
 .pageNumbers {
     color: white;
     font-weight: bold;
-    margin: 0 8px 0 8px;
-    padding: 0 8px 0 8px;
+    margin: 0 0px 0 0px;
+    padding: 0 8px 0 0px;
     position: static;
     color: #ffffff;
 }
