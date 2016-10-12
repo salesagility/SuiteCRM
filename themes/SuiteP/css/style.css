@@ -486,18 +486,18 @@ div#pageContainer td.dashletcontainer div.hd .icon {
 #actionMenuSidebar li a .actionmenulink {
     width: 100%;
     min-height: 48px;
-    padding: 16px 0 16px 16px;
+    padding: 16px 8px 16px 0px;
     line-height: 24px;
 }
 
 .side-bar-action-icon {
-    width: 48px;
+    width: 40px; /* effects link text position */
     height: 48px;
     background-repeat: no-repeat;
     background-position: 0px 8px;
     background-size: 32px;
     vertical-align: middle;
-    margin-left: 16px;
+    margin-left: 12px;
     float: left;
 }
 
@@ -9398,15 +9398,15 @@ table tr#delegates_search {
 }
 @media (min-width: 1131px) {
     .sidebar {
-        width: 16%;
+        width: 20%;
     }
 
     #bootstrap-container.col-md-offset-2 {
-        margin-left: 16%;
+        margin-left: 20%;
     }
 
     .button-toggle-expanded {
-        left: 16%;
+        left: 20%;
     }
 
     .button-toggle-collapsed {
@@ -9414,11 +9414,11 @@ table tr#delegates_search {
     }
 
     .col-md-10 {
-        width: 84%;
+        width: 80%;
     }
 
     footer.expandedSidebar {
-        width: 84%;
+        width: 80%;
     }
     footer.collapsedSidebar {
         width: 100%;
@@ -9437,15 +9437,15 @@ table tr#delegates_search {
 
 @media (min-width: 1230px) {
     .sidebar {
-        width: 15%;
+        width: 18%;
     }
 
     #bootstrap-container.col-md-offset-2 {
-        margin-left: 15%;
+        margin-left: 18%;
     }
 
     .button-toggle-expanded {
-        left: 15%;
+        left: 18%;
     }
 
     .button-toggle-collapsed {
@@ -9453,25 +9453,25 @@ table tr#delegates_search {
     }
 
     .col-md-10 {
-        width: 85%;
+        width: 82%;
     }
 
     footer.expandedSidebar {
-        width: 85%;
+        width: 82%;
     }
 }
 
-@media (min-width: 1360px) {
+@media (min-width: 1300px) {
     .sidebar {
-        width: 14%;
+        width: 17%;
     }
 
     #bootstrap-container.col-md-offset-2 {
-        margin-left: 14%;
+        margin-left: 17%;
     }
 
     .button-toggle-expanded {
-        left: 14%;
+        left: 17%;
     }
 
     .button-toggle-collapsed {
@@ -9479,15 +9479,67 @@ table tr#delegates_search {
     }
 
     .col-md-10 {
-        width: 86%;
+        width: 83%;
     }
 
     footer.expandedSidebar {
-        width: 86%;
+        width: 83%;
     }
 }
 
-@media (min-width: 1460px) {
+@media (min-width: 1400px) {
+    .sidebar {
+        width: 15.8%;
+    }
+
+    #bootstrap-container.col-md-offset-2 {
+        margin-left: 15.8%;
+    }
+
+    .button-toggle-expanded {
+        left: 15.8%;
+    }
+
+    .button-toggle-collapsed {
+        left: 0%;
+    }
+
+    .col-md-10 {
+        width: 84.2%;
+    }
+
+    footer.expandedSidebar {
+        width: 84.2%;
+    }
+}
+
+@media (min-width: 1500px) {
+    .sidebar {
+        width: 14.8%;
+    }
+
+    #bootstrap-container.col-md-offset-2 {
+        margin-left: 14.8%;
+    }
+
+    .button-toggle-expanded {
+        left: 14.8%;
+    }
+
+    .button-toggle-collapsed {
+        left: 0%;
+    }
+
+    .col-md-10 {
+        width: 85.2%;
+    }
+
+    footer.expandedSidebar {
+        width: 85.2%;
+    }
+}
+
+@media (min-width: 1600px) {
     .sidebar {
         width: 13.8%;
     }
@@ -9513,44 +9565,17 @@ table tr#delegates_search {
     }
 }
 
-@media (min-width: 1600px) {
-    .sidebar {
-        width: 12%;
-    }
-
-    #bootstrap-container.col-md-offset-2 {
-        margin-left: 12.;
-    }
-
-    .button-toggle-expanded {
-        left: 12%;
-    }
-
-    .button-toggle-collapsed {
-        left: 0%;
-    }
-
-    .col-md-10 {
-        width: 88%;
-    }
-
-    footer.expandedSidebar {
-        width: 88%;
-        width: 88%;
-    }
-}
-
 @media (min-width: 1800px) {
     .sidebar {
-        width: 11%;
+        width: 12.8%;
     }
 
     #bootstrap-container.col-md-offset-2 {
-        margin-left: 11%;
+        margin-left: 12.8%;
     }
 
     .button-toggle-expanded {
-        left: 11%;
+        left: 12.8%;
     }
 
     .button-toggle-collapsed {
@@ -9558,15 +9583,69 @@ table tr#delegates_search {
     }
 
     .col-md-10 {
-        width: 89%;
+        width: 87.2%;
     }
 
     footer.expandedSidebar {
-        width: 89%;
+        width: 87.2%;
     }
 }
 
 @media (min-width: 1900px) {
+    .sidebar {
+        width: 11.8%;
+    }
+
+    #bootstrap-container.col-md-offset-2 {
+        margin-left: 11.8%;
+    }
+
+    .button-toggle-expanded {
+        left: 11.8%;
+    }
+
+    .button-toggle-collapsed {
+        left: 0%;
+    }
+
+    .col-md-10 {
+        width: 88.2%;
+    }
+
+    footer.expandedSidebar {
+        width: 88.2%;
+    }
+
+}
+
+@media (min-width: 2100px) {
+    .sidebar {
+        width: 10.8%;
+    }
+
+    #bootstrap-container.col-md-offset-2 {
+        margin-left: 10.8%;
+    }
+
+    .button-toggle-expanded {
+        left: 10.8%;
+    }
+
+    .button-toggle-collapsed {
+        left: 0%;
+    }
+
+    .col-md-10 {
+        width: 89.2%;
+    }
+
+    footer.expandedSidebar {
+        width: 89.2%;
+    }
+
+}
+
+@media (min-width: 2300px) {
     .sidebar {
         width: 10%;
     }
@@ -9589,60 +9668,6 @@ table tr#delegates_search {
 
     footer.expandedSidebar {
         width: 90%;
-    }
-
-}
-
-@media (min-width: 2100px) {
-    .sidebar {
-        width: 9%;
-    }
-
-    #bootstrap-container.col-md-offset-2 {
-        margin-left: 9%;
-    }
-
-    .button-toggle-expanded {
-        left: 9%;
-    }
-
-    .button-toggle-collapsed {
-        left: 0%;
-    }
-
-    .col-md-10 {
-        width: 91%;
-    }
-
-    footer.expandedSidebar {
-        width: 91%;
-    }
-
-}
-
-@media (min-width: 2300px) {
-    .sidebar {
-        width: 8%;
-    }
-
-    #bootstrap-container.col-md-offset-2 {
-        margin-left: 8%;
-    }
-
-    .button-toggle-expanded {
-        left: 8%;
-    }
-
-    .button-toggle-collapsed {
-        left: 0%;
-    }
-
-    .col-md-10 {
-        width: 92%;
-    }
-
-    footer.expandedSidebar {
-        width: 92%;
     }
 }
 
