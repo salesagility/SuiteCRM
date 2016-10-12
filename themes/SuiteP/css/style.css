@@ -8544,7 +8544,7 @@ div.list-view-rounded-corners > table th:last-of-type {
         width: 42px;
         background-image: none, url("../../../../themes/SuiteP/images/p_user_icon.svg"), url("../../../../themes/SuiteP/images/p_user_icon.png");
         background-repeat: no-repeat;
-        background-position: 0 0;
+        background-position: 0 0 !important;
         margin-top: 14px;
         border: none;
         margin-left: 0px;
