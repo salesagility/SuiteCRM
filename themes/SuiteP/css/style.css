@@ -8220,6 +8220,7 @@ table.subpanel-table th a:link {
 table.subpanel-table ul.clickMenu > li, ul.SugarActionMenuIESub li {
     padding: 0;
     line-height: 24px;
+    white-space: nowrap;
 }
 
 table.subpanel-table ul.subpanel {
