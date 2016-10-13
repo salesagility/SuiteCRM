@@ -177,10 +177,12 @@ Alerts.prototype.updateManager = function () {
     var alertCount = $('#alerts').find('div.module-alert').size();
     $('.alert_count').html(alertCount);
     if (alertCount > 0) {
+      $('div#alerts').addClass('has-alerts');
       $('.alertsButton').removeClass('btn-').addClass('btn-danger');
       $('.alert_count').removeClass('hidden');
     }
     else {
+      $('div#alerts').removeClass('has-alerts');
       $('.alertsButton').removeClass('btn-danger').addClass('btn-success');
       $('.alert_count').addClass('hidden');
     }

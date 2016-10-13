@@ -6608,7 +6608,7 @@ span#quickcreateplus {
     font-size: 1.1em;
 }
 
-#quickcreatetop button, #desktop_notifications button {
+#quickcreatetop > button, #desktop_notifications > button {
     margin: 10px 0 0 0;
 }
 
@@ -7286,7 +7286,7 @@ h3 span {
     color: red !important;
 }
 
-#desktop_notifications button {
+#desktop_notifications button.alertsButton {
     background-color: transparent;
     border: none;
     width: 44px;
@@ -7309,6 +7309,33 @@ h3 span {
     font-size: 10px;
 }
 
+#desktop_notifications .alert {
+    margin-bottom: 8px !important;
+}
+
+#desktop_notifications .close,
+#desktop_notifications .alert {
+    font-weight: normal;
+    line-height: 1;
+    color: #000;
+    text-shadow: none;
+    filter: none;
+    opacity: 1;
+}
+
+#desktop_notifications .close {
+    position: relative;
+    top: 0px;
+    right: 0px;
+    color: inherit;
+}
+
+#desktop_notifications .close span {
+    color: #FFFFFF;
+    margin-right: 0px !important;
+    margin-bottom: 0px !important;
+}
+
 #desktop_notifications div.dropdown-menu {
     background-color: #F08377;
     color: #fff;
@@ -7316,7 +7343,53 @@ h3 span {
     padding: 8px;
     font-size: 12px;
     border-radius: 0px;
-    text-align: center;
+}
+
+#desktop_notifications div.has-alerts {
+    background-color: #5D5670;
+    border-radius: 4px;
+}
+
+#desktop_notifications div.has-alerts .alert-info {
+    color: #FFFFFF;
+    background-color: inherit;
+    /*border-top: none;*/
+    /*border-right: none;*/
+    /*border-bottom: 1px solid #757083;*/
+    border: 1px solid #757083;
+    /*border-left: none;*/
+    border-radius: 4px;
+    padding: 0;
+}
+
+#desktop_notifications div.has-alerts .text-info {
+    color: #FFFFFF;
+}
+
+#desktop_notifications div.has-alerts p {
+    font-size: 12px;
+    line-height: 20px;
+    background-color: #F5F5F5;
+    color: #534D64;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    min-height: 20px;
+}
+
+#desktop_notifications div.has-alerts h4,
+#desktop_notifications div.has-alerts p {
+    padding: 4px 15px 4px 15px;
+    margin: 0 !important;
+}
+
+#desktop_notifications div.has-alerts h4 {
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #B29EB5;
+    line-height: 20px;
+    /*border-bottom: 1px solid #757083;*/
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
 }
 
 .mobile-bar ul.dropdown-menu.user-dropdown{

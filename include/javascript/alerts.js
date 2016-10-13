@@ -58,8 +58,8 @@ return params;};var params=getQueryParams(document.location.search);if(params.en
 return false;}
 Alerts.prototype.updateManager=function(){var url='index.php?module=Alerts&action=get&to_pdf=1';$.ajax(url).done(function(data){if(data=='lost session'){Alerts.prototype.redirectToLogin();return false;}
 for(replaceMessage in Alerts.prototype.replaceMessages){data=data.replace(Alerts.prototype.replaceMessages[replaceMessage].search,Alerts.prototype.replaceMessages[replaceMessage].replace);}
-$('div#alerts').html(data);$('div.alerts').css('width','200px');var alertCount=$('#alerts').find('div.module-alert').size();$('.alert_count').html(alertCount);if(alertCount>0){$('.alertsButton').removeClass('btn-').addClass('btn-danger');$('.alert_count').removeClass('hidden');}
-else{$('.alertsButton').removeClass('btn-danger').addClass('btn-success');$('.alert_count').addClass('hidden');}}).fail(function(){}).always(function(){});}
+$('div#alerts').html(data);$('div.alerts').css('width','200px');var alertCount=$('#alerts').find('div.module-alert').size();$('.alert_count').html(alertCount);if(alertCount>0){$('div#alerts').addClass('has-alerts');$('.alertsButton').removeClass('btn-').addClass('btn-danger');$('.alert_count').removeClass('hidden');}
+else{$('div#alerts').removeClass('has-alerts');$('.alertsButton').removeClass('btn-danger').addClass('btn-success');$('.alert_count').addClass('hidden');}}).fail(function(){}).always(function(){});}
 Alerts.prototype.markAsRead=function(id){var url='index.php?module=Alerts&action=markAsRead&record='+id+'&to_pdf=1';$.ajax(url).done(function(data){Alerts.prototype.updateManager();}).fail(function(){}).always(function(){});}
 function AlertObj(){this.title='Alert';this.options={body:' ',url_redirect:null,target_module:null,type:'info'};}
 $(document).ready(function(){Alerts.prototype.replaceMessages=[{search:SUGAR.language.translate("app","MSG_JS_ALERT_MTG_REMINDER_CALL_MSG"),replace:""},{search:SUGAR.language.translate("app","MSG_JS_ALERT_MTG_REMINDER_MEETING_MSG"),replace:""},];var updateMissed=function(){Alerts.prototype.updateManager();setInterval(updateMissed,60000);}
