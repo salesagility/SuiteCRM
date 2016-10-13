@@ -178,9 +178,11 @@ Alerts.prototype.updateManager = function () {
     $('.alert_count').html(alertCount);
     if (alertCount > 0) {
       $('.alertsButton').removeClass('btn-').addClass('btn-danger');
+      $('.alert_count').removeClass('hidden');
     }
     else {
       $('.alertsButton').removeClass('btn-danger').addClass('btn-success');
+      $('.alert_count').addClass('hidden');
     }
   }).fail(function () {
   }).always(function () {
@@ -205,7 +207,7 @@ $(document).ready(function () {
   ];
   var updateMissed = function () {
     Alerts.prototype.updateManager();
-    setTimeout(updateMissed, 60000);
+    setInterval(updateMissed, 60000);
   }
   setTimeout(updateMissed, 2000);
 });
