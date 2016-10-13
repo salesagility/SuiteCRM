@@ -4725,6 +4725,10 @@ ol, ul, dl {
 .form-control {
     box-shadow: none;
 }
+#email1_span i.error {
+    background: inherit;
+    color: #534D64;
+}
 
 .email-address-line-container {
     margin-bottom: 8px;
