@@ -7347,7 +7347,7 @@ h3 span {
 
 #desktop_notifications div.has-alerts {
     background-color: #5D5670;
-    border-radius: 4px;
+    border-radius: 2px;
 }
 
 #desktop_notifications div.has-alerts .alert-info {
@@ -7358,7 +7358,7 @@ h3 span {
     /*border-bottom: 1px solid #757083;*/
     border: 1px solid #757083;
     /*border-left: none;*/
-    border-radius: 4px;
+    border-radius: 2px;
     padding: 0;
 }
 
@@ -7385,11 +7385,23 @@ h3 span {
 #desktop_notifications div.has-alerts h4 {
     font-size: 14px;
     font-weight: bold;
-    background-color: #B29EB5;
+    background-color: #5D5670;
     line-height: 20px;
     /*border-bottom: 1px solid #757083;*/
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
+}
+
+
+@media (max-width: 600px) {
+    #desktop_notifications div.has-alerts {
+        background-color: #A2B2BF;
+    }
+
+    #desktop_notifications div.has-alerts h4 {
+        background-color: #778591;
+        line-height: 20px;
+    }
 }
 
 .mobile-bar ul.dropdown-menu.user-dropdown{
