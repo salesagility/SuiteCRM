@@ -4919,7 +4919,7 @@ ul#quick-nav ul li:hover {
     display: none;
 }
 
-#alert-nav {
+#desktop_notifications {
     position: absolute;
     top: 8px;
     right: 320px;
@@ -4928,28 +4928,6 @@ ul#quick-nav ul li:hover {
     z-index:55;
     padding:0;
     margin-bottom:2px;
-}
-
-#alert-nav #alerts {
-    border:1px solid #999999;
-    list-style: none;
-    margin-top:5px;
-    background:#333333;
-    padding:10px;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    -moz-box-shadow: 0 0 5px #888;
-    -webkit-box-shadow: 0 0 5px#888;
-    box-shadow: 0 0 5px #888;
-    right:5px;
-    width: 185px;
-    color: #cccccc;
-}
-
-#alert-nav #alerts.alert {
-    padding:0 5px 10px 5px;
-    color: #cccccc;
 }
 
 .alert {
@@ -6148,4 +6126,108 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 #lineItems .service_delete_line {
     margin: 0 5px 0 0;
+}
+
+
+#desktop_notifications > button  {
+    background: none;
+    border: none;
+}
+
+#desktop_notifications .alert {
+    margin-bottom: 8px !important;
+}
+
+#desktop_notifications button:focus,
+#desktop_notifications button:link,
+#desktop_notifications button:hover,
+#desktop_notifications button:active {
+    background: inherit;
+}
+
+#desktop_notifications.has-alerts .badge {
+    color: #C9302C;
+    background-color: #F6FAFD;
+}
+
+#desktop_notifications .close,
+#desktop_notifications .alert {
+    font-weight: normal;
+    line-height: 1;
+    color: #000;
+    text-shadow: none;
+    filter: none;
+    opacity: 1;
+}
+
+#desktop_notifications .close {
+    position: relative;
+    top: 0px;
+    right: 0px;
+    color: inherit;
+    margin-top: 0;
+    margin-right: 4px;
+}
+
+#desktop_notifications button.close,
+#desktop_notifications .close:hover {
+    background: none;
+    border: none;
+}
+
+#desktop_notifications .close span {
+    color: #FFFFFF;
+    margin-right: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+
+#desktop_notifications button .badge {
+    color: #1C1C1C;
+    background-color: #F6FAFD;
+}
+#desktop_notifications button.close {
+    background: none;
+}
+
+#desktop_notifications div.dropdown-menu {
+    margin: 0;
+    padding: 8px;
+    font-size: 12px;
+    border-radius: 0px;
+}
+
+#desktop_notifications div.has-alerts .alert-info {
+    background-color: inherit;
+    /*border-top: none;*/
+    /*border-right: none;*/
+    /*border-bottom: 1px solid #757083;*/
+    border: 1px solid #dddddd;
+    /*border-left: none;*/
+    border-radius: 0px;
+    padding: 0;
+}
+
+#desktop_notifications div.has-alerts .text-info {
+    color: #FFFFFF;
+}
+
+#desktop_notifications div.has-alerts p {
+    font-size: 12px;
+    line-height: 20px;
+    min-height: 20px;
+}
+
+#desktop_notifications div.has-alerts h4,
+#desktop_notifications div.has-alerts p {
+    padding: 4px 15px 4px 15px;
+    margin: 0 !important;
+}
+
+#desktop_notifications div.has-alerts h4 {
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #1C1C1C;
+    line-height: 20px;
+    /*border-bottom: 1px solid #757083;*/
 }
