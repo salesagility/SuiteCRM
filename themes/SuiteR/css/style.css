@@ -3810,6 +3810,14 @@ li.moremenu {
     margin-top: 0;
 }
 
+.email-address-input-group button[disabled].email-address-remove-button {
+    margin: 0;
+    padding: 6px 9px 6px 9px !important;
+    line-height: 20px;
+    height: 34px;
+    font-size: 14px !important;
+}
+
 div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
     visibility: collapse;
 
