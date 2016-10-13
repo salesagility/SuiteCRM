@@ -211,7 +211,7 @@ $(document).ready(function () {
   ];
   var updateMissed = function () {
     Alerts.prototype.updateManager();
-    setInterval(updateMissed, 60000);
+    setTimeout(updateMissed, 60000);
   }
   setTimeout(updateMissed, 2000);
 });
