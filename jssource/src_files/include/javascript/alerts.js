@@ -178,10 +178,12 @@ Alerts.prototype.updateManager = function () {
     $('.alert_count').html(alertCount);
     if (alertCount > 0) {
       $('div#alerts').addClass('has-alerts');
+      $('#desktop_notifications').addClass('has-alerts');
       $('.alertsButton').removeClass('btn-').addClass('btn-danger');
       $('.alert_count').removeClass('hidden');
     }
     else {
+      $('#desktop_notifications').removeClass('has-alerts');
       $('div#alerts').removeClass('has-alerts');
       $('.alertsButton').removeClass('btn-danger').addClass('btn-success');
       $('.alert_count').addClass('hidden');
