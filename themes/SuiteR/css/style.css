@@ -3815,6 +3815,7 @@ li.moremenu {
     padding-left: 9px;
     padding-right: 9px;
     border: none;
+    margin-left: 0;
 }
 
 .email-address-remove-button {

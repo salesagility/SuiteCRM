@@ -6150,6 +6150,9 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
     margin: 0 5px 0 0;
 }
 
+#email1_span .col-xs-12 {
+    padding-left: 0;
+}
 
 .email-address-add-line-container {
     padding-left: 0;
@@ -6176,8 +6179,14 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
     width: 20%;
 }
 
-.email-address-input-group [type=email] {
-    margin-top: 7px;
+.email-address-input-group [type=email]{
+    margin-top: 8px;
+    line-height: 17.1429px;
+}
+
+.email-address-input-group .form-control {
+    height: 32px;
+    font-size: 12px;
 }
 
 .email-address-input-group {
@@ -6185,11 +6194,13 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
     line-height: 48px;
 }
 
+.email-address-add-button {
+    margin-left: 0;
+}
 
 .email-address-remove-button {
     margin-top: 0;
-    height: 34px !important;
-    line-height: 34px !important;
+    padding: 5px 9px 5px 9px;
 }
 
 div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
@@ -6205,4 +6216,20 @@ div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option l
     div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
         visibility: visible;
     }
+}
+
+/**/
+
+.form-control {
+    border-radius: 0;
+}
+
+input:focus,
+textarea,
+select,
+.form-control:focus {
+    border: 1px solid #cccccc;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
