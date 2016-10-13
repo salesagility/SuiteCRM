@@ -6150,6 +6150,7 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
     margin: 0 5px 0 0;
 }
 
+#email_span .col-xs-12,
 #email1_span .col-xs-12 {
     padding-left: 0;
 }
@@ -6208,6 +6209,70 @@ div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option l
 
 }
 
+
+div.col-xs-12.col-sm-6.email-address-input-container {
+    width: 230px;
+}
+
+td[data-total-columns="2"] #email1_span div.col-xs-12.col-sm-6.email-address-input-container {
+    width: 230px;
+}
+
+td[data-total-columns="2"] #email1_span div.col-xs-12.col-sm-6.email-address-options-container {
+    width: 40%;
+}
+
+@media (max-width: 768px) {
+    .email-address-options-container {
+        width: 100%;
+        margin: 16px 0 16px 0;
+        height: 32px;
+    }
+    div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
+        visibility: visible;
+    }
+
+    .col-xs-12 {
+        float: none;
+        clear: both;
+    }
+
+    .email-address-users-profile {
+        width: 100% !important;
+    }
+}
+
+
+@media (max-width: 1600px) {
+
+    td[data-total-columns="2"] #email1_span div.col-xs-12.col-sm-6.email-address-options-container {
+        width: 100%;
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+
+    td[data-total-columns="2"] #email1_span .email-address-option {
+        width: 20%;
+    }
+
+    td[data-total-columns="2"] #email1_span .email-address-option label {
+        display: block;
+        visibility: visible;
+    }
+}
+
+@media (max-width: 1400px) {
+    .email-address-option {
+        width: 33%;
+    }
+}
+
+@media (max-width: 1130px) {
+    td[data-total-columns="2"] #email1_span .email-address-option {
+        width: 33%;
+    }
+}
+
 @media (max-width: 768px) {
     .email-address-options-container {
         width: 100%;
@@ -6215,6 +6280,10 @@ div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option l
     }
     div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
         visibility: visible;
+    }
+
+    .email-address-option {
+        width: 16.667%;
     }
 }
 
