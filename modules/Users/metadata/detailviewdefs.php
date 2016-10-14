@@ -40,6 +40,14 @@
 $viewdefs['Users']['DetailView'] = array (
     'templateMeta' =>
         array (
+            'form' =>
+                array (
+                    /**
+                     * This is configured in modules/Users/views/view.detail.php
+                     * You need to customise the view instead.
+                     */
+                    'buttons' => array (),
+                ),
             'maxColumns' => '2',
             'widths' =>
                 array (
