@@ -7258,15 +7258,15 @@ h3 span {
     background-position: 0px 0px;
 }
 
+#desktop_notifications #alerts.dropdown-menu {
+    left: auto;
+}
+
 #desktop_notifications:hover {
     background-position: 0px -100px;
 }
 
 #desktop_notifications a {
-    color: blue !important;
-    margin: 8px 0 8px 0 !important;
-    line-height: 50px;
-    padding: 0 5px 0 5px !important;
     cursor: pointer;
 }
 
@@ -7374,11 +7374,13 @@ h3 span {
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
     min-height: 20px;
+    max-width: 256px;
+    width: 256px;
 }
 
 #desktop_notifications div.has-alerts h4,
 #desktop_notifications div.has-alerts p {
-    padding: 4px 15px 4px 15px;
+    padding: 8px 15px 8px 15px;
     margin: 0 !important;
 }
 

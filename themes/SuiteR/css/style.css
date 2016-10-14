@@ -3723,6 +3723,10 @@ span#quickcreateplus{
     font-size:1.1em;
 }
 
+#desktop_notifications #alerts.dropdown-menu {
+    left: auto;
+}
+
 #desktop_notifications .alert {
     margin-bottom: 8px !important;
 }
@@ -4645,7 +4649,7 @@ h3 span{
         display:none !important;
     }
 
-    #quickcreatetop a, #desktop_notifications a{
+    #quickcreatetop a {
         color:#ffffff !important;
         margin:8px 0 8px 0 !important;
         line-height:50px;
