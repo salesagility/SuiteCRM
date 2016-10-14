@@ -3945,7 +3945,7 @@ class InboundEmail extends SugarBean {
 				$q = "DELETE FROM email_cache WHERE message_id = '{$queryUID}' AND ie_id = '{$this->id}' AND mbox = '{$this->mailbox}'";
 			} else {
 				$this->email->name = $app_strings['LBL_EMAIL_ERROR_IMAP_MESSAGE_DELETED'];
-				$q = "DELETE FROM email_cache WHERE imap_uid = {$queryUID} AND ie_id = '{$this->id}' AND mbox = '{$this->mailbox}'";
+				$q = "DELETE FROM email_cache WHERE imap_uid = '{$queryUID}' AND ie_id = '{$this->id}' AND mbox = '{$this->mailbox}'";
 			} // else
 			// delete local cache
 			$r = $this->db->query($q);
