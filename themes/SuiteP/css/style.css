@@ -2162,6 +2162,17 @@ td.fc-widget-header table > thead > tr > th {
     line-height: 24px;
 }
 
+.fc-day-header a {
+    color: #FFFFFF;
+}
+
+.fc-day-header a:hover {
+    color: #FFFFFF;
+}
+
+.fc-day-top {
+    cursor: pointer;
+}
 .monthFooter td {
     padding-left: 7px;
     padding-right: 7px;
