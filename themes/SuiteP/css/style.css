@@ -473,9 +473,6 @@ div#pageContainer td.dashletcontainer div.hd .icon {
     background-color: #8499AB;
 }
 
-#actionMenuSidebar ul li a:hover .side-bar-action-icon {
-    background-position: 0px -72px;
-}
 
 #actionMenuSidebar li a div {
     display: block;
