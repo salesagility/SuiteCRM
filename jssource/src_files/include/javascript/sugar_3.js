@@ -254,12 +254,12 @@ function addAlert(type, name,subtitle, description,time, redirect) {
 	alertList[addIndex]['redirect'] = redirect;
 }
 function checkAlerts() {
-	secondsSinceLoad += 1;
+	secondsSinceLoad = 1;
 	var mj = 0;
 	var alertmsg = '';
 	for(mj = 0 ; mj < alertList.length; mj++) {
 		if(alertList[mj]['done'] == 0) {
-			if(alertList[mj]['time'] < secondsSinceLoad && alertList[mj]['time'] > -1 ) {
+			if(alertList[mj]['time'] > -1 && alertList[mj]['time'] < 1) {
                 alertList[mj]['done'] = 1;
                 if(typeof Alerts !== "undefined") {
                     //
@@ -289,9 +289,10 @@ function checkAlerts() {
                     }
                 }
             }
+			alertList[mj]['time'] -= 1;
 		}
 	}
-
+    //
     alertsTimeoutId = setTimeout("checkAlerts()", 1000);
 }
 

@@ -99,7 +99,7 @@ EOQ;
 
 		// cn: get a boundary limiter
 		$dateTimeMax = $timedate->getNow()->modify("+{$app_list_strings['reminder_max_time']} seconds")->asDb();
-		$dateTimeNow = $timedate->nowDb();
+		$dateTimeNow = $timedate->getNow()->asDb();
 
 		global $db;
 		$dateTimeNow = $db->convert($db->quoted($dateTimeNow), 'datetime');
