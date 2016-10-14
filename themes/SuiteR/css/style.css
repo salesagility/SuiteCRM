@@ -3723,7 +3723,108 @@ span#quickcreateplus{
     font-size:1.1em;
 }
 
-#quickcreatetop button, #desktop_notifications button{
+#desktop_notifications #alerts.dropdown-menu {
+    left: auto;
+}
+
+#desktop_notifications .alert {
+    margin-bottom: 8px !important;
+}
+
+#desktop_notifications button:focus,
+#desktop_notifications button:link,
+#desktop_notifications button:hover,
+#desktop_notifications button:active {
+    background: inherit;
+}
+
+#desktop_notifications.has-alerts .badge {
+    color: #C9302C;
+}
+
+#desktop_notifications .close,
+#desktop_notifications .alert {
+    font-weight: normal;
+    line-height: 1;
+    color: #000;
+    text-shadow: none;
+    filter: none;
+    opacity: 1;
+}
+
+#desktop_notifications .close {
+    position: relative;
+    top: 0px;
+    right: 0px;
+    color: inherit;
+    margin-top: 0;
+    margin-right: 4px;
+}
+
+#desktop_notifications button.close,
+#desktop_notifications .close:hover {
+    background: none;
+}
+
+#desktop_notifications .close span {
+    color: #FFFFFF;
+    margin-right: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+
+#desktop_notifications button .badge {
+    color: #3C8DBC;
+}
+#desktop_notifications button.close {
+    background: none;
+}
+
+#desktop_notifications div.dropdown-menu {
+    margin: 0;
+    padding: 8px;
+    font-size: 12px;
+    border-radius: 0px;
+}
+
+#desktop_notifications div.has-alerts .alert-info {
+    background-color: inherit;
+    /*border-top: none;*/
+    /*border-right: none;*/
+    /*border-bottom: 1px solid #757083;*/
+    border: 1px solid #dddddd;
+    /*border-left: none;*/
+    border-radius: 0px;
+    padding: 0;
+}
+
+#desktop_notifications div.has-alerts .text-info {
+    color: #FFFFFF;
+}
+
+#desktop_notifications div.has-alerts p {
+    font-size: 12px;
+    line-height: 20px;
+    min-height: 20px;
+}
+
+#desktop_notifications div.has-alerts h4,
+#desktop_notifications div.has-alerts p {
+    padding: 4px 15px 4px 15px;
+    margin: 0 !important;
+}
+
+#desktop_notifications div.has-alerts h4 {
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #3C8DBC;
+    line-height: 20px;
+    /*border-bottom: 1px solid #757083;*/
+}
+
+
+
+#quickcreatetop button, #desktop_notifications button {
     margin:10px 0 0 0;
 }
 /* Main content */
@@ -4548,7 +4649,7 @@ h3 span{
         display:none !important;
     }
 
-    #quickcreatetop a, #desktop_notifications a{
+    #quickcreatetop a {
         color:#ffffff !important;
         margin:8px 0 8px 0 !important;
         line-height:50px;
