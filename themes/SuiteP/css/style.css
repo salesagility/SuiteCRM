@@ -6332,6 +6332,7 @@ textarea {
     width: 50%;
 }
 
+select[size],
 select {
     background-color: #FFFFFF;
     border-style: solid;
