@@ -9643,6 +9643,10 @@ div.list-view-rounded-corners > table th:last-of-type {
         display: inline;
     }
 
+    #usermenucollapsed:hover {
+        background-position: 0 -99px !important;
+    }
+
     #search .dropdown-menu {
         background-color: transparent;
         padding: 10px;
