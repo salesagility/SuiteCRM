@@ -70,7 +70,10 @@ class UsersViewDetail extends ViewDetail {
             return;
         }
 
-        parent::preDisplay();
+        $metadataFile = $this->getMetaDataFile();
+        $this->dv = new DetailView2();
+        $this->dv->ss =&  $this->ss;
+        $this->dv->setup($this->module, $this->bean, $metadataFile, get_custom_file_if_exists('modules/Users/tpls/DetailView.tpl'));
 
         $viewHelper = new UserViewHelper($this->ss, $this->bean, 'DetailView');
         $viewHelper->setupAdditionalFields();
@@ -180,7 +183,11 @@ class UsersViewDetail extends ViewDetail {
             }
         }
 
-        return parent::display();
+        if(empty($this->bean->id)){
+            sugar_die($GLOBALS['app_strings']['ERROR_NO_RECORD']);
+        }
+        $this->dv->process();
+        echo $this->dv->display();
     }
 
 
