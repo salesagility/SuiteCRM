@@ -8598,7 +8598,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .button-toggle-expanded {
-        left: 18% !important;
+        left: 18%;
     }
 
     .button-toggle-collapsed {
@@ -8625,7 +8625,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .button-toggle-expanded {
-        left: 18% !important;
+        left: 18%;
     }
 
     .button-toggle-collapsed {
@@ -8653,7 +8653,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .button-toggle-expanded {
-        left: 20% !important;
+        left: 20%;
     }
 
     .button-toggle-collapsed {
