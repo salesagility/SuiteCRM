@@ -1517,6 +1517,16 @@ a.listViewTdToolsS1 {
     word-wrap: normal;
 }
 
+.list td a.listViewTdToolsS1 {
+    min-width: 55px;
+    text-align: left;
+}
+
+.inlineButtons ul.clickMenu > li > span {
+    position: absolute;
+    right: 0;
+}
+
 .list td.inlineButtons {
     text-align: right;
     min-width: 75px;
