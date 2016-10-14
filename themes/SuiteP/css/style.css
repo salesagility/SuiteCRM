@@ -4856,6 +4856,12 @@ div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option l
         width: 33.333333%;
     }
 
+    [type="relate"].edit-view-field input[type="text"] {
+        width: 320px !important;
+    }
+    .dateTime input[type="text"] {
+        width: 400px !important;
+    }
 
 }
 
