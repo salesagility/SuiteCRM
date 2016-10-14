@@ -6231,3 +6231,157 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
     line-height: 20px;
     /*border-bottom: 1px solid #757083;*/
 }
+
+
+#email_span .col-xs-12,
+#email1_span .col-xs-12 {
+    padding-left: 0;
+}
+
+.email-address-add-line-container {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.email-address-option,
+.email-address-lines-container,
+.email-address-input-container,
+.email-address-line-container {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.email-address-option label {
+    font-size: 10px;
+    font-weight: 600;
+    padding-left: 1%;
+    padding-right: 1%;
+    width: 96%;
+}
+
+.email-address-option {
+    width: 20%;
+}
+
+.email-address-input-group [type=email]{
+    margin-top: 8px;
+    line-height: 17.1429px;
+}
+
+.email-address-input-group .form-control {
+    height: 32px;
+    font-size: 12px;
+}
+
+.email-address-input-group {
+    height: 48px;
+    line-height: 48px;
+}
+
+.email-address-add-button {
+    margin-left: 0;
+}
+
+.email-address-remove-button {
+    margin-top: 0;
+    padding: 5px 9px 5px 9px;
+}
+
+div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
+    visibility: collapse;
+
+}
+
+
+div.col-xs-12.col-sm-6.email-address-input-container {
+    width: 230px;
+}
+
+td[data-total-columns="2"] #email1_span div.col-xs-12.col-sm-6.email-address-input-container {
+    width: 230px;
+}
+
+td[data-total-columns="2"] #email1_span div.col-xs-12.col-sm-6.email-address-options-container {
+    width: 40%;
+}
+
+@media (max-width: 768px) {
+    .email-address-options-container {
+        width: 100%;
+        margin: 16px 0 16px 0;
+        height: 32px;
+    }
+    div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
+        visibility: visible;
+    }
+
+    .col-xs-12 {
+        float: none;
+        clear: both;
+    }
+
+    .email-address-users-profile {
+        width: 100% !important;
+    }
+}
+
+
+@media (max-width: 1600px) {
+
+    td[data-total-columns="2"] #email1_span div.col-xs-12.col-sm-6.email-address-options-container {
+        width: 100%;
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+
+    td[data-total-columns="2"] #email1_span .email-address-option {
+        width: 20%;
+    }
+
+    td[data-total-columns="2"] #email1_span .email-address-option label {
+        display: block;
+        visibility: visible;
+    }
+}
+
+@media (max-width: 1400px) {
+    .email-address-option {
+        width: 33%;
+    }
+}
+
+@media (max-width: 1130px) {
+    td[data-total-columns="2"] #email1_span .email-address-option {
+        width: 33%;
+    }
+}
+
+@media (max-width: 768px) {
+    .email-address-options-container {
+        width: 100%;
+        margin: 16px 0 16px 0;
+    }
+    div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
+        visibility: visible;
+    }
+
+    .email-address-option {
+        width: 16.667%;
+    }
+}
+
+/**/
+
+.form-control {
+    border-radius: 0;
+}
+
+input:focus,
+textarea,
+select,
+.form-control:focus {
+    border: 1px solid #cccccc;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
