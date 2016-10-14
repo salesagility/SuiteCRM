@@ -925,15 +925,17 @@ $(document).ready(function () {
           }
 
           /*
-           * When user clicks on the day numbers in the month view
+           * When user clicks on the top of the date in the month view
            * redirect the user to the day view.
            *
-           * Need to allow user to select over multiple days.
+           * We need to allow user to select over multiple days.
            * When upgrading fullcalendar.io ensure that the css class matches the top of each day in the month view.
            **/
-          if ($(view.target).hasClass('fc-day-top') & date_duration <= 86400000) {
-            var jsDate = date._d;
-            var url = 'index.php?module=Calendar&action=index&view=agendaDay&year=' + date.format('YYYY') + '&month=' + date.format('MM') + '&day=' + date.format('DD') + '&hour=0';
+          if ($(view.target).hasClass('fc-day-top') && date_duration <= 86400000) {
+            var dateStr = $(view.target).attr('data-date');
+            var dateMoment = new moment(dateStr);
+            var url = 'index.php?module=Calendar&action=index&view=agendaDay&year=' + dateMoment.format('YYYY') + '&month=' + dateMoment.format('MM') + '&day=' + dateMoment.format('DD') + '&hour=0';
+            console.log('url', url);
             window.location.href = url;
             return false;
           }
@@ -972,11 +974,34 @@ $(document).ready(function () {
       },
       navLinks: true,
       navLinkDayClick: function (weekStart, jsEvent) {
-        var dayHeader = $(jsEvent).closest('.fc-day-header');
-        var momentObj = moment($(dayHeader).attr('data-date'));
-        var url = 'index.php?module=Calendar&action=index&view=agendaDay&year=' + momentObj.format('YYYY') + '&month=' + momentObj.format('MM') + '&day=' + momentObj.format('DD') + '&hour=0';
-        window.location.href = url;
-        return false;
+        if (global_edit == true) {
+          /*
+           * When user clicks on the day numbers in the month view
+           * redirect the user to the day view.
+           *
+           * We need to allow user to select over multiple days.
+           * When upgrading fullcalendar.io ensure that the css class matches the top of each day in the month view.
+           **/
+          if ($(jsEvent.currentTarget).hasClass('fc-day-number')) {
+            var dateStr = $(jsEvent.currentTarget).closest('.fc-day-top').attr('data-date');
+            var dateMoment = new moment(dateStr);
+            var url = 'index.php?module=Calendar&action=index&view=agendaDay&year=' + dateMoment.format('YYYY') + '&month=' + dateMoment.format('MM') + '&day=' + dateMoment.format('DD') + '&hour=0';
+            window.location.href = url;
+            return false;
+          }
+
+          /*
+           * When user clicks on the day header in the week view
+           * redirect the user to the day view.
+           *
+           * When upgrading fullcalendar.io ensure that the css class matches the top of each day in the month view.
+           **/
+          var dayHeader = $(jsEvent.currentTarget).closest('.fc-day-header');
+          var momentObj = moment($(dayHeader).attr('data-date'));
+          var url = 'index.php?module=Calendar&action=index&view=agendaDay&year=' + momentObj.format('YYYY') + '&month=' + momentObj.format('MM') + '&day=' + momentObj.format('DD') + '&hour=0';
+          window.location.href = url;
+          return false;
+        }
       },
       eventResize: function (event, delta, revertFunc) {
 
