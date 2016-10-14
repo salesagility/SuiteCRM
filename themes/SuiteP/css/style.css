@@ -8020,17 +8020,17 @@ object {
 }
 
 #reminders .add-btn {
-    background-image: url(../../../../themes/default/images/id-ff-add.png);
+    background-image: url(../../../../themes/SuiteP/images/id-ff-add.png);
     background-repeat: no-repeat;
     background-position: 5px center;
-    padding-left: 25px;
+    padding-left: 32px !important;
 }
 
 #reminders .remove-btn {
-    background-image: url(../../../../themes/default/images/id-ff-clear.png);
+    background-image: url(../../../../themes/SuiteP/images/id-ff-clear.png);
     background-repeat: no-repeat;
     background-position: right 5px center;
-    padding-right: 25px;
+    padding-right: 32px !important;
 }
 
 #reminders .invitee_btn {
