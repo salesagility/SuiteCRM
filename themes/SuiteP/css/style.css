@@ -10863,7 +10863,7 @@ table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButt
 /* top create button and dropdown menu */
 
 #quickcreatetop ul.dropdown-menu li a {
-    opacity: 0.6;
+    opacity: 0.8;
 }
 
 #quickcreatetop ul.dropdown-menu li a:hover {
