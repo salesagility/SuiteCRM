@@ -490,8 +490,7 @@
             <div id="desktop_notifications" class="dropdown nav navbar-nav navbar-right">
                 <button class="alertsButton dropdown-toggle" data-toggle="dropdown"
                         aria-expanded="false">
-                    <span class="alert_count">0</span>
-
+                    <span class="alert_count hidden">0</span>
                 </button>
                 <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
             </div>
