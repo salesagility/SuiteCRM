@@ -4828,14 +4828,35 @@ div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option l
         visibility: visible;
     }
 
-    .col-xs-12 {
+    .email-address-users-profile {
+        width: 100% !important;
+    }
+
+    .edit-view-row-item {
+        width: 100%;
         float: none;
         clear: both;
     }
 
-    .email-address-users-profile {
-        width: 100% !important;
+    .col-sm-8.edit-view-field {
+        width: 66.6666667%;
     }
+
+    .edit-view-field select {
+        margin-bottom: 8px;
+    }
+
+    .edit-view-field textarea,
+    .edit-view-field input[type="text"] {
+        width: 100% !important;
+        margin-bottom: 8px;
+    }
+
+    .edit-view-row-item .col-sm-2 {
+        width: 33.333333%;
+    }
+
+
 }
 
 
@@ -7868,6 +7889,16 @@ div.panel-heading a.collapsed {
     #wizform #wizard {
         width: 700px;
     }
+
+    .col-sm-8.edit-view-field {
+        width: 100%;
+    }
+    .edit table, .edit thead, .edit tbody, .edit th, .edit td, .edit tr,
+    .popupBody .edit table, .popupBody .edit thead, .popupBody .edit tbody, .popupBody .edit th, .popupBody .edit td, .popupBody .edit tr {
+        display: block;
+        background: none;
+        width: 100%;
+    }
 }
 
 
@@ -9288,12 +9319,6 @@ div.list-view-rounded-corners > table th:last-of-type {
 
 @media (max-width: 640px) {
 
-    .edit table, .edit thead, .edit tbody, .edit th, .edit td, .edit tr,
-    .popupBody .edit table, .popupBody .edit thead, .popupBody .edit tbody, .popupBody .edit th, .popupBody .edit td, .popupBody .edit tr {
-        display: block;
-        background: none;
-        width: 100%;
-    }
 
     .edit tr, .edit tr td[scope="col"], .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td, .detail tr td, .detail table, table.detail {
         background: none;
