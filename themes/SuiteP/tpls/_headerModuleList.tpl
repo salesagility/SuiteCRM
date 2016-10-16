@@ -122,36 +122,7 @@
                         {/if}
                     {/foreach}
                 </div>
-                <form id="searchmobile" onsubmit="return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()"
-                      action="index.php" name="UnifiedSearch">
-                    <input class="form-control" type="hidden" value="UnifiedSearch" name="action">
-                    <input class="form-control" type="hidden" value="Home" name="module">
-                    <input class="form-control" type="hidden" value="false" name="search_form">
-                    <input class="form-control" type="hidden" value="false" name="advanced">
-                <span class="input-group-btn">
-                    <input id="query_string" class="form-control" type="text" placeholder="Search..."
-                           name="query_string">
-                </span>
-                </form>
-                
-                <div id="mobilegloballinks">
-                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span
-                                class="glyphicon glyphicon-option-vertical"></span></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
-                            <li role="presentation">
-                                <a id="{$gcl_key}_link"
-                                   href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>
-                            </li>
-                        {/foreach}
-                        <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'
-                                                   class='utilsLink'>{$LOGOUT_LABEL}</a></li>
-                    </ul>
-                </div>
-                <div id="userlinks_head" class="navbar-toggle collapsed">
-                    <a href="javascript:void(0)" id="userlinks_togglemobilesearch"><span
-                                class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
-                </div>
+
             </div>
         </div>
         <div class="hidden-xs hidden-sm hidden-md hidden-mdlg" id="bs-example-navbar-collapse-1">
@@ -490,8 +461,7 @@
             <div id="desktop_notifications" class="dropdown nav navbar-nav navbar-right">
                 <button class="alertsButton dropdown-toggle" data-toggle="dropdown"
                         aria-expanded="false">
-                    <span class="alert_count">0</span>
-
+                    <span class="alert_count hidden">0</span>
                 </button>
                 <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
             </div>
@@ -561,7 +531,6 @@
                     </li>
                 </ul>
             </div>
-
         </div>
 
 
@@ -618,8 +587,9 @@
                                             <li><a></a><span>&nbsp;</span></li>
                                         {else}
                                             <li class="actionmenulinks" role="presentation">
-                                                <a href="{$item.URL}" class="side-bar-{$item.MODULE_NAME}">
-                                                    <span class="actionmenulink">{$item.LABEL}</span>
+                                                <a href="{$item.URL}" >
+                                                    <div class="side-bar-{$item.MODULE_NAME} side-bar-action-icon"></div>
+                                                    <div class="actionmenulink">{$item.LABEL}</div>
                                                 </a>
                                             </li>
                                         {/if}
