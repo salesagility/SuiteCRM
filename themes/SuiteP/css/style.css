@@ -6213,9 +6213,6 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     div.search_name_basic input {
         width: 90% !important;
     }
-    div.search_fields_basic {
-        margin: 0 8px 0 42px;
-    }
 
     div.search_buttons_basic {
         margin: 0 8px 0 42px;
@@ -6237,10 +6234,6 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
         width: 94% !important;
     }
 
-    div.search_fields_basic {
-        margin: 0 8px 0 42px;
-    }
-
     div.search_buttons_basic {
         margin: 0 8px 0 42px;
     }
@@ -6251,9 +6244,6 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
 
 /*md-col-*/
 @media (min-width: 992px) and (max-width: 1199px) {
-    div.search_fields_basic {
-        margin: 0 8px 0 42px;
-    }
 
     div.search_buttons_basic {
         margin: 0 8px 0 42px;
@@ -6297,10 +6287,6 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
 
     div.search_name_basic img {
         margin: 0 8px 0 8px;
-    }
-
-    div.search_fields_basic {
-        margin: 4px 8px 0 8px;
     }
 
     div.search_buttons_basic {
