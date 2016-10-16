@@ -1484,7 +1484,7 @@ button#listViewEndButton_top img, button#listViewEndButton_bottom img {
 .td_alt, .list tr th, .list tr td[scope=col], .edit .list tr th, .edit .list tr td[scope=col] {
     font-weight: 800;
     text-align: left;
-    padding: 20px 10px 20px 10px !important;
+    padding: 16px 10px 16px 10px !important;
     border-left: none;
     border-right: none;
     white-space: nowrap;
@@ -6467,7 +6467,7 @@ ul::-webkit-resizer
 }
 
 .list tr th {
-    font-weight: normal;
+    font-weight: 700;
 }
 
 .list thead tr {
