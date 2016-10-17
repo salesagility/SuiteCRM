@@ -44,7 +44,8 @@ $viewdefs['Users']['DetailView'] = array (
                 array (
                     /**
                      * This is configured in modules/Users/views/view.detail.php
-                     * You need to create custom view instead. Then override S UsersViewDetail::preDisplay().
+                     * To customise. You need to create custom view instead.
+                     * Then override UsersViewDetail::preDisplay().
                      */
                     'buttons' => array (),
                 ),
