@@ -43,8 +43,9 @@ $viewdefs['Users']['DetailView'] = array (
             'form' =>
                 array (
                     /**
-                     * This is configured in modules/Users/views/view.detail.php
-                     * To customise. You need to create custom view instead.
+                     * Actions for users are configured in modules/Users/views/view.detail.php
+                     * This is to control security access to the actions based on the user and system preferences.
+                     * To customise in an upgrade safe way, You need to create custom view instead.
                      * Then override UsersViewDetail::preDisplay().
                      */
                     'buttons' => array (),

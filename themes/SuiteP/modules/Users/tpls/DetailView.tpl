@@ -70,6 +70,16 @@
                     </a>
                 </li>
                 {{/foreach}}
+                {{counter name="tabCountXS" print=false}}
+                <li role="presentation">
+                    <a data-toggle="tab" id="tab{{$tabCount}}" href="#">{{$MOD.LBL_ADVANCED}}</a>
+                </li>
+                {{if $SHOW_ROLES == true}}
+                {{counter name="tabCountXS" print=false}}
+                <li role="presentation">
+                    <a data-toggle="tab" id="tab{{$tabCount}}" href="#">{{$MOD.LBL_USER_ACCESS}}</a>
+                </li>
+                {{/if}}
             </ul>
         </li>
         {{else}}
@@ -83,6 +93,16 @@
         {* if panel skip*}
         {{/if}}
         {{/foreach}}
+        {{/if}}
+        {{counter name="tabCount" print=false}}
+        <li role="presentation" class="hidden-xs ">
+            <a data-toggle="tab" id="tab{{$tabCount}}" href="#">{{$MOD.LBL_ADVANCED}}</a>
+        </li>
+        {{if $SHOW_ROLES == true}}
+        {{counter name="tabCount" print=false}}
+        <li role="presentation" class="hidden-xs ">
+            <a data-toggle="tab" id="tab{{$tabCount}}" href="#">{{$MOD.LBL_USER_ACCESS}}</a>
+        </li>
         {{/if}}
         {if $config.enable_action_menu}
             <li id="tab-actions" class="dropdown">
@@ -118,6 +138,20 @@
             {{/if}}
             {{counter name="tabCount" print=false}}
             {{/foreach}}
+            {* advanced users tab *}
+            <div class="tab-pane-NOBOOTSTRAPTOGGLER fade" id='tab-content-{{$tabCount}}' >
+                {{include file='themes/SuiteP/modules/Users/tpls/DetailView-advanced-tab-content.tpl'}}
+            </div>
+            {{if $SHOW_ROLES == true}}
+            {{counter name="tabCount" print=false}}
+            {* access users tab (ACL ROLE matrix) *}
+            <div class="tab-pane-NOBOOTSTRAPTOGGLER fade" id='tab-content-{{$tabCount}}'>
+                <div class="row detail-view-row">
+                    access
+                    {{$ROLE_HTML}}
+                </div>
+            </div>
+            {{/if}}
             {{else}}
             <div class="tab-pane-NOBOOTSTRAPTOGGLER panel-collapse"></div>
             {{/if}}
