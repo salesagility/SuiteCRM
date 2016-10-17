@@ -4025,6 +4025,10 @@ div#chartDashlets {
     white-space: nowrap;
 }
 
+.wrap-text {
+    white-space: normal;
+}
+
 td.teamset-row, .edit tr td.teamset-row, .edit tr td table tr td.teamset-row {
     padding: 5px !important;
 }

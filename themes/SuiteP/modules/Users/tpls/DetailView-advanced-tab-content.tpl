@@ -16,7 +16,7 @@ advanced tab content goes here
             </div>
             <!-- /DIV inside  -->
             <!-- phone (version 1) -->
-            <div class="col-xs-12 col-sm-8 detail-view-field ">
+            <div class="col-xs-12 col-sm-8 detail-view-field">
                 <!-- simple hidden start -->
                 <input name='receive_notifications' class="checkbox" tabindex='12' type="checkbox" value="12" {$RECEIVE_NOTIFICATIONS} disabled>
                 <!-- simple hidden finish -->
@@ -321,7 +321,7 @@ advanced tab content goes here
             </div>
             <!-- /DIV inside  -->
             <!-- phone (version 1) -->
-            <div class="col-xs-12 col-sm-10 detail-view-field " type="name" field="name">
+            <div class="col-xs-12 col-sm-10 detail-view-field wrap-text" type="name" field="name">
                 <!-- simple hidden start -->
                 {if $CALENDAR_PUBLISH_KEY}{$CALENDAR_PUBLISH_URL}{else}{$MOD.LBL_NO_KEY}{/if}
                 <!-- simple hidden finish -->
@@ -338,7 +338,7 @@ advanced tab content goes here
             </div>
             <!-- /DIV inside  -->
             <!-- phone (version 1) -->
-            <div class="col-xs-12 col-sm-10 detail-view-field ">
+            <div class="col-xs-12 col-sm-10 detail-view-field wrap-text">
                 <!-- simple hidden start -->
                 {if $CALENDAR_PUBLISH_KEY}{$CALENDAR_SEARCH_URL}{else}{$MOD.LBL_NO_KEY}{/if}
                 <!-- simple hidden finish -->
@@ -355,7 +355,7 @@ advanced tab content goes here
             </div>
             <!-- /DIV inside  -->
             <!-- phone (version 1) -->
-            <div class="col-xs-12 col-sm-10 detail-view-field " type="name" field="name">
+            <div class="col-xs-12 col-sm-10 detail-view-field wrap-text" type="name" field="name">
                 <!-- simple hidden start -->
                 {if $CALENDAR_PUBLISH_KEY}{$CALENDAR_ICAL_URL}{else}{$MOD.LBL_NO_KEY}{/if}
                 <!-- simple hidden finish -->
