@@ -291,8 +291,8 @@ function multiFiles( list_target){
         imgElement.setAttribute("width","16");
 
         var new_row_button_embed = document.createElement("img");
-        new_row_button_embed.setAttribute("src", "index.php?entryPoint=getImage&themeName="+SUGAR.themes.theme_name+"&imageName=attachment.svg");
-        new_row_button_embed.setAttribute("align","absmiddle");
+
+        new_row_button_embed.setAttribute("align","absmiddle");new_row_button_embed.setAttribute("src", "index.php?entryPoint=getImage&themeName="+SUGAR.themes.theme_name+"&imageName=attachment.svg");
         new_row_button_embed.setAttribute("alt",lbl_email_attachments_embeded);
         new_row_button_embed.setAttribute("border","0");
         new_row_button_embed.setAttribute("height","16");

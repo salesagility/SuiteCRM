@@ -6131,12 +6131,12 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
 }
 
 .yui-layout .yui-layout-clip {
-    padding:10px 000;
+    padding:10px 0 0 0;
 }
 
 .yui-dt-label .image {
-    width: 16px;
-    height: auto;
+    width: auto;
+    height: 16px;
 }
 
 #yui-dt15-th-hasAttach-liner {
