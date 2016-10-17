@@ -222,6 +222,8 @@
         address = "";
       }
 
+      //_eaw.totalEmailAddresses
+
 
       // Clone from hidden template on the page
       var lineContainer = $('.template.email-address-line-container').clone();
@@ -265,6 +267,8 @@
       removeButton.attr('enabled', "true");
       removeButton.attr('data-row', this.module + _eaw.id + 'emailAddressRow' + _eaw.totalEmailAddresses);
       removeButton.attr('id', _eaw.totalEmailAddresses);
+      removeButton.attr('module-id', _eaw.id);
+      removeButton.attr('module-email-id', _eaw.totalEmailAddresses);
       removeButton.attr('module', this.module);
       removeButton.click(_eaw.removeEmailAddress);
 
@@ -285,10 +289,10 @@
       primaryCheckbox.attr('enabled', "true");
       primaryCheckbox.attr("checked", (primaryFlag == '1'));
 
-
       if (_eaw.totalEmailAddresses == 0 && primaryFlag != '1') {
         primaryCheckbox.prop("checked", true);
       }
+
 
       // Prevent users from removing their primary email address
       if (this.module == 'Users' &&  primaryCheckbox.attr("checked")) {
@@ -393,6 +397,8 @@
       _eaw.numberEmailAddresses = _eaw.totalEmailAddresses;
       _eaw.addInProgress = false;
 
+      _eaw.fixPrimaryRadioCheckboxValue();
+
     }, //addEmailAddress
 
     EmailAddressValidation: function (ev, fn, r, stR) {
@@ -403,7 +409,8 @@
 
     removeEmailAddress: function () {
       var module = $(this).attr('module');
-      var id = $(this).attr('id');
+      var id = $(this).attr('module-id');
+      var email_id = $(this).attr('module-email-id');
       var rowId = $(this).attr('data-row');
       var index = this.name;
 
@@ -416,7 +423,7 @@
 
       $('.email-address-line-container').each(function(index, value) {
         // skip template
-        if($(value).hasClass('template')) return true;
+        //if($(value).hasClass('template')) return true;
 
         // email input
         $(value).find('input[type=email]').prop('name', module + id + "emailAddress" + index);
@@ -443,19 +450,42 @@
 
       var c = 0;
       $('.email-address-line-container').each(function() {
-        if(!$(this).hasClass('template')) c++;
+        if(!$(this).hasClass('template'))
+          c++;
       });
       _eaw.totalEmailAddresses = c;
 
-      var primaryFound = ($('[name='+ module + '0emailAddressPrimaryFlag]:checked').length != 0);
-      if (primaryFound == false) {
-        $('.email-address-remove-button').bind( "click", _eaw.removeEmailAddress);
-        $('[name='+module + '0emailAddressPrimaryFlag]').first().prop('checked', true);
-        $('[name='+module + '0emailAddressPrimaryFlag]:checked').val(this.id + 'emailAddress0');
+
+      //var primaryFound = ($('[name='+ module + '0emailAddressPrimaryFlag]:checked').length != 0);
+      if ($('[name='+ module + id + 'emailAddressPrimaryFlag]:checked').length == 0) {
+        //$('.email-address-remove-button').bind( "click", _eaw.removeEmailAddress);
+        $('[name='+module + id + 'emailAddressPrimaryFlag]').first().prop('checked', true);
+        var emailId = $('[name='+module + id + 'emailAddressPrimaryFlag]').first().closest('.email-address-line-container').find('.email-address-remove-button').attr('module-email-id');
+        $('[name='+module + id + 'emailAddressPrimaryFlag]:checked').val(module + id + 'emailAddress' + emailId);
+
       }
+
+
+      _eaw.fixPrimaryRadioCheckboxValue();
+
 
       return false;
     },//removeEmailAddress
+
+    //private
+    fixPrimaryRadioCheckboxValue: function() {
+      $('.email-address-line-container').find('input[type="email"]').each(function(){
+        if(!$(this).hasClass('template')) {
+          var thisValueId = $(this).attr('name');
+          $(this).closest('.email-address-line-container').find('.email-address-primary-flag').val(thisValueId);
+        }
+      });
+      if($('.email-address-lines-container .email-address-primary-flag').length > 1) {
+        console.log('hurayyyyyyy!!!! :)');
+        $('.email-address-lines-container .email-address-primary-flag:checked').prop('checked', false);
+        $('.email-address-line-container:not(".template")').first().find('.email-address-primary-flag').prop('checked', true);
+      }
+    },
 
     forceSubmit: function () {
       var theForm = $('#' + this.emailView);
