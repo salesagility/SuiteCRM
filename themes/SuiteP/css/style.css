@@ -6653,11 +6653,12 @@ form#MassAssign_SecurityGroups {
     padding: 0;
 }
 
-#searchform input#query_string {
+#searchform input#query_string,
+#searchform input#query_string:-webkit-autofill {
     background-color: #65697A;
     float: left;
-    border: none;
-    padding: 14px 12px 14px 12px;
+    border: 3px solid #65697A;
+    padding: 12px 12px 12px 12px;
     color: #A2A5AF;
     font-size: 14px;
     letter-spacing: 1px;
@@ -6665,6 +6666,8 @@ form#MassAssign_SecurityGroups {
     border-radius: 3px;
     height: auto;
     line-height: normal;
+    -webkit-text-fill-color:  #A2A5AF;
+    -webkit-box-shadow: 0 0 0 1000px #65697A inset !important;
 }
 
 #searchform button {
