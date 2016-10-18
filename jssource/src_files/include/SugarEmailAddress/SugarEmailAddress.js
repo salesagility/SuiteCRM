@@ -481,7 +481,6 @@
         }
       });
       if($('.email-address-lines-container .email-address-primary-flag').length > 1) {
-        console.log('hurayyyyyyy!!!! :)');
         $('.email-address-lines-container .email-address-primary-flag:checked').prop('checked', false);
         $('.email-address-line-container:not(".template")').first().find('.email-address-primary-flag').prop('checked', true);
       }
