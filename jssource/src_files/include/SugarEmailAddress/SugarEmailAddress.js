@@ -399,6 +399,7 @@
 
       _eaw.fixPrimaryRadioCheckboxValue();
 
+
     }, //addEmailAddress
 
     EmailAddressValidation: function (ev, fn, r, stR) {
@@ -484,6 +485,17 @@
         $('.email-address-lines-container .email-address-primary-flag:checked').prop('checked', false);
         $('.email-address-line-container:not(".template")').first().find('.email-address-primary-flag').prop('checked', true);
       }
+
+      // bind click on primary radio checkbox
+      $('.email-address-lines-container .email-address-line-container:not(.template) input[type="radio"].email-address-primary-flag').each(function(i,e){
+        if(typeof $._data($(e), 'events') == 'undefined') {
+          $(e).click(function(){
+            $('.email-address-lines-container .email-address-line-container:not(.template) input[type="radio"].email-address-primary-flag').prop('checked', false);
+            $(this).prop('checked', true);
+          });
+        }
+      });
+
     },
 
     forceSubmit: function () {
