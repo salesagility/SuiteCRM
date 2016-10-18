@@ -83,6 +83,9 @@ class SugarView
     var $responseTime;
     var $fileResources;
 
+    private $settings = array();
+    private $_js = array();
+
     /**
      * Constructor which will peform the setup.
      */
@@ -344,6 +347,12 @@ class SugarView
 
         $ss->assign("SUGAR_JS",ob_get_contents().$themeObject->getJS());
         ob_end_clean();
+
+        // Add custom JS files from the view
+        if($this->hasCustomJS())
+        {
+            $ss->assign('GCOOP_JS', $this->getCustomJSURL());
+        }
 
         // get favicon
         if(isset($GLOBALS['sugar_config']['default_module_favicon']))
@@ -849,6 +858,20 @@ EOHTML;
             $config_js = $this->getSugarConfigJS();
             if(!empty($config_js)){
                 echo "<script>\n".implode("\n", $config_js)."</script>\n";
+            }
+
+            if ($this->hasCustomJS())
+            {
+                echo getVersionedScript($this->getCustomJSURL());
+            }
+
+            if ($this->hasDomJS())
+            {
+                echo "
+                        <script type='text/javascript'>
+                        SUGAR.append(SUGAR, { settings:".$this->getDomJS()." } );
+                        </script>
+                        ";
             }
 
             if ( isset($sugar_config['email_sugarclient_listviewmaxselect']) ) {
@@ -1694,5 +1717,125 @@ EOHTML;
         return false;
     }
 
+
+    /**
+     * Add custom JS files to the _js property
+     * This function should be called in the constructor of the view like this:
+     *
+     * $this->addCustomJS('custom/include/js/dom_selector.js');
+     *
+     **/
+
+    public function addCustomJS($path)
+    {
+        $this->_js[] = $path;
+    }
+
+    public function delCustomJS($path)
+    {
+        $key = array_search($path, $this->_js);
+        if ($key !== false)
+        {
+            unset($this->_js[$key]);
+        }
+    }
+
+    public function getCustomJS()
+    {
+        return($this->_js);
+    }
+
+    public function hasCustomJS()
+    {
+        return(!empty($this->_js));
+    }
+
+    public function addDomJS($data, $scope)
+    {
+        $this->settings[$scope] = $this->suite_array_merge_deep_array($data);
+    }
+
+    private function getCustomJSURL()
+    {
+        $customJSURL = '';
+
+        if ($this->hasCustomJS())
+        {
+            $jsFiles = $this->getCustomJS();
+
+            $target = SugarThemeRegistry::current()->getJSPath() . '/' . md5(implode('|', $jsFiles)) . '.js';
+            if (!sugar_is_file(sugar_cached($target)))
+            {
+                $customJSContents = '';
+
+                foreach ($jsFiles as $jsFileName)
+                {
+                    $jsFileContents = '';
+
+                    if (sugar_is_file('custom/' . $jsFileName))
+                    {
+                        $jsFileContents .= sugar_file_get_contents('custom/' . $jsFileName);
+                    }
+                    elseif (sugar_is_file($jsFileName))
+                    {
+                        $jsFileContents .= sugar_file_get_contents($jsFileName);
+                    }
+                    if (empty($jsFileContents))
+                    {
+                        $GLOBALS['log']->warn("JS File $jsFileName not found");
+                    }
+                    $customJSContents .= $jsFileContents;
+                }
+
+                $customJSPath = create_cache_directory($target);
+
+                if ((!inDeveloperMode()) && (!sugar_is_file($customJSPath)))
+                {
+                    $customJSContents = SugarMin::minify($customJSContents);
+                }
+                sugar_file_put_contents($customJSPath, $customJSContents);
+            }
+            $customJSURL = sugar_cached($target);
+        }
+        return($customJSURL);
+    }
+
+    public function getDomJS()
+    {
+        return(json_encode($this->settings));
+    }
+
+    public function hasDomJS()
+    {
+        return(!empty($this->settings));
+    }
+    /**
+     * Merges multiple arrays, recursively, and returns the merged array.
+     * https://api.drupal.org/api/drupal/includes!bootstrap.inc/function/drupal_array_merge_deep_array/7
+     */
+    function suite_array_merge_deep_array($arrays) {
+        $result = array();
+
+        foreach ($arrays as $array) {
+            foreach ($array as $key => $value) {
+                // Renumber integer keys as array_merge_recursive() does. Note that PHP
+                // automatically converts array keys that are integer strings (e.g., '1')
+                // to integers.
+                if (is_integer($key)) {
+                    $result [] = $value;
+                }
+                // Recurse when both values are arrays.
+                elseif (isset($result [$key]) && is_array($result [$key]) && is_array($value)) {
+                    $result [$key] = $this->sugar_array_merge_deep_array(array($result [$key], $value));
+                }
+                // Otherwise, use the latter value, overriding any previous value.
+                else {
+                    $result [$key] = $value;
+                }
+            }
+        }
+
+        return $result;
+    }
 
 }
