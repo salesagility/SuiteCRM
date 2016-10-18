@@ -2,7 +2,7 @@
 advanced tab content goes here
 *}
 
-<div id="settings" style="display:{$HIDE_FOR_GROUP_AND_PORTAL}">
+<div id="settings_suitep" >
     <div class="row detail-view-row">
         <h4>{$MOD.LBL_USER_SETTINGS}</h4>
     </div>
@@ -139,7 +139,7 @@ advanced tab content goes here
         </div>
     </div>
 </div>
-<div id='locale'>
+<div id='locale_suitep'>
     <div class="row detail-view-row">
         <h4>{$MOD.LBL_USER_LOCALE}</h4>
     </div>
@@ -289,7 +289,7 @@ advanced tab content goes here
         </div>
     </div>
 </div>
-<div id='calendar_options'>
+<div id='calendar_options_suitep'>
     <div class="row detail-view-row">
         <h4>{$MOD.LBL_CALENDAR_OPTIONS}</h4>
     </div>
@@ -380,7 +380,7 @@ advanced tab content goes here
         </div>
     </div>
 </div>
-<div id="layout">
+<div id="layout_suitep">
     <div class="row detail-view-row">
         <h4>{$MOD.LBL_LAYOUT_OPTIONS}</h4>
     </div>
