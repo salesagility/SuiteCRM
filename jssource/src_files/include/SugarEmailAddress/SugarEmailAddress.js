@@ -415,46 +415,46 @@
       var rowId = $(this).attr('data-row');
       var index = this.name;
 
-      //removeFromValidate($(this).parents('form').attr('name'), rowId);
+      removeFromValidate($(this).parents('form').attr('name'), module + id + 'emailAddress' + email_id);
       $('#' + rowId).remove();
 
       var form = $(this).closest("form");
       var removedIndex = parseInt(index);
       // If we are not deleting the last email address, we need to shift the numbering to fill the gap
 
+      var counter = 0;
       $('.email-address-line-container').each(function(index, value) {
         // skip template
-        //if($(value).hasClass('template')) return true;
+        if(!$(value).hasClass('template')) {
 
-        // email input
-        $(value).find('input[type=email]').prop('name', module + id + "emailAddress" + index);
-        $(value).find('input[type=email]').prop('id', module + id + "emailAddressPrimaryFlag" + index);
+          // email input
+          $(value).find('input[type=email]').prop('name', module + id + "emailAddress" + counter);
+          $(value).find('input[type=email]').prop('id', module + id + "emailAddress" + counter);
 
-        // primary flag
-        $(value).find('input.email-address-primary-flag').prop('id', module + id + "emailAddressPrimaryFlag" + index);
+          // primary flag
+          $(value).find('input.email-address-primary-flag').prop('id', module + id + "emailAddressPrimaryFlag" + counter);
 
-        // invalid
-        $(value).find('input.email-address-invalid-flag').prop('name', module + id + "emailAddress" + index);
-        $(value).find('input.email-address-invalid-flag').prop('id', module + id + "emailAddressInvalidFlag" + index);
+          // invalid
+          $(value).find('input.email-address-invalid-flag').prop('name', module + id + "emailAddress" + counter);
+          $(value).find('input.email-address-invalid-flag').prop('id', module + id + "emailAddressInvalidFlag" + counter);
 
-        // opt-out flag
-        $(value).find('input.email-address-opt-out-flag').prop('name', module + id + "emailAddress" + index);
-        $(value).find('input.email-address-opt-out-flag').prop('id', module + id + "emailAddressOptOutFlag" + index);
+          // opt-out flag
+          $(value).find('input.email-address-opt-out-flag').prop('name', module + id + "emailAddress" + counter);
+          $(value).find('input.email-address-opt-out-flag').prop('id', module + id + "emailAddressOptOutFlag" + counter);
 
-        // remove button
-        $(value).find('.email-address-remove-button').prop('name', index);
-        $(value).find('.email-address-remove-button').prop('data-row', module + id + "emailAddressRow" + index);
+          // remove button
+          $(value).find('.email-address-remove-button').prop('name', counter);
+          $(value).find('.email-address-remove-button').prop('data-row', module + id + "emailAddressRow" + counter);
 
-        $(value).find('.verified-flag').prop('id', module + id + "emailAddressVerifiedFlag" + index);
-        $(value).find('.verified-email-value').prop('id', module + id + "emailAddressVerifiedValue" + index);
+          $(value).find('.verified-flag').prop('id', module + id + "emailAddressVerifiedFlag" + counter);
+          $(value).find('.verified-email-value').prop('id', module + id + "emailAddressVerifiedValue" + counter);
+
+          counter++;
+        }
+
       });
 
-      var c = 0;
-      $('.email-address-line-container').each(function() {
-        if(!$(this).hasClass('template'))
-          c++;
-      });
-      _eaw.totalEmailAddresses = c;
+      _eaw.totalEmailAddresses = $('.email-address-line-container:not(.template)').length;
 
 
       //var primaryFound = ($('[name='+ module + '0emailAddressPrimaryFlag]:checked').length != 0);
@@ -468,7 +468,6 @@
 
 
       _eaw.fixPrimaryRadioCheckboxValue();
-
 
       return false;
     },//removeEmailAddress
