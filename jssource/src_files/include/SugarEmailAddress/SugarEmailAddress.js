@@ -477,11 +477,6 @@
           $(this).closest('.email-address-line-container').find('.email-address-primary-flag').val(thisValueId);
         }
       });
-      if($('.email-address-lines-container .email-address-primary-flag').length > 1) {
-        $('.email-address-lines-container .email-address-primary-flag:checked').prop('checked', false);
-        $('.email-address-line-container:not(".template")').first().find('.email-address-primary-flag').prop('checked', true);
-      }
-
       // bind click on primary radio checkbox
       $('.email-address-lines-container .email-address-line-container:not(.template) input[type="radio"].email-address-primary-flag').each(function(i,e){
         if(typeof $._data($(e), 'events') == 'undefined') {
