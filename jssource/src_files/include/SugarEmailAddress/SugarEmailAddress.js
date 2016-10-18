@@ -429,14 +429,15 @@
           $(value).find('input[type=email]').prop('id', module + id + "emailAddress" + counter);
 
           // primary flag
+          $(value).find('input.email-address-primary-flag').prop('name', module + id + "emailAddressPrimaryFlag" + counter);
           $(value).find('input.email-address-primary-flag').prop('id', module + id + "emailAddressPrimaryFlag" + counter);
 
           // invalid
-          $(value).find('input.email-address-invalid-flag').prop('name', module + id + "emailAddress" + counter);
+          $(value).find('input.email-address-invalid-flag').prop('name', module + id + "emailAddressInvalidFlag" + counter);
           $(value).find('input.email-address-invalid-flag').prop('id', module + id + "emailAddressInvalidFlag" + counter);
 
           // opt-out flag
-          $(value).find('input.email-address-opt-out-flag').prop('name', module + id + "emailAddress" + counter);
+          $(value).find('input.email-address-opt-out-flag').prop('name', module + id + "emailAddressOptOutFlag" + counter);
           $(value).find('input.email-address-opt-out-flag').prop('id', module + id + "emailAddressOptOutFlag" + counter);
 
           // remove button
