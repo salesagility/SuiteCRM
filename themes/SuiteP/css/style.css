@@ -197,7 +197,7 @@ div.p_login #loginform #bigbutton:hover {
 
 li#usermenu a {
     background-color: #534d64;
-    padding: 35px 0px 10px 0px;
+    padding: 33px 0px 10px 0px;
     font-size: 14px;
 }
 
@@ -230,7 +230,7 @@ li#usermenu a:hover span.caret {
 li#usermenu a span.user_icon {
     height: 42px;
     width: 42px;
-    margin-right: 15px;
+    margin-right: 11px;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
     background-repeat: no-repeat;
     background-position: 0 -1;
@@ -3172,8 +3172,8 @@ table#goto_date_trigger_div_t thead {
 
 .yui-calendar a.calnav {
     color: #ffffff;
-    background-color: #AA9DCC;
-    border: 1px solid #AA9DCC;
+    background-color: #66727D;
+    border: 1px solid #66727D;
     padding: 8px;
     border-radius: 4px;
     text-transform: uppercase;
@@ -3532,6 +3532,8 @@ ul.subpanelTablist li a.activeSubTab:hover {
 #search input[name=query_string] {
     border-color: #6fb0e4;
     background-color: #f6fafd;
+    line-height: 20px;
+    min-height: 44px;
 }
 
 #newRecord form a:link, #newRecord form a:visited {
@@ -5056,6 +5058,11 @@ div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option l
     .col-sm-6 #email1_span .email-address-option {
         width: 33%;
     }
+
+    table#lineItems tr td table thead tr td table tbody tr td {
+        display: block;
+        float: left;
+    }
 }
 
 @media (min-width: 768px) {
@@ -5287,12 +5294,10 @@ input#btn_ActionLine.button[type="button"] {
 
 
 .col-sm-6 .edit-view-field[field="billing_address_street"] input[type="text"],
-.col-sm-6 .edit-view-field[field="shipping_address_street"] input[type="text"] {
+.col-sm-6 .edit-view-field[field="primary_address_street"] input[type="text"],
+.col-sm-6 .edit-view-field[field="shipping_address_street"] input[type="text"],
+.col-sm-6 .edit-view-field[field="alt_address_street"] input[type="text"]{
     width: 88%;
-}
-
- .col-sm-12 .edit-view-field input[type="text"]:not(.sqsEnabled) {
-    width: 100%;
 }
 
 #conditionLines_head,
@@ -5707,7 +5712,8 @@ div.col-sm-6 #email1_span td.email-address-add-button {
     }
 }
 
-textarea#billing_address_street, textarea#shipping_address_street {
+textarea#billing_address_street, textarea#shipping_address_street,
+textarea#primary_address_street, textarea#alt_address_street {
     width: 88%;
 }
 
@@ -5804,8 +5810,8 @@ textarea#description {
 
 ul.nav li.topnav a {
     border-top: 3px solid #534d64;
-    padding-top: 35px;
-    padding-bottom: 36px;
+    padding-top: 36px;
+    padding-bottom: 35px;
 }
 
 ul.nav li.topnav a:hover {
@@ -5824,11 +5830,11 @@ ul.nav li.topnav li a, ul.nav li.topnav li a:hover {
 li.topnav {
     margin: 0;
     font-size: 1.1em;
-    font-size: 12px;
+    font-size: 13px;
     height: 90px;
     letter-spacing: 2px;
-    line-height: 90px;
-    padding: 0 5px 0 5px;
+    line-height: 95px;
+    padding: 0 7px 0 7px;
     text-transform: uppercase;
 }
 
@@ -6279,7 +6285,7 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
 /*lg-col-*/
 @media (min-width: 1260px) {
     li.topnav {
-        padding: 0 10px 0 10px;
+        padding: 0 5px 0 5px;
     }
 }
 
@@ -6659,11 +6665,11 @@ form#MassAssign_SecurityGroups {
     border: none;
     padding: 14px 12px 14px 12px;
     color: #A2A5AF;
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: 1px;
     width: 200px;
     border-radius: 3px;
-    height: auto;
+    min-height: 40px;
     line-height: normal;
 }
 
@@ -6677,7 +6683,7 @@ form#MassAssign_SecurityGroups {
     display: block;
     border-radius: 0px 3px 3px 0px;
     margin-left: -50px;
-    padding: 12px 12px 12px 12px;
+    padding: 10px 10px 10px 10px;
     background-image: none, url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
     background-repeat: no-repeat;
     background-position: 13px 10px;
@@ -6846,10 +6852,6 @@ select#sales_stage_advanced {
 @media (min-width: 768px) {
     .col-xs-6 input[type="text"]#first_name, .col-sm-6 input[type="text"]#first_name {
         width: 48.5% !important;
-    }
-
-    .col-xs-12 input[type="text"]#first_name, .col-sm-12 input[type="text"]#first_name {
-        width: 21.5% !important;
     }
 
     #wizform #wizard {
@@ -7482,7 +7484,7 @@ h3 span {
 #quickcreatetop a {
     color: #fff !important;
     text-align: center;
-    padding: 13px 32px 13px 12px;
+    padding: 11px 32px 12px 12px;
     border-radius: 3px;
     background-color: #94A6B5;
     font-size: 13px;
@@ -8639,21 +8641,11 @@ div.list-view-rounded-corners > table th:last-of-type {
         display: none;
     }
 
-    #usermenu {
-        display: none;
-    }
-
-    #globalLinks {
-        border: none;
-        margin: 10px 0 0 0;
-        padding: 0;
-    }
-
     .navbar-form .form-control {
         margin: 8px 0 0 0;
     }
 
-    #usermenucollapsed, #usermenucollapsed-mobile, #searchbutton {
+    #searchbutton {
         display: inline;
     }
 
@@ -8982,7 +8974,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     #quickcreatetop a {
-        padding: 13px 32px 13px 12px;
+        padding: 11px 32px 12px 12px;
         background-position: 80px 2px;
     }
 
@@ -9008,7 +9000,6 @@ div.list-view-rounded-corners > table th:last-of-type {
     #usermenucollapsed {
         border: none;
         border-radius: 0;
-        margin-top: 12px;
         background-position: 0 0;
     }
 
@@ -9023,7 +9014,7 @@ div.list-view-rounded-corners > table th:last-of-type {
         width: 44px;
         height: 48px;
         margin-top: 22px;
-        margin-right: 15px;
+        margin-right: 10px;
         background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert.svg"), url("../../../../themes/SuiteP/images/p_icon_alert.png");
         background-repeat: no-repeat;
         background-position: 0px 0px;
@@ -10472,11 +10463,6 @@ table tr#delegates_search {
 
     table#lineItems table tr td table tbody tr td span.hidden.alignedLabel {
         display: inline!important;
-    }
-
-    table#lineItems tr td table thead tr td table tbody tr td {
-        display: block;
-        float: left;
     }
 }
 
