@@ -222,9 +222,6 @@
         address = "";
       }
 
-      //_eaw.totalEmailAddresses
-
-
       // Clone from hidden template on the page
       var lineContainer = $('.template.email-address-line-container').clone();
       lineContainer.removeClass('template');
