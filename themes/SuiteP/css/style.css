@@ -1877,7 +1877,7 @@ table#mass_update_table td select {
 #actionLinkBottom > .sugar_action_button > ul.subnav a:hover,
 #actionLinkTop .menuItemHilite,
 #actionLinkBottom .menuItemHilite {
-    background-color: #7b8a96 !important;
+    background-color: #7b8a96;
 
 }
 
@@ -8533,7 +8533,7 @@ table.subpanel-table .pagination li.sugar_action_button > form > a,
 table.subpanel-table .pagination .sugar_action_button > form > a,
 table.subpanel-table .pagination .sugar_action_button > form > a {
     padding: 0px !important;
-    background-color: #94A6B5 !important;
+    background-color: #94A6B5;
     border: 1px solid transparent;
     border-radius: 4px;
     padding-right: 4px !important;
@@ -8563,7 +8563,7 @@ table.subpanel-table .pagination .sugar_action_button:hover > form > a,
 table.subpanel-table .pagination .sugar_action_button:hover > form > a,
 table.subpanel-table .pagination a,
 .subpanel-table ul.subnav {
-    background-color: #778591 !important;
+    background-color: #778591;
 }
 
 table.subpanel-table .pagination a {
