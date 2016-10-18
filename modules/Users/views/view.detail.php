@@ -100,6 +100,7 @@ class UsersViewDetail extends ViewDetail {
         $this->ss->assign("ERRORS", $errors);
         $this->ss->assign("ERROR_MESSAGE", $msgGood ? translate('LBL_PASSWORD_SENT','Users') : translate('LBL_CANNOT_SEND_PASSWORD','Users'));
         $buttons = array();
+
         if ((is_admin($current_user) || $_REQUEST['record'] == $current_user->id
                 )
             && !empty($sugar_config['default_user_name'])
@@ -114,6 +115,7 @@ class UsersViewDetail extends ViewDetail {
             $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => "<input title='".$app_strings['LBL_EDIT_BUTTON_TITLE']."' accessKey='".$app_strings['LBL_EDIT_BUTTON_KEY']."' name='Edit' id='edit_button' value='".$app_strings['LBL_EDIT_BUTTON_LABEL']."' onclick=\"this.form.return_module.value='Users'; this.form.return_action.value='DetailView'; this.form.return_id.value='".$this->bean->id."'; this.form.action.value='EditView'\" type='submit' value='" . $app_strings['LBL_EDIT_BUTTON_LABEL'] .  "'>");
             if ((is_admin($current_user)|| $GLOBALS['current_user']->isAdminForModule('Users')
                     )) {
+
                 if (!$current_user->is_group){
                     $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' =>"<input id='duplicate_button' title='".$app_strings['LBL_DUPLICATE_BUTTON_TITLE']."' accessKey='".$app_strings['LBL_DUPLICATE_BUTTON_KEY']."' class='button' onclick=\"this.form.return_module.value='Users'; this.form.return_action.value='DetailView'; this.form.isDuplicate.value=true; this.form.action.value='EditView'\" type='submit' name='Duplicate' value='".$app_strings['LBL_DUPLICATE_BUTTON_LABEL']."'>");
 
@@ -130,6 +132,10 @@ class UsersViewDetail extends ViewDetail {
         }
 
         $show_roles = (!($this->bean->is_group=='1' || $this->bean->portal_only=='1'));
+        if(is_admin($this->bean)) {
+            $show_roles = false;
+        }
+
         $this->ss->assign('SHOW_ROLES', $show_roles);
         //Mark whether or not the user is a group or portal user
         $this->ss->assign('IS_GROUP_OR_PORTAL', ($this->bean->is_group=='1' || $this->bean->portal_only=='1') ? true : false);
