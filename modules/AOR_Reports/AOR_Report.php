@@ -1249,6 +1249,7 @@ class AOR_Report extends Basic {
         $aor_sql_operator_list['Contains'] = 'LIKE';
         $aor_sql_operator_list['Starts_With'] = 'LIKE';
         $aor_sql_operator_list['Ends_With'] = 'LIKE';
+        $aor_sql_operator_list['Not_Contains'] = 'NOT LIKE';
 
         $closure = false;
         if(!empty($query['where'])) {
@@ -1406,13 +1407,30 @@ class AOR_Report extends Basic {
 
                         case 'Multi':
                             $sep = ' AND ';
-                            if ($condition->operator == 'Equal_To') $sep = ' OR ';
+                            $extra = '';
+                            if ($condition->operator == 'Equal_To'){
+                                $sep = ' OR ';
+                                if($condition->value_type == 'Multi'){
+                                    $condition->operator = "Contains";
+                                    $extra = '%';
+                                }
+                            } else {
+                                if($condition->value_type == 'Multi'){
+                                    $condition->operator = "Not_Contains";
+                                    $extra = '%';
+                                }
+
+                            }
                             $multi_values = unencodeMultienum($condition->value);
                             if (!empty($multi_values)) {
                                 $value = '(';
+
                                 foreach ($multi_values as $multi_value) {
-                                    if ($value != '(') $value .= $sep;
-                                    $value .= $field . ' ' . $aor_sql_operator_list[$condition->operator] . " '" . $multi_value . "'";
+                                    if ($value != '(') {
+                                        $value .= $sep;
+                                    }
+
+                                    $value .= $field . ' ' . $aor_sql_operator_list[$condition->operator] . " '" . $extra . "^" . $multi_value . "^" . $extra . "'";
                                 }
                                 $value .= ')';
                             }
@@ -1514,7 +1532,7 @@ class AOR_Report extends Basic {
         if($closure) {
             $query['where'][] = ')';
         }
-
+        //print_r($query);
         return $query;
     }
 
