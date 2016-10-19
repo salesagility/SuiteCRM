@@ -197,7 +197,7 @@ div.p_login #loginform #bigbutton:hover {
 
 li#usermenu a {
     background-color: #534d64;
-    padding: 33px 0px 10px 0px;
+    padding: 35px 0px 10px 0px;
     font-size: 14px;
 }
 
@@ -236,7 +236,7 @@ li#usermenu a span.user_icon {
     background-position: 0 -1;
     display: block;
     float: left;
-    margin-top: -10px;
+    margin-top: -12px;
 }
 
 li#usermenu a:hover span.user_icon {
