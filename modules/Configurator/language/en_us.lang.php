@@ -416,7 +416,6 @@ BSOFR',
 	//Wizard Scenarios
 	'LBL_WIZARD_SCENARIOS' => 'Your Scenarios',
 	'LBL_WIZARD_SCENARIOS_EMPTY_LIST' => 'No scenarios have been configured',
-	'LBL_WIZARD_LOCALE_DESC' => 'Specify how you would like data in SuiteCRM to be displayed, based on your geographical location. The settings you provide here will be the default settings. Users will be able set their own preferences.',
 	'LBL_WIZARD_SCENARIOS_DESC' => 'Choose which scenarios are appropriate for your installation.  These options can be changed post-install.',
 
     'LBL_WIZARD_TITLE' => 'Admin Wizard',
