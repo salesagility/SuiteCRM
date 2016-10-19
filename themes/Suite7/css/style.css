@@ -75,11 +75,39 @@ body
 
 .dashboardTabList {
     height: 40px !important;
+    padding-left: 0px !important;
+}
+
+.dashboardTabList li.addButton {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+.dashboardTabList li {
+    padding:8px 8px 8px 8px !important;
+    font-weight: bold;
+    margin-top:2px !important;
+    border-color: #cccccc;
+    background-image: url('../../../../index.php?entryPoint=getImage&themeName=Suite7&imageName=bgBtn.gif');
+    background-size: contain;
+}
+
+.dashboardTabList li.active {
+    background-image: none;
+    background-color: #f10202 !important;
+}
+
+.dashboardTabList li.active a {
+    color: #fff;
+}
+
+.dashboardTabList li a {
+    color: #000;
+    font-weight: bold;
 }
 
 .addButton {
-    height: 32px !important;
-    line-height: 32px !important;
+    height: auto !important;
+    line-height: inherit !important;
 }
 
 .menuItem {
@@ -3695,7 +3723,7 @@ li div.star {float:none;}
     opacity : .8;
     filter : alpha(opacity=80);
     z-index: 20;
-    top: 7px;
+    top: 50px;
     border: 1px solid #aaa;
     padding: 5px;
 }

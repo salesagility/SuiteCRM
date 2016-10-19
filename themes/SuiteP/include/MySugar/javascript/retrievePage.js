@@ -10,6 +10,7 @@ function retrievePage(page_id, callback){
 
 function retrieveData(page_id, callback){
     var _cb = typeof callback != 'undefined' ? callback : false;
+    $("#pageContainer").html('<img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0" alt="">');
     $.ajax({
 
         url : "index.php?entryPoint=retrieve_dash_page",

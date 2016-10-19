@@ -159,21 +159,16 @@
                     <div id="pageNum_{$divPageNum}_div" style="display:none;">
                     </div>
                 {/foreach}
-
-
-
-                <div id="dashletsDialog" style="display:none;">
-                    <div class="hd" id="dashletsDialogHeader"><a href="javascript:void(0)"
-                                                                 onClick="javascript:SUGAR.mySugar.closeDashletsDialog();">
-                            <div class="container-close">&nbsp;</div>
-                        </a>{$lblAdd}
-                    </div>
-                    <div class="bd" id="dashletsList">
-                        <form></form>
-                    </div>
-
+            </div>
+            <div id="dashletsDialog" style="display:none;">
+                <div class="hd" id="dashletsDialogHeader"><a href="javascript:void(0)"
+                                                             onClick="javascript:SUGAR.mySugar.closeDashletsDialog();">
+                        <div class="container-close">&nbsp;</div>
+                    </a>{$lblAdd}
                 </div>
-
+                <div class="bd" id="dashletsList">
+                    <form></form>
+                </div>
 
             </div>
             <script type="text/javascript" src="include/MySugar/javascript/AddRemoveDashboardPages.js"></script>

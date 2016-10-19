@@ -611,7 +611,7 @@ SUGAR.mySugar = function() {
 
 					webTab.className = 'active';
 					webTabAnchor.className = 'current';
-					webListDiv.style.display = '';					
+					webListDiv.style.display = '';
 					
 					break;
 				default:
@@ -734,7 +734,7 @@ SUGAR.mySugar = function() {
 
 			document.getElementById('dashletsDialog').style.display = '';																				 
 			SUGAR.mySugar.dashletsDialog.render();
-			document.getElementById('dashletsDialog_c').style.display = 'none';			
+			document.getElementById('dashletsDialog_c').style.display = 'none';
 		}	
 	 }; 
 }();
