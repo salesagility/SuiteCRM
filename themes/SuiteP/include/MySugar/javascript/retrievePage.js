@@ -128,9 +128,6 @@ var dashletsPageInit = function() {
 $(document).ready(function () {
     retrievePage(0, function(){
         dashletsPageInit();
-        setTimeout(function(){
-            retrievePage(0);
-        }, 500);
     });
 
 });
