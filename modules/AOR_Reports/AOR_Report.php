@@ -714,7 +714,7 @@ class AOR_Report extends Basic {
         }
         $html .= "</tbody>";
 
-        $html .= $this->getTotalHtml($fields,$totals);
+        $html .= $this->getTotalHTML($fields,$totals);
 
         $html .= "</table>";
 
@@ -1040,7 +1040,8 @@ class AOR_Report extends Basic {
         if($beanList[$this->report_module]){
             $module = new $beanList[$this->report_module]();
 
-            $query['id_select'][] = $this->db->quoteIdentifier($module->table_name).".id AS '".$module->table_name."_id'";
+            $query['id_select'][$module->table_name] = $this->db->quoteIdentifier($module->table_name).".id AS '".$module->table_name."_id'";
+            $query['id_select_group'][$module->table_name] = $this->db->quoteIdentifier($module->table_name).".id";
 
             $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND deleted = 0 ORDER BY field_order ASC";
 
@@ -1119,6 +1120,11 @@ class AOR_Report extends Basic {
                     $select_field = $this->db->convert($select_field, 'date_format', array($timedate->getCalFormat($field->format)));
                 }
 
+                if ($field->link && isset($query['id_select'][$table_alias])) {
+                    $query['select'][] = $query['id_select'][$table_alias];
+                    $query['second_group_by'][] = $query['id_select_group'][$table_alias];
+                    unset($query['id_select'][$table_alias]);
+                }
 
                 if ($field->group_by == 1) {
                     $query['group_by'][] = $select_field;
@@ -1182,7 +1188,8 @@ class AOR_Report extends Basic {
                         if($rel_module != null) {
                             $query['join'][$alias] .= $this->build_report_access_query($rel_module, $name);
                         }
-                        $query['id_select'][] = $join['select']." AS '".$alias."_id'";
+                        $query['id_select'][$alias] = $join['select']." AS '".$alias."_id'";
+                        $query['id_select_group'][$alias] = $join['select'];
                     }
                     break;
                 default:
