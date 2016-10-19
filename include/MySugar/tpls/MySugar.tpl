@@ -244,7 +244,7 @@
                 });
                 mySugarLoader.insert();
                 $(function(){
-                    if (SUGAR.ajaxUI && SUGAR.ajaxUI.hist_loaded == false) retrievePage(0);
+                    if (SUGAR.ajaxUI && SUGAR.ajaxUI.hist_loaded == false) {console.log('test');  retrievePage(0)};
                 });
                 {/literal}
             </script>
