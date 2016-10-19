@@ -243,5 +243,8 @@
                     requires: []
                 });
                 mySugarLoader.insert();
+                $(function(){
+                    if (SUGAR.ajaxUI && SUGAR.ajaxUI.hist_loaded == false) retrievePage(0);
+                });
                 {/literal}
             </script>

@@ -213,7 +213,9 @@
         }
 
         YAHOO.util.Event.addListener(window, 'load', SUGAR.mySugar.init);
-
     </script>
+
+
+
 {/literal}
 {/if}
