@@ -74,40 +74,40 @@ body
 }
 
 .dashboardTabList {
-    height: 40px !important;
+    height: 36px !important;
     padding-left: 0px !important;
 }
 
+
 .dashboardTabList li.addButton {
-    border-bottom-left-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
+    padding: 2px 6px 2px 6px !important;
 }
 .dashboardTabList li {
-    padding:8px 8px 8px 8px !important;
-    font-weight: bold;
+    padding: 6px !important;
+    font-weight: normal !important;
     margin-top:2px !important;
-    border-color: #cccccc;
-    background-image: url('../../../../index.php?entryPoint=getImage&themeName=Suite7&imageName=bgBtn.gif');
-    background-size: contain;
 }
 
 .dashboardTabList li.active {
-    background-image: none;
-    background-color: #f10202 !important;
+
 }
 
 .dashboardTabList li.active a {
-    color: #fff;
+    color: #333;font-weight: bold !important;
 }
 
 .dashboardTabList li a {
-    color: #000;
-    font-weight: bold;
+    color: #333;
+}
+
+.dashboardTabList img:hover{
+    background-color: #fff !important;
 }
 
 .addButton {
     height: auto !important;
     line-height: inherit !important;
+    font-size: 14px;
 }
 
 .menuItem {
