@@ -335,7 +335,7 @@ echo"<script> $( '#pageNum_'+ 0).addClass( 'active' );</script>";
 $initScript = <<<SCRIPT
 <script>
 $(function(){
-    retrievePage(0);
+   if (SUGAR.ajaxUI && SUGAR.ajaxUI.hist_loaded == false) retrievePage(0);
 });
 </script>
 SCRIPT;
