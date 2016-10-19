@@ -2072,7 +2072,7 @@ ul.yui-nav li.selected {
     opacity: .8;
     filter: alpha(opacity=80);
     z-index: 20;
-    top: 7px;
+    top: 70px !important;
     border: 1px solid #aaa;
     padding: 5px;
 }

@@ -66,8 +66,7 @@ height: 10px;
 {$chartResources}
 {$mySugarChartResources}
 
-<div class="clear"></div>
-<div id="pageContainer" class="yui-skin-sam">
+
 <div id="pageNum_{$activePage}_div">
 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top: 5px;">
  	<tr>
@@ -105,20 +104,16 @@ height: 10px;
 	<div id="pageNum_{$divPageNum}_div" style="display:none;">
 	</div>
 	{/foreach}
-
-
-
-	<div id="dashletsDialog" style="display:none;">
-		<div class="hd" id="dashletsDialogHeader"><a href="javascript:void(0)" onClick="javascript:SUGAR.mySugar.closeDashletsDialog();">
-			<div class="container-close">&nbsp;</div></a>{$lblAdd}
-		</div>
-		<div class="bd" id="dashletsList">
-			<form></form>
-		</div>
-
-	</div>
-				
 	
+
+<div id="dashletsDialog" style="display:none;">
+    <div class="hd" id="dashletsDialogHeader"><a href="javascript:void(0)" onClick="javascript:SUGAR.mySugar.closeDashletsDialog();">
+            <div class="container-close">&nbsp;</div></a>{$lblAdd}
+    </div>
+    <div class="bd" id="dashletsList">
+        <form></form>
+    </div>
+
 </div>
 <script type="text/javascript">
     var activePage = {$activePage};

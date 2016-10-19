@@ -74,12 +74,40 @@ body
 }
 
 .dashboardTabList {
-    height: 40px !important;
+    height: 36px !important;
+    padding-left: 0px !important;
+}
+
+
+.dashboardTabList li.addButton {
+    padding: 2px 6px 2px 6px !important;
+}
+.dashboardTabList li {
+    padding: 6px !important;
+    font-weight: normal !important;
+    margin-top:2px !important;
+}
+
+.dashboardTabList li.active {
+
+}
+
+.dashboardTabList li.active a {
+    color: #333;font-weight: bold !important;
+}
+
+.dashboardTabList li a {
+    color: #333;
+}
+
+.dashboardTabList img:hover{
+    background-color: #fff !important;
 }
 
 .addButton {
-    height: 32px !important;
-    line-height: 32px !important;
+    height: auto !important;
+    line-height: inherit !important;
+    font-size: 14px;
 }
 
 .menuItem {
@@ -3695,7 +3723,7 @@ li div.star {float:none;}
     opacity : .8;
     filter : alpha(opacity=80);
     z-index: 20;
-    top: 7px;
+    top: 50px;
     border: 1px solid #aaa;
     padding: 5px;
 }
