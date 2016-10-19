@@ -17,7 +17,7 @@ function retrieveData(page_id) {
   $("div[id^=pageNum_]").css('display','none');
   $("#pageNum_" + page_id + "_div").css("display", "block");
   $("#pageContainer").html('<div class="container-fluid"><img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0" alt=""></div>');
-
+  $('#dashletsDialog_mask').css('display', 'none');
   $.ajax({
 
     url: "index.php?entryPoint=retrieve_dash_page",
