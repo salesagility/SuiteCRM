@@ -142,7 +142,7 @@ class UsersViewDetail extends ViewDetail {
         if ( $show_roles ) {
             ob_start();
 //            echo "<div>";
-            require_once('modules/ACLRoles/DetailUserRole.php');
+            require_once('modules/ACLRoles/DetailUserAccess.php');
 //            echo "</div></div>";
 
 

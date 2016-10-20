@@ -147,7 +147,6 @@
             {* access users tab (ACL ROLE matrix) *}
             <div class="tab-pane-NOBOOTSTRAPTOGGLER fade" id='tab-content-{{$tabCount}}'>
                 <div class="row detail-view-row">
-                    access
                     {{$ROLE_HTML}}
                 </div>
             </div>
