@@ -218,7 +218,7 @@
     {*{{/if}}*}
     <script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>
     <script type="text/javascript" src="modules/Favorites/favorites.js"></script>
-
+    <script type='text/javascript' src='{sugar_getjspath file='modules/Users/DetailView.js'}'></script>
     {literal}
 
         <script type="text/javascript">
@@ -262,4 +262,3 @@
         </script>
 
     {/literal}
-

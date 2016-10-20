@@ -544,7 +544,7 @@ class="yui-navset detailview_tabs"
 </div>
 {{include file=$footerTpl}}
 {{if $useTabs}}
-<script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
+<script type='text/javascript' src='{sugar_getjspath file='modules/javascript/popup_helper.js'}'></script>
 <script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
 <script type="text/javascript">
 var {{$module}}_detailview_tabs = new YAHOO.widget.TabView("{{$module}}_detailview_tabs");
@@ -553,3 +553,4 @@ var {{$module}}_detailview_tabs = new YAHOO.widget.TabView("{{$module}}_detailvi
 {{/if}}
 <script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>
 <script type="text/javascript" src="modules/Favorites/favorites.js"></script>
+<script type='text/javascript' src='{sugar_getjspath file='modules/Users/DetailView.js'}'></script>
