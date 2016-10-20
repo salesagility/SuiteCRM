@@ -74,7 +74,7 @@ $viewdefs['Users']['DetailView'] = array (
                         ),
                     'LBL_EMPLOYEE_INFORMATION' =>
                         array (
-                            'newTab' => true,
+                            'newTab' => false,
                             'panelDefault' => 'expanded',
                         ),
                 ),
