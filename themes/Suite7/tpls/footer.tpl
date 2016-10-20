@@ -197,7 +197,7 @@ function qe_init(){
             </div>
             <div class="modal-footer">
                 <button class="btn btn-default" type="button" data-dismiss="modal">{$MOD.LBL_CANCEL}</button>
-                <button id="btn-generic" class="btn btn-danger" type="button">{$MOD.LBL_GENERATE_PASSWORD_BUTTON_LABEL}</button>
+                <button id="btn-generic" class="btn btn-danger" type="button">{$MOD.LBL_OK}</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
