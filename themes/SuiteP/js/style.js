@@ -522,6 +522,32 @@ $(function () {
         initFooterPopups();
     }
 
+    setInterval(function(){
+        $('#alerts').css({left: 16-$('#alerts').width()+'px'});
+    },100);
+
+    // fix dropdown menu top-position
+    var ddInt = setInterval(function(){
+        if($('.sugar_action_button span').length > 0) {
+            $('.sugar_action_button span').click(function (e) {
+                var hsum = 0;
+                if(!$(this).closest('.sugar_action_button').find('.subnav').hasClass('upper')) {
+                    hsum+= 22;
+                }
+                else {
+                    $(this).closest('.sugar_action_button').find('.subnav li').each(function (e) {
+                        hsum -= $(this).height();
+                    });
+                }
+                var _this = $(this);
+                setTimeout(function(){
+                    _this.closest('.sugar_action_button').find('.subnav').css('top', hsum);
+                }, 11);
+            });
+            clearInterval(ddInt);
+        }
+    }, 300);
+
     // Fix for edit view layout match for layout design
     $('body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-12.edit-view-field fieldset>table tr>td:nth-of-type(2) input[type="checkbox"]').closest('tr').addClass('checkbox-row');
 

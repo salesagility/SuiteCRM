@@ -972,7 +972,7 @@ function return_application_language($language)
     }
 
     $temp_app_strings = $app_strings;
-    $default_language = $sugar_config['default_language'];
+    $default_language = isset($sugar_config['default_language']) ? $sugar_config['default_language'] : null;
 
     $langs = array();
     if ($language != 'en_us') {

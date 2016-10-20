@@ -37,7 +37,7 @@ class CaseEventsHook {
             $field_name = $field['field'];
             $display_field = $field['display_field'];
             $name = $field['display_name'];
-            if($old->$field_name != $new->$field_name){
+            if( (isset($old->$field_name) ? $old->$field_name : null) != (isset($new->$field_name) ? $new->$field_name : null)){
                 $event = new AOP_Case_Events();
                 $old_display = $old->$display_field;
                 $new_display = $new->$display_field;
@@ -57,7 +57,7 @@ class CaseEventsHook {
             //New case so do nothing.
             return;
         }
-        if($_REQUEST['module'] == 'Import'){
+        if(isset($_REQUEST['module']) && $_REQUEST['module'] == 'Import'){
             return;
         }
         $oldbean = new aCase();

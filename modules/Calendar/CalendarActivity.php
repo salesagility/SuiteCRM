@@ -156,7 +156,7 @@ class CalendarActivity {
 	 * @param boolean $show_completed use to allow filtering completed events 
 	 * @return array
 	 */
-	function get_activities($activities, $user_id, $show_tasks, $view_start_time, $view_end_time, $view, $show_calls = true, $show_completed = true)
+	public static function get_activities($activities, $user_id, $show_tasks, $view_start_time, $view_end_time, $view, $show_calls = true, $show_completed = true)
 	{
 
 		global $current_user;
@@ -185,7 +185,7 @@ class CalendarActivity {
 					$bean->disable_row_level_security = true;
 				}
 
-				$where = self::get_occurs_until_where_clause($bean->table_name, $bean->rel_users_table, $view_start_time, $view_end_time, $activity['start'], $activity['end'], $view);
+				$where = self::get_occurs_until_where_clause($bean->table_name, isset($bean->rel_users_table) ? $bean->rel_users_table : null, $view_start_time, $view_end_time, $activity['start'], $activity['end'], $view);
 
 				if($key == "Meeting"){
 					$where .= $completedMeetings;
