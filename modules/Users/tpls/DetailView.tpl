@@ -532,6 +532,13 @@ class="yui-navset detailview_tabs"
             </div>
         </div>
 </div>
+   {{counter name="tabCount" print=false}}
+    <div id='tabcontent{{$tabCount}}'>
+        <div id="detailpanel_{{$tabCount+1}}" class="detail view  detail508 expanded">
+            <div id="advanced">
+                 {{$ROLE_HTML}}
+             </div>
+        </div>
 
 </div>
 </div>

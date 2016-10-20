@@ -485,33 +485,6 @@ $(function () {
                 ]
             };
         }
-
-        var tabsRefresh = function () {
-            // hide all tabs..
-            for (var i = 1; i <= tabFramesLength; i++) {
-                for (var j = 0; j < tabFrames['tab' + i].length; j++) {
-                    $(tabFrames['tab' + i][j]).hide();
-                }
-            }
-
-            // show the active only
-            var activeTab = $(tabActiveSelector).first().attr('id');
-            for (i = 0; i < tabFrames[activeTab].length; i++) {
-                $(tabFrames[activeTab][i]).show();
-            }
-        }
-
-        for (var i = 1; i <= tabFramesLength; i++) {
-            $('#tab' + i + ', input[type="button"]').click(function () {
-                setTimeout(function () {
-                    tabsRefresh();
-                }, 300);
-            });
-        }
-        setTimeout(function () {
-            tabsRefresh();
-        }, 300);
-
     }
 
     // Fix for footer position

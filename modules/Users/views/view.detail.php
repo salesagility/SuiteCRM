@@ -223,5 +223,4 @@ EOHTML;
         }
         return $theTitle;
     }
-
 }
