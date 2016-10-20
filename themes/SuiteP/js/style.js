@@ -548,4 +548,43 @@ $(function () {
         }
     }, 300);
 
+    // Fix for edit view layout match for layout design
+    $('body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-12.edit-view-field fieldset>table tr>td:nth-of-type(2) input[type="checkbox"]').closest('tr').addClass('checkbox-row');
+
+    // resize relate fields
+    var resizeRelatedFields = function() {
+        if($(window).width()>768) {
+            $('body #bootstrap-container #content #pagecontent #EditView #EditView_tabs .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-8.edit-view-field.yui-ac select + input[type="text"].sqsEnabled.yui-ac-input').each(function (i, inp) {
+                var frm = $(inp).closest('.yui-ac');
+                var sel = frm.find('select');
+                var btns = frm.find('span.id-ff.multiple');
+                var w = frm.outerWidth(true) - (sel.outerWidth(true) + btns.outerWidth(true)) - ($(window).width() / 90) - 15;
+                $(inp).attr('style', 'width: ' + w + 'px !important;');
+            });
+        }
+    };
+
+    $(window).click(function(){
+        resizeRelatedFields();
+        setTimeout(function(){
+            resizeRelatedFields();
+        }, 500);
+    });
+
+    $(window).resize(function(){
+        resizeRelatedFields();
+    });
+
+    $(window).load(function(){
+        resizeRelatedFields();
+    });
+
+    $(document).ready(function(){
+        resizeRelatedFields();
+    });
+
+    setTimeout(function(){
+        resizeRelatedFields();
+    }, 1500);
+
 });
