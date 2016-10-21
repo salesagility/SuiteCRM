@@ -160,9 +160,9 @@ class ImportViewStep3 extends ImportView
             $this->_showImportError($mod_strings['LBL_NO_LINES'],$_REQUEST['import_module'],'Step2');
             return;
         }
-        
+
         // save first row to send to step 4
-        $this->ss->assign("FIRSTROW", base64_encode(serialize($rows[0])));
+        $this->ss->assign("FIRSTROW", htmlentities(json_encode($rows[0])));
 
         // Now build template
         $this->ss->assign("TMP_FILE", $uploadFileName );

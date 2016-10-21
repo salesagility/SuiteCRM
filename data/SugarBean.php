@@ -593,7 +593,7 @@ class SugarBean
      * Internal Function, do not override.
      */
     public static function get_union_related_list($parentbean, $order_by = "", $sort_order = '', $where = "",
-                                           $row_offset = 0, $limit = -1, $max = -1, $show_deleted = 0, $subpanel_def)
+                                                  $row_offset = 0, $limit = -1, $max = -1, $show_deleted = 0, $subpanel_def)
     {
         $secondary_queries = array();
         global $layout_edit_mode;
@@ -770,6 +770,7 @@ class SugarBean
 
     protected static function build_sub_queries_for_union($subpanel_list, $subpanel_def, $parentbean, $order_by)
     {
+
         global $beanList;
         $subqueries = array();
         foreach ($subpanel_list as $this_subpanel) {
@@ -877,7 +878,7 @@ class SugarBean
      * @return array $fetched data.
      */
     public function process_union_list_query($parent_bean, $query,
-                                      $row_offset, $limit = -1, $max_per_page = -1, $where = '', $subpanel_def, $query_row_count = '', $secondary_queries = array())
+                                             $row_offset, $limit = -1, $max_per_page = -1, $where = '', $subpanel_def, $query_row_count = '', $secondary_queries = array())
     {
         $db = DBManagerFactory::getInstance('listviews');
         /**
@@ -1888,16 +1889,6 @@ class SugarBean
         // use the db independent query generator
         $this->preprocess_fields_on_save();
 
-        //construct the SQL to create the audit record if auditing is enabled.
-        $auditDataChanges = array();
-        if ($this->is_AuditEnabled()) {
-            if ($isUpdate && !isset($this->fetched_row)) {
-                $GLOBALS['log']->debug('Auditing: Retrieve was not called, audit record will not be created.');
-            } else {
-                $auditDataChanges = $this->db->getAuditDataChanges($this);
-            }
-        }
-
         $this->_sendNotifications($check_notify);
 
         if ($isUpdate) {
@@ -1906,22 +1897,9 @@ class SugarBean
             $this->db->insert($this);
         }
 
-        if (!empty($auditDataChanges) && is_array($auditDataChanges)) {
-            foreach ($auditDataChanges as $change) {
-                $this->db->save_audit_records($this, $change);
-            }
-        }
-
-
         if (empty($GLOBALS['resavingRelatedBeans'])) {
             SugarRelationship::resaveRelatedBeans();
         }
-
-        // populate fetched row with current bean values
-        foreach ($auditDataChanges as $change) {
-            $this->fetched_row[$change['field_name']] = $change['after'];
-        }
-
 
         /* BEGIN - SECURITY GROUPS - inheritance */
         require_once('modules/SecurityGroups/SecurityGroup.php');
@@ -1933,6 +1911,8 @@ class SugarBean
         }
 
         $this->call_custom_logic('after_save', '');
+
+        $this->auditBean($isUpdate);
 
         //Now that the record has been saved, we don't want to insert again on further saves
         $this->new_with_id = false;
@@ -2782,8 +2762,21 @@ class SugarBean
         $xtpl->parse($template_name);
         $xtpl->parse($template_name . "_Subject");
 
-        $notify_mail->Body = from_html(trim($xtpl->text($template_name)));
-        $notify_mail->Subject = from_html($xtpl->text($template_name . "_Subject"));
+        // NOTE: Crowdin translation system requires some HTML tags in the template, namely <p> and <br>.
+        // These will go into the HTML version of the email, but not into the text version, nor the subject line.
+
+        $tempBody = from_html(trim($xtpl->text($template_name)));
+        $notify_mail->msgHTML($tempBody);
+
+        // Improve the text version of the email with some "reverse linkification",
+        // making "<a href=link>text</a>" links readable as "text [link]"
+        $tempBody = preg_replace(  '/<a href=([\"\']?)(.*?)\1>(.*?)<\/a>/', "\\3 [\\2]", $tempBody);
+
+        // all the other HTML tags get removed from the text version:
+        $notify_mail->AltBody = strip_tags($tempBody);
+
+        // strip_tags is used because subject lines NEVER include HTML tags, according to official specification:
+        $notify_mail->Subject = strip_tags(from_html($xtpl->text($template_name . "_Subject")));
 
         // cn: bug 8568 encode notify email in User's outbound email encoding
         $notify_mail->prepForOutbound();
@@ -3377,16 +3370,16 @@ class SugarBean
         return $ret_array['select'] . $ret_array['from'] . $ret_array['where'] . $ret_array['order_by'];
     }
 
-	public function get_relationship_field($field)
-	{
-		foreach ($this->field_defs as $field_def => $value) {
-			if (isset($value['relationship_fields']) && 
-				in_array($field, $value['relationship_fields']) &&
+    public function get_relationship_field($field)
+    {
+        foreach ($this->field_defs as $field_def => $value) {
+            if (isset($value['relationship_fields']) &&
+                in_array($field, $value['relationship_fields']) &&
                 (!isset($value['link_type']) || $value['link_type'] != 'relationship_info')
             ) {
                 return $field_def;
             }
-		}
+        }
 
         return false;
     }
@@ -4358,7 +4351,7 @@ class SugarBean
      * Internal function, do not override.
      */
     public function get_related_list($child_seed, $related_field_name, $order_by = "", $where = "",
-                              $row_offset = 0, $limit = -1, $max = -1, $show_deleted = 0)
+                                     $row_offset = 0, $limit = -1, $max = -1, $show_deleted = 0)
     {
         global $layout_edit_mode;
 
@@ -5532,5 +5525,38 @@ class SugarBean
     public function create_export_query($order_by, $where)
     {
         return $this->create_new_list_query($order_by, $where, array(), array(), 0, '', false, $this, true, true);
+    }
+
+    /**
+     * Checks auditing is enables and then carrys out an audit on the current bean.
+     *
+     * @param $isUpdate
+     */
+    public function auditBean($isUpdate)
+    {
+        if ($this->is_AuditEnabled() && $isUpdate) {
+
+            $auditDataChanges = $this->db->getAuditDataChanges($this);
+
+            if (!empty($auditDataChanges)) {
+                $this->createAuditRecord($auditDataChanges);
+            } else {
+                $GLOBALS['log']->debug('Auditing: createAuditRecord was not called, audit record will not be created.');
+            }
+        }
+    }
+
+    /**
+     * Takes the audit changes array and creates entries in audit table.
+     * Reset's the bean fetched row so changes are not duplicated.
+     *
+     * @param array $auditDataChanges
+     */
+    protected function createAuditRecord(array $auditDataChanges)
+    {
+        foreach ($auditDataChanges as $change) {
+            $this->db->save_audit_records($this, $change);
+            $this->fetched_row[$change['field_name']] = $change['after'];
+        }
     }
 }

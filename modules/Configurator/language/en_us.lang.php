@@ -125,6 +125,7 @@ $mod_strings = array (
     'LBL_ENABLE_INLINE_EDITING_LIST_DESC' => 'Select to enable Inline Editing for fields on the list view. If unselected Inline Editing will be disabled on list view.',
     'LBL_ENABLE_INLINE_EDITING_DETAIL' => 'Enable inline editing on detail view',
     'LBL_ENABLE_INLINE_EDITING_DETAIL_DESC' => 'Select to enable Inline Editing for fields on the detail view. If unselected Inline Editing will be disabled on detail view.',
+	'LBL_HIDE_SUBPANELS' => 'Collapsed subpanels',
     'LIST_ENTRIES_PER_LISTVIEW'=>'Listview items per page',
 	'LIST_ENTRIES_PER_SUBPANEL'=>'Subpanel items per page',
 	'LOG_MEMORY_USAGE'=>'Log memory usage',
@@ -389,8 +390,8 @@ If you choose to not embed your font in the PDF, the generated PDF file will be 
 Adding a PDF font to SuiteCRM requires to follow steps 1 and 2 of the TCPDF Fonts documentation available in the "DOCS" section of the <a href="http://www.tcpdf.org" target="_blank">TCPDF website</a>.
 <br><br>The pfm2afm and ttf2ufm utils are available in fonts/utils in the TCPDF package that you can download on the "DOWNLOAD" section of the <a href="http://www.tcpdf.org" target="_blank">TCPDF website</a>.
 <br><br>Load the metric file generated in step 2 and your font file below.
-BSOFR'
-,
+BSOFR',
+
     'ERR_MISSING_CIDINFO' => 'The field CID Information cannot be empty.',
     'LBL_ADDFONTRESULT_TITLE' => 'Result of the add font process',
     'LBL_STATUS_FONT_SUCCESS' => 'SUCCESS : The font has been added to SuiteCRM.',
@@ -415,7 +416,6 @@ BSOFR'
 	//Wizard Scenarios
 	'LBL_WIZARD_SCENARIOS' => 'Your Scenarios',
 	'LBL_WIZARD_SCENARIOS_EMPTY_LIST' => 'No scenarios have been configured',
-	'LBL_WIZARD_LOCALE_DESC' => 'Specify how you would like data in SuiteCRM to be displayed, based on your geographical location. The settings you provide here will be the default settings. Users will be able set their own preferences.',
 	'LBL_WIZARD_SCENARIOS_DESC' => 'Choose which scenarios are appropriate for your installation.  These options can be changed post-install.',
 
     'LBL_WIZARD_TITLE' => 'Admin Wizard',
@@ -443,6 +443,7 @@ To configure additional system settings, click <a href="index.php?module=Adminis
 	'LBL_WELCOME' => 'Welcome' /*for 508 compliance fix*/,
 	'LBL_LOGO' => 'Logo' /*for 508 compliance fix*/,
     'LBL_ENABLE_HISTORY_CONTACTS_EMAILS' => 'Show related contacts\' emails in History subpanel for modules',
+	
 );
 
 

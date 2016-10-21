@@ -95,7 +95,7 @@ Studio2 = {
 								for (var l=0;l<field.childNodes.length;l++) {
 									var property = field.childNodes[l];
 
-									if (property.className && (property.className.indexOf('field_name') != -1) && property.firstChild) {
+									if (!(property instanceof SVGElement) && property.className && (property.className.indexOf('field_name') != -1) && property.firstChild) {
 										if (property.firstChild.nodeValue.indexOf('(empty)') != -1) {
 											//register field to be expandable
 											_write_("(empty) found");

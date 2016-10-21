@@ -50,7 +50,7 @@
 {assign var="starting_choice" value="="}
 {/if}
 
-<div style="white-space:nowrap !important;">
+<div class="dateTimeRangeChoice" style="white-space:nowrap !important;">
 <select id="{$id}_range_choice" name="{$id}_range_choice" style="width:125px !important;" onchange="{$id}_range_change(this.value);">
 {html_options options={{sugarvar key='options' string=true}} selected=$starting_choice}
 </select>

@@ -1,6 +1,7 @@
 <?php
 
 require_once('include/ListView/ListViewSmarty.php');
+require_once('ProjectListViewData.php');
 
 // custom/modules/Project/ProjectListViewSmarty.php
 

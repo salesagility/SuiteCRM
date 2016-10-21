@@ -119,15 +119,15 @@ require_once('include/EditView/EditView2.php');
 
 
  	function setup($searchdefs, $searchFields = array(), $tpl, $displayView = 'basic_search', $listViewDefs = array()){
-		$this->searchdefs =  $searchdefs[$this->module];
+		$this->searchdefs =  isset($searchdefs[$this->module]) ? $searchdefs[$this->module] : null;
  		$this->tpl = $tpl;
  		//used by advanced search
  		$this->listViewDefs = $listViewDefs;
  		$this->displayView = $displayView;
  		$this->view = $this->view.'_'.$displayView;
  		$tokens = explode('_', $this->displayView);
+        $this->searchFields = $searchFields[$this->module];
  		$this->parsedView = $tokens[0];
-                $this->searchFields = $searchFields[$this->module];
  		if($this->displayView != 'saved_views'){
  			$this->_build_field_defs();
  		}
@@ -377,7 +377,7 @@ require_once('include/EditView/EditView2.php');
 	function _build_field_defs(){
 		$this->formData = array();
 		$this->fieldDefs = array();
-		foreach($this->searchdefs['layout'][$this->displayView] as $data){
+		foreach((array) $this->searchdefs['layout'][$this->displayView] as $data){
 			if(is_array($data)){
 				//Fields may be listed but disabled so that when they are enabled, they have the correct custom display data.
 				if (isset($data['enabled']) && $data['enabled'] == false)
@@ -658,7 +658,7 @@ require_once('include/EditView/EditView2.php');
 
          //rrs check for team_id
 
-         foreach($this->searchFields as $field=>$parms) {
+         foreach((array) $this->searchFields as $field=>$parms) {
              $customField = false;
              // Jenny - Bug 7462: We need a type check here to avoid database errors
              // when searching for numeric fields. This is a temporary fix until we have

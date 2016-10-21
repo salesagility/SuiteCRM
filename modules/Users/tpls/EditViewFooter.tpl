@@ -49,7 +49,7 @@
             {include file="modules/Emails/templates/emailOptions.tpl"}
         {/if}
 </div>
-<div>
+<div class="user-tab-content">
             {if ($CHANGE_PWD) == '1'}
             <div id="generate_password">
             <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
@@ -139,7 +139,7 @@
             {/if}
     </div>
     {if $SHOW_THEMES}
-    <div>
+    <div class="user-tab-content">
         <div id="themepicker" style="display:{$HIDE_FOR_GROUP_AND_PORTAL}">
         <table class="edit view" border="0" cellpadding="0" cellspacing="0" width="100%">
             <tbody>
@@ -163,7 +163,7 @@
         </div>
     </div>
     {/if}
-    <div>
+    <div class="user-tab-content">
         <div id="settings" style="display:{$HIDE_FOR_GROUP_AND_PORTAL}">
         <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 
@@ -351,7 +351,7 @@
         </div>
     </div>
     {if $ID}
-    <div id="eapm_area" style='display:{$HIDE_FOR_GROUP_AND_PORTAL};'>
+    <div id="eapm_area" style='display:{$HIDE_FOR_GROUP_AND_PORTAL};' class="user-tab-content">
         <div style="text-align:center; width: 100%">{sugar_image name="loading"}</div>
     </div>
     {/if}

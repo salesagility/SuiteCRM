@@ -1309,12 +1309,12 @@
 				<div style="margin-bottom: 16px;">
 					{if $WARNING_MESSAGE}
 					<div id='target_message'><font color='red'><b>{$WARNING_MESSAGE}</b></font></div>
-					<br>
+					<br class="emptyRow">
 					{/if}
 					<div id="alert_messages"></div>
 					{if $diagnose}
 					{$diagnose}
-					<br>
+					<br class="emptyRow">
 					{/if}
 					<div id="marketing_errors" class="error">
 						{if $error_on_marketing_name}{$error_on_marketing_name}<br>{/if}

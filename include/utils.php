@@ -972,7 +972,7 @@ function return_application_language($language)
     }
 
     $temp_app_strings = $app_strings;
-    $default_language = $sugar_config['default_language'];
+    $default_language = isset($sugar_config['default_language']) ? $sugar_config['default_language'] : null;
 
     $langs = array();
     if ($language != 'en_us') {
@@ -4287,8 +4287,16 @@ function createGroupUser($name)
 
 function _getIcon($iconFileName)
 {
-    $iconName = "icon_{$iconFileName}.gif";
-    $iconFound = SugarThemeRegistry::current()->getImageURL($iconName, false);
+    if(file_exists(SugarThemeRegistry::current()->getImagePath().DIRECTORY_SEPARATOR.'icon_'.$iconFileName.'.svg')) {
+        $iconName = "icon_{$iconFileName}.svg";
+        $iconFound = SugarThemeRegistry::current()->getImageURL($iconName, false);
+    }
+    else {
+        $iconName = "icon_{$iconFileName}.gif";
+        $iconFound = SugarThemeRegistry::current()->getImageURL($iconName, false);
+    }
+
+
 
     //First try un-ucfirst-ing the icon name
     if (empty($iconFound)) {
@@ -5307,7 +5315,7 @@ function assignConcatenatedValue(SugarBean $bean, $fieldDef, $value)
  */
 function sugar_unserialize($value)
 {
-    preg_match('/[oc]:\d+:/i', $value, $matches);
+    preg_match('/[oc]:[^:]*\d+:/i', $value, $matches);
 
     if (count($matches)) {
         return false;

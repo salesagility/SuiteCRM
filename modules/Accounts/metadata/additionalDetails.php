@@ -69,7 +69,7 @@ function additionalDetailsAccount($fields) {
 	if(!empty($fields['PHONE_FAX'])) $overlib_string .= '<b>'. $mod_strings['LBL_FAX'] . '</b> <span class="phone">' . $fields['PHONE_FAX'] . '</span><br>';
 	if(!empty($fields['PHONE_ALTERNATE'])) $overlib_string .= '<b>'. $mod_strings['LBL_OTHER_PHONE'] . '</b> <span class="phone">' . $fields['PHONE_ALTERNATE'] . '</span><br>';
 	if(!empty($fields['WEBSITE'])) 
-		$overlib_string .= '<a target=_blank href=http://'. $fields['WEBSITE'] . '>' . $fields['WEBSITE'] . '</a><br>';
+		$overlib_string .= '<a target=_blank href='. $fields['WEBSITE'] . '>' . $fields['WEBSITE'] . '</a><br>';
 	if(!empty($fields['INDUSTRY'])) $overlib_string .= '<b>'. $mod_strings['LBL_INDUSTRY'] . '</b> ' . $fields['INDUSTRY'] . '<br>';
 	if(!empty($fields['DESCRIPTION'])) {
 		$overlib_string .= '<b>'. $mod_strings['LBL_DESCRIPTION'] . '</b> ' . substr($fields['DESCRIPTION'], 0, 300);

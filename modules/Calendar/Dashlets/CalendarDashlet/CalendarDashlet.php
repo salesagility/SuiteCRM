@@ -38,95 +38,85 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-
+require_once ('modules/Calendar/Calendar.php');
 require_once('include/Dashlets/Dashlet.php');
 
 
 class CalendarDashlet extends Dashlet {
     var $view = 'week';
 
-    function __construct($id, $def) {
+    function CalendarDashlet($id, $def) {
         $this->loadLanguage('CalendarDashlet','modules/Calendar/Dashlets/');
 
-		parent::__construct($id);
-
-		$this->isConfigurable = true;
-		$this->hasScript = true;
-
-		if(empty($def['title']))
+		parent::Dashlet($id); 
+         
+		$this->isConfigurable = true; 
+		$this->hasScript = true;  
+                
+		if(empty($def['title'])) 
 			$this->title = $this->dashletStrings['LBL_TITLE'];
-		else
-			$this->title = $def['title'];
-
+		else 
+			$this->title = $def['title'];  
+			
 		if(!empty($def['view']))
 			$this->view = $def['view'];
 
+		// seedBean is need to set the calendar icon
+		$this->seedBean  = BeanFactory::newBean('Calendar');
+		$this->seedBean->module_name = 'Calendar';
+             
     }
-
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    function CalendarDashlet($id, $def){
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct($id, $def);
-    }
-
 
     function display(){
 		ob_start();
-
+		
 		if(isset($GLOBALS['cal_strings']))
 			return parent::display() . "Only one Calendar dashlet is allowed.";
-
+			
 		require_once('modules/Calendar/Calendar.php');
 		require_once('modules/Calendar/CalendarDisplay.php');
 		require_once("modules/Calendar/CalendarGrid.php");
-
+		
 		global $cal_strings, $current_language;
 		$cal_strings = return_module_language($current_language, 'Calendar');
-
+		
 		if(!ACLController::checkAccess('Calendar', 'list', true))
 			ACLController::displayNoAccess(true);
-
+						
 		$cal = new Calendar($this->view);
 		$cal->dashlet = true;
 		$cal->add_activities($GLOBALS['current_user']);
 		$cal->load_activities();
-
+		
 		$display = new CalendarDisplay($cal,$this->id);
 		$display->display_calendar_header(false);
+
 		$display->display();
 
 		$str = ob_get_contents();
 		ob_end_clean();
-
+		
 		return parent::display() . $str;
     }
-
+    
 
     function displayOptions() {
-        global $app_strings,$mod_strings;
+        global $app_strings,$mod_strings;        
         $ss = new Sugar_Smarty();
-        $ss->assign('MOD', $this->dashletStrings);
+        $ss->assign('MOD', $this->dashletStrings);        
         $ss->assign('title', $this->title);
         $ss->assign('view', $this->view);
         $ss->assign('id', $this->id);
 
         return parent::displayOptions() . $ss->fetch('modules/Calendar/Dashlets/CalendarDashlet/CalendarDashletOptions.tpl');
-    }
+    }  
 
     function saveOptions($req) {
         global $sugar_config, $timedate, $current_user, $theme;
         $options = array();
-        $options['title'] = $_REQUEST['title'];
-        $options['view'] = $_REQUEST['view'];
-
+        $options['title'] = $_REQUEST['title']; 
+        $options['view'] = $_REQUEST['view'];       
+         
         return $options;
     }
 

@@ -1546,7 +1546,7 @@ pre code {
 }
 }
 
-@media (min-width:1200px) {
+@media (min-width:1130px) {
     .container {
     width: 1170px;
 }
@@ -1907,8 +1907,8 @@ pre code {
     width: 91.66666667%}
 
 .col-md-10 {
-    /*width: 83.33333333%;
-    width: 88%;*/
+    width: 83.33333333%;
+    width: 88%;
     }
 
 .col-md-9 {
@@ -2059,7 +2059,7 @@ pre code {
 }
 }
 
-@media (min-width:1200px) {
+@media (min-width:1130px) {
     .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9 {
     float: left;
 }
@@ -4178,7 +4178,7 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
     margin-top: 4px;
 }
 
-@media (min-width:1251px) {
+@media (min-width:1130px) {
     .navbar-toggle {
     display: none;
 }
@@ -6493,7 +6493,7 @@ button.close {
     display: none!important;
 }
 
-@media (max-width:767px) {
+@media (max-width:768px) {
     .visible-xs {
     display: block!important;
 }
@@ -6601,7 +6601,7 @@ td.visible-md, th.visible-md {
 }
 }
 
-@media (min-width:1200px) {
+@media (min-width:1130px) {
     .visible-lg {
     display: block!important;
 }
@@ -6619,44 +6619,55 @@ td.visible-lg, th.visible-lg {
 }
 }
 
-@media (min-width:1200px) {
+@media (min-width:1130px) {
     .visible-lg-block {
     display: block!important;
 }
 }
 
-@media (min-width:1200px) {
+@media (min-width:1130px) {
     .visible-lg-inline {
     display: inline!important;
 }
 }
 
-@media (min-width:1200px) {
+@media (min-width:1130px) {
     .visible-lg-inline-block {
     display: inline-block!important;
 }
 }
 
-@media (max-width:1250px) {
-    .hidden-xs {}
-    /*display: none!important;*/
-    .navbar-nav {display:none!important;}
+/*@media (max-width:1250px) {*/
+
+    /*.navbar-nav {display:none!important;}*/
+/*}*/
+
+@media (max-width: 768px) {
+    .hidden-xs {
+        display: none!important;
+    }
 }
 
-@media (max-width:1250px) {
-    .hidden-sm {}
-    /*display: none!important;*/
+@media (max-width:991px) {
+    .hidden-sm {
+        display: none!important;
+    }
 
 }
 
-@media (min-width:1251px) {
+@media (max-width:1130px) {
     .hidden-md {
-    display: none!important;
-}
+        display: none!important;
+    }
 }
 
-@media (min-width:1200px) {
-    .hidden-lg {
+@media (min-width:992px) and (max-width:1130px) {
+    .hidden-mdlg {
+        display: none !important;
+}
+
+@media (min-width:1130px) {
+.hidden-lg {
     display: none!important;
 }
 }

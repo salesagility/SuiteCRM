@@ -1,6 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -28,10 +32,10 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 $(document).ready(function () {
     loadSidebar();
     $("ul.clickMenu").each(function (index, node) {
@@ -229,8 +233,7 @@ $( "button" ).click(function() {
 
 });
 
-// Custom JavaScript for copyright pop-ups
-$(function() {
+var initFooterPopups = function() {
     $( "#dialog, #dialog2" ).dialog({
         autoOpen: false,
         show: {
@@ -249,6 +252,11 @@ $(function() {
     $( "#admin_options" ).click(function() {
         $( "#dialog2" ).dialog( "open" );
     });
+};
+
+// Custom JavaScript for copyright pop-ups
+$(function() {
+    initFooterPopups();
 });
 
 // Back to top animation
@@ -268,33 +276,18 @@ $(function() {
     });
 });
 
-var checkContents = setInterval(function(){
-    if ($(".list.view").length > 0 || $(".list.View").length > 0){ // Check if element has been found
-
-        if($(".list.view").length > 0){
-            element = $(".list.view");
+jQuery(function($){
+    $('table.footable').footable({
+        "breakpoints": {
+            "x-small": 480,
+            "small": 768,
+            "medium": 992,
+            "large": 1130,
+            "x-large": 1250
         }
+    });
+})
 
-        if($(".list.View").length > 0){
-            element = $(".list.View");
-        }
-
-        //$('#dashletPanel th:not(:first-child)').attr("data-hide","phone, tablet");
-        //$('#subPanel th:not(:first-child)').attr("data-hide","phone, tablet");
-        $(element).footable();
-        //$(".footable").find("th:first").attr("data-toggle","true");
-
-        // Button to toggle list view search
-        $('.showsearch').click(function() {
-            $('.search_form').toggle();
-        });
-        $('#userlinks_togglemobilesearch').click(function() {
-            $('#searchmobile').toggle('slide', {direction: 'left'}, '350');
-        });
-
-        clearInterval(checkContents);
-    }
-},1);
 
 // JavaScript fix to remove unrequired classes on smaller screens where sidebar is obsolete
 $(window).resize(function () {
@@ -316,12 +309,20 @@ function loadSidebar() {
                 $('#buttontoggle').removeClass('button-toggle-collapsed');
                 $('#buttontoggle').addClass('button-toggle-expanded');
                 $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2');
+                $('footer').removeClass('collapsedSidebar');
+                $('footer').addClass('expandedSidebar');
+                $('#bootstrap-container').removeClass('collapsedSidebar');
+                $('#bootstrap-container').addClass('expandedSidebar');
             }
             if ($('.sidebar').is(':hidden')) {
                 $.cookie('sidebartoggle', 'collapsed');
                 $('#buttontoggle').removeClass('button-toggle-expanded');
                 $('#buttontoggle').addClass('button-toggle-collapsed');
                 $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-3 col-md-2 sidebar');
+                $('footer').removeClass('expandedSidebar');
+                $('footer').addClass('collapsedSidebar');
+                $('#bootstrap-container').removeClass('expandedSidebar');
+                $('#bootstrap-container').addClass('collapsedSidebar');
             }
         });
 
@@ -331,28 +332,21 @@ function loadSidebar() {
             $('#buttontoggle').removeClass('button-toggle-expanded');
             $('#buttontoggle').addClass('button-toggle-collapsed');
             $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-3 col-md-2 sidebar');
+            $('footer').removeClass('expandedSidebar');
+            $('footer').addClass('collapsedSidebar');
+            $('#bootstrap-container').removeClass('expandedSidebar');
+            $('#bootstrap-container').addClass('collapsedSidebar');
         }
         else {
             $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2');
             $('#buttontoggle').removeClass('button-toggle-collapsed');
             $('#buttontoggle').addClass('button-toggle-expanded');
+            $('footer').removeClass('collapsedSidebar');
+            $('footer').addClass('expandedSidebar');
+            $('#bootstrap-container').removeClass('collapsedSidebar');
+            $('#bootstrap-container').addClass('expandedSidebar');
         }
     }
-}
-
-
-update_screen_resolution();
-
-    $(window).resize(function () {
-        update_screen_resolution();
-    });
-
-function update_screen_resolution(){
-    $.ajax({
-        url: 'index.php?module=Calendar&action=processScreenSize',
-        type: 'post',
-        data: { 'width' : $( window ).width(), 'height' : $( window ).height(), 'to_pdf': true}
-    });
 }
 
 // Alerts Notification
@@ -362,4 +356,196 @@ $(document).ready(function() {
     });
 });
 
+
+function changeFirstTab(src) {
+    var selected = $(src);
+    var selectedHtml = $(selected.context).html();
+    $('#xstab0').html(selectedHtml);
+    return true;
+}
 // End of custom jQuery
+
+
+// fix for tab navigation on user profile for SuiteP theme
+
+var getParameterByName = function(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+var isUserProfilePage = function() {
+    var module = getParameterByName('module');
+    if(!module) {
+        module = $('#EditView_tabs').closest('form#EditView').find('input[name="module"]').val();
+    }
+    if(!module) {
+        if(typeof module_sugar_grp1 !== "undefined") {
+            module = module_sugar_grp1;
+        }
+    }
+    return module == 'Users';
+};
+
+var isEditViewPage = function() {
+    var action = getParameterByName('action');
+    if(!action) {
+        action = $('#EditView_tabs').closest('form#EditView').find('input[name="page"]').val();
+    }
+    return action == 'EditView';
+};
+
+var isDetailViewPage = function() {
+    var action = getParameterByName('action');
+    if(!action) {
+        action = action_sugar_grp1;
+    }
+    return action == 'DetailView';
+};
+
+$(function () {
+    if(isUserProfilePage()) {
+
+        var tabActiveSelector;
+        var tabFramesLength;
+        var tabFrames;
+
+        if (isEditViewPage()) {
+            tabActiveSelector = '#EditView_tabs.yui-navset.yui-navset-top ul.yui-nav li.selected a';
+            tabFramesLength = 5;
+            tabFrames = {
+                // User Profile
+                'tab1': [
+                    // User Profile & Employee Information
+                    'form#EditView div#EditView_tabs.yui-navset.yui-navset-top div.yui-content div div#EditView_tabs',
+                    // Email Settings
+                    '#email_options'
+                ],
+                // Password
+                'tab2': [
+                    // Password
+                    '#generate_password'
+                ],
+                // Themes
+                'tab3': [
+                    // Themes
+                    '#themepicker'
+                ],
+                // Advanced
+                'tab4': [
+                    // User Settings
+                    '#settings',
+                    // Layout Options
+                    '#layout',
+                    // Locale Settings
+                    '#locale',
+                    // Calendar Options
+                    '#calendar_options'
+                ],
+                // External Account
+                'tab5': [
+                    '#eapm_area'
+                ]
+            };
+
+        }
+        if (isDetailViewPage()) {
+            tabActiveSelector = '#user_detailview_tabs.yui-navset.detailview_tabs.yui-navset-top ul.yui-nav li.selected a';
+            tabFramesLength = 3;
+            tabFrames = {
+                // User Profile
+                'tab1': [
+                    // User Profile & Employee Information
+                    'div#user_detailview_tabs.yui-navset.detailview_tabs.yui-navset-top div.yui-content',
+                    // Email Settings
+                    '#email_options',
+                    // Security Groups Management etc..
+                    '#subpanel_list'
+                ],
+                // Advanced
+                'tab2': [
+                    // User Settings
+                    '#settings',
+                    // Locale Settings
+                    '#locale',
+                    // Calendar Options
+                    '#calendar_options',
+                    // Layout Options
+                    '#edit_tabs',
+                    // Security Groups Management etc..
+                    '#subpanel_list'
+                ],
+                // Access
+                'tab3': [
+                    // Security Groups Management etc..
+                    '#subpanel_list'
+                ]
+            };
+        }
+
+        var tabsRefresh = function () {
+            // hide all tabs..
+            for (var i = 1; i <= tabFramesLength; i++) {
+                for (var j = 0; j < tabFrames['tab' + i].length; j++) {
+                    $(tabFrames['tab' + i][j]).hide();
+                }
+            }
+
+            // show the active only
+            var activeTab = $(tabActiveSelector).first().attr('id');
+            for (i = 0; i < tabFrames[activeTab].length; i++) {
+                $(tabFrames[activeTab][i]).show();
+            }
+        }
+
+        for (var i = 1; i <= tabFramesLength; i++) {
+            $('#tab' + i + ', input[type="button"]').click(function () {
+                setTimeout(function () {
+                    tabsRefresh();
+                }, 300);
+            });
+        }
+        setTimeout(function () {
+            tabsRefresh();
+        }, 300);
+
+    }
+
+    // Fix for footer position
+    if($('#bootstrap-container footer').length>0) {
+        var clazz = $('#bootstrap-container footer').attr('class');
+        $('body').append('<footer class="' + clazz + '">' + $('#bootstrap-container footer').html() + '</footer>');
+        $('#bootstrap-container footer').remove();
+        initFooterPopups();
+    }
+
+    setInterval(function(){
+        $('#alerts').css({left: 16-$('#alerts').width()+'px'});
+    },100);
+
+    // fix dropdown menu top-position
+    var ddInt = setInterval(function(){
+        if($('.sugar_action_button span').length > 0) {
+            $('.sugar_action_button span').click(function (e) {
+                var hsum = 0;
+                if(!$(this).closest('.sugar_action_button').find('.subnav').hasClass('upper')) {
+                    hsum+= 22;
+                }
+                else {
+                    $(this).closest('.sugar_action_button').find('.subnav li').each(function (e) {
+                        hsum -= $(this).height();
+                    });
+                }
+                var _this = $(this);
+                setTimeout(function(){
+                    _this.closest('.sugar_action_button').find('.subnav').css('top', hsum);
+                }, 11);
+            });
+            clearInterval(ddInt);
+        }
+    }, 300);
+
+});

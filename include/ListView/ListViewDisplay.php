@@ -127,7 +127,7 @@ class ListViewDisplay {
         $params['handleMassupdate'] = true by default, have massupdate.php handle massupdates?
 	 * @param string:'id' $id_field
 	 */
-	function setup($seed, $file, $where, $params = array(), $offset = 0, $limit = -1,  $filter_fields = array(), $id_field = 'id') {
+	function setup($seed, $file, $where, $params = array(), $offset = 0, $limit = -1,  $filter_fields = array(), $id_field = 'id', $id = null) {
         $this->should_process = true;
         if(isset($seed->module_dir) && !$this->shouldProcess($seed->module_dir)){
         		return false;
@@ -150,7 +150,7 @@ class ListViewDisplay {
 
         $filter_fields = $this->setupFilterFields($filter_fields);
 
-        $data = $this->lvd->getListViewData($seed, $where, $offset, $limit, $filter_fields, $params, $id_field);
+        $data = $this->lvd->getListViewData($seed, $where, $offset, $limit, $filter_fields, $params, $id_field, true, $id);
 
         $this->fillDisplayColumnsWithVardefs();
 
@@ -406,7 +406,15 @@ class ListViewDisplay {
 		global $app_strings;
 
         $displayStyle = $total > 0 ? "" : "display: none;";
-		$selectedObjectSpan = "<span style='$displayStyle' id='selectedRecordsTop'>{$app_strings['LBL_LISTVIEW_SELECTED_OBJECTS']}<input  style='border: 0px; background: transparent; font-size: inherit; color: inherit' type='text' id='selectCountTop' readonly name='selectCount[]' value='{$total}' /></span>";
+		$template = new Sugar_Smarty();
+
+		$displayStyle = $total > 0 ? "" : "display: none;";
+		$selectedObjectSpan = "";
+
+		$template->assign('DISPLAY_STYLE', $displayStyle);
+		$template->assign('APP', $app_strings);
+		$template->assign('TOTAL_ITEMS_SELECTED', $total);
+		$selectedObjectSpan = $template->fetch('include/ListView/ListViewSelectObjects.tpl');
 
         return $selectedObjectSpan;
 	}
@@ -476,7 +484,7 @@ class ListViewDisplay {
         global $app_strings;
 		unset($_REQUEST[session_name()]);
 		unset($_REQUEST['PHPSESSID']);
-        $current_query_by_page = base64_encode(serialize($_REQUEST));
+        $current_query_by_page = htmlentities(json_encode($_REQUEST));
 
 		$js = <<<EOF
             if(sugarListView.get_checks_count() < 1) {

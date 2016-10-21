@@ -47,6 +47,7 @@
  */
 class TemplateHandler {
     var $cacheDir;
+    var $themeDir = 'themes/';
     var $templateDir = 'modules/';
     var $ss;
 
@@ -106,6 +107,28 @@ class TemplateHandler {
                 unlink($cacheDir . $e);
             }
         }
+
+        /**
+         * Due to a change since 7.7, the tpl files may also exist in the current theme folder.
+         *
+         * So we need to also clear tpl files in eg cache/[Current Theme]/[modules]/**.tpl
+         * The tpl files for each theme should be cleared for consistency.
+         */
+        $cacheDir = rtrim($GLOBALS['sugar_config']['cache_dir'], '/\\');
+        $themesDir = array_filter(glob($cacheDir.'/themes/*'), 'is_dir');
+
+        foreach($themesDir as $theme) {
+            $tplDir = $theme.'/modules/'. $module . '/';
+            if(!file_exists($tplDir)) continue;
+            $d = dir($tplDir);
+            while($e = $d->read()) {
+                if(!empty($view) && $e != $view ) continue;
+                $end =strlen($e) - 4;
+                if(is_file($tplDir. $e) && $end > 1 && substr($e, $end) == '.tpl') {
+                    unlink($tplDir . $e);
+                }
+            }
+        }
     }
 
     /**
@@ -119,9 +142,10 @@ class TemplateHandler {
      * @param metaDataDefs metadata definition as Array
      **/
     function buildTemplate($module, $view, $tpl, $ajaxSave, $metaDataDefs) {
-        $this->loadSmarty();
+        global $theme;
 
-        $cacheDir = create_cache_directory($this->templateDir. $module . '/');
+        $this->loadSmarty();
+        $cacheDir = create_cache_directory($this->themeDir.$theme.'/'.$this->templateDir. $module . '/');
         $file = $cacheDir . $view . '.tpl';
         $string = '{* Create Date: ' . date('Y-m-d H:i:s') . "*}\n";
         $this->ss->left_delimiter = '{{';
@@ -268,11 +292,12 @@ class TemplateHandler {
      * @param view string view need (eg DetailView, EditView, etc)
      */
     function checkTemplate($module, $view, $checkFormName = false, $formName='') {
+        global $theme;
         if(inDeveloperMode() || !empty($_SESSION['developerMode'])){
             return false;
         }
         $view = $checkFormName ? $formName : $view;
-        return file_exists($this->cacheDir . $this->templateDir . $module . '/' .$view . '.tpl');
+        return file_exists($this->cacheDir.$this->themeDir.$theme.'/'.$this->templateDir . $module . '/' .$view . '.tpl');
     }
 
     /**
@@ -285,11 +310,12 @@ class TemplateHandler {
      * @param metaData Optional metadata definition Array
      */
     function displayTemplate($module, $view, $tpl, $ajaxSave = false, $metaDataDefs = null) {
+        global $theme;
         $this->loadSmarty();
         if(!$this->checkTemplate($module, $view)) {
             $this->buildTemplate($module, $view, $tpl, $ajaxSave, $metaDataDefs);
         }
-        $file = $this->cacheDir . $this->templateDir . $module . '/' . $view . '.tpl';
+        $file = $this->cacheDir.$this->themeDir.$theme.'/'.$this->templateDir . $module . '/' . $view . '.tpl';
         if(file_exists($file)) {
            return $this->ss->fetch($file);
         } else {
@@ -306,16 +332,17 @@ class TemplateHandler {
      * @param view string view need (eg DetailView, EditView, etc)
      */
     function deleteTemplate($module, $view) {
-        if(is_file($this->cacheDir . $this->templateDir . $module . '/' .$view . '.tpl')) {
+        global $theme;
+        if(is_file($this->cacheDir.$this->themeDir.$theme.'/'.$this->templateDir . $module . '/' .$view . '.tpl')) {
             // Bug #54634 : RTC 18144 : Cannot add more than 1 user to role but popup is multi-selectable
             if ( !isset($this->ss) )
             {
                 $this->loadSmarty();
             }
-            $cache_file_name = $this->ss->_get_compile_path($this->cacheDir . $this->templateDir . $module . '/' .$view . '.tpl');
+            $cache_file_name = $this->ss->_get_compile_path($this->cacheDir.$this->themeDir.$theme.'/'.$this->templateDir . $module . '/' .$view . '.tpl');
             SugarCache::cleanFile($cache_file_name);
 
-            return unlink($this->cacheDir . $this->templateDir . $module . '/' .$view . '.tpl');
+            return unlink($this->cacheDir.$this->themeDir.$theme.'/'.$this->templateDir . $module . '/' .$view . '.tpl');
         }
         return false;
     }

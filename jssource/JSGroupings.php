@@ -80,12 +80,12 @@
                 'include/javascript/jquery/jquery.browser.js'         => 'include/javascript/sugar_grp1_jquery.js',
                 'include/javascript/jquery/jquery.json-2.3.js'        => 'include/javascript/sugar_grp1_jquery.js',
                 'include/javascript/jquery/jquery.cookie.js'        => 'include/javascript/sugar_grp1_jquery.js',
-                //jquery for moddule menus
+                //jquery for module menus
                 'include/javascript/jquery/jquery.hoverIntent.js'              => 'include/javascript/sugar_grp1_jquery.js',
                 'include/javascript/jquery/jquery.hoverscroll.js'              => 'include/javascript/sugar_grp1_jquery.js',
                 'include/javascript/jquery/jquery.hotkeys.js'              => 'include/javascript/sugar_grp1_jquery.js',
                 'include/javascript/jquery/jquery.superfish.js'              => 'include/javascript/sugar_grp1_jquery.js',
-                'include/javascript/jquery/jquery.tipTip.js'              => 'include/javascript/sugar_grp1_jquery.js',
+//                'include/javascript/jquery/jquery.tipTip.js'              => 'include/javascript/sugar_grp1_jquery.js',
                 'include/javascript/jquery/jquery.sugarMenu.js'              => 'include/javascript/sugar_grp1_jquery.js',
                 'include/javascript/jquery/jquery.highLight.js'              => 'include/javascript/sugar_grp1_jquery.js',
                 'include/javascript/jquery/jquery.showLoading.js'              => 'include/javascript/sugar_grp1_jquery.js',
@@ -201,6 +201,17 @@
                 'include/javascript/jsclass_async.js'   => 'include/javascript/sugar_grp_jsolait.js',
                 'modules/Meetings/jsclass_scheduler.js'   => 'include/javascript/sugar_grp_jsolait.js',
             ),
+			$sugar_grp_project = array(
+                'include/javascript/jsclass_base.js'    => 'include/javascript/sugar_grp_project.js',
+                'include/javascript/jsclass_async.js'   => 'include/javascript/sugar_grp_project.js',
+				'modules/Project/jsclass_scheduler.js'   => 'include/javascript/sugar_grp_project.js',
+            ),
+			$sugar_grp_project_template = array(
+                'include/javascript/jsclass_base.js'    => 'include/javascript/sugar_grp_project_template.js',
+                'include/javascript/jsclass_async.js'   => 'include/javascript/sugar_grp_project_template.js',
+				'modules/AM_ProjectTemplates/jsclass_scheduler.js'   => 'include/javascript/sugar_grp_project_template.js',
+            ),
+
         );
 
     /**

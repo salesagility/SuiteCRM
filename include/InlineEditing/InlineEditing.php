@@ -304,6 +304,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
 function saveField($field, $id, $module, $value)
 {
 
+    global $current_user;
     $bean = BeanFactory::getBean($module, $id);
 
     if (is_object($bean) && $bean->id != "") {
@@ -317,15 +318,26 @@ function saveField($field, $id, $module, $value)
                 $bean->parent_type = $_REQUEST['parent_type'];
                 $bean->fill_in_additional_parent_fields(); // get up to date parent info as need it to display name
             }
+        }else if ($bean->field_defs[$field]['type'] == "currency"){
+			if (stripos($field, 'usdollar')) {
+				$newfield = str_replace("_usdollar", "", $field);
+				$bean->$newfield = $value;
+			}
+			else{
+				$bean->$field = $value;
+			}
+            
         }else{
             $bean->$field = $value;
         }
 
-        if (($bean->fetched_row['assigned_user_id'] != $value) && ($bean->isOwner($bean->created_by))) {
-            $check_notify = TRUE;
-        }
-        else {
-            $check_notify = FALSE;
+        $check_notify = FALSE;
+
+        if (isset( $bean->fetched_row['assigned_user_id']) && $field == "assigned_user_name") {
+            $old_assigned_user_id = $bean->fetched_row['assigned_user_id'];
+            if (!empty($value) && ($old_assigned_user_id != $value) && ($value != $current_user->id)) {
+                $check_notify = TRUE;
+            }
         }
 
         $bean->save($check_notify);
@@ -472,7 +484,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 
             $value .= getFieldValueFromModule($fieldName,$vardef['ext2'],$record);
 
-        }else if(!empty($vardef['rname'])){
+        } else if(!empty($vardef['rname']) || $vardef['name'] == "related_doc_name") {
             $value .= getFieldValueFromModule($fieldName,$vardef['module'],$record);
 
         } else {
@@ -487,7 +499,15 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 	{
 		$value = '<a href='.$value.' target="_blank">'.$value.'</a>';
 	}
-
+	
+	if($vardef['type'] == "currency"){
+		if($_REQUEST['view'] != "DetailView"){			
+			$value = currency_format_number($value);		
+		}
+		else
+			$value = format_number($value);		
+	}
+	
     return $value;
 }
 

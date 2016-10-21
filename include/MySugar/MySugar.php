@@ -1,11 +1,12 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,7 +37,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
 
 /**
@@ -87,6 +88,10 @@ class MySugar{
     }
 
 	function addDashlet(){
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+            return;
+        }
+
 		if(!is_file(sugar_cached('dashlets/dashlets.php'))) {
             require_once('include/Dashlets/DashletCacheBuilder.php');
 
@@ -104,16 +109,14 @@ class MySugar{
 
 		    $guid = create_guid();
 			$options = array();
-		    if (isset($_REQUEST['type']) && $_REQUEST['type'] == 'web') {
+            if (isset($_POST['type'], $_POST['type_module']) && $_POST['type'] == 'web') {
 				$dashlet_module = 'Home';
 				require_once('include/Dashlets/DashletRssFeedTitle.php');
-				$options['url'] = $_REQUEST['type_module'];
+                $options['url'] = $_POST['type_module'];
 				$webDashlet = new DashletRssFeedTitle($options['url']);
 				$options['title'] = $webDashlet->generateTitle();
-				unset($webDashlet);
-		    }
-			elseif (!empty($_REQUEST['type_module'])) {
-				$dashlet_module = $_REQUEST['type_module'];
+            } elseif (!empty($_POST['type_module'])) {
+                $dashlet_module = $_POST['type_module'];
 			}
 			elseif (isset($dashletsFiles[$_REQUEST['id']]['module'])) {
 				$dashlet_module = $dashletsFiles[$_REQUEST['id']]['module'];
@@ -410,10 +413,14 @@ EOJS;
 	function saveLayout(){
 		global $current_user;
 
-		if(!empty($_REQUEST['layout'])) {
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+            return;
+        }
+
+        if (!empty($_POST['layout'])) {
 		    $newColumns = array();
 
-		    $newLayout = explode('|', $_REQUEST['layout']);
+            $newLayout = explode('|', $_POST['layout']);
 
 			$pages = $current_user->getPreference('pages', $this->type);
 

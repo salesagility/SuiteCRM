@@ -184,61 +184,41 @@ class SubPanelTiles
 
                foreach($tabs as $tab){
     	           $displayTabs []= array('key'=>$tab, 'label'=>translate($this->subpanel_definitions->layout_defs['subpanel_setup'][$tab]['title_key']));
-    	           //echo '<td nowrap="nowrap"><a class="subTabLink" href="#' . $tab . '">' .  translate($this->subpanel_definitions->layout_defs['subpanel_setup'][$tab]['title_key']) .  '</a></td><td> | </td>';
     	       }
                $sugarTab->setup(array(),array(),$displayTabs);
                $sugarTab->display();
             }
-            //echo '<td width="100%">&nbsp;</td></tr></table>';
         }
 	    return $tabs;
 
 	}
 	function display($showContainer = true, $forceTabless = false)
 	{
-		global $layout_edit_mode, $sugar_version, $sugar_config, $current_user, $app_strings;
+		global $layout_edit_mode, $sugar_version, $sugar_config, $current_user, $app_strings, $modListHeader;
+
 		if(isset($layout_edit_mode) && $layout_edit_mode){
 			return;
 		}
 
-		global $modListHeader;
+        $template = new Sugar_Smarty();
+        $template_header = "";
+        $template_body = "";
+        $template_footer = "";
 
-		ob_start();
-    echo '<script type="text/javascript" src="'. getJSPath('include/SubPanel/SubPanelTiles.js') . '"></script>';
-?>
-<script>
-if(document.DetailView != null &&
-   document.DetailView.elements != null &&
-   document.DetailView.elements.layout_def_key != null &&
-   typeof document.DetailView.elements['layout_def_key'] != 'undefined'){
-    document.DetailView.elements['layout_def_key'].value = '<?php echo $this->layout_def_key; ?>';
-}
-</script>
-<?php
+        $tabs = array();
+        $tabs_properties = array();
+        $tab_names = array();
 
-		$tabs = array();
-		$default_div_display = 'inline';
-		if(!empty($sugar_config['hide_subpanels_on_login'])){
-			if(!isset($_SESSION['visited_details'][$this->focus->module_dir])){
-				setcookie($this->focus->module_dir . '_divs', '',0,null,null,false,true);
-				unset($_COOKIE[$this->focus->module_dir . '_divs']);
-				$_SESSION['visited_details'][$this->focus->module_dir] = true;
+        $default_div_display = 'inline';
+        if(!empty($sugar_config['hide_subpanels_on_login'])){
+            if(!isset($_SESSION['visited_details'][$this->focus->module_dir])){
+                setcookie($this->focus->module_dir . '_divs', '',0,null,null,false,true);
+                unset($_COOKIE[$this->focus->module_dir . '_divs']);
+                $_SESSION['visited_details'][$this->focus->module_dir] = true;
+            }
+            $default_div_display = 'none';}
+        $div_cookies = get_sub_cookies($this->focus->module_dir . '_divs');
 
-			}
-			$default_div_display = 'none';
-		}
-		$div_cookies = get_sub_cookies($this->focus->module_dir . '_divs');
-
-
-		//Display the group header. this section is executed only if the tabbed interface is being used.
-		$current_key = '';
-		if (! empty($this->show_tabs))
-		{
-			require_once('include/tabs.php');
-    		$tab_panel = new SugarWidgetTabs($tabs, $current_key, 'showSubPanel');
-			echo get_form_header('Related', '', false);
-			echo "<br />" . $tab_panel->display();
-		}
 
         if(empty($_REQUEST['subpanels']))
         {
@@ -258,62 +238,63 @@ if(document.DetailView != null &&
             {
                 $availableTabs = $tabs ;
                 $tabs = array_intersect ( $usersLayout , $availableTabs ) ; // remove any tabs that have been removed since the user's layout was saved
-                foreach (array_diff ( $availableTabs , $usersLayout ) as $tab)
-                    $tabs [] = $tab ;
+                foreach (array_diff ( $availableTabs , $usersLayout ) as $tab) {
+                    $tabs [] = $tab;
+                }
             }
         }
         else
         {
-        	$tabs = explode(',', $_REQUEST['subpanels']);
+            $tabs = explode(',', $_REQUEST['subpanels']);
         }
 
-        $tab_names = array();
-
-        if($showContainer)
+        // Display the group header. this section is executed only if the tabbed interface is being used.
+        $current_key = '';
+        if (! empty($this->show_tabs))
         {
-            echo '<ul class="noBullet" id="subpanel_list">';
+            require_once('include/tabs.php');
+            $tab_panel = new SugarWidgetTabs($tabs, $current_key, 'showSubPanel');
+            $template_header .= get_form_header('Related', '', false);
+            $template_header .= $tab_panel->display();
         }
-        //echo "<li id='hidden_0' style='height: 5px' class='noBullet'>&nbsp;&nbsp;&nbsp;</li>";
+
         if (empty($GLOBALS['relationships'])) {
-        	if (!class_exists('Relationship')) {
-        		require('modules/Relationships/Relationship.php');
-        	}
-        	$rel= new Relationship();
-	        $rel->load_relationship_meta();
+            if (!class_exists('Relationship')) {
+                require('modules/Relationships/Relationship.php');
+            }
+            $rel= new Relationship();
+            $rel->load_relationship_meta();
         }
 
-        // this array will store names of sub-panels that can contain items
-        // of each module
-        $module_sub_panels = array();
-
-        foreach ($tabs as $tab)
-		{
-			//load meta definition of the sub-panel.
-			$thisPanel=$this->subpanel_definitions->load_subpanel($tab);
-            if ($thisPanel === false)
+        foreach ($tabs as $t => $tab)
+        {
+            // load meta definition of the sub-panel.
+            $thisPanel = $this->subpanel_definitions->load_subpanel($tab);
+            if ($thisPanel === false) {
                 continue;
-			//this if-block will try to skip over ophaned subpanels. Studio/MB are being delete unloaded modules completely.
-			//this check will ignore subpanels that are collections (activities, history, etc)
-			if (!isset($thisPanel->_instance_properties['collection_list']) and isset($thisPanel->_instance_properties['get_subpanel_data']) ) {
-				//ignore when data source is a function
+            }
+            // this if-block will try to skip over ophaned subpanels. Studio/MB are being delete unloaded modules completely.
+            // this check will ignore subpanels that are collections (activities, history, etc)
+            if (!isset($thisPanel->_instance_properties['collection_list']) and isset($thisPanel->_instance_properties['get_subpanel_data']) ) {
+                // ignore when data source is a function
 
-				if (!isset($this->focus->field_defs[$thisPanel->_instance_properties['get_subpanel_data']])) {
-					if (stripos($thisPanel->_instance_properties['get_subpanel_data'],'function:') === false) {
-						$GLOBALS['log']->fatal("Bad subpanel definition, it has incorrect value for get_subpanel_data property " .$tab);
-						continue;
-					}
-				} else {
-					$rel_name='';
-					if (isset($this->focus->field_defs[$thisPanel->_instance_properties['get_subpanel_data']]['relationship'])) {
-						$rel_name=$this->focus->field_defs[$thisPanel->_instance_properties['get_subpanel_data']]['relationship'];
-					}
+                if (!isset($this->focus->field_defs[$thisPanel->_instance_properties['get_subpanel_data']])) {
+                    if (stripos($thisPanel->_instance_properties['get_subpanel_data'],'function:') === false) {
+                        $GLOBALS['log']->fatal("Bad subpanel definition, it has incorrect value for get_subpanel_data property " .$tab);
+                        continue;
+                    }
+                } else {
+                    $rel_name='';
+                    if (isset($this->focus->field_defs[$thisPanel->_instance_properties['get_subpanel_data']]['relationship'])) {
+                        $rel_name=$this->focus->field_defs[$thisPanel->_instance_properties['get_subpanel_data']]['relationship'];
+                    }
 
-					if (empty($rel_name) or !isset($GLOBALS['relationships'][$rel_name])) {
-						$GLOBALS['log']->fatal("Missing relationship definition " .$rel_name. ". skipping " .$tab ." subpanel");
-						continue;
-					}
-				}
-			}
+                    if (empty($rel_name) or !isset($GLOBALS['relationships'][$rel_name])) {
+                        $GLOBALS['log']->fatal("Missing relationship definition " .$rel_name. ". skipping " .$tab ." subpanel");
+                        continue;
+                    }
+                }
+            }
 
             if ($thisPanel->isCollection()) {
                 // collect names of sub-panels that may contain items of each module
@@ -332,34 +313,35 @@ if(document.DetailView != null &&
                 }
             }
 
-			echo '<li class="noBullet" id="whole_subpanel_' . $tab . '">';
+            $display = 'none';
+            $div_display = $default_div_display;
+            $cookie_name =   $tab . '_v';
 
-			$display= 'none';
-			$div_display = $default_div_display;
-			$cookie_name =   $tab . '_v';
-
-			if (isset($thisPanel->_instance_properties['collapsed']) && $thisPanel->_instance_properties['collapsed'])
-			{
-				$div_display = 'none';
-			}
-
-			if(isset($div_cookies[$cookie_name])){
-				//If defaultSubPanelExpandCollapse is set, ignore the cookie that remembers whether the panel is expanded or collapsed.
-				//To be used with the above 'collapsed' metadata setting so they will always be set the same when the page is loaded.
-				if(!isset($sugar_config['defaultSubPanelExpandCollapse']) || $sugar_config['defaultSubPanelExpandCollapse'] == false)
-					$div_display = 	$div_cookies[$cookie_name];
-			}
-			if(!empty($sugar_config['hide_subpanels'])){
-				$div_display = 'none';
-			}
-            if($thisPanel->isDefaultHidden()) {
+            if (isset($thisPanel->_instance_properties['collapsed']) && $thisPanel->_instance_properties['collapsed'])
+            {
                 $div_display = 'none';
             }
-			if($div_display == 'none'){
-				$opp_display  = 'inline';
-			}else{
-				$opp_display  = 'none';
-			}
+
+            if(isset($div_cookies[$cookie_name])){
+                // If defaultSubPanelExpandCollapse is set, ignore the cookie that remembers whether the panel is expanded or collapsed.
+                // To be used with the above 'collapsed' metadata setting so they will always be set the same when the page is loaded.
+                if(!isset($sugar_config['defaultSubPanelExpandCollapse']) || $sugar_config['defaultSubPanelExpandCollapse'] == false)
+                {
+                    $div_display = 	$div_cookies[$cookie_name];
+                }
+            }
+
+            if(!empty($sugar_config['hide_subpanels']) or $thisPanel->isDefaultHidden()) {
+                $div_display = 'none';
+            }
+
+            if($div_display == 'none'){
+                $opp_display  = 'inline';
+                $tabs_properties[$t]['expanded_subpanels'] = false;
+            } else{
+                $opp_display  = 'none';
+                $tabs_properties[$t]['expanded_subpanels'] = true;
+            }
 
             if (!empty($this->layout_def_key) ) {
                 $layout_def_key = $this->layout_def_key;
@@ -367,110 +349,64 @@ if(document.DetailView != null &&
                 $layout_def_key = '';
             }
 
-			if (empty($this->show_tabs))
-			{
-				$show_icon_html = SugarThemeRegistry::current()->getImage( 'advanced_search', 'border="0" align="absmiddle"',null,null,'.gif',translate('LBL_SHOW'));
-				$hide_icon_html = SugarThemeRegistry::current()->getImage( 'basic_search', 'border="0" align="absmiddle"',null,null,'.gif',translate('LBL_HIDE'));
-
- 		 		$max_min = "<a name=\"$tab\"> </a><span id=\"show_link_".$tab."\" style=\"display: $opp_display\"><a href='#' class='utilsLink' onclick=\"current_child_field = '".$tab."';showSubPanel('".$tab."',null,null,'".$layout_def_key."');document.getElementById('show_link_".$tab."').style.display='none';document.getElementById('hide_link_".$tab."').style.display='';return false;\">"
- 		 			. "" . $show_icon_html . "</a></span>";
-				$max_min .= "<span id=\"hide_link_".$tab."\" style=\"display: $div_display\"><a href='#' class='utilsLink' onclick=\"hideSubPanel('".$tab."');document.getElementById('hide_link_".$tab."').style.display='none';document.getElementById('show_link_".$tab."').style.display='';return false;\">"
-				 . "" . $hide_icon_html . "</a></span>";
-				echo '<div id="subpanel_title_' . $tab . '"';
-                if(empty($sugar_config['lock_subpanels']) || $sugar_config['lock_subpanels'] == false) echo ' onmouseover="this.style.cursor = \'move\';"';
-                echo '>' . get_form_header( $thisPanel->get_title(), $max_min, false) . '</div>';
-			}
-
-            echo <<<EOQ
-<div cookie_name="$cookie_name" id="subpanel_$tab" style="display:$div_display">
-    <script>document.getElementById("subpanel_$tab" ).cookie_name="$cookie_name";</script>
-EOQ;
-            $display_spd = '';
-            if($div_display != 'none'){
-            	echo "<script>SUGAR.util.doWhen(\"typeof(markSubPanelLoaded) != 'undefined'\", function() {markSubPanelLoaded('$tab');});</script>";
-            	$old_contents = ob_get_contents();
-            	@ob_end_clean();
-
-            	ob_start();
-            	include_once('include/SubPanel/SubPanel.php');
-            	$subpanel_object = new SubPanel($this->module, $_REQUEST['record'], $tab,$thisPanel,$layout_def_key);
-            	$subpanel_object->setTemplateFile('include/SubPanel/SubPanelDynamic.html');
-            	$subpanel_object->display();
-            	$subpanel_data = ob_get_contents();
-            	@ob_end_clean();
-
-            	ob_start();
-            	echo $this->get_buttons($thisPanel,$subpanel_object->subpanel_query);
-            	$buttons = ob_get_contents();
-            	@ob_end_clean();
-
-            	ob_start();
-            	echo $old_contents;
-            	//echo $buttons;
-                $display_spd = $subpanel_data;
-            }
-            echo <<<EOQ
-    <div id="list_subpanel_$tab">$display_spd</div>
-</div>
-EOQ;
-        	array_push($tab_names, $tab);
-        	echo '</li>';
-        } // end $tabs foreach
-        if($showContainer)
-        {
-        	echo '</ul>';
-
-
-            if(!empty($selected_group))
+            if (empty($this->show_tabs))
             {
-                // closing table from tpls/singletabmenu.tpl
-                echo '</td></tr></table>';
+                ///
+                /// Legacy Support for subpanels
+                $show_icon_html = SugarThemeRegistry::current()->getImage('advanced_search', 'border="0" align="absmiddle"', null, null, '.gif', translate('LBL_SHOW'));
+                $hide_icon_html = SugarThemeRegistry::current()->getImage('basic_search', 'border="0" align="absmiddle"', null, null, '.gif', translate('LBL_HIDE'));
+
+                $tabs_properties[$t]['show_icon_html'] = $show_icon_html;
+                $tabs_properties[$t]['hide_icon_html'] = $hide_icon_html;
+
+                $max_min = "<a name=\"$tab\"> </a><span id=\"show_link_".$tab."\" style=\"display: $opp_display\"><a href='#' class='utilsLink' onclick=\"current_child_field = '".$tab."';showSubPanel('".$tab."',null,null,'".$layout_def_key."');document.getElementById('show_link_".$tab."').style.display='none';document.getElementById('hide_link_".$tab."').style.display='';return false;\">"
+                    . "" . $show_icon_html . "</a></span>";
+                $max_min .= "<span id=\"hide_link_".$tab."\" style=\"display: $div_display\"><a href='#' class='utilsLink' onclick=\"hideSubPanel('".$tab."');document.getElementById('hide_link_".$tab."').style.display='none';document.getElementById('show_link_".$tab."').style.display='';return false;\">"
+                    . "" . $hide_icon_html . "</a></span>";
+                $tabs_properties[$t]['title'] = $thisPanel->get_title();
+                $tabs_properties[$t]['module_name'] = $thisPanel->get_module_name();
+                $tabs_properties[$t]['get_form_header']  = get_form_header( $thisPanel->get_title(), $max_min, false, false);
             }
+
+            $tabs_properties[$t]['cookie_name'] = $cookie_name;
+            $tabs_properties[$t]['div_display'] = $div_display;
+            $tabs_properties[$t]['opp_display'] = $opp_display;
+
+            // Get Subpanel
+            include_once('include/SubPanel/SubPanel.php');
+            $subpanel_object = new SubPanel($this->module, $_REQUEST['record'], $tab, $thisPanel, $layout_def_key);
+
+            $arr = array();
+            // TODO: Remove x-template:
+            $tabs_properties[$t]['subpanel_body'] = $subpanel_object->ProcessSubPanelListView('include/SubPanel/SubPanelDynamic.html', $arr);
+
+            // Get subpanel buttons
+            $tabs_properties[$t]['buttons'] = $this->get_buttons($thisPanel,$subpanel_object->subpanel_query);
+
+            array_push($tab_names, $tab);
         }
-        // drag/drop code
+
         $tab_names = '["' . join($tab_names, '","') . '"]';
-        global $sugar_config;
-
-        if(empty($sugar_config['lock_subpanels']) || $sugar_config['lock_subpanels'] == false) {
-            echo <<<EOQ
-    <script>
-    	var SubpanelInit = function() {
-    		SubpanelInitTabNames({$tab_names});
-    	}
-        var SubpanelInitTabNames = function(tabNames) {
-    		subpanel_dd = new Array();
-    		j = 0;
-    		for(i in tabNames) {
-    			subpanel_dd[j] = new ygDDList('whole_subpanel_' + tabNames[i]);
-    			subpanel_dd[j].setHandleElId('subpanel_title_' + tabNames[i]);
-    			subpanel_dd[j].onMouseDown = SUGAR.subpanelUtils.onDrag;
-    			subpanel_dd[j].afterEndDrag = SUGAR.subpanelUtils.onDrop;
-    			j++;
-    		}
-
-    		YAHOO.util.DDM.mode = 1;
-    	}
-    	currentModule = '{$this->module}';
-    	SUGAR.util.doWhen(
-    	    "typeof(SUGAR.subpanelUtils) == 'object' && typeof(SUGAR.subpanelUtils.onDrag) == 'function'" +
-    	        " && document.getElementById('subpanel_list')",
-    	    SubpanelInit
-    	);
-    </script>
-EOQ;
-        }
 
         $module_sub_panels = array_map('array_keys', $module_sub_panels);
         $module_sub_panels = json_encode($module_sub_panels);
-        echo <<<EOQ
-<script>
-var ModuleSubPanels = $module_sub_panels;
-</script>
-EOQ;
 
-		$ob_contents = ob_get_contents();
-		ob_end_clean();
-		return $ob_contents;
+        $template->assign('layout_def_key', $this->layout_def_key);
+        $template->assign('show_subpanel_tabs', $this->show_tabs);
+        $template->assign('subpanel_tabs', $tabs);
+        $template->assign('subpanel_tabs_properties', $tabs_properties);
+        $template->assign('module_sub_panels', $module_sub_panels);
+        $template->assign('sugar_config', $sugar_config);
+        $template->assign('REQUEST', $_REQUEST);
+        $template->assign('GLOBALS', $GLOBALS);
+        $template->assign('selected_group', $selected_group);
+        $template->assign('tab_names', $tab_names);
+        $template->assign('module_sub_panels', $module_sub_panels);
+        $template->assign('module', $this->module);
+
+        $template_body = $template->fetch('include/SubPanel/tpls/SubPanelTiles.tpl');
+
+        return $template_header . $template_body . $template_footer;
 	}
 
 

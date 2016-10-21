@@ -170,6 +170,6 @@ EditView_tabs.on('contentReady', function(e){
         {/if}
         <li><a id="tab6" href="#tab6" style='display:{$HIDE_FOR_GROUP_AND_PORTAL};'><em>{$MOD.LBL_USER_EMAIL_ACCOUNT_SETTINGS}</em></a></li>
     </ul>
-    <div class="yui-content">
+    <div class="yui-content user-tab-content">
         <div>
 <!-- BEGIN METADATA GENERATED CONTENT -->

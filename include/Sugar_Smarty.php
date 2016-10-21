@@ -105,4 +105,31 @@ class Sugar_Smarty extends Smarty
         // file wasn't found, so it must be gone.
         return true;
     }
+
+	/**
+	 * executes & returns or displays the template results
+	 *
+	 * @param string $resource_name
+	 * @param string $cache_id
+	 * @param string $compile_id
+	 * @param boolean $display
+	 */
+	function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false) {
+
+		/// Try and fetch the tpl from the theme folder
+		/// if the tpl exists in the theme folder then set the resource_name to the tpl in the theme folder.
+		/// otherwise fall back to the default tpl
+		$current_theme = SugarThemeRegistry::current();
+		$theme_directory = $current_theme->dirName;
+		if (strpos($resource_name, "themes" . DIRECTORY_SEPARATOR . $theme_directory) === false) {
+			$test_path = SUGAR_PATH . DIRECTORY_SEPARATOR . "themes" . DIRECTORY_SEPARATOR . $theme_directory . DIRECTORY_SEPARATOR . $resource_name;
+			if (file_exists($test_path)) {
+				$resource_name = "themes" . DIRECTORY_SEPARATOR . $theme_directory . DIRECTORY_SEPARATOR . $resource_name;
+			}
+		}
+		///
+		return parent::fetch($resource_name, $cache_id = null, $compile_id = null, $display);
+	}
+
+
 }
