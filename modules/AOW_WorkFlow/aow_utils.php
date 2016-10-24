@@ -316,6 +316,10 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
             $vardef['name'] = 'aow_temp_date';
         }
 
+        if(!$vardef) {
+            $vardef['name'] = $fieldname;
+        }
+
         // load SugarFieldHandler to render the field tpl file
         static $sfh;
 
