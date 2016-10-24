@@ -81,7 +81,8 @@ $configurator->parseLoggerSettings();
 $valid_public_key= true;
 if(!empty($_POST['saveConfig'])){
     if ($_POST['captcha_on'] == '1'){
-		$handle = @fopen("http://www.google.com/recaptcha/api/challenge?k=".$_POST['captcha_public_key']."&cachestop=35235354", "r");
+		(isset($_SERVER['HTTPS']) && 'on' === $_SERVER['HTTPS']) ? $protocol = 'https' : $protocol = 'http';
+		$handle = @fopen("$protocol://www.google.com/recaptcha/api/challenge?k=".$_POST['captcha_public_key']."&cachestop=35235354", "r");
 		$buffer ='';
 		if ($handle) {
 		    while (!feof($handle)) {
