@@ -55,6 +55,11 @@ class FavoritesController extends SugarController
 
     public function action_remove_record()
     {
+        if(!isset($_REQUEST['record_module']) OR !isset($_REQUEST['record_id'])) {
+            echo "{}";
+            return;
+        }
+
         $favourite_class = new Favorites();
         $favorite_id = $favourite_class->getFavoriteID($_REQUEST['record_module'], $_REQUEST['record_id']);
 
@@ -68,6 +73,11 @@ class FavoritesController extends SugarController
 
     public function action_check_favorite()
     {
+        if(!isset($_REQUEST['record_module']) OR !isset($_REQUEST['record_id'])) {
+            echo "{}";
+            return;
+        }
+
         $favourite_class = new Favorites();
         $return = $favourite_class->getFavoriteID($_REQUEST['record_module'], $_REQUEST['record_id']);
         echo json_encode($return);
@@ -75,6 +85,11 @@ class FavoritesController extends SugarController
 
     public function action_get_sidebar_elements()
     {
+        if(!isset($_REQUEST['record_id'])) {
+            echo "{}";
+            return;
+        }
+
         $favourite_class = new Favorites();
         $return = $favourite_class->getCurrentUserSidebarFavorites($_REQUEST['record_id']);
         echo json_encode($return);

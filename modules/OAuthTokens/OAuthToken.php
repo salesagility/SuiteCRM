@@ -299,10 +299,19 @@ class OAuthToken extends SugarBean
 
 }
 
-function displayDateFromTs($focus, $field, $value, $view='ListView')
+function displayDateFromTs(OAuthToken $focus, $field, $value, $view='ListView')
 {
-    $field = strtoupper($field);
-    if(!isset($focus[$field])) return '';
+    $uppercase_field = strtoupper($field);
+	$property_exists = property_exists($focus, $uppercase_field);
+
+	if($property_exists == false) {
+		return '';
+	};
+
+	if($property_exists == true && !isset($focus->$uppercase_field)) {
+		return '';
+	}
+
     global $timedate;
-    return $timedate->asUser($timedate->fromTimestamp($focus[$field]));
+    return $timedate->asUser($timedate->fromTimestamp($focus->$uppercase_field));
 }
