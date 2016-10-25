@@ -10845,3 +10845,159 @@ table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButt
     opacity: 1;
 }
 
+
+/* admin / inbound emails styles */
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr {
+    padding: 0px !important;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:first-child {
+    background-color: #BFCAD3;
+    padding: 5px 0px 2px 0px !important;
+    color: white;
+    font-weight: 700;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu {
+    min-width: 32px;
+    min-height: 16px;
+    line-height: 0px;
+    position: relative;
+    padding: 1px;
+    height: initial;
+    vertical-align: top;
+
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
+    padding: 0px !important;
+    background-color: #94A6B5;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding-right: 4px !important;
+    min-width: 32px;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button:hover {
+    background-color: #778591;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button input#massall.checkbox.massall {
+    float: left;
+    margin: 5px 0 0 4px;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button a#select_link {
+    padding: 0 !important;
+    border: 1px solid transparent !important;
+    overflow: hidden;
+    display: block;
+    text-decoration: none;
+    float: left;
+    margin: 0 5px 0 0;
+    color: #fff;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav {
+    padding: 0 !important;
+    width: auto;
+    background-color: #7b8a96;
+    line-height: 24px;
+    color: #ffffff;
+    left: 0;
+    right: auto;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li {
+    padding: 0;
+    background-color: #7b8a96;
+    width: 100%;
+    line-height: 24px;
+    color: #ffffff;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItem {
+    color: #ffffff;
+    width: 100%;
+    background-color: #7b8a96;
+    line-height: 24px;
+    padding: 0 5px 0 7px;
+    font-weight: normal;
+}
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItemHilite {
+    padding: 0 5px 0 7px;
+    font-weight: normal;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button span {
+    height: 15px;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td input.button {
+    background-color: #94A6B5 !important;
+    padding: 3px 8px !important;
+    border: 1px solid transparent !important;
+    height: 26px;
+    text-transform: capitalize;
+    line-height: 1px;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td input.button:hover {
+    background-color: #778591 !important;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td input {
+    line-height: initial;
+    min-height: initial;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) {
+    padding: 6px 7px 2px 5px !important;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button {
+    opacity: .5;
+    cursor: default;
+    width: 26px;
+    background-repeat: no-repeat;
+    background-image: none,url("../../../../themes/SuiteP/images/p_pag_tools.svg"),url("../../../../themes/SuiteP/images/p_pag_tools.png");
+    background-color: #94A6B5;
+    color: #c4c4c4;
+    height: 26px;
+    line-height: 26px;
+    padding: 0 10px 0 10px;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button[name="listViewStartButton"] {
+    background-position: 9px -29px;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button[name="listViewPrevButton"] {
+    background-position: 9px -50px;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button[name="listViewNextButton"] {
+    background-position: 10px -132px;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button[name="listViewEndButton"] {
+    background-position: 10px -112px;
+    margin-left: 2px;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button img {
+    display: none;
+}
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) span.pageNumbers {
+    top: -6px;
+    position: relative;
+}
+
+/* list items */
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr td {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
