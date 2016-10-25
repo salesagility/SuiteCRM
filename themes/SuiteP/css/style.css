@@ -11001,3 +11001,48 @@ div#content div#pagecontent form#MassUpdate table.list.view tbody tr td {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
 }
+
+/* edit form */
+
+div#content div#pagecontent form#EditView div.edit.view table tbody tr td {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+}
+
+div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot {
+    display: block;
+    float: none;
+}
+
+div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[type="text"],
+div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[name="filter_domain"],
+div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[name="email_num_autoreplies_24_hours"] {
+    width: 90%;
+}
+
+div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[type="text"][name="mailbox"]#mailbox,
+div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[type="text"][name="trashFolder"]#trashFolder,
+div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[type="text"][name="sentFolder"]#sentFolder {
+    width: 70%;
+}
+div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[type="button"]#subscribeFolderButton.button,
+div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[type="button"]#trashFolderButton.button,
+div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[type="button"]#sentFolderButton.button {
+    width: 18%;
+    min-width:71px;
+}
+
+div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input.button {
+    color: white;
+}
+
+div#content div#pagecontent form#EditView div.edit.view table tbody tr td select {
+    border: 2px solid #A5E8D6;
+}
+
+div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[name="from_name"]#from_name,
+div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[name="from_addr"]#from_addr,
+div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[name="reply_to_name"],
+div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[name="reply_to_addr"] {
+    width: 80%;
+}
