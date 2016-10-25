@@ -498,6 +498,9 @@ SUGAR.mySugar = function() {
 				}
 
 				dashletsListDiv.html(response['html']);
+
+				$('#dashletsList').html(response['html']);
+
 				
 				document.getElementById('dashletsDialog_c').style.display = '';
                 SUGAR.mySugar.dashletsDialog.show();
@@ -608,7 +611,7 @@ SUGAR.mySugar = function() {
 
 					webTab.className = 'active';
 					webTabAnchor.className = 'current';
-					webListDiv.style.display = '';					
+					webListDiv.style.display = '';
 					
 					break;
 				default:
@@ -731,7 +734,7 @@ SUGAR.mySugar = function() {
 
 			document.getElementById('dashletsDialog').style.display = '';																				 
 			SUGAR.mySugar.dashletsDialog.render();
-			document.getElementById('dashletsDialog_c').style.display = 'none';			
+			document.getElementById('dashletsDialog_c').style.display = 'none';
 		}	
 	 }; 
 }();

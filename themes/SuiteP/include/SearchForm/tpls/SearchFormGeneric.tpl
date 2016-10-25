@@ -76,15 +76,15 @@
           right=$basicMaxColumns
           assign=modVal
     }
-	<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 search_fields_basic">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3">
+	<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 search_fields_basic">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
 			{{if isset($colData.field.label)}}
 			<label for='{{$colData.field.name}}' >{sugar_translate label='{{$colData.field.label}}' module='{{$module}}'}</label>
 			{{elseif isset($fields[$colData.field.name])}}
 			<label for='{{$fields[$colData.field.name].name}}'> {sugar_translate label='{{$fields[$colData.field.name].vname}}' module='{{$module}}'}</label>
 			{{/if}}
 		</div>
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
 		{{sugar_field parentFieldArray='fields' vardef=$fields[$colData.field.name] accesskey=$ACCKEY displayType='searchView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name}}
 		</div>
 	</div>

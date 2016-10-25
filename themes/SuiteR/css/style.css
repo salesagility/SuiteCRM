@@ -2072,7 +2072,7 @@ ul.yui-nav li.selected {
     opacity: .8;
     filter: alpha(opacity=80);
     z-index: 20;
-    top: 7px;
+    top: 70px !important;
     border: 1px solid #aaa;
     padding: 5px;
 }
@@ -3723,7 +3723,108 @@ span#quickcreateplus{
     font-size:1.1em;
 }
 
-#quickcreatetop button, #desktop_notifications button{
+#desktop_notifications #alerts.dropdown-menu {
+    left: auto;
+}
+
+#desktop_notifications .alert {
+    margin-bottom: 8px !important;
+}
+
+#desktop_notifications button:focus,
+#desktop_notifications button:link,
+#desktop_notifications button:hover,
+#desktop_notifications button:active {
+    background: inherit;
+}
+
+#desktop_notifications.has-alerts .badge {
+    color: #C9302C;
+}
+
+#desktop_notifications .close,
+#desktop_notifications .alert {
+    font-weight: normal;
+    line-height: 1;
+    color: #000;
+    text-shadow: none;
+    filter: none;
+    opacity: 1;
+}
+
+#desktop_notifications .close {
+    position: relative;
+    top: 0px;
+    right: 0px;
+    color: inherit;
+    margin-top: 0;
+    margin-right: 4px;
+}
+
+#desktop_notifications button.close,
+#desktop_notifications .close:hover {
+    background: none;
+}
+
+#desktop_notifications .close span {
+    color: #FFFFFF;
+    margin-right: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+
+#desktop_notifications button .badge {
+    color: #3C8DBC;
+}
+#desktop_notifications button.close {
+    background: none;
+}
+
+#desktop_notifications div.dropdown-menu {
+    margin: 0;
+    padding: 8px;
+    font-size: 12px;
+    border-radius: 0px;
+}
+
+#desktop_notifications div.has-alerts .alert-info {
+    background-color: inherit;
+    /*border-top: none;*/
+    /*border-right: none;*/
+    /*border-bottom: 1px solid #757083;*/
+    border: 1px solid #dddddd;
+    /*border-left: none;*/
+    border-radius: 0px;
+    padding: 0;
+}
+
+#desktop_notifications div.has-alerts .text-info {
+    color: #FFFFFF;
+}
+
+#desktop_notifications div.has-alerts p {
+    font-size: 12px;
+    line-height: 20px;
+    min-height: 20px;
+}
+
+#desktop_notifications div.has-alerts h4,
+#desktop_notifications div.has-alerts p {
+    padding: 4px 15px 4px 15px;
+    margin: 0 !important;
+}
+
+#desktop_notifications div.has-alerts h4 {
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #3C8DBC;
+    line-height: 20px;
+    /*border-bottom: 1px solid #757083;*/
+}
+
+
+
+#quickcreatetop button, #desktop_notifications button {
     margin:10px 0 0 0;
 }
 /* Main content */
@@ -3769,6 +3870,202 @@ span#quickcreateplus{
 
 li.moremenu {
     padding:8px 10px 8px 10px;
+}
+
+#email_span .col-xs-12,
+#email1_span .col-xs-12 {
+    padding-left: 0;
+}
+
+.email-address-add-line-container {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.email-address-option,
+.email-address-lines-container,
+.email-address-input-container,
+.email-address-line-container {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.email-address-option label {
+    font-size: 10px;
+    font-weight: 600;
+    padding-left: 1%;
+    padding-right: 1%;
+    width: 96%;
+}
+
+.email-address-option {
+    width: 20%;
+}
+
+.email-address-input-group [type=email]{
+    margin-top: 8px;
+    line-height: 17.1429px;
+}
+
+.email-address-input-group {
+    height: 48px;
+    line-height: 48px;
+}
+
+
+.email-address-add-button {
+    padding-left: 9px;
+    padding-right: 9px;
+    border: none;
+    margin-left: 0;
+}
+
+.email-address-remove-button {
+    margin-top: 0;
+    border-radius: 0;
+    padding: 8px 9px 7px 9px;
+    border: none;
+}
+
+.email-address-input-group button[disabled].email-address-remove-button {
+    margin: 0;
+    padding: 6px 9px 6px 9px !important;
+    line-height: 20px;
+    height: 32px;
+    font-size: 14px !important;
+}
+
+.email-address-input-group .form-control {
+    height: 32px;
+    font-size: 12px;
+}
+
+.email-address-input-group .btn,
+.email-address-input-group .glyphicon,
+.email-address-add-line-container .btn,
+.email-address-add-line-container .glyphicon {
+    font-size: 12px;
+}
+
+div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
+    visibility: collapse;
+}
+
+div.col-xs-12.col-sm-6.email-address-input-container {
+    width: 230px;
+}
+td[data-total-columns="2"] #email1_span div.col-xs-12.col-sm-6.email-address-input-container {
+    width: 230px;
+}
+
+td[data-total-columns="2"] #email1_span div.col-xs-12.col-sm-6.email-address-options-container {
+    width: 40%;
+}
+
+
+@media (max-width: 1600px) {
+
+    td[data-total-columns="2"] #email1_span div.col-xs-12.col-sm-6.email-address-options-container {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    td[data-total-columns="2"] #email1_span .email-address-option {
+        width: 20%;
+    }
+
+    td[data-total-columns="2"] #email1_span .email-address-option label {
+        display: block;
+        visibility: visible;
+    }
+}
+
+@media (max-width: 1400px) {
+    .email-address-option {
+        width: 33%;
+    }
+}
+
+@media (max-width: 1130px) {
+    td[data-total-columns="2"] #email1_span .email-address-option {
+        width: 33%;
+    }
+}
+
+@media (max-width: 768px) {
+    .email-address-options-container {
+        width: 100%;
+        margin: 16px 0 16px 0;
+        height: 32px;
+    }
+    div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
+        visibility: visible;
+    }
+
+    .col-xs-12 {
+        float: none;
+        clear: both;
+    }
+
+    .email-address-option {
+        width: 16.667%;
+    }
+
+    .email-address-users-profile {
+        width: 100% !important;
+    }
+
+}
+
+
+@media (max-width: 640px) {
+    .email-address-options-container {
+        width: 100%;
+        margin: 16px 0 16px 0;
+    }
+    div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
+        visibility: visible;
+    }
+    .col-xs-12 {
+        float: none;
+    }
+
+    .col-xs-12,
+    fieldset {
+        clear: both;
+    }
+
+    #email_options_link_type {
+        float: none;
+        clear: both;
+    }
+
+    #email1_span div.col-xs-12.col-sm-6.email-address-input-container {
+        width: 100%;
+    }
+
+    .email-address-option {
+        width: 33.3333%;
+    }
+}
+
+/**/
+.btn {
+    border-radius: 0;
+}
+
+.form-control {
+    border-radius: 0;
+}
+
+input:focus,
+textarea,
+select,
+.form-control:focus {
+    border: 1px solid #cccccc;
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 /* Fix so that sidebar does not oversize on larger screens */
@@ -4548,7 +4845,7 @@ h3 span{
         display:none !important;
     }
 
-    #quickcreatetop a, #desktop_notifications a{
+    #quickcreatetop a {
         color:#ffffff !important;
         margin:8px 0 8px 0 !important;
         line-height:50px;
