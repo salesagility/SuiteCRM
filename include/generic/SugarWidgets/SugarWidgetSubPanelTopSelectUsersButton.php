@@ -77,7 +77,6 @@ class SugarWidgetSubPanelTopSelectUsersButton extends SugarWidgetSubPanelTopSele
 		$initial_filter = '';
 
 		$this->title = $app_strings['LBL_SELECT_USER_BUTTON_TITLE'];
-		//$this->accesskey = $app_strings['LBL_SELECT_USER_BUTTON_KEY'];
 		$this->value = $this->getDisplayName();
 
 		$this->module_name = 'Users';
