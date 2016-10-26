@@ -56,6 +56,8 @@ class Reminder extends Basic
     var $importable = false;
     var $disable_row_level_security = true;
 
+    var $assigned_user_id;
+
     var $popup;
     var $email;
     var $email_sent = false;
@@ -266,17 +268,11 @@ class Reminder extends Basic
             return;
         }
 
-        // Create separate variable to hold timedate value
-        // These timedates need to be in the user time zone as the
-        // datetime returned by the Bean below is in the user time zone
-        $alertDateTimeNow = $timedate->getNow(true)->asDb(false);
-
-        // cn: get a boundary limiter
-        $dateTimeMax = $timedate->getNow(true)->modify("+{$app_list_strings['reminder_max_time']} seconds")->asDb(false);
-        $dateTimeNow = $timedate->getNow(true)->asDb(false);
-
-        $dateTimeNow = $db->convert($db->quoted($dateTimeNow), 'datetime');
-        $dateTimeMax = $db->convert($db->quoted($dateTimeMax), 'datetime');
+        // Create separate variable to hold datetime value
+        // To keep things simple use GMT for all datetimes
+        // and use GMT timestamps
+        $dateTimeMax = $timedate->getNow()->modify("+{$app_list_strings['reminder_max_time']} seconds")->ts;
+        $dateTimeNow = $timedate->getNow()->ts;
 
         // Original jsAlert used to a meeting integration.
 
@@ -297,9 +293,35 @@ class Reminder extends Basic
         if ($popupReminders) {
             foreach ($popupReminders as $popupReminder) {
                 $relatedEvent = BeanFactory::getBean($popupReminder->related_event_module, $popupReminder->related_event_module_id);
+
+if ($relatedEvent) 
+{
+//	print("\nDate1 " . $relatedEvent->date_start);
+//	print("\nDate2 " . $timedate->fromUser($relatedEvent->date_start));
+//	print("\nNow " . $dateTimeNow);
+//	print("\nDate " . strtotime($relatedEvent->date_start));
+//	print("\nNow  " . strtotime(self::unQuoteTime($dateTimeNow)));
+//	print("\nEnd  " . strtotime(self::unQuoteTime($dateTimeMax)));
+//    print("\nDelay " . $app_list_strings['reminder_max_time']);
+//    print("\nNow Db " . $timedate->getNow(true)->asDb(true));
+}
+
+                if ($relatedEvent && isset($relatedEvent->date_start))
+                {
+                    // Start date from the bean is in user timezone and format
+                    // convert using user format to a GMT timestamp
+                    $dateTimeStart = $timedate->fromUser($relatedEvent->date_start)->ts;
+                }
+                else
+                {
+                    // The start date is not set so default it to the current time
+                    $dateTimeStart = $dateTimeNow;
+                }        
+//print("\nTimes " . $dateTimeStart . " " . $dateTimeNow . " " . $dateTimeMax);
+
                 if ($relatedEvent &&
                     (!isset($relatedEvent->status) || $relatedEvent->status == 'Planned') &&
-                    (!isset($relatedEvent->date_start) || (strtotime($relatedEvent->date_start) >= strtotime(self::unQuoteTime($dateTimeNow)) && strtotime($relatedEvent->date_start) <= strtotime(self::unQuoteTime($dateTimeMax)))) &&
+                    (($dateTimeStart >= $dateTimeNow && $dateTimeStart <= $dateTimeMax)) &&
                     (!$checkDecline || ($checkDecline && !self::isDecline($relatedEvent, BeanFactory::getBean('Users', $current_user->id))))
                 ) {
                     // The original popup/alert reminders check the accept_status field in related users/leads/contacts etc. and filtered these users who not decline this event.
@@ -307,7 +329,7 @@ class Reminder extends Basic
                     if ($invitees) {
                         foreach ($invitees as $invitee) {
                             // need to concatenate since GMT times can bridge two local days
-                            $timeStart = strtotime($db->fromConvert(isset($relatedEvent->date_start) ? $relatedEvent->date_start : date(TimeDate::DB_DATETIME_FORMAT), 'datetime'));
+                            $timeStart = $dateTimeStart;
                             $timeRemind = $popupReminder->timer_popup;
                             $timeStart -= $timeRemind;
 
@@ -354,7 +376,7 @@ class Reminder extends Basic
                                 $app_strings['MSG_JS_ALERT_MTG_REMINDER_LOC'] . $location .
                                 $description .
                                 $instructions,
-                                $timeStart - strtotime($alertDateTimeNow),
+                                $timeStart - $dateTimeNow,
                                 $url
                             );
                         }
