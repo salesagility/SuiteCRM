@@ -56,8 +56,6 @@ class Reminder extends Basic
     var $importable = false;
     var $disable_row_level_security = true;
 
-    var $assigned_user_id;
-
     var $popup;
     var $email;
     var $email_sent = false;
@@ -294,21 +292,9 @@ class Reminder extends Basic
             foreach ($popupReminders as $popupReminder) {
                 $relatedEvent = BeanFactory::getBean($popupReminder->related_event_module, $popupReminder->related_event_module_id);
 
-if ($relatedEvent) 
-{
-//	print("\nDate1 " . $relatedEvent->date_start);
-//	print("\nDate2 " . $timedate->fromUser($relatedEvent->date_start));
-//	print("\nNow " . $dateTimeNow);
-//	print("\nDate " . strtotime($relatedEvent->date_start));
-//	print("\nNow  " . strtotime(self::unQuoteTime($dateTimeNow)));
-//	print("\nEnd  " . strtotime(self::unQuoteTime($dateTimeMax)));
-//    print("\nDelay " . $app_list_strings['reminder_max_time']);
-//    print("\nNow Db " . $timedate->getNow(true)->asDb(true));
-}
-
                 if ($relatedEvent && isset($relatedEvent->date_start))
                 {
-                    // Start date from the bean is in user timezone and format
+                    // Start date from the bean is a string in user timezone and format
                     // convert using user format to a GMT timestamp
                     $dateTimeStart = $timedate->fromUser($relatedEvent->date_start)->ts;
                 }
@@ -317,7 +303,6 @@ if ($relatedEvent)
                     // The start date is not set so default it to the current time
                     $dateTimeStart = $dateTimeNow;
                 }        
-//print("\nTimes " . $dateTimeStart . " " . $dateTimeNow . " " . $dateTimeMax);
 
                 if ($relatedEvent &&
                     (!isset($relatedEvent->status) || $relatedEvent->status == 'Planned') &&
