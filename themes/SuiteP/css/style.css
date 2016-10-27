@@ -11037,7 +11037,7 @@ div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot i
 }
 
 div#content div#pagecontent form#EditView div.edit.view table tbody tr td select {
-    border: 2px solid #A5E8D6;
+    border: 3px solid #A5E8D6;
 }
 
 div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[name="from_name"]#from_name,
@@ -11067,7 +11067,8 @@ div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[
         line-height: 16px;
         white-space: initial;
     }
-    div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[type="text"], div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[name="filter_domain"], div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[name="email_num_autoreplies_24_hours"] {
+    div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[type="text"],
+    div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[name="filter_domain"], div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[name="email_num_autoreplies_24_hours"] {
         width: 96%;
     }
     div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[name="reply_to_name"],
@@ -11078,5 +11079,42 @@ div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[
     div#content div#pagecontent form#EditView div.edit.view table tbody tr th h4 {
         background-color: #FEFEFE;
         border: none;
+    }
+}
+
+@media (max-width: 600px) {
+    div#content div#pagecontent form#EditView div.edit.view table {
+        clear: both;
+    }
+    div#content div#pagecontent form#EditView div.edit.view table tbody tr td,
+    div#content div#pagecontent form#EditView div.edit.view table tbody tr td[scope="row"] {
+        width: 100%;
+        height: initial;
+        padding: 15px 0px 5px 0px !important;
+    }
+    div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot {
+        width: 100%;
+    }
+}
+
+@media (max-width: 380px) {
+    div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input,
+    div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot select,
+    div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[name="reply_to_name"],
+    div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[name="reply_to_addr"] {
+        min-height: 40px;
+        line-height: initial;
+        font-size: 12px;
+        height: 40px;
+    }
+    div#content div#pagecontent form#EditView table tbody tr td {
+        display:block;
+        float: left;
+    }
+    div#content div#pagecontent form#EditView div.edit.view table tbody tr td,
+    div#content div#pagecontent form#EditView div.edit.view table tbody tr td[scope="row"] {
+        width: 100%;
+        height: initial;
+        padding: 0px 0px 15px 0px !important;
     }
 }
