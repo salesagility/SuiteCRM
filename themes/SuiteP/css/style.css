@@ -11046,3 +11046,37 @@ div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[
 div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[name="reply_to_addr"] {
     width: 80%;
 }
+
+@media (max-width: 767px) {
+    div#content div#pagecontent form#EditView div.edit.view table tbody tr {
+        padding: 0;
+        border: none;
+    }
+    div#content div#pagecontent form#EditView div.edit.view table tbody tr td {
+        height: 60px;
+    }
+    div#content div#pagecontent form#EditView div.edit.view table tbody tr td[scope="row"] {
+        display: block;
+        float: left;
+        width: 28%;
+    }
+    div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot {
+        display: block;
+        float: left;
+        width: 72%;
+        line-height: 16px;
+        white-space: initial;
+    }
+    div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[type="text"], div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[name="filter_domain"], div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input[name="email_num_autoreplies_24_hours"] {
+        width: 96%;
+    }
+    div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[name="reply_to_name"],
+    div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[name="reply_to_addr"] {
+        width: 58%;
+    }
+
+    div#content div#pagecontent form#EditView div.edit.view table tbody tr th h4 {
+        background-color: #FEFEFE;
+        border: none;
+    }
+}
