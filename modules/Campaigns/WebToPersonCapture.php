@@ -69,7 +69,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     $marketing = new EmailMarketing();
     $marketing_query = $marketing->create_new_list_query(
         'date_start desc, date_modified desc',
-        "campaign_id = '{$campaign_id}' and status = 'active' and date_start < ".$db->convert('', 'today'),
+        "campaign_id = '{$campaign_id}' and status = 'active' and date_start < ".$db->convert(array($db->convert('', 'today'), "'00:00:00'"), 'concat'),
         array('id')
     );
     $marketing_result = $db->limitQuery($marketing_query, 0, 1, true);
