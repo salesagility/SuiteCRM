@@ -470,7 +470,7 @@
                         aria-expanded="true">
                     <!--<span class="glyphicon glyphicon-search"> </span>-->Search
                 </button>
-                <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
                     <form id="searchformdropdown" name='UnifiedSearch' action='index.php'
                           onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
                         <input type="hidden" class="form-control" name="action" value="UnifiedSearch">

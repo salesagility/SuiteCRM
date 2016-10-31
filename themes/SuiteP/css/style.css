@@ -1716,7 +1716,7 @@ table#mass_update_table td select {
     border-radius: 3px;
 }
 
-@media (max-width: 680px) {
+@media (max-width: 750px) {
     #massassign_form table, #massassign_form table td {
         width: 100% !important;
         float: left;
@@ -7700,7 +7700,7 @@ h3 span {
 }
 
 
-@media (max-width: 600px) {
+@media (max-width: 750px) {
     #desktop_notifications div.has-alerts {
         background-color: #A2B2BF;
     }
@@ -8660,16 +8660,6 @@ div.list-view-rounded-corners > table th:last-of-type {
         left: 0px;
     }
 
-    #search #query_string {
-        left: -185px;
-    }
-
-    #search .dropdown-menu {
-        background-color: transparent;
-        padding: 10px;
-        right: 6px;
-        top: 14px;
-    }
 
     #searchformdropdown button {
         background-color: transparent;
@@ -8816,7 +8806,7 @@ div.list-view-rounded-corners > table th:last-of-type {
 }
 
 
-@media (max-width: 600px) {
+@media (max-width: 750px) {
 
     #bootstrap-container {
         margin-top: 110px !important;
@@ -8869,6 +8859,7 @@ div.list-view-rounded-corners > table th:last-of-type {
 
     #quickcreatetop a {
         padding: 5px 32px 5px 12px;
+        background-color: #a2b2bf;
         background-position: 80px -5px;
     }
 
@@ -8876,15 +8867,37 @@ div.list-view-rounded-corners > table th:last-of-type {
         background-position: 80px -5px;
     }
 
-    #search #query_string {
-        left: -100px;
-        top: 48px;
-        padding-top: 7px;
-        padding-bottom: 7px;
-        margin-top: -17px;
+    #search {
+        position: relative;
+        min-height: 28px;
     }
 
-    #searchbutton {
+    #search > div.dropdown-menu {
+        top: -64px;
+        right: -112px;
+        bottom: auto;
+        left: auto;
+        width: auto;
+        clear: both;
+    }
+
+    #search .dropdown-menu,
+    #search #searchformdropdown .input-group {
+        width: 100%;
+    }
+
+    #search #query_string {
+        top: 0px;
+        right: 0px;
+        bottom: auto;
+        left: 0px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        margin: 0px;
+        width: 80% !important;
+    }
+
+    #search #searchbutton {
         margin: 0px 10px 0 0;
         background-color: transparent;
         border: none;
@@ -8895,15 +8908,10 @@ div.list-view-rounded-corners > table th:last-of-type {
         overflow: hidden;
         padding: 12px 0px 12px 0px;
         width: 28px;
-        height: 28
+        height: 40px!important;
     }
 
     #search.open #searchbutton {
-        background-position: 0px -60px;
-        background-color: transparent;
-    }
-
-    #searchbutton:hover {
         background-position: 0px -60px;
         background-color: transparent;
     }
@@ -8924,12 +8932,8 @@ div.list-view-rounded-corners > table th:last-of-type {
         background-position: 0 0;
     }
 
-    #usermenucollapsed:hover {
-        background-position: 0 -70px;
 
-    }
-
-    #desktop_notifications {
+    #desktop_notifications, #desktop_notifications:hover {
         float: left;
         width: 28px;
         height: 28px;
@@ -8940,13 +8944,11 @@ div.list-view-rounded-corners > table th:last-of-type {
         background-position: 0px 0px;
     }
 
-    #desktop_notifications:hover {
-        background-position: 0px -70px;
-    }
+
 
 }
 
-@media (min-width: 600px) {
+@media (min-width: 750px) {
     .modulename {
         line-height: 90px;
     }
@@ -8961,15 +8963,29 @@ div.list-view-rounded-corners > table th:last-of-type {
         -webkit-overflow-scrolling: touch;
     }
 
+    #search .dropdown-menu {
+        position: absolute;
+        top: 14px;
+        right:  0;
+        bottom: auto;
+        left: -224px;
+    }
+
+    #search .dropdown-menu,
+    #search #searchformdropdown .input-group {
+        width: 100%;
+    }
+
     #search #query_string {
-        left: -185px;
-        padding-top: 12px;
-        padding: 12px;
+        top: 0;
+        left: 0px;
+        padding: 0px;
         margin-top: 0px;
     }
 
     #search .input-group-btn {
-        left: -185px;
+        top: 0px;
+        left: 0px;
     }
 
     #quickcreatetop {
@@ -9169,7 +9185,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 750px) {
     nav.navbar .container-fluid {
         padding-left: 0;
         padding-right: 0;
@@ -9265,7 +9281,7 @@ div.list-view-rounded-corners > table th:last-of-type {
 
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 750px) {
     .detail table, .detail thead, .detail tbody, .detail th, .detail td, .detail tr {
         display: block;
         background: none;
@@ -9298,7 +9314,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 750px) {
     .paginationChangeButtons {
         max-width: 125px;
     }
@@ -9353,7 +9369,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 }
 
-@media (min-width: 480px) and (max-width: 680px) {
+@media  (max-width: 750px) {
     #searchmobile {
         float: left;
         z-index: 50 !important;
@@ -9384,7 +9400,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 750px) {
 
 
     .edit tr, .edit tr td[scope="col"], .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td, .detail tr td, .detail table, table.detail {
@@ -9463,7 +9479,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 }
 
-@media (max-width: 670px) {
+@media (max-width: 750px) {
     .footer_left {
         width: 100%;
         text-align: center;
@@ -9698,14 +9714,14 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     #usermenucollapsed:hover {
-        background-position: 0 -99px !important;
+        background-position: 0 -99px;
     }
 
     #search .dropdown-menu {
         background-color: transparent;
         padding: 10px;
-        right: 6px;
-        top: 14px;
+        /*top: 14px;*/
+        /*right: 6px;*/
     }
 
     #searchformdropdown button {
@@ -9931,6 +9947,13 @@ table tr#delegates_search {
     }
 }
 
+@media (max-width: 1150px) {
+    li.topnav {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+
 @media (min-width: 1230px) {
     .sidebar {
         width: 18%;
@@ -10036,6 +10059,9 @@ table tr#delegates_search {
 }
 
 @media (min-width: 1600px) {
+    #search {
+        visibility: collapse;
+    }
     .sidebar {
         width: 13.8%;
     }
@@ -10749,7 +10775,7 @@ body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui
     }
 }
 
-@media(max-width: 600px) {
+@media(max-width: 750px) {
 
     #EditView table.dcQuickEdit,
     #EditView table.dcQuickEdit tr,
