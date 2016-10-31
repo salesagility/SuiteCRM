@@ -548,4 +548,20 @@ $(function () {
         }
     }, 300);
 
+    $("#EditView_tabs .tab-content .row.edit-view-row .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12.col-sm-8.edit-view-field").each(function(i,e){
+       if($(this).find('textarea').length > 0) {
+           $(this).find('textarea').css({
+               width: '100%',
+               height: '100%',
+               resize: 'none'
+           });
+           $(this).resizable({
+               resize: function() {
+                   var w = $(this).width() + 'px';
+                   $(this).parent().css('min-width', w);
+               }
+           });
+       }
+    });
+
 });
