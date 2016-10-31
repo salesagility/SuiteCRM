@@ -222,7 +222,7 @@ $chart= new campaign_charts();
     if(empty($latest_marketing_id) ||  $latest_marketing_id === 'all'){
         $smarty->assign("MY_CHART", $chart->campaign_response_by_activity_type($app_list_strings['campainglog_activity_type_dom'],$app_list_strings['campainglog_target_type_dom'],$focus->id,sugar_cached("xml/$cache_file_name"),true));
     }else{
-        $smarty->assign("MY_CHART", $chart->campaign_response_by_activity_type($app_list_strings['campainglog_activity_type_dom'],$app_list_strings['campainglog_target_type_dom'],$focus->id,sugar_cached("xml/$cache_file_name"),true,$latest_marketing_id));
+        $smarty->assign("MY_CHART", $chart->campaign_response_by_activity_type($app_list_strings['campainglog_activity_type_dom'],$app_list_strings['campainglog_target_type_dom'],$focus->id,sugar_cached("xml/$cache_file_name"),true,$latest_marketing_id, true));
     }
 
 //end chart

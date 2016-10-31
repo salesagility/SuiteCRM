@@ -58,7 +58,7 @@ class campaign_charts {
 	* Contributor(s): ______________________________________..
 	*/
 
-	function campaign_response_by_activity_type($datay= array(),$targets=array(),$campaign_id, $cache_file_name='a_file', $refresh=false, $marketing_id='') {
+	function campaign_response_by_activity_type($datay= array(),$targets=array(),$campaign_id, $cache_file_name='a_file', $refresh=false, $marketing_id='', $countNullMarketings = false) {
 		global $app_strings, $mod_strings, $charset, $lang, $barChartColors,$app_list_strings;
 		$sugarChart = SugarChartFactory::getInstance('','Reports');
 		$xmlFile = $sugarChart->getXMLFileName($campaign_id);
@@ -77,7 +77,13 @@ class campaign_charts {
 
             //if $marketing id is specified, then lets filter the chart by the value
             if (!empty($marketing_id)){
-                $query.= " AND marketing_id ='$marketing_id'";
+				if($countNullMarketings) {
+					$query.= " AND (marketing_id ='$marketing_id' OR marketing_id IS NULL) ";
+				}
+				else {
+					$query.= " AND marketing_id ='$marketing_id'";
+				}
+
             }
 
 			$query.= " GROUP BY  activity_type, target_type";
@@ -92,6 +98,7 @@ class campaign_charts {
 			$rowTotalArr[] = 0;
 			while($row = $focus->db->fetchByAssoc($result))
 			{
+				$row['activity_type'] = strtolower($row['activity_type']);
 				if(!isset($leadSourceArr[$row['activity_type']]['row_total'])) {
 					$leadSourceArr[$row['activity_type']]['row_total']=0;
 				}
