@@ -435,32 +435,32 @@ CAL.edit_all_recurrences = function () {
     CAL.load_form(module, record, true);
   }
 }
-// CAL.remove_shared = function (record_id, edit_all_recurrences) {
-//     if (typeof edit_all_recurrences == "undefined")
-//         edit_all_recurrences = false;
-//     var e;
-//     var arr = new Array();
-//     if (CAL.enable_repeat && edit_all_recurrences) {
-//         var nodes = CAL.query("div.act_item[repeat_parent_id='" + record_id + "']");
-//         CAL.each(nodes, function (i, v) {
-//             var record = nodes[i].getAttribute("record");
-//             if (!CAL.contains(arr, record))
-//                 arr.push(record);
-//             nodes[i].parentNode.removeChild(nodes[i]);
-//             CAL.destroy_ui(nodes[i].id);
-//         });
-//     }
-//     CAL.each(CAL.shared_users, function (user_id, v) {
-//         if (e = CAL.get(record_id + '____' + v)) {
-//             CAL.destroy_ui(e.id);
-//             e.parentNode.removeChild(e);
-//         }
-//         CAL.basic.remove({record: record_id, user_id: user_id});
-//         CAL.each(arr, function (i, id) {
-//             CAL.basic.remove({record: id, user_id: user_id});
-//         });
-//     });
-// }
+ CAL.remove_shared = function (record_id, edit_all_recurrences) {
+     if (typeof edit_all_recurrences == "undefined")
+         edit_all_recurrences = false;
+     var e;
+     var arr = new Array();
+     if (CAL.enable_repeat && edit_all_recurrences) {
+         var nodes = CAL.query("div.act_item[repeat_parent_id='" + record_id + "']");
+         CAL.each(nodes, function (i, v) {
+             var record = nodes[i].getAttribute("record");
+             if (!CAL.contains(arr, record))
+                 arr.push(record);
+             nodes[i].parentNode.removeChild(nodes[i]);
+             CAL.destroy_ui(nodes[i].id);
+         });
+     }
+     CAL.each(CAL.shared_users, function (user_id, v) {
+         if (e = CAL.get(record_id + '____' + v)) {
+             CAL.destroy_ui(e.id);
+             e.parentNode.removeChild(e);
+         }
+         CAL.basic.remove({record: record_id, user_id: user_id});
+         CAL.each(arr, function (i, id) {
+             CAL.basic.remove({record: id, user_id: user_id});
+         });
+     });
+ }
 CAL.change_activity_type = function (mod_name) {
   if (typeof CAL.current_params.module_name != "undefined")
     if (CAL.current_params.module_name == mod_name)
