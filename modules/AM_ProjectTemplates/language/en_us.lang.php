@@ -93,11 +93,7 @@ $mod_strings = array(
     'LBL_VIEW_GANTT_DURATION' => 'Duration',
     'LBL_TASK_TITLE' => 'Edit Task',
     'LBL_PREDECESSOR_TITLE' => 'Edit Predecessor',
-    'LBL_START_DATE_TITLE' => 'Select Start Date',
-    'LBL_END_DATE_TITLE' => 'Select End Date',
     'LBL_DURATION_TITLE' => 'Edit Duration',
-    'LBL_PERCENTAGE_COMPLETE_TITLE' => 'Edit % Complete',
-    'LBL_ACTUAL_DURATION_TITLE' => 'Edit Actual Duration',
     'LBL_DESCRIPTION' => 'Notes',
     'LBL_ASSIGNED_USER_ID' => 'Assigned To:',
 
