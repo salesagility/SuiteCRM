@@ -673,7 +673,7 @@ CAL.dialog_save = function () {
       ajaxStatus.hideStatus();
     }
   };
-  var url = "index.php?module=Calendar&action=SaveActivity&sugar_body_only=true";
+  var url = "index.php?module=Calendar&action=SaveActivity&sugar_body_only=true&XDEBUG_SESSION_START=13537";
   YAHOO.util.Connect.setForm(CAL.get("CalendarEditView"));
   YAHOO.util.Connect.asyncRequest('POST', url, callback, false);
 }
@@ -737,6 +737,11 @@ CAL.refresh = function () {
   YAHOO.util.Connect.asyncRequest('POST', url, callback, CAL.toURI(data));
   CAL.clear();
 }
+
+CAL.fixEventPosition = function() {
+  setTimeout(function() { $(window).trigger('resize'); }, 300);
+}
+
 CAL.clear = function () {
   CAL.basic.items = {};
   var nodes = CAL.query("#cal-grid div.act_item");
@@ -891,205 +896,211 @@ $(document).ready(function () {
       headerFormat = headerFormatMonth;
     }
 
-    $('#calendar' + user_id).fullCalendar({
-      header: {
-        left: '',
-        center: '',
-        right: ''
-      },
-      lang: global_langPrefix,
-      views: views,
-      minTime: global_start_time,
-      maxTime: global_end_time,
-      selectHelper: true,
-      selectable: true,
-      selectOverlap: true, //overlap of events !
-      slotMinutes: global_timeslots,
-      defaultDate: global_year + "-" + global_month + "-" + global_day,
-      editable: global_edit,
-      //weekNumbers: true,
-      disableDragging: global_items_draggable,
-      eventLimit: true, // allow "more" link when too many events
-      defaultView: global_view,
-      firstDay: global_start_week_day,
-      height: global_basic_min_height,
-      columnFormat: headerFormat,
-      select: function (date, jsEvent, view) {
-        if (global_edit == true) {
-          var date_start = date.format(global_datetime_format);
-          var date_end = jsEvent.format(global_datetime_format);
-          var date_duration = jsEvent.diff(date);
 
-          if (date.hasTime() == false) {
-            var date_end = date.add(1, 'days').format(global_datetime_format);
-          }
+   setTimeout(function() {
+     $('#calendar' + user_id).fullCalendar({
+       header: {
+         left: '',
+         center: '',
+         right: ''
+       },
+       lang: global_langPrefix,
+       views: views,
+       minTime: global_start_time,
+       maxTime: global_end_time,
+       selectHelper: true,
+       selectable: true,
+       selectOverlap: true, //overlap of events !
+       slotMinutes: global_timeslots,
+       defaultDate: global_year + "-" + global_month + "-" + global_day,
+       editable: global_edit,
+       //weekNumbers: true,
+       disableDragging: global_items_draggable,
+       eventLimit: true, // allow "more" link when too many events
+       defaultView: global_view,
+       firstDay: global_start_week_day,
+       height: global_basic_min_height,
+       columnFormat: headerFormat,
+       select: function (date, jsEvent, view) {
+         if (global_edit == true) {
+           var date_start = date.format(global_datetime_format);
+           var date_end = jsEvent.format(global_datetime_format);
+           var date_duration = jsEvent.diff(date);
 
-          /*
-           * When user clicks on the top of the date in the month view
-           * redirect the user to the day view.
-           *
-           * We need to allow user to select over multiple days.
-           * When upgrading fullcalendar.io ensure that the css class matches the top of each day in the month view.
-           **/
-          if ($(view.target).hasClass('fc-day-top') && date_duration <= 86400000) {
-            var dateStr = $(view.target).attr('data-date');
-            var dateMoment = new moment(dateStr);
-            var url = 'index.php?module=Calendar&action=index&view=agendaDay&year=' + dateMoment.format('YYYY') + '&month=' + dateMoment.format('MM') + '&day=' + dateMoment.format('DD') + '&hour=0';
-            console.log('url', url);
-            window.location.href = url;
-            return false;
-          }
+           if (date.hasTime() == false) {
+             var date_end = date.add(1, 'days').format(global_datetime_format);
+           }
 
-          CAL.dialog_create(date_start, date_end, user_id);
-        }
-      },
-      eventClick: function (calEvent, jsEvent, view) {
-        if (global_edit == true) {
-          CAL.load_form(calEvent.module, calEvent.record, false, calEvent);
-        }
-      },
-      eventDrop: function (event, delta, revertFunc) {
-        //event_datetime = event.start.format("YYYY-MM-DD HH:mm:ss");
-        event_datetime = event.start.format(global_datetime_format);
-        var data = {
-          "current_module": event.module,
-          "record": event.record,
-          "datetime": event_datetime,
-          "calendar_style": "basic"
-        };
+           /*
+            * When user clicks on the top of the date in the month view
+            * redirect the user to the day view.
+            *
+            * We need to allow user to select over multiple days.
+            * When upgrading fullcalendar.io ensure that the css class matches the top of each day in the month view.
+            **/
+           if ($(view.target).hasClass('fc-day-top') && date_duration <= 86400000) {
+             var dateStr = $(view.target).attr('data-date');
+             var dateMoment = new moment(dateStr);
+             var url = 'index.php?module=Calendar&action=index&view=agendaDay&year=' + dateMoment.format('YYYY') + '&month=' + dateMoment.format('MM') + '&day=' + dateMoment.format('DD') + '&hour=0';
+             window.location.href = url;
+             return false;
+           }
 
-        if (event.allDay == true) {
-          // this is a full day event.
-          data.allDay = true;
-          data.enddatetime = event.start.add(1, 'days').format(global_datetime_format);
-        }
-        var url = "index.php?module=Calendar&action=Reschedule&sugar_body_only=true";
+           CAL.dialog_create(date_start, date_end, user_id);
+         }
+       },
+       eventClick: function (calEvent, jsEvent, view) {
+         if (global_edit == true) {
+           CAL.load_form(calEvent.module, calEvent.record, false, calEvent);
+         }
+       },
+       eventDrop: function (event, delta, revertFunc) {
+         //event_datetime = event.start.format("YYYY-MM-DD HH:mm:ss");
+         event_datetime = event.start.format(global_datetime_format);
+         var data = {
+           "current_module": event.module,
+           "record": event.record,
+           "datetime": event_datetime,
+           "calendar_style": "basic"
+         };
 
-        $.ajax({
-          method: "POST",
-          url: url,
-          data: data
-        })
+         if (event.allDay == true) {
+           // this is a full day event.
+           data.allDay = true;
+           data.enddatetime = event.start.add(1, 'days').format(global_datetime_format);
+         }
+         var url = "index.php?module=Calendar&action=Reschedule&sugar_body_only=true";
 
-      },
-      navLinks: true,
-      navLinkDayClick: function (weekStart, jsEvent) {
-        if (global_edit == true) {
-          /*
-           * When user clicks on the day numbers in the month view
-           * redirect the user to the day view.
-           *
-           * We need to allow user to select over multiple days.
-           * When upgrading fullcalendar.io ensure that the css class matches the top of each day in the month view.
-           **/
-          if ($(jsEvent.currentTarget).hasClass('fc-day-number')) {
-            var dateStr = $(jsEvent.currentTarget).closest('.fc-day-top').attr('data-date');
-            var dateMoment = new moment(dateStr);
-            var url = 'index.php?module=Calendar&action=index&view=agendaDay&year=' + dateMoment.format('YYYY') + '&month=' + dateMoment.format('MM') + '&day=' + dateMoment.format('DD') + '&hour=0';
-            window.location.href = url;
-            return false;
-          }
+         $.ajax({
+           method: "POST",
+           url: url,
+           data: data
+         })
 
-          /*
-           * When user clicks on the day header in the week view
-           * redirect the user to the day view.
-           *
-           * When upgrading fullcalendar.io ensure that the css class matches the top of each day in the month view.
-           **/
-          var dayHeader = $(jsEvent.currentTarget).closest('.fc-day-header');
-          var momentObj = moment($(dayHeader).attr('data-date'));
-          var url = 'index.php?module=Calendar&action=index&view=agendaDay&year=' + momentObj.format('YYYY') + '&month=' + momentObj.format('MM') + '&day=' + momentObj.format('DD') + '&hour=0';
-          window.location.href = url;
-          return false;
-        }
-      },
-      eventResize: function (event, delta, revertFunc) {
+       },
+       navLinks: true,
+       navLinkDayClick: function (weekStart, jsEvent) {
+         if (global_edit == true) {
+           /*
+            * When user clicks on the day numbers in the month view
+            * redirect the user to the day view.
+            *
+            * We need to allow user to select over multiple days.
+            * When upgrading fullcalendar.io ensure that the css class matches the top of each day in the month view.
+            **/
+           if ($(jsEvent.currentTarget).hasClass('fc-day-number')) {
+             var dateStr = $(jsEvent.currentTarget).closest('.fc-day-top').attr('data-date');
+             var dateMoment = new moment(dateStr);
+             var url = 'index.php?module=Calendar&action=index&view=agendaDay&year=' + dateMoment.format('YYYY') + '&month=' + dateMoment.format('MM') + '&day=' + dateMoment.format('DD') + '&hour=0';
+             window.location.href = url;
+             return false;
+           }
 
-        var url = "index.php?module=Calendar&action=Resize&sugar_body_only=true";
+           /*
+            * When user clicks on the day header in the week view
+            * redirect the user to the day view.
+            *
+            * When upgrading fullcalendar.io ensure that the css class matches the top of each day in the month view.
+            **/
+           var dayHeader = $(jsEvent.currentTarget).closest('.fc-day-header');
+           var momentObj = moment($(dayHeader).attr('data-date'));
+           var url = 'index.php?module=Calendar&action=index&view=agendaDay&year=' + momentObj.format('YYYY') + '&month=' + momentObj.format('MM') + '&day=' + momentObj.format('DD') + '&hour=0';
+           window.location.href = url;
+           return false;
+         }
+       },
+       eventResize: function (event, delta, revertFunc) {
+         debugger;
+         var url = "index.php?module=Calendar&action=Resize&sugar_body_only=true";
 
-        var hours = Math.floor(event.end.diff(event.start, 'minutes') / 60);
-        var minutes = event.end.diff(event.start, 'minutes') % 60;
+         var hours = Math.floor(event.end.diff(event.start, 'minutes') / 60);
+         var minutes = event.end.diff(event.start, 'minutes') % 60;
 
-        var data = {
-          "current_module": event.module,
-          "record": event.record,
-          "duration_hours": hours,
-          "duration_minutes": minutes
-        };
-        $.ajax({
-          method: "POST",
-          url: url,
-          data: data
-        })
-      },
-      events: all_events,
-      eventRender: function (event, element) {
-        var title = '<div class="qtip-title-text">' + event.title + '</div>'
-          + '<div class="qtip-title-buttons">'
-          + '<a href="index.php?action=DetailView&module=' + event.module + '&record=' + event.id + '" class="btn btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a>'
-          + '<a href="index.php?action=EditView&module=' + event.module + '&record=' + event.id + '" class="btn btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>'
-          + '</div>';
-
-
-        var body = '';
-        if (typeof event.date_due !== "undefined") {
-          body = body
-            + '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_DUE_DT') + '</span>: ' + event.date_due;
-        } else {
-          body = body
-            + '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</span>: ' + (event.start.format(global_datetime_format) )
-        }
-
-        body = body
-          + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_STATUS') + ': </span>' + ( (event.status) ? event.status : '')
-          + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_PRIORITY') + ': </span>' + ( (event.priority) ? event.priority : '');
-
-        if (event.parent_name != "") {
-          body = body
-            + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '<a href="index.php?action=DetailView&module=' + event.parent_type + '&record=' + event.parent_id + '">' + event.parent_name + '</a>';
-        } else {
-          body = body
-            + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '';
-        }
+         var data = {
+           "current_module": event.module,
+           "record": event.record,
+           "duration_hours": hours,
+           "duration_minutes": minutes
+         };
+         $.ajax({
+           method: "POST",
+           url: url,
+           data: data
+         })
+       },
+       events: all_events,
+       eventRender:
+         function (event, element) {
+           var title = '<div class="qtip-title-text">' + event.title + '</div>'
+             + '<div class="qtip-title-buttons">'
+             + '<a href="index.php?action=DetailView&module=' + event.module + '&record=' + event.id + '" class="btn btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a>'
+             + '<a href="index.php?action=EditView&module=' + event.module + '&record=' + event.id + '" class="btn btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>'
+             + '</div>';
 
 
-        if ($('#cal_module').val() != "Home") {
-          element.qtip({
-            content: {
-              title: {
-                text: title,
-                button: true,
-              },
+           var body = '';
+           if (typeof event.date_due !== "undefined") {
+             body = body
+               + '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_DUE_DT') + '</span>: ' + event.date_due;
+           } else {
+             body = body
+               + '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</span>: ' + (event.start.format(global_datetime_format) )
+           }
 
-              text: body,
-            },
-            position: {
-              my: 'bottom left',
-              at: 'top left'
-            },
-            show: {solo: true},
-            hide: {event: false},
-            style: {
-              width: 224,
-              padding: 5,
-              color: 'black',
-              textAlign: 'left',
-              border: {
-                width: 1,
-                radius: 3
-              },
-              tip: 'bottomLeft',
-              classes: {
-                tooltip: 'ui-widget',
-                tip: 'ui-widget',
-                title: 'ui-widget-header',
-                content: 'ui-widget-content'
-              }
-            }
-          });
-        }
-      },
-    });
+           body = body
+             + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_STATUS') + ': </span>' + ( (event.status) ? event.status : '')
+             + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_PRIORITY') + ': </span>' + ( (event.priority) ? event.priority : '');
+
+           if (event.parent_name != "") {
+             body = body
+               + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '<a href="index.php?action=DetailView&module=' + event.parent_type + '&record=' + event.parent_id + '">' + event.parent_name + '</a>';
+           } else {
+             body = body
+               + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '';
+           }
+
+
+           if ($('#cal_module').val() != "Home") {
+             element.qtip({
+               content: {
+                 title: {
+                   text: title,
+                   button: true,
+                 },
+
+                 text: body,
+               },
+               position: {
+                 my: 'bottom left',
+                 at: 'top left'
+               },
+               show: {solo: true},
+               hide: {event: false},
+               style: {
+                 width: 224,
+                 padding: 5,
+                 color: 'black',
+                 textAlign: 'left',
+                 border: {
+                   width: 1,
+                   radius: 3
+                 },
+                 tip: 'bottomLeft',
+                 classes: {
+                   tooltip: 'ui-widget',
+                   tip: 'ui-widget',
+                   title: 'ui-widget-header',
+                   content: 'ui-widget-content'
+                 }
+               }
+             });
+           }
+         },
+
+     });
+   }, 300);
+
+    $("#calendar_title_" + user_id).fullCalendar('rerenderEvents');
 
     if ($('#calendar_title_' + user_id).length == 0) {
       var calendar = $("#calendar" + user_id + " > .fc-view-container");
