@@ -266,7 +266,7 @@ class Reminder extends Basic
             return;
         }
 
-        // Create separate variable to hold datetime value
+        // Create separate variables to hold datetime values
         // To keep things simple use GMT for all datetimes
         // and use GMT timestamps
         $dateTimeMax = $timedate->getNow()->modify("+{$app_list_strings['reminder_max_time']} seconds")->ts;
