@@ -47,43 +47,37 @@
     {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
     <ul class="nav nav-tabs">
         {{if $useTabs}}
-        {{foreach name=section from=$sectionPanels key=label item=panel}}
-        {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
-        {* if tab *}
-        {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true)}}
-        {*if tab display*}
-        {{counter name="tabCount" print=false}}
-        {{if $tabCount == '0'}}
-        <li role="presentation" class="active">
-            <a id="tab{{$tabCount}}" data-toggle="tab" class="hidden-xs">
-                {sugar_translate label='{{$label}}' module='{{$module}}'}
-            </a>
-            <a id="xstab{{$tabCount}}" href="#" class="visible-xs first-tab-xs dropdown-toggle" data-toggle="dropdown">
-                {sugar_translate label='{{$label}}' module='{{$module}}'}
-            </a>
-            <ul id="first-tab-menu-xs" class="dropdown-menu">
-                {{counter name="tabCountXS" start=-1 print=false assign="tabCountXS"}}
-                {{foreach name=sectionXS from=$sectionPanels key=label item=panelXS}}
-                {{counter name="tabCountXS" print=false}}
-                <li role="presentation">
-                    <a id="tab{{$tabCountXS}}"  data-toggle="tab" onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
-                        {sugar_translate label='{{$label}}' module='{{$module}}'}
-                    </a>
-                </li>
-                {{/foreach}}
-            </ul>
-        </li>
-        {{else}}
-        <li role="presentation" class="hidden-xs">
-            <a id="tab{{$tabCount}}"  data-toggle="tab">
-                {sugar_translate label='{{$label}}' module='{{$module}}'}
-            </a>
-        </li>
-        {{/if}}
-        {{else}}
-        {* if panel skip*}
-        {{/if}}
-        {{/foreach}}
+            {{foreach name=section from=$sectionPanels key=label item=panel}}
+                {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
+                {* if tab *}
+                {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true)}}
+                {*if tab display*}
+                    {{counter name="tabCount" print=false}}
+
+                        <li role="presentation" class="{{if $tabCount == '0'}}active{{else}}hidden-xs{{/if}}">
+                            <a id="tab{{$tabCount}}" data-toggle="tab" class="hidden-xs">
+                                {sugar_translate label='{{$label}}' module='{{$module}}'}
+                            </a>
+                            <a id="xstab{{$tabCount}}" href="#" class="visible-xs first-tab-xs dropdown-toggle" data-toggle="dropdown">
+                                {sugar_translate label='{{$label}}' module='{{$module}}'}
+                            </a>
+                            <ul id="first-tab-menu-xs" class="dropdown-menu">
+                                {{counter name="tabCountXS" start=-1 print=false assign="tabCountXS"}}
+                                {{foreach name=sectionXS from=$sectionPanels key=label item=panelXS}}
+                                {{counter name="tabCountXS" print=false}}
+                                <li role="presentation">
+                                    <a id="mobiletab{{$tabCount}}-{{$tabCountXS}}" data-toggle="tab" onclick="changeEditViewTab('{{$tabCountXS}}'); selectTabOverride = '{{$tabCountXS}}'; // /*changeFirstTab(this, '{{$tabCountXS}}', false); console.log('selectTab({{$tabCount}}-{{$tabCountXS}}) HERE!!'); selectTab('{{$tabCountXS}}');*/">
+                                        {sugar_translate label='{{$label}}' module='{{$module}}'}
+                                    </a>
+                                </li>
+                                {{/foreach}}
+                            </ul>
+                        </li>
+
+                {{else}}
+                    {* if panel skip*}
+                {{/if}}
+            {{/foreach}}
         {{/if}}
 
     </ul>
@@ -193,9 +187,24 @@ $(document).ready(function() {ldelim}
 
     <script type="text/javascript">
 
-    var selectTab = function(tab) {
-        $('#EditView_tabs div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').hide();
-        $('#EditView_tabs div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').eq(tab).show().addClass('active').addClass('in');
+    var selectTabTilt = 0;
+    var selectTabOverride = false;
+    var selectTab = function(tab, tilt) {
+        if(typeof tilt !== undefined && parseInt(tilt) > 0) {
+            selectTabTilt = parseInt(tilt);
+            selectTabOverride = tab;
+        }
+        if(selectTabTilt == 0) {
+            if(selectTabOverride !== false) {
+                tab = selectTabOverride;
+                selectTabOverride = false;
+            }
+            $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').hide();
+            $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').eq(tab).show().addClass('active').addClass('in');
+        }
+        else {
+            selectTabTilt--;
+        }
     };
 
     var selectTabOnError = function(tab) {
@@ -217,8 +226,10 @@ $(document).ready(function() {ldelim}
     $(function(){
         $('#EditView_tabs ul.nav.nav-tabs li').click(function(e){
             if(typeof $(this).find('a').first().attr('id') != 'undefined') {
-                var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
-                selectTab(tab);
+                if($(this).find('a').first().attr('id').match(/^tab(.)*$/) !== null) {
+                    var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
+                    selectTab(tab);
+                }
             }
         });
 

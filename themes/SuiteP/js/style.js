@@ -357,14 +357,27 @@ $(document).ready(function() {
 });
 
 
-function changeFirstTab(src) {
-    var selected = $(src);
-    var selectedHtml = $(selected.context).html();
-    $('#xstab0').html(selectedHtml);
-    return true;
+function changeFirstTab(src, tab, useSelectTab) {
+    if(typeof useSelectTab === 'undefined') {
+        var useSelectTab = true;
+    }
+    if(useSelectTab) {
+        selectTab(tab, 1);
+    }
+
+    changeEditViewTab(tab);
+
+    return false;
 }
 // End of custom jQuery
 
+
+var changeEditViewTab = function(tab) {
+    $('ul.nav.nav-tabs li a.visible-xs.first-tab-xs.dropdown-toggle').each(function(i, e){
+        $(e).closest('li').addClass('hidden-xs');
+    });
+    $('ul.nav.nav-tabs li a#xstab'+tab+'.visible-xs.first-tab-xs.dropdown-toggle').closest('li').removeClass('hidden-xs');
+};
 
 // fix for tab navigation on user profile for SuiteP theme
 

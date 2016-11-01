@@ -52,8 +52,8 @@
                 {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true)}}
                 {*if tab display*}
                     {{counter name="tabCount" print=false}}
-                    {{if $tabCount == '0'}}
-                        <li role="presentation" class="active">
+
+                        <li role="presentation" class="{{if $tabCount == '0'}}active{{else}}hidden-xs{{/if}}">
                             <a id="tab{{$tabCount}}" data-toggle="tab" class="hidden-xs">
                                 {sugar_translate label='{{$label}}' module='{{$module}}'}
                             </a>
@@ -65,20 +65,14 @@
                                 {{foreach name=sectionXS from=$sectionPanels key=label item=panelXS}}
                                 {{counter name="tabCountXS" print=false}}
                                 <li role="presentation">
-                                    <a id="tab{{$tabCountXS}}" data-toggle="tab" onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
+                                    <a id="mobiletab{{$tabCount}}-{{$tabCountXS}}" data-toggle="tab" onclick="changeFirstTab(this, '{{$tabCountXS}}');">
                                         {sugar_translate label='{{$label}}' module='{{$module}}'}
                                     </a>
                                 </li>
                                 {{/foreach}}
                             </ul>
                         </li>
-                    {{else}}
-                        <li role="presentation" class="hidden-xs">
-                            <a id="tab{{$tabCount}}" data-toggle="tab">
-                                {sugar_translate label='{{$label}}' module='{{$module}}'}
-                            </a>
-                        </li>
-                    {{/if}}
+
                 {{else}}
                     {* if panel skip*}
                 {{/if}}
@@ -190,9 +184,24 @@
 
     <script type="text/javascript">
 
-        var selectTab = function(tab) {
-            $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').hide();
-            $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').eq(tab).show().addClass('active').addClass('in');
+        var selectTabTilt = 0;
+        var selectTabOverride = false;
+        var selectTab = function(tab, tilt) {
+            if(typeof tilt !== undefined && parseInt(tilt) > 0) {
+                selectTabTilt = parseInt(tilt);
+                selectTabOverride = tab;
+            }
+            if(selectTabTilt == 0) {
+                if(selectTabOverride !== false) {
+                    tab = selectTabOverride;
+                    selectTabOverride = false;
+                }
+                $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').hide();
+                $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').eq(tab).show().addClass('active').addClass('in');
+            }
+            else {
+                selectTabTilt--;
+            }
         };
 
         var selectTabOnError = function(tab) {
@@ -214,8 +223,10 @@
         $(function(){
             $('#content ul.nav.nav-tabs li').click(function(e){
                 if(typeof $(this).find('a').first().attr('id') != 'undefined') {
-                    var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
-                    selectTab(tab);
+                    if($(this).find('a').first().attr('id').match(/^tab(.)*$/) !== null) {
+                        var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
+                        selectTab(tab);
+                    }
                 }
             });
             $('#content ul.nav.nav-tabs li.active').each(function(e){
