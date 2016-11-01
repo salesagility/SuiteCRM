@@ -284,7 +284,7 @@ var Reminders = {
             if(Reminders.getRemindersData().length == 0 && (Reminders.getBool(Reminders.defaultValues.popup) || Reminders.getBool(Reminders.defaultValues.email))) {
                 Reminders.addDefaultReminderInterval = setInterval(function () {
                     // we have to wait for the scheduler table loaded
-                    if ($('#schedulerTable').length == 0 || $('#schedulerTable .schedulerAttendeeRow').length > 0) {
+                    if ($('#schedulerTable').length != 0 && $('#schedulerTable .schedulerAttendeeRow').length > 0) {
                         clearInterval(Reminders.addDefaultReminderInterval);
                         Reminders.addReminder(null, Reminders.defaultValues.popup, Reminders.defaultValues.email, Reminders.defaultValues.timer_popup, Reminders.defaultValues.timer_email);
                         Reminders.createRemindersPostData();
