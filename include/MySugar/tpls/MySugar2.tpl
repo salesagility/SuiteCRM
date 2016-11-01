@@ -42,6 +42,7 @@
 
 
 *}
+legacy samurai
 {literal}
 <style>
 .menu{

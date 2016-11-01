@@ -255,56 +255,12 @@ SUGAR.mySugar = function() {
 			if(dynamic) {
 				url += '&dynamic=true';
 			}
-
-		 	var fillInDashlet = function(data) {
-
-		 		ajaxStatus.hideStatus();
-				if(data) {
-					dashlet_guid = false;
-					if(SUGAR.mySugar.currentDashlet) {
-
-						// before we refresh, lets make sure that the returned data is for the current dashlet in focus
-						// AND that it is not the initial 'please reload' verbage, start by grabbing the current dashlet id
-						current_dashlet_id = SUGAR.mySugar.currentDashlet.getAttribute('id');
-
-						//lets extract the guid portion of the id, to use as a reference
-						dashlet_guid = current_dashlet_id.substr('dashlet_entire_'.length);
-					}
-                    //now that we have the guid portion, let's search the returned text for it.  There should be many references to it.
-                    if((!dashlet_guid || data.responseText.indexOf(dashlet_guid)<0) &&  data.responseText != SUGAR.language.get('app_strings', 'LBL_RELOAD_PAGE') ){
-                        //guid id was not found in the returned html, that means we have stale dashlet info due to an auto refresh, do not update
-                        return false;
-                    }
-					if((_pageReload && _pageTabElement) || !dashlet_guid) {
-						_pageTabElement.html(data.responseText);
-					} else {
-						SUGAR.mySugar.currentDashlet.innerHTML = data.responseText;
-					}
-				}
-
-				SUGAR.util.evalScript(data.responseText);
-				if(callback) callback();
-				
-				var processChartScript = function(scriptData){
-					SUGAR.util.evalScript(scriptData.responseText);
-					//custom chart code
-					SUGAR.mySugar.sugarCharts.loadSugarCharts(activePage);
-
-				}
-				if(typeof(is_chart_dashlet)=='undefined'){
-					is_chart_dashlet = false;
-				}
-				if (is_chart_dashlet){				
-					var chartScriptObj = YAHOO.util.Connect.asyncRequest('GET', scriptUrl,
-													  {success: processChartScript, failure: processChartScript}, null);
-				}
-
-				$(window).resize();
-			}
 			
 			SUGAR.mySugar.currentDashlet = document.getElementById('dashlet_entire_' + id);
-			var cObj = YAHOO.util.Connect.asyncRequest('GET', url,
-			                    {success: fillInDashlet, failure: fillInDashlet}, null); 
+			$.when($.ajax(url)).then(function(data, textStatus, jqXHR){
+				$(SUGAR.mySugar.currentDashlet).find('.bd-center').html($(data).find('.bd-center').html());
+				ajaxStatus.hideStatus();
+			});
 			return false;
 		},
 		
