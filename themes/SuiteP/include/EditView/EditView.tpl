@@ -187,26 +187,6 @@ $(document).ready(function() {ldelim}
 
     <script type="text/javascript">
 
-    var selectTabTilt = 0;
-    var selectTabOverride = false;
-    var selectTab = function(tab, tilt) {
-        if(typeof tilt !== undefined && parseInt(tilt) > 0) {
-            selectTabTilt = parseInt(tilt);
-            selectTabOverride = tab;
-        }
-        if(selectTabTilt == 0) {
-            if(selectTabOverride !== false) {
-                tab = selectTabOverride;
-                selectTabOverride = false;
-            }
-            $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').hide();
-            $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').eq(tab).show().addClass('active').addClass('in');
-        }
-        else {
-            selectTabTilt--;
-        }
-    };
-
     var selectTabOnError = function(tab) {
         selectTab(tab);
         $('#EditView_tabs ul.nav.nav-tabs li').removeClass('active');
@@ -216,12 +196,6 @@ $(document).ready(function() {ldelim}
         $('#EditView_tabs ul.nav.nav-tabs li').eq(tab).addClass('active');
 
     };
-
-    var selectTabOnErrorInputHandle = function(inputHandle) {
-        var tab = $(inputHandle).closest('.tab-pane-NOBOOTSTRAPTOGGLER').attr('id').match(/^detailpanel_(.*)$/)[1];
-        selectTabOnError(tab);
-    };
-
 
     $(function(){
         $('#EditView_tabs ul.nav.nav-tabs li').click(function(e){

@@ -10845,3 +10845,7 @@ table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButt
     opacity: 1;
 }
 
+.dcQuickEdit {
+    position: relative;
+    z-index: 1;
+}
