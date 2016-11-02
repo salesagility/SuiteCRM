@@ -5841,3 +5841,7 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
+
+#MassUpdate > table.list.view.footable-loaded.footable > tbody > tr:nth-child(2) {
+    display: none;
+}

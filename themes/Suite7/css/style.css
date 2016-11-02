@@ -6413,3 +6413,8 @@ select,
     -webkit-box-shadow: none;
     box-shadow: none;
 }
+
+
+#MassUpdate > table.list.view > tbody > tr:nth-child(2) {
+    display: none;
+}
