@@ -194,6 +194,44 @@ var Reminders = {
         Reminders.createRemindersPostData();
     },
     onInviteeClick: function(e) {
+        var parentReminderItem = $(e).closest('.reminder_item');
+        var parentReminderId = parentReminderItem.attr('data-reminder-id');
+        var reminders = Reminders.getRemindersData();
+        var _e = e;
+        $.each(reminders, function(i, reminder) {
+            if(reminder.id == parentReminderId && reminder.invitees.length == 1) {
+                var confirmDeletePopup = new YAHOO.widget.SimpleDialog("Confirm ", {
+                    //width: "400px",
+                    draggable: false,
+                    constraintoviewport: true,
+                    modal: true,
+                    fixedcenter: true,
+                    text: SUGAR.language.get('app_strings', 'LBL_DELETE_REMINDER_CONFIRM'),
+                    bodyStyle: "padding:5px",
+                    buttons: [{
+                        text: SUGAR.language.get('app_strings', 'LBL_OK'),
+                        handler: function(){
+                            // YES
+                            confirmDeletePopup.hide();
+                            parentReminderItem.remove();
+                            Reminders.createRemindersPostData();
+                            return false;
+                        },
+                        isDefault:true
+                    }, {
+                        text: SUGAR.language.get('app_strings', 'LBL_CANCEL_BUTTON_LABEL'),
+                        handler: function() {
+                            // NO
+                            confirmDeletePopup.hide();
+                            Reminders.createRemindersPostData();
+                            return false;
+                        }
+                    }]
+                });
+                confirmDeletePopup.setHeader(SUGAR.language.get('app_strings', 'LBL_DELETE_REMINDER'));
+                confirmDeletePopup.render(document.body);
+            }
+        });
         $(e).closest('.invitees_item').remove();
         Reminders.createRemindersPostData();
     },
