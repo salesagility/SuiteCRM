@@ -549,9 +549,7 @@ $(function () {
     }, 300);
 
     var hideEmptyFormCellsOnTablet = function() {
-        console.log($(window).width());
         if ($(window).width() <= 767) {
-            console.log('hide');
             $('div#content div#pagecontent form#EditView div.edit.view table tbody tr td').each(function (i, e) {
                 $(e).find('slot').each(function(i,e){
                     if($(e).html().trim() == '&nbsp;') {
@@ -565,7 +563,6 @@ $(function () {
             });
         }
         else {
-            console.log('show');
             $('div#content div#pagecontent form#EditView div.edit.view table tbody tr td.hidden.hiddenOnTablet').each(function (i, e) {
                 $(e).removeClass('hidden');
                 $(e).removeClass('hiddenOnTablet');
