@@ -3882,6 +3882,7 @@ a.first-tab-xs {
 
 #first-tab-menu-xs.dropdown-menu > li > a{
     border-bottom: 1px solid #93A0AB;
+    cursor: pointer;
 }
 
 #first-tab-menu-xs.dropdown-menu > li:last-of-type > a{

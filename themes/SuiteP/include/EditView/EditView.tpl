@@ -64,12 +64,15 @@
                             <ul id="first-tab-menu-xs" class="dropdown-menu">
                                 {{counter name="tabCountXS" start=-1 print=false assign="tabCountXS"}}
                                 {{foreach name=sectionXS from=$sectionPanels key=label item=panelXS}}
-                                {{counter name="tabCountXS" print=false}}
-                                <li role="presentation">
-                                    <a id="mobiletab{{$tabCount}}-{{$tabCountXS}}" data-toggle="tab" onclick="changeEditViewTab('{{$tabCountXS}}'); selectTabOverride = '{{$tabCountXS}}'; // /*changeFirstTab(this, '{{$tabCountXS}}', false); console.log('selectTab({{$tabCount}}-{{$tabCountXS}}) HERE!!'); selectTab('{{$tabCountXS}}');*/">
-                                        {sugar_translate label='{{$label}}' module='{{$module}}'}
-                                    </a>
-                                </li>
+                                    {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
+                                    {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab === true)}}
+                                        {{counter name="tabCountXS" print=false}}
+                                        <li role="presentation">
+                                            <a id="mobiletab{{$tabCount}}-{{$tabCountXS}}" data-toggle="tab" onclick="changeEditViewTab('{{$tabCountXS}}'); selectTabOverride = '{{$tabCountXS}}';">
+                                                {sugar_translate label='{{$label}}' module='{{$module}}'}
+                                            </a>
+                                        </li>
+                                    {{/if}}
                                 {{/foreach}}
                             </ul>
                         </li>
