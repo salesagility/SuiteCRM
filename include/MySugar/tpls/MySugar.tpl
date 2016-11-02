@@ -42,7 +42,7 @@
 
 
 *}
-legacy ninja
+
 {literal}
     <style>
         .menu {
