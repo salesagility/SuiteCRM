@@ -466,8 +466,7 @@
                 <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
             </div>
             <div id="search" class="dropdown nav navbar-nav navbar-right">
-                <button id="searchbutton" class="dropdown-toggle btn btn-default" data-toggle="dropdown"
-                        aria-expanded="true">
+                <button id="searchbutton" class="dropdown-toggle btn btn-default" data-toggle="dropdown" aria-expanded="true">
                     <!--<span class="glyphicon glyphicon-search"> </span>-->Search
                 </button>
                 <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
