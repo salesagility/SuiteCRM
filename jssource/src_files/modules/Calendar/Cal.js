@@ -673,7 +673,7 @@ CAL.dialog_save = function () {
       ajaxStatus.hideStatus();
     }
   };
-  var url = "index.php?module=Calendar&action=SaveActivity&sugar_body_only=true&XDEBUG_SESSION_START=13537";
+  var url = "index.php?module=Calendar&action=SaveActivity&sugar_body_only=true";
   YAHOO.util.Connect.setForm(CAL.get("CalendarEditView"));
   YAHOO.util.Connect.asyncRequest('POST', url, callback, false);
 }
@@ -736,10 +736,6 @@ CAL.refresh = function () {
   var url = "index.php?module=Calendar&action=getActivities&sugar_body_only=true";
   YAHOO.util.Connect.asyncRequest('POST', url, callback, CAL.toURI(data));
   CAL.clear();
-}
-
-CAL.fixEventPosition = function() {
-  setTimeout(function() { $(window).trigger('resize'); }, 300);
 }
 
 CAL.clear = function () {
