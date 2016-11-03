@@ -4273,6 +4273,13 @@ ul#detailViewActions.clickMenu {
     margin-top: 2px !important;
 }
 
+li#tab-actions:only-child > ul.dropdown-menu {
+    right: auto;
+    left: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 4px;
+}
+
 #selectActions.clickMenu {
     display: none;
 }
