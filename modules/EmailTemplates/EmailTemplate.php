@@ -737,6 +737,67 @@ class EmailTemplate extends SugarBean
         return $string;
     }
 
+    public static function parse_template_with_bean($template, $bean) {
+        // Get the properties of the bean.
+        $properties = get_object_vars($bean);
+
+        // When the $bean->module_name is in the following array,
+        // replace the fields beginning with '$contact_" with the values from $bean.
+        //
+        // This ensures that the user can select a single template for campaign emails.
+        $replace_contact_fields_with_module_fields = array(
+            'Leads',
+            'Prospects'
+        );
+
+        foreach($properties as $property_name => $property_value) {
+            // When the property of the $bean is a drop down value
+            // translate the value using options specified in the $bean->field_defs.
+            if( !empty($property_value)
+                AND isset($bean->field_defs[$property_name])
+                AND !empty($bean->field_defs[$property_name])
+                AND strtolower($bean->field_defs[$property_name]['type']) == "enum" ) {
+
+                $translated = translate($bean->field_defs[$property_name]['options'], $bean->module_name, $property_value);
+
+                if(is_array($translated) AND isset($translated[$property_value])) {
+                    $property_value = $translated[$property_value];
+                } else {
+                    $property_value = $translated;
+                }
+            }
+
+            // Replace the template fields with the values of the $bean fields.
+            switch(gettype($property_value)) {
+                case "object":
+                    break;
+                case "ressource":
+                    break;
+                case "NULL":
+                    break;
+                case "unknown type":
+                    break;
+                case "array":
+                    break;
+                default:
+                    $template_field = '$'.strtolower($bean->object_name).'_'.$property_name;
+                    $template = str_replace($template_field, strval($property_value), $template);
+
+                    // When the $bean->module_name is in the $replace_contact_fields_with_module_fields array,
+                    // replace the fields beginning with '$contact_" with the values from $bean.
+                    //
+                    // This ensures that the user can select a single template for campaign emails.
+                    if (in_array($bean->module_name, $replace_contact_fields_with_module_fields)) {
+                        $contact_template_field = '$contact_'.$property_name;
+                        $template = str_replace($contact_template_field, strval($property_value), $template);
+                    }
+                    break;
+            }
+        }
+
+        return $template;
+    }
+
     /**
      * Add replacement(s) to the collection based on field definition
      *
@@ -767,11 +828,7 @@ class EmailTemplate extends SugarBean
                 $bean_name = 'Contacts';
             }
 
-            if (isset($this) && isset($this->module_dir) && $this->module_dir == 'EmailTemplates') {
-                $string = $this->parse_template_bean($string, $bean_name, $focus);
-            } else {
-                $string = EmailTemplate::parse_template_bean($string, $bean_name, $focus);
-            }
+            $string = EmailTemplate::parse_template_with_bean($string, $focus);
         }
         return $string;
     }
