@@ -11118,7 +11118,3 @@ div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[
         padding: 0px 0px 15px 0px !important;
     }
 }
-
-#MassUpdate > table.list.view > tbody > tr:nth-child(2) {
-    display: none;
-}
