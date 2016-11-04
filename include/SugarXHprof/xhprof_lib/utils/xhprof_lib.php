@@ -815,7 +815,7 @@ function xhprof_get_float_param($param, $default = 0) {
   $val = trim($val);
 
   // TBD: confirm the value is indeed a float.
-  if(is_float($val) == "double") {
+  if(is_float($val)) {
     return (float)$val;
   } else {
     return null;
