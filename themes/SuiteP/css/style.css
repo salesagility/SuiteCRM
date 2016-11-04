@@ -4465,6 +4465,9 @@ iframe.teamNoticeBox {
 
 #query_string {
     margin: 0;
+    background-color: #65697A;
+    border: none;
+    border-radius: 3px;
 }
 
 .dashletPanel {
