@@ -294,38 +294,53 @@ CAL.load_form = function (module_name, record, edit_all_recurrences, cal_event) 
   }
 
 
-  if (module_name == "Tasks") {
+	if(module_name == "Tasks") {
+		var url = 'index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean=' + cal_event.module + '&id=' + cal_event.record;
+		var body = SUGAR.language.translate('app_strings', 'LBL_LOADING_PAGE');
 
-    var body = '<span class="title"><strong>' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</strong></span>: ' + (cal_event.start.format(global_datetime_format) ) + '<br><span class="title"><strong>' + SUGAR.language.get('Calendar', 'LBL_SUBJECT') + ': </strong></span>' + ( (cal_event.title) ? cal_event.title : '');
-    if (typeof cal_event.date_due !== "undefined") {
-      body = body
-        + '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_DUE_DT') + '</span>: ' + cal_event.date_due;
-    } else {
-      body = body
-        + '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</span>: ' + (cal_event.start.format(global_datetime_format) )
-    }
+		$.ajax(url)
+			.done(function (data) {
+				eval(data); // produces var result = {body:{}, caption:"", width:300}
+				$('.modal-cal-tasks-edit .modal-body .container-fluid').html(result.body);
+			})
+			.fail(function () {
+				$('.modal-cal-tasks-edit .modal-body .container-fluid').html(SUGAR.language.translate('app_strings', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
+			}).always(function () {
+					//console.log("complete");
+			});
 
-    body = body
-      + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_STATUS') + ': </span>' + ( (cal_event.status) ? cal_event.status : '')
-      + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_PRIORITY') + ': </span>' + ( (cal_event.priority) ? cal_event.priority : '');
+		$('.modal-cal-tasks-edit .modal-body .container-fluid').html(body);
+		$('.modal-cal-tasks-edit').modal('show');
+		$('#btn-view-task').unbind().click(function(){
+			window.location.assign('index.php?module='+cal_event.module+'&action=DetailView&record='+cal_event.record);
+		});
+		$('#btn-tasks-full-form').unbind().click(function(){
+			window.location.assign('index.php?module='+cal_event.module+'&action=EditView&record='+cal_event.record);
+		});
+	} else if(module_name == "FP_events") {
+		var url = 'index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean=' + cal_event.module + '&id=' + cal_event.record;
+		var body =  SUGAR.language.translate('app_strings', 'LBL_LOADING_PAGE');
 
-    if (cal_event.parent_name != "") {
-      body = body
-        + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '<a href="index.php?action=DetailView&module=' + cal_event.parent_type + '&record=' + cal_event.parent_id + '">' + cal_event.parent_name + '</a>';
-    } else {
-      body = body
-        + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '';
-    }
+		$.ajax(url)
+			.done(function (data) {
+				eval(data); // produces var result = {body:{}, caption:"", width:300}
+				$('.modal-cal-events-edit .modal-body .container-fluid').html(result.body);
+			})
+			.fail(function () {
+				$('.modal-cal-events-edit .modal-body .container-fluid').html(SUGAR.language.translate('app_strings', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
+			}).always(function () {
+			//console.log("complete");
+		});
 
-    $('.modal-cal-tasks-edit .modal-body .container-fluid').html(body);
-    $('.modal-cal-tasks-edit').modal('show');
-    $('#btn-view-task').unbind().click(function () {
-      window.location.assign('index.php?module=' + cal_event.module + '&action=DetailView&record=' + cal_event.record);
-    });
-    $('#btn-tasks-full-form').unbind().click(function () {
-      window.location.assign('index.php?module=' + cal_event.module + '&action=EditView&record=' + cal_event.record);
-    });
-  }
+		$('.modal-cal-events-edit .modal-body .container-fluid').html(body);
+		$('.modal-cal-events-edit').modal('show');
+		$('#btn-view-events').unbind().click(function(){
+			window.location.assign('index.php?module='+cal_event.module+'&action=DetailView&record='+cal_event.record);
+		});
+		$('#btn-events-full-form').unbind().click(function(){
+			window.location.assign('index.php?module='+cal_event.module+'&action=EditView&record='+cal_event.record);
+		});
+	}
 
   if (to_open && CAL.records_openable) {
     CAL.get("form_content").style.display = "none";
@@ -1010,48 +1025,25 @@ $(document).ready(function () {
         var hours = Math.floor(event.end.diff(event.start, 'minutes') / 60);
         var minutes = event.end.diff(event.start, 'minutes') % 60;
 
-        var data = {
-          "current_module": event.module,
-          "record": event.record,
-          "duration_hours": hours,
-          "duration_minutes": minutes
-        };
-        $.ajax({
-          method: "POST",
-          url: url,
-          data: data
-        })
-      },
-      events: all_events,
-      eventRender: function (event, element) {
+				var data = {
+					"current_module": event.module,
+					"record": event.record,
+					"duration_hours": hours,
+					"duration_minutes": minutes
+				};
+				$.ajax({
+					method: "POST",
+					url: url,
+					data: data
+				})
+			},
+			events: all_events,
+			eventRender: function (event, element) {
+				var url = 'index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean=' + event.module + '&id=' + event.id;
         var title = '<div class="qtip-title-text">' + event.title + '</div>'
-          + '<div class="qtip-title-buttons">'
-          + '<a href="index.php?action=DetailView&module=' + event.module + '&record=' + event.id + '" class="btn btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a>'
-          + '<a href="index.php?action=EditView&module=' + event.module + '&record=' + event.id + '" class="btn btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>'
-          + '</div>';
-
-
-        var body = '';
-        if (typeof event.date_due !== "undefined") {
-          body = body
-            + '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_DUE_DT') + '</span>: ' + event.date_due;
-        } else {
-          body = body
-            + '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</span>: ' + (event.start.format(global_datetime_format) )
-        }
-
-        body = body
-          + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_STATUS') + ': </span>' + ( (event.status) ? event.status : '')
-          + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_PRIORITY') + ': </span>' + ( (event.priority) ? event.priority : '');
-
-        if (event.parent_name != "") {
-          body = body
-            + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '<a href="index.php?action=DetailView&module=' + event.parent_type + '&record=' + event.parent_id + '">' + event.parent_name + '</a>';
-        } else {
-          body = body
-            + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '';
-        }
-
+					+ '<div class="qtip-title-buttons">'
+					+ '</div>';
+				var body = SUGAR.language.translate('app_strings', 'LBL_LOADING_PAGE');
 
         if ($('#cal_module').val() != "Home") {
           element.qtip({
@@ -1061,35 +1053,55 @@ $(document).ready(function () {
                 button: true,
               },
 
-              text: body,
-            },
-            position: {
-              my: 'bottom left',
-              at: 'top left'
-            },
-            show: {solo: true},
-            hide: {event: false},
-            style: {
-              width: 224,
-              padding: 5,
-              color: 'black',
-              textAlign: 'left',
-              border: {
-                width: 1,
-                radius: 3
-              },
-              tip: 'bottomLeft',
-              classes: {
-                tooltip: 'ui-widget',
-                tip: 'ui-widget',
-                title: 'ui-widget-header',
-                content: 'ui-widget-content'
-              }
-            }
-          });
-        }
-      },
-    });
+							text: body,
+						},
+						events: {
+							render: function(event, api) {
+								$.ajax(url)
+									.done(function (data) {
+										eval(data); // produces var result = {body:{}, caption:"", width:300}
+										var divCaption = "#qtip-"+api.id+"-title";
+										var divBody = "#qtip-"+api.id+"-content";
+										if(data.caption != "") {
+											$(divCaption).html(result.caption);
+										}
+										api.set('content.text', result.body);
+									})
+									.fail(function () {
+										$(divBody).html(SUGAR.language.translate('app_strings', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
+									})
+									.always(function () {
+										//console.log("complete");
+									});
+							}
+						},
+						position: {
+							my: 'bottom left',
+							at: 'top left'
+						},
+						show: {solo: true},
+						hide: {event: false},
+						style: {
+							width: 224,
+							padding: 5,
+							color: 'black',
+							textAlign: 'left',
+							border: {
+								width: 1,
+								radius: 3
+							},
+							tip: 'bottomLeft',
+							classes: {
+								tooltip: 'ui-widget',
+								tip: 'ui-widget',
+								title: 'ui-widget-header',
+								content: 'ui-widget-content'
+							}
+						}
+					});
+				}
+			},
+		});
 
     if ($('#calendar_title_' + user_id).length == 0) {
       var calendar = $("#calendar" + user_id + " > .fc-view-container");

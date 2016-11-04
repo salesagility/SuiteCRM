@@ -6164,6 +6164,11 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
 }
 
 .qtip-titlebar {
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+.qtip-titlebar {
     padding:  5px 24px 5px 10px;
 }
 
@@ -6172,11 +6177,12 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     float: left;
     width: 128px;
     color: #ffffff;
+    line-height: 18px;
 }
 
 .qtip-title-buttons {
     display: inline-block;
-    width: 48px;
+    width: 46px;
     float: right;
     vertical-align: middle;
     padding: 0 0 0 4px;
@@ -6185,7 +6191,7 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
 .qtip-title-buttons a {
     padding-left: 8px;
     color: #ffffff;
-    margin: 0 4px 0 4px;
+    margin: 0 0 0 4px;
     padding: 0;
 }
 
@@ -6214,6 +6220,32 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     font-weight: bold;
 }
 
+.qtip-content {
+    line-height: 16px;
+}
+
+.qtip-content {
+    background-color: #65697A;
+    color: #FFFFFF;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.qtip .qtip-tip {
+    /* hide the tip of the speech bubble */
+    display: none !important;
+}
+
+.qtip-content a {
+    font-weight: bold;
+    /*color: #AA9DCC;*/
+    color: #F08377;
+}
+
+.qtip-content a:hover {
+    /*color: #9589B3;*/
+    color: #D66C60;
+}
 /*xs-col-*/
 @media (max-width: 769px) {
     div.search_name_basic img {
@@ -7957,9 +7989,9 @@ object {
     font-family: 'Lato', Lato, Arial, sans-serif;
     font-size: 12px;
     background: #ffffff;
-    border: 1px solid #cccccc;
+    border: none;
     -webkit-border-radius: 0px;
-    border-radius: 0px;
+    border-radius: 4px;
 }
 
 .qtip-tipped .qtip-titlebar {
