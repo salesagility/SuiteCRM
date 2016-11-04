@@ -845,7 +845,7 @@ CAL.remove_edit_dialog();
 var cal_loaded = true;
 
 /** new items **/
-$(document).ready(function () {
+$($.fullCalendar).ready(function () {
 
   // Container for all calendars
   var calendarContainer = $('#calendarContainer');
@@ -908,7 +908,7 @@ $(document).ready(function () {
     }
 
 
-   setTimeout(function() {
+
      $('#calendar' + user_id).fullCalendar({
        header: {
          left: '',
@@ -1103,7 +1103,11 @@ $(document).ready(function () {
 					});
 				}
 			},
-		});
+		}).ready(function() {
+       // Force calendar to render the events again,
+       // ensuring that the event are correctly rendered.
+       $(window).resize();
+     });
 
     if ($('#calendar_title_' + user_id).length == 0) {
       var calendar = $("#calendar" + user_id + " > .fc-view-container");
