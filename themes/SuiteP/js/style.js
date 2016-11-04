@@ -279,7 +279,7 @@ $(function() {
 jQuery(function($){
     $('table.footable').footable({
         "breakpoints": {
-            "x-small": 480,
+            "x-small": 680,
             "small": 768,
             "medium": 992,
             "large": 1130,
