@@ -881,7 +881,7 @@ eoq;
 			$direction = 'desc';
 			$sortSerial = $current_user->getPreference('folderSortOrder', 'Emails');
 			if(!empty($sortSerial) && !empty($_REQUEST['ieId']) && !empty($_REQUEST['mbox'])) {
-				$sortArray = unserialize($sortSerial);
+				$sortArray = sugar_unserialize($sortSerial);
 				$GLOBALS['log']->debug("********** EMAIL 2.0********** ary=".print_r($sortArray,true).' id='.$_REQUEST['ieId'].'; box='.$_REQUEST['mbox']);
 				$sort = $sortArray[$_REQUEST['ieId']][$_REQUEST['mbox']]['current']['sort'];
 				$direction = $sortArray[$_REQUEST['ieId']][$_REQUEST['mbox']]['current']['direction'];
