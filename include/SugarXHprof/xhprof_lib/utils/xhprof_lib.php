@@ -818,6 +818,7 @@ function xhprof_get_float_param($param, $default = 0) {
   if(is_float($val)) {
     return (float)$val;
   } else {
+    xhprof_error("$param is $val. It must be a float.");
     return null;
   }
 }
