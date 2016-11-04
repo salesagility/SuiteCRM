@@ -3757,7 +3757,6 @@ function getPhpInfo($level = -1)
                     $returnInfo[$vName][trim($match[1])] = trim($match[2]);
                 }
             }
-        } elseif (true) {
         }
     }
 
