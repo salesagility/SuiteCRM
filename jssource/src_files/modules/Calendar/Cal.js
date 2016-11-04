@@ -1027,49 +1027,25 @@ $($.fullCalendar).ready(function () {
          var hours = Math.floor(event.end.diff(event.start, 'minutes') / 60);
          var minutes = event.end.diff(event.start, 'minutes') % 60;
 
-         var data = {
-           "current_module": event.module,
-           "record": event.record,
-           "duration_hours": hours,
-           "duration_minutes": minutes
-         };
-         $.ajax({
-           method: "POST",
-           url: url,
-           data: data
-         })
-       },
-       events: all_events,
-       eventRender:
-         function (event, element) {
-           var title = '<div class="qtip-title-text">' + event.title + '</div>'
-             + '<div class="qtip-title-buttons">'
-             + '<a href="index.php?action=DetailView&module=' + event.module + '&record=' + event.id + '" class="btn btn-xs"><span class="glyphicon glyphicon-eye-open"></span></a>'
-             + '<a href="index.php?action=EditView&module=' + event.module + '&record=' + event.id + '" class="btn btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>'
-             + '</div>';
-
-
-           var body = '';
-           if (typeof event.date_due !== "undefined") {
-             body = body
-               + '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_DUE_DT') + '</span>: ' + event.date_due;
-           } else {
-             body = body
-               + '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</span>: ' + (event.start.format(global_datetime_format) )
-           }
-
-           body = body
-             + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_STATUS') + ': </span>' + ( (event.status) ? event.status : '')
-             + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_PRIORITY') + ': </span>' + ( (event.priority) ? event.priority : '');
-
-           if (event.parent_name != "") {
-             body = body
-               + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '<a href="index.php?action=DetailView&module=' + event.parent_type + '&record=' + event.parent_id + '">' + event.parent_name + '</a>';
-           } else {
-             body = body
-               + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_INFO_RELATED_TO') + ': </span>' + '';
-           }
-
+				var data = {
+					"current_module": event.module,
+					"record": event.record,
+					"duration_hours": hours,
+					"duration_minutes": minutes
+				};
+				$.ajax({
+					method: "POST",
+					url: url,
+					data: data
+				})
+			},
+			events: all_events,
+			eventRender: function (event, element) {
+				var url = 'index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean=' + event.module + '&id=' + event.id;
+        var title = '<div class="qtip-title-text">' + event.title + '</div>'
+					+ '<div class="qtip-title-buttons">'
+					+ '</div>';
+				var body = SUGAR.language.translate('app_strings', 'LBL_LOADING_PAGE');
 
            if ($('#cal_module').val() != "Home") {
              element.qtip({
@@ -1079,41 +1055,59 @@ $($.fullCalendar).ready(function () {
                    button: true,
                  },
 
-                 text: body,
-               },
-               position: {
-                 my: 'bottom left',
-                 at: 'top left'
-               },
-               show: {solo: true},
-               hide: {event: false},
-               style: {
-                 width: 224,
-                 padding: 5,
-                 color: 'black',
-                 textAlign: 'left',
-                 border: {
-                   width: 1,
-                   radius: 3
-                 },
-                 tip: 'bottomLeft',
-                 classes: {
-                   tooltip: 'ui-widget',
-                   tip: 'ui-widget',
-                   title: 'ui-widget-header',
-                   content: 'ui-widget-content'
-                 }
-               }
-             });
-           }
-         },
-     }).ready(function() {
+							text: body,
+						},
+						events: {
+							render: function(event, api) {
+								$.ajax(url)
+									.done(function (data) {
+										eval(data); // produces var result = {body:{}, caption:"", width:300}
+										var divCaption = "#qtip-"+api.id+"-title";
+										var divBody = "#qtip-"+api.id+"-content";
+										if(data.caption != "") {
+											$(divCaption).html(result.caption);
+										}
+										api.set('content.text', result.body);
+									})
+									.fail(function () {
+										$(divBody).html(SUGAR.language.translate('app_strings', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
+									})
+									.always(function () {
+										//console.log("complete");
+									});
+							}
+						},
+						position: {
+							my: 'bottom left',
+							at: 'top left'
+						},
+						show: {solo: true},
+						hide: {event: false},
+						style: {
+							width: 224,
+							padding: 5,
+							color: 'black',
+							textAlign: 'left',
+							border: {
+								width: 1,
+								radius: 3
+							},
+							tip: 'bottomLeft',
+							classes: {
+								tooltip: 'ui-widget',
+								tip: 'ui-widget',
+								title: 'ui-widget-header',
+								content: 'ui-widget-content'
+							}
+						}
+					});
+				}
+			},
+		}).ready(function() {
        // Force calendar to render the events again,
        // ensuring that the event are correctly rendered.
        $(window).resize();
      });
-
-
 
     if ($('#calendar_title_' + user_id).length == 0) {
       var calendar = $("#calendar" + user_id + " > .fc-view-container");
