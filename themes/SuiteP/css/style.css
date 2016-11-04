@@ -1716,7 +1716,7 @@ table#mass_update_table td select {
     border-radius: 3px;
 }
 
-@media (max-width: 680px) {
+@media (max-width: 750px) {
     #massassign_form table, #massassign_form table td {
         width: 100% !important;
         float: left;
@@ -4465,6 +4465,9 @@ iframe.teamNoticeBox {
 
 #query_string {
     margin: 0;
+    background-color: #65697A;
+    border: none;
+    border-radius: 3px;
 }
 
 .dashletPanel {
@@ -6161,6 +6164,11 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
 }
 
 .qtip-titlebar {
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+.qtip-titlebar {
     padding:  5px 24px 5px 10px;
 }
 
@@ -6169,11 +6177,12 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     float: left;
     width: 128px;
     color: #ffffff;
+    line-height: 18px;
 }
 
 .qtip-title-buttons {
     display: inline-block;
-    width: 48px;
+    width: 46px;
     float: right;
     vertical-align: middle;
     padding: 0 0 0 4px;
@@ -6182,7 +6191,7 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
 .qtip-title-buttons a {
     padding-left: 8px;
     color: #ffffff;
-    margin: 0 4px 0 4px;
+    margin: 0 0 0 4px;
     padding: 0;
 }
 
@@ -6211,6 +6220,32 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     font-weight: bold;
 }
 
+.qtip-content {
+    line-height: 16px;
+}
+
+.qtip-content {
+    background-color: #65697A;
+    color: #FFFFFF;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.qtip .qtip-tip {
+    /* hide the tip of the speech bubble */
+    display: none !important;
+}
+
+.qtip-content a {
+    font-weight: bold;
+    /*color: #AA9DCC;*/
+    color: #F08377;
+}
+
+.qtip-content a:hover {
+    /*color: #9589B3;*/
+    color: #D66C60;
+}
 /*xs-col-*/
 @media (max-width: 769px) {
     div.search_name_basic img {
@@ -7700,7 +7735,7 @@ h3 span {
 }
 
 
-@media (max-width: 600px) {
+@media (max-width: 750px) {
     #desktop_notifications div.has-alerts {
         background-color: #A2B2BF;
     }
@@ -7954,9 +7989,9 @@ object {
     font-family: 'Lato', Lato, Arial, sans-serif;
     font-size: 12px;
     background: #ffffff;
-    border: 1px solid #cccccc;
+    border: none;
     -webkit-border-radius: 0px;
-    border-radius: 0px;
+    border-radius: 4px;
 }
 
 .qtip-tipped .qtip-titlebar {
@@ -8660,16 +8695,6 @@ div.list-view-rounded-corners > table th:last-of-type {
         left: 0px;
     }
 
-    #search #query_string {
-        left: -185px;
-    }
-
-    #search .dropdown-menu {
-        background-color: transparent;
-        padding: 10px;
-        right: 6px;
-        top: 14px;
-    }
 
     #searchformdropdown button {
         background-color: transparent;
@@ -8689,6 +8714,12 @@ div.list-view-rounded-corners > table th:last-of-type {
 
     #searchformdropdown button:hover {
         background-position: 13px -44px;
+    }
+
+    #search > div.dropdown-menu {
+        background-color: transparent;
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
 
     #search #query_string {
@@ -8816,7 +8847,7 @@ div.list-view-rounded-corners > table th:last-of-type {
 }
 
 
-@media (max-width: 600px) {
+@media (max-width: 750px) {
 
     #bootstrap-container {
         margin-top: 110px !important;
@@ -8869,6 +8900,7 @@ div.list-view-rounded-corners > table th:last-of-type {
 
     #quickcreatetop a {
         padding: 5px 32px 5px 12px;
+        background-color: #a2b2bf;
         background-position: 80px -5px;
     }
 
@@ -8876,15 +8908,37 @@ div.list-view-rounded-corners > table th:last-of-type {
         background-position: 80px -5px;
     }
 
-    #search #query_string {
-        left: -100px;
-        top: 48px;
-        padding-top: 7px;
-        padding-bottom: 7px;
-        margin-top: -17px;
+    #search {
+        position: relative;
+        min-height: 28px;
     }
 
-    #searchbutton {
+    #search > div.dropdown-menu {
+        top: -64px;
+        right: -112px;
+        bottom: auto;
+        left: auto;
+        width: auto;
+        clear: both;
+    }
+
+    #search .dropdown-menu,
+    #search #searchformdropdown .input-group {
+        width: 100%;
+    }
+
+    #search #query_string {
+        top: 0px;
+        right: 0px;
+        bottom: auto;
+        left: 0px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        margin: 0px;
+        width: 80% !important;
+    }
+
+    #search #searchbutton {
         margin: 0px 10px 0 0;
         background-color: transparent;
         border: none;
@@ -8895,15 +8949,10 @@ div.list-view-rounded-corners > table th:last-of-type {
         overflow: hidden;
         padding: 12px 0px 12px 0px;
         width: 28px;
-        height: 28
+        height: 40px!important;
     }
 
     #search.open #searchbutton {
-        background-position: 0px -60px;
-        background-color: transparent;
-    }
-
-    #searchbutton:hover {
         background-position: 0px -60px;
         background-color: transparent;
     }
@@ -8924,12 +8973,8 @@ div.list-view-rounded-corners > table th:last-of-type {
         background-position: 0 0;
     }
 
-    #usermenucollapsed:hover {
-        background-position: 0 -70px;
 
-    }
-
-    #desktop_notifications {
+    #desktop_notifications, #desktop_notifications:hover {
         float: left;
         width: 28px;
         height: 28px;
@@ -8940,13 +8985,11 @@ div.list-view-rounded-corners > table th:last-of-type {
         background-position: 0px 0px;
     }
 
-    #desktop_notifications:hover {
-        background-position: 0px -70px;
-    }
+
 
 }
 
-@media (min-width: 600px) {
+@media (min-width: 750px) {
     .modulename {
         line-height: 90px;
     }
@@ -8961,15 +9004,30 @@ div.list-view-rounded-corners > table th:last-of-type {
         -webkit-overflow-scrolling: touch;
     }
 
+    #search .dropdown-menu {
+        position: absolute;
+        top: 14px;
+        right:  0;
+        bottom: auto;
+        left: -224px;
+        background: transparent;
+    }
+
+    #search .dropdown-menu,
+    #search #searchformdropdown .input-group {
+        width: 100%;
+    }
+
     #search #query_string {
-        left: -185px;
-        padding-top: 12px;
-        padding: 12px;
+        top: 0;
+        left: 0px;
         margin-top: 0px;
+
     }
 
     #search .input-group-btn {
-        left: -185px;
+        top: 0px;
+        left: 0px;
     }
 
     #quickcreatetop {
@@ -9031,11 +9089,31 @@ div.list-view-rounded-corners > table th:last-of-type {
         margin-right: 8px;
     }
 
+
+    #search.open #searchbutton {
+        margin: 25px 15px 0 0;
+        background-color: transparent;
+        border: none;
+        background-image: url("../../../../themes/SuiteP/images/sidebar/modules/search-close.svg");
+        background-repeat: no-repeat;
+        background-position: 0px 0px!important;
+        background-size: 38px 38px;
+        text-indent: -9999px;
+        overflow: hidden;
+        padding: 12px 0px 12px 0px;
+        width: 42px;
+    }
+    #Icon_5_ {
+        fill: #fff;
+    }
+
+
+
     #searchbutton {
         margin: 25px 15px 0 0;
         background-color: transparent;
         border: none;
-        background-image: none, url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
+        background-image: url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
         background-repeat: no-repeat;
         background-position: 0px -46px;
         text-indent: -9999px;
@@ -9169,7 +9247,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 750px) {
     nav.navbar .container-fluid {
         padding-left: 0;
         padding-right: 0;
@@ -9265,7 +9343,7 @@ div.list-view-rounded-corners > table th:last-of-type {
 
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 750px) {
     .detail table, .detail thead, .detail tbody, .detail th, .detail td, .detail tr {
         display: block;
         background: none;
@@ -9298,7 +9376,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 750px) {
     .paginationChangeButtons {
         max-width: 125px;
     }
@@ -9353,7 +9431,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 }
 
-@media (min-width: 480px) and (max-width: 680px) {
+@media  (max-width: 750px) {
     #searchmobile {
         float: left;
         z-index: 50 !important;
@@ -9384,7 +9462,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 750px) {
 
 
     .edit tr, .edit tr td[scope="col"], .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td, .detail tr td, .detail table, table.detail {
@@ -9463,7 +9541,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 }
 
-@media (max-width: 670px) {
+@media (max-width: 750px) {
     .footer_left {
         width: 100%;
         text-align: center;
@@ -9698,14 +9776,14 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     #usermenucollapsed:hover {
-        background-position: 0 -99px !important;
+        background-position: 0 -99px;
     }
 
     #search .dropdown-menu {
         background-color: transparent;
         padding: 10px;
-        right: 6px;
-        top: 14px;
+        /*top: 14px;*/
+        /*right: 6px;*/
     }
 
     #searchformdropdown button {
@@ -9931,6 +10009,13 @@ table tr#delegates_search {
     }
 }
 
+@media (max-width: 1150px) {
+    li.topnav {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+
 @media (min-width: 1230px) {
     .sidebar {
         width: 18%;
@@ -10036,6 +10121,9 @@ table tr#delegates_search {
 }
 
 @media (min-width: 1600px) {
+    #search {
+        visibility: collapse;
+    }
     .sidebar {
         width: 13.8%;
     }
@@ -10749,7 +10837,7 @@ body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui
     }
 }
 
-@media(max-width: 600px) {
+@media(max-width: 750px) {
 
     #EditView table.dcQuickEdit,
     #EditView table.dcQuickEdit tr,

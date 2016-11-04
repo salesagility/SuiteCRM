@@ -40,8 +40,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once "include/utils/additional_details.php";
 
-function additionalDetailsTask($fields = array(), SugarBean $bean, $params = array()) {
-	return additional_details($fields, $bean, $params);
+
+function additionalDetailsFP_events($fields = array(), SugarBean $bean, $params = array()) {
+    return additional_details($fields, $bean, $params);
 }
- 
-?>
+
