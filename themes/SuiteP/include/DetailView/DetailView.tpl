@@ -53,7 +53,7 @@
                 {*if tab display*}
                     {{counter name="tabCount" print=false}}
 
-                        <li role="presentation" class="{{if $tabCount == '0'}}active{{else}}hidden-xs{{/if}}">
+                        <li role="presentation" class="{{if $tabCount == '0'}}active{{else}}hidden-xs{{/if}} main-tabs">
                             <a id="tab{{$tabCount}}" data-toggle="tab" class="hidden-xs">
                                 {sugar_translate label='{{$label}}' module='{{$module}}'}
                             </a>
@@ -189,16 +189,16 @@
 
         var selectTabOnError = function(tab) {
             selectTab(tab);
-            $('#content ul.nav.nav-tabs li').removeClass('active');
-            $('#content ul.nav.nav-tabs li a').css('color', '');
+            $('#content ul.nav.nav-tabs li.main-tabs').removeClass('active');
+            $('#content ul.nav.nav-tabs li.main-tabs a').css('color', '');
 
-            $('#content ul.nav.nav-tabs li').eq(tab).find('a').first().css('color', 'red');
-            $('#content ul.nav.nav-tabs li').eq(tab).addClass('active');
+            $('#content ul.nav.nav-tabs li.main-tabs').eq(tab).find('a').first().css('color', 'red');
+            $('#content ul.nav.nav-tabs li.main-tabs').eq(tab).addClass('active');
 
         };
 
         $(function(){
-            $('#content ul.nav.nav-tabs li').click(function(e){
+            $('#content ul.nav.nav-tabs li.main-tabs').click(function(e){
                 if(typeof $(this).find('a').first().attr('id') != 'undefined') {
                     if($(this).find('a').first().attr('id').match(/^tab(.)*$/) !== null) {
                         var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
@@ -206,7 +206,7 @@
                     }
                 }
             });
-            $('#content ul.nav.nav-tabs li.active').each(function(e){
+            $('#content ul.nav.nav-tabs li.main-tabs.active').each(function(e){
                 if(typeof $(this).find('a').first().attr('id') != 'undefined') {
                     var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
                     selectTab(tab);

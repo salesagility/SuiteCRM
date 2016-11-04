@@ -403,6 +403,7 @@ var selectTab = function(tab, tilt) {
 var selectTabOnErrorInputHandle = function(inputHandle) {
     var tab = $(inputHandle).closest('.tab-pane-NOBOOTSTRAPTOGGLER').attr('id').match(/^detailpanel_(.*)$/)[1];
     selectTabOnError(tab);
+    $('#EditView_tabs ul.nav.nav-tabs li.main-tabs').eq(tab).click();
 };
 
 // fix for tab navigation on user profile for SuiteP theme

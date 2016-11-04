@@ -54,7 +54,7 @@
                 {*if tab display*}
                     {{counter name="tabCount" print=false}}
 
-                        <li role="presentation" class="{{if $tabCount == '0'}}active{{else}}hidden-xs{{/if}}">
+                        <li role="presentation" class="{{if $tabCount == '0'}}active{{else}}hidden-xs{{/if}} main-tabs">
                             <a id="tab{{$tabCount}}" data-toggle="tab" class="hidden-xs">
                                 {sugar_translate label='{{$label}}' module='{{$module}}'}
                             </a>
@@ -192,16 +192,16 @@ $(document).ready(function() {ldelim}
 
     var selectTabOnError = function(tab) {
         selectTab(tab);
-        $('#EditView_tabs ul.nav.nav-tabs li').removeClass('active');
-        $('#EditView_tabs ul.nav.nav-tabs li a').css('color', '');
+        $('#EditView_tabs ul.nav.nav-tabs li.main-tabs').removeClass('active');
+        $('#EditView_tabs ul.nav.nav-tabs li.main-tabs a').css('color', '');
 
-        $('#EditView_tabs ul.nav.nav-tabs li').eq(tab).find('a').first().css('color', 'red');
-        $('#EditView_tabs ul.nav.nav-tabs li').eq(tab).addClass('active');
+        $('#EditView_tabs ul.nav.nav-tabs li.main-tabs').eq(tab).find('a').first().css('color', 'red');
+        $('#EditView_tabs ul.nav.nav-tabs li.main-tabs').eq(tab).addClass('active');
 
     };
 
     $(function(){
-        $('#EditView_tabs ul.nav.nav-tabs li').click(function(e){
+        $('#EditView_tabs ul.nav.nav-tabs li.main-tabs').click(function(e){
             if(typeof $(this).find('a').first().attr('id') != 'undefined') {
                 if($(this).find('a').first().attr('id').match(/^tab(.)*$/) !== null) {
                     var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
