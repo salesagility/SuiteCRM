@@ -60,6 +60,9 @@ if(!isset($GLOBALS['log']))
 $mail = new SugarPHPMailer();
 $admin = new Administration();
 $admin->retrieveSettings();
+if (isset($admin->settings['mail_sendtype']) && !empty($admin-settings['mail_sendtype']) && $admin->settings['mail_sendtype'] == "SMTP") {
+	$mail->SMTPKeepAlive=true;	// Give better performance. Reduce chance of errors. Added by github.com/EspaceNetworks
+}
 if (isset($admin->settings['massemailer_campaign_emails_per_run'])) {
 	$max_emails_per_run=$admin->settings['massemailer_campaign_emails_per_run'];
 }
