@@ -895,12 +895,14 @@ require_once('include/EditView/EditView2.php');
 
                          if($type == 'date') {
                             // The regular expression check is to circumvent special case YYYY-MM
-                             $operator = '=';
+                             $operator = $operator != 'subquery' ? '=' : $operator;
                              if(preg_match('/^\d{4}.\d{1,2}$/', $field_value) != 0) { // preg_match returns number of matches
                                 $db_field = $this->seed->db->convert($db_field, "date_format", array("%Y-%m"));
                             } else {
                                 $field_value = $timedate->to_db_date($field_value, false);
-                                $db_field = $this->seed->db->convert($db_field, "date_format", array("%Y-%m-%d"));
+                                 if ($operator != 'subquery') {
+                                     $db_field = $this->seed->db->convert($db_field, "date_format", array("%Y-%m-%d"));
+                                 }
                             }
                          }
 
