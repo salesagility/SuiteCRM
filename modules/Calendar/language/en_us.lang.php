@@ -41,9 +41,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $mod_strings = array (
 
-	'LBL_MODULE_NAME' => 'Calendar',
-	'LBL_AGENDADAY' => 'Day',
-	'LBL_AGENDAWEEK' => 'Week',
 	'LBL_SHAREDWEEK' => 'Shared Week',
 	'LBL_SHAREDMONTH' => 'Shared Month',
 
@@ -59,6 +56,8 @@ $mod_strings = array (
 	'LNK_TASK_LIST' => 'Tasks',
 	'LNK_TASK' => 'Task',
 	'LNK_TASK_VIEW' => 'View Task',
+	'LNK_EVENT' => 'Event',
+	'LNK_EVENT_VIEW' => 'View Event',
 	'LNK_VIEW_CALENDAR' => 'Today',
 	'LNK_IMPORT_CALLS' => 'Import Calls',
 	'LNK_IMPORT_MEETINGS' => 'Import Meetings',
