@@ -363,6 +363,9 @@ eoq;
 
 		$this->replaceImageByRegex("(?:{$sugar_config['site_url']})?/?cache/images/", sugar_cached("images/"));
 
+		$this->Body = preg_replace(';=\s*"'.preg_quote(sugar_cached('public/'), ';').';','="cid:',$this->Body);
+		$this->replaceImageByRegex("(?:{$sugar_config['site_url']})?/?public/", "public/");
+
 		//Replace any embeded images using the secure entryPoint for src url.
 		$this->replaceImageByRegex("(?:{$sugar_config['site_url']})?index.php[?]entryPoint=download&(?:amp;)?[^\"]+?id=", "upload://", true);
 
