@@ -3596,11 +3596,12 @@ table legend {
     float: left;
     width: 128px;
     color: #000000;
+    line-height: 18px;
 }
 
 .qtip-title-buttons {
     display: inline-block;
-    width: 48px;
+    width: 52px;
     float: right;
     vertical-align: middle;
     padding: 0 0 0 4px;
@@ -3636,6 +3637,14 @@ table legend {
 .qtip-default .qtip-titlebar .qtip-close:hover {
     color: #286090;
     font-size: 22px;
+    font-weight: bold;
+}
+
+.qtip-content {
+    line-height: 16px;
+}
+
+.qtip-content a {
     font-weight: bold;
 }
 

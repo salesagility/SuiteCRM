@@ -56,7 +56,6 @@ $app_list_strings = array(
     'moduleList' => array(
             'Home' => 'Home',
 			'ResourceCalendar' => 'Resource Calendar',
-			'AOBH_BusinessHours' => 'BusinessHours',
             'Contacts' => 'Contacts',
             'Accounts' => 'Accounts',
             'Opportunities' => 'Opportunities',
@@ -108,7 +107,6 @@ $app_list_strings = array(
             'FAQ' => 'FAQ',
             'Newsletters' => 'Newsletters',
             'SugarFeed' => 'SuiteCRM Feed',
-            'KBDocuments' => 'Knowledge Base',
             'SugarFavorites' => 'SuiteCRM Favorites',
 
             'OAuthKeys' => 'OAuth Consumer Keys',
@@ -444,14 +442,8 @@ $app_list_strings = array(
         'inactive' => 'Inactive',
     ),
 
-    'project_priority_options' => array(
-        'High' => 'High',
-        'Medium' => 'Medium',
-        'Low' => 'Low',
-    ),
-    'project_priority_default' => 'Medium',
-    //Note:  do not translate record_type_default_key
-//       it is the key for the default record_type_module value
+    // Note:  do not translate record_type_default_key
+    //        it is the key for the default record_type_module value
     'record_type_default_key' => 'Accounts',
     'record_type_display' => array(
             '' => '',
@@ -740,9 +732,6 @@ $app_list_strings = array(
     'dom_email_distribution' => array('' => '--None--',
         'direct' => 'Direct Assign',
         'roundRobin' => 'Round-Robin',
-        'leastBusy' => 'Least-Busy',
-    ),
-    'dom_email_distribution_for_auto_create' => array('roundRobin' => 'Round-Robin',
         'leastBusy' => 'Least-Busy',
     ),
     'dom_email_errors' => array(1 => 'Only select one user when Direct Assigning items.',
@@ -1739,9 +1728,6 @@ $app_strings = array(
     'LBL_LISTVIEW_TWO_REQUIRED' => 'Please select at least 2 records to proceed.',
     'LBL_LISTVIEW_LESS_THAN_TEN_SELECT' => 'Please select less than 10 records to proceed.',
     'LBL_LISTVIEW_ALL' => 'All',
-    'LBL_LISTVIEW_NONE' => 'Deselect All',
-    'LBL_LISTVIEW_OPTION_CURRENT' => 'Select This Page',
-    'LBL_LISTVIEW_OPTION_ENTIRE' => 'Select All',
     'LBL_LISTVIEW_OPTION_SELECTED' => 'Selected Records',
     'LBL_LISTVIEW_SELECTED_OBJECTS' => 'Selected: ',
 
@@ -2167,7 +2153,6 @@ $app_strings = array(
     'LBL_ADD_DASHLETS' => 'Add Dashlets',
     'LBL_CLOSE_DASHLETS' => 'Close',
     'LBL_OPTIONS' => 'Options',
-    'LBL_NUMBER_OF_COLUMNS' => 'Select the number of columns',
     'LBL_1_COLUMN' => '1 Column',
     'LBL_2_COLUMN' => '2 Column',
     'LBL_3_COLUMN' => '3 Column',
@@ -2444,6 +2429,9 @@ $app_strings = array(
     'ERR_A_REMINDER_IS_EMPTY_OR_INCORRECT' => 'A reminder is empty or incorrect.',
     'ERR_REMINDER_IS_NOT_SET_POPUP_OR_EMAIL' => 'Reminder is not set for either a popup or email.',
     'ERR_NO_INVITEES_FOR_REMINDER' => 'No invitees for reminder.',
+    'LBL_DELETE_REMINDER_CONFIRM' => 'Reminder doesn\'t include any invitees, do you want to remove the reminder?',
+    'LBL_DELETE_REMINDER' => 'Delete Reminder',
+    'LBL_OK' => 'Ok',
 
 );
 

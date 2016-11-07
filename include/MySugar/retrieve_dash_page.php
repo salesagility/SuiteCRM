@@ -288,6 +288,7 @@ $_SESSION['current_tab'] = $activePage;
 if(!empty($sugar_config['lock_homepage']) && $sugar_config['lock_homepage'] == true) $sugar_smarty->assign('lock_homepage', true);
 
 
+$sugar_smarty->assign('colNum', $numCols);
 $sugar_smarty->assign('sugarVersion', $sugar_version);
 $sugar_smarty->assign('currentLanguage', $GLOBALS['current_language']);
 $sugar_smarty->assign('serverUniqueKey', $GLOBALS['server_unique_key']);
