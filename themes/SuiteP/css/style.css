@@ -11264,3 +11264,19 @@ div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[
     }
 
 }
+
+#selectLinkTop > li > label,
+#selectLinkBottom > li > label {
+    margin-bottom: initial;
+    top: -6px;
+    margin-right: 8px;
+}
+
+#selectLinkTop > li > label.disabled,
+#selectLinkBottom > li > label.disabled {
+    color: #C9D2DA;
+}
+
+.bootstrap-checkbox-hidden {
+    display: none;
+}

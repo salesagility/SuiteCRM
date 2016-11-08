@@ -594,4 +594,56 @@ $(function () {
     }, 1500);
 
 
+    var refreshBootstrapCheckbox = function(e) {
+        $(e).removeClass('glyphicon-check');
+        $(e).removeClass('glyphicon-unchecked');
+        if($(e).next().prop('checked')) {
+            $(e).addClass('glyphicon-check');
+        }
+        else {
+            $(e).addClass('glyphicon-unchecked');
+        }
+        $(e).removeClass('disabled')
+        if($(e).next().prop('disabled')) {
+            $(e).addClass('disabled')
+        }
+    };
+
+    var bootstrapCheckboxesInitialized = false;
+    var initializeBootstrapCheckboxes = function() {
+        if(!bootstrapCheckboxesInitialized) {
+            if ($('.glyphicon.bootstrap-checkbox').length == 0) {
+                setTimeout(function () {
+                    initializeBootstrapCheckboxes();
+                }, 100);
+            } else {
+                $('.glyphicon.bootstrap-checkbox').each(function (i, e) {
+                    $(e).removeClass('hidden');
+                    $(e).next().hide();
+                    refreshBootstrapCheckbox(e);
+                    $(e).click(function () {
+                        $(this).next().click();
+                        refreshBootstrapCheckbox($(this));
+                    });
+                });
+
+                $('#selectLinkTop > li > ul > li > a').click(function (e) {
+                    e.preventDefault();
+                    $('.glyphicon.bootstrap-checkbox').each(function (i, e) {
+                        refreshBootstrapCheckbox(e);
+                    });
+                });
+
+                $('#selectLinkBottom > li > ul > li > a').click(function (e) {
+                    e.preventDefault();
+                    $('.glyphicon.bootstrap-checkbox').each(function (i, e) {
+                        refreshBootstrapCheckbox(e);
+                    });
+                });
+                bootstrapCheckboxesInitialized = true;
+            }
+        }
+    };
+    initializeBootstrapCheckboxes();
+
 });
