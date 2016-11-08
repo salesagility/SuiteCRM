@@ -627,19 +627,13 @@ $(function () {
                     });
                 });
 
-                $('#selectLinkTop > li > ul > li > a').click(function (e) {
+                $('#selectLink > li > ul > li > a, #selectLinkTop > li > ul > li > a, #selectLinkBottom > li > ul > li > a').click(function (e) {
                     e.preventDefault();
                     $('.glyphicon.bootstrap-checkbox').each(function (i, e) {
                         refreshBootstrapCheckbox(e);
                     });
                 });
 
-                $('#selectLinkBottom > li > ul > li > a').click(function (e) {
-                    e.preventDefault();
-                    $('.glyphicon.bootstrap-checkbox').each(function (i, e) {
-                        refreshBootstrapCheckbox(e);
-                    });
-                });
                 bootstrapCheckboxesInitialized = true;
             }
         }
