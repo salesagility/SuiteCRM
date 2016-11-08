@@ -38,6 +38,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
+require_once('include/ListView/ListViewSubPanel.php');
 require_once('include/SubPanel/registered_layout_defs.php');
 /**
  * Subpanel
@@ -138,7 +139,7 @@ class SubPanel
 		$subpanel_def = $thisPanel->get_buttons();
 
 		if(!isset($this->listview)){
-			$this->listview = new ListView();
+			$this->listview = new ListViewSubPanel();
 		}
 		$layout_manager = $this->listview->getLayoutManager();
 		$widget_contents = '<div><table cellpadding="0" cellspacing="0"><tr>';
