@@ -11206,3 +11206,61 @@ div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[
         padding: 0px 0px 15px 0px !important;
     }
 }
+
+#select_actions_disabled_top > a > label.hidden-mobile,
+#select_actions_disabled_top > a > label.hidden-desktop,
+#select_actions_disabled_bottom > a > label.hidden-mobile,
+#select_actions_disabled_bottom > a > label.hidden-desktop,
+#delete_listview_top > label.hidden-mobile,
+#delete_listview_top > label.hidden-desktop,
+#delete_listview_bottom > label.hidden-mobile,
+#delete_listview_bottom > label.hidden-desktop {
+    margin-bottom: initial;
+    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 17px;
+}
+
+#delete_listview_top > label.hidden-mobile,
+#delete_listview_top > label.hidden-desktop,
+#delete_listview_bottom > label.hidden-mobile,
+#delete_listview_bottom > label.hidden-desktop {
+    line-height: 12px;
+}
+
+
+@media (min-width: 480px) {
+
+    #select_actions_disabled_top > a > label.hidden-desktop,
+    #select_actions_disabled_bottom > a > label.hidden-desktop,
+    #delete_listview_top > label.hidden-desktop,
+    #delete_listview_bottom > label.hidden-desktop {
+        display: block;
+    }
+
+    #select_actions_disabled_top > a > label.hidden-mobile,
+    #select_actions_disabled_bottom > a > label.hidden-mobile,
+    #delete_listview_top > label.hidden-mobile,
+    #delete_listview_bottom > label.hidden-mobile {
+        display: none;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    #select_actions_disabled_top > a > label.hidden-desktop,
+    #select_actions_disabled_bottom > a > label.hidden-desktop,
+    #delete_listview_top > label.hidden-desktop,
+    #delete_listview_bottom > label.hidden-desktop {
+        display: none;
+    }
+
+    #select_actions_disabled_top > a > label.hidden-mobile,
+    #select_actions_disabled_bottom > a > label.hidden-mobile,
+    #delete_listview_top > label.hidden-mobile,
+    #delete_listview_bottom > label.hidden-mobile {
+        display: block;
+    }
+
+}
