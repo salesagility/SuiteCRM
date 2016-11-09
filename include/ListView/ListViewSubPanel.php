@@ -61,6 +61,9 @@
             if ($path_parts['extension'] != 'tpl') {
                 $GLOBALS['log']->fatal('ListViewSubPanel::initNewSmartyTemplate path must have an tpl extension');
 
+                // TODO: Remove after 7.8. This is just to see which subpanels need to be upgraded to smarty
+                echo 'ListViewSubPanel::initNewSmartyTemplate path must have an tpl extension';
+
                 return;
             }
 
