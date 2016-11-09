@@ -37,4 +37,26 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 *}
-<div class="container-fluid">TODO convert parse methods calls to something smarty can do</div>
+{*
+ /*
+  * This template is now displays to the sub panel
+  */
+*}
+<table cellpadding="0" cellspacing="0" border="0" class="list view table-responsive">
+    <thead>
+        <tr>
+            {foreach from=$HEADER_CELLS key=colHeader item=header}
+                <th>{$header}</th>
+            {/foreach}
+        </tr>
+    </thead>
+    <tbody>
+    {foreach from=$ROWS key=colHeader item=row}
+        <tr>
+            {foreach from=$row key=colHeader item=cell}
+                <td>{$cell}</td>
+            {/foreach}
+        </tr>
+    {/foreach}
+    </tbody>
+</table>

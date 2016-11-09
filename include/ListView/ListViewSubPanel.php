@@ -145,20 +145,22 @@
                 $thepanel = $subpanel_def;
             }
 
+            // TODO: Refactoring into smarty
 
             $this->process_dynamic_listview_header($thepanel->get_module_name(), $thepanel, $html_var);
             $this->process_dynamic_listview_rows($list, $parent_data, 'dyn_list_view', $html_var, $subpanel_def);
 
-            if ($this->display_header_and_footer) {
-                $this->getAdditionalHeader();
-                if (!empty($this->header_title)) {
-                    echo get_form_header($this->header_title, $this->header_text, false);
-                }
-            }
+//            if ($this->display_header_and_footer) {
+//                $this->getAdditionalHeader();
+//                if (!empty($this->header_title)) {
+//                     get_form_header($this->header_title, $this->header_text, false);
+//                }
+//            }
 
             $this->smartyTemplate->display($this->smartyTemplatePath);
 
             if (isset($_SESSION['validation'])) {
+                // <a href='http://www.sugarcrm.com'>POWERED&nbsp;BY&nbsp;SUGARCRM</a>
                 print base64_decode('PGEgaHJlZj0naHR0cDovL3d3dy5zdWdhcmNybS5jb20nPlBPV0VSRUQmbmJzcDtCWSZuYnNwO1NVR0FSQ1JNPC9hPg==');
             }
             if (isset($list_data['query'])) {
@@ -182,6 +184,9 @@
             }
             $buttons = false;
             $col_count = 0;
+            $widget_contents = array();
+            $footable = array();
+
             foreach ($subpanel_def->get_list_fields() as $column_name => $widget_args) {
                 $usage = empty($widget_args['usage']) ? '' : $widget_args['usage'];
                 if ($usage != 'query_only' || !empty($widget_args['force_query_only_display'])) {
@@ -191,7 +196,7 @@
                         $imgArrow = "_down";
                         if ($this->sort_order == 'asc') {
                             $imgArrow = "_up";
-                        }
+                        };
                     }
 
                     if (!preg_match("/_button/i", $column_name)) {
@@ -201,16 +206,19 @@
                         $widget_args['end_link_wrapper'] = $this->end_link_wrapper;
                         $widget_args['subpanel_module'] = $this->subpanel_module;
 
-                        $widget_contents = $layout_manager->widgetDisplay($widget_args);
+                        $widget_contents[] = $layout_manager->widgetDisplay($widget_args);
                         $cell_width = empty($widget_args['width']) ? '' : $widget_args['width'];
-                        $this->smartyTemplate->assign('HEADER_CELL', $widget_contents);
+
+
                         static $count;
+
                         if (!isset($count)) {
                             $count = 0;
                         }
                         else {
                             $count++;
                         }
+
                         if ($col_count == 0 || $column_name == 'name') {
                             $footable = 'data-toggle="true"';
                         }
@@ -223,9 +231,9 @@
                                 $footable = 'data-hide="phone,phonelandscape,tablet"';
                             }
                         }
-                        $this->smartyTemplate->assign('FOOTABLE', $footable);
-                        $this->smartyTemplate->assign('CELL_COUNT', $count);
-                        $this->smartyTemplate->assign('CELL_WIDTH', $cell_width);
+
+//                        $this->smartyTemplate->assign('CELL_COUNT', $count);
+//                        $this->smartyTemplate->assign('CELL_WIDTH', $cell_width);
                         //                        $this->smartyTemplate->parse('dyn_list_view.header_cell');
                     }
                     else {
@@ -235,13 +243,16 @@
                 ++$col_count;
             }
 
-            if ($buttons) {
-                $this->smartyTemplate->assign('FOOTABLE', '');
-                $this->smartyTemplate->assign('HEADER_CELL', "&nbsp;");
-                $this->smartyTemplate->assign('CELL_COUNT', $count);
-                $this->smartyTemplate->assign('CELL_WIDTH', $cell_width);
-                //                $this->smartyTemplate->parse('dyn_list_view.header_cell');
-            }
+            $this->smartyTemplate->assign('HEADER_CELLS', $widget_contents);
+
+//            $this->smartyTemplate->assign('FOOTABLE', $footable);
+//            if ($buttons) {
+//                $this->smartyTemplate->assign('FOOTABLE', '');
+//                $this->smartyTemplate->assign('HEADER_CELL', "&nbsp;");
+//                $this->smartyTemplate->assign('CELL_COUNT', $count);
+//                $this->smartyTemplate->assign('CELL_WIDTH', $cell_width);
+//                //                $this->smartyTemplate->parse('dyn_list_view.header_cell');
+//            }
 
         }
 
@@ -252,6 +263,8 @@
             global $even_bg;
             global $hilite_bg;
             global $click_bg;
+
+            $widget_contents = array();
 
             $this->smartyTemplate->assign("BG_HILITE", $hilite_bg);
             $this->smartyTemplate->assign('CHECKALL', SugarThemeRegistry::current()->getImage('blank', '', 1, 1, ".gif", ''));
@@ -286,24 +299,23 @@
             }
 
             if (empty($data)) {
-                $this->smartyTemplate->assign("ROW_COLOR", 'oddListRow');
+//                $this->smartyTemplate->assign("ROW_COLOR", 'oddListRow');
                 $thepanel = $subpanel_def;
                 if ($subpanel_def->isCollection()) {
                     $thepanel = $subpanel_def->get_header_panel_def();
                 }
-                $this->smartyTemplate->assign("COL_COUNT", count($thepanel->get_list_fields()));
+//                $this->smartyTemplate->assign("COL_COUNT", count($thepanel->get_list_fields()));
                 //                $this->smartyTemplate->parse($smartyTemplateSection.".nodata");
             }
-            while (list($aVal, $aItem) = each($data)) {
+
+            foreach($data as $aVal => $aItem) {
+                $widget_contents[$aVal] = array();
                 $subpanel_item_count++;
                 $aItem->check_date_relationships_load();
-                // TODO: expensive and needs to be removed and done better elsewhere
 
                 if (!empty($fill_additional_fields[$aItem->object_name]) || ($aItem->object_name == 'Case' && !empty($fill_additional_fields['aCase']))) {
                     $aItem->fill_in_additional_list_fields();
-                    //$aItem->fill_in_additional_detail_fields();
                 }
-                //rrs bug: 25343
                 $aItem->call_custom_logic("process_record");
 
                 if (isset($parent_data[$aItem->id])) {
@@ -329,33 +341,23 @@
 
                 if ($this->shouldProcess) {
                     if ($aItem->ACLAccess('EditView')) {
-                        $this->smartyTemplate->assign('PREROW', "<input type='checkbox' class='checkbox' name='mass[]' value='" . $fields['ID'] . "' />");
+                        $widget_contents[$aVal][0] = "<input type='checkbox' class='checkbox' name='mass[]' value='" . $fields['ID'] . "' />";
                     }
                     else {
-                        $this->smartyTemplate->assign('PREROW', '');
-
+                        $widget_contents[$aVal][0] = '';
                     }
-                    if ($aItem->ACLAccess('DetailView')) {
-                        $this->smartyTemplate->assign('TAG_NAME', 'a');
-                    }
-                    else {
-                        $this->smartyTemplate->assign('TAG_NAME', 'span');
-                    }
+//                    if ($aItem->ACLAccess('DetailView')) {
+//                        $this->smartyTemplate->assign('TAG_NAME', 'a');
+//                    }
+//                    else {
+//                        $this->smartyTemplate->assign('TAG_NAME', 'span');
+//                    }
                     $this->smartyTemplate->assign('CHECKALL', "<input type='checkbox'  title='" . $GLOBALS['app_strings']['LBL_SELECT_ALL_TITLE'] . "' class='checkbox' name='massall' id='massall' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' />");
-                }
 
-                if ($oddRow) {
-                    $ROW_COLOR = 'oddListRow';
-                    $BG_COLOR = $odd_bg;
-                }
-                else {
-                    $ROW_COLOR = 'evenListRow';
-                    $BG_COLOR = $even_bg;
                 }
                 $oddRow = !$oddRow;
                 $button_contents = array();
-                $this->smartyTemplate->assign("ROW_COLOR", $ROW_COLOR);
-                $this->smartyTemplate->assign("BG_COLOR", $BG_COLOR);
+
                 $layout_manager = $this->getLayoutManager();
                 $layout_manager->setAttribute('context', 'List');
                 $layout_manager->setAttribute('image_path', $this->local_image_path);
@@ -424,10 +426,7 @@
                         //if you are here you have column that is query only but needs to be displayed as blank.  This is helpful
                         //for collections such as Activities where you have a field in only one object and wish to show it in the subpanel list
                         $count++;
-                        $widget_contents = '&nbsp;';
-                        $this->smartyTemplate->assign('CLASS', "");
-                        $this->smartyTemplate->assign('CELL_COUNT', $count);
-                        $this->smartyTemplate->assign('CELL', $widget_contents);
+                        $widget_contents[$aVal][$field_name] = '&nbsp;';
                         //                        $this->smartyTemplate->parse($smartyTemplateSection.".row.cell");
 
                     }
@@ -474,20 +473,20 @@
                                 }
 
                                 if ($tmpField != null) {
-                                    $widget_contents = SugarFieldHandler::displaySmarty($list_field['fields'], $vardef, 'ListView', $list_field);
+                                    $widget_contents[$aVal][$field_name] = SugarFieldHandler::displaySmarty($list_field['fields'], $vardef, 'ListView', $list_field);
                                 }
                                 else {
                                     // No SugarField for this particular type
                                     // Use the old, icky, SugarWidget for now
-                                    $widget_contents = $layout_manager->widgetDisplay($list_field);
+                                    $widget_contents[$aVal][$field_name] = $layout_manager->widgetDisplay($list_field);
                                 }
 
                                 if (isset($list_field['widget_class']) && $list_field['widget_class'] == 'SubPanelDetailViewLink') {
                                     // We need to call into the old SugarWidgets for the time being, so it can generate a proper link with all the various corner-cases handled
                                     // So we'll populate the field data with the pre-rendered display for the field
-                                    $list_field['fields'][$field_name] = $widget_contents;
+                                    $list_field['fields'][$field_name] = $widget_contents[$aVal][$field_name];
                                     if ('full_name' == $field_name) {//bug #32465
-                                        $list_field['fields'][strtoupper($field_name)] = $widget_contents;
+                                        $list_field['fields'][strtoupper($field_name)] = $widget_contents[$aVal][$field_name];
                                     }
 
                                     //vardef source is non db, assign the field name to varname for processing of column.
@@ -495,54 +494,54 @@
                                         $list_field['varname'] = $field_name;
 
                                     }
-                                    $widget_contents = $layout_manager->widgetDisplay($list_field);
+                                    $widget_contents[$aVal][$field_name] = $layout_manager->widgetDisplay($list_field);
                                 }
                                 else {
                                     if (isset($list_field['widget_class']) && $list_field['widget_class'] == 'SubPanelEmailLink') {
-                                        $widget_contents = $layout_manager->widgetDisplay($list_field);
+                                        $widget_contents[$aVal][$field_name] = $layout_manager->widgetDisplay($list_field);
                                     }
                                 }
 
                                 $count++;
-                                $this->smartyTemplate->assign('CELL_COUNT', $count);
-                                $this->smartyTemplate->assign('CLASS', "");
+//                                $this->smartyTemplate->assign('CELL_COUNT', $count);
+//                                $this->smartyTemplate->assign('CLASS', "");
                                 if (empty($widget_contents)) {
-                                    $widget_contents = '&nbsp;';
+                                    $widget_contents[$aVal][$field_name] = '&nbsp;';
                                 }
-                                $this->smartyTemplate->assign('CELL', $widget_contents);
+//                                $this->smartyTemplate->assign('CELL', $widget_contents);
                                 //                            $this->smartyTemplate->parse($smartyTemplateSection.".row.cell");
                             }
                             else {
                                 // This handles the edit and remove buttons and icon widget
                                 if (isset($list_field['widget_class']) && $list_field['widget_class'] == "SubPanelIcon") {
                                     $count++;
-                                    $widget_contents = $layout_manager->widgetDisplay($list_field);
-                                    $this->smartyTemplate->assign('CELL_COUNT', $count);
-                                    $this->smartyTemplate->assign('CLASS', "");
-                                    if (empty($widget_contents)) {
-                                        $widget_contents = '&nbsp;';
+                                    $widget_contents[$aVal][$field_name] = $layout_manager->widgetDisplay($list_field);
+//                                    $this->smartyTemplate->assign('CELL_COUNT', $count);
+//                                    $this->smartyTemplate->assign('CLASS', "");
+                                    if (empty($widget_contents[$aVal][$field_name])) {
+                                        $widget_contents[$aVal][$field_name] = '&nbsp;';
                                     }
-                                    $this->smartyTemplate->assign('CELL', $widget_contents);
+//                                    $this->smartyTemplate->assign('CELL', $widget_contents);
                                     //                                $this->smartyTemplate->parse($smartyTemplateSection.".row.cell");
                                 }
                                 elseif (preg_match("/button/i", $list_field['name'])) {
                                     if ((($list_field['name'] === 'edit_button' && $field_acl['EditView']) || ($list_field['name'] === 'close_button' && $field_acl['EditView']) || ($list_field['name'] === 'remove_button' && $field_acl['Delete'])) && '' != ($_content = $layout_manager->widgetDisplay($list_field))) {
-                                        $button_contents[] = $_content;
+                                        $button_contents[$aVal][$field_name] = $_content;
                                         unset($_content);
                                     }
                                     else {
-                                        $button_contents[] = '';
+                                        $button_contents[$aVal][$field_name] = '';
                                     }
                                 }
                                 else {
                                     $count++;
-                                    $this->smartyTemplate->assign('CLASS', "");
-                                    $widget_contents = $layout_manager->widgetDisplay($list_field);
-                                    $this->smartyTemplate->assign('CELL_COUNT', $count);
-                                    if (empty($widget_contents)) {
-                                        $widget_contents = '&nbsp;';
+//                                    $this->smartyTemplate->assign('CLASS', "");
+                                    $widget_contents[$aVal][$field_name] = $layout_manager->widgetDisplay($list_field);
+//                                    $this->smartyTemplate->assign('CELL_COUNT', $count);
+                                    if (empty($widget_contents[$aVal][$field_name])) {
+                                        $widget_contents[$aVal][$field_name] = '&nbsp;';
                                     }
-                                    $this->smartyTemplate->assign('CELL', $widget_contents);
+//                                    $this->smartyTemplate->assign('CELL', $widget_contents);
                                     //                                $this->smartyTemplate->parse($smartyTemplateSection.".row.cell");
                                 }
                             }
@@ -585,7 +584,8 @@
                 //            $this->smartyTemplate->parse($smartyTemplateSection.".row");
             }
 
-            //        $this->smartyTemplate->parse($smartyTemplateSection);
+           //        $this->smartyTemplate->parse($smartyTemplateSection);
+            $this->smartyTemplate->assign('ROWS', $widget_contents);
         }
 
         public function processListNavigation($smartyTemplateSection, $html_varName, $current_offset, $next_offset, $previous_offset, $row_count, $sugarbean = null, $subpanel_def = null, $col_count = 20) {
