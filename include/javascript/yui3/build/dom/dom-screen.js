@@ -5,4 +5,582 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("dom-screen",function(a){(function(f){var d="documentElement",q="compatMode",o="position",c="fixed",m="relative",g="left",h="top",i="BackCompat",p="medium",e="borderLeftWidth",b="borderTopWidth",r="getBoundingClientRect",k="getComputedStyle",l=f.DOM,n=/^t(?:able|d|h)$/i,j;if(f.UA.ie){if(f.config.doc[q]!=="quirks"){j=d;}else{j="body";}}f.mix(l,{winHeight:function(t){var s=l._getWinSize(t).height;return s;},winWidth:function(t){var s=l._getWinSize(t).width;return s;},docHeight:function(t){var s=l._getDocSize(t).height;return Math.max(s,l._getWinSize(t).height);},docWidth:function(t){var s=l._getDocSize(t).width;return Math.max(s,l._getWinSize(t).width);},docScrollX:function(u,v){v=v||(u)?l._getDoc(u):f.config.doc;var t=v.defaultView,s=(t)?t.pageXOffset:0;return Math.max(v[d].scrollLeft,v.body.scrollLeft,s);},docScrollY:function(u,v){v=v||(u)?l._getDoc(u):f.config.doc;var t=v.defaultView,s=(t)?t.pageYOffset:0;return Math.max(v[d].scrollTop,v.body.scrollTop,s);},getXY:function(){if(f.config.doc[d][r]){return function(x){var E=null,y,u,z,C,B,t,w,A,D,s,v;if(x&&x.tagName){D=x.ownerDocument;v=D[d];if(v.contains){s=v.contains(x);}else{s=f.DOM.contains(v,x);}if(s){y=(j)?D[j].scrollLeft:l.docScrollX(x,D);u=(j)?D[j].scrollTop:l.docScrollY(x,D);z=x[r]();E=[z.left,z.top];if(f.UA.ie){C=2;B=2;A=D[q];t=l[k](D[d],e);w=l[k](D[d],b);if(f.UA.ie===6){if(A!==i){C=0;B=0;}}if((A==i)){if(t!==p){C=parseInt(t,10);}if(w!==p){B=parseInt(w,10);}}E[0]-=C;E[1]-=B;}if((u||y)){if(!f.UA.ios||(f.UA.ios>=4.2)){E[0]+=y;E[1]+=u;}}}else{E=l._getOffset(x);}}return E;};}else{return function(t){var w=null,v,s,y,u,x;if(t){if(l.inDoc(t)){w=[t.offsetLeft,t.offsetTop];v=t.ownerDocument;s=t;y=((f.UA.gecko||f.UA.webkit>519)?true:false);while((s=s.offsetParent)){w[0]+=s.offsetLeft;w[1]+=s.offsetTop;if(y){w=l._calcBorders(s,w);}}if(l.getStyle(t,o)!=c){s=t;while((s=s.parentNode)){u=s.scrollTop;x=s.scrollLeft;if(f.UA.gecko&&(l.getStyle(s,"overflow")!=="visible")){w=l._calcBorders(s,w);}if(u||x){w[0]-=x;w[1]-=u;}}w[0]+=l.docScrollX(t,v);w[1]+=l.docScrollY(t,v);}else{w[0]+=l.docScrollX(t,v);w[1]+=l.docScrollY(t,v);}}else{w=l._getOffset(t);}}return w;};}}(),getX:function(s){return l.getXY(s)[0];},getY:function(s){return l.getXY(s)[1];},setXY:function(t,w,z){var u=l.setStyle,y,x,s,v;if(t&&w){y=l.getStyle(t,o);x=l._getOffset(t);if(y=="static"){y=m;u(t,o,y);}v=l.getXY(t);if(w[0]!==null){u(t,g,w[0]-v[0]+x[0]+"px");}if(w[1]!==null){u(t,h,w[1]-v[1]+x[1]+"px");}if(!z){s=l.getXY(t);if(s[0]!==w[0]||s[1]!==w[1]){l.setXY(t,w,true);}}}else{}},setX:function(t,s){return l.setXY(t,[s,null]);},setY:function(s,t){return l.setXY(s,[null,t]);},swapXY:function(t,s){var u=l.getXY(t);l.setXY(t,l.getXY(s));l.setXY(s,u);},_calcBorders:function(v,w){var u=parseInt(l[k](v,b),10)||0,s=parseInt(l[k](v,e),10)||0;if(f.UA.gecko){if(n.test(v.tagName)){u=0;s=0;}}w[0]+=s;w[1]+=u;return w;},_getWinSize:function(v,y){y=y||(v)?l._getDoc(v):f.config.doc;var x=y.defaultView||y.parentWindow,z=y[q],u=x.innerHeight,t=x.innerWidth,s=y[d];if(z&&!f.UA.opera){if(z!="CSS1Compat"){s=y.body;}u=s.clientHeight;t=s.clientWidth;}return{height:u,width:t};},_getDocSize:function(t){var u=(t)?l._getDoc(t):f.config.doc,s=u[d];if(u[q]!="CSS1Compat"){s=u.body;}return{height:s.scrollHeight,width:s.scrollWidth};}});})(a);(function(g){var d="top",c="right",h="bottom",b="left",f=function(m,k){var o=Math.max(m[d],k[d]),p=Math.min(m[c],k[c]),i=Math.min(m[h],k[h]),j=Math.max(m[b],k[b]),n={};n[d]=o;n[c]=p;n[h]=i;n[b]=j;return n;},e=g.DOM;g.mix(e,{region:function(j){var k=e.getXY(j),i=false;if(j&&k){i=e._getRegion(k[1],k[0]+j.offsetWidth,k[1]+j.offsetHeight,k[0]);}return i;},intersect:function(k,i,m){var j=m||e.region(k),l={},p=i,o;if(p.tagName){l=e.region(p);}else{if(g.Lang.isObject(i)){l=i;}else{return false;}}o=f(l,j);return{top:o[d],right:o[c],bottom:o[h],left:o[b],area:((o[h]-o[d])*(o[c]-o[b])),yoff:((o[h]-o[d])),xoff:(o[c]-o[b]),inRegion:e.inRegion(k,i,false,m)};},inRegion:function(l,i,j,o){var m={},k=o||e.region(l),q=i,p;if(q.tagName){m=e.region(q);}else{if(g.Lang.isObject(i)){m=i;}else{return false;}}if(j){return(k[b]>=m[b]&&k[c]<=m[c]&&k[d]>=m[d]&&k[h]<=m[h]);}else{p=f(m,k);if(p[h]>=p[d]&&p[c]>=p[b]){return true;}else{return false;}}},inViewportRegion:function(j,i,k){return e.inRegion(j,e.viewportRegion(j),i,k);},_getRegion:function(k,m,i,j){var n={};n[d]=n[1]=k;n[b]=n[0]=j;n[h]=i;n[c]=m;n.width=n[c]-n[b];n.height=n[h]-n[d];return n;},viewportRegion:function(j){j=j||g.config.doc.documentElement;var i=false,l,k;if(j){l=e.docScrollX(j);k=e.docScrollY(j);i=e._getRegion(k,e.winWidth(j)+l,k+e.winHeight(j),l);}return i;}});})(a);},"3.3.0",{requires:["dom-base","dom-style","event-base"]});
+YUI.add('dom-screen', function(Y) {
+
+(function(Y) {
+
+/**
+ * Adds position and region management functionality to DOM.
+ * @module dom
+ * @submodule dom-screen
+ * @for DOM
+ */
+
+var DOCUMENT_ELEMENT = 'documentElement',
+    COMPAT_MODE = 'compatMode',
+    POSITION = 'position',
+    FIXED = 'fixed',
+    RELATIVE = 'relative',
+    LEFT = 'left',
+    TOP = 'top',
+    _BACK_COMPAT = 'BackCompat',
+    MEDIUM = 'medium',
+    BORDER_LEFT_WIDTH = 'borderLeftWidth',
+    BORDER_TOP_WIDTH = 'borderTopWidth',
+    GET_BOUNDING_CLIENT_RECT = 'getBoundingClientRect',
+    GET_COMPUTED_STYLE = 'getComputedStyle',
+
+    Y_DOM = Y.DOM,
+
+    // TODO: how about thead/tbody/tfoot/tr?
+    // TODO: does caption matter?
+    RE_TABLE = /^t(?:able|d|h)$/i,
+
+    SCROLL_NODE;
+
+if (Y.UA.ie) {
+    if (Y.config.doc[COMPAT_MODE] !== 'quirks') {
+        SCROLL_NODE = DOCUMENT_ELEMENT; 
+    } else {
+        SCROLL_NODE = 'body';
+    }
+}
+
+Y.mix(Y_DOM, {
+    /**
+     * Returns the inner height of the viewport (exludes scrollbar). 
+     * @method winHeight
+     * @return {Number} The current height of the viewport.
+     */
+    winHeight: function(node) {
+        var h = Y_DOM._getWinSize(node).height;
+        return h;
+    },
+
+    /**
+     * Returns the inner width of the viewport (exludes scrollbar). 
+     * @method winWidth
+     * @return {Number} The current width of the viewport.
+     */
+    winWidth: function(node) {
+        var w = Y_DOM._getWinSize(node).width;
+        return w;
+    },
+
+    /**
+     * Document height 
+     * @method docHeight
+     * @return {Number} The current height of the document.
+     */
+    docHeight:  function(node) {
+        var h = Y_DOM._getDocSize(node).height;
+        return Math.max(h, Y_DOM._getWinSize(node).height);
+    },
+
+    /**
+     * Document width 
+     * @method docWidth
+     * @return {Number} The current width of the document.
+     */
+    docWidth:  function(node) {
+        var w = Y_DOM._getDocSize(node).width;
+        return Math.max(w, Y_DOM._getWinSize(node).width);
+    },
+
+    /**
+     * Amount page has been scroll horizontally 
+     * @method docScrollX
+     * @return {Number} The current amount the screen is scrolled horizontally.
+     */
+    docScrollX: function(node, doc) {
+        doc = doc || (node) ? Y_DOM._getDoc(node) : Y.config.doc; // perf optimization
+        var dv = doc.defaultView,
+            pageOffset = (dv) ? dv.pageXOffset : 0;
+        return Math.max(doc[DOCUMENT_ELEMENT].scrollLeft, doc.body.scrollLeft, pageOffset);
+    },
+
+    /**
+     * Amount page has been scroll vertically 
+     * @method docScrollY
+     * @return {Number} The current amount the screen is scrolled vertically.
+     */
+    docScrollY:  function(node, doc) {
+        doc = doc || (node) ? Y_DOM._getDoc(node) : Y.config.doc; // perf optimization
+        var dv = doc.defaultView,
+            pageOffset = (dv) ? dv.pageYOffset : 0;
+        return Math.max(doc[DOCUMENT_ELEMENT].scrollTop, doc.body.scrollTop, pageOffset);
+    },
+
+    /**
+     * Gets the current position of an element based on page coordinates. 
+     * Element must be part of the DOM tree to have page coordinates
+     * (display:none or elements not appended return false).
+     * @method getXY
+     * @param element The target element
+     * @return {Array} The XY position of the element
+
+     TODO: test inDocument/display?
+     */
+    getXY: function() {
+        if (Y.config.doc[DOCUMENT_ELEMENT][GET_BOUNDING_CLIENT_RECT]) {
+            return function(node) {
+                var xy = null,
+                    scrollLeft,
+                    scrollTop,
+                    box,
+                    off1, off2,
+                    bLeft, bTop,
+                    mode,
+                    doc,
+                    inDoc,
+                    rootNode;
+
+                if (node && node.tagName) {
+                    doc = node.ownerDocument;
+                    rootNode = doc[DOCUMENT_ELEMENT];
+
+                    // inline inDoc check for perf
+                    if (rootNode.contains) {
+                        inDoc = rootNode.contains(node); 
+                    } else {
+                        inDoc = Y.DOM.contains(rootNode, node);
+                    }
+
+                    if (inDoc) {
+                        scrollLeft = (SCROLL_NODE) ? doc[SCROLL_NODE].scrollLeft : Y_DOM.docScrollX(node, doc);
+                        scrollTop = (SCROLL_NODE) ? doc[SCROLL_NODE].scrollTop : Y_DOM.docScrollY(node, doc);
+                        box = node[GET_BOUNDING_CLIENT_RECT]();
+                        xy = [box.left, box.top];
+
+                            if (Y.UA.ie) {
+                                off1 = 2;
+                                off2 = 2;
+                                mode = doc[COMPAT_MODE];
+                                bLeft = Y_DOM[GET_COMPUTED_STYLE](doc[DOCUMENT_ELEMENT], BORDER_LEFT_WIDTH);
+                                bTop = Y_DOM[GET_COMPUTED_STYLE](doc[DOCUMENT_ELEMENT], BORDER_TOP_WIDTH);
+
+                                if (Y.UA.ie === 6) {
+                                    if (mode !== _BACK_COMPAT) {
+                                        off1 = 0;
+                                        off2 = 0;
+                                    }
+                                }
+                                
+                                if ((mode == _BACK_COMPAT)) {
+                                    if (bLeft !== MEDIUM) {
+                                        off1 = parseInt(bLeft, 10);
+                                    }
+                                    if (bTop !== MEDIUM) {
+                                        off2 = parseInt(bTop, 10);
+                                    }
+                                }
+                                
+                                xy[0] -= off1;
+                                xy[1] -= off2;
+
+                            }
+
+                        if ((scrollTop || scrollLeft)) {
+                            if (!Y.UA.ios || (Y.UA.ios >= 4.2)) {
+                                xy[0] += scrollLeft;
+                                xy[1] += scrollTop;
+                            }
+                            
+                        }
+                    } else {
+                        xy = Y_DOM._getOffset(node);       
+                    }
+                }
+                return xy;                   
+            }
+        } else {
+            return function(node) { // manually calculate by crawling up offsetParents
+                //Calculate the Top and Left border sizes (assumes pixels)
+                var xy = null,
+                    doc,
+                    parentNode,
+                    bCheck,
+                    scrollTop,
+                    scrollLeft;
+
+                if (node) {
+                    if (Y_DOM.inDoc(node)) {
+                        xy = [node.offsetLeft, node.offsetTop];
+                        doc = node.ownerDocument;
+                        parentNode = node;
+                        // TODO: refactor with !! or just falsey
+                        bCheck = ((Y.UA.gecko || Y.UA.webkit > 519) ? true : false);
+
+                        // TODO: worth refactoring for TOP/LEFT only?
+                        while ((parentNode = parentNode.offsetParent)) {
+                            xy[0] += parentNode.offsetLeft;
+                            xy[1] += parentNode.offsetTop;
+                            if (bCheck) {
+                                xy = Y_DOM._calcBorders(parentNode, xy);
+                            }
+                        }
+
+                        // account for any scrolled ancestors
+                        if (Y_DOM.getStyle(node, POSITION) != FIXED) {
+                            parentNode = node;
+
+                            while ((parentNode = parentNode.parentNode)) {
+                                scrollTop = parentNode.scrollTop;
+                                scrollLeft = parentNode.scrollLeft;
+
+                                //Firefox does something funky with borders when overflow is not visible.
+                                if (Y.UA.gecko && (Y_DOM.getStyle(parentNode, 'overflow') !== 'visible')) {
+                                        xy = Y_DOM._calcBorders(parentNode, xy);
+                                }
+                                
+
+                                if (scrollTop || scrollLeft) {
+                                    xy[0] -= scrollLeft;
+                                    xy[1] -= scrollTop;
+                                }
+                            }
+                            xy[0] += Y_DOM.docScrollX(node, doc);
+                            xy[1] += Y_DOM.docScrollY(node, doc);
+
+                        } else {
+                            //Fix FIXED position -- add scrollbars
+                            xy[0] += Y_DOM.docScrollX(node, doc);
+                            xy[1] += Y_DOM.docScrollY(node, doc);
+                        }
+                    } else {
+                        xy = Y_DOM._getOffset(node);
+                    }
+                }
+
+                return xy;                
+            };
+        }
+    }(),// NOTE: Executing for loadtime branching
+
+    /**
+     * Gets the current X position of an element based on page coordinates. 
+     * Element must be part of the DOM tree to have page coordinates
+     * (display:none or elements not appended return false).
+     * @method getX
+     * @param element The target element
+     * @return {Int} The X position of the element
+     */
+
+    getX: function(node) {
+        return Y_DOM.getXY(node)[0];
+    },
+
+    /**
+     * Gets the current Y position of an element based on page coordinates. 
+     * Element must be part of the DOM tree to have page coordinates
+     * (display:none or elements not appended return false).
+     * @method getY
+     * @param element The target element
+     * @return {Int} The Y position of the element
+     */
+
+    getY: function(node) {
+        return Y_DOM.getXY(node)[1];
+    },
+
+    /**
+     * Set the position of an html element in page coordinates.
+     * The element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).
+     * @method setXY
+     * @param element The target element
+     * @param {Array} xy Contains X & Y values for new position (coordinates are page-based)
+     * @param {Boolean} noRetry By default we try and set the position a second time if the first fails
+     */
+    setXY: function(node, xy, noRetry) {
+        var setStyle = Y_DOM.setStyle,
+            pos,
+            delta,
+            newXY,
+            currentXY;
+
+        if (node && xy) {
+            pos = Y_DOM.getStyle(node, POSITION);
+
+            delta = Y_DOM._getOffset(node);       
+            if (pos == 'static') { // default to relative
+                pos = RELATIVE;
+                setStyle(node, POSITION, pos);
+            }
+            currentXY = Y_DOM.getXY(node);
+
+            if (xy[0] !== null) {
+                setStyle(node, LEFT, xy[0] - currentXY[0] + delta[0] + 'px');
+            }
+
+            if (xy[1] !== null) {
+                setStyle(node, TOP, xy[1] - currentXY[1] + delta[1] + 'px');
+            }
+
+            if (!noRetry) {
+                newXY = Y_DOM.getXY(node);
+                if (newXY[0] !== xy[0] || newXY[1] !== xy[1]) {
+                    Y_DOM.setXY(node, xy, true); 
+                }
+            }
+          
+        } else {
+        }
+    },
+
+    /**
+     * Set the X position of an html element in page coordinates, regardless of how the element is positioned.
+     * The element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).
+     * @method setX
+     * @param element The target element
+     * @param {Int} x The X values for new position (coordinates are page-based)
+     */
+    setX: function(node, x) {
+        return Y_DOM.setXY(node, [x, null]);
+    },
+
+    /**
+     * Set the Y position of an html element in page coordinates, regardless of how the element is positioned.
+     * The element(s) must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).
+     * @method setY
+     * @param element The target element
+     * @param {Int} y The Y values for new position (coordinates are page-based)
+     */
+    setY: function(node, y) {
+        return Y_DOM.setXY(node, [null, y]);
+    },
+
+    /**
+     * @method swapXY
+     * @description Swap the xy position with another node
+     * @param {Node} node The node to swap with
+     * @param {Node} otherNode The other node to swap with
+     * @return {Node}
+     */
+    swapXY: function(node, otherNode) {
+        var xy = Y_DOM.getXY(node);
+        Y_DOM.setXY(node, Y_DOM.getXY(otherNode));
+        Y_DOM.setXY(otherNode, xy);
+    },
+
+    _calcBorders: function(node, xy2) {
+        var t = parseInt(Y_DOM[GET_COMPUTED_STYLE](node, BORDER_TOP_WIDTH), 10) || 0,
+            l = parseInt(Y_DOM[GET_COMPUTED_STYLE](node, BORDER_LEFT_WIDTH), 10) || 0;
+        if (Y.UA.gecko) {
+            if (RE_TABLE.test(node.tagName)) {
+                t = 0;
+                l = 0;
+            }
+        }
+        xy2[0] += l;
+        xy2[1] += t;
+        return xy2;
+    },
+
+    _getWinSize: function(node, doc) {
+        doc  = doc || (node) ? Y_DOM._getDoc(node) : Y.config.doc;
+        var win = doc.defaultView || doc.parentWindow,
+            mode = doc[COMPAT_MODE],
+            h = win.innerHeight,
+            w = win.innerWidth,
+            root = doc[DOCUMENT_ELEMENT];
+
+        if ( mode && !Y.UA.opera ) { // IE, Gecko
+            if (mode != 'CSS1Compat') { // Quirks
+                root = doc.body; 
+            }
+            h = root.clientHeight;
+            w = root.clientWidth;
+        }
+        return { height: h, width: w };
+    },
+
+    _getDocSize: function(node) {
+        var doc = (node) ? Y_DOM._getDoc(node) : Y.config.doc,
+            root = doc[DOCUMENT_ELEMENT];
+
+        if (doc[COMPAT_MODE] != 'CSS1Compat') {
+            root = doc.body;
+        }
+
+        return { height: root.scrollHeight, width: root.scrollWidth };
+    }
+});
+
+})(Y);
+(function(Y) {
+var TOP = 'top',
+    RIGHT = 'right',
+    BOTTOM = 'bottom',
+    LEFT = 'left',
+
+    getOffsets = function(r1, r2) {
+        var t = Math.max(r1[TOP], r2[TOP]),
+            r = Math.min(r1[RIGHT], r2[RIGHT]),
+            b = Math.min(r1[BOTTOM], r2[BOTTOM]),
+            l = Math.max(r1[LEFT], r2[LEFT]),
+            ret = {};
+        
+        ret[TOP] = t;
+        ret[RIGHT] = r;
+        ret[BOTTOM] = b;
+        ret[LEFT] = l;
+        return ret;
+    },
+
+    DOM = Y.DOM;
+
+Y.mix(DOM, {
+    /**
+     * Returns an Object literal containing the following about this element: (top, right, bottom, left)
+     * @for DOM
+     * @method region
+     * @param {HTMLElement} element The DOM element. 
+     * @return {Object} Object literal containing the following about this element: (top, right, bottom, left)
+     */
+    region: function(node) {
+        var xy = DOM.getXY(node),
+            ret = false;
+        
+        if (node && xy) {
+            ret = DOM._getRegion(
+                xy[1], // top
+                xy[0] + node.offsetWidth, // right
+                xy[1] + node.offsetHeight, // bottom
+                xy[0] // left
+            );
+        }
+
+        return ret;
+    },
+
+    /**
+     * Find the intersect information for the passes nodes.
+     * @method intersect
+     * @for DOM
+     * @param {HTMLElement} element The first element 
+     * @param {HTMLElement | Object} element2 The element or region to check the interect with
+     * @param {Object} altRegion An object literal containing the region for the first element if we already have the data (for performance i.e. DragDrop)
+     * @return {Object} Object literal containing the following intersection data: (top, right, bottom, left, area, yoff, xoff, inRegion)
+     */
+    intersect: function(node, node2, altRegion) {
+        var r = altRegion || DOM.region(node), region = {},
+            n = node2,
+            off;
+
+        if (n.tagName) {
+            region = DOM.region(n);
+        } else if (Y.Lang.isObject(node2)) {
+            region = node2;
+        } else {
+            return false;
+        }
+        
+        off = getOffsets(region, r);
+        return {
+            top: off[TOP],
+            right: off[RIGHT],
+            bottom: off[BOTTOM],
+            left: off[LEFT],
+            area: ((off[BOTTOM] - off[TOP]) * (off[RIGHT] - off[LEFT])),
+            yoff: ((off[BOTTOM] - off[TOP])),
+            xoff: (off[RIGHT] - off[LEFT]),
+            inRegion: DOM.inRegion(node, node2, false, altRegion)
+        };
+        
+    },
+    /**
+     * Check if any part of this node is in the passed region
+     * @method inRegion
+     * @for DOM
+     * @param {Object} node2 The node to get the region from or an Object literal of the region
+     * $param {Boolean} all Should all of the node be inside the region
+     * @param {Object} altRegion An object literal containing the region for this node if we already have the data (for performance i.e. DragDrop)
+     * @return {Boolean} True if in region, false if not.
+     */
+    inRegion: function(node, node2, all, altRegion) {
+        var region = {},
+            r = altRegion || DOM.region(node),
+            n = node2,
+            off;
+
+        if (n.tagName) {
+            region = DOM.region(n);
+        } else if (Y.Lang.isObject(node2)) {
+            region = node2;
+        } else {
+            return false;
+        }
+            
+        if (all) {
+            return (
+                r[LEFT]   >= region[LEFT]   &&
+                r[RIGHT]  <= region[RIGHT]  && 
+                r[TOP]    >= region[TOP]    && 
+                r[BOTTOM] <= region[BOTTOM]  );
+        } else {
+            off = getOffsets(region, r);
+            if (off[BOTTOM] >= off[TOP] && off[RIGHT] >= off[LEFT]) {
+                return true;
+            } else {
+                return false;
+            }
+            
+        }
+    },
+
+    /**
+     * Check if any part of this element is in the viewport
+     * @method inViewportRegion
+     * @for DOM
+     * @param {HTMLElement} element The DOM element. 
+     * @param {Boolean} all Should all of the node be inside the region
+     * @param {Object} altRegion An object literal containing the region for this node if we already have the data (for performance i.e. DragDrop)
+     * @return {Boolean} True if in region, false if not.
+     */
+    inViewportRegion: function(node, all, altRegion) {
+        return DOM.inRegion(node, DOM.viewportRegion(node), all, altRegion);
+            
+    },
+
+    _getRegion: function(t, r, b, l) {
+        var region = {};
+
+        region[TOP] = region[1] = t;
+        region[LEFT] = region[0] = l;
+        region[BOTTOM] = b;
+        region[RIGHT] = r;
+        region.width = region[RIGHT] - region[LEFT];
+        region.height = region[BOTTOM] - region[TOP];
+
+        return region;
+    },
+
+    /**
+     * Returns an Object literal containing the following about the visible region of viewport: (top, right, bottom, left)
+     * @method viewportRegion
+     * @for DOM
+     * @return {Object} Object literal containing the following about the visible region of the viewport: (top, right, bottom, left)
+     */
+    viewportRegion: function(node) {
+        node = node || Y.config.doc.documentElement;
+        var ret = false,
+            scrollX,
+            scrollY;
+
+        if (node) {
+            scrollX = DOM.docScrollX(node);
+            scrollY = DOM.docScrollY(node);
+
+            ret = DOM._getRegion(scrollY, // top
+                DOM.winWidth(node) + scrollX, // right
+                scrollY + DOM.winHeight(node), // bottom
+                scrollX); // left
+        }
+
+        return ret;
+    }
+});
+})(Y);
+
+
+}, '3.3.0' ,{requires:['dom-base', 'dom-style', 'event-base']});

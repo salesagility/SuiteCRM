@@ -1,6 +1,9 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -28,11 +31,66 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-SUGAR.dashlets=function(){return{postForm:function(theForm,callback){var success=function(data){if(data){callback(data.responseText);}}
-YAHOO.util.Connect.setForm(theForm);var cObj=YAHOO.util.Connect.asyncRequest('POST','index.php',{success:success,failure:success});return false;},callMethod:function(dashletId,methodName,postData,refreshAfter,callback){ajaxStatus.showStatus(SUGAR.language.get('app_strings','LBL_SAVING'));response=function(data){ajaxStatus.hideStatus();if(refreshAfter)SUGAR.mySugar.retrieveDashlet(dashletId);if(callback){callback(data.responseText);}}
-post='to_pdf=1&module=Home&action=CallMethodDashlet&method='+methodName+'&id='+dashletId+'&'+postData;var cObj=YAHOO.util.Connect.asyncRequest('POST','index.php',{success:response,failure:response},post);}};}();if(SUGAR.util.isTouchScreen()&&typeof iScroll=='undefined'){with(document.getElementsByTagName("head")[0].appendChild(document.createElement("script")))
-{setAttribute("id","newScript",0);setAttribute("type","text/javascript",0);setAttribute("src","include/javascript/iscroll.js",0);}}
+
+
+
+
+SUGAR.dashlets = function() {
+	return {
+		/**
+		 * Generic javascript method to use post a form 
+		 * 
+		 * @param object theForm pointer to the form object
+		 * @param function callback function to call after for form is sent
+		 *
+		 * @return bool false
+		 */ 
+		postForm: function(theForm, callback) {	
+			var success = function(data) {
+				if(data) {
+					callback(data.responseText);
+				}
+			}
+			YAHOO.util.Connect.setForm(theForm); 
+			var cObj = YAHOO.util.Connect.asyncRequest('POST', 'index.php', {success: success, failure: success});
+			return false;
+		},
+		/**
+		 * Generic javascript method to use Dashlet methods
+		 * 
+		 * @param string dashletId Id of the dashlet being call
+		 * @param string methodName method to be called (function in the dashlet class)
+		 * @param string postData data to send (eg foo=bar&foo2=bar2...)
+		 * @param bool refreshAfter refreash the dashlet after sending data
+		 * @param function callback function to be called after dashlet is refreshed (or not refresed) 
+		 */ 
+		callMethod: function(dashletId, methodName, postData, refreshAfter, callback) {
+        	ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_SAVING'));
+        	response = function(data) {
+        		ajaxStatus.hideStatus();
+				if(refreshAfter) SUGAR.mySugar.retrieveDashlet(dashletId);
+				if(callback) {
+					callback(data.responseText);
+				}
+        	}
+	    	post = 'to_pdf=1&module=Home&action=CallMethodDashlet&method=' + methodName + '&id=' + dashletId + '&' + postData;
+			var cObj = YAHOO.util.Connect.asyncRequest('POST','index.php', 
+							  {success: response, failure: response}, post);
+		}
+	 };
+}();
+
+if(SUGAR.util.isTouchScreen() && typeof iScroll == 'undefined') {
+
+	with (document.getElementsByTagName("head")[0].appendChild(document.createElement("script")))
+	{
+		setAttribute("id", "newScript", 0);
+		setAttribute("type", "text/javascript", 0);
+		setAttribute("src", "include/javascript/iscroll.js", 0);
+	}
+
+}

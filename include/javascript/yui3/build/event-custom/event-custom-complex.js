@@ -5,4 +5,502 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("event-custom-complex",function(f){var b,e,d={},a=f.CustomEvent.prototype,c=f.EventTarget.prototype;f.EventFacade=function(h,g){h=h||d;this._event=h;this.details=h.details;this.type=h.type;this._type=h.type;this.target=h.target;this.currentTarget=g;this.relatedTarget=h.relatedTarget;};f.extend(f.EventFacade,Object,{stopPropagation:function(){this._event.stopPropagation();this.stopped=1;},stopImmediatePropagation:function(){this._event.stopImmediatePropagation();this.stopped=2;},preventDefault:function(){this._event.preventDefault();this.prevented=1;},halt:function(g){this._event.halt(g);this.prevented=1;this.stopped=(g)?2:1;}});a.fireComplex=function(p){var r,l,g,n,i,o,u,j,h,t=this,s=t.host||t,m,k;if(t.stack){if(t.queuable&&t.type!=t.stack.next.type){t.log("queue "+t.type);t.stack.queue.push([t,p]);return true;}}r=t.stack||{id:t.id,next:t,silent:t.silent,stopped:0,prevented:0,bubbling:null,type:t.type,afterQueue:new f.Queue(),defaultTargetOnly:t.defaultTargetOnly,queue:[]};j=t.getSubs();t.stopped=(t.type!==r.type)?0:r.stopped;t.prevented=(t.type!==r.type)?0:r.prevented;t.target=t.target||s;u=new f.EventTarget({fireOnce:true,context:s});t.events=u;if(t.preventedFn){u.on("prevented",t.preventedFn);}if(t.stoppedFn){u.on("stopped",t.stoppedFn);}t.currentTarget=s;t.details=p.slice();t.log("Firing "+t.type);t._facade=null;l=t._getFacade(p);if(f.Lang.isObject(p[0])){p[0]=l;}else{p.unshift(l);}if(j[0]){t._procSubs(j[0],p,l);}if(t.bubbles&&s.bubble&&!t.stopped){k=r.bubbling;r.bubbling=t.type;if(r.type!=t.type){r.stopped=0;r.prevented=0;}o=s.bubble(t,p,null,r);t.stopped=Math.max(t.stopped,r.stopped);t.prevented=Math.max(t.prevented,r.prevented);r.bubbling=k;}if(t.defaultFn&&!t.prevented&&((!t.defaultTargetOnly&&!r.defaultTargetOnly)||s===l.target)){t.defaultFn.apply(s,p);}t._broadcast(p);if(j[1]&&!t.prevented&&t.stopped<2){if(r.id===t.id||t.type!=s._yuievt.bubbling){t._procSubs(j[1],p,l);while((m=r.afterQueue.last())){m();}}else{h=j[1];if(r.execDefaultCnt){h=f.merge(h);f.each(h,function(q){q.postponed=true;});}r.afterQueue.add(function(){t._procSubs(h,p,l);});}}t.target=null;if(r.id===t.id){n=r.queue;while(n.length){g=n.pop();i=g[0];r.next=i;i.fire.apply(i,g[1]);}t.stack=null;}o=!(t.stopped);if(t.type!=s._yuievt.bubbling){r.stopped=0;r.prevented=0;t.stopped=0;t.prevented=0;}return o;};a._getFacade=function(){var g=this._facade,j,i,h=this.details;if(!g){g=new f.EventFacade(this,this.currentTarget);}j=h&&h[0];if(f.Lang.isObject(j,true)){i={};f.mix(i,g,true,e);f.mix(g,j,true);f.mix(g,i,true,e);g.type=j.type||g.type;}g.details=this.details;g.target=this.originalTarget||this.target;g.currentTarget=this.currentTarget;g.stopped=0;g.prevented=0;this._facade=g;return this._facade;};a.stopPropagation=function(){this.stopped=1;if(this.stack){this.stack.stopped=1;}this.events.fire("stopped",this);};a.stopImmediatePropagation=function(){this.stopped=2;if(this.stack){this.stack.stopped=2;}this.events.fire("stopped",this);};a.preventDefault=function(){if(this.preventable){this.prevented=1;if(this.stack){this.stack.prevented=1;}this.events.fire("prevented",this);}};a.halt=function(g){if(g){this.stopImmediatePropagation();}else{this.stopPropagation();}this.preventDefault();};c.addTarget=function(g){this._yuievt.targets[f.stamp(g)]=g;this._yuievt.hasTargets=true;};c.getTargets=function(){return f.Object.values(this._yuievt.targets);};c.removeTarget=function(g){delete this._yuievt.targets[f.stamp(g)];};c.bubble=function(u,q,o,s){var m=this._yuievt.targets,p=true,v,r=u&&u.type,h,l,n,j,g=o||(u&&u.target)||this,k;if(!u||((!u.stopped)&&m)){for(l in m){if(m.hasOwnProperty(l)){v=m[l];h=v.getEvent(r,true);j=v.getSibling(r,h);if(j&&!h){h=v.publish(r);}k=v._yuievt.bubbling;v._yuievt.bubbling=r;if(!h){if(v._yuievt.hasTargets){v.bubble(u,q,g,s);}}else{h.sibling=j;h.target=g;h.originalTarget=g;h.currentTarget=v;n=h.broadcast;h.broadcast=false;h.emitFacade=true;h.stack=s;p=p&&h.fire.apply(h,q||u.details||[]);h.broadcast=n;h.originalTarget=null;if(h.stopped){break;}}v._yuievt.bubbling=k;}}}return p;};b=new f.EventFacade();e=f.Object.keys(b);},"3.3.0",{requires:["event-custom-base"]});
+YUI.add('event-custom-complex', function(Y) {
+
+
+/**
+ * Adds event facades, preventable default behavior, and bubbling.
+ * events.
+ * @module event-custom
+ * @submodule event-custom-complex
+ */
+
+var FACADE,
+    FACADE_KEYS,
+    EMPTY = {},
+    CEProto = Y.CustomEvent.prototype,
+    ETProto = Y.EventTarget.prototype;
+
+/**
+ * Wraps and protects a custom event for use when emitFacade is set to true.
+ * Requires the event-custom-complex module
+ * @class EventFacade
+ * @param e {Event} the custom event
+ * @param currentTarget {HTMLElement} the element the listener was attached to
+ */
+
+Y.EventFacade = function(e, currentTarget) {
+
+    e = e || EMPTY;
+
+    this._event = e;
+
+    /**
+     * The arguments passed to fire
+     * @property details
+     * @type Array
+     */
+    this.details = e.details;
+
+    /**
+     * The event type, this can be overridden by the fire() payload
+     * @property type
+     * @type string
+     */
+    this.type = e.type;
+
+    /**
+     * The real event type
+     * @property type
+     * @type string
+     */
+    this._type = e.type;
+
+    //////////////////////////////////////////////////////
+
+    /**
+     * Node reference for the targeted eventtarget
+     * @propery target
+     * @type Node
+     */
+    this.target = e.target;
+
+    /**
+     * Node reference for the element that the listener was attached to.
+     * @propery currentTarget
+     * @type Node
+     */
+    this.currentTarget = currentTarget;
+
+    /**
+     * Node reference to the relatedTarget
+     * @propery relatedTarget
+     * @type Node
+     */
+    this.relatedTarget = e.relatedTarget;
+
+};
+
+Y.extend(Y.EventFacade, Object, {
+
+    /**
+     * Stops the propagation to the next bubble target
+     * @method stopPropagation
+     */
+    stopPropagation: function() {
+        this._event.stopPropagation();
+        this.stopped = 1;
+    },
+
+    /**
+     * Stops the propagation to the next bubble target and
+     * prevents any additional listeners from being exectued
+     * on the current target.
+     * @method stopImmediatePropagation
+     */
+    stopImmediatePropagation: function() {
+        this._event.stopImmediatePropagation();
+        this.stopped = 2;
+    },
+
+    /**
+     * Prevents the event's default behavior
+     * @method preventDefault
+     */
+    preventDefault: function() {
+        this._event.preventDefault();
+        this.prevented = 1;
+    },
+
+    /**
+     * Stops the event propagation and prevents the default
+     * event behavior.
+     * @method halt
+     * @param immediate {boolean} if true additional listeners
+     * on the current target will not be executed
+     */
+    halt: function(immediate) {
+        this._event.halt(immediate);
+        this.prevented = 1;
+        this.stopped = (immediate) ? 2 : 1;
+    }
+
+});
+
+CEProto.fireComplex = function(args) {
+
+    var es, ef, q, queue, ce, ret, events, subs, postponed,
+        self = this, host = self.host || self, next, oldbubble;
+
+    if (self.stack) {
+        // queue this event if the current item in the queue bubbles
+        if (self.queuable && self.type != self.stack.next.type) {
+            self.log('queue ' + self.type);
+            self.stack.queue.push([self, args]);
+            return true;
+        }
+    }
+
+    es = self.stack || {
+       // id of the first event in the stack
+       id: self.id,
+       next: self,
+       silent: self.silent,
+       stopped: 0,
+       prevented: 0,
+       bubbling: null,
+       type: self.type,
+       // defaultFnQueue: new Y.Queue(),
+       afterQueue: new Y.Queue(),
+       defaultTargetOnly: self.defaultTargetOnly,
+       queue: []
+    };
+
+    subs = self.getSubs();
+
+    self.stopped = (self.type !== es.type) ? 0 : es.stopped;
+    self.prevented = (self.type !== es.type) ? 0 : es.prevented;
+
+    self.target = self.target || host;
+
+    events = new Y.EventTarget({
+        fireOnce: true,
+        context: host
+    });
+
+    self.events = events;
+
+    if (self.preventedFn) {
+        events.on('prevented', self.preventedFn);
+    }
+
+    if (self.stoppedFn) {
+        events.on('stopped', self.stoppedFn);
+    }
+
+    self.currentTarget = host;
+
+    self.details = args.slice(); // original arguments in the details
+
+    // self.log("Firing " + self  + ", " + "args: " + args);
+    self.log("Firing " + self.type);
+
+    self._facade = null; // kill facade to eliminate stale properties
+
+    ef = self._getFacade(args);
+
+    if (Y.Lang.isObject(args[0])) {
+        args[0] = ef;
+    } else {
+        args.unshift(ef);
+    }
+
+    // if (subCount) {
+    if (subs[0]) {
+        // self._procSubs(Y.merge(self.subscribers), args, ef);
+        self._procSubs(subs[0], args, ef);
+    }
+
+    // bubble if this is hosted in an event target and propagation has not been stopped
+    if (self.bubbles && host.bubble && !self.stopped) {
+
+        oldbubble = es.bubbling;
+
+        // self.bubbling = true;
+        es.bubbling = self.type;
+
+        // if (host !== ef.target || es.type != self.type) {
+        if (es.type != self.type) {
+            es.stopped = 0;
+            es.prevented = 0;
+        }
+
+        ret = host.bubble(self, args, null, es);
+
+        self.stopped = Math.max(self.stopped, es.stopped);
+        self.prevented = Math.max(self.prevented, es.prevented);
+
+        // self.bubbling = false;
+        es.bubbling = oldbubble;
+
+    }
+
+    if (self.defaultFn &&
+        !self.prevented &&
+        ((!self.defaultTargetOnly && !es.defaultTargetOnly) || host === ef.target)) {
+
+        self.defaultFn.apply(host, args);
+    }
+
+    // broadcast listeners are fired as discreet events on the
+    // YUI instance and potentially the YUI global.
+    self._broadcast(args);
+
+    // Queue the after
+    if (subs[1] && !self.prevented && self.stopped < 2) {
+        if (es.id === self.id || self.type != host._yuievt.bubbling) {
+            self._procSubs(subs[1], args, ef);
+            while ((next = es.afterQueue.last())) {
+                next();
+            }
+        } else {
+            postponed = subs[1];
+            if (es.execDefaultCnt) {
+                postponed = Y.merge(postponed);
+                Y.each(postponed, function(s) {
+                    s.postponed = true;
+                });
+            }
+
+            es.afterQueue.add(function() {
+                self._procSubs(postponed, args, ef);
+            });
+        }
+    }
+
+    self.target = null;
+
+    if (es.id === self.id) {
+        queue = es.queue;
+
+        while (queue.length) {
+            q = queue.pop();
+            ce = q[0];
+            // set up stack to allow the next item to be processed
+            es.next = ce;
+            ce.fire.apply(ce, q[1]);
+        }
+
+        self.stack = null;
+    }
+
+    ret = !(self.stopped);
+
+    if (self.type != host._yuievt.bubbling) {
+        es.stopped = 0;
+        es.prevented = 0;
+        self.stopped = 0;
+        self.prevented = 0;
+    }
+
+    return ret;
+};
+
+CEProto._getFacade = function() {
+
+    var ef = this._facade, o, o2,
+    args = this.details;
+
+    if (!ef) {
+        ef = new Y.EventFacade(this, this.currentTarget);
+    }
+
+    // if the first argument is an object literal, apply the
+    // properties to the event facade
+    o = args && args[0];
+
+    if (Y.Lang.isObject(o, true)) {
+
+        o2 = {};
+
+        // protect the event facade properties
+        Y.mix(o2, ef, true, FACADE_KEYS);
+
+        // mix the data
+        Y.mix(ef, o, true);
+
+        // restore ef
+        Y.mix(ef, o2, true, FACADE_KEYS);
+
+        // Allow the event type to be faked
+        // http://yuilibrary.com/projects/yui3/ticket/2528376
+        ef.type = o.type || ef.type;
+    }
+
+    // update the details field with the arguments
+    // ef.type = this.type;
+    ef.details = this.details;
+
+    // use the original target when the event bubbled to this target
+    ef.target = this.originalTarget || this.target;
+
+    ef.currentTarget = this.currentTarget;
+    ef.stopped = 0;
+    ef.prevented = 0;
+
+    this._facade = ef;
+
+    return this._facade;
+};
+
+/**
+ * Stop propagation to bubble targets
+ * @for CustomEvent
+ * @method stopPropagation
+ */
+CEProto.stopPropagation = function() {
+    this.stopped = 1;
+    if (this.stack) {
+        this.stack.stopped = 1;
+    }
+    this.events.fire('stopped', this);
+};
+
+/**
+ * Stops propagation to bubble targets, and prevents any remaining
+ * subscribers on the current target from executing.
+ * @method stopImmediatePropagation
+ */
+CEProto.stopImmediatePropagation = function() {
+    this.stopped = 2;
+    if (this.stack) {
+        this.stack.stopped = 2;
+    }
+    this.events.fire('stopped', this);
+};
+
+/**
+ * Prevents the execution of this event's defaultFn
+ * @method preventDefault
+ */
+CEProto.preventDefault = function() {
+    if (this.preventable) {
+        this.prevented = 1;
+        if (this.stack) {
+            this.stack.prevented = 1;
+        }
+        this.events.fire('prevented', this);
+    }
+};
+
+/**
+ * Stops the event propagation and prevents the default
+ * event behavior.
+ * @method halt
+ * @param immediate {boolean} if true additional listeners
+ * on the current target will not be executed
+ */
+CEProto.halt = function(immediate) {
+    if (immediate) {
+        this.stopImmediatePropagation();
+    } else {
+        this.stopPropagation();
+    }
+    this.preventDefault();
+};
+
+/**
+ * Registers another EventTarget as a bubble target.  Bubble order
+ * is determined by the order registered.  Multiple targets can
+ * be specified.
+ *
+ * Events can only bubble if emitFacade is true.
+ *
+ * Included in the event-custom-complex submodule.
+ *
+ * @method addTarget
+ * @param o {EventTarget} the target to add
+ * @for EventTarget
+ */
+ETProto.addTarget = function(o) {
+    this._yuievt.targets[Y.stamp(o)] = o;
+    this._yuievt.hasTargets = true;
+};
+
+/**
+ * Returns an array of bubble targets for this object.
+ * @method getTargets
+ * @return EventTarget[]
+ */
+ETProto.getTargets = function() {
+    return Y.Object.values(this._yuievt.targets);
+};
+
+/**
+ * Removes a bubble target
+ * @method removeTarget
+ * @param o {EventTarget} the target to remove
+ * @for EventTarget
+ */
+ETProto.removeTarget = function(o) {
+    delete this._yuievt.targets[Y.stamp(o)];
+};
+
+/**
+ * Propagate an event.  Requires the event-custom-complex module.
+ * @method bubble
+ * @param evt {CustomEvent} the custom event to propagate
+ * @return {boolean} the aggregated return value from Event.Custom.fire
+ * @for EventTarget
+ */
+ETProto.bubble = function(evt, args, target, es) {
+
+    var targs = this._yuievt.targets, ret = true,
+        t, type = evt && evt.type, ce, i, bc, ce2,
+        originalTarget = target || (evt && evt.target) || this,
+        oldbubble;
+
+    if (!evt || ((!evt.stopped) && targs)) {
+
+        for (i in targs) {
+            if (targs.hasOwnProperty(i)) {
+                t = targs[i];
+                ce = t.getEvent(type, true);
+                ce2 = t.getSibling(type, ce);
+
+                if (ce2 && !ce) {
+                    ce = t.publish(type);
+                }
+
+                oldbubble = t._yuievt.bubbling;
+                t._yuievt.bubbling = type;
+
+                // if this event was not published on the bubble target,
+                // continue propagating the event.
+                if (!ce) {
+                    if (t._yuievt.hasTargets) {
+                        t.bubble(evt, args, originalTarget, es);
+                    }
+                } else {
+
+                    ce.sibling = ce2;
+
+                    // set the original target to that the target payload on the
+                    // facade is correct.
+                    ce.target = originalTarget;
+                    ce.originalTarget = originalTarget;
+                    ce.currentTarget = t;
+                    bc = ce.broadcast;
+                    ce.broadcast = false;
+
+                    // default publish may not have emitFacade true -- that
+                    // shouldn't be what the implementer meant to do
+                    ce.emitFacade = true;
+
+                    ce.stack = es;
+
+                    ret = ret && ce.fire.apply(ce, args || evt.details || []);
+                    ce.broadcast = bc;
+                    ce.originalTarget = null;
+
+
+                    // stopPropagation() was called
+                    if (ce.stopped) {
+                        break;
+                    }
+                }
+
+                t._yuievt.bubbling = oldbubble;
+            }
+        }
+    }
+
+    return ret;
+};
+
+FACADE = new Y.EventFacade();
+FACADE_KEYS = Y.Object.keys(FACADE);
+
+
+
+}, '3.3.0' ,{requires:['event-custom-base']});

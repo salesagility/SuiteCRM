@@ -5,4 +5,70 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("sortable-scroll",function(B){var A=function(){A.superclass.constructor.apply(this,arguments);};B.extend(A,B.Base,{initializer:function(){var C=this.get("host");C.plug(B.Plugin.DDNodeScroll,{node:C.get("container")});C.delegate.on("drop:over",function(D){if(this.dd.nodescroll&&D.drag.nodescroll){D.drag.nodescroll.set("parentScroll",B.one(this.get("container")));}});}},{ATTRS:{host:{value:""}},NAME:"SortScroll",NS:"scroll"});B.namespace("Y.Plugin");B.Plugin.SortableScroll=A;},"3.3.0",{requires:["sortable","dd-scroll"]});
+YUI.add('sortable-scroll', function(Y) {
+
+    
+    /**
+     * Plugin for sortable to handle scrolling lists.
+     * @module sortable
+     * @submodule sortable-scroll
+     */
+    /**
+     * Plugin for sortable to handle scrolling lists.
+     * @class SortScroll
+     * @extends Base
+     * @constructor
+     * @namespace Plugin     
+     */
+    
+    var SortScroll = function() {
+        SortScroll.superclass.constructor.apply(this, arguments);
+    };
+
+    Y.extend(SortScroll, Y.Base, {
+        initializer: function() {
+            var host = this.get('host');
+            host.plug(Y.Plugin.DDNodeScroll, {
+                node: host.get('container')
+            });
+            host.delegate.on('drop:over', function(e) {
+                if (this.dd.nodescroll && e.drag.nodescroll) {
+                    e.drag.nodescroll.set('parentScroll', Y.one(this.get('container')));
+                }
+            });
+        }
+    }, {
+        ATTRS: {
+            host: {
+                value: ''
+            }
+        },
+        /**
+        * @property NAME
+        * @default SortScroll
+        * @readonly
+        * @protected
+        * @static
+        * @description The name of the class.
+        * @type {String}
+        */
+        NAME: 'SortScroll',
+        /**
+        * @property NS
+        * @default scroll
+        * @readonly
+        * @protected
+        * @static
+        * @description The scroll instance.
+        * @type {String}
+        */
+        NS: 'scroll'
+    });
+
+
+    Y.namespace('Y.Plugin');
+    Y.Plugin.SortableScroll = SortScroll;
+
+
+
+}, '3.3.0' ,{requires:['sortable', 'dd-scroll']});

@@ -1,6 +1,9 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -28,12 +31,39 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-function initPanel(id,state){panelId='detailpanel_'+id;expandPanel(id);if(state=='collapsed'){collapsePanel(id);}}
-function expandPanel(id){var panelId='detailpanel_'+id;document.getElementById(panelId).className=document.getElementById(panelId).className.replace(/(expanded|collapsed)/ig,'')+' expanded';}
-function collapsePanel(id){var panelId='detailpanel_'+id;document.getElementById(panelId).className=document.getElementById(panelId).className.replace(/(expanded|collapsed)/ig,'')+' collapsed';}
-function setCollapseState(mod,panel,isCollapsed){var sugar_panel_collase=Get_Cookie("sugar_panel_collase");if(sugar_panel_collase==null){sugar_panel_collase={};}else{sugar_panel_collase=YAHOO.lang.JSON.parse(sugar_panel_collase);}
-sugar_panel_collase[mod]=sugar_panel_collase[mod]||{};sugar_panel_collase[mod][panel]=isCollapsed;Set_Cookie('sugar_panel_collase',YAHOO.lang.JSON.stringify(sugar_panel_collase),30,'/','','');}
+
+
+function initPanel(id, state) {
+    panelId = 'detailpanel_' + id;
+    expandPanel(id);
+    if(state == 'collapsed') {
+        collapsePanel(id);
+    }
+}
+
+function expandPanel(id) {
+    var panelId = 'detailpanel_' + id;
+    document.getElementById(panelId).className = document.getElementById(panelId).className.replace(/(expanded|collapsed)/ig, '') + ' expanded';
+}
+
+function collapsePanel(id) {
+    var panelId = 'detailpanel_' + id;
+    document.getElementById(panelId).className = document.getElementById(panelId).className.replace(/(expanded|collapsed)/ig, '') + ' collapsed';
+}
+
+function setCollapseState(mod, panel, isCollapsed) {
+    var sugar_panel_collase = Get_Cookie("sugar_panel_collase");
+    if(sugar_panel_collase == null) {
+        sugar_panel_collase = {};
+    } else {
+        sugar_panel_collase = YAHOO.lang.JSON.parse(sugar_panel_collase);
+    }
+    sugar_panel_collase[mod] = sugar_panel_collase[mod] || {};
+    sugar_panel_collase[mod][panel] = isCollapsed;
+
+    Set_Cookie('sugar_panel_collase', YAHOO.lang.JSON.stringify(sugar_panel_collase),30,'/','','');
+}
