@@ -59,11 +59,9 @@
                 <td>{$cell}</td>
             {/foreach}
             <td>
-                {*<small style="font-size: 8px;">{$rowHeader}</small>*}
-                {*<small>{$ROWS_BUTTONS.$rowHeader|var_dump}</small>*}
-                {foreach from=$ROWS_BUTTONS.$rowHeader key=rowButton item=button}
-                    {$button}
-                {/foreach}
+                {if $ROWS_BUTTONS.$rowHeader|@count gt 0}
+                    {sugar_action_menu id="$rowHeader" buttons=$ROWS_BUTTONS.$rowHeader class="clickMenu subpanel records fancymenu button" flat=false}
+                {/if}
             </td>
         </tr>
     {/foreach}

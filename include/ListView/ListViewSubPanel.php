@@ -517,32 +517,6 @@
                     }
                 }
 
-
-                // Make sure we have at least one button before rendering a column for
-                // the action buttons in a list view. Relevant bugs: #51647 and #51640.
-                if (!empty($button_contents[$aVal])) {
-//                    $button_contents[$aVal] = array_filter($button_contents[$aVal]);
-//                    if (!empty($button_contents)) {
-//                        // this is for inline buttons on listviews
-//                        // bug#51275: smarty widget to help provide the action menu functionality as it is currently sprinkled throughout the app with html
-                        require_once('include/Smarty/plugins/function.sugar_action_menu.php');
-////                        $tempid = $aVal;
-////                        array_unshift($button_contents, "<div style='display: inline' id='$tempid'>" . array_shift($button_contents) . "</div>");
-////                        $button_contents = implode("", $button_contents);
-                        $action_button = smarty_function_sugar_action_menu(array(
-                            'id' => $aVal,
-                            'buttons' => $button_contents[$aVal],
-                            'class' => 'clickMenu subpanel records fancymenu button',
-                            'flat' => false
-                        ), $this->smartyTemplate);
-//                    }
-                    $button_contents[$aVal] =  array($action_button);
-//                    else {
-//                        $action_button = '';
-//                    }
-                }
-
-
                 $aItem->setupCustomFields($aItem->module_dir);
                 $aItem->custom_fields->populateAllXTPL($this->smartyTemplate, 'detail', $html_varName, $fields);
 
