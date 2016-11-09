@@ -417,6 +417,12 @@ function addToValidateMoreThan(formname, name, type, required, msg, min) {
     validate[formname][validate[formname].length - 1][minIndex] = min;
 }
 
+var limIndex = 5;
+function addToValidateLength(formname, name, type, required, msg, max) {
+	addToValidate(formname, name, type, required, msg);
+	validate[formname][validate[formname].length - 1][limIndex] = 'length';
+	validate[formname][validate[formname].length - 1][maxIndex] = max;
+}
 
 function removeFromValidate(formname, name) {
 	for(i = 0; i < validate[formname].length; i++)
@@ -1159,6 +1165,16 @@ function validate_form(formname, startsWith){
                                         isError = true;
                                         add_error_style(formname, validate[formname][i][nameIndex], validate[formname][i][msgIndex] +" " +SUGAR.language.get('app_strings', 'MSG_SHOULD_BE')+ ' ' + minimum + ' ' + SUGAR.language.get('app_strings', 'MSG_OR_GREATER'));
                                     }
+								}
+							break;
+							case 'length':
+								value=trim(form[validate[formname][i][nameIndex]].value);
+								maximum = parseFloat(validate[formname][i][maxIndex]);
+								if(	typeof maximum != 'undefined'){
+									if(value.length > maximum) {
+										isError = true;
+										add_error_style(formname, validate[formname][i][nameIndex],'Invalid Value: Maximum string length is 25 characters');
+									}
 								}
 							break;
                             case 'binarydep':
