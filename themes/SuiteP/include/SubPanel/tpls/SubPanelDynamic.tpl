@@ -42,7 +42,6 @@
   * This template is now displays to the sub panel
   */
 *}
-{$PAGINATION}
 <table cellpadding="0" cellspacing="0" border="0" class="list view table-responsive">
     <thead>
         <tr>
@@ -51,10 +50,24 @@
             {/foreach}
             <th><!-- extra th for the button --></th>
         </tr>
+        <tr>
+        <tr id='pagination' class="pagination" role='presentation'>
+            <td colspan='{if $prerow}{$colCount+1}{else}{$colCount}{/if}'>
+                {$PAGINATION}
+            </td>
+        </tr>
     </thead>
     <tbody>
+    {counter start=0 name="rowCounter" print=false assign="rowCounter"}
     {foreach from=$ROWS key=rowHeader item=row}
-        <tr>
+        {if $rowCounter % 2 == 0}
+            {*Odd row*}
+            {assign var="rowClass" value="oddListRowS1"}
+        {else}
+            {*Even row*}
+            {assign var="rowClass" value="evenListRowS1"}
+        {/if}
+        <tr class="{$rowClass}">
             {foreach from=$row key=colHeader item=cell}
                 <td>{$cell}</td>
             {/foreach}
@@ -66,6 +79,7 @@
                 {/foreach}
             </td>
         </tr>
+        {counter name="rowCounter" print=false}
     {/foreach}
     </tbody>
 </table>

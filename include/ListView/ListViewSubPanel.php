@@ -145,17 +145,10 @@
                 $thepanel = $subpanel_def;
             }
 
-            // TODO: Refactoring into smarty
 
             $this->process_dynamic_listview_header($thepanel->get_module_name(), $thepanel, $html_var);
             $this->process_dynamic_listview_rows($list, $parent_data, 'dyn_list_view', $html_var, $subpanel_def);
 
-//            if ($this->display_header_and_footer) {
-//                $this->getAdditionalHeader();
-//                if (!empty($this->header_title)) {
-//                     get_form_header($this->header_title, $this->header_text, false);
-//                }
-//            }
 
             $this->smartyTemplate->display($this->smartyTemplatePath);
 
@@ -232,9 +225,6 @@
                             }
                         }
 
-//                        $this->smartyTemplate->assign('CELL_COUNT', $count);
-//                        $this->smartyTemplate->assign('CELL_WIDTH', $cell_width);
-                        //                        $this->smartyTemplate->parse('dyn_list_view.header_cell');
                     }
                     else {
                         $buttons = true;
@@ -244,16 +234,6 @@
             }
 
             $this->smartyTemplate->assign('HEADER_CELLS', $widget_contents);
-
-//            $this->smartyTemplate->assign('FOOTABLE', $footable);
-//            if ($buttons) {
-//                $this->smartyTemplate->assign('FOOTABLE', '');
-//                $this->smartyTemplate->assign('HEADER_CELL', "&nbsp;");
-//                $this->smartyTemplate->assign('CELL_COUNT', $count);
-//                $this->smartyTemplate->assign('CELL_WIDTH', $cell_width);
-//                //                $this->smartyTemplate->parse('dyn_list_view.header_cell');
-//            }
-
         }
 
         public function process_dynamic_listview_rows($data, $parent_data, $smartyTemplateSection, $html_varName, $subpanel_def) {
@@ -265,6 +245,7 @@
             global $click_bg;
 
             $widget_contents = array();
+            $button_contents = array();
 
             $this->smartyTemplate->assign("BG_HILITE", $hilite_bg);
             $this->smartyTemplate->assign('CHECKALL', SugarThemeRegistry::current()->getImage('blank', '', 1, 1, ".gif", ''));
@@ -299,13 +280,10 @@
             }
 
             if (empty($data)) {
-//                $this->smartyTemplate->assign("ROW_COLOR", 'oddListRow');
                 $thepanel = $subpanel_def;
                 if ($subpanel_def->isCollection()) {
                     $thepanel = $subpanel_def->get_header_panel_def();
                 }
-//                $this->smartyTemplate->assign("COL_COUNT", count($thepanel->get_list_fields()));
-                //                $this->smartyTemplate->parse($smartyTemplateSection.".nodata");
             }
 
             foreach($data as $aVal => $aItem) {
@@ -356,7 +334,6 @@
 
                 }
                 $oddRow = !$oddRow;
-                $button_contents = array();
 
                 $layout_manager = $this->getLayoutManager();
                 $layout_manager->setAttribute('context', 'List');
@@ -427,7 +404,6 @@
                         //for collections such as Activities where you have a field in only one object and wish to show it in the subpanel list
                         $count++;
                         $widget_contents[$aVal][$field_name] = '&nbsp;';
-                        //                        $this->smartyTemplate->parse($smartyTemplateSection.".row.cell");
 
                     }
                     else {
@@ -503,34 +479,27 @@
                                 }
 
                                 $count++;
-//                                $this->smartyTemplate->assign('CELL_COUNT', $count);
-//                                $this->smartyTemplate->assign('CLASS', "");
                                 if (empty($widget_contents)) {
                                     $widget_contents[$aVal][$field_name] = '&nbsp;';
                                 }
-//                                $this->smartyTemplate->assign('CELL', $widget_contents);
-                                //                            $this->smartyTemplate->parse($smartyTemplateSection.".row.cell");
                             }
                             else {
                                 // This handles the edit and remove buttons and icon widget
                                 if (isset($list_field['widget_class']) && $list_field['widget_class'] == "SubPanelIcon") {
                                     $count++;
                                     $widget_contents[$aVal][$field_name] = $layout_manager->widgetDisplay($list_field);
-//                                    $this->smartyTemplate->assign('CELL_COUNT', $count);
-//                                    $this->smartyTemplate->assign('CLASS', "");
+
                                     if (empty($widget_contents[$aVal][$field_name])) {
                                         $widget_contents[$aVal][$field_name] = '&nbsp;';
                                     }
-//                                    $this->smartyTemplate->assign('CELL', $widget_contents);
-                                    //                                $this->smartyTemplate->parse($smartyTemplateSection.".row.cell");
                                 }
                                 elseif (preg_match("/button/i", $list_field['name'])) {
                                     if ((($list_field['name'] === 'edit_button' && $field_acl['EditView']) || ($list_field['name'] === 'close_button' && $field_acl['EditView']) || ($list_field['name'] === 'remove_button' && $field_acl['Delete'])) && '' != ($_content = $layout_manager->widgetDisplay($list_field))) {
-                                        $button_contents[$aVal][$field_name] = $_content;
+                                        $button_contents[$aVal][] = $_content;
                                         unset($_content);
                                     }
                                     else {
-                                        $button_contents[$aVal][$field_name] = '';
+                                        $button_contents[$aVal][] = '';
                                     }
                                 }
                                 else {
@@ -541,8 +510,6 @@
                                     if (empty($widget_contents[$aVal][$field_name])) {
                                         $widget_contents[$aVal][$field_name] = '&nbsp;';
                                     }
-//                                    $this->smartyTemplate->assign('CELL', $widget_contents);
-                                    //                                $this->smartyTemplate->parse($smartyTemplateSection.".row.cell");
                                 }
                             }
 
@@ -553,39 +520,32 @@
 
                 // Make sure we have at least one button before rendering a column for
                 // the action buttons in a list view. Relevant bugs: #51647 and #51640.
-                if (!empty($button_contents)) {
-                    $button_contents = array_filter($button_contents);
-                    if (!empty($button_contents)) {
-                        // this is for inline buttons on listviews
-                        // bug#51275: smarty widget to help provide the action menu functionality as it is currently sprinkled throughout the app with html
-                        require_once('include/Smarty/plugins/function.sugar_action_menu.php');
-                        $tempid = create_guid();
-                        array_unshift($button_contents, "<div style='display: inline' id='$tempid'>" . array_shift($button_contents) . "</div>");
-                        $action_button = smarty_function_sugar_action_menu(array(
-                            'id' => $tempid, 'buttons' => $button_contents, 'class' => 'clickMenu subpanel records fancymenu button', 'flat' => false //assign flat value as false to display dropdown menu at any other preferences.
-                        ), $this->smartyTemplate);
-                    }
-                    else {
-                        $action_button = '';
-                    }
-                    $this->smartyTemplate->assign('CLASS', "inlineButtons");
-                    $this->smartyTemplate->assign('CELL_COUNT', ++$count);
-                    //Bug#51275 for beta3 pre_script is not required any more
-                    $this->smartyTemplate->assign('CELL', $action_button);
-                    //                $this->smartyTemplate->parse($smartyTemplateSection . ".row.cell");
-                }
+//                if (!empty($button_contents[$aVal])) {
+//                    $button_contents[$aVal] = array_filter($button_contents[$aVal]);
+//                    if (!empty($button_contents)) {
+//                        // this is for inline buttons on listviews
+//                        // bug#51275: smarty widget to help provide the action menu functionality as it is currently sprinkled throughout the app with html
+//                        require_once('include/Smarty/plugins/function.sugar_action_menu.php');
+////                        $tempid = $aVal;
+////                        array_unshift($button_contents, "<div style='display: inline' id='$tempid'>" . array_shift($button_contents) . "</div>");
+////                        $button_contents = implode("", $button_contents);
+////                        $action_button = smarty_function_sugar_action_menu(array(
+////                            'id' => $tempid, 'buttons' => $button_contents, 'class' => 'clickMenu subpanel records fancymenu button', 'flat' => false //assign flat value as false to display dropdown menu at any other preferences.
+////                        ), $this->smartyTemplate);
+//                    }
+//                    else {
+//                        $action_button = '';
+//                    }
+//                }
 
 
                 $aItem->setupCustomFields($aItem->module_dir);
                 $aItem->custom_fields->populateAllXTPL($this->smartyTemplate, 'detail', $html_varName, $fields);
 
                 $count++;
-
-                //            $this->smartyTemplate->parse($smartyTemplateSection.".row");
             }
-
-           //        $this->smartyTemplate->parse($smartyTemplateSection);
             $this->smartyTemplate->assign('ROWS', $widget_contents);
+            $this->smartyTemplate->assign('ROWS_BUTTONS', $button_contents);
         }
 
         public function processListNavigation($smartyTemplateSection, $html_varName, $current_offset, $next_offset, $previous_offset, $row_count, $sugarbean = null, $subpanel_def = null, $col_count = 20) {
@@ -877,7 +837,6 @@
                 if (empty($_REQUEST['action']) || $_REQUEST['action'] != 'Popup') {
                     $_SESSION['export_where'] = $this->query_where;
                 }
-                //                $this->smartyTemplate->parse($smartyTemplateSection.".list_nav_row");
             }
         } // end processListNavigation
 
