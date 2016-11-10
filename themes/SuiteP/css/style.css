@@ -1493,7 +1493,7 @@ button#listViewEndButton_top img, button#listViewEndButton_bottom img {
 
 .list tr td {
     vertical-align: middle;
-    padding: 3px 8px 5px 5px !important;
+    padding: 3px 8px 5px 5px;
 }
 
 .list tr.pagination td {
@@ -7356,10 +7356,10 @@ hr {
 }
 
 .list tr.oddListRowS1 td, .list tr.evenListRowS1 td {
-    padding-top: 15px !important;
-    padding-bottom: 12px !important;
-    padding-left: 10px !important;
-    padding-right: 10px !important;
+    padding-top: 15px;
+    padding-bottom: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .list tr.oddListRowS1 td.inlineEdit a, .list tr.evenListRowS1 td.inlineEdit a {
@@ -11099,8 +11099,8 @@ div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination 
 /* list items */
 
 div#content div#pagecontent form#MassUpdate table.list.view tbody tr td {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 /* edit form */
@@ -11294,4 +11294,86 @@ replace #columnsFilterDialog prefix to '.modal .modal-dialog' and #columnsFilter
 #pagination > td > table > tbody > tr > td > ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton.listViewLinkButton_top > li > a {
     margin: 5px 4px 5px 7px;
     top: -1px;
+}
+
+#select_actions_disabled_top > a > label.hidden-mobile,
+#select_actions_disabled_top > a > label.hidden-desktop,
+#select_actions_disabled_bottom > a > label.hidden-mobile,
+#select_actions_disabled_bottom > a > label.hidden-desktop,
+#delete_listview_top > label.hidden-mobile,
+#delete_listview_top > label.hidden-desktop,
+#delete_listview_bottom > label.hidden-mobile,
+#delete_listview_bottom > label.hidden-desktop {
+    margin-bottom: initial;
+    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 17px;
+}
+
+#delete_listview_top > label.hidden-mobile,
+#delete_listview_top > label.hidden-desktop,
+#delete_listview_bottom > label.hidden-mobile,
+#delete_listview_bottom > label.hidden-desktop {
+    line-height: 12px;
+}
+
+
+@media (min-width: 480px) {
+
+    #select_actions_disabled_top > a > label.hidden-desktop,
+    #select_actions_disabled_bottom > a > label.hidden-desktop,
+    #delete_listview_top > label.hidden-desktop,
+    #delete_listview_bottom > label.hidden-desktop {
+        display: block;
+    }
+
+    #select_actions_disabled_top > a > label.hidden-mobile,
+    #select_actions_disabled_bottom > a > label.hidden-mobile,
+    #delete_listview_top > label.hidden-mobile,
+    #delete_listview_bottom > label.hidden-mobile {
+        display: none;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    #select_actions_disabled_top > a > label.hidden-desktop,
+    #select_actions_disabled_bottom > a > label.hidden-desktop,
+    #delete_listview_top > label.hidden-desktop,
+    #delete_listview_bottom > label.hidden-desktop {
+        display: none;
+    }
+
+    #select_actions_disabled_top > a > label.hidden-mobile,
+    #select_actions_disabled_bottom > a > label.hidden-mobile,
+    #delete_listview_top > label.hidden-mobile,
+    #delete_listview_bottom > label.hidden-mobile {
+        display: block;
+    }
+
+}
+
+#selectLink > li > label,
+#selectLinkTop > li > label,
+#selectLinkBottom > li > label {
+    margin-bottom: initial;
+    top: -6px;
+    margin-right: 8px;
+}
+
+#selectLink > li > label.disabled,
+#selectLinkTop > li > label.disabled,
+#selectLinkBottom > li > label.disabled {
+    color: #C9D2DA;
+}
+
+.bootstrap-checkbox-hidden {
+    display: none;
+}
+
+div#content div#pagecontent form#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.oddListRowS1 > td,
+div#content div#pagecontent form#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.evenListRowS1 > td {
+    padding-top: 15px;
+    padding-bottom: 12px;
 }

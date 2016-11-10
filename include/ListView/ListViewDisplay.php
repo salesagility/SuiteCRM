@@ -49,6 +49,12 @@ class ListViewDisplay {
 
 	var $show_mass_update_form = false;
 	var $show_action_dropdown = true;
+
+	/**
+	 * @var bool Show Bulk Action button as Delete link
+	 */
+	var $show_action_dropdown_as_delete = false;
+
 	var $rowCount;
 	var $mass = null;
 	var $seed;
@@ -251,7 +257,7 @@ class ListViewDisplay {
 
 		$close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'border=0', null, null, ".gif", $app_strings['LBL_CLOSEINLINE']);
 		$menuItems = array(
-            "<input title=\"".$app_strings['LBL_SELECT_ALL_TITLE']."\" type='checkbox' class='checkbox massall' name='massall' id='massall_".$location."' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' /><a id='$id'  href='javascript: void(0);'></a>",
+            "<label class=\"hidden glyphicon bootstrap-checkbox glyphicon-unchecked\"></label><input title=\"".$app_strings['LBL_SELECT_ALL_TITLE']."\" type='checkbox' class='bootstrap-checkbox-hidden checkbox massall' name='massall' id='massall_".$location."' value='' onclick='sListView.check_all(document.MassUpdate, \"mass[]\", this.checked);' /><a id='$id'  href='javascript: void(0);'></a>",
             "<a  name='thispage' id='button_select_this_page_".$location."' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' onclick='if (document.MassUpdate.select_entire_list.value==1){document.MassUpdate.select_entire_list.value=0;sListView.check_all(document.MassUpdate, \"mass[]\", true, $pageTotal)}else {sListView.check_all(document.MassUpdate, \"mass[]\", true)};' href='#'>{$app_strings['LBL_LISTVIEW_OPTION_CURRENT']}&nbsp;&#x28;{$pageTotal}&#x29;&#x200E;</a>",
             "<a  name='selectall' id='button_select_all_".$location."' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' onclick='sListView.check_entire_list(document.MassUpdate, \"mass[]\",true,{$total});' href='#'>{$app_strings['LBL_LISTVIEW_OPTION_ENTIRE']}&nbsp;&#x28;{$total_label}&#x29;&#x200E;</a>",
             "<a name='deselect' id='button_deselect_".$location."' class='menuItem' onmouseover='hiliteItem(this,\"yes\");' onmouseout='unhiliteItem(this);' onclick='sListView.clear_all(document.MassUpdate, \"mass[]\", false);' href='#'>{$app_strings['LBL_LISTVIEW_NONE']}</a>",
@@ -280,8 +286,10 @@ class ListViewDisplay {
 		$menuItems = array();
 
 		// delete
-		if ( ACLController::checkAccess($this->seed->module_dir,'delete',true) && $this->delete )
-			$menuItems[] = $this->buildDeleteLink($location);
+		if ( ACLController::checkAccess($this->seed->module_dir,'delete',true) && $this->delete ) {
+			$menuItems[] = $this->show_action_dropdown_as_delete ? $this->buildDeleteLink($location) : $this->buildBulkActionButton($location);
+		}
+
 		// compose email
         if ( $this->email )
 			$menuItems[] = $this->buildComposeEmailLink($this->data['pageData']['offsets']['total'], $location);
@@ -304,6 +312,10 @@ class ListViewDisplay {
 
 		foreach ( $this->actionsMenuExtraItems as $item )
 		    $menuItems[] = $item;
+
+		if(!$this->show_action_dropdown_as_delete) {
+			$menuItems[] = $this->buildDeleteLink($location);
+		}
 
         $link = array(
             'class' => 'clickMenu selectActions fancymenu',
@@ -397,6 +409,18 @@ class ListViewDisplay {
 		global $app_strings;
         return "<a href='javascript:void(0)' id=\"delete_listview_". $loc ."\" onclick=\"return sListView.send_mass_update('selected', '{$app_strings['LBL_LISTVIEW_NO_SELECTED']}', 1)\">{$app_strings['LBL_DELETE_BUTTON_LABEL']}</a>";
 	}
+
+	/**
+	 * Generate Bulk Action button
+	 *
+	 * @param string $loc position on list view
+	 * @return string HTML of Bulk Action Button
+	 */
+	protected function buildBulkActionButton($loc = 'top') {
+		global $app_strings;
+		return "<a href='javascript:void(0)' id=\"delete_listview_". $loc ."\" onclick=\"return false;\"><label class=\"hidden-mobile\">{$app_strings['LBL_BULK_ACTION_BUTTON_LABEL_MOBILE']}</label><label class=\"hidden-desktop\">{$app_strings['LBL_BULK_ACTION_BUTTON_LABEL']}</label></a>";
+	}
+
 	/**
 	 * Display the selected object span object
 	 *
