@@ -193,7 +193,7 @@ class SugarEmailAddress extends SugarBean {
      * @param bool $in_workflow
      * @return null
      */
-    public function save($id = false){ //, $module, $new_addrs = array(), $primary='', $replyTo='', $invalid='', $optOut='', $in_workflow = false) {
+    public function save($id, $module, $new_addrs = array(), $primary='', $replyTo='', $invalid='', $optOut='', $in_workflow = false) {
         if(gettype($id) == "boolean") {
             $GLOBALS['log']->fatal('SugarEmailAddress::save() Invalid arguments - Parent method SugarBean::save($checknotify) is not implemented. Please pass the correct arguments into SugarEmailAddress::save()');
         }
