@@ -51,6 +51,14 @@
             {/foreach}
             <th><!-- extra th for the button --></th>
         </tr>
+        <tr id='pagination' class="pagination" role='presentation'>
+            <td colspan='{if $prerow}{$colCount+1}{else}{$colCount}{/if}'>
+                {$PAGINATION}
+            </td>
+        </tr>
+        <tr id="activities_search" class="pagination" style="display:none">
+            <td align="right" colspan="{if $prerow}{$colCount+1}{else}{$colCount}{/if}"></td>
+        </tr>
     </thead>
     <tbody>
     {foreach from=$ROWS key=rowHeader item=row}

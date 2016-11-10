@@ -7406,15 +7406,6 @@ tr:hover img.info {
     margin: 0;
 }
 
-[id^=list_subpanel_] {
-    margin-bottom: 25px !important;
-    border: 1px solid #dddddd;
-}
-
-[id^=list_subpanel_] tr:last-child {
-    margin-bottom: 25px !important;
-    border-bottom: none;
-}
 
 .h3Row {
     padding: 0;
@@ -8177,6 +8168,55 @@ object {
     border: none;
 }
 
+/* action menu in the pagination bar of the subpanel */
+.sub-panel thead .pagination .SugarActionMenu {
+    height: 32px;
+    background-color: #94a6b5;
+}
+
+/* caret on the action menu */
+.sub-panel thead .pagination .SugarActionMenu span {
+    margin-top: 6px;
+}
+
+/* paginatoin buttons in the subpanel */
+.sub-panel thead .pagination .button {
+    background-color: #94A6B5;
+    height: 32px;
+    width: 32px;
+    padding: 0;
+    line-height: 32px;
+}
+
+.sub-panel thead .pagination .SugarActionMenu .subnav {
+    left: 0px;
+    background: #94A6B5;
+    border-radius: 0;
+}
+
+.sub-panel thead .pagination .SugarActionMenu .subnav li a {
+    padding: 12px 15px 12px 15px;
+    border-bottom: #9EACB8 1px solid;
+}
+
+.sub-panel thead .pagination .SugarActionMenu .subnav li a:hover {
+    background: #94A6B5;
+}
+
+/* action menu in the list view of subpanel */
+.sub-panel tbody .SugarActionMenu {
+    background-color: #94A6B5;
+}
+.sub-panel tbody .SugarActionMenu .subnav {
+    left: 0px;
+    background-color: #94A6B5;
+    border-radius: 0;
+}
+
+.sub-panel tbody .SugarActionMenu .subnav li a {
+    padding: 12px 15px 12px 15px;
+    border-bottom: #9EACB8 1px solid;
+}
 
 .panel-default > .panel-heading > a img {
     margin-right: 15px;
@@ -8619,15 +8659,14 @@ table.subpanel-table .pagination ul.clickMenu li span {
 }
 
 
-ul.SugarActionMenuIESub li a, ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .list tr.pagination td.buttons ul.clickMenu > li > a
-
-
-
-div.list-view-rounded-corners > table > thead > th,
-.pagination-bottom {
-    border: 1px solid transparent !important;
-    overflow: hidden;
-}
+/*ul.SugarActionMenuIESub li a, ul.clickMenu li a,*/
+/*.list tr.pagination td.buttons ul.clickMenu > li > a:link,*/
+/*.list tr.pagination td.buttons ul.clickMenu > li > a,*/
+/*div.list-view-rounded-corners > table > thead > th,*/
+/*.pagination-bottom {*/
+    /*border: 1px solid transparent !important;*/
+    /*overflow: hidden;*/
+/*}*/
 
 div.list-view-rounded-corners > table th:first-of-type {
     border-top-left-radius: 4px;

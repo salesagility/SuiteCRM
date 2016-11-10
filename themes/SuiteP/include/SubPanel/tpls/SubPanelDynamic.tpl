@@ -51,11 +51,8 @@
             <th><!-- extra th for the button --></th>
         </tr>
         <tr>
-        <tr id='pagination' class="pagination" role='presentation'>
-            <td colspan='{if $prerow}{$colCount+1}{else}{$colCount}{/if}'>
-                {$PAGINATION}
-            </td>
-        </tr>
+        {* TODO: Break $pagination so that it can be fully customisable *}
+        {$PAGINATION}
         <tr id="activities_search" class="pagination" style="display:none">
             <td align="right" colspan="{if $prerow}{$colCount+1}{else}{$colCount}{/if}"></td>
         </tr>
@@ -76,7 +73,7 @@
             {/foreach}
             <td>
                 {if $ROWS_BUTTONS.$rowHeader|@count gt 0}
-                    {sugar_action_menu id="$rowHeader" buttons=$ROWS_BUTTONS.$rowHeader class="clickMenu subpanel records fancymenu button" flat=false}
+                    {sugar_action_menu id="$rowHeader" buttons=$ROWS_BUTTONS.$rowHeader class="" flat=false}
                 {/if}
             </td>
         </tr>
