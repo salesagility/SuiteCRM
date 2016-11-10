@@ -257,6 +257,10 @@ require_once('include/EditView/EditView2.php');
             $this->th->ss->assign('DOCUMENTS_MODULE', true);
         }
 
+        if(isset($_REQUEST['columnsFilter']) && $_REQUEST['columnsFilter']) {
+            return '<pre id="responseData">'.json_encode($this->getColumnsFilterData()).'</pre>';
+        }
+
         $return_txt = $this->th->displayTemplate($this->seed->module_dir, 'SearchForm_'.$this->parsedView, $this->locateFile($this->tpl));
 
         if($header){
@@ -268,6 +272,13 @@ require_once('include/EditView/EditView2.php');
 		}
 		return $return_txt;
  	}
+
+     private function getColumnsFilterData() {
+         if(!isset($this->lastTemplateGroupChooser)) {
+             $this->displaySavedSearch();
+         }
+         return $this->lastTemplateGroupChooser;
+     }
 
  	/**
  	 * Set options
@@ -323,7 +334,9 @@ require_once('include/EditView/EditView2.php');
      function displaySavedSearch()
      {
         $savedSearch = new SavedSearch($this->listViewDefs[$this->module], $this->lv->data['pageData']['ordering']['orderBy'], $this->lv->data['pageData']['ordering']['sortOrder']);
-        return $savedSearch->getForm($this->module, false);
+        $ret = $savedSearch->getForm($this->module, false);
+         $this->lastTemplateGroupChooser = $savedSearch->lastTemplateGroupChooser;
+         return $ret;
      }
 
 
