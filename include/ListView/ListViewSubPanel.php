@@ -527,7 +527,6 @@
             }
             $this->smartyTemplate->assign('ROWS', $widget_contents);
             $this->smartyTemplate->assign('ROWS_BUTTONS', $button_contents);
-            $this->smartyTemplate->assign('ROWS_BUTTONS', $button_contents);
         }
 
         public function processListNavigation($smartyTemplateSection, $html_varName, $current_offset, $next_offset, $previous_offset, $row_count, $sugarbean = null, $subpanel_def = null, $col_count = 20) {
