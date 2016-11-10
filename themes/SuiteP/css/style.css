@@ -11220,8 +11220,59 @@ div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[
     }
 }
 
+
+/* Columns Filter Dialog on ListViews
+replace #columnsFilterDialog prefix to '.modal .modal-dialog' and #columnsFilterList to '.modal-body' to apply changes for all popup */
+
 #columnsFilterDialog > div.modal-dialog.modal-lg > div.modal-content {
-    width: 500px;
+    width: 450px;
     margin: 0 auto;
     max-width: 100%;
+}
+
+#columnsFilterDialog > div > div > div.modal-header > h4 {
+    font-size: 19px;
+    color: #534D64;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 300;
+}
+
+#columnsFilterList > div > h1 {
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+}
+
+#columnsFilterList > div > ul.chooserList {
+    list-style-type: none;
+    min-height: 60px;
+}
+
+#columnsFilterList > div > ul.chooserList > li {
+    padding: 10px;
+    margin-bottom: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+#columnsFilterList > div > ul.chooserList.green.ui-sortable > li {
+    background-color: #CCE8E2;
+}
+
+#columnsFilterList > div > ul.chooserList.red.ui-sortable > li {
+    background-color: #FFAFA6;
+}
+
+#columnsFilterDialog > div > div > div.modal-header {
+    padding: 25px;
+}
+
+#columnsFilterList {
+    padding: 30px;
+}
+
+#columnsFilterList > div > ul.chooserList.green.ui-sortable {
+    margin-bottom: 30px;
 }
