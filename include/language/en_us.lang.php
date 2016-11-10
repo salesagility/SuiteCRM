@@ -2436,7 +2436,8 @@ $app_strings = array(
     'LBL_COLUMNS_FILTER_HEADER_TITLE' => 'Choose columns',
     'LBL_SAVE_CHANGES_BUTTON_TITLE' => 'Save changes',
     'LBL_DISPLAYED' => 'Displayed',
-    'LBL_HIDDEN' => 'Hidden'
+    'LBL_HIDDEN' => 'Hidden',
+    'ERR_EMPTY_COLUMNS_LIST' => 'At least, one element required',
 
 );
 

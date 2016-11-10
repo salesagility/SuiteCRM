@@ -22,6 +22,7 @@
         <div class="chooserContent">
             <h1>{$APP.LBL_DISPLAYED}</h1>
             <ul class="chooserList green"></ul>
+            <div id="error-displayed-columns" class="error"></div>
             <h1>{$APP.LBL_HIDDEN}</h1>
             <ul class="chooserList red"></ul>
         </div>
@@ -87,28 +88,47 @@
                     },
 
                     initDragDropChooser: function() {
-
+                        var _this = this;
                         $( "#columnsFilterList .chooserContent .chooserList.green" ).sortable({
-                            connectWith: "#columnsFilterList .chooserContent .chooserList.red"
+                            connectWith: "#columnsFilterList .chooserContent .chooserList.red",
+                            stop: function() {
+                                _this.isValid();
+                            }
                         });
                         $( "#columnsFilterList .chooserContent .chooserList.green" ).disableSelection();
 
                         $( "#columnsFilterList .chooserContent .chooserList.red" ).sortable({
-                            connectWith: "#columnsFilterList .chooserContent .chooserList.green"
+                            connectWith: "#columnsFilterList .chooserContent .chooserList.green",
+                            stop: function() {
+                                _this.isValid();
+                            }
                         });
                         $( "#columnsFilterList .chooserContent .chooserList.red" ).disableSelection();
 
                     },
 
                     onSaveClick: function() {
-                        if(this.isValid) {
+                        if(this.isValid()) {
                             this.save();
                         }
                     },
 
+                    // validation (return true if valid, otherwise show error(s) and return false)
                     isValid: function() {
-                        // TODO make a validation (return true if valid, otherwise show error(s) and return false)
-                        return true;
+                        // clear error message
+                        $('#error-displayed-columns').html('');
+                        // check validation for empty list
+                        var v = $('#columnsFilterList > div > ul.chooserList.green.ui-sortable li').length > 0;
+                        if(!v) {
+                            // show error
+                            $('#error-displayed-columns').html('{/literal}{$APP.ERR_EMPTY_COLUMNS_LIST}{literal}');
+                            // scroll to error message
+                            $('#columnsFilterDialog').animate({
+                                scrollTop: $("#error-displayed-columns").offset().top - 100
+                            });
+                        }
+                        // return validation result
+                        return v;
                     },
 
                     // send it to server to save user preferences (refresh the page to show changes)
