@@ -4092,14 +4092,6 @@ ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .l
     color: #fff;
 }
 
-ul.clickMenu li.single a {
-    padding-right: 8px !important;
-}
-
-ul.clickMenu li a:hover {
-    text-decoration: none !important;
-}
-
 ul.clickMenu > li > span {
     margin-top: 9px;
     width: 16px;
@@ -4389,14 +4381,7 @@ ul.clickMenu li ul.subnav li a:hover .showLessArrow, ul.clickMenu li ul.subnav l
     opacity: .6;
 }
 
-ul.clickMenu.SugarActionMenu li.single a {
-    background-color: #94A6B5 !important;
-    padding: 0px 8px !important;
-}
 
-ul.clickMenu.SugarActionMenu li.single a:hover {
-    background-color: #778591 !important;
-}
 
 .view, table.view td {
     border: none;
@@ -8168,13 +8153,23 @@ object {
     border: none;
 }
 
-/* action menu in the pagination bar of the subpanel */
-.sub-panel thead .pagination .SugarActionMenu {
+.sub-panel .SugarActionMenu {
     height: 32px;
     background-color: #94a6b5;
 }
 
-/* caret on the action menu */
+.sub-panel .SugarActionMenu .single a {
+    min-width: inherit;
+    line-height: 24px;
+}
+
+.sub-panel .SugarActionMenu .single a:hover {
+    background-color: #94a6b5;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+    /* caret on the action menu */
 .sub-panel thead .pagination .SugarActionMenu span {
     margin-top: 6px;
 }
@@ -8213,9 +8208,14 @@ object {
     border-radius: 0;
 }
 
+.sub-panel tbody .SugarActionMenu > li > a {
+    font-size: 13px;
+}
+
 .sub-panel tbody .SugarActionMenu .subnav li a {
     padding: 12px 15px 12px 15px;
     border-bottom: #9EACB8 1px solid;
+    font-size: 13px;
 }
 
 .panel-default > .panel-heading > a img {
@@ -8579,12 +8579,6 @@ table.subpanel-table th a:link {
     font-weight: bold;
 }
 
-table.subpanel-table ul.clickMenu > li, ul.SugarActionMenuIESub li {
-    padding: 0;
-    line-height: 24px;
-    white-space: nowrap;
-}
-
 table.subpanel-table ul.subpanel {
     background: none;
     background-color: transparent !important;
@@ -8600,51 +8594,11 @@ table.subpanel-table .pagination li.sugar_action_button > form > a {
     width: 100%;
 }
 
-table.subpanel-table ul.subpanel > a,
-.single  a,
-.single > a,
-#actionLinkTop li.sugar_action_button,
-#actionLinkBottom li.sugar_action_button,
-table.subpanel-table li.sugar_action_button,
-#selectLinkTop li.sugar_action_button,
-#selectLinkBottom li.sugar_action_button,
-table.subpanel-table .pagination .sugar_action_button,
-table.subpanel-table .pagination li.sugar_action_button > form > a,
-table.subpanel-table .pagination .sugar_action_button > form > a,
-table.subpanel-table .pagination .sugar_action_button > form > a {
-    padding: 0px !important;
-    background-color: #94A6B5;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    padding-right: 4px !important;
-}
-
 /*calendar popup fix*/
 .calcell > a {
     background-color: #fff;
 }
 
-
-#actionLinkTop li.sugar_action_button:hover,
-#actionLinkBottom li.sugar_action_button:hover,
-table.subpanel-table li.sugar_action_button:hover,
-#selectLinkTop li.sugar_action_button:hover,
-#selectLinkBottom li.sugar_action_button:hover,
-table.subpanel-table .pagination .sugar_action_button:hover,
-table.subpanel-table .pagination li.sugar_action_button:hover > form > a,
-table.subpanel-table .pagination .sugar_action_button:hover > form > a,
-table.subpanel-table .pagination .sugar_action_button:hover > form > a,
-
-table.subpanel-table ul.subpanel a:hover,
-table.subpanel-table li.sugar_action_button:hover,
-table.subpanel-table .pagination .sugar_action_button:hover,
-table.subpanel-table .pagination li.sugar_action_button:hover > form > a,
-table.subpanel-table .pagination .sugar_action_button:hover > form > a,
-table.subpanel-table .pagination .sugar_action_button:hover > form > a,
-table.subpanel-table .pagination a,
-.subpanel-table ul.subnav {
-    background-color: #778591;
-}
 
 table.subpanel-table .pagination a {
     padding-left: 8px;
@@ -8658,15 +8612,6 @@ table.subpanel-table .pagination ul.clickMenu li span {
     margin-right: 5px;
 }
 
-
-/*ul.SugarActionMenuIESub li a, ul.clickMenu li a,*/
-/*.list tr.pagination td.buttons ul.clickMenu > li > a:link,*/
-/*.list tr.pagination td.buttons ul.clickMenu > li > a,*/
-/*div.list-view-rounded-corners > table > thead > th,*/
-/*.pagination-bottom {*/
-    /*border: 1px solid transparent !important;*/
-    /*overflow: hidden;*/
-/*}*/
 
 div.list-view-rounded-corners > table th:first-of-type {
     border-top-left-radius: 4px;
