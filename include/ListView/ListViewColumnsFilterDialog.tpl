@@ -128,7 +128,11 @@
                         }, function(){
                             //close form and refresh page after save
                             $('#columnsFilterDialog > div > div > div.modal-footer > button.btn.button.purple.btn-default').click();
-                            document.location.href = document.location.href;
+                            if($('#search_form').lenght > 0) {
+                                document.location.href = $('#search_form').attr('action');
+                            } else {
+                                document.location.href = document.location.href;
+                            }
                         });
 
                     }

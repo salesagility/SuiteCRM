@@ -11276,3 +11276,11 @@ replace #columnsFilterDialog prefix to '.modal .modal-dialog' and #columnsFilter
 #columnsFilterList > div > ul.chooserList.green.ui-sortable {
     margin-bottom: 30px;
 }
+
+#columnsFilterDialog > div > div > div.modal-footer > button.btn.button.purple.btn-default {
+    background-color: #AA9DCC;
+}
+
+#columnsFilterDialog > div > div > div.modal-footer > button.btn.button.purple.btn-default:hover {
+    background-color: #9589B3;
+}
