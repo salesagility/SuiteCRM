@@ -53,7 +53,6 @@ $(document).ajaxStop( function() {
         $('.panel-collapse').removeClass('in');
         $('.panel-heading-collapse a').removeClass('in');
         $('.panel-heading-collapse a').addClass('collapsed');
-        console.log('collapse subpanels');
     }
 });
 
