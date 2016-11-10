@@ -36,6 +36,27 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+SUGAR.measurements = {
+    "breakpoints": {
+        "x-small": 750,
+        "small": 768,
+        "medium": 992,
+        "large": 1130,
+        "x-large": 1250
+    }
+};
+
+$(document).ajaxStop( function() {
+    // collapse subpanels when device is mobile / tablet
+    if($(window).width() <= SUGAR.measurements.breakpoints.large) {
+        $('.panel-collapse').removeClass('in');
+        $('.panel-heading-collapse a').removeClass('in');
+        $('.panel-heading-collapse a').addClass('collapsed');
+        console.log('collapse subpanels');
+    }
+});
+
 $(document).ready(function () {
     loadSidebar();
     $("ul.clickMenu").each(function (index, node) {
@@ -277,15 +298,7 @@ $(function() {
 });
 
 jQuery(function($){
-    $('table.footable').footable({
-        "breakpoints": {
-            "x-small": 680,
-            "small": 768,
-            "medium": 992,
-            "large": 1130,
-            "x-large": 1250
-        }
-    });
+    $('table.footable').footable(SUGAR.measurements);
 })
 
 
@@ -592,6 +605,5 @@ $(function () {
     setTimeout(function(){
         hideEmptyFormCellsOnTablet();
     }, 1500);
-
-
 });
+
