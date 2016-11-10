@@ -12,7 +12,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn button purple btn-default" data-dismiss="modal">{$APP.LBL_CLOSE_BUTTON_TITLE}</button>
-                    <button href="javascript:void(0);" onclick="columnsFilter.onSaveClick();" type="button" class="button red">{$APP.LBL_SAVE_CHANGES_BUTTON_TITLE}</button>
+                    <button type="button" onclick="columnsFilter.onSaveClick();" type="button" class="button red">{$APP.LBL_SAVE_CHANGES_BUTTON_TITLE}</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
