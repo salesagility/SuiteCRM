@@ -1,0 +1,26 @@
+@import 'variables';
+
+html {
+  height: 100%;
+}
+
+body {
+  background: $main-bg;
+  font-family: $page-font-family;
+  font-size: $page-font-size;
+  color: $main-font;
+  margin: 0;
+  overflow: auto;
+  height: 100%;
+}
+
+img, svg {
+  image-rendering: auto;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+.studiolink svg, .studiolink img {
+  width: 30px;
+  height: auto;
+}
