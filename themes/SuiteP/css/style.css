@@ -8168,7 +8168,6 @@ object {
     font-size: 13px;
     text-decoration: none;
 }
-
     /* caret on the action menu */
 .sub-panel thead .pagination .SugarActionMenu span {
     margin-top: 6px;
@@ -8192,10 +8191,12 @@ object {
 .sub-panel thead .pagination .SugarActionMenu .subnav li a {
     padding: 12px 15px 12px 15px;
     border-bottom: #9EACB8 1px solid;
+    text-decoration: none;
 }
 
 .sub-panel thead .pagination .SugarActionMenu .subnav li a:hover {
     background: #94A6B5;
+    text-decoration: none;
 }
 
 /* action menu in the list view of subpanel */
