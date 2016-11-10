@@ -11284,3 +11284,14 @@ replace #columnsFilterDialog prefix to '.modal .modal-dialog' and #columnsFilter
 #columnsFilterDialog > div > div > div.modal-footer > button.btn.button.purple.btn-default:hover {
     background-color: #9589B3;
 }
+
+#pagination > td > table > tbody > tr > td > ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton.listViewLinkButton_bottom,
+#pagination > td > table > tbody > tr > td > ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton.listViewLinkButton_top {
+    top: -1px;
+}
+
+#pagination > td > table > tbody > tr > td > ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton.listViewLinkButton_bottom > li > a,
+#pagination > td > table > tbody > tr > td > ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton.listViewLinkButton_top > li > a {
+    margin: 5px 4px 5px 7px;
+    top: -1px;
+}
