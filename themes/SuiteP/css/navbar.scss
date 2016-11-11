@@ -221,21 +221,22 @@ li.topnav > ul > li > ul > li a span.topnav-fake-icon {
   padding-bottom: 16px;
 }
 
-//.with-actions .dropdown-menu ul li a {
-//  padding-top: 12px !important;
-//  padding-bottom: 12px !important;
-//}
-
 #mobileheader .dropdown-menu ul li a.recent-links-detail,
 #mobileheader .dropdown-menu ul li a.favorite-links-detail,
 .topnav .dropdown-menu li a.recent-links-detail,
 .topnav .dropdown-menu li a.favorite-links-detail,
-.recent-links-detail,
-.favorite-links-detail {
+.with-actions .recent-links-detail,
+.with-actions .favorite-links-detail {
   border: none;
   width: 85%;
   display: inline-block;
-  padding-right: 0px !important;
+}
+
+.navbar-inverse .dropdown-menu li a.recent-links-edit,
+.navbar-inverse .dropdown-menu li a.favorite-links-edit,
+.navbar-inverse .dropdown-menu li a.recent-links-detail,
+.navbar-inverse .dropdown-menu li a.favorite-links-detail {
+  padding-right: 0px;
 }
 
 #mobileheader .dropdown-menu ul li a.recent-links-edit,
@@ -248,7 +249,6 @@ li.topnav > ul > li > ul > li a span.topnav-fake-icon {
   width: 20px;
   height: 20px;
   display: inline-block;
-  padding: 0px !important;
 }
 
 
@@ -270,7 +270,7 @@ li.topnav ul.dropdown-menu li:last-child a {
 
 
 .moremenu a {
-  color: #ffffff !important;
+  color: $default-btn-color !important;
   font-size: 1.2em;
   cursor: pointer;
   margin: 0;
