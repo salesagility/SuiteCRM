@@ -1,0 +1,11 @@
+html {
+  height: 100%; }
+
+body {
+  background: whitesmoke;
+  font-family: "Lato", Lato, Arial, sans-serif;
+  font-size: 13px;
+  color: #534d64;
+  margin: 0;
+  overflow: auto;
+  height: 100%; }
