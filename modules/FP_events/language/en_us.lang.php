@@ -72,7 +72,6 @@ $mod_strings = array(
     'LBL_START_DATE' => 'start date',
     'LBL_END_DATE' => 'End Date/Time',
     'LBL_BUDGET' => 'Budget',
-    'LBL_FP_EVENTS_FP_EXPENSES_1_FROM_FP_EXPENSES_TITLE' => 'Expenses',
     'LBL_DATE' => 'Start Date',
     'LBL_DATE_END' => 'End Date',
     'LBL_DURATION' => 'Duration',
@@ -117,8 +116,6 @@ $mod_strings = array(
 	'LBL_MINSS_ABBREV' => 'm',
 
 	// Attendance report
-	'LBL_ACCEPT_REPORT' => 'Attendance',
-	'LBL_ACCEPT_REPORT_KEY' => '',
 	'LBL_CONTACT_NAME' => 'Name',
 	'LBL_ACCOUNT_NAME' => 'Company',
 	'LBL_SIGNATURE' => 'Signature',
@@ -129,7 +126,6 @@ $mod_strings = array(
 	'LBL_LIST_INVITE_STATUS_EVENT' => 'Invited',
 	'LBL_LIST_ACCEPT_STATUS_EVENT' => 'Status',
 	// counts
-	'LBL_NB_INVITES' => 'Invited :',
 	'LBL_NB_ACCEPT' => 'Accepted :',
 	'LBL_NB_DECLINED' => 'Refused :',
 	'LBL_NB_ATTENDED' => 'Attended :',
