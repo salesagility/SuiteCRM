@@ -1,0 +1,95 @@
+/**** FORM ****/
+@import 'variables';
+
+
+
+fieldset, table, pre {
+  margin-bottom: 0;
+}
+
+p {
+  font-size: 14px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+a {
+}
+
+form {
+  margin: 0;
+}
+
+textarea {
+  font-family: 'Lato', Lato, Arial, sans-serif;
+}
+
+
+.checkbox, input[type=checkbox] {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+  visibility: visible;
+  height: 16px;
+  width: 16px;
+  background: url('../../../../themes/SuiteP/images/forms/check.png') no-repeat;
+  overflow: hidden;
+}
+
+input[type=radio] {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+  visibility: visible;
+  height: 16px;
+  width: 16px;
+  background: url('../../../../themes/SuiteP/images/forms/radio.png') no-repeat;
+}
+
+input[type=checkbox]:focus, input[type=radio]:focus {
+  outline: 0;
+}
+
+input[type=checkbox] {
+  background-position: 0px 0px;
+}
+
+input[type=checkbox]:checked {
+  background-position: -18px 0px;
+}
+
+input[type=checkbox]:disabled {
+  background-position: -36px 0px;
+}
+
+input[type=checkbox]:disabled:checked, input[type=checkbox]:checked:disabled {
+  background-position: -54px 0px;
+}
+
+input[type=radio] {
+  background-position: 0px 0px;
+}
+
+input[type=radio]:checked {
+  background-position: -18px 0px;
+}
+
+input[type=radio]:disabled {
+  background-position: -36px 0px;
+}
+
+input[type=radio]:disabled:checked, input[type=radio]:checked:disabled {
+  background-position: -54px 0px;
+}
+
+td.nowrap input[type=checkbox] {
+  margin-top: 3px;
+}
+
+input[type=text]:disabled {
+  border: 1px solid #e2e7eb;
+  background: #f8f8f8;
+}
+
