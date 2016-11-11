@@ -662,12 +662,17 @@ li.topnav > ul > li > ul > li a span.topnav-fake-icon {
 #mobileheader .dropdown-menu ul li a.favorite-links-detail,
 .topnav .dropdown-menu li a.recent-links-detail,
 .topnav .dropdown-menu li a.favorite-links-detail,
-.recent-links-detail,
-.favorite-links-detail {
+.with-actions .recent-links-detail,
+.with-actions .favorite-links-detail {
   border: none;
   width: 85%;
-  display: inline-block;
-  padding-right: 0px !important; }
+  display: inline-block; }
+
+.navbar-inverse .dropdown-menu li a.recent-links-edit,
+.navbar-inverse .dropdown-menu li a.favorite-links-edit,
+.navbar-inverse .dropdown-menu li a.recent-links-detail,
+.navbar-inverse .dropdown-menu li a.favorite-links-detail {
+  padding-right: 0px; }
 
 #mobileheader .dropdown-menu ul li a.recent-links-edit,
 #mobileheader .dropdown-menu ul li a.favorite-links-edit,
@@ -678,8 +683,7 @@ li.topnav > ul > li > ul > li a span.topnav-fake-icon {
   border: none;
   width: 20px;
   height: 20px;
-  display: inline-block;
-  padding: 0px !important; }
+  display: inline-block; }
 
 li.topnav:hover > a {
   border-top: 3px solid #f08377; }
@@ -694,7 +698,7 @@ li.topnav ul.dropdown-menu li:last-child a {
   border-bottom: 0px; }
 
 .moremenu a {
-  color: #ffffff !important;
+  color: whitesmoke !important;
   font-size: 1.2em;
   cursor: pointer;
   margin: 0;
