@@ -1,0 +1,54 @@
+
+$page-font-family: 'Lato', Lato, Arial, sans-serif;
+$page-font-size: 13px;
+
+$main-color: #534D64;
+$global-search-color: #A2A5AF;
+$default-btn-color: #F5F5F5;
+$primary: #778591;
+$danger: #F08377;
+$success: #66996B;
+$info: #AA9DCC;
+$main-menu-color: $default-btn-color;
+$main-menu-color-hover: $danger;
+
+$main-bg: #F5F5F5;
+$main-alternate-bg: #FFFFFF;
+
+$navbar-bg: #534D64;
+$main-menu-bg: #5D5670;
+$global-search-bg: #65697A;
+
+$sidebar-bg: #778591;
+$sidebar-btn-bg: #94A6B5;
+$sidebar-btn-bg-hover: #94A6B5;
+
+$default-input-group-color: #C4C3C7;
+$default-btn-bg: #94A6B5;
+$default-btn-bg-hover: #94A6B5;
+$primary-btn-bg: $primary;
+$primary-btn-bg-hover: #778591;
+$info-btn-bg: $info;
+$info-btn-bg-hover: #9589B3;
+$danger-btn-bg: $danger;
+$danger-btn-bg-hover: #D66C60;
+$success-btn-bg: $success;
+$success-btn-bg-hover: #6EA674;
+
+$footer-btn-bg: #E6E6E6;
+
+$panel-bg: #E6E6E6;
+$input-bg: #D8F5EE;
+$input-select-bg: #A5E8D6;
+
+$table-header-bg: #778591;
+$table-nav-bg: #BFCAD3;
+$table-focus-bg: #FAF7CF;
+$table-alternate-row-bg: #FFFFFF;
+
+$main-menu-seperator: #757083;
+$main-menu-current-seperator: $danger;
+$xs-breakpoint: 750px;
+$sm-breakpoint: 768px;
+$md-breakpoint: 992px;
+$lg-breakpoint: 1130px;

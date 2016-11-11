@@ -1,3 +1,4 @@
+/*** MAIN ***/
 @import 'variables';
 
 html {
@@ -19,6 +20,8 @@ img, svg {
   image-rendering: crisp-edges;
   image-rendering: pixelated;
 }
+
+
 
 .studiolink svg, .studiolink img {
   width: 30px;

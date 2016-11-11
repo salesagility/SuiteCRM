@@ -1,20 +1,18 @@
+
 /**** LOGIN **/
-/* TYPOGRAPHY */
-/* FONT COLORS */
-/* BACKGROUND COLORS */
-/* BORDER COLORS */
-/* URLS */
-/* BREAKPOINTS */
-/* MEASUREMENTS */
+@import 'variables';
+
 div.p_login {
-  background-color: #F5F5F5;
-  height: 100%; }
+  background-color: $main-bg;
+  height: 100%;
+}
 
 div.p_login .p_login_top {
-  background-color: #534D64;
+  background-color: $main-color;
   float: left;
   width: 100%;
-  padding: 20px 2% 20px 2%; }
+  padding: 20px 2% 20px 2%;
+}
 
 div.p_login .p_login_top a {
   height: 40px;
@@ -24,63 +22,77 @@ div.p_login .p_login_top a {
   display: block;
   background-image: none, url("../../../../themes/SuiteP/images/p_login_logo.svg"), url("../../../../themes/SuiteP/images/p_login_logo.png");
   background-repeat: no-repeat;
-  background-position: 0 0; }
+  background-position: 0 0;
+}
 
 div.p_login .p_login_middle {
-  background-color: #F5F5F5;
+  background-color: $main-bg;
   float: left;
-  width: 100%; }
-
+  width: 100%;
+}
 div.p_login .p_login_bottom {
-  background-color: #E6E6E6;
+  background-color: $footer-btn-bg;
   float: left;
   width: 100%;
   left: 0;
   bottom: 0;
-  padding: 20px 2% 20px 2%; }
+  padding: 20px 2% 20px 2%;
+}
 
 @media (min-height: 400px) {
+
   div.p_login .p_login_bottom {
-    position: absolute; } }
+    position: absolute;
+  }
+}
+
 div.p_login .p_login_bottom a#powered_by {
-  margin-left: 20px; }
+  margin-left: 20px;
+}
 
 div.p_login #loginform {
   max-width: 400px;
   padding: 15px;
   margin: 8% auto 0 auto;
-  text-align: center; }
+  text-align: center;
+}
 
 div.p_login #loginform .input-group {
   font-size: 19px;
-  color: #C4C3C7;
-  width: 100%; }
+  color: $default-input-group-color;
+  width: 100%;
+}
 
 div.p_login #loginform .input-group input {
-  background-color: #FFFFFF;
+  background-color: $main-alternate-bg;
   border: none;
   height: 50px;
   line-height: 50px;
   padding: 0 2% 0 60px;
-  color: #C4C3C7;
-  border-radius: 3px; }
+  color: $default-input-group-color;
+  border-radius: 3px;
+}
 
 div.p_login #loginform .input-group input#user_name, #user_name:-webkit-autofill, div.p_login #loginform .input-group input#user_password {
   background-repeat: no-repeat;
-  background-image: none, url("../../../../themes/SuiteP/images/login_bg.svg"), url("../../../../themes/SuiteP/images/login_bg.png"); }
+  background-image: none, url("../../../../themes/SuiteP/images/login_bg.svg"), url("../../../../themes/SuiteP/images/login_bg.png");
+}
 
 div.p_login #loginform .input-group input#user_name {
   background-position: 12px 9px;
   background-repeat: no-repeat;
-  background-image: none, url("../../../../themes/SuiteP/images/login_bg.svg"); }
+  background-image: none, url("../../../../themes/SuiteP/images/login_bg.svg");
+}
 
 div.p_login #loginform .input-group input#user_password {
   background-position: 12px -51px;
   background-repeat: no-repeat;
-  background-image: none, url("../../../../themes/SuiteP/images/login_bg.png"); }
+  background-image: none, url("../../../../themes/SuiteP/images/login_bg.png");
+}
 
 div.p_login #loginform .glyphicon {
-  top: 0; }
+  top: 0;
+}
 
 div.p_login #loginform span.error {
   display: block;
@@ -88,8 +100,9 @@ div.p_login #loginform span.error {
   line-height: 140%;
   margin-bottom: 0px;
   margin-top: 20px;
-  color: #F08377;
-  background-color: transparent; }
+  color: $danger;
+  background-color: transparent;
+}
 
 div.p_login #loginform #bigbutton {
   border-radius: 3px;
@@ -97,32 +110,42 @@ div.p_login #loginform #bigbutton {
   letter-spacing: 3px;
   padding: 0;
   height: 50px;
-  line-height: 50px; }
+  line-height: 50px;
+}
 
 div.p_login #loginform #bigbutton:hover {
-  background-color: #D66C60; }
+  background-color: $danger-btn-bg-hover;
+}
+
+
 
 @media (max-width: 750px) {
+
   div.p_login .p_login_top {
-    padding: 10px 3% 10px 3%; }
+    padding: 10px 3% 10px 3%;
+  }
 
   div.p_login .p_login_top a {
     height: 30px;
     width: 170px;
     background-image: none, url("../../../../themes/SuiteP/images/p_login_logo.svg"), url("../../../../themes/SuiteP/images/p_login_logo.png");
-    background-position: 0 -70px; }
+    background-position: 0 -70px;
+  }
 
   div.p_login .p_login_bottom {
     padding-top: 10px;
-    padding: 10px 3% 10px 3%; }
+    padding: 10px 3% 10px 3%;
+  }
 
   div.p_login .p_login_bottom a#powered_by, div.p_login .p_login_bottom a#admin_options {
     font-size: 10px;
     margin-left: 0px;
     text-align: center;
-    display: block; }
+    display: block;
+  }
 
   div.p_login .p_login_bottom a#admin_options {
-    margin-bottom: 5px; } }
+    margin-bottom: 5px;
+  }
 
-/*# sourceMappingURL=login.css.map */
+}
