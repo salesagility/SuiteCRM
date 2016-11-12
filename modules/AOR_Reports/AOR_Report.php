@@ -117,6 +117,17 @@ class AOR_Report extends Basic {
         $chart->save_lines($_POST, $this, 'aor_chart_');
     }
 
+    function ACLAccess($view,$is_owner='not_set',$in_group='not_set', $target_module){
+        $result = parent::ACLAccess($view,$is_owner,$in_group);
+        if($result === true){
+            if($target_module != ""){
+                $result = ACLController::checkAccess($this->report_module, 'list', true);
+            }
+        }
+        return $result;
+    }
+
+
     function load_report_beans(){
         global $beanList, $app_list_strings;
 

@@ -27,42 +27,30 @@ $viewdefs['AOR_Reports']['DetailView'] = array(
     'form' => array(
         'buttons'=>array(
             array(
-                'customCode' => '{if $bean->aclAccess("edit")}
-                {checkTargetModuleAccess assign="access"}
-                {if $access=="true"}
+                'customCode' => '{if $bean->aclAccess("edit","not_set","not_set",$bean->report_module)}
                 <input title="{$APP.LBL_EDIT_BUTTON_TITLE}" accessKey="{$APP.LBL_EDIT_BUTTON_KEY}" class="button primary" 
                 onclick="var _form = document.getElementById(\'formDetailView\'); _form.return_module.value=\'AOR_Reports\'; 
                 _form.return_action.value=\'DetailView\'; _form.return_id.value=\'{$id}\'; _form.action.value=\'EditView\';
                 SUGAR.ajaxUI.submitForm(_form);" type="button" name="Edit" id="edit_button" value="{$APP.LBL_EDIT_BUTTON_LABEL}">
-                {/if}
                 {/if}'
             ),
             array(
-                'customCode' => '{if $bean->aclAccess("edit")}
-                {checkTargetModuleAccess assign="access"}
-                {if $access=="true"}
+                'customCode' => '{if $bean->aclAccess("edit","not_set","not_set",$bean->report_module)}
                 <input title="{$APP.LBL_DUPLICATE_BUTTON_TITLE}" accessKey="{$APP.LBL_DUPLICATE_BUTTON_KEY}" class="button" 
                 onclick="var _form = document.getElementById(\'formDetailView\'); _form.return_module.value=\'AOR_Reports\'; 
                 _form.return_action.value=\'DetailView\'; _form.isDuplicate.value=true; _form.action.value=\'EditView\'; 
                 _form.return_id.value=\'{$id}\';SUGAR.ajaxUI.submitForm(_form);" type="button" name="Duplicate" 
                 value="{$APP.LBL_DUPLICATE_BUTTON_LABEL}" id="duplicate_button">
-                {/if}
                 {/if}'
             ),
             array(
-                'customCode' => '{if $bean->aclAccess("delete")}
-                {checkTargetModuleAccess assign="access"}
-                {if $access=="true"}
+                'customCode' => '{if $bean->aclAccess("delete","not_set","not_set",$bean->report_module)}
                 <input title="{$APP.LBL_DELETE_BUTTON_TITLE}" accessKey="{$APP.LBL_DELETE_BUTTON_KEY}" class="button" 
                 onclick="var _form = document.getElementById(\'formDetailView\'); _form.return_module.value=\'AOR_Reports\'; 
                 _form.return_action.value=\'ListView\'; _form.action.value=\'Delete\'; if(confirm(\'{$APP.NTC_DELETE_CONFIRMATION}\')) 
                 SUGAR.ajaxUI.submitForm(_form);" type="submit" name="Delete" value="{$APP.LBL_DELETE_BUTTON_LABEL}" id="delete_button">
-                {/if}
                 {/if}',
             ),
-//            'EDIT',
-//            'DUPLICATE',
-//            'DELETE',
             array (
                 'customCode' => '<input type="button" class="button" id="download_csv_button_old" value="{$MOD.LBL_EXPORT}">',
             ),
