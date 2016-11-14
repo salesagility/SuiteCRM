@@ -406,7 +406,7 @@ var isDetailViewPage = function() {
     return action == 'DetailView';
 };
 
-var refreshBootstrapCheckbox = function(e) {
+var refreshListViewCheckbox = function(e) {
     $(e).removeClass('glyphicon-check');
     $(e).removeClass('glyphicon-unchecked');
     if($(e).next().prop('checked')) {
@@ -619,17 +619,17 @@ $(function () {
                 $('.glyphicon.bootstrap-checkbox').each(function (i, e) {
                     $(e).removeClass('hidden');
                     $(e).next().hide();
-                    refreshBootstrapCheckbox(e);
+                    refreshListViewCheckbox(e);
                     $(e).click(function () {
                         $(this).next().click();
-                        refreshBootstrapCheckbox($(this));
+                        refreshListViewCheckbox($(this));
                     });
                 });
 
                 $('#selectLink > li > ul > li > a, #selectLinkTop > li > ul > li > a, #selectLinkBottom > li > ul > li > a').click(function (e) {
                     e.preventDefault();
                     $('.glyphicon.bootstrap-checkbox').each(function (i, e) {
-                        refreshBootstrapCheckbox(e);
+                        refreshListViewCheckbox(e);
                     });
                 });
 

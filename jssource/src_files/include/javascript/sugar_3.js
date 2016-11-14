@@ -2470,8 +2470,8 @@ sugarListView.prototype.check_entire_list = function(form, field, value, list_co
     sugarListView.prototype.toggleSelected();
 	$('input[name="massall"]').prop('checked', true);
 	$('.glyphicon.bootstrap-checkbox').each(function (i, e) {
-		if(typeof refreshBootstrapCheckbox !== 'undefined') {
-			refreshBootstrapCheckbox(e);
+		if(typeof refreshListViewCheckbox !== 'undefined') {
+			refreshListViewCheckbox(e);
 		}
 	});
 
