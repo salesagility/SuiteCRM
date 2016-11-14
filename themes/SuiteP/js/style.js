@@ -639,4 +639,15 @@ $(function () {
     };
     initializeBootstrapCheckboxes();
 
+    setInterval(function() {
+        $('.subnav').each(function(i,e){
+            if($(e).hasClass('ddopen')) {
+                $(e).closest('.sugar_action_button').addClass('hover');
+            }
+            else {
+                $(e).closest('.sugar_action_button').removeClass('hover');
+            }
+        });
+    }, 100);
+
 });

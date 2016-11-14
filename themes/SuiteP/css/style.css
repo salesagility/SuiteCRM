@@ -8602,7 +8602,25 @@ table.subpanel-table .pagination li.sugar_action_button:hover > form > a,
 table.subpanel-table .pagination .sugar_action_button:hover > form > a,
 table.subpanel-table .pagination .sugar_action_button:hover > form > a,
 table.subpanel-table .pagination a,
-.subpanel-table ul.subnav {
+.subpanel-table ul.subnav,
+
+#actionLinkTop li.sugar_action_button.hover,
+#actionLinkBottom li.sugar_action_button.hover,
+table.subpanel-table li.sugar_action_button.hover,
+.listViewLinkButton li.sugar_action_button.hover,
+#selectLinkTop li.sugar_action_button.hover,
+#selectLinkBottom li.sugar_action_button.hover,
+table.subpanel-table .pagination .sugar_action_button.hover,
+table.subpanel-table .pagination li.sugar_action_button.hover > form > a,
+table.subpanel-table .pagination .sugar_action_button.hover > form > a,
+table.subpanel-table .pagination .sugar_action_button.hover > form > a,
+table.subpanel-table li.sugar_action_button.hover,
+table.subpanel-table .pagination .sugar_action_button.hover,
+table.subpanel-table .pagination li.sugar_action_button.hover > form > a,
+table.subpanel-table .pagination .sugar_action_button.hover > form > a,
+table.subpanel-table .pagination .sugar_action_button.hover > form > a
+
+{
     background-color: #778591;
 }
 
@@ -10967,7 +10985,8 @@ div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination 
     min-width: 32px;
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button:hover {
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button:hover,
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button.hover {
     background-color: #778591;
 }
 
