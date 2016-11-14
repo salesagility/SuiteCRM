@@ -125,7 +125,7 @@
 
             </div>
         </div>
-        <div class="hidden-xs hidden-sm hidden-md hidden-mdlg" id="bs-example-navbar-collapse-1">
+        <div class="hidden-xs hidden-sm hidden-md hidden-mdlg" id="toolbar">
             {if $USE_GROUP_TABS}
                 <ul class="nav navbar-nav">
                     {assign var="groupSelected" value=false}
@@ -436,7 +436,7 @@
         </div>
 
         <!-- Right side of the main navigation -->
-        <div class="mobile-bar" id="bs-example-navbar-collapse-1">
+        <div class="mobile-bar" id="toolbar">
             <div id="globalLinks" class="dropdown nav navbar-nav navbar-right">
 
                 <button id="usermenucollapsed" class="dropdown-toggle btn btn-default " data-toggle="dropdown"
