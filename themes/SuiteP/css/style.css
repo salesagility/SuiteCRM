@@ -509,7 +509,7 @@ img, svg {
     display: inline;
     background-image: url("../../../../themes/SuiteP/images/p_icon_home.png");
     background-repeat: no-repeat;
-    background-position: 0px 35px;
+    background-position: 0px 35.0px;
     text-indent: -9999px;
     overflow: hidden;
     width: 40px; }
@@ -565,7 +565,7 @@ img, svg {
       font-size: 13px;
       height: 90px;
       letter-spacing: 2px;
-      line-height: 95px;
+      line-height: 90px;
       padding: 0 7px 0 7px;
       text-transform: uppercase; }
       .navbar-inverse .nav > .topnav > span.notCurrentTab > a {
@@ -580,6 +580,9 @@ img, svg {
         padding-bottom: 35px; }
   .navbar-inverse .navbar-right .dropdown-menu {
     border-top-left-radius: 3px; }
+
+.navbar {
+  min-height: 90px; }
 
 #mobileheader .dropdown-menu li:last-of-type a {
   border-bottom: none; }
@@ -604,7 +607,7 @@ img, svg {
   z-index: 15030; }
 
 /* fakes the space the icon takes */
-li.topnav > ul > li > ul > li a span.topnav-fake-icon {
+.topnav > ul > li > ul > li a span.topnav-fake-icon {
   display: inline;
   height: 20px; }
 
@@ -781,13 +784,13 @@ li.topnav > ul > li > ul > li a span.topnav-fake-icon {
   height: 20px;
   display: inline-block; }
 
-li.topnav:hover > a {
+.topnav:hover > a {
   border-top: 3px solid #f08377; }
 
-li.topnav a:hover {
+.topnav a:hover {
   color: #f08377; }
 
-li.topnav ul.dropdown-menu li:last-child a {
+.topnav ul.dropdown-menu li:last-child a {
   border-bottom: 0px; }
 
 .navbar-right .dropdown-menu li:last-child a {
@@ -821,9 +824,6 @@ li.topnav ul.dropdown-menu li:last-child a {
   padding: 5px;
   background: #f08377; }
 
-.navbar-inverse .navbar-brand:hover {
-  background-position: 0px -145px; }
-
 li#usermenu a {
   background-color: #534d64;
   padding: 35px 0px 10px 0px;
@@ -831,6 +831,9 @@ li#usermenu a {
 
 li#usermenu a:hover {
   color: #f08377; }
+
+#globalLinks {
+  margin-top: 22.5px; }
 
 #globalLinks ul.user-dropdown li a {
   color: whitesmoke; }
@@ -952,7 +955,6 @@ li#usermenu a:hover span.user_icon {
   background-color: #829eb5; }
 
 #mobilegloballinks {
-  display: none;
   display: inline; }
 
 .navbar-fixed-top {
@@ -1076,7 +1078,7 @@ a[id^=grouptab]:active {
 
 #quickcreatetop {
   float: left;
-  margin-top: 25px;
+  margin-top: 22.5px;
   margin-right: 15px; }
 
 #quickcreatetop a {
@@ -1356,7 +1358,6 @@ a[id^=grouptab]:active {
     background-image: none, url("../../../../themes/SuiteP/images/p_user_icon.svg"), url("../../../../themes/SuiteP/images/p_user_icon.png");
     background-repeat: no-repeat;
     background-position: 0 0;
-    margin-top: 14px;
     border: none;
     margin-left: 0px; }
 
@@ -1492,9 +1493,6 @@ a[id^=grouptab]:active {
     top: 0px;
     left: 0px; }
 
-  #quickcreatetop {
-    margin-top: 25px; }
-
   #quickcreatetop a {
     padding: 11px 32px 12px 12px;
     background-position: 80px 2px; }
@@ -1527,7 +1525,7 @@ a[id^=grouptab]:active {
     float: left;
     width: 44px;
     height: 48px;
-    margin-top: 22px;
+    margin-top: 22.5px;
     margin-right: 10px;
     background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert.svg"), url("../../../../themes/SuiteP/images/p_icon_alert.png");
     background-repeat: no-repeat;
@@ -1556,7 +1554,10 @@ a[id^=grouptab]:active {
     fill: whitesmoke; }
 
   #search #searchbutton {
-    margin: 25px 15px 0 0;
+    margin-top: 22.5px;
+    margin-right: 15px; }
+
+  #search #searchbutton {
     background-color: transparent;
     border: none;
     background-image: url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
@@ -1782,7 +1783,6 @@ a[id^=grouptab]:active {
 
   #globalLinks {
     border: none;
-    margin: 10px 0 0 0;
     padding: 0; }
 
   .navbar-form .form-control {
