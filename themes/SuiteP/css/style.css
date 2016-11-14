@@ -11340,7 +11340,6 @@ replace #columnsFilterDialog prefix to '.modal .modal-dialog' and #columnsFilter
 #delete_listview_bottom > label.hidden-mobile,
 #delete_listview_bottom > label.hidden-desktop {
     margin-bottom: initial;
-    text-transform: uppercase;
     font-size: 12px;
     line-height: 17px;
 }
