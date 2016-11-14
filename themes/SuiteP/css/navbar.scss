@@ -6,13 +6,13 @@
 
   .navbar-brand {
     color: $main-menu-color;
-    height: 90px;
-    line-height: 90px;
+    height: $navbar-height;
+    line-height: $navbar-height;
     padding: 0;
     display: inline;
     background-image: url('../../../../themes/SuiteP/images/p_icon_home.png');
     background-repeat: no-repeat;
-    background-position: 0px 35px;
+    background-position: 0px $home-icon-bg-pos-y;
     text-indent: -9999px;
     overflow: hidden;
     width: 40px;
@@ -91,10 +91,10 @@
       margin: 0;
       font-size: 1.1em;
       font-size: 13px;
-      height: 90px;
+      height: $navbar-height;
       letter-spacing: 2px;
-      line-height: 95px;
-      padding: 0 7px 0 7px;
+      line-height: $navbar-height;
+      padding: 0 ($topnav-padding / 2) 0 ($topnav-padding / 2);
       text-transform: uppercase;
 
       > span.notCurrentTab {
@@ -127,6 +127,11 @@
   }
 }
 
+
+.navbar {
+  min-height: $navbar-height;
+  max-height: $navbar-height;
+}
 //.dropdown-menu em a:hover {
 //  color: #565656;
 //  -webkit-transition: all 0.3s ease-out;
@@ -165,7 +170,7 @@
 }
 
 /* fakes the space the icon takes */
-li.topnav > ul > li > ul > li a span.topnav-fake-icon {
+.topnav > ul > li > ul > li a span.topnav-fake-icon {
   display: inline;
   height: 20px;
 }
@@ -390,15 +395,15 @@ li.topnav > ul > li > ul > li a span.topnav-fake-icon {
 }
 
 
-li.topnav:hover > a {
+.topnav:hover > a {
   border-top: 3px solid $main-menu-hover;
 }
 
-li.topnav a:hover {
+.topnav a:hover {
   color: $main-menu-hover;
 }
 
-li.topnav ul.dropdown-menu li:last-child a {
+.topnav ul.dropdown-menu li:last-child a {
   border-bottom: 0px;
 }
 
@@ -442,16 +447,28 @@ li.topnav ul.dropdown-menu li:last-child a {
 
 
 .navbar-inverse .navbar-brand:hover {
-  background-position: 0px -145px;
+  //background-position: 0px $home-icon-bg-pos-y-over;
 }
+
 li#usermenu a {
   background-color: $main-color;
-  padding: 35px 0px 10px 0px;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
   font-size: 14px;
 }
 
 li#usermenu a:hover {
   color: $main-menu-color-hover;
+}
+
+#globalLinks {
+  margin-top: ($navbar-height / 4);
+}
+
+#globalLinks.globalLinks-desktop {
+  margin-top: ($navbar-height / 4) + ($navbar-height / 6.5);
 }
 
 #globalLinks ul.user-dropdown li a {
@@ -513,13 +530,11 @@ li#usermenu a:hover span.user_icon {
   display: none;
 }
 
-#searchbutton {
-  margin: 10px 5px 0 0;
-}
+
 
 #searchform {
   margin-right: -10px;
-  margin-top: 25px;
+  margin-top: ($navbar-height/4);
   margin-right: 15px;
 }
 
@@ -597,8 +612,18 @@ li#usermenu a:hover span.user_icon {
   background-color: $global-search-btn-bg;
 }
 
+
+#globalLinks ul li a {
+  text-decoration: none;
+}
+
+.globalLinks-desktop ul{
+  top: 90px !important;
+}
+
+
+
 #mobilegloballinks {
-  display: none ;
   display: inline;
 }
 
@@ -768,7 +793,7 @@ a[id^=grouptab]:active {
 
 #quickcreatetop {
   float: left;
-  margin-top: 25px;
+  margin-top: ($navbar-height / 4);
   margin-right: 15px;
 }
 
@@ -801,7 +826,7 @@ a[id^=grouptab]:active {
   background-color: #829EB5;
   border-radius: 3px;
   border-top-right-radius: 0px;
-  padding: 4px 10px 4px 10px;
+
 }
 
 #quickcreatetop ul li {
@@ -1014,7 +1039,7 @@ a[id^=grouptab]:active {
 
 @media (min-width: 768px) and (min-height: 381px) {
   .mobile-bar #globalLinks {
-    height: 90px;
+    height: $navbar-height;
   }
 
   .mobile-bar ul.dropdown-menu.user-dropdown{
@@ -1026,7 +1051,7 @@ a[id^=grouptab]:active {
 
 @media (min-width: 768px) and (min-height: 381px) {
   .mobile-bar #globalLinks {
-    height: 90px;
+    height: $navbar-height;
   }
   .mobile-bar ul.dropdown-menu.user-dropdown{
     top: 78px ;
@@ -1037,8 +1062,8 @@ a[id^=grouptab]:active {
 @media (max-width: 1560px) {
 
   .navbar-fixed-top {
-    height: 90px;
-    max-height: 90px;
+    height: $navbar-height;
+    max-height:$navbar-height;
   }
 
   #searchform {
@@ -1109,7 +1134,6 @@ a[id^=grouptab]:active {
     background-image: none, url("../../../../themes/SuiteP/images/p_user_icon.svg"), url("../../../../themes/SuiteP/images/p_user_icon.png");
     background-repeat: no-repeat;
     background-position: 0 0;
-    margin-top: 14px;
     border: none;
     margin-left: 0px;
   }
@@ -1222,12 +1246,14 @@ a[id^=grouptab]:active {
     background-position: 0 0;
   }
 
-
+  #globalLinks,
+  #desktop_notifications, #desktop_notifications:hover {
+    margin-top: 9px;
+  }
   #desktop_notifications, #desktop_notifications:hover {
     float: left;
     width: 28px;
     height: 28px;
-    margin-top: 9px;
     margin-right: 20px;
     background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert_small.svg"), url("../../../../themes/SuiteP/images/p_icon_alert_small.png");
     background-repeat: no-repeat;
@@ -1237,22 +1263,22 @@ a[id^=grouptab]:active {
 
 @media (min-width: 750px) {
   .modulename {
-    line-height: 90px;
+    line-height: $navbar-height;
   }
 
   .navbar-toggle {
-    height: 90px;
+    height: $navbar-height;
   }
 
   #mobile_menu {
-    top: 90px;
+    top: $navbar-height;
     left: 10px;
     -webkit-overflow-scrolling: touch;
   }
 
   #search .dropdown-menu {
     position: absolute;
-    top: 14px;
+    top: 12px;
     right:  0;
     bottom: auto;
     left: -224px;
@@ -1279,9 +1305,6 @@ a[id^=grouptab]:active {
     left: 0px;
   }
 
-  #quickcreatetop {
-    margin-top: 25px;
-  }
 
   #quickcreatetop a {
     padding: 11px 32px 12px 12px;
@@ -1322,7 +1345,7 @@ a[id^=grouptab]:active {
     float: left;
     width: 44px;
     height: 48px;
-    margin-top: 22px;
+    margin-top: ($navbar-height / 4);
     margin-right: 10px;
     background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert.svg"), url("../../../../themes/SuiteP/images/p_icon_alert.png");
     background-repeat: no-repeat;
@@ -1339,7 +1362,6 @@ a[id^=grouptab]:active {
 
 
   #search.open #searchbutton {
-    margin: 25px 15px 0 0;
     background-color: transparent;
     border: none;
     background-image: url("../../../../themes/SuiteP/images/sidebar/modules/search-close.svg");
@@ -1357,7 +1379,11 @@ a[id^=grouptab]:active {
   }
 
   #search #searchbutton {
-    margin: 25px 15px 0 0;
+    margin-top: ($navbar-height / 4);
+    margin-right: 15px;
+  }
+
+  #search #searchbutton {
     background-color: transparent;
     border: none;
     background-image: url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
@@ -1475,8 +1501,8 @@ a[id^=grouptab]:active {
 
   #toolbar {
     display: block;
-    margin-top: -90px;
-    height: 48px;
+    margin-top: -$navbar-height;
+    height: $navbar-toolbar-height;
   }
 }
 
@@ -1502,7 +1528,7 @@ a[id^=grouptab]:active {
   }
 
   .navbar {
-    min-height: 60px ;
+    min-height: 60px;
   }
 
   .navbar-inverse {
@@ -1581,10 +1607,7 @@ a[id^=grouptab]:active {
   #mobilegloballinks {
     display: inline;
   }
-}
 
-
-@media  (max-width: 750px) {
   #searchmobile {
     float: left;
     z-index: 50 ;
@@ -1594,13 +1617,13 @@ a[id^=grouptab]:active {
   }
 
   #searchmobile #query_string {
-    width: 80% ;
-    outline: 0 ;
-    border: none ;
-    border-radius: 0 ;
-    color: $main-menu-color ;
-    -webkit-appearance: none ;
-    box-shadow: none ;
+    width: 80%;
+    outline: 0;
+    border: none;
+    border-radius: 0;
+    color: $main-menu-color;
+    -webkit-appearance: none;
+    box-shadow: none;
     float: left;
   }
 
@@ -1660,7 +1683,6 @@ a[id^=grouptab]:active {
 
   #globalLinks {
     border: none;
-    margin: 10px 0 0 0;
     padding: 0;
   }
 

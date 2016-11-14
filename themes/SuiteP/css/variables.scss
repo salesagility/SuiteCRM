@@ -64,3 +64,10 @@ $xs-breakpoint: 750px;
 $sm-breakpoint: 768px;
 $md-breakpoint: 992px;
 $lg-breakpoint: 1130px;
+
+
+$navbar-height: 90px;/* 90px normal or 72px small*/
+$navbar-mobile-height: 60px;
+$navbar-toolbar-height: 48px;
+$topnav-padding: 14px; /* 14px normal or 8px small */
+$home-icon-bg-pos-y:  ($navbar-height / 2.571428571);
