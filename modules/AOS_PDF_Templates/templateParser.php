@@ -52,7 +52,7 @@ class templateParser
 
     function parse_template_bean($string, $key, &$focus)
     {
-        global $app_strings;
+        global $app_strings, $sugar_config;
         $repl_arr = array();
 
         foreach ($focus->field_defs as $field_def) {
@@ -68,8 +68,17 @@ class templateParser
                 else if ($field_def['type'] == 'int') {
                     $repl_arr[$key . "_" . $fieldName] = strval($focus->$fieldName);
                 } else if ($field_def['type'] == 'image') {
-                    $link = str_replace('index.php?entryPoint=generatePdf', '', "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]") . 'upload/' . $focus->id .  '_' . $fieldName;
-                    $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="50" height="50"/>';
+                    $secureLink = $sugar_config['site_url'] . '/' . "public/". $focus->id .  '_' . $fieldName;
+                    $file_location = $sugar_config['upload_dir'] . '/'  . $focus->id .  '_' . $fieldName;
+                    // create a copy with correct extension by mime type
+                    if(!file_exists('public')) {
+                        sugar_mkdir('public', 0777);
+                    }
+                    if(!copy($file_location, "public/{$focus->id}".  '_' . "$fieldName")) {
+                        $secureLink = $sugar_config['site_url'] . '/'. $file_location;
+                    }
+                    $link = $secureLink;
+                    $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="'.$field_def['width'].'" height="'.$field_def['height'].'"/>';
                 } else {
                     $repl_arr[$key . "_" . $fieldName] = $focus->$fieldName;
                 }
