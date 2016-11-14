@@ -11216,7 +11216,6 @@ div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[
 #delete_listview_bottom > label.hidden-mobile,
 #delete_listview_bottom > label.hidden-desktop {
     margin-bottom: initial;
-    text-transform: uppercase;
     font-size: 12px;
     line-height: 17px;
 }
