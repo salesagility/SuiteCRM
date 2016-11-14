@@ -380,8 +380,8 @@ class Task extends SugarBean {
 			//parent_name_owner not being set for whatever reason so we need to figure this out
 			else if(!empty($this->parent_type) && !empty($this->parent_id)) {
 				global $current_user;
-                $parent_bean = BeanFactory::getBean($this->parent_type,$this->parent_id);
-                if($parent_bean !== false) {
+                $parent_bean = $this->getParent();
+                if ($parent_bean !== false && $parent_bean !== null) {
                 	$is_owner = $current_user->id == $parent_bean->assigned_user_id;
                 }
 			}
@@ -450,4 +450,15 @@ class Task extends SugarBean {
         return '';
     }
 
+    /**
+     * @return null|SugarBean
+     */
+    public function getParent()
+    {
+        if ($this->parent_type === null || $this->parent_id === null) {
+            return null;
+        }
+
+        return BeanFactory::getBean($this->parent_type, $this->parent_id);
+    }
 }
