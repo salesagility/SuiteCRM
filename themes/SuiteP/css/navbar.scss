@@ -94,7 +94,7 @@
       height: $navbar-height;
       letter-spacing: 2px;
       line-height: $navbar-height;
-      padding: 0 7px 0 7px;
+      padding: 0 ($topnav-padding / 2) 0 ($topnav-padding / 2);
       text-transform: uppercase;
 
       > span.notCurrentTab {
@@ -130,6 +130,7 @@
 
 .navbar {
   min-height: $navbar-height;
+  max-height: $navbar-height;
 }
 //.dropdown-menu em a:hover {
 //  color: #565656;
@@ -451,7 +452,10 @@
 
 li#usermenu a {
   background-color: $main-color;
-  padding: 35px 0px 10px 0px;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
   font-size: 14px;
 }
 
@@ -461,6 +465,10 @@ li#usermenu a:hover {
 
 #globalLinks {
   margin-top: ($navbar-height / 4);
+}
+
+#globalLinks.globalLinks-desktop {
+  margin-top: ($navbar-height / 4) + ($navbar-height / 6.5);
 }
 
 #globalLinks ul.user-dropdown li a {
@@ -522,13 +530,11 @@ li#usermenu a:hover span.user_icon {
   display: none;
 }
 
-#searchbutton {
-  margin: 10px 5px 0 0;
-}
+
 
 #searchform {
   margin-right: -10px;
-  margin-top: 25px;
+  margin-top: ($navbar-height/4);
   margin-right: 15px;
 }
 
@@ -605,6 +611,17 @@ li#usermenu a:hover span.user_icon {
   background-position: 14px -46px;
   background-color: $global-search-btn-bg;
 }
+
+
+#globalLinks ul li a {
+  text-decoration: none;
+}
+
+.globalLinks-desktop ul{
+  top: 90px !important;
+}
+
+
 
 #mobilegloballinks {
   display: inline;
@@ -809,7 +826,7 @@ a[id^=grouptab]:active {
   background-color: #829EB5;
   border-radius: 3px;
   border-top-right-radius: 0px;
-  padding: 4px 10px 4px 10px;
+
 }
 
 #quickcreatetop ul li {
@@ -1229,12 +1246,14 @@ a[id^=grouptab]:active {
     background-position: 0 0;
   }
 
-
+  #globalLinks,
+  #desktop_notifications, #desktop_notifications:hover {
+    margin-top: 9px;
+  }
   #desktop_notifications, #desktop_notifications:hover {
     float: left;
     width: 28px;
     height: 28px;
-    margin-top: 9px;
     margin-right: 20px;
     background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert_small.svg"), url("../../../../themes/SuiteP/images/p_icon_alert_small.png");
     background-repeat: no-repeat;
@@ -1259,7 +1278,7 @@ a[id^=grouptab]:active {
 
   #search .dropdown-menu {
     position: absolute;
-    top: 14px;
+    top: 12px;
     right:  0;
     bottom: auto;
     left: -224px;
@@ -1343,7 +1362,6 @@ a[id^=grouptab]:active {
 
 
   #search.open #searchbutton {
-    margin: 25px 15px 0 0;
     background-color: transparent;
     border: none;
     background-image: url("../../../../themes/SuiteP/images/sidebar/modules/search-close.svg");
@@ -1484,7 +1502,7 @@ a[id^=grouptab]:active {
   #toolbar {
     display: block;
     margin-top: -$navbar-height;
-    height: 48px;
+    height: $navbar-toolbar-height;
   }
 }
 
@@ -1589,10 +1607,7 @@ a[id^=grouptab]:active {
   #mobilegloballinks {
     display: inline;
   }
-}
 
-
-@media  (max-width: 750px) {
   #searchmobile {
     float: left;
     z-index: 50 ;

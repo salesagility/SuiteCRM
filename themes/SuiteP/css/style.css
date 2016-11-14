@@ -1,5 +1,7 @@
 /**Style**/
 /*** MAIN ***/
+/* 90px normal or 72px small*/
+/* 14px normal or 8px small */
 html {
   height: 100%; }
 
@@ -22,6 +24,8 @@ img, svg {
   height: auto; }
 
 /**** SIDEBAR ****/
+/* 90px normal or 72px small*/
+/* 14px normal or 8px small */
 .sidebar {
   position: fixed;
   top: 90px;
@@ -499,6 +503,8 @@ img, svg {
     float: left;
     width: 100%; } }
 /**** NAVBAR ****/
+/* 90px normal or 72px small*/
+/* 14px normal or 8px small */
 .navbar-inverse {
   background: #534d64; }
   .navbar-inverse .navbar-brand {
@@ -582,7 +588,8 @@ img, svg {
     border-top-left-radius: 3px; }
 
 .navbar {
-  min-height: 90px; }
+  min-height: 90px;
+  max-height: 90px; }
 
 #mobileheader .dropdown-menu li:last-of-type a {
   border-bottom: none; }
@@ -826,7 +833,10 @@ img, svg {
 
 li#usermenu a {
   background-color: #534d64;
-  padding: 35px 0px 10px 0px;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
   font-size: 14px; }
 
 li#usermenu a:hover {
@@ -834,6 +844,9 @@ li#usermenu a:hover {
 
 #globalLinks {
   margin-top: 22.5px; }
+
+#globalLinks.globalLinks-desktop {
+  margin-top: 36.34615px; }
 
 #globalLinks ul.user-dropdown li a {
   color: whitesmoke; }
@@ -882,12 +895,9 @@ li#usermenu a:hover span.user_icon {
   margin-top: 8px;
   display: none; }
 
-#searchbutton {
-  margin: 10px 5px 0 0; }
-
 #searchform {
   margin-right: -10px;
-  margin-top: 25px;
+  margin-top: 22.5px;
   margin-right: 15px; }
 
 #search_form label {
@@ -953,6 +963,12 @@ li#usermenu a:hover span.user_icon {
 #searchform button:hover {
   background-position: 14px -46px;
   background-color: #829eb5; }
+
+#globalLinks ul li a {
+  text-decoration: none; }
+
+.globalLinks-desktop ul {
+  top: 90px !important; }
 
 #mobilegloballinks {
   display: inline; }
@@ -1107,8 +1123,7 @@ a[id^=grouptab]:active {
 #quickcreatetop ul.dropdown-menu {
   background-color: #829EB5;
   border-radius: 3px;
-  border-top-right-radius: 0px;
-  padding: 4px 10px 4px 10px; }
+  border-top-right-radius: 0px; }
 
 #quickcreatetop ul li {
   padding: 0;
@@ -1449,11 +1464,14 @@ a[id^=grouptab]:active {
     background-repeat: no-repeat;
     background-position: 0 0; }
 
+  #globalLinks,
+  #desktop_notifications, #desktop_notifications:hover {
+    margin-top: 9px; }
+
   #desktop_notifications, #desktop_notifications:hover {
     float: left;
     width: 28px;
     height: 28px;
-    margin-top: 9px;
     margin-right: 20px;
     background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert_small.svg"), url("../../../../themes/SuiteP/images/p_icon_alert_small.png");
     background-repeat: no-repeat;
@@ -1472,7 +1490,7 @@ a[id^=grouptab]:active {
 
   #search .dropdown-menu {
     position: absolute;
-    top: 14px;
+    top: 12px;
     right: 0;
     bottom: auto;
     left: -224px;
@@ -1538,7 +1556,6 @@ a[id^=grouptab]:active {
     margin-right: 8px; }
 
   #search.open #searchbutton {
-    margin: 25px 15px 0 0;
     background-color: transparent;
     border: none;
     background-image: url("../../../../themes/SuiteP/images/sidebar/modules/search-close.svg");
@@ -1729,8 +1746,8 @@ a[id^=grouptab]:active {
     float: left; }
 
   #mobilegloballinks {
-    display: inline; } }
-@media (max-width: 750px) {
+    display: inline; }
+
   #searchmobile {
     float: left;
     z-index: 50;
@@ -2079,6 +2096,8 @@ ul.dropdown-menu {
     max-height: inherit;
     height: auto; } }
 /**** LOGIN **/
+/* 90px normal or 72px small*/
+/* 14px normal or 8px small */
 div.p_login {
   background-color: whitesmoke;
   height: 100%; }
@@ -2198,6 +2217,8 @@ div.p_login #loginform #bigbutton:hover {
   div.p_login .p_login_bottom a#admin_options {
     margin-bottom: 5px; } }
 /**** FORM ****/
+/* 90px normal or 72px small*/
+/* 14px normal or 8px small */
 fieldset, table, pre {
   margin-bottom: 0; }
 
@@ -2267,6 +2288,8 @@ input[type=text]:disabled {
   border: 1px solid #e2e7eb;
   background: #f8f8f8; }
 
+/* 90px normal or 72px small*/
+/* 14px normal or 8px small */
 #ajaxHeader {
   float: left; }
 
@@ -5367,15 +5390,6 @@ a:link {
 iframe.teamNoticeBox {
   width: 100%;
   overflow: auto; }
-
-#globalLinks ul li a {
-  text-decoration: none; }
-
-.globalLinks-desktop ul {
-  top: 90px !important; }
-
-.globalLinks-desktop #usermenu {
-  height: 90px; }
 
 .iconed {
   padding: 5px 5px 2px 0;
