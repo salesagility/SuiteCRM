@@ -643,9 +643,13 @@ $(function () {
         $('.subnav').each(function(i,e){
             if($(e).hasClass('ddopen')) {
                 $(e).closest('.sugar_action_button').addClass('hover');
+                if(!$(e).hasClass('upper')) {
+                    $(e).closest('.sugar_action_button').addClass('opened');
+                }
             }
             else {
                 $(e).closest('.sugar_action_button').removeClass('hover');
+                $(e).closest('.sugar_action_button').removeClass('opened');
             }
         });
     }, 100);

@@ -1755,7 +1755,7 @@ table#mass_update_table td select {
 
 #actionLinkTop,
 #actionLinkBottom {
-    font-size: 14px;
+    font-size: 11px;
     min-height: 16px;
     line-height: 11px;
     position: relative;
@@ -1850,8 +1850,8 @@ table#mass_update_table td select {
 #actionLinkBottom .sugar_action_button .subnav.ddopen a:hover,
 #actionLinkTop .sugar_action_button .subnav.ddopen li a.menuItemHilite,
 #actionLinkBottom .sugar_action_button .subnav.ddopen li a.menuItemHilite {
-    background-color: #677785 !important;
-    width: 100% !important;
+    background-color: #7B8A96 !important;
+    width: 83% !important;
 }
 
 #actionLinkTop .sugar_action_button .subnav.ddopen,
@@ -1863,13 +1863,15 @@ table#mass_update_table td select {
     margin: 0 !important;
     padding: 0 !important;
     border: 0 !important;
+    left: -1px;
 }
 
 #actionLinkTop .sugar_action_button .subnav li a,
 #actionLinkBottom .sugar_action_button .subnav li a,
 #actionLinkTop .sugar_action_button .subnav.ddopen li a,
 #actionLinkBottom .sugar_action_button .subnav.ddopen li a {
-    padding: 5px 15px !important;
+    margin: 5px 15px !important;
+    border-bottom: 2px solid #93a0ab !important;
 }
 
 #actionLinkTop li.sugar_action_button,
@@ -1879,6 +1881,12 @@ table#mass_update_table td select {
 #actionLinkBottom .menuItemHilite {
     background-color: #7b8a96;
 
+}
+
+#actionLinkTop .sugar_action_button .subnav.ddopen a:hover,
+#actionLinkBottom .sugar_action_button .subnav.ddopen a:hover {
+    width: 83% !important;
+    font-size: 11px;
 }
 
 #selectLinkTop>.sugar_action_button>ul.subnav a:hover,
@@ -1898,6 +1906,7 @@ table#mass_update_table td select {
 #selectLinkBottom>.sugar_action_button>ul.subnav {
     padding: 0 !important;
     width: auto;
+    left: -1px;
 }
 
 #actionLinkTop>.sugar_action_button>ul.subnav,
@@ -4130,6 +4139,7 @@ ul.clickMenu > li > span {
 #selectLinkBottom, #selectLinkBottom .sugar_action_button,
 #selectLinkTop, #selectLinkTop .selectActionsDisabled {
     min-width: 32px;
+    margin-left: 8px;
 }
 ul.clickMenu li span.subhover {
     cursor: pointer;
@@ -4147,8 +4157,7 @@ ul.SugarActionMenuIESub {
     float: left;
     width: auto;
     border: 1px solid transparent;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+    border-radius: 4px;
     padding: 8px 0;
     z-index: 10;
     overflow: hidden;
@@ -11235,8 +11244,9 @@ div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[
 #delete_listview_bottom > label.hidden-mobile,
 #delete_listview_bottom > label.hidden-desktop {
     margin-bottom: initial;
-    font-size: 12px;
+    font-size: 10.2px;
     line-height: 17px;
+    letter-spacing: 1.2px;
 }
 
 #delete_listview_top > label.hidden-mobile,
@@ -11305,4 +11315,17 @@ div#content div#pagecontent form#MassUpdate > div.list-view-rounded-corners > ta
 div#content div#pagecontent form#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.evenListRowS1 > td {
     padding-top: 15px;
     padding-bottom: 12px;
+}
+
+#actionLinkTop li.sugar_action_button ul.subnav.ddopen > li:last-child a,
+#actionLinkBottom li.sugar_action_button ul.subnav.ddopen > li:last-child a {
+    border-bottom: none !important;
+}
+
+
+li.sugar_action_button.hover.opened {
+    position: relative;
+    height: 40px;
+    top: 13px;
+    margin-top: -13px;
 }
