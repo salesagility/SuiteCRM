@@ -617,17 +617,17 @@ li#usermenu a:hover span.user_icon {
   text-decoration: none;
 }
 
-.globalLinks-desktop ul{
-  top: 90px !important;
+.globalLinks-desktop .user-dropdown {
+  top: 100%;
 }
 
-
+.dropdown-menu {
+  top:100%
+}
 
 #mobilegloballinks {
   display: inline;
 }
-
-
 
 .navbar-fixed-top {
   border: 0;
@@ -1027,35 +1027,29 @@ a[id^=grouptab]:active {
     background-color: $main-menu-bg;
     line-height: 20px;
   }
+  .mobile-bar .user-dropdown{
+    top: ($navbar-height/3);
+    left: -140px ;
+  }
 }
 
 .mobile-bar ul.dropdown-menu.user-dropdown{
-  left: -140px ;
+  left: -140px;
 }
 
 #modulelinks > ul.dropdown-menu {
-  left: 50px ;
+  left: 50px;
 }
 
 @media (min-width: 768px) and (min-height: 381px) {
   .mobile-bar #globalLinks {
     height: $navbar-height;
   }
-
-  .mobile-bar ul.dropdown-menu.user-dropdown{
-    top: 78px ;
-    left: -140px ;
-  }
-
 }
 
 @media (min-width: 768px) and (min-height: 381px) {
   .mobile-bar #globalLinks {
     height: $navbar-height;
-  }
-  .mobile-bar ul.dropdown-menu.user-dropdown{
-    top: 78px ;
-    left: -140px ;
   }
 }
 
@@ -1109,8 +1103,6 @@ a[id^=grouptab]:active {
 
   #search > .dropdown-menu {
     background-color: transparent;
-    padding-top: 10px;
-    padding-bottom: 10px;
     width: 200px;
   }
 
@@ -1276,9 +1268,14 @@ a[id^=grouptab]:active {
     -webkit-overflow-scrolling: touch;
   }
 
+  .mobile-bar .user-dropdown{
+    top: ($navbar-height/2) + ($navbar-height/4);
+    left: -140px ;
+  }
+
   #search .dropdown-menu {
     position: absolute;
-    top: 12px;
+    top: ($navbar-height / 5.5);
     right:  0;
     bottom: auto;
     left: -224px;
@@ -1706,7 +1703,6 @@ a[id^=grouptab]:active {
 
   #search .dropdown-menu {
     background-color: transparent;
-    padding: 10px;
     /*top: 14px;*/
     /*right: 6px;*/
   }

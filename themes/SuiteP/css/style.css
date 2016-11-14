@@ -967,8 +967,11 @@ li#usermenu a:hover span.user_icon {
 #globalLinks ul li a {
   text-decoration: none; }
 
-.globalLinks-desktop ul {
-  top: 90px !important; }
+.globalLinks-desktop .user-dropdown {
+  top: 100%; }
+
+.dropdown-menu {
+  top: 100%; }
 
 #mobilegloballinks {
   display: inline; }
@@ -1289,7 +1292,11 @@ a[id^=grouptab]:active {
 
   #desktop_notifications div.has-alerts h4 {
     background-color: #5d5670;
-    line-height: 20px; } }
+    line-height: 20px; }
+
+  .mobile-bar .user-dropdown {
+    top: 30px;
+    left: -140px; } }
 .mobile-bar ul.dropdown-menu.user-dropdown {
   left: -140px; }
 
@@ -1298,18 +1305,10 @@ a[id^=grouptab]:active {
 
 @media (min-width: 768px) and (min-height: 381px) {
   .mobile-bar #globalLinks {
-    height: 90px; }
-
-  .mobile-bar ul.dropdown-menu.user-dropdown {
-    top: 78px;
-    left: -140px; } }
+    height: 90px; } }
 @media (min-width: 768px) and (min-height: 381px) {
   .mobile-bar #globalLinks {
-    height: 90px; }
-
-  .mobile-bar ul.dropdown-menu.user-dropdown {
-    top: 78px;
-    left: -140px; } }
+    height: 90px; } }
 @media (max-width: 1560px) {
   .navbar-fixed-top {
     height: 90px;
@@ -1350,8 +1349,6 @@ a[id^=grouptab]:active {
 
   #search > .dropdown-menu {
     background-color: transparent;
-    padding-top: 10px;
-    padding-bottom: 10px;
     width: 200px; }
 
   #search #query_string {
@@ -1488,9 +1485,13 @@ a[id^=grouptab]:active {
     left: 10px;
     -webkit-overflow-scrolling: touch; }
 
+  .mobile-bar .user-dropdown {
+    top: 67.5px;
+    left: -140px; }
+
   #search .dropdown-menu {
     position: absolute;
-    top: 12px;
+    top: 16.36364px;
     right: 0;
     bottom: auto;
     left: -224px;
@@ -1816,7 +1817,6 @@ a[id^=grouptab]:active {
 
   #search .dropdown-menu {
     background-color: transparent;
-    padding: 10px;
     /*top: 14px;*/
     /*right: 6px;*/ }
 
