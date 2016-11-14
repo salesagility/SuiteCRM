@@ -1757,7 +1757,7 @@ table#mass_update_table td select {
 #actionLinkBottom {
     font-size: 11px;
     min-height: 16px;
-    line-height: 11px;
+    line-height: 8px;
     position: relative;
 }
 
@@ -1790,6 +1790,7 @@ table#mass_update_table td select {
     padding: 4px 10px 4px 10px;
     top: -1px;
     position: relative;
+    height: 27px;
 }
 
 #detail_header_action_menu > .sugar_action_button > ul.subnav,
@@ -1934,6 +1935,16 @@ table#mass_update_table td select {
 #selectLinkTop > .sugar_action_button > ul.subnav a,
 #actionLinkBottom > .sugar_action_button > ul.subnav a {
     color: #ffffff;
+    width: 83%;
+}
+#selectLinkTop > .sugar_action_button > ul.subnav a.menuItem,
+#actionLinkBottom > .sugar_action_button > ul.subnav a.menuItem,
+#selectLinkTop > .sugar_action_button > ul.subnav a.menuItem:hover,
+#actionLinkBottom > .sugar_action_button > ul.subnav a.menuItem:hover,
+#selectLinkTop > .sugar_action_button > ul.subnav a.menuItemHilite,
+#actionLinkBottom > .sugar_action_button > ul.subnav a.menuItemHilite,
+#selectLinkTop > .sugar_action_button > ul.subnav a.menuItemHilite:hover,
+#actionLinkBottom > .sugar_action_button > ul.subnav a.menuItemHilite:hover {
     width: 100%;
 }
 
@@ -4316,7 +4327,7 @@ ul#detailViewActions.clickMenu {
     padding: 1px !important;
     font-weight: normal;
     font-size: 14px;
-    top: -1px;
+    top: 2px;
     position: relative;
 }
 
