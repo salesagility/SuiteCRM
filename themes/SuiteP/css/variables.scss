@@ -5,6 +5,9 @@ $page-font-size: 13px;
 $main-color: #534D64;
 $global-search-color: #A2A5AF;
 $default-btn-color: #F5F5F5;
+$alert-body-color: #000000;
+$global-search-text-color: #A2A5AF;
+$global-search-color: #817D8D;
 $primary: #778591;
 $danger: #F08377;
 $success: #66996B;
@@ -17,7 +20,15 @@ $main-alternate-bg: #FFFFFF;
 
 $navbar-bg: #534D64;
 $main-menu-bg: #5D5670;
+$toolbar-bg: #A2B2BF;
 $global-search-bg: #65697A;
+$global-search-btn-bg: #829EB5;
+$quick-create-mobile-btn-bg: #A2B2BF;
+$quick-create-btn-bg: #A2B2BF;
+$quick-create-menu-bg: #829EB5;
+$quick-create-btn-bg-hover: $quick-create-menu-bg;
+$main-menu-hover: #F08377;
+$alert-count-bg: #F08377;
 
 $sidebar-bg: #778591;
 $sidebar-btn-bg: #94A6B5;
@@ -34,6 +45,7 @@ $danger-btn-bg: $danger;
 $danger-btn-bg-hover: #D66C60;
 $success-btn-bg: $success;
 $success-btn-bg-hover: #6EA674;
+
 
 $footer-btn-bg: #E6E6E6;
 
