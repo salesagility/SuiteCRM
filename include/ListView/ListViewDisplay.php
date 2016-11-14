@@ -418,7 +418,7 @@ class ListViewDisplay {
 	 */
 	protected function buildBulkActionButton($loc = 'top') {
 		global $app_strings;
-		return "<a href='javascript:void(0)' id=\"delete_listview_". $loc ."\" onclick=\"return false;\"><label class=\"hidden-mobile\">{$app_strings['LBL_BULK_ACTION_BUTTON_LABEL_MOBILE']}</label><label class=\"hidden-desktop\">{$app_strings['LBL_BULK_ACTION_BUTTON_LABEL']}</label></a>";
+		return "<a href='javascript:void(0)' id=\"delete_listview_". $loc ."\" onclick=\"return false;\" class=\"parent-dropdown-handler\"><label class=\"hidden-mobile\">{$app_strings['LBL_BULK_ACTION_BUTTON_LABEL_MOBILE']}</label><label class=\"hidden-desktop\">{$app_strings['LBL_BULK_ACTION_BUTTON_LABEL']}</label></a>";
 	}
 
 	/**
