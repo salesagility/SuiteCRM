@@ -406,6 +406,21 @@ var isDetailViewPage = function() {
     return action == 'DetailView';
 };
 
+var refreshBootstrapCheckbox = function(e) {
+    $(e).removeClass('glyphicon-check');
+    $(e).removeClass('glyphicon-unchecked');
+    if($(e).next().prop('checked')) {
+        $(e).addClass('glyphicon-check');
+    }
+    else {
+        $(e).addClass('glyphicon-unchecked');
+    }
+    $(e).removeClass('disabled')
+    if($(e).next().prop('disabled')) {
+        $(e).addClass('disabled')
+    }
+};
+
 $(function () {
     if(isUserProfilePage()) {
 
@@ -592,22 +607,6 @@ $(function () {
     setTimeout(function(){
         hideEmptyFormCellsOnTablet();
     }, 1500);
-
-
-    var refreshBootstrapCheckbox = function(e) {
-        $(e).removeClass('glyphicon-check');
-        $(e).removeClass('glyphicon-unchecked');
-        if($(e).next().prop('checked')) {
-            $(e).addClass('glyphicon-check');
-        }
-        else {
-            $(e).addClass('glyphicon-unchecked');
-        }
-        $(e).removeClass('disabled')
-        if($(e).next().prop('disabled')) {
-            $(e).addClass('disabled')
-        }
-    };
 
     var bootstrapCheckboxesInitialized = false;
     var initializeBootstrapCheckboxes = function() {
