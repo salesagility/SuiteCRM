@@ -80,7 +80,7 @@ function duplicate_check($db, $text, $date)
 function check_auth($url)
 {
 
-    $url = $url . "/include/social/twitter/twitter_auth/callback.php";
+    $url = $url . "/index.php?entryPoint=twitter_callback";
 
     $config = '';
 

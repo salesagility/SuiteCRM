@@ -5,7 +5,7 @@
  * Verify credentials and redirect to based on response from Twitter.
  */
 
-include_once('../../../../../config.php');
+include_once('../../../../config.php');
 
 global $sugar_config;
 
