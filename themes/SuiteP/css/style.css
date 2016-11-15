@@ -4356,6 +4356,8 @@ ul#detailViewActions.clickMenu {
     font-weight: normal;
 }
 
+
+
 .quickcreate {
     margin: 5px;
     padding: 5px 7px 5px 7px;
@@ -8595,6 +8597,10 @@ table.subpanel-table ul.subpanel {
     background-color: transparent !important;
     border-color: transparent !important;
     border: none;
+}
+
+.sugar_action_button {
+    height: 27px;
 }
 
 .sugar_action_button a {
