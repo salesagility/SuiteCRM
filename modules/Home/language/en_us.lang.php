@@ -57,7 +57,6 @@ $mod_strings  = array(
     'LBL_PIPELINE_FORM_TITLE' => 'Pipeline By Sales Stage',
     'LBL_RGraph_PIPELINE_FORM_TITLE' => 'Pipeline By Sales Stage',
     'LBL_CAMPAIGN_ROI_FORM_TITLE' => 'Campaign ROI',
-    'LBL_MY_CLOSED_OPPORTUNITIES_GAUGE' => 'My Closed Won Opportunities Gauge',
     'LNK_NEW_CONTACT' => 'Create Contact',
     'LNK_NEW_ACCOUNT' => 'Create Account',
     'LNK_NEW_OPPORTUNITY' => 'Create Opportunity',
@@ -71,7 +70,6 @@ $mod_strings  = array(
     'LNK_NEW_TASK' => 'Create Task',
     'LNK_NEW_BUG' => 'Report Bug',
     'LBL_ADD_BUSINESSCARD' => 'Enter Business Card',
-    'ERR_ONE_CHAR' => 'Please enter at least one letter or number for your search ...',
     'LBL_OPEN_TASKS' => 'My Open Tasks',
     'LBL_SEARCH_RESULTS_IN' => 'in',
     'LNK_NEW_SEND_EMAIL' => 'Compose Email',
@@ -139,8 +137,6 @@ $mod_strings  = array(
     'LBL_DASHLET_REFRESH' => 'Refresh SuiteCRM Dashlet',
     'LBL_DASHLET_EDIT' => 'Edit SuiteCRM Dashlet',
 
-    'LBL_TRAINING_TITLE' => 'Training',
-
     'LBL_CREATING_NEW_PAGE' => 'Creating New Page...',
     'LBL_NEW_PAGE_FEEDBACK' => 'You have created a new page. You can add new content with the Add SuiteCRM Dashlets option.',
     'LBL_DELETE_PAGE_CONFIRM' => 'Are you sure you want to delete this page?',
@@ -148,32 +144,18 @@ $mod_strings  = array(
     'LBL_RETRIEVING_PAGE' => 'Retrieving Page...',
 
     // Default out-of-box names for tabs
-    'LBL_HOME_PAGE_1_NAME' => 'My SuiteCRM',
-    'LBL_HOME_PAGE_2_NAME' => 'Sales',
-    'LBL_HOME_PAGE_3_NAME' => 'Support',
-    'LBL_HOME_PAGE_6_NAME' => 'Marketing',//bug 16510, separate the support and marketing page from each other
-    'LBL_HOME_PAGE_4_NAME' => 'Tracker',
     'LBL_CLOSE_SITEMAP' => 'Close',
 
     'LBL_SEARCH' => 'Search',
     'LBL_CLEAR' => 'Clear',
 
     'LBL_BASIC_CHARTS' => 'Basic Charts',
-    'LBL_REPORT_CHARTS' => 'Report Charts',
-
-    'LBL_MY_FAVORITE_REPORT_CHARTS' => 'My Favorite Reports',
-    'LBL_GLOBAL_REPORT_CHARTS' => 'Global Team Reports',
-    'LBL_MY_TEAM_REPORT_CHARTS' => 'My Team Reports',
-    'LBL_MY_SAVED_REPORT_CHARTS' => 'My Saved Reports',
-
     'LBL_DASHLET_SEARCH' => 'Find SuiteCRM Dashlet',
 
 //ABOUT page
     'LBL_VERSION' => 'Version',
     'LBL_BUILD' => 'Build',
 
-
-    'LBL_VIEWLICENSE_COM' => '<P>This program is free software; you can redistribute it and/or modify it under the terms of the <a href="LICENSE.txt" target="_blank" class="body"> GNU Affero General Public License version 3</a> as published by the Free Software Foundation, including the additional permission set forth in the source code header.</P>',
     'LBL_ADD_TERM_COM' => '<P>The interactive user interfaces in modified source and object code versions of this program must display Appropriate Legal Notices, as required under Section 5 of the GNU Affero General Public License version 3. In accordance with Section 7(b) of the GNU General Public License version 3, these Appropriate Legal Notices must retain the display of the &quot;Powered by SugarCRM&quot; logo. If the display of the logo is not reasonably feasible for technical reasons, the Appropriate Legal Notices must display the words &quot;Powered by SugarCRM&quot;.</P>',
 
 
