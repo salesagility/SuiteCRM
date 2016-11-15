@@ -5850,3 +5850,73 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
+
+div.modal-content {
+    width: 450px;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+div.modal-header > h4 {
+    font-size: 19px;
+    color: #534D64;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 300;
+}
+
+#columnsFilterList > div > h1 {
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+}
+
+ul.chooserList {
+    list-style-type: none;
+    min-height: 60px;
+}
+
+ul.chooserList > li {
+    padding: 10px;
+    margin-bottom: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+ul.chooserList.green.ui-sortable > li {
+    background-color: #CCE8E2;
+}
+
+ul.chooserList.red.ui-sortable > li {
+    background-color: #3C8DBC;
+}
+
+div.modal-header {
+    padding: 25px;
+}
+
+#columnsFilterList {
+    padding: 30px;
+}
+
+ul.chooserList.green.ui-sortable {
+    margin-bottom: 30px;
+}
+
+div.modal-footer > button.btn.button.purple.btn-default {
+    background-color: #AA9DCC;
+}
+
+div.modal-footer > button.btn.button.purple.btn-default:hover {
+    background-color: #9589B3;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton {
+    top: -1px;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > li > a {
+    margin: 5px 4px 5px 7px;
+    top: -1px;
+}
