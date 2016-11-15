@@ -1865,6 +1865,7 @@ table#mass_update_table td select {
     padding: 0 !important;
     border: 0 !important;
     left: -1px;
+    min-width: 150px;
 }
 
 #actionLinkTop .sugar_action_button .subnav li a,
@@ -11310,4 +11311,3 @@ li.sugar_action_button.hover.opened {
 ul.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button label.glyphicon.bootstrap-checkbox {
     margin-left: 4px;
 }
-
