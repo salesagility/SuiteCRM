@@ -6507,3 +6507,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > l
     background-color: #fff;
     color: #000;
 }
+
+.paginationActionButtons input {
+    width: 30px;
+}

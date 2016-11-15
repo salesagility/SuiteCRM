@@ -5925,3 +5925,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > l
     margin: 2px 4px 5px 4px;
     top: -1px;
 }
+
+.paginationActionButtons input {
+    width: 30px;
+}
