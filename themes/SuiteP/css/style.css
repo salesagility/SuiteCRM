@@ -11320,3 +11320,7 @@ li.sugar_action_button.hover.opened {
     top: 13px;
     margin-top: -13px;
 }
+
+ul.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button label.glyphicon.bootstrap-checkbox {
+    margin-left: 4px;
+}
