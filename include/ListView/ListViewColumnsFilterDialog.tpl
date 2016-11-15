@@ -37,7 +37,6 @@
                 var columnsFilter = {
 
                     onOpen: function() {
-                        console.log('columns filter dialog open clicked..');
                         this.loadColumnsSettings();
                     },
 
@@ -58,7 +57,6 @@
                             var url = 'index.php?module=' + module_sugar_grp1 + '&action=index&search_form_only=true&to_pdf=true&search_form_view=advanced_search&columnsFilter=true';
 
                             var cObj = YAHOO.util.Connect.asyncRequest('GET', url, {success: function(e){
-                                //console.log(e);
                                 _this.showContents(_this.getDragDropChooserHTML(JSON.parse($('<div></div>').html(e.responseText).find('#responseData').html())));
                                 _this.initDragDropChooser();
                             }, failure: function(){
@@ -72,7 +70,6 @@
                     },
 
                     getDragDropChooserHTML: function(chooserData) {
-                        console.log(chooserData);
 
                         $('#chooserTemplate .chooserList.green').html('');
                         $.each(chooserData.args.values_array[0], function(key, value){
