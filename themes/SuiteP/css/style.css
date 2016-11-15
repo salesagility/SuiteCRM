@@ -1868,6 +1868,11 @@ table#mass_update_table td select {
     min-width: 150px;
 }
 
+#actionLinkTop .sugar_action_button .subnav.ddopen li a:hover,
+#actionLinkBottom .sugar_action_button .subnav.ddopen li a:hover {
+    background-color: #677785 !important;
+}
+
 #actionLinkTop .sugar_action_button .subnav li a,
 #actionLinkBottom .sugar_action_button .subnav li a,
 #actionLinkTop .sugar_action_button .subnav.ddopen li a,
