@@ -4332,9 +4332,28 @@ ul#detailViewActions.clickMenu {
     padding: 2px !important;
     padding: 1px !important;
     font-weight: normal;
-    font-size: 14px;
-    top: 2px;
     position: relative;
+}
+
+.selectActionsDisabled a.parent-dropdown-handler {
+    top: 2px;
+
+}
+
+#select_actions_disabled_top > a.parent-dropdown-handler,
+#select_actions_disabled_bottom > a.parent-dropdown-handler{
+    font-size: 14px;
+}
+#massupdate_listview_top,
+#massupdate_listview_bottom {
+    font-size: 14px;
+    line-height: 12px;
+    font-weight: normal;
+}
+
+.clickMenu.SugarActionMenu > li > ul > li,
+.clickMenu.SugarActionMenu > li > ul > li {
+    font-weight: normal;
 }
 
 .quickcreate {
