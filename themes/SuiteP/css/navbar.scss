@@ -415,6 +415,10 @@
   border-bottom: 0px;
 }
 
+.moremenu ul, .dropdown-menu {
+  max-height: 525px;
+  overflow-y: auto;
+}
 
 .moremenu a {
   color: $default-btn-color ;
@@ -481,6 +485,25 @@ li#usermenu a:hover {
 
 #globalLinks ul.user-dropdown li a:hover {
   color: $main-menu-color-hover;
+}
+
+
+#globalLinks a {
+  color: $default-btn-color;
+}
+
+#globalLinks ul li a {
+  max-width: 150px;
+  color: $main-menu-color;
+}
+
+#globalLinks ul li a:hover {
+  max-width: 150px;
+  color: $main-menu-hover;
+}
+
+#globalLinks ul li {
+  padding: 0;
 }
 
 li#usermenu a span.caret {

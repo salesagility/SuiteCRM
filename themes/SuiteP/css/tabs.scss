@@ -1,0 +1,216 @@
+/**** Tabs ***/
+@import 'variables';
+
+#content {
+
+  .nav-tabs {
+    border: hidden;
+    margin: ($tab-height/2) 0 ($tab-height/2) 0;
+  }
+
+  .dropdown-menu {
+    overflow: visible;
+    min-width: 200px;
+  }
+
+  .dropdown-menu > li {
+    width: 100%;
+    overflow: visible;
+  }
+
+  .dropdown-menu > li > a {
+    font-weight: 400;
+    letter-spacing: 2px;
+    font-size: $page-font-size;
+    margin: 0 2px 0 2px;
+    line-height: $tab-height;
+    cursor: pointer;
+  }
+
+  .nav-tabs > li > a,
+  .nav-tabs > li > a:focus,
+  .nav-tabs > li > a:hover {
+    font-weight: 400;
+    letter-spacing: 2px;
+    font-size: $page-font-size;
+    text-transform: uppercase;
+    background-color: $default-tab-bg;
+    margin: 0 2px 0 2px;
+    color: $default-tab-color;
+    line-height: $tab-height;
+    border-color: #eee #eee #fff;
+    cursor: pointer;
+  }
+
+  .nav-tabs > li.active > a,
+  .nav-tabs > li.active > a:focus,
+  .nav-tabs > li.active > a:hover {
+    font-weight: 400;
+    letter-spacing: 2px;
+    font-size: $page-font-size;
+    text-transform: uppercase;
+    background-color: $active-tab-bg;
+    margin: 0 2px 0 2px;
+    color: $default-tab-color;
+    line-height: $tab-height;
+    border-color: #eee #eee #fff;
+    cursor: pointer;
+  }
+
+  #overflow-menu > li > span.notCurrentTabLeft, #overflow-menu > li > span.notCurrentTabRight {
+    visibility: collapse;
+    display: none;
+  }
+
+  #overflow-menu > li {
+    line-height: normal;
+    height: auto;
+  }
+
+  #overflow-menu > li a {
+    margin: 0;
+    padding: 12px 15px 12px 15px;
+    font-size: 14px;
+    font-weight: normal;
+    clear: both;
+  }
+
+  #overflow-menu > li > ul {
+    display: none;
+    visibility: collapse;
+    height: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  #overflow-menu > li > ul > li {
+    display: none;
+    visibility: collapse;
+    height: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  .nav > li > a.first-tab-xs {
+    background-color: $active-tab-bg;
+    border-bottom: none;
+    padding-right: $tab-height;
+    background-image: url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
+    background-repeat: no-repeat;
+    background-position: right ($tab-height/2) top (($tab-height/4)*3);
+  }
+
+  #first-tab-menu-xs.dropdown-menu > li > a {
+    border-bottom: 1px solid #93A0AB;
+  }
+
+  #first-tab-menu-xs.dropdown-menu > li:last-of-type > a {
+    border-bottom: none;
+  }
+
+  #first-tab-menu-xs.dropdown-menu {
+    border-top-right-radius: 4px;
+  }
+
+  #first-tab-menu-xs.dropdown-menu {
+    background-color: $active-tab-bg;
+  }
+
+  #first-tab-menu-xs.dropdown-menu > li {
+    background-color: $active-tab-bg;
+  }
+
+  #first-tab-menu-xs.dropdown-menu > li > a {
+    background-color: $active-tab-bg;
+  }
+
+  /*Override bootstrap (needs to be stacked)*/
+  .dropdown-menu > li > a,
+  .dropdown-menu > li > a:focus,
+  .dropdown-menu > li > a:hover {
+    color: $action-tab-color;
+    text-decoration: none;
+    background-color: $action-tab-bg;
+  }
+
+  #tab-actions > a {
+    cursor: pointer;
+    background-color: $action-tab-bg;
+    padding-right: $tab-height;
+    background-image: url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
+    background-repeat: no-repeat;
+    background-position: right ($tab-height/2) top (($tab-height/4)*3);
+    border-color: $action-tab-bg;
+    border-bottom: $action-tab-seperator;
+  }
+
+  #tab-actions > a:hover {
+    cursor: pointer;
+    background-color: $action-tab-bg-hover;
+    color: $action-tab-color;
+  }
+
+  #tab-actions > .dropdown-menu {
+    left: auto;
+    right: 0px;
+    background-color: $action-tab-bg;
+    margin-right: 2px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  #tab-actions > .dropdown-menu li {
+    background-color: $action-tab-bg;
+    border-bottom: 1px solid $action-tab-seperator;
+  }
+
+  #tab-actions > .dropdown-menu li:last-of-type {
+    border-bottom: none;
+  }
+
+  #tab-actions > .dropdown-menu input {
+    width: 100%;
+    text-align: left;
+  }
+
+  #tab-actions > ul.dropdown-menu a {
+    background-color: $action-tab-bg;
+  }
+
+  #tab-actions > ul.dropdown-menu .button {
+    background-color: $action-tab-bg;
+  }
+
+  #tab-actions > ul.dropdown-menu .button:hover {
+    background-color: $action-tab-bg;
+  }
+
+  #tab-actions > ul.dropdown-menu .button:focus {
+    background-color: $action-tab-bg;
+  }
+
+  #tab-actions > ul.dropdown-menu .button:active {
+    background-color: $action-tab-bg;
+  }
+
+  #tab-actions > ul.dropdown-menu .open > .dropdown-toggle.btn-primary {
+    background-color: $action-tab-bg;
+  }
+
+  #tab-actions > ul.dropdown-menu li:last-of-type a {
+    background-color: $action-tab-bg;
+    border: none;
+  }
+
+  div.tab-content {
+    background-color: #ffffff;
+    padding: 24px;
+    border: 1px solid transparent;
+    border-bottom-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    margin-bottom: 30px;
+  }
+}

@@ -5,117 +5,19 @@
 @import 'login';
 @import 'forms';
 @import 'calendar';
+@import 'dashboard';
+@import 'listview';
+@import 'admin';
+@import 'tabs';
 @import 'variables';
 
-#ajaxHeader {
-  float: left;
-}
-
-#bootstrap-container {
-  background-color: $main-bg;
-  margin-top: 110px !important;
-
-  .dropdown-menu em {
-    padding: 0 10px 0 10px
-  }
-
-  .dropdown-menu em a {
-    color: #F08377;
-  }
-
-  .dropdown-menu {
-    padding: 4px 10px 4px 10px;
-    min-width: 200px;
-    margin-top: 0px;
-    border-top-right-radius: 0px;
-    border-top-left-radius: 0px;
-    font-size: 10px;
-  }
-}
-
-@media (max-width: 750px) {
-
-  #bootstrap-container {
-    margin-top: 110px !important;
-  }
-}
-
-@media (max-width: 1130px) {
-  #bootstrap-container.col-md-offset-2 {
-    margin-left: 0;
-  }
-
-  .col-md-10, #bootstrap-container {
-    width: 100%;
-  }
-
-}
-
-.dashletcontainer.col-50 {
-  width: 50%;
-}
-.dashletcontainer.col-33 {
-  width: 33.333%;
-}
-
-.dashletcontainer, .drop-location {
-  min-height: 132px;
-}
-
-div#pageContainer td.dashletcontainer div.hd {
-  background-color: #66727d;
-  padding: 0;
-  margin: 0;
-}
-
-.yui-module .hd, .yui-panel .hd {
-  background: #66727d;
-}
-
-div#pageContainer td.dashletcontainer tr.pagination td {
-  background-color: #BFCAD3;
-}
-
-div#pageContainer td.dashletcontainer tr.pagination span {
-  display: inline-block;
-}
-
-div#pageContainer td.dashletcontainer tr.pagination td button {
-  width: auto;
-  background-color: #94A6B5;
-  padding: 2px;
-  height: auto;
-  border-radius: 3px;
-}
-
-td.dashletcontainer button[disabled], td.dashletcontainer input[type="submit"][disabled], td.dashletcontainer input[type="reset"][disabled], td.dashletcontainer input[type="button"][disabled] {
-  line-height: 100% !important;
-}
-
-td.dashletcontainer .button, td.dashletcontainer input[type="submit"], td.dashletcontainer input[type="button"] {
-  line-height: 100% !important;
-}
-
-div#pageContainer td.dashletcontainer th.footable-visible a {
-  padding-right: 20px;
-}
 
 div#searchResults {
   overflow-y: auto;
   padding-bottom: 50px;
 }
 
-div#pageContainer td.dashletcontainer div.hd .icon {
-  fill: #fff;
-}
 
-.moremenu ul, ul.dropdown-menu {
-  max-height: 525px;
-  overflow: auto;
-}
-
-
-#edittabs {}
 
 #edittabs  table:nth-of-type(2),
 #edittabs  table:nth-of-type(2) > tbody,
@@ -607,7 +509,7 @@ slot, #lead_queries_Div td {
   color: $main-color;
 }
 
-#EditView .edit input,
+#EditView .edit input:not([type=button]),
 #EditView .edit textarea,
 #EditView .edit select,
 #EditView .edit option,
@@ -895,10 +797,6 @@ button#listViewEndButton_top img, button#listViewEndButton_bottom img {
 }
 
 thead {
-  background-color: #778591;
-}
-
-table#dashletPanel thead {
   background-color: #778591;
 }
 
@@ -1290,7 +1188,7 @@ table#mass_update_table td select {
 #userEditActions > .sugar_action_button > ul.subnav,
 #userEditActions > .sugar_action_button > ul.subnav li,
 #userEditActions > .sugar_action_button > ul.subnav a {
-  background-color: #F08377;
+  background-color: $danger-btn-bg;
 }
 #detail_header_action_menu li.sugar_action_button,
 #userEditActions li.sugar_action_button {
@@ -1299,7 +1197,7 @@ table#mass_update_table td select {
 
 #selectLinkTop > .sugar_action_button > ul.subnav a,
 #actionLinkBottom > .sugar_action_button > ul.subnav a {
-  color: #ffffff;
+  color: $default-btn-color;
   width: 100%;
 }
 
@@ -1424,7 +1322,7 @@ ul#dashletCategories > li.active a:visited,
 ul#dashletCategories > li.active a:active,
 ul#dashletCategories > li.active a:focus {
   background-color: #778591;
-  color: #ffffff;
+  color: $default-btn-color;
 }
 
 
@@ -2122,13 +2020,15 @@ li.noBullet {
 }
 
 .error {
-  background-color: #f08377;
-  color: #ffffff;
+  background-color: $danger-btn-bg;
+  color: $default-btn-color;
   padding: 10px;
   margin-bottom: 20px;
   border: 1px solid transparent;
   border-radius: 4px;
 }
+
+//
 
 
 /*The nonPaddedError class is to remove the padding from interal error messages during the upgrade wizard*/
@@ -2159,7 +2059,7 @@ div#content p.error {
 }
 
 .required a:link, .error a, .error a:link {
-  color: #fff;
+  color: $default-btn-color;
   font-weight: 600;
   text-decoration: underline;
 }
@@ -2324,7 +2224,7 @@ td.edit.view td[align=right] {
 }
 
 #importOptions #chooser_choose_index_text, #importOptions #chooser_ignore_index {
-  background: white;
+  background: $main-alternate-bg;
   border: 0;
   text-align: left;
 }
@@ -2802,23 +2702,6 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
   margin-right: 2px;
 }
 
-#globalLinks a {
-  color: #ffffff;
-}
-
-#globalLinks ul li a {
-  max-width: 150px !important;
-  color: #F08377;
-}
-
-#globalLinks ul li a:hover {
-  max-width: 150px !important;
-  color: #ffffff;
-}
-
-#globalLinks ul li {
-  padding: 0;
-}
 
 #themepickerLinkSpan a {
   color: #444444;
@@ -3186,191 +3069,7 @@ ul.yui-nav li.selected {
   background: #F08377;
 }
 
-ul.nav-tabs {
-  border: hidden;
-  margin: 16px 0 16px 0;
-}
 
-ul.nav-tabs > li > a, ul.nav-tabs > li.active > a:focus {
-  font-weight: 400;
-  letter-spacing: 2px;
-  font-size: 13px;
-  text-transform: uppercase;
-  background-color: #BFCAD3;
-  margin: 0 2px 0 2px;
-  color: #ffffff;
-  line-height: 32px;
-  border-color: #eee #eee #fff;
-  cursor: pointer;
-}
-
-ul.nav-tabs > li:first-of-type > a {
-  background-color: #BFCAD3;
-  margin: 0 2px 0 0;
-  color: #ffffff;
-}
-
-
-#overflow-menu > li > span.notCurrentTabLeft, #overflow-menu > li > span.notCurrentTabRight {
-  visibility: collapse;
-  display: none;
-}
-
-#overflow-menu > li {
-  line-height: normal;
-  height: auto;
-}
-
-#overflow-menu > li a {
-  margin: 0;
-  padding: 12px 15px 12px 15px;
-  font-size: 14px;
-  font-weight: normal;
-  clear: both;
-}
-
-#overflow-menu > li > ul,
-#overflow-menu > li > ul > li {
-  display: none;
-  visibility: collapse;
-  height: 0;
-  padding: 0;
-  margin: 0;
-}
-
-a.first-tab-xs {
-  /*TODO: fix long tabs*/
-  background-color: #778591 !important;
-  border-bottom: none !important;
-  padding-right: 30px !important;
-  background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
-  background-repeat: no-repeat;
-  background-position: 90% 120%;
-  background-origin: border-box;
-  background-size: 10px 95px;
-}
-
-#first-tab-menu-xs.dropdown-menu {
-  padding: 8px !important;
-  margin: 0 0 0 1px !important;
-}
-
-#first-tab-menu-xs.dropdown-menu > li > a{
-  border-bottom: 1px solid #93A0AB;
-}
-
-#first-tab-menu-xs.dropdown-menu > li:last-of-type > a{
-  border-bottom: none;
-}
-
-
-#first-tab-menu-xs.dropdown-menu {
-  border-top-right-radius: 4px;
-}
-
-#first-tab-menu-xs.dropdown-menu,
-#first-tab-menu-xs.dropdown-menu > li,
-#first-tab-menu-xs.dropdown-menu > li > a {
-  background-color: #778591 !important;
-}
-
-ul.nav-tabs > li:first-of-type > a:hover {
-  background-color: #BFCAD3;
-  color: #ffffff;
-  border-color: #eee #eee #fff;
-  margin: 0 2px 0 0;
-}
-
-
-
-ul.nav-tabs > li > a:hover {
-  background-color: #BFCAD3;
-  color: #ffffff;
-  border-color: #eee #eee #fff;
-}
-
-
-ul.nav-tabs > li.active > a,  ul.nav-tabs > li.active > a:focus {
-  background-color: #778591;
-  color: #ffffff;
-  border-color: #eee #eee #fff;
-  margin-left: 0px;
-}
-
-ul.nav-tabs > li.active > a:hover{
-  background-color: #778591;
-  color: #ffffff;
-  border-color: #eee #eee #fff;
-}
-
-li#tab-actions > a {
-  cursor: pointer;
-  background-color: #F08377;
-  padding-right: 42px;
-  background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
-  background-repeat: no-repeat;
-  background-position: 80% 120%;
-  background-origin: border-box;
-  background-size: 10px 95px;
-  border-color: #F08377;
-  border-bottom: #ffffff;
-}
-
-li#tab-actions > a:hover {
-  cursor: pointer;
-  background-color: #F08377;
-  background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
-  color: #ffffff;
-}
-
-li#tab-actions > ul.dropdown-menu {
-  left:auto;
-  right: 0px;
-  background-color: #F08377;
-  margin-right: 2px;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-}
-
-li#tab-actions > ul.dropdown-menu li {
-  background-color: #F08377;
-  border-bottom: 1px solid #FA988D;
-}
-
-ul.tab-actions li a {
-  border-bottom: 1px solid #FA988D !important;
-}
-
-li#tab-actions > ul.dropdown-menu input {
-  width: 100%;
-  text-align: left;
-}
-
-li#tab-actions > ul.dropdown-menu a,
-li#tab-actions > ul.dropdown-menu .button,
-li#tab-actions > ul.dropdown-menu .button:hover,
-li#tab-actions > ul.dropdown-menu .button:focus,
-li#tab-actions > ul.dropdown-menu .button:active,
-li#tab-actions > ul.dropdown-menu .open > .dropdown-toggle.btn-primary {
-  background-color: #F08377;
-}
-
-li#tab-actions > ul.dropdown-menu li:last-of-type a {
-  background-color: #F08377;
-  border: none;
-}
-
-div.tab-content {
-  background-color: #ffffff;
-  padding: 24px;
-  border: 1px solid transparent;
-  border-bottom-left-radius: 4px;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-  margin-bottom: 30px;
-}
 
 #basic_search_link {
   margin-left: 6px !important;
@@ -5599,19 +5298,19 @@ div.action_buttons form {
 }
 
 div.action_buttons .button {
-  background-color: #94A6B5;
+  background-color: $default-btn-bg;
 }
 div.action_buttons .button:hover {
-  background-color: #7B8A96;
+  background-color: $default-btn-bg-hover;
 }
 
 #EditView div.action_buttons .button,
 #save_and_continue.button {
-  background-color: #F08377;
+  background-color: $danger-btn-bg;
 }
 #EditView div.action_buttons .button:hover,
 #save_and_continue.button:hover  {
-  background-color: #D66C60;
+  background-color: $danger-btn-bg-hover;
 }
 
 #subpanel_list .tab-content .list.view.subpanel-table .pagination div.action_buttons .button {
@@ -6523,9 +6222,6 @@ table.subpanel-table .pagination ul.clickMenu li span {
 
 
 ul.SugarActionMenuIESub li a, ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .list tr.pagination td.buttons ul.clickMenu > li > a
-
-
-
 div.list-view-rounded-corners > table > thead > th,
 .pagination-bottom {
   border: 1px solid transparent !important;

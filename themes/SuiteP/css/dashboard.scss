@@ -1,0 +1,60 @@
+/**** Dashboard ***/
+@import 'variables';
+
+
+.dashletcontainer.col-50 {
+  width: 50%;
+}
+.dashletcontainer.col-33 {
+  width: 33.333%;
+}
+
+.dashletcontainer, .drop-location {
+  min-height: 132px;
+}
+
+div#pageContainer td.dashletcontainer div.hd {
+  background-color: #66727d;
+  padding: 0;
+  margin: 0;
+}
+
+.yui-module .hd, .yui-panel .hd {
+  background: #66727d;
+}
+
+div#pageContainer td.dashletcontainer tr.pagination td {
+  background-color: #BFCAD3;
+}
+
+div#pageContainer td.dashletcontainer tr.pagination span {
+  display: inline-block;
+}
+
+div#pageContainer td.dashletcontainer tr.pagination td button {
+  width: auto;
+  background-color: #94A6B5;
+  padding: 2px;
+  height: auto;
+  border-radius: 3px;
+}
+
+td.dashletcontainer button[disabled], td.dashletcontainer input[type="submit"][disabled], td.dashletcontainer input[type="reset"][disabled], td.dashletcontainer input[type="button"][disabled] {
+  line-height: 100% !important;
+}
+
+td.dashletcontainer .button, td.dashletcontainer input[type="submit"], td.dashletcontainer input[type="button"] {
+  line-height: 100% !important;
+}
+
+div#pageContainer td.dashletcontainer th.footable-visible a {
+  padding-right: 20px;
+}
+
+div#pageContainer td.dashletcontainer div.hd .icon {
+  fill: $default-btn-color;
+}
+
+.dashletPanel thead {
+  background-color: #778591;
+}

@@ -25,3 +25,39 @@ img, svg {
   width: 30px;
   height: auto;
 }
+
+#ajaxHeader {
+  float: left;
+}
+
+#bootstrap-container {
+  background-color: $main-bg;
+  margin-top: 110px;
+
+  .dropdown-menu em {
+    padding: 0 10px 0 10px
+  }
+
+  .dropdown-menu em a {
+    color: $link-color;
+  }
+}
+
+
+@media (max-width: 750px) {
+
+  #bootstrap-container {
+    margin-top: 110px;
+  }
+}
+
+@media (max-width: 1130px) {
+  #bootstrap-container.col-md-offset-2 {
+    margin-left: 0;
+  }
+
+  .col-md-10, #bootstrap-container {
+    width: 100%;
+  }
+
+}
