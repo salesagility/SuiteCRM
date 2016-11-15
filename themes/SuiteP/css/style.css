@@ -4344,19 +4344,10 @@ ul#detailViewActions.clickMenu {
 #select_actions_disabled_bottom > a.parent-dropdown-handler{
     font-size: 14px;
 }
-#massupdate_listview_top,
-#massupdate_listview_bottom {
-    font-size: 14px;
-    line-height: 12px;
-    font-weight: normal;
-}
 
-.clickMenu.SugarActionMenu > li > ul > li,
 .clickMenu.SugarActionMenu > li > ul > li {
     font-weight: normal;
 }
-
-
 
 .quickcreate {
     margin: 5px;
