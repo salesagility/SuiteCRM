@@ -6438,6 +6438,11 @@ label.hidden-desktop.selected-actions-label {
 }
 
 
+label.selected-actions-label {
+    cursor: pointer;
+}
+
+
 @media (min-width: 480px) {
 
     label.hidden-desktop.selected-actions-label {

@@ -11259,6 +11259,9 @@ label.hidden-desktop.selected-actions-label {
     line-height: 12px;
 }
 
+label.selected-actions-label {
+    cursor: pointer;
+}
 
 @media (min-width: 480px) {
 
@@ -11324,3 +11327,4 @@ li.sugar_action_button.hover.opened {
 ul.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button label.glyphicon.bootstrap-checkbox {
     margin-left: 4px;
 }
+

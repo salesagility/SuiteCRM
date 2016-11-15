@@ -5862,6 +5862,10 @@ label.hidden-desktop.selected-actions-label {
     line-height: 12px;
 }
 
+label.selected-actions-label {
+    cursor: pointer;
+}
+
 
 @media (min-width: 480px) {
 
