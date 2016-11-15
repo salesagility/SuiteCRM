@@ -1,23 +1,30 @@
 
-$page-font-family: 'Lato', Lato, Arial, sans-serif;
-$page-font-size: 13px;
-
+/// Colors
+//// Buttons
+$primary: #778591;
+$danger: #F08377;
+$danger-hover: #F08377;
+$success: #66996B;
+$info: #AA9DCC;
+$link-color: $danger;
+$link-color-hover: $danger-hover;
+//// Navbar
 $main-color: #534D64;
 $global-search-color: #A2A5AF;
 $default-btn-color: #F5F5F5;
+$default-text-disabled-bg: #F8F8F8;
+$default-text-disabled-color: #F8F8F8;
+$default-text-disabled-border-color: #E2E7EB;
 $alert-body-color: #000000;
 $global-search-text-color: #A2A5AF;
 $global-search-color: #817D8D;
-$primary: #778591;
-$danger: #F08377;
-$success: #66996B;
-$info: #AA9DCC;
 $main-menu-color: $default-btn-color;
 $main-menu-color-hover: $danger;
 
+/// Backgrounds
 $main-bg: #F5F5F5;
 $main-alternate-bg: #FFFFFF;
-
+//// Navbar
 $navbar-bg: #534D64;
 $main-menu-bg: #5D5670;
 $toolbar-bg: #A2B2BF;
@@ -29,11 +36,11 @@ $quick-create-menu-bg: #829EB5;
 $quick-create-btn-bg-hover: $quick-create-menu-bg;
 $main-menu-hover: #F08377;
 $alert-count-bg: #F08377;
-
+//// Sidebar
 $sidebar-bg: #778591;
 $sidebar-btn-bg: #94A6B5;
 $sidebar-btn-bg-hover: #94A6B5;
-
+//// Buttons
 $default-input-group-color: #C4C3C7;
 $default-btn-bg: #94A6B5;
 $default-btn-bg-hover: #94A6B5;
@@ -45,13 +52,18 @@ $danger-btn-bg: $danger;
 $danger-btn-bg-hover: #D66C60;
 $success-btn-bg: $success;
 $success-btn-bg-hover: #6EA674;
-
+$disabled-btn-color: #808F9C;
+$disabled-btn-bg: #777777;
 
 $footer-btn-bg: #E6E6E6;
 
 $panel-bg: #E6E6E6;
+//// Form Elements
 $input-bg: #D8F5EE;
+$input-select-option: #FFFFFF;
 $input-select-bg: #A5E8D6;
+$input-select-border: #A5E8D6;
+$input-border: #A5E8D6;
 
 $table-header-bg: #778591;
 $table-nav-bg: #BFCAD3;
@@ -60,14 +72,23 @@ $table-alternate-row-bg: #FFFFFF;
 
 $main-menu-seperator: #757083;
 $main-menu-current-seperator: $danger;
+
+/// Measurements
+/// Page
+$page-font-family: 'Lato', Lato, Arial, sans-serif;
+$page-font-size: 13px;
+$page-p-size: 14px;
+/// Breakpoints
 $xs-breakpoint: 750px;
 $sm-breakpoint: 768px;
 $md-breakpoint: 992px;
 $lg-breakpoint: 1130px;
-
-
-$navbar-height: 90px;/* 90px normal or 72px small*/
+///
+$navbar-height: 90px; /// 90px normal or 72px small
 $navbar-mobile-height: 60px;
 $navbar-toolbar-height: 48px;
-$topnav-padding: 14px; /* 14px normal or 8px small */
+$navbar-topnav-font-size: 13px; /// 13px normal
+$topnav-padding: 14px; /// 14px normal or 8px small
 $home-icon-bg-pos-y:  ($navbar-height / 2.571428571);
+//// Inputs
+$input-line-height: 40px; // 40px normal 32px small
