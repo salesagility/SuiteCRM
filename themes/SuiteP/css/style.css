@@ -10974,29 +10974,15 @@ table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButt
 
 /* admin / inbound emails styles */
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr {
-    padding: 0px !important;
-}
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:first-child {
-    background-color: #BFCAD3;
-    padding: 5px 0px 2px 0px !important;
-    color: white;
-    font-weight: 700;
-}
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu {
-    min-width: 32px;
-    min-height: 16px;
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu {
     line-height: 0px;
-    position: relative;
     padding: 1px;
-    height: initial;
     vertical-align: top;
-
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
     padding: 0px !important;
     background-color: #94A6B5;
     border: 1px solid transparent;
@@ -11005,17 +10991,17 @@ div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination 
     min-width: 32px;
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button:hover,
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button.hover {
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button:hover,
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button.hover {
     background-color: #778591;
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button input#massall.checkbox.massall {
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button input#massall.checkbox.massall {
     float: left;
     margin: 5px 0 0 4px;
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button a#select_link {
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button a#select_link {
     padding: 0 !important;
     border: 1px solid transparent !important;
     overflow: hidden;
@@ -11026,7 +11012,7 @@ div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination 
     color: #fff;
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav {
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav {
     padding: 0 !important;
     width: auto;
     background-color: #7b8a96;
@@ -11036,7 +11022,7 @@ div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination 
     right: auto;
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li {
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li {
     padding: 0;
     background-color: #7b8a96;
     width: 100%;
@@ -11044,7 +11030,7 @@ div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination 
     color: #ffffff;
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItem {
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItem {
     color: #ffffff;
     width: 100%;
     background-color: #7b8a96;
@@ -11052,12 +11038,12 @@ div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination 
     padding: 0 5px 0 7px;
     font-weight: normal;
 }
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItemHilite {
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItemHilite {
     padding: 0 5px 0 7px;
     font-weight: normal;
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button span {
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button span {
     height: 15px;
 }
 
@@ -11127,6 +11113,8 @@ div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination 
 div#content div#pagecontent form#MassUpdate table.list.view tbody tr td {
     padding-top: 0;
     padding-bottom: 0;
+    color:white;
+    font-weight: 700;
 }
 
 /* edit form */
@@ -11305,11 +11293,6 @@ label.selected-actions-label {
     display: none;
 }
 
-div#content div#pagecontent form#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.oddListRowS1 > td,
-div#content div#pagecontent form#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.evenListRowS1 > td {
-    padding-top: 15px;
-    padding-bottom: 12px;
-}
 
 #actionLinkTop li.sugar_action_button ul.subnav.ddopen > li:last-child a,
 #actionLinkBottom li.sugar_action_button ul.subnav.ddopen > li:last-child a {
