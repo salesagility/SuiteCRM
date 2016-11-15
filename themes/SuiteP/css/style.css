@@ -11295,3 +11295,9 @@ replace #columnsFilterDialog prefix to '.modal .modal-dialog' and #columnsFilter
     margin: 5px 4px 5px 7px;
     top: -1px;
 }
+
+.preloading {
+    background-image: url("../../../../themes/SuiteP/images/loading.gif");
+    width: 48px;
+    height: 48px;
+}

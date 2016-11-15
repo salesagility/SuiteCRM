@@ -46,7 +46,7 @@
                     },
 
                     showPreload: function() {
-                        this.showContents('<p><img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0" alt=""></p>');
+                        this.showContents('<p class="preloading"></p>');
                     },
 
                     loadColumnsSettings: function() {
