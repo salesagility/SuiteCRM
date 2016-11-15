@@ -1757,9 +1757,9 @@ table#mass_update_table td select {
 
 #actionLinkTop,
 #actionLinkBottom {
-    font-size: 14px;
+    font-size: 11px;
     min-height: 16px;
-    line-height: 11px;
+    line-height: 8px;
     position: relative;
 }
 
@@ -1792,6 +1792,7 @@ table#mass_update_table td select {
     padding: 4px 10px 4px 10px;
     top: -1px;
     position: relative;
+    height: 27px;
 }
 
 #detail_header_action_menu > .sugar_action_button > ul.subnav,
@@ -1856,8 +1857,8 @@ table#mass_update_table td select {
 #actionLinkBottom .sugar_action_button .subnav.ddopen a:hover,
 #actionLinkTop .sugar_action_button .subnav.ddopen li a.menuItemHilite,
 #actionLinkBottom .sugar_action_button .subnav.ddopen li a.menuItemHilite {
-    background-color: #677785 !important;
-    width: 100% !important;
+    background-color: #7B8A96 !important;
+    width: 83% !important;
 }
 
 #actionLinkTop .sugar_action_button .subnav.ddopen,
@@ -1869,13 +1870,15 @@ table#mass_update_table td select {
     margin: 0 !important;
     padding: 0 !important;
     border: 0 !important;
+    left: -1px;
 }
 
 #actionLinkTop .sugar_action_button .subnav li a,
 #actionLinkBottom .sugar_action_button .subnav li a,
 #actionLinkTop .sugar_action_button .subnav.ddopen li a,
 #actionLinkBottom .sugar_action_button .subnav.ddopen li a {
-    padding: 5px 15px !important;
+    margin: 5px 15px !important;
+    border-bottom: 2px solid #93a0ab !important;
 }
 
 #actionLinkTop li.sugar_action_button,
@@ -1885,6 +1888,12 @@ table#mass_update_table td select {
 #actionLinkBottom .menuItemHilite {
     background-color: #7b8a96;
 
+}
+
+#actionLinkTop .sugar_action_button .subnav.ddopen a:hover,
+#actionLinkBottom .sugar_action_button .subnav.ddopen a:hover {
+    width: 83% !important;
+    font-size: 11px;
 }
 
 .listViewLinkButton>.sugar_action_button>ul.subnav a:hover,
@@ -1907,6 +1916,7 @@ table#mass_update_table td select {
 #selectLinkBottom>.sugar_action_button>ul.subnav {
     padding: 0 !important;
     width: auto;
+    left: -1px;
 }
 
 #actionLinkTop>.sugar_action_button>ul.subnav,
@@ -1935,6 +1945,16 @@ table#mass_update_table td select {
 #selectLinkTop > .sugar_action_button > ul.subnav a,
 #actionLinkBottom > .sugar_action_button > ul.subnav a {
     color: #ffffff;
+    width: 83%;
+}
+#selectLinkTop > .sugar_action_button > ul.subnav a.menuItem,
+#actionLinkBottom > .sugar_action_button > ul.subnav a.menuItem,
+#selectLinkTop > .sugar_action_button > ul.subnav a.menuItem:hover,
+#actionLinkBottom > .sugar_action_button > ul.subnav a.menuItem:hover,
+#selectLinkTop > .sugar_action_button > ul.subnav a.menuItemHilite,
+#actionLinkBottom > .sugar_action_button > ul.subnav a.menuItemHilite,
+#selectLinkTop > .sugar_action_button > ul.subnav a.menuItemHilite:hover,
+#actionLinkBottom > .sugar_action_button > ul.subnav a.menuItemHilite:hover {
     width: 100%;
 }
 
@@ -4102,6 +4122,11 @@ ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .l
     color: #fff;
 }
 
+/* TODO : remove it */
+ul.clickMenu li.single a {
+    padding-right: 8px !important;
+}
+
 ul.clickMenu li a:hover {
     text-decoration: none !important;
 }
@@ -4137,6 +4162,7 @@ ul.clickMenu > li > span {
 .listViewLinkButton, .listViewLinkButton .selectActionsDisabled,
 #selectLinkTop, #selectLinkTop .selectActionsDisabled {
     min-width: 32px;
+    margin-left: 8px;
 }
 ul.clickMenu li span.subhover {
     cursor: pointer;
@@ -4154,8 +4180,7 @@ ul.SugarActionMenuIESub {
     float: left;
     width: auto;
     border: 1px solid transparent;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+    border-radius: 4px;
     padding: 8px 0;
     z-index: 10;
     overflow: hidden;
@@ -4314,7 +4339,7 @@ ul#detailViewActions.clickMenu {
     padding: 1px !important;
     font-weight: normal;
     font-size: 14px;
-    top: -1px;
+    top: 2px;
     position: relative;
 }
 
@@ -4396,7 +4421,16 @@ ul.clickMenu li ul.subnav li a:hover .showLessArrow, ul.clickMenu li ul.subnav l
     opacity: .6;
 }
 
+/* TODO : remove it */
+ul.clickMenu.SugarActionMenu li.single a {
+    background-color: #94A6B5 !important;
+    padding: 0px 8px !important;
+}
 
+/* TODO : remove it */
+ul.clickMenu.SugarActionMenu li.single a:hover {
+    background-color: #778591 !important;
+}
 
 .view, table.view td {
     border: none;
@@ -7406,6 +7440,17 @@ tr:hover img.info {
     margin: 0;
 }
 
+/* TODO : remove it */
+[id^=list_subpanel_] {
+    margin-bottom: 25px !important;
+    border: 1px solid #dddddd;
+}
+
+/* TODO : remove it */
+[id^=list_subpanel_] tr:last-child {
+    margin-bottom: 25px !important;
+    border-bottom: none;
+}
 
 .h3Row {
     padding: 0;
@@ -8593,6 +8638,13 @@ table.subpanel-table th,
 table.subpanel-table th a:link {
     color: #000000;
     font-weight: bold;
+}
+
+/* TODO : remove it */
+table.subpanel-table ul.clickMenu > li, ul.SugarActionMenuIESub li {
+    padding: 0;
+    line-height: 24px;
+    white-space: nowrap;
 }
 
 table.subpanel-table ul.subpanel {
@@ -11350,40 +11402,28 @@ replace #columnsFilterDialog prefix to '.modal .modal-dialog' and #columnsFilter
     top: -1px;
 }
 
-#select_actions_disabled_top > a > label.hidden-mobile,
-#select_actions_disabled_top > a > label.hidden-desktop,
-#select_actions_disabled_bottom > a > label.hidden-mobile,
-#select_actions_disabled_bottom > a > label.hidden-desktop,
-#delete_listview_top > label.hidden-mobile,
-#delete_listview_top > label.hidden-desktop,
-#delete_listview_bottom > label.hidden-mobile,
-#delete_listview_bottom > label.hidden-desktop {
+
+label.hidden-mobile.selected-actions-label,
+label.hidden-desktop.selected-actions-label {
     margin-bottom: initial;
-    font-size: 12px;
+    font-size: 10.2px;
     line-height: 17px;
+    letter-spacing: 1.2px;
 }
 
-#delete_listview_top > label.hidden-mobile,
-#delete_listview_top > label.hidden-desktop,
-#delete_listview_bottom > label.hidden-mobile,
-#delete_listview_bottom > label.hidden-desktop {
+label.hidden-mobile.selected-actions-label,
+label.hidden-desktop.selected-actions-label {
     line-height: 12px;
 }
 
 
 @media (min-width: 480px) {
 
-    #select_actions_disabled_top > a > label.hidden-desktop,
-    #select_actions_disabled_bottom > a > label.hidden-desktop,
-    #delete_listview_top > label.hidden-desktop,
-    #delete_listview_bottom > label.hidden-desktop {
+    label.hidden-desktop.selected-actions-label {
         display: block;
     }
 
-    #select_actions_disabled_top > a > label.hidden-mobile,
-    #select_actions_disabled_bottom > a > label.hidden-mobile,
-    #delete_listview_top > label.hidden-mobile,
-    #delete_listview_bottom > label.hidden-mobile {
+    label.hidden-mobile.selected-actions-label {
         display: none;
     }
 
@@ -11391,17 +11431,11 @@ replace #columnsFilterDialog prefix to '.modal .modal-dialog' and #columnsFilter
 
 @media (max-width: 480px) {
 
-    #select_actions_disabled_top > a > label.hidden-desktop,
-    #select_actions_disabled_bottom > a > label.hidden-desktop,
-    #delete_listview_top > label.hidden-desktop,
-    #delete_listview_bottom > label.hidden-desktop {
+    label.hidden-desktop.selected-actions-label {
         display: none;
     }
 
-    #select_actions_disabled_top > a > label.hidden-mobile,
-    #select_actions_disabled_bottom > a > label.hidden-mobile,
-    #delete_listview_top > label.hidden-mobile,
-    #delete_listview_bottom > label.hidden-mobile {
+    label.hidden-mobile.selected-actions-label {
         display: block;
     }
 
@@ -11429,4 +11463,17 @@ div#content div#pagecontent form#MassUpdate > div.list-view-rounded-corners > ta
 div#content div#pagecontent form#MassUpdate > div.list-view-rounded-corners > table > tbody > tr.evenListRowS1 > td {
     padding-top: 15px;
     padding-bottom: 12px;
+}
+
+#actionLinkTop li.sugar_action_button ul.subnav.ddopen > li:last-child a,
+#actionLinkBottom li.sugar_action_button ul.subnav.ddopen > li:last-child a {
+    border-bottom: none !important;
+}
+
+
+li.sugar_action_button.hover.opened {
+    position: relative;
+    height: 40px;
+    top: 13px;
+    margin-top: -13px;
 }

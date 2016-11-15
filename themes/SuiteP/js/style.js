@@ -418,7 +418,7 @@ var isDetailViewPage = function() {
     return action == 'DetailView';
 };
 
-var refreshBootstrapCheckbox = function(e) {
+var refreshListViewCheckbox = function(e) {
     $(e).removeClass('glyphicon-check');
     $(e).removeClass('glyphicon-unchecked');
     if($(e).next().prop('checked')) {
@@ -619,25 +619,11 @@ $(function () {
     setTimeout(function(){
         hideEmptyFormCellsOnTablet();
     }, 1500);
+    
 
-    var refreshBootstrapCheckbox = function(e) {
-        $(e).removeClass('glyphicon-check');
-        $(e).removeClass('glyphicon-unchecked');
-        if($(e).next().prop('checked')) {
-            $(e).addClass('glyphicon-check');
-        }
-        else {
-            $(e).addClass('glyphicon-unchecked');
-        }
-        $(e).removeClass('disabled')
-        if($(e).next().prop('disabled')) {
-            $(e).addClass('disabled')
-        }
-    };
-
-    var bootstrapCheckboxesInitialized = false;
+    var listViewCheckboxesInitialized = false;
     var initializeBootstrapCheckboxes = function() {
-        if(!bootstrapCheckboxesInitialized) {
+        if(!listViewCheckboxesInitialized) {
             if ($('.glyphicon.bootstrap-checkbox').length == 0) {
                 setTimeout(function () {
                     initializeBootstrapCheckboxes();
@@ -646,21 +632,21 @@ $(function () {
                 $('.glyphicon.bootstrap-checkbox').each(function (i, e) {
                     $(e).removeClass('hidden');
                     $(e).next().hide();
-                    refreshBootstrapCheckbox(e);
+                    refreshListViewCheckbox(e);
                     $(e).click(function () {
                         $(this).next().click();
-                        refreshBootstrapCheckbox($(this));
+                        refreshListViewCheckbox($(this));
                     });
                 });
 
                 $('#selectLink > li > ul > li > a, #selectLinkTop > li > ul > li > a, #selectLinkBottom > li > ul > li > a').click(function (e) {
                     e.preventDefault();
                     $('.glyphicon.bootstrap-checkbox').each(function (i, e) {
-                        refreshBootstrapCheckbox(e);
+                        refreshListViewCheckbox(e);
                     });
                 });
 
-                bootstrapCheckboxesInitialized = true;
+                listViewCheckboxesInitialized = true;
             }
         }
     };
@@ -670,9 +656,13 @@ $(function () {
         $('.subnav').each(function(i,e){
             if($(e).hasClass('ddopen')) {
                 $(e).closest('.sugar_action_button').addClass('hover');
+                if(!$(e).hasClass('upper')) {
+                    $(e).closest('.sugar_action_button').addClass('opened');
+                }
             }
             else {
                 $(e).closest('.sugar_action_button').removeClass('hover');
+                $(e).closest('.sugar_action_button').removeClass('opened');
             }
         });
     }, 100);
