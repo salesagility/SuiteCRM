@@ -11121,6 +11121,12 @@ div#content div#pagecontent form#MassUpdate table.list.view tbody tr td {
     font-weight: 700;
 }
 
+.list tr.oddListRowS1 td.inline-email-td,
+.list tr.evenListRowS1 td.inline-email-td {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
 /* edit form */
 
 div#content div#pagecontent form#EditView div.edit.view table tbody tr td {
