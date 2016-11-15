@@ -58,6 +58,16 @@ $disabled-btn-bg: #777777;
 $footer-btn-bg: #E6E6E6;
 
 $panel-bg: #E6E6E6;
+
+$active-tab-bg: #778591;
+$active-tab-bg-hover:#778591;
+$default-tab-bg: #BFCAD3;
+$default-tab-bg-hover: #BFCAD3;
+$default-tab-color: #FFFFFF;
+$action-tab-bg: #F08377;
+$action-tab-bg-hover: #F08377;
+$action-tab-seperator: #FA988D;
+$action-tab-color: #FFFFFF;
 //// Form Elements
 $input-bg: #D8F5EE;
 $input-select-option: #FFFFFF;
@@ -72,6 +82,8 @@ $table-alternate-row-bg: #FFFFFF;
 
 $main-menu-seperator: #757083;
 $main-menu-current-seperator: $danger;
+////Dashlet panel
+$sidebar-bg: #778591;
 
 /// Measurements
 /// Page
@@ -92,3 +104,5 @@ $topnav-padding: 14px; /// 14px normal or 8px small
 $home-icon-bg-pos-y:  ($navbar-height / 2.571428571);
 //// Inputs
 $input-line-height: 40px; // 40px normal 32px small
+/// tabs
+$tab-height: 32px; // 32p normal 24px small

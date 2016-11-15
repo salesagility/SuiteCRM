@@ -2,7 +2,6 @@
 @import 'variables';
 
 
-
 fieldset, table, pre {
   margin-bottom: 0;
 }
@@ -208,7 +207,6 @@ fieldset[disabled] .btn-primary.active {
 
 #EditView_tabs .edit .button {
   margin-right: 4px;
-  padding: 0px;
   background-color: $danger-btn-bg;
   border: 1px solid $danger-btn-bg;
   border-radius: 4px;
@@ -240,7 +238,6 @@ fieldset[disabled] .btn-primary.active {
 
 #EditView_tabs .edit [type="button"] {
   margin-right: 4px;
-  padding: 0px;
   background-color: $danger-btn-bg;
   border: 1px solid $danger-btn-bg;
   border-radius: 4px;
@@ -271,8 +268,8 @@ fieldset[disabled] .btn-primary.active {
 }
 
 .btn-danger {
-  background-color: #F08377;
-  border: 1px solid #F08377;
+  background-color: $danger-btn-bg;
+  border: 1px solid $danger-btn-bg;
 }
 
 .btn-danger:hover {
@@ -290,6 +287,45 @@ fieldset[disabled] .btn-primary.active {
   border: 1px solid $danger-btn-bg;
 }
 
+/** EditView action buttons ***/
+.buttons .primary {
+  background-color: $danger-btn-bg;
+}
+
+.buttons .primary:hover {
+  background-color: $danger-btn-bg-hover;
+}
+
+.buttons .button {
+  background-color: $danger-btn-bg;
+}
+
+.buttons .button:hover {
+  background-color: $danger-btn-bg-hover;
+}
+
+.removeFileButton {
+   cursor: pointer;
+   font-size: $page-font-size;
+   padding: 0 20px 0 20px;
+   border-radius: 4px;
+   text-transform: uppercase;
+   font-weight: 500;
+   letter-spacing: 1px;
+   height: $input-line-height;
+   line-height: $input-line-height;
+   border-style: none;
+ }
+
+.removeFileButton {
+  color: $default-btn-color;
+  background-color: $danger-btn-bg;
+}
+
+.removeFileButton:hover {
+  background-color: $danger-btn-bg-hover;
+}
+
 .buttonOn,
 .btn .btn:hover {
   cursor: pointer;
@@ -299,8 +335,8 @@ fieldset[disabled] .btn-primary.active {
   text-transform: uppercase;
   font-weight: 500;
   letter-spacing: 1px;
-  height: 40px;
-  line-height: 40px;
+  height: $input-line-height;
+  line-height: $input-line-height;
 }
 
 .btn-default, .btn-default:hover {
@@ -817,7 +853,7 @@ textarea {
 
 input[type=text] {
   line-height: $input-line-height;
-  min-height: $input-line-height + 8;
+  min-height: $input-line-height;
 }
 
 input[type=password] {
@@ -1070,7 +1106,6 @@ div.col-sm-6 #email1_span td.email-address-add-button {
 
 .email-address-add-line-container .email-address-add-button {
   padding: 6px 9px 6px 9px;
-
 }
 
 .email-address-add-line-container .email-address-add-button:focus {
@@ -1100,7 +1135,6 @@ div.col-sm-6 #email1_span td.email-address-add-button {
 }
 
 .email-address-input-group button[disabled].email-address-remove-button {
-  margin: 0;
   padding: 6px 9px 6px 9px;
   line-height: 20px;
   height: 36px;
@@ -1252,7 +1286,8 @@ div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option l
     border-bottom-right-radius: 4px;
   }
 
-  .input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
+  .input-group-btn:last-child>.btn,
+  .input-group-btn:last-child>.btn-group {
     margin-left: 8px;
   }
 
