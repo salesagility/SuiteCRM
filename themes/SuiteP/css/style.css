@@ -1871,6 +1871,12 @@ table#mass_update_table td select {
     padding: 0 !important;
     border: 0 !important;
     left: -1px;
+    min-width: 150px;
+}
+
+#actionLinkTop .sugar_action_button .subnav.ddopen li a:hover,
+#actionLinkBottom .sugar_action_button .subnav.ddopen li a:hover {
+    background-color: #677785 !important;
 }
 
 #actionLinkTop .sugar_action_button .subnav li a,
@@ -4338,9 +4344,21 @@ ul#detailViewActions.clickMenu {
     padding: 2px !important;
     padding: 1px !important;
     font-weight: normal;
-    font-size: 14px;
-    top: 2px;
     position: relative;
+}
+
+.selectActionsDisabled a.parent-dropdown-handler {
+    top: 2px;
+
+}
+
+#select_actions_disabled_top > a.parent-dropdown-handler,
+#select_actions_disabled_bottom > a.parent-dropdown-handler{
+    font-size: 14px;
+}
+
+.clickMenu.SugarActionMenu > li > ul > li {
+    font-weight: normal;
 }
 
 .quickcreate {
@@ -8654,6 +8672,10 @@ table.subpanel-table ul.subpanel {
     border: none;
 }
 
+.sugar_action_button {
+    height: 27px;
+}
+
 .sugar_action_button a {
     color: #fff;
 }
@@ -11191,10 +11213,14 @@ div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination 
 /* list items */
 
 div#content div#pagecontent form#MassUpdate table.list.view tbody tr td {
-    padding-top: 0;
-    padding-bottom: 0;
     color:white;
     font-weight: 700;
+}
+
+.list tr.oddListRowS1 td.inline-email-td,
+.list tr.evenListRowS1 td.inline-email-td {
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 /* edit form */
