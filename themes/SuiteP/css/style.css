@@ -11220,17 +11220,13 @@ div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[
     }
 }
 
-
-/* Columns Filter Dialog on ListViews
-replace #columnsFilterDialog prefix to '.modal .modal-dialog' and #columnsFilterList to '.modal-body' to apply changes for all popup */
-
-#columnsFilterDialog > div.modal-dialog.modal-lg > div.modal-content {
+div.modal-content {
     width: 450px;
     margin: 0 auto;
     max-width: 100%;
 }
 
-#columnsFilterDialog > div > div > div.modal-header > h4 {
+div.modal-header > h4 {
     font-size: 19px;
     color: #534D64;
     text-transform: uppercase;
@@ -11244,12 +11240,12 @@ replace #columnsFilterDialog prefix to '.modal .modal-dialog' and #columnsFilter
     letter-spacing: 1.2px;
 }
 
-#columnsFilterList > div > ul.chooserList {
+ul.chooserList {
     list-style-type: none;
     min-height: 60px;
 }
 
-#columnsFilterList > div > ul.chooserList > li {
+ul.chooserList > li {
     padding: 10px;
     margin-bottom: 2px;
     -webkit-border-radius: 2px;
@@ -11257,15 +11253,15 @@ replace #columnsFilterDialog prefix to '.modal .modal-dialog' and #columnsFilter
     border-radius: 2px;
 }
 
-#columnsFilterList > div > ul.chooserList.green.ui-sortable > li {
+ul.chooserList.green.ui-sortable > li {
     background-color: #CCE8E2;
 }
 
-#columnsFilterList > div > ul.chooserList.red.ui-sortable > li {
+ul.chooserList.red.ui-sortable > li {
     background-color: #FFAFA6;
 }
 
-#columnsFilterDialog > div > div > div.modal-header {
+div.modal-header {
     padding: 25px;
 }
 
@@ -11273,25 +11269,23 @@ replace #columnsFilterDialog prefix to '.modal .modal-dialog' and #columnsFilter
     padding: 30px;
 }
 
-#columnsFilterList > div > ul.chooserList.green.ui-sortable {
+ul.chooserList.green.ui-sortable {
     margin-bottom: 30px;
 }
 
-#columnsFilterDialog > div > div > div.modal-footer > button.btn.button.purple.btn-default {
+div.modal-footer > button.btn.button.purple.btn-default {
     background-color: #AA9DCC;
 }
 
-#columnsFilterDialog > div > div > div.modal-footer > button.btn.button.purple.btn-default:hover {
+div.modal-footer > button.btn.button.purple.btn-default:hover {
     background-color: #9589B3;
 }
 
-#pagination > td > table > tbody > tr > td > ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton.listViewLinkButton_bottom,
-#pagination > td > table > tbody > tr > td > ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton.listViewLinkButton_top {
+ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton {
     top: -1px;
 }
 
-#pagination > td > table > tbody > tr > td > ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton.listViewLinkButton_bottom > li > a,
-#pagination > td > table > tbody > tr > td > ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton.listViewLinkButton_top > li > a {
+ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > li > a {
     margin: 5px 4px 5px 7px;
     top: -1px;
 }
