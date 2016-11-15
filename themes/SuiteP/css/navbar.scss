@@ -89,7 +89,6 @@
 
     > .topnav {
       margin: 0;
-      font-size: 1.1em;
       font-size: 13px;
       height: $navbar-height;
       letter-spacing: 2px;
@@ -115,6 +114,11 @@
           padding-top: 36px;
           padding-bottom: 35px;
         }
+      }
+
+      .currentTab a,
+      .dropdown-toggle {
+        font-size: $navbar-topnav-font-size;
       }
     }
   }
@@ -669,54 +673,57 @@ li#usermenu a:hover span.user_icon {
   padding: 8px 10px 8px 10px;
 }
 
-.recentlinks_top {
-  float: left;
-  width: 75%;
-  overflow: hidden;
-  margin-left: 2px;
-  line-height: 32px;
-  height: auto;
-}
+.navbar-fixed-top {
+
+  .recentlinks_top {
+    float: left;
+    width: 75%;
+    overflow: hidden;
+    margin-left: 2px;
+    line-height: 32px;
+    height: auto;
+  }
 
 
-.recentlinks_topedit, li.recentlinks_topedit > a {
-  line-height: 32px;
-  height: auto;
+  .recentlinks_topedit, li.recentlinks_topedit > a {
+    line-height: 32px;
+    height: auto;
 
-}
+  }
 
 
-.recentlinks_topedit > a {
-  padding: 0 15px 0 15px ;
-}
+  .recentlinks_topedit > a {
+    padding: 0 15px 0 15px ;
+  }
 
-.recentlinks_top > a {
-  padding: 0 15px 0 15px ;
-  width: auto;
-  height: auto;
-  line-height: 32px;
+  .recentlinks_top > a {
+    padding: 0 15px 0 15px ;
+    width: auto;
+    height: auto;
+    line-height: 32px;
 
-}
-.recentlinks_topedit {
-  float: right;
-  width: 20%;
-}
+  }
+  .recentlinks_topedit {
+    float: right;
+    width: 20%;
+  }
 
-.recentlinks_topedit a:focus {
-  color: $main-menu-color ;
-}
+  .recentlinks_topedit a:focus {
+    color: $main-menu-color ;
+  }
 
-.recentlinks_top a {
-  width: 100%;
-  height: 100%;
-}
+  .recentlinks_top a {
+    width: 100%;
+    height: 100%;
+  }
 
-.recentlinks  {
-  display: block;
-}
+  .recentlinks  {
+    display: block;
+  }
 
-.favoritelinks {
-  display: block;
+  .favoritelinks {
+    display: block;
+  }
 }
 
 
@@ -1203,6 +1210,13 @@ a[id^=grouptab]:active {
     width: 80% ;
   }
 
+  #query_string {
+    margin: 0;
+    background-color: $global-search-bg;
+    border: none;
+    border-radius: 3px;
+  }
+
   #search #searchbutton {
     margin: 0px 10px 0 0;
     background-color: transparent;
@@ -1423,10 +1437,6 @@ a[id^=grouptab]:active {
 
   .navbar-toggle {
     display: inline-block;
-  }
-
-  footer.expandedSidebar {
-    width: 94%;
   }
 
   .modulename {
@@ -1736,17 +1746,6 @@ a[id^=grouptab]:active {
     border: none;
     border-radius: 3px;
     height: auto;
-  }
-
-
-  @media print {
-    .navbar-inverse {
-      display: none;
-    }
-
-    .sidebar {
-      display: none;
-    }
   }
 }
 
