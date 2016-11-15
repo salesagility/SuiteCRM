@@ -6486,14 +6486,6 @@ ul.chooserList.ui-sortable {
     padding-left: 0;
 }
 
-div.modal-footer > button.btn.button.purple.btn-default {
-    background-color: #AA9DCC;
-}
-
-div.modal-footer > button.btn.button.purple.btn-default:hover {
-    background-color: #9589B3;
-}
-
 ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton {
     top: -1px;
 }
