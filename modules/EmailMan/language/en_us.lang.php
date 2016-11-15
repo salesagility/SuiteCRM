@@ -55,7 +55,6 @@ $mod_strings = array (
 	'LBL_CONFIGURE_SETTINGS'				=> 'Configure Email Settings',
 	'LBL_CUSTOM_LOCATION'					=> 'User Defined',
 	'LBL_DEFAULT_LOCATION'					=> 'Default',
-	'LBL_DISCLOSURE_TITLE'					=> 'Append Disclosure Message to Every Email',
 	'LBL_EMAIL_DEFAULT_CHARSET'				=> 'Compose email messages in this character set',
 	'LBL_EMAIL_DEFAULT_EDITOR'				=> 'Compose email using this client',
 	'LBL_EMAIL_DEFAULT_DELETE_ATTACHMENTS'	=> 'Delete related notes & attachments with deleted Emails',
