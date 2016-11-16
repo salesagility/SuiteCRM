@@ -66,7 +66,7 @@ div#searchResults {
 #edittabs .listContainer li span {
   display: block;
   padding: 8px 0 8px 8px;
-  background: #f5f5f5;
+  background: $main-bg;
   margin-bottom: 4px;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -83,7 +83,7 @@ div#searchResults {
 }
 
 #edittabs #groupTable {
-  background: #ffffff;
+  background: $main-alternate-bg;
   border: 1px solid transparent;
   border-radius: 4px;
 }
@@ -127,14 +127,12 @@ span.error:empty{
 }
 
 #ygddfdiv {
-  background: #B29Eb5 !important;
+  background: $info !important;
   opacity: 1 !important;
   padding: 8px;
 }
 
-.slotSub {
-  background: #00AA00;
-}
+
 
 div.noBullet li, .nobullet
 {
@@ -174,7 +172,7 @@ a#admin_options, a#powered_by {
 }
 
 a#admin_options:hover, a#powered_by:hover {
-  color: #D66C60;
+  color: $danger-btn-bg-hover;
   text-decoration: none;
 }
 
@@ -201,7 +199,7 @@ a#admin_options:hover, a#powered_by:hover {
 }
 
 .footer_right a:hover {
-  color: #D66C60;
+  color: $danger-btn-bg-hover;
   background-position: right -15px;
 }
 
@@ -217,7 +215,7 @@ a#admin_options:hover, a#powered_by:hover {
 .menuItemX:visited, .menuItemHiliteX:visited, .menuItemX:hover, .menuItemHiliteX:hover,
 .menuItemX:active, .menuItemHiliteX:active, .menuItemX:link, .menuItemHiliteX:link {
   line-height: 24px;
-  color: #000;
+  color: $alert-body-color;
   text-decoration: none;
   width: 120px;
   border-left: none;
