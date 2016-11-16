@@ -420,7 +420,7 @@ class Jjwg_MapsViewConfig extends SugarView {
             value="<?php echo (isset($GLOBALS['jjwg_config']['geocoding_api_secret'])) ?
                 htmlspecialchars($GLOBALS['jjwg_config']['geocoding_api_secret']) :
                 htmlspecialchars($GLOBALS['jjwg_config_defaults']['geocoding_api_secret']); ?>"
-            title='' tabindex='140' size="25" maxlength="32">
+            title='' tabindex='140' size="25" maxlength="255">
             &nbsp; <?php echo $GLOBALS['mod_strings']['LBL_CONFIG_DEFAULT']; ?>
                 <?php echo htmlspecialchars($GLOBALS['jjwg_config_defaults']['geocoding_api_secret']) ?>
         </td>
