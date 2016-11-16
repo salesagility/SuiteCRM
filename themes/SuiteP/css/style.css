@@ -8227,6 +8227,11 @@ object {
     padding: 0 0 0 0;
 }
 
+.panel-body .footable-details tr th,
+.panel-body .footable-details tr th .listViewThLinkS1{
+    color: #534D64;
+}
+
 div.panel-heading a.collapsed {
     background-color: #BFCAD3 !important;
 }

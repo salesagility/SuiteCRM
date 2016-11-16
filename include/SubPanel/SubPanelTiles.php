@@ -388,6 +388,7 @@ class SubPanelTiles
         $template->assign('tab_names', $tab_names);
         $template->assign('module_sub_panels', $module_sub_panels);
         $template->assign('module', $this->module);
+        $template->assign('APP', $app_strings);
 
         $template_body = $template->fetch('include/SubPanel/tpls/SubPanelTiles.tpl');
 

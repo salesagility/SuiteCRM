@@ -159,6 +159,7 @@ class SubPanel
 		global $app_strings;
 		global $current_user;
 		global $sugar_config;
+		global $app_strings;
 
 //		if(isset($this->listview)){
 //			$ListView =& $this->listview;
@@ -174,6 +175,7 @@ class SubPanel
 		$ListView->smartyTemplateAssign("EDIT_INLINE_PNG", SugarThemeRegistry::current()->getImage('edit_inline','align="absmiddle"  border="0"',null,null,'.gif',$app_strings['LNK_EDIT']));
 		$ListView->smartyTemplateAssign("DELETE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LBL_DELETE_INLINE']));
 		$ListView->smartyTemplateAssign("REMOVE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LBL_ID_FF_REMOVE']));
+		$ListView->smartyTemplateAssign("APP", $app_strings);
 		$header_text= '';
 
 		$ListView->smartyTemplateAssign("SUBPANEL_ID", $this->subpanel_id);

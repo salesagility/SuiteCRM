@@ -42,7 +42,7 @@
   * This template is now displays to the sub panel
   */
 *}
-<table cellpadding="0" cellspacing="0" border="0" class="list view table-responsive" >
+<table cellpadding="0" cellspacing="0" border="0" class="list view table-responsive" data-empty="{$APP.MSG_LIST_VIEW_NO_RESULTS_BASIC}">
     <thead>
         <tr class="footable-header">
             {counter start=0 name="colCounter" print=false assign="colCounter"}
