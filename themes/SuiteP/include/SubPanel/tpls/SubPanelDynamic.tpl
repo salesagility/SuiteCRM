@@ -42,15 +42,29 @@
   * This template is now displays to the sub panel
   */
 *}
-<table cellpadding="0" cellspacing="0" border="0" class="list view table-responsive">
+<table cellpadding="0" cellspacing="0" border="0" class="list view table-responsive" >
     <thead>
-        <tr>
+        <tr class="footable-header">
+            {counter start=0 name="colCounter" print=false assign="colCounter"}
+            <th data-type="html"><!-- extra th for the plus button -->&nbsp;</th>
             {foreach from=$HEADER_CELLS key=colHeader item=header}
-                <th>{$header}</th>
+                {* calculate break points for footable *}
+                {if $colCounter <= 2}
+                    {capture assign="breakpoints"}show{/capture}
+                {/if}
+
+                {if $colCounter > 2 && $colCounter < 5}
+                    {capture assign="breakpoints"}xs sm{/capture}
+                {/if}
+
+                {if $colCounter >= 5 && $colCounter}
+                    {capture assign="breakpoints"}xs sm md{/capture}
+                {/if}
+                <th {if $colCounter != "show"}data-breakpoints="{$breakpoints}"{/if} data-type="html">{$header}</th>
+                {counter name="colCounter" print=false}
             {/foreach}
-            <th><!-- extra th for the button --></th>
+            <th data-type="html"><!-- extra th for the button --></th>
         </tr>
-        <tr>
         {* TODO: Break $pagination so that it can be fully customisable *}
         {$PAGINATION}
         <tr id="activities_search" class="pagination" style="display:none">
@@ -67,7 +81,8 @@
             {*Even row*}
             {assign var="rowClass" value="evenListRowS1"}
         {/if}
-        <tr class="{$rowClass}">
+        <tr class="{$rowClass}" >
+            <td>&nbsp;</td>
             {foreach from=$row key=colHeader item=cell}
                 <td>{$cell}</td>
             {/foreach}
