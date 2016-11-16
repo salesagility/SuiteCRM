@@ -44,7 +44,7 @@ img, svg {
 /**** SIDEBAR ****/
 .sidebar {
   position: fixed;
-  top: 90px;
+  top: 80px;
   bottom: 0;
   left: 0;
   z-index: 1000;
@@ -479,13 +479,13 @@ footer.collapsedSidebar {
   background: #534d64; }
   .navbar-inverse .navbar-brand {
     color: whitesmoke;
-    height: 90px;
-    line-height: 90px;
+    height: 80px;
+    line-height: 80px;
     padding: 0;
     display: inline;
     background-image: url("../../../../themes/SuiteP/images/p_icon_home.png");
     background-repeat: no-repeat;
-    background-position: 0px 35.0px;
+    background-position: 0px 31.11111px;
     text-indent: -9999px;
     overflow: hidden;
     width: 40px; }
@@ -540,9 +540,9 @@ footer.collapsedSidebar {
     .navbar-inverse .nav > .topnav {
       margin: 0;
       font-size: 13px;
-      height: 90px;
+      height: 80px;
       letter-spacing: 2px;
-      line-height: 90px;
+      line-height: 80px;
       padding: 0 7px 0 7px;
       text-transform: uppercase; }
       .navbar-inverse .nav > .topnav > span.notCurrentTab > a {
@@ -562,8 +562,8 @@ footer.collapsedSidebar {
     border-top-left-radius: 3px; }
 
 .navbar {
-  min-height: 90px;
-  max-height: 90px; }
+  min-height: 80px;
+  max-height: 80px; }
 
 #mobileheader .dropdown-menu li:last-of-type a {
   border-bottom: none; }
@@ -833,10 +833,10 @@ li#usermenu a:hover {
   color: #f08377; }
 
 #globalLinks {
-  margin-top: 22.5px; }
+  margin-top: 20px; }
 
 #globalLinks.globalLinks-desktop {
-  margin-top: 36.34615px; }
+  margin-top: 32.30769px; }
 
 #globalLinks ul.user-dropdown li a {
   color: whitesmoke; }
@@ -901,7 +901,7 @@ li#usermenu a:hover span.user_icon {
 
 #searchform {
   margin-right: -10px;
-  margin-top: 22.5px;
+  margin-top: 20px;
   margin-right: 15px; }
 
 #search_form label {
@@ -1093,7 +1093,7 @@ a[id^=grouptab]:active {
 
 #quickcreatetop {
   float: left;
-  margin-top: 22.5px;
+  margin-top: 20px;
   margin-right: 15px; }
 
 #quickcreatetop a {
@@ -1291,7 +1291,7 @@ a[id^=grouptab]:active {
     line-height: 20px; }
 
   .mobile-bar .user-dropdown {
-    top: 30px;
+    top: 26.66667px;
     left: -140px; } }
 .mobile-bar ul.dropdown-menu.user-dropdown {
   left: -140px; }
@@ -1301,14 +1301,14 @@ a[id^=grouptab]:active {
 
 @media (min-width: 768px) and (min-height: 381px) {
   .mobile-bar #globalLinks {
-    height: 90px; } }
+    height: 80px; } }
 @media (min-width: 768px) and (min-height: 381px) {
   .mobile-bar #globalLinks {
-    height: 90px; } }
+    height: 80px; } }
 @media (max-width: 1560px) {
   .navbar-fixed-top {
-    height: 90px;
-    max-height: 90px; }
+    height: 80px;
+    max-height: 80px; }
 
   #searchform {
     display: none; }
@@ -1477,23 +1477,23 @@ a[id^=grouptab]:active {
     background-position: 0px 0px; } }
 @media (min-width: 750px) {
   .modulename {
-    line-height: 90px; }
+    line-height: 80px; }
 
   .navbar-toggle {
-    height: 90px; }
+    height: 80px; }
 
   #mobile_menu {
-    top: 90px;
+    top: 80px;
     left: 10px;
     -webkit-overflow-scrolling: touch; }
 
   .mobile-bar .user-dropdown {
-    top: 67.5px;
+    top: 60px;
     left: -140px; }
 
   #search .dropdown-menu {
     position: absolute;
-    top: 16.36364px;
+    top: 14.54545px;
     right: 0;
     bottom: auto;
     left: -224px;
@@ -1546,7 +1546,7 @@ a[id^=grouptab]:active {
     float: left;
     width: 44px;
     height: 48px;
-    margin-top: 22.5px;
+    margin-top: 20px;
     margin-right: 10px;
     background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert.svg"), url("../../../../themes/SuiteP/images/p_icon_alert.png");
     background-repeat: no-repeat;
@@ -1574,7 +1574,7 @@ a[id^=grouptab]:active {
     fill: whitesmoke; }
 
   #search #searchbutton {
-    margin-top: 22.5px;
+    margin-top: 20px;
     margin-right: 15px; }
 
   #search #searchbutton {
@@ -1663,7 +1663,7 @@ a[id^=grouptab]:active {
 
   #toolbar {
     display: block;
-    margin-top: -90px;
+    margin-top: -80px;
     height: 48px; } }
 @media (max-width: 750px) {
   .navbar .container-fluid {
@@ -3692,7 +3692,7 @@ td.dashlet-title > h3 > span {
   /*Override bootstrap (needs to be stacked)*/ }
   #content .nav-tabs {
     border: hidden;
-    margin: 16px 0 16px 0; }
+    margin: 12px 0 12px 0; }
   #content .dropdown-menu {
     overflow: visible;
     min-width: 200px;
@@ -3706,7 +3706,7 @@ td.dashlet-title > h3 > span {
     letter-spacing: normal;
     font-size: 13px;
     margin: 0;
-    line-height: 32px;
+    line-height: 24px;
     cursor: pointer; }
   #content .nav-tabs > li > a,
   #content .nav-tabs > li > a:focus,
@@ -3718,7 +3718,7 @@ td.dashlet-title > h3 > span {
     background-color: #bfcad3;
     margin: 0 2px 0 2px;
     color: white;
-    line-height: 32px;
+    line-height: 24px;
     border-color: #eee #eee #fff;
     cursor: pointer; }
   #content .nav-tabs > li.active > a,
@@ -3731,7 +3731,7 @@ td.dashlet-title > h3 > span {
     background-color: #778591;
     margin: 0 2px 0 2px;
     color: white;
-    line-height: 32px;
+    line-height: 24px;
     border-color: #eee #eee #fff;
     cursor: pointer; }
   #content #overflow-menu > li > span.notCurrentTabLeft, #content #overflow-menu > li > span.notCurrentTabRight {
@@ -3761,10 +3761,10 @@ td.dashlet-title > h3 > span {
   #content .nav > li > a.first-tab-xs {
     background-color: #778591;
     border-bottom: none;
-    padding-right: 32px;
+    padding-right: 24px;
     background-image: url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
     background-repeat: no-repeat;
-    background-position: right 16px top 24px; }
+    background-position: right 12px top 18px; }
   #content #first-tab-menu-xs.dropdown-menu > li > a {
     border-bottom: 1px solid #93A0AB; }
   #content #first-tab-menu-xs.dropdown-menu > li:last-of-type > a {
@@ -3786,10 +3786,10 @@ td.dashlet-title > h3 > span {
   #content #tab-actions > a {
     cursor: pointer;
     background-color: #f08377;
-    padding-right: 32px;
+    padding-right: 24px;
     background-image: url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
     background-repeat: no-repeat;
-    background-position: right 16px top 24px;
+    background-position: right 12px top 18px;
     border-color: #f08377;
     border-bottom: #fa988d; }
   #content #tab-actions > a:hover {
@@ -3940,7 +3940,7 @@ div.noBullet li, .nobullet {
 
 #content {
   width: 100%;
-  padding: 30px 3% 40px 3%; }
+  padding: 15px 3% 40px 3%; }
 
 #pagecontent:after {
   clear: both; }
@@ -5855,7 +5855,7 @@ a:link, a:visited, a:hover {
   color: #534d64;
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin: 0px 0 40px 0;
+  margin: 0px 0 20px 0;
   font-weight: 300; }
 
 .moduleTitle > h2 > img {
