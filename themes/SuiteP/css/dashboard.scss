@@ -269,7 +269,7 @@ td.dashlet-title > h3 > span {
 #basicChartDashletsList a,
 #toolsDashletsList a,
 #webDashletsList a {
-  color: #D66C60;
+  color: $link-color;
   margin: 5px;
 }
 
@@ -341,7 +341,7 @@ td.dashlet-title > h3 > span {
 }
 
 #dashletbuttons {
-  color: #F08377;
+  color: $danger-btn-bg;
   margin: 0 2px 0 2px;
 }
 
@@ -523,7 +523,7 @@ td.dashlet-title > h3 > span {
   }
 }
 
-@media (max-width: 750px) {
+@media (max-width: 768px) {
   .dashletcontainer.col-50 {
     width: 100%;
   }
@@ -538,7 +538,7 @@ td.dashlet-title > h3 > span {
   }
 }
 
-@media (min-width: 750px) {
+@media (min-width: 769px) {
   .dashletcontainer.col-50 {
     width: 50%;
   }

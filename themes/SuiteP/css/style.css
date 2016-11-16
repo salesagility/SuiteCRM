@@ -3471,7 +3471,7 @@ td.dashlet-title > h3 > span {
 #basicChartDashletsList a,
 #toolsDashletsList a,
 #webDashletsList a {
-  color: #D66C60;
+  color: #f08377;
   margin: 5px; }
 
 #moduleDashletsList a span, #basicChartDashletsList a span, #toolsDashletsList a span, #webDashletsList a span {
@@ -3525,7 +3525,7 @@ td.dashlet-title > h3 > span {
   font-weight: normal; }
 
 #dashletbuttons {
-  color: #F08377;
+  color: #f08377;
   margin: 0 2px 0 2px; }
 
 #dashletbuttons:hover {
@@ -3662,7 +3662,7 @@ td.dashlet-title > h3 > span {
     margin-bottom: 25px;
     height: 70%;
     overflow: scroll; } }
-@media (max-width: 750px) {
+@media (max-width: 768px) {
   .dashletcontainer.col-50 {
     width: 100%; }
 
@@ -3673,7 +3673,7 @@ td.dashlet-title > h3 > span {
     float: none;
     display: block;
     clear: both; } }
-@media (min-width: 750px) {
+@media (min-width: 769px) {
   .dashletcontainer.col-50 {
     width: 50%; } }
 /**** List view ***/
@@ -3869,7 +3869,7 @@ div#searchResults {
 #edittabs .listContainer li span {
   display: block;
   padding: 8px 0 8px 8px;
-  background: #f5f5f5;
+  background: whitesmoke;
   margin-bottom: 4px;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -3883,7 +3883,7 @@ div#searchResults {
   width: 100%; }
 
 #edittabs #groupTable {
-  background: #ffffff;
+  background: white;
   border: 1px solid transparent;
   border-radius: 4px; }
 
@@ -3916,12 +3916,9 @@ span.error:empty {
   width: 10%; }
 
 #ygddfdiv {
-  background: #B29Eb5 !important;
+  background: #aa9dcc !important;
   opacity: 1 !important;
   padding: 8px; }
-
-.slotSub {
-  background: #00AA00; }
 
 div.noBullet li, .nobullet {
   list-style-type: none; }
@@ -3948,7 +3945,7 @@ a#admin_options, a#powered_by {
   cursor: pointer; }
 
 a#admin_options:hover, a#powered_by:hover {
-  color: #D66C60;
+  color: #d66c60;
   text-decoration: none; }
 
 #copyright_data {
@@ -3971,7 +3968,7 @@ a#admin_options:hover, a#powered_by:hover {
   font-size: 12px; }
 
 .footer_right a:hover {
-  color: #D66C60;
+  color: #d66c60;
   background-position: right -15px; }
 
 .subDmenu {
@@ -3985,7 +3982,7 @@ a#admin_options:hover, a#powered_by:hover {
 .menuItemX:visited, .menuItemHiliteX:visited, .menuItemX:hover, .menuItemHiliteX:hover,
 .menuItemX:active, .menuItemHiliteX:active, .menuItemX:link, .menuItemHiliteX:link {
   line-height: 24px;
-  color: #000;
+  color: black;
   text-decoration: none;
   width: 120px;
   border-left: none;
