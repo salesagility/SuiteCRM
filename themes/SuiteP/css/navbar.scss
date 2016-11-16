@@ -17,6 +17,11 @@
     overflow: hidden;
     width: 40px;
   }
+
+  .dropdown-menu>li>a {
+    line-height: normal;
+  }
+
   .dropdown-menu {
     padding: 4px 10px 4px 10px;
     min-width: 240px;
@@ -285,23 +290,23 @@
 }
 
 #mobileheader .dropdown-menu ul li a.recent-links-detail {
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 #mobileheader .dropdown-menu ul li a.favorite-links-detail {
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 #mobileheader .dropdown-menu ul li a.recent-links-edit {
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 #mobileheader .dropdown-menu ul li a.favorite-links-edit {
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 #mobileheader .dropdown-menu ul li a.recent-links-detail {
@@ -453,6 +458,20 @@
   background: $danger-btn-bg;
 }
 
+#mobile_menu {
+  padding: 4px 10px;
+}
+
+#mobile_menu a .glyphicon-plus {
+  float: right;
+  height: 28px;
+  width: 28px;
+  text-align: center;
+}
+
+#mobile_menu a:hover .glyphicon-plus {
+  color: $main-menu-color;
+}
 
 .navbar-inverse .navbar-brand:hover {
   //background-position: 0px $home-icon-bg-pos-y-over;
@@ -1479,7 +1498,7 @@ a[id^=grouptab]:active {
     width: 300px ;
     margin: 0;
     padding: 0;
-    background: #5d5670 ;
+    background: $main-menu-bg ;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
 
@@ -1487,17 +1506,14 @@ a[id^=grouptab]:active {
 
   #mobile_menu li {
     list-style: none;
-    height: 50px;
-    margin: 0;
-    border-bottom: 1px solid #757083;
-    line-height: 50px;
   }
 
   #mobile_menu a {
     color: $main-menu-color;
     display: block;
-    padding: 0px 15px;
+    padding: 12px 15px;
     font-size: 14px;
+
   }
 
   #mobile_menu a:hover {
@@ -1789,6 +1805,11 @@ a[id^=grouptab]:active {
   max-height: 200px;
   height: 200px;
 }
+
+#mobile_menu .create-module-record {
+  display: inline-block;
+}
+
 
 .navbar-header ul.dropdown-menu {
   max-height: 200px;
