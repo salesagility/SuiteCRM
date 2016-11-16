@@ -2456,8 +2456,8 @@ fieldset[disabled] .btn-primary.active {
   text-transform: uppercase;
   font-weight: 500;
   letter-spacing: 1px;
-  height: 40px;
-  line-height: 40px;
+  height: 32px;
+  line-height: 32px;
   border-style: none; }
 
 .removeFileButton {
@@ -2476,8 +2476,8 @@ fieldset[disabled] .btn-primary.active {
   text-transform: uppercase;
   font-weight: 500;
   letter-spacing: 1px;
-  height: 40px;
-  line-height: 40px; }
+  height: 32px;
+  line-height: 32px; }
 
 .btn-default, .btn-default:hover {
   color: whitesmoke;
@@ -2738,8 +2738,8 @@ input[type="button"][disabled] {
   text-transform: uppercase;
   font-weight: 500;
   letter-spacing: 1px;
-  height: 40px;
-  line-height: 40px; }
+  height: 32px;
+  line-height: 32px; }
 
 [field="billing_address_street"].detail-view-field {
   padding: 16px 16px 32px 16px; }
@@ -2907,20 +2907,20 @@ textarea {
   padding: 5px; }
 
 input[type=text] {
-  line-height: 40px;
-  min-height: 40px; }
+  line-height: 32px;
+  min-height: 32px; }
 
 input[type=password] {
-  line-height: 40px;
-  min-height: 48px; }
+  line-height: 32px;
+  min-height: 40px; }
 
 input[type=email] {
-  line-height: 40px;
-  min-height: 48px; }
+  line-height: 32px;
+  min-height: 40px; }
 
 input:not([type]) {
-  line-height: 40px;
-  min-height: 48px; }
+  line-height: 32px;
+  min-height: 40px; }
 
 textarea {
   width: 50%; }
@@ -2941,8 +2941,8 @@ select[size] {
   scrollbar-base-color: #a5e8d6;
   scrollbar-arrow-color: #a5e8d6;
   color: #534d64;
-  height: 48px;
-  line-height: 48px; }
+  height: 40px;
+  line-height: 40px; }
 
 select {
   border-style: solid;
@@ -2960,8 +2960,8 @@ select {
   scrollbar-base-color: #a5e8d6;
   scrollbar-arrow-color: #a5e8d6;
   color: #534d64;
-  height: 48px;
-  line-height: 48px; }
+  height: 40px;
+  line-height: 40px; }
 
 select:focus {
   -moz-appearance: none;
@@ -3045,11 +3045,11 @@ div.col-sm-6 #email1_span td.email-address-input {
 #email1_span td.email-address-primary,
 #email1_span td.email-address-opt-out,
 #email1_span td.email-address-invalid {
-  width: 52px;
-  height: 52px;
+  width: 44px;
+  height: 44px;
   /* same height as td.email-address-input */
   display: inline-block;
-  line-height: 48px; }
+  line-height: 40px; }
 
 div.col-sm-12 #email1_span td.email-address-add-button {
   width: 25%;
