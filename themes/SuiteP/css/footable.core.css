@@ -90,7 +90,7 @@ div.footable-loader > span.fooicon {
 table.footable > tbody > tr.footable-empty > td {
   vertical-align: middle;
   text-align: center;
-  font-size: 13px;
+  font-size: 12px;
 }
 table.footable > tbody > tr > td,
 table.footable > tbody > tr > th {

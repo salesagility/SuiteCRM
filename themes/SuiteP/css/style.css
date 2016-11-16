@@ -8185,7 +8185,7 @@ object {
 .sub-panel thead .pagination .SugarActionMenu .subnav {
     left: 0px;
     background: #94A6B5;
-    border-radius: 0;
+    border-radius: 4px;
 }
 
 .sub-panel thead .pagination .SugarActionMenu .subnav li a {
@@ -8206,7 +8206,7 @@ object {
 .sub-panel tbody .SugarActionMenu .subnav {
     left: 0px;
     background-color: #94A6B5;
-    border-radius: 0;
+    border-radius: 4px;
 }
 
 .sub-panel tbody .SugarActionMenu > li > a {
@@ -8227,10 +8227,53 @@ object {
     padding: 0 0 0 0;
 }
 
+/*footables (subpanel)*/
 .panel-body .footable-details tr th,
-.panel-body .footable-details tr th .listViewThLinkS1{
+.panel-body .footable-details tr th .listViewThLinkS1 {
     color: #534D64;
 }
+
+
+.panel-body .footable-details tr td,
+.panel-body .footable-details tr th,
+.list .footable-detail-row td {
+    padding: 5px !important;
+    background-color: #FAF7CF;
+}
+
+.panel-body .footable-details tr th,
+.panel-body .footable-details tr th .listViewThLinkS1 {
+    font-size: 12px;
+}
+
+.panel-body table.footable > tbody > tr.footable-empty > td {
+    vertical-align: middle;
+    text-align: center;
+    font-size: 12px;
+}
+
+.footable-details.view {
+    margin: 0  32px 0 32px ;
+    width: 70%;
+}
+
+.footable-details.view, .footable-details.table.view {
+    background-color: #FAF7CF;
+}
+
+.footable-details tr {
+    background-color: #FAF7CF;
+}
+
+.footable-details td {
+    background-color: #FAF7CF;
+}
+
+tr[data-expanded=true].oddListRowS1 td,
+tr[data-expanded=true].evenListRowS1 td {
+    background-color: #FAF7CF;
+}
+
 
 div.panel-heading a.collapsed {
     background-color: #BFCAD3 !important;
@@ -8836,8 +8879,42 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 }
 
+@media (max-width: 425px) {
+    .SugarActionMenu > li > span {
+        visibility: collapse;
+    }
+}
 
 @media (max-width: 750px) {
+
+    /*subpanel buttons*/
+    .SugarActionMenu .sugar_action_button form {
+        padding-left: 5px !important;
+        padding-right: 5px  !important;;
+    }
+
+    .sugar_action_button,
+    .SugarActionMenu .sugar_action_button {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .sub-panel .SugarActionMenu > li > a {
+        font-size: 12px !important;
+        padding-left: 0;
+        padding-right: 0;
+        margin-right: 0;
+        width: 50%;
+    }
+
+    .SugarActionMenu .sugar_action_button form a {
+        font-size: 12px;
+        margin-right: 0;
+    }
+
+    .sub-panel thead .pagination .button {
+        width: 16px;
+    }
 
     #bootstrap-container {
         margin-top: 110px !important;
