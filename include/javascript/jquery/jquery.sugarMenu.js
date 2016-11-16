@@ -168,59 +168,79 @@
 						dropDownHandle = $(parent.find("span"));
 					}
 
+          var toggleDropDown = function() {
+            //close all other open menus
+            //restore the dom elements back by handling iefix
+            $("ul.SugarActionMenu > li").each(function() {
+              $(this).sugarActionMenu('IEfix');
+            });
+            $("ul.SugarActionMenu ul.subnav").each(function(subIndex, node){
+              var subjNode = $(node);
+              if(!(subjNode[0] === jNode[0])){
+                subjNode.slideUp(slideUpSpeed);
+                subjNode.removeClass("ddopen");
+              }
+            });
+            if(jNode.hasClass("ddopen")){
+              parent.sugarActionMenu('IEfix');
+              //Bug#50983: Popup the dropdown list above the arrow if the bottom part is cut off .
+              var _animation = {
+                'height' : 0
+              };
+              if(jNode.hasClass("upper")) {
+                _animation['top'] = (dropDownHandle.height() * -1);
+              }
+              jNode.animate(_animation, slideUpSpeed, function() {
+                $(this).css({
+                  'height' : '',
+                  'top' : ''
+                }).hide().removeClass("upper ddopen");
+              });
+            }
+            else{
+              //To support IE fixed size rendering,
+              //parse out dom elements out of the fixed element
+              parent.sugarActionMenu('IEfix', jNode);
+              var _dropdown_height = jNode.height(),
+                _animation = { 'height' : _dropdown_height },
+                _dropdown_bottom = dropDownHandle.offset().top + dropDownHandle.height() - $(document).scrollTop() + jNode.outerHeight(),
+                _win_height = $(window).height();
+              if(dropDownHandle.offset().top > jNode.height() && _dropdown_bottom > $(window).height()) {
+                jNode.css('top', (dropDownHandle.height() * -1)).addClass("upper");
+                _animation['top'] = (jNode.height() + dropDownHandle.height()) * -1;
+              }
+
+              jNode.height(0).show().animate(_animation,slideDownSpeed, function() {
+                $(this).css('height', '');
+                setTimeout(function(){
+                  $('.subnav.ddopen').each(function(i,e){
+                    if($(e).hasClass('upper')) {
+                      $(e).css('top', parseInt($(e).css('top'))-($(e).find('a').length-1)*5 + 'px');
+                    }
+                    else {
+                      $(e).css('top', parseInt($(e).css('top')) + 10 + 'px');
+                    }
+                  })
+                }, 2);
+              });
+              jNode.addClass("ddopen");
+            }
+          };
+
 
 						//add click handler to handle
 						dropDownHandle.click(function(event){
-
-
-							//close all other open menus
-                            //retore the dom elements back by handling iefix
-                            $("ul.SugarActionMenu > li").each(function() {
-                                $(this).sugarActionMenu('IEfix');
-                            });
-							$("ul.SugarActionMenu ul.subnav").each(function(subIndex, node){
-								var subjNode = $(node);
-								if(!(subjNode[0] === jNode[0])){
-									subjNode.slideUp(slideUpSpeed);
-									subjNode.removeClass("ddopen");
-								}
-							});
-							if(jNode.hasClass("ddopen")){
-                                parent.sugarActionMenu('IEfix');
-                                //Bug#50983: Popup the dropdown list above the arrow if the bottom part is cut off .
-                                var _animation = {
-                                    'height' : 0
-                                };
-                                if(jNode.hasClass("upper")) {
-                                    _animation['top'] = (dropDownHandle.height() * -1);
-                                }
-								jNode.animate(_animation, slideUpSpeed, function() {
-                                    $(this).css({
-                                        'height' : '',
-                                        'top' : ''
-                                    }).hide().removeClass("upper ddopen");
-                                });
-							}
-							else{
-                                //To support IE fixed size rendering,
-                                //parse out dom elements out of the fixed element
-                                parent.sugarActionMenu('IEfix', jNode);
-                                var _dropdown_height = jNode.height(),
-                                    _animation = { 'height' : _dropdown_height },
-                                    _dropdown_bottom = dropDownHandle.offset().top + dropDownHandle.height() - $(document).scrollTop() + jNode.outerHeight(),
-                                    _win_height = $(window).height();
-                                if(dropDownHandle.offset().top > jNode.height() && _dropdown_bottom > $(window).height()) {
-                                    jNode.css('top', (dropDownHandle.height() * -1)).addClass("upper");
-                                    _animation['top'] = (jNode.height() + dropDownHandle.height()) * -1;
-                                }
-
-								jNode.height(0).show().animate(_animation,slideDownSpeed, function() {
-                                    $(this).css('height', '');
-                                });
-								jNode.addClass("ddopen");
-							}
+              toggleDropDown();
 							event.stopPropagation();
 						});
+
+          var parentDropDownHandler = parent.find('a').first().hasClass('parent-dropdown-handler');
+          if(parentDropDownHandler) {
+            parent.click(function(event){
+              dropDownHandle.click();
+              event.stopPropagation();
+            });
+          }
 
 						//add submenu click off to body
 						var jBody = $("body");

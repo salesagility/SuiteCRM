@@ -2468,6 +2468,13 @@ sugarListView.prototype.check_entire_list = function(form, field, value, list_co
 	document.MassUpdate.select_entire_list.value = 1;
 	sugarListView.update_count(list_count, false);
     sugarListView.prototype.toggleSelected();
+	$('input[name="massall"]').prop('checked', true);
+	$('.glyphicon.bootstrap-checkbox').each(function (i, e) {
+		if(typeof refreshListViewCheckbox !== 'undefined') {
+			refreshListViewCheckbox(e);
+		}
+	});
+
 }
 
 sugarListView.prototype.check_all = function(form, field, value, pageTotal) {

@@ -36,6 +36,26 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+SUGAR.measurements = {
+    "breakpoints": {
+        "x-small": 750,
+        "small": 768,
+        "medium": 992,
+        "large": 1130,
+        "x-large": 1250
+    }
+};
+
+$(document).ajaxStop( function() {
+    // collapse subpanels when device is mobile / tablet
+    if($(window).width() <= SUGAR.measurements.breakpoints.large) {
+        $('.panel-collapse').removeClass('in');
+        $('.panel-heading-collapse a').removeClass('in');
+        $('.panel-heading-collapse a').addClass('collapsed');
+    }
+});
+
 $(document).ready(function () {
     loadSidebar();
     $("ul.clickMenu").each(function (index, node) {
@@ -277,15 +297,7 @@ $(function() {
 });
 
 jQuery(function($){
-    $('table.footable').footable({
-        "breakpoints": {
-            "x-small": 680,
-            "small": 768,
-            "medium": 992,
-            "large": 1130,
-            "x-large": 1250
-        }
-    });
+    $('table.footable').footable(SUGAR.measurements);
 })
 
 
@@ -404,6 +416,21 @@ var isDetailViewPage = function() {
         action = action_sugar_grp1;
     }
     return action == 'DetailView';
+};
+
+var refreshListViewCheckbox = function(e) {
+    $(e).removeClass('glyphicon-check');
+    $(e).removeClass('glyphicon-unchecked');
+    if($(e).next().prop('checked')) {
+        $(e).addClass('glyphicon-check');
+    }
+    else {
+        $(e).addClass('glyphicon-unchecked');
+    }
+    $(e).removeClass('disabled')
+    if($(e).next().prop('disabled')) {
+        $(e).addClass('disabled')
+    }
 };
 
 $(function () {
@@ -592,6 +619,52 @@ $(function () {
     setTimeout(function(){
         hideEmptyFormCellsOnTablet();
     }, 1500);
+    
 
+    var listViewCheckboxesInitialized = false;
+    var initializeBootstrapCheckboxes = function() {
+        if(!listViewCheckboxesInitialized) {
+            if ($('.glyphicon.bootstrap-checkbox').length == 0) {
+                setTimeout(function () {
+                    initializeBootstrapCheckboxes();
+                }, 100);
+            } else {
+                $('.glyphicon.bootstrap-checkbox').each(function (i, e) {
+                    $(e).removeClass('hidden');
+                    $(e).next().hide();
+                    refreshListViewCheckbox(e);
+                    $(e).click(function () {
+                        $(this).next().click();
+                        refreshListViewCheckbox($(this));
+                    });
+                });
+
+                $('#selectLink > li > ul > li > a, #selectLinkTop > li > ul > li > a, #selectLinkBottom > li > ul > li > a').click(function (e) {
+                    e.preventDefault();
+                    $('.glyphicon.bootstrap-checkbox').each(function (i, e) {
+                        refreshListViewCheckbox(e);
+                    });
+                });
+
+                listViewCheckboxesInitialized = true;
+            }
+        }
+    };
+    initializeBootstrapCheckboxes();
+
+    setInterval(function() {
+        $('.subnav').each(function(i,e){
+            if($(e).hasClass('ddopen')) {
+                $(e).closest('.sugar_action_button').addClass('hover');
+                if(!$(e).hasClass('upper')) {
+                    $(e).closest('.sugar_action_button').addClass('opened');
+                }
+            }
+            else {
+                $(e).closest('.sugar_action_button').removeClass('hover');
+                $(e).closest('.sugar_action_button').removeClass('opened');
+            }
+        });
+    }, 100);
 
 });
