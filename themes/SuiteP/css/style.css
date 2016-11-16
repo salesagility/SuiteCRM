@@ -4345,6 +4345,12 @@ ul#detailViewActions.clickMenu {
     font-size: 14px;
 }
 
+.sugar_action_button > .parent-dropdown-action-handler {
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: normal;
+}
+
 .clickMenu.SugarActionMenu > li > ul > li {
     font-weight: normal;
 }
@@ -11336,3 +11342,4 @@ li.sugar_action_button.hover.opened {
 ul.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button label.glyphicon.bootstrap-checkbox {
     margin-left: 4px;
 }
+
