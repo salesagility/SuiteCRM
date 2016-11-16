@@ -149,7 +149,7 @@ div.noBullet li, .nobullet
 
 #content {
   width: 100%;
-  padding: 30px 3% 40px 3%;
+  padding: $content-top 3% 40px 3%;
 }
 
 #bootstrap-container.col-md-offset-2 {
@@ -2510,7 +2510,7 @@ a:link, a:visited, a:hover {
   color: $main-color;
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin: 0px 0 40px 0;
+  margin: 0px 0 $page-title-space 0;
   font-weight: 300;
 }
 

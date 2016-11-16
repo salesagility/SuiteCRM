@@ -94,13 +94,14 @@ $dashlet-header-bg: #778591;
 $page-font-family: 'Lato', Lato, Arial, sans-serif;
 $page-font-size: 13px;
 $page-p-size: 14px;
+$page-title-space: 20px; // normal 40px
 /// Breakpoints
 $xs-breakpoint: 750px;
 $sm-breakpoint: 768px;
 $md-breakpoint: 992px;
 $lg-breakpoint: 1130px;
 ///
-$navbar-height: 90px; /// 90px normal or 72px small
+$navbar-height: 80px; /// 90px normal or 80px small
 $navbar-mobile-height: 60px;
 $navbar-toolbar-height: 48px;
 $navbar-topnav-font-size: 13px; /// 13px normal
@@ -109,8 +110,10 @@ $home-icon-bg-pos-y:  ($navbar-height / 2.571428571);
 //// Inputs
 $input-line-height: 40px; // 40px normal 32px small
 /// Tabs
-$tab-height: 32px; // 32p normal 24px small
+$tab-height: 24px; // 32p normal 24px small
 
 $dashlet-title-height: 40px; // 48px normal 40px small
 $dashlet-header-height: 32px; // 32px normal 24px small
 $dashlet-header-padding: 5px; // 5 normal 0px small
+
+$content-top: 15px; // 30px normal
