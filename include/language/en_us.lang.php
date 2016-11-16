@@ -2433,6 +2433,12 @@ $app_strings = array(
     'LBL_DELETE_REMINDER' => 'Delete Reminder',
     'LBL_OK' => 'Ok',
 
+    'LBL_COLUMNS_FILTER_HEADER_TITLE' => 'Choose columns',
+    'LBL_SAVE_CHANGES_BUTTON_TITLE' => 'Save changes',
+    'LBL_DISPLAYED' => 'Displayed',
+    'LBL_HIDDEN' => 'Hidden',
+    'ERR_EMPTY_COLUMNS_LIST' => 'At least, one element required',
+
 );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
