@@ -73,12 +73,12 @@
   visibility: collapse;
 }
 
-#webDashlets h3{
+#webDashlets h3 {
   display: none;
   visibility: collapse;
 }
 
-#toolsDashlets h3{
+#toolsDashlets h3 {
   display: none;
   visibility: collapse;
 }
@@ -249,8 +249,8 @@ div#chartDashlets {
 }
 
 td.dashlet-title {
-  height: $dashlet-header-height + 4px;
-  line-height: $dashlet-header-height;
+  height: $dashlet-title-height + 4px;
+  line-height: $dashlet-title-height;
 }
 
 td.dashlet-title > h3 > span {
@@ -313,6 +313,16 @@ td.dashlet-title > h3 > span {
   }
 }
 
+.dashletPanel .list tr th a:link {
+  padding-right: 0px;
+}
+
+.dashletPanel .list tr th {
+  padding-top: $dashlet-header-height/2;
+  padding-bottom: $dashlet-header-height/2;
+  padding-left: $dashlet-header-padding;
+  padding-right: $dashlet-header-padding;
+}
 
 
 .dashletPanel .h3Row {
@@ -523,7 +533,7 @@ td.dashlet-title > h3 > span {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .dashletcontainer.col-50 {
     width: 100%;
   }
@@ -538,7 +548,7 @@ td.dashlet-title > h3 > span {
   }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1025px) {
   .dashletcontainer.col-50 {
     width: 50%;
   }

@@ -759,7 +759,7 @@ button#listViewEndButton_top img, button#listViewEndButton_bottom img {
 .td_alt, .list tr th, .list tr td[scope=col], .edit .list tr th, .edit .list tr td[scope=col] {
   font-weight: 800;
   text-align: left;
-  padding: 16px 10px 16px 10px !important;
+  padding: 16px 10px 16px 10px;
   border-left: none;
   border-right: none;
   white-space: nowrap;
@@ -768,11 +768,11 @@ button#listViewEndButton_top img, button#listViewEndButton_bottom img {
 
 .list tr td {
   vertical-align: middle;
-  padding: 3px 8px 5px 5px !important;
+  padding: 3px 8px 5px 5px;
 }
 
 .list tr.pagination td {
-  padding: 0 !important;
+  padding: 0;
 }
 
 .list tr td.odd {
