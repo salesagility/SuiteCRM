@@ -1,0 +1,47 @@
+/*
+Syntax error: Undefined variable: "$danger".
+        on line 16 of variables.scss
+        from line 2 of calendar.scss
+
+Backtrace:
+variables.scss:16
+calendar.scss:2
+/usr/lib/ruby/vendor_ruby/sass/script/variable.rb:49:in `_perform'
+/usr/lib/ruby/vendor_ruby/sass/script/node.rb:40:in `perform'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:327:in `visit_variable'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:37:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:100:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:227:in `block in visit_import'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:227:in `map'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:227:in `visit_import'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:37:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:100:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:53:in `block in visit_children'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:53:in `map'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:53:in `visit_children'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:109:in `block in visit_children'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:121:in `with_environment'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:108:in `visit_children'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:37:in `block in visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:128:in `visit_root'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/base.rb:37:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:100:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/visitors/perform.rb:7:in `visit'
+/usr/lib/ruby/vendor_ruby/sass/tree/root_node.rb:20:in `render'
+/usr/lib/ruby/vendor_ruby/sass/engine.rb:315:in `_render'
+/usr/lib/ruby/vendor_ruby/sass/engine.rb:262:in `render'
+/usr/lib/ruby/vendor_ruby/sass/plugin/compiler.rb:362:in `update_stylesheet'
+/usr/lib/ruby/vendor_ruby/sass/plugin/compiler.rb:203:in `block in update_stylesheets'
+/usr/lib/ruby/vendor_ruby/sass/plugin/compiler.rb:201:in `each'
+/usr/lib/ruby/vendor_ruby/sass/plugin/compiler.rb:201:in `update_stylesheets'
+/usr/lib/ruby/vendor_ruby/sass/plugin.rb:81:in `update_stylesheets'
+/usr/lib/ruby/vendor_ruby/sass/exec.rb:439:in `watch_or_update'
+/usr/lib/ruby/vendor_ruby/sass/exec.rb:326:in `process_result'
+/usr/lib/ruby/vendor_ruby/sass/exec.rb:41:in `parse'
+/usr/lib/ruby/vendor_ruby/sass/exec.rb:21:in `parse!'
+/usr/bin/scss:8:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Syntax error: Undefined variable: \"$danger\".\A         on line 16 of variables.scss\A         from line 2 of calendar.scss"; }
