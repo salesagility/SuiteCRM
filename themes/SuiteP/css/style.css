@@ -3455,8 +3455,8 @@ div#chartDashlets {
   margin-top: -50px; }
 
 td.dashlet-title {
-  height: 52px;
-  line-height: 48px; }
+  height: 44px;
+  line-height: 40px; }
 
 td.dashlet-title > h3 > span {
   margin-left: 8px; }
@@ -3503,6 +3503,15 @@ td.dashlet-title > h3 > span {
     margin: 0;
     float: left;
     padding: 0; } }
+.dashletPanel .list tr th a:link {
+  padding-right: 0px; }
+
+.dashletPanel .list tr th {
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-left: 5px;
+  padding-right: 5px; }
+
 .dashletPanel .h3Row {
   background-color: #66727d;
   color: whitesmoke;
@@ -3662,7 +3671,7 @@ td.dashlet-title > h3 > span {
     margin-bottom: 25px;
     height: 70%;
     overflow: scroll; } }
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .dashletcontainer.col-50 {
     width: 100%; }
 
@@ -3673,7 +3682,7 @@ td.dashlet-title > h3 > span {
     float: none;
     display: block;
     clear: both; } }
-@media (min-width: 769px) {
+@media (min-width: 1025px) {
   .dashletcontainer.col-50 {
     width: 50%; } }
 /**** List view ***/
@@ -4418,7 +4427,7 @@ button#listViewEndButton_top img, button#listViewEndButton_bottom img {
 .td_alt, .list tr th, .list tr td[scope=col], .edit .list tr th, .edit .list tr td[scope=col] {
   font-weight: 800;
   text-align: left;
-  padding: 16px 10px 16px 10px !important;
+  padding: 16px 10px 16px 10px;
   border-left: none;
   border-right: none;
   white-space: nowrap;
@@ -4426,10 +4435,10 @@ button#listViewEndButton_top img, button#listViewEndButton_bottom img {
 
 .list tr td {
   vertical-align: middle;
-  padding: 3px 8px 5px 5px !important; }
+  padding: 3px 8px 5px 5px; }
 
 .list tr.pagination td {
-  padding: 0 !important; }
+  padding: 0; }
 
 .list tr td.odd {
   padding: 3px 8px 5px 5px;
