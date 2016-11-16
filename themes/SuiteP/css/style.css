@@ -4357,6 +4357,12 @@ ul#detailViewActions.clickMenu {
     font-size: 14px;
 }
 
+.sugar_action_button > .parent-dropdown-action-handler {
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: normal;
+}
+
 .clickMenu.SugarActionMenu > li > ul > li {
     font-weight: normal;
 }
