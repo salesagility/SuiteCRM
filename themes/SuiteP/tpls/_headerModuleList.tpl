@@ -43,12 +43,40 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="index.php?module=Home&action=index">{$APP.LBL_BROWSER_TITLE}</a>
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mobile_menu">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="dropdown">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+            <ul class="dropdown-menu" role="menu" id="mobile_menu">
+                {foreach from=$groupTabs item=modules key=group name=groupList}
+                    {if $smarty.foreach.groupList.last}
+                        {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
+                        {foreach from=$modules.modules item=module key=modulekey}
+                            <li role="presentation" data-test="1">
+                                {capture name=moduleTabId assign=moduleTabId}moduleTab_{$smarty.foreach.moduleList.index}_{$module}{/capture}
+                                <a href="javascript:void(0)" onclick="window.location.href = 'index.php{sugar_link id=$moduleTabId module=$modulekey link_only=1 data=$module extraparams=$extraparams}'">
+                                    {$module}
+                                    {if $modulekey !='Home' && $modulekey !='Calendar'}
+                                        <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module={$modulekey}'"></span>
+                                        {*<span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'http://google.com'"></span>*}
+                                    {/if}
+                                </a>
+                            </li>
+                        {/foreach}
+                        {foreach from=$modules.extra item=submodulename key=submodule}
+                            <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = 'index.php{sugar_link module=$submodule link_only=1 extraparams=$extraparams}'">
+                                    {$submodulename}
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module={$submodule}'"></span>
+                                    {*<span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'http://google.com'"></span>*}
+                                </a>
+                            </li>
+                        {/foreach}
+                    {/if}
+                {/foreach}
+            </ul>
             <div id="mobileheader">
                 <div id="modulelinks">
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
@@ -533,34 +561,7 @@
         </div>
 
 
-        <div class="collapse navbar-collapse" id="mobile_menu">
-            {foreach from=$groupTabs item=modules key=group name=groupList}
-                {if $smarty.foreach.groupList.last}
-                    {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
-                    {foreach from=$modules.modules item=module key=modulekey}
-                        {if $modulekey !='Home' && $modulekey !='Calendar'}
-                            <li style="float:right;">
-                                <a href="{sugar_link module=$modulekey action='EditView' link_only=1}"><span
-                                            class="glyphicon glyphicon-plus"></span></a>
-                            </li>
-                        {/if}
-                        <li>
-                            {capture name=moduleTabId assign=moduleTabId}moduleTab_{$smarty.foreach.moduleList.index}_{$module}{/capture}
-                            {sugar_link id=$moduleTabId module=$modulekey data=$module extraparams=$extraparams}
-                        </li>
-                    {/foreach}
-                    {foreach from=$modules.extra item=submodulename key=submodule}
-                        <li style="float:right;">
-                            <a href="{sugar_link module=$modulekey action='EditView' link_only=1}"><span
-                                        class="glyphicon glyphicon-plus"></span></a>
-                        </li>
-                        <li>
-                            <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a>
-                        </li>
-                    {/foreach}
-                {/if}
-            {/foreach}            
-        </div>
+
 </nav>
 <!--End Responsive Top Navigation Menu -->
 {if $THEME_CONFIG.display_sidebar}

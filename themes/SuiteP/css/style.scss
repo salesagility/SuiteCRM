@@ -232,7 +232,7 @@ a#admin_options:hover, a#powered_by:hover {
 }
 
 .menuItemHilite {
-  background-color: #FFFFFF;
+  background-color: $default-btn-color;
 }
 
 .menuItemX {
@@ -1100,7 +1100,7 @@ table#mass_update_table td select {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: #ffffff;
+  color: $default-btn-color;
   padding: 0 5px 0 7px;
 }
 
@@ -1114,7 +1114,7 @@ table#mass_update_table td select {
 #actionLinkTop .sugar_action_button .subnav.ddopen a:hover,
 #actionLinkBottom .sugar_action_button .subnav.ddopen a,
 #actionLinkBottom .sugar_action_button .subnav.ddopen a:hover {
-  color: #ffffff;
+  color: $default-btn-color;
   display: block;
   float: none;
 }
@@ -1264,67 +1264,10 @@ ul.tablist, ul.subpanelTablist {
   margin: 0;
 }
 
-#moduleDashlets h3,
-#chartDashlets h3,
-#webDashlets h3,
-#toolsDashlets h3,
-#searchDashlets h3 {
-  display: none;
-  visibility: collapse;
-}
-
-ul.subpanelTablist li {
-  list-style: none;
-  margin: 0 0 0 3px;
-  padding:0;
-}
-
 
 #dashName {
   margin-bottom: 4px;
 }
-
-
-ul#dashletCategories {
-  display: block;
-  font-size: 13px;
-  height: 28px;
-  border-bottom-color: #778591  !important;
-
-}
-
-ul#dashletCategories > li {
-  display: inline-block;
-  font-size: 13px;
-}
-
-
-ul#dashletCategories > li a,
-ul#dashletCategories > li a:link,
-ul#dashletCategories > li a:hover,
-ul#dashletCategories > li a:visited,
-ul#dashletCategories > li a:active,
-ul#dashletCategories > li a:focus {
-  font-weight: 400;
-  border: 1px solid transparent;
-  background-color: #BFCAD3;
-  padding: 10px 20px 10px 10px;
-  color: #ffffff;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  text-transform: uppercase;
-}
-
-ul#dashletCategories > li.active a,
-ul#dashletCategories > li.active a:link,
-ul#dashletCategories > li.active a:hover,
-ul#dashletCategories > li.active a:visited,
-ul#dashletCategories > li.active a:active,
-ul#dashletCategories > li.active a:focus {
-  background-color: #778591;
-  color: $default-btn-color;
-}
-
 
 ul.subpanelTablist #addPageItem a, ul.subpanelTablist #addPageItem a:hover {
   border: none;
@@ -1495,7 +1438,7 @@ div#responseTime {
 
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime {
   border-left: 4px solid #75AF4F !important;
-  background-color: #FFFFFF;
+  background-color: $default-btn-color;
 }
 
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime {
@@ -1537,11 +1480,11 @@ td.fc-widget-header table > thead > tr > th {
 }
 
 .fc-day-header a {
-  color: #FFFFFF;
+  color: $default-btn-color;
 }
 
 .fc-day-header a:hover {
-  color: #FFFFFF;
+  color: $default-btn-color;
 }
 
 .fc-day-top {
@@ -1561,7 +1504,7 @@ td.fc-widget-header table > thead > tr > th {
   margin-top: 10px;
   border: none;
   background: #778591;
-  color: #ffffff;
+  color: $default-btn-color;
   vertical-align: middle;
   border: 1px solid transparent;
   border-top-left-radius: 4px;
@@ -1570,7 +1513,7 @@ td.fc-widget-header table > thead > tr > th {
 }
 
 #pagecontent > div.row.monthHeader > div > a {
-  color: #ffffff;
+  color: $default-btn-color;
 }
 
 #pagecontent > div.row.monthHeader {
@@ -1685,12 +1628,12 @@ div.fc-toolbar {
 .monthCalBody > .calSharedUser {
   padding: 20px 0 20px 0;
   text-align: center;
-  color: #ffffff;
+  color: $default-btn-color;
 }
 
 thead.fc-head {
   background: #778591;
-  color: #ffffff;
+  color: $default-btn-color;
 }
 
 thead.fc-head tr td {
@@ -1698,7 +1641,7 @@ thead.fc-head tr td {
 }
 
 .fc-day-number {
-  color: #ffffff;
+  color: $default-btn-color;
 }
 .calendar {
   border: 1px solid #999;
@@ -2112,7 +2055,7 @@ table.dateTime {
   margin: 0 0px 0 0px;
   padding: 0 8px 0 0px;
   position: static;
-  color: #ffffff;
+  color: $default-btn-color;
 }
 
 .contentBox {
@@ -2139,19 +2082,6 @@ table.dateTime {
 
 .mceToolbarTop {
   border-bottom: 1px solid #CCCCCC !important;
-}
-
-#dashletCtrls {
-  float: right;
-}
-
-
-#moduleDashlets h3, #chartDashlets h3, #toolsDashlets h3 {
-  margin-top: 13px;
-}
-
-#dashletSearch table tr td input[type=button] {
-  vertical-align: top;
 }
 
 .x-dlg-btns button.x-btn-text:hover,
@@ -2259,43 +2189,6 @@ td.edit.view td[align=right] {
   padding: 0 0.25em;
 }
 
-.sugarFeedDashlet {
-  overflow: auto;
-  max-height: 375px;
-}
-
-.sugarFeedDashlet td.list th, .sugarFeedDashlet td.list td[scope=col] {
-  display: none;
-}
-
-.sugarFeedDashlet tr {
-  height: auto;
-}
-
-.sugarFeedDashlet .byLineBox,
-.sugarFeedDashlet blockquote
-{
-  width:100%;
-  position:relative;
-  overflow: hidden;
-  font-size:12px !important;
-}
-
-.sugarFeedDashlet blockquote img
-{
-  width: 30px;
-  height: 30px;
-}
-
-.sugarFeedDashlet .byLineBox .byLineLeft {
-  float: left;
-}
-
-.sugarFeedDashlet .byLineBox .byLineRight {
-  display: inline;
-  float: right;
-  font-size: 79%;
-}
 
 iframe.teamNoticeBox {
   width: 99%;
@@ -2356,24 +2249,6 @@ embed {
   padding: 3px;
 }
 
-.dashletPanel .hd .hd-center .dashletToolSet a {
-  padding: 0 2px;
-}
-
-.dashletPanel .hd .hd-center .dashletToolSet a:last-child {
-  padding-right: 0;
-}
-
-.dashletPanelMenu.wizard.import .bd .screen {
-  padding: 20px;
-  border: 0 none;
-  height: 487px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  width: auto;
-  display: block;
-  background-color: #fff;
-}
 
 #goto_date_trigger_div {
   border: none;
@@ -2446,7 +2321,7 @@ table#goto_date_trigger_div_t thead {
 }
 
 .yui-calendar a.calnav {
-  color: #ffffff;
+  color: $default-btn-color;
   background-color: #66727D;
   border: 1px solid #66727D;
   padding: 8px;
@@ -2458,7 +2333,7 @@ table#goto_date_trigger_div_t thead {
 }
 
 .yui-calendar a.calnavleft, .yui-calendar a.calnavright {
-  color: #ffffff;
+  color: $default-btn-color;
 
   background-color: #AA9DCC;
   border: 1px solid #AA9DCC;
@@ -2519,11 +2394,11 @@ table#goto_date_trigger_div_t thead {
 .yui-calendar td.calcell.calcellhover,
 .yui-calendar td.calcell.calcellhover a {
   background: #F08377;
-  color: #ffffff;
+  color: $default-btn-color;
 }
 
 .yui-calendar .calweekdaycell {
-  color: #ffffff;
+  color: $default-btn-color;
 }
 
 a#callnav_today {
@@ -2813,7 +2688,7 @@ ul.subpanelTablist li a.activeSubTab:hover {
 .list tr td[scope=col] a:link,
 .list tr td[scope=col] a:visited,
 .list tr.pagination td table td span.pageNumbers {
-  color: #ffffff;
+  color: $default-btn-color;
 }
 
 
@@ -2891,7 +2766,7 @@ ul.subpanelTablist li a.activeSubTab:hover {
 
 .other td {
   color: #444444;
-  background-color: #ffffff;
+  background-color: $default-btn-color;
   border-left-color: #dfdfdf;
 }
 
@@ -2937,7 +2812,7 @@ div.monthFooter {
 
 .monthViewDayHeight td {
   border-color: #abc3d7;
-  background-color: #ffffff;
+  background-color: $default-btn-color;
   color: #444444;
 }
 
@@ -2946,7 +2821,7 @@ div.monthFooter {
 }
 
 .monthCalBodyDayItem {
-  background-color: #ffffff;
+  background-color: $default-btn-color;
   border-top-color: #abc3d7;
   border-bottom-color: #ddd;
 }
@@ -2993,7 +2868,7 @@ h5.calSharedUser {
 .subpanelTabForm {
   border-color: #F08377;
   color: #000000;
-  background-color: #ffffff;
+  background-color: $default-btn-color;
 }
 
 ul.tablist, ul.subpanelTablist {
@@ -3089,10 +2964,6 @@ ul.yui-nav li.selected {
 }
 
 
-div#chartDashlets {
-  overflow-y: auto;
-}
-
 .detail508 tr td[scope="col"] {
   background-color: #F6F6F6;
   border-color: #CBDAE6;
@@ -3114,7 +2985,7 @@ ul.clickMenu {
   padding: 0;
   margin: 0 !important;
   vertical-align: bottom;
-  color: #ffffff;
+  color: $default-btn-color;
   display: inline-block;
   border-radius: 3px;
 }
@@ -3149,7 +3020,7 @@ ul.clickMenu > li, ul.SugarActionMenuIESub li {
   position: relative;
   cursor: pointer;
   padding: 5px;
-  color: #ffffff;
+  color: $default-btn-color;
   border-radius: 3px;
 }
 
@@ -3448,21 +3319,6 @@ iframe.teamNoticeBox {
 }
 
 
-.dashletPanel {
-  padding: 0;
-  margin: 15px 15px 15px 0px;
-}
-
-.hd-center {
-  padding: 0;
-  margin: 0;
-}
-
-.bd {
-  padding: 0;
-  margin: 0;
-}
-
 .view, table.view {
   padding: 0;
   margin: 0;
@@ -3508,29 +3364,6 @@ iframe.teamNoticeBox {
   height: auto;
 }
 
-#moduleDashletsList {
-  height: auto;
-}
-
-#dashletsList {
-  max-height: 500px !important;
-  overflow: hidden;
-}
-
-#dashletsDialog_c {
-  margin-left: -125px;
-  margin-top: -50px;
-}
-
-td.dashlet-title {
-  height: 52px;
-  line-height: 48px;
-}
-
-td.dashlet-title > h3 > span {
-  margin-left: 8px;
-}
-
 button[disabled]:hover, input[type=submit][disabled]:hover, input[type=reset][disabled]:hover, input[type=button][disabled]:hover {
   border: none;
   background-color: #777777;
@@ -3539,10 +3372,6 @@ button[disabled]:hover, input[type=submit][disabled]:hover, input[type=reset][di
 
 .iconed_dull {
   opacity: 0.6;
-}
-
-.dashletNonTable {
-  padding: 0 5px 0 10px;
 }
 
 a.crumbLink {
@@ -3580,17 +3409,13 @@ span.crumbLink {
 }
 
 a#delete_listview_top:hover {
-  color: #ffffff;
+  color: $default-btn-color;
   font-size: 14px;
 }
 
 a#delete_listview_bottom:hover {
-  color: #ffffff;
+  color: $default-btn-color;
   font-size: 14px;
-}
-
-#add_dashlets {
-  display: none;
 }
 
 .about_suite {
@@ -3662,31 +3487,6 @@ input[type=text].cstm_code {
   height: 200px;
 }
 
-#moduleDashletsList > table > tbody > tr > td,
-#basicChartDashletsList > table > tbody  > tr > td,
-#toolsDashletsList > table > tbody  > tr > td,
-#webDashletsList > table > tbody  > tr > td {
-  padding: 10px;
-}
-
-#moduleDashletsList a, #basicChartDashletsList a, #toolsDashletsList a, #webDashletsList a {
-  color: #D66C60;
-  margin: 5px;
-}
-
-#moduleDashletsList a span, #basicChartDashletsList a span, #toolsDashletsList a span, #webDashletsList a span {
-  margin-left: 10px;
-}
-
-
-#moduleDashletsList, #basicChartDashletsList, #toolsDashletsList, #webDashletsList {
-  padding: 10px;
-  max-height: 375px !important;
-  /*background: #778591;*/
-  border: 1px solid transparent;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-}
 
 #caseStyleUser {
   background: #f7f7f7;
@@ -3846,15 +3646,6 @@ ol, ul, dl {
   font-size: 16px;
 }
 
-#dashletsDialog_mask {
-  display: none !important;
-  visibility: collapse !important;
-}
-
-#dashletsDialog {
-  display: none !important;
-  visibility: collapse !important;
-}
 
 #ConvertLead .label {
   text-align: left;
@@ -4345,7 +4136,7 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
   display: block;
   float: left;
   width: 128px;
-  color: #ffffff;
+  color: $default-btn-color;
   line-height: 18px;
 }
 
@@ -4359,7 +4150,7 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
 
 .qtip-title-buttons a {
   padding-left: 8px;
-  color: #ffffff;
+  color: $default-btn-color;
   margin: 0 0 0 4px;
   padding: 0;
 }
@@ -4379,7 +4170,7 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
 }
 
 .qtip-default .qtip-titlebar .qtip-close {
-  color: #ffffff;
+  color: $default-btn-color;
   font-size: 22px;
 }
 
@@ -4395,7 +4186,7 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
 
 .qtip-content {
   background-color: #65697A;
-  color: #FFFFFF;
+  color: $default-btn-color;
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
 }
@@ -4615,14 +4406,6 @@ ul::-webkit-resizer
 
 
 
-#dashletresponsive {
-  float: left;
-}
-
-.dashboardTbList {
-  max-width: 90% !important;
-}
-
 #addbuttons {
   float: right;
   margin: 0 5px 0 5px;
@@ -4631,12 +4414,12 @@ ul::-webkit-resizer
 
 
 .btn-success {
-  background: #F08377;
+  background: $danger-btn-bg;
   border: none;
 }
 
 .headerlinks a:hover {
-  color: #ffffff;
+  color: $default-btn-color;
 }
 
 table {
@@ -5024,7 +4807,7 @@ select#sales_stage_advanced {
   background-color: #BFCAD3;
   border: 1px solid transparent;
   border-radius: 4px;
-  color: #ffffff;
+  color: $default-btn-color;
   font-size: 14px;
   padding: 8px;
   display: inherit;
@@ -5034,8 +4817,8 @@ select#sales_stage_advanced {
 
 #fieldChoices .required  > .field-header {
   border: 1px solid transparent;
-  background-color: #F08377;
-  color: #ffffff;
+  background-color: $danger-btn-bg;
+  color: $default-btn-color;
   padding: 8px !important;
   margin: 0;
 }
@@ -5121,19 +4904,6 @@ hr {
   border: none;
 }
 
-@media (max-width: 980px) {
-  .dashletNonTable {
-    display: none;
-  }
-
-  .dashletcontainer {
-    width: 100%;
-    position: relative;
-    margin: 0;
-    float: left;
-    padding: 0;
-  }
-}
 
 .table > thead > tr > th {
   border: none;
@@ -5171,45 +4941,6 @@ hr {
 
 #forgotpasslink {
   margin: 10px 0 0 0;
-}
-
-
-.dashletPanel .h3Row {
-  background-color: #66727D;
-  color: #ffffff;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-}
-
-.h3Row {
-  padding: 5px 10px 5px 10px;
-  margin: 5px 0 5px 0;
-}
-
-.dashletPanel .h3Row h3 {
-  color: #ffffff;
-  font-size: 13px;
-  text-transform: uppercase;
-  font-weight: bold;
-  margin: 0 0 0 10px;
-  letter-spacing: 1px;
-}
-
-.dashletPanel .h3Row h3 span {
-  font-weight: normal;
-}
-
-#dashletbuttons {
-  color: #F08377;
-  margin: 0 2px 0 2px;
-}
-
-#dashletbuttons:hover {
-  opacity: 0.8;
-}
-
-.dashletToolSet {
-  margin: 0 10px 0 0;
 }
 
 .teamNoticeBox {
@@ -5726,7 +5457,7 @@ object {
 }
 
 .panel-default > .panel-heading > div {
-  color: #ffffff;
+  color: $default-btn-color;
   height: 52px;
   line-height: 52px;
   font-weight: 500;
@@ -5753,7 +5484,7 @@ object {
 }
 
 .panel-default > .panel-heading > a {
-  color: #ffffff;
+  color: $default-btn-color;
   display: block;
   height: 52px;
   font-weight: 500;
@@ -5763,7 +5494,7 @@ object {
 }
 
 .panel-default.sub-panel > .panel-heading  > a {
-  color: #ffffff;
+  color: $default-btn-color;
   display: block;
   height: 52px;
   font-weight: 500;
@@ -6416,17 +6147,6 @@ div.list-view-rounded-corners > table th:last-of-type {
     font-size: 1em;
   }
 
-  .dashletcontainer {
-    float: left;
-  }
-
-  .dashletPanel {
-    overflow: auto;
-  }
-
-  .dashboardTabList {
-    display: none;
-  }
 
   /*#bootstrap-container, .col-sm-9, .col-sm-offset-3, .col-md-10, .col-md-offset-2, .main {margin: 0;padding: 0;}*/
   #content, #pageContainer {
@@ -6479,7 +6199,6 @@ div.list-view-rounded-corners > table th:last-of-type {
   #search_form > div.basic  > table > tbody > tr > td.submitButtons {
     min-width: 200px;
     width: auto;
-    background-color: red;
     display: table-cell;
   }
 
@@ -6592,15 +6311,6 @@ div.list-view-rounded-corners > table th:last-of-type {
   }
 }
 
-@media (max-width: 999px) and (max-height: 1024px) {
-  #dashletsDialog_c {
-    margin-top: 25px;
-    margin-left: 0;
-    margin-bottom: 25px;
-    height: 70%;
-    overflow: scroll;
-  }
-}
 
 @media (min-width: 999px) and (max-width: 1024px) {
   .col-sm-3 {
@@ -7105,131 +6815,6 @@ body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shado
 
 
 
-body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel {
-  top: initial;
-  left: -50%;
-  border: none;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .container-close {
-  color: #aaa;
-  text-indent: initial;
-  top: 15px;
-  right: 30px;
-  width: initial;
-}
-
-body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .hd {
-  background: white;
-  color: $main-color;
-  font-family: Lato, Lato, Arial, sans-serif;
-  font-size: 18px;
-  font-weight: bold;
-  height: 25px;
-  line-height: 25.7143px;
-  margin: 0px;
-  padding: 15px 15px 42px 19px;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-  border-bottom: solid 1px #ddd;
-}
-
-body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd {
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
-  max-height: 650px;
-  overflow: hidden;
-  overflow-y: scroll;
-}
-
-body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form {
-  /* form looking good. */
-}
-
-body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table td input[type="checkbox"] {
-  height: 30px;
-  margin-top: 10px;
-}
-
-body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr,
-body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.view td tr {
-  display: block;
-  float: none;
-  width: auto;
-  border-bottom: none;
-}
-
-body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td[scope=row],
-body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.view td tr td {
-  display: block;
-  float: left;
-  width: auto;
-}
-
-body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td[scope=row] {
-  width: 30%;
-}
-
-body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table tr td[scope=row][colspan="4"] {
-  float: none;
-}
-
-body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table tr td[scope=row][colspan="4"] br {
-  display: none;
-}
-
-
-body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td table {
-
-}
-
-body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td table tbody {
-  display: table-row-group;
-  vertical-align: middle;
-  border-color: inherit;
-  float: initial;
-}
-
-body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td table tbody tr {
-  display: table-row;
-  vertical-align: inherit;
-  border-color: inherit;
-  float: initial;
-}
-
-body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td table tbody tr td {
-  display: table-cell;
-  vertical-align: inherit;
-  float: initial;
-}
-
-@media(min-width: 800px) {
-
-  body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td[scope=row] {
-    width: 20%;
-  }
-  body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td[valign=top] {
-    float: left;
-    width: 25%;
-
-  }
-  body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr:last-child {
-    clear: both;
-  }
-
-  body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit {
-    position: relative;
-  }
-
-  body.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit #edit_tabs {
-    position: absolute;
-    top: 20px;
-    right: 40px;
-  }
-}
 
 @media(max-width: 750px) {
 
@@ -7386,7 +6971,7 @@ div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination 
   width: auto;
   background-color: #7b8a96;
   line-height: 24px;
-  color: #ffffff;
+  color: $default-btn-color;
   left: 0;
   right: auto;
 }
@@ -7396,11 +6981,11 @@ div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination 
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: #ffffff;
+  color: $default-btn-color;
 }
 
 div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItem {
-  color: #ffffff;
+  color: $default-btn-color;
   width: 100%;
   background-color: #7b8a96;
   line-height: 24px;

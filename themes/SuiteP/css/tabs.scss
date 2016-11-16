@@ -11,6 +11,7 @@
   .dropdown-menu {
     overflow: visible;
     min-width: 200px;
+    padding: 4px 10px 4px 10px;
   }
 
   .dropdown-menu > li {
@@ -18,11 +19,12 @@
     overflow: visible;
   }
 
+  #tab-actions .dropdown-menu > li > input[type=button],
   .dropdown-menu > li > a {
-    font-weight: 400;
-    letter-spacing: 2px;
+    font-weight: normal;
+    letter-spacing: normal;
     font-size: $page-font-size;
-    margin: 0 2px 0 2px;
+    margin: 0;
     line-height: $tab-height;
     cursor: pointer;
   }
