@@ -8611,6 +8611,10 @@ table.subpanel-table ul.subpanel {
     height: 27px;
 }
 
+.clickMenu.subpanel.records.button.SugarActionMenu .sugar_action_button {
+    height: 100%;
+}
+
 .sugar_action_button a {
     color: #fff;
 }
