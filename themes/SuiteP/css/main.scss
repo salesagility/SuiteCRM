@@ -53,6 +53,11 @@ a:hover {
 }
 
 
+::selection {background: $selection-bg;color:$selection-color;} /* Safari */
+::-moz-selection {background: $selection-bg;color:$selection-color;} /* Firefox */
+
+
+
 @media (max-width: 750px) {
 
   #bootstrap-container {
