@@ -117,6 +117,17 @@ class AOR_Report extends Basic {
         $chart->save_lines($_POST, $this, 'aor_chart_');
     }
 
+    function ACLAccess($view,$is_owner='not_set',$in_group='not_set', $target_module){
+        $result = parent::ACLAccess($view,$is_owner,$in_group);
+        if($result === true){
+            if($target_module != ""){
+                $result = ACLController::checkAccess($this->report_module, 'list', true);
+            }
+        }
+        return $result;
+    }
+
+
     function load_report_beans(){
         global $beanList, $app_list_strings;
 
@@ -957,6 +968,11 @@ class AOR_Report extends Basic {
         $query = '';
         $query_array = array();
 
+        //Check if the user has access to the target module
+        if(!(ACLController::checkAccess($this->report_module, 'list', true))) {
+            return false;
+        }
+
         $query_array = $this->build_report_query_select($query_array, $group_value);
         if(isset($extra['where']) && $extra['where']) {
             $query_array['where'][] = implode(' AND ', $extra['where']) . ' AND ';
@@ -1280,6 +1296,10 @@ class AOR_Report extends Basic {
                         }
                         // Bug: Prevents relationships from loading.
                         $new_condition_module = new $beanList[getRelatedModule($condition_module->module_dir,$rel)];
+                        //Check if the user has access to the related module
+                        if(!(ACLController::checkAccess($new_condition_module->module_name, 'list', true))) {
+                            return false;
+                        }
                         $oldAlias = $table_alias;
                         $table_alias = $table_alias.":".$rel;
                         $query = $this->build_report_query_join($rel, $table_alias, $oldAlias, $condition_module, 'relationship', $query, $new_condition_module);
