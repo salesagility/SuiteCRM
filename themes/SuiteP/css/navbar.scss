@@ -43,7 +43,7 @@
         padding: 12px 15px 12px 15px;
         display: block;
         font-size: 14px;
-        border-bottom: 1px solid #757083;
+        border-bottom: 1px solid $navbar-menu-seperator;
         text-transform: none;
         letter-spacing: 0;
         margin: 0;
@@ -103,21 +103,24 @@
 
       > span.notCurrentTab {
         > a {
+          display: inline-block;
           border-top: 3px solid transparent;
-          padding-top: 36px;
-          padding-bottom: 35px;
+          //padding-top: 36px;
+          //padding-bottom: 35px;
         }
 
         > a:hover {
+          background-color: $navbar-main-menu-bg;
           border-top: 3px solid $navbar-menu-current-seperator;
         }
       }
 
       > span.currentTab {
         > a {
+          display: inline-block;
           border-top: 3px solid $navbar-menu-current-seperator;
-          padding-top: 36px;
-          padding-bottom: 35px;
+          //padding-top: 36px;
+          //padding-bottom: 35px;
         }
       }
 
@@ -404,12 +407,18 @@
 }
 
 
-.topnav:hover > a {
-  border-top: 3px solid $navbar-menu-link-color-hover;
+.topnav a {
+  color: $navbar-link-color;
 }
 
+.topnav:hover {
+  background-color: $navbar-main-menu-bg;
+  color: $navbar-link-color-hover;
+}
+
+
 .topnav a:hover {
-  color: $navbar-menu-link-color-hover;
+  color: $navbar-link-color-hover;
 }
 
 .topnav ul.dropdown-menu li:last-child a {
@@ -487,7 +496,7 @@ li#usermenu a {
 }
 
 li#usermenu a:hover {
-  color: $navbar-menu-link-color-hover;
+  color: $navbar-menu-link-color;
 }
 
 #globalLinks {
@@ -535,9 +544,9 @@ li#usermenu a span.caret {
   background-position: 0 0;
 }
 
-li#usermenu a:hover span.caret {
-  background-position: 0 -48px;
-}
+//li#usermenu a:hover span.caret {
+//  background-position: 0 -48px;
+//}
 
 li#usermenu a span.user_icon {
   height: 42px;
@@ -551,9 +560,9 @@ li#usermenu a span.user_icon {
   margin-top: -12px;
 }
 
-li#usermenu a:hover span.user_icon {
-  background-position: 0 -99px;
-}
+//li#usermenu a:hover span.user_icon {
+//  background-position: 0 -99px;
+//}
 
 
 
@@ -770,8 +779,7 @@ li#usermenu a:hover span.user_icon {
 
 
 a[id^=grouptab], a[id^=moduleTab] {
-  color: $navbar-menu-link-color;
-  padding: 15px 0 18px 0;
+  color: $navbar-link-color;
 }
 
 a[id^=grouptab]:visited {
@@ -847,11 +855,11 @@ a[id^=grouptab]:active {
 }
 
 #quickcreatetop a {
-  color: $navbar-menu-link-color ;
+  color: $navbar-quick-create-link-color ;
   text-align: center;
   padding: 11px 32px 12px 12px;
   border-radius: 3px;
-  background-color: $quick-create-btn-bg;
+  background-color: $navbar-quick-create-btn-bg;
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -864,8 +872,8 @@ a[id^=grouptab]:active {
 
 #quickcreatetop a:hover {
   cursor: pointer;
-  background-color: $quick-create-btn-bg-hover;
-  background-position: 80px -56px;
+  background-color: $navbar-quick-create-btn-bg-hover;
+  //background-position: 80px -56px;
   text-decoration: none;
   border-bottom-right-radius: 0px;
   border-bottom-left-radius: 0px;
@@ -924,9 +932,9 @@ a[id^=grouptab]:active {
   left: auto;
 }
 
-#desktop_notifications:hover {
-  background-position: 0px -100px;
-}
+//#desktop_notifications:hover {
+//  background-position: 0px -100px;
+//}
 
 #desktop_notifications a {
   cursor: pointer;
@@ -956,7 +964,7 @@ a[id^=grouptab]:active {
 #desktop_notifications span.alert_count {
   background-color: $navbar-alert-count-bg;
   line-height: 20px;
-  color: $navbar-menu-link-color;
+  color: $navbar-alert-count-link-color;
   height: 20px;
   width: 20px;
   display: block;
@@ -1018,10 +1026,10 @@ a[id^=grouptab]:active {
 }
 
 #desktop_notifications div.has-alerts .alert-info {
-  color: $navbar-menu-link-color;
+  color: $navbar-alert-link-color;
   background-color: inherit;
 
-  border: 1px solid $navbar-menu-seperator;
+  border: 1px solid $navbar-alert-seperator;
   border-radius: 2px;
   padding: 0;
 }
@@ -1055,7 +1063,7 @@ a[id^=grouptab]:active {
 #desktop_notifications div.has-alerts h4 {
   font-size: 14px;
   font-weight: bold;
-  background-color: $navbar-main-menu-bg;
+  background-color: $navbar-alert-title-bg;
   line-height: 20px;
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
@@ -1146,9 +1154,9 @@ a[id^=grouptab]:active {
     overflow: hidden;
   }
 
-  #searchformdropdown button:hover {
-    background-position: 13px -44px;
-  }
+  //#searchformdropdown button:hover {
+  //  background-position: 13px -44px;
+  //}
 
   #search > .dropdown-menu {
     background-color: transparent;
@@ -1179,9 +1187,9 @@ a[id^=grouptab]:active {
     margin-left: 0px;
   }
 
-  #usermenucollapsed, #usermenucollapsed-mobile:hover {
-    background-position: 0 -99px;
-  }
+  //#usermenucollapsed, #usermenucollapsed-mobile:hover {
+  //  background-position: 0 -99px;
+  //}
 
   #content {
     width: 99%;
@@ -1211,13 +1219,13 @@ a[id^=grouptab]:active {
 
   #quickcreatetop a {
     padding: 5px 32px 5px 12px;
-    background-color: $quick-create-mobile-btn-bg;
+    background-color: $navbar-quick-create-mobile-btn-bg;
     background-position: 80px -5px;
   }
 
-  #quickcreatetop a:hover {
-    background-position: 80px -5px;
-  }
+  //#quickcreatetop a:hover {
+  //  background-position: 80px -5px;
+  //}
 
   #search {
     position: relative;
@@ -1303,8 +1311,7 @@ a[id^=grouptab]:active {
     width: 28px;
     height: 28px;
     margin-right: 20px;
-    background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert_small.svg"), url("../../../../themes/SuiteP/images/p_icon_alert_small.png");
-    background-repeat: no-repeat;
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
     background-position: 0px 0px;
   }
 }
@@ -1364,9 +1371,9 @@ a[id^=grouptab]:active {
     background-position: 80px 2px;
   }
 
-  #quickcreatetop a:hover {
-    background-position: 80px -56px;
-  }
+  //#quickcreatetop a:hover {
+  //  background-position: 80px -56px;
+  //}
 
   #quickcreatetop ul.dropdown-menu {
     left: 0px;
@@ -1389,9 +1396,9 @@ a[id^=grouptab]:active {
     background-position: 0 0;
   }
 
-  #usermenucollapsed:hover {
-    background-position: 0 -99px;
-  }
+  //#usermenucollapsed:hover {
+  //  background-position: 0 -99px;
+  //}
 
 
   #desktop_notifications {
@@ -1405,9 +1412,9 @@ a[id^=grouptab]:active {
     background-position: 0px 0px;
   }
 
-  #desktop_notifications:hover {
-    background-position: 0px -100px;
-  }
+  //#desktop_notifications:hover {
+  //  background-position: 0px -100px;
+  //}
 
   #search {
     margin-right: 8px;
@@ -1456,10 +1463,10 @@ a[id^=grouptab]:active {
     background-color: transparent;
   }
 
-  #searchbutton:hover {
-    background-position: 0px 8px;
-    background-color: transparent;
-  }
+  //#searchbutton:hover {
+  //  background-position: 0px 8px;
+  //  background-color: transparent;
+  //}
 }
 
 
@@ -1497,7 +1504,7 @@ a[id^=grouptab]:active {
     float: left;
     width: 300px ;
     margin: 0;
-    padding: 0;
+    padding: 4px 10px 4px 10px;
     background: $navbar-main-menu-bg ;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
@@ -1676,9 +1683,9 @@ a[id^=grouptab]:active {
   #mobilegloballinks {
     display: inline;
   }
-  #usermenucollapsed:hover {
-    background-position: 0 0px;
-  }
+  //#usermenucollapsed:hover {
+  //  background-position: 0 0px;
+  //}
 }
 
 
@@ -1772,9 +1779,9 @@ a[id^=grouptab]:active {
     overflow: hidden;
   }
 
-  #searchformdropdown button:hover {
-    background-position: 13px -44px;
-  }
+  //#searchformdropdown button:hover {
+  //  background-position: 13px -44px;
+  //}
 
   #search #query_string {
     background-color: $navbar-search-bg;
