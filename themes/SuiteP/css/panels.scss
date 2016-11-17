@@ -1,0 +1,489 @@
+/**** Panels ****/
+@import 'variables';
+
+
+.panel {
+  margin-bottom: 0;
+}
+
+.panel-body {
+  padding: 0;
+}
+
+.panel-template {
+  visibility: collapse;
+}
+
+.panel-default > .panel-heading {
+  background: #66727D;
+  color: white;
+  padding: 0px;
+  vertical-align: middle;
+  height: 52px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.panel-default > .panel-heading > div {
+  color: $default-btn-color;
+  height: 52px;
+  line-height: 52px;
+  font-weight: 500;
+  font-size: 14px /*!important*/;
+  background-color: #66727D;
+}
+
+.panel-default > .panel-body {
+  padding: 0;
+}
+
+.panel-default > .panel-heading-collapse {
+  background: #BFCAD3;
+}
+
+.collapse, .collapsing, .collapse.in {
+  -webkit-transition: none;
+  transition: none;
+}
+
+.panel-default > .panel-heading {
+  display: block;
+  text-transform: uppercase;
+}
+
+.panel-default > .panel-heading > a {
+  color: $default-btn-color;
+  display: block;
+  height: 52px;
+  font-weight: 500;
+  font-size: 14px /*!important*/;
+  //background-color: #66727D;
+  padding: 15px 10px 0 10px;
+  text-decoration: none;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  text-decoration: none;
+}
+
+.panel-default.sub-panel > .panel-heading  > a {
+  color: $default-btn-color;
+  display: block;
+  height: 52px;
+  font-weight: 500;
+  font-size: 14px /*!important*/;
+  //background-color: #66727D;
+  padding: 10px 10px 0 10px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  text-decoration: none;
+}
+
+.panel-default > .panel-heading  > a:not(.collapsed) {
+  background-color: #66727D;
+
+}
+
+.sub-panel  div.tab-content {
+  padding: 0 /*!important*/;
+  border: none;
+}
+
+
+.panel-default > .panel-heading > a img {
+  margin-right: 15px;
+}
+
+.panel-default > .panel-body {
+  padding: 0 0 0 0;
+}
+
+.panel-heading a.collapsed {
+  background-color: #BFCAD3 /*!important*/;
+}
+
+
+.panel-heading a.collapsed:before {
+  content: "\2b" /*!important*/;
+}
+
+.panel-heading a:before
+{
+  font-family: 'Glyphicons Halflings';
+  content: "\2212";
+  font-weight: 100;
+  line-height: 26px;
+}
+
+
+[id^=list_subpanel_] {
+  margin-bottom: 25px /*!important*/;
+  border: 1px solid #dddddd;
+}
+
+[id^=list_subpanel_] tr:last-child {
+  margin-bottom: 25px /*!important*/;
+  border-bottom: none;
+}
+
+.h3Row {
+  padding: 0;
+  margin: 0;
+}
+
+div.action_buttons form {
+  float: left;
+}
+
+div.action_buttons .button {
+  background-color: $default-btn-bg;
+}
+div.action_buttons .button:hover {
+  background-color: $default-btn-bg-hover;
+}
+
+
+
+#subpanel_list .tab-content .list.view.subpanel-table .pagination div.action_buttons .button {
+  text-transform: capitalize;
+  padding: 5px 13px;
+  line-height: initial;
+  height: initial;
+}
+
+
+
+
+div.sub-panel {
+  margin-bottom: 4px;
+}
+
+
+table.subpanel-table tr:last-of-type td {
+  border-bottom: 1px solid transparent;
+}
+
+
+table.subpanel-table {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+table.subpanel-table th {
+  border-bottom: 1px solid #ddd;
+}
+
+table.subpanel-table th,
+table.subpanel-table th a:link {
+  color: #000000;
+  font-weight: bold;
+}
+
+table.subpanel-table ul.clickMenu > li, ul.SugarActionMenuIESub li {
+  padding: 0;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+table.subpanel-table ul.subpanel {
+  background: none;
+  background-color: transparent /*!important*/;
+  border-color: transparent /*!important*/;
+  border: none;
+}
+
+.sugar_action_button a {
+  color: #fff;
+}
+
+table.subpanel-table .pagination li.sugar_action_button > form > a {
+  width: 100%;
+}
+
+table.subpanel-table ul.subpanel > a,
+.single  a,
+.single > a,
+#actionLinkTop li.sugar_action_button,
+#actionLinkBottom li.sugar_action_button,
+table.subpanel-table li.sugar_action_button,
+#selectLinkTop li.sugar_action_button,
+#selectLinkBottom li.sugar_action_button,
+table.subpanel-table .pagination .sugar_action_button,
+table.subpanel-table .pagination li.sugar_action_button > form > a,
+table.subpanel-table .pagination .sugar_action_button > form > a,
+table.subpanel-table .pagination .sugar_action_button > form > a {
+  padding: 0px /*!important*/;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding-right: 4px /*!important*/;
+}
+
+/*calendar popup fix*/
+.calcell > a {
+  background-color: #fff;
+}
+
+
+/* pagination on list view subpanel-table */
+
+table.list.view.subpanel-table tr.pagination span.pageNumbers {
+  position: relative;
+  top: -7px;
+}
+
+table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"] img,
+table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"] img,
+table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"] img,
+table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"] img {
+  display: none;
+}
+
+table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"] {
+  width: 26px;
+  height: 26px;
+  margin: 0;
+  padding: 0;
+  background-image: none,url("../../../../themes/SuiteP/images/p_pag_tools.svg"),url("../../../../themes/SuiteP/images/p_pag_tools.png");
+  background-repeat: no-repeat;
+}
+table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"]:hover,
+table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"]:hover,
+table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"]:hover,
+table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"]:hover {
+  background-color: #808F9C;
+}
+
+table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"] {
+  background-position: 9px -29px;
+}
+
+table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"] {
+  background-position: 9px -50px;
+}
+
+table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"] {
+  background-position: 10px -132px;
+}
+
+table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"] {
+  background-position: 10px -112px;
+}
+
+table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"][disabled],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"][disabled],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"][disabled],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"][disabled] {
+  opacity: .5;
+  cursor: default;
+}
+
+table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"],
+table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"][disabled]:hover,
+table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"][disabled]:hover,
+table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"][disabled]:hover,
+table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"][disabled]:hover {
+  background-color: #94A6B5;
+}
+
+#actionLinkTop li.sugar_action_button:hover,
+#actionLinkBottom li.sugar_action_button:hover,
+table.subpanel-table li.sugar_action_button:hover,
+#selectLinkTop li.sugar_action_button:hover,
+#selectLinkBottom li.sugar_action_button:hover,
+table.subpanel-table .pagination .sugar_action_button:hover,
+table.subpanel-table .pagination li.sugar_action_button:hover > form > a,
+table.subpanel-table .pagination .sugar_action_button:hover > form > a,
+table.subpanel-table .pagination .sugar_action_button:hover > form > a,
+
+table.subpanel-table ul.subpanel a:hover,
+table.subpanel-table li.sugar_action_button:hover,
+table.subpanel-table .pagination .sugar_action_button:hover,
+table.subpanel-table .pagination li.sugar_action_button:hover > form > a,
+table.subpanel-table .pagination .sugar_action_button:hover > form > a,
+table.subpanel-table .pagination .sugar_action_button:hover > form > a,
+table.subpanel-table .pagination a,
+.subpanel-table ul.subnav {
+  background-color: #778591;
+}
+
+table.subpanel-table .pagination a {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+table.subpanel-table .pagination ul.clickMenu li span {
+  float: right;
+  margin-top: 9px;
+  margin-left: 0px;
+  margin-right: 5px;
+}
+
+
+
+.subpanelTabForm {
+  border-color: #F08377;
+  color: #000000;
+  background-color: $default-btn-color;
+}
+
+ul.tablist, ul.subpanelTablist {
+  border-bottom-color: #F08377;
+}
+
+ul.tablist li a:hover, ul.subpanelTablist li a:hover {
+  background: #fafafa;
+  border-color: #F08377;
+}
+
+ul.tablist li a, ul.subpanelTablist li a {
+  background-color: #fff;
+  border-color: #dddddd;
+}
+
+ul.tablist li a:link, ul.tablist li a:visited, ul.subpanelTablist li a:link, ul.subpanelTablist li a:visited {
+  color: #444444;
+}
+
+ul.tablist li a:hover, ul.subpanelTablist li a:hover {
+  background: #fafafa;
+}
+
+ul.subpanelTablist li a.current, ul.subpanelTablist li a.current:hover {
+  color: #4f4f4f;
+  background: #fff;
+  border-right-color: #cccccc;
+  border-top: none;
+  border-bottom: none;
+}
+
+ul.tablist li a.current:link, ul.tablist li a.current:visited, ul.tablist li a.current:hover {
+  background: #f6f6f6;
+  border-bottom-color: #f6f6f6;
+  border-right-color: #abc3d7;
+  border-top-color: #abc3d7;
+}
+
+
+ul.tablist, ul.subpanelTablist {
+  border-bottom: 2px solid;
+}
+
+ul.tablist li a, ul.subpanelTablist li a {
+  border-top: 2px solid;
+  border-right-color: #cccccc;
+  border-top: none;
+  border-bottom: none;
+}
+
+ul.tablist li a:hover, ul.subpanelTablist li a:hover {
+  border-top: 2px solid;
+}
+
+ul.tablist li a.current, ul.tablist li a.current:hover {
+  border-bottom: 2px solid #f6f6f6;
+  font-weight: bold;
+}
+
+ul.subpanelTablist li a.current, ul.subpanelTablist li a.current:hover {
+  border-bottom: 2px solid #fff;
+  font-weight: bold;
+}
+
+.subpanelTabForm .h3Row {
+  border-top: 1px solid #dddddd;
+  background-image: none;
+}
+
+
+
+ul.tablist, ul.subpanelTablist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+#dashName {
+  margin-bottom: 4px;
+}
+
+
+ul.tablist li a.activeSubTab:hover {
+  border-bottom-color: #ddd;
+  color: #000000;
+}
+
+ul.subpanelTablist li a.activeSubTab:hover {
+  color: #000000;
+}
+
+ul.subpanelTablist #addPageItem a, ul.subpanelTablist #addPageItem a:hover {
+  border: none;
+  background: transparent;
+  text-decoration: none;
+}
+
+ul.tablist li a:link, ul.tablist li a:visited, ul.subpanelTablist li a:link, ul.subpanelTablist li a:visited {
+  text-decoration: none;
+}
+
+.subpanelTabForm td {
+  padding: 15px;
+}
+
+table.subpanelTabForm td {
+  padding-bottom: 2px;
+  padding-top: 0;
+}
+
+.subpanelTabForm p {
+  margin-bottom: 0;
+}
+
+.subpanelTabForm h3 {
+  padding-left: 3px;
+}
+
+.subpanelTabForm .h3Row {
+  padding-top: 2px;
+  margin-top: 0;
+}
+
+.subpanelTabForm {
+  margin-bottom: 10px;
+}
+
+#groupTabs {
+  margin-top: 20px;
+}
+
+#groupTabs li, #searchTabs li {
+  margin: 0 -3px 0 0;
+}
+
+table.subpanelTabForm {
+  border-top: 0 none;
+  margin-bottom: 4px;
+}
+
+.collapsed .panelContainer, .collapsed .collapseLink, .expanded .expandLink {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .panel-heading a div {
+    width: 94.66%;
+  }
+}
+
+@media (min-width: 768px) {
+  .panel-heading a div {
+    width: 97.66%;
+  }
+}
