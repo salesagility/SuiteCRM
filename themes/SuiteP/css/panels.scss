@@ -19,15 +19,15 @@
   color: white;
   padding: 0px;
   vertical-align: middle;
-  height: 52px;
+  height: 52px/$panel-height-divisor;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
 }
 
 .panel-default > .panel-heading > div {
   color: $default-btn-color;
-  height: 52px;
-  line-height: 52px;
+  height: 52px/$panel-height-divisor;
+  line-height: 52px/$panel-height-divisor;
   font-weight: 500;
   font-size: 14px /*!important*/;
   background-color: $panel-expanded-bg;
@@ -58,7 +58,7 @@
   font-weight: 500;
   font-size: 14px /*!important*/;
   //background-color: $panel-expanded-bg;
-  padding: 15px 10px 0 10px;
+  padding: 15px/$panel-height-divisor 10px 0 10px/$panel-height-divisor;
   text-decoration: none;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
@@ -68,11 +68,11 @@
 .panel-default.sub-panel > .panel-heading  > a {
   color: $default-btn-color;
   display: block;
-  height: 52px;
+  height: 52px/$panel-height-divisor;
   font-weight: 500;
   font-size: 14px /*!important*/;
   //background-color: $panel-expanded-bg;
-  padding: 10px 10px 0 10px;
+  padding: 10px/$panel-height-divisor 10px 0 10px/$panel-height-divisor;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   text-decoration: none;
@@ -111,7 +111,7 @@
   font-family: 'Glyphicons Halflings';
   content: "\2212";
   font-weight: 100;
-  line-height: 26px;
+  line-height: 26px/$panel-height-divisor;
 }
 
 
