@@ -11099,8 +11099,8 @@ div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination 
 /* list items */
 
 div#content div#pagecontent form#MassUpdate table.list.view tbody tr td {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 /* edit form */

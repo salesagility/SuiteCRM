@@ -52,7 +52,7 @@ class templateParser
 
     function parse_template_bean($string, $key, &$focus)
     {
-        global $app_strings;
+        global $app_strings, $sugar_config;
         $repl_arr = array();
 
         foreach ($focus->field_defs as $field_def) {
@@ -67,6 +67,18 @@ class templateParser
                 } //Fix for Windows Server as it needed to be converted to a string.
                 else if ($field_def['type'] == 'int') {
                     $repl_arr[$key . "_" . $fieldName] = strval($focus->$fieldName);
+                } else if ($field_def['type'] == 'image') {
+                    $secureLink = $sugar_config['site_url'] . '/' . "public/". $focus->id .  '_' . $fieldName;
+                    $file_location = $sugar_config['upload_dir'] . '/'  . $focus->id .  '_' . $fieldName;
+                    // create a copy with correct extension by mime type
+                    if(!file_exists('public')) {
+                        sugar_mkdir('public', 0777);
+                    }
+                    if(!copy($file_location, "public/{$focus->id}".  '_' . "$fieldName")) {
+                        $secureLink = $sugar_config['site_url'] . '/'. $file_location;
+                    }
+                    $link = $secureLink;
+                    $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="'.$field_def['width'].'" height="'.$field_def['height'].'"/>';
                 } else {
                     $repl_arr[$key . "_" . $fieldName] = $focus->$fieldName;
                 }

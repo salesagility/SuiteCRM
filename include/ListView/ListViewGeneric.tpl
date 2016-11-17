@@ -195,11 +195,13 @@
 	            {capture assign=action}{if $act}{$act}{else}EditView{/if}{/capture}
 				<td width='2%' nowrap>
                     {if $pageData.rowAccess[$id].edit}
+						{if $linkModule != 'AOR_Reports'}
                         <a title='{$editLinkString}' id="edit-{$rowData.ID}"
                            href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
                                 >
                             {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
                             {sugar_getimage name="edit_inline.gif" attr='border="0" ' alt="$alt_edit"}</a>
+						{/if}
                     {/if}
 	            </td>
 
