@@ -4140,7 +4140,7 @@ input::-webkit-scrollbar-thumb,
 textarea::-webkit-scrollbar-thumb,
 ul::-webkit-scrollbar-thumb
 { /* 5 */
-  background: rgba(165, 232, 214, 1);
+  background: $scroll-bar-thumb-color;
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.5);
 }
