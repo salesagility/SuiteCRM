@@ -60,7 +60,7 @@ a:hover {
 /**** SIDEBAR ****/
 .sidebar {
   position: fixed;
-  top: 80px;
+  top: 90px;
   bottom: 0;
   left: 0;
   z-index: 1000;
@@ -495,13 +495,13 @@ footer.collapsedSidebar {
   background: #3C8DBC; }
   .navbar-inverse .navbar-brand {
     color: #3C8DBC;
-    height: 80px;
-    line-height: 80px;
+    height: 90px;
+    line-height: 90px;
     padding: 0;
     display: inline;
     background-image: url("../../../../themes/SuiteP/images/p_icon_home.png");
     background-repeat: no-repeat;
-    background-position: 0px 31.11111px;
+    background-position: 0px 35px;
     text-indent: -9999px;
     overflow: hidden;
     width: 40px; }
@@ -556,9 +556,9 @@ footer.collapsedSidebar {
     .navbar-inverse .nav > .topnav {
       margin: 0;
       font-size: 13px;
-      height: 80px;
+      height: 90px;
       letter-spacing: 2px;
-      line-height: 80px;
+      line-height: 90px;
       padding: 0 7px 0 7px;
       text-transform: uppercase; }
       .navbar-inverse .nav > .topnav > span.notCurrentTab > a {
@@ -577,8 +577,8 @@ footer.collapsedSidebar {
     border-top-left-radius: 3px; }
 
 .navbar {
-  min-height: 80px;
-  max-height: 80px; }
+  min-height: 90px;
+  max-height: 90px; }
 
 #mobileheader .dropdown-menu li:last-of-type a {
   border-bottom: none; }
@@ -849,13 +849,13 @@ li#usermenu a {
   font-size: 14px; }
 
 li#usermenu a:hover {
-  color: #3C8DBC; }
+  color: #FFFFFF; }
 
 #globalLinks {
-  margin-top: 20px; }
+  margin-top: 22.5px; }
 
 #globalLinks.globalLinks-desktop {
-  margin-top: 32.30769px; }
+  margin-top: 36.34615px; }
 
 #globalLinks ul.user-dropdown li a {
   color: #3C8DBC; }
@@ -914,7 +914,7 @@ li#usermenu a span.user_icon {
 
 #searchform {
   margin-right: -10px;
-  margin-top: 20px;
+  margin-top: 22.5px;
   margin-right: 15px; }
 
 #search_form label {
@@ -1105,7 +1105,7 @@ a[id^=grouptab]:active {
 
 #quickcreatetop {
   float: left;
-  margin-top: 20px;
+  margin-top: 22.5px;
   margin-right: 15px; }
 
 #quickcreatetop a {
@@ -1299,7 +1299,7 @@ a[id^=grouptab]:active {
     line-height: 20px; }
 
   .mobile-bar .user-dropdown {
-    top: 26.66667px;
+    top: 30px;
     left: -140px; } }
 .mobile-bar ul.dropdown-menu.user-dropdown {
   left: -140px; }
@@ -1309,14 +1309,14 @@ a[id^=grouptab]:active {
 
 @media (min-width: 768px) and (min-height: 381px) {
   .mobile-bar #globalLinks {
-    height: 80px; } }
+    height: 90px; } }
 @media (min-width: 768px) and (min-height: 381px) {
   .mobile-bar #globalLinks {
-    height: 80px; } }
+    height: 90px; } }
 @media (max-width: 1560px) {
   .navbar-fixed-top {
-    height: 80px;
-    max-height: 80px; }
+    height: 90px;
+    max-height: 90px; }
 
   #searchform {
     display: none; }
@@ -1475,23 +1475,23 @@ a[id^=grouptab]:active {
     background-position: 0px 0px; } }
 @media (min-width: 750px) {
   .modulename {
-    line-height: 80px; }
+    line-height: 90px; }
 
   .navbar-toggle {
-    height: 80px; }
+    height: 90px; }
 
   #mobile_menu {
-    top: 80px;
+    top: 90px;
     left: 10px;
     -webkit-overflow-scrolling: touch; }
 
   .mobile-bar .user-dropdown {
-    top: 60px;
+    top: 67.5px;
     left: -140px; }
 
   #search .dropdown-menu {
     position: absolute;
-    top: 14.54545px;
+    top: 16.36364px;
     right: 0;
     bottom: auto;
     left: -224px;
@@ -1538,7 +1538,7 @@ a[id^=grouptab]:active {
     float: left;
     width: 44px;
     height: 48px;
-    margin-top: 20px;
+    margin-top: 22.5px;
     margin-right: 10px;
     background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert.svg"), url("../../../../themes/SuiteP/images/p_icon_alert.png");
     background-repeat: no-repeat;
@@ -1563,7 +1563,7 @@ a[id^=grouptab]:active {
     fill: #3C8DBC; }
 
   #search #searchbutton {
-    margin-top: 20px;
+    margin-top: 22.5px;
     margin-right: 15px; }
 
   #search #searchbutton {
@@ -1648,7 +1648,7 @@ a[id^=grouptab]:active {
 
   #toolbar {
     display: block;
-    margin-top: -80px;
+    margin-top: -90px;
     height: 48px; } }
 @media (max-width: 750px) {
   .navbar .container-fluid {
