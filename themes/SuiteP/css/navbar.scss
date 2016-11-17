@@ -428,7 +428,7 @@
   color: $navbar-link-color-hover;
 }
 
-.topnav ul.dropdown-menu li:last-child a {
+.topnav .dropdown-menu li:last-child a {
   border-bottom: 0px;
 }
 
@@ -685,6 +685,8 @@ li#usermenu a span.user_icon {
 
 .globalLinks-desktop .user-dropdown {
   top: 100%;
+  right: -30px;
+  left: auto;
 }
 
 .dropdown-menu {
@@ -890,7 +892,7 @@ a[id^=grouptab]:active {
   border-bottom-left-radius: 0px;
 }
 
-#quickcreatetop ul.dropdown-menu {
+#quickcreatetop .dropdown-menu {
   background-color: #829EB5;
   border-radius: 3px;
   border-top-right-radius: 0px;
@@ -1105,7 +1107,7 @@ a[id^=grouptab]:active {
   left: -140px;
 }
 
-#modulelinks > ul.dropdown-menu {
+#modulelinks > .dropdown-menu {
   left: 50px;
 }
 
@@ -1144,7 +1146,7 @@ a[id^=grouptab]:active {
     left: -140px;
   }
 
-  li.topnav ul.dropdown-menu {
+  li.topnav .dropdown-menu {
     left: 0px;
   }
 
@@ -1297,7 +1299,7 @@ a[id^=grouptab]:active {
     background-color: transparent;
   }
 
-  #quickcreatetop ul.dropdown-menu {
+  #quickcreatetop .dropdown-menu {
     left: 0px;
   }
 
@@ -1327,7 +1329,7 @@ a[id^=grouptab]:active {
   }
 }
 
-@media (min-width: 750px) {
+@media (min-width: 751px) {
   .modulename {
     line-height: $navbar-height;
   }
@@ -1386,7 +1388,7 @@ a[id^=grouptab]:active {
   //  background-position: 80px -56px;
   //}
 
-  #quickcreatetop ul.dropdown-menu {
+  #quickcreatetop .dropdown-menu {
     left: 0px;
   }
 
@@ -1716,11 +1718,11 @@ a[id^=grouptab]:active {
     display: block;
   }
 
-  #globalLinks:hover ul.dropdown-menu {
+  #globalLinks:hover .dropdown-menu {
     display: block;
   }
 
-  #quickcreatetop:hover ul.dropdown-menu {
+  #quickcreatetop:hover .dropdown-menu {
     display: block;
   }
 
@@ -1828,31 +1830,33 @@ a[id^=grouptab]:active {
   display: inline-block;
 }
 
+.navbar-fixed-top {
+  .navbar-header .dropdown-menu {
+    max-height: 200px;
+    height: 200px;
+  }
 
-.navbar-header ul.dropdown-menu {
-  max-height: 200px;
-  height: 200px;
+  .with-actions > .dropdown-menu {
+    max-height: 200px;
+    height: 200px;
+  }
+
+  .moremenu ul {
+    max-height: 200px;
+    height: 200px;
+  }
+
+  .dropdown-menu {
+    max-height: 200px;
+    height: 200px;
+  }
+
+  .navbar-fixed-bottom .navbar-collapse {
+    max-height: 200px;
+    height: 200px;
+  }
 }
 
-.with-actions > .dropdown-menu {
-  max-height: 200px;
-  height: 200px;
-}
-
-.moremenu ul {
-  max-height: 200px;
-  height: 200px;
-}
-
-ul.dropdown-menu {
-  max-height: 200px;
-  height: 200px;
-}
-
-.navbar-fixed-bottom .navbar-collapse {
-  max-height: 200px;
-  height: 200px;
-}
 
 .navbar-fixed-top .navbar-collapse {
   max-height: 200px;
@@ -1873,44 +1877,46 @@ ul.dropdown-menu {
 
 /*mobile medium*/
 @media (min-height: 380px) {
-  .navbar-header ul.dropdown-menu {
-    max-height: 200px;
-    height: auto;
-  }
+  .navbar-fixed-top {
+    .navbar-header .dropdown-menu {
+      max-height: 200px;
+      height: auto;
+    }
 
-  .topnav .dropdown-menu {
-    max-height: 200px;
-    height: auto;
-  }
+    .topnav .dropdown-menu {
+      max-height: 200px;
+      height: auto;
+    }
 
-  .with-actions > .dropdown-menu {
-    max-height: 200px;
-    height: auto;
-  }
+    .with-actions > .dropdown-menu {
+      max-height: 200px;
+      height: auto;
+    }
 
-  .moremenu ul {
-    max-height: 200px;
-    height: auto;
-  }
+    .moremenu ul {
+      max-height: 200px;
+      height: auto;
+    }
 
-  ul.dropdown-menu {
-    max-height: 200px;
-    height: auto;
-  }
+    .dropdown-menu {
+      max-height: 200px;
+      height: auto;
+    }
 
-  #modulelinks > ul {
-    max-height: 280px;
-    height: 280px;
-  }
+    #modulelinks > ul {
+      max-height: 280px;
+      height: 280px;
+    }
 
-  .mobileheader ul {
-    max-height: 280px;
-    height: 280px;
-  }
+    .mobileheader ul {
+      max-height: 280px;
+      height: 280px;
+    }
 
-  #mobile_menu {
-    max-height: 280px;
-    height: 280px;
+    #mobile_menu {
+      max-height: 280px;
+      height: 280px;
+    }
   }
 
   .navbar-fixed-bottom .navbar-collapse {
@@ -1926,42 +1932,44 @@ ul.dropdown-menu {
 
 /* mobile large*/
 @media  (min-height: 480px) {
-  .navbar-header ul.dropdown-menu {
-    max-height: 380px;
-    height: auto;
-  }
+  .navbar-fixed-top {
+    .navbar-header .dropdown-menu {
+      max-height: 380px;
+      height: auto;
+    }
 
-  .topnav .dropdown-menu {
-    max-height: 380px;
-    height: auto;
-  }
+    .topnav .dropdown-menu {
+      max-height: 380px;
+      height: auto;
+    }
 
-  .with-actions > .dropdown-menu {
-    max-height: 380px;
-    height: auto;
-  }
+    .with-actions > .dropdown-menu {
+      max-height: 380px;
+      height: auto;
+    }
 
-  .moremenu ul {
-    max-height: 380px;
-    height: auto;
-  }
+    .moremenu ul {
+      max-height: 380px;
+      height: auto;
+    }
 
-  ul.dropdown-menu {
-    max-height: 380px;
-    height: auto;
-  }
+    .dropdown-menu {
+      max-height: 380px;
+      height: auto;
+    }
 
-  #modulelinks > ul {
-    max-height: 380px;
-    height: auto;
-  }
-  .mobileheader ul {
-    max-height: 380px;
-    height: auto;
-  }
-  #mobile_menu {
-    max-height: 380px;
-    height: auto;
+    #modulelinks > ul {
+      max-height: 380px;
+      height: auto;
+    }
+    .mobileheader ul {
+      max-height: 380px;
+      height: auto;
+    }
+    #mobile_menu {
+      max-height: 380px;
+      height: auto;
+    }
   }
 
   .navbar-fixed-bottom .navbar-collapse {
@@ -1978,43 +1986,44 @@ ul.dropdown-menu {
 
 /* 720p / ipad */
 @media  (min-height: 700px) {
-  .navbar-header ul.dropdown-menu {
-    max-height: 620px;
-    height: auto;
-  }
+  .navbar-fixed-top {
+    .navbar-header .dropdown-menu {
+      max-height: 620px;
+      height: auto;
+    }
 
-  .topnav .dropdown-menu {
-    max-height: 620px;
-    height: auto;
-  }
+    .topnav .dropdown-menu {
+      max-height: 620px;
+      height: auto;
+    }
 
-  .with-actions > .dropdown-menu {
-    max-height: 620px;
-    height: auto;
-  }
+    .with-actions > .dropdown-menu {
+      max-height: 620px;
+      height: auto;
+    }
 
-  .moremenu ul {
-    max-height: 620px;
-    height: auto;
-  }
+    .moremenu ul {
+      max-height: 620px;
+      height: auto;
+    }
 
-  ul.dropdown-menu {
-    max-height: 620px;
-    height: auto;
-  }
+    .dropdown-menu {
+      max-height: 620px;
+      height: auto;
+    }
 
-  #modulelinks > ul {
-    max-height: 620px;
-  }
+    #modulelinks > ul {
+      max-height: 620px;
+    }
 
-  .mobileheader ul {
-    max-height: 620px;
-  }
+    .mobileheader ul {
+      max-height: 620px;
+    }
 
-  #mobile_menu {
-    max-height: 620px;
+    #mobile_menu {
+      max-height: 620px;
+    }
   }
-
   .navbar-fixed-bottom .navbar-collapse {
     max-height: 620px;
     height: 620px;
@@ -2028,37 +2037,38 @@ ul.dropdown-menu {
 
 /* 720p-1080p*/
 @media  (min-height: 820px) {
-  .navbar-header ul.dropdown-menu {
-    max-height: 700px;
-    height: auto;
-    overflow-y: auto;
+  .navbar-fixed-top {
+    .navbar-header .dropdown-menu {
+      max-height: 700px;
+      height: auto;
+      overflow-y: auto;
+    }
+
+    .topnav .dropdown-menu {
+      max-height: 700px;
+      height: auto;
+      overflow-y: auto;
+    }
+
+    .with-actions > .dropdown-menu {
+      max-height: 700px;
+      height: auto;
+      overflow-y: auto;
+    }
+
+    .moremenu ul {
+      max-height: 700px;
+      height: auto;
+      overflow-y: auto;
+    }
+
+    .dropdown-menu {
+      max-height: 700px;
+      height: auto;
+      overflow-y: auto;
+    }
+
   }
-
-  .topnav .dropdown-menu {
-    max-height: 700px;
-    height: auto;
-    overflow-y: auto;
-  }
-
-  .with-actions > .dropdown-menu {
-    max-height: 700px;
-    height: auto;
-    overflow-y: auto;
-  }
-
-  .moremenu ul {
-    max-height: 700px;
-    height: auto;
-    overflow-y: auto;
-  }
-
-  ul.dropdown-menu {
-    max-height: 700px;
-    height: auto;
-    overflow-y: auto;
-  }
-
-
   .navbar-fixed-bottom .navbar-collapse {
     max-height: 620px;
     height: 620px;
@@ -2075,7 +2085,7 @@ ul.dropdown-menu {
 
 /* 1080p*/
 @media  (min-height: 920px) {
-  .navbar-header ul.dropdown-menu {
+  .navbar-header .dropdown-menu {
     max-height: 820px;
     height: auto;
   }
@@ -2095,7 +2105,7 @@ ul.dropdown-menu {
     height: auto;
   }
 
-  ul.dropdown-menu {
+  .dropdown-menu {
     max-height: 820px;
     height: auto;
   }
@@ -2104,7 +2114,7 @@ ul.dropdown-menu {
 
 /* 2K and above */
 @media  (min-height: 1080px) {
-  .navbar-header ul.dropdown-menu {
+  .navbar-header .dropdown-menu {
     max-height: inherit;
     height: auto;
   }
@@ -2119,7 +2129,7 @@ ul.dropdown-menu {
     height: auto;
   }
 
-  .moremenu ul, ul.dropdown-menu {
+  .moremenu ul, .dropdown-menu {
     max-height: inherit;
     height: auto;
   }

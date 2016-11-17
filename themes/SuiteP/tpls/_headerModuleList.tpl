@@ -434,7 +434,7 @@
                 {/literal}
 
             {/if}
-            <div id="globalLinks" class="dropdown nav navbar-nav navbar-right globalLinks-desktop">
+            <div id="globalLinks" class="dropdown nav navbar-nav navbar-right globalLinks-desktop" >
                 <li id="usermenu" aria-expanded="false">
                     <a>
                         <span class="user_icon"> </span> {$CURRENT_USER}
