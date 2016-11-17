@@ -15,7 +15,7 @@
 }
 
 .panel-default > .panel-heading {
-  background: #66727D;
+  background: $panel-expanded-bg;
   color: white;
   padding: 0px;
   vertical-align: middle;
@@ -30,7 +30,7 @@
   line-height: 52px;
   font-weight: 500;
   font-size: 14px /*!important*/;
-  background-color: #66727D;
+  background-color: $panel-expanded-bg;
 }
 
 .panel-default > .panel-body {
@@ -38,7 +38,7 @@
 }
 
 .panel-default > .panel-heading-collapse {
-  background: #BFCAD3;
+  background: $panel-collapsed-bg;
 }
 
 .collapse, .collapsing, .collapse.in {
@@ -57,7 +57,7 @@
   height: 52px;
   font-weight: 500;
   font-size: 14px /*!important*/;
-  //background-color: #66727D;
+  //background-color: $panel-expanded-bg;
   padding: 15px 10px 0 10px;
   text-decoration: none;
   border-top-left-radius: 4px;
@@ -71,7 +71,7 @@
   height: 52px;
   font-weight: 500;
   font-size: 14px /*!important*/;
-  //background-color: #66727D;
+  //background-color: $panel-expanded-bg;
   padding: 10px 10px 0 10px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
@@ -79,7 +79,7 @@
 }
 
 .panel-default > .panel-heading  > a:not(.collapsed) {
-  background-color: #66727D;
+  background-color: $panel-expanded-bg;
 
 }
 
@@ -98,7 +98,7 @@
 }
 
 .panel-heading a.collapsed {
-  background-color: #BFCAD3 /*!important*/;
+  background-color: $panel-collapsed-bg /*!important*/;
 }
 
 

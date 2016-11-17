@@ -39,13 +39,13 @@ a:hover {
     color: #F08377; }
 
 ::selection {
-  background: #534d64;
-  color: #F08377; }
+  background: #F08377;
+  color: #FFFFFF; }
 
 /* Safari */
 ::-moz-selection {
-  background: #534d64;
-  color: #F08377; }
+  background: #F08377;
+  color: #FFFFFF; }
 
 /* Firefox */
 @media (max-width: 750px) {
@@ -4399,7 +4399,7 @@ div.noBullet li, .nobullet {
 
 #content {
   width: 100%;
-  padding: 15px 3% 40px 3%; }
+  padding: 30px 3% 40px 3%; }
 
 #pagecontent:after {
   clear: both; }
@@ -6265,7 +6265,7 @@ a:link, a:visited, a:hover {
   color: #534D64;
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin: 0px 0 20px 0;
+  margin: 0px 0 40px 0;
   font-weight: 300; }
 
 .moduleTitle > h2 > img {

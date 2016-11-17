@@ -15,19 +15,19 @@ $info: #AA9DCC;
 $main-bg: #F5F5F5;
 $main-alternate-bg: #FFFFFF;
 
-$selection-color: #F08377;
-$selection-bg: #534d64;
+$selection-color: #FFFFFF;
+$selection-bg: #F08377;
 
 $page-font-family: 'Lato', Lato, Arial, sans-serif;
 $page-font-size: 13px;
 $page-p-size: 14px;
-$page-title-space: 20px; // normal 40px
+$page-title-space: 40px; // normal 40px
 $main-font-color: #534D64;
 
 $link-color: $danger;
 $link-color-hover: $danger-hover;
 
-$page-title-spacing: 15px; // 30px normal
+$page-title-spacing: 30px; // 30px normal
 
 $panel-bg: #E6E6E6;
 $footer-btn-bg: #E6E6E6;
@@ -99,7 +99,6 @@ $navbar-topnav-font-size: 13px; /// 13px normal
 $navbar-links-padding: 14px; /// 14px normal or 8px small
 $home-icon-bg-pos-y:  ($navbar-height / 2.571428571);
 
-
 // Sidebar
 $sidebar-bg: #778591;
 $sidebar-btn-bg: #94A6B5;
@@ -121,6 +120,14 @@ $action-tab-seperator: #FA988D;
 $action-tab-color: #FFFFFF;
 $tab-height: 32px; // 32p normal 24px small
 
+
+// Panels
+$panel-collapsed-bg: #BFCAD3;
+$panel-expanded-bg: #66727D;
+
+
+// Detail view
+$detail-view-field-bg: #F5F5F5;
 
 // Form Elements
 $input-line-height: 40px; // 40px normal 32px small
