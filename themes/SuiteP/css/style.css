@@ -17,6 +17,12 @@ img, svg {
   image-rendering: crisp-edges;
   image-rendering: pixelated; }
 
+a {
+  color: #f08377; }
+
+a:hover {
+  color: #f08377; }
+
 .studiolink svg, .studiolink img {
   width: 30px;
   height: auto; }
@@ -478,7 +484,7 @@ footer.collapsedSidebar {
 .navbar-inverse {
   background: #534d64; }
   .navbar-inverse .navbar-brand {
-    color: whitesmoke;
+    color: white;
     height: 80px;
     line-height: 80px;
     padding: 0;
@@ -504,7 +510,7 @@ footer.collapsedSidebar {
       margin: 0;
       padding: 0; }
       .navbar-inverse .dropdown-menu li a {
-        color: whitesmoke;
+        color: white;
         background-color: #5d5670;
         text-decoration: none;
         padding: 12px 15px 12px 15px;
@@ -819,7 +825,7 @@ footer.collapsedSidebar {
   text-align: center; }
 
 #mobile_menu a:hover .glyphicon-plus {
-  color: whitesmoke; }
+  color: white; }
 
 li#usermenu a {
   background-color: #534d64;
@@ -839,7 +845,7 @@ li#usermenu a:hover {
   margin-top: 32.30769px; }
 
 #globalLinks ul.user-dropdown li a {
-  color: whitesmoke; }
+  color: white; }
 
 #globalLinks ul.user-dropdown li a:hover {
   color: #f08377; }
@@ -849,7 +855,7 @@ li#usermenu a:hover {
 
 #globalLinks ul li a {
   max-width: 150px;
-  color: whitesmoke; }
+  color: white; }
 
 #globalLinks ul li a:hover {
   max-width: 150px;
@@ -949,7 +955,7 @@ li#usermenu a:hover span.user_icon {
 
 #searchform button {
   background-color: #65697A;
-  color: whitesmoke;
+  color: white;
   border: none;
   float: left;
   width: 50px;
@@ -1030,7 +1036,7 @@ li#usermenu a:hover span.user_icon {
   float: right;
   width: 20%; }
 .navbar-fixed-top .recentlinks_topedit a:focus {
-  color: whitesmoke; }
+  color: white; }
 .navbar-fixed-top .recentlinks_top a {
   width: 100%;
   height: 100%; }
@@ -1040,7 +1046,7 @@ li#usermenu a:hover span.user_icon {
   display: block; }
 
 a[id^=grouptab], a[id^=moduleTab] {
-  color: whitesmoke;
+  color: white;
   padding: 15px 0 18px 0; }
 
 a[id^=grouptab]:visited {
@@ -1071,15 +1077,15 @@ a[id^=grouptab]:active {
   background: none; }
 
 .navbar-inverse .navbar-nav > .open > a {
-  color: whitesmoke;
+  color: white;
   background: none; }
 
 .navbar-inverse .navbar-nav > .open > a:hover {
-  color: whitesmoke;
+  color: white;
   background: none; }
 
 .navbar-inverse .navbar-nav > .open > a:focus {
-  color: whitesmoke;
+  color: white;
   background: none; }
 
 #mobileheader {
@@ -1089,7 +1095,7 @@ a[id^=grouptab]:active {
   font-size: 14px; }
 
 #modulelinks {
-  color: whitesmoke; }
+  color: white; }
 
 #quickcreatetop {
   float: left;
@@ -1097,7 +1103,7 @@ a[id^=grouptab]:active {
   margin-right: 15px; }
 
 #quickcreatetop a {
-  color: whitesmoke;
+  color: white;
   text-align: center;
   padding: 11px 32px 12px 12px;
   border-radius: 3px;
@@ -1146,7 +1152,7 @@ a[id^=grouptab]:active {
   border-bottom: none; }
 
 #quickcreatetop ul li a:hover {
-  color: whitesmoke; }
+  color: white; }
 
 #quickcreatetop .dropdown-menu {
   margin-top: 0px; }
@@ -1188,7 +1194,7 @@ a[id^=grouptab]:active {
 #desktop_notifications span.alert_count {
   background-color: #f08377;
   line-height: 20px;
-  color: whitesmoke;
+  color: white;
   height: 20px;
   width: 20px;
   display: block;
@@ -1225,13 +1231,13 @@ a[id^=grouptab]:active {
   color: inherit; }
 
 #desktop_notifications .close span {
-  color: whitesmoke;
+  color: white;
   margin-right: 0px;
   margin-bottom: 0px; }
 
 #desktop_notifications div.dropdown-menu {
   background-color: #f08377;
-  color: whitesmoke;
+  color: white;
   margin: 0;
   padding: 8px;
   font-size: 12px;
@@ -1242,14 +1248,14 @@ a[id^=grouptab]:active {
   border-radius: 2px; }
 
 #desktop_notifications div.has-alerts .alert-info {
-  color: whitesmoke;
+  color: white;
   background-color: inherit;
   border: 1px solid #757083;
   border-radius: 2px;
   padding: 0; }
 
 #desktop_notifications div.has-alerts .text-info {
-  color: whitesmoke; }
+  color: white; }
 
 #desktop_notifications div.has-alerts p {
   font-size: 12px;
@@ -1327,7 +1333,7 @@ a[id^=grouptab]:active {
 
   #searchformdropdown button {
     background-color: transparent;
-    color: whitesmoke;
+    color: white;
     border: none;
     float: left;
     width: 50px;
@@ -1571,7 +1577,7 @@ a[id^=grouptab]:active {
     width: 42px; }
 
   #Icon_5_ {
-    fill: whitesmoke; }
+    fill: white; }
 
   #search #searchbutton {
     margin-top: 20px;
@@ -1634,7 +1640,7 @@ a[id^=grouptab]:active {
     list-style: none; }
 
   #mobile_menu a {
-    color: whitesmoke;
+    color: white;
     display: block;
     padding: 12px 15px;
     font-size: 14px; }
@@ -1699,7 +1705,7 @@ a[id^=grouptab]:active {
     margin-top: 10px; } }
 @media (max-width: 340px) {
   #mobilegloballinks a {
-    color: whitesmoke;
+    color: white;
     float: right;
     margin: 8px 0 0;
     padding: 8px;
@@ -1756,7 +1762,7 @@ a[id^=grouptab]:active {
     outline: 0;
     border: none;
     border-radius: 0;
-    color: whitesmoke;
+    color: white;
     -webkit-appearance: none;
     box-shadow: none;
     float: left; }
@@ -1768,10 +1774,10 @@ a[id^=grouptab]:active {
     background-position: 0 0px; } }
 @media (max-width: 980px) {
   ul.navbar-nav li a {
-    color: whitesmoke; }
+    color: white; }
 
   .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
-    color: whitesmoke; } }
+    color: white; } }
 @media (min-width: 1024px) {
   .navbar-nav > li:hover ul {
     display: block; }
@@ -1817,7 +1823,7 @@ a[id^=grouptab]:active {
 
   #searchformdropdown button {
     background-color: transparent;
-    color: whitesmoke;
+    color: white;
     border: none;
     float: left;
     width: 50px;

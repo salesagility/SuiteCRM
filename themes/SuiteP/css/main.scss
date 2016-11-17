@@ -9,7 +9,7 @@ body {
   background: $main-bg;
   font-family: $page-font-family;
   font-size: $page-font-size;
-  color: $main-color;
+  color: $main-font-color;
   margin: 0;
   overflow: auto;
   height: 100%;
@@ -19,6 +19,15 @@ img, svg {
   image-rendering: auto;
   image-rendering: crisp-edges;
   image-rendering: pixelated;
+}
+
+// override bootstrap
+a {
+  color: $link-color;
+}
+
+a:hover {
+  color: $link-color-hover;
 }
 
 .studiolink svg, .studiolink img {
@@ -35,7 +44,7 @@ img, svg {
   margin-top: 110px;
 
   .dropdown-menu em {
-    padding: 0 10px 0 10px
+    padding: 0 10px 0 10px;
   }
 
   .dropdown-menu em a {
