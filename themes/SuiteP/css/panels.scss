@@ -153,33 +153,37 @@ div.sub-panel {
 }
 
 
-table.subpanel-table tr:last-of-type td {
+.subpanel-table tr:last-of-type td {
   border-bottom: 1px solid transparent;
 }
 
 
-table.subpanel-table {
+.subpanel-table {
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
 }
 
-table.subpanel-table th {
+.subpanel-table th {
   border-bottom: 1px solid #ddd;
 }
 
-table.subpanel-table th,
-table.subpanel-table th a:link {
+.subpanel-table.list th {
   color: #000000;
   font-weight: bold;
 }
 
-table.subpanel-table ul.clickMenu > li, ul.SugarActionMenuIESub li {
+.subpanel-table.list th a:link {
+  color: #000000;
+  font-weight: bold;
+}
+
+.subpanel-table .clickMenu > li, .SugarActionMenuIESub li {
   padding: 0;
   line-height: 24px;
   white-space: nowrap;
 }
 
-table.subpanel-table ul.subpanel {
+.subpanel-table ul.subpanel {
   background: none;
   background-color: transparent /*!important*/;
   border-color: transparent /*!important*/;
@@ -190,7 +194,7 @@ table.subpanel-table ul.subpanel {
   color: #fff;
 }
 
-table.subpanel-table .pagination li.sugar_action_button > form > a {
+.subpanel-table .pagination li.sugar_action_button > form > a {
   width: 100%;
 }
 
@@ -210,7 +214,7 @@ table.subpanel-table .pagination li.sugar_action_button > form > a {
   padding-right: 4px /*!important*/;
 }
 
-table.subpanel-table .pagination .sugar_action_button {
+.subpanel-table .pagination .sugar_action_button {
   padding: 0px /*!important*/;
   background-color: #94A6B5;
   border: 1px solid transparent;
@@ -218,7 +222,7 @@ table.subpanel-table .pagination .sugar_action_button {
   padding-right: 4px /*!important*/;
 }
 
-table.subpanel-table .pagination li.sugar_action_button > form > a {
+.subpanel-table .pagination li.sugar_action_button > form > a {
   padding: 0px /*!important*/;
   background-color: #94A6B5;
   border: 1px solid transparent;
@@ -226,7 +230,7 @@ table.subpanel-table .pagination li.sugar_action_button > form > a {
   padding-right: 4px /*!important*/;
 }
 
-table.subpanel-table .pagination .sugar_action_button > form > a{
+.subpanel-table .pagination .sugar_action_button > form > a{
   padding: 0px /*!important*/;
   background-color: #94A6B5;
   border: 1px solid transparent;
@@ -234,7 +238,7 @@ table.subpanel-table .pagination .sugar_action_button > form > a{
   padding-right: 4px /*!important*/;
 }
 
-table.subpanel-table .pagination .sugar_action_button > form > a {
+.subpanel-table .pagination .sugar_action_button > form > a {
   padding: 0px /*!important*/;
   background-color: #94A6B5;
   border: 1px solid transparent;
@@ -250,23 +254,23 @@ table.subpanel-table .pagination .sugar_action_button > form > a {
 
 /* pagination on list view subpanel-table */
 
-table.list.view.subpanel-table tr.pagination span.pageNumbers {
+.subpanel-table.list tr.pagination span.pageNumbers {
   position: relative;
   top: -7px;
 }
 
 
-table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"] img,
-table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"] img,
-table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"] img,
-table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"] img {
+.subpanel-table.list tr.pagination button.button[name="listViewStartButton"] img,
+.subpanel-table.list tr.pagination button.button[name="listViewPrevButton"] img,
+.subpanel-table.list tr.pagination button.button[name="listViewNextButton"] img,
+.subpanel-table.list tr.pagination button.button[name="listViewEndButton"] img {
   display: none;
 }
 
-table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"],
-table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"],
-table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"],
-table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"] {
+.subpanel-table.list tr.pagination button.button[name="listViewStartButton"],
+.subpanel-table.list tr.pagination button.button[name="listViewPrevButton"],
+.subpanel-table.list tr.pagination button.button[name="listViewNextButton"],
+.subpanel-table.list tr.pagination button.button[name="listViewEndButton"] {
   width: 26px;
   height: 26px;
   margin: 0;
@@ -274,75 +278,75 @@ table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButt
   background-image: none,url("../../../../themes/SuiteP/images/p_pag_tools.svg"),url("../../../../themes/SuiteP/images/p_pag_tools.png");
   background-repeat: no-repeat;
 }
-table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"]:hover,
-table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"]:hover,
-table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"]:hover,
-table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"]:hover {
+.subpanel-table.list tr.pagination button.button[name="listViewStartButton"]:hover,
+.subpanel-table.list tr.pagination button.button[name="listViewPrevButton"]:hover,
+.subpanel-table.list tr.pagination button.button[name="listViewNextButton"]:hover,
+.subpanel-table.list tr.pagination button.button[name="listViewEndButton"]:hover {
   background-color: #808F9C;
 }
 
-table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"] {
+.subpanel-table.list tr.pagination button.button[name="listViewStartButton"] {
   background-position: 9px -29px;
 }
 
-table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"] {
+.subpanel-table.list tr.pagination button.button[name="listViewPrevButton"] {
   background-position: 9px -50px;
 }
 
-table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"] {
+.subpanel-table.list tr.pagination button.button[name="listViewNextButton"] {
   background-position: 10px -132px;
 }
 
-table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"] {
+.subpanel-table.list tr.pagination button.button[name="listViewEndButton"] {
   background-position: 10px -112px;
 }
 
-table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"][disabled],
-table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"][disabled],
-table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"][disabled],
-table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"][disabled] {
+.subpanel-table.list tr.pagination button.button[name="listViewStartButton"][disabled],
+.subpanel-table.list tr.pagination button.button[name="listViewPrevButton"][disabled],
+.subpanel-table.list tr.pagination button.button[name="listViewNextButton"][disabled],
+.subpanel-table.list tr.pagination button.button[name="listViewEndButton"][disabled] {
   opacity: .5;
   cursor: default;
 }
 
-table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"],
-table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"],
-table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"],
-table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"],
-table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"][disabled]:hover,
-table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"][disabled]:hover,
-table.list.view.subpanel-table tr.pagination button.button[name="listViewNextButton"][disabled]:hover,
-table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButton"][disabled]:hover {
+.subpanel-table.list tr.pagination button.button[name="listViewStartButton"],
+.subpanel-table.list tr.pagination button.button[name="listViewPrevButton"],
+.subpanel-table.list tr.pagination button.button[name="listViewNextButton"],
+.subpanel-table.list tr.pagination button.button[name="listViewEndButton"],
+.subpanel-table.list tr.pagination button.button[name="listViewStartButton"][disabled]:hover,
+.subpanel-table.list tr.pagination button.button[name="listViewPrevButton"][disabled]:hover,
+.subpanel-table.list tr.pagination button.button[name="listViewNextButton"][disabled]:hover,
+.subpanel-table.list tr.pagination button.button[name="listViewEndButton"][disabled]:hover {
   background-color: #94A6B5;
 }
 
 #actionLinkTop li.sugar_action_button:hover,
 #actionLinkBottom li.sugar_action_button:hover,
-table.subpanel-table li.sugar_action_button:hover,
+.subpanel-table li.sugar_action_button:hover,
 #selectLinkTop li.sugar_action_button:hover,
 #selectLinkBottom li.sugar_action_button:hover,
-table.subpanel-table .pagination .sugar_action_button:hover,
-table.subpanel-table .pagination li.sugar_action_button:hover > form > a,
-table.subpanel-table .pagination .sugar_action_button:hover > form > a,
-table.subpanel-table .pagination .sugar_action_button:hover > form > a,
+.subpanel-table .pagination .sugar_action_button:hover,
+.subpanel-table .pagination li.sugar_action_button:hover > form > a,
+.subpanel-table .pagination .sugar_action_button:hover > form > a,
+.subpanel-table .pagination .sugar_action_button:hover > form > a,
 
-table.subpanel-table ul.subpanel a:hover,
-table.subpanel-table li.sugar_action_button:hover,
-table.subpanel-table .pagination .sugar_action_button:hover,
-table.subpanel-table .pagination li.sugar_action_button:hover > form > a,
-table.subpanel-table .pagination .sugar_action_button:hover > form > a,
-table.subpanel-table .pagination .sugar_action_button:hover > form > a,
-table.subpanel-table .pagination a,
-.subpanel-table ul.subnav {
+.subpanel-table ul.subpanel a:hover,
+.subpanel-table li.sugar_action_button:hover,
+.subpanel-table .pagination .sugar_action_button:hover,
+.subpanel-table .pagination li.sugar_action_button:hover > form > a,
+.subpanel-table .pagination .sugar_action_button:hover > form > a,
+.subpanel-table .pagination .sugar_action_button:hover > form > a,
+.subpanel-table .pagination a,
+.subpanel-table .subnav {
   background-color: #778591;
 }
 
-table.subpanel-table .pagination a {
+.subpanel-table .pagination a {
   padding-left: 8px;
   padding-right: 8px;
 }
 
-table.subpanel-table .pagination ul.clickMenu li span {
+.subpanel-table .pagination .clickMenu li span {
   float: right;
   margin-top: 9px;
   margin-left: 0px;
@@ -357,29 +361,29 @@ table.subpanel-table .pagination ul.clickMenu li span {
   background-color: $default-btn-color;
 }
 
-ul.tablist, ul.subpanelTablist {
+.tablist, .subpanelTablist {
   border-bottom-color: #F08377;
 }
 
-ul.tablist li a:hover, ul.subpanelTablist li a:hover {
+.tablist li a:hover, .subpanelTablist li a:hover {
   background: #fafafa;
   border-color: #F08377;
 }
 
-ul.tablist li a, ul.subpanelTablist li a {
+.tablist li a, .subpanelTablist li a {
   background-color: #fff;
   border-color: #dddddd;
 }
 
-ul.tablist li a:link, ul.tablist li a:visited, ul.subpanelTablist li a:link, ul.subpanelTablist li a:visited {
+.tablist li a:link, .tablist li a:visited, .subpanelTablist li a:link, .subpanelTablist li a:visited {
   color: #444444;
 }
 
-ul.tablist li a:hover, ul.subpanelTablist li a:hover {
+.tablist li a:hover, .subpanelTablist li a:hover {
   background: #fafafa;
 }
 
-ul.subpanelTablist li a.current, ul.subpanelTablist li a.current:hover {
+.subpanelTablist li a.current, .subpanelTablist li a.current:hover {
   color: #4f4f4f;
   background: #fff;
   border-right-color: #cccccc;
@@ -387,7 +391,7 @@ ul.subpanelTablist li a.current, ul.subpanelTablist li a.current:hover {
   border-bottom: none;
 }
 
-ul.tablist li a.current:link, ul.tablist li a.current:visited, ul.tablist li a.current:hover {
+.tablist li a.current:link, .tablist li a.current:visited, .tablist li a.current:hover {
   background: #f6f6f6;
   border-bottom-color: #f6f6f6;
   border-right-color: #abc3d7;
@@ -395,27 +399,27 @@ ul.tablist li a.current:link, ul.tablist li a.current:visited, ul.tablist li a.c
 }
 
 
-ul.tablist, ul.subpanelTablist {
+.tablist, .subpanelTablist {
   border-bottom: 2px solid;
 }
 
-ul.tablist li a, ul.subpanelTablist li a {
+.tablist li a, .subpanelTablist li a {
   border-top: 2px solid;
   border-right-color: #cccccc;
   border-top: none;
   border-bottom: none;
 }
 
-ul.tablist li a:hover, ul.subpanelTablist li a:hover {
+.tablist li a:hover, .subpanelTablist li a:hover {
   border-top: 2px solid;
 }
 
-ul.tablist li a.current, ul.tablist li a.current:hover {
+.tablist li a.current, .tablist li a.current:hover {
   border-bottom: 2px solid #f6f6f6;
   font-weight: bold;
 }
 
-ul.subpanelTablist li a.current, ul.subpanelTablist li a.current:hover {
+.subpanelTablist li a.current, .subpanelTablist li a.current:hover {
   border-bottom: 2px solid #fff;
   font-weight: bold;
 }
@@ -427,7 +431,7 @@ ul.subpanelTablist li a.current, ul.subpanelTablist li a.current:hover {
 
 
 
-ul.tablist, ul.subpanelTablist {
+.tablist, .subpanelTablist {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -439,22 +443,22 @@ ul.tablist, ul.subpanelTablist {
 }
 
 
-ul.tablist li a.activeSubTab:hover {
+.tablist li a.activeSubTab:hover {
   border-bottom-color: #ddd;
   color: #000000;
 }
 
-ul.subpanelTablist li a.activeSubTab:hover {
+.subpanelTablist li a.activeSubTab:hover {
   color: #000000;
 }
 
-ul.subpanelTablist #addPageItem a, ul.subpanelTablist #addPageItem a:hover {
+.subpanelTablist #addPageItem a, .subpanelTablist #addPageItem a:hover {
   border: none;
   background: transparent;
   text-decoration: none;
 }
 
-ul.tablist li a:link, ul.tablist li a:visited, ul.subpanelTablist li a:link, ul.subpanelTablist li a:visited {
+.tablist li a:link, .tablist li a:visited, .subpanelTablist li a:link, .subpanelTablist li a:visited {
   text-decoration: none;
 }
 
@@ -514,14 +518,14 @@ table.subpanelTabForm {
 }
 
 
-ul.clickMenu li span.subhover {
+.clickMenu li span.subhover {
   cursor: pointer;
 }
 
 
-ul.clickMenu li ul.subnav,
-ul.clickMenu ul.subnav-sub,
-ul.SugarActionMenuIESub {
+.clickMenu li .subnav,
+.clickMenu .subnav-sub,
+.SugarActionMenuIESub {
   list-style: none;
   position: absolute;
   top: 20px;
@@ -537,18 +541,18 @@ ul.SugarActionMenuIESub {
   overflow: hidden;
 }
 
-ul.clickMenu ul.subnav-sub,
-ul.SugarActionMenuIESub {
+.clickMenu .subnav-sub,
+.SugarActionMenuIESub {
   right: 0;
 }
 
-ul.clickMenu li ul.subnav {
+.clickMenu li .subnav {
   margin-top: 4px;
   min-width: 128px;
   right: auto;
 }
 
-ul.clickMenu li ul.subnav li, ul.clickMenu ul.subnav-sub li, ul.SugarActionMenuIESub li {
+.clickMenu li .subnav li, .clickMenu .subnav-sub li, .SugarActionMenuIESub li {
   margin: 0;
   padding: 0;
   clear: both;
@@ -558,30 +562,30 @@ ul.clickMenu li ul.subnav li, ul.clickMenu ul.subnav-sub li, ul.SugarActionMenuI
 }
 
 
-ul.clickMenu.subpanel.records li ul.subnav li a span {
+.clickMenu.subpanel.records li .subnav li a span {
   height: 0;
   width: 0;
   background-image: none;
 }
 
-ul.clickMenu.button li span.ab:hover {
+.clickMenu.button li span.ab:hover {
   background-position: 50% 0;
 
 }
 
-ul.clickMenu.button li > span a {
+.clickMenu.button li > span a {
   padding: 0 /*!important*/;
 }
 
-ul.clickMenu.button span {
+.clickMenu.button span {
   padding-right: 5px;
 }
 
-ul.clickMenu.button li ul.subnav {
+.clickMenu.button li .subnav {
   width: auto;
 }
 
-ul.clickMenu li a.disabled {
+.clickMenu li a.disabled {
   color: gray /*!important*/;
   cursor: default /*!important*/;
 }
