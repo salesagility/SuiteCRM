@@ -141,17 +141,12 @@ div.action_buttons .button:hover {
   background-color: $default-btn-bg-hover;
 }
 
-
-
 #subpanel_list .tab-content .list.view.subpanel-table .pagination div.action_buttons .button {
   text-transform: capitalize;
   padding: 5px 13px;
   line-height: initial;
   height: initial;
 }
-
-
-
 
 div.sub-panel {
   margin-bottom: 4px;
@@ -199,17 +194,46 @@ table.subpanel-table .pagination li.sugar_action_button > form > a {
   width: 100%;
 }
 
-table.subpanel-table ul.subpanel > a,
-.single  a,
-.single > a,
-#actionLinkTop li.sugar_action_button,
-#actionLinkBottom li.sugar_action_button,
-table.subpanel-table li.sugar_action_button,
-#selectLinkTop li.sugar_action_button,
-#selectLinkBottom li.sugar_action_button,
-table.subpanel-table .pagination .sugar_action_button,
-table.subpanel-table .pagination li.sugar_action_button > form > a,
-table.subpanel-table .pagination .sugar_action_button > form > a,
+.subpanel-table ul.subpanel > a {
+  padding: 0px /*!important*/;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding-right: 4px /*!important*/;
+}
+
+.subpanel-table li.sugar_action_button {
+  padding: 0px /*!important*/;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding-right: 4px /*!important*/;
+}
+
+table.subpanel-table .pagination .sugar_action_button {
+  padding: 0px /*!important*/;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding-right: 4px /*!important*/;
+}
+
+table.subpanel-table .pagination li.sugar_action_button > form > a {
+  padding: 0px /*!important*/;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding-right: 4px /*!important*/;
+}
+
+table.subpanel-table .pagination .sugar_action_button > form > a{
+  padding: 0px /*!important*/;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding-right: 4px /*!important*/;
+}
+
 table.subpanel-table .pagination .sugar_action_button > form > a {
   padding: 0px /*!important*/;
   background-color: #94A6B5;
@@ -230,6 +254,7 @@ table.list.view.subpanel-table tr.pagination span.pageNumbers {
   position: relative;
   top: -7px;
 }
+
 
 table.list.view.subpanel-table tr.pagination button.button[name="listViewStartButton"] img,
 table.list.view.subpanel-table tr.pagination button.button[name="listViewPrevButton"] img,
@@ -486,4 +511,77 @@ table.subpanelTabForm {
   .panel-heading a div {
     width: 97.66%;
   }
+}
+
+
+ul.clickMenu li span.subhover {
+  cursor: pointer;
+}
+
+
+ul.clickMenu li ul.subnav,
+ul.clickMenu ul.subnav-sub,
+ul.SugarActionMenuIESub {
+  list-style: none;
+  position: absolute;
+  top: 20px;
+  margin: 0;
+  display: none;
+  float: left;
+  width: auto;
+  border: 1px solid transparent;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  padding: 8px 0;
+  z-index: 10;
+  overflow: hidden;
+}
+
+ul.clickMenu ul.subnav-sub,
+ul.SugarActionMenuIESub {
+  right: 0;
+}
+
+ul.clickMenu li ul.subnav {
+  margin-top: 4px;
+  min-width: 128px;
+  right: auto;
+}
+
+ul.clickMenu li ul.subnav li, ul.clickMenu ul.subnav-sub li, ul.SugarActionMenuIESub li {
+  margin: 0;
+  padding: 0;
+  clear: both;
+  width: 100%;
+  white-space: nowrap;
+
+}
+
+
+ul.clickMenu.subpanel.records li ul.subnav li a span {
+  height: 0;
+  width: 0;
+  background-image: none;
+}
+
+ul.clickMenu.button li span.ab:hover {
+  background-position: 50% 0;
+
+}
+
+ul.clickMenu.button li > span a {
+  padding: 0 /*!important*/;
+}
+
+ul.clickMenu.button span {
+  padding-right: 5px;
+}
+
+ul.clickMenu.button li ul.subnav {
+  width: auto;
+}
+
+ul.clickMenu li a.disabled {
+  color: gray /*!important*/;
+  cursor: default /*!important*/;
 }
