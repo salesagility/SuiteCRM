@@ -103,8 +103,11 @@ $home-icon-bg-pos-y:  ($navbar-height / 2.571428571);
 // Sidebar
 $sidebar-bg: #778591;
 $sidebar-btn-bg: #94A6B5;
-$sidebar-btn-bg-hover: #94A6B5;
-
+$sidebar-btn-bg-hover: #8499AB;
+$sidebar-btn-color: #FFFFFF;
+$side-bar-header-color: #F5F5F5;
+$side-bar-link-color-hover: $sidebar-bg;
+$side-bar-link-color-hover: #677785;
 
 // Tabs
 $active-tab-bg: #778591;
