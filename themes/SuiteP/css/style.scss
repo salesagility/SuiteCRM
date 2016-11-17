@@ -6375,11 +6375,11 @@ body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shado
 
 /* top create button and dropdown menu */
 
-#quickcreatetop ul.dropdown-menu li a {
+#quickcreatetop .dropdown-menu li a {
   opacity: 0.8;
 }
 
-#quickcreatetop ul.dropdown-menu li a:hover {
+#quickcreatetop .dropdown-menu li a:hover {
   opacity: 1;
 }
 
