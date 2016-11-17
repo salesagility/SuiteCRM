@@ -52,11 +52,19 @@
     font-size: $page-font-size;
     text-transform: uppercase;
     background-color: $active-tab-bg;
-    margin: 0 2px 0 2px;
+    margin-top: 0;
+    margin-right: 2px;
+    margin-bottom: 0;
+    margin-left: 2px;
     color: $default-tab-color;
     line-height: $tab-height;
     border-color: #eee #eee #fff;
     cursor: pointer;
+  }
+
+  .nav-tabs > li.active:nth-of-type(1) > a,
+  .nav-tabs > li:nth-of-type(1) > a {
+    margin-left: 0px;
   }
 
   #overflow-menu > li > span.notCurrentTabLeft, #overflow-menu > li > span.notCurrentTabRight {
@@ -206,7 +214,7 @@
     border: none;
   }
 
-  div.tab-content {
+  .detail-view .tab-content {
     background-color: #ffffff;
     padding: 24px;
     border: 1px solid transparent;

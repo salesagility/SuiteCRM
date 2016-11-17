@@ -173,6 +173,13 @@
   text-transform: none;
 }
 
+.recently_viewed_link_container {
+  width: 100%;
+  float: left;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
 .navbar-fixed-bottom {
   z-index: 15030;
 }
@@ -465,6 +472,10 @@
   cursor: pointer;
   padding: 5px;
   background: $danger-btn-bg;
+}
+
+#mobile_menu {
+  border-top: none;
 }
 
 #mobile_menu {
