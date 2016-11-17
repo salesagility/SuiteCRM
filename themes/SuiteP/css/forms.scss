@@ -891,7 +891,7 @@ select[size] {
   outline: 0;
   scrollbar-base-color: $input-select-bg;
   scrollbar-arrow-color: $input-select-bg;
-  color: $main-color;
+  color: $main-font-color;
   height: $input-line-height+8;
   line-height: $input-line-height+8;
 }
@@ -911,7 +911,7 @@ select {
   outline: 0;
   scrollbar-base-color: $input-select-bg;
   scrollbar-arrow-color: $input-select-bg;
-  color: $main-color;
+  color: $main-font-color;
   height: $input-line-height+8;
   line-height: $input-line-height+8;
 }
@@ -939,12 +939,12 @@ select#user_theme_picker {
 }
 
 select:checked {
-  color: $main-color;
+  color: $main-font-color;
   background: $input-select-bg;
 }
 
 option:checked {
-  color: $main-color;
+  color: $main-font-color;
   background: $input-select-bg;
 }
 
@@ -1071,7 +1071,7 @@ div.col-sm-6 #email1_span td.email-address-add-button {
 
 #email1_span i.error {
   background: inherit;
-  color: $main-color;
+  color: $main-font-color;
 }
 
 .email-address-line-container {

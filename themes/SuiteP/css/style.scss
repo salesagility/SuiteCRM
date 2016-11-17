@@ -11,7 +11,6 @@
 @import 'tabs';
 @import 'variables';
 
-
 div#searchResults {
   overflow-y: auto;
   padding-bottom: 50px;
@@ -149,7 +148,7 @@ div.noBullet li, .nobullet
 
 #content {
   width: 100%;
-  padding: $content-top 3% 40px 3%;
+  padding: $page-title-spacing 3% 40px 3%;
 }
 
 #bootstrap-container.col-md-offset-2 {
@@ -166,7 +165,7 @@ a#powered_by {
 }
 
 a#admin_options, a#powered_by {
-  color: $main-color;
+  color: $main-font-color;
   font-size: 12px;
   cursor: pointer;
 }
@@ -215,7 +214,7 @@ a#admin_options:hover, a#powered_by:hover {
 .menuItemX:visited, .menuItemHiliteX:visited, .menuItemX:hover, .menuItemHiliteX:hover,
 .menuItemX:active, .menuItemHiliteX:active, .menuItemX:link, .menuItemHiliteX:link {
   line-height: 24px;
-  color: $alert-body-color;
+  color: $navbar-alert-body-color;
   text-decoration: none;
   width: 120px;
   border-left: none;
@@ -399,7 +398,7 @@ th, td {
 }
 
 .detail-view-row .label, .edit-view-row .label, #lineItems {
-  color: $main-color;
+  color: $main-font-color;
   display: inline;
   padding: 0 0 0 8px;
   font-size: 14px;
@@ -412,7 +411,7 @@ th, td {
 }
 
 slot, #lead_queries_Div td {
-  color: $main-color;
+  color: $main-font-color;
   font-size: 14px;
   font-weight: 700;
   line-height: 48px;
@@ -432,7 +431,7 @@ slot, #lead_queries_Div td {
 }
 
 .detail-view-field {
-  color: $main-color;
+  color: $main-font-color;
   display: inline;
   padding:  12px;
   font-size: 14px;
@@ -504,7 +503,7 @@ slot, #lead_queries_Div td {
 
 #EditView .edit tr td {
   font-weight: 700;
-  color: $main-color;
+  color: $main-font-color;
 }
 
 #EditView .edit input:not([type=button]),
@@ -515,7 +514,7 @@ select,
 option[selected],
 .sqsEnabled {
   font-weight: normal;
-  color: $main-color;
+  color: $main-font-color;
 }
 
 .edit {
@@ -524,7 +523,7 @@ option[selected],
 
 .label {
   font-size: 14px;
-  color: $main-color;
+  color: $main-font-color;
 }
 
 .edit > table {
@@ -588,7 +587,7 @@ fieldset label {
   border: none;
   font-size: 14px;
   font-weight: 700;
-  color: $main-color;
+  color: $main-font-color;
 }
 
 .validation-message {
@@ -966,7 +965,7 @@ td.listViewButtons input.button:hover {
   font-size: 14px;
   font-weight: normal;
   margin: 14px 20px 0px 0;
-  color: $global-search-color;
+  color: $navbar-search-color;
 }
 
 #massassign_form input.button {
@@ -974,7 +973,7 @@ td.listViewButtons input.button:hover {
 }
 
 table#mass_update_table {
-  color: $global-search-color;
+  color: $navbar-search-color;
   background-color: $default-btn-color;
 }
 
@@ -2006,7 +2005,7 @@ div#content p.error {
 }
 
 .required a:hover, .error a:hover {
-  color: $main-color;
+  color: $main-font-color;
 }
 
 .success {
@@ -2507,7 +2506,7 @@ a:link, a:visited, a:hover {
   display: block;
   float: left;
   font-size: 26px;
-  color: $main-color;
+  color: $main-font-color;
   text-transform: uppercase;
   letter-spacing: 2px;
   margin: 0px 0 $page-title-space 0;
@@ -2691,7 +2690,7 @@ ul.subpanelTablist li a.activeSubTab:hover {
 
 
 .evenListRowS1 td, .oddListRowS1 td {
-  color: $main-color;
+  color: $main-font-color;
 
 }
 
@@ -4072,7 +4071,7 @@ textarea#description {
 
 .hr {
   height: 1px;
-  color: $main-menu-seperator;
+  color: $navbar-menu-seperator;
   background: $main-alternate-bg;
 }
 

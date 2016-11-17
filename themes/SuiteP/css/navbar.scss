@@ -5,7 +5,7 @@
   background: $navbar-bg;
 
   .navbar-brand {
-    color: $main-menu-color;
+    color: $navbar-menu-link-color;
     height: $navbar-height;
     line-height: $navbar-height;
     padding: 0;
@@ -29,7 +29,7 @@
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
     font-size: 10px;
-    background: $main-menu-bg;
+    background: $navbar-main-menu-bg;
     overflow-y: auto;
 
     li {
@@ -37,8 +37,8 @@
       padding: 0;
 
       a {
-        color: $main-menu-color;
-        background-color: $main-menu-bg;
+        color: $navbar-menu-link-color;
+        background-color: $navbar-main-menu-bg;
         text-decoration: none;
         padding: 12px 15px 12px 15px;
         display: block;
@@ -50,8 +50,8 @@
       }
 
       a:hover {
-        color: $main-menu-color-hover;
-        background: $main-menu-bg;
+        color: $navbar-menu-link-color-hover;
+        background: $navbar-main-menu-bg;
         -webkit-transition: all 0.3s ease-out;
         -moz-transition: all 0.3s ease-out;
         -o-transition: all 0.3s ease-out;
@@ -98,7 +98,7 @@
       height: $navbar-height;
       letter-spacing: 2px;
       line-height: $navbar-height;
-      padding: 0 ($topnav-padding / 2) 0 ($topnav-padding / 2);
+      padding: 0 ($navbar-links-padding / 2) 0 ($navbar-links-padding / 2);
       text-transform: uppercase;
 
       > span.notCurrentTab {
@@ -109,13 +109,13 @@
         }
 
         > a:hover {
-          border-top: 3px solid $main-menu-current-seperator;
+          border-top: 3px solid $navbar-menu-current-seperator;
         }
       }
 
       > span.currentTab {
         > a {
-          border-top: 3px solid $main-menu-current-seperator;
+          border-top: 3px solid $navbar-menu-current-seperator;
           padding-top: 36px;
           padding-bottom: 35px;
         }
@@ -266,27 +266,27 @@
 }
 
 #mobileheader .dropdown-menu li.recentlinks {
-  border-bottom: 1px solid $main-menu-seperator;
+  border-bottom: 1px solid $navbar-menu-seperator;
 }
 
 #mobileheader .dropdown-menu li.favoritelinks {
-  border-bottom: 1px solid $main-menu-seperator;
+  border-bottom: 1px solid $navbar-menu-seperator;
 }
 
 .topnav .dropdown-menu li.recentlinks {
-  border-bottom: 1px solid $main-menu-seperator;
+  border-bottom: 1px solid $navbar-menu-seperator;
 }
 
 .topnav .dropdown-menu li.favoritelinks {
-  border-bottom: 1px solid $main-menu-seperator;
+  border-bottom: 1px solid $navbar-menu-seperator;
 }
 
 .with-actions .dropdown-menu li.recentlinks {
-  border-bottom: 1px solid $main-menu-seperator;
+  border-bottom: 1px solid $navbar-menu-seperator;
 }
 
 .with-actions .dropdown-menu li.favoritelinks {
-  border-bottom: 1px solid $main-menu-seperator;
+  border-bottom: 1px solid $navbar-menu-seperator;
 }
 
 #mobileheader .dropdown-menu ul li a.recent-links-detail {
@@ -405,11 +405,11 @@
 
 
 .topnav:hover > a {
-  border-top: 3px solid $main-menu-hover;
+  border-top: 3px solid $navbar-menu-link-color-hover;
 }
 
 .topnav a:hover {
-  color: $main-menu-hover;
+  color: $navbar-menu-link-color-hover;
 }
 
 .topnav ul.dropdown-menu li:last-child a {
@@ -470,7 +470,7 @@
 }
 
 #mobile_menu a:hover .glyphicon-plus {
-  color: $main-menu-color;
+  color: $navbar-menu-link-color;
 }
 
 .navbar-inverse .navbar-brand:hover {
@@ -478,7 +478,7 @@
 }
 
 li#usermenu a {
-  background-color: $main-color;
+  background-color: $navbar-bg;
   padding-top: 0;
   padding-bottom: 0;
   padding-left: 0;
@@ -487,7 +487,7 @@ li#usermenu a {
 }
 
 li#usermenu a:hover {
-  color: $main-menu-color-hover;
+  color: $navbar-menu-link-color-hover;
 }
 
 #globalLinks {
@@ -499,11 +499,11 @@ li#usermenu a:hover {
 }
 
 #globalLinks ul.user-dropdown li a {
-  color: $main-menu-color;
+  color: $navbar-menu-link-color;
 }
 
 #globalLinks ul.user-dropdown li a:hover {
-  color: $main-menu-color-hover;
+  color: $navbar-menu-link-color-hover;
 }
 
 
@@ -513,12 +513,12 @@ li#usermenu a:hover {
 
 #globalLinks ul li a {
   max-width: 150px;
-  color: $main-menu-color;
+  color: $navbar-menu-link-color;
 }
 
 #globalLinks ul li a:hover {
   max-width: 150px;
-  color: $main-menu-hover;
+  color: $navbar-menu-link-color-hover;
 }
 
 #globalLinks ul li {
@@ -586,7 +586,7 @@ li#usermenu a:hover span.user_icon {
 
 #search_form label {
   font-weight: normal;
-  color: $global-search-color;
+  color: $navbar-search-color;
 }
 
 
@@ -604,40 +604,40 @@ li#usermenu a:hover span.user_icon {
 }
 
 #searchform #query_string  {
-  background-color: $global-search-bg;
+  background-color: $navbar-search-bg;
   float: left;
-  border: 3px solid $global-search-bg;
+  border: 3px solid $navbar-search-bg;
   padding: 12px 12px 12px 12px;
-  color: $global-search-text-color;
+  color: $navbar-search-text-color;
   font-size: 13px;
   letter-spacing: 1px;
   width: 200px;
   border-radius: 3px;
   min-height: 40px;
   line-height: normal;
-  -webkit-text-fill-color:  $global-search-color;
-  -webkit-box-shadow: 0 0 0 1000px $global-search-bg inset;
+  -webkit-text-fill-color:  $navbar-search-color;
+  -webkit-box-shadow: 0 0 0 1000px $navbar-search-bg inset;
 }
 
 #searchform #query_string:-webkit-autofill {
-  background-color: $global-search-bg;
+  background-color: $navbar-search-bg;
   float: left;
-  border: 3px solid $global-search-bg;
+  border: 3px solid $navbar-search-bg;
   padding: 12px 12px 12px 12px;
-  color: $global-search-text-color;
+  color: $navbar-search-text-color;
   font-size: 13px;
   letter-spacing: 1px;
   width: 200px;
   border-radius: 3px;
   min-height: 40px;
   line-height: normal;
-  -webkit-text-fill-color:  $global-search-bg;
-  -webkit-box-shadow: 0 0 0 1000px $global-search-bg inset ;
+  -webkit-text-fill-color:  $navbar-search-bg;
+  -webkit-box-shadow: 0 0 0 1000px $navbar-search-bg inset ;
 }
 
 #searchform button {
   background-color: #65697A;
-  color: $main-menu-color;
+  color: $navbar-menu-link-color;
   border: none;
   float: left;
   width: 50px;
@@ -655,7 +655,7 @@ li#usermenu a:hover span.user_icon {
 
 #searchform button:hover {
   background-position: 14px -46px;
-  background-color: $global-search-btn-bg;
+  background-color: $navbar-search-btn-bg;
 }
 
 
@@ -751,7 +751,7 @@ li#usermenu a:hover span.user_icon {
   }
 
   .recentlinks_topedit a:focus {
-    color: $main-menu-color ;
+    color: $navbar-menu-link-color ;
   }
 
   .recentlinks_top a {
@@ -770,7 +770,7 @@ li#usermenu a:hover span.user_icon {
 
 
 a[id^=grouptab], a[id^=moduleTab] {
-  color: $main-menu-color;
+  color: $navbar-menu-link-color;
   padding: 15px 0 18px 0;
 }
 
@@ -814,17 +814,17 @@ a[id^=grouptab]:active {
 
 
 .navbar-inverse .navbar-nav > .open > a {
-  color: $main-menu-color;
+  color: $navbar-menu-link-color;
   background: none ;
 }
 
 .navbar-inverse .navbar-nav > .open > a:hover {
-  color: $main-menu-color;
+  color: $navbar-menu-link-color;
   background: none ;
 }
 
 .navbar-inverse .navbar-nav > .open > a:focus {
-  color: $main-menu-color;
+  color: $navbar-menu-link-color;
   background: none ;
 }
 
@@ -837,7 +837,7 @@ a[id^=grouptab]:active {
 }
 
 #modulelinks {
-  color: $main-menu-color;
+  color: $navbar-menu-link-color;
 }
 
 #quickcreatetop {
@@ -847,7 +847,7 @@ a[id^=grouptab]:active {
 }
 
 #quickcreatetop a {
-  color: $main-menu-color ;
+  color: $navbar-menu-link-color ;
   text-align: center;
   padding: 11px 32px 12px 12px;
   border-radius: 3px;
@@ -903,7 +903,7 @@ a[id^=grouptab]:active {
 }
 
 #quickcreatetop ul li a:hover {
-  color: $main-menu-color ;
+  color: $navbar-menu-link-color ;
 }
 
 #quickcreatetop .dropdown-menu {
@@ -954,9 +954,9 @@ a[id^=grouptab]:active {
 }
 
 #desktop_notifications span.alert_count {
-  background-color: $alert-count-bg;
+  background-color: $navbar-alert-count-bg;
   line-height: 20px;
-  color: $main-menu-color;
+  color: $navbar-menu-link-color;
   height: 20px;
   width: 20px;
   display: block;
@@ -975,7 +975,7 @@ a[id^=grouptab]:active {
 #desktop_notifications .close {
   font-weight: normal;
   line-height: 1;
-  color: $alert-body-color;
+  color: $navbar-alert-body-color;
   text-shadow: none;
   filter: none;
   opacity: 1;
@@ -984,7 +984,7 @@ a[id^=grouptab]:active {
 #desktop_notifications .alert {
   font-weight: normal;
   line-height: 1;
-  color: $alert-body-color;
+  color: $navbar-alert-body-color;
   text-shadow: none;
   filter: none;
   opacity: 1;
@@ -998,14 +998,14 @@ a[id^=grouptab]:active {
 }
 
 #desktop_notifications .close span {
-  color: $main-menu-color;
+  color: $navbar-menu-link-color;
   margin-right: 0px ;
   margin-bottom: 0px ;
 }
 
 #desktop_notifications div.dropdown-menu {
   background-color: $danger;
-  color: $main-menu-color;
+  color: $navbar-menu-link-color;
   margin: 0;
   padding: 8px;
   font-size: 12px;
@@ -1013,28 +1013,28 @@ a[id^=grouptab]:active {
 }
 
 #desktop_notifications div.has-alerts {
-  background-color: $main-menu-bg;
+  background-color: $navbar-main-menu-bg;
   border-radius: 2px;
 }
 
 #desktop_notifications div.has-alerts .alert-info {
-  color: $main-menu-color;
+  color: $navbar-menu-link-color;
   background-color: inherit;
 
-  border: 1px solid $main-menu-seperator;
+  border: 1px solid $navbar-menu-seperator;
   border-radius: 2px;
   padding: 0;
 }
 
 #desktop_notifications div.has-alerts .text-info {
-  color: $main-menu-color;
+  color: $navbar-menu-link-color;
 }
 
 #desktop_notifications div.has-alerts p {
   font-size: 12px;
   line-height: 20px;
   background-color: $main-bg;
-  color: $main-color;
+  color: $main-font-color;
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
   min-height: 20px;
@@ -1055,7 +1055,7 @@ a[id^=grouptab]:active {
 #desktop_notifications div.has-alerts h4 {
   font-size: 14px;
   font-weight: bold;
-  background-color: $main-menu-bg;
+  background-color: $navbar-main-menu-bg;
   line-height: 20px;
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
@@ -1069,11 +1069,11 @@ a[id^=grouptab]:active {
 
 @media (max-width: 750px) {
   #desktop_notifications div.has-alerts {
-    background-color: $toolbar-bg;
+    background-color: $mobile-navbar-toolbar-bg;
   }
 
   #desktop_notifications div.has-alerts h4 {
-    background-color: $main-menu-bg;
+    background-color: $navbar-main-menu-bg;
     line-height: 20px;
   }
   .mobile-bar .user-dropdown{
@@ -1132,7 +1132,7 @@ a[id^=grouptab]:active {
 
   #searchformdropdown button {
     background-color: transparent;
-    color: $main-menu-color;
+    color: $navbar-menu-link-color;
     border: none;
     float: left;
     width: 50px;
@@ -1156,8 +1156,8 @@ a[id^=grouptab]:active {
   }
 
   #search #query_string {
-    background-color: $global-search-bg;
-    color: $global-search-text-color;
+    background-color: $navbar-search-bg;
+    color: $navbar-search-text-color;
     font-size: 14px;
     letter-spacing: 1px;
     width: 200px;
@@ -1254,7 +1254,7 @@ a[id^=grouptab]:active {
 
   #query_string {
     margin: 0;
-    background-color: $global-search-bg;
+    background-color: $navbar-search-bg;
     border: none;
     border-radius: 3px;
   }
@@ -1428,7 +1428,7 @@ a[id^=grouptab]:active {
   }
 
   #Icon_5_ {
-    fill: $main-menu-color;
+    fill: $navbar-menu-link-color;
   }
 
   #search #searchbutton {
@@ -1498,7 +1498,7 @@ a[id^=grouptab]:active {
     width: 300px ;
     margin: 0;
     padding: 0;
-    background: $main-menu-bg ;
+    background: $navbar-main-menu-bg ;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
 
@@ -1509,7 +1509,7 @@ a[id^=grouptab]:active {
   }
 
   #mobile_menu a {
-    color: $main-menu-color;
+    color: $navbar-menu-link-color;
     display: block;
     padding: 12px 15px;
     font-size: 14px;
@@ -1517,7 +1517,7 @@ a[id^=grouptab]:active {
   }
 
   #mobile_menu a:hover {
-    color: $main-menu-color-hover;
+    color: $navbar-menu-link-color-hover;
     -webkit-transition: all 0.3s ease-out;
     -moz-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
@@ -1569,7 +1569,7 @@ a[id^=grouptab]:active {
   #toolbar {
     margin-top: 0px;
     width: 100%;
-    background-color: $toolbar-bg;
+    background-color: $mobile-navbar-toolbar-bg;
     padding: 0 20px 0 0;
   }
 
@@ -1599,7 +1599,7 @@ a[id^=grouptab]:active {
 
 @media (max-width: 340px) {
   #mobilegloballinks a {
-    color: $main-menu-color;
+    color: $navbar-menu-link-color;
     float: right;
     margin: 8px 0 0;
     padding: 8px;
@@ -1667,7 +1667,7 @@ a[id^=grouptab]:active {
     outline: 0;
     border: none;
     border-radius: 0;
-    color: $main-menu-color;
+    color: $navbar-menu-link-color;
     -webkit-appearance: none;
     box-shadow: none;
     float: left;
@@ -1684,11 +1684,11 @@ a[id^=grouptab]:active {
 
 @media (max-width: 980px) {
   ul.navbar-nav li a {
-    color: $main-menu-color;
+    color: $navbar-menu-link-color;
   }
 
   .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
-    color: $main-menu-color ;
+    color: $navbar-menu-link-color ;
   }
 }
 
@@ -1758,7 +1758,7 @@ a[id^=grouptab]:active {
 
   #searchformdropdown button {
     background-color: transparent;
-    color: $main-menu-color;
+    color: $navbar-menu-link-color;
     border: none;
     float: left;
     width: 50px;
@@ -1777,8 +1777,8 @@ a[id^=grouptab]:active {
   }
 
   #search #query_string {
-    background-color: $global-search-bg;
-    color: $global-search-text-color;
+    background-color: $navbar-search-bg;
+    color: $navbar-search-text-color;
     font-size: 14px;
     letter-spacing: 1px;
     width: 200px;
