@@ -6425,6 +6425,49 @@ select,
     box-shadow: none;
 }
 
+label.hidden-mobile.selected-actions-label,
+label.hidden-desktop.selected-actions-label {
+    margin-bottom: initial;
+    font-size: 10.2px;
+    line-height: 17px;
+    letter-spacing: 1.2px;
+}
+
+label.hidden-mobile.selected-actions-label,
+label.hidden-desktop.selected-actions-label {
+    line-height: 12px;
+}
+
+
+label.selected-actions-label {
+    cursor: pointer;
+}
+
+
+@media (min-width: 480px) {
+
+    label.hidden-desktop.selected-actions-label {
+        display: block;
+    }
+
+    label.hidden-mobile.selected-actions-label {
+        display: none;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    label.hidden-desktop.selected-actions-label {
+        display: none;
+    }
+
+    label.hidden-mobile.selected-actions-label {
+        display: block;
+    }
+
+}
+
 
 div.modal-content {
     width: 450px;
