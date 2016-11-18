@@ -42,25 +42,25 @@
   * This template is now displays to the sub panel
   */
 *}
-<table cellpadding="0" cellspacing="0" border="0" class="list view table-responsive" data-empty="{$APP.MSG_LIST_VIEW_NO_RESULTS_BASIC}">
+<table cellpadding="0" cellspacing="0" border="0" class="list view table-responsive" data-empty="{$APP.MSG_LIST_VIEW_NO_RESULTS_BASIC}" {literal}data-breakpoints='{ "xs": 754, "sm": 750, "md": 768, "lg": 992}'{/literal}>
     <thead>
         <tr class="footable-header">
             {counter start=0 name="colCounter" print=false assign="colCounter"}
             <th data-type="html"><!-- extra th for the plus button -->&nbsp;</th>
             {foreach from=$HEADER_CELLS key=colHeader item=header}
                 {* calculate break points for footable *}
-                {if $colCounter <= 2}
-                    {capture assign="breakpoints"}show{/capture}
+                {if $colCounter <= 1}
+                    {capture assign="breakpoints"}1{/capture}
                 {/if}
 
-                {if $colCounter > 2 && $colCounter < 5}
+                {if $colCounter >= 2 && $colCounter < 5}
                     {capture assign="breakpoints"}xs sm{/capture}
                 {/if}
 
                 {if $colCounter >= 5 && $colCounter}
                     {capture assign="breakpoints"}xs sm md{/capture}
                 {/if}
-                <th {if $colCounter != "show"}data-breakpoints="{$breakpoints}"{/if} data-type="html">{$header}</th>
+                <th data-breakpoints="{if $breakpoints != 1}{$breakpoints}{/if}" data-type="html">{$header}</th>
                 {counter name="colCounter" print=false}
             {/foreach}
             <th data-type="html"><!-- extra th for the button --></th>
