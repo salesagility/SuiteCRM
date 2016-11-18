@@ -43,7 +43,7 @@
   */
 *}
 {$PAGINATION}
-<table cellpadding="0" cellspacing="0" border="0" class="list view table-responsive">
+<table cellpadding="0" cellspacing="0" border="0"  data-empty="{$APP.MSG_LIST_VIEW_NO_RESULTS_BASIC}" class="list view table-responsive">
     <thead>
         <tr>
             {foreach from=$HEADER_CELLS key=colHeader item=header}
