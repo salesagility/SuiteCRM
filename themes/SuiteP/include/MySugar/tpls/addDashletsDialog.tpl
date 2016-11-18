@@ -133,7 +133,7 @@
 	<div id="webDashletsList">
 	<table width="95%">
 	    <tr>
-	        <td scope="row"></td>
+	        <td scope="row">{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}</td>
 	        <td><input type="text" id="web_address" value="http://" style="width: 400px"   title="{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}"/></td>
         </tr>
         <tr>
@@ -144,9 +144,9 @@
         </tr>
     </table>
     <h3>{sugar_translate label='LBL_RSS_TITLE' module='Home'}</h3>
-	<table width="95%">
+	<table width="78%">
         <tr>
-	        <td scope="row"></td>
+	        <td scope="row">{sugar_translate label='LBL_RSS_TITLE' module='Home'}</td>
 	        <td><input type="text" id="rss_address" value="http://" style="width: 400px"  title="{sugar_translate label='LBL_RSS_TITLE' module='Home'}" /></td>
         </tr>
         <tr>
