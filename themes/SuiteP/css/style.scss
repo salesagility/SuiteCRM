@@ -4,12 +4,16 @@
 @import 'navbar';
 @import 'login';
 @import 'forms';
-@import 'calendar';
 @import 'dashboard';
 @import 'listview';
-@import 'admin';
 @import 'tabs';
 @import 'panels';
+//@import 'admin'; // TODO
+//@import 'calendar'; // TODO
+//@import 'reminders'
+//@import 'lineitems'
+//@import 'cases'
+//@import 'campaigns'
 @import 'variables';
 
 div#searchResults {
@@ -18,7 +22,7 @@ div#searchResults {
 }
 
 
-
+// TODO: clean up css
 #edittabs  table:nth-of-type(2),
 #edittabs  table:nth-of-type(2) > tbody,
 #edittabs  table:nth-of-type(2) tbody > tr
@@ -3636,19 +3640,19 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
   line-height: 0;
 }
 
-#lineItems .group_name {}
-#lineItems .delete_group {}
-#lineItems .product_group {}
-#lineItems .service_group {}
-#lineItems .add_product_line {}
-#lineItems .add_service_line {}
-#lineItems .group_total_amt {}
-#lineItems .group_discount_amount {}
-#lineItems .group_subtotal_amount {}
-#lineItems .group_tax_amount {}
-#lineItems .group_subtotal_tax_amount {}
-#lineItems .group_total_amount {}
-#lineItems  #addGroup {}
+//#lineItems .group_name {}
+//#lineItems .delete_group {}
+//#lineItems .product_group {}
+//#lineItems .service_group {}
+//#lineItems .add_product_line {}
+//#lineItems .add_service_line {}
+//#lineItems .group_total_amt {}
+//#lineItems .group_discount_amount {}
+//#lineItems .group_subtotal_amount {}
+//#lineItems .group_tax_amount {}
+//#lineItems .group_subtotal_tax_amount {}
+//#lineItems .group_total_amount {}
+//#lineItems  #addGroup {}
 /*Labels Next to Fields*/
 #lineItems  .alignedLabel {
   display: none;
