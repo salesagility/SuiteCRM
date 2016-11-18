@@ -47,9 +47,9 @@
     <thead>
         <tr>
             {foreach from=$HEADER_CELLS key=colHeader item=header}
-                <th>{$header}</th>
+                <th data-type="html">{$header}</th>
             {/foreach}
-            <th><!-- extra th for the button --></th>
+            <th data-type="html"><!-- extra th for the button --></th>
         </tr>
     </thead>
     <tbody>
