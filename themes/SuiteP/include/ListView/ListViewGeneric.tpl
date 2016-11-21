@@ -39,7 +39,6 @@
  */
 *}
 {include file='include/ListView/ListViewColumnsFilterDialog.tpl'}
-{include file='include/ListView/ListViewSearchDialog.tpl'}
 <script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
 
 

@@ -247,7 +247,7 @@ require_once('include/EditView/EditView2.php');
             }
         }
         $this->th->ss->assign('templateMeta', $this->searchdefs['templateMeta']);
-        $this->th->ss->assign('HAS_ADVANCED_SEARCH', !empty($this->searchdefs['layout']['advanced_search']));
+        $this->th->ss->assign('HAS_ADVANCED_SEARCH', !empty($this->searchdefs['layout']['advanced_search']) && $_REQUEST['hasAdvancedSearch'] != 'false');
         $this->th->ss->assign('displayType', $this->displayType);
         // return the form of the shown tab only
         if($this->showSavedSearchesOptions){

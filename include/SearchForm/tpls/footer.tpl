@@ -61,3 +61,5 @@ function toggleInlineSearch()
 }
 </script>
 {/literal}
+
+{include file='include/ListView/ListViewSearchDialog.tpl'}

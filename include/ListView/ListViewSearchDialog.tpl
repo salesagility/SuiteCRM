@@ -10,10 +10,6 @@
                 <div class="modal-body" id="searchList">
 
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn button purple btn-default" data-dismiss="modal">{$APP.LBL_CLOSE_BUTTON_TITLE}</button>
-                    <button type="button" onclick="search.onSaveClick();" type="button" class="button red">{$APP.LBL_SAVE_CHANGES_BUTTON_TITLE}</button>
-                </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
@@ -37,7 +33,7 @@
             var search = {
 
                 onOpen: function() {
-                    this.loadSearchSettings();
+                    this.loadSearchForm();
                 },
 
                 showContents: function(contents) {
@@ -48,17 +44,56 @@
                     this.showContents('<p class="preloading"></p>');
                 },
 
-                loadSearchSettings: function() {
+                loadSearchForm: function() {
                     var _this = this;
                     this.showPreload();
 
                     if(typeof module_sugar_grp1 != 'undefined' && module_sugar_grp1) {
 
-                        var url = 'index.php?module=' + module_sugar_grp1 + '&action=index&search_form_only=true&to_pdf=true&search_form_view=advanced_search&search=true';
+                        var url = 'index.php?module=' + module_sugar_grp1 + '&action=index&search_form_only=true&to_pdf=true&search_form_view=basic_search&search=true&hasAdvancedSearch=false';
 
                         var cObj = YAHOO.util.Connect.asyncRequest('GET', url, {success: function(e){
-                            _this.showContents(_this.getDragDropChooserHTML(JSON.parse($('<div></div>').html(e.responseText).find('#responseData').html())));
-                            _this.initDragDropChooser();
+                            var actionLink = $('#search_form').attr('action');
+                            var $searchFormPopup = $('<form id="search_form_popup" method="post" action="'+actionLink+'"></form>').html(e.responseText);
+                            $searchFormPopup.find();
+                            _this.showContents($('<form id="search_form_popup" method="post" action="'+actionLink+'"></form>').html(e.responseText));
+
+                            $('#searchList #search_form_popup').prepend('<input type="hidden" name="searchFormTab" value="{/literal}{$displayView}{literal}">');
+                            $('#searchList #search_form_popup').prepend('<input type="hidden" name="module" value="{/literal}{$module}{literal}">');
+                            $('#searchList #search_form_popup').prepend('<input type="hidden" name="action" value="{/literal}{$action}{literal}">');
+                            $('#searchList #search_form_popup').prepend('<input type="hidden" name="query" value="true">');
+
+                            var prefixString = 'searchFormPopup_';
+                            var prefixLength = prefixString.length;
+
+                            // add unique id and name in popup search form elements
+                            $('#searchList #search_form_popup *').each(function(i,e){
+                                var elemId = $(e).attr('id');
+                                var elemName = $(e).attr('name');
+                                var elemFor = $(e).attr('for');
+                                if(elemId) {
+                                    $(e).attr('id', prefixString + elemId);
+                                }
+                                if(elemName) {
+                                    $(e).attr('name', prefixString + elemName);
+                                }
+                                if(elemFor) {
+                                    $(e).attr('for', prefixString + elemFor);
+                                }
+                            });
+
+                            // remove unique names from popup search form elements before submit
+                            $('#searchList #search_form_popup').submit(function(e){
+                                $('#searchList #search_form_popup *').each(function(i,e){
+                                    var elemName = $(e).attr('name');
+                                    if(elemName && elemName.substr(0, prefixLength) == prefixString) {
+                                        $(e).attr('name', elemName.substr(prefixLength));
+                                    }
+                                });
+                                $('#search_form_popup').submit();
+                                return false;
+                            });
+
                         }, failure: function(){
                             _this.showContents('ERR_COMMUNICATION_ERROR');
                         }});
@@ -68,95 +103,6 @@
                     }
 
                 },
-
-                getDragDropChooserHTML: function(chooserData) {
-
-                    $('#chooserTemplate .chooserList.green').html('');
-                    $.each(chooserData.args.values_array[0], function(key, value){
-                        $('#chooserTemplate .chooserList.green').append('<li data-key="'+key+'">'+value+'</li>');
-                    });
-
-                    $('#chooserTemplate .chooserList.red').html('');
-                    $.each(chooserData.args.values_array[1], function(key, value){
-                        $('#chooserTemplate .chooserList.red').append('<li data-key="'+key+'">'+value+'</li>');
-                    });
-
-                    return $('#chooserTemplate').html();
-                },
-
-                initDragDropChooser: function() {
-                    var _this = this;
-                    $( "#searchList .chooserContent .chooserList.green" ).sortable({
-                        connectWith: "#searchList .chooserContent .chooserList.red",
-                        stop: function() {
-                            _this.isValid();
-                        }
-                    });
-                    $( "#searchList .chooserContent .chooserList.green" ).disableSelection();
-
-                    $( "#searchList .chooserContent .chooserList.red" ).sortable({
-                        connectWith: "#searchList .chooserContent .chooserList.green",
-                        stop: function() {
-                            _this.isValid();
-                        }
-                    });
-                    $( "#searchList .chooserContent .chooserList.red" ).disableSelection();
-
-                },
-
-                onSaveClick: function() {
-                    if(this.isValid()) {
-                        this.save();
-                    }
-                },
-
-                // validation (return true if valid, otherwise show error(s) and return false)
-                isValid: function() {
-                    // clear error message
-                    $('#error-displayed-search').html('');
-                    // check validation for empty list
-                    var v = $('#searchList > div > ul.chooserList.green.ui-sortable li').length > 0;
-                    if(!v) {
-                        // show error
-                        $('#error-displayed-search').html('{/literal}{$APP.ERR_EMPTY_SEARCH_LIST}{literal}');
-                        // scroll to error message
-                        $('#searchDialog').animate({
-                            scrollTop: $("#error-displayed-search").offset().top - 100
-                        });
-                    }
-                    // return validation result
-                    return v;
-                },
-
-                // send it to server to save user preferences (refresh the page to show changes)
-                save: function() {
-
-                    // TODO : show loading message...
-
-                    // make query search list
-                    var cols = [];
-                    $('#searchList > div > ul.chooserList.green.ui-sortable > li').each(function(i,e){
-                        cols.push($(e).attr('data-key'));
-                    });
-
-                    $.post($('#search_form').attr('action'), {
-                        displaySearch: cols.join('|'),
-                        query: 'true'
-                    }, function(){
-                        //close form and refresh page after save
-                        $('#searchDialog > div > div > div.modal-footer > button.btn.button.purple.btn-default').click();
-                        if($('#search_form').length > 0) {
-                            document.location.href = $('#search_form').attr('action');
-                        } else {
-                            if(typeof module_sugar_grp1 != 'undefined' && module_sugar_grp1) {
-                                document.location.href = 'index.php?module=' + module_sugar_grp1 + '&action=index';
-                            } else {
-                                document.location.href = document.location.href;
-                            }
-                        }
-                    });
-
-                }
 
             };
 
