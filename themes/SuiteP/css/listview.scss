@@ -343,12 +343,12 @@
   text-decoration: underline;
 }
 
-.list tr.oddListRowS1 td {
+.list .oddListRowS1 td {
   white-space: normal;
   word-wrap: break-word;
 }
 
-.list tr.evenListRowS1 td {
+.list .evenListRowS1 td {
   white-space: normal;
   word-wrap: break-word;
 }
@@ -357,12 +357,12 @@
   background-color: $list-view-header-bg;
 }
 
-.list tr.oddListRowS1 td[nowrap] {
+.list .oddListRowS1 td[nowrap] {
   white-space: nowrap;
   word-wrap: normal;
 }
 
-.list tr.evenListRowS1 td[nowrap] {
+.list .evenListRowS1 td[nowrap] {
   white-space: nowrap;
   word-wrap: normal;
 }
@@ -430,6 +430,93 @@ a.listViewTdToolsS1 {
   font-size: 12px;
 }
 
+
+.list-view-rounded-corners {
+  margin: 16px 0 16px 0;
+}
+
+.list-view-rounded-corners > table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+#pagination:nth-of-type(2) {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+
+.SugarActionMenuIESub li a {
+  border: 1px solid transparent;
+  overflow: hidden;
+}
+
+.clickMenu li a {
+  border: 1px solid transparent;
+  overflow: hidden;
+}
+
+.list .pagination .buttons .clickMenu > li > a:link {
+  border: 1px solid transparent;
+  overflow: hidden;
+}
+
+.list .pagination .buttons .clickMenu > li > a {
+  border: 1px solid transparent;
+  overflow: hidden;
+}
+
+.list-view-rounded-corners > table > thead > th {
+  border: 1px solid transparent;
+  overflow: hidden;
+}
+
+.pagination-bottom {
+  border: 1px solid transparent;
+  overflow: hidden;
+}
+
+.list-view-rounded-corners > table th:first-of-type {
+  border-top-left-radius: 4px;
+}
+
+.list-view-rounded-corners > table th:last-of-type {
+  border-top-right-radius: 4px;
+}
+
+.pagination-bottom .paginationTable td:first-of-type {
+  border-bottom-left-radius: 4px;
+}
+
+.pagination-bottom .paginationTable td:last-of-type {
+  border-bottom-right-radius: 4px;
+}
+
+#history_search table td {
+  width: auto;
+}
+
+#history_search table td:nth-of-type(2) select[multiple] {
+  height: 48px;
+}
+
+#history_search table td:nth-of-type(2) select[size] {
+  height: 48px;
+}
+
+#history_search table td:nth-of-type(8) div {
+  display: inline-block;
+}
+.col-advanced-search {
+  margin-bottom: 16px;
+
+}
+
+.col-advanced-search label {
+  font-weight: 700;
+}
+
+
 .table-responsive.list  > tbody > tr > td  {
   padding-top: 15px;
   padding-bottom: 12px;
@@ -455,8 +542,6 @@ a.listViewTdToolsS1 {
 .table-responsive.list  > tbody > tr > td .edit-link {
   border-bottom: none;
 }
-
-
 
 #selectLinkTop {
   min-width: 32px;
@@ -1213,6 +1298,274 @@ a.listViewTdToolsS1 {
   padding-bottom: 15px;
 }
 
+
+/*** Search (ListView) ***/
+
+.search {
+  margin: 0 0 4px 0;
+  padding: 10px 6px 12px 10px;
+}
+
+.search > table {
+  padding: 0;
+  margin: 0;
+}
+
+.search td span {
+  color: #444444;
+}
+
+.submitButtons {
+  padding-left: 20px;
+}
+
+.submitButtons input {
+  margin-bottom: 10px;
+}
+
+.search td input[type=text] {
+  width: 260px;
+  height: 40px;
+  line-height: 40px;
+  border: none;
+  border-radius: 3px;
+}
+
+.search td input[type=password] {
+  width: 260px;
+  height: 40px;
+  line-height: 40px;
+  border: none;
+  border-radius: 3px;
+}
+
+.search td select {
+  width: 260px;
+  height: 40px;
+  line-height: 40px;
+  border: none;
+  border-radius: 3px;
+}
+
+
+.search_form {
+  overflow: visible;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.search_form .view {
+  width: 100%;
+  margin: 0;
+  padding: 20px;
+  background-color: #E6E6E6;
+  border-radius: 3px;
+  font-size: 13px;
+}
+
+
+
+select#saved_search_select {
+  border: none;
+  border-radius: 3px;
+}
+
+.search_form input[type=text] {
+  background: $filters-input-bg;
+}
+
+.search_form textarea {
+  background: $filters-input-bg;
+}
+
+.search_fields_basic {
+  line-height: 48px;
+}
+
+.search_fields_basic select[multiple] {
+  display: block;
+  width: 100%;
+}
+
+.search_fields_basic:nth-of-type(3n+1) {
+  clear: both;
+}
+
+
+.search_name_basic input {
+  width: 75%;
+}
+
+.search_fields_basic .dateTimeRangeChoice {
+  display: inline-block;
+}
+
+.search_fields_basic .dateTimeRangeChoice + div {
+  display: inline-block;
+}
+
+
+a#advanced_search_link {
+  background-color: $info-btn-bg;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  margin: 4px 0 4px 0;
+  padding: 0 40px 0 20px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 1px;
+  height: 40px;
+  line-height: 40px;
+  display: inline-block;
+  background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
+  background-repeat: no-repeat;
+  background-position: 173px 2px;
+}
+
+a#advanced_search_link:hover {
+  background-color: $info-btn-bg-hover;
+}
+
+a#basic_search_link {
+  background-color: $info-btn-bg;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  margin: 0 0 0 0;
+  padding: 0 40px 0 20px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 1px;
+  height: 40px;
+  line-height: 40px;
+  display: inline-block;
+  background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_up_arrow.png");
+  background-repeat: no-repeat;
+  background-position: 136px 13px;
+}
+
+a#basic_search_link:hover {
+  background-color: $danger-btn-bg-hover;
+}
+
+div#search_form > .advanced input.button {
+  background-color: $info-btn-bg;
+  color: $default-btn-color;
+}
+
+div#search_form > .advanced input.button:hover {
+  background-color:$danger-btn-bg-hover;
+}
+
+.listViewEmpty {
+  background-color: transparent;
+}
+
+/*xs-col-*/
+@media (max-width: 769px) {
+  .search_name_basic img {
+    margin: 0 8px 0 8px;
+  }
+  .search_name_basic input {
+    width: 90%;
+  }
+
+  .search_buttons_basic {
+    margin: 0 8px 0 42px;
+  }
+
+}
+
+/*sm-col-*/
+@media (min-width: 768px) and (max-width: 991px) {
+  .search_name_basic img {
+    margin: 0 8px 0 8px;
+  }
+  .search_name_basic input {
+    width: 94%;
+  }
+
+  .search_buttons_basic {
+    margin: 0 8px 0 42px;
+  }
+  /*md-col-*/
+  @media (min-width: 992px) and (max-width: 1199px) {
+
+    .search_buttons_basic {
+      margin: 0 8px 0 42px;
+    }
+
+    .search_name_basic img {
+      margin: 0 8px 0 8px;
+    }
+    .search_name_basic input {
+      width: 90%;
+    }
+
+    .search_buttons_basic {
+      position: absolute;
+      right: 0;
+    }
+
+    #wizform #wizard {
+      width: 900px;
+    }
+
+  }
+  /*md-fixes*/
+  @media (min-width: 1180px) and (max-width: 1199px) {
+    .search_buttons_basic {
+      width: auto;
+    }
+
+    #wizform #wizard {
+      width: 1000px;
+    }
+  }
+  /*lg-col-*/
+  @media (min-width: 1260px) {
+    li.topnav {
+      padding: 0 5px 0 5px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+
+    .search_name_basic img {
+      margin: 0 8px 0 8px;
+    }
+
+    .search_buttons_basic {
+      margin: 4px 8px 0 8px;
+    }
+
+    .search_fields_basic .col-lg-3 {
+      width: 100%;
+    }
+
+    #wizform #wizard {
+      width: 1100px;
+    }
+  }
+
+  @media (min-width: 1600px) {
+    .search_fields_basic .col-lg-3 {
+      width: 25%;
+    }
+  }
+}
+
+
+@media (min-width: 320px) and (max-width: 978px) {
+  .search_fields_basic.col-sm-3 {
+    display: block;
+  }
+}
 
 
 @media (max-width: 750px) {
