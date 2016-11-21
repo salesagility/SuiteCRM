@@ -170,7 +170,7 @@
 #actionMenuSidebar li a .actionmenulink {
   width: 100%;
   min-height: 48px;
-  padding: 16px 8px 16px 0px;
+  padding: 16px 8px 16px 0;
   line-height: 24px; }
 
 .side-bar-action-icon {
@@ -178,7 +178,7 @@
   /* effects link text position */
   height: 48px;
   background-repeat: no-repeat;
-  background-position: 0px 8px;
+  background-position: 0 8px;
   background-size: 32px;
   vertical-align: middle;
   margin-left: 12px;
@@ -274,8 +274,8 @@
     padding: 0 1% 0 15%; } }
 @media (max-width: 1150px) {
   li.topnav {
-    padding-left: 0px;
-    padding-right: 0px; } }
+    padding-left: 0;
+    padding-right: 0; } }
 @media (min-width: 1230px) {
   .sidebar {
     width: 18%; }

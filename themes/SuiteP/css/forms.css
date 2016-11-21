@@ -45,28 +45,28 @@ input[type=checkbox]:focus, input[type=radio]:focus {
   outline: 0; }
 
 input[type=checkbox] {
-  background-position: 0px 0px; }
+  background-position: 0 0; }
 
 input[type=checkbox]:checked {
-  background-position: -18px 0px; }
+  background-position: -18px 0; }
 
 input[type=checkbox]:disabled {
-  background-position: -36px 0px; }
+  background-position: -36px 0; }
 
 input[type=checkbox]:disabled:checked, input[type=checkbox]:checked:disabled {
-  background-position: -54px 0px; }
+  background-position: -54px 0; }
 
 input[type=radio] {
-  background-position: 0px 0px; }
+  background-position: 0 0; }
 
 input[type=radio]:checked {
-  background-position: -18px 0px; }
+  background-position: -18px 0; }
 
 input[type=radio]:disabled {
-  background-position: -36px 0px; }
+  background-position: -36px 0; }
 
 input[type=radio]:disabled:checked, input[type=radio]:checked:disabled {
-  background-position: -54px 0px; }
+  background-position: -54px 0; }
 
 td.nowrap input[type=checkbox] {
   margin-top: 3px; }

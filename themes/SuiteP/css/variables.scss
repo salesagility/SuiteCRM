@@ -132,6 +132,17 @@ $panel-height-divisor: 1; // 1 normal  1.25 small
 // Detail view
 $detail-view-field-bg: #F5F5F5;
 
+// List View
+$list-view-toolbar-bg: #BFCAD3;
+$list-view-header-bg: #778591;
+$list-view-button-color: #FFFFFF;
+$list-view-link-color: #E56455;
+$list-view-link-hover-color: #D66C60;
+$list-view-action-button-bg: #94A6B5;
+$list-view-action-menu-bg: #7B8A96;
+$list-view-action-menu-link-bg: #677785;
+
+
 // Form Elements
 $input-line-height: 40px; // 40px normal 32px small
 $input-bg: #D8F5EE;
@@ -156,4 +167,4 @@ $dashlet-header-bg: #778591;
 
 $dashlet-title-height: 48px; // 48px normal 40px small
 $dashlet-header-height: 32px; // 32px normal 24px small
-$dashlet-header-padding: 5px; // 5 normal 0px small
+$dashlet-header-padding: 5px; // 5 normal 0 small

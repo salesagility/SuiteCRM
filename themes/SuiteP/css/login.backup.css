@@ -57,12 +57,12 @@ table.tabForm td {
 }
 
 p {
-    MARGIN-TOP: 0px;
+    MARGIN-TOP: 0;
     MARGIN-BOTTOM: 10px;
 }
 
 form {
-    margin: 0px;
+    margin: 0;
 }
 
 input[type="text"], input[type="password"], textarea {
@@ -88,7 +88,7 @@ input[type="text"], input[type="password"], textarea {
 .password {
     padding: 5px 20px 5px 20px;
     border: 1px solid #999;
-    border-top: 0px none;
+    border-top: 0 none;
     background-color: #fff;
 }
 
@@ -109,5 +109,5 @@ input[type="text"], input[type="password"], textarea {
 }
 
 .dashletPanelMenu .bd .bd-center {
-    padding-top: 0px;
+    padding-top: 0;
 }
