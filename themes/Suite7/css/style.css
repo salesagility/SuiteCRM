@@ -6470,9 +6470,12 @@ label.selected-actions-label {
 
 
 div.modal-content {
-    width: 450px;
     margin: 0 auto;
     max-width: 100%;
+}
+
+#columnsFilterDialog div.modal-content {
+    width: 450px;
 }
 
 div.modal-header > h4 {
@@ -6545,4 +6548,18 @@ ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > l
 
 .paginationActionButtons input {
     width: 30px;
+}
+
+#search_form_popup {
+    padding: 30px;
+}
+
+#search_form_popup input {
+    max-width: 90%;
+}
+
+#search_form_popup .submitButtons {
+    padding-top: 20px;
+    float: right;
+
 }

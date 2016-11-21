@@ -11362,9 +11362,12 @@ ul.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button label.glyphicon.b
 
 
 div.modal-content {
-    width: 450px;
     margin: 0 auto;
     max-width: 100%;
+}
+
+#columnsFilterDialog div.modal-content {
+    width: 450px;
 }
 
 div.modal-header > h4 {
@@ -11437,4 +11440,18 @@ ul.clickMenu.selectmenu.SugarActionMenu.searchLink.listViewLinkButton > li > a {
     background-image: url("../../../../themes/SuiteP/images/loading.gif");
     width: 48px;
     height: 48px;
+}
+
+#search_form_popup {
+    padding: 30px;
+}
+
+#search_form_popup input {
+    max-width: 90%;
+}
+
+#search_form_popup .submitButtons {
+    padding-top: 20px;
+    float: right;
+
 }
