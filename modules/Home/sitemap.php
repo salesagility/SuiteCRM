@@ -75,7 +75,7 @@ foreach ($sm as $mod_dir_name => $links)
 // Specify the sitemap template to use; allow developers to override this with a custom one to add/remove modules
 // from the list
 $tpl = 'modules/Home/sitemap.tpl';
-if ( sugar_is_file('custom/modules/Home/sitemap.tpl') ) {
+if ( is_file('custom/modules/Home/sitemap.tpl') ) {
     $tpl = 'custom/modules/Home/sitemap.tpl';
 }
 echo $sm_smarty->fetch($tpl);

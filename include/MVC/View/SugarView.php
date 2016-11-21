@@ -1609,7 +1609,7 @@ EOHTML;
         $favicon = '';
         if ( $module_favicon )
             $favicon = $themeObject->getImageURL($this->module.'.gif',false);
-        if ( !sugar_is_file($favicon) || !$module_favicon )
+        if ( !is_file($favicon) || !$module_favicon )
             $favicon = $themeObject->getImageURL('sugar_icon.ico',false);
 
         $extension = pathinfo($favicon, PATHINFO_EXTENSION);

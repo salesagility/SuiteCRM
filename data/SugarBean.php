@@ -4565,7 +4565,7 @@ class SugarBean
         $directory = $this->deleteFileDirectory();
 
         foreach ($files as $file) {
-            if (sugar_is_file('upload://deleted/' . $directory . '/' . $file)) {
+            if (is_file('upload://deleted/' . $directory . '/' . $file)) {
                 if (!sugar_rename('upload://deleted/' . $directory . '/' . $file, 'upload://' . $file)) {
                     $GLOBALS['log']->error('Could not move file ' . $directory . '/' . $file . ' from deleted directory');
                 }
@@ -4724,10 +4724,10 @@ class SugarBean
 
         $directory = $this->deleteFileDirectory();
 
-        $isCreated = sugar_is_dir('upload://deleted/' . $directory);
+        $isCreated = is_dir('upload://deleted/' . $directory);
         if (!$isCreated) {
             sugar_mkdir('upload://deleted/' . $directory, 0777, true);
-            $isCreated = sugar_is_dir('upload://deleted/' . $directory);
+            $isCreated = is_dir('upload://deleted/' . $directory);
         }
         if (!$isCreated) {
             return false;

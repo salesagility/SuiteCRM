@@ -75,7 +75,7 @@ class SugarRelationshipFactory {
     public static function deleteCache()
     {
         $file = self::getInstance()->getCacheFile();
-        if(sugar_is_file($file))
+        if(is_file($file))
         {
             unlink($file);
         }
@@ -149,7 +149,7 @@ class SugarRelationshipFactory {
 
     protected function loadRelationships()
     {
-        if(sugar_is_file($this->getCacheFile()))
+        if(is_file($this->getCacheFile()))
         {
             include($this->getCacheFile());
             $this->relationships = $relationships;

@@ -63,7 +63,7 @@ function sugar_mkdir($pathname, $mode = null, $recursive = false, $context = '')
 {
     $mode = get_mode('dir_mode', $mode);
 
-    if (sugar_is_dir($pathname, $mode)) {
+    if (is_dir($pathname)) {
         return true;
     }
 
@@ -399,6 +399,10 @@ function get_mode($key = 'dir_mode', $mode = null)
     return $mode;
 }
 
+/**
+ * @deprecated 7.8
+ * @see is_dir
+ */
 function sugar_is_dir($path, $mode = 'r')
 {
     if (defined('TEMPLATE_URL')) {
@@ -408,6 +412,10 @@ function sugar_is_dir($path, $mode = 'r')
     return is_dir($path);
 }
 
+/**
+ * @deprecated 7.8
+ * @see is_file
+ */
 function sugar_is_file($path, $mode = 'r')
 {
     if (defined('TEMPLATE_URL')) {
