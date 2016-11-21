@@ -2441,6 +2441,8 @@ $app_strings = array(
     'LBL_HIDDEN' => 'Hidden',
     'ERR_EMPTY_COLUMNS_LIST' => 'At least, one element required',
 
+    'LBL_SEARCH_HEADER_TITLE' => 'Search',
+
 );
 
 $app_list_strings['moduleList']['Library'] = 'Library';

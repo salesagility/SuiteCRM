@@ -11422,11 +11422,13 @@ div.modal-footer > button.btn.button.purple.btn-default:hover {
     background-color: #9589B3;
 }
 
-ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton {
+ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton,
+ul.clickMenu.selectmenu.SugarActionMenu.searchLink.listViewLinkButton {
     top: -1px;
 }
 
-ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > li > a {
+ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > li > a,
+ul.clickMenu.selectmenu.SugarActionMenu.searchLink.listViewLinkButton > li > a {
     margin: 5px 4px 5px 7px;
     top: -1px;
 }
