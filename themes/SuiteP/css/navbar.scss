@@ -1747,9 +1747,13 @@ a[id^=grouptab]:active {
   }
 }
 
-
-
-
+@media (min-width: 1180px) and (max-width: 1199px) {
+  @media (min-width: 1260px) {
+    li.topnav {
+      padding: 0 5px 0 5px;
+    }
+  }
+}
 @media (max-width: 1399px) {
   #usermenu, #searchform {
     display: none;
