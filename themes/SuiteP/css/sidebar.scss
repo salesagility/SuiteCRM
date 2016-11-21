@@ -170,7 +170,7 @@
   #actionMenuSidebar li a .actionmenulink {
     width: 100%;
     min-height: 48px;
-    padding: 16px 8px 16px 0px;
+    padding: 16px 8px 16px 0;
     line-height: 24px;
   }
 
@@ -188,7 +188,7 @@
     width: 40px; /* effects link text position */
     height: 48px;
     background-repeat: no-repeat;
-    background-position: 0px 8px;
+    background-position: 0 8px;
     background-size: 32px;
     vertical-align: middle;
     margin-left: 12px;

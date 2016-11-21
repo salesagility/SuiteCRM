@@ -6,6 +6,8 @@
 @import 'forms';
 @import 'dashboard';
 @import 'listview';
+@import 'detailview';
+@import 'editview';
 @import 'tabs';
 @import 'panels';
 //@import 'admin'; // TODO
@@ -117,7 +119,7 @@ span.error:empty{
 }
 
 #edittabs #groupTable .tdContainer h2 {
-  margin: 16px 0 8px 0px;
+  margin: 16px 0 8px 0;
 }
 
 #edittabs #groupTable .tdContainer h2 > span:nth-of-type(1) {
@@ -460,7 +462,7 @@ slot, #lead_queries_Div td {
 }
 
 #no-tab-actions > ul > li {
-  margin: 8px 8px 8px 0px;
+  margin: 8px 8px 8px 0;
 }
 
 .detail tr td {
@@ -485,11 +487,11 @@ slot, #lead_queries_Div td {
 
 #EditView > table {
   overflow: auto;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 #EditView_tabs.yui-navset.yui-navset-top {
-  padding: 0px 5px 5px 5px;
+  padding: 0 5px 5px 5px;
 }
 
 #EditView_tabs.yui-navset.yui-navset-top .nav.nav-tabs {
@@ -547,7 +549,7 @@ option[selected],
 }
 
 .edit tr td[scope=row] {
-  padding: 0px 10px 0px 10px /*!important*/;
+  padding: 0 10px 0 10px /*!important*/;
   text-align: left;
   vertical-align: top;
   height: 40px;
@@ -641,192 +643,6 @@ td.submitButtons input {
 .list, .edit .list {
   padding: 0 /*!important*/;
   margin-bottom: 10px;
-}
-
-.list tr.pagination,
-.list tr.pagination td,
-.list tr.pagination td table {
-  padding: 0;
-  border: 0;
-  margin: 0;
-}
-
-/* PAGINATION */
-
-.list tr#pagination {
-}
-
-.list tr#pagination td {
-  padding: 0px /*!important*/;
-}
-
-.list tr#pagination td table.paginationTable {
-}
-
-.list tr#pagination td table.paginationTable tr {
-  padding: 0px /*!important*/;
-}
-
-.list tr#pagination td table.paginationTable td.paginationActionButtons {
-  background-color: #BFCAD3;
-  padding: 5px 0px 5px 0px /*!important*/;
-}
-
-.list tr#pagination td table.paginationTable td.paginationChangeButtons {
-  background-color: #BFCAD3;
-  padding: 5px 5px 5px 0px /*!important*/;
-}
-
-button#listViewStartButton_top, button#listViewStartButton_bottom {
-  width: 26px;
-  background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-repeat: no-repeat;
-  background-position: 9px -29px;
-  margin-right: 2px;
-}
-
-button#listViewStartButton_top[disabled], button#listViewPrevButton_top[disabled], button#listViewNextButton_top[disabled], button#listViewEndButton_top[disabled], button#listViewStartButton_bottom[disabled], button#listViewPrevButton_bottom[disabled], button#listViewNextButton_bottom[disabled], button#listViewEndButton_bottom[disabled] {
-  opacity: .5;
-  cursor: default;
-}
-
-button#listViewStartButton_top img, button#listViewStartButton_bottom img {
-  display: none;
-}
-
-button#listViewPrevButton_top, button#listViewPrevButton_bottom {
-  width: 26px;
-  background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-repeat: no-repeat;
-  background-position: 9px -50px;
-}
-
-button#listViewPrevButton_top img, button#listViewPrevButton_bottom img {
-  display: none;
-}
-
-button#listViewNextButton_top, button#listViewNextButton_bottom {
-  width: 26px;
-  background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-repeat: no-repeat;
-  background-position: 10px -132px;
-}
-
-button#listViewNextButton_top img, button#listViewNextButton_bottom img {
-  display: none;
-}
-
-button#listViewEndButton_top, button#listViewEndButton_bottom {
-  width: 26px;
-  background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-repeat: no-repeat;
-  background-position: 10px -112px;
-  margin-left: 2px;
-}
-
-button#listViewEndButton_top img, button#listViewEndButton_bottom img {
-  display: none;
-}
-
-.list tr.pagination td table td {
-  padding: 3px 7px 3px 5px /*!important*/;
-}
-
-.list tr.pagination td table td button {
-  width: 25px;
-}
-
-.list tr.pagination td table td a:link, .list tr.pagination td table td a:visited, .reportGroupByDataChildTablelistViewThS1 a:link, .reportGroupByDataChildTablelistViewThS1 a:visited {
-  font-weight: bold;
-  text-decoration: none;
-  padding: 2px 0 3px 0;
-}
-
-.list tr.pagination td table td a:hover, .reportGroupByDataChildTablelistViewThS1 a:hover {
-  text-decoration: underline;
-}
-
-.list tr.pagination .buttons {
-  padding: 2px 2px 2px 0 /*!important*/;
-}
-
-.list tr.pagination #selectCountTop {
-  width: 5em;
-}
-
-#selectedRecordsTopLabel, #selectedRecordsTopValue {
-  color: white;
-}
-
-.td_alt, .list tr th, .list tr td[scope=col], .edit .list tr th, .edit .list tr td[scope=col] {
-  font-weight: 800;
-  text-align: left;
-  padding: 16px 10px 16px 10px;
-  border-left: none;
-  border-right: none;
-  white-space: nowrap;
-  font-size: 13px;
-}
-
-.list tr td {
-  vertical-align: middle;
-  padding: 3px 8px 5px 5px;
-}
-
-.list tr.pagination td {
-  padding: 0;
-}
-
-.list tr td.odd {
-  padding: 3px 8px 5px 5px;
-  vertical-align: middle;
-}
-
-.list th a:link, .list th a:visited, .list td[scope=col] a:link, .list td[scope=col] a:visited {
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.list th a:hover, .list td[scope=col] a:hover {
-  text-decoration: underline;
-}
-
-.list tr.oddListRowS1 td, .list tr.evenListRowS1 td {
-  white-space: normal;
-  word-wrap: break-word;
-}
-
-thead {
-  background-color: #778591;
-}
-
-.list tr.oddListRowS1 td[nowrap], .list tr.evenListRowS1 td[nowrap] {
-  white-space: nowrap;
-  word-wrap: normal;
-}
-
-a.listViewTdToolsS1 {
-  padding: 4px;
-}
-
-.list td a.listViewTdToolsS1, .list tr td.nowrap {
-  white-space: nowrap;
-  word-wrap: normal;
-}
-
-.list td a.listViewTdToolsS1 {
-  min-width: 55px;
-  text-align: left;
-}
-
-.inlineButtons ul.clickMenu > li > span {
-  position: absolute;
-  right: 0;
-}
-
-.list td.inlineButtons {
-  text-align: right;
-  min-width: 75px;
 }
 
 .other {
@@ -952,254 +768,6 @@ a.listViewTdToolsS1 {
   }
 }
 
-
-/*///// MASS ASSIGN /////*/
-
-#massassign_form table, #massassign_form table td {
-  width: auto /*!important*/;
-  float: left;
-}
-
-td.listViewButtons input.button:hover {
-  background-color: $danger-btn-bg-hover;
-}
-
-#massassign_form h3 {
-  font-size: 14px;
-  font-weight: normal;
-  margin: 14px 20px 0px 0;
-  color: $navbar-search-color;
-}
-
-#massassign_form input.button {
-  margin-right: 10px;
-}
-
-table#mass_update_table {
-  color: $navbar-search-color;
-  background-color: $default-btn-color;
-}
-
-table#mass_update_table td {
-  padding-left: 15px;
-  line-height: 40px;
-}
-
-table#mass_update_table td select {
-  border-radius: 3px;
-}
-
-@media (max-width: 750px) {
-  #massassign_form table, #massassign_form table td {
-    width: 100% /*!important*/;
-    float: left;
-  }
-
-  #massassign_form h3 {
-    text-align: center;
-    margin-right: 0px;
-  }
-
-  #massassign_form table, #massassign_form table td {
-    text-align: center;
-  }
-
-  table#mass_update_table td {
-    padding-left: 0;
-    line-height: 30px;
-  }
-
-}
-
-
-#selectLinkTop,
-#selectLinkBottom,
-#actionLinkBottom {
-  min-height: 16px;
-  line-height: 0px;
-  position: relative;
-  padding: 1px;
-}
-#selectLinkTop input[type=checkbox],
-#selectLinkBottom input[type=checkbox],
-#actionLinkBottom input[type=checkbox] {
-  margin-top: 5px;
-}
-
-#actionLinkTop,
-#actionLinkBottom {
-  font-size: 14px;
-  min-height: 16px;
-  line-height: 11px;
-  position: relative;
-}
-
-#actionLinkTop {
-  top: -1px;
-}
-
-#actionLinkBottom {
-  left: -1px;
-}
-
-#detail_header_action_menu li.sugar_action_button a#edit_button,
-#userEditActions li.sugar_action_button  a,
-#actionLinkTop li.sugar_action_button  a,
-#actionLinkBottom li.sugar_action_button  a {
-  margin: 5px 10px 5px 9px;
-}
-
-.buttonOn,
-#detail_header_action_menu li.sugar_action_button,
-#userEditActions li.sugar_action_button,
-#actionLinkTop li.sugar_action_button,
-#actionLinkBottom li.sugar_action_button {
-  min-width: 32px;
-  padding: 11px 10px 12px 10px;
-}
-
-#select_actions_disabled_top,
-#select_actions_disabled_bottom {
-  padding: 4px 10px 4px 10px;
-  top: -1px;
-  position: relative;
-}
-
-#detail_header_action_menu > .sugar_action_button > ul.subnav,
-#userEditActions > .sugar_action_button > ul.subnav,
-#selectLinkTop > .sugar_action_button > ul.subnav,
-#selectLinkBottom > .sugar_action_button > ul.subnav {
-  left: 0;
-  right: auto;
-  background-color: #7B8A96;
-}
-
-#detail_header_action_menu > .sugar_action_button > ul.subnav,
-#detail_header_action_menu > .sugar_action_button > ul.subnav li,
-#detail_header_action_menu > .sugar_action_button > ul.subnav a,
-#userEditActions > .sugar_action_button > ul.subnav,
-#userEditActions > .sugar_action_button > ul.subnav li,
-#userEditActions > .sugar_action_button > ul.subnav a,
-#userEditActions ul.clickMenu li ul.subnav,
-#selectLinkTop > .sugar_action_button > ul.subnav,
-#selectLinkTop > .sugar_action_button > ul.subnav li,
-#selectLinkTop > .sugar_action_button > ul.subnav a,
-#actionLinkTop ul.clickMenu li ul.subnav,
-#actionLinkTop > .sugar_action_button > ul.subnav,
-#actionLinkTop > .sugar_action_button > ul.subnav li,
-#actionLinkTop > .sugar_action_button > ul.subnav a
-#selectLinkBottom > .sugar_action_button > ul.subnav,
-#selectLinkBottom > .sugar_action_button > ul.subnav li,
-#selectLinkBottom > .sugar_action_button > ul.subnav a,
-#actionLinkBottom ul.clickMenu li ul.subnav,
-#actionLinkBottom > .sugar_action_button > ul.subnav,
-#actionLinkBottom > .sugar_action_button > ul.subnav li,
-#actionLinkBottom > .sugar_action_button > ul.subnav a ,
-#actionLinkTop .menuItem,
-#actionLinkBottom .menuItem {
-  background-color: #7b8a96;
-  width: 100%;
-  line-height: 24px;
-  color: $default-btn-color;
-  padding: 0 5px 0 7px;
-}
-
-
-#actionLinkTop .menuItem,
-#actionLinkBottom .menuItem {
-  padding: 0;
-}
-
-#actionLinkTop .sugar_action_button .subnav.ddopen a,
-#actionLinkTop .sugar_action_button .subnav.ddopen a:hover,
-#actionLinkBottom .sugar_action_button .subnav.ddopen a,
-#actionLinkBottom .sugar_action_button .subnav.ddopen a:hover {
-  color: $default-btn-color;
-  display: block;
-  float: none;
-}
-
-#actionLinkTop .sugar_action_button .subnav.ddopen a:hover,
-#actionLinkBottom .sugar_action_button .subnav.ddopen a:hover,
-#actionLinkTop .sugar_action_button .subnav.ddopen li a.menuItemHilite,
-#actionLinkBottom .sugar_action_button .subnav.ddopen li a.menuItemHilite {
-  background-color: #677785 /*!important*/;
-  width: 100% /*!important*/;
-}
-
-#actionLinkTop .sugar_action_button .subnav.ddopen,
-#actionLinkBottom .sugar_action_button .subnav.ddopen,
-#actionLinkTop .sugar_action_button .subnav.ddopen li,
-#actionLinkBottom .sugar_action_button .subnav.ddopen li,
-#actionLinkTop .sugar_action_button .subnav.ddopen li a,
-#actionLinkBottom .sugar_action_button .subnav.ddopen li a {
-  margin: 0 /*!important*/;
-  padding: 0 /*!important*/;
-  border: 0 /*!important*/;
-}
-
-#actionLinkTop .sugar_action_button .subnav li a,
-#actionLinkBottom .sugar_action_button .subnav li a,
-#actionLinkTop .sugar_action_button .subnav.ddopen li a,
-#actionLinkBottom .sugar_action_button .subnav.ddopen li a {
-  padding: 5px 15px /*!important*/;
-}
-
-#actionLinkTop li.sugar_action_button,
-#actionLinkBottom li.sugar_action_button,
-#actionLinkBottom > .sugar_action_button > ul.subnav a:hover,
-#actionLinkTop .menuItemHilite,
-#actionLinkBottom .menuItemHilite {
-  background-color: #7b8a96;
-
-}
-
-#selectLinkTop>.sugar_action_button>ul.subnav a:hover,
-#selectLinkBottom>.sugar_action_button>ul.subnav a:hover {
-  background-color: #677785 /*!important*/;
-}
-
-
-#selectLinkTop>.sugar_action_button>ul.subnav
-#selectLinkBottom>.sugar_action_button>ul.subnav,
-#selectLinkTop>.sugar_action_button>ul.subnav li,
-#selectLinkBottom>.sugar_action_button>ul.subnav li {
-  padding: 0;
-}
-
-#selectLinkTop>.sugar_action_button>ul.subnav,
-#selectLinkBottom>.sugar_action_button>ul.subnav {
-  padding: 0 /*!important*/;
-  width: auto;
-}
-
-#actionLinkTop>.sugar_action_button>ul.subnav,
-#actionLinkBottom>.sugar_action_button>ul.subnav {
-  width: auto;
-}
-
-#detail_header_action_menu li.sugar_action_button,
-#detail_header_action_menu > .sugar_action_button > ul.subnav a:hover,
-#detail_header_action_menu > .sugar_action_button > ul.subnav,
-#detail_header_action_menu > .sugar_action_button > ul.subnav li,
-#detail_header_action_menu > .sugar_action_button > ul.subnav a,
-#userEditActions li.sugar_action_button,
-#userEditActions > .sugar_action_button > ul.subnav a:hover,
-#userEditActions > .sugar_action_button > ul.subnav,
-#userEditActions > .sugar_action_button > ul.subnav li,
-#userEditActions > .sugar_action_button > ul.subnav a {
-  background-color: $danger-btn-bg;
-}
-#detail_header_action_menu li.sugar_action_button,
-#userEditActions li.sugar_action_button {
-  padding: 5px 20px;
-}
-
-#selectLinkTop > .sugar_action_button > ul.subnav a,
-#actionLinkBottom > .sugar_action_button > ul.subnav a {
-  color: $default-btn-color;
-  width: 100%;
-}
 
 #map_listview_top, #export_listview_top {
   float: none;
@@ -1916,11 +1484,11 @@ li.noBullet {
 
 /*The nonPaddedError class is to remove the padding from interal error messages during the upgrade wizard*/
 span.error.nonPaddedError{
-  padding: 0px;
+  padding: 0;
 }
 
 div#generate_success.error{
-  padding: 0px;
+  padding: 0;
 }
 
 p.error {
@@ -1933,7 +1501,7 @@ p.error {
 }
 
 .error:empty{
-  padding:0px;
+  padding:0;
 }
 
 div#content p.error {
@@ -1952,7 +1520,7 @@ div#content p.error {
 }
 
 .success {
-  color: #00ee00;
+  color: $success;
 }
 
 .rssItemDate {
@@ -1990,10 +1558,9 @@ table.dateTime {
 }
 
 .pageNumbers {
-  color: white;
   font-weight: bold;
-  margin: 0 0px 0 0px;
-  padding: 0 8px 0 0px;
+  margin: 0 0 0 0;
+  padding: 0 8px 0 0;
   position: static;
   color: $default-btn-color;
 }
@@ -2104,13 +1671,6 @@ td.edit.view td[align=right] {
   text-align: left;
 }
 
-.login {
-  padding: 10px 6px 12px 10px /*!important*/;
-}
-
-.login .login_more {
-  text-align: right;
-}
 
 #lastviewicon, #newrecordicon, #shortcuts_img, #lastviewicon_1, #newrecordicon_1, #shortcuts_img_1 {
   display: none;
@@ -2174,14 +1734,6 @@ iframe.teamNoticeBox {
 
 embed {
   background: transparent;
-}
-
-#massupdate_form {
-  margin-top: 20px;
-}
-
-#massupdate_form .buttons {
-  padding-bottom: 2px;
 }
 
 #selected_directory_children {
@@ -2296,12 +1848,12 @@ table#goto_date_trigger_div_t thead {
 }
 
 .yui-calendar .calnavleft {
-  left: 0px;
+  left: 0;
   background-image: url("../../../../themes/SuiteP/images/p_left.svg");
 }
 
 .yui-calendar .calnavright {
-  right: 0px;
+  right: 0;
   background-image: url("../../../../themes/SuiteP/images/p_right.svg");
 }
 .yui-module .hd {
@@ -2370,7 +1922,7 @@ div.confirmTable {
 }
 
 .h3Row td {
-  padding: 0px;
+  padding: 0;
 }
 
 h4, h5 {
@@ -2422,10 +1974,6 @@ a:link, a:visited, a:hover {
   border-top: 2px solid;
 }
 
-.list tr.pagination td table td {
-  background: #BFCAD3 none repeat scroll 0 0;
-  color: #666666;
-}
 
 .td_alt, .list tr th, .list tr td[scope=col], .edit .list tr th, .edit .list tr td[scope=col] {
   border-left: none;
@@ -2452,7 +2000,7 @@ a:link, a:visited, a:hover {
   color: $main-font-color;
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin: 0px 0 $page-title-space 0;
+  margin: 0 0 $page-title-space 0;
   font-weight: 300;
 }
 
@@ -2577,20 +2125,6 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
 
 #newRecord form a:hover {
   color: #444444;
-}
-
-.list tr.pagination td table td a:link,
-.list tr.pagination td table td a:visited,
-.reportGroupByDataChildTablelistViewThS1 a:link,
-.reportGroupByDataChildTablelistViewThS1 a:visited,
-.list tr th,
-.list tr th a:link,
-.list tr th a:visited,
-.list tr td[scope=col],
-.list tr td[scope=col] a:link,
-.list tr td[scope=col] a:visited,
-.list tr.pagination td table td span.pageNumbers {
-  color: $default-btn-color;
 }
 
 
@@ -2856,7 +2390,7 @@ ul.clickMenu form {
 }
 
 ul.clickMenu li.sugar_action_button > form:first-child {
-  padding: 0px 15px;
+  padding: 0 15px;
 }
 
 ul.clickMenu.SugarActionMenu li.sugar_action_button ul.subnav.ddopen li form,
@@ -2893,9 +2427,6 @@ ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .l
   color: #fff;
 }
 
-.list tr.pagination td.buttons ul.clickMenu:hover > li > a:link, .list tr.pagination td.buttons ul.clickMenu:hover > li > a {
-  color: #fff;
-}
 
 ul.clickMenu li.single a {
   padding-right: 8px /*!important*/;
@@ -2930,59 +2461,6 @@ ul.clickMenu > li > span {
   padding: 4px;
 }
 
-
-#selectLinkTop, #selectLinkTop .sugar_action_button,
-#selectLinkBottom, #selectLinkBottom .sugar_action_button,
-#selectLinkTop, #selectLinkTop .selectActionsDisabled {
-  min-width: 32px;
-}
-
-
-.oddListRowS1:hover td ul.clickMenu.subpanel.records li span,
-.evenListRowS1:hover td ul.clickMenu.subpanel.records li span {
-  opacity: 1;
-}
-
-td.paginationActionButtons ul.clickMenu .massall,
-ul#selectLink.clickMenu .massall, td.selectCol .massall {
-  float: left;
-  margin: 2px 0 0 4px;
-}
-
-td.paginationActionButtons ul.selectmenu > li > a, td.selectCol ul.selectmenu > li > a, ul#selectLink.clickMenu > li > a {
-  padding: 0 /*!important*/;
-}
-
-ul.clickMenu.showLess .moreOverflow, ul.clickMenu.showLess .moduleMenuOverFlowLess, ul.clickMenu.showMore .moduleMenuOverFlowMore {
-  display: none;
-}
-
-ul#selectLink.clickMenu {
-  height: 17px;
-  min-width: 20px;
-  background-image:
-          none;
-}
-
-.single  a,
-.single > a,
-#actionLinkTop li.sugar_action_button,
-#actionLinkBottom li.sugar_action_button,
-#selectLinkTop li.sugar_action_button,
-#selectLinkBottom li.sugar_action_button {
-
-  padding: 0px /*!important*/;
-  background-color: #94A6B5;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  padding-right: 4px /*!important*/;
-}
-
-td.paginationActionButtons ul.clickMenu #massall,
-ul#selectLink.clickMenu #massall {
-  float: left;
-  margin: 1px 4px;
-}
 
 .selectActions.clickMenu {
   display: none;
@@ -3032,7 +2510,7 @@ ul#detailViewActions.clickMenu {
 
 .selectActionsDisabled span.ab {
   padding-left: 5px;
-  margin: -1px 1px 0px 1px;
+  margin: -1px 1px 0 1px;
 }
 
 .selectActionsDisabled a, #selectActionsDisabled a:hover {
@@ -3051,7 +2529,7 @@ ul#detailViewActions.clickMenu {
 
 ul.clickMenu.SugarActionMenu li.single a {
   background-color: #94A6B5 /*!important*/;
-  padding: 0px 8px /*!important*/;
+  padding: 0 8px /*!important*/;
 }
 
 ul.clickMenu.SugarActionMenu li.single a:hover {
@@ -3068,7 +2546,7 @@ ul.clickMenu.SugarActionMenu li.single a:hover {
 
 .selectActionsDisabled {
   padding: 4px 8px 5px 8px;
-  margin: 0 3px 0 0px;
+  margin: 0 3px 0 0;
   cursor: pointer;
   font-size: 13px;
 }
@@ -4173,21 +3651,6 @@ ul::-webkit-resizer
   background: rgba(0,0,0,0.25);
 }
 
-.list tr th {
-  font-weight: 700;
-}
-
-.list thead tr {
-}
-
-.list thead tr#pagination {
-}
-
-.list tr th a:link {
-  font-weight: 700;
-  font-size: 13px;
-  padding-right: 10px;
-}
 
 .edit h4 {
   padding: 0 0 10px 0;
@@ -4224,14 +3687,6 @@ table legend {
 
 .edit h4 {
   font-size: 1.2em;
-}
-
-.list tr th {
-  font-size: 13px;
-}
-
-.list {
-  font-size: 12px;
 }
 
 #tabs {
@@ -4311,7 +3766,7 @@ a#advanced_search_link {
   color: #fff;
   cursor: pointer;
   font-size: 13px /*!important*/;
-  margin: 4px 0px 4px 0px;
+  margin: 4px 0 4px 0;
   padding: 0 40px 0 20px;
   border-radius: 3px;
   text-transform: uppercase;
@@ -4739,23 +4194,6 @@ hr {
   border: none;
 }
 
-.list tr.oddListRowS1 td, .list tr.evenListRowS1 td {
-  padding-top: 15px /*!important*/;
-  padding-bottom: 12px /*!important*/;
-  padding-left: 10px /*!important*/;
-  padding-right: 10px /*!important*/;
-}
-
-.list tr.oddListRowS1 td.inlineEdit a, .list tr.evenListRowS1 td.inlineEdit a {
-  color: #E56455;
-  border-bottom: 1px dashed #E56455;
-  padding-bottom: 2px;
-}
-
-.list tr.oddListRowS1 td.inlineEdit a:hover, .list tr.evenListRowS1 td.inlineEdit a:hover {
-  color: #D66C60;
-  border-bottom: 1px dashed #D66C60;
-}
 
 #copyright_data a {
   color: #000000;
@@ -4856,7 +4294,7 @@ h3 span {
   top: 75px;
 }
 
-@media (min-width: 0px) and (max-height: 320px) {
+@media (min-width: 0) and (max-height: 320px) {
 
   .mobile-bar ul.dropdown-menu.user-dropdown{
     top: 50px /*!important*/;
@@ -5010,11 +4448,11 @@ object {
 
 #suggestion_box table {
   border: 1px solid #cccccc;
-  padding: 0px /*!important*/;
+  padding: 0 /*!important*/;
   width: 100%;
   max-width: 400px;
   color: #337ab7;
-  border-spacing: 0px;
+  border-spacing: 0;
 }
 
 #suggestion_box table tr {
@@ -5034,7 +4472,7 @@ object {
 }
 
 #suggestion_box table tr td {
-  margin: 0px;
+  margin: 0;
   border: none;
 }
 
@@ -5075,7 +4513,7 @@ object {
   font-size: 12px;
   background: #ffffff;
   border: none;
-  -webkit-border-radius: 0px;
+  -webkit-border-radius: 0;
   border-radius: 4px;
 }
 
@@ -5618,31 +5056,7 @@ div.list-view-rounded-corners > table th:last-of-type {
   }
 }
 
-@media (max-width: 750px) {
-  .paginationChangeButtons {
-    max-width: 125px;
-  }
 
-  .paginationActionButtons {
-    padding: 30px;
-  }
-
-  #listViewStartButton_top, #listViewPrevButton_top, #listViewNextButton_top, #listViewEndButton_top,
-  #listViewStartButton_bottom, #listViewPrevButton_bottom, #listViewNextButton_bottom, #listViewEndButton_bottom,
-  #listViewStartButton_, #listViewPrevButton_, #listViewNextButton_, #listViewEndButton_ {
-    padding: 2px 5px 2px 5px;
-    margin: 0;
-  }
-
-  .pageNumbers {
-    font-size: 10px;
-  }
-
-  #selectedRecordsTop {
-    max-width: 100px;
-    float: left;
-  }
-}
 
 @media  (max-width: 750px) {
   #wizform #wizard {
@@ -6167,7 +5581,7 @@ table tr#delegates_search {
   float: none;
 }
 #email_template_editor ul.mozaik-thumbs li.mozaik-thumbnail {
-  padding: 0px;
+  padding: 0;
 }
 #email_template_editor .mozaik-thumbnail.ui-draggable.ui-draggable-handle * {
   margin: 5px;
@@ -6194,7 +5608,7 @@ table tr#delegates_search {
   display: none;
 }
 #wizform table.diagnose_messages td {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 #wizform br.emptyRow {
   display: none;
@@ -6205,7 +5619,7 @@ table tr#delegates_search {
   margin-left: 50px;
 }
 #wizform #step3 .button-group a.btn img {
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 /* non-email campaign / budget page */
@@ -6310,7 +5724,7 @@ table tr#delegates_search {
 
       #wizform .wizard-box {
         width: auto;
-        min-width: 0px;
+        min-width: 0;
       }
 
       /* target-list fix */
@@ -6377,172 +5791,9 @@ body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shado
 
 
 
-/* top create button and dropdown menu */
-
-#quickcreatetop .dropdown-menu li a {
-  opacity: 0.8;
-}
-
-#quickcreatetop .dropdown-menu li a:hover {
-  opacity: 1;
-}
 
 
-/* admin / inbound emails styles */
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr {
-  padding: 0px /*!important*/;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:first-child {
-  background-color: #BFCAD3;
-  padding: 5px 0px 2px 0px /*!important*/;
-  color: white;
-  font-weight: 700;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu {
-  min-width: 32px;
-  min-height: 16px;
-  line-height: 0px;
-  position: relative;
-  padding: 1px;
-  height: initial;
-  vertical-align: top;
-
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
-  padding: 0px /*!important*/;
-  background-color: #94A6B5;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  padding-right: 4px /*!important*/;
-  min-width: 32px;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button:hover {
-  background-color: #778591;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button input#massall.checkbox.massall {
-  float: left;
-  margin: 5px 0 0 4px;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button a#select_link {
-  padding: 0 /*!important*/;
-  border: 1px solid transparent /*!important*/;
-  overflow: hidden;
-  display: block;
-  text-decoration: none;
-  float: left;
-  margin: 0 5px 0 0;
-  color: #fff;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav {
-  padding: 0 /*!important*/;
-  width: auto;
-  background-color: #7b8a96;
-  line-height: 24px;
-  color: $default-btn-color;
-  left: 0;
-  right: auto;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li {
-  padding: 0;
-  background-color: #7b8a96;
-  width: 100%;
-  line-height: 24px;
-  color: $default-btn-color;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItem {
-  color: $default-btn-color;
-  width: 100%;
-  background-color: #7b8a96;
-  line-height: 24px;
-  padding: 0 5px 0 7px;
-  font-weight: normal;
-}
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItemHilite {
-  padding: 0 5px 0 7px;
-  font-weight: normal;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button span {
-  height: 15px;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td input.button {
-  background-color: #94A6B5 /*!important*/;
-  padding: 3px 8px /*!important*/;
-  border: 1px solid transparent /*!important*/;
-  height: 26px;
-  text-transform: capitalize;
-  line-height: 1px;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td input.button:hover {
-  background-color: #778591 /*!important*/;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td input {
-  line-height: initial;
-  min-height: initial;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) {
-  padding: 6px 7px 2px 5px /*!important*/;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button {
-  opacity: .5;
-  cursor: default;
-  width: 26px;
-  background-repeat: no-repeat;
-  background-image: none,url("../../../../themes/SuiteP/images/p_pag_tools.svg"),url("../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-color: #94A6B5;
-  color: #c4c4c4;
-  height: 26px;
-  line-height: 26px;
-  padding: 0 10px 0 10px;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button[name="listViewStartButton"] {
-  background-position: 9px -29px;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button[name="listViewPrevButton"] {
-  background-position: 9px -50px;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button[name="listViewNextButton"] {
-  background-position: 10px -132px;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button[name="listViewEndButton"] {
-  background-position: 10px -112px;
-  margin-left: 2px;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button img {
-  display: none;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) span.pageNumbers {
-  top: -6px;
-  position: relative;
-}
-
-/* list items */
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr td {
-  padding-top: 0 /*!important*/;
-  padding-bottom: 0 /*!important*/;
-}
 
 /* edit form */
 
@@ -6632,7 +5883,7 @@ div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[
   div#content div#pagecontent form#EditView div.edit.view table tbody tr td[scope="row"] {
     width: 100%;
     height: initial;
-    padding: 15px 0px 5px 0px /*!important*/;
+    padding: 15px 0 5px 0 /*!important*/;
   }
   div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot {
     width: 100%;
@@ -6657,6 +5908,6 @@ div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[
   div#content div#pagecontent form#EditView div.edit.view table tbody tr td[scope="row"] {
     width: 100%;
     height: initial;
-    padding: 0px 0px 15px 0px /*!important*/;
+    padding: 0 0 15px 0 /*!important*/;
   }
 }

@@ -2,6 +2,15 @@
 /**** LOGIN **/
 @import 'variables';
 
+.login {
+  padding: 10px 6px 12px 10px /*!important*/;
+}
+
+.login .login_more {
+  text-align: right;
+}
+
+
 div.p_login {
   background-color: $main-bg;
   height: 100%;
@@ -98,7 +107,7 @@ div.p_login #loginform span.error {
   display: block;
   padding: 0;
   line-height: 140%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   margin-top: 20px;
   color: $danger;
   background-color: transparent;
@@ -139,7 +148,7 @@ div.p_login #loginform #bigbutton:hover {
 
   div.p_login .p_login_bottom a#powered_by, div.p_login .p_login_bottom a#admin_options {
     font-size: 10px;
-    margin-left: 0px;
+    margin-left: 0;
     text-align: center;
     display: block;
   }

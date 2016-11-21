@@ -115,8 +115,8 @@
     z-index: 0;
     width: 100%;
     height: 100%;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
 }
 
 .yui-calcontainer iframe.fixedsize {
@@ -641,14 +641,14 @@ p#clear {
 }
 
 span.yui-carousel-first-button {
-    background-position: 0px -550px;
+    background-position: 0 -550px;
     margin-left: -100px;
     margin-right: 50px;
     margin: 5px 5px 5px -90px;
 }
 
 .yui-carousel-vertical span.yui-carousel-first-button {
-    background-position: 0px -750px;
+    background-position: 0 -750px;
 }
 
 span.yui-carousel-first-button-disabled {
@@ -756,7 +756,7 @@ span.yui-carousel-first-button-disabled {
 
 .yui-picker-hue-bg {
     -moz-outline: none;
-    outline: 0px none;
+    outline: 0 none;
     position: absolute;
     left: 200px;
     height: 183px;
@@ -767,7 +767,7 @@ span.yui-carousel-first-button-disabled {
 
 .yui-picker-bg {
     -moz-outline: none;
-    outline: 0px none;
+    outline: 0 none;
     position: absolute;
     top: 4px;
     left: 4px;
@@ -787,8 +787,8 @@ span.yui-carousel-first-button-disabled {
 .yui-picker-mask {
     position: absolute;
     z-index: 1;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
 }
 
 .yui-picker-thumb {
@@ -828,12 +828,12 @@ span.yui-carousel-first-button-disabled {
 
 .yui-picker-controls .hd {
     background: transparent;
-    border-width: 0px !important;
+    border-width: 0 !important;
 }
 
 .yui-picker-controls .bd {
     height: 100px;
-    border-width: 0px !important;
+    border-width: 0 !important;
 }
 
 .yui-picker-controls ul {
@@ -1657,7 +1657,7 @@ a.yui-dt-page {
     height: 100%;
     width: 100%;
     overflow: hidden;
-    font-size: 0px;
+    font-size: 0;
 }
 
 .yui-toolbar-container .yui-button-disabled {
@@ -1766,7 +1766,7 @@ a.yui-dt-page {
 }
 
 .yui-editor-container iframe {
-    border: 0px;
+    border: 0;
     padding: 0;
     margin: 0;
     zoom: 1;
@@ -1934,8 +1934,8 @@ a.yui-dt-page {
 
 .yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-0
 {
-    top: 0px;
-    text-indent: 0px;
+    top: 0;
+    text-indent: 0;
     font-size: 75%;
 }
 
@@ -1977,7 +1977,7 @@ a.yui-dt-page {
 
 .yui-toolbar-bordersize-menu .yuimenuitemlabel,.yui-toolbar-bordertype-menu .yuimenuitemlabel,.yui-toolbar-bordersize-menu .yuimenuitemlabel,.yui-toolbar-bordertype-menu .yuimenuitemlabel:hover
 {
-    margin: 0px 3px 7px 17px;
+    margin: 0 3px 7px 17px;
 }
 
 .yui-toolbar-bordersize-menu .yuimenuitemlabel .checkedindicator,.yui-toolbar-bordertype-menu .yuimenuitemlabel .checkedindicator
@@ -1985,7 +1985,7 @@ a.yui-dt-page {
     position: absolute;
     left: -12px;
     top: 14px;
-    left: 0px;
+    left: 0;
 }
 
 .yui-toolbar-bordersize-menu li.yui-toolbar-bordersize-1 a {
@@ -2242,7 +2242,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     padding-left: 35px;
     height: 20px;
     text-decoration: none;
-    font-size: 0px;
+    font-size: 0;
     line-height: 2;
     display: block;
     color: #000;
@@ -2282,7 +2282,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 }
 
 .yui-toolbar-container .yui-button .first-child {
-    left: 0px;
+    left: 0;
 }
 
 .yui-toolbar-container .yui-toolbar-fontname {
@@ -2564,7 +2564,7 @@ div.yuimenu li.selected a.selected {
     background: url( editor-sprite.gif ) no-repeat 0 -1144px;
     overflow: hidden;
     right: -2px;
-    top: 0px;
+    top: 0;
     height: 20px;
 }
 
@@ -2859,9 +2859,9 @@ body.yui-layout {
 }
 
 .yui-layout-doc {
-    box-shadow: #999 0px 5px 10px;
-    -moz-box-shadow: #999 0px 5px 10px;
-    -webkit-box-shadow: #999 0px 5px 10px;
+    box-shadow: #999 0 5px 10px;
+    -moz-box-shadow: #999 0 5px 10px;
+    -webkit-box-shadow: #999 0 5px 10px;
     position: relative;
     overflow: visible;
     padding: 0;
@@ -3011,7 +3011,7 @@ div.yui-layout-hd h2 {
     right: 6px;
     top: 5px;
     width: 11px;
-    font-size: 0px;
+    font-size: 0;
 }
 
 .yui-layout .yui-layout-wrap {
@@ -3144,7 +3144,7 @@ div.yui-layout-hd h2 {
     background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
     border:1px solid #ccc;
-    border-width: 0px;
+    border-width: 0;
 }
 
 .yui-layout {
@@ -3231,7 +3231,7 @@ div.yui-layout-hd h2 {
     height: 16px;
     width: 6px;
     top: 45%;
-    left: 0px;
+    left: 0;
     background: transparent url(../../../../index.php?entryPoint=getImage&imageName=layout_sprite.png) no-repeat 0 -5px;
 }
 
@@ -4300,7 +4300,7 @@ a.yuimenuitemlabel:hover {
     height: 100%;
     width: 100%;
     overflow: hidden;
-    font-size: 0px;
+    font-size: 0;
 }
 
 .yui-toolbar-container .yui-button-disabled {
@@ -4409,7 +4409,7 @@ a.yuimenuitemlabel:hover {
 }
 
 .yui-editor-container iframe {
-    border: 0px;
+    border: 0;
     padding: 0;
     margin: 0;
     zoom: 1;
@@ -4577,8 +4577,8 @@ a.yuimenuitemlabel:hover {
 
 .yui-editor-panel .yui-toolbar-bordersize span a span.yui-toolbar-bordersize-0
 {
-    top: 0px;
-    text-indent: 0px;
+    top: 0;
+    text-indent: 0;
     font-size: 75%;
 }
 
@@ -4620,7 +4620,7 @@ a.yuimenuitemlabel:hover {
 
 .yui-toolbar-bordersize-menu .yuimenuitemlabel,.yui-toolbar-bordertype-menu .yuimenuitemlabel,.yui-toolbar-bordersize-menu .yuimenuitemlabel,.yui-toolbar-bordertype-menu .yuimenuitemlabel:hover
 {
-    margin: 0px 3px 7px 17px;
+    margin: 0 3px 7px 17px;
 }
 
 .yui-toolbar-bordersize-menu .yuimenuitemlabel .checkedindicator,.yui-toolbar-bordertype-menu .yuimenuitemlabel .checkedindicator
@@ -4628,7 +4628,7 @@ a.yuimenuitemlabel:hover {
     position: absolute;
     left: -12px;
     top: 14px;
-    left: 0px;
+    left: 0;
 }
 
 .yui-toolbar-bordersize-menu li.yui-toolbar-bordersize-1 a {
@@ -4885,7 +4885,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     padding-left: 35px;
     height: 20px;
     text-decoration: none;
-    font-size: 0px;
+    font-size: 0;
     line-height: 2;
     display: block;
     color: #000;
@@ -4925,7 +4925,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 }
 
 .yui-toolbar-container .yui-button .first-child {
-    left: 0px;
+    left: 0;
 }
 
 .yui-toolbar-container .yui-toolbar-fontname {
@@ -5207,7 +5207,7 @@ div.yuimenu li.selected a.selected {
     background: url( editor-sprite.gif ) no-repeat 0 -1144px;
     overflow: hidden;
     right: -2px;
-    top: 0px;
+    top: 0;
     height: 20px;
 }
 
@@ -5514,7 +5514,7 @@ div.yuimenu li.selected a.selected {
 .yui-nav, .yui-nav li, .yui-navset .yui-nav li {
     margin: 0;
     padding: 0;
-    padding-top:0px;
+    padding-top:0;
     list-style: none;
 }
 
@@ -5611,7 +5611,7 @@ div.yuimenu li.selected a.selected {
 
 .yui-navset .yui-nav li, .yui-navset .yui-navset-top .yui-nav li
 {
-    margin:0px 1px 0 0;
+    margin:0 1px 0 0;
     overflow: hidden;
     height: 18px;
     zoom: 1;
@@ -5696,7 +5696,7 @@ div.bodywrapper {
 }
 .yui-navset .yui-content, .yui-navset .yui-navset-top .yui-content
 {
-    border-top-width: 0px;
+    border-top-width: 0;
     padding: 0.2em 0.5em;
 }
 
@@ -6046,7 +6046,7 @@ div.bodywrapper {
 .sugar-progress-bar {
     background:#DDD url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') repeat-x scroll 0 -50px;
     height: 16px;
-    width: 0px;
+    width: 0;
 }
 
 /* Sugar YUI widget styles */
@@ -6056,7 +6056,7 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
     position:relative;
     top:-3px;
     width:9px;
-    background : transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png')  no-repeat scroll 0px -70px;
+    background : transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png')  no-repeat scroll 0 -70px;
 }
 
 .sugar-message-prompt {
@@ -6072,8 +6072,8 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
 /* KBDocuments tree*/
 #tagstree{
     width:auto;
-    margin-top:0px;
-    margin-bottom:0px;
+    margin-top:0;
+    margin-bottom:0;
 }
 .ygtvlabel, .ygtvlp, .ygtvlm
 {

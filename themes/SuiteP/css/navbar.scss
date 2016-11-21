@@ -12,7 +12,7 @@
     display: inline;
     background-image: url('../../../../themes/SuiteP/images/p_icon_home.png');
     background-repeat: no-repeat;
-    background-position: 0px $home-icon-bg-pos-y;
+    background-position: 0 $home-icon-bg-pos-y;
     text-indent: -9999px;
     overflow: hidden;
     width: 40px;
@@ -25,9 +25,9 @@
   .dropdown-menu {
     padding: 4px 10px 4px 10px;
     min-width: 240px;
-    margin-top: 0px;
-    border-top-right-radius: 0px;
-    border-top-left-radius: 0px;
+    margin-top: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
     font-size: 10px;
     background: $navbar-main-menu-bg;
     overflow-y: auto;
@@ -356,19 +356,19 @@
 }
 
 .navbar-inverse .dropdown-menu li a.recent-links-edit {
-  padding-right: 0px;
+  padding-right: 0;
 }
 
 .navbar-inverse .dropdown-menu li a.favorite-links-edit {
-  padding-right: 0px;
+  padding-right: 0;
 }
 
 .navbar-inverse .dropdown-menu li a.recent-links-detail {
-  padding-right: 0px;
+  padding-right: 0;
 }
 
 .navbar-inverse .dropdown-menu li a.favorite-links-detail {
-  padding-right: 0px;
+  padding-right: 0;
 }
 
 #mobileheader .dropdown-menu ul li a.recent-links-edit {
@@ -429,11 +429,11 @@
 }
 
 .topnav .dropdown-menu li:last-child a {
-  border-bottom: 0px;
+  border-bottom: 0;
 }
 
 .navbar-right .dropdown-menu li:last-child a {
-  border-bottom: 0px;
+  border-bottom: 0;
 }
 
 .moremenu ul, .dropdown-menu {
@@ -494,7 +494,7 @@
 }
 
 .navbar-inverse .navbar-brand:hover {
-  //background-position: 0px $home-icon-bg-pos-y-over;
+  //background-position: 0 $home-icon-bg-pos-y-over;
 }
 
 li#usermenu a {
@@ -614,7 +614,7 @@ li#usermenu a span.user_icon {
   background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.png");
   background-repeat: no-repeat;
   background-position: 92.5% 5px;
-  padding: 15px 32px 18px 0px;
+  padding: 15px 32px 18px 0;
 }
 
 
@@ -663,7 +663,7 @@ li#usermenu a span.user_icon {
   width: 50px;
   height: auto;
   display: block;
-  border-radius: 0px 3px 3px 0px;
+  border-radius: 0 3px 3px 0;
   margin-left: -50px;
   padding: 10px 10px 10px 10px;
   background-image: none, url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
@@ -888,14 +888,14 @@ a[id^=grouptab]:active {
   background-color: $navbar-quick-create-btn-bg-hover;
   //background-position: 80px -56px;
   text-decoration: none;
-  border-bottom-right-radius: 0px;
-  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 #quickcreatetop .dropdown-menu {
   background-color: #829EB5;
   border-radius: 3px;
-  border-top-right-radius: 0px;
+  border-top-right-radius: 0;
 
 }
 
@@ -912,7 +912,7 @@ a[id^=grouptab]:active {
   border-radius: 0;
   text-transform: none;
   border-bottom: 1px solid #95ACC0;
-  letter-spacing: 0px;
+  letter-spacing: 0;
   font-size: 14px;
   width: 100%;
   display: block;
@@ -928,7 +928,15 @@ a[id^=grouptab]:active {
 }
 
 #quickcreatetop .dropdown-menu {
-  margin-top: 0px ;
+  margin-top: 0 ;
+}
+
+#quickcreatetop .dropdown-menu li a {
+  opacity: 0.8;
+}
+
+#quickcreatetop .dropdown-menu li a:hover {
+  opacity: 1;
 }
 
 #desktop_notifications {
@@ -938,7 +946,7 @@ a[id^=grouptab]:active {
   margin-right: 15px;
   background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert.svg"), url("../../../../themes/SuiteP/images/p_icon_alert.png");
   background-repeat: no-repeat;
-  background-position: 0px 0px;
+  background-position: 0 0;
 }
 
 #desktop_notifications #alerts.dropdown-menu {
@@ -946,7 +954,7 @@ a[id^=grouptab]:active {
 }
 
 //#desktop_notifications:hover {
-//  background-position: 0px -100px;
+//  background-position: 0 -100px;
 //}
 
 #desktop_notifications a {
@@ -971,7 +979,7 @@ a[id^=grouptab]:active {
   border: none;
   width: 44px;
   height: 48px;
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 #desktop_notifications span.alert_count {
@@ -1013,15 +1021,15 @@ a[id^=grouptab]:active {
 
 #desktop_notifications .close {
   position: relative;
-  top: 0px;
-  right: 0px;
+  top: 0;
+  right: 0;
   color: inherit;
 }
 
 #desktop_notifications .close span {
   color: $navbar-menu-link-color;
-  margin-right: 0px ;
-  margin-bottom: 0px ;
+  margin-right: 0 ;
+  margin-bottom: 0 ;
 }
 
 #desktop_notifications div.dropdown-menu {
@@ -1030,7 +1038,7 @@ a[id^=grouptab]:active {
   margin: 0;
   padding: 8px;
   font-size: 12px;
-  border-radius: 0px;
+  border-radius: 0;
 }
 
 #desktop_notifications div.has-alerts {
@@ -1147,7 +1155,7 @@ a[id^=grouptab]:active {
   }
 
   li.topnav .dropdown-menu {
-    left: 0px;
+    left: 0;
   }
 
 
@@ -1197,7 +1205,7 @@ a[id^=grouptab]:active {
     background-repeat: no-repeat;
     background-position: 0 0;
     border: none;
-    margin-left: 0px;
+    margin-left: 0;
   }
 
   //#usermenucollapsed, #usermenucollapsed-mobile:hover {
@@ -1263,13 +1271,13 @@ a[id^=grouptab]:active {
   }
 
   #search #query_string {
-    top: 0px;
-    right: 0px;
+    top: 0;
+    right: 0;
     bottom: auto;
-    left: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    margin: 0px;
+    left: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0;
     width: 80% ;
   }
 
@@ -1281,26 +1289,26 @@ a[id^=grouptab]:active {
   }
 
   #search #searchbutton {
-    margin: 0px 10px 0 0;
+    margin: 0 10px 0 0;
     background-color: transparent;
     border: none;
     background-image: none, url("../../../../themes/SuiteP/images/p_search_button_small.svg"), url("../../../../themes/SuiteP/images/p_search_button_small.png");
     background-repeat: no-repeat;
-    background-position: 0px 10px;
+    background-position: 0 10px;
     text-indent: -9999px;
     overflow: hidden;
-    padding: 12px 0px 12px 0px;
+    padding: 12px 0 12px 0;
     width: 28px;
     height: 40px;
   }
 
   #search.open #searchbutton {
-    background-position: 0px -60px;
+    background-position: 0 -60px;
     background-color: transparent;
   }
 
   #quickcreatetop .dropdown-menu {
-    left: 0px;
+    left: 0;
   }
 
   #usermenucollapsed {
@@ -1308,7 +1316,7 @@ a[id^=grouptab]:active {
     border-radius: 0;
     background-color: transparent;
     height: 28px;
-    margin-top: 0px;
+    margin-top: 0;
     width: 28px;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
     background-repeat: no-repeat;
@@ -1325,7 +1333,7 @@ a[id^=grouptab]:active {
     height: 28px;
     margin-right: 20px;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
-    background-position: 0px 0px;
+    background-position: 0 0;
   }
 }
 
@@ -1368,14 +1376,14 @@ a[id^=grouptab]:active {
 
   #search #query_string {
     top: 0;
-    left: 0px;
-    margin-top: 0px;
+    left: 0;
+    margin-top: 0;
 
   }
 
   #search .input-group-btn {
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
   }
 
 
@@ -1389,7 +1397,7 @@ a[id^=grouptab]:active {
   //}
 
   #quickcreatetop .dropdown-menu {
-    left: 0px;
+    left: 0;
   }
 
   #usermenucollapsed, #usermenucollapsed-mobile {
@@ -1400,7 +1408,7 @@ a[id^=grouptab]:active {
     background-repeat: no-repeat;
     background-position: 0 0;
     border: none;
-    margin-left: 0px;
+    margin-left: 0;
   }
 
   #usermenucollapsed {
@@ -1422,11 +1430,11 @@ a[id^=grouptab]:active {
     margin-right: 10px;
     background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert.svg"), url("../../../../themes/SuiteP/images/p_icon_alert.png");
     background-repeat: no-repeat;
-    background-position: 0px 0px;
+    background-position: 0 0;
   }
 
   //#desktop_notifications:hover {
-  //  background-position: 0px -100px;
+  //  background-position: 0 -100px;
   //}
 
   #search {
@@ -1439,11 +1447,11 @@ a[id^=grouptab]:active {
     border: none;
     background-image: url("../../../../themes/SuiteP/images/sidebar/modules/search-close.svg");
     background-repeat: no-repeat;
-    background-position: 0px 0px;
+    background-position: 0 0;
     background-size: 38px 38px;
     text-indent: -9999px;
     overflow: hidden;
-    padding: 12px 0px 12px 0px;
+    padding: 12px 0 12px 0;
     width: 42px;
   }
 
@@ -1463,21 +1471,21 @@ a[id^=grouptab]:active {
     background-repeat: no-repeat;
     text-indent: -9999px;
     overflow: hidden;
-    padding: 12px 0px 12px 0px;
+    padding: 12px 0 12px 0;
     width: 26px;
   }
 
   #search:not(.open) #searchbutton {
-    background-position: 0px -46px;
+    background-position: 0 -46px;
   }
 
   #search.open #searchbutton {
-    background-position: 0px 0px;
+    background-position: 0 0;
     background-color: transparent;
   }
 
   //#searchbutton:hover {
-  //  background-position: 0px 8px;
+  //  background-position: 0 8px;
   //  background-color: transparent;
   //}
 }
@@ -1587,7 +1595,7 @@ a[id^=grouptab]:active {
   }
 
   #toolbar {
-    margin-top: 0px;
+    margin-top: 0;
     width: 100%;
     background-color: $mobile-navbar-toolbar-bg;
     padding: 0 20px 0 0;
@@ -1697,7 +1705,7 @@ a[id^=grouptab]:active {
     display: inline;
   }
   //#usermenucollapsed:hover {
-  //  background-position: 0 0px;
+  //  background-position: 0 0;
   //}
 }
 

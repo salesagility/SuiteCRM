@@ -17,7 +17,7 @@
 .panel-default > .panel-heading {
   background: $panel-expanded-bg;
   color: white;
-  padding: 0px;
+  padding: 0;
   vertical-align: middle;
   height: 52px/$panel-height-divisor;
   border-top-left-radius: 4px;
@@ -199,7 +199,7 @@ div.sub-panel {
 }
 
 .subpanel-table ul.subpanel > a {
-  padding: 0px /*!important*/;
+  padding: 0 /*!important*/;
   background-color: #94A6B5;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -207,7 +207,7 @@ div.sub-panel {
 }
 
 .subpanel-table li.sugar_action_button {
-  padding: 0px /*!important*/;
+  padding: 0 /*!important*/;
   background-color: #94A6B5;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -215,7 +215,7 @@ div.sub-panel {
 }
 
 .subpanel-table .pagination .sugar_action_button {
-  padding: 0px /*!important*/;
+  padding: 0 /*!important*/;
   background-color: #94A6B5;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -223,7 +223,7 @@ div.sub-panel {
 }
 
 .subpanel-table .pagination li.sugar_action_button > form > a {
-  padding: 0px /*!important*/;
+  padding: 0 /*!important*/;
   background-color: #94A6B5;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -231,7 +231,7 @@ div.sub-panel {
 }
 
 .subpanel-table .pagination .sugar_action_button > form > a{
-  padding: 0px /*!important*/;
+  padding: 0 /*!important*/;
   background-color: #94A6B5;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -239,7 +239,7 @@ div.sub-panel {
 }
 
 .subpanel-table .pagination .sugar_action_button > form > a {
-  padding: 0px /*!important*/;
+  padding: 0 /*!important*/;
   background-color: #94A6B5;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -349,7 +349,7 @@ div.sub-panel {
 .subpanel-table .pagination .clickMenu li span {
   float: right;
   margin-top: 9px;
-  margin-left: 0px;
+  margin-left: 0;
   margin-right: 5px;
 }
 
@@ -504,6 +504,13 @@ table.subpanelTabForm {
 .collapsed .panelContainer, .collapsed .collapseLink, .expanded .expandLink {
   display: none;
 }
+
+
+.oddListRowS1:hover td ul.clickMenu.subpanel.records li span,
+.evenListRowS1:hover td ul.clickMenu.subpanel.records li span {
+  opacity: 1;
+}
+
 
 @media (max-width: 767px) {
   .panel-heading a div {

@@ -52,35 +52,35 @@ input[type=checkbox]:focus, input[type=radio]:focus {
 }
 
 input[type=checkbox] {
-  background-position: 0px 0px;
+  background-position: 0 0;
 }
 
 input[type=checkbox]:checked {
-  background-position: -18px 0px;
+  background-position: -18px 0;
 }
 
 input[type=checkbox]:disabled {
-  background-position: -36px 0px;
+  background-position: -36px 0;
 }
 
 input[type=checkbox]:disabled:checked, input[type=checkbox]:checked:disabled {
-  background-position: -54px 0px;
+  background-position: -54px 0;
 }
 
 input[type=radio] {
-  background-position: 0px 0px;
+  background-position: 0 0;
 }
 
 input[type=radio]:checked {
-  background-position: -18px 0px;
+  background-position: -18px 0;
 }
 
 input[type=radio]:disabled {
-  background-position: -36px 0px;
+  background-position: -36px 0;
 }
 
 input[type=radio]:disabled:checked, input[type=radio]:checked:disabled {
-  background-position: -54px 0px;
+  background-position: -54px 0;
 }
 
 td.nowrap input[type=checkbox] {
@@ -214,7 +214,7 @@ fieldset[disabled] .btn-primary.active {
 
 #ConvertLead .edit .button {
   margin-right: 4px;
-  padding: 0px;
+  padding: 0;
   background-color: $danger-btn-bg;
   border: 1px solid $danger-btn-bg;
   border-radius: 4px;
@@ -222,7 +222,7 @@ fieldset[disabled] .btn-primary.active {
 
 #EditView_tabs .id-ff-remove {
   margin-right: 4px;
-  padding: 0px;
+  padding: 0;
   background-color: $danger-btn-bg;
   border: 1px solid $danger-btn-bg;
   border-radius: 4px;
@@ -230,7 +230,7 @@ fieldset[disabled] .btn-primary.active {
 
 #ConvertLead .id-ff-remove {
   margin-right: 4px;
-  padding: 0px;
+  padding: 0;
   background-color: $danger-btn-bg;
   border: 1px solid $danger-btn-bg;
   border-radius: 4px;
@@ -245,7 +245,7 @@ fieldset[disabled] .btn-primary.active {
 
 #conditionLines [type="button"] {
   margin-right: 4px;
-  padding: 0px;
+  padding: 0;
   background-color: $danger-btn-bg;
   border: 1px solid $danger-btn-bg;
   border-radius: 4px;
@@ -253,7 +253,7 @@ fieldset[disabled] .btn-primary.active {
 
 #actionLines [type="button"] {
   margin-right: 4px;
-  padding: 0px;
+  padding: 0;
   background-color: $danger-btn-bg;
   border: 1px solid $danger-btn-bg;
   border-radius: 4px;
@@ -261,7 +261,7 @@ fieldset[disabled] .btn-primary.active {
 
 #deleteGroup img {
   margin-right: 4px;
-  padding: 0px;
+  padding: 0;
   background-color: $danger-btn-bg;
   border: 1px solid $danger-btn-bg;
   border-radius: 4px;
@@ -881,7 +881,7 @@ select[size] {
   border-size: 1px;
   border-color: $input-select-bg;
   border-radius: 4px;
-  padding: 0px 52px 0px 5px;
+  padding: 0 52px 0 5px;
   background-color: $input-select-option;
   background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
   background-size: 52px 52px;
@@ -901,7 +901,7 @@ select {
   border-size: 1px;
   border-color: $input-select-bg;
   border-radius: 4px;
-  padding: 0px 52px 0px 5px;
+  padding: 0 52px 0 5px;
   background-color: $input-select-option;
   background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
   background-size: 52px 52px;

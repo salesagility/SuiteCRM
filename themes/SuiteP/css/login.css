@@ -86,7 +86,7 @@ div.p_login #loginform span.error {
   display: block;
   padding: 0;
   line-height: 140%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   margin-top: 20px;
   color: #F08377;
   background-color: transparent; }
@@ -118,7 +118,7 @@ div.p_login #loginform #bigbutton:hover {
 
   div.p_login .p_login_bottom a#powered_by, div.p_login .p_login_bottom a#admin_options {
     font-size: 10px;
-    margin-left: 0px;
+    margin-left: 0;
     text-align: center;
     display: block; }
 
