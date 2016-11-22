@@ -116,7 +116,12 @@
     line-height: 100%;
   }
 
-  .other.view td:nth-of-type(1),
+  .other.view td:nth-of-type(1) {
+    display: block;
+    float: left;
+    width: 25%;
+  }
+
   .other.view td:nth-of-type(3) {
     display: block;
     float: left;
@@ -124,7 +129,14 @@
   }
 
   /* right admin panel column */
-  .other.view td:nth-of-type(2),
+  .other.view td:nth-of-type(2) {
+    display: block;
+    float: right;
+    width: 75%;
+    line-height: 48px;
+    height: 48px;
+  }
+
   .other.view td:nth-of-type(4) {
     display: block;
     float: right;
