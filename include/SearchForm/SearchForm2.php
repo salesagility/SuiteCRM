@@ -164,7 +164,7 @@ require_once('include/EditView/EditView2.php');
  	}
 
  	function display($header = true){
-    	global $theme, $timedate, $current_user;
+    	global $theme, $timedate, $current_user, $sugar_config;
  		$header_txt = '';
  		$footer_txt = '';
  		$return_txt = '';
@@ -263,8 +263,7 @@ require_once('include/EditView/EditView2.php');
 
         $this->th->ss->assign('searchInfoJson', $this->getSearchInfoJson());
 
-        // TODO: bring it from config (but do not use filter icon if there is not any results cause list not shows)
-        $this->th->ss->assign('searchFormInPopup', true);
+        $this->th->ss->assign('searchFormInPopup', !isset($sugar_config['show_search_form_popup']) || $sugar_config['show_search_form_popup']);
 
         $return_txt = $this->th->displayTemplate($this->seed->module_dir, 'SearchForm_'.$this->parsedView, $this->locateFile($this->tpl));
 

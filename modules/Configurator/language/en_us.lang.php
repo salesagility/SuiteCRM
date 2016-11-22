@@ -126,6 +126,7 @@ $mod_strings = array (
     'LBL_ENABLE_INLINE_EDITING_DETAIL' => 'Enable inline editing on detail view',
     'LBL_ENABLE_INLINE_EDITING_DETAIL_DESC' => 'Select to enable Inline Editing for fields on the detail view. If unselected Inline Editing will be disabled on detail view.',
 	'LBL_HIDE_SUBPANELS' => 'Collapsed subpanels',
+	'LBL_SHOW_SEARCH_FORM_IN_POPUP' => 'Show search forms in popup on list view',
     'LIST_ENTRIES_PER_LISTVIEW'=>'Listview items per page',
 	'LIST_ENTRIES_PER_SUBPANEL'=>'Subpanel items per page',
 	'LOG_MEMORY_USAGE'=>'Log memory usage',
