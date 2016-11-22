@@ -4241,6 +4241,18 @@ a.listViewTdToolsS1 {
 .list .pagination td table td span.pageNumbers {
   color: whitesmoke; }
 
+.list tr.pagination td.buttons ul.clickMenu > li > a:link {
+  display: block;
+  text-decoration: none;
+  float: left;
+  color: whitesmoke; }
+
+.list tr.pagination td.buttons ul.clickMenu > li > a {
+  display: block;
+  text-decoration: none;
+  float: left;
+  color: whitesmoke; }
+
 /*///// MASS ASSIGN /////*/
 #massassign_form table {
   width: auto;
@@ -4355,174 +4367,172 @@ a.listViewTdToolsS1 {
   top: -1px;
   position: relative; }
 
-#detail_header_action_menu > .sugar_action_button > .subnav,
-#userEditActions > .sugar_action_button > .subnav,
-#selectLinkTop > .sugar_action_button > .subnav,
+#detail_header_action_menu > .sugar_action_button > .subnav {
+  left: 0;
+  right: auto;
+  background-color: #7b8a96; }
+
+#userEditActions > .sugar_action_button > .subnav {
+  left: 0;
+  right: auto;
+  background-color: #7b8a96; }
+
+#selectLinkTop > .sugar_action_button > .subnav {
+  left: 0;
+  right: auto;
+  background-color: #7b8a96; }
+
 #selectLinkBottom > .sugar_action_button > .subnav {
   left: 0;
   right: auto;
-  background-color: #7B8A96; }
+  background-color: #7b8a96; }
+
+.list .SugarActionMenu .sugar_action_button > .subnav a {
+  border-bottom: 1px solid #93a0ab; }
+
+.list .SugarActionMenu .sugar_action_button > .subnav li:last-of-type a:last-of-type {
+  border-bottom: none; }
+
+.list .SugarActionMenu .sugar_action_button .subnav {
+  padding: 4px 10px; }
 
 #detail_header_action_menu > .sugar_action_button > .subnav {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #detail_header_action_menu > .sugar_action_button > .subnav li {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #detail_header_action_menu > .sugar_action_button > .subnav a {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #userEditActions > .sugar_action_button > .subnav {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #userEditActions > .sugar_action_button > .subnav li {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #userEditActions > .sugar_action_button > .subnav a {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #userEditActions .clickMenu li .subnav {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #selectLinkTop > .sugar_action_button > .subnav {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #selectLinkTop > .sugar_action_button > .subnav li {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #selectLinkTop > .sugar_action_button > .subnav a {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #actionLinkTop .clickMenu li .subnav {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #actionLinkTop > .sugar_action_button > .subnav {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #actionLinkTop > .sugar_action_button > .subnav li {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #actionLinkTop > .sugar_action_button > .subnav a {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #selectLinkBottom > .sugar_action_button > .subnav {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #selectLinkBottom > .sugar_action_button > .subnav li {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #selectLinkBottom > .sugar_action_button > .subnav a {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #actionLinkBottom .clickMenu li .subnav {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #actionLinkBottom > .sugar_action_button > .subnav {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #actionLinkBottom > .sugar_action_button > .subnav li {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #actionLinkBottom > .sugar_action_button > .subnav a {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #actionLinkTop .menuItem {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #actionLinkBottom .menuItem {
   background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: whitesmoke;
-  padding: 0 5px 0 7px; }
+  color: whitesmoke; }
 
 #actionLinkTop .menuItem {
   padding: 0; }
@@ -4588,13 +4598,11 @@ a.listViewTdToolsS1 {
 
 #actionLinkTop .sugar_action_button .subnav.ddopen li a {
   margin: 0;
-  padding: 0;
-  border: 0; }
+  padding: 0; }
 
 #actionLinkBottom .sugar_action_button .subnav.ddopen li a {
   margin: 0;
-  padding: 0;
-  border: 0; }
+  padding: 0; }
 
 #actionLinkTop .sugar_action_button .subnav li a {
   padding: 5px 15px; }
@@ -4688,8 +4696,11 @@ a.listViewTdToolsS1 {
 #userEditActions .sugar_action_button {
   padding: 5px 20px; }
 
-#selectLinkTop > .sugar_action_button > .subnav a {
+.list .sugar_action_button > .subnav a {
   padding: 5px 20px; }
+
+.list .sugar_action_button > .subnav {
+  border-radius: 4px; }
 
 #actionLinkBottom > .sugar_action_button > .subnav a {
   color: whitesmoke;
@@ -5779,33 +5790,6 @@ a#admin_options:hover, a#powered_by:hover {
   position: absolute;
   display: none;
   visibility: hidden; }
-
-.menuItem, .menuItemHilite, .menuItemX, .menuItemHiliteX,
-.menuItem:visited, .menuItemHilite:visited, .menuItem:hover, .menuItemHilite:hover,
-.menuItem:active, .menuItemHilite:active, .menuItem:link, .menuItemHilite:link,
-.menuItemX:visited, .menuItemHiliteX:visited, .menuItemX:hover, .menuItemHiliteX:hover,
-.menuItemX:active, .menuItemHiliteX:active, .menuItemX:link, .menuItemHiliteX:link {
-  line-height: 24px;
-  color: black;
-  text-decoration: none;
-  width: 120px;
-  border-left: none;
-  border-right: none;
-  display: block;
-  padding: 1px 5px 1px 7px;
-  border-bottom: 1px solid #c0c0c0; }
-
-.menuItem {
-  background-color: #f6f6f6; }
-
-.menuItemHilite {
-  background-color: whitesmoke; }
-
-.menuItemX {
-  background-color: #CCCCCC; }
-
-.menuItemHiliteX {
-  background-color: #999999; }
 
 .menu {
   position: absolute;
@@ -7500,13 +7484,27 @@ ul.clickMenu form {
 ul.clickMenu li.sugar_action_button > form:first-child {
   padding: 0 15px; }
 
-ul.clickMenu.SugarActionMenu li.sugar_action_button ul.subnav.ddopen li form,
+ul.clickMenu.SugarActionMenu li.sugar_action_button ul.subnav.ddopen li form {
+  width: 100%; }
+
 ul.clickMenu.SugarActionMenu li.sugar_action_button ul.subnav.ddopen li form a {
   width: 100%; }
 
-ul.clickMenu li ul.subnav li a:hover,
-ul.clickMenu li ul.subnav li input:hover,
-ul.clickMenu.subpanel.records li ul.subnav li a:hover,
+ul.clickMenu li ul.subnav li a:hover {
+  background-color: #677785;
+  width: 100%;
+  text-align: left; }
+
+ul.clickMenu li ul.subnav li input:hover {
+  background-color: #677785;
+  width: 100%;
+  text-align: left; }
+
+ul.clickMenu.subpanel.records li ul.subnav li a:hover {
+  background-color: #677785;
+  width: 100%;
+  text-align: left; }
+
 ul.clickMenu ul.subnav-sub li a:hover {
   background-color: #677785;
   width: 100%;
@@ -7522,13 +7520,19 @@ ul.clickMenu > li, ul.SugarActionMenuIESub li {
   color: whitesmoke;
   border-radius: 3px; }
 
-ul.SugarActionMenuIESub li a,
-ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .list tr.pagination td.buttons ul.clickMenu > li > a {
+ul.SugarActionMenuIESub li {
   display: block;
   text-decoration: none;
   float: left;
   margin: 0 5px 0 0;
-  color: #fff; }
+  color: whitesmoke; }
+
+ul.clickMenu li a {
+  display: block;
+  text-decoration: none;
+  float: left;
+  margin: 0 5px 0 0;
+  color: whitesmoke; }
 
 ul.clickMenu li.single a {
   padding-right: 8px; }
