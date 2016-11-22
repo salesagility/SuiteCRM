@@ -5965,3 +5965,26 @@ ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > l
 .paginationActionButtons input {
     width: 30px;
 }
+
+.paginationActionButtons .selectActionsDisabled {
+    height: 27px;
+    padding: 6px 10px;
+}
+
+.paginationActionButtons .sugar_action_button {
+    height: 25px;
+}
+
+.paginationActionButtons .parent-dropdown-handler {
+    padding: 3px 10px;
+}
+
+.paginationActionButtons .parent-dropdown-handler:hover * {
+    color: #3C8DBC;
+}
+
+
+.paginationActionButtons .selectActionsDisabled .parent-dropdown-action-handler {
+    top: -3px;
+    position: relative;
+}

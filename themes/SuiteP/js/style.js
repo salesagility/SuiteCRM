@@ -608,36 +608,70 @@ $(function () {
         hideEmptyFormCellsOnTablet();
     }, 1500);
 
-    var bootstrapCheckboxesInitialized = false;
-    var initializeBootstrapCheckboxes = function() {
-        if(!bootstrapCheckboxesInitialized) {
-            if ($('.glyphicon.bootstrap-checkbox').length == 0) {
-                setTimeout(function () {
-                    initializeBootstrapCheckboxes();
-                }, 100);
-            } else {
-                $('.glyphicon.bootstrap-checkbox').each(function (i, e) {
-                    $(e).removeClass('hidden');
-                    $(e).next().hide();
-                    refreshListViewCheckbox(e);
-                    $(e).click(function () {
-                        $(this).next().click();
-                        refreshListViewCheckbox($(this));
-                    });
-                });
-
-                $('#selectLink > li > ul > li > a, #selectLinkTop > li > ul > li > a, #selectLinkBottom > li > ul > li > a').click(function (e) {
-                    e.preventDefault();
+    var listViewCheckboxInit = function() {
+        var checkboxesInitialized = false;
+        var checkboxesInitializeInterval = false;
+        var checkboxesCountdown = 100;
+        var initializeBootstrapCheckboxes = function() {
+            if(!checkboxesInitialized) {
+                if ($('.glyphicon.bootstrap-checkbox').length == 0) {
+                    if(!checkboxesInitializeInterval) {
+                        checkboxesInitializeInterval = setInterval(function () {
+                            checkboxesCountdown--;
+                            if(checkboxesCountdown<=0) {
+                                clearInterval(checkboxesInitializeInterval);
+                                return;
+                            }
+                            initializeBootstrapCheckboxes();
+                        }, 100);
+                    }
+                } else {
                     $('.glyphicon.bootstrap-checkbox').each(function (i, e) {
+                        $(e).removeClass('hidden');
+                        $(e).next().hide();
                         refreshListViewCheckbox(e);
+                        $(e).click(function () {
+                            $(this).next().click();
+                            refreshListViewCheckbox($(this));
+                        });
                     });
-                });
 
-                bootstrapCheckboxesInitialized = true;
+                    $('#selectLink > li > ul > li > a, #selectLinkTop > li > ul > li > a, #selectLinkBottom > li > ul > li > a').click(function (e) {
+                        e.preventDefault();
+                        $('.glyphicon.bootstrap-checkbox').each(function (i, e) {
+                            refreshListViewCheckbox(e);
+                        });
+                    });
+
+                    checkboxesInitialized = true;
+                    clearInterval(checkboxesInitializeInterval);
+                    checkboxesInitializeInterval = true;
+                }
             }
-        }
+        };
+        initializeBootstrapCheckboxes();
+
+        YAHOO.util.Connect.h = YAHOO.util.Connect.asyncRequest;
+        YAHOO.util.Connect.asyncRequest = function(a,b,c,d,e,f,g) {
+            var _c = c;
+            _c.s = _c.success;
+            c.success = function(a,b,c,d,e,f,g) {
+                var r = _c.s(a,b,c,d,e,f,g);
+                if(checkboxesInitializeInterval) {
+                    clearInterval(checkboxesInitializeInterval);
+                }
+                checkboxesInitialized = false;
+                checkboxesInitializeInterval = false;
+                initializeBootstrapCheckboxes();
+                return r;
+            };
+            var r = YAHOO.util.Connect.h(a,b,c,d,e,f,g);
+            return r;
+
+        };
     };
-    initializeBootstrapCheckboxes();
+    listViewCheckboxInit();
+
 
     setInterval(function() {
         $('.subnav').each(function(i,e){
