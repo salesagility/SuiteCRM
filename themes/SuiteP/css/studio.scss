@@ -10,11 +10,41 @@
   width: 32px;
 }
 
-#exportcustom h3,
-#layoutEditor h4,
-#layoutEditor h3,
-#layoutEditor h2,
-#layoutEditor h1,
+#exportcustom h3 {
+  padding-left: 0px;
+  margin: 3px;
+  font-size: $page-font-size + 1px;
+  font-weight: bold;
+}
+
+#layoutEditor h4 {
+  padding-left: 0px;
+  margin: 3px;
+  font-size: $page-font-size + 1px;
+  font-weight: bold;
+}
+
+#layoutEditor h3 {
+  padding-left: 0px;
+  margin: 3px;
+  font-size: $page-font-size + 1px;
+  font-weight: bold;
+}
+
+#layoutEditor h2 {
+  padding-left: 0px;
+  margin: 3px;
+  font-size: $page-font-size + 1px;
+  font-weight: bold;
+}
+
+#layoutEditor h1 {
+  padding-left: 0px;
+  margin: 3px;
+  font-size: $page-font-size + 1px;
+  font-weight: bold;
+}
+
 .panel_name {
   padding-left: 0px;
   margin: 3px;
@@ -196,15 +226,26 @@ body > .le_panel .le_edit, #toolbox .le_panel .le_edit {
   text-align: center;
 }
 
-#exportcustom > table > tbody > tr > .mbLBL,
-#popup_form_id > table > tbody > tr > .mbLBL {
+#exportcustom > table > tbody > tr > .mbLBL {
   line-height: $input-line-height;
 }
 
+#popup_form_id > table > tbody > tr > .mbLBL
 
-.relform td,
-#editlabels td,
-#exportcustom > table > tbody > tr > td,
+
+.relform td {
+  padding-left: 8px;
+  padding-bottom: 8px;
+}
+
+#editlabels td {
+  padding-left: 8px;
+  padding-bottom: 8px;
+}
+#exportcustom > table > tbody > tr > td {
+  padding-left: 8px;
+  padding-bottom: 8px;
+}
 #popup_form_id > table > tbody > tr > td {
   padding-left: 8px;
   padding-bottom: 8px;

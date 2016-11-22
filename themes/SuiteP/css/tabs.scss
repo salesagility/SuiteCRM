@@ -160,6 +160,11 @@
     color: $action-tab-color;
   }
 
+  #tab-actions:only-child > .dropdown-menu {
+    left: 0;
+    right: auto;
+  }
+
   #tab-actions > .dropdown-menu {
     left: auto;
     right: 0;
