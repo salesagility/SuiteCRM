@@ -1,157 +1,293 @@
 /**** Admin ***/
 @import 'variables';
-/* admin / inbound emails styles */
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr {
-  padding: 0 /*!important*/;
+
+
+.admin-panel h3 {
+  font-size: $page-font-size + 1px;
+  font-weight: bold;
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:first-child {
-  background-color: #BFCAD3;
-  padding: 5px 0 2px 0 /*!important*/;
-  color: white;
-  font-weight: 700;
+.admin-panel .other {
+  margin-top: 20px;
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu {
-  min-width: 32px;
-  min-height: 16px;
-  line-height: 0;
-  position: relative;
-  padding: 1px;
-  height: initial;
-  vertical-align: top;
-
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
-  padding: 0 /*!important*/;
-  background-color: #94A6B5;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  padding-right: 4px /*!important*/;
-  min-width: 32px;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button:hover {
-  background-color: #778591;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button input#massall.checkbox.massall {
-  float: left;
-  margin: 5px 0 0 4px;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button a#select_link {
-  padding: 0 /*!important*/;
-  border: 1px solid transparent /*!important*/;
-  overflow: hidden;
-  display: block;
-  text-decoration: none;
-  float: left;
-  margin: 0 5px 0 0;
-  color: #fff;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav {
-  padding: 0 /*!important*/;
-  width: auto;
-  background-color: #7b8a96;
-  line-height: 24px;
-  color: $default-btn-color;
-  left: 0;
-  right: auto;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li {
+.other {
+  border: none;
+  margin-top: 20px;
+  margin-bottom: 20px;
   padding: 0;
-  background-color: #7b8a96;
   width: 100%;
-  line-height: 24px;
-  color: $default-btn-color;
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItem {
-  color: $default-btn-color;
-  width: 100%;
-  background-color: #7b8a96;
-  line-height: 24px;
-  padding: 0 5px 0 7px;
+.other td {
   font-weight: normal;
-}
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItemHilite {
-  padding: 0 5px 0 7px;
-  font-weight: normal;
+  padding: 4px 10px 4px 6px;
+  vertical-align: middle;
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button span {
-  height: 15px;
+.other td[scope=row] {
+  padding: 4px 6px 4px 6px;
+  white-space: nowrap;
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td input.button {
-  background-color: #94A6B5 /*!important*/;
-  padding: 3px 8px /*!important*/;
-  border: 1px solid transparent /*!important*/;
-  height: 26px;
-  text-transform: capitalize;
-  line-height: 1px;
+.other .edit td {
+  background: transparent;
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td input.button:hover {
-  background-color: #778591 /*!important*/;
+.other .edit {
+  margin-top: 0;
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td input {
-  line-height: initial;
-  min-height: initial;
+.other td.edit #wizard td {
+  background: transparent;
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) {
-  padding: 6px 7px 2px 5px /*!important*/;
+.other td.edit #wizard h4 {
+  padding-left: 0;
+  margin-top: 0;
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button {
-  opacity: .5;
-  cursor: default;
-  width: 26px;
-  background-repeat: no-repeat;
-  background-image: none,url("../../../../themes/SuiteP/images/p_pag_tools.svg"),url("../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-color: #94A6B5;
-  color: #c4c4c4;
-  height: 26px;
-  line-height: 26px;
-  padding: 0 10px 0 10px;
+.other.view td {
+  height: 48px;
+  line-height: 48px;
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button[name="listViewStartButton"] {
-  background-position: 9px -29px;
+.other.view img, .other.view svg {
+  font-weight: 700;
+  margin: 5px 0 0 5px;
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  float: left;
 }
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button[name="listViewPrevButton"] {
-  background-position: 9px -50px;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button[name="listViewNextButton"] {
-  background-position: 10px -132px;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button[name="listViewEndButton"] {
-  background-position: 10px -112px;
-  margin-left: 2px;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button img {
-  display: none;
-}
-
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) span.pageNumbers {
-  top: -6px;
+.other.view a {
   position: relative;
+  font-weight: 700;
+  margin: 0 0 0 10px;
+  display: inline-block;
 }
 
-/* list items */
+.other.view td:nth-of-type(1) {
+  display: block;
+  float: left;
+  width: 100%;
+  background-color: $main-alternate-bg;
+  text-wrap: normal;
 
-div#content div#pagecontent form#MassUpdate table.list.view tbody tr td {
-  padding-top: 0 /*!important*/;
-  padding-bottom: 0 /*!important*/;
 }
+.other.view td:nth-of-type(2) {
+  display: block;
+  float: right;
+  width: 100%;
+  background-color: $main-alternate-bg;
+  padding-left: 52px;
+  padding-bottom: 10px;
+  height: auto;
+  line-height: 24px;
+}
+
+.other.view td:nth-of-type(2):after {
+  clear: both;
+}
+.other.view td:nth-of-type(3) {
+  display: block;
+  float: left;
+  width: 100%;
+  background-color: $main-bg;
+}
+.other.view td:nth-of-type(4) {
+  display: block;
+  float: right;
+  width: 100%;
+  background-color: $main-bg;
+  padding-left: 52px;
+  padding-bottom: 10px;
+  height: auto;
+  line-height: 24px;
+}
+
+@media (min-width: 1250px) {
+  /* left admin panel column */
+  .other.view td a {
+    white-space: normal;
+    height: 100%;
+    line-height: 100%;
+  }
+
+  .other.view td:nth-of-type(1),
+  .other.view td:nth-of-type(3) {
+    display: block;
+    float: left;
+    width: 25%;
+  }
+
+  /* right admin panel column */
+  .other.view td:nth-of-type(2),
+  .other.view td:nth-of-type(4) {
+    display: block;
+    float: right;
+    width: 75%;
+    line-height: 48px;
+    height: 48px;
+  }
+}
+
+
+
+/* admin / inbound emails styles */
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr {
+//  padding: 0;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:first-child {
+//  background-color: #BFCAD3;
+//  padding: 5px 0 2px 0;
+//  color: white;
+//  font-weight: 700;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu {
+//  min-width: 32px;
+//  min-height: 16px;
+//  line-height: 0;
+//  position: relative;
+//  padding: 1px;
+//  height: initial;
+//  vertical-align: top;
+//
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
+//  padding: 0;
+//  background-color: #94A6B5;
+//  border: 1px solid transparent;
+//  border-radius: 4px;
+//  padding-right: 4px;
+//  min-width: 32px;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button:hover {
+//  background-color: #778591;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button input#massall.checkbox.massall {
+//  float: left;
+//  margin: 5px 0 0 4px;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button a#select_link {
+//  padding: 0;
+//  border: 1px solid transparent;
+//  overflow: hidden;
+//  display: block;
+//  text-decoration: none;
+//  float: left;
+//  margin: 0 5px 0 0;
+//  color: #fff;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav {
+//  padding: 0;
+//  width: auto;
+//  background-color: #7b8a96;
+//  line-height: 24px;
+//  color: $default-btn-color;
+//  left: 0;
+//  right: auto;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li {
+//  padding: 0;
+//  background-color: #7b8a96;
+//  width: 100%;
+//  line-height: 24px;
+//  color: $default-btn-color;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItem {
+//  color: $default-btn-color;
+//  width: 100%;
+//  background-color: #7b8a96;
+//  line-height: 24px;
+//  padding: 0 5px 0 7px;
+//  font-weight: normal;
+//}
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItemHilite {
+//  padding: 0 5px 0 7px;
+//  font-weight: normal;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button span {
+//  height: 15px;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td input.button {
+//  background-color: #94A6B5;
+//  padding: 3px 8px;
+//  border: 1px solid transparent;
+//  height: 26px;
+//  text-transform: capitalize;
+//  line-height: 1px;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td input.button:hover {
+//  background-color: #778591;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td input {
+//  line-height: initial;
+//  min-height: initial;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) {
+//  padding: 6px 7px 2px 5px;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button {
+//  opacity: .5;
+//  cursor: default;
+//  width: 26px;
+//  background-repeat: no-repeat;
+//  background-image: none,url("../../../../themes/SuiteP/images/p_pag_tools.svg"),url("../../../../themes/SuiteP/images/p_pag_tools.png");
+//  background-color: #94A6B5;
+//  color: #c4c4c4;
+//  height: 26px;
+//  line-height: 26px;
+//  padding: 0 10px 0 10px;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button[name="listViewStartButton"] {
+//  background-position: 9px -29px;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button[name="listViewPrevButton"] {
+//  background-position: 9px -50px;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button[name="listViewNextButton"] {
+//  background-position: 10px -132px;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button[name="listViewEndButton"] {
+//  background-position: 10px -112px;
+//  margin-left: 2px;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) button.button img {
+//  display: none;
+//}
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr td:nth-child(2) span.pageNumbers {
+//  top: -6px;
+//  position: relative;
+//}
+//
+///* list items */
+//
+//div#content div#pagecontent form#MassUpdate table.list.view tbody tr td {
+//  padding-top: 0;
+//  padding-bottom: 0;
+//}
