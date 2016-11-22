@@ -8867,23 +8867,6 @@ tr:hover img.info {
 h3 span {
   font-weight: bold; }
 
-#layoutEditor .le_row {
-  margin: 2px 3px;
-  height: 25px;
-  clear: both;
-  padding: 0 10px 5px 20px; }
-
-#toolbox .le_panel, #toolbox .le_row, .le_field {
-  width: 150px;
-  float: left;
-  border: 1px solid #808080;
-  background: none repeat scroll 0% 0% #EEE;
-  padding: 0;
-  margin: 2px 3px; }
-
-#toolbox {
-  overflow: auto; }
-
 #dlg {
   left: 300px;
   top: 75px; }

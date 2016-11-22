@@ -1,0 +1,211 @@
+/**** Studio ***/
+@import 'variables';
+
+#layoutEditor img {
+
+}
+
+#delete img {
+  height: 32px;
+  width: 32px;
+}
+
+#exportcustom h3,
+#layoutEditor h4,
+#layoutEditor h3,
+#layoutEditor h2,
+#layoutEditor h1,
+.panel_name {
+  padding-left: 0px;
+  margin: 3px;
+  font-size: $page-font-size + 1px;
+  font-weight: bold;
+}
+
+.panel_name {
+  font-weight: bold;
+  color: #565656;
+  float: left;
+  margin: 5px;
+}
+
+#toolbox {
+  background: $main-alternate-bg;
+  float: left;
+  width: 192px;
+  padding: 5px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  overflow-y: scroll;
+}
+
+#panels {
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  float: right;
+  margin-left: 200px;
+  padding: 5px;
+  position: absolute;
+  width: 100%;
+
+}
+
+.le_panel {
+  background: $default-tab-bg;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.le_row {
+  //background: $main-bg;
+  background: $default-btn-bg;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+
+#toolbox .special:nth-of-type(2) {
+  background: $default-btn-bg;
+  color: $default-btn-color;
+  width: 150px;
+  float: left;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 5px;
+  margin: 2px 3px;
+  overflow: hidden;
+}
+
+
+
+#toolbox .special:nth-of-type(3) {
+  background: $default-tab-bg;
+  color: $default-btn-color;
+  width: 150px;
+  float: left;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 5px;
+  margin: 2px 3px;
+  overflow: hidden;
+}
+
+
+#layoutEditor .le_panel {
+  margin: 2px 2px 10px 2px;
+  padding: 5px 15px 15px 15px;
+}
+
+#layoutEditor .le_panel .le_row {
+  margin: 5px 5px;
+  clear: both;
+  padding: 5px 0px 5px 15px;
+}
+
+#panels > .le_panel > .le_row {
+  line-height: 48px;
+  height: 48px;
+}
+
+#panels > .le_panel > .le_row > .le_field {
+  line-height: 18px;
+}
+
+#panels > .le_panel > .panel_label {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#panels span {
+  margin-bottom: 5px;
+}
+
+body > .le_panel .le_edit, #toolbox .le_panel .le_edit {
+  display: none;
+}
+
+#toolbox .le_row,
+.le_field {
+  width: 150px;
+  float: left;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 5px;
+  margin: 2px 3px;
+  overflow: hidden;
+}
+
+.le_field {
+  background: $main-bg;
+}
+
+#toolbox .le_panel img, #toolbox .le_row img, .le_field img {
+  margin: 0;
+}
+
+#delete {
+  margin: 5px;
+  width: 150px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  background: $danger;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+#delete span {
+  color: $default-btn-color;
+}
+#panels .le_row .le_field, #availablefields .le_field, #layoutPreview .le_row .le_field {
+  display: block;
+}
+
+.le_row .le_field {
+  display: none;
+}
+
+.field_tabindex, .field_label, .field_name, .panel_id {
+  display: none;
+}
+
+#availablefields .le_field {
+  clear: both;
+}
+
+#availablefields {
+  margin-top: 20px;
+}
+
+#layoutEditorButtons div {
+  float: left;
+}
+
+.le_edit {
+  cursor: pointer;
+  float: right;
+}
+
+.deleteme {
+
+  font-weight: normal;
+  color: #565656;
+
+}
+
+#delete {
+  text-align: center;
+}
+
+#exportcustom > table > tbody > tr > .mbLBL,
+#popup_form_id > table > tbody > tr > .mbLBL {
+  line-height: $input-line-height;
+}
+
+
+.relform td,
+#editlabels td,
+#exportcustom > table > tbody > tr > td,
+#popup_form_id > table > tbody > tr > td {
+  padding-left: 8px;
+  padding-bottom: 8px;
+}
