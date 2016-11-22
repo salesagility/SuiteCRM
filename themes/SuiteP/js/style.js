@@ -276,18 +276,6 @@ $(function() {
     });
 });
 
-jQuery(function($){
-    $('table.footable').footable({
-        "breakpoints": {
-            "x-small": 680,
-            "small": 768,
-            "medium": 992,
-            "large": 1130,
-            "x-large": 1250
-        }
-    });
-})
-
 
 // JavaScript fix to remove unrequired classes on smaller screens where sidebar is obsolete
 $(window).resize(function () {
