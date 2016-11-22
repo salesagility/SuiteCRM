@@ -10,8 +10,8 @@
 @import 'editview';
 @import 'tabs';
 @import 'panels';
-//@import 'admin'; // TODO
-//@import 'calendar'; // TODO
+@import 'admin';
+//@import 'calendar';
 //@import 'reminders'
 //@import 'lineitems'
 //@import 'cases'
@@ -583,130 +583,6 @@ table#tabFormPagination td, #tabFormPagination, #EditView > table#tabFormPaginat
   padding: 0 /*!important*/;
   margin-bottom: 10px;
 }
-
-.other {
-  border: none /*!important*/;
-  margin-top: 20px /*!important*/;
-  margin-bottom: 20px /*!important*/;
-  padding: 0 /*!important*/;
-  width: 100%;
-}
-
-.other td {
-  font-weight: normal;
-  padding: 4px 10px 4px 6px;
-  vertical-align: middle;
-}
-
-.other td[scope=row] {
-  padding: 4px 6px 4px 6px;
-  white-space: nowrap;
-}
-
-.other .edit td {
-  background: transparent /*!important*/;
-}
-
-.other .edit {
-  margin-top: 0;
-}
-
-.other td.edit #wizard td {
-  background: transparent;
-}
-
-.other td.edit #wizard h4 {
-  padding-left: 0;
-  margin-top: 0;
-}
-
-
-.other.view td {
-  height: 48px;
-  line-height: 48px;
-}
-
-.other.view img, .other.view svg {
-  font-weight: 700;
-  margin: 5px 0 0 5px;
-  width: 32px;
-  height: 32px;
-  display: inline-block;
-  float: left;
-}
-
-.other.view a {
-  position: relative;
-  font-weight: 700;
-  margin: 0 0 0 10px;
-  display: inline-block;
-}
-
-.other.view td:nth-of-type(1) {
-  display: block;
-  float: left;
-  width: 100%;
-  background-color: $default-btn-color;
-  text-wrap: normal;
-
-}
-.other.view td:nth-of-type(2) {
-  display: block;
-  float: right;
-  width: 100%;
-  background-color: $default-btn-color;
-  padding-left: 52px;
-  padding-bottom: 10px;
-  height: auto;
-  line-height: 24px;
-}
-
-.other.view td:nth-of-type(2):after {
-  clear: both;
-}
-.other.view td:nth-of-type(3) {
-  display: block;
-  float: left;
-  width: 100%;
-  background-color: $main-bg;
-}
-.other.view td:nth-of-type(4) {
-  display: block;
-  float: right;
-  width: 100%;
-  background-color: $main-bg;
-  padding-left: 52px /*!important*/;
-  padding-bottom: 10px;
-  height: auto;
-  line-height: 24px;
-}
-
-@media (min-width: 1250px) {
-  /* left admin panel column */
-  .other.view td a {
-    white-space: normal;
-    height: 100%;
-    line-height: 100%;
-  }
-
-  .other.view td:nth-of-type(1),
-  .other.view td:nth-of-type(3) {
-    display: block;
-    float: left;
-    width: 25%;
-  }
-
-  /* right admin panel column */
-  .other.view td:nth-of-type(2),
-  .other.view td:nth-of-type(4) {
-    display: block;
-    float: right;
-    width: 75%;
-    line-height: 48px;
-    height: 48px;
-  }
-}
-
 
 #map_listview_top, #export_listview_top {
   float: none;
