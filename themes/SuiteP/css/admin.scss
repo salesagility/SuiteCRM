@@ -146,9 +146,122 @@
   }
 }
 
+/*** Menu Filters ***/
+#edittabs  table:nth-of-type(2),
+#edittabs  table:nth-of-type(2) > tbody,
+#edittabs  table:nth-of-type(2) tbody > tr
+{
+  width: 100%;
+}
+
+#edittabs  table:nth-of-type(2) tbody > tr > td {
+  display: inline-block;
+}
+
+#edittabs .edit {
+  display: inline-block;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin: 0 16px 0 0;
+  width: 16% /*!important*/;
+}
+
+#edittabs  table:nth-of-type(2) tbody > tr > td:nth-of-type(2) {
+  width: 80%;
+}
+
+#s_field_delete > tbody > tr > td,
+#trash,
+#trashcan,
+#trashcan table,
+#trashcan table > tbody,
+#trashcan table > tbody > tr
+{
+  width: 100%/*!important*/;
+}
+
+#edittabs h2 {
+  font-size: $page-font-size;
+  font-weight: bold;
+}
+
+#edittabs #trash {
+  height: 64px;
+  overflow: visible;
+}
 
 
-/* admin / inbound emails styles */
+#edittabs .listContainer {
+  height: 384px;
+  overflow-y: auto;
+}
+
+#edittabs .listContainer li span {
+  display: block;
+  padding: 8px 0 8px 8px;
+  background: $main-bg;
+  margin-bottom: 4px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  width: 98%;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+#edittabs #groupTable,
+#edittabs #groupTable > tbody,
+#edittabs #groupTable > tbody > tr {
+  width: 100%;
+}
+
+#edittabs #groupTable {
+  background: $main-alternate-bg;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+#edittabs #groupTable * {
+  border: none;
+}
+
+
+#edittabs #groupTable .tdContainer {
+  display: inline-block;
+  width: 16%;
+}
+
+.slotB {
+  border-width:0;cursor:move;
+
+}
+
+span.error:empty{
+  padding:0;
+}
+
+
+#groupTable > tbody > tr:nth-child(1) > td {
+  margin: 0 8px 8px 16px;
+}
+
+#edittabs #groupTable .tdContainer h2 {
+  margin: 16px 0 8px 0;
+}
+
+#edittabs #groupTable .tdContainer h2 > span:nth-of-type(1) {
+  display: inline-block;
+  width: 80%;
+}
+
+#edittabs #groupTable .tdContainer h2 > span:nth-of-type(2) {
+  display: inline-block;
+  width: 10%;
+}
+
+
+/* admin / inbound emails styles *
+// TODO Compare with merged changes
 //
 //div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr {
 //  padding: 0;

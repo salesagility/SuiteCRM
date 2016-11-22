@@ -5117,6 +5117,9 @@ div#search_form > .advanced input.button:hover {
     cursor: pointer;
     background-color: #f08377;
     color: white; }
+  #content #tab-actions:only-child > .dropdown-menu {
+    left: 0;
+    right: auto; }
   #content #tab-actions > .dropdown-menu {
     left: auto;
     right: 0;
@@ -5765,11 +5768,7 @@ table.subpanelTabForm {
     width: 75%;
     line-height: 48px;
     height: 48px; } }
-/* admin / inbound emails styles */
-div#searchResults {
-  overflow-y: auto;
-  padding-bottom: 50px; }
-
+/*** Menu Filters ***/
 #edittabs table:nth-of-type(2),
 #edittabs table:nth-of-type(2) > tbody,
 #edittabs table:nth-of-type(2) tbody > tr {
@@ -5795,6 +5794,10 @@ div#searchResults {
 #trashcan table > tbody,
 #trashcan table > tbody > tr {
   width: 100%; }
+
+#edittabs h2 {
+  font-size: 13px;
+  font-weight: bold; }
 
 #edittabs #trash {
   height: 64px;
@@ -5852,6 +5855,10 @@ span.error:empty {
 #edittabs #groupTable .tdContainer h2 > span:nth-of-type(2) {
   display: inline-block;
   width: 10%; }
+
+div#searchResults {
+  overflow-y: auto;
+  padding-bottom: 50px; }
 
 #ygddfdiv {
   background: #aa9dcc;
