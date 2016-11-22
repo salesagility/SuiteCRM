@@ -718,6 +718,20 @@ a.listViewTdToolsS1 {
   color: $default-btn-color;
 }
 
+.list tr.pagination td.buttons ul.clickMenu > li > a:link {
+  display: block;
+  text-decoration: none;
+  float: left;
+  color: $default-btn-color;
+}
+
+.list tr.pagination td.buttons ul.clickMenu > li > a {
+  display: block;
+  text-decoration: none;
+  float: left;
+  color: $default-btn-color;
+}
+
 /*///// MASS ASSIGN /////*/
 
 #massassign_form table {
@@ -864,13 +878,40 @@ a.listViewTdToolsS1 {
   position: relative;
 }
 
-#detail_header_action_menu > .sugar_action_button > .subnav,
-#userEditActions > .sugar_action_button > .subnav,
-#selectLinkTop > .sugar_action_button > .subnav,
+#detail_header_action_menu > .sugar_action_button > .subnav {
+  left: 0;
+  right: auto;
+  background-color: $list-view-action-menu-bg;
+}
+
+#userEditActions > .sugar_action_button > .subnav {
+  left: 0;
+  right: auto;
+  background-color: $list-view-action-menu-bg;
+}
+
+#selectLinkTop > .sugar_action_button > .subnav {
+  left: 0;
+  right: auto;
+  background-color: $list-view-action-menu-bg;
+}
+
 #selectLinkBottom > .sugar_action_button > .subnav {
   left: 0;
   right: auto;
-  background-color: #7B8A96;
+  background-color: $list-view-action-menu-bg;
+}
+
+.list .SugarActionMenu .sugar_action_button > .subnav a {
+  border-bottom: 1px solid $list-view-action-menu-separator;
+}
+
+.list .SugarActionMenu .sugar_action_button > .subnav li:last-of-type a:last-of-type {
+  border-bottom: none;
+}
+
+.list .SugarActionMenu .sugar_action_button .subnav {
+  padding: 4px 10px;
 }
 
 #detail_header_action_menu > .sugar_action_button > .subnav {
@@ -878,7 +919,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+  
 }
 
 #detail_header_action_menu > .sugar_action_button > .subnav li {
@@ -886,7 +927,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 #detail_header_action_menu > .sugar_action_button > .subnav a {
@@ -894,7 +935,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 #userEditActions > .sugar_action_button > .subnav {
@@ -902,7 +943,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 #userEditActions > .sugar_action_button > .subnav li {
@@ -910,7 +951,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 #userEditActions > .sugar_action_button > .subnav a {
@@ -918,7 +959,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 #userEditActions .clickMenu li .subnav {
@@ -926,7 +967,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 #selectLinkTop > .sugar_action_button > .subnav  {
@@ -934,7 +975,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 #selectLinkTop > .sugar_action_button > .subnav li  {
@@ -942,7 +983,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 #selectLinkTop > .sugar_action_button > .subnav a  {
@@ -950,7 +991,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 #actionLinkTop .clickMenu li .subnav {
@@ -958,7 +999,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 #actionLinkTop > .sugar_action_button > .subnav {
@@ -966,7 +1007,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 #actionLinkTop > .sugar_action_button > .subnav li {
@@ -974,7 +1015,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 #actionLinkTop > .sugar_action_button > .subnav a {
@@ -982,7 +1023,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 #selectLinkBottom > .sugar_action_button > .subnav {
@@ -990,7 +1031,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 #selectLinkBottom > .sugar_action_button > .subnav li {
@@ -998,7 +1039,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 
@@ -1007,7 +1048,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 #actionLinkBottom .clickMenu li .subnav {
@@ -1015,7 +1056,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 
@@ -1024,7 +1065,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 #actionLinkBottom > .sugar_action_button > .subnav li {
@@ -1032,7 +1073,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 #actionLinkBottom > .sugar_action_button > .subnav a {
@@ -1040,7 +1081,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 #actionLinkTop .menuItem {
@@ -1048,7 +1089,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 #actionLinkBottom .menuItem {
@@ -1056,7 +1097,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  padding: 0 5px 0 7px;
+
 }
 
 
@@ -1139,13 +1180,11 @@ a.listViewTdToolsS1 {
 #actionLinkTop .sugar_action_button .subnav.ddopen li a {
   margin: 0;
   padding: 0;
-  border: 0;
 }
 
 #actionLinkBottom .sugar_action_button .subnav.ddopen li a {
   margin: 0;
   padding: 0;
-  border: 0;
 }
 
 #actionLinkTop .sugar_action_button .subnav li a {
@@ -1276,8 +1315,12 @@ a.listViewTdToolsS1 {
   padding: 5px 20px;
 }
 
-#selectLinkTop > .sugar_action_button > .subnav a {
+.list .sugar_action_button > .subnav a {
   padding: 5px 20px;
+}
+
+.list .sugar_action_button > .subnav {
+  border-radius: 4px;
 }
 
 #actionLinkBottom > .sugar_action_button > .subnav a {
