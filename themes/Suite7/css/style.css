@@ -6550,16 +6550,8 @@ ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > l
     width: 30px;
 }
 
-#search_form_popup {
-    padding: 30px;
-}
 
-#search_form_popup input {
-    max-width: 90%;
-}
-
-#search_form_popup .submitButtons {
-    padding-top: 20px;
-    float: right;
-
+ul.clickMenu>li>span.searchAppliedAlert {
+    background-image: none;
+    text-align: center;
 }

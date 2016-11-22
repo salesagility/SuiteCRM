@@ -11442,16 +11442,22 @@ ul.clickMenu.selectmenu.SugarActionMenu.searchLink.listViewLinkButton > li > a {
     height: 48px;
 }
 
-#search_form_popup {
-    padding: 30px;
+
+
+ul.clickMenu>li>span.searchAppliedAlert {
+    background-color: #F08377;
+    position: absolute;
+    line-height: 20px;
+    color: #fff;
+    height: 20px;
+    width: 20px;
+    border-radius: 30px;
+    left: 14px;
+    top: -16px;
+    background-image: none;
+    text-align: center;
 }
 
-#search_form_popup input {
-    max-width: 90%;
-}
-
-#search_form_popup .submitButtons {
-    padding-top: 20px;
-    float: right;
-
+div.qtip.qtip-default {
+    border: none;
 }

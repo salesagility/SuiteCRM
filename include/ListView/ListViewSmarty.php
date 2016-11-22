@@ -199,6 +199,9 @@ class ListViewSmarty extends ListViewDisplay{
             }
             $this->ss->assign('contextMenuScript', $script);
         }
+
+        // TODO: bring it from config (but do not use filter icon if there is not any results cause list not shows)
+        $this->ss->assign('showFilterIcon', true);
 	}
 
     /**

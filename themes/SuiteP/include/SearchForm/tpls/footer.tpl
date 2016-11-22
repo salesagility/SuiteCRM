@@ -62,4 +62,7 @@ function toggleInlineSearch()
 </script>
 {/literal}
 
-{include file='include/ListView/ListViewSearchDialog.tpl'}
+{if $searchFormInPopup}
+    {include file='include/SearchForm/tpls/footerPopup.tpl'}
+{/if}
+

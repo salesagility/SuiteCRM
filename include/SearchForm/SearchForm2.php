@@ -247,7 +247,7 @@ require_once('include/EditView/EditView2.php');
             }
         }
         $this->th->ss->assign('templateMeta', $this->searchdefs['templateMeta']);
-        $this->th->ss->assign('HAS_ADVANCED_SEARCH', !empty($this->searchdefs['layout']['advanced_search']) && $_REQUEST['hasAdvancedSearch'] != 'false');
+        $this->th->ss->assign('HAS_ADVANCED_SEARCH', !empty($this->searchdefs['layout']['advanced_search']));
         $this->th->ss->assign('displayType', $this->displayType);
         // return the form of the shown tab only
         if($this->showSavedSearchesOptions){
@@ -261,6 +261,11 @@ require_once('include/EditView/EditView2.php');
             return '<pre id="responseData">'.json_encode($this->getColumnsFilterData()).'</pre>';
         }
 
+        $this->th->ss->assign('searchInfoJson', $this->getSearchInfoJson());
+
+        // TODO: bring it from config (but do not use filter icon if there is not any results cause list not shows)
+        $this->th->ss->assign('searchFormInPopup', true);
+
         $return_txt = $this->th->displayTemplate($this->seed->module_dir, 'SearchForm_'.$this->parsedView, $this->locateFile($this->tpl));
 
         if($header){
@@ -272,6 +277,26 @@ require_once('include/EditView/EditView2.php');
 		}
 		return $return_txt;
  	}
+
+     private function getSearchInfo() {
+         global $app_strings;
+         $data = array();
+         $fields = array_merge((array) $this->fieldDefs, (array) $this->customFieldDefs);
+         foreach($fields as $name => $defs) {
+             $vname = isset($defs['vname']) ? $defs['vname'] : null;
+             $label = isset($defs['label']) ? $defs['label'] : null;
+             $value = isset($defs['value']) ? $defs['value'] : null;
+             if(($vname || $label) && $value) {
+                 $type = isset($defs['type']) ? $defs['type'] : null;
+                 $data[$app_strings[$vname ? $vname : $label]] = $type == 'bool' ? '&#10004' :  $value;
+             }
+         }
+         return $data;
+     }
+
+     private function getSearchInfoJson() {
+         return json_encode($this->getSearchInfo());
+     }
 
      private function getColumnsFilterData() {
          if(!isset($this->lastTemplateGroupChooser)) {
