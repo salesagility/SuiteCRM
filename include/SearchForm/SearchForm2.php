@@ -325,7 +325,9 @@ require_once('include/EditView/EditView2.php');
                                  $values[$key] = $defs['options'][$key];
                              }
                              else {
-                                 $values[$key] = $value[$key];
+                                 if(isset($value[$key])) {
+                                     $values[$key] = $value[$key];
+                                 }
                              }
                          }
                          $value = implode(', ', $values);
