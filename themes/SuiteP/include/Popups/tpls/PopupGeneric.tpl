@@ -55,12 +55,8 @@
 		<thead>
 		<tr height='20'>
 			{if $prerow}
-				<td nowrap="nowrap" width="43px" class="selectCol td_alt">
-				<div style="width:43px">
-					{sugar_action_menu id=$link_select_id params=$selectLink}
-				</div>
-				</td>
-				<td class='td_alt' nowrap="nowrap" width='1%'>&nbsp;</td>
+				<th nowrap="nowrap" width="43px" class="selectCol td_alt"></th>
+				<th class='td_alt' nowrap="nowrap" width='1%'>&nbsp;</th>
 			{/if}
 			{counter start=0 name="colCounter" print=false assign="colCounter"}
 			{foreach from=$displayColumns key=colHeader item=params}
@@ -92,7 +88,7 @@
 				{counter name="colCounter"}
 			{/foreach}
 			{if !empty($quickViewLinks)}
-			<td class='td_alt' nowrap="nowrap" width='1%'>&nbsp;</td>
+			<th class='td_alt' nowrap="nowrap" width='1%'>&nbsp;</th>
 			{/if}
 		</tr>
 		<tr class='pagination'  role='presentation'>
@@ -100,7 +96,10 @@
 				<table border='0' cellpadding='0' cellspacing='0' width='100%'>
 					<tr>
 						<td align='left' >
-							&nbsp;</td>
+							<div>
+								{sugar_action_menu id=$link_select_id params=$selectLink}
+							</div>
+						</td>
 						<td  align='right' nowrap='nowrap'>
 							{if $pageData.urls.startPage}
 								<button type='button' id='popupViewStartButton' title='{$navStrings.start}' class='button' {if $prerow}onclick='return sListView.save_checks(0, "{$moduleString}");'{else} onClick='location.href="{$pageData.urls.startPage}"' {/if}>
@@ -215,7 +214,10 @@
 				<table border='0' cellpadding='0' cellspacing='0' width='100%'>
 					<tr>
 						<td align='left' >
-							&nbsp;</td>
+							<div>
+								{sugar_action_menu id=$link_select_id params=$selectLink}
+							</div>
+						</td>
 						<td  align='right' nowrap='nowrap'>
 							{if $pageData.urls.startPage}
 								<button type='button' title='{$navStrings.start}' class='button' {if $prerow}onclick='return sListView.save_checks(0, "{$moduleString}");'{else} onClick='location.href="{$pageData.urls.startPage}"' {/if}>

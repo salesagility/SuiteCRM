@@ -11,6 +11,7 @@
 @import 'tabs';
 @import 'panels';
 @import 'admin';
+//
 //@import 'calendar';
 //@import 'calendar';
 //@import 'reminders'
@@ -1766,16 +1767,6 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
   color: #444444;
 }
 
-.pagination button {
-  border-color: #c1c1c1;
-  background-color: #f7f7f7;
-  color: #333333;
-}
-
-.pagination button [title="Return to List"]:hover {
-  background-image: none;
-  color: #fff;
-}
 
 #colorPicker {
   border-right: 2px solid #DDDDDD;
@@ -3212,10 +3203,7 @@ textarea#description {
 
 
 
-:disabled {
-  border: 1px solid $default-text-disabled-border-color;
-  background: $default-text-disabled-bg;
-}
+
 
 /**** Scrollbars ****/
 div::-webkit-scrollbar,

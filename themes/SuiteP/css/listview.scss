@@ -868,7 +868,6 @@ a.listViewTdToolsS1 {
 
 #actionLinkBottom .sugar_action_button {
   min-width: 32px;
-  //padding: 11px 10px 12px 10px;
 }
 
 #select_actions_disabled_top {
@@ -924,7 +923,7 @@ a.listViewTdToolsS1 {
   width: 100%;
   line-height: 24px;
   color: $default-btn-color;
-  
+
 }
 
 #detail_header_action_menu > .sugar_action_button > .subnav li {
@@ -1516,6 +1515,85 @@ div#search_form > .advanced input.button:hover {
 
 
 
+.pagination button [title="Return to List"]:hover {
+  background-image: none;
+  color: #fff;
+}
+
+.paginationTable .button  {
+  background-color: $default-btn-bg;
+  color: $default-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.paginationTable input[type=submit]  {
+  background-color: $default-btn-bg;
+  color: $default-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.paginationTable input[type=button]  {
+  background-color: $default-btn-bg;
+  color: $default-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.paginationChangeButtons button[type=submit]  {
+  background-color: $default-btn-bg;
+  color: $default-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.paginationTable button[disabled] {
+  background-color: $default-btn-bg;
+  color: $disabled-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.paginationTable input[type="submit"][disabled] {
+  background-color: $default-btn-bg;
+  color: $disabled-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.paginationTable input[type="reset"][disabled] {
+  background-color: $default-btn-bg;
+  color: $disabled-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.paginationTable input[type="button"][disabled] {
+  background-color: $default-btn-bg;
+  color: $disabled-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.paginationChangeButtons button[type=submit][disabled] {
+  background-color: $default-btn-bg;
+  color: $disabled-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+
+
 /*** Popup ***/
 .popupBody {
   margin: 10px;
@@ -1529,6 +1607,8 @@ div#search_form > .advanced input.button:hover {
 .popupBody .list.view {
   overflow: scroll;
   width: 95%;
+  margin-bottom: 20px;
+  font-size: $page-list-view-font-size;
 }
 
 .popupBody .list.view > thead > tr > th {
@@ -1550,9 +1630,92 @@ div#search_form > .advanced input.button:hover {
   margin-left: 15px;
 }
 
-.popupBody .list thead tr th {
-
+.popupBody .list.view .pagination .button {
+  background-color: $default-btn-bg;
+  color: $default-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
 }
+
+.popupBody .list.view .pagination input[type=submit] {
+  background-color: $default-btn-bg;
+  color: $default-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.popupBody .list.view .pagination input[type=button] {
+  background-color: $default-btn-bg;
+  color: $default-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.popupBody .list.view .paginationChangeButtons button[type=submit] {
+  background-color: $default-btn-bg;
+  color: $default-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.popupBody .list.view .pagination button[disabled] {
+  background-color: $default-btn-bg;
+  color: $disabled-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.popupBody .list.view .pagination input[type="submit"][disabled] {
+  background-color: $default-btn-bg;
+  color: $disabled-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.popupBody .list.view .pagination input[type="reset"][disabled] {
+  background-color: $default-btn-bg;
+  color: $disabled-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.popupBody .list.view .pagination input[type="button"][disabled] {
+  background-color: $default-btn-bg;
+  color: $disabled-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.popupBody .sugar_action_button {
+  min-width: 32px;
+  padding: 0;
+  background-color: $list-view-action-button-bg;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding-right: 4px;
+}
+
+.popupBody .list.view .paginationChangeButtons button[type=submit][disabled] {
+  background-color: $default-btn-bg;
+  color: $disabled-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.popupBody .list .pagination #select_link {
+  display: none;
+  visibility: hidden;
+}
+
 
 .popupBody .list tbody > tr > td a {
   font-weight: bold;
@@ -1560,6 +1723,7 @@ div#search_form > .advanced input.button:hover {
   border-bottom-width: 1px;
   border-bottom-style: dashed;
   border-bottom-color: $list-view-link-color;
+  font-size: $page-list-view-font-size;
 }
 
 
@@ -1567,6 +1731,7 @@ div#search_form > .advanced input.button:hover {
   color: $list-view-link-hover-color;
   border-bottom-color: $list-view-link-hover-color;
 }
+
 
 .popupBody .list tbody > tr > td {
   vertical-align: middle;
@@ -1579,6 +1744,75 @@ div#search_form > .advanced input.button:hover {
 .popupBody .list .pagination tbody > tr > td {
   padding: 5px;
 }
+.popupBody .checkbox .popupBody input[type=checkbox] {
+  margin-top: 0px;
+  display: block;
+  float: left;
+}
+
+.popupBody input[type=checkbox] {
+  margin-top: 0px;
+  display: block;
+  float: left;
+  margin-top: 5px;
+  margin-left: 4px;
+}
+
+
+.popupBody .list .sugar_action_button > span {
+  margin-left: 4px;
+}
+
+.popupBody .list .sugar_action_button .subnav {
+  left: 0;
+  right: auto;
+  background-color: $list-view-action-menu-bg;
+}
+
+.popupBody .list .SugarActionMenu .sugar_action_button .subnav a {
+  border-bottom: 1px solid $list-view-action-menu-separator;
+}
+
+.popupBody .list .SugarActionMenu .sugar_action_button .subnav li:last-of-type a:last-of-type {
+  border-bottom: none;
+}
+
+
+.popupBody .list .SugarActionMenu .sugar_action_button .subnav {
+  padding: 4px 10px;
+}
+
+.popupBody .list  .sugar_action_button .subnav {
+  background-color: $list-view-action-menu-bg;
+  width: auto;
+  line-height: 24px;
+  color: $default-btn-color;
+}
+
+.popupBody input {
+  font-size: 100%; /* 1 */
+  margin: 0; /* 2 */
+  vertical-align: baseline; /* 3 */
+  *vertical-align: middle; /* 3 */
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+.popupBody .list th {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+
+.popupBody .list td {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.popupBody .paginationActionButtons {
+  height: 40px;
+  max-height: 40px; }
+
 
 
 
@@ -1595,6 +1829,14 @@ div#search_form > .advanced input.button:hover {
     margin: 0 8px 0 42px;
   }
 
+}
+
+.popupBody .list tfoot > .pagination table tr td:first-of-type {
+  border-bottom-left-radius: 4px;
+}
+
+.popupBody .list tfoot > .pagination table tr td:last-of-type {
+  border-bottom-right-radius: 4px;
 }
 
 /*sm-col-*/
