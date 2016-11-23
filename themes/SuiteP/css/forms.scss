@@ -447,8 +447,8 @@ input[type=button].btn-info:focus {
   text-transform: uppercase;
   font-weight: 500;
   letter-spacing: 1px;
-  height: 40px;
-  line-height: 40px;
+  height: $button-line-height;
+  line-height: $button-line-height;
 }
 
 input[type=submit] {
@@ -463,8 +463,8 @@ input[type=submit] {
   text-transform: uppercase;
   font-weight: 500;
   letter-spacing: 1px;
-  height: 40px;
-  line-height: 40px;
+  height: $button-line-height;
+  line-height: $button-line-height;
 }
 
 input[type=button] {
@@ -479,8 +479,8 @@ input[type=button] {
   text-transform: uppercase;
   font-weight: 500;
   letter-spacing: 1px;
-  height: 40px;
-  line-height: 40px;
+  height: $button-line-height;
+  line-height: $button-line-height;
 }
 
 input[type=reset] {
@@ -495,8 +495,8 @@ input[type=reset] {
   text-transform: uppercase;
   font-weight: 500;
   letter-spacing: 1px;
-  height: 40px;
-  line-height: 40px;
+  height: $button-line-height;
+  line-height: $button-line-height;
 }
 
 .btn {
@@ -744,6 +744,11 @@ input[type="button"][disabled] {
   font-size: $page-font-size;
 }
 
+.form-control:focus  {
+  border: 1px solid $input-select-bg;
+  border-radius: 4px;
+  box-shadow: none;
+}
 
 input[type=text] {
   background: $input-bg;
@@ -806,6 +811,26 @@ textarea {
 }
 
 select[size] {
+  border-style: solid;
+  border-size: 1px;
+  border-color: $input-select-bg;
+  border-radius: 4px;
+  padding: 0 52px 0 5px;
+  background-color: $input-select-option;
+  background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
+  background-size: 52px 52px;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  outline: 0;
+  scrollbar-base-color: $input-select-bg;
+  scrollbar-arrow-color: $input-select-bg;
+  color: $main-font-color;
+  height: $input-line-height+8;
+  line-height: $input-line-height+8;
+}
+
+select.form-control {
   border-style: solid;
   border-size: 1px;
   border-color: $input-select-bg;
@@ -1105,6 +1130,9 @@ div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option l
   width: 33.33%;
 }
 
+font[color=red] {
+  color: $danger;
+}
 
 @media (max-width: 768px) {
   .email-address-options-container {

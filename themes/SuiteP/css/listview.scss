@@ -12,6 +12,10 @@
   margin: 0;
 }
 
+tr#pagination {
+  background: $main-bg;
+}
+
 .list .pagination td {
   padding: 0;
   border: 0;
