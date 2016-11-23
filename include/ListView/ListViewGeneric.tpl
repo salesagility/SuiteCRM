@@ -95,16 +95,16 @@
                 </a>
 
             </p>
-			{$APP.MSG_LIST_VIEW_CHANGE_SEARCH}
-			{if $showFilterIcon}
-				{include file='include/ListView/ListViewSearchLink.tpl'}
-			{/if}
         {/if}
     {else}
         <p class="msg">
             {$APP.LBL_NO_DATA}
         </p>
 	{/if}
+		{$APP.MSG_LIST_VIEW_CHANGE_SEARCH}
+		{if $showFilterIcon}
+			{include file='include/ListView/ListViewSearchLink.tpl'}
+		{/if}
 	</div>
 {/if}
 {$multiSelectData}

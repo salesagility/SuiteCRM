@@ -278,16 +278,60 @@ require_once('include/EditView/EditView2.php');
  	}
 
      private function getSearchInfo() {
-         global $app_strings;
+         global $app_strings, $mod_strings;
          $data = array();
-         $fields = array_merge((array) $this->fieldDefs, (array) $this->customFieldDefs);
+         $fields = array_merge($this->fieldDefs, (array) $this->customFieldDefs);
+         $fields = array_merge($fields, $this->searchFields);
          foreach($fields as $name => $defs) {
-             $vname = isset($defs['vname']) ? $defs['vname'] : null;
-             $label = isset($defs['label']) ? $defs['label'] : null;
-             $value = isset($defs['value']) ? $defs['value'] : null;
-             if(($vname || $label) && $value) {
-                 $type = isset($defs['type']) ? $defs['type'] : null;
-                 $data[$app_strings[$vname ? $vname : $label]] = $type == 'bool' ? '&#10004' :  $value;
+             if(preg_match('/(.*)_basic$/', $name, $match)) {
+                 if(isset($fields[$match[1]]['value']) && $fields[$match[1]]['value'] && (!isset($defs['value']) || !$defs['value'])) {
+                     $fields[$name] = array_merge((array) $fields[$name], (array) $fields[$match[1]]);
+                 }
+             }
+             if(preg_match('/(.*)_advanced$/', $name, $match)) {
+                 if(isset($fields[$match[1]]['value']) && $fields[$match[1]]['value'] && (!isset($defs['value']) || !$defs['value'])) {
+                     $fields[$name] = array_merge((array) $fields[$name], (array) $fields[$match[1]]);
+                 }
+             }
+         }
+         $searchFieldsKeys = array_keys($this->searchFields);
+         foreach($fields as $name => $defs) {
+             $searchTypeKey = false;
+             if(preg_match('/(.*)_basic$/', $name, $match)) {
+                 $searchTypeKey = $match[1];
+             }
+             if(preg_match('/(.*)_advanced$/', $name, $match)) {
+                 $searchTypeKey = $match[1];
+             }
+             if(in_array($name, $searchFieldsKeys) || ($searchTypeKey && in_array($searchTypeKey, $searchFieldsKeys))) {
+                 $vname = isset($defs['vname']) ? $defs['vname'] : null;
+                 $label = isset($defs['label']) ? $defs['label'] : null;
+                 $value = isset($defs['value']) ? $defs['value'] : null;
+                 if (($vname || $label) && $value) {
+                     $type = isset($defs['type']) ? $defs['type'] : null;
+                     if(isset($app_strings[$vname ? $vname : $label])) {
+                         $labelText = $app_strings[$vname ? $vname : $label];
+                     }
+                     else {
+                         $labelText = $mod_strings[$vname ? $vname : $label];
+                     }
+                     if(!preg_match('/\:\s*/', $labelText)) {
+                         $labelText.= ':';
+                     }
+                     if(is_array($value)) {
+                         $values = array();
+                         foreach($value as $key) {
+                             if(isset($defs['options'][$key]) && $defs['options'][$key]) {
+                                 $values[$key] = $defs['options'][$key];
+                             }
+                             else {
+                                 $values[$key] = $value[$key];
+                             }
+                         }
+                         $value = implode(', ', $values);
+                     }
+                     $data[$labelText] = $type == 'bool' ? '&#10004' : $value;
+                 }
              }
          }
          return $data;

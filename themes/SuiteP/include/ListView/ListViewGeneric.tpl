@@ -90,16 +90,16 @@
                     {$APP.MSG_LIST_VIEW_NO_RESULTS_SUBMSG|replace:"<item1>":$quotedQuery|replace:"<item2>":$singularModule}
                 </a>
             </p>
-			{$APP.MSG_LIST_VIEW_CHANGE_SEARCH}
-			{if $showFilterIcon}
-				{include file='include/ListView/ListViewSearchLink.tpl'}
-			{/if}
         {/if}
     {else}
         <p class="msg">
             {$APP.LBL_NO_DATA}
         </p>
 	{/if}
+		{$APP.MSG_LIST_VIEW_CHANGE_SEARCH}
+		{if $showFilterIcon}
+			{include file='include/ListView/ListViewSearchLink.tpl'}
+		{/if}
 	</div>
 {/if}
 {$multiSelectData}
