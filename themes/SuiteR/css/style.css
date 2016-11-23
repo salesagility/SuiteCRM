@@ -2117,7 +2117,6 @@ ul.clickMenu form{
 ul.SugarActionMenuIESub li a:hover, ul.clickMenu.SugarActionMenu li a:hover, ul.clickMenu.SugarActionMenu li span.subhover:hover,
 ul#globalLinksSubnav li a:hover, ul#quickCreateULSubnav li a:hover,
 ul.clickMenu li ul.subnav li a:hover,ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover { /*--Hover effect for subnav links--*/
-
    color: #3C8DBC;
 }
 
@@ -2218,7 +2217,7 @@ ul.clickMenu.subpanel.records {
 }
 
 ul.clickMenu.subpanel.records li a{
-    color: #aaa;
+    color: #000;
 }
 
 ul.clickMenu.subpanel.records > li div:hover a{
