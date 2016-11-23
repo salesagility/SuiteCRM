@@ -2761,69 +2761,6 @@ input[type="button"][disabled] {
 .buttons input#btn_view_change_log:hover {
   background-color: #9589b3; }
 
-.paginationTable .button {
-  background-color: #94a6b5;
-  color: whitesmoke;
-  height: 26px;
-  line-height: 26px;
-  padding: 0 10px 0 10px; }
-
-.paginationTable input[type=submit] {
-  background-color: #94a6b5;
-  color: whitesmoke;
-  height: 26px;
-  line-height: 26px;
-  padding: 0 10px 0 10px; }
-
-.paginationTable input[type=button] {
-  background-color: #94a6b5;
-  color: whitesmoke;
-  height: 26px;
-  line-height: 26px;
-  padding: 0 10px 0 10px; }
-
-.paginationChangeButtons button[type=submit] {
-  background-color: #94a6b5;
-  color: whitesmoke;
-  height: 26px;
-  line-height: 26px;
-  padding: 0 10px 0 10px; }
-
-.paginationTable button[disabled] {
-  background-color: #94a6b5;
-  color: #808f9c;
-  height: 26px;
-  line-height: 26px;
-  padding: 0 10px 0 10px; }
-
-.paginationTable input[type="submit"][disabled] {
-  background-color: #94a6b5;
-  color: #808f9c;
-  height: 26px;
-  line-height: 26px;
-  padding: 0 10px 0 10px; }
-
-.paginationTable input[type="reset"][disabled] {
-  background-color: #94a6b5;
-  color: #808f9c;
-  height: 26px;
-  line-height: 26px;
-  padding: 0 10px 0 10px; }
-
-.paginationTable input[type="button"][disabled] {
-  background-color: #94a6b5;
-  color: #808f9c;
-  height: 26px;
-  line-height: 26px;
-  padding: 0 10px 0 10px; }
-
-.paginationChangeButtons button[type=submit][disabled] {
-  background-color: #94a6b5;
-  color: #808f9c;
-  height: 26px;
-  line-height: 26px;
-  padding: 0 10px 0 10px; }
-
 .button:hover {
   color: whitesmoke;
   background-color: #808f9c;
@@ -4853,6 +4790,73 @@ div#search_form > .advanced input.button:hover {
 .listViewEmpty {
   background-color: transparent; }
 
+.pagination button [title="Return to List"]:hover {
+  background-image: none;
+  color: #fff; }
+
+.paginationTable .button {
+  background-color: #94a6b5;
+  color: whitesmoke;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.paginationTable input[type=submit] {
+  background-color: #94a6b5;
+  color: whitesmoke;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.paginationTable input[type=button] {
+  background-color: #94a6b5;
+  color: whitesmoke;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.paginationChangeButtons button[type=submit] {
+  background-color: #94a6b5;
+  color: whitesmoke;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.paginationTable button[disabled] {
+  background-color: #94a6b5;
+  color: #808f9c;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.paginationTable input[type="submit"][disabled] {
+  background-color: #94a6b5;
+  color: #808f9c;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.paginationTable input[type="reset"][disabled] {
+  background-color: #94a6b5;
+  color: #808f9c;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.paginationTable input[type="button"][disabled] {
+  background-color: #94a6b5;
+  color: #808f9c;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.paginationChangeButtons button[type=submit][disabled] {
+  background-color: #94a6b5;
+  color: #808f9c;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
 /*** Popup ***/
 .popupBody {
   margin: 10px;
@@ -4863,7 +4867,9 @@ div#search_form > .advanced input.button:hover {
 
 .popupBody .list.view {
   overflow: scroll;
-  width: 95%; }
+  width: 95%;
+  margin-bottom: 20px;
+  font-size: 12px; }
 
 .popupBody .list.view > thead > tr > th {
   border: 1px solid transparent;
@@ -4879,12 +4885,88 @@ div#search_form > .advanced input.button:hover {
   margin-right: 15px;
   margin-left: 15px; }
 
+.popupBody .list.view .pagination .button {
+  background-color: #94a6b5;
+  color: whitesmoke;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.popupBody .list.view .pagination input[type=submit] {
+  background-color: #94a6b5;
+  color: whitesmoke;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.popupBody .list.view .pagination input[type=button] {
+  background-color: #94a6b5;
+  color: whitesmoke;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.popupBody .list.view .paginationChangeButtons button[type=submit] {
+  background-color: #94a6b5;
+  color: whitesmoke;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.popupBody .list.view .pagination button[disabled] {
+  background-color: #94a6b5;
+  color: #808f9c;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.popupBody .list.view .pagination input[type="submit"][disabled] {
+  background-color: #94a6b5;
+  color: #808f9c;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.popupBody .list.view .pagination input[type="reset"][disabled] {
+  background-color: #94a6b5;
+  color: #808f9c;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.popupBody .list.view .pagination input[type="button"][disabled] {
+  background-color: #94a6b5;
+  color: #808f9c;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.popupBody .sugar_action_button {
+  min-width: 32px;
+  padding: 0;
+  background-color: #94a6b5;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding-right: 4px; }
+
+.popupBody .list.view .paginationChangeButtons button[type=submit][disabled] {
+  background-color: #94a6b5;
+  color: #808f9c;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.popupBody .list .pagination #select_link {
+  display: none;
+  visibility: hidden; }
+
 .popupBody .list tbody > tr > td a {
   font-weight: bold;
   color: #e56455;
   border-bottom-width: 1px;
   border-bottom-style: dashed;
-  border-bottom-color: #e56455; }
+  border-bottom-color: #e56455;
+  font-size: 12px; }
 
 .popupBody .list tbody > tr > td a:hover {
   color: #d66c60;
@@ -4900,6 +4982,65 @@ div#search_form > .advanced input.button:hover {
 .popupBody .list .pagination tbody > tr > td {
   padding: 5px; }
 
+.popupBody .checkbox .popupBody input[type=checkbox] {
+  margin-top: 0px;
+  display: block;
+  float: left; }
+
+.popupBody input[type=checkbox] {
+  margin-top: 0px;
+  display: block;
+  float: left;
+  margin-top: 5px;
+  margin-left: 4px; }
+
+.popupBody .list .sugar_action_button > span {
+  margin-left: 4px; }
+
+.popupBody .list .sugar_action_button .subnav {
+  left: 0;
+  right: auto;
+  background-color: #7b8a96; }
+
+.popupBody .list .SugarActionMenu .sugar_action_button .subnav a {
+  border-bottom: 1px solid #93a0ab; }
+
+.popupBody .list .SugarActionMenu .sugar_action_button .subnav li:last-of-type a:last-of-type {
+  border-bottom: none; }
+
+.popupBody .list .SugarActionMenu .sugar_action_button .subnav {
+  padding: 4px 10px; }
+
+.popupBody .list .sugar_action_button .subnav {
+  background-color: #7b8a96;
+  width: auto;
+  line-height: 24px;
+  color: whitesmoke; }
+
+.popupBody input {
+  font-size: 100%;
+  /* 1 */
+  margin: 0;
+  /* 2 */
+  vertical-align: baseline;
+  /* 3 */
+  *vertical-align: middle;
+  /* 3 */
+  -webkit-appearance: none;
+  border-radius: 0; }
+
+.popupBody .list th {
+  white-space: normal;
+  word-wrap: break-word; }
+
+.popupBody .list td {
+  white-space: normal;
+  word-wrap: break-word; }
+
+.popupBody .paginationActionButtons {
+  height: 40px;
+  max-height: 40px; }
+
 /*xs-col-*/
 @media (max-width: 769px) {
   .search_name_basic img {
@@ -4910,6 +5051,12 @@ div#search_form > .advanced input.button:hover {
 
   .search_buttons_basic {
     margin: 0 8px 0 42px; } }
+.popupBody .list tfoot > .pagination table tr td:first-of-type {
+  border-bottom-left-radius: 4px; }
+
+.popupBody .list tfoot > .pagination table tr td:last-of-type {
+  border-bottom-right-radius: 4px; }
+
 /*sm-col-*/
 @media (min-width: 768px) and (max-width: 991px) {
   .search_name_basic img {
@@ -7310,15 +7457,6 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
 #themepickerLinkSpan a {
   color: #444444; }
 
-.pagination button {
-  border-color: #c1c1c1;
-  background-color: #f7f7f7;
-  color: #333333; }
-
-.pagination button [title="Return to List"]:hover {
-  background-image: none;
-  color: #fff; }
-
 #colorPicker {
   border-right: 2px solid #DDDDDD;
   padding: 8px 4px 4px 0;
@@ -8444,10 +8582,6 @@ textarea#description {
 @media (min-width: 1200px) {
   #wizform #wizard {
     width: 1100px; } }
-:disabled {
-  border: 1px solid #e2e7eb;
-  background: #f8f8f8; }
-
 /**** Scrollbars ****/
 div::-webkit-scrollbar,
 select::-webkit-scrollbar,
