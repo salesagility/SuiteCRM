@@ -702,6 +702,7 @@ $dictionary['AOS_Invoices'] = array(
                 'relationship' => 'aos_quotes_aos_invoices',
                 'source' => 'non-db',
                 'module' => 'AOS_Quotes',
+                'vname' => 'LBL_AOS_QUOTES_AOS_INVOICES',
             ),
         'aos_products_quotes' =>
             array(
@@ -711,6 +712,7 @@ $dictionary['AOS_Invoices'] = array(
                 'module' => 'AOS_Products_Quotes',
                 'bean_name' => 'AOS_Products_Quotes',
                 'source' => 'non-db',
+                'vname' => 'LBL_AOS_PRODUCT_QUOTES',
             ),
         'aos_line_item_groups' =>
             array(
@@ -720,6 +722,7 @@ $dictionary['AOS_Invoices'] = array(
                 'module' => 'AOS_Line_Item_Groups',
                 'bean_name' => 'AOS_Line_Item_Groups',
                 'source' => 'non-db',
+                'vname' => 'LBL_AOS_LINE_ITEM_GROUPS',
             ),
 
     ),

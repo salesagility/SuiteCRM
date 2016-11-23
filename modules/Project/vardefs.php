@@ -436,6 +436,8 @@ $dictionary['Project'] = array(
                 'type' => 'link',
                 'relationship' => 'aos_quotes_project',
                 'source' => 'non-db',
+                'vname' => 'LBL_AOS_QUOTES_PROJECT',
+
             ),
         'override_business_hours' => array(
             'name' => 'override_business_hours',

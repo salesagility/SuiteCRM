@@ -222,6 +222,7 @@ $mod_strings = array(
     'LBL_PROJECT_SUBPANEL_TITLE' => 'Projects',
     'LBL_CAMPAIGNS_SUBPANEL_TITLE' => 'Campaigns',
     'LNK_IMPORT_CONTACTS' => 'Import Contacts',
+    'LBL_PROJECT_CONTACTS_1_FROM_PROJECT_TITLE' => 'Project contacts from project',
 
     //For export labels
     'LBL_PHONE_HOME' => 'Phone Home',
@@ -257,6 +258,10 @@ $mod_strings = array(
     'LBL_PORTAL_USER_TYPE' => 'Portal User Type',
     'LBL_PORTAL_ACCOUNT_DISABLED' => 'Account Disabled',
     'LBL_JOOMLA_ACCOUNT_ID' => 'Joomla Account ID',
+
+    'LBL_AOS_CONTRACTS' => 'Contracts',
+    'LBL_AOS_INVOICES' => 'Invoices',
+    'LBL_AOS_QUOTES' => 'Quotes',
 );
 
 ?>

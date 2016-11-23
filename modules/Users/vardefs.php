@@ -641,7 +641,7 @@ $dictionary['User'] = array(
                 'source' => 'non-db',
                 'module' => 'Project',
                 'bean_name' => 'Project',
-                'vname' => 'LBL_PROJECT_USERS_1_FROM_PROJECT_TITLE',
+                'vname' => 'LBL_PROJECTS',
             ),
         'am_projecttemplates_resources' =>
             array(
@@ -659,7 +659,7 @@ $dictionary['User'] = array(
                 'source' => 'non-db',
                 'module' => 'AM_ProjectTemplates',
                 'bean_name' => 'AM_ProjectTemplates',
-                'vname' => 'LBL_PROJECT_USERS_1_FROM_PROJECT_TITLE',
+                'vname' => 'LBL_PROJECT_TEMPLATES',
             ),
         'SecurityGroups' =>
             array(

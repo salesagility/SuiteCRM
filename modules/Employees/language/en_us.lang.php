@@ -157,6 +157,12 @@ $mod_strings = array (
   'LBL_DATE_MODIFIED' => 'Date Modified',
   'LBL_DATE_ENTERED' => 'Date Entered',
   'LBL_DELETED' => 'Deleted',
+	'LBL_PROJECT_TEMPLATES' => 'Project templates',
+	'LBL_CONTACTS_SYNC' => 'Contacts',
+	'LBL_OAUTH_TOKENS' => 'OAuth Tokens',
+	'LBL_ROLES' => 'Roles',
+	'LBL_PROSPECT_LIST' => 'Target list',
+	'LBL_SECURITYGROUPS' => 'Security Groups',
 );
 
 

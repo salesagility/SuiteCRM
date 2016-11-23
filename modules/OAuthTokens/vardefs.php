@@ -82,6 +82,7 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
             'type' => 'long',
             'required' => true,
             'comment' => 'Token timestamp',
+            'vname' => 'LBL_TOKEN_TS',
             'function' => array('name' => 'displayDateFromTs', 'returns' => 'html', 'onListView' => true)
       ),
       'verify' =>
@@ -111,6 +112,7 @@ $dictionary['OAuthToken'] = array('table' => 'oauth_tokens',
 	'callback_url' =>
       array (
             'name' => 'callback_url',
+            'vname' => 'LBL_CALLBACK_URL',
             'type' => 'url',
             'len' => 255,
             'required' => false,

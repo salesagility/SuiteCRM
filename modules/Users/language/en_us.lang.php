@@ -346,6 +346,7 @@ $mod_strings = array (
     'LBL_RESET_HOMEPAGE_WARNING_USER' => 'Are you sure you want reset the Homepage for this user?',
     'LBL_SALUTATION' => 'Salutation',
     'LBL_ROLES_SUBPANEL_TITLE' => 'Roles',
+    'LBL_ROLES' => 'Roles',
     'LBL_SEARCH_FORM_TITLE' => 'User Search',
     'LBL_SEARCH_URL' => 'Search location',
     'LBL_SELECT_CHECKED_BUTTON_LABEL' => 'Select Checked Users',
@@ -605,6 +606,11 @@ $mod_strings = array (
     'LBL_LIST_NONINHERITABLE' => "Not Inheritable",
     'LBL_PRIMARY_GROUP' => "Primary Group",
 	'LBL_PASSWORD_MIS_MATCH' => 'mis-match',
+
+	'LBL_CONTACTS_SYNC' => 'Contacts',
+	'LBL_PROJECT_TEMPLATES' => 'Project templates',
+	'LBL_PROJECTS' => 'Projects',
+	'LBL_SECURITYGROUPS' => 'Security groups',
 ); // END STRINGS DEFS
 
 ?>

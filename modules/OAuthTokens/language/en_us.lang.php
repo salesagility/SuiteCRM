@@ -53,4 +53,6 @@ $mod_strings = array (
     'LBL_LIST_DELETE' => 'Delete Token',
     'LBL_CONSUMER' => 'Consumer Name',
     'LBL_OAUTH_DISABLED' => 'OAuth support not enabled. PHP oauth extension may be missing. Please contact your administrator.',
+    'LBL_TOKEN_TS' => 'Token TS',
+    'LBL_CALLBACK_URL' => 'Callback URL',
 );

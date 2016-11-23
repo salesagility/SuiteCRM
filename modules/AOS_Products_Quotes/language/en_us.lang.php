@@ -69,6 +69,10 @@ $mod_strings = array (
     'LBL_AOS_PRODUCTS_QUOTES_SUBPANEL_TITLE' => 'Products Quotes',
     'LBL_FLEX_RELATE' => 'Related to',
     'LBL_PRODUCT' => 'Product',
+    'LBL_AOS_CONTRACTS' => 'Contracts',
+    'LBL_AOS_INVOICES' => 'Invoices',
+    'LBL_AOS_PRODUCTS' => 'Products',
+    'LBL_AOS_QUOTES' => 'Quotes',
 
     'LBL_SERVICE_MODULE_NAME' => 'Services',
     'LBL_LIST_NUM' => 'Number',
@@ -82,5 +86,8 @@ $mod_strings = array (
     'LBL_PRODUCT_DISCOUNT_AMOUNT_USDOLLAR' => 'Discount Amount (Default Currency)',
     'LBL_VAT_AMT_USDOLLAR' => 'Tax Amount (Default Currency)',
     'LBL_PRODUCTS_SERVICES' => 'Product / Service',
+    'LBL_CONTRACT_ACCOUNT' => 'Contracts',
+    'LBL_PRODUCT_ID' => 'Product ID',
+
 );
 ?>
