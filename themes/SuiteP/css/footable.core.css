@@ -33,6 +33,7 @@ table.footable-details {
 table > tbody > tr > td > span.footable-toggle {
   margin-right: 8px;
   opacity: 0.3;
+  cursor: pointer;
 }
 table > tbody > tr > td > span.footable-toggle.last-column {
   margin-left: 8px;
