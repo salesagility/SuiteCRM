@@ -340,6 +340,13 @@ function saveField($field, $id, $module, $value)
             }
         }
 
+        // Fix for gitHub issue 2689 - inline editing removes related Account from Calls
+        if(isset($bean->parent_id) && $bean->parent_id != null && $bean->parent_id != '') {
+            if($bean->account_id == null || $bean->account_id == ''){
+                $bean->account_id = $bean->parent_id;
+            }
+        }
+
         $bean->save($check_notify);
         return getDisplayValue($bean, $field);
     } else {
