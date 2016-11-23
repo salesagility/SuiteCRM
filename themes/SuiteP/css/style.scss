@@ -3517,35 +3517,6 @@ select#sales_stage_advanced {
 
 
 
-.popupBody {
-  margin: 10px;
-  padding: 0;
-}
-
-.popupBody input[type=text], .popupBody textarea {
-  width: 95%;
-}
-
-.popupBody .list.view {
-  overflow: scroll;
-  width: 95%;
-}
-
-
-.popupBody .list.view > thead > tr > th {
-  border: 1px solid transparent;
-  border-bottom-color: #778591;
-}
-
-.popupBody .list.view > thead > tr > th:first-of-type {
-  border-top-left-radius: 4px;
-}
-
-.popupBody .list.view > thead > tr > th:last-of-type {
-  border-top-right-radius: 4px;
-}
-
-
 
 
 #user_password, #user_name {
