@@ -283,7 +283,9 @@ EOHTML;
         echo $sugar_config['meta_tags']['IE_COMPAT_MODE'];
     }
 
-    echo "<title>{$app_strings['LBL_BROWSER_TITLE']}</title>" . $themeCSS;
+    echo "<title>{$app_strings['LBL_BROWSER_TITLE']}</title>";
+    echo '<link href="themes/'.SugarThemeRegistry::current().'/css/bootstrap.min.css" rel="stylesheet">';
+    echo $themeCSS;
     if ($includeJS)
     {
         $charset = isset($app_strings['LBL_CHARSET']) ? $app_strings['LBL_CHARSET'] : $sugar_config['default_charset'];
@@ -297,7 +299,6 @@ EOHTML;
     echo '<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />';
 
     if(SugarThemeRegistry::current() == "SuiteR") {
-        echo '<link href="themes/SuiteR/css/bootstrap.min.css" rel="stylesheet">';
         echo '<link href="themes/SuiteR/css/colourSelector.php" rel="stylesheet">';
     }
 

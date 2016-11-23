@@ -3932,6 +3932,9 @@ td.dashlet-title > h3 > span {
 .list .pagination td {
   padding: 0; }
 
+.list .pagination button[disabled] {
+  height: 26px; }
+
 .list tr .odd {
   padding: 3px 8px 5px 5px;
   vertical-align: middle; }
@@ -4849,6 +4852,53 @@ div#search_form > .advanced input.button:hover {
 
 .listViewEmpty {
   background-color: transparent; }
+
+/*** Popup ***/
+.popupBody {
+  margin: 10px;
+  padding: 0; }
+
+.popupBody input[type=text], .popupBody textarea {
+  width: 95%; }
+
+.popupBody .list.view {
+  overflow: scroll;
+  width: 95%; }
+
+.popupBody .list.view > thead > tr > th {
+  border: 1px solid transparent;
+  border-bottom-color: #778591; }
+
+.popupBody .list.view > thead > tr > th:first-of-type {
+  border-top-left-radius: 4px; }
+
+.popupBody .list.view > thead > tr > th:last-of-type {
+  border-top-right-radius: 4px; }
+
+#popup_query_form .row {
+  margin-right: 15px;
+  margin-left: 15px; }
+
+.popupBody .list tbody > tr > td a {
+  font-weight: bold;
+  color: #e56455;
+  border-bottom-width: 1px;
+  border-bottom-style: dashed;
+  border-bottom-color: #e56455; }
+
+.popupBody .list tbody > tr > td a:hover {
+  color: #d66c60;
+  border-bottom-color: #d66c60; }
+
+.popupBody .list tbody > tr > td {
+  vertical-align: middle;
+  padding-top: 15px;
+  padding-bottom: 12px;
+  padding-left: 10px;
+  padding-right: 10px; }
+
+.popupBody .list .pagination tbody > tr > td {
+  padding: 5px; }
 
 /*xs-col-*/
 @media (max-width: 769px) {
@@ -8628,27 +8678,6 @@ select#sales_stage_advanced {
 .placeholder img {
   display: inline-block;
   border-radius: 50%; }
-
-.popupBody {
-  margin: 10px;
-  padding: 0; }
-
-.popupBody input[type=text], .popupBody textarea {
-  width: 95%; }
-
-.popupBody .list.view {
-  overflow: scroll;
-  width: 95%; }
-
-.popupBody .list.view > thead > tr > th {
-  border: 1px solid transparent;
-  border-bottom-color: #778591; }
-
-.popupBody .list.view > thead > tr > th:first-of-type {
-  border-top-left-radius: 4px; }
-
-.popupBody .list.view > thead > tr > th:last-of-type {
-  border-top-right-radius: 4px; }
 
 #user_password, #user_name {
   width: 150px; }
