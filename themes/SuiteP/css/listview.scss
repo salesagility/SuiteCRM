@@ -228,7 +228,7 @@
 }
 
 .list .pagination td table td a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .reportGroupByDataChildTablelistViewThS1 a:hover {
@@ -1732,6 +1732,17 @@ div#search_form > .advanced input.button:hover {
   border-bottom-color: $list-view-link-hover-color;
 }
 
+
+.popupBody .list .pagination td table td a:link {
+  font-weight: normal;
+  font-size: $page-font-size;
+  width: 100%;
+}
+
+.popupBody .list .pagination a:hover {
+  color: $list-view-button-color;
+  border-bottom-color: $list-view-link-hover-color;
+}
 
 .popupBody .list tbody > tr > td {
   vertical-align: middle;

@@ -3800,7 +3800,7 @@ td.dashlet-title > h3 > span {
   padding: 2px 0 3px 0; }
 
 .list .pagination td table td a:hover {
-  text-decoration: underline; }
+  text-decoration: none; }
 
 .reportGroupByDataChildTablelistViewThS1 a:hover {
   text-decoration: underline; }
@@ -4970,6 +4970,15 @@ div#search_form > .advanced input.button:hover {
 
 .popupBody .list tbody > tr > td a:hover {
   color: #d66c60;
+  border-bottom-color: #d66c60; }
+
+.popupBody .list .pagination td table td a:link {
+  font-weight: normal;
+  font-size: 13px;
+  width: 100%; }
+
+.popupBody .list .pagination a:hover {
+  color: white;
   border-bottom-color: #d66c60; }
 
 .popupBody .list tbody > tr > td {
