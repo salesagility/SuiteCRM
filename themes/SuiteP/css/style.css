@@ -3780,7 +3780,7 @@ td.dashlet-title > h3 > span {
   width: 25px; }
 
 .list .pagination td table td a:link {
-  font-weight: bold;
+  font-weight: normal;
   text-decoration: none;
   padding: 2px 0 3px 0; }
 
@@ -5006,21 +5006,21 @@ div#search_form > .advanced input.button:hover {
 .popupBody .list .sugar_action_button > span {
   margin-left: 4px; }
 
-.popupBody .list .sugar_action_button .subnav {
+.popupBody .list .subnav {
   left: 0;
   right: auto;
   background-color: #7b8a96; }
 
-.popupBody .list .SugarActionMenu .sugar_action_button .subnav a {
+.popupBody .list .subnav a {
   border-bottom: 1px solid #93a0ab; }
 
-.popupBody .list .SugarActionMenu .sugar_action_button .subnav li:last-of-type a:last-of-type {
+.popupBody .list .subnav li:last-of-type a:last-of-type {
   border-bottom: none; }
 
-.popupBody .list .SugarActionMenu .sugar_action_button .subnav {
+.popupBody .list .subnav {
   padding: 4px 10px; }
 
-.popupBody .list .sugar_action_button .subnav {
+.popupBody .list .subnav {
   background-color: #7b8a96;
   width: auto;
   line-height: 24px;
@@ -5049,6 +5049,238 @@ div#search_form > .advanced input.button:hover {
 .popupBody .paginationActionButtons {
   height: 40px;
   max-height: 40px; }
+
+/*** Inbound Email ***/
+.inbound-email {
+  margin: 10px;
+  padding: 0; }
+
+.inbound-email input[type=text], .inbound-email textarea {
+  width: 95%; }
+
+.inbound-email .list.view {
+  overflow: scroll;
+  width: 95%;
+  margin-bottom: 20px;
+  font-size: 12px; }
+
+.inbound-email .list.view > thead > tr > th {
+  border: 1px solid transparent;
+  border-bottom-color: #778591; }
+
+.inbound-email .list.view > thead > tr > th:first-of-type {
+  border-top-left-radius: 4px; }
+
+.inbound-email .list.view > thead > tr > th:last-of-type {
+  border-top-right-radius: 4px; }
+
+#popup_query_form .row {
+  margin-right: 15px;
+  margin-left: 15px; }
+
+.inbound-email .list.view .pagination .button {
+  background-color: #94a6b5;
+  color: whitesmoke;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.inbound-email .list.view .pagination td {
+  color: whitesmoke; }
+
+.inbound-email .list.view .pagination #delete_button {
+  background-color: #94a6b5;
+  color: whitesmoke;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+
+.inbound-email .list.view .pagination input[type=button] {
+  background-color: #94a6b5;
+  color: whitesmoke;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+  color: white; }
+
+.inbound-email #delete_button {
+  background-color: #94a6b5;
+  color: whitesmoke;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.inbound-email .listViewTdToolsS1 {
+  border-bottom: none; }
+
+.inbound-email .list.view .paginationChangeButtons button[type=submit] {
+  background-color: #94a6b5;
+  color: whitesmoke;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.inbound-email .list.view .pagination button[disabled] {
+  background-color: #94a6b5;
+  color: #808f9c;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.inbound-email .list.view .pagination input[type="submit"][disabled] {
+  background-color: #94a6b5;
+  color: #808f9c;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.inbound-email .list.view .pagination input[type="reset"][disabled] {
+  background-color: #94a6b5;
+  color: #808f9c;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.inbound-email .list.view .pagination input[type="button"][disabled] {
+  background-color: #94a6b5;
+  color: #808f9c;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.inbound-email .sugar_action_button {
+  min-width: 32px;
+  padding: 0;
+  background-color: #94a6b5;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding-right: 4px; }
+
+.inbound-email .SugarActionMenu {
+  clear: both;
+  float: left; }
+
+.inbound-email #selectLink.clickMenu #massall {
+  margin-top: 4px; }
+
+.inbound-email .list.view .paginationChangeButtons button[type=submit][disabled] {
+  background-color: #94a6b5;
+  color: #808f9c;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px; }
+
+.inbound-email .pagination input[type=text] {
+  min-height: 0;
+  line-height: normal; }
+
+.inbound-email .list tbody > tr > td a {
+  font-weight: bold;
+  color: #e56455;
+  border-bottom-width: 1px;
+  border-bottom-style: dashed;
+  border-bottom-color: #e56455;
+  font-size: 12px; }
+
+.inbound-email .list tbody > tr > td a:hover {
+  color: #d66c60;
+  border-bottom-color: #d66c60; }
+
+.inbound-email .list .pagination td table td a:link {
+  font-weight: normal;
+  font-size: 13px;
+  width: 100%; }
+
+.inbound-email .list .pagination a:hover {
+  color: white;
+  border-bottom-color: #d66c60; }
+
+.inbound-email .list tbody > tr > td {
+  vertical-align: middle;
+  padding-top: 15px;
+  padding-bottom: 12px;
+  padding-left: 10px;
+  padding-right: 10px; }
+
+.inbound-email .list .pagination tbody > tr > td {
+  padding: 5px; }
+
+.inbound-email .checkbox .inbound-email input[type=checkbox] {
+  margin-top: 0px;
+  display: block;
+  float: left; }
+
+.inbound-email input[type=checkbox] {
+  margin-top: 0px;
+  display: block;
+  float: left;
+  margin-top: 5px;
+  margin-left: 4px; }
+
+.inbound-email .list .sugar_action_button > span {
+  margin-left: 4px; }
+
+.inbound-email #selectLink.clickMenu {
+  background-color: #7b8a96; }
+
+.inbound-email .subnav {
+  left: 0;
+  right: auto;
+  background-color: #7b8a96; }
+
+.inbound-email .list .subnav a {
+  border-bottom: 1px solid #93a0ab; }
+
+.inbound-email .list .subnav li:last-of-type a:last-of-type {
+  border-bottom: none; }
+
+.inbound-email .list .subnav {
+  padding: 4px 10px; }
+
+.inbound-email .list .subnav {
+  background-color: #7b8a96;
+  width: auto;
+  line-height: 24px;
+  color: whitesmoke; }
+
+.inbound-email input {
+  font-size: 100%;
+  /* 1 */
+  margin: 0;
+  /* 2 */
+  vertical-align: baseline;
+  /* 3 */
+  *vertical-align: middle;
+  /* 3 */
+  -webkit-appearance: none; }
+
+.inbound-email .list th {
+  white-space: normal;
+  word-wrap: break-word; }
+
+.inbound-email .list td {
+  white-space: normal;
+  word-wrap: break-word; }
+
+.inbound-email .paginationActionButtons {
+  height: 40px;
+  max-height: 40px; }
+
+.inbound-email .menuItemHilite {
+  background-color: #7b8a96;
+  width: 100%;
+  line-height: 24px;
+  color: whitesmoke;
+  font-weight: normal; }
+
+.inbound-email .menuItem {
+  background-color: #7b8a96;
+  width: 100%;
+  line-height: 24px;
+  color: whitesmoke;
+  font-weight: normal; }
 
 /*xs-col-*/
 @media (max-width: 769px) {

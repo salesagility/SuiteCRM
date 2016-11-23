@@ -204,7 +204,7 @@
 }
 
 .list .pagination td table td a:link {
-  font-weight: bold;
+  font-weight: normal;
   text-decoration: none;
   padding: 2px 0 3px 0;
 }
@@ -1774,26 +1774,26 @@ div#search_form > .advanced input.button:hover {
   margin-left: 4px;
 }
 
-.popupBody .list .sugar_action_button .subnav {
+.popupBody .list .subnav {
   left: 0;
   right: auto;
   background-color: $list-view-action-menu-bg;
 }
 
-.popupBody .list .SugarActionMenu .sugar_action_button .subnav a {
+.popupBody .list  .subnav a {
   border-bottom: 1px solid $list-view-action-menu-separator;
 }
 
-.popupBody .list .SugarActionMenu .sugar_action_button .subnav li:last-of-type a:last-of-type {
+.popupBody .list .subnav li:last-of-type a:last-of-type {
   border-bottom: none;
 }
 
 
-.popupBody .list .SugarActionMenu .sugar_action_button .subnav {
+.popupBody .list  .subnav {
   padding: 4px 10px;
 }
 
-.popupBody .list  .sugar_action_button .subnav {
+.popupBody .list .subnav {
   background-color: $list-view-action-menu-bg;
   width: auto;
   line-height: 24px;
@@ -1822,10 +1822,291 @@ div#search_form > .advanced input.button:hover {
 
 .popupBody .paginationActionButtons {
   height: 40px;
-  max-height: 40px; }
+  max-height: 40px;
+}
+
+
+/*** Inbound Email ***/
+.inbound-email {
+  margin: 10px;
+  padding: 0;
+}
+
+.inbound-email input[type=text], .inbound-email textarea {
+  width: 95%;
+}
+
+.inbound-email .list.view {
+  overflow: scroll;
+  width: 95%;
+  margin-bottom: 20px;
+  font-size: $page-list-view-font-size;
+}
+
+.inbound-email .list.view > thead > tr > th {
+  border: 1px solid transparent;
+  border-bottom-color: #778591;
+}
+
+.inbound-email .list.view > thead > tr > th:first-of-type {
+  border-top-left-radius: 4px;
+}
+
+.inbound-email .list.view > thead > tr > th:last-of-type {
+  border-top-right-radius: 4px;
+}
+
+
+#popup_query_form .row {
+  margin-right: 15px;
+  margin-left: 15px;
+}
+
+.inbound-email .list.view .pagination .button {
+  background-color: $default-btn-bg;
+  color: $default-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.inbound-email .list.view .pagination td {
+  color: $default-btn-color;
+}
+
+.inbound-email .list.view .pagination #delete_button {
+  background-color: $default-btn-bg;
+  color: $default-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.inbound-email .list.view .pagination input[type=button] {
+  background-color: $default-btn-bg;
+  color: $default-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+  color: $list-view-button-color;
+}
+
+.inbound-email #delete_button  {
+  background-color: $default-btn-bg;
+  color: $default-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.inbound-email .listViewTdToolsS1 {
+  border-bottom: none;
+}
+
+.inbound-email .list.view .paginationChangeButtons button[type=submit] {
+  background-color: $default-btn-bg;
+  color: $default-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.inbound-email .list.view .pagination button[disabled] {
+  background-color: $default-btn-bg;
+  color: $disabled-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.inbound-email .list.view .pagination input[type="submit"][disabled] {
+  background-color: $default-btn-bg;
+  color: $disabled-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.inbound-email .list.view .pagination input[type="reset"][disabled] {
+  background-color: $default-btn-bg;
+  color: $disabled-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.inbound-email .list.view .pagination input[type="button"][disabled] {
+  background-color: $default-btn-bg;
+  color: $disabled-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
+
+.inbound-email .sugar_action_button {
+  min-width: 32px;
+  padding: 0;
+  background-color: $list-view-action-button-bg;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding-right: 4px;
+
+}
+.inbound-email .SugarActionMenu {
+  clear: both;
+  float: left;
+}
+
+.inbound-email #selectLink.clickMenu #massall {
+  margin-top: 4px;
+}
+
+.inbound-email .list.view .paginationChangeButtons button[type=submit][disabled] {
+  background-color: $default-btn-bg;
+  color: $disabled-btn-color;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 10px 0 10px;
+}
 
 
 
+.inbound-email .pagination  input[type=text] {
+  min-height: 0;
+  line-height: normal;
+}
+
+
+
+.inbound-email .list tbody > tr > td a {
+  font-weight: bold;
+  color: $list-view-link-color;
+  border-bottom-width: 1px;
+  border-bottom-style: dashed;
+  border-bottom-color: $list-view-link-color;
+  font-size: $page-list-view-font-size;
+}
+
+
+.inbound-email .list tbody > tr > td a:hover {
+  color: $list-view-link-hover-color;
+  border-bottom-color: $list-view-link-hover-color;
+}
+
+
+.inbound-email .list .pagination td table td a:link {
+  font-weight: normal;
+  font-size: $page-font-size;
+  width: 100%;
+}
+
+.inbound-email .list .pagination a:hover {
+  color: $list-view-button-color;
+  border-bottom-color: $list-view-link-hover-color;
+}
+
+.inbound-email .list tbody > tr > td {
+  vertical-align: middle;
+  padding-top: 15px;
+  padding-bottom: 12px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.inbound-email .list .pagination tbody > tr > td {
+  padding: 5px;
+}
+.inbound-email .checkbox .inbound-email input[type=checkbox] {
+  margin-top: 0px;
+  display: block;
+  float: left;
+}
+
+.inbound-email input[type=checkbox] {
+  margin-top: 0px;
+  display: block;
+  float: left;
+  margin-top: 5px;
+  margin-left: 4px;
+}
+
+
+.inbound-email .list .sugar_action_button > span {
+  margin-left: 4px;
+}
+
+.inbound-email #selectLink.clickMenu {
+  background-color: $list-view-action-menu-bg;
+}
+
+.inbound-email .subnav {
+  left: 0;
+  right: auto;
+  background-color: $list-view-action-menu-bg;
+}
+
+.inbound-email .list .subnav a {
+  border-bottom: 1px solid $list-view-action-menu-separator;
+}
+
+.inbound-email .list  .subnav li:last-of-type a:last-of-type {
+  border-bottom: none;
+}
+
+
+.inbound-email .list .subnav {
+  padding: 4px 10px;
+}
+
+.inbound-email .list .subnav {
+  background-color: $list-view-action-menu-bg;
+  width: auto;
+  line-height: 24px;
+  color: $default-btn-color;
+}
+
+.inbound-email input {
+  font-size: 100%; /* 1 */
+  margin: 0; /* 2 */
+  vertical-align: baseline; /* 3 */
+  *vertical-align: middle; /* 3 */
+  -webkit-appearance: none;
+}
+
+.inbound-email .list th {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+
+.inbound-email .list td {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.inbound-email .paginationActionButtons {
+  height: 40px;
+  max-height: 40px;
+}
+
+
+.inbound-email .menuItemHilite {
+  background-color: $list-view-action-menu-bg;
+  width: 100%;
+  line-height: 24px;
+  color: $default-btn-color;
+  font-weight: normal;
+}
+
+.inbound-email .menuItem {
+  background-color: $list-view-action-menu-bg;
+  width: 100%;
+  line-height: 24px;
+  color: $default-btn-color;
+  font-weight: normal;
+}
 
 /*xs-col-*/
 @media (max-width: 769px) {
