@@ -1,0 +1,68 @@
+/**** Cases ***/
+@import 'variables';
+
+
+#caseStyleUser {
+  background: $case-user-bg;
+  border: 1px solid $case-user-border-color;
+  color: $case-user-color;
+  border-radius: 4px;
+  margin: 10px;
+  padding: 10px;
+}
+
+#caseStyleContact {
+  background: $case-contact-bg;
+  border: 1px solid $case-contact-border-color;
+  color: $case-contact-color;
+  border-radius: 4px;
+  margin: 10px;
+  padding: 10px;
+}
+
+#caseStyleInternal {
+  background: $case-internal-bg;
+  border: 1px solid $case-internal-border-color;
+  color: $case-internal-color;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px 60px 10px 10px;
+}
+
+.caseUpdateImage {
+  margin: 0 5px 0 0;
+}
+/** Style expanded/collapse like buttons**/
+#aop_case_updates_threaded_span > a {
+  margin-right: 4px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  color: $default-btn-color;
+  font-size: 13px;
+  background-color: $danger-btn-bg;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 0 20px 0 20px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 1px;
+  height: $button-line-height;
+  line-height: $button-line-height;
+  display: inline-block;
+}
+
+
+#case_updates label {
+  margin-left: 10px;
+}
+
+#case_updates textarea {
+  margin-left: 10px;
+}
+
+#case_updates input[type=button] {
+  margin-left: 10px;
+  margin-top: 10px;
+}
