@@ -11891,6 +11891,7 @@ h5.calSharedUser {
   height: 40px;
   line-height: 40px; }
 
+.fc-unthemed thead
 .fc-view-container .monthCalBody * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -12348,6 +12349,20 @@ a.fc-day-number:hover {
 div.fc-basic-view .fc-body .fc-row {
   min-height: 52px;
   /* ensure that all rows are at least this tall */ }
+
+/* user list */
+.modal-calendar-user-list table.edit {
+  width: 256px;
+  margin-top: 8px; }
+
+.modal-calendar-user-list table.edit tr td:first-of-type {
+  width: 192px; }
+
+.modal-calendar-user-list #shared_ids_td {
+  width: 128px; }
+
+.modal-calendar-user-list select[size]#shared_ids {
+  height: 200px; }
 
 div#searchResults {
   overflow-y: auto;
