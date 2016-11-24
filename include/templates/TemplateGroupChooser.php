@@ -130,7 +130,7 @@ EOQ;
                             <td id="{$this->args['left_name']}_td" align="center">
                             <select id="{$this->args['left_name']}" name="{$this->args['left_name']}[]" size=
 EOQ;
-        $str .=  '"' . (empty($this->args['left_size']) ? '10' : $this->args['left_size']) . '" multiple="multiple" ' . (isset($this->args['disable']) ?  "DISABLED" : '') . 'style="width: 150px;">';
+        $str .=  '"' . (empty($this->args['left_size']) ? '10' : $this->args['left_size']) . '" multiple="multiple" ' . (isset($this->args['disable']) ?  "DISABLED" : '') . 'class="templateGroupChooser">';
 
         foreach($this->args['values_array'][0] as $key=>$value) {
             $str .= "<option value='{$key}'>{$value}</option>";
@@ -146,7 +146,7 @@ EOQ;
             }
             $str .= "</td>
                 <td id=\"{$this->args['right_name']}_td\" align=\"center\">
-                <select id=\"{$this->args['right_name']}\" name=\"{$this->args['right_name']}[]\" size=\"" . (empty($this->args['right_size']) ? '10' : $this->args['right_size']) . "\" multiple=\"multiple\" " . (isset($this->args['disable']) ? "DISABLED" : '') . 'style="width: 150px;">';
+                <select id=\"{$this->args['right_name']}\" name=\"{$this->args['right_name']}[]\" size=\"" . (empty($this->args['right_size']) ? '10' : $this->args['right_size']) . "\" multiple=\"multiple\" " . (isset($this->args['disable']) ? "DISABLED" : '') . 'class="groupChooser">';
             foreach($this->args['values_array'][1] as $key=>$value) {
                 $str .= "<option value=\"{$key}\">{$value}</option>";
             }
@@ -161,7 +161,7 @@ EOQ;
             }
             $str .= "</td>
                 <td id=\"{$this->args['third_name']}_td\" align=\"center\">
-                <select id=\"{$this->args['third_name']}\" name=\"{$this->args['third_name']}[]\" size=\"" . (empty($this->args['third_size']) ? '10' : $this->args['third_size']) . "\" multiple=\"multiple\" " . (isset($this->args['disable']) ? "DISABLED" : '') . 'style="width: 150px;">';
+                <select id=\"{$this->args['third_name']}\" name=\"{$this->args['third_name']}[]\" size=\"" . (empty($this->args['third_size']) ? '10' : $this->args['third_size']) . "\" multiple=\"multiple\" " . (isset($this->args['disable']) ? "DISABLED" : '') . 'class="templateGroupChooser">';
             foreach($this->args['values_array'][2] as $key=>$value) {
                 $str .= "<option value=\"{$key}\">{$value}</option>";
             }

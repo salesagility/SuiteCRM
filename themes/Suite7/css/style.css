@@ -6555,3 +6555,15 @@ ul.clickMenu>li>span.searchAppliedAlert {
     background-image: none;
     text-align: center;
 }
+
+.dateTimeRangeChoice select {
+    width:125px !important;
+}
+
+.dateRangeInput {
+    width:100px !important;
+}
+
+.templateGroupChooser {
+    width: 150px;
+}

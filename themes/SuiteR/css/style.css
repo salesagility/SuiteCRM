@@ -5998,3 +5998,14 @@ ul.clickMenu>li>span.searchAppliedAlert {
     position: relative;
 }
 
+.dateTimeRangeChoice select {
+    width:125px !important;
+}
+
+.dateRangeInput {
+    width:100px !important;
+}
+
+.templateGroupChooser {
+    width: 150px;
+}
