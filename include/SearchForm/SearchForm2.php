@@ -126,7 +126,7 @@ require_once('include/EditView/EditView2.php');
  		$this->displayView = $displayView;
  		$this->view = $this->view.'_'.$displayView;
  		$tokens = explode('_', $this->displayView);
-        $this->searchFields = $searchFields[$this->module];
+        $this->searchFields = isset($searchFields[$this->module]) ? $searchFields[$this->module] : null;
  		$this->parsedView = $tokens[0];
  		if($this->displayView != 'saved_views'){
  			$this->_build_field_defs();
@@ -312,8 +312,11 @@ require_once('include/EditView/EditView2.php');
                      if(isset($app_strings[$vname ? $vname : $label])) {
                          $labelText = $app_strings[$vname ? $vname : $label];
                      }
-                     else {
+                     elseif(isset($mod_strings[$vname ? $vname : $label])) {
                          $labelText = $mod_strings[$vname ? $vname : $label];
+                     }
+                     else {
+                         $labelText = $vname ? $vname : $label;
                      }
                      if(!preg_match('/\:\s*/', $labelText)) {
                          $labelText.= ':';
@@ -325,8 +328,19 @@ require_once('include/EditView/EditView2.php');
                                  $values[$key] = $defs['options'][$key];
                              }
                              else {
-                                 if(isset($value[$key])) {
+                                 if(in_array($key, $value)) {
+                                     try {
+                                         $values[$key] = $this->findFieldOptionValue($fields, $key);
+                                     }
+                                     catch(Exception $e) {
+                                         $values[$key] = $key;
+                                     }
+                                 }
+                                 elseif(isset($value[$key])) {
                                      $values[$key] = $value[$key];
+                                 }
+                                 else {
+                                     $values[$key] = '?';
                                  }
                              }
                          }
@@ -337,6 +351,19 @@ require_once('include/EditView/EditView2.php');
              }
          }
          return $data;
+     }
+
+     private function findFieldOptionValue($fields, $key) {
+         foreach($fields as $fkey => $fvalue) {
+             if(isset($fvalue['options']) && is_array($fvalue['options'])) {
+                 foreach($fvalue['options'] as $okey => $ovalue) {
+                     if($okey == $key) {
+                         return $ovalue;
+                     }
+                 }
+             }
+         }
+         throw new Exception('Not found');
      }
 
      private function getSearchInfoJson() {

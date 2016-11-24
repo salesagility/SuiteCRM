@@ -2444,6 +2444,8 @@ $app_strings = array(
 
     'LBL_SEARCH_HEADER_TITLE' => 'Search',
 
+    'LBL_AOP_INTERNAL' => 'Internal',
+
 );
 
 $app_list_strings['moduleList']['Library'] = 'Library';

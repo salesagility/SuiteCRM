@@ -302,7 +302,7 @@ function quick_edit_case_updates($case){
     if(isset($case->internal) && $case->internal){
         $internalChecked = "checked='checked'";
     }
-    $internal = $mod_strings['LBL_AOP_INTERNAL'];
+    $internal = $app_strings['LBL_AOP_INTERNAL'];
     $saveBtn = $app_strings['LBL_SAVE_BUTTON_LABEL'];
     $saveTitle = $app_strings['LBL_SAVE_BUTTON_TITLE'];
 
