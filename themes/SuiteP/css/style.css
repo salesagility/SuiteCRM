@@ -11632,7 +11632,7 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
 /**** Cases ***/
 #caseStyleUser {
   background: #bbe6a5;
-  border: 1px solid #cccccc;
+  border: 1px solid transparent;
   color: #534d64;
   border-radius: 4px;
   margin: 10px;
@@ -11640,15 +11640,15 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
 
 #caseStyleContact {
   background: #f7f7f7;
-  border: 1px solid #cccccc;
+  border: 1px solid transparent;
   color: #534d64;
   border-radius: 4px;
   margin: 10px;
   padding: 10px; }
 
 #caseStyleInternal {
-  background: #00eeee;
-  border: 1px solid #cccccc;
+  background: #a5e6e6;
+  border: 1px solid transparent;
   color: #534d64;
   border-radius: 4px;
   padding: 10px;
