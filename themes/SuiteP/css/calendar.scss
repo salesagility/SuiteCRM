@@ -169,7 +169,19 @@ table#goto_date_trigger_div_t thead {
 }
 
 .yui-calendar .calweekdaycell {
-  color: $default-btn-color;
+  color: $link-color;
+}
+
+.yui-calendar a.calnav {
+  background-color: $danger-btn-bg;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.yui-calendar a.calnav:hover {
+  background-color: $danger-btn-bg-hover;
+  border: 1px solid transparent;
+  border-radius: 4px;
 }
 
 a#callnav_today {
