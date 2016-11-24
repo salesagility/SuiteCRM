@@ -11511,6 +11511,7 @@ div.qtip.qtip-default {
 
 .search_form .view .dateTimeRangeChoice select {
     width: 90px !important;
+    margin-right: 4px;
 }
 
 .search_form .view .dateTimeRangeChoiceClear {
@@ -11549,4 +11550,21 @@ div.qtip.qtip-default {
     width: 100%;
     display: block;
     float: none;
+}
+.search_form.non-popup input[type="text"],
+.search_form.non-popup select,
+.search_form.non-popup textarea {
+    border: none;
+    height: 40px;
+    min-height: 40px;
+    padding: 5px;
+    line-height: 20px;
+}
+
+.search_form.non-popup select[multiple],
+.search_form.non-popup textarea {
+    min-height: 80px;
+}
+.search_form.non-popup .view {
+    padding: 10px 0px 10px 30px !important;
 }
