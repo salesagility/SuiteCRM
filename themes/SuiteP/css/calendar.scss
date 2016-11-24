@@ -804,7 +804,7 @@ a.fc-day-number:hover {
 }
 
 div.fc-basic-view .fc-body .fc-row {
-  min-height: $calendar-slot-height; /* ensure that all rows are at least this tall */
+  min-height: $calendar-month-slot-height; /* ensure that all rows are at least this tall */
 }
 
 /* user list */

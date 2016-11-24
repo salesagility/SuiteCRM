@@ -12347,7 +12347,7 @@ a.fc-day-number:hover {
   background-color: #fcf8e3; }
 
 div.fc-basic-view .fc-body .fc-row {
-  min-height: 52px;
+  min-height: 72px;
   /* ensure that all rows are at least this tall */ }
 
 /* user list */
