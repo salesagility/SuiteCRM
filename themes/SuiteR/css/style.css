@@ -3594,7 +3594,9 @@ table legend {
     display: none;
 }
 
-
+.sidebar h2 {
+    font-size: 14.772px;
+}
 
 .modal {
     z-index: 16000;
@@ -4486,6 +4488,12 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 
 .list thead{
     border-bottom:1px solid #cccccc;
+}
+
+.topnav h3,
+.recent_h3,
+.home_h3 {
+    font-size: 14.772px;
 }
 
 .home_h3 span{
