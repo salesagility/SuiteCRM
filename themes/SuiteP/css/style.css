@@ -11489,7 +11489,8 @@ div.qtip.qtip-default {
 .modal-content .search_form .view textarea {
     background-color: #D4F1EA;
 }
-.modal-content .search_form .view select {
+.modal-content .search_form .view select,
+.modal-content .search_form .view select#saved_search_select {
     border: 2px solid #A5E8D6;
     padding: initial;
 }
@@ -11533,4 +11534,10 @@ div.qtip.qtip-default {
 .modal-content .search_form .view .search_fields_basic .col-lg-8 {
     float: none;
     padding: initial;
+}
+
+.modal-content .search_form .view #inlineSavedSearch > table > tbody > tr > td {
+    width: 100%;
+    display: block;
+    float: none;
 }

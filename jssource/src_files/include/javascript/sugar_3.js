@@ -3981,6 +3981,10 @@ SUGAR.tabChooser = function () {
 		                text +=" size=\""+ info['select']['size'] +"\"";
 		        }
 
+				if(typeof (info['select']['id']) != 'undefined') {
+					text +=" id=\""+ info['select']['id'] +"\"";
+				}
+
 		        if(typeof (info['select']['name']) != 'undefined') {
 		                text +=" name=\""+ info['select']['name'] +"\"";
 		        }

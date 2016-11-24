@@ -581,6 +581,7 @@ SUGAR.searchForm.clearBasicSearchOrderToDefault(form);SUGAR.savedViews.clearColu
 if(!SUGAR.tabChooser.frozenOptions[left_name]){SUGAR.tabChooser.frozenOptions[left_name]=[];}
 if(!SUGAR.tabChooser.frozenOptions[left_name][right_name]){SUGAR.tabChooser.frozenOptions[left_name][right_name]=[];}
 if(typeof target=='array'){for(var i in target){SUGAR.tabChooser.frozenOptions[left_name][right_name][target[i]]=true;}}else{SUGAR.tabChooser.frozenOptions[left_name][right_name][target]=true;}},buildSelectHTML:function(info){var text="<select";if(typeof(info['select']['size'])!='undefined'){text+=" size=\""+info['select']['size']+"\"";}
+if(typeof(info['select']['id'])!='undefined'){text+=" id=\""+info['select']['id']+"\"";}
 if(typeof(info['select']['name'])!='undefined'){text+=" name=\""+info['select']['name']+"\"";}
 if(typeof(info['select']['style'])!='undefined'){text+=" style=\""+info['select']['style']+"\"";}
 if(typeof(info['select']['onchange'])!='undefined'){text+=" onChange=\""+info['select']['onchange']+"\"";}
