@@ -774,6 +774,42 @@ div#responseTime {
     margin-bottom: 0;
 }
 
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime.free {
+    border-left: 4px solid  #ff0000;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime.busy {
+    border-left: 4px solid  #ff0000;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime {
+    border-left: 4px solid #75AF4F /*!important*/;
+    background-color: #fff;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime {
+    border-left: 4px solid #ff0000 /*!important*/;
+}
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime.free {
+    border-left: 4px solid  #ff0000 /*!important*/;
+}
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.free {
+    background-color: rgb(77, 94, 170);
+    border-color: #fff;
+}
+
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.busy {
+    background-color: rgb(170, 77, 77);
+    border-color: #fff;
+}
+
 /* calendar module styles */
 .monthFooter td {
     padding-left: 7px;

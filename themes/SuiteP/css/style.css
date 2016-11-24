@@ -321,7 +321,7 @@ footer * {
 footer {
   bottom: 0;
   margin: 0 0 0 0;
-  background-color: #e6e6e6;
+  background-color: #dddddd;
   clear: both;
   width: 100%;
   border: 1px solid transparent;
@@ -2114,7 +2114,7 @@ div.p_login .p_login_middle {
   width: 100%; }
 
 div.p_login .p_login_bottom {
-  background-color: #e6e6e6;
+  background-color: #dddddd;
   float: left;
   width: 100%;
   left: 0;
@@ -5474,6 +5474,180 @@ div#search_form > .advanced input.button:hover {
     float: left; } }
 /**** Detail view ***/
 /**** Edit view ***/
+/** Reminders **/
+#EditView #reminder_view input[type="button"].add-btn {
+  padding: 0px 20px 20px 32px; }
+
+#EditView #reminder_view input[type="button"].remove-btn {
+  padding: 0px 32px 20px 20px; }
+
+#EditView #reminders input[type="button"]#reminder_add_btn {
+  padding: 0px 20px 20px 32px; }
+
+/** Schedule Bar **/
+#scheduler {
+  margin-top: 5px; }
+
+#scheduler .schedulerDiv {
+  color: #534d64;
+  text-align: left;
+  width: 100%;
+  background-color: #FAFAFA;
+  border-collapse: collapse;
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  padding: 20px 20px 10px 20px; }
+
+#scheduler .schedulerDiv table {
+  width: 100%;
+  border-collapse: collapse; }
+
+#scheduler .schedulerDiv table tr td {
+  height: 18px;
+  border: 1px solid #dddddd; }
+
+#scheduler .schedulerDiv table tr.schedulerTimeRow td {
+  border-left: 0; }
+
+#scheduler .schedulerDiv table tr.schedulerTimeRow th[scope=col] {
+  border-left: 1px solid #DDDDDD;
+  padding-left: 4px; }
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td {
+  background-color: #eeeeee;
+  width: 15px; }
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td[scope=row] {
+  overflow: hidden;
+  padding-left: 4px;
+  width: 125px;
+  background: transparent;
+  border-left: 0; }
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime.free {
+  border-left: 4px solid #79996a; }
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime.busy {
+  border-left: 4px solid #79996a; }
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime {
+  border-left: 4px solid #79996a;
+  background-color: whitesmoke; }
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime {
+  border-left: 4px solid #99534d; }
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime.free {
+  border-left: 4px solid #99534d; }
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime.busy {
+  border-left: 4px solid #99534d; }
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerAttendeeDeleteCell {
+  background: transparent;
+  border-left: 1px solid #dddddd;
+  padding-left: 4px; }
+
+#scheduler .schedulerInvitees .tabForm {
+  margin-bottom: 0; }
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.free {
+  background-color: #bbe6a5;
+  border-color: #7e996e; }
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.busy {
+  background-color: #f08377;
+  border-color: #99524d; }
+
+#create-invitees {
+  margin-top: 5px;
+  color: #534d64;
+  text-align: left;
+  width: 100%;
+  background-color: #FAFAFA;
+  border-collapse: collapse;
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  padding: 20px 20px 10px 20px; }
+
+.schedulerInvitees {
+  margin-top: 5px;
+  color: #534d64;
+  text-align: left;
+  width: 100%;
+  background-color: #FAFAFA;
+  border-collapse: collapse;
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  padding: 20px 20px 10px 20px; }
+
+#create_invitee_as_lead {
+  color: whitesmoke;
+  background-color: #f08377;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin: 4px;
+  padding: 0 10px;
+  font-size: 13px;
+  height: 40px;
+  line-height: 40px;
+  text-transform: uppercase; }
+
+#create_invitee_as_contact {
+  color: whitesmoke;
+  background-color: #f08377;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin: 4px;
+  padding: 0 10px;
+  font-size: 13px;
+  height: 40px;
+  line-height: 40px;
+  text-transform: uppercase; }
+
+#create-invitee-edit td {
+  padding-bottom: 8px;
+  line-height: 40px; }
+
+#create-invitee-edit button {
+  color: whitesmoke;
+  background-color: #f08377;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin: 4px;
+  padding: 0 10px;
+  font-size: 13px;
+  height: 40px;
+  line-height: 40px;
+  text-transform: uppercase; }
+
+/** add invitees search **/
+#EditView .edit input[type=submit]#invitees_search {
+  color: whitesmoke;
+  background-color: #f08377;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin: 4px;
+  padding: 0 10px;
+  font-size: 13px;
+  height: 40px;
+  line-height: 40px;
+  text-transform: uppercase; }
+
+#list_div_win {
+  color: #534d64;
+  text-align: left;
+  width: 100%;
+  background-color: white;
+  border-collapse: collapse;
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  padding: 20px 20px 10px 20px;
+  margin-top: 5px; }
+
+#list_div_win .list tr th {
+  color: #534d64; }
+
 /**** Tabs ***/
 #content {
   /*Override bootstrap (needs to be stacked)*/ }
@@ -12383,7 +12557,8 @@ div#searchResults {
   opacity: 1;
   padding: 8px; }
 
-div.noBullet li, .nobullet {
+div.noBullet li,
+.nobullet {
   list-style-type: none; }
 
 #p_wrap {
@@ -12478,7 +12653,8 @@ th, td {
 #unified_search_advanced_div .edit.view td {
   padding: 0 0.5em; }
 
-#themeColors img, #themeFonts img {
+#themeColors img,
+#themeFonts img {
   margin-bottom: 0; }
 
 #HideHandle {
@@ -12496,12 +12672,17 @@ th, td {
 #newRecord form {
   padding: 8px 8px 5px 8px; }
 
-#newRecord form input, #newRecord form select, #newRecord form textarea {
+#newRecord form input,
+#newRecord form select,
+#newRecord form textarea {
   margin-bottom: 4px;
   margin-top: 2px;
   max-width: 140px; }
 
-#newRecord form button, #newRecord form input[type=button], #newRecord form input[type=submit], #newRecord form input[type=reset] {
+#newRecord form button,
+#newRecord form input[type=button],
+#newRecord form input[type=submit],
+#newRecord form input[type=reset] {
   padding-top: 0;
   vertical-align: bottom; }
 
@@ -12519,7 +12700,9 @@ th, td {
   margin-top: 2px;
   vertical-align: bottom; }
 
-#newRecord form a:link, #newRecord form a:visited, #newRecord form a:hover {
+#newRecord form a:link,
+#newRecord form a:visited,
+#newRecord form a:hover {
   text-decoration: underline;
   border-bottom: 0;
   padding-left: 0; }
@@ -12553,17 +12736,21 @@ th, td {
   padding-bottom: 6px;
   padding-left: 0; }
 
-.detail-view-row, .detail-view-row-item {
+.detail-view-row,
+.detail-view-row-item {
   margin: 0 0 2px 0;
   min-width: 48px;
   min-height: 24px; }
 
-.edit-view-row, .edit-view-row-item {
+.edit-view-row,
+.edit-view-row-item {
   margin: 0 0 8px 0;
   min-width: 48px;
   min-height: 24px; }
 
-.detail-view-row .label, .edit-view-row .label, #lineItems {
+.detail-view-row .label,
+.edit-view-row .label,
+#lineItems {
   color: #534d64;
   display: inline;
   padding: 0 0 0 8px;
@@ -12574,7 +12761,8 @@ th, td {
   white-space: nowrap;
   vertical-align: baseline; }
 
-slot, #lead_queries_Div td {
+slot,
+#lead_queries_Div td {
   color: #534d64;
   font-size: 14px;
   font-weight: 700;
@@ -12712,7 +12900,8 @@ fieldset table {
 fieldset > table tr > td:first-of-type {
   width: 33.33333333%; }
 
-fieldset tr, fieldset td {
+fieldset tr,
+fieldset td {
   border: none; }
 
 fieldset label {
@@ -12726,22 +12915,27 @@ fieldset label {
   border-radius: 4px;
   margin: 4px; }
 
-table#tabFormPagination td, #tabFormPagination, #EditView > table#tabFormPagination.detail.view {
+table#tabFormPagination td,
+#tabFormPagination,
+#EditView > table#tabFormPagination.detail.view {
   border-bottom: none;
   margin-bottom: 0; }
 
-.edit tr td table, .edit tr td table tr td {
+.edit tr td table,
+.edit tr td table tr td {
   padding: 3px 3px 3px 0; }
 
 .edit .list {
   padding: 0;
   margin-bottom: 10px; }
 
-#map_listview_top, #export_listview_top {
+#map_listview_top,
+#export_listview_top {
   float: none;
   clear: both; }
 
-.detail.view, .detail table, table.detail {
+.detail.view,
+.detail table, table.detail {
   padding: 0;
   width: 100%; }
 
@@ -12771,7 +12965,8 @@ table#tabFormPagination td, #tabFormPagination, #EditView > table#tabFormPaginat
 .small tr td table {
   background-color: transparent; }
 
-.small tr td[scope=row] table tr td, .small tr td[scope=row] table tr th {
+.small tr td[scope=row] table tr td,
+.small tr td[scope=row] table tr th {
   background-color: transparent; }
 
 .small tr td table tr th {
@@ -12790,10 +12985,12 @@ table#tabFormPagination td, #tabFormPagination, #EditView > table#tabFormPaginat
   border: 2px solid;
   padding: 6px 6px 6px 16px; }
 
-#sitemap a:link, #sitemap a:visited {
+#sitemap a:link,
+#sitemap a:visited {
   text-decoration: none; }
 
-#sitemap a:hover, #sitemap h4 a:hover {
+#sitemap a:hover,
+#sitemap h4 a:hover {
   text-decoration: underline; }
 
 #sitemap ul {
@@ -12821,64 +13018,10 @@ div#responseTime {
   font-size: 12px;
   color: #888888; }
 
-#themePicker, #langPicker {
+#themePicker,
+#langPicker {
   text-align: center;
   margin-bottom: 0.5em; }
-
-#scheduler {
-  margin-top: 5px; }
-
-#scheduler .schedulerDiv {
-  color: #000000;
-  text-align: left;
-  width: 100%;
-  background-color: #FAFAFA;
-  border-collapse: collapse;
-  border-bottom: 1px solid #999; }
-
-#scheduler .schedulerDiv table {
-  width: 100%;
-  border-collapse: collapse; }
-
-#scheduler .schedulerDiv table tr td {
-  height: 18px;
-  border: 1px solid #dddddd; }
-
-#scheduler .schedulerDiv table tr.schedulerTimeRow td {
-  border-left: 0; }
-
-#scheduler .schedulerDiv table tr.schedulerTimeRow th[scope=col] {
-  border-left: 1px solid #DDDDDD;
-  padding-left: 4px; }
-
-#scheduler .schedulerDiv table tr.schedulerAttendeeRow td {
-  background-color: #eeeeee;
-  width: 15px; }
-
-#scheduler .schedulerDiv table tr.schedulerAttendeeRow td[scope=row] {
-  overflow: hidden;
-  padding-left: 4px;
-  width: 125px;
-  background: transparent;
-  border-left: 0; }
-
-#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime {
-  border-left: 4px solid #75af4f;
-  background-color: whitesmoke; }
-
-#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime {
-  border-left: 4px solid red; }
-
-#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerAttendeeDeleteCell {
-  background: transparent;
-  border-left: 1px solid #dddddd;
-  padding-left: 4px; }
-
-#scheduler .schedulerInvitees {
-  margin-top: 1em; }
-
-#scheduler .schedulerInvitees .tabForm {
-  margin-bottom: 0; }
 
 div.row.monthHeader {
   margin-left: 0;
@@ -12888,12 +13031,14 @@ div.row.monthHeader {
 .olCapFontClass A {
   color: #dfdfdf; }
 
-.olFgClass td, #forecastsWorksheet .olBgClass td.olFgClass {
+.olFgClass td,
+#forecastsWorksheet .olBgClass td.olFgClass {
   background-color: #fff;
   padding: 5px 7px 7px 10px;
   line-height: 18px; }
 
-.olCgClass td, #forecastsWorksheet .olBgClass td.olCgClass {
+.olCgClass td,
+#forecastsWorksheet .olBgClass td.olCgClass {
   border-bottom: 2px solid #ddd;
   background-color: #f6f6f6;
   padding: 5px 3px 3px 10px; }
@@ -13047,12 +13192,15 @@ div#content p.error {
   margin: 0 0 20px 0;
   border-radius: 3px; }
 
-.required a:link, .error a, .error a:link {
+.required a:link,
+.error a,
+.error a:link {
   color: whitesmoke;
   font-weight: 600;
   text-decoration: underline; }
 
-.required a:hover, .error a:hover {
+.required a:hover,
+.error a:hover {
   color: #534d64; }
 
 .success {
@@ -13132,17 +13280,24 @@ td.edit.view td[align=right] {
 #forecastsWorksheet tr.pagination td table td {
   padding: 3px 7px 3px 5px; }
 
-#forecastsWorksheet > tbody > tr > td, #forecastsWorksheet > tr > td, #forecastsWorksheet #activetimeperiods tr td {
+#forecastsWorksheet > tbody > tr > td,
+#forecastsWorksheet > tr > td,
+#forecastsWorksheet #activetimeperiods tr td {
   padding: 0 !important;
   vertical-align: top; }
 
-#tab_general > form > table, #tab_general > form > table.detail th, #tab_accounts > table, #tab_accounts > table.detail th {
+#tab_general > form > table,
+#tab_general > form > table.detail th,
+#tab_accounts > table,
+#tab_accounts > table.detail th {
   border: 0; }
 
 #tab_accounts .detail.view .edit.view {
   margin-top: 0; }
 
-#tab_accounts #ieSelect > table, #ieAccount > table, #ieAccount > table td table {
+#tab_accounts #ieSelect > table,
+#ieAccount > table,
+#ieAccount > table td table {
   padding: 0pt !important;
   border-collapse: collapse; }
 
@@ -13165,7 +13320,8 @@ td.edit.view td[align=right] {
 #importOptions table {
   border-collapse: collapse; }
 
-#importOptions #chooser_choose_index_text, #importOptions #chooser_ignore_index {
+#importOptions #chooser_choose_index_text,
+#importOptions #chooser_ignore_index {
   background: white;
   border: 0;
   text-align: left; }
@@ -13174,7 +13330,12 @@ td.edit.view td[align=right] {
   padding: 0;
   text-align: left; }
 
-#lastviewicon, #newrecordicon, #shortcuts_img, #lastviewicon_1, #newrecordicon_1, #shortcuts_img_1 {
+#lastviewicon,
+#newrecordicon,
+#shortcuts_img,
+#lastviewicon_1,
+#newrecordicon_1,
+#shortcuts_img_1 {
   display: none; }
 
 #popup_query_form {
@@ -13299,7 +13460,11 @@ a:link, a:visited, a:hover {
   border-bottom: 1px solid;
   border-top: 2px solid; }
 
-.td_alt, .list tr th, .list tr td[scope=col], .edit .list tr th, .edit .list tr td[scope=col] {
+.td_alt,
+.list tr th,
+.list tr td[scope=col],
+.edit .list tr th,
+.edit .list tr td[scope=col] {
   border-left: none;
   border-right: none; }
 
@@ -13389,7 +13554,10 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
 #colorPicker #themepickerLinkSpan:hover {
   color: #0B578F; }
 
-.ygrid-row, .ygrid-hd, .ygrid-hd-body, .ygrid-hd-body span {
+.ygrid-row,
+.ygrid-hd,
+.ygrid-hd-body,
+.ygrid-hd-body span {
   font-size: 8pt; }
 
 .teamNoticeBox {
@@ -13402,13 +13570,15 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
   line-height: 20px;
   min-height: 44px; }
 
-#newRecord form a:link, #newRecord form a:visited {
+#newRecord form a:link,
+#newRecord form a:visited {
   color: #666666; }
 
 #newRecord form a:hover {
   color: #444444; }
 
-.evenListRowS1 td, .oddListRowS1 td {
+.evenListRowS1 td,
+.oddListRowS1 td {
   color: #534d64; }
 
 .evenListRowS1 td {
@@ -13442,7 +13612,9 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
   border-color: #cbdae6;
   background-color: #fff; }
 
-.detail tr td a:link, .detail tr td a:visited, .detail tr td a:hover {
+.detail tr td a:link,
+.detail tr td a:visited,
+.detail tr td a:hover {
   color: #f08377; }
 
 .edit td[scope=row] {
@@ -13506,7 +13678,9 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited {
   text-align: right;
   white-space: nowrap; }
 
-td.teamset-row, .edit tr td.teamset-row, .edit tr td table tr td.teamset-row {
+td.teamset-row,
+.edit tr td.teamset-row,
+.edit tr td table tr td.teamset-row {
   padding: 5px; }
 
 span#selectedRecordsTop {
@@ -13642,7 +13816,8 @@ ul#detailViewActions.clickMenu {
   padding-left: 5px;
   margin: -1px 1px 0 1px; }
 
-.selectActionsDisabled a, #selectActionsDisabled a:hover {
+.selectActionsDisabled a,
+#selectActionsDisabled a:hover {
   float: left;
   display: inline-block;
   text-decoration: none;
@@ -13880,13 +14055,15 @@ input[type=text].cstm_code {
   float: left;
   width: 14.5em; }
 
-#color_menu, #font_menu {
+#color_menu,
+#font_menu {
   width: 200px;
   height: 15px;
   margin: 0;
   padding: 0; }
 
-#color_menu li, #font_menu li {
+#color_menu li,
+#font_menu li {
   float: left;
   height: 15px;
   width: 15px; }
@@ -13904,7 +14081,8 @@ input[type=text].cstm_code {
   right: 2em;
   top: 3em; }
 
-.headerlinks a:link, .headerlinks a:visited {
+.headerlinks a:link,
+.headerlinks a:visited {
   color: whitesmoke;
   padding: 14px 5px 14px 0;
   width: 100%; }
@@ -13940,10 +14118,12 @@ ol, ul, dl {
 #ConvertLead .label {
   text-align: left; }
 
-#EditView_tabs .id-ff-remove, #EditView_tabs .edit [type="radio"] {
+#EditView_tabs .id-ff-remove,
+#EditView_tabs .edit [type="radio"] {
   margin-top: 8px; }
 
-#EditView_tabs .edit [type="radio"], #EditView_tabs .edit [type="checkbox"] {
+#EditView_tabs .edit [type="radio"],
+#EditView_tabs .edit [type="checkbox"] {
   margin-top: 20px; }
 
 #EditView_tabs .id-ff-remove img,
@@ -13978,7 +14158,8 @@ input#btn_ActionLine.button[type="button"] {
   height: 32px;
   width: 32px; }
 
-#EditView_tabs .edit input, #EditView_tabs .edit textarea {
+#EditView_tabs .edit input,
+#EditView_tabs .edit textarea {
   margin-top: 5px;
   margin-bottom: 5px; }
 
@@ -13995,10 +14176,14 @@ input#btn_ActionLine.button[type="button"] {
 .col-sm-6 .edit-view-field .datetimecombo_time_section {
   display: inline-block; }
 
-#billing_address_street, #shipping_address_street, #primary_address_street, #alt_address_street {
+#billing_address_street,
+#shipping_address_street,
+#primary_address_street,
+#alt_address_street {
   height: 54px; }
 
-#primary_address_street, #alt_address_street {
+#primary_address_street,
+#alt_address_street {
   width: 60%; }
 
 .col-sm-6 .edit-view-field[field="billing_address_street"] input[type="text"],
@@ -14262,7 +14447,8 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
   background: none;
   margin: 0; }
 
-#btn_vCardButton, #btn_vCardButton img {
+#btn_vCardButton,
+#btn_vCardButton img {
   height: 14px;
   width: auto; }
 
@@ -14402,10 +14588,14 @@ table legend {
   padding: 5px;
   font-size: 0.9em; }
 
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default {
   background: #eeeeee; }
 
-.ui-state-active a, .ui-state-active a:link, .ui-state-default a:hover {
+.ui-state-active a,
+.ui-state-active a:link,
+.ui-state-default a:hover {
   font-weight: bold; }
 
 .ui-widget-content a {
@@ -14414,7 +14604,8 @@ table legend {
 .ui-widget-content a:hover {
   color: #008080; }
 
-.ui-tabs ul li a, .ui-tabs ul li a h3 {
+.ui-tabs ul li a,
+.ui-tabs ul li a h3 {
   padding: 5px;
   margin: 0; }
 
@@ -14427,7 +14618,10 @@ table legend {
 #adminsection {
   display: table-cell; }
 
-.detail table, .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th {
+.detail table,
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th {
   border: 1px solid #dddddd; }
 
 .table-responsive > tbody > tr > td {
@@ -14494,13 +14688,16 @@ select#sales_stage_advanced {
   .detail-view-row .label.col-2-label {
     padding-left: 8px; }
 
-  .col-xs-6 input[type="text"]#first_name, .col-sm-6 input[type="text"]#first_name {
+  .col-xs-6 input[type="text"]#first_name,
+  .col-sm-6 input[type="text"]#first_name {
     width: 48.5%; }
 
-  .col-xs-12 input[type="text"]#first_name, .col-sm-12 input[type="text"]#first_name {
+  .col-xs-12 input[type="text"]#first_name,
+  .col-sm-12 input[type="text"]#first_name {
     width: 38.4%; } }
 @media (min-width: 768px) {
-  .col-xs-6 input[type="text"]#first_name, .col-sm-6 input[type="text"]#first_name {
+  .col-xs-6 input[type="text"]#first_name,
+  .col-sm-6 input[type="text"]#first_name {
     width: 48.5%; } }
 .sub-header {
   padding-bottom: 10px;
@@ -14523,7 +14720,8 @@ select#sales_stage_advanced {
   display: inline-block;
   border-radius: 50%; }
 
-#user_password, #user_name {
+#user_password,
+#user_name {
   width: 150px; }
 
 .edit img#company_logo_image {
@@ -14565,7 +14763,8 @@ select#sales_stage_advanced {
   padding: 8px;
   margin-right: 1%; }
 
-#fieldChoices .field-list input, .field-list textarea {
+#fieldChoices .field-list input,
+.field-list textarea {
   width: 100%;
   display: block;
   float: none;
@@ -14657,7 +14856,9 @@ hr {
   .View {
     border: 1px solid #cccccc; }
 
-  #month-tab, #year-tab, #shared-tab {
+  #month-tab,
+  #year-tab,
+  #shared-tab {
     display: none; } }
 .table > thead > tr > th {
   border: none; }
@@ -14690,7 +14891,8 @@ hr {
   color: #000000;
   margin: 0 5px 0 5px; }
 
-#copyright_data a:hover, #links a:hover {
+#copyright_data a:hover,
+#links a:hover {
   cursor: pointer;
   text-decoration: none; }
 
@@ -14716,7 +14918,8 @@ tr:hover img.info {
 #EditView .paginationWrapper {
   padding-top: 4px; }
 
-.paginationWrapper span, .paginationWrapper span {
+.paginationWrapper span,
+.paginationWrapper span {
   padding: 0;
   margin: 0; }
 
@@ -14731,11 +14934,18 @@ tr:hover img.info {
 .paginationWrapper {
   float: right; }
 
-.yui-layout .yui-layout-clip-right .collapse, .yui-layout-hd .collapse, .yui-layout .yui-layout-clip-left .collapse {
+.yui-layout .yui-layout-clip-right .collapse,
+.yui-layout-hd .collapse,
+.yui-layout .yui-layout-clip-left .collapse {
   visibility: visible;
   display: block; }
 
-.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
   border-top: none; }
 
 h3 span {
@@ -14967,8 +15177,18 @@ object {
   .col-sm-8.edit-view-field {
     width: 100%; }
 
-  .edit table, .edit thead, .edit tbody, .edit th, .edit td, .edit tr,
-  .popupBody .edit table, .popupBody .edit thead, .popupBody .edit tbody, .popupBody .edit th, .popupBody .edit td, .popupBody .edit tr {
+  .edit table,
+  .edit thead,
+  .edit tbody,
+  .edit th,
+  .edit td,
+  .edit tr,
+  .popupBody .edit table,
+  .popupBody .edit thead,
+  .popupBody .edit tbody,
+  .popupBody .edit th,
+  .popupBody .edit td,
+  .popupBody .edit tr {
     display: block;
     background: none;
     width: 100%; } }
@@ -15021,17 +15241,32 @@ object {
   .col-sm-9 {
     width: 99%; } }
 @media (max-width: 350px) {
-  .footer_left a#admin_options, .footer_left a#powered_by {
+  .footer_left a#admin_options,
+  .footer_left a#powered_by {
     display: block; }
 
   .footer_left a#admin_options {
     padding-bottom: 10px; } }
 @media only screen and (max-width: 750px) {
-  .detail table, .detail thead, .detail tbody, .detail th, .detail td, .detail tr {
+  .detail table,
+  .detail thead,
+  .detail tbody,
+  .detail th,
+  .detail td,
+  .detail tr {
     display: block;
     background: none; }
 
-  .detail tr, .detail tr td[scope="col"], .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td, .detail tr td, .detail table, table.detail {
+  .detail tr,
+  .detail tr td[scope="col"],
+  .table > thead > tr > th,
+  .table > tbody > tr > th,
+  .table > tfoot > tr > th,
+  .table > thead > tr > td,
+  .table > tbody > tr > td,
+  .table > tfoot > tr > td,
+  .detail tr td,
+  .detail table, table.detail {
     background: none;
     border: none; }
 
@@ -15052,7 +15287,16 @@ object {
   .detail tr:last-child {
     border: none; } }
 @media (max-width: 750px) {
-  .edit tr, .edit tr td[scope="col"], .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td, .detail tr td, .detail table, table.detail {
+  .edit tr,
+  .edit tr td[scope="col"],
+  .table > thead > tr > th,
+  .table > tbody > tr > th,
+  .table > tfoot > tr > th,
+  .table > thead > tr > td,
+  .table > tbody > tr > td,
+  .table > tfoot > tr > td,
+  .detail tr td,
+  .detail table, table.detail {
     background: none;
     font-size: 1em; }
 
@@ -15078,8 +15322,14 @@ object {
   .edit input[type=text] {
     font-size: 1em; }
 
-  /*#bootstrap-container, .col-sm-9, .col-sm-offset-3, .col-md-10, .col-md-offset-2, .main {margin: 0;padding: 0;}*/
-  #content, #pageContainer {
+  /*#bootstrap-container,
+.col-sm-9,
+.col-sm-offset-3,
+.col-md-10,
+.col-md-offset-2,
+.main {margin: 0;padding: 0;}*/
+  #content,
+  #pageContainer {
     width: 100%;
     margin: 0 0 0 0; }
 
@@ -15091,11 +15341,15 @@ object {
     border: 1px solid #ccc;
     padding: 0; }
 
-  #suggestion_box table tbody tr th, #suggestion_box table tbody tr td {
+  #suggestion_box table tbody tr th,
+  #suggestion_box table tbody tr td {
     display: table-cell;
     width: auto; }
 
-  #cal-edit, #settings_dialog, #settings_dialog form, #container1 {
+  #cal-edit,
+  #settings_dialog,
+  #settings_dialog form,
+  #container1 {
     top: 10px;
     max-height: 400px;
     max-width: 300px;
@@ -15145,11 +15399,25 @@ object {
   .defaultSkin .mceToolbar {
     height: auto; } }
 @media only screen and (min-device-width: 480px) and (max-device-width: 980px) {
-  .detail table, .detail thead, .detail tbody, .detail th, .detail td, .detail tr {
+  .detail table,
+  .detail thead,
+  .detail tbody,
+  .detail th,
+  .detail td,
+  .detail tr {
     display: block;
     background: none; }
 
-  .detail tr, .detail tr td[scope="col"], .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td, .detail tr td, .detail table, table.detail {
+  .detail tr,
+  .detail tr td[scope="col"],
+  .table > thead > tr > th,
+  .table > tbody > tr > th,
+  .table > tfoot > tr > th,
+  .table > thead > tr > td,
+  .table > tbody > tr > td,
+  .table > tfoot > tr > td,
+  .detail tr td,
+  .detail table, table.detail {
     background: none;
     border: none; }
 
@@ -15160,7 +15428,8 @@ object {
     margin: 10px 0 0 0;
     padding: 8px; }
 
-  .detail508 tr td[scope="col"], .edit tr td[scope="col"] {
+  .detail508 tr td[scope="col"],
+  .edit tr td[scope="col"] {
     font-weight: bold;
     margin: 0;
     text-align: left;
@@ -15172,7 +15441,8 @@ object {
   .detail tr:last-child {
     border: none; }
 
-  .detail td, #DEFAULT td {
+  .detail td,
+  #DEFAULT td {
     display: inline-block;
     border: none;
     margin: 0 5px 0 25px;
@@ -15253,7 +15523,8 @@ object {
     -webkit-box-shadow: 0 0 3px #555;
     -moz-box-shadow: 0 0 3px #555; }
 
-  #tiptip_arrow, #tiptip_arrow_inner {
+  #tiptip_arrow,
+  #tiptip_arrow_inner {
     position: absolute;
     border-color: transparent;
     border-style: solid;
