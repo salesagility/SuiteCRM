@@ -11474,69 +11474,78 @@ div.qtip.qtip-default {
     width: 150px;
 }
 
-.modal-content .search_form .view {
-    background-color: initial;
+/* search form (and popup search form) */
+
+.search_form .view {
     padding: 5px 0px 0px 30px !important;
 }
+.modal-content .search_form .view {
+    background-color: initial;
+}
 
-.modal-content #search_form label {
+#search_form label {
     font-weight: bold;
-    color: #000000;
     white-space: nowrap;
+}
+.modal-content #search_form label {
+    color: #000000;
 }
 
 .modal-content .search_form .view input[type="text"],
 .modal-content .search_form .view textarea {
     background-color: #D4F1EA;
 }
+.search_form .view select,
+.search_form .view select#saved_search_select {
+    padding: initial;
+}
 .modal-content .search_form .view select,
 .modal-content .search_form .view select#saved_search_select {
     border: 2px solid #A5E8D6;
-    padding: initial;
 }
 
-.modal-content .search_form .view .dateTimeRangeChoice {
+.search_form .view .dateTimeRangeChoice {
     display: block;
     float: left;
 }
 
-.modal-content .search_form .view .dateTimeRangeChoice select {
+.search_form .view .dateTimeRangeChoice select {
     width: 90px !important;
 }
 
-.modal-content .search_form .view .dateTimeRangeChoiceClear {
+.search_form .view .dateTimeRangeChoiceClear {
     display: block !important;
 }
 
-.modal-content .search_form .view .col-lg-8 {
+.search_form .view .col-lg-8 {
     width: initial;
 }
 
-.modal-content .search_form .view div.search_fields_basic {
+.search_form .view div.search_fields_basic {
     line-height: 22px;
     padding-top: 10px;
 }
 
-.modal-content .search_form .view .col-xs-12 {
+.search_form .view .col-xs-12 {
     padding-right: 30px;
     min-height: initial !important;
 }
 
-.modal-content .search_form .view .col-xs-12 input[type="text"],
-.modal-content .search_form .view .col-xs-12 textarea {
+.search_form .view .col-xs-12 input[type="text"],
+.search_form .view .col-xs-12 textarea {
     width: 100%;
 }
 
-.modal-content .search_form .view .templateGroupChooser {
+.search_form .view .templateGroupChooser {
     width: 100%;
 }
 
-.modal-content .search_form .view .search_fields_basic .col-lg-8 {
+.search_form .view .search_fields_basic .col-lg-8 {
     float: none;
     padding: initial;
 }
 
-.modal-content .search_form .view #inlineSavedSearch > table > tbody > tr > td {
+.search_form .view #inlineSavedSearch > table > tbody > tr > td {
     width: 100%;
     display: block;
     float: none;
