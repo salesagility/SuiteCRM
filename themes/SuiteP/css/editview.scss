@@ -1,2 +1,213 @@
 /**** Edit view ***/
 @import 'variables';
+
+/** Reminders **/
+#EditView #reminder_view input[type="button"].add-btn {
+  padding: 0px 20px 20px 32px;
+}
+
+#EditView #reminder_view input[type="button"].remove-btn {
+  padding: 0px 32px 20px 20px;
+}
+
+#EditView #reminders input[type="button"]#reminder_add_btn {
+  padding: 0px 20px 20px 32px;
+}
+
+/** Schedule Bar **/
+
+#scheduler {
+  margin-top: 5px;
+}
+
+#scheduler .schedulerDiv {
+  color: $main-font-color;
+  text-align: left;
+  width: 100%;
+  background-color: #FAFAFA;
+  border-collapse: collapse;
+  border: 1px solid $panel-border-bg;
+  border-radius: 4px;
+  padding: 20px 20px 10px 20px;
+}
+
+#scheduler .schedulerDiv table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#scheduler .schedulerDiv table tr td {
+  height: 18px;
+  border: 1px solid #dddddd;
+}
+
+#scheduler .schedulerDiv table tr.schedulerTimeRow td {
+  border-left: 0;
+}
+
+#scheduler .schedulerDiv table tr.schedulerTimeRow th[scope=col] {
+  border-left: 1px solid #DDDDDD;
+  padding-left: 4px;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td {
+  background-color: #eeeeee;
+  width: 15px;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td[scope=row] {
+  overflow: hidden;
+  padding-left: 4px;
+  width: 125px;
+  background: transparent;
+  border-left: 0;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime.free {
+  border-left: 4px solid $scheduler-start-color /*!important*/;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime.busy {
+  border-left: 4px solid $scheduler-start-color /*!important*/;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime {
+  border-left: 4px solid $scheduler-start-color /*!important*/;
+  background-color: $default-btn-color;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime {
+  border-left: 4px solid $scheduler-end-color /*!important*/;
+}
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime.free {
+  border-left: 4px solid $scheduler-end-color /*!important*/;
+}
+
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime.busy {
+  border-left: 4px solid $scheduler-end-color /*!important*/;
+}
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerAttendeeDeleteCell {
+  background: transparent;
+  border-left: 1px solid #dddddd;
+  padding-left: 4px;
+}
+
+#scheduler .schedulerInvitees .tabForm {
+  margin-bottom: 0;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.free {
+  background-color: $scheduler-free-color;
+  border-color: $scheduler-free-border-color;
+}
+
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.busy {
+  background-color: $scheduler-busy-color;
+  border-color: $scheduler-border-color;
+}
+
+#create-invitees {
+  margin-top: 5px;
+  color: $main-font-color;
+  text-align: left;
+  width: 100%;
+  background-color: #FAFAFA;
+  border-collapse: collapse;
+  border: 1px solid $panel-border-bg;
+  border-radius: 4px;
+  padding: 20px 20px 10px 20px;
+}
+
+.schedulerInvitees {
+  margin-top: 5px;
+  color: $main-font-color;
+  text-align: left;
+  width: 100%;
+  background-color: #FAFAFA;
+  border-collapse: collapse;
+  border: 1px solid $panel-border-bg;
+  border-radius: 4px;
+  padding: 20px 20px 10px 20px;
+}
+
+#create_invitee_as_lead {
+  color: $default-btn-color;
+  background-color: $danger-btn-bg;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin: 4px;
+  padding: 0 10px;
+  font-size: $page-font-size;
+  height: $button-line-height;
+  line-height: $button-line-height;
+  text-transform: uppercase;
+}
+
+#create_invitee_as_contact {
+  color: $default-btn-color;
+  background-color: $danger-btn-bg;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin: 4px;
+  padding: 0 10px;
+  font-size: $page-font-size;
+  height: $button-line-height;
+  line-height: $button-line-height;
+  text-transform: uppercase;
+}
+
+#create-invitee-edit td {
+  padding-bottom: 8px;
+  line-height: $input-line-height;
+}
+
+#create-invitee-edit button {
+  color: $default-btn-color;
+  background-color: $danger-btn-bg;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin: 4px;
+  padding: 0 10px;
+  font-size: $page-font-size;
+  height: $button-line-height;
+  line-height: $button-line-height;
+  text-transform: uppercase;
+}
+
+/** add invitees search **/
+#EditView .edit input[type=submit]#invitees_search  {
+  color: $default-btn-color;
+  background-color: $danger-btn-bg;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin: 4px;
+  padding: 0 10px;
+  font-size: $page-font-size;
+  height: $button-line-height;
+  line-height: $button-line-height;
+  text-transform: uppercase;
+}
+
+#list_div_win {
+  color: $main-font-color;
+  text-align: left;
+  width: 100%;
+  background-color: $panel-bg;
+  border-collapse: collapse;
+  border: 1px solid $panel-border-bg;
+  border-radius: 4px;
+  padding: 20px 20px 10px 20px;
+  margin-top: 5px;
+}
+
+#list_div_win .list tr th {
+  color: $main-font-color;
+}

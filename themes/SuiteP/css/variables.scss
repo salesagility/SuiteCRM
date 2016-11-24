@@ -31,8 +31,9 @@ $link-color-hover: $danger-hover;
 
 $page-title-spacing: 30px; // 30px normal
 
-$panel-bg: #E6E6E6;
-$footer-btn-bg: #E6E6E6;
+$panel-bg: #FFFFFF;
+$panel-border-bg: #E6E6E6;
+$footer-btn-bg: #ddd;
 
 // Scroll bars
 $scroll-bar-thumb-color: rgba(165, 232, 214, 1);
@@ -218,3 +219,11 @@ $qtip-title-bg: #5D5670;
 $qtip-title-color: #F5F5F5;
 $qtip-content-bg: #65697A;
 $qtip-content-color: #F5F5F5;
+
+// Schedule bar
+$scheduler-start-color: #79996a;
+$scheduler-end-color: #99534d;
+$scheduler-free-color: #BBE6A5;
+$scheduler-free-border-color: #7e996e;
+$scheduler-busy-color: #F08377;
+$scheduler-border-color: #99524d;
