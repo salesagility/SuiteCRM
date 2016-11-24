@@ -21,6 +21,11 @@ img, svg {
   image-rendering: pixelated;
 }
 
+h3 {
+  font-size: $page-font-size;
+  font-weight: bold;
+}
+
 // override bootstrap
 a {
   color: $link-color;
