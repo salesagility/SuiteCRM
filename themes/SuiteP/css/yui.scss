@@ -518,15 +518,16 @@ p#clear {
 }
 
 .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn.yui-default {
-  background-color: #426fd9;
-  border: 1px solid #326A9C;
+  background-color: $danger-btn-bg;
+  border: 1px solid $danger-btn-bg;
   -moz-border-radius :  4px 4px 4px 4px;
+  border-radius :  4px;
 }
 
 .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn.yui-default button {
   color: #fff;
-  background-color: #356EA1;
-  text-shadow: -1px -1px #254F74;
+  background-color: $danger-btn-bg;
+  text-shadow: -1px -1px $danger-btn-bg;
 }
 
 
@@ -1463,7 +1464,7 @@ tr.yui-dt-highlighted, tr.yui-dt-highlighted td.yui-dt-asc, tr.yui-dt-highlighte
 }
 
 th.yui-dt-selected, th.yui-dt-selected a {
-  background-color: #446CD7;
+  background-color: $danger-btn-bg;
 }
 
 tr.yui-dt-selected td, tr.yui-dt-selected td.yui-dt-asc, tr.yui-dt-selected td.yui-dt-desc
@@ -1473,24 +1474,24 @@ tr.yui-dt-selected td, tr.yui-dt-selected td.yui-dt-asc, tr.yui-dt-selected td.y
 
 tr.yui-dt-even td.yui-dt-selected, tr.yui-dt-odd td.yui-dt-selected
 {
-  background-color: #446CD7;
+  background-color: $danger-btn-bg;
   color: #FFF;
 }
 
 .yui-dt-list th.yui-dt-selected, .yui-dt-list th.yui-dt-selected a
 {
-  background-color: #446CD7;
+  background-color: $danger-btn-bg;
 }
 
 .yui-dt-list tr.yui-dt-selected td, .yui-dt-list tr.yui-dt-selected td.yui-dt-asc, .yui-dt-list tr.yui-dt-selected td.yui-dt-desc
 {
-  background-color: #426FD9;
+  background-color: $danger-btn-bg;
   color: #FFF;
 }
 
 .yui-dt-list tr.yui-dt-even td.yui-dt-selected, .yui-dt-list tr.yui-dt-odd td.yui-dt-selected
 {
-  background-color: #446CD7;
+  background-color: $danger-btn-bg;
   color: #FFF;
 }
 
@@ -4098,7 +4099,7 @@ a.yuimenuitemlabel:hover {
 }
 
 .yui-resize-proxy {
-  border: 1px dashed #426FD9;
+  border: 1px dashed $danger-btn-bg;
 }
 
 .yui-resize-status {
