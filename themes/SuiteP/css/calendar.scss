@@ -218,7 +218,7 @@ h5.calSharedUser  {
 }
 
 
-
+.fc-unthemed thead
 
 
 .fc-view-container .monthCalBody * {
@@ -404,7 +404,7 @@ ul.yui-nav li.selected {
   display: block;
   float: left;
   width: 128px;
-  color: $default-btn-color;
+  color: $qtip-title-color;
   line-height: $qtip-font-size + 6px;
 }
 
@@ -418,7 +418,7 @@ ul.yui-nav li.selected {
 
 .qtip-title-buttons a {
   padding-left: 8px;
-  color: $default-btn-color;
+  color: $qtip-btn-color;
   margin: 0 0 0 4px;
   padding: 0;
 }
@@ -438,7 +438,7 @@ ul.yui-nav li.selected {
 }
 
 .qtip-default .qtip-titlebar .qtip-close {
-  color: $default-btn-color;
+  color: $qtip-btn-color;
   font-size: 22px;
 }
 
@@ -454,7 +454,7 @@ ul.yui-nav li.selected {
 
 .qtip-content {
   background-color: $qtip-content-bg;
-  color: $default-btn-color;
+  color: $qtip-content-color;
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
 }
@@ -797,10 +797,31 @@ a.fc-day-number:hover {
   font-weight: bold;
 }
 
+
+
 .fc-bg table > tbody > tr .fc-today {
   background-color: $calendar-today-bg;
 }
 
 div.fc-basic-view .fc-body .fc-row {
   min-height: $calendar-slot-height; /* ensure that all rows are at least this tall */
+}
+
+/* user list */
+
+.modal-calendar-user-list table.edit {
+  width: 256px;
+  margin-top: 8px;
+}
+
+.modal-calendar-user-list table.edit tr td:first-of-type {
+  width: 192px;
+}
+
+.modal-calendar-user-list #shared_ids_td {
+  width: 128px;
+}
+
+.modal-calendar-user-list select[size]#shared_ids {
+  height: 200px;
 }
