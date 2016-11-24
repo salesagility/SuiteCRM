@@ -5364,6 +5364,19 @@ input[type=text].cstm_code {
     margin: 10px 60px 10px 10px;
 }
 
+#case_updates label {
+    margin-left: 10px;
+}
+
+#case_updates textarea {
+    margin-left: 10px;
+}
+
+#case_updates input[type=button] {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
 .caseUpdateImage {
     margin:0 5px 0 0;
 }
