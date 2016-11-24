@@ -149,8 +149,8 @@ table#goto_date_trigger_div_t thead {
 }
 
 .yui-calendar td.calcell.selected a {
-  background: $main-alternate-bg;
-  color: $link-color;
+  background: $danger-btn-bg-hover;
+  color: $default-btn-color;
 }
 
 .yui-calendar td.calcell a:hover {

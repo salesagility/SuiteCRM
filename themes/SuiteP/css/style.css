@@ -11835,8 +11835,8 @@ table#goto_date_trigger_div_t thead {
   color: whitesmoke; }
 
 .yui-calendar td.calcell.selected a {
-  background: white;
-  color: #f08377; }
+  background: #d66c60;
+  color: whitesmoke; }
 
 .yui-calendar td.calcell a:hover {
   background: #d66c60;
@@ -12347,7 +12347,7 @@ a.fc-day-number:hover {
   background-color: #fcf8e3; }
 
 div.fc-basic-view .fc-body .fc-row {
-  min-height: 72px;
+  min-height: 52px;
   /* ensure that all rows are at least this tall */ }
 
 /* user list */
