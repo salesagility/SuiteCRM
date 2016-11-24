@@ -11851,7 +11851,17 @@ table#goto_date_trigger_div_t thead {
   color: whitesmoke; }
 
 .yui-calendar .calweekdaycell {
-  color: whitesmoke; }
+  color: #f08377; }
+
+.yui-calendar a.calnav {
+  background-color: #f08377;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+
+.yui-calendar a.calnav:hover {
+  background-color: #d66c60;
+  border: 1px solid transparent;
+  border-radius: 4px; }
 
 a#callnav_today {
   clear: both;
