@@ -11658,6 +11658,9 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
   margin: 0 5px 0 0; }
 
 /** Style expanded/collapse like buttons**/
+#aop_case_updates_threaded_span > a:first-of-type {
+  margin-left: 10px; }
+
 #aop_case_updates_threaded_span > a {
   margin-right: 4px;
   margin-bottom: 4px;
