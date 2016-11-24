@@ -2537,23 +2537,23 @@ input[type=button].btn-info:focus {
 
 .btn-success {
   color: whitesmoke;
-  background-color: #66996b;
-  border: 1px solid #66996b; }
+  background-color: #bbe6a5;
+  border: 1px solid #bbe6a5; }
 
 .btn-success:hover {
   color: whitesmoke;
-  background-color: #66996b;
-  border: 1px solid #66996b; }
+  background-color: #bbe6a5;
+  border: 1px solid #bbe6a5; }
 
 .btn-success:active {
   color: whitesmoke;
-  background-color: #66996b;
-  border: 1px solid #66996b; }
+  background-color: #bbe6a5;
+  border: 1px solid #bbe6a5; }
 
 .btn-success:focus {
   color: whitesmoke;
-  background-color: #66996b;
-  border: 1px solid #66996b; }
+  background-color: #bbe6a5;
+  border: 1px solid #bbe6a5; }
 
 .button {
   background: #f08377;
@@ -12653,7 +12653,7 @@ div#content p.error {
   color: #534d64; }
 
 .success {
-  color: #66996b; }
+  color: #bbe6a5; }
 
 .rssItemDate {
   color: #666666; }
