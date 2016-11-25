@@ -62,7 +62,6 @@ $mod_strings = array(
     'LBL_ENABLED' => 'Enabled',
     'LBL_EXTERNAL' => 'Enable users to create external account records to this connector.',
     'LBL_EXTERNAL_SET_PROPERTIES' => ' In order to use this connector, the properties should also be set in the Set Connector Properties settings page.',
-    'LBL_FINSALES' => 'Finsales',
     'LBL_MARKET_CAP' => 'Market Cap',
     'LBL_MERGE' => 'Merge',
     'LBL_MODIFY_DISPLAY_TITLE' => 'Enable Connectors',
