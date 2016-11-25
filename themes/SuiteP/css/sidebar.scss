@@ -2,15 +2,15 @@
 @import 'variables';
 
 .sidebar {
+  display: block;
   position: fixed;
   top: $navbar-height;
   bottom: 0;
   left: 0;
-  z-index: 1000;
-  display: block;
+  background-color: $sidebar-bg;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: $sidebar-bg;
+  z-index: 1000;
 
   #actionMenuSidebar {
     margin-bottom: 24px;
@@ -149,17 +149,17 @@
   }
 
   #actionMenuSidebar li a {
-    background-color: $sidebar-btn-bg;
-    color: $sidebar-btn-color;
     display: block;
     font-size: 13px;
+    background-color: $sidebar-btn-bg;
+    color: $sidebar-btn-color;
     margin: 0 0 1px 0;
     clear: both;
   }
 
   #actionMenuSidebar ul li a:hover {
-    color: $sidebar-btn-color;
     background-color: $sidebar-btn-bg-hover;
+    color: $sidebar-btn-color;
   }
 
   #actionMenuSidebar li a div {
@@ -168,10 +168,10 @@
   }
 
   #actionMenuSidebar li a .actionmenulink {
-    width: 100%;
-    min-height: 48px;
     padding: 16px 8px 16px 0;
     line-height: 24px;
+    width: 100%;
+    min-height: 48px;
   }
 
   #recentlyViewedSidebar {
@@ -185,14 +185,14 @@
   }
 
   .side-bar-action-icon {
-    width: 40px; /* effects link text position */
-    height: 48px;
-    background-repeat: no-repeat;
     background-position: 0 8px;
+    background-repeat: no-repeat;
     background-size: 32px;
-    vertical-align: middle;
     margin-left: 12px;
     float: left;
+    width: 40px; /* effects link text position */
+    height: 48px;
+    vertical-align: middle;
   }
 
   .favoritelinks {
@@ -222,46 +222,46 @@
   position: fixed;
   top: 100px;
   background: $sidebar-bg;
-  z-index: 1000;
-  height: 30px;
-  width: 30px;
   background-image: none, url("../../../../themes/SuiteP/images/p_show_sidebar.svg"), url("../../../../themes/SuiteP/images/p_show_sidebar.png");
-  background-repeat: no-repeat;
   background-position: center center;
+  background-repeat: no-repeat;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
+  width: 30px;
+  height: 30px;
+  z-index: 1000;
 }
 
 .button-toggle-expanded {
   position: fixed;
   top: 100px;
   background: $sidebar-bg;
-  z-index: 1000;
-  height: 30px;
-  width: 30px;
   background-image: none, url("../../../../themes/SuiteP/images/p_hide_sidebar.svg"), url("../../../../themes/SuiteP/images/p_hide_sidebar.png");
-  background-repeat: no-repeat;
   background-position: center center;
+  background-repeat: no-repeat;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
+  width: 30px;
+  height: 30px;
+  z-index: 1000;
 }
 
 
 /* Breakpoints */
 @media (max-width: 1130px) {
   .sidebar {
-    visibility: collapse;
     width: 0;
+    visibility: collapse;
   }
 
   .button-toggle-expanded {
-    visibility: collapse;
     width: 0;
+    visibility: collapse;
   }
 
   .button-toggle-collapsed {
-    visibility: collapse;
     width: 0;
+    visibility: collapse;
   }
 
   #bootstrap-container.col-md-offset-2 {
@@ -297,15 +297,15 @@
 }
 
 #favoritesSidebar .new {
-  visibility: collapse;
   width: 0;
   height: 0;
+  visibility: collapse;
 }
 
 #favoritesSidebar .new * {
-  visibility: collapse;
   width: 0;
   height: 0;
+  visibility: collapse;
 }
 
 #recentlyViewedSidebar li a {
@@ -321,25 +321,25 @@
 }
 
 #recentlyViewedSidebar .recent-links-detail  {
-  width: 85%;
   display: inline-block;
+  width: 85%;
 }
 
 #favoritesSidebar .favorite-links-detail {
-  width: 85%;
   display: inline-block;
+  width: 85%;
 }
 
 #recentlyViewedSidebar .recent-links-edit{
-  height: 20px;
-  width: 20px;
   display: inline-block;
+  width: 20px;
+  height: 20px;
 }
 
 #favoritesSidebar .favorite-links-edit {
-  height: 20px;
-  width: 20px;
   display: inline-block;
+  width: 20px;
+  height: 20px;
 }
 
 #recentlyViewedSidebar li:hover {
@@ -369,15 +369,15 @@ footer * {
 }
 
 footer {
+  box-sizing: content-box;
   bottom: 0;
-  margin: 0 0 0 0;
   background-color: $footer-btn-bg;
-  clear: both;
-  width: 100%;
+  margin: 0 0 0 0;
   border: 1px solid transparent;
   border-radius: 4px;
-  box-sizing: content-box;
+  clear: both;
   line-height: 48px;
+  width: 100%;
 }
 
 footer.expandedSidebar {

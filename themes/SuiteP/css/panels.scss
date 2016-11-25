@@ -18,19 +18,19 @@
   background: $panel-expanded-bg;
   color: white;
   padding: 0;
-  vertical-align: middle;
-  height: 52px/$panel-height-divisor;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  height: 52px/$panel-height-divisor;
+  vertical-align: middle;
 }
 
 .panel-default > .panel-heading > div {
-  color: $default-btn-color;
-  height: 52px/$panel-height-divisor;
-  line-height: 52px/$panel-height-divisor;
-  font-weight: 500;
   font-size: 14px ;
+  font-weight: 500;
   background-color: $panel-expanded-bg;
+  color: $default-btn-color;
+  line-height: 52px/$panel-height-divisor;
+  height: 52px/$panel-height-divisor;
 }
 
 .panel-default > .panel-body {
@@ -42,8 +42,8 @@
 }
 
 .collapse, .collapsing, .collapse.in {
-  -webkit-transition: none;
   transition: none;
+  -webkit-transition: none;
 }
 
 .panel-default > .panel-heading {
@@ -52,30 +52,30 @@
 }
 
 .panel-default > .panel-heading > a {
-  color: $default-btn-color;
   display: block;
-  height: 52px;
-  font-weight: 500;
   font-size: 14px ;
-  //background-color: $panel-expanded-bg;
+  font-weight: 500;
+  color: $default-btn-color;
   padding: 15px/$panel-height-divisor 10px 0 10px/$panel-height-divisor;
-  text-decoration: none;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  height: 52px;
   text-decoration: none;
+  text-decoration: none;
+  //background-color: $panel-expanded-bg;
 }
 
 .panel-default.sub-panel > .panel-heading  > a {
-  color: $default-btn-color;
   display: block;
-  height: 52px/$panel-height-divisor;
-  font-weight: 500;
   font-size: 14px ;
-  //background-color: $panel-expanded-bg;
+  font-weight: 500;
+  color: $default-btn-color;
   padding: 10px/$panel-height-divisor 10px 0 10px/$panel-height-divisor;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  height: 52px/$panel-height-divisor;
   text-decoration: none;
+  //background-color: $panel-expanded-bg;
 }
 
 .panel-default > .panel-heading  > a:not(.collapsed) {
@@ -142,10 +142,10 @@ div.action_buttons .button:hover {
 }
 
 #subpanel_list .tab-content .list.view.subpanel-table .pagination div.action_buttons .button {
-  text-transform: capitalize;
   padding: 5px 13px;
   line-height: initial;
   height: initial;
+  text-transform: capitalize;
 }
 
 div.sub-panel {
@@ -168,13 +168,13 @@ div.sub-panel {
 }
 
 .subpanel-table.list th {
-  color: #000000;
   font-weight: bold;
+  color: #000000;
 }
 
 .subpanel-table.list th a:link {
-  color: #000000;
   font-weight: bold;
+  color: #000000;
 }
 
 .subpanel-table .clickMenu > li, .SugarActionMenuIESub li {
@@ -186,8 +186,8 @@ div.sub-panel {
 .subpanel-table ul.subpanel {
   background: none;
   background-color: transparent ;
-  border-color: transparent ;
   border: none;
+  border-color: transparent ;
 }
 
 .sugar_action_button a {
@@ -199,51 +199,51 @@ div.sub-panel {
 }
 
 .subpanel-table ul.subpanel > a {
-  padding: 0 ;
   background-color: #94A6B5;
+  padding: 0 ;
+  padding-right: 4px ;
   border: 1px solid transparent;
   border-radius: 4px;
-  padding-right: 4px ;
 }
 
 .subpanel-table li.sugar_action_button {
-  padding: 0 ;
   background-color: #94A6B5;
+  padding: 0 ;
+  padding-right: 4px ;
   border: 1px solid transparent;
   border-radius: 4px;
-  padding-right: 4px ;
 }
 
 .subpanel-table .pagination .sugar_action_button {
-  padding: 0 ;
   background-color: #94A6B5;
+  padding: 0 ;
+  padding-right: 4px ;
   border: 1px solid transparent;
   border-radius: 4px;
-  padding-right: 4px ;
 }
 
 .subpanel-table .pagination li.sugar_action_button > form > a {
-  padding: 0 ;
   background-color: #94A6B5;
+  padding: 0 ;
+  padding-right: 4px ;
   border: 1px solid transparent;
   border-radius: 4px;
-  padding-right: 4px ;
 }
 
 .subpanel-table .pagination .sugar_action_button > form > a{
-  padding: 0 ;
   background-color: #94A6B5;
+  padding: 0 ;
+  padding-right: 4px ;
   border: 1px solid transparent;
   border-radius: 4px;
-  padding-right: 4px ;
 }
 
 .subpanel-table .pagination .sugar_action_button > form > a {
-  padding: 0 ;
   background-color: #94A6B5;
+  padding: 0 ;
+  padding-right: 4px ;
   border: 1px solid transparent;
   border-radius: 4px;
-  padding-right: 4px ;
 }
 
 /*calendar popup fix*/
@@ -271,12 +271,12 @@ div.sub-panel {
 .subpanel-table.list tr.pagination button.button[name="listViewPrevButton"],
 .subpanel-table.list tr.pagination button.button[name="listViewNextButton"],
 .subpanel-table.list tr.pagination button.button[name="listViewEndButton"] {
-  width: 26px;
-  height: 26px;
-  margin: 0;
-  padding: 0;
   background-image: none,url("../../../../themes/SuiteP/images/p_pag_tools.svg"),url("../../../../themes/SuiteP/images/p_pag_tools.png");
   background-repeat: no-repeat;
+  padding: 0;
+  margin: 0;
+  width: 26px;
+  height: 26px;
 }
 .subpanel-table.list tr.pagination button.button[name="listViewStartButton"]:hover,
 .subpanel-table.list tr.pagination button.button[name="listViewPrevButton"]:hover,
@@ -305,8 +305,8 @@ div.sub-panel {
 .subpanel-table.list tr.pagination button.button[name="listViewPrevButton"][disabled],
 .subpanel-table.list tr.pagination button.button[name="listViewNextButton"][disabled],
 .subpanel-table.list tr.pagination button.button[name="listViewEndButton"][disabled] {
-  opacity: .5;
   cursor: default;
+  opacity: .5;
 }
 
 .subpanel-table.list tr.pagination button.button[name="listViewStartButton"],
@@ -347,18 +347,18 @@ div.sub-panel {
 }
 
 .subpanel-table .pagination .clickMenu li span {
-  float: right;
   margin-top: 9px;
   margin-left: 0;
   margin-right: 5px;
+  float: right;
 }
 
 
 
 .subpanelTabForm {
-  border-color: #F08377;
-  color: #000000;
   background-color: $default-btn-color;
+  color: #000000;
+  border-color: #F08377;
 }
 
 .tablist, .subpanelTablist {
@@ -384,18 +384,18 @@ div.sub-panel {
 }
 
 .subpanelTablist li a.current, .subpanelTablist li a.current:hover {
-  color: #4f4f4f;
   background: #fff;
-  border-right-color: #cccccc;
+  color: #4f4f4f;
   border-top: none;
   border-bottom: none;
+  border-right-color: #cccccc;
 }
 
 .tablist li a.current:link, .tablist li a.current:visited, .tablist li a.current:hover {
   background: #f6f6f6;
+  border-top-color: #abc3d7;
   border-bottom-color: #f6f6f6;
   border-right-color: #abc3d7;
-  border-top-color: #abc3d7;
 }
 
 
@@ -405,9 +405,9 @@ div.sub-panel {
 
 .tablist li a, .subpanelTablist li a {
   border-top: 2px solid;
-  border-right-color: #cccccc;
   border-top: none;
   border-bottom: none;
+  border-right-color: #cccccc;
 }
 
 .tablist li a:hover, .subpanelTablist li a:hover {
@@ -415,26 +415,26 @@ div.sub-panel {
 }
 
 .tablist li a.current, .tablist li a.current:hover {
-  border-bottom: 2px solid #f6f6f6;
   font-weight: bold;
+  border-bottom: 2px solid #f6f6f6;
 }
 
 .subpanelTablist li a.current, .subpanelTablist li a.current:hover {
-  border-bottom: 2px solid #fff;
   font-weight: bold;
+  border-bottom: 2px solid #fff;
 }
 
 .subpanelTabForm .h3Row {
-  border-top: 1px solid #dddddd;
   background-image: none;
+  border-top: 1px solid #dddddd;
 }
 
 
 
 .tablist, .subpanelTablist {
-  list-style: none;
   padding: 0;
   margin: 0;
+  list-style: none;
 }
 
 
@@ -444,8 +444,8 @@ div.sub-panel {
 
 
 .tablist li a.activeSubTab:hover {
-  border-bottom-color: #ddd;
   color: #000000;
+  border-bottom-color: #ddd;
 }
 
 .subpanelTablist li a.activeSubTab:hover {
@@ -453,8 +453,8 @@ div.sub-panel {
 }
 
 .subpanelTablist #addPageItem a, .subpanelTablist #addPageItem a:hover {
-  border: none;
   background: transparent;
+  border: none;
   text-decoration: none;
 }
 
@@ -467,8 +467,8 @@ div.sub-panel {
 }
 
 table.subpanelTabForm td {
-  padding-bottom: 2px;
   padding-top: 0;
+  padding-bottom: 2px;
 }
 
 .subpanelTabForm p {
@@ -497,8 +497,8 @@ table.subpanelTabForm td {
 }
 
 table.subpanelTabForm {
-  border-top: 0 none;
   margin-bottom: 4px;
+  border-top: 0 none;
 }
 
 .collapsed .panelContainer, .collapsed .collapseLink, .expanded .expandLink {
@@ -533,19 +533,19 @@ table.subpanelTabForm {
 .clickMenu li .subnav,
 .clickMenu .subnav-sub,
 .SugarActionMenuIESub {
-  list-style: none;
+  display: none;
   position: absolute;
   top: 20px;
+  padding: 8px 0;
   margin: 0;
-  display: none;
-  float: left;
-  width: auto;
   border: 1px solid transparent;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
-  padding: 8px 0;
-  z-index: 10;
+  float: left;
   overflow: hidden;
+  width: auto;
+  z-index: 10;
+  list-style: none;
 }
 
 .clickMenu .subnav-sub,
@@ -554,14 +554,14 @@ table.subpanelTabForm {
 }
 
 .clickMenu li .subnav {
+  right: auto;
   margin-top: 4px;
   min-width: 128px;
-  right: auto;
 }
 
 .clickMenu li .subnav li, .clickMenu .subnav-sub li, .SugarActionMenuIESub li {
-  margin: 0;
   padding: 0;
+  margin: 0;
   clear: both;
   width: 100%;
   white-space: nowrap;
@@ -570,9 +570,9 @@ table.subpanelTabForm {
 
 
 .clickMenu.subpanel.records li .subnav li a span {
-  height: 0;
-  width: 0;
   background-image: none;
+  width: 0;
+  height: 0;
 }
 
 .clickMenu.button li span.ab:hover {

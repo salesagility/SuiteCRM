@@ -111,17 +111,17 @@
 
 
 .wizard-box {
-  position: relative;
   display: block;
+  position: relative;
+  background-color: #f6f6f6;
+  color: #333333;
+  padding: 20px;
+  margin: 20px;
+  border: 1px solid lightgrey;
   float: left;
   width: 350px;
   min-width: 300px;
-  border: 1px solid lightgrey;
-  padding: 20px;
-  margin: 20px;
   min-height: 150px;
-  background-color: #f6f6f6;
-  color: #333333;
 }
 
 .wizard-box label {
@@ -151,33 +151,33 @@
 
 .wizard-summary-left {
   display: block;
-  margin: 0 20px 0 0;
   padding: 0;
+  margin: 0 20px 0 0;
   border: none;
-  width: 450px;
   float: left;
+  width: 450px;
 }
 
 .wizard-summary-left .box {
   display: block;
-  float: none;
-  border: 1px solid lightgrey;
-  margin: 0 0 20px 0;
+  background-repeat: no-repeat;
   padding: 20px 20px 20px 80px;
+  margin: 0 0 20px 0;
+  border: 1px solid lightgrey;
+  float: none;
   background-position-x: 10px;
   background-position-y: center;
-  background-repeat: no-repeat;
 }
 
 .wizard-summary-right .box {
   display: block;
-  float: none;
-  border: 1px solid lightgrey;
-  margin: 0 0 20px 0;
+  background-repeat: no-repeat;
   padding: 20px 20px 20px 80px;
+  margin: 0 0 20px 0;
+  border: 1px solid lightgrey;
+  float: none;
   background-position-x: 10px;
   background-position-y: center;
-  background-repeat: no-repeat;
 }
 
 .wizard-summary-left .box.button.disabled {
@@ -205,13 +205,13 @@
 }
 
 .wizard-summary-left .box.small {
-  width: 210px;
-  float: none;
-  height: 80px;
   display: table-cell;
-  vertical-align: middle;
   padding-left: 55px;
   padding-right: 5px;
+  float: none;
+  width: 210px;
+  height: 80px;
+  vertical-align: middle;
 }
 
 .wizard-summary-left .box.button a,
@@ -220,32 +220,32 @@
 }
 
 .wizard-summary-left .space {
-  width: 28px;
-  float: none;
-  height: 80px;
   display: table-cell;
+  float: none;
+  width: 28px;
+  height: 80px;
 
 }
 
 .wizard-summary-right {
   display: block;
-  margin: 0;
   padding: 20px;
-  width: 280px;
-  float: left;
+  margin: 0;
   border: 1px solid lightgrey;
+  float: left;
+  width: 280px;
 }
 
 .wizard-summary-right .box {
-  height: 180px;
-  margin-left: 20px;
-  padding: 0;
-  float: none;
   display: table-cell;
-  vertical-align: middle;
-  width: 260px;
-  text-align: center;
   background-position: top 10px right 10px;
+  padding: 0;
+  margin-left: 20px;
+  float: none;
+  text-align: center;
+  width: 260px;
+  height: 180px;
+  vertical-align: middle;
 }
 
 .wizard-summary-right .send {
@@ -270,24 +270,24 @@
 }
 
 ul.target-list {
-  list-style-type: none;
+  display: block;
   padding: 10px;
   margin: 0;
-  display: block;
-  max-height: 300px;
-  overflow: scroll;
   border: 1px solid lightgray;
+  overflow: scroll;
+  max-height: 300px;
+  list-style-type: none;
 }
 
 ul.target-list li {
-  margin: 5px 0;
   padding: 0;
+  margin: 5px 0;
 }
 
 div.target-list-create {
-  border: 1px solid lightgray;
   padding: 10px;
   margin: 10px 0 0 0;
+  border: 1px solid lightgray;
 }
 
 div.target-list-table {
@@ -298,33 +298,33 @@ div.target-list-table {
 }
 
 .icon-btn-lst {
-  margin: 0;
   padding: 0;
+  margin: 0;
   list-style-type: none;
 }
 
 .icon-btn-lst .icon-btn a {
-  margin: 10px;
-  list-style-type: none;
-  background-color: $campaign-type-bg;
   display: block;
+  background-color: $campaign-type-bg;
+  margin: 10px;
+  border: none;
   float: left;
+  text-align: center;
   width: 150px;
   min-height: 150px;
-  text-align: center;
-  border: none;
+  list-style-type: none;
 }
 
 .icon-btn-lst .icon-btn {
-  margin: 10px;
-  list-style-type: none;
-  background-color: $campaign-type-bg;
   display: block;
+  background-color: $campaign-type-bg;
+  margin: 10px;
+  border: none;
   float: left;
+  text-align: center;
   width: 150px;
   min-height: 150px;
-  text-align: center;
-  border: none;
+  list-style-type: none;
 }
 
 .icon-btn-lst .icon-btn:hover {
@@ -341,11 +341,11 @@ div.target-list-table {
 }
 
 .icon-btn-lst .icon-btn a {
-  color: $campaign-type-color;
   display: block;
+  color: $campaign-type-color;
+  padding: 10px;
   width: 100%;
   height: 100%;
-  padding: 10px;
 }
 
 
@@ -419,23 +419,23 @@ div.target-list-table {
 
 #wizform .other.view td:nth-of-type(1) {
   display: table-cell;
+  background: none;
   float: none;
   width: auto;
-  background: none;
 }
 
 #wizform .other.view td:nth-of-type(2) {
   display: table-cell;
+  background: none;
   float: none;
   width: auto;
-  background: none;
 }
 
 #wizform .other.view td {
   display: table-cell;
+  background: none;
   float: none;
   width: auto;
-  background: none;
 }
 
 #wizform .other.view td {
@@ -451,9 +451,9 @@ div.target-list-table {
 
 
 #wizform .icon-btn-lst .icon-btn a {
-  text-align: center;
-  line-height: 20px;
   margin: 0;
+  line-height: 20px;
+  text-align: center;
 }
 
 #wizform .icon-btn-lst .icon-btn a img {
@@ -462,8 +462,8 @@ div.target-list-table {
 
 #wizform .icon-btn-lst .icon-btn a br {
   display: block;
-  float: none;
   clear: both;
+  float: none;
 }
 
 /* campaign wizard progress bar stuff */
@@ -620,9 +620,9 @@ div.target-list-table {
 }
 
 #wizform #wizard #step2 table tr td {
-  width: auto;
   display: table-cell;
   float: none;
+  width: auto;
 }
 
 
@@ -647,14 +647,14 @@ div.target-list-table {
       float: left;
     }
     #wizform table.other.view tr td.edit.view table tr td:nth-of-type(odd) {
-      min-width: 300px;
-      max-width: 300px;
       width: 300px;
+      max-width: 300px;
+      min-width: 300px;
     }
     #wizform table.other.view tr td.edit.view table tr td:nth-of-type(even) {
-      min-width: 500px;
-      max-width: 500px;
       width: 500px;
+      max-width: 500px;
+      min-width: 500px;
     }
 
     /* a common fix */
@@ -684,14 +684,14 @@ div.target-list-table {
       float: left;
     }
     #wizform table.other.view tr td #wizard #step2 table.edit.view tr td:nth-of-type(odd) {
-      min-width: 300px;
-      max-width: 300px;
       width: 300px;
+      max-width: 300px;
+      min-width: 300px;
     }
     #wizform table.other.view tr td #wizard #step2 table.edit.view tr td:nth-of-type(even) {
-      min-width: 500px;
-      max-width: 500px;
       width: 500px;
+      max-width: 500px;
+      min-width: 500px;
     }
 
     /* Target List fix */

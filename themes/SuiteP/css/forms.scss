@@ -34,37 +34,37 @@ textarea {
 
 .checkbox {
   display: inline-block;
-  margin: 0;
+  background: url('../../../../themes/SuiteP/images/forms/check.png') no-repeat;
   padding: 0;
+  margin: 0;
+  overflow: hidden;
+  width: 16px;
+  height: 16px;
   vertical-align: middle;
   visibility: visible;
-  height: 16px;
-  width: 16px;
-  background: url('../../../../themes/SuiteP/images/forms/check.png') no-repeat;
-  overflow: hidden;
 }
 
 input[type=checkbox] {
   display: inline-block;
-  margin: 0;
+  background: url('../../../../themes/SuiteP/images/forms/check.png') no-repeat;
   padding: 0;
+  margin: 0;
+  overflow: hidden;
+  width: 16px;
+  height: 16px;
   vertical-align: middle;
   visibility: visible;
-  height: 16px;
-  width: 16px;
-  background: url('../../../../themes/SuiteP/images/forms/check.png') no-repeat;
-  overflow: hidden;
 }
 
 input[type=radio] {
   display: inline-block;
-  margin: 0;
+  background: url('../../../../themes/SuiteP/images/forms/radio.png') no-repeat;
   padding: 0;
+  margin: 0;
+  width: 16px;
+  height: 16px;
   vertical-align: middle;
   visibility: visible;
-  height: 16px;
-  width: 16px;
-  background: url('../../../../themes/SuiteP/images/forms/radio.png') no-repeat;
 }
 
 input[type=checkbox]:focus {
@@ -120,20 +120,20 @@ td.nowrap input[type=checkbox] {
 }
 
 input[type=text]:disabled {
-  border: 1px solid $default-text-disabled-border-color;
   background: $default-text-disabled-color;
+  border: 1px solid $default-text-disabled-border-color;
 }
 
 
 #bigbutton {
-  border-radius: 0;
   padding: 10px 0 10px 0;
+  border-radius: 0;
 }
 
 div.input-group input {
   margin: 0 auto;
-  min-width: 100% ;
   max-width: 100% ;
+  min-width: 100% ;
 }
 
 .button-primary:active {
@@ -239,70 +239,70 @@ fieldset[disabled] .btn-primary.active {
 }
 
 .button-primary .badge {
-  color: $link-color;
   background-color: $main-alternate-bg;
+  color: $link-color;
   padding: 5px;
 }
 
 
 #EditView_tabs .edit .button {
-  margin-right: 4px;
   background-color: $danger-btn-bg;
+  margin-right: 4px;
   border: 1px solid $danger-btn-bg;
   border-radius: 4px;
 }
 
 #ConvertLead .edit .button {
-  margin-right: 4px;
-  padding: 0;
   background-color: $danger-btn-bg;
+  padding: 0;
+  margin-right: 4px;
   border: 1px solid $danger-btn-bg;
   border-radius: 4px;
 }
 
 #EditView_tabs .id-ff-remove {
-  margin-right: 4px;
-  padding: 0;
   background-color: $danger-btn-bg;
+  padding: 0;
+  margin-right: 4px;
   border: 1px solid $danger-btn-bg;
   border-radius: 4px;
 }
 
 #ConvertLead .id-ff-remove {
-  margin-right: 4px;
-  padding: 0;
   background-color: $danger-btn-bg;
+  padding: 0;
+  margin-right: 4px;
   border: 1px solid $danger-btn-bg;
   border-radius: 4px;
 }
 
 #EditView_tabs .edit [type="button"] {
-  margin-right: 4px;
   background-color: $danger-btn-bg;
+  margin-right: 4px;
   border: 1px solid $danger-btn-bg;
   border-radius: 4px;
 }
 
 #conditionLines [type="button"] {
-  margin-right: 4px;
-  padding: 0;
   background-color: $danger-btn-bg;
+  padding: 0;
+  margin-right: 4px;
   border: 1px solid $danger-btn-bg;
   border-radius: 4px;
 }
 
 #actionLines [type="button"] {
-  margin-right: 4px;
-  padding: 0;
   background-color: $danger-btn-bg;
+  padding: 0;
+  margin-right: 4px;
   border: 1px solid $danger-btn-bg;
   border-radius: 4px;
 }
 
 #deleteGroup img {
-  margin-right: 4px;
-  padding: 0;
   background-color: $danger-btn-bg;
+  padding: 0;
+  margin-right: 4px;
   border: 1px solid $danger-btn-bg;
   border-radius: 4px;
 }
@@ -345,21 +345,21 @@ fieldset[disabled] .btn-primary.active {
 }
 
 .removeFileButton {
-   cursor: pointer;
    font-size: $page-font-size;
-   padding: 0 20px 0 20px;
-   border-radius: 4px;
-   text-transform: uppercase;
    font-weight: 500;
-   letter-spacing: 1px;
-   height: $input-line-height;
-   line-height: $input-line-height;
+   cursor: pointer;
+   padding: 0 20px 0 20px;
    border-style: none;
+   border-radius: 4px;
+   letter-spacing: 1px;
+   line-height: $input-line-height;
+   height: $input-line-height;
+   text-transform: uppercase;
  }
 
 .removeFileButton {
-  color: $default-btn-color;
   background-color: $danger-btn-bg;
+  color: $default-btn-color;
 }
 
 .removeFileButton:hover {
@@ -367,164 +367,164 @@ fieldset[disabled] .btn-primary.active {
 }
 
 .buttonOn {
-  cursor: pointer;
   font-size: $page-font-size;
+  font-weight: 500;
+  cursor: pointer;
   padding: 0 20px 0 20px;
   border-radius: 4px;
-  text-transform: uppercase;
-  font-weight: 500;
   letter-spacing: 1px;
-  height: $input-line-height;
   line-height: $input-line-height;
+  height: $input-line-height;
+  text-transform: uppercase;
 }
 
 .btn .btn:hover {
-  cursor: pointer;
   font-size: $page-font-size;
+  font-weight: 500;
+  cursor: pointer;
   padding: 0 20px 0 20px;
   border-radius: 4px;
-  text-transform: uppercase;
-  font-weight: 500;
   letter-spacing: 1px;
-  height: $input-line-height;
   line-height: $input-line-height;
+  height: $input-line-height;
+  text-transform: uppercase;
 }
 
 .btn-default{
-  color: $default-btn-color;
   background-color: $default-btn-bg;
+  color: $default-btn-color;
   border: 1px solid $default-btn-bg;
 }
 
 .btn-default:hover {
-  color: $default-btn-color;
   background-color: $default-btn-bg;
+  color: $default-btn-color;
   border: 1px solid $default-btn-bg;
 }
 
 .btn-default:active {
-  color: $default-btn-color;
   background-color: $default-btn-bg;
+  color: $default-btn-color;
   border: 1px solid $default-btn-bg;
 }
 
 .btn-default:focus {
-  color: $default-btn-color;
   background-color: $default-btn-bg;
+  color: $default-btn-color;
   border: 1px solid $default-btn-bg;
 }
 
 .btn-primary {
-  color: $default-btn-color;
   background-color: $primary-btn-bg;
+  color: $default-btn-color;
   border: 1px solid $primary-btn-bg;
 }
 
 .btn-primary:hover {
-  color: $default-btn-color;
   background-color: $primary-btn-bg;
+  color: $default-btn-color;
   border: 1px solid $primary-btn-bg;
 }
 
 .btn-primary:active {
-  color: $default-btn-color;
   background-color: $primary-btn-bg;
+  color: $default-btn-color;
   border: 1px solid $primary-btn-bg;
 }
 
 .btn-primary:focus {
-  color: $default-btn-color;
   background-color: $primary-btn-bg;
+  color: $default-btn-color;
   border: 1px solid $primary-btn-bg;
 }
 
 .btn-info {
-  color: $default-btn-color;
   background-color: $info-btn-bg;
+  color: $default-btn-color;
   border: 1px solid $info-btn-bg;
 }
 
 input[type=button].btn-info {
-  color: $default-btn-color;
   background-color: $info-btn-bg;
+  color: $default-btn-color;
   border: 1px solid $info-btn-bg;
 }
 
 .btn-info:hover {
-  color: $default-btn-color;
   background-color: $info-btn-bg-hover;
+  color: $default-btn-color;
   border: 1px solid $info-btn-bg-hover;
 }
 
 .btn-info:active {
-  color: $default-btn-color;
   background-color: $info-btn-bg-hover;
+  color: $default-btn-color;
   border: 1px solid $info-btn-bg-hover;
 }
 
 .btn-info:focus {
-  color: $default-btn-color;
   background-color: $info-btn-bg-hover;
+  color: $default-btn-color;
   border: 1px solid $info-btn-bg-hover;
 }
 
 input[type=button].btn-info:hover {
-  color: $default-btn-color;
   background-color: $info-btn-bg-hover;
+  color: $default-btn-color;
   border: 1px solid $info-btn-bg-hover;
 }
 
 input[type=button].btn-info:active {
-  color: $default-btn-color;
   background-color: $info-btn-bg-hover;
+  color: $default-btn-color;
   border: 1px solid $info-btn-bg-hover;
 }
 
 input[type=button].btn-info:focus {
-  color: $default-btn-color;
   background-color: $info-btn-bg-hover;
+  color: $default-btn-color;
   border: 1px solid $info-btn-bg-hover;
 }
 
 .btn-success {
-  color: $default-btn-color;
   background-color: $success-btn-bg;
+  color: $default-btn-color;
   border: 1px solid $success-btn-bg;
 }
 
 .btn-success:hover {
-  color: $default-btn-color;
   background-color: $success-btn-bg;
+  color: $default-btn-color;
   border: 1px solid $success-btn-bg;
 }
 
 .btn-success:active {
-  color: $default-btn-color;
   background-color: $success-btn-bg;
+  color: $default-btn-color;
   border: 1px solid $success-btn-bg;
 }
 
 .btn-success:focus {
-  color: $default-btn-color;
   background-color: $success-btn-bg;
+  color: $default-btn-color;
   border: 1px solid $success-btn-bg;
 }
 
 
 .button {
+  font-size: $page-font-size;
+  font-weight: 500;
   background: $danger-btn-bg;
-  border: none;
   color: $default-btn-color;
   cursor: pointer;
-  font-size: $page-font-size;
-  margin: 0 0 0 0;
   padding: 0 20px 0 20px;
+  margin: 0 0 0 0;
+  border: none;
   border-radius: 3px;
-  text-transform: uppercase;
-  font-weight: 500;
   letter-spacing: 1px;
-  height: $button-line-height;
   line-height: $button-line-height;
+  height: $button-line-height;
+  text-transform: uppercase;
 }
 
 input[type=submit].button:hover {
@@ -532,51 +532,51 @@ input[type=submit].button:hover {
 }
 
 input[type=submit] {
+  font-size: $page-font-size;
+  font-weight: 500;
   background: $danger-btn-bg;
-  border: none;
   color: $default-btn-color;
   cursor: pointer;
-  font-size: $page-font-size;
-  margin: 0 0 0 0;
   padding: 0 20px 0 20px;
+  margin: 0 0 0 0;
+  border: none;
   border-radius: 3px;
-  text-transform: uppercase;
-  font-weight: 500;
   letter-spacing: 1px;
-  height: $button-line-height;
   line-height: $button-line-height;
+  height: $button-line-height;
+  text-transform: uppercase;
 }
 
 input[type=button] {
+  font-size: $page-font-size;
+  font-weight: 500;
   background: $danger-btn-bg;
-  border: none;
   color: $default-btn-color;
   cursor: pointer;
-  font-size: $page-font-size;
-  margin: 0 0 0 0;
   padding: 0 20px 0 20px;
+  margin: 0 0 0 0;
+  border: none;
   border-radius: 3px;
-  text-transform: uppercase;
-  font-weight: 500;
   letter-spacing: 1px;
-  height: $button-line-height;
   line-height: $button-line-height;
+  height: $button-line-height;
+  text-transform: uppercase;
 }
 
 input[type=reset] {
+  font-size: $page-font-size;
+  font-weight: 500;
   background: $danger-btn-bg;
-  border: none;
   color: $default-btn-color;
   cursor: pointer;
-  font-size: $page-font-size;
-  margin: 0 0 0 0;
   padding: 0 20px 0 20px;
+  margin: 0 0 0 0;
+  border: none;
   border-radius: 3px;
-  text-transform: uppercase;
-  font-weight: 500;
   letter-spacing: 1px;
-  height: $button-line-height;
   line-height: $button-line-height;
+  height: $button-line-height;
+  text-transform: uppercase;
 }
 
 .btn {
@@ -584,23 +584,23 @@ input[type=reset] {
 }
 
 button {
-  margin-right: 4px;
   margin-bottom: 4px;
+  margin-right: 4px;
 }
 
 html input[type=button] {
-  margin-right: 4px;
   margin-bottom: 4px;
+  margin-right: 4px;
 }
 
 input[type=reset]{
-  margin-right: 4px;
   margin-bottom: 4px;
+  margin-right: 4px;
 }
 
 input[type=submit] {
-  margin-right: 4px;
   margin-bottom: 4px;
+  margin-right: 4px;
 }
 
 .button {
@@ -616,41 +616,41 @@ input[type=reset] {
 }
 
 input[type=submit]:hover, input[type=button]:hover, input[type=reset]:hover {
-  color: $default-btn-color;
   font-size: $page-font-size;
+  color: $default-btn-color;
   cursor: pointer;
 }
 
 input[type=submit]:active, input[type=button]:active, input[type=reset]:active {
-  color: $default-btn-color;
   font-size: $page-font-size;
+  color: $default-btn-color;
   cursor: pointer;
 }
 
 input[type=submit]:focus, input[type=button] {
-  color: $default-btn-color;
   font-size: $page-font-size;
+  color: $default-btn-color;
   cursor: pointer;
 }
 
 .moremenu a {
-  color: $default-btn-color;
   font-size: $page-font-size;
+  color: $default-btn-color;
   cursor: pointer;
   margin: 0;
 }
 
 .moremenu ul {
-  margin: 0;
   top: 49px;
+  margin: 0;
 }
 
 .moremenu ul li a {
+  display: block;
+  font-size: $page-font-size;
   color: $danger-btn-bg ;
   cursor: pointer;
   padding: 5px;
-  font-size: $page-font-size;
-  display: block;
 }
 
 .moremenu ul li:hover {
@@ -658,11 +658,11 @@ input[type=submit]:focus, input[type=button] {
 }
 
 .moremenu ul li a:hover {
-  color: $default-btn-color ;
   background: none ;
+  background: $danger-btn-bg-hover ;
+  color: $default-btn-color ;
   cursor: pointer;
   padding: 5px;
-  background: $danger-btn-bg-hover ;
 }
 
 [button]:focus, input[type=reset]:focus {
@@ -688,23 +688,23 @@ input[type=submit]:focus, input[type=button] {
 }
 
 form[name=DetailView] .button {
-  float: left;
   margin: 0 4px 4px 0;
+  float: left;
 }
 
 form[name=DetailView] input[type=submit] {
-  float: left;
   margin: 0 4px 4px 0;
+  float: left;
 }
 
 form[name=DetailView] input[type=button] {
-  float: left;
   margin: 0 4px 4px 0;
+  float: left;
 }
 
 form[name=DetailView] input[type=reset] {
-  float: left;
   margin: 0 4px 4px 0;
+  float: left;
 }
 
 td.submitButtons .button:hover {
@@ -712,67 +712,67 @@ td.submitButtons .button:hover {
 }
 
 button[disabled] {
+  font-size: $page-font-size;
+  font-weight: 500;
   background-color: $disabled-btn-bg;
-  border: none;
   color: $main-bg;
   cursor: pointer;
-  font-size: $page-font-size;
   margin: 0 0 0 0;
+  border: none;
   border-radius: 3px;
-  text-transform: uppercase;
-  font-weight: 500;
-  //padding: 0 20px 0 20px;
   letter-spacing: 1px;
-  height: $input-line-height;
   line-height: $input-line-height;
+  height: $input-line-height;
+  text-transform: uppercase;
+  //padding: 0 20px 0 20px;
 }
 
 input[type="submit"][disabled] {
+  font-size: $page-font-size;
+  font-weight: 500;
   background-color: $disabled-btn-bg;
-  border: none;
   color: $main-bg;
   cursor: pointer;
-  font-size: $page-font-size;
   margin: 0 0 0 0;
+  border: none;
   border-radius: 3px;
-  text-transform: uppercase;
-  font-weight: 500;
-  //padding: 0 20px 0 20px;
   letter-spacing: 1px;
-  height: $input-line-height;
   line-height: $input-line-height;
+  height: $input-line-height;
+  text-transform: uppercase;
+  //padding: 0 20px 0 20px;
 }
 
 input[type="reset"][disabled] {
+  font-size: $page-font-size;
+  font-weight: 500;
   background-color: $disabled-btn-bg;
-  border: none;
   color: $main-bg;
   cursor: pointer;
-  font-size: $page-font-size;
   margin: 0 0 0 0;
+  border: none;
   border-radius: 3px;
-  text-transform: uppercase;
-  font-weight: 500;
-  //padding: 0 20px 0 20px;
   letter-spacing: 1px;
-  height: $input-line-height;
   line-height: $input-line-height;
+  height: $input-line-height;
+  text-transform: uppercase;
+  //padding: 0 20px 0 20px;
 }
 
 input[type="button"][disabled] {
+  font-size: $page-font-size;
+  font-weight: 500;
   background-color: $disabled-btn-bg;
-  border: none;
   color: $main-bg;
   cursor: pointer;
-  font-size: $page-font-size;
   margin: 0 0 0 0;
+  border: none;
   border-radius: 3px;
-  text-transform: uppercase;
-  font-weight: 500;
-  //padding: 0 20px 0 20px;
   letter-spacing: 1px;
-  height: $input-line-height;
   line-height: $input-line-height;
+  height: $input-line-height;
+  text-transform: uppercase;
+  //padding: 0 20px 0 20px;
 }
 
 [field="billing_address_street"].detail-view-field {
@@ -809,38 +809,38 @@ input[type="button"][disabled] {
 
 
 .button:hover {
-  color: $default-btn-color;
   background-color: $disabled-btn-color;
+  color: $default-btn-color;
   border-color: $disabled-btn-color;
 }
 
 .button:focus {
-  color: $default-btn-color;
   background-color: $disabled-btn-color;
+  color: $default-btn-color;
   border-color: $disabled-btn-color;
 }
 
 .button.focus {
-  color: $default-btn-color;
   background-color: $disabled-btn-color;
+  color: $default-btn-color;
   border-color: $disabled-btn-color;
 }
 
 .button:active {
-  color: $default-btn-color;
   background-color: $disabled-btn-color;
+  color: $default-btn-color;
   border-color: $disabled-btn-color;
 }
 
 .button.active {
-  color: $default-btn-color;
   background-color: $disabled-btn-color;
+  color: $default-btn-color;
   border-color: $disabled-btn-color;
 }
 
 .open > .dropdown-toggle.btn-primary {
-  color: $default-btn-color;
   background-color: $disabled-btn-color;
+  color: $default-btn-color;
   border-color: $disabled-btn-color;
 }
 
@@ -857,8 +857,8 @@ input[type="button"][disabled] {
 }
 
 .button .badge {
-  color: $danger-btn-bg;
   background-color: $default-btn-color;
+  color: $danger-btn-bg;
 }
 
 
@@ -876,44 +876,44 @@ input[type="button"][disabled] {
 }
 
 .form-control:focus  {
+  box-shadow: none;
   border: 1px solid $input-select-bg;
   border-radius: 4px;
-  box-shadow: none;
 }
 
 input[type=text] {
   background: $input-bg;
+  padding: 5px;
   border: 1px solid $input-select-bg;
   border-radius: 4px;
-  padding: 5px;
 }
 
 input[type=password] {
   background: $input-bg;
+  padding: 5px;
   border: 1px solid $input-select-bg;
   border-radius: 4px;
-  padding: 5px;
 }
 
 input[type=email] {
   background: $input-bg;
+  padding: 5px;
   border: 1px solid $input-select-bg;
   border-radius: 4px;
-  padding: 5px;
 }
 
 input:not([type]) {
   background: $input-bg;
+  padding: 5px;
   border: 1px solid $input-select-bg;
   border-radius: 4px;
-  padding: 5px;
 }
 
 textarea {
   background: $input-bg;
+  padding: 5px;
   border: 1px solid $input-select-bg;
   border-radius: 4px;
-  padding: 5px;
 }
 
 input[type=text] {
@@ -942,80 +942,80 @@ textarea {
 }
 
 select[size] {
-  border-style: solid;
-  border-size: 1px;
-  border-color: $input-select-bg;
-  border-radius: 4px;
-  padding: 0 52px 0 5px;
-  background-color: $input-select-option;
   background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
+  background-color: $input-select-option;
   background-size: 52px 52px;
-  -moz-appearance: none;
+  color: $main-font-color;
+  padding: 0 52px 0 5px;
+  border-color: $input-select-bg;
+  border-style: solid;
+  border-radius: 4px;
+  line-height: $input-line-height + 8;
+  outline: 0;
+  height: $input-line-height + 8;
   -webkit-appearance: none;
   appearance: none;
-  outline: 0;
   scrollbar-base-color: $input-select-bg;
   scrollbar-arrow-color: $input-select-bg;
-  color: $main-font-color;
-  height: $input-line-height + 8;
-  line-height: $input-line-height + 8;
+  border-size: 1px;
+  -moz-appearance: none;
 }
 
 select.form-control {
-  border-style: solid;
-  border-size: 1px;
-  border-color: $input-select-bg;
-  border-radius: 4px;
-  padding: 0 52px 0 5px;
-  background-color: $input-select-option;
   background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
+  background-color: $input-select-option;
   background-size: 52px 52px;
-  -moz-appearance: none;
+  color: $main-font-color;
+  padding: 0 52px 0 5px;
+  border-color: $input-select-bg;
+  border-style: solid;
+  border-radius: 4px;
+  line-height: $input-line-height + 8;
+  outline: 0;
+  height: $input-line-height + 8;
   -webkit-appearance: none;
   appearance: none;
-  outline: 0;
   scrollbar-base-color: $input-select-bg;
   scrollbar-arrow-color: $input-select-bg;
-  color: $main-font-color;
-  height: $input-line-height + 8;
-  line-height: $input-line-height + 8;
+  border-size: 1px;
+  -moz-appearance: none;
 }
 
 select {
-  border-style: solid;
-  border-size: 1px;
-  border-color: $input-select-bg;
-  border-radius: 4px;
-  padding: 0 52px 0 5px;
-  background-color: $input-select-option;
   background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
+  background-color: $input-select-option;
   background-size: 52px 52px;
-  -moz-appearance: none;
+  color: $main-font-color;
+  padding: 0 52px 0 5px;
+  border-color: $input-select-bg;
+  border-style: solid;
+  border-radius: 4px;
+  line-height: $input-line-height + 8;
+  outline: 0;
+  height: $input-line-height + 8;
   -webkit-appearance: none;
   appearance: none;
-  outline: 0;
   scrollbar-base-color: $input-select-bg;
   scrollbar-arrow-color: $input-select-bg;
-  color: $main-font-color;
-  height: $input-line-height + 8;
-  line-height: $input-line-height + 8;
+  border-size: 1px;
+  -moz-appearance: none;
 }
 
 select:focus {
+  border-color: $input-select-bg;
+  border-style: solid;
+  border-radius: 4px;
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  border-style: solid;
   border-size: 1px;
-  border-color: $input-select-bg;
-  border-radius: 4px;
 }
 
 select::selection {
-  border-style: solid;
-  border-size: 1px;
   border-color: $input-select-bg;
+  border-style: solid;
   border-radius: 4px;
+  border-size: 1px;
 }
 
 
@@ -1024,24 +1024,24 @@ select#user_theme_picker {
 }
 
 select:checked {
-  color: $main-font-color;
   background: $input-select-bg;
+  color: $main-font-color;
 }
 
 option:checked {
-  color: $main-font-color;
   background: $input-select-bg;
+  color: $main-font-color;
 }
 
 .saved_search_select {
-  background-color: $input-select-option;
-  border-style: solid;
-  border-size: 1px;
-  border-color: $input-select-bg;
-  border-radius: 4px;
-  padding: 16px 55px 16px 5px;
   background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
+  background-color: $input-select-option;
   background-size: 52px 52px;
+  padding: 16px 55px 16px 5px;
+  border-color: $input-select-bg;
+  border-style: solid;
+  border-radius: 4px;
+  border-size: 1px;
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
@@ -1054,23 +1054,23 @@ select[multiple] {
 }
 
 select.ui-widget-content {
-  border-style: solid;
-  border-size: 1px;
-  border-color: $input-select-bg;
-  border-radius: 4px;
-  padding: 0 52px 0 5px;
-  background-color: $input-select-option;
   background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
+  background-color: $input-select-option;
   background-size: 52px 52px;
-  -moz-appearance: none;
+  color: $main-font-color;
+  padding: 0 52px 0 5px;
+  border-color: $input-select-bg;
+  border-style: solid;
+  border-radius: 4px;
+  line-height: $input-line-height + 8;
+  outline: 0;
+  height: $input-line-height + 8;
   -webkit-appearance: none;
   appearance: none;
-  outline: 0;
   scrollbar-base-color: $input-select-bg;
   scrollbar-arrow-color: $input-select-bg;
-  color: $main-font-color;
-  height: $input-line-height + 8;
-  line-height: $input-line-height + 8;
+  border-size: 1px;
+  -moz-appearance: none;
 }
 
 .form-control {
@@ -1120,31 +1120,31 @@ div.col-sm-6 #email1_span td.email-address-input {
 }
 
 #email1_span td.email-address-remove-button {
-  width: $input-line-height + 12;
-  height: $input-line-height + 12; /* same height as td.email-address-input */
   display: inline-block;
   line-height: $input-line-height + 8;
+  width: $input-line-height + 12;
+  height: $input-line-height + 12; /* same height as td.email-address-input */
 }
 
 #email1_span td.email-address-primary {
-  width: $input-line-height + 12;
-  height: $input-line-height + 12; /* same height as td.email-address-input */
   display: inline-block;
   line-height: $input-line-height + 8;
+  width: $input-line-height + 12;
+  height: $input-line-height + 12; /* same height as td.email-address-input */
 }
 
 #email1_span td.email-address-opt-out {
-  width: $input-line-height + 12;
-  height: $input-line-height + 12; /* same height as td.email-address-input */
   display: inline-block;
   line-height: $input-line-height + 8;
+  width: $input-line-height + 12;
+  height: $input-line-height + 12; /* same height as td.email-address-input */
 }
 
 #email1_span td.email-address-invalid {
-  width: $input-line-height + 12;
-  height: $input-line-height + 12; /* same height as td.email-address-input */
   display: inline-block;
   line-height: $input-line-height + 8;
+  width: $input-line-height + 12;
+  height: $input-line-height + 12; /* same height as td.email-address-input */
 }
 
 div.col-sm-12 #email1_span td.email-address-add-button {
@@ -1160,30 +1160,30 @@ div.col-sm-6 #email1_span td.email-address-add-button {
 }
 
 #email1_span  td.email-address-title {
-  width: 52px; /* same widths as td.email-address-remove-button */
-  font-size: 10px;
   display: inline-block;
+  font-size: 10px;
   padding-top: 42px;
+  width: 52px; /* same widths as td.email-address-remove-button */
 }
 
 .emailaddresses > tbody:nth-child(1) > tr > td:nth-child(1) button img {
   content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
-  height: 32px;
   width: 32px;
+  height: 32px;
 }
 
 
 .emailaddresses button {
   content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
-  height: 34px;
   width: 34px;
+  height: 34px;
 }
 
 
 .emailaddresses button {
+  background-color: $danger-btn-bg;
   border: 1px solid transparent;
   border-radius: 4px;
-  background-color: $danger-btn-bg;
 }
 
 
@@ -1207,23 +1207,23 @@ div.col-sm-6 #email1_span td.email-address-add-button {
 }
 
 .email-address-input-group input[type=email].form-control {
+  display: inline-block;
+  font-size: 14px;
   border: none;
   line-height: 40px;
-  font-size: 14px;
-  display: inline-block;
 }
 
 .email-address-input-group .form-control:focus  {
   box-shadow: none;
-  -webkit-box-shadow: none;
   border-color: $input-border;
   outline: 0;
+  -webkit-box-shadow: none;
 }
 .email-address-input-group .form-control {
   box-shadow: none;
-  -webkit-box-shadow: none;
   border-color: $input-border;
   outline: 0;
+  -webkit-box-shadow: none;
 }
 
 .email-address-add-line-container .email-address-add-button {
@@ -1258,11 +1258,11 @@ div.col-sm-6 #email1_span td.email-address-add-button {
 }
 
 .email-address-input-group button[disabled].email-address-remove-button {
+  font-size: $page-p-size;
   padding: 6px 9px 6px 9px;
   line-height: 20px;
-  height: 36px;
   width: 36px;
-  font-size: $page-p-size;
+  height: 36px;
 }
 
 .email-address-option label {
@@ -1305,8 +1305,8 @@ font[color=red] {
 
 @media (max-width: 768px) {
   .email-address-options-container {
-    width: 100%;
     margin: 16px 0 16px 0;
+    width: 100%;
     height: 32px;
   }
   div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option label {
@@ -1318,9 +1318,9 @@ font[color=red] {
   }
 
   .edit-view-row-item {
-    width: 100%;
-    float: none;
     clear: both;
+    float: none;
+    width: 100%;
   }
 
   .col-sm-8.edit-view-field {
@@ -1332,13 +1332,13 @@ font[color=red] {
   }
 
   .edit-view-field textarea {
-    width: 100%;
     margin-bottom: 8px;
+    width: 100%;
   }
 
   .edit-view-field input[type="text"] {
-    width: 100%;
     margin-bottom: 8px;
+    width: 100%;
   }
 
   .edit-view-row-item .col-sm-2 {
@@ -1361,8 +1361,8 @@ font[color=red] {
   }
 
   .col-sm-6 #email1_span div.col-xs-12.col-sm-6.email-address-options-container {
-    width: 100%;
     margin-top: 8px;
+    width: 100%;
   }
 
   .col-sm-6 #email1_span .email-address-option {

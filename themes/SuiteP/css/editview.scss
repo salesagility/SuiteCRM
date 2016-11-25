@@ -2,8 +2,8 @@
 @import 'variables';
 
 div#searchResults {
-  overflow-y: auto;
   padding-bottom: 50px;
+  overflow-y: auto;
 }
 
 /** Reminders **/
@@ -25,14 +25,14 @@ div#searchResults {
 }
 
 #scheduler .schedulerDiv {
-  color: $main-font-color;
-  text-align: left;
-  width: 100%;
   background-color: #FAFAFA;
-  border-collapse: collapse;
+  color: $main-font-color;
+  padding: 20px 20px 10px 20px;
   border: 1px solid $panel-border-bg;
   border-radius: 4px;
-  padding: 20px 20px 10px 20px;
+  text-align: left;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 #scheduler .schedulerDiv table {
@@ -41,8 +41,8 @@ div#searchResults {
 }
 
 #scheduler .schedulerDiv table tr td {
-  height: 18px;
   border: 1px solid #dddddd;
+  height: 18px;
 }
 
 #scheduler .schedulerDiv table tr.schedulerTimeRow td {
@@ -50,8 +50,8 @@ div#searchResults {
 }
 
 #scheduler .schedulerDiv table tr.schedulerTimeRow th[scope=col] {
-  border-left: 1px solid #DDDDDD;
   padding-left: 4px;
+  border-left: 1px solid #DDDDDD;
 }
 
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td {
@@ -60,11 +60,11 @@ div#searchResults {
 }
 
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td[scope=row] {
-  overflow: hidden;
-  padding-left: 4px;
-  width: 125px;
   background: transparent;
+  padding-left: 4px;
   border-left: 0;
+  overflow: hidden;
+  width: 125px;
 }
 
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime.free {
@@ -76,8 +76,8 @@ div#searchResults {
 }
 
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime {
-  border-left: 4px solid $scheduler-start-color ;
   background-color: $default-btn-color;
+  border-left: 4px solid $scheduler-start-color ;
 }
 
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime {
@@ -98,8 +98,8 @@ div#searchResults {
 
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerAttendeeDeleteCell {
   background: transparent;
-  border-left: 1px solid #dddddd;
   padding-left: 4px;
+  border-left: 1px solid #dddddd;
 }
 
 #scheduler .schedulerInvitees .tabForm {
@@ -119,52 +119,52 @@ div#searchResults {
 }
 
 #create-invitees {
-  margin-top: 5px;
-  color: $main-font-color;
-  text-align: left;
-  width: 100%;
   background-color: #FAFAFA;
-  border-collapse: collapse;
+  color: $main-font-color;
+  padding: 20px 20px 10px 20px;
+  margin-top: 5px;
   border: 1px solid $panel-border-bg;
   border-radius: 4px;
-  padding: 20px 20px 10px 20px;
+  text-align: left;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .schedulerInvitees {
-  margin-top: 5px;
-  color: $main-font-color;
-  text-align: left;
-  width: 100%;
   background-color: #FAFAFA;
-  border-collapse: collapse;
+  color: $main-font-color;
+  padding: 20px 20px 10px 20px;
+  margin-top: 5px;
   border: 1px solid $panel-border-bg;
   border-radius: 4px;
-  padding: 20px 20px 10px 20px;
+  text-align: left;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 #create_invitee_as_lead {
-  color: $default-btn-color;
+  font-size: $page-font-size;
   background-color: $danger-btn-bg;
+  color: $default-btn-color;
+  padding: 0 10px;
+  margin: 4px;
   border: 1px solid transparent;
   border-radius: 4px;
-  margin: 4px;
-  padding: 0 10px;
-  font-size: $page-font-size;
-  height: $button-line-height;
   line-height: $button-line-height;
+  height: $button-line-height;
   text-transform: uppercase;
 }
 
 #create_invitee_as_contact {
-  color: $default-btn-color;
+  font-size: $page-font-size;
   background-color: $danger-btn-bg;
+  color: $default-btn-color;
+  padding: 0 10px;
+  margin: 4px;
   border: 1px solid transparent;
   border-radius: 4px;
-  margin: 4px;
-  padding: 0 10px;
-  font-size: $page-font-size;
-  height: $button-line-height;
   line-height: $button-line-height;
+  height: $button-line-height;
   text-transform: uppercase;
 }
 
@@ -174,42 +174,42 @@ div#searchResults {
 }
 
 #create-invitee-edit button {
-  color: $default-btn-color;
+  font-size: $page-font-size;
   background-color: $danger-btn-bg;
+  color: $default-btn-color;
+  padding: 0 10px;
+  margin: 4px;
   border: 1px solid transparent;
   border-radius: 4px;
-  margin: 4px;
-  padding: 0 10px;
-  font-size: $page-font-size;
-  height: $button-line-height;
   line-height: $button-line-height;
+  height: $button-line-height;
   text-transform: uppercase;
 }
 
 /** add invitees search **/
 #EditView .edit input[type=submit]#invitees_search  {
-  color: $default-btn-color;
+  font-size: $page-font-size;
   background-color: $danger-btn-bg;
+  color: $default-btn-color;
+  padding: 0 10px;
+  margin: 4px;
   border: 1px solid transparent;
   border-radius: 4px;
-  margin: 4px;
-  padding: 0 10px;
-  font-size: $page-font-size;
-  height: $button-line-height;
   line-height: $button-line-height;
+  height: $button-line-height;
   text-transform: uppercase;
 }
 
 #list_div_win {
-  color: $main-font-color;
-  text-align: left;
-  width: 100%;
   background-color: $panel-bg;
-  border-collapse: collapse;
-  border: 1px solid $panel-border-bg;
-  border-radius: 4px;
+  color: $main-font-color;
   padding: 20px 20px 10px 20px;
   margin-top: 5px;
+  border: 1px solid $panel-border-bg;
+  border-radius: 4px;
+  text-align: left;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 #list_div_win .list tr th {
@@ -219,8 +219,8 @@ div#searchResults {
 
 #ygddfdiv {
   background: $info;
-  opacity: 1;
   padding: 8px;
+  opacity: 1;
 }
 
 div.noBullet li,
@@ -229,15 +229,15 @@ div.noBullet li,
 }
 
 #p_wrap {
-  width: 100%;
-  float: left;
-  padding-left: 215px;
   position: relative;
+  padding-left: 215px;
+  float: left;
+  width: 100%;
 }
 
 #content {
-  width: 100%;
   padding: $page-title-spacing 3% 40px 3%;
+  width: 100%;
 }
 
 #bootstrap-container.col-md-offset-2 {
@@ -252,14 +252,14 @@ a#powered_by {
 }
 
 a#admin_options {
-  color: $main-font-color;
   font-size: 12px;
+  color: $main-font-color;
   cursor: pointer;
 }
 
 a#powered_by {
-  color: $main-font-color;
   font-size: 12px;
+  color: $main-font-color;
   cursor: pointer;
 }
 
@@ -278,60 +278,60 @@ a#powered_by:hover {
 }
 
 .footer_right {
-  float: right;
-  width: 47%;
-  text-align: right;
-  text-transform: uppercase;
   padding-right: 1%;
+  float: right;
+  text-align: right;
+  width: 47%;
+  text-transform: uppercase;
 }
 
 .footer_right a {
-  color: #4D4D4D;
-  letter-spacing: 1px;
-  background-image: none, url("../../../../index.php?entryPoint=getImage&imageName=p_icon_back_to_top.svg"), url("../../../../index.php?entryPoint=getImage&imageName=p_icon_back_to_top.png");
-  background-repeat: no-repeat;
-  background-position: right 3px;
-  padding-right: 20px;
   font-size: 12px;
+  background-image: none, url("../../../../index.php?entryPoint=getImage&imageName=p_icon_back_to_top.svg"), url("../../../../index.php?entryPoint=getImage&imageName=p_icon_back_to_top.png");
+  background-position: right 3px;
+  background-repeat: no-repeat;
+  color: #4D4D4D;
+  padding-right: 20px;
+  letter-spacing: 1px;
 }
 
 .footer_right a:hover {
-  color: $danger-btn-bg-hover;
   background-position: right -15px;
+  color: $danger-btn-bg-hover;
 }
 
 .subDmenu {
-  position: absolute;
   display: none;
+  position: absolute;
   visibility: hidden;
 }
 
 .menu {
-  position: absolute;
   display: none;
-  visibility: hidden;
+  position: absolute;
   background-color: #f6f6f6;
-  z-index: 2;
   border: #999999 solid 1px;
   filter: alpha(opacity=90);
-  -moz-opacity: 0.9;
   opacity: 0.9;
+  visibility: hidden;
+  z-index: 2;
+  -moz-opacity: 0.9;
 }
 
 div.clear {
-  height: 0;
   clear: both;
+  height: 0;
   visibility: hidden;
 }
 
 th {
-  border: none;
   padding: 0;
+  border: none;
 }
 
 td {
-  border: none;
   padding: 0;
+  border: none;
 }
 
 #header ul li {
@@ -343,11 +343,11 @@ td {
 }
 
 #unified_search_advanced_div {
-  height: 1px;
   position: relative;
+  padding-top: 5px;
   overflow: hidden;
   width: 21em;
-  padding-top: 5px;
+  height: 1px;
 }
 
 #unified_search_advanced_div .edit.view {
@@ -367,13 +367,13 @@ td {
 }
 
 #HideHandle {
-  padding-top: 5px;
   cursor: pointer;
+  padding-top: 5px;
 }
 
 #HideMenu {
-  visibility: hidden;
   position: absolute;
+  visibility: hidden;
   z-index: 100;
 }
 
@@ -386,20 +386,20 @@ td {
 }
 
 #newRecord form input {
-  margin-bottom: 4px;
   margin-top: 2px;
+  margin-bottom: 4px;
   max-width: 140px;
 }
 
 #newRecord form select {
-  margin-bottom: 4px;
   margin-top: 2px;
+  margin-bottom: 4px;
   max-width: 140px;
 }
 
 #newRecord form textarea {
-  margin-bottom: 4px;
   margin-top: 2px;
+  margin-bottom: 4px;
   max-width: 140px;
 }
 
@@ -424,8 +424,8 @@ td {
 }
 
 #newRecord form .dataLabel {
-  padding-bottom: 2px;
   padding-top: 3px;
+  padding-bottom: 2px;
   padding-left: 0;
   vertical-align: bottom;
 }
@@ -435,27 +435,27 @@ td {
 }
 
 #newRecord form #jscal_trigger {
-  margin-bottom: 4px;
   margin-top: 2px;
+  margin-bottom: 4px;
   vertical-align: bottom;
 }
 
 #newRecord form a:link {
-  text-decoration: underline;
-  border-bottom: 0;
   padding-left: 0;
+  border-bottom: 0;
+  text-decoration: underline;
 }
 
 #newRecord form a:visited {
-  text-decoration: underline;
-  border-bottom: 0;
   padding-left: 0;
+  border-bottom: 0;
+  text-decoration: underline;
 }
 
 #newRecord form a:hover {
-  text-decoration: underline;
-  border-bottom: 0;
   padding-left: 0;
+  border-bottom: 0;
+  text-decoration: underline;
 }
 
 .sqsSelectedSmartInputItem {
@@ -463,16 +463,16 @@ td {
 }
 
 .view{
-  margin-bottom: 3px;
-  margin-top: 3px;
   padding: 20px 16px 22px 30px;
+  margin-top: 3px;
+  margin-bottom: 3px;
   width: 100%;
 }
 
 table.view {
-  margin-bottom: 3px;
-  margin-top: 3px;
   padding: 20px 16px 22px 30px;
+  margin-top: 3px;
+  margin-bottom: 3px;
   width: 100%;
 }
 
@@ -485,19 +485,19 @@ table.view {
 }
 
 .basic textarea {
-  height: 48px;
   width: 100%;
+  height: 48px;
 }
 
 .detail h4 {
-  font-weight: bold;
   font-size: 1.2em;
-  margin: 0;
-  text-align: left;
-  border: none;
+  font-weight: bold;
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 0;
+  margin: 0;
+  border: none;
+  text-align: left;
 }
 
 .detail-view-row {
@@ -525,59 +525,59 @@ table.view {
 }
 
 .detail-view-row .label {
-  color: $main-font-color;
   display: inline;
-  padding: 0 0 0 8px;
   font-size: 14px;
   font-weight: 700;
+  color: $main-font-color;
+  padding: 0 0 0 8px;
   line-height: 48px;
   text-align: left;
-  white-space: nowrap;
   vertical-align: baseline;
+  white-space: nowrap;
 }
 
 .edit-view-row .label {
-  color: $main-font-color;
   display: inline;
-  padding: 0 0 0 8px;
   font-size: 14px;
   font-weight: 700;
+  color: $main-font-color;
+  padding: 0 0 0 8px;
   line-height: 48px;
   text-align: left;
-  white-space: nowrap;
   vertical-align: baseline;
+  white-space: nowrap;
 }
 
 #lineItems {
-  color: $main-font-color;
   display: inline;
-  padding: 0 0 0 8px;
   font-size: 14px;
   font-weight: 700;
+  color: $main-font-color;
+  padding: 0 0 0 8px;
   line-height: 48px;
   text-align: left;
-  white-space: nowrap;
   vertical-align: baseline;
+  white-space: nowrap;
 }
 
 slot {
-  color: $main-font-color;
   font-size: 14px;
   font-weight: 700;
+  color: $main-font-color;
   line-height: 48px;
   text-align: left;
-  white-space: nowrap;
   vertical-align: baseline;
+  white-space: nowrap;
 }
 
 #lead_queries_Div td {
-  color: $main-font-color;
   font-size: 14px;
   font-weight: 700;
+  color: $main-font-color;
   line-height: 48px;
   text-align: left;
-  white-space: nowrap;
   vertical-align: baseline;
+  white-space: nowrap;
 }
 
 #html_div {
@@ -585,24 +585,24 @@ slot {
 }
 
 .dataField {
-  min-height: 48px;
   line-height: 48px;
+  min-height: 48px;
 }
 
 .detail-view-field {
-  color: $main-font-color;
   display: inline;
-  padding: 12px;
   font-size: 14px;
   font-weight: 400;
-  line-height: 20px;
-  min-height: 48px;
-  text-align: left;
-  white-space: nowrap;
-  vertical-align: baseline;
   background-color: $detail-view-field-bg;
+  color: $main-font-color;
+  padding: 12px;
   border: 1px solid transparent;
   border-radius: 4px;
+  line-height: 20px;
+  text-align: left;
+  min-height: 48px;
+  vertical-align: baseline;
+  white-space: nowrap;
 }
 
 .detail-view-field a {
@@ -610,13 +610,13 @@ slot {
 }
 
 .edit-view-field textarea {
-  line-height: 24px;
   padding-top: 14px;
+  line-height: 24px;
 }
 
 .inline_edit_field textarea {
-  line-height: 24px;
   padding-top: 14px;
+  line-height: 24px;
 }
 
 #no-tab-actions > ul > li {
@@ -624,11 +624,11 @@ slot {
 }
 
 .detail tr td {
-  border: none;
-  vertical-align: top;
   padding: 5px 6px 5px 6px;
-  vertical-align: top;
+  border: none;
   text-align: left;
+  vertical-align: top;
+  vertical-align: top;
 }
 
 .detail tr td[scope=row] {
@@ -643,8 +643,8 @@ slot {
 }
 
 #EditView > table {
-  overflow: auto;
   margin-bottom: 0;
+  overflow: auto;
 }
 
 #EditView_tabs.yui-navset.yui-navset-top {
@@ -713,15 +713,15 @@ option[selected] {
 }
 
 .edit > table {
-  margin-bottom: 0;
   padding: 3px 3px 3px 10px;
+  margin-bottom: 0;
 }
 
 .edit h4 {
-  text-align: left;
   padding-top: 0;
-  margin-top: 10px;
   padding-left: 0;
+  margin-top: 10px;
+  text-align: left;
 }
 
 .edit tr td {
@@ -731,10 +731,10 @@ option[selected] {
 
 .edit tr td[scope=row] {
   padding: 0 10px 0 10px;
-  text-align: left;
-  vertical-align: top;
-  height: 40px;
   line-height: 40px;
+  text-align: left;
+  height: 40px;
+  vertical-align: top;
 }
 
 .edit tr th {
@@ -742,8 +742,8 @@ option[selected] {
 }
 
 #EditView input[type="button"] {
-  margin: 4px;
   padding: 0 10px;
+  margin: 4px;
 }
 
 fieldset {
@@ -751,10 +751,10 @@ fieldset {
 }
 
 fieldset legend {
-  border: none;
   font-size: 16px;
   font-weight: 700;
   padding-left: 33.33333333%;
+  border: none;
 }
 
 fieldset table {
@@ -774,31 +774,31 @@ fieldset td {
 }
 
 fieldset label {
-  border: none;
   font-size: 14px;
   font-weight: 700;
   color: $main-font-color;
+  border: none;
 }
 
 .validation-message {
+  margin: 4px;
   border: 1px solid transparent;
   border-radius: 4px;
-  margin: 4px;
 }
 
 table#tabFormPagination td{
-  border-bottom: none;
   margin-bottom: 0;
+  border-bottom: none;
 }
 
 #tabFormPagination{
-  border-bottom: none;
   margin-bottom: 0;
+  border-bottom: none;
 }
 
 #EditView > table#tabFormPagination.detail.view {
-  border-bottom: none;
   margin-bottom: 0;
+  border-bottom: none;
 }
 
 .edit tr td table {
@@ -815,13 +815,13 @@ table#tabFormPagination td{
 }
 
 #map_listview_top {
-  float: none;
   clear: both;
+  float: none;
 }
 
 #export_listview_top {
-  float: none;
   clear: both;
+  float: none;
 }
 
 .detail.view {
@@ -889,22 +889,22 @@ table.detail {
 }
 
 .small tr td table tr th {
-  text-align: left;
   border-bottom: none;
+  text-align: left;
 }
 
 #sitemap {
+  display: none;
+  top: 10%;
+  left: 30%;
   clear: both;
   width: 650px;
-  display: none;
   z-index: 9999;
-  left: 30%;
-  top: 10%;
 }
 
 #sitemap .edit.view {
-  border: 2px solid;
   padding: 6px 6px 6px 16px;
+  border: 2px solid;
 }
 
 #sitemap a:link {
@@ -929,8 +929,8 @@ table.detail {
 }
 
 #sitemap ul li {
-  margin-bottom: 5px;
   display: list-item;
+  margin-bottom: 5px;
 }
 
 #sitemapLink a {
@@ -949,19 +949,19 @@ table.detail {
 }
 
 div#responseTime {
-  width: 50%;
   font-size: 12px;
   color: #888888;
+  width: 50%;
 }
 
 #themePicker {
-  text-align: center;
   margin-bottom: 0.5em;
+  text-align: center;
 }
 
 #langPicker {
-  text-align: center;
   margin-bottom: 0.5em;
+  text-align: center;
 }
 
 div.row.monthHeader {
@@ -987,15 +987,15 @@ div.row.monthHeader {
 }
 
 .olCgClass td{
-  border-bottom: 2px solid #ddd;
   background-color: #f6f6f6;
   padding: 5px 3px 3px 10px;
+  border-bottom: 2px solid #ddd;
 }
 
 #forecastsWorksheet .olBgClass td.olCgClass {
-  border-bottom: 2px solid #ddd;
   background-color: #f6f6f6;
   padding: 5px 3px 3px 10px;
+  border-bottom: 2px solid #ddd;
 }
 
 .olCgClass {
@@ -1013,55 +1013,55 @@ div.row.monthHeader {
 }
 
 .olCloseFontClass {
+  background-color: #dfdfdf;
   padding-bottom: 1px;
   text-align: right;
-  background-color: #dfdfdf;
 }
 
 .aclAll {
-  color: #008000;
   font-weight: bold;
+  color: #008000;
 }
 
 .aclOwner {
-  color: #000000;
   font-weight: bold;
+  color: #000000;
 }
 
 .aclNone {
-  color: #FF0000;
   font-weight: bold;
+  color: #FF0000;
 }
 
 .aclEnabled {
-  color: #008000;
   font-weight: bold;
+  color: #008000;
 }
 
 .aclDisabled {
-  color: #FF0000;
   font-weight: bold;
+  color: #FF0000;
 }
 
 .aclAdmin {
-  color: #0000FF;
   font-weight: bold;
+  color: #0000FF;
 }
 
 .aclNormal {
-  color: #008000;
   font-weight: bold;
+  color: #008000;
 }
 
 .aclGroup {
-  color: #0000A0;
   font-weight: bold;
+  color: #0000A0;
 }
 
 ul.noBullet {
-  list-style-type: none;
-  margin-left: 0;
   padding-left: 0;
+  margin-left: 0;
+  list-style-type: none;
 }
 
 li.noBullet:first-child {
@@ -1069,40 +1069,40 @@ li.noBullet:first-child {
 }
 
 li.noBullet {
-  list-style-type: none;
   padding: 0;
   margin: 0;
   min-height: initial;
+  list-style-type: none;
 }
 
 #MorePanelHandle {
-  cursor: pointer;
   display: inline;
-  margin-left: 2px;
-  margin-bottom: 2px;
-  text-align: center;
   background: url('../../../../index.php?entryPoint=getImage&imageName=more.gif') no-repeat bottom left;
   color: #444;
+  cursor: pointer;
+  margin-bottom: 2px;
+  margin-left: 2px;
+  text-align: center;
 }
 
 .sqsFloater {
+  display: none;
   position: absolute;
-  z-index: 2;
   bottom: 0;
   right: 0;
-  display: none;
   padding: 0;
+  z-index: 2;
 }
 
 .sqsFloater td {
-  border: 1px inset;
   color: black;
+  border: 1px inset;
 }
 
 .sqsMatchedSmartInputItem {
+  cursor: pointer;
   padding: 2px 5px 2px 5px;
   margin: 0;
-  cursor: pointer;
 }
 
 .sqsSelectedSmartInputItem {
@@ -1115,10 +1115,10 @@ li.noBullet {
 }
 
 .sqsNoMatch {
-  padding: 2px 5px 2px 5px;
   font-weight: bold;
   background-color: #eeeeee;
   color: #980000;
+  padding: 2px 5px 2px 5px;
 }
 
 .todaysTask {
@@ -1183,20 +1183,20 @@ div#content p.error {
 }
 
 .required a:link {
-  color: $default-btn-color;
   font-weight: 600;
+  color: $default-btn-color;
   text-decoration: underline;
 }
 
 .error a {
-  color: $default-btn-color;
   font-weight: 600;
+  color: $default-btn-color;
   text-decoration: underline;
 }
 
 .error a:link {
-  color: $default-btn-color;
   font-weight: 600;
+  color: $default-btn-color;
   text-decoration: underline;
 }
 
@@ -1219,8 +1219,8 @@ div#content p.error {
 .date {
   font-size: 13px;
   font-weight: bold;
-  border-bottom: 1px solid;
   padding-right: 10px;
+  border-bottom: 1px solid;
 }
 
 table.dateTime {
@@ -1232,39 +1232,39 @@ table.dateTime {
 }
 
 .dateFormat {
-  font-weight: normal;
   font-style: italic;
+  font-weight: normal;
 }
 
 #parent_name {
   display: inline-block;
-  clear: both;
   margin-top: 8px;
-  width: 50%;
   margin-right: 8px;
+  clear: both;
+  width: 50%;
 }
 
 input.sqsEnabled {
   display: inline-block;
-  clear: both;
   margin-top: 8px;
-  width: 50%;
   margin-right: 8px;
+  clear: both;
+  width: 50%;
 }
 
 .pageNumbers {
-  font-weight: bold;
-  margin: 0 0 0 0;
-  padding: 0 8px 0 0;
   position: static;
+  font-weight: bold;
   color: $default-btn-color;
+  padding: 0 8px 0 0;
+  margin: 0 0 0 0;
 }
 
 .contentBox {
-  border-top: 1px solid #DDD;
-  border-bottom: 1px solid #DDD;
   padding: 0 10px 0 0;
   margin: 10px 0 10px 0;
+  border-top: 1px solid #DDD;
+  border-bottom: 1px solid #DDD;
 }
 
 .contentBox td {
@@ -1272,9 +1272,9 @@ input.sqsEnabled {
 }
 
 .teamNoticeBox {
-  border: 1px solid;
-  padding: 0;
   background: #fff;
+  padding: 0;
+  border: 1px solid;
   width: 100%;
 }
 
@@ -1448,45 +1448,45 @@ td.edit.view td[align=right] {
 }
 
 iframe.teamNoticeBox {
-  width: 99%;
   padding: 0;
+  width: 99%;
 }
 
 .loading-indicator {
   background-image: url('../default/ext/resources/images/default/grid/loading.gif');
-  background-repeat: no-repeat;
   background-position: left;
+  background-repeat: no-repeat;
   padding-left: 20px;
-  line-height: 16px;
   margin: 3px;
+  line-height: 16px;
 }
 
 .x-sqs-list {
-  border: 1px solid #d0d0d0;
   background: #d0d0d0;
+  border: 1px solid #d0d0d0;
   overflow: hidden;
 }
 
 .x-sqs-list-inner {
-  overflow: auto;
-  background: #FFF;
   position: relative;
+  background: #FFF;
+  overflow: auto;
   overflow-x: hidden;
 }
 
 .x-sqs-list-item {
   font: normal 12px 'Lato', arial, sans-serif;
+  padding: 1px;
   border: 1px solid #fff;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 1px;
+  white-space: nowrap;
 }
 
 .x-sqs-list .x-sqs-selected {
-  border: 1px dotted #f6f6f6;
   background: #d0d0d0;
   cursor: pointer;
+  border: 1px dotted #f6f6f6;
 }
 
 embed {
@@ -1494,13 +1494,13 @@ embed {
 }
 
 #selected_directory_children {
-  border-left: 1px solid;
   padding: 3px;
+  border-left: 1px solid;
 }
 
 #goto_date_trigger_div {
-  border: none;
   padding: 0;
+  border: none;
 }
 
 .yui-panel-container {
@@ -1508,10 +1508,10 @@ embed {
 }
 
 div.confirmTable {
-  overflow: auto;
-  width: 1056px;
   position: relative;
   margin-bottom: 20px;
+  overflow: auto;
+  width: 1056px;
 }
 
 #html_div p {
@@ -1523,10 +1523,10 @@ div.confirmTable {
 }
 
 .h3Row {
+  background-position: top;
+  background-repeat: repeat-x;
   margin-top: 10px;
   vertical-align: middle;
-  background-repeat: repeat-x;
-  background-position: top;
 }
 
 .h3Row td {
@@ -1539,21 +1539,21 @@ div.confirmTable {
 }
 
 .buttonSlide .yui-hd {
-  border: 0;
   background-color: transparent;
   padding: 0;
+  border: 0;
 }
 
 .buttonSlide.yui-module .yui-hd .toggle em {
+  display: inline;
   background-image: url('../../../../index.php?entryPoint=getImage&imageName=slider_button_more.png');
   background-repeat: no-repeat;
-  display: inline;
-  overflow: hidden;
-  text-indent: 9999px;
   float: right;
+  overflow: hidden;
   text-align: right;
-  height: 14px;
   width: 14px;
+  height: 14px;
+  text-indent: 9999px;
 }
 
 .buttonSlide.yui-module.yui-closed .yui-hd .toggle em {
@@ -1561,8 +1561,8 @@ div.confirmTable {
 }
 
 .view {
-  border-bottom: 1px solid;
   border-top: 2px solid;
+  border-bottom: 1px solid;
 }
 
 .td_alt {
@@ -1605,13 +1605,13 @@ div.confirmTable {
 
 .moduleTitle h2 {
   display: block;
-  float: left;
   font-size: 26px;
-  color: $main-font-color;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin: 0 0 $page-title-space 0;
   font-weight: 300;
+  color: $main-font-color;
+  margin: 0 0 $page-title-space 0;
+  float: left;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .moduleTitle > h2 > img {
@@ -1619,22 +1619,22 @@ div.confirmTable {
 }
 
 .moduleTitle h2 span.pointer {
-  padding: 0 8px;
   font-size: 18px;
+  padding: 0 8px;
   line-height: 16px;
 }
 
 ul.subTabs {
+  font: 12px 'Lato', Arial, Verdana, Helvetica, sans-serif;
   padding: 4px 0;
   margin: 0;
   border: none;
-  font: 12px 'Lato', Arial, Verdana, Helvetica, sans-serif;
 }
 
 ul.subTabs li {
-  list-style: none;
-  margin: 0;
   display: inline;
+  margin: 0;
+  list-style: none;
 }
 
 .activeSubTab {
@@ -1656,8 +1656,8 @@ ul.subTabs li a.activeSubTab:hover {
 ul.subTabs li a {
   padding: 0 8px 0 8px;
   margin: 0;
-  border-right: 1px solid;
   border-bottom: none;
+  border-right: 1px solid;
   text-decoration: none;
 }
 
@@ -1670,9 +1670,9 @@ ul.subTabs li a:visited {
 }
 
 .subTabMore {
-
-  text-decoration: none;
   padding-top: 3px;
+  text-decoration: none;
+
 }
 
 #newRecord form {
@@ -1681,32 +1681,32 @@ ul.subTabs li a:visited {
 
 a.utilsLink:link {
   font-weight: normal;
-  text-decoration: underline;
   padding-bottom: 3px;
+  text-decoration: underline;
 }
 
 a.utilsLink:visited {
   font-weight: normal;
-  text-decoration: underline;
   padding-bottom: 3px;
+  text-decoration: underline;
 }
 
 a.tabFormAdvLink:link {
-  text-decoration: none;
-  line-height: 20px;
   margin-right: 2px;
+  line-height: 20px;
+  text-decoration: none;
 }
 
 a.tabFormAdvLink:visited {
-  text-decoration: none;
-  line-height: 20px;
   margin-right: 2px;
+  line-height: 20px;
+  text-decoration: none;
 }
 
 a.tabFormAdvLink:hover {
-  text-decoration: none;
-  line-height: 20px;
   margin-right: 2px;
+  line-height: 20px;
+  text-decoration: none;
 }
 
 #themepickerLinkSpan a {
@@ -1714,9 +1714,9 @@ a.tabFormAdvLink:hover {
 }
 
 #colorPicker {
-  border-right: 2px solid #DDDDDD;
   padding: 8px 4px 4px 0;
   margin-right: 1px;
+  border-right: 2px solid #DDDDDD;
 }
 
 #colorPicker span {
@@ -1724,10 +1724,10 @@ a.tabFormAdvLink:hover {
 }
 
 #colorPicker #themepickerLinkSpan {
-  color: #444444;
-  text-decoration: underline;
   font-size: 12px;
   font-weight: 400;
+  color: #444444;
+  text-decoration: underline;
 }
 
 #colorPicker #themepickerLinkSpan:hover {
@@ -1751,13 +1751,13 @@ a.tabFormAdvLink:hover {
 }
 
 .teamNoticeBox {
-  border-color: #abc3d7;
   color: #444444;
+  border-color: #abc3d7;
 }
 
 #search input[name=query_string] {
-  border-color: #6fb0e4;
   background-color: #f6fafd;
+  border-color: #6fb0e4;
   line-height: 20px;
   min-height: 44px;
 }
@@ -1805,8 +1805,8 @@ table.detail {
 }
 
 .detail tr td[scope="row"] {
-  color: #000000;
   background-color: #f6f6f6;
+  color: #000000;
   border-color: #cbdae6;
 }
 
@@ -1819,9 +1819,9 @@ table.detail {
 }
 
 .detail tr td {
+  background-color: #fff;
   color: #444444;
   border-color: #cbdae6;
-  background-color: #fff;
 }
 
 .detail tr td a:link {
@@ -1845,8 +1845,8 @@ table.detail {
 }
 
 .edit {
-  color: #333333;
   background-color: #f6f6f6;
+  color: #333333;
 }
 
 .detail .edit td {
@@ -1855,38 +1855,38 @@ table.detail {
 }
 
 .other {
-  border-color: #abc3d7;
   background-color: #cbdae6;
+  border-color: #abc3d7;
 }
 
 .other td {
-  color: #444444;
   background-color: $default-btn-color;
+  color: #444444;
   border-left-color: #dfdfdf;
 }
 
 .other td[scope=row] {
-  color: #000000;
   background-color: #fafafa;
+  color: #000000;
 }
 
 .other td.edit {
-  color: #000000;
   background-color: #f6f6f6;
+  color: #000000;
 }
 
 a.tabFormAdvLink:link {
   color: #444444;
-  float: left;
   padding-top: 32px;
   padding-right: 32px;
+  float: left;
 }
 
 a.tabFormAdvLink:visited {
   color: #444444;
-  float: left;
   padding-top: 32px;
   padding-right: 32px;
+  float: left;
 }
 
 #change_layout {
@@ -1898,22 +1898,22 @@ a.tabFormAdvLink:visited {
 }
 
 #ajaxStatusDiv {
+  position: fixed;
+  top: 7px;
   background: #ffffff;
   color: $danger;
-  position: fixed;
-  opacity: .8;
-  filter: alpha(opacity=80);
-  z-index: 20;
-  top: 7px;
-  border: 1px solid #aaa;
   padding: 5px;
+  border: 1px solid #aaa;
+  filter: alpha(opacity=80);
+  opacity: .8;
+  z-index: 20;
 
 }
 
 .detail508 tr td[scope="col"] {
   background-color: #F6F6F6;
-  border-color: #CBDAE6;
   color: #000000;
+  border-color: #CBDAE6;
   text-align: right;
   white-space: nowrap;
 }
@@ -1935,18 +1935,18 @@ span#selectedRecordsTop {
 }
 
 ul.clickMenu {
-  list-style: none;
+  display: inline-block;
+  color: $default-btn-color;
   padding: 0;
   margin: 0;
-  vertical-align: bottom;
-  color: $default-btn-color;
-  display: inline-block;
   border-radius: 3px;
+  vertical-align: bottom;
+  list-style: none;
 }
 
 ul.clickMenu form {
-  float: left;
   display: block;
+  float: left;
 }
 
 ul.clickMenu li.sugar_action_button > form:first-child {
@@ -1963,64 +1963,64 @@ ul.clickMenu.SugarActionMenu li.sugar_action_button ul.subnav.ddopen li form a {
 
 ul.clickMenu li ul.subnav li a:hover {
   background-color: $list-view-action-menu-link-bg;
-  width: 100%;
   text-align: left;
+  width: 100%;
 }
 
 ul.clickMenu li ul.subnav li input:hover {
   background-color: $list-view-action-menu-link-bg;
-  width: 100%;
   text-align: left;
+  width: 100%;
 }
 
 ul.clickMenu.subpanel.records li ul.subnav li a:hover {
   background-color: $list-view-action-menu-link-bg;
-  width: 100%;
   text-align: left;
+  width: 100%;
 }
 
 ul.clickMenu ul.subnav-sub li a:hover {
   background-color: $list-view-action-menu-link-bg;
-  width: 100%;
   text-align: left;
+  width: 100%;
 }
 
 ul.clickMenu > li {
-  float: left;
-  margin: 0;
-  list-style: none;
   position: relative;
+  color: $default-btn-color;
   cursor: pointer;
   padding: 5px;
-  color: $default-btn-color;
+  margin: 0;
   border-radius: 3px;
+  float: left;
+  list-style: none;
 }
 
 ul.SugarActionMenuIESub li {
-  float: left;
-  margin: 0;
-  list-style: none;
   position: relative;
+  color: $default-btn-color;
   cursor: pointer;
   padding: 5px;
-  color: $default-btn-color;
+  margin: 0;
   border-radius: 3px;
+  float: left;
+  list-style: none;
 }
 
 ul.SugarActionMenuIESub li {
   display: block;
-  text-decoration: none;
-  float: left;
-  margin: 0 5px 0 0;
   color: $default-btn-color;
+  margin: 0 5px 0 0;
+  float: left;
+  text-decoration: none;
 }
 
 ul.clickMenu li a {
   display: block;
-  text-decoration: none;
-  float: left;
-  margin: 0 5px 0 0;
   color: $default-btn-color;
+  margin: 0 5px 0 0;
+  float: left;
+  text-decoration: none;
 }
 
 ul.clickMenu li.single a {
@@ -2032,17 +2032,17 @@ ul.clickMenu li a:hover {
 }
 
 ul.clickMenu > li > span {
+  display: inline-block;
+  background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
+  background-position: 0% 0%;
+  background-repeat: no-repeat;
+  background-size: 12px auto;
+  cursor: pointer;
   margin-top: 9px;
   width: 16px;
   height: 16px;
-  display: inline-block;
 
-  background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
-  background-repeat: no-repeat;
-  background-position: 0% 0%;
-  background-size: 12px auto;
 
-  cursor: pointer;
 }
 
 .inlineButtons ul.clickMenu > li > span {
@@ -2051,9 +2051,9 @@ ul.clickMenu > li > span {
 }
 
 .inlineButtons ul.clickMenu.SugarActionMenu li.sugar_action_button ul.subnav.ddopen li a {
-  width: 100%;
-  text-align: left;
   padding: 4px;
+  text-align: left;
+  width: 100%;
 }
 
 .selectActions.clickMenu {
@@ -2092,14 +2092,14 @@ ul#detailViewActions.clickMenu {
 }
 
 .selectActionsDisabled span {
-  width: 19px;
-  height: 17px;
-  float: left;
   background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
+  background-position: 9px 7px;
   background-repeat: no-repeat;
   background-size: 12px auto;
-  background-position: 9px 7px;
+  float: left;
   opacity: .4;
+  width: 19px;
+  height: 17px;
 }
 
 .selectActionsDisabled span.ab {
@@ -2108,29 +2108,29 @@ ul#detailViewActions.clickMenu {
 }
 
 .selectActionsDisabled a {
-  float: left;
   display: inline-block;
-  text-decoration: none;
+  position: relative;
+  top: -1px;
+  font-size: 14px;
+  font-weight: normal;
   color: #C9D2DA;
   padding: 2px;
   padding: 1px;
-  font-weight: normal;
-  font-size: 14px;
-  top: -1px;
-  position: relative;
+  float: left;
+  text-decoration: none;
 }
 
 #selectActionsDisabled a:hover {
-  float: left;
   display: inline-block;
-  text-decoration: none;
+  position: relative;
+  top: -1px;
+  font-size: 14px;
+  font-weight: normal;
   color: #C9D2DA;
   padding: 2px;
   padding: 1px;
-  font-weight: normal;
-  font-size: 14px;
-  top: -1px;
-  position: relative;
+  float: left;
+  text-decoration: none;
 }
 
 ul.clickMenu.SugarActionMenu li.single a {
@@ -2155,10 +2155,10 @@ table.view td {
 }
 
 .selectActionsDisabled {
+  font-size: 13px;
+  cursor: pointer;
   padding: 4px 8px 5px 8px;
   margin: 0 3px 0 0;
-  cursor: pointer;
-  font-size: 13px;
 }
 
 a:link {
@@ -2172,15 +2172,15 @@ a:link {
 }
 
 .view {
+  background: #fefefe;
   padding: 0;
   margin: 0;
-  background: #fefefe;
 }
 
 table.view {
+  background: #fefefe;
   padding: 0;
   margin: 0;
-  background: #fefefe;
 }
 
 .evenListRowS1 {
@@ -2194,27 +2194,27 @@ table.view {
 .detail h4 {
   font-weight: bold;
   margin: 10px;
-  text-align: left;
   border: none;
+  text-align: left;
 }
 
 #dialog {
-  text-align: center;
-  overflow: hidden;
-  zoom: 1;
   padding: 25px;
+  overflow: hidden;
+  text-align: center;
   z-index: 1;
+  zoom: 1;
   background-opacity: 0.6;
 }
 
 #overlay {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
   background-color: #fff;
   width: 100%;
   height: 100%;
-  display: none;
 }
 
 .module_icon {
@@ -2253,8 +2253,8 @@ span.crumbLink {
 }
 
 .tabForm {
-  border: none;
   background: #ffffff;
+  border: none;
 }
 
 #create_image {
@@ -2262,13 +2262,13 @@ span.crumbLink {
 }
 
 a#delete_listview_top:hover {
-  color: $default-btn-color;
   font-size: 14px;
+  color: $default-btn-color;
 }
 
 a#delete_listview_bottom:hover {
-  color: $default-btn-color;
   font-size: 14px;
+  color: $default-btn-color;
 }
 
 .about_suite {
@@ -2278,20 +2278,20 @@ a#delete_listview_bottom:hover {
 }
 
 .about_suite h3 {
-  font-weight: normal;
   font-size: 18px;
+  font-weight: normal;
 }
 
 .about_suite ul li {
   font-size: 14px;
-  margin-bottom: 10px;
   color: #777777;
+  margin-bottom: 10px;
 }
 
 #about_menu {
+  padding-left: 0;
   margin-top: 10px;
   margin-bottom: 20px;
-  padding-left: 0;
 }
 
 #about_table {
@@ -2307,15 +2307,15 @@ a#delete_listview_bottom:hover {
 }
 
 #featuring {
-  padding: 10px 0 0 0;
   font-size: 14px;
   color: #777777;
+  padding: 10px 0 0 0;
 }
 
 .wrapper {
-  border: 1px solid #000;
   display: inline-block;
   position: relative;
+  border: 1px solid #000;
 }
 
 .wrapper input,
@@ -2326,8 +2326,8 @@ a#delete_listview_bottom:hover {
 
 .wrapper button {
   position: absolute;
-  right: 0;
   top: 0;
+  right: 0;
 }
 
 .wrapper input {
@@ -2335,9 +2335,9 @@ a#delete_listview_bottom:hover {
 }
 
 input[type=text].cstm_code {
-  resize: both;
   width: 200px;
   height: 200px;
+  resize: both;
 }
 
 .themePicker {
@@ -2350,8 +2350,8 @@ input[type=text].cstm_code {
 
 .themePicker > table > tbody > tr > td {
   text-align: left;
-  vertical-align: top;
   width: 100%;
+  vertical-align: top;
 }
 
 .themePicker hr {
@@ -2367,17 +2367,17 @@ input[type=text].cstm_code {
 }
 
 #colorPicker ul {
-  border: none;
   padding: 3px 0 0 0;
   margin: 0 0 0 10px;
+  border: none;
 }
 
 #colorPicker ul li {
-  list-style-type: none;
   display: inline;
-  padding: 0;
   cursor: pointer;
+  padding: 0;
   margin: 0;
+  list-style-type: none;
 }
 
 #themeName {
@@ -2385,36 +2385,36 @@ input[type=text].cstm_code {
 }
 
 #leftColumn {
-  left: 10px;
   position: absolute;
+  left: 10px;
   float: left;
   width: 14.5em;
 }
 
 #color_menu {
+  padding: 0;
+  margin: 0;
   width: 200px;
   height: 15px;
-  margin: 0;
-  padding: 0;
 }
 
 #font_menu {
+  padding: 0;
+  margin: 0;
   width: 200px;
   height: 15px;
-  margin: 0;
-  padding: 0;
 }
 
 #color_menu li {
   float: left;
-  height: 15px;
   width: 15px;
+  height: 15px;
 }
 
 #font_menu li {
   float: left;
-  height: 15px;
   width: 15px;
+  height: 15px;
 }
 
 #themepickerDialog div[class="ft"] {
@@ -2422,15 +2422,15 @@ input[type=text].cstm_code {
 }
 
 #stylepicker {
-  border-width: 1px;
-  margin: 0;
   padding: 0;
+  margin: 0;
+  border-width: 1px;
   width: auto;
 }
 
 #themepickerDialog_c {
-  right: 2em;
   top: 3em;
+  right: 2em;
 }
 
 .headerlinks a:link {
@@ -2482,13 +2482,13 @@ dl {
 }
 
 .form-signin .form-control {
+  box-sizing: border-box;
   position: relative;
+  font-size: 16px;
+  padding: 10px;
   height: auto;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 10px;
-  font-size: 16px;
 }
 
 #ConvertLead .label {
@@ -2513,26 +2513,26 @@ dl {
 
 #EditView_tabs .id-ff-remove img {
   content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
-  height: 32px;
   width: 32px;
+  height: 32px;
 }
 
 #EditView_tabs .edit [type="button"] img {
   content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
-  height: 32px;
   width: 32px;
+  height: 32px;
 }
 
 #conditionLines [type="button"] img {
   content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
-  height: 32px;
   width: 32px;
+  height: 32px;
 }
 
 #actionLines [type="button"] img {
   content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
-  height: 32px;
   width: 32px;
+  height: 32px;
 }
 
 #actionLines tr td table tbody tr td div table tbody tr td button[type="button"] img {
@@ -2544,8 +2544,8 @@ dl {
 }
 
 #search_form span.id-ff.multiple {
-  top: 10px;
   position: relative;
+  top: 10px;
 }
 
 #EditView_tabs span.id-ff.multiple [type="button"] img {
@@ -2557,19 +2557,19 @@ dl {
 }
 
 input#btn_ConditionLine.button[type="button"]{
-  padding: 0 10px;
   color: white;
+  padding: 0 10px;
 }
 
 input#btn_ActionLine.button[type="button"] {
-  padding: 0 10px;
   color: white;
+  padding: 0 10px;
 }
 
 #deleteGroup img {
   content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-clear.png');
-  height: 32px;
   width: 32px;
+  height: 32px;
 }
 
 #EditView_tabs .edit input{
@@ -2587,8 +2587,8 @@ input#btn_ActionLine.button[type="button"] {
 }
 
 .edit-view-field #duration_hours {
-  width: 80px;
   margin-right: 8px;
+  width: 80px;
 }
 
 .col-sm-6 .edit-view-field input[type="text"].datetimecombo_date {
@@ -2661,14 +2661,14 @@ input#btn_ActionLine.button[type="button"] {
 }
 
 #actionLines {
-  clear: both;
   border-radius: 4px;
+  clear: both;
   width: 100%;
 }
 
 #actionLines table {
-  clear: both;
   border-radius: 4px;
+  clear: both;
   width: 100%;
 }
 
@@ -2739,35 +2739,35 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems .group_body {
-  width: 100%;
   display: block;
   padding: 2px;
   border: 1px solid transparent;
   border-radius: 4px;
+  width: 100%;
 }
 
 #lineItems .group_body > td {
-  width: 100%;
   display: block;
   padding: 2px;
   border: 1px solid transparent;
   border-radius: 4px;
+  width: 100%;
 }
 
 #lineItems .group > thead {
-  width: 100%;
   display: block;
   padding: 2px;
   border: 1px solid transparent;
   border-radius: 4px;
+  width: 100%;
 }
 
 #lineItems .group > thead > tr {
-  width: 100%;
   display: block;
   padding: 2px;
   border: 1px solid transparent;
   border-radius: 4px;
+  width: 100%;
 }
 
 #lineItems .group > thead {
@@ -2786,20 +2786,20 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems .group > thead > tr > td:nth-of-type(1) {
-  width: 80%;
   display: inline-block;
+  width: 80%;
 }
 
 #lineItems .group > thead > tr > td:nth-of-type(2) {
-  width: 20%;
   display: inline-block;
+  width: 20%;
 }
 
 #lineItems .group button {
-  width: 32px;
-  height: 32px;
   padding: 0;
   line-height: 0;
+  width: 32px;
+  height: 32px;
 }
 
 /*Labels Next to Fields*/
@@ -2849,18 +2849,18 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems .product_qty {
-  width: 40px;
   margin: 0 5px 0 0;
+  width: 40px;
 }
 
 #lineItems .product_name {
-  width: 98%;
   margin: 0 5px 0 0;
+  width: 98%;
 }
 
 #lineItems .product_part_number {
-  width: 100%;
   margin: 0 5px 0 0;
+  width: 100%;
 }
 
 #lineItems .product_part_number_button {
@@ -2868,13 +2868,13 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems .product_list_price {
-  width: 80px;
   margin: 0 5px 0 0;
+  width: 80px;
 }
 
 #lineItems .product_discount_text {
-  width: 80px;
   margin: 0 5px 0 0;
+  width: 80px;
 }
 
 #lineItems .product_discount_amount_select {
@@ -2882,13 +2882,13 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems .product_unit_price {
-  width: 80px;
   margin: 0 5px 0 0;
+  width: 80px;
 }
 
 #lineItems .product_vat_amt_text {
-  width: 80px;
   margin: 0 5px 0 0;
+  width: 80px;
 }
 
 #lineItems .product_vat_amt_select {
@@ -2896,8 +2896,8 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems .product_total_price {
-  width: 80px;
   margin: 0 5px 0 0;
+  width: 80px;
 }
 
 #lineItems .product_delete_line {
@@ -2909,8 +2909,8 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems .product_item_description {
-  height: 50px;
   width: 95%;
+  height: 50px;
 }
 
 #lineItems .product_description_label {
@@ -2918,8 +2918,8 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems .product_description {
-  height: 50px;
   width: 95%;
+  height: 50px;
 }
 
 /*Service Lines*/
@@ -2955,19 +2955,19 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems .service_name {
+  margin: 0 5px 0 0;
   width: 95%;
   height: 50px;
-  margin: 0 5px 0 0;
 }
 
 #lineItems .service_list_price {
-  width: 80px;
   margin: 0 5px 0 0;
+  width: 80px;
 }
 
 #lineItems .service_discount_text {
-  width: 80px;
   margin: 0 5px 0 0;
+  width: 80px;
 }
 
 #lineItems .service_discount_select {
@@ -2975,8 +2975,8 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems .service_unit_price {
-  width: 80px;
   margin: 0 5px 0 0;
+  width: 80px;
 }
 
 #lineItems .service_vat_text {
@@ -2988,8 +2988,8 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems .service_total_price {
-  width: 80px;
   margin: 0 5px 0 0;
+  width: 80px;
 }
 
 #lineItems .service_delete_line {
@@ -3002,38 +3002,38 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 /*Grand Total*/
 #EditView #total_amt {
-  max-width: 40%;
   width: 40%;
+  max-width: 40%;
 }
 
 #EditView #discount_amount {
-  max-width: 40%;
   width: 40%;
+  max-width: 40%;
 }
 
 #EditView #subtotal_amount {
-  max-width: 40%;
   width: 40%;
+  max-width: 40%;
 }
 
 #EditView #shipping_amount {
-  max-width: 40%;
   width: 40%;
+  max-width: 40%;
 }
 
 #EditView #shipping_tax_amt {
-  max-width: 40%;
   width: 40%;
+  max-width: 40%;
 }
 
 #EditView #tax_amount {
-  max-width: 40%;
   width: 40%;
+  max-width: 40%;
 }
 
 #EditView #total_amount {
-  max-width: 40%;
   width: 40%;
+  max-width: 40%;
 }
 
 #EditView #shipping_tax {
@@ -3054,8 +3054,8 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 #btn_vCardButton,
 #btn_vCardButton img {
-  height: 14px;
   width: auto;
+  height: 14px;
 }
 
 textarea#billing_address_street {
@@ -3079,9 +3079,9 @@ textarea#description {
 }
 
 .hr {
-  height: 1px;
-  color: $navbar-menu-seperator;
   background: $main-alternate-bg;
+  color: $navbar-menu-seperator;
+  height: 1px;
 }
 
 .converted_account {
@@ -3094,8 +3094,8 @@ textarea#description {
 }
 
 .converted_account > tbody > tr > td {
-  border-radius: 4px;
   padding: 10px;
+  border-radius: 4px;
 }
 
 .modal {
@@ -3134,28 +3134,28 @@ ul::-webkit-scrollbar { /* 1 */
 
 
 div::-webkit-scrollbar-track { /* 3 */
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
 select::-webkit-scrollbar-track { /* 3 */
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
 input::-webkit-scrollbar-track { /* 3 */
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
 textarea::-webkit-scrollbar-track { /* 3 */
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
 ul::-webkit-scrollbar-track { /* 3 */
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
 
@@ -3200,15 +3200,15 @@ ul::-webkit-scrollbar-thumb { /* 5 */
 }
 
 .edit h4 {
+  font-size: 21px;
   padding: 0 0 10px 0;
   margin: 0 0 10px 0;
-  font-size: 21px;
   border-bottom: 1px solid #dddddd;
 }
 
 #addbuttons {
-  float: right;
   margin: 0 5px 0 5px;
+  float: right;
 }
 
 .btn-success {
@@ -3247,8 +3247,8 @@ table legend {
 }
 
 .ui-tabs .ui-tabs-nav li a {
-  padding: 5px;
   font-size: 0.9em;
+  padding: 5px;
 }
 
 .ui-state-default {
@@ -3316,19 +3316,19 @@ table legend {
 
 form#MassAssign_SecurityGroups {
   background-color: #e6e6e6;
-  border-radius: 3px;
-  margin: 20px 0 0 0;
-  width: 100%;
-  float: left;
   padding: 10px 20px 10px 20px;
+  margin: 20px 0 0 0;
+  border-radius: 3px;
+  float: left;
+  width: 100%;
 }
 
 span.id-ff button {
-  width: 32px;
-  height: 32px;
   padding: 0;
   margin: 5px 5px 5px 0;
   line-height: 0;
+  width: 32px;
+  height: 32px;
 }
 
 span.id-ff button:hover {
@@ -3336,10 +3336,10 @@ span.id-ff button:hover {
 }
 
 span.id-ff button img {
-  width: 32px;
-  height: 32px;
   padding: 0;
   margin: 0;
+  width: 32px;
+  height: 32px;
 }
 
 span.id-ff button:first-of-type img {
@@ -3458,21 +3458,21 @@ select#sales_stage_advanced {
 }
 
 .edit img#company_logo_image {
-  max-width: 250px;
   margin-top: 50px;
+  max-width: 250px;
 }
 
 .chartContainer .label {
-  color: #333333;
-  font-weight: normal;
   font-size: 1em;
+  font-weight: normal;
+  color: #333333;
 }
 
 .serverstats {
-  margin: 0;
   padding: 0;
-  width: 250px;
+  margin: 0;
   float: left;
+  width: 250px;
 }
 
 .dashboardTabList li a span {
@@ -3485,8 +3485,8 @@ select#sales_stage_advanced {
 
 /*Form to Person section*/
 #fieldChoices .field {
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
 
 #fieldChoices #fieldcontainer {
@@ -3494,28 +3494,28 @@ select#sales_stage_advanced {
 }
 
 #fieldChoices .field-list {
-  background-color: $main-bg;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  min-height: 240px;
-  width: 30%;
   display: inline-block;
+  background-color: $main-bg;
   padding: 8px;
   margin-right: 1%;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  width: 30%;
+  min-height: 240px;
 }
 
 #fieldChoices .field-list input {
-  width: 100%;
   display: block;
-  float: none;
   clear: both;
+  float: none;
+  width: 100%;
 }
 
 .field-list textarea {
-  width: 100%;
   display: block;
-  float: none;
   clear: both;
+  float: none;
+  width: 100%;
 }
 
 #fieldChoices .field-list input {
@@ -3531,24 +3531,24 @@ select#sales_stage_advanced {
 }
 
 #fieldChoices .field-header {
+  display: inherit;
+  font-size: 14px;
   background-clip: padding-box;
   background-color: #BFCAD3;
+  color: $default-btn-color;
+  padding: 8px;
   border: 1px solid transparent;
   border-radius: 4px;
-  color: $default-btn-color;
-  font-size: 14px;
-  padding: 8px;
-  display: inherit;
-  height: 48px;
   line-height: 32px;
+  height: 48px;
 }
 
 #fieldChoices .required > .field-header {
-  border: 1px solid transparent;
   background-color: $danger-btn-bg;
   color: $default-btn-color;
   padding: 8px;
   margin: 0;
+  border: 1px solid transparent;
 }
 
 #fieldChoices .field-type {
@@ -3564,11 +3564,11 @@ select#sales_stage_advanced {
 }
 
 #fieldChoices .field-container {
-  max-height: 300px;
-  min-height: 300px;
-  height: 300px;
   overflow-x: hidden;
   overflow-y: auto;
+  height: 300px;
+  max-height: 300px;
+  min-height: 300px;
 }
 
 #fieldChoices .optionButtonsHolder {
@@ -3577,12 +3577,12 @@ select#sales_stage_advanced {
 
 #fieldChoices .title {
   display: inline-block;
-  width: 30%;
-  text-align: center;
-  font-weight: 300;
   font-size: 20px;
+  font-weight: 300;
   color: #F08377;
   padding-bottom: 8px;
+  text-align: center;
+  width: 30%;
 }
 
 #fieldChoices #personTypeSelect {
@@ -3590,10 +3590,10 @@ select#sales_stage_advanced {
 }
 
 .ui-state-highlight {
-  height: 48px;
+  background: #E6E6E6;
   border: 1px solid #778591;
   border-radius: 4px;
-  background: #E6E6E6;
+  height: 48px;
 
 }
 
@@ -3610,8 +3610,8 @@ hr {
 }
 
 #fieldChoices {
-  padding: 16px 8px 8px 8px;
   background: #ffffff;
+  padding: 16px 8px 8px 8px;
   border: 1px solid transparent;
   border-radius: 4px;
 }
@@ -3653,20 +3653,20 @@ hr {
 
 @media (min-width: 641px) and (max-width: 978px) {
   #cal-edit {
-    max-height: 50%;
-    max-width: 55%;
-    overflow: scroll;
     margin: 0 0 0 50px;
+    overflow: scroll;
+    max-width: 55%;
+    max-height: 50%;
   }
 
 }
 
 @media (min-width: 999px) and (max-width: 1279px) {
   #cal-edit {
-    max-height: 50%;
-    max-width: 55%;
-    overflow: scroll;
     margin: 0 0 0 250px;
+    overflow: scroll;
+    max-width: 55%;
+    max-height: 50%;
   }
 
 }
@@ -3700,13 +3700,13 @@ img.info {
 }
 
 img.info:hover {
-  opacity: 1;
   cursor: pointer;
+  opacity: 1;
 }
 
 tr:hover img.info {
-  opacity: 1;
   cursor: pointer;
+  opacity: 1;
 }
 
 .helpIcon {
@@ -3714,9 +3714,9 @@ tr:hover img.info {
 }
 
 .paginationWrapper {
-  float: right;
-  margin: 0;
   padding: 0;
+  margin: 0;
+  float: right;
 }
 
 #EditView .paginationWrapper {
@@ -3751,18 +3751,18 @@ tr:hover img.info {
 }
 
 .yui-layout .yui-layout-clip-right .collapse {
-  visibility: visible;
   display: block;
+  visibility: visible;
 }
 
 .yui-layout-hd .collapse {
-  visibility: visible;
   display: block;
+  visibility: visible;
 }
 
 .yui-layout .yui-layout-clip-left .collapse {
-  visibility: visible;
   display: block;
+  visibility: visible;
 }
 
 .table > thead > tr > th {
@@ -3794,8 +3794,8 @@ h3 span {
 }
 
 #dlg {
-  left: 300px;
   top: 75px;
+  left: 300px;
 }
 
 @media (min-width: 0) and (max-height: 320px) {
@@ -3803,8 +3803,8 @@ h3 span {
   .mobile-bar ul.dropdown-menu.user-dropdown {
     top: 50px;
     left: -140px;
-    height: 200px;
     overflow-y: scroll;
+    height: 200px;
   }
 
 }
@@ -3825,21 +3825,21 @@ h3 span {
 }
 
 .inlineEditIcon {
-  float: right;
-  height: 10px;
   color: #F08377;
-  width: 15px;
   padding-left: 3px;
+  float: right;
+  width: 15px;
+  height: 10px;
 }
 
 .inlineEditIcon svg {
-  fill: #F08377;
   display: none;
+  fill: #F08377;
 }
 
 .inlineEdit:hover .inlineEditIcon svg {
-  cursor: pointer;
   display: inline;
+  cursor: pointer;
 }
 
 td.inlineEditActive {
@@ -3847,8 +3847,8 @@ td.inlineEditActive {
 }
 
 #inlineEditSaveButton {
-  float: right;
   display: inline;
+  float: right;
 }
 
 #inlineEditSaveButton svg {
@@ -3860,9 +3860,9 @@ td.inlineEditActive {
 }
 
 #inline_edit_field {
+  padding-right: 5px;
   float: left;
   width: 80%;
-  padding-right: 5px;
 }
 
 #editAccountDialogue_c {
@@ -3870,8 +3870,8 @@ td.inlineEditActive {
 }
 
 #editAccountDialogue {
-  height: 90%;
   overflow: auto;
+  height: 90%;
 }
 
 #settingsDialog .yui-content {
@@ -3906,8 +3906,8 @@ td.inlineEditActive {
 /* stop child elements of a hidden dialog from showing up above other elements */
 .yui-overlay-hidden * {
   display: none;
-  visibility: collapse;
   height: 0;
+  visibility: collapse;
 }
 
 object {
@@ -3915,9 +3915,9 @@ object {
 }
 
 .favorite {
-  width: 20px;
-  float: left;
   margin-left: 5px;
+  float: left;
+  width: 20px;
 }
 
 .favorite:hover {
@@ -3925,12 +3925,12 @@ object {
 }
 
 #suggestion_box table {
-  border: 1px solid #cccccc;
+  color: #337ab7;
   padding: 0;
+  border: 1px solid #cccccc;
+  border-spacing: 0;
   width: 100%;
   max-width: 400px;
-  color: #337ab7;
-  border-spacing: 0;
 }
 
 #suggestion_box table tr {
@@ -3943,10 +3943,10 @@ object {
 }
 
 #suggestion_box table tr th {
-  padding: 4px;
-  text-align: left;
   background-color: #f0f0ee;
   color: #333333;
+  padding: 4px;
+  text-align: left;
 }
 
 #suggestion_box table tr td {
@@ -3960,13 +3960,13 @@ object {
 }
 
 .tool-tip-title {
-  margin-bottom: 3px;
   display: inline-block;
+  margin-bottom: 3px;
 }
 
 #use_resolution {
-  margin-top: 4px;
   padding: 8px;
+  margin-top: 4px;
 }
 
 #additional_info_p {
@@ -3986,33 +3986,33 @@ object {
 }
 
 #reminders #reminder_view {
-  list-style-type: none;
-  margin: 0;
   padding: 0;
+  margin: 0;
   border: none;
+  list-style-type: none;
 }
 
 #reminders #reminder_view .reminder_item {
-  list-style-type: none;
-  margin: 10px 0;
   padding: 10px;
+  margin: 10px 0;
   border: 1px solid lightgray;
+  list-style-type: none;
 }
 
 #reminders #reminder_view .reminder_item .invitees_list {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  border: none;
   display: block;
+  padding: 0;
+  margin: 0;
+  border: none;
+  list-style-type: none;
 }
 
 #reminders #reminder_view .reminder_item .invitees_list .invitees_item {
-  list-style-type: none;
-  margin: 0;
   padding: 0;
+  margin: 0;
   border: none;
   float: left;
+  list-style-type: none;
 }
 
 #reminders #reminder_view .reminder_item .invitees_list .invitees_item .invitee_btn {
@@ -4021,22 +4021,22 @@ object {
 
 #reminders .add-btn {
   background-image: url(../../../../themes/SuiteP/images/id-ff-add.png);
-  background-repeat: no-repeat;
   background-position: 5px center;
+  background-repeat: no-repeat;
   padding-left: 32px;
 }
 
 #reminders .remove-btn {
   background-image: url(../../../../themes/SuiteP/images/id-ff-clear.png);
-  background-repeat: no-repeat;
   background-position: right 5px center;
+  background-repeat: no-repeat;
   padding-right: 32px;
 }
 
 #reminders .invitee_btn {
   background-image: url(../../../../themes/default/images/id-ff-clear.png);
-  background-repeat: no-repeat;
   background-position: right 5px center;
+  background-repeat: no-repeat;
   padding: 4px 25px 4px 10px;
   border: 1px solid lightgrey;
 }
@@ -4046,8 +4046,8 @@ object {
 }
 
 #reminders #reminder_view .reminder_item.reminder-error {
-  border: 1px solid $danger;
   background-color: #fff8f8;
+  border: 1px solid $danger;
 }
 
 #reminders #reminder_view .reminder_item .error-msg {
@@ -4056,8 +4056,8 @@ object {
 }
 
 #report-editview-footer {
-  width: 70%;
   float: left;
+  width: 70%;
 }
 
 #detailpanel_fields,
@@ -4067,11 +4067,11 @@ object {
 }
 
 #detailpanel_fields_select {
+  margin-right: 20px;
   float: left;
+  overflow-y: auto;
   width: 20%;
   height: 640px;
-  overflow-y: auto;
-  margin-right: 20px;
 }
 
 @media (max-width: 767px) {
@@ -4098,8 +4098,8 @@ object {
 }
 
 .aor_dragbox {
-  height: 250px;
   overflow: scroll;
+  height: 250px;
 }
 
 #report-editview-footer .tab-togglers {
@@ -4108,8 +4108,8 @@ object {
 
 #report-editview-footer .tab-toggler {
   display: block;
-  float: left;
   padding: 0 4px;
+  float: left;
 }
 
 #report-editview-footer .tab-toggler.active .button {
@@ -4118,9 +4118,9 @@ object {
 
 #report-editview-footer .parentheses-btn {
   display: block;
+  border: 1px solid lightgray;
   width: 100%;
   min-height: 30px;
-  border: 1px solid lightgray;
 }
 
 #report-editview-footer .condition-sortable-handle {
@@ -4266,9 +4266,9 @@ object {
   .detail h4 {
     font-size: 1.2em;
     background: #eeeeee;
-    border: 1px solid #cccccc;
-    margin: 10px 0 0 0;
     padding: 8px;
+    margin: 10px 0 0 0;
+    border: 1px solid #cccccc;
   }
 
   .detail508 tr td[scope="col"] {
@@ -4276,8 +4276,8 @@ object {
   }
 
   .detail tr {
-    margin: 0;
     padding: 0;
+    margin: 0;
   }
 
   .detail tr:last-child {
@@ -4288,72 +4288,72 @@ object {
 @media (max-width: 750px) {
 
   .edit tr {
-    background: none;
     font-size: 1em;
+    background: none;
 
   }
 
   .edit tr td[scope="col"] {
-    background: none;
     font-size: 1em;
+    background: none;
 
   }
 
   .table > thead > tr > th {
-    background: none;
     font-size: 1em;
+    background: none;
 
   }
 
   .table > tbody > tr > th {
-    background: none;
     font-size: 1em;
+    background: none;
 
   }
 
   .table > tfoot > tr > th {
-    background: none;
     font-size: 1em;
+    background: none;
 
   }
 
   .table > thead > tr > td {
-    background: none;
     font-size: 1em;
+    background: none;
 
   }
 
   .table > tbody > tr > td {
-    background: none;
     font-size: 1em;
+    background: none;
 
   }
 
   .table > tfoot > tr > td {
-    background: none;
     font-size: 1em;
+    background: none;
 
   }
 
   .detail tr td {
-    background: none;
     font-size: 1em;
+    background: none;
 
   }
 
   .detail table
   table.detail {
-    background: none;
     font-size: 1em;
+    background: none;
 
   }
 
   .edit h4 {
     font-size: 1.2em;
     background: #eeeeee;
-    border: 1px solid #cccccc;
-    margin: 10px 0 0 0;
     padding: 8px 0 8px 0;
+    margin: 10px 0 0 0;
+    border: 1px solid #cccccc;
   }
 
   .edit tr td[scope="col"] {
@@ -4377,13 +4377,13 @@ object {
   }
 
   #content {
-    width: 100%;
     margin: 0 0 0 0;
+    width: 100%;
   }
 
   #pageContainer {
-    width: 100%;
     margin: 0 0 0 0;
+    width: 100%;
   }
 
   #suggestion_box table {
@@ -4392,8 +4392,8 @@ object {
 
   #suggestion_box table tbody tr {
     display: table-row;
-    border: 1px solid #ccc;
     padding: 0;
+    border: 1px solid #ccc;
   }
 
   #suggestion_box table tbody tr th{
@@ -4408,56 +4408,56 @@ object {
 
   #cal-edit {
     top: 10px;
-    max-height: 400px;
-    max-width: 300px;
     overflow: scroll;
+    max-width: 300px;
+    max-height: 400px;
   }
 
   #settings_dialog {
     top: 10px;
-    max-height: 400px;
-    max-width: 300px;
     overflow: scroll;
+    max-width: 300px;
+    max-height: 400px;
   }
 
   #settings_dialog form {
     top: 10px;
-    max-height: 400px;
-    max-width: 300px;
     overflow: scroll;
+    max-width: 300px;
+    max-height: 400px;
   }
 
   #container1 {
     top: 10px;
-    max-height: 400px;
-    max-width: 300px;
     overflow: scroll;
+    max-width: 300px;
+    max-height: 400px;
   }
 }
 
 @media (max-width: 750px) {
   .footer_left {
-    width: 100%;
     text-align: center;
+    width: 100%;
   }
 
   .footer_right {
-    width: 100%;
     text-align: center;
+    width: 100%;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1000px) {
   a#advanced_search_link {
-    min-width: 200px;
     width: auto;
+    min-width: 200px;
   }
 
   /*buttons*/
   #search_form > div.basic > table > tbody > tr > td.submitButtons {
-    min-width: 200px;
-    width: auto;
     display: table-cell;
+    width: auto;
+    min-width: 200px;
   }
 
   /*help*/
@@ -4483,13 +4483,13 @@ object {
   }
 
   table.mceLayout {
-    width: 90%;
     overflow: scroll;
+    width: 90%;
   }
 
   textarea.richEditor {
-    width: 90%;
     overflow: scroll;
+    width: 90%;
   }
 
   .mceToolbar td {
@@ -4595,9 +4595,9 @@ object {
   .detail h4 {
     font-size: 1em;
     background: #eeeeee;
-    border: 1px solid #cccccc;
-    margin: 10px 0 0 0;
     padding: 8px;
+    margin: 10px 0 0 0;
+    border: 1px solid #cccccc;
   }
 
   .detail508 tr td[scope="col"],
@@ -4618,20 +4618,20 @@ object {
 
   .detail td {
     display: inline-block;
-    border: none;
-    margin: 0 5px 0 25px;
-    padding: 0;
     font-size: 1em;
+    padding: 0;
+    margin: 0 5px 0 25px;
+    border: none;
     width: auto;
     min-width: 35%;
   }
 
   #DEFAULT td {
     display: inline-block;
-    border: none;
-    margin: 0 5px 0 25px;
-    padding: 0;
     font-size: 1em;
+    padding: 0;
+    margin: 0 5px 0 25px;
+    border: none;
     width: auto;
     min-width: 35%;
   }
@@ -4640,8 +4640,8 @@ object {
 
 @media (min-width: 980px) {
   #dialog1_c {
-    margin-left: 40%;
     margin-top: 100px;
+    margin-left: 40%;
   }
 
   #dlg {
@@ -4671,8 +4671,8 @@ object {
 
 @media (max-width: 1023px) {
   .quickcreate {
-    margin: 0;
     padding: 5px 7px 5px 7px;
+    margin: 0;
   }
 }
 
@@ -4696,8 +4696,8 @@ object {
   }
 
   #dlg .bd {
-    max-height: 500px;
     overflow-y: scroll;
+    max-height: 500px;
   }
 }
 
@@ -4729,37 +4729,37 @@ object {
 
   #tiptip_content {
     font-size: 11px;
+    background-color: rgba(25, 25, 25, 0.92);
+    background-color: rgb(25, 25, 25);
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(transparent), to(#000));
+    box-shadow: 0 0 3px #555;
     color: #fff;
-    text-shadow: 0 0 2px #000;
     padding: 4px 8px;
     border: 1px solid rgba(255, 255, 255, 0.25);
-    background-color: rgb(25, 25, 25);
-    background-color: rgba(25, 25, 25, 0.92);
-    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(transparent), to(#000));
     border-radius: 3px;
+    text-shadow: 0 0 2px #000;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
-    box-shadow: 0 0 3px #555;
     -webkit-box-shadow: 0 0 3px #555;
     -moz-box-shadow: 0 0 3px #555;
   }
 
   #tiptip_arrow {
     position: absolute;
+    border-width: 6px;
     border-color: transparent;
     border-style: solid;
-    border-width: 6px;
-    height: 0;
     width: 0;
+    height: 0;
   }
 
   #tiptip_arrow_inner {
     position: absolute;
+    border-width: 6px;
     border-color: transparent;
     border-style: solid;
-    border-width: 6px;
-    height: 0;
     width: 0;
+    height: 0;
   }
 
   #tiptip_holder.tip_top #tiptip_arrow {
@@ -4813,8 +4813,8 @@ object {
   /* Webkit Hacks  */
   @media screen and (-webkit-min-device-pixel-ratio: 0) {
     #tiptip_content {
-      padding: 4px 8px 5px 8px;
       background-color: rgba(45, 45, 45, 0.88);
+      padding: 4px 8px 5px 8px;
     }
 
     #tiptip_holder.tip_bottom #tiptip_arrow_inner {
@@ -4843,9 +4843,9 @@ table tr#delegates_search {
 
 body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shadow#dlg_c {
   top: 100px;
-  z-index: 103100;
-  width: 100%;
   padding: 20px;
+  width: 100%;
+  z-index: 103100;
 }
 
 body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shadow[id="container_pbss_date_start_trigger_c"] {
@@ -4999,8 +4999,8 @@ div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[
   div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot {
     display: block;
     float: left;
-    width: 72%;
     line-height: 16px;
+    width: 72%;
     white-space: initial;
   }
 
@@ -5036,15 +5036,15 @@ div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[
   }
 
   div#content div#pagecontent form#EditView div.edit.view table tbody tr td {
+    padding: 15px 0 5px 0;
     width: 100%;
     height: initial;
-    padding: 15px 0 5px 0;
   }
 
   div#content div#pagecontent form#EditView div.edit.view table tbody tr td[scope="row"] {
+    padding: 15px 0 5px 0;
     width: 100%;
     height: initial;
-    padding: 15px 0 5px 0;
   }
 
   div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot {
@@ -5054,32 +5054,32 @@ div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[
 
 @media (max-width: 380px) {
   div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot input {
-    min-height: 40px;
-    line-height: initial;
     font-size: 12px;
+    line-height: initial;
     height: 40px;
+    min-height: 40px;
   }
 
   div#content div#pagecontent form#EditView div.edit.view table tbody tr td slot select {
-    min-height: 40px;
-    line-height: initial;
     font-size: 12px;
+    line-height: initial;
     height: 40px;
+    min-height: 40px;
   }
 
 
   div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[name="reply_to_name"] {
-    min-height: 40px;
-    line-height: initial;
     font-size: 12px;
+    line-height: initial;
     height: 40px;
+    min-height: 40px;
   }
 
   div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[name="reply_to_addr"] {
-    min-height: 40px;
-    line-height: initial;
     font-size: 12px;
+    line-height: initial;
     height: 40px;
+    min-height: 40px;
   }
 
   div#content div#pagecontent form#EditView table tbody tr td {
@@ -5088,15 +5088,15 @@ div#content div#pagecontent form#EditView div.edit.view table tbody tr td input[
   }
 
   div#content div#pagecontent form#EditView div.edit.view table tbody tr td {
+    padding: 0 0 15px 0;
     width: 100%;
     height: initial;
-    padding: 0 0 15px 0;
   }
 
   div#content div#pagecontent form#EditView div.edit.view table tbody tr td[scope="row"] {
+    padding: 0 0 15px 0;
     width: 100%;
     height: initial;
-    padding: 0 0 15px 0;
   }
 }
 

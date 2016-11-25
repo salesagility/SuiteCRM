@@ -6,76 +6,76 @@
 }
 
 #delete img {
-  height: 32px;
   width: 32px;
+  height: 32px;
 }
 
 #exportcustom h3 {
-  padding-left: 0px;
-  margin: 3px;
   font-size: $page-font-size + 1px;
   font-weight: bold;
+  padding-left: 0px;
+  margin: 3px;
 }
 
 #layoutEditor h4 {
-  padding-left: 0px;
-  margin: 3px;
   font-size: $page-font-size + 1px;
   font-weight: bold;
+  padding-left: 0px;
+  margin: 3px;
 }
 
 #layoutEditor h3 {
-  padding-left: 0px;
-  margin: 3px;
   font-size: $page-font-size + 1px;
   font-weight: bold;
+  padding-left: 0px;
+  margin: 3px;
 }
 
 #layoutEditor h2 {
-  padding-left: 0px;
-  margin: 3px;
   font-size: $page-font-size + 1px;
   font-weight: bold;
+  padding-left: 0px;
+  margin: 3px;
 }
 
 #layoutEditor h1 {
-  padding-left: 0px;
-  margin: 3px;
   font-size: $page-font-size + 1px;
   font-weight: bold;
+  padding-left: 0px;
+  margin: 3px;
 }
 
 .panel_name {
-  padding-left: 0px;
-  margin: 3px;
   font-size: $page-font-size + 1px;
   font-weight: bold;
+  padding-left: 0px;
+  margin: 3px;
 }
 
 .panel_name {
   font-weight: bold;
   color: #565656;
-  float: left;
   margin: 5px;
+  float: left;
 }
 
 #toolbox {
   background: $main-alternate-bg;
-  float: left;
-  width: 192px;
   padding: 5px;
   border: 1px solid #cccccc;
   border-radius: 4px;
+  float: left;
   overflow-y: scroll;
+  width: 192px;
 }
 
 #panels {
+  position: absolute;
+  padding: 5px;
+  margin-left: 200px;
   border: 1px solid #cccccc;
   border-radius: 4px;
   float: right;
-  margin-left: 200px;
-  padding: 5px;
-  position: absolute;
   width: 100%;
 
 }
@@ -87,23 +87,23 @@
 }
 
 .le_row {
-  //background: $main-bg;
   background: $default-btn-bg;
   border: 1px solid transparent;
   border-radius: 4px;
+  //background: $main-bg;
 }
 
 
 #toolbox .special:nth-of-type(2) {
   background: $default-btn-bg;
   color: $default-btn-color;
-  width: 150px;
-  float: left;
-  border: 1px solid transparent;
-  border-radius: 4px;
   padding: 5px;
   margin: 2px 3px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  float: left;
   overflow: hidden;
+  width: 150px;
 }
 
 
@@ -111,25 +111,25 @@
 #toolbox .special:nth-of-type(3) {
   background: $default-tab-bg;
   color: $default-btn-color;
-  width: 150px;
-  float: left;
-  border: 1px solid transparent;
-  border-radius: 4px;
   padding: 5px;
   margin: 2px 3px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  float: left;
   overflow: hidden;
+  width: 150px;
 }
 
 
 #layoutEditor .le_panel {
-  margin: 2px 2px 10px 2px;
   padding: 5px 15px 15px 15px;
+  margin: 2px 2px 10px 2px;
 }
 
 #layoutEditor .le_panel .le_row {
+  padding: 5px 0px 5px 15px;
   margin: 5px 5px;
   clear: both;
-  padding: 5px 0px 5px 15px;
 }
 
 #panels > .le_panel > .le_row {
@@ -156,13 +156,13 @@ body > .le_panel .le_edit, #toolbox .le_panel .le_edit {
 
 #toolbox .le_row,
 .le_field {
-  width: 150px;
-  float: left;
-  border: 1px solid transparent;
-  border-radius: 4px;
   padding: 5px;
   margin: 2px 3px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  float: left;
   overflow: hidden;
+  width: 150px;
 }
 
 .le_field {
@@ -174,13 +174,13 @@ body > .le_panel .le_edit, #toolbox .le_panel .le_edit {
 }
 
 #delete {
-  margin: 5px;
-  width: 150px;
+  background: $danger;
   padding-top: 5px;
   padding-bottom: 10px;
-  background: $danger;
+  margin: 5px;
   border: 1px solid transparent;
   border-radius: 4px;
+  width: 150px;
 }
 
 #delete span {
@@ -216,9 +216,9 @@ body > .le_panel .le_edit, #toolbox .le_panel .le_edit {
 }
 
 .deleteme {
-
   font-weight: normal;
   color: #565656;
+
 
 }
 
@@ -234,19 +234,19 @@ body > .le_panel .le_edit, #toolbox .le_panel .le_edit {
 
 
 .relform td {
-  padding-left: 8px;
   padding-bottom: 8px;
+  padding-left: 8px;
 }
 
 #editlabels td {
-  padding-left: 8px;
   padding-bottom: 8px;
+  padding-left: 8px;
 }
 #exportcustom > table > tbody > tr > td {
-  padding-left: 8px;
   padding-bottom: 8px;
+  padding-left: 8px;
 }
 #popup_form_id > table > tbody > tr > td {
-  padding-left: 8px;
   padding-bottom: 8px;
+  padding-left: 8px;
 }

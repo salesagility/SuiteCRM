@@ -18,20 +18,20 @@ div.p_login {
 
 div.p_login .p_login_top {
   background-color: $login-top-bar-bg;
+  padding: 20px 2% 20px 2%;
   float: left;
   width: 100%;
-  padding: 20px 2% 20px 2%;
 }
 
 div.p_login .p_login_top a {
-  height: 40px;
-  width: 170px;
-  text-indent: -9999px;
-  overflow: hidden;
   display: block;
   background-image: none, url("../../../../themes/SuiteP/images/p_login_logo.svg"), url("../../../../themes/SuiteP/images/p_login_logo.png");
-  background-repeat: no-repeat;
   background-position: 0 0;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  width: 170px;
+  height: 40px;
+  text-indent: -9999px;
 }
 
 div.p_login .p_login_middle {
@@ -40,12 +40,12 @@ div.p_login .p_login_middle {
   width: 100%;
 }
 div.p_login .p_login_bottom {
+  bottom: 0;
+  left: 0;
   background-color: $footer-btn-bg;
+  padding: 20px 2% 20px 2%;
   float: left;
   width: 100%;
-  left: 0;
-  bottom: 0;
-  padding: 20px 2% 20px 2%;
 }
 
 @media (min-height: 400px) {
@@ -60,10 +60,10 @@ div.p_login .p_login_bottom a#powered_by {
 }
 
 div.p_login #loginform {
-  max-width: 400px;
   padding: 15px;
   margin: 8% auto 0 auto;
   text-align: center;
+  max-width: 400px;
 }
 
 div.p_login #loginform .input-group {
@@ -74,29 +74,29 @@ div.p_login #loginform .input-group {
 
 div.p_login #loginform .input-group input {
   background-color: $main-alternate-bg;
-  border: none;
-  height: 50px;
-  line-height: 50px;
-  padding: 0 2% 0 60px;
   color: $default-input-group-color;
+  padding: 0 2% 0 60px;
+  border: none;
   border-radius: 3px;
+  line-height: 50px;
+  height: 50px;
 }
 
 div.p_login #loginform .input-group input#user_name, #user_name:-webkit-autofill, div.p_login #loginform .input-group input#user_password {
-  background-repeat: no-repeat;
   background-image: none, url("../../../../themes/SuiteP/images/login_bg.svg"), url("../../../../themes/SuiteP/images/login_bg.png");
+  background-repeat: no-repeat;
 }
 
 div.p_login #loginform .input-group input#user_name {
+  background-image: none, url("../../../../themes/SuiteP/images/login_bg.svg");
   background-position: 12px 9px;
   background-repeat: no-repeat;
-  background-image: none, url("../../../../themes/SuiteP/images/login_bg.svg");
 }
 
 div.p_login #loginform .input-group input#user_password {
+  background-image: none, url("../../../../themes/SuiteP/images/login_bg.png");
   background-position: 12px -51px;
   background-repeat: no-repeat;
-  background-image: none, url("../../../../themes/SuiteP/images/login_bg.png");
 }
 
 div.p_login #loginform .glyphicon {
@@ -105,21 +105,21 @@ div.p_login #loginform .glyphicon {
 
 div.p_login #loginform span.error {
   display: block;
-  padding: 0;
-  line-height: 140%;
-  margin-bottom: 0;
-  margin-top: 20px;
-  color: $danger;
   background-color: transparent;
+  color: $danger;
+  padding: 0;
+  margin-top: 20px;
+  margin-bottom: 0;
+  line-height: 140%;
 }
 
 div.p_login #loginform #bigbutton {
-  border-radius: 3px;
   font-size: 20px;
-  letter-spacing: 3px;
   padding: 0;
-  height: 50px;
+  border-radius: 3px;
+  letter-spacing: 3px;
   line-height: 50px;
+  height: 50px;
 }
 
 div.p_login #loginform #bigbutton:hover {
@@ -135,22 +135,22 @@ div.p_login #loginform #bigbutton:hover {
   }
 
   div.p_login .p_login_top a {
-    height: 30px;
-    width: 170px;
     background-image: none, url("../../../../themes/SuiteP/images/p_login_logo.svg"), url("../../../../themes/SuiteP/images/p_login_logo.png");
     background-position: 0 -70px;
+    width: 170px;
+    height: 30px;
   }
 
   div.p_login .p_login_bottom {
-    padding-top: 10px;
     padding: 10px 3% 10px 3%;
+    padding-top: 10px;
   }
 
   div.p_login .p_login_bottom a#powered_by, div.p_login .p_login_bottom a#admin_options {
+    display: block;
     font-size: 10px;
     margin-left: 0;
     text-align: center;
-    display: block;
   }
 
   div.p_login .p_login_bottom a#admin_options {

@@ -4,29 +4,29 @@
 
 #caseStyleUser {
   background: $case-user-bg;
-  border: 1px solid $case-user-border-color;
   color: $case-user-color;
-  border-radius: 4px;
-  margin: 10px;
   padding: 10px;
+  margin: 10px;
+  border: 1px solid $case-user-border-color;
+  border-radius: 4px;
 }
 
 #caseStyleContact {
   background: $case-contact-bg;
-  border: 1px solid $case-contact-border-color;
   color: $case-contact-color;
-  border-radius: 4px;
-  margin: 10px;
   padding: 10px;
+  margin: 10px;
+  border: 1px solid $case-contact-border-color;
+  border-radius: 4px;
 }
 
 #caseStyleInternal {
   background: $case-internal-bg;
-  border: 1px solid $case-internal-border-color;
   color: $case-internal-color;
-  border-radius: 4px;
   padding: 10px;
   margin: 10px 60px 10px 10px;
+  border: 1px solid $case-internal-border-color;
+  border-radius: 4px;
 }
 
 .caseUpdateImage {
@@ -38,23 +38,23 @@
 }
 
 #aop_case_updates_threaded_span > a {
-  margin-right: 4px;
-  margin-bottom: 4px;
-  cursor: pointer;
-  color: $default-btn-color;
-  font-size: 13px;
-  background-color: $danger-btn-bg;
-  border: 1px solid transparent;
-  cursor: pointer;
-  font-size: 13px;
-  padding: 0 20px 0 20px;
-  border-radius: 4px;
-  text-transform: uppercase;
-  font-weight: 500;
-  letter-spacing: 1px;
-  height: $button-line-height;
-  line-height: $button-line-height;
   display: inline-block;
+  font-size: 13px;
+  font-size: 13px;
+  font-weight: 500;
+  background-color: $danger-btn-bg;
+  color: $default-btn-color;
+  cursor: pointer;
+  cursor: pointer;
+  padding: 0 20px 0 20px;
+  margin-bottom: 4px;
+  margin-right: 4px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  line-height: $button-line-height;
+  height: $button-line-height;
+  text-transform: uppercase;
 }
 
 
@@ -67,8 +67,8 @@
 }
 
 #case_updates input[type=button] {
-  margin-left: 10px;
   margin-top: 10px;
+  margin-left: 10px;
 }
 
 

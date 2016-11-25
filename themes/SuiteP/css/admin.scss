@@ -13,10 +13,10 @@
 }
 
 .other {
-  border: none;
+  padding: 0;
   margin-top: 20px;
   margin-bottom: 20px;
-  padding: 0;
+  border: none;
   width: 100%;
 }
 
@@ -49,43 +49,43 @@
 }
 
 .other.view td {
-  height: 48px;
   line-height: 48px;
+  height: 48px;
 }
 
 .other.view img, .other.view svg {
+  display: inline-block;
   font-weight: 700;
   margin: 5px 0 0 5px;
+  float: left;
   width: 32px;
   height: 32px;
-  display: inline-block;
-  float: left;
 }
 
 .other.view a {
+  display: inline-block;
   position: relative;
   font-weight: 700;
   margin: 0 0 0 10px;
-  display: inline-block;
 }
 
 .other.view td:nth-of-type(1) {
   display: block;
+  background-color: $main-alternate-bg;
   float: left;
   width: 100%;
-  background-color: $main-alternate-bg;
   text-wrap: normal;
 
 }
 .other.view td:nth-of-type(2) {
   display: block;
-  float: right;
-  width: 100%;
   background-color: $main-alternate-bg;
-  padding-left: 52px;
   padding-bottom: 10px;
-  height: auto;
+  padding-left: 52px;
+  float: right;
   line-height: 24px;
+  width: 100%;
+  height: auto;
 }
 
 .other.view td:nth-of-type(2):after {
@@ -93,27 +93,27 @@
 }
 .other.view td:nth-of-type(3) {
   display: block;
+  background-color: $main-bg;
   float: left;
   width: 100%;
-  background-color: $main-bg;
 }
 .other.view td:nth-of-type(4) {
   display: block;
-  float: right;
-  width: 100%;
   background-color: $main-bg;
-  padding-left: 52px;
   padding-bottom: 10px;
-  height: auto;
+  padding-left: 52px;
+  float: right;
   line-height: 24px;
+  width: 100%;
+  height: auto;
 }
 
 @media (min-width: 1250px) {
   /* left admin panel column */
   .other.view td a {
-    white-space: normal;
-    height: 100%;
     line-height: 100%;
+    height: 100%;
+    white-space: normal;
   }
 
   .other.view td:nth-of-type(1) {
@@ -132,16 +132,16 @@
   .other.view td:nth-of-type(2) {
     display: block;
     float: right;
-    width: 75%;
     line-height: 48px;
+    width: 75%;
     height: 48px;
   }
 
   .other.view td:nth-of-type(4) {
     display: block;
     float: right;
-    width: 75%;
     line-height: 48px;
+    width: 75%;
     height: 48px;
   }
 }
@@ -160,9 +160,9 @@
 
 #edittabs .edit {
   display: inline-block;
+  margin: 0 16px 0 0;
   border: 1px solid transparent;
   border-radius: 4px;
-  margin: 0 16px 0 0;
   width: 16% ;
 }
 
@@ -186,26 +186,26 @@
 }
 
 #edittabs #trash {
-  height: 64px;
   overflow: visible;
+  height: 64px;
 }
 
 
 #edittabs .listContainer {
-  height: 384px;
   overflow-y: auto;
+  height: 384px;
 }
 
 #edittabs .listContainer li span {
   display: block;
-  padding: 8px 0 8px 8px;
+  font-size: 13px;
+  font-weight: 700;
   background: $main-bg;
+  padding: 8px 0 8px 8px;
   margin-bottom: 4px;
   border: 1px solid transparent;
   border-radius: 4px;
   width: 98%;
-  font-size: 13px;
-  font-weight: 700;
 }
 
 
