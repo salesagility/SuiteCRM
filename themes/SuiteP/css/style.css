@@ -1769,6 +1769,7 @@ table#mass_update_table td select {
 
 #actionLinkBottom {
     left: -1px;
+    margin-right: -2px !important;
 }
 
 #detail_header_action_menu li.sugar_action_button a#edit_button,
@@ -1789,10 +1790,11 @@ table#mass_update_table td select {
 
 #select_actions_disabled_top,
 #select_actions_disabled_bottom {
-    padding: 4px 10px 4px 10px;
+    padding: 4px 6px 4px 10px;
     top: -1px;
     position: relative;
     height: 27px;
+    margin-right: 0px;
 }
 
 #detail_header_action_menu > .sugar_action_button > ul.subnav,
@@ -4357,8 +4359,8 @@ ul#detailViewActions.clickMenu {
 }
 
 .sugar_action_button > .parent-dropdown-action-handler {
-    font-size: 14px;
-    line-height: 14px;
+    font-size: 13px;
+    line-height: 13px;
     font-weight: normal;
 }
 
@@ -8640,7 +8642,6 @@ table.subpanel-table .pagination .sugar_action_button > form > a {
     background-color: #94A6B5;
     border: 1px solid transparent;
     border-radius: 4px;
-    padding-right: 4px !important;
 }
 
 /*calendar popup fix*/
@@ -11432,7 +11433,8 @@ ul.clickMenu.selectmenu.SugarActionMenu.searchLink.listViewLinkButton {
 
 ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > li > a,
 ul.clickMenu.selectmenu.SugarActionMenu.searchLink.listViewLinkButton > li > a {
-    margin: 5px 4px 5px 7px;
+    margin: 0;
+    padding: 5px 8px 7px 7px !important;
     top: -1px;
 }
 

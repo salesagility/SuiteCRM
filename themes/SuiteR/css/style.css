@@ -2151,8 +2151,9 @@ ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .l
     display: block;
     text-decoration: none;
     float: left;
-    margin:0 5px 0 0;
+    margin: 0px 4px 0 0;
     color: #333333;
+    padding: 3px 3px 0px 8px;
 }
 
 .list tr.pagination td.buttons ul.clickMenu:hover > li > a:link, .list tr.pagination td.buttons ul.clickMenu:hover > li > a{
@@ -2168,17 +2169,25 @@ ul.clickMenu li a:hover{
 }
 
 ul.clickMenu li span { /*--Drop down trigger styles--*/
-    width: 22px;
-    height: 16px;
+    width: 15px;
+    height: 25px;
     float: left;
-    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -28px;
+    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 0px -24px;
     cursor: pointer;
+}
+
+#selectLink li span {
+    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 0px -28px;
 }
 
 ul.clickMenu li span.ab { /*--Drop down trigger styles--*/
     border-left: 1px #aaa solid;
     /* Remove the padding, not needed when we select records */
     /* padding-left: 5px; */
+}
+
+#select_link {
+    padding: 0px;
 }
 
 ul.clickMenu li span.subhover {
@@ -2320,11 +2329,12 @@ ul.clickMenu li ul.subnav li a:hover,ul.clickMenu li ul.subnav li input:hover, u
 td.paginationActionButtons ul.clickMenu .massall,
 ul#selectLink.clickMenu .massall, td.selectCol .massall{
     float: left;
-    margin: 2px 0 0 4px;
+    margin: 6px 0 0 0px;
 }
 
 td.paginationActionButtons ul.selectmenu > li > a, td.selectCol ul.selectmenu > li > a, ul#selectLink.clickMenu > li > a {
-    padding: 0 !important;
+    padding: 5px 5px 5px 5px;
+    margin: 0;
 }
 
 ul.clickMenu.showLess .moreOverflow , ul.clickMenu.showLess .moduleMenuOverFlowLess, ul.clickMenu.showMore .moduleMenuOverFlowMore {
@@ -2332,7 +2342,7 @@ ul.clickMenu.showLess .moreOverflow , ul.clickMenu.showLess .moduleMenuOverFlowL
 }
 
 ul#selectLink.clickMenu {
-    height: 17px;
+    height: 28px;
     min-width: 20px;
     background-image: none;
 }
@@ -2381,14 +2391,13 @@ ul#detailViewActions.clickMenu {
     width: 17px;
     height: 17px;
     float: left;
-    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -28px;
+    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -30px;
     opacity: .5;
 }
 
 .selectActionsDisabled span.ab {
     border-left: 1px #ccc solid;
-    margin-left: 10px;
-    padding-left: 5px;
+    margin: 6px 5px 2px -2px;
 }
 
 .selectActionsDisabled a, #selectActionsDisabled a:hover {
@@ -2478,8 +2487,8 @@ ul.clickMenu li ul.subnav li a:hover .showLessArrow, ul.clickMenu li ul.subnav l
 }
 
 .selectActionsDisabled {
-    padding: 3px 8px 3px 8px;
-    margin: 0 3px 0 3px;
+    /*padding: 3px 8px 3px 8px;
+    margin: 0 3px 0 3px;*/
     background: #cccccc; /* Old browsers */
     color: #121212;
     cursor: pointer;
@@ -4546,6 +4555,13 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
         float: left;
         background: url("../../../../index.php?entryPoint=getImage&themeName=suiteresponsive&imageName=actionMenuArrow.png") no-repeat scroll 6px -28px transparent;
         cursor: pointer;
+        margin: 4px 0px 0px 0;
+        left: -6px;
+        position: relative;
+    }
+    #selectLink li span {
+        margin: 0;
+        left: 0px
     }
 }
 
@@ -5860,7 +5876,7 @@ label.hidden-desktop.selected-actions-label {
 
 label.hidden-mobile.selected-actions-label,
 label.hidden-desktop.selected-actions-label {
-    line-height: 12px;
+    line-height: 20px;
 }
 
 label.selected-actions-label {
@@ -5960,15 +5976,11 @@ ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton {
     top: -1px;
 }
 
-ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > li > a {
-    margin: 2px 4px 5px 4px;
-    top: -1px;
-}
-
 ul.clickMenu>li>span.searchAppliedAlert {
     color: #000;
     background-image: none;
     text-align: center;
+    padding: 5px 15px 5px 0px;
 }
 
 .paginationActionButtons input {
@@ -5977,15 +5989,16 @@ ul.clickMenu>li>span.searchAppliedAlert {
 
 .paginationActionButtons .selectActionsDisabled {
     height: 27px;
-    padding: 6px 10px;
+    /*padding: 6px 10px;*/
 }
 
 .paginationActionButtons .sugar_action_button {
     height: 25px;
+    padding: 0;
 }
 
 .paginationActionButtons .parent-dropdown-handler {
-    padding: 3px 10px;
+    padding: 3px 10px !important;
 }
 
 .paginationActionButtons .parent-dropdown-handler:hover * {
@@ -5994,8 +6007,7 @@ ul.clickMenu>li>span.searchAppliedAlert {
 
 
 .paginationActionButtons .selectActionsDisabled .parent-dropdown-action-handler {
-    top: -3px;
-    position: relative;
+    padding: 3px 3px 0px 8px !important;
 }
 
 .dateTimeRangeChoice select {
