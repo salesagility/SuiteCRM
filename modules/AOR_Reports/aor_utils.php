@@ -159,7 +159,7 @@ function getConditionsAsParameters($report, $override = array())
 function getPeriodDate($date_time_period_list_selected)
 {
     global $sugar_config;
-    $datetime_period = new DateTime();
+    $datetime_period = new DateTime("", new DateTimeZone("UTC"));
 
     // Setup when year quarters start & end
     if ($sugar_config['aor']['quarters_begin']) {
@@ -169,7 +169,7 @@ function getPeriodDate($date_time_period_list_selected)
     }
 
     if ($date_time_period_list_selected == 'today') {
-        $datetime_period = new DateTime();
+
     } else if ($date_time_period_list_selected == 'yesterday') {
         $datetime_period = $datetime_period->sub(new DateInterval("P1D"));
     } else if ($date_time_period_list_selected == 'this_week') {
@@ -216,7 +216,7 @@ function getPeriodDate($date_time_period_list_selected)
         $datetime_period = $datetime_period = $datetime_period->setDate($datetime_period->format('Y') - 1, 1, 1);
     }
     // set time to 00:00:00
-    $datetime_period = $datetime_period->setTime(0, 0, 0);
+    //$datetime_period = $datetime_period->setTime(0, 0, 0);
     return $datetime_period;
 }
 

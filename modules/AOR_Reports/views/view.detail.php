@@ -33,6 +33,7 @@ class AOR_ReportsViewDetail extends ViewDetail {
         }
         $conditions = $this->bean->get_linked_beans('aor_conditions','AOR_Conditions', 'condition_order');
         $parameters = array();
+        $count = 0;
         foreach($conditions as $condition){
             if(!$condition->parameter){
                 continue;
@@ -49,7 +50,16 @@ class AOR_ReportsViewDetail extends ViewDetail {
                 $param = $this->bean->user_parameters[$condition->id];
                 $condition_item['operator'] = $param['operator'];
                 $condition_item['value_type'] = $param['type'];
-                $condition_item['value'] = $param['value'];
+                if($param['type'] != "Date" ){
+                    $condition_item['value'] = $param['value'];
+                }else{
+                    $count++;
+                    if(in_array("undefined", $_REQUEST['parameter_value'])){
+                        $undefined = array("undefined");
+                        $_REQUEST['parameter_value'] = array_diff($_REQUEST['parameter_value'], $undefined);
+                    }
+                    $condition_item['value'] = array_slice($_REQUEST['parameter_value'], ($count -1) *4, 4 );
+                }
             }
             if(isset($parameters[$condition_item['condition_order']])) {
                 $parameters[] = $condition_item;

@@ -136,6 +136,29 @@ function changeReportPage(record, offset, group){
         query += "&parameter_type[]="+fieldType;
         var fieldInput = $('#aor_conditions_value\\['+ln+'\\]').val();
         query += "&parameter_value[]="+fieldInput;
+        if (fieldType === 'Date') {
+            var fieldValue = $('#aor_conditions_value\\[' + ln + '\\]\\[0\\]').val();
+            var fieldSign = $('#aor_conditions_value\\[' + ln + '\\]\\[1\\]').val();
+            var fieldNumber = $('#aor_conditions_value\\[' + ln + '\\]\\[2\\]').val();
+            var fieldTime = $('#aor_conditions_value\\[' + ln + '\\]\\[3\\]').val();
+            query += "&parameter_value[]="+fieldValue;
+            query += "&parameter_value[]="+fieldSign;
+            query += "&parameter_value[]="+fieldNumber;
+            query += "&parameter_value[]="+fieldTime;
+        }
+        else {
+            var fieldInput = $('#aor_conditions_value\\['+ln+'\\]').val();
+            // Fix for issue #1082 - change local date format to db date format
+            if ($('#aor_conditions_value\\[' + index + '\\]').hasClass('date_input')) { // only change to DB format if its a date
+                if (isDate(fieldInput)) {
+                    var dateObject = getDateObject(fieldInput);
+                }
+                fieldInput = $.datepicker.formatDate('yy-mm-dd', dateObject);
+            }
+
+
+            query += "&parameter_value[]="+fieldInput;
+        }
     });
 
     YAHOO.util.Connect.asyncRequest ("GET", "index.php"+query,callback);

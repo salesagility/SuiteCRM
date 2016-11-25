@@ -469,7 +469,11 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
         $fieldlist[$fieldname]['name'] = $aow_field;
     } else if(isset( $fieldlist[$fieldname]['type'] ) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')){
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
-        $fieldlist[$fieldname]['value'] = $timedate->to_display_date($value);
+        if(substr($aow_field, 0, 20) == "aor_conditions_value"){
+            $fieldlist[$fieldname]['value'] = $timedate->to_display_date($value, false);
+        }else{
+            $fieldlist[$fieldname]['value'] = $timedate->to_display_date($value, true);
+        }
         //$fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
         //$fieldlist[$fieldname]['value'] = $value;
         $fieldlist[$fieldname]['name'] = $aow_field;
@@ -762,7 +766,20 @@ function fixUpFormatting($module, $field, $value)
             }
             if ( ! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/',$value) ) {
                 // This appears to be formatted in user date/time
-                $value = $timedate->to_db($value);
+                // If date string doesnt have time setup, dont change it to the previous date/future date
+                if (strpos($value, ':') === false) {
+                    global $current_user;
+                    $userDateFormat = $timedate->get_date_format($current_user);
+
+                    if (DateTime::createFromFormat($userDateFormat, $value) !== FALSE) {
+                        $date = DateTime::createFromFormat($userDateFormat, $value);
+                        $date->setTime(00, 00, 00);
+                        $value = $date->format('Y-m-d H:i:s');
+                    }
+                } else {
+                    // This appears to be formatted in user date/time
+                    $value = $timedate->to_db($value);
+                }
             }
             break;
         case 'date':
