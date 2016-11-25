@@ -596,7 +596,11 @@ a.listViewTdToolsS1 {
 }
 
 
-.selectCol .selectmenu > li > a, #selectLink.clickMenu > li > a {
+.selectCol .selectmenu > li > a {
+  padding: 0;
+}
+
+#selectLink.clickMenu > li > a {
   padding: 0;
 }
 
@@ -1604,7 +1608,11 @@ div#search_form > .advanced input.button:hover {
   padding: 0;
 }
 
-.popupBody input[type=text], .popupBody textarea {
+.popupBody input[type=text] {
+  width: 95%;
+}
+
+.popupBody textarea {
   width: 95%;
 }
 
@@ -1836,7 +1844,11 @@ div#search_form > .advanced input.button:hover {
   padding: 0;
 }
 
-.inbound-email input[type=text], .inbound-email textarea {
+.inbound-email input[type=text] {
+  width: 95%;
+}
+
+.inbound-email textarea {
   width: 95%;
 }
 

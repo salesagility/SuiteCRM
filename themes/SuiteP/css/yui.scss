@@ -88,11 +88,11 @@
 }
 
 .yui-ac-content li {
-  margin: 0 !important;
+  margin: 0 ;
   padding: 2px 5px;
   cursor: default;
   white-space: nowrap;
-  list-style: none !important;
+  list-style: none ;
   zoom: 1;
 }
 
@@ -832,12 +832,12 @@ span.yui-carousel-first-button-disabled {
 
 .yui-picker-controls .hd {
   background: transparent;
-  border-width: 0 !important;
+  border-width: 0 ;
 }
 
 .yui-picker-controls .bd {
   height: 100px;
-  border-width: 0 !important;
+  border-width: 0 ;
 }
 
 .yui-picker-controls ul {
@@ -940,7 +940,7 @@ span.yui-carousel-first-button-disabled {
 }
 
 .yui-override-padding {
-  padding: 0 !important;
+  padding: 0 ;
 }
 
 .yui-panel-container .container-close {
@@ -1529,7 +1529,7 @@ a.yui-dt-page {
 }
 
 .yui-busy {
-  cursor: wait !important;
+  cursor: wait ;
 }
 
 .yui-toolbar-container fieldset {
@@ -1918,7 +1918,7 @@ a.yui-dt-page {
   _top: -5px;
   width: 24px;
   text-indent: 52px;
-  font-size: 0%;
+  font-size: 0;
 }
 
 .yui-editor-panel .yui-toolbar-bordertype span a span.yui-toolbar-bordertype-solid
@@ -1976,7 +1976,7 @@ a.yui-dt-page {
 
 .yui-toolbar-container .yui-toolbar-bordersize-menu,.yui-toolbar-container .yui-toolbar-bordertype-menu
 {
-  width: 95px !important;
+  width: 95px ;
 }
 
 .yui-toolbar-bordersize-menu .yuimenuitemlabel,.yui-toolbar-bordertype-menu .yuimenuitemlabel,.yui-toolbar-bordersize-menu .yuimenuitemlabel,.yui-toolbar-bordertype-menu .yuimenuitemlabel:hover
@@ -3314,7 +3314,7 @@ div.yui-layout-hd h2 {
 
 .yui-log pre.yui-log-verbose {
   white-space: pre-wrap;
-  white-space: -moz-pre-wrap !important;
+  white-space: -moz-pre-wrap ;
   white-space: -pre-wrap;
   white-space: -o-pre-wrap;
   word-wrap: break-word;
@@ -4172,7 +4172,7 @@ a.yuimenuitemlabel:hover {
 }
 
 .yui-busy {
-  cursor: wait !important;
+  cursor: wait ;
 }
 
 .yui-toolbar-container fieldset {
@@ -4561,7 +4561,7 @@ a.yuimenuitemlabel:hover {
   _top: -5px;
   width: 24px;
   text-indent: 52px;
-  font-size: 0%;
+  font-size: 0;
 }
 
 .yui-editor-panel .yui-toolbar-bordertype span a span.yui-toolbar-bordertype-solid
@@ -4619,7 +4619,7 @@ a.yuimenuitemlabel:hover {
 
 .yui-toolbar-container .yui-toolbar-bordersize-menu,.yui-toolbar-container .yui-toolbar-bordertype-menu
 {
-  width: 95px !important;
+  width: 95px ;
 }
 
 .yui-toolbar-bordersize-menu .yuimenuitemlabel,.yui-toolbar-bordertype-menu .yuimenuitemlabel,.yui-toolbar-bordersize-menu .yuimenuitemlabel,.yui-toolbar-bordertype-menu .yuimenuitemlabel:hover
@@ -6081,7 +6081,7 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
 }
 .ygtvlabel, .ygtvlp, .ygtvlm
 {
-  background-color: transparent !important;
+  background-color: transparent ;
 }
 
 /*

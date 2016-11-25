@@ -29,7 +29,7 @@
   height: 52px/$panel-height-divisor;
   line-height: 52px/$panel-height-divisor;
   font-weight: 500;
-  font-size: 14px /*!important*/;
+  font-size: 14px ;
   background-color: $panel-expanded-bg;
 }
 
@@ -56,7 +56,7 @@
   display: block;
   height: 52px;
   font-weight: 500;
-  font-size: 14px /*!important*/;
+  font-size: 14px ;
   //background-color: $panel-expanded-bg;
   padding: 15px/$panel-height-divisor 10px 0 10px/$panel-height-divisor;
   text-decoration: none;
@@ -70,7 +70,7 @@
   display: block;
   height: 52px/$panel-height-divisor;
   font-weight: 500;
-  font-size: 14px /*!important*/;
+  font-size: 14px ;
   //background-color: $panel-expanded-bg;
   padding: 10px/$panel-height-divisor 10px 0 10px/$panel-height-divisor;
   border-top-left-radius: 4px;
@@ -84,7 +84,7 @@
 }
 
 .sub-panel  div.tab-content {
-  padding: 0 /*!important*/;
+  padding: 0 ;
   border: none;
 }
 
@@ -98,12 +98,12 @@
 }
 
 .panel-heading a.collapsed {
-  background-color: $panel-collapsed-bg /*!important*/;
+  background-color: $panel-collapsed-bg ;
 }
 
 
 .panel-heading a.collapsed:before {
-  content: "\2b" /*!important*/;
+  content: "\2b" ;
 }
 
 .panel-heading a:before
@@ -116,12 +116,12 @@
 
 
 [id^=list_subpanel_] {
-  margin-bottom: 25px /*!important*/;
+  margin-bottom: 25px ;
   border: 1px solid #dddddd;
 }
 
 [id^=list_subpanel_] tr:last-child {
-  margin-bottom: 25px /*!important*/;
+  margin-bottom: 25px ;
   border-bottom: none;
 }
 
@@ -185,8 +185,8 @@ div.sub-panel {
 
 .subpanel-table ul.subpanel {
   background: none;
-  background-color: transparent /*!important*/;
-  border-color: transparent /*!important*/;
+  background-color: transparent ;
+  border-color: transparent ;
   border: none;
 }
 
@@ -199,51 +199,51 @@ div.sub-panel {
 }
 
 .subpanel-table ul.subpanel > a {
-  padding: 0 /*!important*/;
+  padding: 0 ;
   background-color: #94A6B5;
   border: 1px solid transparent;
   border-radius: 4px;
-  padding-right: 4px /*!important*/;
+  padding-right: 4px ;
 }
 
 .subpanel-table li.sugar_action_button {
-  padding: 0 /*!important*/;
+  padding: 0 ;
   background-color: #94A6B5;
   border: 1px solid transparent;
   border-radius: 4px;
-  padding-right: 4px /*!important*/;
+  padding-right: 4px ;
 }
 
 .subpanel-table .pagination .sugar_action_button {
-  padding: 0 /*!important*/;
+  padding: 0 ;
   background-color: #94A6B5;
   border: 1px solid transparent;
   border-radius: 4px;
-  padding-right: 4px /*!important*/;
+  padding-right: 4px ;
 }
 
 .subpanel-table .pagination li.sugar_action_button > form > a {
-  padding: 0 /*!important*/;
+  padding: 0 ;
   background-color: #94A6B5;
   border: 1px solid transparent;
   border-radius: 4px;
-  padding-right: 4px /*!important*/;
+  padding-right: 4px ;
 }
 
 .subpanel-table .pagination .sugar_action_button > form > a{
-  padding: 0 /*!important*/;
+  padding: 0 ;
   background-color: #94A6B5;
   border: 1px solid transparent;
   border-radius: 4px;
-  padding-right: 4px /*!important*/;
+  padding-right: 4px ;
 }
 
 .subpanel-table .pagination .sugar_action_button > form > a {
-  padding: 0 /*!important*/;
+  padding: 0 ;
   background-color: #94A6B5;
   border: 1px solid transparent;
   border-radius: 4px;
-  padding-right: 4px /*!important*/;
+  padding-right: 4px ;
 }
 
 /*calendar popup fix*/
@@ -581,7 +581,7 @@ table.subpanelTabForm {
 }
 
 .clickMenu.button li > span a {
-  padding: 0 /*!important*/;
+  padding: 0 ;
 }
 
 .clickMenu.button span {
@@ -593,6 +593,6 @@ table.subpanelTabForm {
 }
 
 .clickMenu li a.disabled {
-  color: gray /*!important*/;
-  cursor: default /*!important*/;
+  color: gray ;
+  cursor: default ;
 }

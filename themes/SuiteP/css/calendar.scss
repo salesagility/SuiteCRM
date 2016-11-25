@@ -837,3 +837,9 @@ div.fc-basic-view .fc-body .fc-row {
 .modal-calendar-user-list select[size]#shared_ids {
   height: 200px;
 }
+
+
+iframe.teamNoticeBox {
+  width: 100%;
+  overflow: auto;
+}
