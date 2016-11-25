@@ -1,6 +1,6 @@
 <ul class="clickMenu selectmenu SugarActionMenu searchLink listViewLinkButton listViewLinkButton_{$action_menu_location}">
     <li class="sugar_action_button">
-        <a href="javascript:void(0);" class="glyphicon glyphicon-filter" data-toggle="modal" data-target=".modal-search"></a>
+        <a href="#" class="glyphicon glyphicon-filter" data-toggle="modal" data-target=".modal-search"></a>
         <span class="searchAppliedAlert hidden">&#10004</span>
     </li>
 </ul>
