@@ -2968,6 +2968,25 @@ select[multiple] {
   overflow: auto !important;
   vertical-align: text-top; }
 
+select.ui-widget-content {
+  border-style: solid;
+  border-size: 1px;
+  border-color: #a5e8d6;
+  border-radius: 4px;
+  padding: 0 52px 0 5px;
+  background-color: white;
+  background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right white;
+  background-size: 52px 52px;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  outline: 0;
+  scrollbar-base-color: #a5e8d6;
+  scrollbar-arrow-color: #a5e8d6;
+  color: #534d64;
+  height: 48px;
+  line-height: 48px; }
+
 .form-control {
   box-shadow: none; }
 
@@ -12547,6 +12566,57 @@ div.fc-basic-view .fc-body .fc-row {
 
 .modal-calendar-user-list select[size]#shared_ids {
   height: 200px; }
+
+/** Style **/
+select#Duration_unit {
+  padding: 0 52px 0 5px; }
+
+select#Lag_unit {
+  padding: 0 52px 0 5px; }
+
+.projects-gantt-chart-popup fieldset > table tr > td {
+  width: 50%;
+  display: block;
+  float: left; }
+
+/** make align with task name **/
+.projects-gantt-chart-popup table > tbody > tr > td:nth-of-type(2) {
+  padding-top: 44px; }
+
+#dialog .projects-gantt-chart-popup input.text {
+  width: auto; }
+
+#dialog .projects-gantt-chart-popup input[type=text]#Lag {
+  width: 72px; }
+
+#dialog .projects-gantt-chart-popup input[type=text]#Duration {
+  width: 72px; }
+
+input#Resources {
+  width: auto; }
+
+input[type=radio]#Milestone {
+  line-height: 40px; }
+
+label#Milestone_label {
+  line-height: 40px; }
+
+input[type=radio]#Subtask {
+  line-height: 40px; }
+
+label#Subtask_label {
+  line-height: 40px; }
+
+.projects-gantt-chart-popup label {
+  display: inline-block; }
+
+.projects-gantt-chart-popup input[type=radio]#Milestone {
+  margin-left: 20px; }
+
+/** fix popup message **/
+.blockMsg h1 {
+  font-size: 13px;
+  font-weight: bold; }
 
 div#searchResults {
   overflow-y: auto;

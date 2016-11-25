@@ -922,6 +922,25 @@ select[multiple] {
   vertical-align: text-top;
 }
 
+select.ui-widget-content {
+  border-style: solid;
+  border-size: 1px;
+  border-color: $input-select-bg;
+  border-radius: 4px;
+  padding: 0 52px 0 5px;
+  background-color: $input-select-option;
+  background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right $input-select-option;
+  background-size: 52px 52px;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  outline: 0;
+  scrollbar-base-color: $input-select-bg;
+  scrollbar-arrow-color: $input-select-bg;
+  color: $main-font-color;
+  height: $input-line-height+8;
+  line-height: $input-line-height+8;
+}
 
 .form-control {
   box-shadow: none;

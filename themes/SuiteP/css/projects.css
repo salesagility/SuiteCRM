@@ -1,0 +1,35 @@
+/*
+Syntax error: Invalid CSS after "...unit, #Lag_unit": expected "{", was ""
+        on line 1 of projects.scss
+
+1: #Duration_unit, #Lag_unit
+
+Backtrace:
+projects.scss:1
+/usr/lib/ruby/vendor_ruby/sass/scss/parser.rb:1148:in `expected'
+/usr/lib/ruby/vendor_ruby/sass/scss/parser.rb:1084:in `expected'
+/usr/lib/ruby/vendor_ruby/sass/scss/parser.rb:1079:in `tok!'
+/usr/lib/ruby/vendor_ruby/sass/scss/parser.rb:533:in `block'
+/usr/lib/ruby/vendor_ruby/sass/scss/parser.rb:528:in `ruleset'
+/usr/lib/ruby/vendor_ruby/sass/scss/parser.rb:552:in `block_child'
+/usr/lib/ruby/vendor_ruby/sass/scss/parser.rb:542:in `block_contents'
+/usr/lib/ruby/vendor_ruby/sass/scss/parser.rb:82:in `stylesheet'
+/usr/lib/ruby/vendor_ruby/sass/scss/parser.rb:27:in `parse'
+/usr/lib/ruby/vendor_ruby/sass/engine.rb:342:in `_to_tree'
+/usr/lib/ruby/vendor_ruby/sass/engine.rb:315:in `_render'
+/usr/lib/ruby/vendor_ruby/sass/engine.rb:262:in `render'
+/usr/lib/ruby/vendor_ruby/sass/plugin/compiler.rb:362:in `update_stylesheet'
+/usr/lib/ruby/vendor_ruby/sass/plugin/compiler.rb:203:in `block in update_stylesheets'
+/usr/lib/ruby/vendor_ruby/sass/plugin/compiler.rb:201:in `each'
+/usr/lib/ruby/vendor_ruby/sass/plugin/compiler.rb:201:in `update_stylesheets'
+/usr/lib/ruby/vendor_ruby/sass/plugin.rb:81:in `update_stylesheets'
+/usr/lib/ruby/vendor_ruby/sass/exec.rb:439:in `watch_or_update'
+/usr/lib/ruby/vendor_ruby/sass/exec.rb:326:in `process_result'
+/usr/lib/ruby/vendor_ruby/sass/exec.rb:41:in `parse'
+/usr/lib/ruby/vendor_ruby/sass/exec.rb:21:in `parse!'
+/usr/bin/scss:8:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Syntax error: Invalid CSS after \"...unit, #Lag_unit\": expected \"{\", was \"\"\A         on line 1 of projects.scss\A \A 1: #Duration_unit, #Lag_unit"; }
