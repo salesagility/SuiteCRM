@@ -5552,12 +5552,12 @@ div#search_form > .advanced input.button:hover {
   margin-bottom: 0; }
 
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.free {
-  background-color: #bbe6a5;
-  border-color: #7e996e; }
+  background-color: #6a80e6;
+  border-color: white; }
 
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.busy {
-  background-color: #f08377;
-  border-color: #99524d; }
+  background-color: #e67c73;
+  border-color: white; }
 
 #create-invitees {
   margin-top: 5px;

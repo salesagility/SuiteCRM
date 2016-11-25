@@ -111,7 +111,7 @@
 
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.busy {
   background-color: $scheduler-busy-color;
-  border-color: $scheduler-border-color;
+  border-color: $scheduler-free-border-color;
 }
 
 #create-invitees {
