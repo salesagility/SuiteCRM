@@ -630,10 +630,13 @@ $(function () {
                         $(e).removeClass('hidden');
                         $(e).next().hide();
                         refreshListViewCheckbox(e);
-                        $(e).click(function () {
-                            $(this).next().click();
-                            refreshListViewCheckbox($(this));
-                        });
+                        if(!$(e).hasClass('initialized-checkbox')) {
+                            $(e).click(function () {
+                                $(this).next().click();
+                                refreshListViewCheckbox($(this));
+                            });
+                            $(e).addClass('initialized-checkbox');
+                        }
                     });
 
                     $('#selectLink > li > ul > li > a, #selectLinkTop > li > ul > li > a, #selectLinkBottom > li > ul > li > a').click(function (e) {
