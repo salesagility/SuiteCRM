@@ -78,7 +78,7 @@
         <div class='le_field' id='{$idCount}'>
             {if ! $fromModuleBuilder && ($col.name != '(filler)')}
                 {capture assign="otherAttributes"}class="le_edit" style="float:right; cursor:pointer;" onclick="editFieldProperties('{$idCount}', '{$col.label}');"{/capture}
-                {sugar_getimage name="edit_inline" ext=".svg" other_attributes=$otherAttributes}
+                <img src="themes/SuiteP/images/edit_inline.svg" {$otherAttributes}/>
             {/if}
             {if isset($col.type) && ($col.type == 'address')}
                 {$icon_address}
@@ -143,7 +143,6 @@
         </div>
         {if $panelid ne 'default'}
             {capture assign="otherAttributes"}class="le_edit" style="float:left; cursor:pointer;" onclick="editPanelProperties('{$idCount}');"{/capture}
-            {*{sugar_getimage name="edit_inline" ext=".png" other_attributes=$otherAttributes}*}
             <img src="themes/SuiteP/images/edit_inline.svg" {$otherAttributes}/>
         {/if}
         <span id="le_paneltype_{$idCount}" style="float:left;">
@@ -176,7 +175,7 @@
                 <div class='le_field' id='{$idCount}'>
                     {if ! $fromModuleBuilder && ($col.name != '(filler)')}
                         {capture assign="otherAttributes"}class="le_edit" style="float:right; cursor:pointer;" onclick="editFieldProperties('{$idCount}', '{$col.label}');"{/capture}
-                        {sugar_getimage name="edit_inline" ext=".gif" other_attributes=$otherAttributes}
+                        <img src="themes/SuiteP/images/edit_inline.svg" {$otherAttributes}/>
                     {/if}
 
                     {if isset($col.type) && ($col.type == 'address')}
