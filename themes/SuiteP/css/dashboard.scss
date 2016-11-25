@@ -22,7 +22,10 @@
   border-top-right-radius: 4px;
 }
 
-.yui-module .hd,
+.yui-module .hd{
+  background: $dashlet-title-bg;
+}
+
 .yui-panel .hd {
   background: $dashlet-title-bg;
 }
@@ -108,11 +111,61 @@ ul.subpanelTablist li {
 }
 
 
-#dashletCategories > li a,
-#dashletCategories > li a:link,
-#dashletCategories > li a:hover,
-#dashletCategories > li a:visited,
-#dashletCategories > li a:active,
+#dashletCategories > li a {
+  font-weight: 400;
+  border: 1px solid transparent;
+  background-color: $default-tab-bg;
+  padding: 10px 20px 10px 10px;
+  color: $default-btn-color;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  text-transform: uppercase;
+}
+
+#dashletCategories > li a:link {
+  font-weight: 400;
+  border: 1px solid transparent;
+  background-color: $default-tab-bg;
+  padding: 10px 20px 10px 10px;
+  color: $default-btn-color;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  text-transform: uppercase;
+}
+
+#dashletCategories > li a:hover {
+  font-weight: 400;
+  border: 1px solid transparent;
+  background-color: $default-tab-bg;
+  padding: 10px 20px 10px 10px;
+  color: $default-btn-color;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  text-transform: uppercase;
+}
+
+#dashletCategories > li a:visited {
+  font-weight: 400;
+  border: 1px solid transparent;
+  background-color: $default-tab-bg;
+  padding: 10px 20px 10px 10px;
+  color: $default-btn-color;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  text-transform: uppercase;
+}
+
+#dashletCategories > li a:active {
+  font-weight: 400;
+  border: 1px solid transparent;
+  background-color: $default-tab-bg;
+  padding: 10px 20px 10px 10px;
+  color: $default-btn-color;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  text-transform: uppercase;
+}
+
 #dashletCategories > li a:focus {
   font-weight: 400;
   border: 1px solid transparent;
@@ -124,11 +177,31 @@ ul.subpanelTablist li {
   text-transform: uppercase;
 }
 
-#dashletCategories > li.active a,
-#dashletCategories > li.active a:link,
-#dashletCategories > li.active a:hover,
-#dashletCategories > li.active a:visited,
-#dashletCategories > li.active a:active,
+#dashletCategories > li.active a {
+  background-color: $active-tab-bg;
+  color: $default-btn-color;
+}
+
+#dashletCategories > li.active a:link {
+  background-color: $active-tab-bg;
+  color: $default-btn-color;
+}
+
+#dashletCategories > li.active a:hover {
+  background-color: $active-tab-bg;
+  color: $default-btn-color;
+}
+
+#dashletCategories > li.active a:visited {
+  background-color: $active-tab-bg;
+  color: $default-btn-color;
+}
+
+#dashletCategories > li.active a:active {
+  background-color: $active-tab-bg;
+  color: $default-btn-color;
+}
+
 #dashletCategories > li.active a:focus {
   background-color: $active-tab-bg;
   color: $default-btn-color;
@@ -140,7 +213,9 @@ ul.subpanelTablist li {
 }
 
 
-#moduleDashlets h3, #chartDashlets h3, #toolsDashlets h3 {
+#moduleDashlets h3,
+#chartDashlets h3,
+#toolsDashlets h3 {
   margin-top: 13px;
 }
 
@@ -154,7 +229,10 @@ ul.subpanelTablist li {
   max-height: 375px;
 }
 
-.sugarFeedDashlet td.list th,
+.sugarFeedDashlet td.list th {
+  display: none;
+}
+
 .sugarFeedDashlet td.list td[scope=col] {
   display: none;
 }
@@ -258,27 +336,87 @@ td.dashlet-title > h3 > span {
 }
 
 
-#moduleDashletsList > table > tbody > tr > td,
-#basicChartDashletsList > table > tbody  > tr > td,
-#toolsDashletsList > table > tbody  > tr > td,
+#moduleDashletsList > table > tbody > tr > td {
+  padding: 10px;
+}
+
+#basicChartDashletsList > table > tbody  > tr > td {
+  padding: 10px;
+}
+
+#toolsDashletsList > table > tbody  > tr > td {
+  padding: 10px;
+}
+
 #webDashletsList > table > tbody  > tr > td {
   padding: 10px;
 }
 
-#moduleDashletsList a,
-#basicChartDashletsList a,
-#toolsDashletsList a,
+#moduleDashletsList a {
+  color: $link-color;
+  margin: 5px;
+}
+
+#basicChartDashletsList a {
+  color: $link-color;
+  margin: 5px;
+}
+
+#toolsDashletsList a {
+  color: $link-color;
+  margin: 5px;
+}
+
 #webDashletsList a {
   color: $link-color;
   margin: 5px;
 }
 
-#moduleDashletsList a span, #basicChartDashletsList a span, #toolsDashletsList a span, #webDashletsList a span {
+#moduleDashletsList a span {
+  margin-left: 10px;
+}
+
+#basicChartDashletsList a span {
+  margin-left: 10px;
+}
+
+#toolsDashletsList a span {
+  margin-left: 10px;
+}
+
+#webDashletsList a span {
   margin-left: 10px;
 }
 
 
-#moduleDashletsList, #basicChartDashletsList, #toolsDashletsList, #webDashletsList {
+#moduleDashletsList {
+  padding: 10px;
+  max-height: 375px ;
+  /*background: #778591;*/
+  border: 1px solid transparent;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+#basicChartDashletsList {
+  padding: 10px;
+  max-height: 375px ;
+  /*background: #778591;*/
+  border: 1px solid transparent;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+#toolsDashletsList {
+  padding: 10px;
+  max-height: 375px ;
+  /*background: #778591;*/
+  border: 1px solid transparent;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+#webDashletsList {
   padding: 10px;
   max-height: 375px ;
   /*background: #778591;*/
@@ -428,7 +566,13 @@ td.dashlet-title > h3 > span {
   margin-top: 10px;
 }
 
-.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr,
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr{
+  display: block;
+  float: none;
+  width: auto;
+  border-bottom: none;
+}
+
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.view td tr {
   display: block;
   float: none;
@@ -436,7 +580,12 @@ td.dashlet-title > h3 > span {
   border-bottom: none;
 }
 
-.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td[scope=row],
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td[scope=row]{
+  display: block;
+  float: left;
+  width: auto;
+}
+
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.view td tr td {
   display: block;
   float: left;
@@ -538,8 +687,20 @@ td.dashlet-title > h3 > span {
     width: 100%;
   }
 
-  table td[class*=col-],
-  table th[class*=col-],
+  table td[class*=col-] {
+    width: 100%;
+    float: none;
+    display: block;
+    clear: both;
+  }
+
+  table th[class*=col-] {
+    width: 100%;
+    float: none;
+    display: block;
+    clear: both;
+  }
+
   .dashletcontainer {
     width: 100%;
     float: none;

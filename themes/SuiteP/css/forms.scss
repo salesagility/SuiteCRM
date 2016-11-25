@@ -2,7 +2,15 @@
 @import 'variables';
 
 
-fieldset, table, pre {
+fieldset {
+  margin-bottom: 0;
+}
+
+table {
+  margin-bottom: 0;
+}
+
+pre {
   margin-bottom: 0;
 }
 
@@ -24,7 +32,19 @@ textarea {
 }
 
 
-.checkbox, input[type=checkbox] {
+.checkbox {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+  visibility: visible;
+  height: 16px;
+  width: 16px;
+  background: url('../../../../themes/SuiteP/images/forms/check.png') no-repeat;
+  overflow: hidden;
+}
+
+input[type=checkbox] {
   display: inline-block;
   margin: 0;
   padding: 0;
@@ -47,7 +67,11 @@ input[type=radio] {
   background: url('../../../../themes/SuiteP/images/forms/radio.png') no-repeat;
 }
 
-input[type=checkbox]:focus, input[type=radio]:focus {
+input[type=checkbox]:focus {
+  outline: 0;
+}
+
+input[type=radio]:focus {
   outline: 0;
 }
 
@@ -63,7 +87,11 @@ input[type=checkbox]:disabled {
   background-position: -36px 0;
 }
 
-input[type=checkbox]:disabled:checked, input[type=checkbox]:checked:disabled {
+input[type=checkbox]:disabled:checked {
+  background-position: -54px 0;
+}
+
+input[type=checkbox]:checked:disabled {
   background-position: -54px 0;
 }
 
@@ -79,7 +107,11 @@ input[type=radio]:disabled {
   background-position: -36px 0;
 }
 
-input[type=radio]:disabled:checked, input[type=radio]:checked:disabled {
+input[type=radio]:disabled:checked {
+  background-position: -54px 0;
+}
+
+input[type=radio]:checked:disabled {
   background-position: -54px 0;
 }
 
@@ -104,7 +136,15 @@ div.input-group input {
   max-width: 100% ;
 }
 
-.button-primary:active, .button-primary.active, .open > .dropdown-toggle.btn-primary {
+.button-primary:active {
+  background-image: none;
+}
+
+.button-primary.active {
+  background-image: none;
+}
+
+.open > .dropdown-toggle.btn-primary {
   background-image: none;
 }
 
@@ -326,7 +366,18 @@ fieldset[disabled] .btn-primary.active {
   background-color: $danger-btn-bg-hover;
 }
 
-.buttonOn,
+.buttonOn {
+  cursor: pointer;
+  font-size: $page-font-size;
+  padding: 0 20px 0 20px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 1px;
+  height: $input-line-height;
+  line-height: $input-line-height;
+}
+
 .btn .btn:hover {
   cursor: pointer;
   font-size: $page-font-size;
@@ -339,24 +390,49 @@ fieldset[disabled] .btn-primary.active {
   line-height: $input-line-height;
 }
 
-.btn-default, .btn-default:hover {
-  color: $default-btn-color;
-  background-color: $default-btn-bg;
-  border: 1px solid $default-btn-bg;
-}
-.btn-default:active, .btn-default:focus {
+.btn-default{
   color: $default-btn-color;
   background-color: $default-btn-bg;
   border: 1px solid $default-btn-bg;
 }
 
-.btn-primary, .btn-primary:hover {
+.btn-default:hover {
+  color: $default-btn-color;
+  background-color: $default-btn-bg;
+  border: 1px solid $default-btn-bg;
+}
+
+.btn-default:active {
+  color: $default-btn-color;
+  background-color: $default-btn-bg;
+  border: 1px solid $default-btn-bg;
+}
+
+.btn-default:focus {
+  color: $default-btn-color;
+  background-color: $default-btn-bg;
+  border: 1px solid $default-btn-bg;
+}
+
+.btn-primary {
   color: $default-btn-color;
   background-color: $primary-btn-bg;
   border: 1px solid $primary-btn-bg;
 }
 
-.btn-primary:active, .btn-primary:focus {
+.btn-primary:hover {
+  color: $default-btn-color;
+  background-color: $primary-btn-bg;
+  border: 1px solid $primary-btn-bg;
+}
+
+.btn-primary:active {
+  color: $default-btn-color;
+  background-color: $primary-btn-bg;
+  border: 1px solid $primary-btn-bg;
+}
+
+.btn-primary:focus {
   color: $default-btn-color;
   background-color: $primary-btn-bg;
   border: 1px solid $primary-btn-bg;
@@ -449,6 +525,10 @@ input[type=button].btn-info:focus {
   letter-spacing: 1px;
   height: $button-line-height;
   line-height: $button-line-height;
+}
+
+input[type=submit].button:hover {
+  background: $danger-btn-bg-hover;
 }
 
 input[type=submit] {
@@ -631,9 +711,54 @@ td.submitButtons .button:hover {
   background-color: $danger-btn-bg-hover;
 }
 
-button[disabled],
-input[type="submit"][disabled],
-input[type="reset"][disabled],
+button[disabled] {
+  background-color: $disabled-btn-bg;
+  border: none;
+  color: $main-bg;
+  cursor: pointer;
+  font-size: $page-font-size;
+  margin: 0 0 0 0;
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+  //padding: 0 20px 0 20px;
+  letter-spacing: 1px;
+  height: $input-line-height;
+  line-height: $input-line-height;
+}
+
+input[type="submit"][disabled] {
+  background-color: $disabled-btn-bg;
+  border: none;
+  color: $main-bg;
+  cursor: pointer;
+  font-size: $page-font-size;
+  margin: 0 0 0 0;
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+  //padding: 0 20px 0 20px;
+  letter-spacing: 1px;
+  height: $input-line-height;
+  line-height: $input-line-height;
+}
+
+input[type="reset"][disabled] {
+  background-color: $disabled-btn-bg;
+  border: none;
+  color: $main-bg;
+  cursor: pointer;
+  font-size: $page-font-size;
+  margin: 0 0 0 0;
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+  //padding: 0 20px 0 20px;
+  letter-spacing: 1px;
+  height: $input-line-height;
+  line-height: $input-line-height;
+}
+
 input[type="button"][disabled] {
   background-color: $disabled-btn-bg;
   border: none;
@@ -719,8 +844,14 @@ input[type="button"][disabled] {
   border-color: $disabled-btn-color;
 }
 
-.button:active,
-.button.active,
+.button:active {
+  background-image: none;
+}
+
+.button.active {
+  background-image: none;
+}
+
 .open > .dropdown-toggle.btn-primary {
   background-image: none;
 }
@@ -792,17 +923,17 @@ input[type=text] {
 
 input[type=password] {
   line-height: $input-line-height;
-  min-height: $input-line-height + 8;
+  min-height: $input-line-height  +  8;
 }
 
 input[type=email] {
   line-height: $input-line-height;
-  min-height: $input-line-height + 8;
+  min-height: $input-line-height  +  8;
 }
 
 input:not([type]) {
   line-height: $input-line-height;
-  min-height: $input-line-height + 8;
+  min-height: $input-line-height  +  8;
 }
 
 
@@ -826,8 +957,8 @@ select[size] {
   scrollbar-base-color: $input-select-bg;
   scrollbar-arrow-color: $input-select-bg;
   color: $main-font-color;
-  height: $input-line-height+8;
-  line-height: $input-line-height+8;
+  height: $input-line-height + 8;
+  line-height: $input-line-height + 8;
 }
 
 select.form-control {
@@ -846,8 +977,8 @@ select.form-control {
   scrollbar-base-color: $input-select-bg;
   scrollbar-arrow-color: $input-select-bg;
   color: $main-font-color;
-  height: $input-line-height+8;
-  line-height: $input-line-height+8;
+  height: $input-line-height + 8;
+  line-height: $input-line-height + 8;
 }
 
 select {
@@ -866,8 +997,8 @@ select {
   scrollbar-base-color: $input-select-bg;
   scrollbar-arrow-color: $input-select-bg;
   color: $main-font-color;
-  height: $input-line-height+8;
-  line-height: $input-line-height+8;
+  height: $input-line-height + 8;
+  line-height: $input-line-height + 8;
 }
 
 select:focus {
@@ -938,8 +1069,8 @@ select.ui-widget-content {
   scrollbar-base-color: $input-select-bg;
   scrollbar-arrow-color: $input-select-bg;
   color: $main-font-color;
-  height: $input-line-height+8;
-  line-height: $input-line-height+8;
+  height: $input-line-height + 8;
+  line-height: $input-line-height + 8;
 }
 
 .form-control {
@@ -988,14 +1119,32 @@ div.col-sm-6 #email1_span td.email-address-input {
   width: 100%;
 }
 
-#email1_span td.email-address-remove-button,
-#email1_span td.email-address-primary,
-#email1_span td.email-address-opt-out,
-#email1_span td.email-address-invalid {
-  width: $input-line-height+12;
-  height: $input-line-height+12; /* same height as td.email-address-input */
+#email1_span td.email-address-remove-button {
+  width: $input-line-height + 12;
+  height: $input-line-height + 12; /* same height as td.email-address-input */
   display: inline-block;
-  line-height: $input-line-height+8;
+  line-height: $input-line-height + 8;
+}
+
+#email1_span td.email-address-primary {
+  width: $input-line-height + 12;
+  height: $input-line-height + 12; /* same height as td.email-address-input */
+  display: inline-block;
+  line-height: $input-line-height + 8;
+}
+
+#email1_span td.email-address-opt-out {
+  width: $input-line-height + 12;
+  height: $input-line-height + 12; /* same height as td.email-address-input */
+  display: inline-block;
+  line-height: $input-line-height + 8;
+}
+
+#email1_span td.email-address-invalid {
+  width: $input-line-height + 12;
+  height: $input-line-height + 12; /* same height as td.email-address-input */
+  display: inline-block;
+  line-height: $input-line-height + 8;
 }
 
 div.col-sm-12 #email1_span td.email-address-add-button {
@@ -1105,6 +1254,7 @@ div.col-sm-6 #email1_span td.email-address-add-button {
 
 .email-address-input-group .email-address-remove-button {
   padding: 6px 9px 6px 9px;
+  margin-left: 4px;
 }
 
 .email-address-input-group button[disabled].email-address-remove-button {
@@ -1181,7 +1331,11 @@ font[color=red] {
     margin-bottom: 8px;
   }
 
-  .edit-view-field textarea,
+  .edit-view-field textarea {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
   .edit-view-field input[type="text"] {
     width: 100%;
     margin-bottom: 8px;

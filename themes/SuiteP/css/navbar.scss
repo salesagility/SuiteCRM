@@ -436,7 +436,12 @@
   border-bottom: 0;
 }
 
-.moremenu ul, .dropdown-menu {
+.moremenu ul{
+  max-height: 525px;
+  overflow-y: auto;
+}
+
+.dropdown-menu {
   max-height: 525px;
   overflow-y: auto;
 }
@@ -1323,11 +1328,20 @@ a[id^=grouptab]:active {
     background-position: 0 0;
   }
 
-  #globalLinks,
-  #desktop_notifications, #desktop_notifications:hover {
+  #globalLinks {
     margin-top: 9px;
   }
-  #desktop_notifications, #desktop_notifications:hover {
+
+  #desktop_notifications {
+    margin-top: 9px;
+  }
+
+  #desktop_notifications:hover {
+    margin-top: 9px;
+  }
+
+  #desktop_notifications,
+  #desktop_notifications:hover {
     float: left;
     width: 28px;
     height: 28px;
@@ -1400,7 +1414,18 @@ a[id^=grouptab]:active {
     left: 0;
   }
 
-  #usermenucollapsed, #usermenucollapsed-mobile {
+  #usermenucollapsed {
+    background-color: transparent;
+    height: 42px;
+    width: 42px;
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    border: none;
+    margin-left: 0;
+  }
+
+  #usermenucollapsed-mobile {
     background-color: transparent;
     height: 42px;
     width: 42px;
@@ -1423,14 +1448,7 @@ a[id^=grouptab]:active {
 
 
   #desktop_notifications {
-    float: left;
-    width: 44px;
-    height: 48px;
     margin-top: ($navbar-height / 4);
-    margin-right: 10px;
-    background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert.svg"), url("../../../../themes/SuiteP/images/p_icon_alert.png");
-    background-repeat: no-repeat;
-    background-position: 0 0;
   }
 
   //#desktop_notifications:hover {
@@ -1755,7 +1773,11 @@ a[id^=grouptab]:active {
   }
 }
 @media (max-width: 1399px) {
-  #usermenu, #searchform {
+  #usermenu {
+    display: none;
+  }
+
+  #searchform {
     display: none;
   }
 
@@ -2141,7 +2163,12 @@ a[id^=grouptab]:active {
     height: auto;
   }
 
-  .moremenu ul, .dropdown-menu {
+  .moremenu ul {
+    max-height: inherit;
+    height: auto;
+  }
+
+  .dropdown-menu {
     max-height: inherit;
     height: auto;
   }
