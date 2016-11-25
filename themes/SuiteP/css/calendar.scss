@@ -7,36 +7,36 @@
 }
 
 button#goto_date_trigger_div_nav_cancel {
+  font-size: 13px;
+  font-weight: 500;
   background-color: #F08377;
   color: #fff;
   cursor: pointer;
-  font-size: 13px;
-  margin: 0 0 0 0;
   padding: 0 10px 0 10px;
-  text-transform: uppercase;
-  font-weight: 500;
-  letter-spacing: 1px;
-  height: 40px;
-  line-height: 40px;
+  margin: 0 0 0 0;
   border: 1px solid transparent;
   border-radius: 4px;
+  letter-spacing: 1px;
+  line-height: 40px;
+  height: 40px;
+  text-transform: uppercase;
 }
 
 button#goto_date_trigger_div_nav_submit {
-  text-shadow: none;
+  font-size: 13px;
+  font-weight: 500;
   background-color: #F08377;
   color: #fff;
   cursor: pointer;
-  font-size: 13px;
-  margin: 0 0 0 0;
   padding: 0 10px 0 10px;
-  text-transform: uppercase;
-  font-weight: 500;
-  letter-spacing: 1px;
-  height: 40px;
-  line-height: 40px;
+  margin: 0 0 0 0;
   border: 1px solid transparent;
   border-radius: 4px;
+  letter-spacing: 1px;
+  line-height: 40px;
+  height: 40px;
+  text-shadow: none;
+  text-transform: uppercase;
 }
 
 table#goto_date_trigger_div_t thead {
@@ -55,15 +55,15 @@ table#goto_date_trigger_div_t thead {
 }
 
 .yui-calendar a.calnav {
-  color: $default-btn-color;
-  background-color: #66727D;
-  border: 1px solid #66727D;
-  padding: 8px;
-  border-radius: 4px;
-  text-transform: uppercase;
   font-weight: normal;
-  height: auto;
+  background-color: #66727D;
+  color: $default-btn-color;
+  padding: 8px;
+  border: 1px solid #66727D;
+  border-radius: 4px;
   width: auto;
+  height: auto;
+  text-transform: uppercase;
 }
 
 .yui-calendar a.calnavleft
@@ -84,25 +84,25 @@ table#goto_date_trigger_div_t thead {
 }
 
 .yui-calendar a.calnavright {
-  color: $default-btn-color;
-  background-color: $info-btn-bg;
-  border: 1px solid $info-btn-bg;
-  padding: 0;
-  border-radius: 4px;
-  text-transform: uppercase;
-  font-weight: normal;
-  height: 32px;
-  width: 32px;
   display: inline-block;
-  margin-top: 10px;
+  font-weight: normal;
+  background-color: $info-btn-bg;
   background-origin: padding-box;
   background-position: 0 0;
+  color: $default-btn-color;
+  padding: 0;
+  margin-top: 10px;
+  border: 1px solid $info-btn-bg;
+  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  text-transform: uppercase;
 }
 
 .yui-calendar .calheader {
   padding: 4px;
-  height: 48px;
   line-height: 48px;
+  height: 48px;
 }
 
 .yui-calendar .calnavleft {
@@ -136,11 +136,11 @@ table#goto_date_trigger_div_t thead {
 }
 
 .yui-calendar td.calcell a {
-  height: 32px;
-  width: 32px;
   background: $main-alternate-bg;
   color: $link-color;
   line-height: 32px;
+  width: 32px;
+  height: 32px;
 }
 
 .yui-calendar td.calcell.selected {
@@ -191,18 +191,18 @@ a#callnav_today {
 }
 
 .monthHeader {
-  height: $calendar-title-height;
-  line-height: $calendar-title-height;
-  margin-top: 10px;
-  border: none;
   background: $calendar-title-bg;
   color: $default-btn-color;
-  vertical-align: middle;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-top: 10px;
+  border: none;
   border: 1px solid transparent;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  padding-left: 8px;
-  padding-right: 8px;
+  line-height: $calendar-title-height;
+  height: $calendar-title-height;
+  vertical-align: middle;
 }
 
 .monthHeader h3 {
@@ -225,39 +225,44 @@ a#callnav_today {
 }
 
 h5.calSharedUser  {
-  height: $calendar-user-height;
   line-height: $calendar-user-height;
+  height: $calendar-user-height;
 }
 
 
-.fc-unthemed thead
+.fc-unthemed thead {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
 
 
 .fc-view-container .monthCalBody * {
+  box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box;
 }
 
 
 .fc-view-container .monthCalBody:before {
+  box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box;
 }
 
 
 .fc-view-container .monthCalBody:after {
+  box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box;
 }
 
 
 .fc-view-container .monthCalBody {
+  box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box;
 }
 
 
@@ -386,8 +391,8 @@ ul.yui-nav li.selected {
 
 
 .qtip-content {
-  max-height: 450px;
   overflow-y: auto;
+  max-height: 450px;
 }
 
 .qtip-content .title {
@@ -398,8 +403,8 @@ ul.yui-nav li.selected {
   font-family: 'Lato', Lato, Arial, sans-serif;
   font-size: $qtip-font-size;
   border: none;
-  -webkit-border-radius: 4px;
   border-radius: 4px;
+  -webkit-border-radius: 4px;
 }
 
 
@@ -414,25 +419,25 @@ ul.yui-nav li.selected {
 
 .qtip-title-text {
   display: block;
-  float: left;
-  width: 128px;
   color: $qtip-title-color;
+  float: left;
   line-height: $qtip-font-size + 6px;
+  width: 128px;
 }
 
 .qtip-title-buttons {
   display: inline-block;
-  width: 46px;
-  float: right;
-  vertical-align: middle;
   padding: 0 0 0 4px;
+  float: right;
+  width: 46px;
+  vertical-align: middle;
 }
 
 .qtip-title-buttons a {
-  padding-left: 8px;
   color: $qtip-btn-color;
-  margin: 0 0 0 4px;
   padding: 0;
+  padding-left: 8px;
+  margin: 0 0 0 4px;
 }
 
 .qtip-title-buttons a:hover {
@@ -444,20 +449,20 @@ ul.yui-nav li.selected {
 }
 
 .qtip-default .qtip-icon {
+  top: 16px;
   background-color: transparent;
   border: none;
-  top: 16px;
 }
 
 .qtip-default .qtip-titlebar .qtip-close {
-  color: $qtip-btn-color;
   font-size: 22px;
+  color: $qtip-btn-color;
 }
 
 .qtip-default .qtip-titlebar .qtip-close:hover {
-  color: $qtip-btn-hover;
   font-size: 22px;
   font-weight: bold;
+  color: $qtip-btn-hover;
 }
 
 .qtip-content {
@@ -487,21 +492,21 @@ ul.yui-nav li.selected {
 
 
 td.fc-widget-header {
+  background-color: $calendar-header-bg;
   padding: 0;
   border: none;
-  background-color: $calendar-header-bg;
 }
 
 td.fc-widget-header table > thead {
+  background-color: $calendar-header-bg;
   padding: 0;
   border: none;
-  background-color: $calendar-header-bg;
 }
 
 td.fc-widget-header table > thead > tr > th {
+  background-color: $calendar-header-bg;
   padding: 0;
   border: none;
-  background-color: $calendar-header-bg;
 }
 
 
@@ -524,20 +529,20 @@ td.fc-day-top.fc-other-month {
 }
 
 td.fc-day-top.fc-today {
-  cursor: pointer;
   background: $calendar-month-day-header-bg;
+  cursor: pointer;
 }
 
 .fc-day-top {
-  cursor: pointer;
   background: $calendar-month-day-header-bg;
+  cursor: pointer;
 }
 
 .monthFooter td {
-  padding-left: 7px;
-  padding-right: 7px;
   padding-top: 3px;
   padding-bottom: 5px;
+  padding-left: 7px;
+  padding-right: 7px;
   border-top: 1px solid;
   border-bottom: 2px solid;
 }
@@ -566,9 +571,9 @@ td.fc-day-top.fc-today {
 }
 
 .monthViewDayHeight td {
-  vertical-align: top;
   padding: 3px;
   text-align: right;
+  vertical-align: top;
 }
 
 .yearViewDayHeight {
@@ -576,8 +581,8 @@ td.fc-day-top.fc-today {
 }
 
 .monthCalBodyDayItem {
-  margin: 7px 0 7px 0;
   padding: 5px 0 8px 0;
+  margin: 7px 0 7px 0;
   border-top: 1px solid;
 }
 
@@ -591,16 +596,16 @@ td.fc-day-top.fc-today {
 }
 
 .monthCalBody th {
-  vertical-align: top;
+  font-weight: normal;
   padding: 7px;
   height: 20px;
-  font-weight: normal;
+  vertical-align: top;
 }
 
 .monthCalBodyTH th {
+  font-weight: bold;
   padding: 5px;
   border-bottom: 1px solid;
-  font-weight: bold;
 }
 
 .monthCalBody td {
@@ -632,8 +637,8 @@ td.fc-day-top.fc-today {
 
 .yearCalBodyMonth > a {
   font-weight: bold;
-  margin: 0;
   padding: 5px;
+  margin: 0;
   width: 100%;
   text-decoration: none;
 }
@@ -643,18 +648,18 @@ td.fc-day-top.fc-today {
 }
 
 .calSharedUser {
-  height: 20px;
   padding-top: 5px;
   padding-left: 8px;
   margin-top: 0;
   margin-bottom: 0;
   border-top: 1px;
+  height: 20px;
 }
 
 .fc-toolbar {
-  visibility: collapse;
   display: none;
   height: 0;
+  visibility: collapse;
 }
 
 .monthCalBody > .calSharedUser {
@@ -690,12 +695,12 @@ a.fc-day-number:hover {
 }
 
 .calendar .combo {
-  border-top: 1px solid #f1f1f1;
-  border-right: 1px solid #999;
-  border-bottom: 1px solid #999;
-  border-left: 1px solid #f1f1f1;
   background: #eee;
   padding: 0;
+  border-top: 1px solid #f1f1f1;
+  border-bottom: 1px solid #999;
+  border-left: 1px solid #f1f1f1;
+  border-right: 1px solid #999;
 }
 
 .calendar .combo .active {
@@ -705,19 +710,19 @@ a.fc-day-number:hover {
 .calendar .combo .hilite {
   background: #f8f7f7;
   padding: 1px 4px 1px 4px;
+  border-color: #9e9e9e;
   border-top: 1px solid;
   border-bottom: 1px solid;
-  border-color: #9e9e9e;
 }
 
 .calendar .combo .label{
-  text-align: left;
   padding: 2px 4px 2px 4px;
+  text-align: left;
 }
 
 .calendar .combo .label-IEfix {
-  text-align: left;
   padding: 2px 4px 2px 4px;
+  text-align: left;
 }
 
 .calendar .nav {
@@ -735,8 +740,8 @@ a.fc-day-number:hover {
 
 .calendar tbody .day {
   background: #fff;
-  text-align: right;
   padding: 2px 4px 2px 2px;
+  text-align: right;
 }
 
 .calendar tbody .day.othermonth.oweekend {
@@ -763,8 +768,8 @@ a.fc-day-number:hover {
 }
 
 .calendar tbody td.selected {
-  border-color: #666;
   background: #eee;
+  border-color: #666;
 }
 
 .calendar tbody td.today {
@@ -772,22 +777,22 @@ a.fc-day-number:hover {
 }
 
 .calendar tbody td.weekend {
-  color: #666;
   background: #f9f9f9;
+  color: #666;
 }
 
 .calendar tfoot .ttip {
   background: #e8f0f4;
-  border-top: 1px solid #fff;
-  border-bottom: 1px solid #ccc;
   background: #dfdfdf;
   color: #000;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #ccc;
 }
 
 .calendar thead .hilite {
+  border-top: 1px solid #aaa;
   border-bottom: 1px solid #fff;
   border-left: 1px solid #aaa;
-  border-top: 1px solid #aaa;
   border-right: 1px solid #fff;
 }
 
@@ -797,16 +802,16 @@ a.fc-day-number:hover {
 }
 
 .calendar thead .title {
+  background: #f8f7f7;
+  color: #000;
   padding: 3px;
   border-top: 1px solid #fff;
   border-bottom: 1px solid #cccccc;
-  color: #000;
-  background: #f8f7f7;
 }
 
 .calendar thead .weekend {
-  color: #000;
   font-weight: bold;
+  color: #000;
 }
 
 
@@ -822,8 +827,8 @@ div.fc-basic-view .fc-body .fc-row {
 /* user list */
 
 .modal-calendar-user-list table.edit {
-  width: 256px;
   margin-top: 8px;
+  width: 256px;
 }
 
 .modal-calendar-user-list table.edit tr td:first-of-type {
@@ -840,6 +845,6 @@ div.fc-basic-view .fc-body .fc-row {
 
 
 iframe.teamNoticeBox {
-  width: 100%;
   overflow: auto;
+  width: 100%;
 }

@@ -11,9 +11,9 @@ select#Lag_unit {
 }
 
 .projects-gantt-chart-popup fieldset > table tr > td {
-  width: 50%;
   display: block;
   float: left;
+  width: 50%;
 }
 
 /** make align with task name **/
@@ -26,11 +26,11 @@ select#Lag_unit {
   width: auto;
 }
 
-#dialog .projects-gantt-chart-popup input[type=text]#Lag {
+#dialog .projects-gantt-chart-popup input#Lag[type=text] {
   width: 72px;
 }
 
-#dialog .projects-gantt-chart-popup input[type=text]#Duration {
+#dialog .projects-gantt-chart-popup input#Duration[type=text] {
   width: 72px;
 }
 
@@ -70,20 +70,20 @@ label#Subtask_label {
 
 
 a#create_link.utilsLink {
+  font-size: $page-font-size;
+  font-weight: 500;
   background: $danger-btn-bg;
-  border: none;
   color: $default-btn-color;
   cursor: pointer;
-  font-size: $page-font-size;
-  margin: 0 0 0 0;
   padding: 5px 20px 5px 20px;
+  margin: 0 0 0 0;
+  border: none;
   border-radius: 3px;
-  text-transform: uppercase;
-  font-weight: 500;
   letter-spacing: 1px;
-  height: $button-line-height;
   line-height: $button-line-height;
+  height: $button-line-height;
   text-decoration: none;
+  text-transform: uppercase;
 }
 
 a#create_link.utilsLink:hover {

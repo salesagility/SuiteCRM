@@ -39,11 +39,11 @@
 }
 
 #pageContainer .dashletcontainer .pagination td button {
-  width: auto;
   background-color: $dashlet-pagination-bg;
   padding: 2px;
-  height: auto;
   border-radius: 3px;
+  width: auto;
+  height: auto;
 }
 
 .dashletcontainer button[disabled], .dashletcontainer input[type="submit"][disabled], .dashletcontainer input[type="reset"][disabled], .dashletcontainer input[type="button"][disabled] {
@@ -92,16 +92,16 @@
 }
 
 ul.subpanelTablist li {
-  list-style: none;
   margin: 0 0 0 3px;
+  list-style: none;
   padding:0;
 }
 
 #dashletCategories {
   display: block;
   font-size: 13px;
-  height: 28px;
   border-bottom-color: $active-tab-bg;
+  height: 28px;
 
 }
 
@@ -113,10 +113,10 @@ ul.subpanelTablist li {
 
 #dashletCategories > li a {
   font-weight: 400;
-  border: 1px solid transparent;
   background-color: $default-tab-bg;
-  padding: 10px 20px 10px 10px;
   color: $default-btn-color;
+  padding: 10px 20px 10px 10px;
+  border: 1px solid transparent;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   text-transform: uppercase;
@@ -124,10 +124,10 @@ ul.subpanelTablist li {
 
 #dashletCategories > li a:link {
   font-weight: 400;
-  border: 1px solid transparent;
   background-color: $default-tab-bg;
-  padding: 10px 20px 10px 10px;
   color: $default-btn-color;
+  padding: 10px 20px 10px 10px;
+  border: 1px solid transparent;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   text-transform: uppercase;
@@ -135,10 +135,10 @@ ul.subpanelTablist li {
 
 #dashletCategories > li a:hover {
   font-weight: 400;
-  border: 1px solid transparent;
   background-color: $default-tab-bg;
-  padding: 10px 20px 10px 10px;
   color: $default-btn-color;
+  padding: 10px 20px 10px 10px;
+  border: 1px solid transparent;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   text-transform: uppercase;
@@ -146,10 +146,10 @@ ul.subpanelTablist li {
 
 #dashletCategories > li a:visited {
   font-weight: 400;
-  border: 1px solid transparent;
   background-color: $default-tab-bg;
-  padding: 10px 20px 10px 10px;
   color: $default-btn-color;
+  padding: 10px 20px 10px 10px;
+  border: 1px solid transparent;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   text-transform: uppercase;
@@ -157,10 +157,10 @@ ul.subpanelTablist li {
 
 #dashletCategories > li a:active {
   font-weight: 400;
-  border: 1px solid transparent;
   background-color: $default-tab-bg;
-  padding: 10px 20px 10px 10px;
   color: $default-btn-color;
+  padding: 10px 20px 10px 10px;
+  border: 1px solid transparent;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   text-transform: uppercase;
@@ -168,10 +168,10 @@ ul.subpanelTablist li {
 
 #dashletCategories > li a:focus {
   font-weight: 400;
-  border: 1px solid transparent;
   background-color: $default-tab-bg;
-  padding: 10px 20px 10px 10px;
   color: $default-btn-color;
+  padding: 10px 20px 10px 10px;
+  border: 1px solid transparent;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   text-transform: uppercase;
@@ -267,8 +267,8 @@ ul.subpanelTablist li {
 
 .sugarFeedDashlet .byLineBox .byLineRight {
   display: inline;
-  float: right;
   font-size: 79%;
+  float: right;
 }
 
 
@@ -281,14 +281,14 @@ ul.subpanelTablist li {
 }
 
 .dashletPanelMenu.wizard.import .bd .screen {
+  display: block;
+  background-color: #fff;
   padding: 20px;
   border: 0 none;
-  height: 487px;
   overflow-x: hidden;
   overflow-y: auto;
   width: auto;
-  display: block;
-  background-color: #fff;
+  height: 487px;
 }
 
 div#chartDashlets {
@@ -317,18 +317,18 @@ div#chartDashlets {
 }
 
 #dashletsList {
-  max-height: 500px ;
   overflow: hidden;
+  max-height: 500px ;
 }
 
 #dashletsDialog_c {
-  margin-left: -125px;
   margin-top: -50px;
+  margin-left: -125px;
 }
 
 td.dashlet-title {
-  height: $dashlet-title-height + 4px;
   line-height: $dashlet-title-height;
+  height: $dashlet-title-height + 4px;
 }
 
 td.dashlet-title > h3 > span {
@@ -443,11 +443,11 @@ td.dashlet-title > h3 > span {
   }
 
   .dashletcontainer {
-    width: 100%;
     position: relative;
+    padding: 0;
     margin: 0;
     float: left;
-    padding: 0;
+    width: 100%;
   }
 }
 
@@ -476,12 +476,12 @@ td.dashlet-title > h3 > span {
 }
 
 .dashletPanel .h3Row h3 {
-  color: $default-btn-color;
   font-size: 13px;
-  text-transform: uppercase;
   font-weight: bold;
+  color: $default-btn-color;
   margin: 0 0 0 10px;
   letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .dashletPanel .h3Row h3 span {
@@ -520,41 +520,41 @@ td.dashlet-title > h3 > span {
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel {
   top: initial;
   left: -50%;
-  border: none;
   box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
-  max-width: 900px;
   margin: 0 auto;
+  border: none;
+  max-width: 900px;
 }
 
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .container-close {
-  color: #aaa;
-  text-indent: initial;
   top: 15px;
   right: 30px;
+  color: #aaa;
   width: initial;
+  text-indent: initial;
 }
 
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .hd {
-  background: $main-alternate-bg;
-  color: $main-font-color;
   font-family: Lato, Lato, Arial, sans-serif;
   font-size: 18px;
   font-weight: bold;
-  height: 25px;
-  line-height: 25.7143px;
-  margin: 0;
+  background: $main-alternate-bg;
+  color: $main-font-color;
   padding: 15px 15px 42px 19px;
+  margin: 0;
+  border-bottom: solid 1px #ddd;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
-  border-bottom: solid 1px #ddd;
+  line-height: 25.7143px;
+  height: 25px;
 }
 
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd {
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
-  max-height: 650px;
   overflow: hidden;
   overflow-y: scroll;
+  max-height: 650px;
 }
 
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form {
@@ -562,22 +562,22 @@ td.dashlet-title > h3 > span {
 }
 
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table td input[type="checkbox"] {
-  height: 30px;
   margin-top: 10px;
+  height: 30px;
 }
 
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr{
   display: block;
+  border-bottom: none;
   float: none;
   width: auto;
-  border-bottom: none;
 }
 
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.view td tr {
   display: block;
+  border-bottom: none;
   float: none;
   width: auto;
-  border-bottom: none;
 }
 
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td[scope=row]{
@@ -611,22 +611,22 @@ td.dashlet-title > h3 > span {
 
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td table tbody {
   display: table-row-group;
-  vertical-align: middle;
   border-color: inherit;
   float: initial;
+  vertical-align: middle;
 }
 
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td table tbody tr {
   display: table-row;
-  vertical-align: inherit;
   border-color: inherit;
   float: initial;
+  vertical-align: inherit;
 }
 
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td table tbody tr td {
   display: table-cell;
-  vertical-align: inherit;
   float: initial;
+  vertical-align: inherit;
 }
 
 @media(min-width: 800px) {
@@ -675,10 +675,10 @@ td.dashlet-title > h3 > span {
 @media (max-width: 999px) and (max-height: 1024px) {
   #dashletsDialog_c {
     margin-top: 25px;
-    margin-left: 0;
     margin-bottom: 25px;
-    height: 70%;
+    margin-left: 0;
     overflow: scroll;
+    height: 70%;
   }
 }
 
@@ -688,24 +688,24 @@ td.dashlet-title > h3 > span {
   }
 
   table td[class*=col-] {
-    width: 100%;
-    float: none;
     display: block;
     clear: both;
+    float: none;
+    width: 100%;
   }
 
   table th[class*=col-] {
-    width: 100%;
-    float: none;
     display: block;
     clear: both;
+    float: none;
+    width: 100%;
   }
 
   .dashletcontainer {
-    width: 100%;
-    float: none;
     display: block;
     clear: both;
+    float: none;
+    width: 100%;
   }
 }
 

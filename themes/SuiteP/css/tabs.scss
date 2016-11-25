@@ -4,62 +4,62 @@
 #content {
 
   .nav-tabs {
-    border: hidden;
     margin: ($tab-height/2) 0 ($tab-height/2) 0;
+    border: hidden;
   }
 
   .dropdown-menu {
+    padding: 4px 10px 4px 10px;
     overflow: visible;
     min-width: 200px;
-    padding: 4px 10px 4px 10px;
   }
 
   .dropdown-menu > li {
-    width: 100%;
     overflow: visible;
+    width: 100%;
   }
 
   #tab-actions .dropdown-menu > li > input[type=button],
   .dropdown-menu > li > a {
-    font-weight: normal;
-    letter-spacing: normal;
     font-size: $page-font-size;
-    margin: 0;
-    line-height: $tab-height;
+    font-weight: normal;
     cursor: pointer;
+    margin: 0;
+    letter-spacing: normal;
+    line-height: $tab-height;
   }
 
   .nav-tabs > li > a,
   .nav-tabs > li > a:focus,
   .nav-tabs > li > a:hover {
-    font-weight: 400;
-    letter-spacing: 2px;
     font-size: $page-font-size;
-    text-transform: uppercase;
+    font-weight: 400;
     background-color: $default-tab-bg;
-    margin: 0 2px 0 2px;
     color: $default-tab-color;
-    line-height: $tab-height;
-    border-color: #eee #eee #fff;
     cursor: pointer;
+    margin: 0 2px 0 2px;
+    border-color: #eee #eee #fff;
+    letter-spacing: 2px;
+    line-height: $tab-height;
+    text-transform: uppercase;
   }
 
   .nav-tabs > li.active > a,
   .nav-tabs > li.active > a:focus,
   .nav-tabs > li.active > a:hover {
-    font-weight: 400;
-    letter-spacing: 2px;
     font-size: $page-font-size;
-    text-transform: uppercase;
+    font-weight: 400;
     background-color: $active-tab-bg;
+    color: $default-tab-color;
+    cursor: pointer;
     margin-top: 0;
-    margin-right: 2px;
     margin-bottom: 0;
     margin-left: 2px;
-    color: $default-tab-color;
-    line-height: $tab-height;
+    margin-right: 2px;
     border-color: #eee #eee #fff;
-    cursor: pointer;
+    letter-spacing: 2px;
+    line-height: $tab-height;
+    text-transform: uppercase;
   }
 
   .nav-tabs > li.active:nth-of-type(1) > a,
@@ -68,8 +68,8 @@
   }
 
   #overflow-menu > li > span.notCurrentTabLeft, #overflow-menu > li > span.notCurrentTabRight {
-    visibility: collapse;
     display: none;
+    visibility: collapse;
   }
 
   #overflow-menu > li {
@@ -78,36 +78,36 @@
   }
 
   #overflow-menu > li a {
-    margin: 0;
-    padding: 12px 15px 12px 15px;
     font-size: 14px;
     font-weight: normal;
+    padding: 12px 15px 12px 15px;
+    margin: 0;
     clear: both;
   }
 
   #overflow-menu > li > ul {
     display: none;
-    visibility: collapse;
-    height: 0;
     padding: 0;
     margin: 0;
+    height: 0;
+    visibility: collapse;
   }
 
   #overflow-menu > li > ul > li {
     display: none;
-    visibility: collapse;
-    height: 0;
     padding: 0;
     margin: 0;
+    height: 0;
+    visibility: collapse;
   }
 
   .nav > li > a.first-tab-xs {
     background-color: $active-tab-bg;
-    border-bottom: none;
-    padding-right: $tab-height;
     background-image: url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
-    background-repeat: no-repeat;
     background-position: right ($tab-height/2) top (($tab-height/4)*3);
+    background-repeat: no-repeat;
+    padding-right: $tab-height;
+    border-bottom: none;
   }
 
   #first-tab-menu-xs.dropdown-menu > li > a {
@@ -138,26 +138,26 @@
   .dropdown-menu > li > a,
   .dropdown-menu > li > a:focus,
   .dropdown-menu > li > a:hover {
+    background-color: $action-tab-bg;
     color: $action-tab-color;
     text-decoration: none;
-    background-color: $action-tab-bg;
   }
 
   #tab-actions > a {
-    cursor: pointer;
     background-color: $action-tab-bg;
-    padding-right: $tab-height;
     background-image: url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
-    background-repeat: no-repeat;
     background-position: right ($tab-height/2) top (($tab-height/4)*3);
+    background-repeat: no-repeat;
+    cursor: pointer;
+    padding-right: $tab-height;
     border-color: $action-tab-bg;
     border-bottom: $action-tab-seperator;
   }
 
   #tab-actions > a:hover {
-    cursor: pointer;
     background-color: $action-tab-bg-hover;
     color: $action-tab-color;
+    cursor: pointer;
   }
 
   #tab-actions:only-child > .dropdown-menu {
@@ -186,8 +186,8 @@
   }
 
   #tab-actions > .dropdown-menu input {
-    width: 100%;
     text-align: left;
+    width: 100%;
   }
 
   #tab-actions > .dropdown-menu a {
@@ -222,30 +222,30 @@
   #EditView_tabs .tab-content {
     background-color: #ffffff;
     padding: 24px;
-    border: 1px solid transparent;
-    border-bottom-left-radius: 4px;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
     margin-bottom: 30px;
+    border: 1px solid transparent;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
 
   .detail-view .tab-content {
     background-color: #ffffff;
     padding: 24px;
-    border: 1px solid transparent;
-    border-bottom-left-radius: 4px;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
     margin-bottom: 30px;
+    border: 1px solid transparent;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
 }
 
 .dashboard .tab-content {
   background-color: #ffffff;
   padding: 24px;
-  border: 1px solid transparent;
-  border-bottom-left-radius: 4px;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
   margin-bottom: 30px;
+  border: 1px solid transparent;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
 }

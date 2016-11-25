@@ -5,17 +5,17 @@
   background: $navbar-bg;
 
   .navbar-brand {
-    color: $navbar-menu-link-color;
-    height: $navbar-height;
-    line-height: $navbar-height;
-    padding: 0;
     display: inline;
     background-image: url('../../../../themes/SuiteP/images/p_icon_home.png');
-    background-repeat: no-repeat;
     background-position: 0 $home-icon-bg-pos-y;
-    text-indent: -9999px;
+    background-repeat: no-repeat;
+    color: $navbar-menu-link-color;
+    padding: 0;
+    line-height: $navbar-height;
     overflow: hidden;
     width: 40px;
+    height: $navbar-height;
+    text-indent: -9999px;
   }
 
   .dropdown-menu>li>a {
@@ -23,39 +23,39 @@
   }
 
   .dropdown-menu {
-    padding: 4px 10px 4px 10px;
-    min-width: 240px;
-    margin-top: 0;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
     font-size: 10px;
     background: $navbar-main-menu-bg;
+    padding: 4px 10px 4px 10px;
+    margin-top: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
     overflow-y: auto;
+    min-width: 240px;
 
     li {
-      margin: 0;
       padding: 0;
+      margin: 0;
 
       a {
-        color: $navbar-menu-link-color;
-        background-color: $navbar-main-menu-bg;
-        text-decoration: none;
-        padding: 12px 15px 12px 15px;
         display: block;
         font-size: 14px;
-        border-bottom: 1px solid $navbar-menu-seperator;
-        text-transform: none;
-        letter-spacing: 0;
+        background-color: $navbar-main-menu-bg;
+        color: $navbar-menu-link-color;
+        padding: 12px 15px 12px 15px;
         margin: 0;
+        border-bottom: 1px solid $navbar-menu-seperator;
+        letter-spacing: 0;
+        text-decoration: none;
+        text-transform: none;
       }
 
       a:hover {
-        color: $navbar-menu-link-color-hover;
         background: $navbar-main-menu-bg;
+        color: $navbar-menu-link-color-hover;
+        transition: all 0.3s ease-out;
         -webkit-transition: all 0.3s ease-out;
         -moz-transition: all 0.3s ease-out;
         -o-transition: all 0.3s ease-out;
-        transition: all 0.3s ease-out;
       }
     }
 
@@ -141,8 +141,8 @@
 
 
 .navbar {
-  min-height: $navbar-height;
   max-height: $navbar-height;
+  min-height: $navbar-height;
 }
 //.dropdown-menu em a:hover {
 //  color: #565656;
@@ -174,10 +174,10 @@
 }
 
 .recently_viewed_link_container {
-  width: 100%;
+  margin-bottom: 16px;
   float: left;
   overflow: hidden;
-  margin-bottom: 16px;
+  width: 100%;
 }
 
 .navbar-fixed-bottom {
@@ -320,39 +320,39 @@
 }
 
 #mobileheader .dropdown-menu ul li a.recent-links-detail {
+  display: inline-block;
   border: none;
   width: 85%;
-  display: inline-block;
 }
 
 #mobileheader .dropdown-menu ul li a.favorite-links-detail {
+  display: inline-block;
   border: none;
   width: 85%;
-  display: inline-block;
 }
 
 .topnav .dropdown-menu li a.recent-links-detail {
+  display: inline-block;
   border: none;
   width: 85%;
-  display: inline-block;
 }
 
 .topnav .dropdown-menu li a.favorite-links-detail {
+  display: inline-block;
   border: none;
   width: 85%;
-  display: inline-block;
 }
 
 .with-actions .recent-links-detail {
+  display: inline-block;
   border: none;
   width: 85%;
-  display: inline-block;
 }
 
 .with-actions .favorite-links-detail {
+  display: inline-block;
   border: none;
   width: 85%;
-  display: inline-block;
 }
 
 .navbar-inverse .dropdown-menu li a.recent-links-edit {
@@ -372,45 +372,45 @@
 }
 
 #mobileheader .dropdown-menu ul li a.recent-links-edit {
+  display: inline-block;
   border: none;
   width: 20px;
   height: 20px;
-  display: inline-block;
 }
 
 #mobileheader .dropdown-menu ul li a.favorite-links-edit {
+  display: inline-block;
   border: none;
   width: 20px;
   height: 20px;
-  display: inline-block;
 }
 
 .topnav .dropdown-menu li a.recent-links-edit {
+  display: inline-block;
   border: none;
   width: 20px;
   height: 20px;
-  display: inline-block;
 }
 
 .topnav .dropdown-menu li a.favorite-links-edit {
+  display: inline-block;
   border: none;
   width: 20px;
   height: 20px;
-  display: inline-block;
 }
 
 .with-actions .dropdown-menu li a.recent-links-edit {
+  display: inline-block;
   border: none;
   width: 20px;
   height: 20px;
-  display: inline-block;
 }
 
 .with-actions .dropdown-menu li a.favorite-links-edit {
+  display: inline-block;
   border: none;
   width: 20px;
   height: 20px;
-  display: inline-block;
 }
 
 
@@ -437,34 +437,34 @@
 }
 
 .moremenu ul{
-  max-height: 525px;
   overflow-y: auto;
+  max-height: 525px;
 }
 
 .dropdown-menu {
-  max-height: 525px;
   overflow-y: auto;
+  max-height: 525px;
 }
 
 .moremenu a {
-  color: $default-btn-color ;
   font-size: 1.2em;
+  color: $default-btn-color ;
   cursor: pointer;
-  margin: 0;
   padding: 8px 0 0 0;
+  margin: 0;
 }
 
 .moremenu ul {
-  margin: 0;
   top: 49px;
+  margin: 0;
 }
 
 .moremenu ul li a {
+  display: block;
+  font-size: 1.2em;
   color: $danger;
   cursor: pointer;
   padding: 5px;
-  font-size: 1.2em;
-  display: block;
 }
 
 .moremenu ul li:hover {
@@ -472,11 +472,11 @@
 }
 
 .moremenu ul li a:hover {
-  color: $default-btn-color ;
   background: none ;
+  background: $danger-btn-bg;
+  color: $default-btn-color ;
   cursor: pointer;
   padding: 5px;
-  background: $danger-btn-bg;
 }
 
 #mobile_menu {
@@ -489,9 +489,9 @@
 
 #mobile_menu a .glyphicon-plus {
   float: right;
-  height: 28px;
-  width: 28px;
   text-align: center;
+  width: 28px;
+  height: 28px;
 }
 
 #mobile_menu a:hover .glyphicon-plus {
@@ -503,12 +503,12 @@
 }
 
 li#usermenu a {
+  font-size: 14px;
   background-color: $navbar-bg;
   padding-top: 0;
   padding-bottom: 0;
   padding-left: 0;
   padding-right: 0;
-  font-size: 14px;
 }
 
 li#usermenu a:hover {
@@ -537,13 +537,13 @@ li#usermenu a:hover {
 }
 
 #globalLinks ul li a {
-  max-width: 150px;
   color: $navbar-menu-link-color;
+  max-width: 150px;
 }
 
 #globalLinks ul li a:hover {
-  max-width: 150px;
   color: $navbar-menu-link-color-hover;
+  max-width: 150px;
 }
 
 #globalLinks ul li {
@@ -551,13 +551,13 @@ li#usermenu a:hover {
 }
 
 li#usermenu a span.caret {
-  border: 0;
-  height: 10px;
-  width: 10px;
-  margin-left: 10px;
   background-image: none, url("../../../../index.php?entryPoint=getImage&imageName=p_icon_caret.svg"), url("../../../../index.php?entryPoint=getImage&imageName=p_icon_caret.png");
-  background-repeat: no-repeat;
   background-position: 0 0;
+  background-repeat: no-repeat;
+  margin-left: 10px;
+  border: 0;
+  width: 10px;
+  height: 10px;
 }
 
 //li#usermenu a:hover span.caret {
@@ -565,15 +565,15 @@ li#usermenu a span.caret {
 //}
 
 li#usermenu a span.user_icon {
-  height: 42px;
-  width: 42px;
-  margin-right: 11px;
-  background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
-  background-repeat: no-repeat;
-  background-position: 0 -1;
   display: block;
-  float: left;
+  background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
+  background-position: 0 -1;
+  background-repeat: no-repeat;
   margin-top: -12px;
+  margin-right: 11px;
+  float: left;
+  width: 42px;
+  height: 42px;
 }
 
 //li#usermenu a:hover span.user_icon {
@@ -583,13 +583,13 @@ li#usermenu a span.user_icon {
 
 
 #usermenucollapsed {
-  margin: 0 0 0 5px;
   display: none;
+  margin: 0 0 0 5px;
 }
 
 #usermenucollapsed-mobile {
-  margin: 0 0 0 5px;
   display: none;
+  margin: 0 0 0 5px;
 }
 
 #searchbutton {
@@ -597,15 +597,15 @@ li#usermenu a span.user_icon {
 }
 
 #searchmobile {
-  margin-top: 8px;
   display: none;
+  margin-top: 8px;
 }
 
 
 
 #searchform {
-  margin-right: -10px;
   margin-top: ($navbar-height/4);
+  margin-right: -10px;
   margin-right: 15px;
 }
 
@@ -617,8 +617,8 @@ li#usermenu a span.user_icon {
 
 #mobileheader .modulename {
   background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.png");
-  background-repeat: no-repeat;
   background-position: 92.5% 5px;
+  background-repeat: no-repeat;
   padding: 15px 32px 18px 0;
 }
 
@@ -629,58 +629,58 @@ li#usermenu a span.user_icon {
 }
 
 #searchform #query_string  {
-  background-color: $navbar-search-bg;
-  float: left;
-  border: 3px solid $navbar-search-bg;
-  padding: 12px 12px 12px 12px;
-  color: $navbar-search-text-color;
   font-size: 13px;
-  letter-spacing: 1px;
-  width: 200px;
+  background-color: $navbar-search-bg;
+  color: $navbar-search-text-color;
+  padding: 12px 12px 12px 12px;
+  border: 3px solid $navbar-search-bg;
   border-radius: 3px;
-  min-height: 40px;
+  float: left;
+  letter-spacing: 1px;
   line-height: normal;
+  width: 200px;
+  min-height: 40px;
   -webkit-text-fill-color:  $navbar-search-color;
   -webkit-box-shadow: 0 0 0 1000px $navbar-search-bg inset;
 }
 
 #searchform #query_string:-webkit-autofill {
-  background-color: $navbar-search-bg;
-  float: left;
-  border: 3px solid $navbar-search-bg;
-  padding: 12px 12px 12px 12px;
-  color: $navbar-search-text-color;
   font-size: 13px;
-  letter-spacing: 1px;
-  width: 200px;
+  background-color: $navbar-search-bg;
+  color: $navbar-search-text-color;
+  padding: 12px 12px 12px 12px;
+  border: 3px solid $navbar-search-bg;
   border-radius: 3px;
-  min-height: 40px;
+  float: left;
+  letter-spacing: 1px;
   line-height: normal;
+  width: 200px;
+  min-height: 40px;
   -webkit-text-fill-color:  $navbar-search-bg;
   -webkit-box-shadow: 0 0 0 1000px $navbar-search-bg inset ;
 }
 
 #searchform button {
+  display: block;
   background-color: #65697A;
+  background-image: none, url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
+  background-position: 14px 8px;
+  background-repeat: no-repeat;
   color: $navbar-menu-link-color;
+  padding: 10px 10px 10px 10px;
+  margin-left: -50px;
   border: none;
+  border-radius: 0 3px 3px 0;
   float: left;
+  overflow: hidden;
   width: 50px;
   height: auto;
-  display: block;
-  border-radius: 0 3px 3px 0;
-  margin-left: -50px;
-  padding: 10px 10px 10px 10px;
-  background-image: none, url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
-  background-repeat: no-repeat;
-  background-position: 14px 8px;
   text-indent: -9999px;
-  overflow: hidden;
 }
 
 #searchform button:hover {
-  background-position: 14px -46px;
   background-color: $navbar-search-btn-bg;
+  background-position: 14px -46px;
 }
 
 
@@ -690,8 +690,8 @@ li#usermenu a span.user_icon {
 
 .globalLinks-desktop .user-dropdown {
   top: 100%;
-  right: -30px;
   left: auto;
+  right: -30px;
 }
 
 .dropdown-menu {
@@ -711,8 +711,8 @@ li#usermenu a span.user_icon {
 }
 
 #userlinks a {
-  padding: 5px 10px 5px 10px;
   font-size: 1.1em;
+  padding: 5px 10px 5px 10px;
 }
 
 
@@ -725,8 +725,8 @@ li#usermenu a span.user_icon {
 }
 
 #quickcreatelinks {
-  margin: 0 0 15px 12px;
   font-size: 1.1em;
+  margin: 0 0 15px 12px;
 }
 
 #quickcreatetop > button {
@@ -745,11 +745,11 @@ li#usermenu a span.user_icon {
 .navbar-fixed-top {
 
   .recentlinks_top {
-    float: left;
-    width: 75%;
-    overflow: hidden;
     margin-left: 2px;
+    float: left;
     line-height: 32px;
+    overflow: hidden;
+    width: 75%;
     height: auto;
   }
 
@@ -767,9 +767,9 @@ li#usermenu a span.user_icon {
 
   .recentlinks_top > a {
     padding: 0 15px 0 15px ;
+    line-height: 32px;
     width: auto;
     height: auto;
-    line-height: 32px;
 
   }
   .recentlinks_topedit {
@@ -840,18 +840,18 @@ a[id^=grouptab]:active {
 
 
 .navbar-inverse .navbar-nav > .open > a {
-  color: $navbar-menu-link-color;
   background: none ;
+  color: $navbar-menu-link-color;
 }
 
 .navbar-inverse .navbar-nav > .open > a:hover {
-  color: $navbar-menu-link-color;
   background: none ;
+  color: $navbar-menu-link-color;
 }
 
 .navbar-inverse .navbar-nav > .open > a:focus {
-  color: $navbar-menu-link-color;
   background: none ;
+  color: $navbar-menu-link-color;
 }
 
 #mobileheader {
@@ -867,34 +867,34 @@ a[id^=grouptab]:active {
 }
 
 #quickcreatetop {
-  float: left;
   margin-top: ($navbar-height / 4);
   margin-right: 15px;
+  float: left;
 }
 
 #quickcreatetop a {
+  display: inline-block;
+  font-size: 13px;
+  background-color: $navbar-quick-create-btn-bg;
+  background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
+  background-position: 80px 2px;
+  background-repeat: no-repeat;
   color: $navbar-quick-create-link-color ;
-  text-align: center;
   padding: 11px 32px 12px 12px;
   border-radius: 3px;
-  background-color: $navbar-quick-create-btn-bg;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  display: inline-block;
   float: left;
-  background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
-  background-repeat: no-repeat;
-  background-position: 80px 2px;
+  letter-spacing: 2px;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 #quickcreatetop a:hover {
-  cursor: pointer;
   background-color: $navbar-quick-create-btn-bg-hover;
-  //background-position: 80px -56px;
-  text-decoration: none;
-  border-bottom-right-radius: 0;
+  cursor: pointer;
   border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  text-decoration: none;
+  //background-position: 80px -56px;
 }
 
 #quickcreatetop .dropdown-menu {
@@ -910,18 +910,18 @@ a[id^=grouptab]:active {
 }
 
 #quickcreatetop ul li a {
+  display: block;
+  font-size: 14px;
+  background-color: #829EB5;
+  background-image: none;
   padding: 12px 15px 12px 15px ;
   margin: 0 ;
-  background-image: none;
-  background-color: #829EB5;
-  border-radius: 0;
-  text-transform: none;
   border-bottom: 1px solid #95ACC0;
+  border-radius: 0;
   letter-spacing: 0;
-  font-size: 14px;
-  width: 100%;
-  display: block;
   text-align: left;
+  width: 100%;
+  text-transform: none;
 }
 
 #quickcreatetop ul li.last a {
@@ -945,13 +945,13 @@ a[id^=grouptab]:active {
 }
 
 #desktop_notifications {
+  background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert.svg"), url("../../../../themes/SuiteP/images/p_icon_alert.png");
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  margin-right: 15px;
   float: left;
   width: 44px;
   height: 48px;
-  margin-right: 15px;
-  background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert.svg"), url("../../../../themes/SuiteP/images/p_icon_alert.png");
-  background-repeat: no-repeat;
-  background-position: 0 0;
 }
 
 #desktop_notifications #alerts.dropdown-menu {
@@ -981,25 +981,25 @@ a[id^=grouptab]:active {
 
 #desktop_notifications button.alertsButton {
   background-color: transparent;
+  margin-top: 0;
   border: none;
   width: 44px;
   height: 48px;
-  margin-top: 0;
 }
 
 #desktop_notifications span.alert_count {
-  background-color: $navbar-alert-count-bg;
-  line-height: 20px;
-  color: $navbar-alert-count-link-color;
-  height: 20px;
-  width: 20px;
   display: block;
-  float: left;
-  border-radius: 30px;
   position: relative;
-  left: 24px;
   top: -16px;
+  left: 24px;
   font-size: 10px;
+  background-color: $navbar-alert-count-bg;
+  color: $navbar-alert-count-link-color;
+  border-radius: 30px;
+  float: left;
+  line-height: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 #desktop_notifications .alert {
@@ -1008,20 +1008,20 @@ a[id^=grouptab]:active {
 
 #desktop_notifications .close {
   font-weight: normal;
-  line-height: 1;
   color: $navbar-alert-body-color;
-  text-shadow: none;
   filter: none;
+  line-height: 1;
   opacity: 1;
+  text-shadow: none;
 }
 
 #desktop_notifications .alert {
   font-weight: normal;
-  line-height: 1;
   color: $navbar-alert-body-color;
-  text-shadow: none;
   filter: none;
+  line-height: 1;
   opacity: 1;
+  text-shadow: none;
 }
 
 #desktop_notifications .close {
@@ -1033,16 +1033,16 @@ a[id^=grouptab]:active {
 
 #desktop_notifications .close span {
   color: $navbar-menu-link-color;
-  margin-right: 0 ;
   margin-bottom: 0 ;
+  margin-right: 0 ;
 }
 
 #desktop_notifications div.dropdown-menu {
+  font-size: 12px;
   background-color: $danger;
   color: $navbar-menu-link-color;
-  margin: 0;
   padding: 8px;
-  font-size: 12px;
+  margin: 0;
   border-radius: 0;
 }
 
@@ -1052,12 +1052,12 @@ a[id^=grouptab]:active {
 }
 
 #desktop_notifications div.has-alerts .alert-info {
-  color: $navbar-alert-link-color;
   background-color: inherit;
-
+  color: $navbar-alert-link-color;
+  padding: 0;
   border: 1px solid $navbar-alert-seperator;
   border-radius: 2px;
-  padding: 0;
+
 }
 
 #desktop_notifications div.has-alerts .text-info {
@@ -1066,14 +1066,14 @@ a[id^=grouptab]:active {
 
 #desktop_notifications div.has-alerts p {
   font-size: 12px;
-  line-height: 20px;
   background-color: $main-bg;
   color: $main-font-color;
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
-  min-height: 20px;
-  max-width: 256px;
+  line-height: 20px;
   width: 256px;
+  max-width: 256px;
+  min-height: 20px;
 }
 
 #desktop_notifications div.has-alerts h4  {
@@ -1090,9 +1090,9 @@ a[id^=grouptab]:active {
   font-size: 14px;
   font-weight: bold;
   background-color: $navbar-alert-title-bg;
-  line-height: 20px;
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
+  line-height: 20px;
 }
 
 #desktop_notifications div.has-alerts h4 img {
@@ -1165,19 +1165,19 @@ a[id^=grouptab]:active {
 
 
   #searchformdropdown button {
+    display: block;
     background-color: transparent;
+    background-image: none, url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
+    background-position: 13px 10px;
+    background-repeat: no-repeat;
     color: $navbar-menu-link-color;
+    padding: 12px 12px 12px 12px;
+    margin-left: -50px;
     border: none;
     float: left;
-    width: 50px;
-    display: block;
-    margin-left: -50px;
-    padding: 12px 12px 12px 12px;
-    background-image: none, url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
-    background-repeat: no-repeat;
-    background-position: 13px 10px;
-    text-indent: -9999px;
     overflow: hidden;
+    width: 50px;
+    text-indent: -9999px;
   }
 
   //#searchformdropdown button:hover {
@@ -1190,27 +1190,27 @@ a[id^=grouptab]:active {
   }
 
   #search #query_string {
+    font-size: 14px;
     background-color: $navbar-search-bg;
     color: $navbar-search-text-color;
-    font-size: 14px;
-    letter-spacing: 1px;
-    width: 200px;
+    padding: 12px 12px 12px 12px;
     border: none;
     border-radius: 3px;
-    padding: 12px 12px 12px 12px;
+    letter-spacing: 1px;
+    width: 200px;
     height: auto;
   }
 
   #usermenucollapsed,
   #usermenucollapsed-mobile {
     background-color: transparent;
-    height: 42px;
-    width: 42px;
     background-image: none, url("../../../../themes/SuiteP/images/p_user_icon.svg"), url("../../../../themes/SuiteP/images/p_user_icon.png");
-    background-repeat: no-repeat;
     background-position: 0 0;
-    border: none;
+    background-repeat: no-repeat;
     margin-left: 0;
+    border: none;
+    width: 42px;
+    height: 42px;
   }
 
   //#usermenucollapsed, #usermenucollapsed-mobile:hover {
@@ -1218,8 +1218,8 @@ a[id^=grouptab]:active {
   //}
 
   #content {
-    width: 99%;
     margin-left: 1%;
+    width: 99%;
   }
 }
 
@@ -1234,9 +1234,9 @@ a[id^=grouptab]:active {
   }
 
   #mobile_menu {
-    z-index: 65530;
     top: 60px;
     left: 20px;
+    z-index: 65530;
   }
 
   #quickcreatetop {
@@ -1244,9 +1244,9 @@ a[id^=grouptab]:active {
   }
 
   #quickcreatetop a {
-    padding: 5px 32px 5px 12px;
     background-color: $navbar-quick-create-mobile-btn-bg;
     background-position: 80px -5px;
+    padding: 5px 32px 5px 12px;
   }
 
   //#quickcreatetop a:hover {
@@ -1260,11 +1260,11 @@ a[id^=grouptab]:active {
 
   #search > .dropdown-menu {
     top: -64px;
-    right: -112px;
     bottom: auto;
     left: auto;
-    width: auto;
+    right: -112px;
     clear: both;
+    width: auto;
   }
 
   #search .dropdown-menu  {
@@ -1277,9 +1277,9 @@ a[id^=grouptab]:active {
 
   #search #query_string {
     top: 0;
-    right: 0;
     bottom: auto;
     left: 0;
+    right: 0;
     padding-top: 0;
     padding-bottom: 0;
     margin: 0;
@@ -1287,29 +1287,29 @@ a[id^=grouptab]:active {
   }
 
   #query_string {
-    margin: 0;
     background-color: $navbar-search-bg;
+    margin: 0;
     border: none;
     border-radius: 3px;
   }
 
   #search #searchbutton {
-    margin: 0 10px 0 0;
     background-color: transparent;
-    border: none;
     background-image: none, url("../../../../themes/SuiteP/images/p_search_button_small.svg"), url("../../../../themes/SuiteP/images/p_search_button_small.png");
-    background-repeat: no-repeat;
     background-position: 0 10px;
-    text-indent: -9999px;
-    overflow: hidden;
+    background-repeat: no-repeat;
     padding: 12px 0 12px 0;
+    margin: 0 10px 0 0;
+    border: none;
+    overflow: hidden;
     width: 28px;
     height: 40px;
+    text-indent: -9999px;
   }
 
   #search.open #searchbutton {
-    background-position: 0 -60px;
     background-color: transparent;
+    background-position: 0 -60px;
   }
 
   #quickcreatetop .dropdown-menu {
@@ -1317,15 +1317,15 @@ a[id^=grouptab]:active {
   }
 
   #usermenucollapsed {
+    background-color: transparent;
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    margin-top: 0;
     border: none;
     border-radius: 0;
-    background-color: transparent;
-    height: 28px;
-    margin-top: 0;
     width: 28px;
-    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
-    background-repeat: no-repeat;
-    background-position: 0 0;
+    height: 28px;
   }
 
   #globalLinks {
@@ -1342,12 +1342,12 @@ a[id^=grouptab]:active {
 
   #desktop_notifications,
   #desktop_notifications:hover {
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
+    background-position: 0 0;
+    margin-right: 20px;
     float: left;
     width: 28px;
     height: 28px;
-    margin-right: 20px;
-    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
-    background-position: 0 0;
   }
 }
 
@@ -1374,9 +1374,9 @@ a[id^=grouptab]:active {
   #search .dropdown-menu {
     position: absolute;
     top: ($navbar-height / 5.5);
-    right:  0;
     bottom: auto;
     left: -224px;
+    right:  0;
     background: transparent;
   }
 
@@ -1402,8 +1402,8 @@ a[id^=grouptab]:active {
 
 
   #quickcreatetop a {
-    padding: 11px 32px 12px 12px;
     background-position: 80px 2px;
+    padding: 11px 32px 12px 12px;
   }
 
   //#quickcreatetop a:hover {
@@ -1416,30 +1416,30 @@ a[id^=grouptab]:active {
 
   #usermenucollapsed {
     background-color: transparent;
-    height: 42px;
-    width: 42px;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
-    background-repeat: no-repeat;
     background-position: 0 0;
-    border: none;
+    background-repeat: no-repeat;
     margin-left: 0;
+    border: none;
+    width: 42px;
+    height: 42px;
   }
 
   #usermenucollapsed-mobile {
     background-color: transparent;
-    height: 42px;
-    width: 42px;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
-    background-repeat: no-repeat;
     background-position: 0 0;
-    border: none;
+    background-repeat: no-repeat;
     margin-left: 0;
+    border: none;
+    width: 42px;
+    height: 42px;
   }
 
   #usermenucollapsed {
+    background-position: 0 0;
     border: none;
     border-radius: 0;
-    background-position: 0 0;
   }
 
   //#usermenucollapsed:hover {
@@ -1462,15 +1462,15 @@ a[id^=grouptab]:active {
 
   #search.open #searchbutton {
     background-color: transparent;
-    border: none;
     background-image: url("../../../../themes/SuiteP/images/sidebar/modules/search-close.svg");
-    background-repeat: no-repeat;
     background-position: 0 0;
+    background-repeat: no-repeat;
     background-size: 38px 38px;
-    text-indent: -9999px;
-    overflow: hidden;
     padding: 12px 0 12px 0;
+    border: none;
+    overflow: hidden;
     width: 42px;
+    text-indent: -9999px;
   }
 
   #Icon_5_ {
@@ -1484,13 +1484,13 @@ a[id^=grouptab]:active {
 
   #search #searchbutton {
     background-color: transparent;
-    border: none;
     background-image: url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
     background-repeat: no-repeat;
-    text-indent: -9999px;
-    overflow: hidden;
     padding: 12px 0 12px 0;
+    border: none;
+    overflow: hidden;
     width: 26px;
+    text-indent: -9999px;
   }
 
   #search:not(.open) #searchbutton {
@@ -1498,8 +1498,8 @@ a[id^=grouptab]:active {
   }
 
   #search.open #searchbutton {
-    background-position: 0 0;
     background-color: transparent;
+    background-position: 0 0;
   }
 
   //#searchbutton:hover {
@@ -1528,25 +1528,25 @@ a[id^=grouptab]:active {
   }
 
   .modulename {
-    visibility: visible;
     font-size: 14px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    text-align: left ;
     margin: 0 auto 0 15px ;
+    letter-spacing: 2px;
+    text-align: left ;
+    text-transform: uppercase;
+    visibility: visible;
   }
 
   #mobile_menu {
     position: absolute;
-    overflow-y: scroll;
-    overflow-x: hidden ;
-    float: left;
-    width: 300px ;
-    margin: 0;
-    padding: 4px 10px 4px 10px;
     background: $navbar-main-menu-bg ;
+    padding: 4px 10px 4px 10px;
+    margin: 0;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
+    float: left;
+    overflow-x: hidden ;
+    overflow-y: scroll;
+    width: 300px ;
 
   }
 
@@ -1555,19 +1555,19 @@ a[id^=grouptab]:active {
   }
 
   #mobile_menu a {
-    color: $navbar-menu-link-color;
     display: block;
-    padding: 12px 15px;
     font-size: 14px;
+    color: $navbar-menu-link-color;
+    padding: 12px 15px;
 
   }
 
   #mobile_menu a:hover {
     color: $navbar-menu-link-color-hover;
+    transition: all 0.3s ease-out;
     -webkit-transition: all 0.3s ease-out;
     -moz-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
   }
 
   .navbar-header {
@@ -1613,10 +1613,10 @@ a[id^=grouptab]:active {
   }
 
   #toolbar {
-    margin-top: 0;
-    width: 100%;
     background-color: $mobile-navbar-toolbar-bg;
     padding: 0 20px 0 0;
+    margin-top: 0;
+    width: 100%;
   }
 
   .navbar {
@@ -1632,9 +1632,9 @@ a[id^=grouptab]:active {
   }
 
   .modulename {
-    height: 60px;
-    width: 100%;
     line-height: 60px ;
+    width: 100%;
+    height: 60px;
   }
 
   #quickcreatetop {
@@ -1645,23 +1645,23 @@ a[id^=grouptab]:active {
 
 @media (max-width: 340px) {
   #mobilegloballinks a {
-    color: $navbar-menu-link-color;
-    float: right;
-    margin: 8px 0 0;
-    padding: 8px;
     position: fixed;
-    right: 0;
     top: 0;
+    right: 0;
+    color: $navbar-menu-link-color;
+    padding: 8px;
+    margin: 8px 0 0;
+    float: right;
   }
 
   #userlinks_head {
-    color: #ffffff ;
-    float: right;
-    margin: 8px 0 0;
-    padding: 8px;
     position: fixed;
-    right: 40px;
     top: 0;
+    right: 40px;
+    color: #ffffff ;
+    padding: 8px;
+    margin: 8px 0 0;
+    float: right;
   }
 }
 
@@ -1679,21 +1679,21 @@ a[id^=grouptab]:active {
   }
 
   #searchmobile {
-    float: left;
-    z-index: 50 ;
     position: absolute;
     left: 60px;
+    float: left;
     width: 70% ;
+    z-index: 50 ;
   }
 
   #searchmobile #query_string {
-    width: 75% ;
-    outline: 0 ;
+    box-shadow: none ;
     border: none ;
     border-radius: 0 ;
-    -webkit-appearance: none ;
-    box-shadow: none ;
     float: left;
+    outline: 0 ;
+    width: 75% ;
+    -webkit-appearance: none ;
   }
 
   #mobilegloballinks {
@@ -1701,22 +1701,22 @@ a[id^=grouptab]:active {
   }
 
   #searchmobile {
-    float: left;
-    z-index: 50 ;
     position: absolute;
     left: 60px;
+    float: left;
     width: 80% ;
+    z-index: 50 ;
   }
 
   #searchmobile #query_string {
-    width: 80%;
-    outline: 0;
+    box-shadow: none;
+    color: $navbar-menu-link-color;
     border: none;
     border-radius: 0;
-    color: $navbar-menu-link-color;
-    -webkit-appearance: none;
-    box-shadow: none;
     float: left;
+    outline: 0;
+    width: 80%;
+    -webkit-appearance: none;
   }
 
   #mobilegloballinks {
@@ -1782,8 +1782,8 @@ a[id^=grouptab]:active {
   }
 
   #globalLinks {
-    border: none;
     padding: 0;
+    border: none;
   }
 
   .navbar-form .form-control {
@@ -1811,19 +1811,19 @@ a[id^=grouptab]:active {
   }
 
   #searchformdropdown button {
+    display: block;
     background-color: transparent;
+    background-image: none, url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
+    background-position: 13px 10px;
+    background-repeat: no-repeat;
     color: $navbar-menu-link-color;
+    padding: 12px 12px 12px 12px;
+    margin-left: -50px;
     border: none;
     float: left;
-    width: 50px;
-    display: block;
-    margin-left: -50px;
-    padding: 12px 12px 12px 12px;
-    background-image: none, url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
-    background-repeat: no-repeat;
-    background-position: 13px 10px;
-    text-indent: -9999px;
     overflow: hidden;
+    width: 50px;
+    text-indent: -9999px;
   }
 
   //#searchformdropdown button:hover {
@@ -1831,13 +1831,13 @@ a[id^=grouptab]:active {
   //}
 
   #search #query_string {
+    font-size: 14px;
     background-color: $navbar-search-bg;
     color: $navbar-search-text-color;
-    font-size: 14px;
-    letter-spacing: 1px;
-    width: 200px;
     border: none;
     border-radius: 3px;
+    letter-spacing: 1px;
+    width: 200px;
     height: auto;
   }
 }
@@ -1846,18 +1846,18 @@ a[id^=grouptab]:active {
 /* dropdown vertical size fixes */
 /* mobile small */
 #modulelinks > ul {
-  max-height: 200px;
   height: 200px;
+  max-height: 200px;
 }
 
 .mobileheader ul {
-  max-height: 200px;
   height: 200px;
+  max-height: 200px;
 }
 
 #mobile_menu {
-  max-height: 200px;
   height: 200px;
+  max-height: 200px;
 }
 
 #mobile_menu .create-module-record {
@@ -1866,101 +1866,101 @@ a[id^=grouptab]:active {
 
 .navbar-fixed-top {
   .navbar-header .dropdown-menu {
-    max-height: 200px;
     height: 200px;
+    max-height: 200px;
   }
 
   .with-actions > .dropdown-menu {
-    max-height: 200px;
     height: 200px;
+    max-height: 200px;
   }
 
   .moremenu ul {
-    max-height: 200px;
     height: 200px;
+    max-height: 200px;
   }
 
   .dropdown-menu {
-    max-height: 200px;
     height: 200px;
+    max-height: 200px;
   }
 
   .navbar-fixed-bottom .navbar-collapse {
-    max-height: 200px;
     height: 200px;
+    max-height: 200px;
   }
 }
 
 
 .navbar-fixed-top .navbar-collapse {
-  max-height: 200px;
   height: 200px;
+  max-height: 200px;
 }
 
 .navbar-fixed-bottom .navbar-collapse  {
-  max-height: 200px;
-  height: 200px;
   overflow-y: scroll;
+  height: 200px;
+  max-height: 200px;
 }
 
 .navbar-fixed-top .navbar-collapse {
-  max-height: 200px;
-  height: 200px;
   overflow-y: scroll;
+  height: 200px;
+  max-height: 200px;
 }
 
 /*mobile medium*/
 @media (min-height: 380px) {
   .navbar-fixed-top {
     .navbar-header .dropdown-menu {
-      max-height: 200px;
       height: auto;
+      max-height: 200px;
     }
 
     .topnav .dropdown-menu {
-      max-height: 200px;
       height: auto;
+      max-height: 200px;
     }
 
     .with-actions > .dropdown-menu {
-      max-height: 200px;
       height: auto;
+      max-height: 200px;
     }
 
     .moremenu ul {
-      max-height: 200px;
       height: auto;
+      max-height: 200px;
     }
 
     .dropdown-menu {
-      max-height: 200px;
       height: auto;
+      max-height: 200px;
     }
 
     #modulelinks > ul {
-      max-height: 280px;
       height: 280px;
+      max-height: 280px;
     }
 
     .mobileheader ul {
-      max-height: 280px;
       height: 280px;
+      max-height: 280px;
     }
 
     #mobile_menu {
-      max-height: 280px;
       height: 280px;
+      max-height: 280px;
     }
   }
 
   .navbar-fixed-bottom .navbar-collapse {
-    max-height: 280px;
     height: 280px;
+    max-height: 280px;
   }
 
   .navbar-fixed-top .navbar-collapse {
-    max-height: 280px;
     height: 280px;
+    max-height: 280px;
   }
 }
 
@@ -1968,52 +1968,52 @@ a[id^=grouptab]:active {
 @media  (min-height: 480px) {
   .navbar-fixed-top {
     .navbar-header .dropdown-menu {
-      max-height: 380px;
       height: auto;
+      max-height: 380px;
     }
 
     .topnav .dropdown-menu {
-      max-height: 380px;
       height: auto;
+      max-height: 380px;
     }
 
     .with-actions > .dropdown-menu {
-      max-height: 380px;
       height: auto;
+      max-height: 380px;
     }
 
     .moremenu ul {
-      max-height: 380px;
       height: auto;
+      max-height: 380px;
     }
 
     .dropdown-menu {
-      max-height: 380px;
       height: auto;
+      max-height: 380px;
     }
 
     #modulelinks > ul {
-      max-height: 380px;
       height: auto;
+      max-height: 380px;
     }
     .mobileheader ul {
-      max-height: 380px;
       height: auto;
+      max-height: 380px;
     }
     #mobile_menu {
-      max-height: 380px;
       height: auto;
+      max-height: 380px;
     }
   }
 
   .navbar-fixed-bottom .navbar-collapse {
-    max-height: 380px;
     height: 380px;
+    max-height: 380px;
   }
 
   .navbar-fixed-top .navbar-collapse {
-    max-height: 380px;
     height: 380px;
+    max-height: 380px;
   }
 
 }
@@ -2022,28 +2022,28 @@ a[id^=grouptab]:active {
 @media  (min-height: 700px) {
   .navbar-fixed-top {
     .navbar-header .dropdown-menu {
-      max-height: 620px;
       height: auto;
+      max-height: 620px;
     }
 
     .topnav .dropdown-menu {
-      max-height: 620px;
       height: auto;
+      max-height: 620px;
     }
 
     .with-actions > .dropdown-menu {
-      max-height: 620px;
       height: auto;
+      max-height: 620px;
     }
 
     .moremenu ul {
-      max-height: 620px;
       height: auto;
+      max-height: 620px;
     }
 
     .dropdown-menu {
-      max-height: 620px;
       height: auto;
+      max-height: 620px;
     }
 
     #modulelinks > ul {
@@ -2059,13 +2059,13 @@ a[id^=grouptab]:active {
     }
   }
   .navbar-fixed-bottom .navbar-collapse {
-    max-height: 620px;
     height: 620px;
+    max-height: 620px;
   }
 
   .navbar-fixed-top .navbar-collapse {
-    max-height: 620px;
     height: 620px;
+    max-height: 620px;
   }
 }
 
@@ -2073,46 +2073,46 @@ a[id^=grouptab]:active {
 @media  (min-height: 820px) {
   .navbar-fixed-top {
     .navbar-header .dropdown-menu {
-      max-height: 700px;
-      height: auto;
       overflow-y: auto;
+      height: auto;
+      max-height: 700px;
     }
 
     .topnav .dropdown-menu {
-      max-height: 700px;
-      height: auto;
       overflow-y: auto;
+      height: auto;
+      max-height: 700px;
     }
 
     .with-actions > .dropdown-menu {
-      max-height: 700px;
-      height: auto;
       overflow-y: auto;
+      height: auto;
+      max-height: 700px;
     }
 
     .moremenu ul {
-      max-height: 700px;
-      height: auto;
       overflow-y: auto;
+      height: auto;
+      max-height: 700px;
     }
 
     .dropdown-menu {
-      max-height: 700px;
-      height: auto;
       overflow-y: auto;
+      height: auto;
+      max-height: 700px;
     }
 
   }
   .navbar-fixed-bottom .navbar-collapse {
-    max-height: 620px;
-    height: 620px;
     overflow-y: auto;
+    height: 620px;
+    max-height: 620px;
   }
 
   .navbar-fixed-top .navbar-collapse {
-    max-height: 620px;
-    height: 620px;
     overflow-y: auto;
+    height: 620px;
+    max-height: 620px;
   }
 
 }
@@ -2120,28 +2120,28 @@ a[id^=grouptab]:active {
 /* 1080p*/
 @media  (min-height: 920px) {
   .navbar-header .dropdown-menu {
-    max-height: 820px;
     height: auto;
+    max-height: 820px;
   }
 
   .topnav .dropdown-menu {
-    max-height: 820px;
     height: auto;
+    max-height: 820px;
   }
 
   .with-actions > .dropdown-menu {
-    max-height: 820px;
     height: auto;
+    max-height: 820px;
   }
 
   .moremenu ul {
-    max-height: 820px;
     height: auto;
+    max-height: 820px;
   }
 
   .dropdown-menu {
-    max-height: 820px;
     height: auto;
+    max-height: 820px;
   }
 
 }
@@ -2149,28 +2149,28 @@ a[id^=grouptab]:active {
 /* 2K and above */
 @media  (min-height: 1080px) {
   .navbar-header .dropdown-menu {
-    max-height: inherit;
     height: auto;
+    max-height: inherit;
   }
 
   .topnav .dropdown-menu {
-    max-height: inherit;
     height: auto;
+    max-height: inherit;
   }
 
   .with-actions > .dropdown-menu {
-    max-height: inherit;
     height: auto;
+    max-height: inherit;
   }
 
   .moremenu ul {
-    max-height: inherit;
     height: auto;
+    max-height: inherit;
   }
 
   .dropdown-menu {
-    max-height: inherit;
     height: auto;
+    max-height: inherit;
   }
 
 }
