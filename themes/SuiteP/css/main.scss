@@ -73,7 +73,7 @@ a:hover {
   float: left;
 }
 
-#bootstrap-container {
+.bootstrap-container {
   background-color: $main-bg;
   margin-top: 110px;
 
@@ -94,17 +94,17 @@ a:hover {
 
 @media (max-width: 750px) {
 
-  #bootstrap-container {
+  .bootstrap-container {
     margin-top: 110px;
   }
 }
 
 @media (max-width: 1130px) {
-  #bootstrap-container.col-md-offset-2 {
+  .bootstrap-container.col-md-offset-2 {
     margin-left: 0;
   }
 
-  .col-md-10, #bootstrap-container {
+  .col-md-10, .bootstrap-container {
     width: 100%;
   }
 

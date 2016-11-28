@@ -12,143 +12,143 @@
   overflow-y: auto;
   z-index: 1000;
 
-  #actionMenuSidebar {
+  .actionMenuSidebar {
     margin-bottom: 24px;
   }
 
-  #actionMenuSidebar_top {
+  .actionMenuSidebar_top {
     display: none;
   }
 
-  #actionMenuSidebar h2 {
+  .actionMenuSidebar h2 {
     display: none;
   }
 
-  #actionMenuSidebar ul {
+  .actionMenuSidebar ul {
     list-style-type: none;
   }
 
-  #actionMenuSidebar li a .side-bar-Create, #actionMenuSidebar li a .side-bar-Add {
+  .actionMenuSidebar li a .side-bar-Create, .actionMenuSidebar li a .side-bar-Add {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Add.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Add.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-Create_Contact_Vcard, #actionMenuSidebar li a .side-bar-Create_Lead_Vcard {
+  .actionMenuSidebar li a .side-bar-Create_Contact_Vcard, .actionMenuSidebar li a .side-bar-Create_Lead_Vcard {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Contact_Vcard.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Contact_Vcard.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-Create_Group_User {
+  .actionMenuSidebar li a .side-bar-Create_Group_User {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Group_User.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Group_User.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-Create_Person_Form {
+  .actionMenuSidebar li a .side-bar-Create_Person_Form {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Person_Form.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Person_Form.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-Create_Security_Group {
+  .actionMenuSidebar li a .side-bar-Create_Security_Group {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Security_Group.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Security_Group.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-Import {
+  .actionMenuSidebar li a .side-bar-Import {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Import.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Import.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-Import_Line_Item {
+  .actionMenuSidebar li a .side-bar-Import_Line_Item {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Import_Line_Item.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Import_Line_Item.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-List_Maps {
+  .actionMenuSidebar li a .side-bar-List_Maps {
     background-image: url("../../../../themes/SuiteP/images/sidebar/List_Maps.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/List_Maps.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-Quick_Radius_Map {
+  .actionMenuSidebar li a .side-bar-Quick_Radius_Map {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Quick_Radius_Map.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Quick_Radius_Map.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-Resource_Chart {
+  .actionMenuSidebar li a .side-bar-Resource_Chart {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Resource_Chart.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Resource_Chart.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-Role_Management {
+  .actionMenuSidebar li a .side-bar-Role_Management {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Role_Management.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Role_Management.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-Schedule_Call {
+  .actionMenuSidebar li a .side-bar-Schedule_Call {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Schedule_Call.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Schedule_Call.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-Schedule_Meeting {
+  .actionMenuSidebar li a .side-bar-Schedule_Meeting {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Schedule_Meeting.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Schedule_Meeting.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-Security_Groups {
+  .actionMenuSidebar li a .side-bar-Security_Groups {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Security_Groups.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Security_Groups.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-Security_Suite_Settings {
+  .actionMenuSidebar li a .side-bar-Security_Suite_Settings {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Security_Suite_Settings.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Security_Suite_Settings.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-Setup_Email {
+  .actionMenuSidebar li a .side-bar-Setup_Email {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Setup_Email.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Setup_Email.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-Today {
+  .actionMenuSidebar li a .side-bar-Today {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Today.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Today.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-View_Project_Tasks {
+  .actionMenuSidebar li a .side-bar-View_Project_Tasks {
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Project_Tasks.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Project_Tasks.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-View_Create_Email_Templates {
+  .actionMenuSidebar li a .side-bar-View_Create_Email_Templates {
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Create_Email_Templates.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Create_Email_Templates.svg");
   }
 
-  #actionMenuSidebar li a.side-bar-View, #actionMenuSidebar li a .side-bar-List {
+  .actionMenuSidebar li a.side-bar-View, .actionMenuSidebar li a .side-bar-List {
     background-image: url("../../../../themes/SuiteP/images/sidebar/View.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/View.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-View_Diagnostics {
+  .actionMenuSidebar li a .side-bar-View_Diagnostics {
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Diagnostics.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Diagnostics.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-View_Email_Templates {
+  .actionMenuSidebar li a .side-bar-View_Email_Templates {
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Email_Templates.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Email_Templates.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-View_Process_Audit {
+  .actionMenuSidebar li a .side-bar-View_Process_Audit {
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Process_Audit.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Process_Audit.svg");
   }
 
-  #actionMenuSidebar li a .side-bar-View_Process_Tasks {
+  .actionMenuSidebar li a .side-bar-View_Process_Tasks {
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Process_Tasks.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Process_Tasks.svg");
   }
 
-  #actionMenuSidebar li a {
+  .actionMenuSidebar li a {
     display: block;
     font-size: 13px;
     background-color: $sidebar-btn-bg;
@@ -157,24 +157,24 @@
     clear: both;
   }
 
-  #actionMenuSidebar ul li a:hover {
+  .actionMenuSidebar ul li a:hover {
     background-color: $sidebar-btn-bg-hover;
     color: $sidebar-btn-color;
   }
 
-  #actionMenuSidebar li a div {
+  .actionMenuSidebar li a div {
     display: block;
     text-wrap: normal;
   }
 
-  #actionMenuSidebar li a .actionmenulink {
+  .actionMenuSidebar li a .actionmenulink {
     padding: 16px 8px 16px 0;
     line-height: 24px;
     width: 100%;
     min-height: 48px;
   }
 
-  #recentlyViewedSidebar {
+  .recentlyViewedSidebar {
     margin-bottom: 12px;
     float: left;
     width: 100%;
@@ -264,7 +264,7 @@
     visibility: collapse;
   }
 
-  #bootstrap-container.col-md-offset-2 {
+  .bootstrap-container.col-md-offset-2 {
     margin-left: 0;
   }
 
@@ -291,73 +291,73 @@
 
 
 
-#favoritesSidebar {
+.favoritesSidebar {
   float: left;
   width: 100%;
 }
 
-#favoritesSidebar .new {
+.favoritesSidebar .new {
   width: 0;
   height: 0;
   visibility: collapse;
 }
 
-#favoritesSidebar .new * {
+.favoritesSidebar .new * {
   width: 0;
   height: 0;
   visibility: collapse;
 }
 
-#recentlyViewedSidebar li a {
+.recentlyViewedSidebar li a {
   color: $side-bar-header-color;
   padding-top: 12px;
   padding-bottom: 12px;
 }
 
-#favoritesSidebar li a {
+.favoritesSidebar li a {
   color: $side-bar-header-color;
   padding-top: 12px;
   padding-bottom: 12px;
 }
 
-#recentlyViewedSidebar .recent-links-detail  {
+.recentlyViewedSidebar .recent-links-detail  {
   display: inline-block;
   width: 85%;
 }
 
-#favoritesSidebar .favorite-links-detail {
+.favoritesSidebar .favorite-links-detail {
   display: inline-block;
   width: 85%;
 }
 
-#recentlyViewedSidebar .recent-links-edit{
+.recentlyViewedSidebar .recent-links-edit{
   display: inline-block;
   width: 20px;
   height: 20px;
 }
 
-#favoritesSidebar .favorite-links-edit {
+.favoritesSidebar .favorite-links-edit {
   display: inline-block;
   width: 20px;
   height: 20px;
 }
 
-#recentlyViewedSidebar li:hover {
+.recentlyViewedSidebar li:hover {
   background-color: $side-bar-link-color-hover;
 }
 
-#favoritesSidebar li:hover {
+.favoritesSidebar li:hover {
   background-color: $side-bar-link-color-hover;
 }
 
-#recentlyViewedSidebar h2{
+.recentlyViewedSidebar h2{
   font-size: 16px;
   font-weight: bold;
   color: $side-bar-header-color;
   margin: 0 0 5px 0;
 }
 
-#favoritesSidebar h2 {
+.favoritesSidebar h2 {
   font-size: 16px;
   font-weight: bold;
   color: $side-bar-header-color;
@@ -400,7 +400,7 @@ footer.collapsedSidebar {
     width: 20%;
   }
 
-  #bootstrap-container.col-md-offset-2 {
+  .bootstrap-container.col-md-offset-2 {
     margin-left: 20%;
   }
 
@@ -420,19 +420,19 @@ footer.collapsedSidebar {
     width: 100%;
   }
 
-  #recentlyViewedSidebar .recent-links-detail {
+  .recentlyViewedSidebar .recent-links-detail {
     padding: 8px 1% 8px 15%;
   }
 
-  #favoritesSidebar .favorite-links-detail {
+  .favoritesSidebar .favorite-links-detail {
     padding: 8px 1% 8px 15%;
   }
 
-  #recentlyViewedSidebar h2{
+  .recentlyViewedSidebar h2{
     padding: 0 1% 0 15%;
   }
 
-  #favoritesSidebar h2 {
+  .favoritesSidebar h2 {
     padding: 0 1% 0 15%;
   }
 }
@@ -442,7 +442,7 @@ footer.collapsedSidebar {
     width: 18%;
   }
 
-  #bootstrap-container.col-md-offset-2 {
+  .bootstrap-container.col-md-offset-2 {
     margin-left: 18%;
   }
 
@@ -464,7 +464,7 @@ footer.collapsedSidebar {
     width: 17%;
   }
 
-  #bootstrap-container.col-md-offset-2 {
+  .bootstrap-container.col-md-offset-2 {
     margin-left: 17%;
   }
 
@@ -487,7 +487,7 @@ footer.collapsedSidebar {
     width: 15.8%;
   }
 
-  #bootstrap-container.col-md-offset-2 {
+  .bootstrap-container.col-md-offset-2 {
     margin-left: 15.8%;
   }
 
@@ -511,7 +511,7 @@ footer.collapsedSidebar {
     width: 14.8%;
   }
 
-  #bootstrap-container.col-md-offset-2 {
+  .bootstrap-container.col-md-offset-2 {
     margin-left: 14.8%;
   }
 
@@ -538,7 +538,7 @@ footer.collapsedSidebar {
     width: 13.8%;
   }
 
-  #bootstrap-container.col-md-offset-2 {
+  .bootstrap-container.col-md-offset-2 {
     margin-left: 13.8%;
   }
 
@@ -562,7 +562,7 @@ footer.collapsedSidebar {
     width: 12.8%;
   }
 
-  #bootstrap-container.col-md-offset-2 {
+  .bootstrap-container.col-md-offset-2 {
     margin-left: 12.8%;
   }
 
@@ -586,7 +586,7 @@ footer.collapsedSidebar {
     width: 11.8%;
   }
 
-  #bootstrap-container.col-md-offset-2 {
+  .bootstrap-container.col-md-offset-2 {
     margin-left: 11.8%;
   }
 
@@ -611,7 +611,7 @@ footer.collapsedSidebar {
     width: 10.8%;
   }
 
-  #bootstrap-container.col-md-offset-2 {
+  .bootstrap-container.col-md-offset-2 {
     margin-left: 10.8%;
   }
 
@@ -636,7 +636,7 @@ footer.collapsedSidebar {
     width: 10%;
   }
 
-  #bootstrap-container.col-md-offset-2 {
+  .bootstrap-container.col-md-offset-2 {
     margin-left: 10%;
   }
 

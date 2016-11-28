@@ -49,7 +49,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <ul class="dropdown-menu" role="menu" id="mobile_menu">
+            <ul class="dropdown-menu mobile_menu" role="menu" id="mobile_menu">
                 {foreach from=$groupTabs item=modules key=group name=groupList}
                     {if $smarty.foreach.groupList.last}
                         {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
@@ -77,8 +77,8 @@
                     {/if}
                 {/foreach}
             </ul>
-            <div id="mobileheader">
-                <div id="modulelinks">
+            <div id="mobileheader" class="mobileheader">
+                <div id="modulelinks" class="modulelinks">
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                         {if $name == $MODULE_TAB}
                             <span class="modulename" data-toggle="dropdown"
@@ -153,7 +153,7 @@
 
             </div>
         </div>
-        <div class="hidden-xs hidden-sm hidden-md hidden-mdlg" id="toolbar">
+        <div class="hidden-xs hidden-sm hidden-md hidden-mdlg desktop-toolbar" id="toolbar">
             {if $USE_GROUP_TABS}
                 <ul class="nav navbar-nav">
                     {assign var="groupSelected" value=false}
@@ -434,7 +434,7 @@
                 {/literal}
 
             {/if}
-            <div id="globalLinks" class="dropdown nav navbar-nav navbar-right globalLinks-desktop" >
+            <div id="globalLinks" class="dropdown nav navbar-nav globalLinks-desktop" >
                 <li id="usermenu" aria-expanded="false">
                     <a>
                         <span class="user_icon"> </span> {$CURRENT_USER}
@@ -464,41 +464,67 @@
         </div>
 
         <!-- Right side of the main navigation -->
-        <div class="mobile-bar" id="toolbar">
-            <div id="globalLinks" class="dropdown nav navbar-nav navbar-right">
-
-                <button id="usermenucollapsed" class="dropdown-toggle btn btn-default " data-toggle="dropdown"
-                        aria-expanded="true">
-                </button>
-                <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu2">
-                    <li role="presentation">
-                        <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>
-                            {$APP.LBL_PROFILE}
-                        </a>
-                    </li>
-                    {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
-                        <li role="presentation">
-                            <a id="{$gcl_key}_link"
-                               href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>
+        <div class="mobile-bar">
+            <ul id="toolbar">
+                <li id="quickcreatetop" class="create dropdown nav navbar-nav quickcreatetop">
+                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        {$APP.LBL_CREATE_BUTTON_LABEL}
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_ACCOUNT}</a>
                         </li>
-                    {/foreach}
-                    <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'
-                                               class='utilsLink'>{$LOGOUT_LABEL}</a></li>
-                </ul>
-            </div>
-            <div id="desktop_notifications" class="dropdown nav navbar-nav navbar-right">
-                <button class="alertsButton dropdown-toggle" data-toggle="dropdown"
-                        aria-expanded="false">
-                    <span class="alert_count hidden">0</span>
-                </button>
-                <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
-            </div>
-            <div id="search" class="dropdown nav navbar-nav navbar-right">
-                <button id="searchbutton" class="dropdown-toggle btn btn-default" data-toggle="dropdown" aria-expanded="true">
-                    <!--<span class="glyphicon glyphicon-search"> </span>-->Search
-                </button>
-                <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
-                    <form id="searchformdropdown" name='UnifiedSearch' action='index.php'
+                        <li>
+                            <a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{$APP.LBL_QUICK_CONTACT}</a>
+                        </li>
+                        <li>
+                            <a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">{$APP.LBL_QUICK_OPPORTUNITY}</a>
+                        </li>
+                        <li>
+                            <a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">{$APP.LBL_QUICK_LEAD}</a>
+                        </li>
+                        <li>
+                            <a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">{$APP.LBL_QUICK_DOCUMENT}</a>
+                        </li>
+                        <li>
+                            <a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{$APP.LBL_QUICK_CALL}</a>
+                        </li>
+                        <li class="last">
+                            <a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a>
+                        </li>
+                    </ul>
+                </li>
+                <li id="desktop_notifications" class="dropdown nav navbar-nav desktop_notifications">
+                    <button class="alertsButton btn dropdown-toggle" data-toggle="dropdown"
+                            aria-expanded="false">
+                        <span class="alert_count hidden">0</span>
+                    </button>
+                    <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
+                </li>
+                <li id="" class="dropdown nav navbar-nav navbar-search">
+                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton" data-toggle="dropdown" aria-expanded="true">
+                        <!--<span class="glyphicon glyphicon-search"> </span>-->Search
+                    </button>
+                    <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
+                        <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
+                              onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
+                            <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
+                            <input type="hidden" class="form-control" name="module" value="Home">
+                            <input type="hidden" class="form-control" name="search_form" value="false">
+                            <input type="hidden" class="form-control" name="advanced" value="false">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="query_string" id="query_string"
+                                       placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
+                                                                                    aria-hidden="true"></span>-->Search</button>
+                            </span>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <form id="searchform" class="navbar-form searchform" name='UnifiedSearch' action='index.php'
                           onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
                         <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
                         <input type="hidden" class="form-control" name="module" value="Home">
@@ -507,57 +533,35 @@
                         <div class="input-group">
                             <input type="text" class="form-control" name="query_string" id="query_string"
                                    placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
-                            <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
-                                                                                    aria-hidden="true"></span>-->Search</button>
-                            </span>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <form id="searchform" class="navbar-form navbar-right" name='UnifiedSearch' action='index.php'
-                  onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
-                <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
-                <input type="hidden" class="form-control" name="module" value="Home">
-                <input type="hidden" class="form-control" name="search_form" value="false">
-                <input type="hidden" class="form-control" name="advanced" value="false">
-                <div class="input-group">
-                    <input type="text" class="form-control" name="query_string" id="query_string"
-                           placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                     <span class="input-group-btn">
                         <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
                                                                             aria-hidden="true"></span>-->Search</button>
                     </span>
-                </div>
-            </form>
-            <div id="quickcreatetop" class="create dropdown nav navbar-nav navbar-right">
-                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    {$APP.LBL_CREATE_BUTTON_LABEL}
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                    <li>
-                        <a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_ACCOUNT}</a>
-                    </li>
-                    <li>
-                        <a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{$APP.LBL_QUICK_CONTACT}</a>
-                    </li>
-                    <li>
-                        <a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">{$APP.LBL_QUICK_OPPORTUNITY}</a>
-                    </li>
-                    <li>
-                        <a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">{$APP.LBL_QUICK_LEAD}</a>
-                    </li>
-                    <li>
-                        <a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">{$APP.LBL_QUICK_DOCUMENT}</a>
-                    </li>
-                    <li>
-                        <a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{$APP.LBL_QUICK_CALL}</a>
-                    </li>
-                    <li class="last">
-                        <a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a>
-                    </li>
-                </ul>
-            </div>
+                        </div>
+                    </form>
+                </li>
+                <li id="globalLinks" class="dropdown nav navbar-nav globalLinks-mobile">
+
+                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default " data-toggle="dropdown"
+                            aria-expanded="true">
+                    </button>
+                    <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu2">
+                        <li role="presentation">
+                            <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>
+                                {$APP.LBL_PROFILE}
+                            </a>
+                        </li>
+                        {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
+                            <li role="presentation">
+                                <a id="{$gcl_key}_link"
+                                   href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>
+                            </li>
+                        {/foreach}
+                        <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'
+                                                   class='utilsLink'>{$LOGOUT_LABEL}</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
 
 
@@ -566,9 +570,9 @@
 <!--End Responsive Top Navigation Menu -->
 {if $THEME_CONFIG.display_sidebar}
     <!--Start Page Container and Responsive Sidebar -->
-    <div id='sidebar_container' class="container-fluid">
+    <div id='sidebar_container' class="container-fluid sidebar_container">
 
-        <a id="buttontoggle"><span></span></a>
+        <a id="buttontoggle" class="buttontoggle"><span></span></a>
                 
         <!--<div class="row">-->
             <!--<div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}
@@ -576,7 +580,7 @@
              <div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}
              class="sidebar">
                 
-                <div id="actionMenuSidebar">
+                <div id="actionMenuSidebar" class="actionMenuSidebar">
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                         {if $name == $MODULE_TAB}
                             <ul>
@@ -600,7 +604,7 @@
                     {/foreach}
                 </div>
                 
-                <div id="recentlyViewedSidebar">
+                <div id="recentlyViewedSidebar" class="recentlyViewedSidebar">
                 {if count($recentRecords) > 0}
                     <h2 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h2>
                 {/if}
@@ -619,7 +623,7 @@
                     </ul>
                 </div>
      
-                <div id="favoritesSidebar">
+                <div id="favoritesSidebar" class="favoritesSidebar">
                 {if count($favoriteRecords) > 0}
                     <h2 class="recent_h3">{$APP.LBL_FAVORITES}</h2>
                 {/if}
