@@ -51,7 +51,7 @@
 
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
-		<th colspan="4" align="left" ><h4>{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP3}</h4></th>
+		<th colspan="4" align="left" ><h4 class="header-4">{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP3}</h4></th>
 		</tr>
 		<tr><td class="datalabel" colspan="3">{$MOD.LBL_WIZARD_TRACKER_MESSAGE}<br></td><td>&nbsp;</td></tr>
 		<tr><td class="datalabel" colspan="4">&nbsp;</td></tr>
