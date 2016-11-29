@@ -389,9 +389,6 @@ class SubPanel
 
 	function buildSearchQuery()
 	{
-		if($this->subpanel_defs == null) {
-			$breakpoint = true;
-		}
 		$thisPanel =& $this->subpanel_defs;
 		$subpanel_defs = $thisPanel->_instance_properties;
 
