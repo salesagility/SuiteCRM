@@ -502,7 +502,7 @@
   //background-position: 0 $home-icon-bg-pos-y-over;
 }
 
-li#usermenu a {
+li.usermenu a {
   font-size: 14px;
   background-color: $navbar-bg;
   padding-top: 0;
@@ -511,7 +511,7 @@ li#usermenu a {
   padding-right: 0;
 }
 
-li#usermenu a:hover {
+li.usermenu a:hover {
   color: $navbar-link-color;
 }
 
@@ -549,7 +549,7 @@ li#usermenu a:hover {
   padding: 0;
 }
 
-li#usermenu a span.caret {
+li.usermenu a span.caret {
   background-image: none, url("../../../../index.php?entryPoint=getImage&imageName=p_icon_caret.svg"), url("../../../../index.php?entryPoint=getImage&imageName=p_icon_caret.png");
   background-position: 0 0;
   background-repeat: no-repeat;
@@ -559,11 +559,11 @@ li#usermenu a span.caret {
   height: 10px;
 }
 
-//li#usermenu a:hover span.caret {
+//li.usermenu a:hover span.caret {
 //  background-position: 0 -48px;
 //}
 
-li#usermenu a span.user_icon {
+li.usermenu a span.user_icon {
   display: block;
   background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
   background-position: 0 -1;
@@ -574,18 +574,18 @@ li#usermenu a span.user_icon {
   height: 42px;
 }
 
-//li#usermenu a:hover span.user_icon {
+//li.usermenu a:hover span.user_icon {
 //  background-position: 0 -99px;
 //}
 
 
 
-#usermenucollapsed {
+.usermenucollapsed {
   display: none;
   margin: 0 0 0 5px;
 }
 
-#usermenucollapsed-mobile {
+.usermenucollapsed-mobile {
   display: none;
   margin: 0 0 0 5px;
 }
@@ -626,7 +626,7 @@ li#usermenu a span.user_icon {
   padding: 0;
 }
 
-.searchform #query_string  {
+.searchform .query_string  {
   font-size: 13px;
   background-color: $navbar-search-bg;
   color: $navbar-search-text-color;
@@ -642,7 +642,7 @@ li#usermenu a span.user_icon {
   -webkit-box-shadow: 0 0 0 1000px $navbar-search-bg inset;
 }
 
-.searchform #query_string:-webkit-autofill {
+.searchform .query_string:-webkit-autofill {
   font-size: 13px;
   background-color: $navbar-search-bg;
   color: $navbar-search-text-color;
@@ -818,11 +818,6 @@ a[id^=grouptab]:active {
   background: none;
 }
 
-#globalLinksicons {
-  margin: 0 5px 0 0;
-}
-
-
 .navbar-inverse .navbar-toggle {
   border: none;
 }
@@ -956,15 +951,13 @@ a[id^=grouptab]:active {
   opacity: 1;
 }
 
-.desktop_notifications button {
+.desktop_notifications > button {
   background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert.svg"), url("../../../../themes/SuiteP/images/p_icon_alert.png");
   background-position: 0 0;
   background-repeat: no-repeat;
-  //margin-right: 15px;
-  //float: left;
 }
 
-.desktop_notifications #alerts.dropdown-menu {
+.desktop_notifications > .dropdown-menu {
   left: auto;
 }
 
@@ -995,7 +988,7 @@ a[id^=grouptab]:active {
   border: none;
 }
 
-.desktop_notifications span.alert_count {
+.desktop_notifications .alert_count {
   display: block;
   position: relative;
   top: -16px;
@@ -1045,7 +1038,7 @@ a[id^=grouptab]:active {
   margin-right: 0 ;
 }
 
-.desktop_notifications div.dropdown-menu {
+.desktop_notifications .dropdown-menu {
   font-size: 12px;
   background-color: $danger;
   color: $navbar-menu-link-color;
@@ -1054,12 +1047,12 @@ a[id^=grouptab]:active {
   border-radius: 0;
 }
 
-.desktop_notifications div.has-alerts {
+.desktop_notifications .has-alerts {
   background-color: $navbar-main-menu-bg;
   border-radius: 2px;
 }
 
-.desktop_notifications div.has-alerts .alert-info {
+.desktop_notifications .has-alerts .alert-info {
   background-color: inherit;
   color: $navbar-alert-link-color;
   padding: 0;
@@ -1068,11 +1061,11 @@ a[id^=grouptab]:active {
 
 }
 
-.desktop_notifications div.has-alerts .text-info {
+.desktop_notifications .has-alerts .text-info {
   color: $navbar-menu-link-color;
 }
 
-.desktop_notifications div.has-alerts p {
+.desktop_notifications .has-alerts p {
   font-size: 12px;
   background-color: $main-bg;
   color: $main-font-color;
@@ -1084,17 +1077,17 @@ a[id^=grouptab]:active {
   min-height: 20px;
 }
 
-.desktop_notifications div.has-alerts h4  {
+.desktop_notifications .has-alerts .alert-header  {
   padding: 8px 15px 8px 15px;
   margin: 0 ;
 }
 
-.desktop_notifications div.has-alerts p {
+.desktop_notifications .has-alerts p {
   padding: 8px 15px 8px 15px;
   margin: 0 ;
 }
 
-.desktop_notifications div.has-alerts h4 {
+.desktop_notifications .has-alerts .alert-header {
   font-size: 14px;
   font-weight: bold;
   background-color: $navbar-alert-title-bg;
@@ -1103,31 +1096,47 @@ a[id^=grouptab]:active {
   line-height: 20px;
 }
 
-.desktop_notifications div.has-alerts h4 img {
+.desktop_notifications .has-alerts .alert-header img {
   width: 16px;
   height: 16px;
 }
 
 
 @media (max-width: 750px) {
-  .desktop_notifications div.has-alerts {
+  .desktop_notifications .has-alerts {
     background-color: $mobile-navbar-toolbar-bg;
   }
 
-  .desktop_notifications div.has-alerts h4 {
+  .desktop_notifications .has-alerts .alert-header {
     background-color: $navbar-main-menu-bg;
     line-height: 20px;
   }
-  .mobile-bar .user-dropdown{
-    top: ($navbar-height/3);
+  .mobile-bar .user-dropdown {
+    top: $navbar-toolbar-height - 8px;
     left: -140px ;
+  }
+
+  .mobile-bar .desktop_notifications {
+    // add margin for alert_count
+    margin-right: 4px;
+  }
+
+  .mobile-bar .desktop_notifications .alert_count {
+    top: -16px;
+    left: 4px;
+  }
+
+  .mobile-bar .desktop_notifications .dropdown-menu.has-alerts {
+    left: auto;
+    right: 0;
+  }
+
+  .mobile-bar .desktop_notifications .dropdown-menu .has-alerts p {
+    width: 100%;
   }
 }
 
-.mobile-bar .dropdown-menu.user-dropdown{
-  right: 0;
-  left: auto;
-}
+
 
 .modulelinks > .dropdown-menu {
   left: 50px;
@@ -1144,6 +1153,19 @@ a[id^=grouptab]:active {
 @media (min-width: 768px) and (min-height: 381px) {
   .mobile-bar .globalLinks-mobile {
     height: $navbar-height;
+  }
+}
+
+@media (min-width: 1560px) {
+  .globalLinks-mobile .dropdown-toggle {
+    background-color: transparent;
+    background-image: none, url("../../../../themes/SuiteP/images/p_user_icon.svg"), url("../../../../themes/SuiteP/images/p_user_icon.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    margin-left: 0;
+    border: none;
+    width: 42px;
+    height: 42px;
   }
 }
 
@@ -1238,7 +1260,7 @@ a[id^=grouptab]:active {
     width: 200px;
   }
 
-  .navbar-search #query_string {
+  .navbar-search .query_string {
     font-size: 14px;
     background-color: $navbar-search-bg;
     color: $navbar-search-text-color;
@@ -1261,20 +1283,10 @@ a[id^=grouptab]:active {
     height: 42px;
   }
 
-  .globalLinks-mobile .dropdown-toggle {
-    background-color: transparent;
-    background-image: none, url("../../../../themes/SuiteP/images/p_user_icon.svg"), url("../../../../themes/SuiteP/images/p_user_icon.png");
-    background-position: 0 0;
-    background-repeat: no-repeat;
-    margin-left: 0;
-    border: none;
-    width: 42px;
-    height: 42px;
-  }
 
 
 
-  //#usermenucollapsed, #usermenucollapsed-mobile:hover {
+  //.usermenucollapsed, .usermenucollapsed-mobile:hover {
   //  background-position: 0 -99px;
   //}
 
@@ -1338,7 +1350,7 @@ a[id^=grouptab]:active {
     width: 100%;
   }
 
-  .navbar-search #query_string {
+  .navbar-search .query_string {
     top: 0;
     bottom: auto;
     left: 0;
@@ -1350,7 +1362,7 @@ a[id^=grouptab]:active {
     width: 80% ;
   }
 
-  #query_string {
+  .query_string {
     background-color: $navbar-search-bg;
     margin: 0;
     border: none;
@@ -1381,7 +1393,7 @@ a[id^=grouptab]:active {
     left: 0;
   }
 
-  #usermenucollapsed {
+  .usermenucollapsed {
     background-color: transparent;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
     background-position: 0 0;
@@ -1393,7 +1405,8 @@ a[id^=grouptab]:active {
     height: 28px;
   }
 
-  .desktop_notifications button {
+  .desktop_notifications > button {
+    background-color: $mobile-navbar-toolbar-bg;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
     background-position: 0 0;
     //margin-right: 20px;
@@ -1403,11 +1416,31 @@ a[id^=grouptab]:active {
     border:none;
   }
 
-  .desktop_notifications button:hover {
+  .desktop_notifications > button:hover {
+    background-color: $mobile-navbar-toolbar-bg;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
     background-position: 0 0;
     background-color: $mobile-navbar-toolbar-bg;
     border:none;
+  }
+
+
+  .open>.dropdown-toggle.alertsButton.btn-danger:active {
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
+    background-position: 0 0;
+    background-color: $mobile-navbar-toolbar-bg
+  }
+
+  .open>.dropdown-toggle.alertsButton.btn-danger:focus {
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
+    background-position: 0 0;
+    background-color: $mobile-navbar-toolbar-bg
+  }
+
+  .open>.dropdown-toggle.alertsButton.btn-danger:hover {
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
+    background-position: 0 0;
+    background-color: $mobile-navbar-toolbar-bg
   }
 
   /*override bootstrap*/
@@ -1425,7 +1458,7 @@ a[id^=grouptab]:active {
     padding: 0;
   }
 
-  .navbar-search #query_string {
+  .navbar-search .query_string {
     width: 150px;
   }
   .tablet-bar {
@@ -1520,7 +1553,7 @@ a[id^=grouptab]:active {
     width: 100%;
   }
 
-  .navbar-search #query_string {
+  .navbar-search .query_string {
     top: 0;
     left: 0;
     margin-top: 0;
@@ -1546,7 +1579,7 @@ a[id^=grouptab]:active {
     right: 0;
   }
 
-  #usermenucollapsed {
+  .usermenucollapsed {
     background-color: transparent;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
     background-position: 0 0;
@@ -1557,18 +1590,7 @@ a[id^=grouptab]:active {
     height: 42px;
   }
 
-  #usermenucollapsed-mobile {
-    background-color: transparent;
-    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
-    background-position: 0 0;
-    background-repeat: no-repeat;
-    margin-left: 0;
-    border: none;
-    width: 42px;
-    height: 42px;
-  }
-
-  #usermenucollapsed {
+  .usermenucollapsed {
     background-position: 0 0;
     border: none;
     border-radius: 0;
@@ -1676,12 +1698,59 @@ a[id^=grouptab]:active {
   //  background-position: 0 8px;
   //  background-color: transparent;
   //}
+
+
+  .desktop_notifications .btn-danger:hover {
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+    background-position: 0 0;
+    background-color: $navbar-bg;
+    border:none;
+    box-shadow: none;
+  }
+
+  .desktop_notifications .btn-danger:focus {
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+    background-position: 0 0;
+    background-color: $navbar-bg;
+    border:none;
+    box-shadow: none;
+  }
+
+  .desktop_notifications .btn-danger:active {
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+    background-position: 0 0;
+    background-color: $navbar-bg;
+    border:none;
+  }
+
+  .open>.dropdown-toggle.alertsButton.btn-danger:active {
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+    background-position: 0 0;
+    background-color: $navbar-bg;
+    border:none;
+    box-shadow: none;
+  }
+
+  .open>.dropdown-toggle.alertsButton.btn-danger:focus {
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+    background-position: 0 0;
+    background-color: $navbar-bg;
+    border:none;
+  }
+
+  .open>.dropdown-toggle.alertsButton.btn-danger:hover {
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+    background-position: 0 0;
+    background-color: $navbar-bg;
+    border:none;
+  }
+
 }
 
 
 @media (max-width: 1130px) {
 
-  #usermenu {
+  .usermenu {
     display: none;
   }
 
@@ -1831,38 +1900,8 @@ a[id^=grouptab]:active {
 }
 
 
-@media (max-width: 340px) {
-  .globalLinks-mobile a {
-    position: fixed;
-    top: 0;
-    right: 0;
-    color: $navbar-menu-link-color;
-    padding: 8px;
-    margin: 8px 0 0;
-    float: right;
-  }
-
-  #userlinks_head {
-    position: fixed;
-    top: 0;
-    right: 40px;
-    color: #ffffff ;
-    padding: 8px;
-    margin: 8px 0 0;
-    float: right;
-  }
-}
-
 @media (max-width: 750px) {
-  #userlinks_home {
-    display: none;
-  }
-
   .quickcreate {
-    display: none;
-  }
-
-  #userlinks_currentuser {
     display: none;
   }
 
@@ -1874,7 +1913,7 @@ a[id^=grouptab]:active {
     z-index: 50 ;
   }
 
-  .searchmobile #query_string {
+  .searchmobile .query_string {
     box-shadow: none ;
     border: none ;
     border-radius: 0 ;
@@ -1892,7 +1931,7 @@ a[id^=grouptab]:active {
     z-index: 50 ;
   }
 
-  .searchmobile #query_string {
+  .searchmobile .query_string {
     box-shadow: none;
     color: $navbar-menu-link-color;
     border: none;
@@ -1937,9 +1976,6 @@ a[id^=grouptab]:active {
     content: none;
   }
 
-  form[name="wizform"] div.wizard-unique-elem {
-    width: 1000px;
-  }
 }
 
 @media (min-width: 1180px) and (max-width: 1199px) {
@@ -1950,7 +1986,7 @@ a[id^=grouptab]:active {
   }
 }
 @media (max-width: 1399px) {
-  #usermenu {
+  .usermenu {
     display: none;
   }
 
@@ -1967,11 +2003,11 @@ a[id^=grouptab]:active {
     margin: 8px 0 0 0;
   }
 
-  #usermenucollapsed  {
+  .usermenucollapsed  {
     display: inline;
   }
 
-  #usermenucollapsed-mobile {
+  .usermenucollapsed-mobile {
     display: inline;
   }
 
@@ -2007,7 +2043,7 @@ a[id^=grouptab]:active {
   //  background-position: 13px -44px;
   //}
 
-  .navbar-search #query_string {
+  .navbar-search .query_string {
     font-size: 14px;
     background-color: $navbar-search-bg;
     color: $navbar-search-text-color;

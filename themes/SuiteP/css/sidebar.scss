@@ -20,7 +20,7 @@
     display: none;
   }
 
-  .actionMenuSidebar h2 {
+  .actionMenuSidebar .recent_h3 {
     display: none;
   }
 
@@ -350,14 +350,14 @@
   background-color: $side-bar-link-color-hover;
 }
 
-.recentlyViewedSidebar h2{
+.recentlyViewedSidebar .recent_h3{
   font-size: 16px;
   font-weight: bold;
   color: $side-bar-header-color;
   margin: 0 0 5px 0;
 }
 
-.favoritesSidebar h2 {
+.favoritesSidebar .recent_h3 {
   font-size: 16px;
   font-weight: bold;
   color: $side-bar-header-color;
@@ -428,11 +428,11 @@ footer.collapsedSidebar {
     padding: 8px 1% 8px 15%;
   }
 
-  .recentlyViewedSidebar h2{
+  .recentlyViewedSidebar .recent_h3 {
     padding: 0 1% 0 15%;
   }
 
-  .favoritesSidebar h2 {
+  .favoritesSidebar .recent_h3 {
     padding: 0 1% 0 15%;
   }
 }
