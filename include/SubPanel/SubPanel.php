@@ -66,6 +66,7 @@ class SubPanel
 	{
 		global $beanList, $beanFiles, $focus, $app_strings;
 
+
 		$this->subpanel_defs=$subpanelDef;
 		$this->subpanel_id = $subpanel_id;
 		$this->parent_record_id = $record_id;
@@ -90,15 +91,16 @@ class SubPanel
 		{
 			sugar_die($app_strings['ERROR_NO_RECORD']);
 		}
-		$this->buildSearchQuery();
+
 		if (empty($subpanelDef)) {
 			//load the subpanel by name.
 			require_once 'include/SubPanel/SubPanelDefinitions.php' ;
 			$panelsdef=new SubPanelDefinitions($result,$layout_def_key);
 			$subpanelDef=$panelsdef->load_subpanel($subpanel_id, false, false, $this->search_query,$collections);
 			$this->subpanel_defs=$subpanelDef;
-
 		}
+
+		$this->buildSearchQuery();
 	}
 
 	function setTemplateFile($template_file)
@@ -387,6 +389,9 @@ class SubPanel
 
 	function buildSearchQuery()
 	{
+		if($this->subpanel_defs == null) {
+			$breakpoint = true;
+		}
 		$thisPanel =& $this->subpanel_defs;
 		$subpanel_defs = $thisPanel->_instance_properties;
 
