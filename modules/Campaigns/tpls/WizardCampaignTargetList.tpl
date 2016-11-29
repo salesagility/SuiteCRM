@@ -46,7 +46,7 @@
 		<div class="template-container-full">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-	<th colspan="4" align="left" ><h4  style="border-bottom: solid 1px rgb(221, 221, 221);">{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP4}</h4></th>
+	<th colspan="4" align="left" ><h4 class="header-4"  style="border-bottom: solid 1px rgb(221, 221, 221);">{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP4}</h4></th>
 	</tr>
 	<tr>
 	<td colspan="4"><label class="wizard-step-info">{$MOD.LBL_STEP_INFO_TARGET_LIST_NEWSLETTER}</label></td>

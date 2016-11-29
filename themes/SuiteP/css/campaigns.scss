@@ -137,15 +137,15 @@ div.wizard-unique-elem td {
   bottom: 15px;
 }
 
-#step2 table {
+div.step2 table {
   min-width: 300px;
 }
 
-#step2 table th td {
+div.step2 table th td {
   width: 60px;
 }
 
-#step2 .target-list-table {
+div.step2 .target-list-table {
   min-width: 570px;
 }
 
@@ -520,7 +520,7 @@ form[name="wizform"] td {
   margin-bottom: 24px;
 }
 
-form[name="wizform"] td.emptyField {
+form[name="wizform"] .emptyField {
   display: none;
 }
 
@@ -530,7 +530,7 @@ form[name="wizform"] tr.emptyRow {
 
 /* target list page */
 
-form[name="wizform"] div.template-container-full div.row {
+form[name="wizform"] .template-container-full div.row {
   padding: 5px 20px;
 }
 
@@ -540,7 +540,7 @@ form[name="wizform"] .other.view img, .other.view svg {
 
 }
 
-form[name="wizform"] select.input-sm {
+form[name="wizform"] .input-sm {
   height: 42px;
 }
 
@@ -554,7 +554,7 @@ form[name="wizform"] div.target-list-create input[type="button"] {
 
 /* Template editor */
 
-div.wizard-unique-elem h2 {
+div.wizard-unique-elem .header-2 {
   font-size: $page-font-size;
   font-weight: bold;
 }
@@ -571,11 +571,11 @@ div.wizard-unique-elem h2 {
 
 /* Marketing page */
 
-#step2 table tr td, #step2 table th td {
+div.step2 table tr td, div.step2 table th td {
   width: 80%;
 }
 
-form[name="wizform"] .other.view #step2 table.edit.view tr:first-child td:first-child {
+form[name="wizform"] .other.view div.step2 table.edit.view tr:first-child td:first-child {
   width: 100%;
 }
 
@@ -585,41 +585,41 @@ form[name="wizform"] .wizard-box span.helpmsg {
 
 /* summary page */
 
-form[name="wizform"] #target_message br,
-form[name="wizform"] #alert_messages br {
+form[name="wizform"] .target_message br,
+form[name="wizform"] .alert_messages br {
   display: none;
 }
-form[name="wizform"] table.diagnose_messages td {
+form[name="wizform"] .diagnose_messages td {
   margin-bottom: 0;
 }
 form[name="wizform"] br.emptyRow {
   display: none;
 }
 
-form[name="wizform"] #step3 ul li.li-tick {
+form[name="wizform"] div.step3 ul .li-tick {
   margin-left: 50px;
 }
 
-form[name="wizform"] #step3 ul li.li-cross {
+form[name="wizform"] div.step3 ul .li-cross {
   margin-left: 50px;
 }
-form[name="wizform"] #step3 .button-group a.btn img {
+form[name="wizform"] div.step3 .button-group a.btn img {
   margin-top: 0;
 }
 
 /* non-email campaign / budget page */
 
-form[name="wizform"] div.wizard-unique-elem #step2 .other.view td:nth-of-type(1) {
+form[name="wizform"] div.wizard-unique-elem div.step2 .other.view td:nth-of-type(1) {
   display: table-cell;
   float: none;
 }
 
-form[name="wizform"] div.wizard-unique-elem #step2 .other.view td:nth-of-type(2) {
+form[name="wizform"] div.wizard-unique-elem div.step2 .other.view td:nth-of-type(2) {
   display: table-cell;
   float: none;
 }
 
-form[name="wizform"] div.wizard-unique-elem #step2 table tr td {
+form[name="wizform"] div.wizard-unique-elem div.step2 table tr td {
   display: table-cell;
   float: none;
   width: auto;
@@ -665,30 +665,29 @@ form[name="wizform"] div.wizard-unique-elem #step2 table tr td {
 
     /* Subscriptions fix */
 
-    form[name="wizform"] div.wizard-unique-elem #step2 table tr td {
+    form[name="wizform"] div.wizard-unique-elem div.step2 table tr td {
       float: left;
     }
 
-    form[name="wizform"] div.wizard-unique-elem #step2 table tr th h4,
-    form[name="wizform"] div.wizard-unique-elem #step2 table tr td h4{
+    form[name="wizform"] div.wizard-unique-elem div.step2 table tr td .header-4 {
       max-width: 255px;
     }
 
     /* marketing fix */
 
-    form[name="wizform"] table.other.view tr td div.wizard-unique-elem #step2 table {
+    form[name="wizform"] table.other.view tr td div.wizard-unique-elem div.step2 table {
       background: none;
     }
-    form[name="wizform"] table.other.view tr td div.wizard-unique-elem #step2 table.edit.view tr td {
+    form[name="wizform"] table.other.view tr td div.wizard-unique-elem div.step2 table.edit.view tr td {
       display: block;
       float: left;
     }
-    form[name="wizform"] table.other.view tr td div.wizard-unique-elem #step2 table.edit.view tr td:nth-of-type(odd) {
+    form[name="wizform"] table.other.view tr td div.wizard-unique-elem div.step2 table.edit.view tr td:nth-of-type(odd) {
       width: 300px;
       max-width: 300px;
       min-width: 300px;
     }
-    form[name="wizform"] table.other.view tr td div.wizard-unique-elem #step2 table.edit.view tr td:nth-of-type(even) {
+    form[name="wizform"] table.other.view tr td div.wizard-unique-elem div.step2 table.edit.view tr td:nth-of-type(even) {
       width: 500px;
       max-width: 500px;
       min-width: 500px;
@@ -696,18 +695,18 @@ form[name="wizform"] div.wizard-unique-elem #step2 table tr td {
 
     /* Target List fix */
 
-    form[name="wizform"] table.other.view tr td.edit.view div.wizard-unique-elem #step2 .row .col-xs-12.col-sm-4 {
+    form[name="wizform"] table.other.view tr td.edit.view div.wizard-unique-elem div.step2 .row .col-xs-12.col-sm-4 {
       width: auto;
     }
 
-    form[name="wizform"] table.other.view tr td.edit.view div.wizard-unique-elem #step2 table.detail.view tr td table tr.detail.view td  {
+    form[name="wizform"] table.other.view tr td.edit.view div.wizard-unique-elem div.step2 table.detail.view tr td table tr.detail.view td  {
       float: left;
     }
 
-    form[name="wizform"] table.other.view tr td.edit.view div.wizard-unique-elem #step2 table.detail.view tr td table tr.detail.view th {
+    form[name="wizform"] table.other.view tr td.edit.view div.wizard-unique-elem div.step2 table.detail.view tr td table tr.detail.view th {
       float: left;
     }
-    form[name="wizform"] table.other.view tr td.edit.view div.wizard-unique-elem #step2 .target-list-table {
+    form[name="wizform"] table.other.view tr td.edit.view div.wizard-unique-elem div.step2 .target-list-table {
       min-width: 335px;
     }
 
@@ -727,7 +726,7 @@ form[name="wizform"] div.wizard-unique-elem #step2 table tr td {
 
       /* target-list fix */
 
-      form[name="wizform"] table.other.view tr td.edit.view div.wizard-unique-elem #step2 .target-list-table {
+      form[name="wizform"] table.other.view tr td.edit.view div.wizard-unique-elem div.step2 .target-list-table {
         min-width: 255px;
       }
 
