@@ -2178,7 +2178,7 @@ div#search_form > .advanced input.button:hover {
       right: 0;
     }
 
-    #wizform #wizard {
+    form[name="wizform"] div.wizard-unique-elem {
       width: 900px;
     }
 
@@ -2189,7 +2189,7 @@ div#search_form > .advanced input.button:hover {
       width: auto;
     }
 
-    #wizform #wizard {
+    form[name="wizform"] div.wizard-unique-elem {
       width: 1000px;
     }
   }
@@ -2214,7 +2214,7 @@ div#search_form > .advanced input.button:hover {
       width: 100%;
     }
 
-    #wizform #wizard {
+    form[name="wizform"] div.wizard-unique-elem {
       width: 1100px;
     }
   }
