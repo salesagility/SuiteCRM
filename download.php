@@ -155,8 +155,6 @@ else {
             $query .= "WHERE notes.id = '" . $db->quote($_REQUEST['id']) ."'";
         } elseif( !isset($_REQUEST['isTempFile']) && !isset($_REQUEST['tempName'] ) && isset($_REQUEST['type']) && $file_type!='temp' && isset($image_field) ) { //make sure not email temp file.
             //$query = "SELECT " . $image_field ." FROM " . $file_type . " LEFT JOIN " . $file_type . "_cstm cstm ON cstm.id_c = " . $file_type . ".id ";
-
-
                 $checkBean = BeanFactory::getBean($module);
                 $file_type = $checkBean->table_name;
 
