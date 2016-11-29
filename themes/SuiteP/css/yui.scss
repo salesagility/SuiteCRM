@@ -180,7 +180,7 @@
   width: 100%;
   height: 100%;
   z-index: 2;
-  _width: 0;
+  width: 0;
   _height: 0;
   left: 0;
   top: 0;
@@ -489,7 +489,7 @@ p#clear {
 
 .yui-calcontainer .yui-cal-nav-mc {
   width: 100%;
-  _width: auto;
+  width: auto;
 }
 
 .yui-calcontainer .yui-cal-nav-y input.yui-invalid {
@@ -2709,7 +2709,7 @@ div.yuimenu li.selected a.selected {
 
 .yui-editor-panel .yui-toolbar-group-padding {
   width: 203px;
-  _width: 198px;
+  width: 198px;
 }
 
 .yui-editor-panel .no-button .yui-toolbar-group-padding {
@@ -3850,7 +3850,7 @@ a.yuimenuitemlabel:hover {
 .yui-pv-chartlegend div {
   margin: 0 0 0 10px;
   float: right;
-  _width: 250px;
+  width: 250px;
 }
 
 .yui-pv-chartlegend dl {
@@ -5352,7 +5352,7 @@ div.yuimenu li.selected a.selected {
 
 .yui-editor-panel .yui-toolbar-group-padding {
   width: 203px;
-  _width: 198px;
+  width: 198px;
 }
 
 .yui-editor-panel .no-button .yui-toolbar-group-padding {
