@@ -4678,7 +4678,7 @@ object {
 
 @media (min-width: 1024px) {
 
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 1000px;
   }
 }
