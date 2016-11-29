@@ -99,7 +99,7 @@ a:hover {
     margin-bottom: 24px; }
   .sidebar .actionMenuSidebar_top {
     display: none; }
-  .sidebar .actionMenuSidebar h2 {
+  .sidebar .actionMenuSidebar .recent_h3 {
     display: none; }
   .sidebar .actionMenuSidebar ul {
     list-style-type: none; }
@@ -326,13 +326,13 @@ a:hover {
 .favoritesSidebar li:hover {
   background-color: #677785; }
 
-.recentlyViewedSidebar h2 {
+.recentlyViewedSidebar .recent_h3 {
   font-size: 16px;
   font-weight: bold;
   color: whitesmoke;
   margin: 0 0 5px 0; }
 
-.favoritesSidebar h2 {
+.favoritesSidebar .recent_h3 {
   font-size: 16px;
   font-weight: bold;
   color: whitesmoke;
@@ -388,10 +388,10 @@ footer.collapsedSidebar {
   .favoritesSidebar .favorite-links-detail {
     padding: 8px 1% 8px 15%; }
 
-  .recentlyViewedSidebar h2 {
+  .recentlyViewedSidebar .recent_h3 {
     padding: 0 1% 0 15%; }
 
-  .favoritesSidebar h2 {
+  .favoritesSidebar .recent_h3 {
     padding: 0 1% 0 15%; } }
 @media (min-width: 1230px) {
   .sidebar {
@@ -900,7 +900,7 @@ footer.collapsedSidebar {
 .mobile_menu a:hover .glyphicon-plus {
   color: white; }
 
-li#usermenu a {
+li.usermenu a {
   font-size: 14px;
   background-color: #534d64;
   padding-top: 0;
@@ -908,7 +908,7 @@ li#usermenu a {
   padding-left: 0;
   padding-right: 0; }
 
-li#usermenu a:hover {
+li.usermenu a:hover {
   color: white; }
 
 .globalLinks-desktop ul.user-dropdown li a {
@@ -931,7 +931,7 @@ li#usermenu a:hover {
 .globalLinks-desktop ul li {
   padding: 0; }
 
-li#usermenu a span.caret {
+li.usermenu a span.caret {
   background-image: none, url("../../../../index.php?entryPoint=getImage&imageName=p_icon_caret.svg"), url("../../../../index.php?entryPoint=getImage&imageName=p_icon_caret.png");
   background-position: 0 0;
   background-repeat: no-repeat;
@@ -940,7 +940,7 @@ li#usermenu a span.caret {
   width: 10px;
   height: 10px; }
 
-li#usermenu a span.user_icon {
+li.usermenu a span.user_icon {
   display: block;
   background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
   background-position: 0 -1;
@@ -950,11 +950,11 @@ li#usermenu a span.user_icon {
   width: 42px;
   height: 42px; }
 
-#usermenucollapsed {
+.usermenucollapsed {
   display: none;
   margin: 0 0 0 5px; }
 
-#usermenucollapsed-mobile {
+.usermenucollapsed-mobile {
   display: none;
   margin: 0 0 0 5px; }
 
@@ -982,7 +982,7 @@ li#usermenu a span.user_icon {
 .searchform.navbar-form {
   padding: 0; }
 
-.searchform #query_string {
+.searchform .query_string {
   font-size: 13px;
   background-color: #65697a;
   color: #a2a5af;
@@ -996,7 +996,7 @@ li#usermenu a span.user_icon {
   -webkit-text-fill-color: #817d8d;
   -webkit-box-shadow: 0 0 0 1000px #65697a inset; }
 
-.searchform #query_string:-webkit-autofill {
+.searchform .query_string:-webkit-autofill {
   font-size: 13px;
   background-color: #65697a;
   color: #a2a5af;
@@ -1117,9 +1117,6 @@ a[id^=grouptab]:active {
 .nav .open > a:focus {
   background: none; }
 
-#globalLinksicons {
-  margin: 0 5px 0 0; }
-
 .navbar-inverse .navbar-toggle {
   border: none; }
 
@@ -1221,12 +1218,12 @@ a[id^=grouptab]:active {
 .quickcreatetop .dropdown-menu li a:hover {
   opacity: 1; }
 
-.desktop_notifications button {
+.desktop_notifications > button {
   background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert.svg"), url("../../../../themes/SuiteP/images/p_icon_alert.png");
   background-position: 0 0;
   background-repeat: no-repeat; }
 
-.desktop_notifications #alerts.dropdown-menu {
+.desktop_notifications > .dropdown-menu {
   left: auto; }
 
 .desktop_notifications a {
@@ -1246,7 +1243,7 @@ a[id^=grouptab]:active {
   margin-top: 0;
   border: none; }
 
-.desktop_notifications span.alert_count {
+.desktop_notifications .alert_count {
   display: block;
   position: relative;
   top: -16px;
@@ -1290,7 +1287,7 @@ a[id^=grouptab]:active {
   margin-bottom: 0;
   margin-right: 0; }
 
-.desktop_notifications div.dropdown-menu {
+.desktop_notifications .dropdown-menu {
   font-size: 12px;
   background-color: #f08377;
   color: white;
@@ -1298,21 +1295,21 @@ a[id^=grouptab]:active {
   margin: 0;
   border-radius: 0; }
 
-.desktop_notifications div.has-alerts {
+.desktop_notifications .has-alerts {
   background-color: #5d5670;
   border-radius: 2px; }
 
-.desktop_notifications div.has-alerts .alert-info {
+.desktop_notifications .has-alerts .alert-info {
   background-color: inherit;
   color: white;
   padding: 0;
   border: 1px solid #757083;
   border-radius: 2px; }
 
-.desktop_notifications div.has-alerts .text-info {
+.desktop_notifications .has-alerts .text-info {
   color: white; }
 
-.desktop_notifications div.has-alerts p {
+.desktop_notifications .has-alerts p {
   font-size: 12px;
   background-color: whitesmoke;
   color: #534d64;
@@ -1323,15 +1320,15 @@ a[id^=grouptab]:active {
   max-width: 256px;
   min-height: 20px; }
 
-.desktop_notifications div.has-alerts h4 {
+.desktop_notifications .has-alerts .alert-header {
   padding: 8px 15px 8px 15px;
   margin: 0; }
 
-.desktop_notifications div.has-alerts p {
+.desktop_notifications .has-alerts p {
   padding: 8px 15px 8px 15px;
   margin: 0; }
 
-.desktop_notifications div.has-alerts h4 {
+.desktop_notifications .has-alerts .alert-header {
   font-size: 14px;
   font-weight: bold;
   background-color: #5d5670;
@@ -1339,25 +1336,35 @@ a[id^=grouptab]:active {
   border-top-right-radius: 2px;
   line-height: 20px; }
 
-.desktop_notifications div.has-alerts h4 img {
+.desktop_notifications .has-alerts .alert-header img {
   width: 16px;
   height: 16px; }
 
 @media (max-width: 750px) {
-  .desktop_notifications div.has-alerts {
+  .desktop_notifications .has-alerts {
     background-color: #a2b2bf; }
 
-  .desktop_notifications div.has-alerts h4 {
+  .desktop_notifications .has-alerts .alert-header {
     background-color: #5d5670;
     line-height: 20px; }
 
   .mobile-bar .user-dropdown {
-    top: 30px;
-    left: -140px; } }
-.mobile-bar .dropdown-menu.user-dropdown {
-  right: 0;
-  left: auto; }
+    top: 40px;
+    left: -140px; }
 
+  .mobile-bar .desktop_notifications {
+    margin-right: 4px; }
+
+  .mobile-bar .desktop_notifications .alert_count {
+    top: -16px;
+    left: 4px; }
+
+  .mobile-bar .desktop_notifications .dropdown-menu.has-alerts {
+    left: auto;
+    right: 0; }
+
+  .mobile-bar .desktop_notifications .dropdown-menu .has-alerts p {
+    width: 100%; } }
 .modulelinks > .dropdown-menu {
   left: 50px; }
 
@@ -1367,6 +1374,16 @@ a[id^=grouptab]:active {
 @media (min-width: 768px) and (min-height: 381px) {
   .mobile-bar .globalLinks-mobile {
     height: 90px; } }
+@media (min-width: 1560px) {
+  .globalLinks-mobile .dropdown-toggle {
+    background-color: transparent;
+    background-image: none, url("../../../../themes/SuiteP/images/p_user_icon.svg"), url("../../../../themes/SuiteP/images/p_user_icon.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    margin-left: 0;
+    border: none;
+    width: 42px;
+    height: 42px; } }
 @media (max-width: 1560px) {
   .desktop-toolbar {
     display: none;
@@ -1445,7 +1462,7 @@ a[id^=grouptab]:active {
     background-color: transparent;
     width: 200px; }
 
-  .navbar-search #query_string {
+  .navbar-search .query_string {
     font-size: 14px;
     background-color: #65697a;
     color: #a2a5af;
@@ -1457,16 +1474,6 @@ a[id^=grouptab]:active {
     height: auto; }
 
   .globalLinks-desktop .dropdown-toggle {
-    background-color: transparent;
-    background-image: none, url("../../../../themes/SuiteP/images/p_user_icon.svg"), url("../../../../themes/SuiteP/images/p_user_icon.png");
-    background-position: 0 0;
-    background-repeat: no-repeat;
-    margin-left: 0;
-    border: none;
-    width: 42px;
-    height: 42px; }
-
-  .globalLinks-mobile .dropdown-toggle {
     background-color: transparent;
     background-image: none, url("../../../../themes/SuiteP/images/p_user_icon.svg"), url("../../../../themes/SuiteP/images/p_user_icon.png");
     background-position: 0 0;
@@ -1519,7 +1526,7 @@ a[id^=grouptab]:active {
   .navbar-search .searchformdropdown .input-group {
     width: 100%; }
 
-  .navbar-search #query_string {
+  .navbar-search .query_string {
     top: 0;
     bottom: auto;
     left: 0;
@@ -1530,7 +1537,7 @@ a[id^=grouptab]:active {
     margin: 0;
     width: 80%; }
 
-  #query_string {
+  .query_string {
     background-color: #65697a;
     margin: 0;
     border: none;
@@ -1556,7 +1563,7 @@ a[id^=grouptab]:active {
   .quickcreatetop .dropdown-menu {
     left: 0; }
 
-  #usermenucollapsed {
+  .usermenucollapsed {
     background-color: transparent;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
     background-position: 0 0;
@@ -1567,18 +1574,35 @@ a[id^=grouptab]:active {
     width: 28px;
     height: 28px; }
 
-  .desktop_notifications button {
+  .desktop_notifications > button {
+    background-color: #a2b2bf;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
     background-position: 0 0;
     width: 28px;
     height: 28px;
     border: none; }
 
-  .desktop_notifications button:hover {
+  .desktop_notifications > button:hover {
+    background-color: #a2b2bf;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
     background-position: 0 0;
     background-color: #a2b2bf;
     border: none; }
+
+  .open > .dropdown-toggle.alertsButton.btn-danger:active {
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
+    background-position: 0 0;
+    background-color: #a2b2bf; }
+
+  .open > .dropdown-toggle.alertsButton.btn-danger:focus {
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
+    background-position: 0 0;
+    background-color: #a2b2bf; }
+
+  .open > .dropdown-toggle.alertsButton.btn-danger:hover {
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert_small.png");
+    background-position: 0 0;
+    background-color: #a2b2bf; }
 
   /*override bootstrap*/
   .desktop_notifications .btn-success:focus,
@@ -1593,7 +1617,7 @@ a[id^=grouptab]:active {
   .navbar-inverse .mobile-bar .navbar-search .dropdown-menu {
     padding: 0; }
 
-  .navbar-search #query_string {
+  .navbar-search .query_string {
     width: 150px; }
 
   .tablet-bar {
@@ -1662,7 +1686,7 @@ a[id^=grouptab]:active {
   .navbar-search .searchformdropdown .input-group {
     width: 100%; }
 
-  .navbar-search #query_string {
+  .navbar-search .query_string {
     top: 0;
     left: 0;
     margin-top: 0; }
@@ -1681,7 +1705,7 @@ a[id^=grouptab]:active {
     left: auto;
     right: 0; }
 
-  #usermenucollapsed {
+  .usermenucollapsed {
     background-color: transparent;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
     background-position: 0 0;
@@ -1691,17 +1715,7 @@ a[id^=grouptab]:active {
     width: 42px;
     height: 42px; }
 
-  #usermenucollapsed-mobile {
-    background-color: transparent;
-    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
-    background-position: 0 0;
-    background-repeat: no-repeat;
-    margin-left: 0;
-    border: none;
-    width: 42px;
-    height: 42px; }
-
-  #usermenucollapsed {
+  .usermenucollapsed {
     background-position: 0 0;
     border: none;
     border-radius: 0; }
@@ -1793,9 +1807,48 @@ a[id^=grouptab]:active {
     border: none;
     overflow: hidden;
     width: 48px;
-    text-indent: -9999px; } }
+    text-indent: -9999px; }
+
+  .desktop_notifications .btn-danger:hover {
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+    background-position: 0 0;
+    background-color: #534d64;
+    border: none;
+    box-shadow: none; }
+
+  .desktop_notifications .btn-danger:focus {
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+    background-position: 0 0;
+    background-color: #534d64;
+    border: none;
+    box-shadow: none; }
+
+  .desktop_notifications .btn-danger:active {
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+    background-position: 0 0;
+    background-color: #534d64;
+    border: none; }
+
+  .open > .dropdown-toggle.alertsButton.btn-danger:active {
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+    background-position: 0 0;
+    background-color: #534d64;
+    border: none;
+    box-shadow: none; }
+
+  .open > .dropdown-toggle.alertsButton.btn-danger:focus {
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+    background-position: 0 0;
+    background-color: #534d64;
+    border: none; }
+
+  .open > .dropdown-toggle.alertsButton.btn-danger:hover {
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+    background-position: 0 0;
+    background-color: #534d64;
+    border: none; } }
 @media (max-width: 1130px) {
-  #usermenu {
+  .usermenu {
     display: none; }
 
   .navbar-inverse .navbar-brand {
@@ -1904,32 +1957,8 @@ a[id^=grouptab]:active {
     line-height: 60px;
     width: 100%;
     height: 60px; } }
-@media (max-width: 340px) {
-  .globalLinks-mobile a {
-    position: fixed;
-    top: 0;
-    right: 0;
-    color: white;
-    padding: 8px;
-    margin: 8px 0 0;
-    float: right; }
-
-  #userlinks_head {
-    position: fixed;
-    top: 0;
-    right: 40px;
-    color: white;
-    padding: 8px;
-    margin: 8px 0 0;
-    float: right; } }
 @media (max-width: 750px) {
-  #userlinks_home {
-    display: none; }
-
   .quickcreate {
-    display: none; }
-
-  #userlinks_currentuser {
     display: none; }
 
   .searchmobile {
@@ -1939,7 +1968,7 @@ a[id^=grouptab]:active {
     width: 70%;
     z-index: 50; }
 
-  .searchmobile #query_string {
+  .searchmobile .query_string {
     box-shadow: none;
     border: none;
     border-radius: 0;
@@ -1955,7 +1984,7 @@ a[id^=grouptab]:active {
     width: 80%;
     z-index: 50; }
 
-  .searchmobile #query_string {
+  .searchmobile .query_string {
     box-shadow: none;
     color: white;
     border: none;
@@ -1984,15 +2013,12 @@ a[id^=grouptab]:active {
     content: none; }
 
   .dropdown-toggle:after {
-    content: none; }
-
-  #wizform #wizard {
-    width: 1000px; } }
+    content: none; } }
 @media (min-width: 1180px) and (max-width: 1199px) and (min-width: 1260px) {
   li.topnav {
     padding: 0 5px 0 5px; } }
 @media (max-width: 1399px) {
-  #usermenu {
+  .usermenu {
     display: none; }
 
   .searchform {
@@ -2005,10 +2031,10 @@ a[id^=grouptab]:active {
   .navbar-form .form-control {
     margin: 8px 0 0 0; }
 
-  #usermenucollapsed {
+  .usermenucollapsed {
     display: inline; }
 
-  #usermenucollapsed-mobile {
+  .usermenucollapsed-mobile {
     display: inline; }
 
   .searchbutton {
@@ -2019,7 +2045,7 @@ a[id^=grouptab]:active {
     /*top: 14px;*/
     /*right: 6px;*/ }
 
-  .navbar-search #query_string {
+  .navbar-search .query_string {
     font-size: 14px;
     background-color: #65697a;
     color: #a2a5af;
@@ -5817,13 +5843,13 @@ div#search_form > .advanced input.button:hover {
     position: absolute;
     right: 0; }
 
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 900px; } }
 @media (min-width: 768px) and (max-width: 991px) and (min-width: 1180px) and (max-width: 1199px) {
   .search_buttons_basic {
     width: auto; }
 
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 1000px; } }
 @media (min-width: 768px) and (max-width: 991px) and (min-width: 1260px) {
   li.topnav {
@@ -5838,7 +5864,7 @@ div#search_form > .advanced input.button:hover {
   .search_fields_basic .col-lg-3 {
     width: 100%; }
 
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 1100px; } }
 @media (min-width: 768px) and (max-width: 991px) and (min-width: 1600px) {
   .search_fields_basic .col-lg-3 {
@@ -8977,12 +9003,6 @@ h3 span {
   top: 75px;
   left: 300px; }
 
-@media (min-width: 0) and (max-height: 320px) {
-  .mobile-bar ul.dropdown-menu.user-dropdown {
-    top: 50px;
-    left: -140px;
-    overflow-y: scroll;
-    height: 200px; } }
 #themePreview {
   width: 250px; }
 
@@ -9648,7 +9668,7 @@ object {
     padding: 5px 7px 5px 7px;
     margin: 0; } }
 @media (min-width: 1024px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 1000px; } }
 @media (min-width: 1280px) {
   #cal-edit {
@@ -10821,55 +10841,55 @@ span.error:empty {
   width: 10%; }
 
 /**** Campaigns ***/
-#wizard td {
+div.wizard-unique-elem td {
   white-space: normal;
   word-wrap: break-word; }
 
 @media (min-width: 922px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 900px; } }
 /*sm-col-*/
 @media (min-width: 768px) and (max-width: 991px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 700px; } }
 /*md-col-*/
 @media (min-width: 992px) and (max-width: 1199px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 900px; } }
 /*md-fixes*/
 @media (min-width: 1180px) and (max-width: 1199px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 1000px; } }
 /*lg-col-*/
 @media (min-width: 1200px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 1100px; } }
 @media (min-width: 768px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 700px; } }
 @media (min-width: 641px) and (max-width: 978px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 600px; } }
 @media (min-width: 999px) and (max-width: 1279px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 900px; } }
 @media (min-width: 0) and (max-height: 320px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     min-width: 300px; } }
 @media (min-width: 480px) and (max-height: 320px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 400px; } }
 @media (min-width: 768px) and (min-height: 381px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 700px; } }
 @media (min-width: 768px) and (min-height: 381px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 700px; } }
 @media (max-width: 767px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 700px; } }
 @media (min-width: 768px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 700px; } }
 .wizard-box {
   display: block;
@@ -11073,144 +11093,144 @@ div.target-list-table {
 
 /*////////////////////////////////////////////////////////////////////////////////////////// MEDIA QUERIES //////////*/
 @media (min-width: 750px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 500px; } }
 @media (max-width: 1130px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 300px; } }
 @media (min-width: 768px) and (max-width: 1000px) {
   /*help*/
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 700px; } }
 @media only screen and (min-device-width: 480px) and (max-device-width: 980px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 400px; } }
 @media (min-width: 980px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 900px; } }
 @media (min-width: 999px) and (max-width: 1024px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 900px; } }
 @media (min-width: 1024px) {
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 1000px; } }
 @media (min-width: 1280px) {
   #cal-edit {
     margin: 0 0 0 200px; }
 
-  #wizform #wizard {
+  form[name="wizform"] div.wizard-unique-elem {
     width: 1200px; } }
 /* campaign wizard backgrounds and commons */
-#wizform .other.view {
+form[name="wizform"] .other.view {
   background: none; }
 
-#wizform .other.view .edit.view {
+form[name="wizform"] .other.view .edit.view {
   width: 100%; }
 
-#wizform .other.view td:nth-of-type(1) {
+form[name="wizform"] .other.view td:nth-of-type(1) {
   display: table-cell;
   background: none;
   float: none;
   width: auto; }
 
-#wizform .other.view td:nth-of-type(2) {
+form[name="wizform"] .other.view td:nth-of-type(2) {
   display: table-cell;
   background: none;
   float: none;
   width: auto; }
 
-#wizform .other.view td {
+form[name="wizform"] .other.view td {
   display: table-cell;
   background: none;
   float: none;
   width: auto; }
 
-#wizform .other.view td {
+form[name="wizform"] .other.view td {
   height: auto; }
 
 /* campaign wizard home start page */
-#wizform fieldset legend {
+form[name="wizform"] fieldset legend {
   padding: 0; }
 
-#wizform .icon-btn-lst .icon-btn a {
+form[name="wizform"] .icon-btn-lst .icon-btn a {
   margin: 0;
   line-height: 20px;
   text-align: center; }
 
-#wizform .icon-btn-lst .icon-btn a img {
+form[name="wizform"] .icon-btn-lst .icon-btn a img {
   float: none; }
 
-#wizform .icon-btn-lst .icon-btn a br {
+form[name="wizform"] .icon-btn-lst .icon-btn a br {
   display: block;
   clear: both;
   float: none; }
 
 /* campaign wizard progress bar stuff */
-#wizform .progression-container .progression .nav-steps {
+form[name="wizform"] .progression-container .progression .nav-steps {
   background-color: #f08377; }
 
-#wizform .progression-container {
+form[name="wizform"] .progression-container {
   background-color: #808f9c; }
 
 .progression .nav-steps:hover {
   background-color: #808f9c; }
 
-#wizform .progression-container .progression .nav-steps.selected {
+form[name="wizform"] .progression-container .progression .nav-steps.selected {
   background-color: #808f9c; }
 
-#wizform .progression li.selected::after {
+form[name="wizform"] .progression li.selected::after {
   border-left-color: #808f9c; }
 
-#wizform .progression li:hover::after {
+form[name="wizform"] .progression li:hover::after {
   border-left-color: #808f9c; }
 
-#wizform .progression li::after {
+form[name="wizform"] .progression li::after {
   border-left-color: #f08377; }
 
-#wizform .progression li::after {
+form[name="wizform"] .progression li::after {
   border-left-color: #f08377; }
 
-#wizform .progression li::before {
+form[name="wizform"] .progression li::before {
   border-left-color: whitesmoke; }
 
 /* campaign wizard (top) buttons */
-#wizform input[type="button"] {
+form[name="wizform"] input[type="button"] {
   margin-left: 10px;
   margin-right: 10px; }
 
-#wizform input[type="submit"] {
+form[name="wizform"] input[type="submit"] {
   margin-left: 10px;
   margin-right: 10px; }
 
 /* campaign wizard forms */
-#wizform td {
+form[name="wizform"] td {
   margin-bottom: 24px; }
 
-#wizform td.emptyField {
+form[name="wizform"] td.emptyField {
   display: none; }
 
-#wizform tr.emptyRow {
+form[name="wizform"] tr.emptyRow {
   display: none; }
 
 /* target list page */
-#wizform div.template-container-full div.row {
+form[name="wizform"] div.template-container-full div.row {
   padding: 5px 20px; }
 
-#wizform .other.view img, .other.view svg {
+form[name="wizform"] .other.view img, .other.view svg {
   width: initial;
   height: initial; }
 
-#wizform select.input-sm {
+form[name="wizform"] select.input-sm {
   height: 42px; }
 
-#wizform div.target-list-create br {
+form[name="wizform"] div.target-list-create br {
   display: none; }
 
-#wizform div.target-list-create input[type="button"] {
+form[name="wizform"] div.target-list-create input[type="button"] {
   margin-top: 16px; }
 
 /* Template editor */
-#wizard h2 {
+div.wizard-unique-elem h2 {
   font-size: 13px;
   font-weight: bold; }
 
@@ -11227,123 +11247,123 @@ div.target-list-table {
 #step2 table tr td, #step2 table th td {
   width: 80%; }
 
-#wizform .other.view #step2 table.edit.view tr:first-child td:first-child {
+form[name="wizform"] .other.view #step2 table.edit.view tr:first-child td:first-child {
   width: 100%; }
 
-#wizform .wizard-box span.helpmsg {
+form[name="wizform"] .wizard-box span.helpmsg {
   bottom: -36px; }
 
 /* summary page */
-#wizform #target_message br,
-#wizform #alert_messages br {
+form[name="wizform"] #target_message br,
+form[name="wizform"] #alert_messages br {
   display: none; }
 
-#wizform table.diagnose_messages td {
+form[name="wizform"] table.diagnose_messages td {
   margin-bottom: 0; }
 
-#wizform br.emptyRow {
+form[name="wizform"] br.emptyRow {
   display: none; }
 
-#wizform #step3 ul li.li-tick {
+form[name="wizform"] #step3 ul li.li-tick {
   margin-left: 50px; }
 
-#wizform #step3 ul li.li-cross {
+form[name="wizform"] #step3 ul li.li-cross {
   margin-left: 50px; }
 
-#wizform #step3 .button-group a.btn img {
+form[name="wizform"] #step3 .button-group a.btn img {
   margin-top: 0; }
 
 /* non-email campaign / budget page */
-#wizform #wizard #step2 .other.view td:nth-of-type(1) {
+form[name="wizform"] div.wizard-unique-elem #step2 .other.view td:nth-of-type(1) {
   display: table-cell;
   float: none; }
 
-#wizform #wizard #step2 .other.view td:nth-of-type(2) {
+form[name="wizform"] div.wizard-unique-elem #step2 .other.view td:nth-of-type(2) {
   display: table-cell;
   float: none; }
 
-#wizform #wizard #step2 table tr td {
+form[name="wizform"] div.wizard-unique-elem #step2 table tr td {
   display: table-cell;
   float: none;
   width: auto; }
 
 /* desktop / tablet / mobile fix */
 @media (max-width: 1024px) {
-  #wizform table.other.view tr td.edit.view table tr td input {
+  form[name="wizform"] table.other.view tr td.edit.view table tr td input {
     max-width: 355px; }
 
-  #wizform table.other.view tr td.edit.view table tr td textarea {
+  form[name="wizform"] table.other.view tr td.edit.view table tr td textarea {
     max-width: 355px; } }
 @media (max-width: 1024px) and (max-width: 980px) {
-  #wizform table.other.view tr td.edit.view table tr td {
+  form[name="wizform"] table.other.view tr td.edit.view table tr td {
     display: block;
     float: left; }
 
-  #wizform table.other.view tr td.edit.view table tr td:nth-of-type(odd) {
+  form[name="wizform"] table.other.view tr td.edit.view table tr td:nth-of-type(odd) {
     width: 300px;
     max-width: 300px;
     min-width: 300px; }
 
-  #wizform table.other.view tr td.edit.view table tr td:nth-of-type(even) {
+  form[name="wizform"] table.other.view tr td.edit.view table tr td:nth-of-type(even) {
     width: 500px;
     max-width: 500px;
     min-width: 500px; }
 
   /* a common fix */
-  #wizform .edit tr {
+  form[name="wizform"] .edit tr {
     border-bottom: none; }
 
   /* Subscriptions fix */
-  #wizform #wizard #step2 table tr td {
+  form[name="wizform"] div.wizard-unique-elem #step2 table tr td {
     float: left; }
 
-  #wizform #wizard #step2 table tr th h4,
-  #wizform #wizard #step2 table tr td h4 {
+  form[name="wizform"] div.wizard-unique-elem #step2 table tr th h4,
+  form[name="wizform"] div.wizard-unique-elem #step2 table tr td h4 {
     max-width: 255px; }
 
   /* marketing fix */
-  #wizform table.other.view tr td #wizard #step2 table {
+  form[name="wizform"] table.other.view tr td div.wizard-unique-elem #step2 table {
     background: none; }
 
-  #wizform table.other.view tr td #wizard #step2 table.edit.view tr td {
+  form[name="wizform"] table.other.view tr td div.wizard-unique-elem #step2 table.edit.view tr td {
     display: block;
     float: left; }
 
-  #wizform table.other.view tr td #wizard #step2 table.edit.view tr td:nth-of-type(odd) {
+  form[name="wizform"] table.other.view tr td div.wizard-unique-elem #step2 table.edit.view tr td:nth-of-type(odd) {
     width: 300px;
     max-width: 300px;
     min-width: 300px; }
 
-  #wizform table.other.view tr td #wizard #step2 table.edit.view tr td:nth-of-type(even) {
+  form[name="wizform"] table.other.view tr td div.wizard-unique-elem #step2 table.edit.view tr td:nth-of-type(even) {
     width: 500px;
     max-width: 500px;
     min-width: 500px; }
 
   /* Target List fix */
-  #wizform table.other.view tr td.edit.view #wizard #step2 .row .col-xs-12.col-sm-4 {
+  form[name="wizform"] table.other.view tr td.edit.view div.wizard-unique-elem #step2 .row .col-xs-12.col-sm-4 {
     width: auto; }
 
-  #wizform table.other.view tr td.edit.view #wizard #step2 table.detail.view tr td table tr.detail.view td {
+  form[name="wizform"] table.other.view tr td.edit.view div.wizard-unique-elem #step2 table.detail.view tr td table tr.detail.view td {
     float: left; }
 
-  #wizform table.other.view tr td.edit.view #wizard #step2 table.detail.view tr td table tr.detail.view th {
+  form[name="wizform"] table.other.view tr td.edit.view div.wizard-unique-elem #step2 table.detail.view tr td table tr.detail.view th {
     float: left; }
 
-  #wizform table.other.view tr td.edit.view #wizard #step2 .target-list-table {
+  form[name="wizform"] table.other.view tr td.edit.view div.wizard-unique-elem #step2 .target-list-table {
     min-width: 335px; } }
 @media (max-width: 1024px) and (max-width: 980px) and (max-width: 480px) {
-  #wizform table.other.view tr td.edit.view table tr td input {
+  form[name="wizform"] table.other.view tr td.edit.view table tr td input {
     max-width: 255px; }
 
-  #wizform table.other.view tr td.edit.view table tr td textarea {
+  form[name="wizform"] table.other.view tr td.edit.view table tr td textarea {
     max-width: 255px; }
 
-  #wizform .wizard-box {
+  form[name="wizform"] .wizard-box {
     width: auto;
     min-width: 0; }
 
   /* target-list fix */
-  #wizform table.other.view tr td.edit.view #wizard #step2 .target-list-table {
+  form[name="wizform"] table.other.view tr td.edit.view div.wizard-unique-elem #step2 .target-list-table {
     min-width: 255px; } }
 .yui-ac {
   position: relative;

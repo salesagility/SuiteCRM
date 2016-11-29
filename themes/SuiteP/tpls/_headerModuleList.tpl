@@ -434,7 +434,7 @@
 
             {/if}
             <div id="globalLinks" class="dropdown nav navbar-nav globalLinks-desktop" >
-                <li id="usermenu" aria-expanded="false">
+                <li id="usermenu" class="usermenu" aria-expanded="false">
                     <a>
                         <span class="user_icon"> </span> {$CURRENT_USER}
                         <span class="caret"></span>
@@ -490,13 +490,6 @@
                         </li>
                     </ul>
                 </li>
-                <li id="desktop_notifications" class="dropdown nav navbar-nav desktop_notifications">
-                    <button class="alertsButton btn dropdown-toggle" data-toggle="dropdown"
-                            aria-expanded="false">
-                        <span class="alert_count hidden">0</span>
-                    </button>
-                    <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
-                </li>
                 <li id="" class="dropdown nav navbar-nav navbar-search">
                     <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton" data-toggle="dropdown" aria-expanded="true">
                         <!--<span class="glyphicon glyphicon-search"> </span>-->Search
@@ -509,7 +502,7 @@
                             <input type="hidden" class="form-control" name="search_form" value="false">
                             <input type="hidden" class="form-control" name="advanced" value="false">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="query_string" id="query_string"
+                                <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                        placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                             <span class="input-group-btn">
                                 <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
@@ -519,6 +512,13 @@
                         </form>
                     </div>
                 </li>
+                <li id="desktop_notifications" class="dropdown nav navbar-nav desktop_notifications">
+                    <button class="alertsButton btn dropdown-toggle" data-toggle="dropdown"
+                            aria-expanded="false">
+                        <span class="alert_count hidden">0</span>
+                    </button>
+                    <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
+                </li>
                 <li>
                     <form id="searchform" class="navbar-form searchform" name='UnifiedSearch' action='index.php'
                           onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
@@ -527,7 +527,7 @@
                         <input type="hidden" class="form-control" name="search_form" value="false">
                         <input type="hidden" class="form-control" name="advanced" value="false">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="query_string" id="query_string"
+                            <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                    placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                     <span class="input-group-btn">
                         <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
@@ -538,7 +538,7 @@
                 </li>
                 <li id="globalLinks" class="dropdown nav navbar-nav globalLinks-mobile">
 
-                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default " data-toggle="dropdown"
+                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed" data-toggle="dropdown"
                             aria-expanded="true">
                     </button>
                     <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu2">
@@ -601,7 +601,7 @@
                             <input type="hidden" class="form-control" name="search_form" value="false">
                             <input type="hidden" class="form-control" name="advanced" value="false">
                             <div class="input-group">
-                                <input type="text" class="form-control" name="query_string" id="query_string"
+                                <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                        placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                             <span class="input-group-btn">
                                 <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
@@ -619,7 +619,7 @@
                         <input type="hidden" class="form-control" name="search_form" value="false">
                         <input type="hidden" class="form-control" name="advanced" value="false">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="query_string" id="query_string"
+                            <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                    placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                     <span class="input-group-btn">
                         <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
@@ -637,7 +637,7 @@
                 </li>
                 <li id="globalLinks" class="dropdown nav navbar-nav globalLinks-mobile">
 
-                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default " data-toggle="dropdown"
+                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed" data-toggle="dropdown"
                             aria-expanded="true">
                     </button>
                     <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu2">

@@ -3798,17 +3798,6 @@ h3 span {
   left: 300px;
 }
 
-@media (min-width: 0) and (max-height: 320px) {
-
-  .mobile-bar ul.dropdown-menu.user-dropdown {
-    top: 50px;
-    left: -140px;
-    overflow-y: scroll;
-    height: 200px;
-  }
-
-}
-
 #themePreview {
   width: 250px;
 }
