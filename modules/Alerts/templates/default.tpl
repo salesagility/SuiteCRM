@@ -17,7 +17,7 @@
         </a>
         {/if}
         </h4>
-        <p>
+        <p class="alert-body">
             {$result->name|nl2br}<br/>
             {$result->description|nl2br}
         </p>
