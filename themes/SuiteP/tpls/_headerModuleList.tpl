@@ -42,11 +42,6 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <ul class="navbar-brand-container">
-                <li>
-                    <a class="navbar-brand" href="index.php?module=Home&action=index">{$APP.LBL_BROWSER_TITLE}</a>
-                </li>
-            </ul>
             <button type="button" class="navbar-toggle collapsed" data-toggle="dropdown">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
@@ -156,9 +151,12 @@
                 </div>
             </div>
         </div>
-        <div class="hidden-xs hidden-sm hidden-md hidden-mdlg desktop-toolbar" id="toolbar">
+        <div class="desktop-toolbar" id="toolbar">
             {if $USE_GROUP_TABS}
                 <ul class="nav navbar-nav">
+                    <li class="navbar-brand-container">
+                            <a class="navbar-brand" href="index.php?module=Home&action=index">{$APP.LBL_BROWSER_TITLE}</a>
+                    </li>
                     {assign var="groupSelected" value=false}
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                         {if $name == $MODULE_TAB}
@@ -167,9 +165,6 @@
                                     <span class="currentTabLeft">&nbsp;</span>
                                     <span class="currentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span>
                                     <span>&nbsp;</span>
-
-
-
                                     {* check, is there any recent items *}
                                     {assign var=foundRecents value=false}
                                     {foreach from=$recentRecords item=item name=lastViewed}
@@ -437,30 +432,6 @@
                 {/literal}
 
             {/if}
-            <div id="globalLinks" class="dropdown nav navbar-nav globalLinks-desktop" >
-                <li id="usermenu" class="usermenu" aria-expanded="false">
-                    <a>
-                        <span class="user_icon"> </span> {$CURRENT_USER}
-                        <span class="caret"></span>
-                    </a>
-                </li>
-
-                <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu1">
-                    <li role="presentation">
-                        <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>
-                            {$APP.LBL_PROFILE}
-                        </a>
-                    </li>
-                    {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
-                        <li role="presentation">
-                            <a id="{$gcl_key}_link"
-                               href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>
-                        </li>
-                    {/foreach}
-                    <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'
-                                               class='utilsLink'>{$LOGOUT_LABEL}</a></li>
-                </ul>
-            </div>
         </div>
 
         <!-- Right side of the main navigation -->
@@ -661,6 +632,129 @@
                     </ul>
                 </li>
             </ul>
+        </div>
+        <div class="desktop-bar">
+            <ul id="toolbar" class="toolbar">
+                <li id="quickcreatetop" class="create dropdown nav navbar-nav quickcreatetop">
+                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        {$APP.LBL_CREATE_BUTTON_LABEL}
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_ACCOUNT}</a>
+                        </li>
+                        <li>
+                            <a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{$APP.LBL_QUICK_CONTACT}</a>
+                        </li>
+                        <li>
+                            <a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">{$APP.LBL_QUICK_OPPORTUNITY}</a>
+                        </li>
+                        <li>
+                            <a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">{$APP.LBL_QUICK_LEAD}</a>
+                        </li>
+                        <li>
+                            <a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">{$APP.LBL_QUICK_DOCUMENT}</a>
+                        </li>
+                        <li>
+                            <a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{$APP.LBL_QUICK_CALL}</a>
+                        </li>
+                        <li class="last">
+                            <a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a>
+                        </li>
+                    </ul>
+                </li>
+                <li id="" class="dropdown nav navbar-nav navbar-search">
+                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton" data-toggle="dropdown" aria-expanded="true">
+                        <!--<span class="glyphicon glyphicon-search"> </span>-->Search
+                    </button>
+                    <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
+                        <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
+                              onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
+                            <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
+                            <input type="hidden" class="form-control" name="module" value="Home">
+                            <input type="hidden" class="form-control" name="search_form" value="false">
+                            <input type="hidden" class="form-control" name="advanced" value="false">
+                            <div class="input-group">
+                                <input type="text" class="form-control query_string" name="query_string" id="query_string"
+                                       placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
+                                                                                    aria-hidden="true"></span>-->Search</button>
+                            </span>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <form id="searchform" class="navbar-form searchform" name='UnifiedSearch' action='index.php'
+                          onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
+                        <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
+                        <input type="hidden" class="form-control" name="module" value="Home">
+                        <input type="hidden" class="form-control" name="search_form" value="false">
+                        <input type="hidden" class="form-control" name="advanced" value="false">
+                        <div class="input-group">
+                            <input type="text" class="form-control query_string" name="query_string" id="query_string"
+                                   placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
+                                                                            aria-hidden="true"></span>-->Search</button>
+                    </span>
+                        </div>
+                    </form>
+                </li>
+                <li id="desktop_notifications" class="dropdown nav navbar-nav desktop_notifications">
+                    <button class="alertsButton btn dropdown-toggle" data-toggle="dropdown"
+                            aria-expanded="false">
+                        <span class="alert_count hidden">0</span>
+                    </button>
+                    <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
+                </li>
+                <li id="globalLinks" class="dropdown nav navbar-nav globalLinks-desktop">
+
+                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed" data-toggle="dropdown"
+                            aria-expanded="true">
+                    </button>
+                    <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu2">
+                        <li role="presentation">
+                            <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>
+                                {$APP.LBL_PROFILE}
+                            </a>
+                        </li>
+                        {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
+                            <li role="presentation">
+                                <a id="{$gcl_key}_link"
+                                   href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>
+                            </li>
+                        {/foreach}
+                        <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'
+                                                   class='utilsLink'>{$LOGOUT_LABEL}</a></li>
+                    </ul>
+                </li>
+            </ul>
+            {*<div id="globalLinks" class="dropdown nav navbar-nav globalLinks-desktop" >*}
+            {*<li id="usermenu" class="usermenu" aria-expanded="false">*}
+            {*<a>*}
+            {*<span class="user_icon"> </span> {$CURRENT_USER}*}
+            {*<span class="caret"></span>*}
+            {*</a>*}
+            {*</li>*}
+
+            {*<ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu1">*}
+            {*<li role="presentation">*}
+            {*<a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>*}
+            {*{$APP.LBL_PROFILE}*}
+            {*</a>*}
+            {*</li>*}
+            {*{foreach from=$GCLS item=GCL name=gcl key=gcl_key}*}
+            {*<li role="presentation">*}
+            {*<a id="{$gcl_key}_link"*}
+            {*href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>*}
+            {*</li>*}
+            {*{/foreach}*}
+            {*<li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'*}
+            {*class='utilsLink'>{$LOGOUT_LABEL}</a></li>*}
+            {*</ul>*}
+            {*</div>*}
         </div>
 
 
