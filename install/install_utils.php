@@ -1,7 +1,4 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -47,6 +44,10 @@ if(!defined('sugarEntry') || !sugarEntry) {
  * (C) SugarCRM, Inc. All Rights Reserved. Contributor(s):
  * ______________________________________..
  * *******************************************************************************/
+
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/utils/zip_utils.php');
 
