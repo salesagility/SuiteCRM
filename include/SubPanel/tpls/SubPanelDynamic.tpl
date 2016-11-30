@@ -1,5 +1,4 @@
-<?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+{*
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,80 +36,34 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-
-
-
-
-global $beanList;
-global $beanFiles;
-
-
-if(empty($_REQUEST['module']))
-{
-	die("'module' was not defined");
-}
-
-if(empty($_REQUEST['record']))
-{
-	die("'record' was not defined");
-}
-
-if(!isset($beanList[$_REQUEST['module']]))
-{
-	die("'".$_REQUEST['module']."' is not defined in \$beanList");
-}
-
-if (!isset($_REQUEST['subpanel'])) {
-    sugar_die('Subpanel was not defined');
-}
-
-$subpanel = $_REQUEST['subpanel'];
-$record = $_REQUEST['record'];
-$module = $_REQUEST['module'];
-
-$collection = array();
-
-if(isset($_REQUEST['collection_basic']) && $_REQUEST['collection_basic'][0] != 'null'){
-    $_REQUEST['collection_basic'] = explode(',',$_REQUEST['collection_basic'][0]);
-    $collection = $_REQUEST['collection_basic'];
-}
-
-if(empty($_REQUEST['inline']))
-{
-	insert_popup_header($theme);
-}
-
-//require_once('include/SubPanel/SubPanelDefinitions.php');
-//require_once($beanFiles[$beanList[$_REQUEST['module']]]);
-//$focus=new $beanList[$_REQUEST['module']];
-//$focus->retrieve($record);
-
-include('include/SubPanel/SubPanel.php');
-$layout_def_key = '';
-if(!empty($_REQUEST['layout_def_key'])){
-	$layout_def_key = $_REQUEST['layout_def_key'];
-}
-require_once ('include/SubPanel/SubPanelDefinitions.php') ;
-// retrieve the definitions for all the available subpanels for this module from the subpanel
-$bean = BeanFactory::getBean($module);
-$spd = new SubPanelDefinitions ( $bean ) ;
-$aSubPanelObject = $spd->load_subpanel ( $subpanel ) ;
-
-
-$subpanel_object = new SubPanel($module, $record, $subpanel, $aSubPanelObject, $layout_def_key, $collection);
-$subpanel_object->setTemplateFile('include/SubPanel/tpls/SubPanelDynamic.tpl');
-
-echo (empty($_REQUEST['inline']))?$subpanel_object->get_buttons():'' ;  
-
-$subpanel_object->display();
-
-$jsAlerts = new jsAlerts();
-if (!isset($_SESSION['isMobile'])) {
-    echo $jsAlerts->getScript();
-}
-
-if(empty($_REQUEST['inline']))
-{
-	insert_popup_footer($theme);
-}
-
+*}
+{*
+ /*
+  * This template is now displays to the sub panel
+  */
+*}
+{$PAGINATION}
+<table cellpadding="0" cellspacing="0" border="0"  data-empty="{$APP.MSG_LIST_VIEW_NO_RESULTS_BASIC}" class="list view table-responsive">
+    <thead>
+        <tr>
+            {foreach from=$HEADER_CELLS key=colHeader item=header}
+                <th data-type="html">{$header}</th>
+            {/foreach}
+            <th data-type="html"><!-- extra th for the button --></th>
+        </tr>
+    </thead>
+    <tbody>
+    {foreach from=$ROWS key=rowHeader item=row}
+        <tr>
+            {foreach from=$row key=colHeader item=cell}
+                <td>{$cell}</td>
+            {/foreach}
+            <td>
+                {if $ROWS_BUTTONS.$rowHeader|@count gt 0}
+                    {sugar_action_menu id="$rowHeader" buttons=$ROWS_BUTTONS.$rowHeader class="clickMenu subpanel records fancymenu button" flat=false}
+                {/if}
+            </td>
+        </tr>
+    {/foreach}
+    </tbody>
+</table>
