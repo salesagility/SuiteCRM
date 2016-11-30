@@ -2405,7 +2405,7 @@ ul#detailViewActions.clickMenu {
     display: block;
     text-decoration: none !important;
     color: #999 !important;
-    padding: 1px 0 0 0 !important;
+    padding: 1px 0 0 0;
     text-shadow: 1px 1px #FFFFFF;
     font-weight: normal;
     font-size: 13px;
@@ -5998,7 +5998,7 @@ ul.clickMenu>li>span.searchAppliedAlert {
 }
 
 .paginationActionButtons .parent-dropdown-handler {
-    padding: 3px 10px !important;
+    padding: 3px 10px;
 }
 
 .paginationActionButtons .parent-dropdown-handler:hover * {
@@ -6007,11 +6007,11 @@ ul.clickMenu>li>span.searchAppliedAlert {
 
 
 .paginationActionButtons .selectActionsDisabled .parent-dropdown-action-handler {
-    padding: 3px 3px 0px 8px !important;
+    padding: 3px 3px 0px 8px;
 }
 
 .dateTimeRangeChoice select {
-    width:125px !important;
+    width:125px;
 }
 
 .dateRangeInput {

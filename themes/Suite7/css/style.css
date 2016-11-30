@@ -3800,7 +3800,7 @@ ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .l
     text-decoration: none;
     float: left;
     font-weight: normal !important;
-    padding: 1px 10px 1px 10px !important;
+    padding: 1px 10px 1px 10px;
     color: #000;
     font-size: 11px;
 }
@@ -3945,7 +3945,7 @@ ul.clickMenu li a.disabled {
 }
 
 ul.clickMenu li.sugar_action_button a.parent-dropdown-action-handler {
-    padding: 6px 10px 6px 10px !important;
+    padding: 6px 10px 6px 10px;
     border-radius: 4px;
 }
 
@@ -3977,7 +3977,7 @@ ul.clickMenu li.sugar_action_button a.parent-dropdown-action-handler {
 ul.clickMenu li ul.subnav li a,ul.clickMenu li ul.subnav li input, ul.subnav-sub li a, ul.SugarActionMenuIESub li a {
     float: left;
     background: #fff;
-    padding: 1px 10px !important;
+    padding: 1px 10px;
     border: 0px !important;
     /*width: 150px;*/
     width:100%;
@@ -4016,7 +4016,7 @@ ul#selectLink.clickMenu .massall, td.selectCol .massall{
 }
 
 td.paginationActionButtons ul.selectmenu > li > a, td.selectCol ul.selectmenu > li > a, ul#selectLink.clickMenu > li > a {
-    padding: 7px 5px 9px 6px !important;
+    padding: 7px 5px 9px 6px;
     border-radius: 4px;
     top: -1px;
 }
@@ -6570,7 +6570,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton {
 }
 
 ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > li > a {
-    padding: 6px 6px 8px 5px !important;
+    padding: 6px 6px 8px 5px;
     border-radius: 4px;
     top: 0px;
 }
@@ -6591,11 +6591,11 @@ ul.clickMenu>li>span.searchAppliedAlert {
 }
 
 .dateTimeRangeChoice select {
-    width:125px !important;
+    width:125px;
 }
 
 .dateRangeInput {
-    width:100px !important;
+    width:100px;
 }
 
 .templateGroupChooser {
