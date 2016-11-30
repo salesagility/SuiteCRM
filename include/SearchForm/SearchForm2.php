@@ -264,8 +264,7 @@ class SearchForm{
 
         $this->th->ss->assign('searchInfoJson', $this->getSearchInfoJson());
 
-        // TODO: bring it from config (but do not use filter icon if there is not any results cause list not shows)
-        $this->th->ss->assign('searchFormInPopup', true);
+        $this->th->ss->assign('searchFormInPopup', !in_array($this->module, isset($sugar_config['use_legacy_search']) ? $sugar_config['use_legacy_search'] : array()));
 
         $return_txt = $this->th->displayTemplate($this->seed->module_dir, 'SearchForm_'.$this->parsedView, $this->locateFile($this->tpl));
 
