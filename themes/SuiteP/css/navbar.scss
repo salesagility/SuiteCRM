@@ -4,7 +4,7 @@
 .navbar-inverse {
   background: $navbar-bg;
 
-  .navbar-brand {
+  .with-home-icon {
     display: inline-block;
     background-image: url('../../../../themes/SuiteP/images/p_icon_home.png');
     background-position: 14px 14px;
@@ -15,6 +15,7 @@
     width: 48px;
     height: 48px;
     text-indent: -9999px;
+    content: '';
   }
 
   .dropdown-menu > li > a {
@@ -510,10 +511,6 @@
   color: $navbar-menu-link-color;
 }
 
-.navbar-inverse .navbar-brand:hover {
-  //background-position: 0 $home-icon-bg-pos-y-over;
-}
-
 .usermenu a {
   font-size: 14px;
   background-color: $navbar-bg;
@@ -582,10 +579,16 @@
   height: 42px;
 }
 
+.usermenucollapsed {
+  margin: 0;
+  padding: 0;
+  height: 48px;
+  width: 48px;
+  line-height: 20px;
+}
 
-.usermenucollapsed.btn-default {
-  display: none;
-  margin: 0 0 0 5px;
+.usermenucollapsed.btn-default:hover {
+  border: none;
 }
 
 .usermenucollapsed.btn-default-mobile {
@@ -1081,6 +1084,19 @@
 }
 
 
+.globalLinks-desktop {
+  .btn-default.active,
+  .btn-default:active,
+  .open>.dropdown-toggle.btn-default {
+    background-color: $navbar-bg;
+  }
+}
+
+/*when filters are turned off*/
+.headerlinks {
+  display: inline-block;
+}
+
 @media (max-width: 750px) {
 
   .modulelinks .dropdown-menu {
@@ -1225,6 +1241,8 @@
     color: $default-btn-color;
     background-color: transparent;
     border-color: transparent;
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
+
   }
 
   .open.globalLinks > .btn-default:active {
@@ -1555,6 +1573,15 @@
     color: $default-btn-color;
     background-color: transparent;
     border-color: transparent;
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
+  }
+  .globalLinks-desktop {
+    .btn-default.active,
+    .btn-default:active,
+    .open>.dropdown-toggle.btn-default {
+      background-color: $navbar-bg;
+      background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
+    }
   }
 
   .open.globalLinks > .btn-default:active {
@@ -1653,6 +1680,20 @@
     background-size: 25px auto;
     width: 48px;
     height: 48px;
+  }
+
+  .desktop-bar .navbar-search.open .dropdown-menu {
+    top: -(($navbar-toolbar-height / 4) - 12px);
+    right: $navbar-toolbar-height;
+    left: auto;
+    background-color: $navbar-bg;
+    height: $navbar-toolbar-height;
+    overflow: visible;
+    width: auto;
+  }
+
+  .navbar-search .input-group-btn > .btn-default:hover {
+    border: none;
   }
 
   .navbar-search.open .searchbutton {
@@ -1783,7 +1824,7 @@
   }
 }
 
-@media (max-width: 1130px) {
+@media (max-width: 1200px) {
 
   .navbar-header {
     width: 49.9%;
@@ -1803,13 +1844,9 @@
     display: none;
   }
 
-
-
-
   .navbar-toggle {
     display: inline-block;
   }
-
 
   .mobile_menu {
     position: absolute;
@@ -1888,7 +1925,7 @@
   }
 }
 
-@media (min-width: 1131px) {
+@media (min-width: 1201px) {
   .navbar-fixed-top > .container-fluid {
     padding-left: 0;
     padding-right: 0;
@@ -1907,7 +1944,7 @@
     display: inline-block;
     visibility: visible;
     text-align: right;
-    width: 39%;
+    width: 35%;
   }
 
 
@@ -1951,9 +1988,45 @@
   .desktop-toolbar {
     display: inline-block;
   }
+  .desktop-toolbar {
+    display: inline-block;
+  }
+  .usermenucollapsed.btn-default {
+    display: inline-block;
+    margin: 0 0 0 5px;
+  }
+  /* overridding bootstrap needs to be stacked */
+  .globalLinks-desktop .btn-default.active.focus,
+  .globalLinks-desktop .btn-default.active:focus,
+  .globalLinks-desktop .btn-default.active:hover,
+  .globalLinks-desktop .btn-default:active.focus,
+  .globalLinks-desktop .btn-default:active:focus,
+  .globalLinks-desktop .btn-default:active:hover,
+  .globalLinks-desktop.open>.dropdown-toggle.btn-default.focus,
+  .globalLinks-desktop.open>.dropdown-toggle.btn-default:focus,
+  .globalLinks-desktop.open>.dropdown-toggle.btn-default:hover {
+    color: $default-btn-color;
+    background-color: transparent;
+    border-color: transparent;
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
+
+  }
 }
 
-@media (max-width: 1230px) {
+@media (min-width: 1201px) {
+  .navbar-inverse .nav > .topnav {
+    padding: 0 0 0 0;
+  }
+
+  .desktop-bar {
+    display: inline-block;
+    visibility: visible;
+    text-align: right;
+    width: 39%;
+  }
+}
+
+@media (max-width: 1399px) {
   .navbar-inverse .nav > .topnav {
     padding: 0 0 0 0;
   }
@@ -2025,7 +2098,6 @@
     height: auto;
   }
 }
-
 
 @media (max-width: 1560px) {
 
@@ -2143,8 +2215,8 @@
     background-repeat: no-repeat;
     margin-left: 0;
     border: none;
-    width: 42px;
-    height: 42px;
+    width: 48px;
+    height: 48px;
   }
 
   //.usermenucollapsed.btn-default, .usermenucollapsed.btn-default-mobile:hover {
@@ -2154,6 +2226,31 @@
   .content {
     margin-left: 1%;
     width: 99%;
+  }
+}
+
+@media (max-width: 1600px) {
+
+  .globalLinks-desktop .with-label {
+    display: none;
+    visibility: collapse;
+  }
+}
+@media (min-width: 1600px) {
+
+  .globalLinks-desktop .with-label {
+    display: inline-block;
+    visibility: visible;
+    background-color: $navbar-bg;
+    border: none;
+    color: $navbar-menu-link-color;
+    padding-left: 0;
+  }
+
+  .usermenucollapsed .caret {
+    display: inline-block;
+    visibility: visible;
+    color: $navbar-menu-link-color;
   }
 }
 

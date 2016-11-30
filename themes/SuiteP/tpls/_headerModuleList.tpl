@@ -155,7 +155,7 @@
             {if $USE_GROUP_TABS}
                 <ul class="nav navbar-nav">
                     <li class="navbar-brand-container">
-                            <a class="navbar-brand" href="index.php?module=Home&action=index">{$APP.LBL_BROWSER_TITLE}</a>
+                            <a class="navbar-brand with-home-icon" href="index.php?module=Home&action=index">{$APP.LBL_BROWSER_TITLE}</a>
                     </li>
                     {assign var="groupSelected" value=false}
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
@@ -290,6 +290,9 @@
             {else}
 
                 <ul class="nav navbar-nav navbar-horizontal-fluid">
+                    <li class="navbar-brand-container">
+                        <a class="navbar-brand" href="index.php?module=Home&action=index">{$APP.LBL_BROWSER_TITLE}</a>
+                    </li>
                     {foreach from=$groupTabs item=modules key=group name=groupList}
                         {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
                     {/foreach}
@@ -713,6 +716,13 @@
 
                     <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed" data-toggle="dropdown"
                             aria-expanded="true">
+                    </button>
+
+                    <button id="with-label" class="dropdown-toggle with-label" data-toggle="dropdown"
+                            aria-expanded="true">
+                        <span class="user_icon"> </span>
+                        <span class="user_label">{$CURRENT_USER}</span>
+                        <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu2">
                         <li role="presentation">
