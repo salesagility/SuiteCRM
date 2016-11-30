@@ -134,8 +134,6 @@ function changeReportPage(record, offset, group){
         query += "&parameter_operator[]="+operator;
         var fieldType = $('#aor_conditions_value_type\\['+ln+'\\]').val();
         query += "&parameter_type[]="+fieldType;
-        var fieldInput = $('#aor_conditions_value\\['+ln+'\\]').val();
-        query += "&parameter_value[]="+fieldInput;
         if (fieldType === 'Date') {
             var fieldValue = $('#aor_conditions_value\\[' + ln + '\\]\\[0\\]').val();
             var fieldSign = $('#aor_conditions_value\\[' + ln + '\\]\\[1\\]').val();
