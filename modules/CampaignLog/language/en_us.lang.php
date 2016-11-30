@@ -94,10 +94,7 @@ $mod_strings = array (
     'LBL_SENT_EMAIL' => 'Sent Email',
   	'LBL_LIST_FORM_TITLE'=> 'Targeted Campaigns',	
   	'LBL_LIST_ACTIVITY_DATE'=>'Activity Date',
-  	'LBL_LIST_CAMPAIGN_OBJECTIVE'=>'Campaign Objective',
   	'LBL_RELATED'=>'Related',
-  	'LBL_CLICKED_URL_KEY'=>'Clicked URL Key',
-  	'LBL_URL_CLICKED'=>'URL Clicked',
   	'LBL_MORE_INFO'=>'More Information',
     
     'LBL_CAMPAIGNS' => 'Campaigns',
