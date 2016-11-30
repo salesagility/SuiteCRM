@@ -632,14 +632,19 @@ footer.collapsedSidebar {
       clear: both; }
       .navbar-inverse .nav > .topnav.with-actions > span.notCurrentTab > a {
         display: inline-block;
-        border-top: 3px solid transparent; }
+        border-top: 3px solid transparent;
+        padding-top: 0;
+        padding-bottom: 0;
+        height: 90px; }
       .navbar-inverse .nav > .topnav.with-actions > span.notCurrentTab > a:hover {
         background-color: #5d5670;
         border-top: 3px solid #f08377; }
       .navbar-inverse .nav > .topnav.with-actions > span.currentTab > a {
         display: inline-block;
         border-top: 3px solid #f08377;
-        line-height: 180px; }
+        padding-top: 0;
+        padding-bottom: 0;
+        height: 90px; }
       .navbar-inverse .nav > .topnav.with-actions .currentTab a,
       .navbar-inverse .nav > .topnav.with-actions .dropdown-toggle {
         font-size: 13px; }
@@ -657,6 +662,14 @@ footer.collapsedSidebar {
   .navbar-inverse .btn-default:focus {
     background-color: transparent;
     border-color: transparent; }
+  .navbar-inverse .headerlinks a:link {
+    color: whitesmoke;
+    padding: 0;
+    width: 100%; }
+  .navbar-inverse .headerlinks a:visited {
+    color: whitesmoke;
+    padding: 0;
+    width: 100%; }
 
 .navbar-nav > li {
   float: none;

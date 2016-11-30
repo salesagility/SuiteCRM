@@ -142,8 +142,9 @@
         > a {
           display: inline-block;
           border-top: 3px solid transparent;
-          //padding-top: 36px;
-          //padding-bottom: 35px;
+          padding-top: 0;
+          padding-bottom: 0;
+          height: $navbar-height;
         }
 
         > a:hover {
@@ -156,8 +157,9 @@
         > a {
           display: inline-block;
           border-top: 3px solid $navbar-menu-current-seperator;
-          //padding-top: 36px;
-          //padding-bottom: 35px;
+          padding-top: 0;
+          padding-bottom: 0;
+          height: $navbar-height;
         }
       }
 
@@ -193,6 +195,19 @@
     background-color: transparent;
     border-color: transparent;
   }
+  .headerlinks a:link {
+    color: $default-btn-color;
+    padding: 0;
+    width: 100%;
+  }
+
+  .headerlinks a:visited {
+    color: $default-btn-color;
+    padding: 0;
+    width: 100%;
+  }
+
+
 }
 
 .navbar-nav>li {
