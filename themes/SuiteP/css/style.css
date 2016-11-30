@@ -1244,7 +1244,7 @@ option[selected],
 }
 
 .edit {
-    padding: 0 6px 12px 10px !important;
+    padding: 0 6px 12px 10px;
 }
 
 .label {
@@ -2149,7 +2149,7 @@ table.subpanelTabForm {
 .search_form .view {
     width: 100%;
     margin: 0;
-    padding: 20px !important;
+    padding: 20px;
     background-color: #E6E6E6;
     border-radius: 3px;
     font-size: 13px;
@@ -4076,7 +4076,7 @@ span#selectedRecordsTop {
 ul.clickMenu {
     list-style: none;
     padding: 0;
-    margin: 0 !important;
+    margin: 0;
     vertical-align: bottom;
     color: #ffffff;
     display: inline-block;
@@ -4266,7 +4266,7 @@ ul#selectLink.clickMenu .massall, td.selectCol .massall {
 }
 
 td.paginationActionButtons ul.selectmenu > li > a, td.selectCol ul.selectmenu > li > a, ul#selectLink.clickMenu > li > a {
-    padding: 0 !important;
+    padding: 0;
 }
 
 ul.clickMenu.showLess .moreOverflow, ul.clickMenu.showLess .moduleMenuOverFlowLess, ul.clickMenu.showMore .moduleMenuOverFlowMore {
@@ -11434,7 +11434,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.searchLink.listViewLinkButton {
 ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > li > a,
 ul.clickMenu.selectmenu.SugarActionMenu.searchLink.listViewLinkButton > li > a {
     margin: 0;
-    padding: 5px 8px 7px 7px !important;
+    padding: 5px 8px 7px 7px;
     top: -1px;
 }
 
@@ -11465,11 +11465,11 @@ div.qtip.qtip-default {
 }
 
 .dateTimeRangeChoice select {
-    width:125px !important;
+    width:125px;
 }
 
 .dateRangeInput {
-    width: 90px !important;
+    width: 90px;
 }
 
 .templateGroupChooser {
@@ -11479,7 +11479,7 @@ div.qtip.qtip-default {
 /* search form (and popup search form) */
 
 .search_form .view {
-    padding: 5px 0px 0px 30px !important;
+    padding: 5px 0px 0px 30px;
 }
 .modal-content .search_form .view {
     background-color: initial;
@@ -11512,7 +11512,7 @@ div.qtip.qtip-default {
 }
 
 .search_form .view .dateTimeRangeChoice select {
-    width: 90px !important;
+    width: 90px;
     margin-right: 4px;
 }
 
@@ -11531,7 +11531,7 @@ div.qtip.qtip-default {
 
 .search_form .view .col-xs-12 {
     padding-right: 30px;
-    min-height: initial !important;
+    min-height: initial;
 }
 
 .search_form .view .col-xs-12 input[type="text"],
@@ -11568,5 +11568,5 @@ div.qtip.qtip-default {
     min-height: 80px;
 }
 .search_form.non-popup .view {
-    padding: 10px 0px 10px 30px !important;
+    padding: 10px 0px 10px 30px;
 }
