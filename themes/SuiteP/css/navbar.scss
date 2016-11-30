@@ -7,7 +7,7 @@
   .with-home-icon {
     display: inline-block;
     background-image: url('../../../../themes/SuiteP/images/p_icon_home.png');
-    background-position: 14px 14px;
+    background-position: 14px ($navbar-height / 3);
     background-repeat: no-repeat;
     color: $navbar-menu-link-color;
     padding: 0;
@@ -127,6 +127,45 @@
         font-size: $navbar-topnav-font-size;
       }
     }
+
+    > .topnav.with-actions {
+      margin: 0;
+      font-size: 13px;
+      height: $navbar-height;
+      letter-spacing: 2px;
+      line-height: 90px;
+      padding: 0 0 0 0;
+      text-transform: uppercase;
+      clear: both;
+
+      > span.notCurrentTab {
+        > a {
+          display: inline-block;
+          border-top: 3px solid transparent;
+          //padding-top: 36px;
+          //padding-bottom: 35px;
+        }
+
+        > a:hover {
+          background-color: $navbar-main-menu-bg;
+          border-top: 3px solid $navbar-menu-current-seperator;
+        }
+      }
+
+      > span.currentTab {
+        > a {
+          display: inline-block;
+          border-top: 3px solid $navbar-menu-current-seperator;
+          //padding-top: 36px;
+          //padding-bottom: 35px;
+        }
+      }
+
+      .currentTab a,
+      .dropdown-toggle {
+        font-size: $navbar-topnav-font-size;
+      }
+    }
   }
 
   .navbar-right {
@@ -210,6 +249,10 @@
 
 .dropdown-menu li.favorite-links-title a:hover {
   color: $default-btn-color;
+}
+
+.with-actions span {
+  display: inline-block;
 }
 
 .with-actions .dropdown-menu {
@@ -1923,6 +1966,10 @@
   .tablet-bar .input-group-btn > .btn {
     margin-left: 0;
   }
+
+  .navbar-inverse .nav > .topnav {
+    padding: 0 0 0 0;
+  }
 }
 
 @media (min-width: 1201px) {
@@ -2014,15 +2061,24 @@
 }
 
 @media (min-width: 1201px) {
-  .navbar-inverse .nav > .topnav {
-    padding: 0 0 0 0;
-  }
-
   .desktop-bar {
     display: inline-block;
     visibility: visible;
     text-align: right;
     width: 39%;
+  }
+}
+
+@media (min-width: 1201px) and (max-width: 1230px)  {
+
+  .desktop-toolbar {
+    width: 67.9%;
+  }
+  .desktop-bar {
+    display: inline-block;
+    visibility: visible;
+    text-align: right;
+    width: 30%;
   }
 }
 
