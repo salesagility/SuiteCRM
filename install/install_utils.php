@@ -795,7 +795,6 @@ function handleSugarConfig() {
     $sugar_config['enable_line_editing_detail']     = true;
     $sugar_config['enable_line_editing_list']       = true;
     $sugar_config['hide_subpanels']       = true;
-    $sugar_config['show_search_form_popup'] = true;
 
     // Setup FTS
     if (!empty($_SESSION['setup_fts_type'])) {

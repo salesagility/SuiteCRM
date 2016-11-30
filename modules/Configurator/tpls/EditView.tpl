@@ -225,18 +225,6 @@
 			<input type='hidden' name='hide_subpanels' value='false'>
 			<input name='hide_subpanels'  type="checkbox" value="true" {$hide_subpanels}>
 		</td>
-
-		<td  scope="row" nowrap>{$MOD.LBL_SHOW_SEARCH_FORM_IN_POPUP}: &nbsp;{sugar_help text=$MOD.LBL_SHOW_SEARCH_FORM_IN_POPUP}</td>
-		{if (isset($config.show_search_form_popup) && $config.show_search_form_popup != "true") || !isset($config.show_search_form_popup)}
-			{assign var='show_search_form_popup' value=''}
-		{else}
-			{assign var='show_search_form_popup' value='CHECKED'}
-		{/if}
-		<td>
-			<input type='hidden' name='show_search_form_popup' value='false'>
-			<input name='show_search_form_popup'  type="checkbox" value="true" {$show_search_form_popup}>
-		</td>
-
 	</tr>
 
 </table>
