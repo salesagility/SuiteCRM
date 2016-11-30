@@ -1072,7 +1072,20 @@
   left: 50px;
 }
 
+.navbar-brand-container {
+  display: inline-block;
+  height: $navbar-toolbar-height;
+}
+
+.mobileheader {
+  display: inline-block;
+}
+
 @media (max-width: 750px) {
+
+  .modulelinks .dropdown-menu {
+    top: $navbar-toolbar-height + 10px;
+  }
 
   .desktop_notifications .has-alerts {
     background-color: $mobile-navbar-toolbar-bg;
@@ -1083,8 +1096,12 @@
     line-height: 20px;
   }
   .mobile-bar .user-dropdown {
-    top: $navbar-toolbar-height - 8px;
+    top: $navbar-toolbar-height - 12px;
     left: -140px;
+  }
+
+  .mobile-bar .btn {
+    line-height: $navbar-toolbar-height;
   }
 
   .mobile-bar .desktop_notifications {
@@ -1137,7 +1154,7 @@
   }
 
   .navbar-search > .dropdown-menu {
-    top: -($navbar-toolbar-height);
+    top: -($navbar-toolbar-height  + 12px);
     bottom: auto;
     left: auto;
     right: 0;
@@ -1175,28 +1192,78 @@
   .navbar-search .searchbutton {
     background-color: transparent;
     background-image: none, url("../../../../themes/SuiteP/images/p_search_button_small.svg"), url("../../../../themes/SuiteP/images/p_search_button_small.png");
-    background-position: 0 10px;
+    background-position: 0 0;
     background-repeat: no-repeat;
     padding: 0;
     //margin: 0 10px 0 0;
     border: none;
     overflow: hidden;
     width: 28px;
-    height: $navbar-toolbar-height;
+    height: 28px;
+    line-height:  $navbar-toolbar-height;
     text-indent: -9999px;
   }
 
   .navbar-search.open .searchbutton {
     background-image: none, url("../../../../themes/SuiteP/images/p_search_button_small.svg"), url("../../../../themes/SuiteP/images/p_search_button_small.png");
-    background-position: 0 10px;
+    background-position: 0 0;
     background-color: transparent;
   }
 
-  .quickcreatetop .dropdown-menu {
-    left: 0;
+
+
+  /* overridding bootstrap needs to be stacked */
+  .globalLinks-mobile .btn-default.active.focus,
+  .globalLinks-mobile .btn-default.active:focus,
+  .globalLinks-mobile .btn-default.active:hover,
+  .globalLinks-mobile .btn-default:active.focus,
+  .globalLinks-mobile .btn-default:active:focus,
+  .globalLinks-mobile .btn-default:active:hover,
+  .globalLinks-mobile.open>.dropdown-toggle.btn-default.focus,
+  .globalLinks-mobile.open>.dropdown-toggle.btn-default:focus,
+  .globalLinks-mobile.open>.dropdown-toggle.btn-default:hover {
+    color: $default-btn-color;
+    background-color: transparent;
+    border-color: transparent;
   }
 
-  .usermenucollapsed.btn-default {
+  .open.globalLinks > .btn-default:active {
+    background-color: transparent;
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    margin-top: 0;
+    border: none;
+    border-radius: 0;
+    width: 28px;
+    height: 28px;
+  }
+
+  .open.globalLinks > .btn-default:active:hover {
+    background-color: transparent;
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    margin-top: 0;
+    border: none;
+    border-radius: 0;
+    width: 28px;
+    height: 28px;
+  }
+
+  .open.globalLinks > .btn-default.focus:active {
+    background-color: transparent;
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    margin-top: 0;
+    border: none;
+    border-radius: 0;
+    width: 28px;
+    height: 28px;
+  }
+
+  .globalLinks-mobile > .btn-default.usermenucollapsed {
     background-color: transparent;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
     background-position: 0 0;
@@ -1377,12 +1444,7 @@
     padding: 0;
   }
 
-  .navbar-header {
-    display: inline-block;
-    float: none;
-    width: 49.5%;
-    line-height: $navbar-height;
-  }
+
 
   .navbar-inverse .mobile-bar .nav {
     display: inline-block;
@@ -1411,7 +1473,7 @@
   }
 
   .tablet-bar .user-dropdown {
-    top: $navbar-height;
+    top: ($navbar-height / 1.5);
     left: -140px;
   }
 
@@ -1453,8 +1515,8 @@
   }
 
   .quickcreatetop .dropdown-menu {
-    left: auto;
-    right: 0;
+    left: 0;
+    right: auto;
   }
 
   .usermenucollapsed.btn-default {
@@ -1474,6 +1536,70 @@
     border-radius: 0;
   }
 
+  /* overridding bootstrap needs to be stacked */
+  .globalLinks-mobile .btn-default.active.focus,
+  .globalLinks-mobile .btn-default.active:focus,
+  .globalLinks-mobile .btn-default.active:hover,
+  .globalLinks-mobile .btn-default:active.focus,
+  .globalLinks-mobile .btn-default:active:focus,
+  .globalLinks-mobile .btn-default:active:hover,
+  .globalLinks-mobile.open>.dropdown-toggle.btn-default.focus,
+  .globalLinks-mobile.open>.dropdown-toggle.btn-default:focus,
+  .globalLinks-mobile.open>.dropdown-toggle.btn-default:hover {
+    color: $default-btn-color;
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  .open.globalLinks > .btn-default:active {
+    background-color: transparent;
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    margin-top: 0;
+    border: none;
+    border-radius: 0;
+    width: 28px;
+    height: 28px;
+  }
+
+  .open.globalLinks > .btn-default:active:hover {
+    background-color: transparent;
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    margin-top: 0;
+    border: none;
+    border-radius: 0;
+    width: 42px;
+    height: 42px;
+  }
+
+  .open.globalLinks > .btn-default.focus:active {
+    background-color: transparent;
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    margin-top: 0;
+    border: none;
+    border-radius: 0;
+    width: 28px;
+    height: 28px;
+  }
+
+  .globalLinks-mobile > .btn-default.usermenucollapsed {
+    background-color: transparent;
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    margin-top: 0;
+    border: none;
+    border-radius: 0;
+    width: 42px;
+    height: 42px;
+  }
+
+
   .navbar-search {
     margin-right: 8px;
   }
@@ -1488,7 +1614,6 @@
     padding: 0;
     border: none;
     overflow: hidden;
-    width: 26px;
     text-indent: -9999px;
     background-size: 25px auto;
     background-position: 15px -46px;
@@ -1534,7 +1659,7 @@
     right: $navbar-toolbar-height;
     bottom: auto;
     left: auto;
-    background-color: $navbar-main-menu-bg;
+    background-color: $navbar-bg;
     min-width: 480px;
     min-height: $navbar-toolbar-height;
     height: $navbar-toolbar-height;
@@ -1620,6 +1745,14 @@
 
 }
 
+@media (min-width: 751px) and (max-width: 1560px) {
+  .navbar-header {
+    display: inline-block;
+    float: none;
+    width: 49.5%;
+  }
+}
+
 @media (max-width: 980px) {
   ul.navbar-nav li a {
     color: $navbar-menu-link-color;
@@ -1654,6 +1787,7 @@
 
 @media (max-width: 1130px) {
 
+
   .navbar-brand-container {
     display: none;
   }
@@ -1674,14 +1808,6 @@
     display: inline-block;
   }
 
-  .modulename {
-    font-size: 14px;
-    margin: 0 auto 0 15px;
-    letter-spacing: 2px;
-    text-align: left;
-    text-transform: uppercase;
-    visibility: visible;
-  }
 
   .mobile_menu {
     position: absolute;
@@ -1750,7 +1876,7 @@
 
   .mobile-bar .searchbutton.btn-default:hover {
     background-image: none, url("../../../../themes/SuiteP/images/p_search_button_small.svg"), url("../../../../themes/SuiteP/images/p_search_button_small.png");
-    background-position: 0 10px;
+    background-position: 0 0;
     border: none;
     background-color: $mobile-navbar-toolbar-bg;
   }
@@ -1759,6 +1885,7 @@
     margin-left: 0;
   }
 }
+
 
 @media (min-width: 1180px) and (max-width: 1199px) {
   @media (min-width: 1260px) {
@@ -1846,10 +1973,31 @@
     width: 42px;
     height: 42px;
   }
+  .mobileheader {
+    display: none;
+    visibility: collapse;
+  }
+  .navbar-header {
+    display: inline-block;
+    float: none;
+
+    line-height: $navbar-height;
+  }
+  .desktop-toolbar {
+    display: inline-block;
+  }
 }
 
 @media (max-width: 1560px) {
 
+  .modulename {
+    font-size: 14px;
+    margin: 0 auto 0 15px;
+    letter-spacing: 2px;
+    text-align: left;
+    text-transform: uppercase;
+    visibility: visible;
+  }
   .desktop-toolbar {
     display: none;
     visibility: collapse;
@@ -1943,7 +2091,7 @@
     font-size: 14px;
     background-color: $navbar-search-bg;
     color: $navbar-search-text-color;
-    padding: 0;
+    padding: 0 4px 0 4px;
     border: none;
     border-radius: 3px;
     letter-spacing: 1px;
