@@ -42,7 +42,11 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="index.php?module=Home&action=index">{$APP.LBL_BROWSER_TITLE}</a>
+            <ul class="navbar-brand-container">
+                <li>
+                    <a class="navbar-brand" href="index.php?module=Home&action=index">{$APP.LBL_BROWSER_TITLE}</a>
+                </li>
+            </ul>
             <button type="button" class="navbar-toggle collapsed" data-toggle="dropdown">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
@@ -269,7 +273,7 @@
                         {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
                         <li class="topnav">
                             <span class="notCurrentTabLeft">&nbsp;</span><span class="notCurrentTab">
-                            <a href="#" id="grouptab_{$smarty.foreach.groupList.index}" class="dropdown-toggle"
+                            <a href="#" id="grouptab_{$smarty.foreach.groupList.index}" class="dropdown-toggle grouptab"
                                data-toggle="dropdown">{$group}</a>
                             <span class="notCurrentTabRight">&nbsp;</span>
                             <ul class="dropdown-menu" role="menu" {if $smarty.foreach.groupList.last} class="All"{/if}>
