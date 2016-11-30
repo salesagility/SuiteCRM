@@ -544,7 +544,7 @@ footer.collapsedSidebar {
   .navbar-inverse .with-home-icon {
     display: inline-block;
     background-image: url("../../../../themes/SuiteP/images/p_icon_home.png");
-    background-position: 14px 14px;
+    background-position: 14px 30px;
     background-repeat: no-repeat;
     color: white;
     padding: 0;
@@ -621,6 +621,33 @@ footer.collapsedSidebar {
       .navbar-inverse .nav > .topnav .currentTab a,
       .navbar-inverse .nav > .topnav .dropdown-toggle {
         font-size: 13px; }
+    .navbar-inverse .nav > .topnav.with-actions {
+      margin: 0;
+      font-size: 13px;
+      height: 90px;
+      letter-spacing: 2px;
+      line-height: 90px;
+      padding: 0 0 0 0;
+      text-transform: uppercase;
+      clear: both; }
+      .navbar-inverse .nav > .topnav.with-actions > span.notCurrentTab > a {
+        display: inline-block;
+        border-top: 3px solid transparent;
+        padding-top: 0;
+        padding-bottom: 0;
+        height: 90px; }
+      .navbar-inverse .nav > .topnav.with-actions > span.notCurrentTab > a:hover {
+        background-color: #5d5670;
+        border-top: 3px solid #f08377; }
+      .navbar-inverse .nav > .topnav.with-actions > span.currentTab > a {
+        display: inline-block;
+        border-top: 3px solid #f08377;
+        padding-top: 0;
+        padding-bottom: 0;
+        height: 90px; }
+      .navbar-inverse .nav > .topnav.with-actions .currentTab a,
+      .navbar-inverse .nav > .topnav.with-actions .dropdown-toggle {
+        font-size: 13px; }
   .navbar-inverse .navbar-right .dropdown-menu {
     border-top-left-radius: 3px; }
   .navbar-inverse .btn-default {
@@ -635,6 +662,14 @@ footer.collapsedSidebar {
   .navbar-inverse .btn-default:focus {
     background-color: transparent;
     border-color: transparent; }
+  .navbar-inverse .headerlinks a:link {
+    color: whitesmoke;
+    padding: 0;
+    width: 100%; }
+  .navbar-inverse .headerlinks a:visited {
+    color: whitesmoke;
+    padding: 0;
+    width: 100%; }
 
 .navbar-nav > li {
   float: none;
@@ -679,6 +714,9 @@ footer.collapsedSidebar {
 
 .dropdown-menu li.favorite-links-title a:hover {
   color: whitesmoke; }
+
+.with-actions span {
+  display: inline-block; }
 
 .with-actions .dropdown-menu {
   padding: 0 10px 0 10px;
@@ -2051,7 +2089,10 @@ footer.collapsedSidebar {
     background-color: #a2b2bf; }
 
   .tablet-bar .input-group-btn > .btn {
-    margin-left: 0; } }
+    margin-left: 0; }
+
+  .navbar-inverse .nav > .topnav {
+    padding: 0 0 0 0; } }
 @media (min-width: 1201px) {
   .navbar-fixed-top > .container-fluid {
     padding-left: 0;
@@ -2128,14 +2169,20 @@ footer.collapsedSidebar {
     border-color: transparent;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png"); } }
 @media (min-width: 1201px) {
-  .navbar-inverse .nav > .topnav {
-    padding: 0 0 0 0; }
-
   .desktop-bar {
     display: inline-block;
     visibility: visible;
     text-align: right;
     width: 39%; } }
+@media (min-width: 1201px) and (max-width: 1230px) {
+  .desktop-toolbar {
+    width: 67.9%; }
+
+  .desktop-bar {
+    display: inline-block;
+    visibility: visible;
+    text-align: right;
+    width: 30%; } }
 @media (max-width: 1399px) {
   .navbar-inverse .nav > .topnav {
     padding: 0 0 0 0; } }
