@@ -976,12 +976,10 @@ footer.collapsedSidebar {
   color: whitesmoke; }
 
 .globalLinks-desktop ul li a {
-  color: white;
-  max-width: 150px; }
+  color: white; }
 
 .globalLinks-desktop ul li a:hover {
-  color: #f08377;
-  max-width: 150px; }
+  color: #f08377; }
 
 .globalLinks-desktop ul li {
   padding: 0; }
