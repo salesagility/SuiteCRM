@@ -1423,17 +1423,17 @@ width:350px;
 }
 
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime {
-    border-left: 4px solid #75AF4F /*!important*/;
+    border-left: 4px solid #75AF4F;
     background-color: #fff;
 }
 
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime {
-    border-left: 4px solid #ff0000 /*!important*/;
+    border-left: 4px solid #ff0000;
 }
 
 
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime.free {
-    border-left: 4px solid  #ff0000 /*!important*/;
+    border-left: 4px solid  #ff0000;
 }
 
 
