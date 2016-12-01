@@ -335,13 +335,20 @@
     width:80%;
     padding: .4em;
 }
-#Milestone, #Milestone_label, #Subtask, #Subtask_label {
-    display: inline!important;
+input[type=radio]#Milestone, label#Milestone_label, input[type=radio]#Subtask, label#Subtask_label {
+    display: inline-block;
 }
-#Duration, #Lag {
-    display: inline!important;
-    width: 58%!important;
- }
+
+input[type=text]#Duration {
+    display: inline;
+    width: 58%;
+}
+
+input[type=text]#Lag {
+    display: inline;
+    width: 58%;
+}
+
 #Duration_unit, #Lag_unit {
     display: inline;
     padding: .3em;
