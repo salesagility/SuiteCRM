@@ -630,10 +630,13 @@ $(function () {
                         $(e).removeClass('hidden');
                         $(e).next().hide();
                         refreshListViewCheckbox(e);
-                        $(e).click(function () {
-                            $(this).next().click();
-                            refreshListViewCheckbox($(this));
-                        });
+                        if(!$(e).hasClass('initialized-checkbox')) {
+                            $(e).click(function () {
+                                $(this).next().click();
+                                refreshListViewCheckbox($(this));
+                            });
+                            $(e).addClass('initialized-checkbox');
+                        }
                     });
 
                     $('#selectLink > li > ul > li > a, #selectLinkTop > li > ul > li > a, #selectLinkBottom > li > ul > li > a').click(function (e) {
@@ -651,6 +654,13 @@ $(function () {
         };
         initializeBootstrapCheckboxes();
 
+        var handlenonPopupBasicSearchForm = function() {
+            if($('.search_fields_basic').length > 0 && $('.search_fields_basic').length <= 3) {
+                $('.search_fields_basic input[type="text"], .search_fields_basic textarea').css('width', 'initial');
+            }
+        };
+        handlenonPopupBasicSearchForm();
+
         YAHOO.util.Connect.h = YAHOO.util.Connect.asyncRequest;
         YAHOO.util.Connect.asyncRequest = function(a,b,c,d,e,f,g) {
             var _c = c;
@@ -663,6 +673,7 @@ $(function () {
                 checkboxesInitialized = false;
                 checkboxesInitializeInterval = false;
                 initializeBootstrapCheckboxes();
+                handlenonPopupBasicSearchForm();
                 return r;
             };
             var r = YAHOO.util.Connect.h(a,b,c,d,e,f,g);

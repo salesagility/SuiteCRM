@@ -79,7 +79,7 @@ function clearAll() {
 <input type="submit" name="button" class="button" id="search_form_submit"
 	title="{$APP.LBL_SEARCH_BUTTON_TITLE}"
 	value="{$APP.LBL_SEARCH_BUTTON_LABEL}" />
-<input type="reset" onclick="SUGAR.searchForm.clear_form(this.form); return false;" class="button" id="search_form_clear"
+<input type="reset" onclick="SUGAR.searchForm.clear_form(this.form); this.form.submit(); return false;" class="button" id="search_form_clear"
 	title="{$APP.LBL_CLEAR_BUTTON_TITLE}"
 	value="{$APP.LBL_CLEAR_BUTTON_LABEL}"/>
 </td>

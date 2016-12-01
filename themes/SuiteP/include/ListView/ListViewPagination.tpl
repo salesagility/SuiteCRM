@@ -63,6 +63,9 @@
 
                         { if $actionDisabledLink ne "" }<div class='selectActionsDisabled' id='select_actions_disabled_{$action_menu_location}'>{$actionDisabledLink}<span class='ab'></span></div>{/if}
 						{include file='include/ListView/ListViewColumnsFilterLink.tpl'}
+						{if $showFilterIcon}
+							{include file='include/ListView/ListViewSearchLink.tpl'}
+						{/if}
 						&nbsp;{$selectedObjectsSpan}
 					</td>
 					<td  nowrap='nowrap' align="right" class='paginationChangeButtons' width="1%">
