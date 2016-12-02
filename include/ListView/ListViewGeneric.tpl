@@ -167,7 +167,9 @@
 				</th>
 				{counter name="colCounter"}
 			{/foreach}
-
+			<th width='1%' class="td_alt">
+				&nbsp;
+			</th>
 		</tr>
 	</thead>
 		{counter start=$pageData.offsets.current print=false assign="offset" name="offset"}
