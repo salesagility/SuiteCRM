@@ -328,7 +328,7 @@ class CaseUpdatesHook
      */
     public function closureNotifyPrep($case)
     {
-        if ($_REQUEST['module'] == 'Import') {
+        if (isset($_REQUEST['module']) && $_REQUEST['module'] == 'Import') {
             return;
         }
         if ($case->state != 'Closed' || $case->fetched_row['state'] == 'Closed') {
@@ -345,7 +345,7 @@ class CaseUpdatesHook
      */
     public function closureNotify($case, $event, $arguments)
     {
-        if ($_REQUEST['module'] == 'Import') {
+	    if (isset($_REQUEST['module']) && $_REQUEST['module'] == 'Import') {
             return;
         }
         if ($case->state != 'Closed' || !$case->send_closure_email) {
@@ -423,7 +423,7 @@ class CaseUpdatesHook
      */
     public function creationNotify($bean, $event, $arguments)
     {
-        if ($_REQUEST['module'] == 'Import') {
+	    if (isset($_REQUEST['module']) && $_REQUEST['module'] == 'Import') {
             return;
         }
         if ($arguments['module'] != 'Cases' || $arguments['related_module'] != 'Contacts') {

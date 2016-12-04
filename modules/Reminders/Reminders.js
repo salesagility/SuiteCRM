@@ -194,6 +194,44 @@ var Reminders = {
         Reminders.createRemindersPostData();
     },
     onInviteeClick: function(e) {
+        var parentReminderItem = $(e).closest('.reminder_item');
+        var parentReminderId = parentReminderItem.attr('data-reminder-id');
+        var reminders = Reminders.getRemindersData();
+        var _e = e;
+        $.each(reminders, function(i, reminder) {
+            if(reminder.id == parentReminderId && reminder.invitees.length == 1) {
+                var confirmDeletePopup = new YAHOO.widget.SimpleDialog("Confirm ", {
+                    //width: "400px",
+                    draggable: false,
+                    constraintoviewport: true,
+                    modal: true,
+                    fixedcenter: true,
+                    text: SUGAR.language.get('app_strings', 'LBL_DELETE_REMINDER_CONFIRM'),
+                    bodyStyle: "padding:5px",
+                    buttons: [{
+                        text: SUGAR.language.get('app_strings', 'LBL_OK'),
+                        handler: function(){
+                            // YES
+                            confirmDeletePopup.hide();
+                            parentReminderItem.remove();
+                            Reminders.createRemindersPostData();
+                            return false;
+                        },
+                        isDefault:true
+                    }, {
+                        text: SUGAR.language.get('app_strings', 'LBL_CANCEL_BUTTON_LABEL'),
+                        handler: function() {
+                            // NO
+                            confirmDeletePopup.hide();
+                            Reminders.createRemindersPostData();
+                            return false;
+                        }
+                    }]
+                });
+                confirmDeletePopup.setHeader(SUGAR.language.get('app_strings', 'LBL_DELETE_REMINDER'));
+                confirmDeletePopup.render(document.body);
+            }
+        });
         $(e).closest('.invitees_item').remove();
         Reminders.createRemindersPostData();
     },
@@ -284,7 +322,7 @@ var Reminders = {
             if(Reminders.getRemindersData().length == 0 && (Reminders.getBool(Reminders.defaultValues.popup) || Reminders.getBool(Reminders.defaultValues.email))) {
                 Reminders.addDefaultReminderInterval = setInterval(function () {
                     // we have to wait for the scheduler table loaded
-                    if ($('#schedulerTable').length == 0 || $('#schedulerTable .schedulerAttendeeRow').length > 0) {
+                    if ($('#schedulerTable').length != 0 && $('#schedulerTable .schedulerAttendeeRow').length > 0) {
                         clearInterval(Reminders.addDefaultReminderInterval);
                         Reminders.addReminder(null, Reminders.defaultValues.popup, Reminders.defaultValues.email, Reminders.defaultValues.timer_popup, Reminders.defaultValues.timer_email);
                         Reminders.createRemindersPostData();

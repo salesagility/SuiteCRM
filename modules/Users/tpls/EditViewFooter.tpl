@@ -55,7 +55,7 @@
                                 <td scope="row" width="17%">
                                 {$MOD.LBL_EMAIL}:  {if $REQUIRED_EMAIL_ADDRESS}<span class="required" id="mandatory_email">{$APP.LBL_REQUIRED_SYMBOL}</span> {/if}
                                 </td>
-                                <td>
+                                <td width="83%">
                                     {$NEW_EMAIL}
                                 </td>
                             </tr>

@@ -223,3 +223,11 @@
     mySugarLoader.insert();
     {/literal}
 </script>
+
+<script>
+    {literal}
+    $(function(){
+        if (SUGAR.ajaxUI && SUGAR.ajaxUI.hist_loaded == false) retrievePage(0);
+    });
+    {/literal}
+</script>

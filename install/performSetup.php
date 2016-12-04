@@ -494,34 +494,31 @@ if(!file_exists('custom/include')){
 
 require_once('modules/Home/dashlets.php');
 
-foreach($_SESSION['installation_scenarios'] as $scenario)
-{
-    //If the item is not in $_SESSION['scenarios'], then unset them as they are not required
-    if(!in_array($scenario['key'],$_SESSION['scenarios']))
-    {
-        foreach($scenario['modules'] as $module)
-        {
-            if (($removeKey = array_search($module, $enabled_tabs)) !== false) {
-                unset($enabled_tabs[$removeKey]);
+if(isset($_SESSION['installation_scenarios'])) {
+    foreach ($_SESSION['installation_scenarios'] as $scenario) {
+        //If the item is not in $_SESSION['scenarios'], then unset them as they are not required
+        if (!in_array($scenario['key'], $_SESSION['scenarios'])) {
+            foreach ($scenario['modules'] as $module) {
+                if (($removeKey = array_search($module, $enabled_tabs)) !== false) {
+                    unset($enabled_tabs[$removeKey]);
+                }
             }
-        }
 
-        //Loop through the dashlets to remove from the default home page based on this scenario
-        foreach($scenario['dashlets'] as $dashlet)
-        {
-            //if (($removeKey = array_search($dashlet, $defaultDashlets)) !== false) {
-            //    unset($defaultDashlets[$removeKey]);
-            // }
-            if(isset($defaultDashlets[$dashlet]))
-                unset($defaultDashlets[$dashlet]);
-        }
+            //Loop through the dashlets to remove from the default home page based on this scenario
+            foreach ($scenario['dashlets'] as $dashlet) {
+                //if (($removeKey = array_search($dashlet, $defaultDashlets)) !== false) {
+                //    unset($defaultDashlets[$removeKey]);
+                // }
+                if (isset($defaultDashlets[$dashlet]))
+                    unset($defaultDashlets[$dashlet]);
+            }
 
-        //If the scenario has an associated group tab, remove accordingly (by not adding to the custom tabconfig.php
-        if(isset($scenario['groupedTabs']))
-        {
-            unset($GLOBALS['tabStructure'][$scenario['groupedTabs']]);
-        }
+            //If the scenario has an associated group tab, remove accordingly (by not adding to the custom tabconfig.php
+            if (isset($scenario['groupedTabs'])) {
+                unset($GLOBALS['tabStructure'][$scenario['groupedTabs']]);
+            }
 
+        }
     }
 }
 

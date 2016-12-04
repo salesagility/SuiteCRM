@@ -3,9 +3,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,12 +38,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
- 
+
 $mod_strings = array (
 
-	'LBL_MODULE_NAME' => 'Calendar',
-	'LBL_AGENDADAY' => 'Day',
-	'LBL_AGENDAWEEK' => 'Week',
 	'LBL_SHAREDWEEK' => 'Shared Week',
 	'LBL_SHAREDMONTH' => 'Shared Month',
 
@@ -59,6 +56,8 @@ $mod_strings = array (
 	'LNK_TASK_LIST' => 'Tasks',
 	'LNK_TASK' => 'Task',
 	'LNK_TASK_VIEW' => 'View Task',
+	'LNK_EVENT' => 'Event',
+	'LNK_EVENT_VIEW' => 'View Event',
 	'LNK_VIEW_CALENDAR' => 'Today',
 	'LNK_IMPORT_CALLS' => 'Import Calls',
 	'LNK_IMPORT_MEETINGS' => 'Import Meetings',
@@ -91,7 +90,7 @@ $mod_strings = array (
 	'LBL_SELECT_USERS' => 'Select users for calendar display',
 	'LBL_FILTER_BY_TEAM' => 'Filter user list by team:',
 	'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
-	'LBL_DATE' => 'Start Date & Time',  
+	'LBL_DATE' => 'Start Date & Time',
 	'LBL_CREATE_MEETING' => 'Schedule Meeting',
 	'LBL_CREATE_CALL' => 'Log Call',
 	'LBL_HOURS_ABBREV' => 'h',
@@ -133,8 +132,8 @@ $mod_strings = array (
 
 	'LBL_SETTINGS_TITLE' => 'Settings',
 	'LBL_SETTINGS_DISPLAY_TIMESLOTS' => 'Display time slots in Day and Week views:',
-	'LBL_SETTINGS_TIME_STARTS'=>'Start time:', 
-	'LBL_SETTINGS_TIME_ENDS'=>'End time:', 
+	'LBL_SETTINGS_TIME_STARTS'=>'Start time:',
+	'LBL_SETTINGS_TIME_ENDS'=>'End time:',
 	'LBL_SETTINGS_CALLS_SHOW' => 'Show Calls:',
 	'LBL_SETTINGS_TASKS_SHOW' => 'Show Tasks:',
     'LBL_SETTINGS_COMPLETED_SHOW' => 'Show Completed Meetings, Calls and Tasks:',
@@ -149,15 +148,15 @@ $mod_strings = array (
 
 	'LBL_GENERAL_TAB' => 'Details',
 	'LBL_PARTICIPANTS_TAB' => 'Invitees',
-	'LBL_REPEAT_TAB' => 'Recurrence',	
+	'LBL_REPEAT_TAB' => 'Recurrence',
 	
 	'LBL_REPEAT_TYPE' => 'Repeat',
 	'LBL_REPEAT_INTERVAL' => 'Every',
 	'LBL_REPEAT_END' => 'End',	
 	'LBL_REPEAT_END_AFTER' => 'After',
 	'LBL_REPEAT_OCCURRENCES' => 'recurrences',
-	'LBL_REPEAT_END_BY' => 'By',	
-	'LBL_REPEAT_DOW' => 'On',	
+	'LBL_REPEAT_END_BY' => 'By',
+	'LBL_REPEAT_DOW' => 'On',
 	'LBL_REPEAT_UNTIL' => 'Repeat Until',
 	'LBL_REPEAT_COUNT' => 'Number of recurrences',
 	'LBL_REPEAT_LIMIT_ERROR' => 'Your request was going to create more than $limit meetings.',
