@@ -61,8 +61,8 @@
             if(this.lastLoadedDialogType!==null && this.lastLoadedDialogType != dialogType) {
                 $('#searchDialog .modal-body').addClass('modal-preload-hidden');
             }
+            SUGAR.searchForm.searchFormSelect('{/literal}{$module}{literal}|'+dialogType+'_search','{/literal}{$module}{literal}|'+(dialogType=='advanced'?'basic':'advanced')+'_search');
             this.lastLoadedDialogType = dialogType;
-            $('#'+dialogType+'_search_link').click();
         }
 
     };
