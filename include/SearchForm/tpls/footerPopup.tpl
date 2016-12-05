@@ -41,14 +41,13 @@
                         qtipContent += '</table>';
 
                         if(qtipNeeded) {
-                            $('.searchLink').qtip({
+                            $('.searchLink .searchAppliedAlert').qtip({
                                 content: qtipContent
                             });
                             $('.searchLink .searchAppliedAlert').removeClass('hidden');
                         }
                     }
                 }, 100);
-                //$('.searchLink').data('qtip').options.content.text = "some text<br>may <b>html<b> is?";
             });
 
         },
