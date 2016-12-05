@@ -1953,7 +1953,6 @@ table#mass_update_table td select {
 #selectLinkTop > .sugar_action_button > ul.subnav a,
 #actionLinkBottom > .sugar_action_button > ul.subnav a {
     color: #ffffff;
-    width: 83%;
 }
 #selectLinkTop > .sugar_action_button > ul.subnav a.menuItem,
 #actionLinkBottom > .sugar_action_button > ul.subnav a.menuItem,
@@ -11454,10 +11453,14 @@ ul.clickMenu>li>span.searchAppliedAlert {
     height: 20px;
     width: 20px;
     border-radius: 30px;
-    right: -16px;
+    left: 40px;
     top: -16px;
     background-image: none;
     text-align: center;
+}
+
+.modal-preload-hidden {
+    display: none;
 }
 
 div.qtip.qtip-default {

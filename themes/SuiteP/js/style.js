@@ -674,6 +674,8 @@ $(function () {
                 checkboxesInitializeInterval = false;
                 initializeBootstrapCheckboxes();
                 handlenonPopupBasicSearchForm();
+                $('.modal-preload-hidden').removeClass('modal-preload-hidden');
+                //$('.modal-body').addClass('modal-preload-hidden');
                 return r;
             };
             var r = YAHOO.util.Connect.h(a,b,c,d,e,f,g);

@@ -52,7 +52,18 @@
 
         },
 
-        onOpen: function() {}
+        onOpen: function() {},
+
+        lastLoadedDialogType: null,
+
+        toggleSearchDialog: function(dialogType) {
+            $('#searchDialog').modal('toggle');
+            if(this.lastLoadedDialogType!==null && this.lastLoadedDialogType != dialogType) {
+                $('#searchDialog .modal-body').addClass('modal-preload-hidden');
+            }
+            this.lastLoadedDialogType = dialogType;
+            $('#'+dialogType+'_search_link').click();
+        }
 
     };
 
