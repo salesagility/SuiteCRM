@@ -11460,6 +11460,12 @@ ul.clickMenu>li>span.searchAppliedAlert {
 }
 
 .modal-preload-hidden {
+    min-height: 100px;
+    background-image: url("../../../../themes/SuiteP/images/loading.gif");
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.modal-preload-hidden * {
     display: none;
 }
 
