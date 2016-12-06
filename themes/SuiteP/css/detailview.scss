@@ -1,2 +1,14 @@
 /**** Detail view ***/
 @import 'variables';
+
+.favorite_icon_fill svg,
+.favorite_icon_outline svg{
+  width: 28px;
+  height: 28px;
+
+}
+
+.module-title-text {
+  height: 36px;
+  line-height: 36px;
+}
