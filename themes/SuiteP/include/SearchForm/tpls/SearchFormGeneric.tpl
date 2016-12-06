@@ -87,6 +87,7 @@
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
 		{{sugar_field parentFieldArray='fields' vardef=$fields[$colData.field.name] accesskey=$ACCKEY displayType='searchView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name}}
 		</div>
+		<div class="search-clear"></div>
 	</div>
 {{/foreach}}
 </div>

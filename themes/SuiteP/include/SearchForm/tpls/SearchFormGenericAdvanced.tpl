@@ -81,7 +81,7 @@
 		<label for='{{$fields[$colData.field.name].name}}'>{sugar_translate label='{{$fields[$colData.field.name].vname}}' module='{{$module}}'}</label>
 	{{/if}}
 	</div>
-	<div clas="col-xs-12">
+	<div class="form-item">
 	{{if $fields[$colData.field.name]}}
 		{{sugar_field parentFieldArray='fields' accesskey=$ACCKEY vardef=$fields[$colData.field.name] displayType=$displayType displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name}}
    	{{/if}}
@@ -90,51 +90,51 @@
 </div>
 {{/foreach}}
 
-<tr>
-	<td colspan='20'>
+<div>
+	<div>
 		&nbsp;
-	</td>
-</tr>
+	</div>
+</div>
 {if $DISPLAY_SAVED_SEARCH && !$searchFormInPopup}
-<tr>
-	<td colspan='2'>
+<div>
+	<div>
 		<a class='tabFormAdvLink' onhover href='javascript:toggleInlineSearch()'>
             {capture assign="alt_show_hide"}{sugar_translate label='LBL_ALT_SHOW_OPTIONS'}{/capture}
 		{sugar_getimage alt=$alt_show_hide name="advanced_search" ext=".gif" other_attributes='border="0" id="up_down_img" '}&nbsp;{$APP.LNK_SAVED_VIEWS}
 		</a><br>
 		<input type='hidden' id='showSSDIV' name='showSSDIV' value='{$SHOWSSDIV}'><p>
-	</td>
-	<td scope='row' width='10%' nowrap="nowrap">
+	</div>
+	<div scope='row' width='10%' nowrap="nowrap">
 		{sugar_translate label='LBL_SAVE_SEARCH_AS' module='SavedSearch'}:
-	</td>
-	<td width='30%' nowrap>
+	</div>
+	<div width='30%' nowrap>
 		<input type='text' name='saved_search_name'>
 		<input type='hidden' name='search_module' value=''>
 		<input type='hidden' name='saved_search_action' value=''>
 		<input title='{$APP.LBL_SAVE_BUTTON_LABEL}' value='{$APP.LBL_SAVE_BUTTON_LABEL}' class='button' type='button' name='saved_search_submit' onclick='SUGAR.savedViews.setChooser(); return SUGAR.savedViews.saved_search_action("save");'>
-	</td>
-	<td scope='row' width='10%' nowrap="nowrap">
+	</div>
+	<div scope='row' width='10%' nowrap="nowrap">
 	    {sugar_translate label='LBL_MODIFY_CURRENT_SEARCH' module='SavedSearch'}:
-	</td>
-	<td width='30%' nowrap>
+	</div>
+	<div width='30%' nowrap>
         <input class='button' onclick='SUGAR.savedViews.setChooser(); return SUGAR.savedViews.saved_search_action("update")' value='{$APP.LBL_UPDATE}' title='{$APP.LBL_UPDATE}' name='ss_update' id='ss_update' type='button' >
 		<input class='button' onclick='return SUGAR.savedViews.saved_search_action("delete", "{sugar_translate label='LBL_DELETE_CONFIRM' module='SavedSearch'}")' value='{$APP.LBL_DELETE}' title='{$APP.LBL_DELETE}' name='ss_delete' id='ss_delete' type='button'>
 		<br><span id='curr_search_name'></span>
-	</td>
-</tr>
+	</div>
+</div>
 
-<tr>
-<td colspan='6'>
+<div>
+<div colspan='6'>
 <div style='{$DISPLAYSS}' id='inlineSavedSearch' >
 	{$SAVED_SEARCH}
 </div>
-</td>
-</tr>
+</div>
+</div>
 
 {/if}
 {if $displayType != 'popupView'}
-<tr>
-	<td colspan='5'>
+<div>
+	<div class="submitButtonsAdvanced">
         <input tabindex='2' title='{$APP.LBL_SEARCH_BUTTON_TITLE}' onclick='SUGAR.savedViews.setChooser()' class='button' type='submit' name='button' value='{$APP.LBL_SEARCH_BUTTON_LABEL}' id='search_form_submit_advanced'/>&nbsp;
         <input tabindex='2' title='{$APP.LBL_CLEAR_BUTTON_TITLE}'  onclick='SUGAR.searchForm.clear_form(this.form); document.getElementById("saved_search_select").options[0].selected=true; return false;' class='button' type='button' name='clear' id='search_form_clear_advanced' value='{$APP.LBL_CLEAR_BUTTON_LABEL}'/>
         {if $DOCUMENTS_MODULE}
@@ -148,13 +148,13 @@
             <span id='go_btn_span' style='display:none'><input tabindex='2' title='go_select' id='go_select'  onclick='SUGAR.searchForm.clear_form(this.form);' class='button' type='button' name='go_select' value=' {$APP.LBL_GO_BUTTON_LABEL} '/></span>	
         </span>
 		{/if}
-	</td>
-	<td class="help">
+	</div>
+	<div class="help">
 	    {if $DISPLAY_SEARCH_HELP}
 	    <img  border='0' src='{sugar_getimagepath file="help-dashlet.gif"}' class="help-search">
 	    {/if}
-    </td>
-</tr>
+    </div>
+</div>
 {/if}
 </div>
 

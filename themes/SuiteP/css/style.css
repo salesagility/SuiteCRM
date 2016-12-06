@@ -11573,3 +11573,69 @@ div.qtip.qtip-default {
 .search_form.non-popup .view {
     padding: 10px 0px 10px 30px;
 }
+
+.search-clear {
+    display: none;
+    clear: both;
+}
+
+.modal-search .search-clear {
+    display: block;
+}
+
+.modal-search .col-xs-12.col-sm-4.col-md-4.col-lg-4 {
+    float: none;
+    width: initial;
+}
+
+.modal-search .col-xs-12.col-sm-12.col-md-12.col-lg-4 {
+    float: left;
+    width: 150px;
+}
+
+.modal-search .col-xs-12.col-sm-12.col-md-12.col-lg-8 {
+    float: left;
+    width: 70%;
+}
+@media (min-width: 992px) {
+    .modal-search .modal-lg {
+        width: 600px;
+    }
+}
+@media (max-width: 594px) {
+    .modal-search .col-xs-12.col-sm-12.col-md-12.col-lg-8 {
+        width: 100%;
+    }
+}
+
+.modal-search .row {
+    margin-bottom: 30px;
+}
+
+.modal-search .row .submitButtons {
+    float: right;
+}
+
+.modal-search .col-xs-12.col-sm-6.col-md-4.col-lg-4 {
+    width: 100%;
+}
+
+.modal-search .col-xs-12.col-sm-6.col-md-4.col-lg-4 .col-xs-12 {
+    float: left;
+    width: 150px;
+}
+
+.modal-search .form-item {
+    float: left;
+    width: 70%;
+}
+@media (max-width: 594px) {
+    .modal-search .form-item {
+        width: 100%;
+    }
+}
+
+.modal-search .submitButtonsAdvanced {
+    float: right;
+    padding-right: 30px;
+}
