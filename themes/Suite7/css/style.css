@@ -6624,3 +6624,10 @@ ul.clickMenu>li>span.searchAppliedAlert {
         display: none;
     }
 }
+
+@media (max-width: 360px) {
+    .modal-search .edit tr td[scope=row] {
+        width: 100%;
+        float: none;
+    }
+}

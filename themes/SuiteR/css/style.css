@@ -6029,6 +6029,7 @@ ul.clickMenu>li>span.searchAppliedAlert {
         width: 100%;
         display: block;
         float: none;
+        border: none;
     }
     .modal-search td {
         width: 100%;
@@ -6044,5 +6045,18 @@ ul.clickMenu>li>span.searchAppliedAlert {
     }
     .modal-search .helpIcon {
       display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .modal-search .edit > table {
+        border: none;
+    }
+}
+
+@media (max-width: 360px) {
+    .modal-search .edit tr td[scope=row] {
+        width: 100%;
+        float: none;
     }
 }
