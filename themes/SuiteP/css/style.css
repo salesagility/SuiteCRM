@@ -6296,9 +6296,34 @@ div#search_form > .advanced input.button:hover {
   font-size: 13px;
   font-weight: bold; }
 
-@media (max-width: 425px) {
+.mobile-pagination {
+  line-height: 32px;
+  display: none;
+  visibility: collapse; }
+
+.mobile-pagination .btn-pagination[disabled] {
+  background-color: #777777; }
+
+.mobile-pagination .btn-pagination {
+  height: 20px;
+  line-height: 14px;
+  font-size: 8px;
+  padding: 0 5px 0 5px;
+  background-color: #94A6B5;
+  font-weight: 600; }
+
+.mobile-pagination .btn-pagination:hover {
+  background-color: #94A6B5; }
+
+.mobile-pagination .glyphicon-chevron-left {
+  margin-right: 0px; }
+
+.mobile-pagination .glyphicon-chevron-right {
+  margin-left: 0px; }
+
+@media (max-width: 750px) {
   .favorite {
-    padding: 0 44%;
+    padding: 0 45.25%;
     display: inline-block;
     float: none;
     width: 32px;
@@ -6306,15 +6331,31 @@ div#search_form > .advanced input.button:hover {
 
   .nav-tabs > li.tab-inline-pagination {
     display: none;
-    visibility: collapse; } }
-@media (max-width: 750px) {
+    visibility: collapse; }
+
+  nav-tabs > .mobile-pagination {
+    display: none;
+    visibility: collapse; }
+
+  .mobile-pagination {
+    display: block;
+    visibility: visible; }
+
+  .mobile-pagination > table {
+    width: 100px;
+    margin-left: auto;
+    margin-right: auto; }
+
+  .mobile-pagination .pagination-range-label {
+    font-size: 10px; }
+
   .moduleTitle .module-title-text {
     font-size: 18px;
     text-align: center;
     float: none;
     margin-bottom: 0; }
 
-  .pagination-range-label {
+  .tab-inline-pagination .pagination-range-label {
     display: none;
     visibility: hidden; } }
 @media (max-width: 1200px) {
@@ -6326,6 +6367,12 @@ div#search_form > .advanced input.button:hover {
     margin-right: 0px; }
 
   .nav-tabs > li.tab-inline-pagination .glyphicon-chevron-right {
+    margin-left: 0px; }
+
+  .mobile-pagination .glyphicon-chevron-left {
+    margin-right: 0px; }
+
+  .mobile-pagination .glyphicon-chevron-right {
     margin-left: 0px; } }
 /**** Edit view ***/
 div#searchResults {

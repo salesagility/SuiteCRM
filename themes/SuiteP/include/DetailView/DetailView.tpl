@@ -42,6 +42,7 @@
 {{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
 <div class="detail-view">
+    <div class="mobile-pagination">{$PAGINATION}</div>
     {*display tabs*}
     {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
     <ul class="nav nav-tabs">
