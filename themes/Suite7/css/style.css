@@ -6601,3 +6601,26 @@ ul.clickMenu>li>span.searchAppliedAlert {
 .templateGroupChooser {
     width: 150px;
 }
+
+@media (max-width: 990px) {
+    .modal-search tr {
+        width: 100%;
+        display: block;
+        float: none;
+    }
+    .modal-search td {
+        width: 100%;
+        display: block;
+        float: none;
+    }
+    .modal-search .edit tr td[scope=row] {
+        width: 110px;
+        float: left;
+    }
+    .modal-search .edit.basic tr td {
+        clear: both;
+    }
+    .modal-search .helpIcon {
+        display: none;
+    }
+}
