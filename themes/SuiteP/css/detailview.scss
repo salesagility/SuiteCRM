@@ -8,7 +8,8 @@
 
 }
 
-.module-title-text {
+.moduleTitle .module-title-text {
   height: 36px;
   line-height: 36px;
+  margin-bottom: $detail-view-module-title-space;
 }

@@ -236,7 +236,7 @@ div.noBullet li,
 }
 
 .content {
-  padding: $page-title-spacing 3% 40px 3%;
+  padding: $page-content-spacing 3% 40px 3%;
   width: 100%;
 }
 
@@ -1608,7 +1608,7 @@ div.confirmTable {
   font-size: 26px;
   font-weight: 300;
   color: $main-font-color;
-  margin: 0 0 $page-title-space 0;
+  margin: 0 0 $detail-view-module-title-space 0;
   float: left;
   letter-spacing: 2px;
   text-transform: uppercase;
