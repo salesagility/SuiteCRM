@@ -89,6 +89,15 @@
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{$APP.LBL_LINK_ACTIONS}}</a>
             {{include file="themes/SuiteP/include/DetailView/actions_menu.tpl"}}
         </li>
+            <li class="tab-inline-pagination">
+                {{if $panelCount == 0}}
+                {{* Render tag for VCR control if SHOW_VCR_CONTROL is true *}}
+                {{if $SHOW_VCR_CONTROL}}
+                {$PAGINATION}
+                {{/if}}
+                {{counter name="panelCount" print=false}}
+                {{/if}}
+            </li>
         {/if}
     </ul>
 
