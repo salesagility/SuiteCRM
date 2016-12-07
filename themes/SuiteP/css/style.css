@@ -76,6 +76,9 @@ a:hover {
 
 /* Firefox */
 @media (max-width: 750px) {
+  .bootstrap-container.col-sm-offset-3 {
+    margin-top: 110px; }
+
   .bootstrap-container {
     margin-top: 110px; } }
 @media (max-width: 1130px) {
