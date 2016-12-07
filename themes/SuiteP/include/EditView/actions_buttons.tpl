@@ -11,4 +11,9 @@
         {{sugar_button module="$module" id="Audit" view="$view" form_id="$form_id"}}
     {{/if}}
     {{sugar_action_menu buttons=$footer_buttons class="fancymenu" flat=true}}
+    {if $showVCRControl}
+        <button type="button" id="new_save_and_continue" class="button" title="{$app_strings.LBL_SAVE_AND_CONTINUE}" onClick="$('#save_and_continue').click();">
+            {$APP.LBL_SAVE_AND_CONTINUE}
+        </button>
+    {/if}
 </div>
