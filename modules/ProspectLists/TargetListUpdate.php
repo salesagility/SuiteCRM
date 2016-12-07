@@ -60,6 +60,19 @@ if($_REQUEST['select_entire_list'] == '1'){
 	$mass = new MassUpdate();
 	$mass->generateSearchWhere($_REQUEST['module'], $_REQUEST['current_query_by_page']);
 	$ret_array = create_export_query_relate_link_patch($_REQUEST['module'], $mass->searchFields, $mass->where_clauses);
+
+	if($focus->bean_implements('ACL') && ACLController::requireOwner($focus->module_dir, 'list') )
+        {
+            global $current_user;
+            $ownerWhere = $focus->getOwnerWhere($current_user->id);
+            if(!empty($ownerWhere)){
+                if(empty($ret_array['where'])){
+                    $ret_array['where'] = $ownerWhere;
+                }else{
+                    $ret_array['where'] .= " AND " . $ownerWhere;
+                }
+            }
+        }
 	/* BEGIN - SECURITY GROUPS */
 	//need to hijack the $ret_array['where'] of securitygorup required
 	if($focus->bean_implements('ACL') && ACLController::requireSecurityGroup($focus->module_dir, 'list') )
