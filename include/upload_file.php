@@ -820,6 +820,32 @@ class UploadStream
         return @stat(self::path($path));
     }
 
+    public function stream_metadata( $path, $option, $value )
+    {
+
+        $path = self::path( $path );
+
+        switch ( $option )
+        {
+            case STREAM_META_TOUCH:
+                return @touch($path, $value[0], $value[1]);
+                break;
+            case STREAM_META_OWNER_NAME:
+            case STREAM_META_OWNER:
+                return @chown($path, $value);
+                break;
+            case STREAM_META_GROUP_NAME:
+            case STREAM_META_GROUP:
+                return @chgrp($path, $value);
+                break;
+            case STREAM_META_ACCESS:
+                return @chmod($path, $value);
+                break;
+        }
+
+        return false;
+    }
+
     public static function move_uploaded_file($upload, $path)
     {
         return move_uploaded_file($upload, self::path($path));
