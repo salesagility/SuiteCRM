@@ -2,19 +2,19 @@
 @import 'variables';
 
 .favorite_icon_fill svg {
-  width: 28px;
   height: 28px;
+  width: 28px;
 
 }
 
 .favorite_icon_outline svg {
-  width: 28px;
   height: 28px;
+  width: 28px;
 
 }
 
 .moduleTitle .module-title-text {
-  height: 36px;
+  height: auto;
   line-height: 36px;
   margin-bottom: $detail-view-module-title-space;
 }
@@ -29,12 +29,12 @@
 }
 
 .nav-tabs > li.tab-inline-pagination .btn-pagination {
+  background-color: $default-btn-bg;
+  font-size: 10px;
+  font-weight: 600;
   height: 28px;
   line-height: 18px;
-  font-size: 10px;
   padding: 0 10px 0 10px;
-  background-color: $default-btn-bg;
-  font-weight: 600;
 }
 
 .nav-tabs > li.tab-inline-pagination .btn-pagination:hover {
@@ -57,9 +57,9 @@
 
 
  .mobile-pagination {
-  line-height: $tab-height;
-  display: none;
-  visibility: collapse;
+   display: none;
+   line-height: $tab-height;
+   visibility: collapse;
 }
 
  .mobile-pagination .btn-pagination[disabled] {
@@ -67,12 +67,12 @@
 }
 
  .mobile-pagination .btn-pagination {
-  height: 20px;
-  line-height: 14px;
-  font-size: 8px;
-  padding: 0 5px 0 5px;
-  background-color: $default-btn-bg;
-  font-weight: 600;
+   background-color: $default-btn-bg;
+   font-size: 8px;
+   font-weight: 600;
+   height: 20px;
+   line-height: 14px;
+   padding: 0 5px 0 5px;
 }
 
  .mobile-pagination .btn-pagination:hover {
@@ -92,11 +92,11 @@
 @media (max-width: 750px) {
 
   .favorite {
-    padding: 0 45.25%;
     display: inline-block;
     float: none;
-    width: 32px;
     height: 32px;
+    padding: 0 45.25%;
+    width: 32px;
   }
 
   .nav-tabs > li.tab-inline-pagination {
@@ -115,9 +115,9 @@
   }
 
   .mobile-pagination > table {
-    width: 100px;
     margin-left: auto;
     margin-right: auto;
+    width: 100px;
   }
 
   .mobile-pagination .pagination-range-label {
@@ -126,9 +126,9 @@
 
   .moduleTitle .module-title-text {
     font-size: 18px;
-    text-align: center;
     float: none;
     margin-bottom: 0;
+    text-align: center;
   }
 
   .tab-inline-pagination .pagination-range-label {

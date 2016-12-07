@@ -6262,15 +6262,15 @@ div#search_form > .advanced input.button:hover {
     max-width: 100px; } }
 /**** Detail view ***/
 .favorite_icon_fill svg {
-  width: 28px;
-  height: 28px; }
+  height: 28px;
+  width: 28px; }
 
 .favorite_icon_outline svg {
-  width: 28px;
-  height: 28px; }
+  height: 28px;
+  width: 28px; }
 
 .moduleTitle .module-title-text {
-  height: 36px;
+  height: auto;
   line-height: 36px;
   margin-bottom: 24px; }
 
@@ -6282,12 +6282,12 @@ div#search_form > .advanced input.button:hover {
   background-color: #777777; }
 
 .nav-tabs > li.tab-inline-pagination .btn-pagination {
+  background-color: #94A6B5;
+  font-size: 10px;
+  font-weight: 600;
   height: 28px;
   line-height: 18px;
-  font-size: 10px;
-  padding: 0 10px 0 10px;
-  background-color: #94A6B5;
-  font-weight: 600; }
+  padding: 0 10px 0 10px; }
 
 .nav-tabs > li.tab-inline-pagination .btn-pagination:hover {
   background-color: #94A6B5; }
@@ -6304,20 +6304,20 @@ div#search_form > .advanced input.button:hover {
   font-weight: bold; }
 
 .mobile-pagination {
-  line-height: 32px;
   display: none;
+  line-height: 32px;
   visibility: collapse; }
 
 .mobile-pagination .btn-pagination[disabled] {
   background-color: #777777; }
 
 .mobile-pagination .btn-pagination {
+  background-color: #94A6B5;
+  font-size: 8px;
+  font-weight: 600;
   height: 20px;
   line-height: 14px;
-  font-size: 8px;
-  padding: 0 5px 0 5px;
-  background-color: #94A6B5;
-  font-weight: 600; }
+  padding: 0 5px 0 5px; }
 
 .mobile-pagination .btn-pagination:hover {
   background-color: #94A6B5; }
@@ -6330,11 +6330,11 @@ div#search_form > .advanced input.button:hover {
 
 @media (max-width: 750px) {
   .favorite {
-    padding: 0 45.25%;
     display: inline-block;
     float: none;
-    width: 32px;
-    height: 32px; }
+    height: 32px;
+    padding: 0 45.25%;
+    width: 32px; }
 
   .nav-tabs > li.tab-inline-pagination {
     display: none;
@@ -6349,18 +6349,18 @@ div#search_form > .advanced input.button:hover {
     visibility: visible; }
 
   .mobile-pagination > table {
-    width: 100px;
     margin-left: auto;
-    margin-right: auto; }
+    margin-right: auto;
+    width: 100px; }
 
   .mobile-pagination .pagination-range-label {
     font-size: 10px; }
 
   .moduleTitle .module-title-text {
     font-size: 18px;
-    text-align: center;
     float: none;
-    margin-bottom: 0; }
+    margin-bottom: 0;
+    text-align: center; }
 
   .tab-inline-pagination .pagination-range-label {
     display: none;
@@ -9487,6 +9487,46 @@ td.inlineEditActive {
   top: 120px;
   z-index: 20000; }
 
+.edit-view-pagination .btn-pagination[disabled] {
+  background-color: #777777; }
+
+.edit-view-pagination .btn-pagination {
+  background-color: #94A6B5;
+  font-size: 10px;
+  font-weight: 600;
+  height: 28px;
+  line-height: 18px;
+  padding: 0 10px 0 10px; }
+
+.edit-view-pagination .btn-pagination:hover {
+  background-color: #94A6B5; }
+
+.edit-view-pagination.glyphicon-chevron-left {
+  margin-right: 4px; }
+
+.edit-view-pagination .glyphicon-chevron-right {
+  margin-left: 4px; }
+
+@media (max-width: 1200px) {
+  .pagination-label {
+    display: none;
+    visibility: collapse; }
+
+  .edit-view-pagination .btn-pagination.button {
+    margin-left: 0px;
+    margin-right: 0px; }
+
+  .edit-view-pagination .glyphicon-chevron-left {
+    margin-right: 0px; }
+
+  .edit-view-pagination.glyphicon-chevron-right {
+    margin-left: 0px; }
+
+  .edit-view-pagination .glyphicon-chevron-left {
+    margin-right: 0px; }
+
+  .edit-view-pagination .glyphicon-chevron-right {
+    margin-left: 0px; } }
 @media (max-width: 992px) {
   #settingsDialog_c {
     left: 1%; }
@@ -9801,7 +9841,45 @@ object {
 
   .detail tr:last-child {
     border: none; } }
+@media (min-width: 751px) {
+  .edit-view-pagination-mobile-container {
+    display: none;
+    visibility: collapse; } }
 @media (max-width: 750px) {
+  .edit-view-mobile-pagination {
+    font-size: 8px; }
+
+  .edit-view-mobile-pagination .btn-pagination.button {
+    font-size: 8px;
+    margin-left: 0px;
+    margin-right: 0px; }
+
+  .edit-view-pagination-mobile-container {
+    text-align: center; }
+
+  .edit-view-mobile-pagination {
+    display: inline-block;
+    width: auto; }
+
+  .edit-view-pagination-mobile > table {
+    display: inline-block;
+    width: auto; }
+
+  #EditView table.dcQuickEdit tr td.edit-view-pagination-desktop-container {
+    visibility: collapse;
+    display: none; }
+
+  .edit-view-pagination-desktop {
+    display: hidden;
+    visibility: collapse; }
+
+  .buttons .button {
+    width: 45%;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 4px;
+    font-size: 10px; }
+
   .edit tr {
     font-size: 1em;
     background: none; }
