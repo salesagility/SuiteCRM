@@ -73,6 +73,11 @@ a:hover {
   float: left;
 }
 
+.bootstrap-container.col-sm-offset-3 {
+  background-color: $main-bg;
+  margin-top: $navbar-height + 20px;
+}
+
 .bootstrap-container {
   background-color: $main-bg;
   margin-top: 110px;
@@ -93,11 +98,11 @@ a:hover {
 @media (max-width: 750px) {
 
   .bootstrap-container.col-sm-offset-3 {
-    margin-top: 110px;
+    margin-top: $navbar-height + 20px;
   }
 
   .bootstrap-container {
-    margin-top: 110px;
+    margin-top: $navbar-height + 20px;
   }
 }
 
