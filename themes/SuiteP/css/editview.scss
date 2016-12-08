@@ -4749,21 +4749,6 @@ object {
 
 }
 
-@media (min-width: 999px) and (max-width: 1024px) {
-  .col-sm-3 {
-    max-width: 215px;
-  }
-
-  .col-sm-offset-3 {
-    margin-left: 215px;
-  }
-
-  .col-sm-9 {
-    width: 75%;
-  }
-
-}
-
 @media (max-width: 1023px) {
   .quickcreate {
     padding: 5px 7px 5px 7px;
