@@ -333,6 +333,10 @@ class CalendarActivity
 
         $where .= ")";
 
+        if($where == '()') {
+            $where = '';
+        }
+
         return $where;
     }
 
