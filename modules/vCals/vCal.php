@@ -144,7 +144,7 @@
                 "Meetings" => array("showCompleted" => true, "start" => "date_start", "end" => "date_end"), "Calls" => array("showCompleted" => true, "start" => "date_start", "end" => "date_end"), "Tasks" => array("showCompleted" => true, "start" => "date_start", "end" => "date_due")
             );
 
-            $acts_arr = CalendarActivity::get_activities($activityList, $user_bean->id, false, $start_date_time, $end_date_time, 'freebusy');
+            $acts_arr = CalendarActivity::getActivities($activityList, $user_bean->id, false, $start_date_time, $end_date_time, 'freebusy');
             // loop thru each activity, get start/end time in UTC, and return FREEBUSY strings
             foreach ($acts_arr as $act) {
                 if (empty($act->start_time)) {

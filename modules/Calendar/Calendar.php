@@ -391,11 +391,11 @@ class Calendar {
 		$acts_arr = array();
 	    	if($type == 'vfb')
 	    	{
-				$acts_arr = CalendarActivity::get_freebusy_activities($user, $start_date_time, $end_date_time);
+				$acts_arr = CalendarActivity::getFreebusyActivities($user, $start_date_time, $end_date_time);
 	    	}
 	    	else
 	    	{
-				$acts_arr = CalendarActivity::get_activities($this->activityList, $user->id, $this->show_tasks, $start_date_time, $end_date_time, $this->view, $this->show_calls, $this->show_completed);
+				$acts_arr = CalendarActivity::getActivities($this->activityList, $user->id, $this->show_tasks, $start_date_time, $end_date_time, $this->view, $this->show_calls, $this->show_completed);
 	    	}
 
 
