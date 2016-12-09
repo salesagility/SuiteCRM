@@ -132,14 +132,18 @@ class M2MRelationship extends SugarRelationship
      */
     public function add($lhs, $rhs, $additionalFields = array())
     {
+        require_once("modules/Users/User.php");
+        require_once("modules/ACLRoles/ACLRole.php");
+        require_once("modules/SecurityGroups/SecurityGroup.php");
+
         $lhsLinkName = $this->lhsLink;
         $rhsLinkName = $this->rhsLink;
         
     	/* BEGIN - SECURITY GROUPS */
     	//Need to hijack this as security groups will not contain a link on the module side
     	//due to the way the module works. Plus it would remove the relative ease of adding custom module support
-    	
-    	if(get_class($rhs) != 'User' && get_class($rhs) != 'ACLRole' && get_class($lhs) == 'SecurityGroup') {
+
+        if (!$rhs instanceof User && !$rhs instanceof ACLRole && !$lhs instanceof SecurityGroup) {
 			$rhs->$rhsLinkName->addBean($lhs);			
 			$this->callBeforeAdd($rhs, $lhs, $rhsLinkName);
 
@@ -147,7 +151,7 @@ class M2MRelationship extends SugarRelationship
 			$this->addRow($dataToInsert);
     		$rhs->$rhsLinkName->addBean($lhs);
     		$this->callAfterAdd($lhs, $rhs, $lhsLinkName);
-    	} else if(get_class($lhs) != 'User' && get_class($lhs) != 'ACLRole' && get_class($rhs) == 'SecurityGroup') {
+        } else if(!$lhs instanceof User && !$lhs instanceof ACLRole && !$rhs instanceof SecurityGroup) {
 			$lhs->$lhsLinkName->addBean($rhs);			
 			$this->callBeforeAdd($lhs, $rhs, $lhsLinkName);
 
