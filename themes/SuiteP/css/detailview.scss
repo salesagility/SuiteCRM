@@ -67,12 +67,12 @@
 }
 
  .mobile-pagination .btn-pagination {
-  height: 20px;
-  line-height: 14px;
-  font-size: 8px;
-  padding: 0 5px 0 5px;
   background-color: $default-btn-bg;
+  font-size: 10px;
   font-weight: 600;
+  height: 28px;
+  line-height: 14px;
+  padding: 2px 10px 2px 10px;
 }
 
  .mobile-pagination .btn-pagination:hover {
