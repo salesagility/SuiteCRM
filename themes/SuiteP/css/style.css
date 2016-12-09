@@ -6329,10 +6329,14 @@ div#search_form > .advanced input.button:hover {
   margin-left: 0px; }
 
 @media (max-width: 750px) {
-  .favorite {
-    padding: 0 45.25%;
+  .moduleTitle {
     display: inline-block;
-    float: none;
+    padding-left: 30%; }
+
+  .favorite {
+    padding: 0 0;
+    display: inline-block;
+    float: none !important;
     width: 32px;
     height: 32px; }
 
@@ -6358,9 +6362,9 @@ div#search_form > .advanced input.button:hover {
 
   .moduleTitle .module-title-text {
     font-size: 18px;
-    text-align: center;
     float: none;
-    margin-bottom: 0; }
+    margin-bottom: 0;
+    display: inline-block; }
 
   .tab-inline-pagination .pagination-range-label {
     display: none;
