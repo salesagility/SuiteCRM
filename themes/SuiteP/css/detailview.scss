@@ -67,12 +67,12 @@
 }
 
  .mobile-pagination .btn-pagination {
-   background-color: $default-btn-bg;
-   font-size: 8px;
-   font-weight: 600;
-   height: 20px;
-   line-height: 14px;
-   padding: 0 5px 0 5px;
+  background-color: $default-btn-bg;
+  font-size: 10px;
+  font-weight: 600;
+  height: 28px;
+  line-height: 14px;
+  padding: 2px 10px 2px 10px;
 }
 
  .mobile-pagination .btn-pagination:hover {
@@ -91,9 +91,16 @@
 
 @media (max-width: 750px) {
 
-  .favorite {
+  .moduleTitle {
     display: inline-block;
-    float: none;
+    padding-left: 30%;
+  }
+
+  .favorite {
+    padding: 0 0;
+    display: inline-block;
+    float: none !important;
+    width: 32px;
     height: 32px;
     padding: 0 45.25%;
     width: 32px;
@@ -128,7 +135,7 @@
     font-size: 18px;
     float: none;
     margin-bottom: 0;
-    text-align: center;
+    display: inline-block;
   }
 
   .tab-inline-pagination .pagination-range-label {
