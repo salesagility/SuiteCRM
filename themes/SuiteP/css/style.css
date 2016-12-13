@@ -5697,6 +5697,8 @@ div.col-sm-6 #email1_span td.email-address-add-button {
 .row {
     margin-top: 1px;
     margin-bottom: 1px;
+    margin-right: 1px;
+    margin-left: 1px;
 }
 
 #btn_vCardButton {
