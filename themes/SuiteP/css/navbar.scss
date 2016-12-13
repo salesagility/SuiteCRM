@@ -1501,7 +1501,7 @@
   .tablet-bar {
     display: inline-block;
     visibility: visible;
-    width: 49.5%;
+    width: 49%;
     text-align: right;
     line-height: 90px;
   }
@@ -1847,6 +1847,10 @@
     border: none;
   }
 
+  .navbar-header {
+    width: 49%;
+    display: inline-block;
+  }
 }
 
 @media (max-width: 980px) {
@@ -1882,10 +1886,6 @@
 }
 
 @media (max-width: 1200px) {
-
-  .navbar-header {
-    width: 49.9%;
-  }
 
   .desktop-bar {
     display: none;
@@ -1998,14 +1998,14 @@
   }
 
   .desktop-toolbar {
-    width: 59%;
+    width: 70%;
   }
 
   .desktop-bar {
     display: inline-block;
     visibility: visible;
     text-align: right;
-    width: 35%;
+    width: 28%;
   }
 
 
@@ -2043,7 +2043,8 @@
   }
 
   .navbar-header {
-    display: inline-block;
+    display: none;
+    visibility: collapse;
     float: none;
   }
   .desktop-toolbar {
@@ -2074,27 +2075,15 @@
   }
 }
 
-@media (min-width: 1201px) {
+@media (min-width: 1250px) {
   .desktop-bar {
     display: inline-block;
     visibility: visible;
     text-align: right;
-    width: 39%;
   }
 }
 
-@media (min-width: 1201px) and (max-width: 1230px)  {
 
-  .desktop-toolbar {
-    width: 67.9%;
-  }
-  .desktop-bar {
-    display: inline-block;
-    visibility: visible;
-    text-align: right;
-    width: 30%;
-  }
-}
 
 @media (max-width: 1399px) {
   .navbar-inverse .nav > .topnav {
@@ -2296,6 +2285,14 @@
   .content {
     margin-left: 1%;
     width: 99%;
+  }
+}
+@media (min-width: 1561px) {
+  .desktop-toolbar {
+    width: 60%;
+  }
+  .desktop-bar {
+    width: 39%;
   }
 }
 
