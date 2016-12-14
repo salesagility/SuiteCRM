@@ -115,12 +115,12 @@
 }
 
 
-[id^=list_subpanel_] {
+.sub-panel > .panel-body > .tab-content > div {
   margin-bottom: 25px ;
-  border: 1px solid #dddddd;
+  border: none;
 }
 
-[id^=list_subpanel_] tr:last-child {
+.sub-panel > .panel-body > .tab-content > div tr:last-child {
   margin-bottom: 25px ;
   border-bottom: none;
 }
@@ -163,16 +163,20 @@ div.sub-panel {
   border-bottom-right-radius: 4px;
 }
 
-.subpanel-table th {
-  border-bottom: 1px solid #ddd;
+//.subpanel-table th {
+//  border-bottom: 1px solid #ddd;
+//}
+
+.table-responsive.list .pagination {
+  border-bottom: 0px solid transparent;
 }
 
-.subpanel-table.list th {
+.footable-details.table-responsive.list th {
   font-weight: bold;
   color: #000000;
 }
 
-.subpanel-table.list th a:link {
+.footable-details.table-responsive.list th a:link {
   font-weight: bold;
   color: #000000;
 }

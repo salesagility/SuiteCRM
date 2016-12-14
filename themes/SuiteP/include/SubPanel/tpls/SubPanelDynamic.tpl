@@ -42,7 +42,7 @@
   * This template is now displays to the sub panel
   */
 *}
-<table cellpadding="0" cellspacing="0" border="0" class="list view table-responsive" data-empty="{$APP.MSG_LIST_VIEW_NO_RESULTS_BASIC}" {literal}data-breakpoints='{ "xs": 754, "sm": 750, "md": 768, "lg": 992}'{/literal}>
+<table cellpadding="0" cellspacing="0" border="0" class="list view table-responsive subpanel-table" data-empty="{$APP.MSG_LIST_VIEW_NO_RESULTS_BASIC}" {literal}data-breakpoints='{ "xs": 754, "sm": 750, "md": 768, "lg": 992}'{/literal}>
     <thead>
         <tr class="footable-header">
             {counter start=0 name="colCounter" print=false assign="colCounter"}
