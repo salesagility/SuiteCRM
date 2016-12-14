@@ -51,13 +51,13 @@ SUGAR.loaded_once = false;
 
 $(document).ajaxStop( function() {
         // collapse subpanels when device is mobile / tablet
-        if($(window).width() <= SUGAR.measurements.breakpoints.large && !SUGAR.loaded_once) {
+        if($(window).width() <= SUGAR.measurements.breakpoints.large && SUGAR.loaded_once == false) {
             $('.panel-collapse').removeClass('in');
             $('.panel-heading-collapse a').removeClass('in');
             $('.panel-heading-collapse a').addClass('collapsed');
         }
 
-        if(!SUGAR.loaded_once) {
+        if(SUGAR.loaded_once == false) {
           $('.sub-panel .table-responsive').footable();
         }
 
