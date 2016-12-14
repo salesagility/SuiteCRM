@@ -24,11 +24,32 @@
   line-height: $tab-height;
 }
 
+
 .nav-tabs > li.tab-inline-pagination .btn-pagination[disabled] {
   background-color: $disabled-btn-bg;
 }
 
+
+.buttons .pagination .btn-pagination {
+  height: 28px;
+  line-height: 18px;
+  font-size: 10px;
+  padding: 0 10px 0 10px;
+  background-color: $default-btn-bg;
+  font-weight: 600;
+}
+
 .nav-tabs > li.tab-inline-pagination .btn-pagination {
+  height: 28px;
+  line-height: 18px;
+  font-size: 10px;
+  padding: 0 10px 0 10px;
+  background-color: $default-btn-bg;
+  font-weight: 600;
+}
+
+
+.buttons .pagination .btn-pagination:hover {
   height: 28px;
   line-height: 18px;
   font-size: 10px;
@@ -109,7 +130,7 @@
     visibility: collapse;
   }
 
-  nav-tabs > .mobile-pagination {
+  .nav-tabs > .mobile-pagination {
     display: none;
     visibility: collapse;
   }

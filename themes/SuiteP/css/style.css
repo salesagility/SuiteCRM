@@ -6281,7 +6281,23 @@ div#search_form > .advanced input.button:hover {
 .nav-tabs > li.tab-inline-pagination .btn-pagination[disabled] {
   background-color: #777777; }
 
+.buttons .pagination .btn-pagination {
+  height: 28px;
+  line-height: 18px;
+  font-size: 10px;
+  padding: 0 10px 0 10px;
+  background-color: #94A6B5;
+  font-weight: 600; }
+
 .nav-tabs > li.tab-inline-pagination .btn-pagination {
+  height: 28px;
+  line-height: 18px;
+  font-size: 10px;
+  padding: 0 10px 0 10px;
+  background-color: #94A6B5;
+  font-weight: 600; }
+
+.buttons .pagination .btn-pagination {
   height: 28px;
   line-height: 18px;
   font-size: 10px;
@@ -6344,7 +6360,7 @@ div#search_form > .advanced input.button:hover {
     display: none;
     visibility: collapse; }
 
-  nav-tabs > .mobile-pagination {
+  .nav-tabs > .mobile-pagination {
     display: none;
     visibility: collapse; }
 
