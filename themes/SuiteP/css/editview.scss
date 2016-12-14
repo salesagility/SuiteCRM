@@ -236,7 +236,7 @@ div.noBullet li,
 }
 
 .content {
-  padding: $page-title-spacing 3% 40px 3%;
+  padding: $page-content-spacing 3% 40px 3%;
   width: 100%;
 }
 
@@ -1608,7 +1608,7 @@ div.confirmTable {
   font-size: 26px;
   font-weight: 300;
   color: $main-font-color;
-  margin: 0 0 $page-title-space 0;
+  margin: 0 0 $detail-view-module-title-space 0;
   float: left;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -1619,9 +1619,9 @@ div.confirmTable {
 }
 
 .moduleTitle h2 span.pointer {
-  font-size: 18px;
+  font-size: 32px;
   padding: 0 8px;
-  line-height: 16px;
+  line-height: 36px;
 }
 
 ul.subTabs {
@@ -3872,6 +3872,62 @@ td.inlineEditActive {
   z-index: 20000;
 }
 
+
+.edit-view-pagination .btn-pagination[disabled] {
+  background-color: $disabled-btn-bg;
+}
+
+.edit-view-pagination .btn-pagination {
+  background-color: $default-btn-bg;
+  font-size: 10px;
+  font-weight: 600;
+  height: 28px;
+  line-height: 18px;
+  padding: 0 10px 0 10px;
+}
+
+.edit-view-pagination .btn-pagination:hover {
+  background-color: $default-btn-bg-hover;
+}
+
+.edit-view-pagination.glyphicon-chevron-left {
+  margin-right: 4px;
+}
+
+.edit-view-pagination .glyphicon-chevron-right {
+  margin-left: 4px;
+}
+
+
+@media (max-width: 1200px) {
+  .pagination-label {
+    display: none;
+    visibility: collapse;
+  }
+
+  .edit-view-pagination .btn-pagination.button {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .edit-view-pagination .glyphicon-chevron-left {
+    margin-right: 0px;
+  }
+
+  .edit-view-pagination.glyphicon-chevron-right {
+    margin-left: 0px;
+  }
+
+  .edit-view-pagination .glyphicon-chevron-left {
+    margin-right: 0px;
+  }
+
+  .edit-view-pagination .glyphicon-chevron-right {
+    margin-left: 0px;
+  }
+}
+
+
 @media (max-width: 992px) {
   #settingsDialog_c {
     left: 1%;
@@ -4272,9 +4328,83 @@ object {
   .detail tr:last-child {
     border: none;
   }
+
+  .buttons input.button[type=submit]:hover, input.button[type=button]:hover, input.button[type=reset]:hover {
+    font-size: 10px;
+  }
+}
+
+@media (min-width: 751px) {
+  .edit-view-pagination-mobile-container {
+    display: none;
+    visibility: collapse;
+  }
 }
 
 @media (max-width: 750px) {
+
+  .edit-view-mobile-pagination {
+    font-size: 8px;
+  }
+
+  .edit-view-mobile-pagination .btn-pagination.button {
+    font-size: 8px;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .edit-view-pagination-mobile-container {
+    text-align: center;
+  }
+
+  #EditView .buttons {
+    width: 100%;
+  }
+
+  #EditView .dcQuickEdit > tbody {
+    display: block;
+    width: 100%;
+  }
+
+  #EditView .dcQuickEdit tr {
+    display: block;
+    width: 100%;
+  }
+
+  #EditView .dcQuickEdit td {
+    display: block;
+    width: 100%;
+  }
+
+
+  .edit-view-mobile-pagination {
+    display: inline-block;
+    width: auto;
+  }
+
+  .edit-view-pagination-mobile > table {
+    display: inline-block;
+    width: auto;
+  }
+
+  #EditView table.dcQuickEdit tr td.edit-view-pagination-desktop-container {
+    visibility: collapse;
+    display: none;
+  }
+
+  .edit-view-pagination-desktop {
+    display: hidden;
+    visibility: collapse;
+  }
+
+
+  .buttons .button {
+    width: 45%;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 4px;
+    font-size: 10px;
+  }
 
   .edit tr {
     font-size: 1em;
@@ -4639,21 +4769,6 @@ object {
 
   #dlg_c {
     left: 50%;
-  }
-
-}
-
-@media (min-width: 999px) and (max-width: 1024px) {
-  .col-sm-3 {
-    max-width: 215px;
-  }
-
-  .col-sm-offset-3 {
-    margin-left: 215px;
-  }
-
-  .col-sm-9 {
-    width: 75%;
   }
 
 }
