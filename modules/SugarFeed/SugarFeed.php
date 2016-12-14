@@ -268,9 +268,9 @@ class SugarFeed extends Basic {
         }
         $text = strip_tags(from_html($text));
 		$text = '<b>{this.CREATED_BY}</b> ' . $text;
-		$feed->name = mb_substr($text, 0, 255, 'UTF-8');	
-		if(mb_strlen($text, 'UTF-8') > 255){
-			$feed->description = mb_substr($text, 255, 510, 'UTF-8');
+		$feed->name = substr($text, 0, 255);
+		if(strlen($text) > 255){
+			$feed->description = substr($text, 255, 510);
 		}
 
 		if ( $record_assigned_user_id === false ) {
