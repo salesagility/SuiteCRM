@@ -46,7 +46,15 @@
             <button type="button" id="save_and_continue" class="hidden" title="{$app_strings.LBL_SAVE_AND_CONTINUE}" onClick="this.form.action.value='Save';if(check_form('EditView')){ldelim}sendAndRedirect('EditView', '{$app_strings.LBL_SAVING} {$module}...', '{$list_link}');{rdelim}">
                 {$app_strings.LBL_SAVE_AND_CONTINUE}
             </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;{else}
+                {* remove the other save and continue button next to teh view change log *}
+                {literal}
+                    <script>
+                        $(document).ready(function () {
+                          $('#new_save_and_continue').remove();
+                        })
+                    </script>
+                {/literal}
             {/if}
             <span class="pagination">
                 {if !empty($previous_link)}
