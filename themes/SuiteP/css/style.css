@@ -6297,7 +6297,7 @@ div#search_form > .advanced input.button:hover {
   background-color: #94A6B5;
   font-weight: 600; }
 
-.buttons .pagination .btn-pagination {
+.buttons .pagination .btn-pagination:hover {
   height: 28px;
   line-height: 18px;
   font-size: 10px;
@@ -6384,7 +6384,11 @@ div#search_form > .advanced input.button:hover {
 
   .tab-inline-pagination .pagination-range-label {
     display: none;
-    visibility: hidden; } }
+    visibility: hidden; }
+
+  .buttons .pagination {
+    visibility: collapse;
+    display: none; } }
 @media (max-width: 1200px) {
   .pagination-label {
     display: none;
