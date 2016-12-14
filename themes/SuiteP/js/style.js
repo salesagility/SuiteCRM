@@ -299,10 +299,6 @@ $(function() {
     });
 });
 
-jQuery(function($){
-    $('table.footable').footable(SUGAR.measurements);
-})
-
 
 // JavaScript fix to remove unrequired classes on smaller screens where sidebar is obsolete
 $(window).resize(function () {
