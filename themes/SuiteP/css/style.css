@@ -9849,7 +9849,10 @@ object {
     margin: 0; }
 
   .detail tr:last-child {
-    border: none; } }
+    border: none; }
+
+  .buttons input.button[type=submit]:hover, input.button[type=button]:hover, input.button[type=reset]:hover {
+    font-size: 10px; } }
 @media (min-width: 751px) {
   .edit-view-pagination-mobile-container {
     display: none;
@@ -9865,6 +9868,21 @@ object {
 
   .edit-view-pagination-mobile-container {
     text-align: center; }
+
+  #EditView .buttons {
+    width: 100%; }
+
+  #EditView .dcQuickEdit > tbody {
+    display: block;
+    width: 100%; }
+
+  #EditView .dcQuickEdit tr {
+    display: block;
+    width: 100%; }
+
+  #EditView .dcQuickEdit td {
+    display: block;
+    width: 100%; }
 
   .edit-view-mobile-pagination {
     display: inline-block;
