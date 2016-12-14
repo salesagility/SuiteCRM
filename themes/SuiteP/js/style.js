@@ -51,12 +51,17 @@ SUGAR.loaded_once = false;
 
 $(document).ajaxStop( function() {
         // collapse subpanels when device is mobile / tablet
-        if($(window).width() <= SUGAR.measurements.breakpoints.large) {
+        if($(window).width() <= SUGAR.measurements.breakpoints.large && !SUGAR.loaded_once) {
             $('.panel-collapse').removeClass('in');
             $('.panel-heading-collapse a').removeClass('in');
             $('.panel-heading-collapse a').addClass('collapsed');
         }
-        $('.sub-panel .table-responsive').footable();
+
+        if(!SUGAR.loaded_once) {
+          $('.sub-panel .table-responsive').footable();
+        }
+
+        SUGAR.loaded_once = true;
 });
 
 $(document).ready(function () {

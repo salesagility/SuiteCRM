@@ -67,8 +67,8 @@
         </tr>
         {* TODO: Break $pagination so that it can be fully customisable *}
         {$PAGINATION}
-        <tr id="activities_search" class="pagination" style="display:none">
-            <td align="right" colspan="{if $prerow}{$colCount+1}{else}{$colCount}{/if}"></td>
+        <tr id="activities_search" class="pagination" style="display:none" colspan="0">
+            <td align="right" colspan="0"></td>
         </tr>
     </thead>
     <tbody>
