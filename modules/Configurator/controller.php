@@ -258,11 +258,6 @@ class ConfiguratorController extends SugarController
         $focus = new Administration();
         $focus->saveConfig();
 
-        // Clear the Contacts file b/c portal flag affects rendering
-        if (file_exists($cachedfile = sugar_cached('modules/Contacts/EditView.tpl'))) {
-            unlink($cachedfile);
-        }
-
         $rc = new RepairAndClear();
         $rc->clearTpls();
         $rc->clearLanguageCache();
