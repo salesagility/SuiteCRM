@@ -115,12 +115,12 @@
 }
 
 
-[id^=list_subpanel_] {
+.sub-panel > .panel-body > .tab-content > div {
   margin-bottom: 25px ;
-  border: 1px solid #dddddd;
+  border: none;
 }
 
-[id^=list_subpanel_] tr:last-child {
+.sub-panel > .panel-body > .tab-content > div tr:last-child {
   margin-bottom: 25px ;
   border-bottom: none;
 }
@@ -163,18 +163,50 @@ div.sub-panel {
   border-bottom-right-radius: 4px;
 }
 
-.subpanel-table th {
-  border-bottom: 1px solid #ddd;
+.table-responsive.list .pagination,
+.table-responsive.list .pagination tr,
+.table-responsive.list .pagination  td,
+.table-responsive.list .pagination  th {
+    border: 0;
 }
 
-.subpanel-table.list th {
+.sub-panel tbody tr td .sugar_action_button > a:link {
+  border-bottom: none;
+  color: $list-view-button-color;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.sub-panel .sugar_action_button > a:hover {
+  border-bottom: none;
+  color: $list-view-button-color;
+}
+
+
+.sub-panel .table-responsive.list > tbody > tr > td ul.subnav a {
+  color: $list-view-button-color;
+  width: 100%;
+}
+
+.sub-panel .table-responsive.list > tbody > tr > td ul.subnav a:hover {
+  color: $list-view-button-color;
+  width: 100%;
+}
+
+.sub-panel tbody tr td ul.clickMenu > li > span {
+  margin-top: 12px;
+}
+
+
+.footable-details.table-responsive.list th {
   font-weight: bold;
   color: #000000;
 }
 
-.subpanel-table.list th a:link {
+.footable-details.table-responsive.list th a:link {
   font-weight: bold;
   color: #000000;
+  border-bottom: none;
 }
 
 .subpanel-table .clickMenu > li, .SugarActionMenuIESub li {
