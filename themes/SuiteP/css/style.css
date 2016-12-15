@@ -6281,6 +6281,14 @@ div#search_form > .advanced input.button:hover {
 .nav-tabs > li.tab-inline-pagination .btn-pagination[disabled] {
   background-color: #777777; }
 
+.buttons .pagination .btn-pagination {
+  height: 28px;
+  line-height: 18px;
+  font-size: 10px;
+  padding: 0 10px 0 10px;
+  background-color: #94A6B5;
+  font-weight: 600; }
+
 .nav-tabs > li.tab-inline-pagination .btn-pagination {
   background-color: #94A6B5;
   font-size: 10px;
@@ -6288,6 +6296,14 @@ div#search_form > .advanced input.button:hover {
   height: 28px;
   line-height: 18px;
   padding: 0 10px 0 10px; }
+
+.buttons .pagination .btn-pagination:hover {
+  height: 28px;
+  line-height: 18px;
+  font-size: 10px;
+  padding: 0 10px 0 10px;
+  background-color: #94A6B5;
+  font-weight: 600; }
 
 .nav-tabs > li.tab-inline-pagination .btn-pagination:hover {
   background-color: #94A6B5; }
@@ -6346,7 +6362,7 @@ div#search_form > .advanced input.button:hover {
     display: none;
     visibility: collapse; }
 
-  nav-tabs > .mobile-pagination {
+  .nav-tabs > .mobile-pagination {
     display: none;
     visibility: collapse; }
 
@@ -6373,7 +6389,10 @@ div#search_form > .advanced input.button:hover {
     visibility: hidden; }
 
   .pointer {
-    font-size: 32px; } }
+    font-size: 32px; }
+  .buttons .pagination {
+    visibility: collapse;
+    display: none; } }
 @media (max-width: 1200px) {
   .pagination-label {
     display: none;
