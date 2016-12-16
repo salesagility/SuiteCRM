@@ -648,33 +648,15 @@ $(function () {
 
                     checkboxesInitialized = true;
                     clearInterval(checkboxesInitializeInterval);
-                    checkboxesInitializeInterval = true;
+                    checkboxesInitializeInterval = false;
                 }
             }
         };
         initializeBootstrapCheckboxes();
-
-        YAHOO.util.Connect.h = YAHOO.util.Connect.asyncRequest;
-        YAHOO.util.Connect.asyncRequest = function(a,b,c,d,e,f,g) {
-            var _c = c;
-            _c.s = _c.success;
-            c.success = function(a,b,c,d,e,f,g) {
-                var r = _c.s(a,b,c,d,e,f,g);
-                if(checkboxesInitializeInterval) {
-                    clearInterval(checkboxesInitializeInterval);
-                }
-                checkboxesInitialized = false;
-                checkboxesInitializeInterval = false;
-                initializeBootstrapCheckboxes();
-                //$('.modal-preload-hidden').removeClass('modal-preload-hidden');
-                return r;
-            };
-            var r = YAHOO.util.Connect.h(a,b,c,d,e,f,g);
-            return r;
-
-        };
     };
-    listViewCheckboxInit();
+    setInterval(function(){
+        listViewCheckboxInit();
+    },100);
 
 
     setInterval(function() {
