@@ -11465,9 +11465,6 @@ ul.clickMenu>li>span.searchAppliedAlert {
     background-position: center;
     background-repeat: no-repeat;
 }
-.modal-preload-hidden * {
-    display: none;
-}
 
 div.qtip.qtip-default {
     border: none;

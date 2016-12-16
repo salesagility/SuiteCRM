@@ -93,15 +93,9 @@
 
         onOpen: function() {},
 
-        lastLoadedDialogType: null,
-
         toggleSearchDialog: function(dialogType) {
-            if((this.lastLoadedDialogType==null || this.lastLoadedDialogType != dialogType) && !(this.lastLoadedDialogType==null && dialogType == 'advanced')) {
-                $('#searchDialog .modal-body').addClass('modal-preload-hidden');
-            }
             $('#searchDialog').modal('toggle');
             SUGAR.searchForm.searchFormSelect('{/literal}{$module}{literal}|'+dialogType+'_search','{/literal}{$module}{literal}|'+(dialogType=='advanced'?'basic':'advanced')+'_search');
-            this.lastLoadedDialogType = dialogType;
         }
 
     };
