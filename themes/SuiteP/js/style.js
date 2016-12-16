@@ -654,13 +654,6 @@ $(function () {
         };
         initializeBootstrapCheckboxes();
 
-        var handlenonPopupBasicSearchForm = function() {
-            if($('.search_fields_basic').length > 0 && $('.search_fields_basic').length <= 3) {
-                $('.search_fields_basic input[type="text"], .search_fields_basic textarea').css('width', 'initial');
-            }
-        };
-        handlenonPopupBasicSearchForm();
-
         YAHOO.util.Connect.h = YAHOO.util.Connect.asyncRequest;
         YAHOO.util.Connect.asyncRequest = function(a,b,c,d,e,f,g) {
             var _c = c;
@@ -673,7 +666,7 @@ $(function () {
                 checkboxesInitialized = false;
                 checkboxesInitializeInterval = false;
                 initializeBootstrapCheckboxes();
-                handlenonPopupBasicSearchForm();
+                //$('.modal-preload-hidden').removeClass('modal-preload-hidden');
                 return r;
             };
             var r = YAHOO.util.Connect.h(a,b,c,d,e,f,g);

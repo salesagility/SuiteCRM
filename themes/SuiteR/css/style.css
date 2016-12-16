@@ -4329,6 +4329,9 @@ select,
     .search_form {
         display: none;
     }
+    .modal-search .search_form {
+        display: block;
+    }
 }
 
 /* Custom styling for recently viewed on sidebar */
@@ -6019,4 +6022,41 @@ ul.clickMenu>li>span.searchAppliedAlert {
 
 .templateGroupChooser {
     width: 150px;
+}
+
+@media (max-width: 990px) {
+    .modal-search tr {
+        width: 100%;
+        display: block;
+        float: none;
+        border: none;
+    }
+    .modal-search td {
+        width: 100%;
+        display: block;
+        float: none;
+    }
+    .modal-search .edit tr td[scope=row] {
+        width: 110px;
+        float: left;
+    }
+    .modal-search .edit.basic tr td {
+        clear: both;
+    }
+    .modal-search .helpIcon {
+      display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .modal-search .edit > table {
+        border: none;
+    }
+}
+
+@media (max-width: 360px) {
+    .modal-search .edit tr td[scope=row] {
+        width: 100%;
+        float: none;
+    }
 }
