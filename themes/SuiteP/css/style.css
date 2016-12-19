@@ -1376,11 +1376,8 @@ td.submitButtons input {
 
 /* PAGINATION */
 
-.list tr#pagination {
-}
-
 .list tr#pagination td {
-    padding: 0px !important;
+    padding: 0px;
 }
 
 .list tr#pagination td table.paginationTable {
@@ -1392,7 +1389,7 @@ td.submitButtons input {
 
 .list tr#pagination td table.paginationTable td.paginationActionButtons {
     background-color: #BFCAD3;
-    padding: 5px 0px 5px 0px !important;
+    padding: 5px 0px 5px 0px;
 }
 
 .list tr#pagination td table.paginationTable td.paginationChangeButtons {
@@ -6553,12 +6550,6 @@ ul::-webkit-resizer
     font-weight: 700;
 }
 
-.list thead tr {
-}
-
-.list thead tr#pagination {
-}
-
 .list tr th a:link {
     font-weight: 700;
     font-size: 13px;
@@ -11641,4 +11632,8 @@ div.qtip.qtip-default {
 .modal-search .submitButtonsAdvanced {
     float: right;
     padding-right: 30px;
+}
+
+.list #pagination td table.paginationTable td.paginationActionButtons:first-child {
+    padding-right: 60px;
 }
