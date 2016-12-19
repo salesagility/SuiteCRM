@@ -422,6 +422,21 @@ var isDetailViewPage = function() {
     return action == 'DetailView';
 };
 
+var refreshListViewCheckbox = function(e) {
+    $(e).removeClass('glyphicon-check');
+    $(e).removeClass('glyphicon-unchecked');
+    if($(e).next().prop('checked')) {
+        $(e).addClass('glyphicon-check');
+    }
+    else {
+        $(e).addClass('glyphicon-unchecked');
+    }
+    $(e).removeClass('disabled')
+    if($(e).next().prop('disabled')) {
+        $(e).addClass('disabled')
+    }
+};
+
 $(function () {
     if(isUserProfilePage()) {
 
@@ -610,3 +625,68 @@ $(function () {
     }, 1500);
 });
 
+    var listViewCheckboxInit = function() {
+        var checkboxesInitialized = false;
+        var checkboxesInitializeInterval = false;
+        var checkboxesCountdown = 100;
+        var initializeBootstrapCheckboxes = function() {
+            if(!checkboxesInitialized) {
+                if ($('.glyphicon.bootstrap-checkbox').length == 0) {
+                    if(!checkboxesInitializeInterval) {
+                        checkboxesInitializeInterval = setInterval(function () {
+                            checkboxesCountdown--;
+                            if(checkboxesCountdown<=0) {
+                                clearInterval(checkboxesInitializeInterval);
+                                return;
+                            }
+                            initializeBootstrapCheckboxes();
+                        }, 100);
+                    }
+                } else {
+                    $('.glyphicon.bootstrap-checkbox').each(function (i, e) {
+                        $(e).removeClass('hidden');
+                        $(e).next().hide();
+                        refreshListViewCheckbox(e);
+                        if(!$(e).hasClass('initialized-checkbox')) {
+                            $(e).click(function () {
+                                $(this).next().click();
+                                refreshListViewCheckbox($(this));
+                            });
+                            $(e).addClass('initialized-checkbox');
+                        }
+                    });
+
+                    $('#selectLink > li > ul > li > a, #selectLinkTop > li > ul > li > a, #selectLinkBottom > li > ul > li > a').click(function (e) {
+                        e.preventDefault();
+                        $('.glyphicon.bootstrap-checkbox').each(function (i, e) {
+                            refreshListViewCheckbox(e);
+                        });
+                    });
+
+                    checkboxesInitialized = true;
+                    clearInterval(checkboxesInitializeInterval);
+                    checkboxesInitializeInterval = false;
+                }
+            }
+        };
+        initializeBootstrapCheckboxes();
+    };
+    setInterval(function(){
+        listViewCheckboxInit();
+    },100);
+
+
+    setInterval(function() {
+        $('.subnav').each(function(i,e){
+            if($(e).hasClass('ddopen')) {
+                $(e).closest('.sugar_action_button').addClass('hover');
+                if(!$(e).hasClass('upper')) {
+                    $(e).closest('.sugar_action_button').addClass('opened');
+                }
+            }
+            else {
+                $(e).closest('.sugar_action_button').removeClass('hover');
+                $(e).closest('.sugar_action_button').removeClass('opened');
+            }
+        });
+    }, 100);

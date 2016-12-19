@@ -1974,6 +1974,8 @@ $app_strings = array(
     'LNK_ABOUT' => 'About',
     'LNK_ADVANCED_SEARCH' => 'Advanced Search',
     'LNK_BASIC_SEARCH' => 'Basic Search',
+    'LBL_ADVANCED_SEARCH' => 'Advanced Search',
+    'LBL_QUICK_SEARCH' => 'Quick Search',
     'LNK_SEARCH_FTS_VIEW_ALL' => 'View all results',
     'LNK_SEARCH_NONFTS_VIEW_ALL' => 'Show All',
     'LNK_CLOSE' => 'Close',
@@ -2074,6 +2076,7 @@ $app_strings = array(
     'MSG_LIST_VIEW_NO_RESULTS_BASIC' => 'No results found.',
     'MSG_LIST_VIEW_NO_RESULTS' => 'No results found for <item1>',
     'MSG_LIST_VIEW_NO_RESULTS_SUBMSG' => 'Create <item1> as a new <item2>',
+    'MSG_LIST_VIEW_CHANGE_SEARCH' => 'or change your search criteria',
     'MSG_EMPTY_LIST_VIEW_NO_RESULTS' => 'You currently have no records saved. <item2> or <item3> one now.',
     'MSG_EMPTY_LIST_VIEW_NO_RESULTS_SUBMSG' => '<item4> to learn more about the <item1> module. In order to access more information, use the user menu drop down located on the main navigation bar to access Help.',
 
@@ -2400,6 +2403,8 @@ $app_strings = array(
     'LBL_DELETE_BUTTON_KEY' => 'd',
     'LBL_DELETE_BUTTON_LABEL' => 'Delete',
     'LBL_DELETE_BUTTON_TITLE' => 'Delete',
+    'LBL_BULK_ACTION_BUTTON_LABEL' => 'BULK ACTION',
+    'LBL_BULK_ACTION_BUTTON_LABEL_MOBILE' => 'ACTION',
     'LBL_SAVE_BUTTON_KEY' => 'a',
     'LBL_SAVE_BUTTON_LABEL' => 'Save',
     'LBL_SAVE_BUTTON_TITLE' => 'Save',
@@ -2432,6 +2437,16 @@ $app_strings = array(
     'LBL_DELETE_REMINDER_CONFIRM' => 'Reminder doesn\'t include any invitees, do you want to remove the reminder?',
     'LBL_DELETE_REMINDER' => 'Delete Reminder',
     'LBL_OK' => 'Ok',
+
+    'LBL_COLUMNS_FILTER_HEADER_TITLE' => 'Choose columns',
+    'LBL_SAVE_CHANGES_BUTTON_TITLE' => 'Save changes',
+    'LBL_DISPLAYED' => 'Displayed',
+    'LBL_HIDDEN' => 'Hidden',
+    'ERR_EMPTY_COLUMNS_LIST' => 'At least, one element required',
+
+    'LBL_SEARCH_HEADER_TITLE' => 'Search',
+
+    'LBL_AOP_INTERNAL' => 'Internal',
 
 );
 
