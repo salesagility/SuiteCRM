@@ -46,7 +46,7 @@
 <input type='hidden' name='original_name' value='{$module->name}'>
 <input type='hidden' name='duplicate' value='0'>
 <input type='hidden' name='to_pdf' value='1'>
-<table class='mbTable'  >
+<table class='mbLBL' >
 	<tr><td></td><td colspan=4><input type='button' name='savebtn' value='{$mod_strings.LBL_BTN_SAVE}' class='button' onclick="ModuleBuilder.handleSave('CreateModule');">&nbsp;
 		{if !empty($module->name)}
 			<input type='button' name='duplicatebtn' value='{$mod_strings.LBL_BTN_DUPLICATE}' class='button' onclick="document.CreateModule.duplicate.value=1;ModuleBuilder.handleSave('CreateModule');">

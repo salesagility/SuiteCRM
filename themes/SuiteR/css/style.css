@@ -774,6 +774,42 @@ div#responseTime {
     margin-bottom: 0;
 }
 
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime.free {
+    border-left: 4px solid  #ff0000;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime.busy {
+    border-left: 4px solid  #ff0000;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime {
+    border-left: 4px solid #75AF4F;
+    background-color: #fff;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime {
+    border-left: 4px solid #ff0000;
+}
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime.free {
+    border-left: 4px solid  #ff0000;
+}
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.free {
+    background-color: rgb(77, 94, 170);
+    border-color: #fff;
+}
+
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.busy {
+    background-color: rgb(170, 77, 77);
+    border-color: #fff;
+}
+
 /* calendar module styles */
 .monthFooter td {
     padding-left: 7px;
@@ -2117,7 +2153,6 @@ ul.clickMenu form{
 ul.SugarActionMenuIESub li a:hover, ul.clickMenu.SugarActionMenu li a:hover, ul.clickMenu.SugarActionMenu li span.subhover:hover,
 ul#globalLinksSubnav li a:hover, ul#quickCreateULSubnav li a:hover,
 ul.clickMenu li ul.subnav li a:hover,ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover { /*--Hover effect for subnav links--*/
-
    color: #3C8DBC;
 }
 
@@ -2218,7 +2253,7 @@ ul.clickMenu.subpanel.records {
 }
 
 ul.clickMenu.subpanel.records li a{
-    color: #aaa;
+    color: #000;
 }
 
 ul.clickMenu.subpanel.records > li div:hover a{
@@ -2785,6 +2820,19 @@ input[type=text].cstm_code {
     border:1px solid #cccccc;
     padding:10px;
     margin: 10px 60px 10px 10px;
+}
+
+#case_updates label {
+    margin-left: 10px;
+}
+
+#case_updates textarea {
+    margin-left: 10px;
+}
+
+#case_updates input[type=button] {
+    margin-left: 10px;
+    margin-top: 10px;
 }
 
 .caseUpdateImage {
@@ -3581,7 +3629,11 @@ table legend {
     display: none;
 }
 
-
+h3,
+h4,
+.sidebar h2 {
+    font-size: 14.772px;
+}
 
 .modal {
     z-index: 16000;
@@ -4473,6 +4525,12 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 
 .list thead{
     border-bottom:1px solid #cccccc;
+}
+
+.topnav h3,
+.recent_h3,
+.home_h3 {
+    font-size: 14.772px;
 }
 
 .home_h3 span{
