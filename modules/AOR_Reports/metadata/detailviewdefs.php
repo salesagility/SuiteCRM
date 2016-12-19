@@ -52,10 +52,14 @@ $viewdefs['AOR_Reports']['DetailView'] = array(
                 {/if}',
             ),
             array (
-                'customCode' => '<input type="button" class="button" id="download_csv_button_old" value="{$MOD.LBL_EXPORT}">',
+                'customCode' => '{if $bean->aclAccess("export","not_set","not_set",$bean->report_module)}
+                <input type="button" class="button" id="download_csv_button_old" value="{$MOD.LBL_EXPORT}">
+                {/if}',
             ),
             array (
-                'customCode' => '<input type="button" class="button" id="download_pdf_button_old" value="{$MOD.LBL_DOWNLOAD_PDF}">',
+                'customCode' => '{if $bean->aclAccess("export","not_set","not_set",$bean->report_module)}
+                <input type="button" class="button" id="download_pdf_button_old" value="{$MOD.LBL_DOWNLOAD_PDF}">
+                {/if}',
             ),
             array (
                 'customCode' => '<input type="button" class="button" onClick="openProspectPopup();" value="{$MOD.LBL_ADD_TO_PROSPECT_LIST}">',

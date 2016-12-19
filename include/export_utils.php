@@ -117,6 +117,24 @@ function export($type, $records = null, $members = false, $sample=false) {
             ACLController::displayNoAccess();
             sugar_die('');
         }
+        if($focus->module_dir == "AOR_Reports"){
+            if(is_array($records)){
+                foreach ($records as $report){
+                    $report = BeanFactory::getBean("AOR_Reports", $report);
+                    if(!ACLController::checkAccess($report->report_module, 'export', true)){
+                        ACLController::displayNoAccess();
+                        sugar_die('');
+                    }
+                }
+            }
+            else {
+                $report = BeanFactory::getBean("AOR_Reports", $records);
+                if(!ACLController::checkAccess($report->report_module, 'export', true)){
+                    ACLController::displayNoAccess();
+                    sugar_die('');
+                }
+            }
+        }
         if(ACLController::requireOwner($focus->module_dir, 'export')){
             if(!empty($where)){
                 $where .= ' AND ';
