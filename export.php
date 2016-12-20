@@ -62,6 +62,24 @@ if(!empty($_REQUEST['sample'])){
     $content = exportSample(clean_string($_REQUEST['module']));
 
 }else if(!empty($_REQUEST['uid'])){
+    if($_REQUEST['module'] == "AOR_Reports"){
+        if(is_array($_REQUEST['uid'])){
+            foreach ($_REQUEST['uid'] as $report){
+                $report = BeanFactory::getBean("AOR_Reports", $report);
+                if(!ACLController::checkAccess($report->report_module, 'export', true)){
+                    echo '<script>alert("'.$app_list_strings['LBL_REPORTS_RESTRICTED'].'");</script>';
+                    die($GLOBALS['app_strings']['ERR_EXPORT_DISABLED']);
+                }
+            }
+        }
+        else {
+            $report = BeanFactory::getBean("AOR_Reports", $records);
+            if(!ACLController::checkAccess($report->report_module, 'export', true)){
+                echo '<script>alert(\''.$app_list_strings['LBL_REPORTS_RESTRICTED'].'\');</script>';
+                die($GLOBALS['app_strings']['ERR_EXPORT_DISABLED']);
+            }
+        }
+    }
 	$content = export(clean_string($_REQUEST['module']), $_REQUEST['uid'], isset($_REQUEST['members']) ? $_REQUEST['members'] : false);
 }else{
 	$content = export(clean_string($_REQUEST['module']));

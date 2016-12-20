@@ -122,16 +122,14 @@ function export($type, $records = null, $members = false, $sample=false) {
                 foreach ($records as $report){
                     $report = BeanFactory::getBean("AOR_Reports", $report);
                     if(!ACLController::checkAccess($report->report_module, 'export', true)){
-                        ACLController::displayNoAccess();
-                        sugar_die('');
+                        return false;
                     }
                 }
             }
             else {
                 $report = BeanFactory::getBean("AOR_Reports", $records);
                 if(!ACLController::checkAccess($report->report_module, 'export', true)){
-                    ACLController::displayNoAccess();
-                    sugar_die('');
+                    return false;
                 }
             }
         }
