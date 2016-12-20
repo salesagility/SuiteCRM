@@ -1782,7 +1782,7 @@ div.qtip.qtip-default {
 }
 
 .search_form .view .dateTimeRangeChoiceClear {
-  display: block !important;
+  display: block;
 }
 
 .search_form .view .col-lg-8 {
@@ -2650,18 +2650,18 @@ div.qtip.qtip-default {
 
 
 .list tr.pagination-unique td table.paginationTable tr {
-  padding: 0px !important;
+  padding: 0px;
 }
 
 
 .list tr.pagination-unique td table.paginationTable td.paginationActionButtons {
-  background-color: #BFCAD3;
+  background-color: $list-view-toolbar-bg;
   padding: 5px 0px 5px 0px;
 }
 
 .list tr.pagination-unique td table.paginationTable td.paginationChangeButtons {
-  background-color: #BFCAD3;
-  padding: 5px 5px 5px 0px !important;
+  background-color: $dashlet-toolbar-bg;
+  padding: 5px 5px 5px 0px;
 }
 
 .list tr td {
@@ -2707,7 +2707,7 @@ div.qtip.qtip-default {
 #actionLinkTop li.sugar_action_button,
 #actionLinkBottom li.sugar_action_button {
   min-width: 32px;
-padding: 11px 10px 12px 10px;
+  padding: 11px 10px 12px 10px;
 }
 
 #select_actions_disabled_top,
@@ -2726,7 +2726,7 @@ padding: 11px 10px 12px 10px;
 #selectLinkBottom > .sugar_action_button > ul.subnav {
   left: 0;
   right: auto;
-  background-color: #7B8A96;
+  background-color: $list-view-action-menu-bg;
 }
 
 #detail_header_action_menu > .sugar_action_button > ul.subnav,
@@ -2755,10 +2755,10 @@ padding: 11px 10px 12px 10px;
 #actionLinkBottom > .sugar_action_button > ul.subnav a ,
 #actionLinkTop .menuItem,
 #actionLinkBottom .menuItem {
-  background-color: #7b8a96;
+  background-color: $list-view-header-bg;
   width: 100%;
   line-height: 24px;
-  color: #ffffff;
+  color: $list-view-button-color;
   padding: 0 5px 0 7px;
 }
 
@@ -2766,8 +2766,8 @@ padding: 11px 10px 12px 10px;
 #actionLinkBottom .sugar_action_button .subnav.ddopen a:hover,
 #actionLinkTop .sugar_action_button .subnav.ddopen li a.menuItemHilite,
 #actionLinkBottom .sugar_action_button .subnav.ddopen li a.menuItemHilite {
-  background-color: #7B8A96 !important;
-  width: 83% !important;
+  background-color: $list-view-action-menu-bg;
+  width: 83%;
 }
 
 #actionLinkTop .sugar_action_button .subnav.ddopen,
@@ -2776,36 +2776,36 @@ padding: 11px 10px 12px 10px;
 #actionLinkBottom .sugar_action_button .subnav.ddopen li,
 #actionLinkTop .sugar_action_button .subnav.ddopen li a,
 #actionLinkBottom .sugar_action_button .subnav.ddopen li a {
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
+  margin: 0;
+  padding: 0;
+  border: 0;
   left: -1px;
   min-width: 150px;
 }
 
 #actionLinkTop .sugar_action_button .subnav.ddopen li a:hover,
 #actionLinkBottom .sugar_action_button .subnav.ddopen li a:hover {
-  background-color: #677785 !important;
+  background-color: $list-view-action-menu-link-bg;
 }
 
 #actionLinkTop .sugar_action_button .subnav li a,
 #actionLinkBottom .sugar_action_button .subnav li a,
 #actionLinkTop .sugar_action_button .subnav.ddopen li a,
 #actionLinkBottom .sugar_action_button .subnav.ddopen li a {
-  margin: 5px 15px !important;
-  border-bottom: 2px solid #93a0ab !important;
+  margin: 5px 15px;
+  border-bottom: 2px solid $list-view-action-menu-separator;
 }
 
 #actionLinkTop .sugar_action_button .subnav.ddopen a:hover,
 #actionLinkBottom .sugar_action_button .subnav.ddopen a:hover {
-  width: 83% !important;
+  width: 83%;
   font-size: 11px;
 }
 
 .listViewLinkButton>.sugar_action_button>ul.subnav a:hover,
 #selectLinkTop>.sugar_action_button>ul.subnav a:hover,
 #selectLinkBottom>.sugar_action_button>ul.subnav a:hover {
-  background-color: #677785 !important;
+  background-color: #677785;
 }
 
 .listViewLinkButton>.sugar_action_button>ul.subnav,
@@ -2820,7 +2820,7 @@ padding: 11px 10px 12px 10px;
 .listViewLinkButton > .sugar_action_button > ul.subnav a,
 #selectLinkTop > .sugar_action_button > ul.subnav a,
 #actionLinkBottom > .sugar_action_button > ul.subnav a {
-  color: #ffffff;
+  color: $list-view-button-color;
 }
 #selectLinkTop > .sugar_action_button > ul.subnav a.menuItem,
 #actionLinkBottom > .sugar_action_button > ul.subnav a.menuItem,
@@ -2837,7 +2837,7 @@ padding: 11px 10px 12px 10px;
   width: 100%;
   margin: 0;
   padding: 20px;
-  background-color: #E6E6E6;
+  background-color: $panel-border-bg;
   border-radius: 3px;
   font-size: 13px;
 }
@@ -2847,7 +2847,7 @@ ul.clickMenu {
   padding: 0;
   margin: 0;
   vertical-align: bottom;
-  color: #ffffff;
+  color: $default-btn-color;
   display: inline-block;
   border-radius: 3px;
 }
@@ -2885,10 +2885,10 @@ td.paginationActionButtons ul.selectmenu > li > a, td.selectCol ul.selectmenu > 
 .selectActionsDisabled a, #selectActionsDisabled a:hover {
   float: left;
   display: inline-block;
-  text-decoration: none !important;
-  color: #C9D2DA !important;
-  padding: 2px !important;
-  padding: 1px !important;
+  text-decoration: none;
+  color: $list-view-action-button-disabled-bg;
+  padding: 2px;
+  padding: 1px;
   font-weight: normal;
   position: relative;
 }
@@ -2928,7 +2928,7 @@ tr.pagination-unique:nth-of-type(2) {
 
 div.list-view-rounded-corners > table,
 tr.pagination-unique {
-  background: #f5f5f5;
+  background: $main-bg;
 }
 
 .sugar_action_button {
@@ -2952,8 +2952,8 @@ table.subpanel-table .pagination .sugar_action_button,
 table.subpanel-table .pagination li.sugar_action_button > form > a,
 table.subpanel-table .pagination .sugar_action_button > form > a,
 table.subpanel-table .pagination .sugar_action_button > form > a {
-  padding: 0px !important;
-  background-color: #94A6B5;
+  padding: 0px;
+  background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
   border-radius: 4px;
 }
@@ -2968,7 +2968,6 @@ table.subpanel-table .pagination .sugar_action_button:hover,
 table.subpanel-table .pagination li.sugar_action_button:hover > form > a,
 table.subpanel-table .pagination .sugar_action_button:hover > form > a,
 table.subpanel-table .pagination .sugar_action_button:hover > form > a,
-
 table.subpanel-table ul.subpanel a:hover,
 table.subpanel-table li.sugar_action_button:hover,
 table.subpanel-table .pagination .sugar_action_button:hover,
@@ -2977,7 +2976,6 @@ table.subpanel-table .pagination .sugar_action_button:hover > form > a,
 table.subpanel-table .pagination .sugar_action_button:hover > form > a,
 table.subpanel-table .pagination a,
 .subpanel-table ul.subnav,
-
 #actionLinkTop li.sugar_action_button.hover,
 #actionLinkBottom li.sugar_action_button.hover,
 table.subpanel-table li.sugar_action_button.hover,
@@ -2992,9 +2990,7 @@ table.subpanel-table li.sugar_action_button.hover,
 table.subpanel-table .pagination .sugar_action_button.hover,
 table.subpanel-table .pagination li.sugar_action_button.hover > form > a,
 table.subpanel-table .pagination .sugar_action_button.hover > form > a,
-table.subpanel-table .pagination .sugar_action_button.hover > form > a
-
-{
+table.subpanel-table .pagination .sugar_action_button.hover > form > a {
   background-color: #778591;
 }
 
@@ -3005,11 +3001,11 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu {
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
-  padding: 0px !important;
+  padding: 0px;
   background-color: #94A6B5;
   border: 1px solid transparent;
   border-radius: 4px;
-  padding-right: 4px !important;
+  padding-right: 4px;
   min-width: 32px;
 }
 
@@ -3024,8 +3020,8 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button input#
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button a#select_link {
-  padding: 0 !important;
-  border: 1px solid transparent !important;
+  padding: 0;
+  border: 1px solid transparent;
   overflow: hidden;
   display: block;
   text-decoration: none;
@@ -3035,7 +3031,7 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button a#sele
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav {
-  padding: 0 !important;
+  padding: 0;
   width: auto;
   background-color: #7b8a96;
   line-height: 24px;
@@ -3141,7 +3137,7 @@ label.selected-actions-label {
 
 #actionLinkTop li.sugar_action_button ul.subnav.ddopen > li:last-child a,
 #actionLinkBottom li.sugar_action_button ul.subnav.ddopen > li:last-child a {
-  border-bottom: none !important;
+  border-bottom: none;
 }
 
 
@@ -3320,7 +3316,7 @@ div.qtip.qtip-default {
 }
 
 .search_form .view .dateTimeRangeChoiceClear {
-  display: block !important;
+  display: block;
 }
 
 .search_form .view .col-lg-8 {
