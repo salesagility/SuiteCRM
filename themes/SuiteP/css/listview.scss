@@ -1627,7 +1627,6 @@ label.selected-actions-label {
 }
 
 div.modal-content {
-  width: 450px;
   margin: 0 auto;
   max-width: 100%;
 }
@@ -2845,7 +2844,7 @@ table.subpanel-table .pagination .sugar_action_button.hover,
 table.subpanel-table .pagination li.sugar_action_button.hover > form > a,
 table.subpanel-table .pagination .sugar_action_button.hover > form > a,
 table.subpanel-table .pagination .sugar_action_button.hover > form > a {
-  background-color: #778591;
+  background-color: $list-view-header-bg;
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu {
@@ -2856,7 +2855,7 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu {
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
   padding: 0px;
-  background-color: #94A6B5;
+  background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
   border-radius: 4px;
   padding-right: 4px;
@@ -2865,7 +2864,7 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button:hover,
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button.hover {
-  background-color: #778591;
+  background-color: $list-view-header-bg;
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button input#massall.checkbox.massall {
@@ -2881,31 +2880,31 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button a#sele
   text-decoration: none;
   float: left;
   margin: 0 5px 0 0;
-  color: #fff;
+  color: $list-view-button-color;
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav {
   padding: 0;
   width: auto;
-  background-color: #7b8a96;
+  background-color: $list-view-action-menu-bg;
   line-height: 24px;
-  color: #ffffff;
+  color: $list-view-button-color;
   left: 0;
   right: auto;
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li {
   padding: 0;
-  background-color: #7b8a96;
+  background-color: $list-view-action-menu-bg;
   width: 100%;
   line-height: 24px;
-  color: #ffffff;
+  color: $list-view-button-color;
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItem {
-  color: #ffffff;
+  color: $list-view-button-color;
   width: 100%;
-  background-color: #7b8a96;
+  background-color: $list-view-action-menu-bg;
   line-height: 24px;
   padding: 0 5px 0 7px;
   font-weight: normal;
@@ -2981,7 +2980,7 @@ label.selected-actions-label {
 #selectLink > li > label.disabled,
 #selectLinkTop > li > label.disabled,
 #selectLinkBottom > li > label.disabled {
-  color: #C9D2DA;
+  color: $list-view-action-button-disabled-bg;
 }
 
 .bootstrap-checkbox-hidden {
@@ -3019,7 +3018,7 @@ div.modal-content {
 
 div.modal-header > h4 {
   font-size: 19px;
-  color: #534D64;
+  color: $main-font-color;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: 300;
@@ -3061,35 +3060,6 @@ ul.clickMenu.selectmenu.SugarActionMenu.searchLink.listViewLinkButton > li > a {
   margin: 0;
   padding: 5px 8px 7px 7px;
   top: -1px;
-}
-
-.preloading {
-  background-image: url("../../../../themes/SuiteP/images/loading.gif");
-  width: 48px;
-  height: 48px;
-}
-
-
-
-ul.clickMenu>li>span.searchAppliedAlert {
-  background-color: #F08377;
-  position: absolute;
-  line-height: 20px;
-  color: #fff;
-  height: 20px;
-  width: 20px;
-  border-radius: 30px;
-  left: 40px;
-  top: -16px;
-  background-image: none;
-  text-align: center;
-}
-
-.modal-preload-hidden {
-  min-height: 100px;
-  background-image: url("../../../../themes/SuiteP/images/loading.gif");
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
 div.qtip.qtip-default {
