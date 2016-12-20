@@ -1627,6 +1627,7 @@ label.selected-actions-label {
 }
 
 div.modal-content {
+  width: 450px;
   margin: 0 auto;
   max-width: 100%;
 }
@@ -1848,25 +1849,6 @@ div.qtip.qtip-default {
     clear: both;
   }
 
-  .modal-search .search-clear {
-    display: block;
-  }
-
-  .modal-search .col-xs-12.col-sm-4.col-md-4.col-lg-4 {
-    float: none;
-    width: initial;
-  }
-
-  .modal-search .col-xs-12.col-sm-12.col-md-12.col-lg-4 {
-    float: left;
-    width: 150px;
-  }
-
-  .modal-search .col-xs-12.col-sm-12.col-md-12.col-lg-8 {
-    float: left;
-    width: 70%;
-  }
-
   @media (min-width: 992px) {
     .modal-search .modal-lg {
       width: 600px;
@@ -1879,27 +1861,7 @@ div.qtip.qtip-default {
     }
   }
 
-  .modal-search .row {
-    margin-bottom: 30px;
-  }
 
-  .modal-search .row .submitButtons {
-    float: right;
-  }
-
-  .modal-search .col-xs-12.col-sm-6.col-md-4.col-lg-4 {
-    width: 100%;
-  }
-
-  .modal-search .col-xs-12.col-sm-6.col-md-4.col-lg-4 .col-xs-12 {
-    float: left;
-    width: 150px;
-  }
-
-  .modal-search .form-item {
-    float: left;
-    width: 70%;
-  }
 
   @media (max-width: 594px) {
     .modal-search .form-item {
@@ -2687,9 +2649,6 @@ div.qtip.qtip-default {
 
 #actionLinkTop,
 #actionLinkBottom {
-  font-size: 11px;
-  min-height: 16px;
-  line-height: 8px;
   position: relative;
 }
 
@@ -2726,110 +2685,6 @@ div.qtip.qtip-default {
   left: 0;
   right: auto;
   background-color: $list-view-action-menu-bg;
-}
-
-#detail_header_action_menu > .sugar_action_button > ul.subnav,
-#detail_header_action_menu > .sugar_action_button > ul.subnav li,
-#detail_header_action_menu > .sugar_action_button > ul.subnav a,
-#userEditActions > .sugar_action_button > ul.subnav,
-#userEditActions > .sugar_action_button > ul.subnav li,
-#userEditActions > .sugar_action_button > ul.subnav a,
-#userEditActions ul.clickMenu li ul.subnav,
-.listViewLinkButton > .sugar_action_button > ul.subnav,
-.listViewLinkButton > .sugar_action_button > ul.subnav li,
-.listViewLinkButton > .sugar_action_button > ul.subnav a,
-#selectLinkTop > .sugar_action_button > ul.subnav,
-#selectLinkTop > .sugar_action_button > ul.subnav li,
-#selectLinkTop > .sugar_action_button > ul.subnav a,
-#actionLinkTop ul.clickMenu li ul.subnav,
-#actionLinkTop > .sugar_action_button > ul.subnav,
-#actionLinkTop > .sugar_action_button > ul.subnav li,
-#actionLinkTop > .sugar_action_button > ul.subnav a
-#selectLinkBottom > .sugar_action_button > ul.subnav,
-#selectLinkBottom > .sugar_action_button > ul.subnav li,
-#selectLinkBottom > .sugar_action_button > ul.subnav a,
-#actionLinkBottom ul.clickMenu li ul.subnav,
-#actionLinkBottom > .sugar_action_button > ul.subnav,
-#actionLinkBottom > .sugar_action_button > ul.subnav li,
-#actionLinkBottom > .sugar_action_button > ul.subnav a ,
-#actionLinkTop .menuItem,
-#actionLinkBottom .menuItem {
-  background-color: $list-view-header-bg;
-  width: 100%;
-  line-height: 24px;
-  color: $list-view-button-color;
-  padding: 0 5px 0 7px;
-}
-
-#actionLinkTop .sugar_action_button .subnav.ddopen a:hover,
-#actionLinkBottom .sugar_action_button .subnav.ddopen a:hover,
-#actionLinkTop .sugar_action_button .subnav.ddopen li a.menuItemHilite,
-#actionLinkBottom .sugar_action_button .subnav.ddopen li a.menuItemHilite {
-  background-color: $list-view-action-menu-bg;
-  width: 83%;
-}
-
-#actionLinkTop .sugar_action_button .subnav.ddopen,
-#actionLinkBottom .sugar_action_button .subnav.ddopen,
-#actionLinkTop .sugar_action_button .subnav.ddopen li,
-#actionLinkBottom .sugar_action_button .subnav.ddopen li,
-#actionLinkTop .sugar_action_button .subnav.ddopen li a,
-#actionLinkBottom .sugar_action_button .subnav.ddopen li a {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  left: -1px;
-  min-width: 150px;
-}
-
-#actionLinkTop .sugar_action_button .subnav.ddopen li a:hover,
-#actionLinkBottom .sugar_action_button .subnav.ddopen li a:hover {
-  background-color: $list-view-action-menu-link-bg;
-}
-
-#actionLinkTop .sugar_action_button .subnav li a,
-#actionLinkBottom .sugar_action_button .subnav li a,
-#actionLinkTop .sugar_action_button .subnav.ddopen li a,
-#actionLinkBottom .sugar_action_button .subnav.ddopen li a {
-  margin: 5px 15px;
-  border-bottom: 2px solid $list-view-action-menu-separator;
-}
-
-#actionLinkTop .sugar_action_button .subnav.ddopen a:hover,
-#actionLinkBottom .sugar_action_button .subnav.ddopen a:hover {
-  width: 83%;
-  font-size: 11px;
-}
-
-.listViewLinkButton>.sugar_action_button>ul.subnav a:hover,
-#selectLinkTop>.sugar_action_button>ul.subnav a:hover,
-#selectLinkBottom>.sugar_action_button>ul.subnav a:hover {
-  background-color: #677785;
-}
-
-.listViewLinkButton>.sugar_action_button>ul.subnav,
-#selectLinkTop>.sugar_action_button>ul.subnav,
-#selectLinkBottom>.sugar_action_button>ul.subnav,
-.listViewLinkButton>.sugar_action_button>ul.subnav li,
-#selectLinkTop>.sugar_action_button>ul.subnav li,
-#selectLinkBottom>.sugar_action_button>ul.subnav li {
-  padding: 0;
-}
-
-.listViewLinkButton > .sugar_action_button > ul.subnav a,
-#selectLinkTop > .sugar_action_button > ul.subnav a,
-#actionLinkBottom > .sugar_action_button > ul.subnav a {
-  color: $list-view-button-color;
-}
-#selectLinkTop > .sugar_action_button > ul.subnav a.menuItem,
-#actionLinkBottom > .sugar_action_button > ul.subnav a.menuItem,
-#selectLinkTop > .sugar_action_button > ul.subnav a.menuItem:hover,
-#actionLinkBottom > .sugar_action_button > ul.subnav a.menuItem:hover,
-#selectLinkTop > .sugar_action_button > ul.subnav a.menuItemHilite,
-#actionLinkBottom > .sugar_action_button > ul.subnav a.menuItemHilite,
-#selectLinkTop > .sugar_action_button > ul.subnav a.menuItemHilite:hover,
-#actionLinkBottom > .sugar_action_button > ul.subnav a.menuItemHilite:hover {
-  width: 100%;
 }
 
 .search_form .view {
@@ -2990,7 +2845,7 @@ table.subpanel-table .pagination .sugar_action_button.hover,
 table.subpanel-table .pagination li.sugar_action_button.hover > form > a,
 table.subpanel-table .pagination .sugar_action_button.hover > form > a,
 table.subpanel-table .pagination .sugar_action_button.hover > form > a {
-  background-color: $list-view-header-bg;
+  background-color: #778591;
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu {
@@ -3001,7 +2856,7 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu {
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
   padding: 0px;
-  background-color: $list-view-action-button-bg;
+  background-color: #94A6B5;
   border: 1px solid transparent;
   border-radius: 4px;
   padding-right: 4px;
@@ -3010,7 +2865,7 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button:hover,
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button.hover {
-  background-color: $list-view-header-bg;
+  background-color: #778591;
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button input#massall.checkbox.massall {
@@ -3026,31 +2881,31 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button a#sele
   text-decoration: none;
   float: left;
   margin: 0 5px 0 0;
-  color: $list-view-button-color;
+  color: #fff;
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav {
   padding: 0;
   width: auto;
-  background-color: $list-view-action-menu-bg;
+  background-color: #7b8a96;
   line-height: 24px;
-  color: $list-view-button-color;
+  color: #ffffff;
   left: 0;
   right: auto;
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li {
   padding: 0;
-  background-color: $list-view-action-menu-bg;
+  background-color: #7b8a96;
   width: 100%;
   line-height: 24px;
-  color: $list-view-button-color;
+  color: #ffffff;
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItem {
-  color: $list-view-button-color;
+  color: #ffffff;
   width: 100%;
-  background-color: $list-view-action-menu-bg;
+  background-color: #7b8a96;
   line-height: 24px;
   padding: 0 5px 0 7px;
   font-weight: normal;
@@ -3126,7 +2981,7 @@ label.selected-actions-label {
 #selectLink > li > label.disabled,
 #selectLinkTop > li > label.disabled,
 #selectLinkBottom > li > label.disabled {
-  color: $list-view-action-button-disabled-bg;
+  color: #C9D2DA;
 }
 
 .bootstrap-checkbox-hidden {
@@ -3164,7 +3019,7 @@ div.modal-content {
 
 div.modal-header > h4 {
   font-size: 19px;
-  color: $main-font-color;
+  color: #534D64;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: 300;
@@ -3176,17 +3031,24 @@ div.modal-header > h4 {
   letter-spacing: 1.2px;
 }
 
-ul.chooserList {
-  list-style-type: none;
-  min-height: 60px;
+div.modal-header {
+  padding: 25px;
 }
 
-ul.chooserList > li {
-  padding: 10px;
-  margin-bottom: 2px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
+#columnsFilterList {
+  padding: 30px;
+}
+
+ul.chooserList.green.ui-sortable {
+  margin-bottom: 30px;
+}
+
+div.modal-footer > button.btn.button.purple.btn-default {
+  background-color: #AA9DCC;
+}
+
+div.modal-footer > button.btn.button.purple.btn-default:hover {
+  background-color: #9589B3;
 }
 
 ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton,
@@ -3199,6 +3061,35 @@ ul.clickMenu.selectmenu.SugarActionMenu.searchLink.listViewLinkButton > li > a {
   margin: 0;
   padding: 5px 8px 7px 7px;
   top: -1px;
+}
+
+.preloading {
+  background-image: url("../../../../themes/SuiteP/images/loading.gif");
+  width: 48px;
+  height: 48px;
+}
+
+
+
+ul.clickMenu>li>span.searchAppliedAlert {
+  background-color: #F08377;
+  position: absolute;
+  line-height: 20px;
+  color: #fff;
+  height: 20px;
+  width: 20px;
+  border-radius: 30px;
+  left: 40px;
+  top: -16px;
+  background-image: none;
+  text-align: center;
+}
+
+.modal-preload-hidden {
+  min-height: 100px;
+  background-image: url("../../../../themes/SuiteP/images/loading.gif");
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 div.qtip.qtip-default {
@@ -3215,4 +3106,180 @@ div.qtip.qtip-default {
 
 .templateGroupChooser {
   width: 150px;
+}
+
+/* search form (and popup search form) */
+
+.search_form .view {
+  padding: 5px 0px 0px 30px;
+}
+.modal-content .search_form .view {
+  background-color: initial;
+}
+
+#search_form label {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.modal-content .search_form .view input[type="text"],
+.modal-content .search_form .view textarea {
+  background-color: $input-bg;
+}
+.search_form .view select,
+.search_form .view select#saved_search_select {
+  padding: initial;
+}
+.modal-content .search_form .view select,
+.modal-content .search_form .view select#saved_search_select {
+  border: 2px solid $input-bg;
+}
+
+.search_form .view .dateTimeRangeChoice {
+  display: block;
+  float: left;
+}
+
+.search_form .view .dateTimeRangeChoice select {
+  width: 90px;
+  margin-right: 4px;
+}
+
+.search_form .view .dateTimeRangeChoiceClear {
+  display: block;
+}
+
+.search_form .view .col-lg-8 {
+  width: initial;
+}
+
+.search_form .view div.search_fields_basic {
+  line-height: 22px;
+  padding-top: 10px;
+}
+
+.search_form .view .col-xs-12 {
+  padding-right: 30px;
+  min-height: initial;
+}
+
+.search_form .view .col-xs-12 input[type="text"],
+.search_form .view .col-xs-12 textarea {
+  width: 100%;
+}
+
+.search_form .view .templateGroupChooser {
+  width: 100%;
+}
+
+.search_form .view .search_fields_basic .col-lg-8 {
+  float: none;
+  padding: initial;
+}
+
+.search_form .view #inlineSavedSearch > table > tbody > tr > td {
+  width: 100%;
+  display: block;
+  float: none;
+}
+.search_form.non-popup input[type="text"],
+.search_form.non-popup select,
+.search_form.non-popup textarea {
+  border: none;
+  height: 40px;
+  min-height: 40px;
+  padding: 5px;
+  line-height: 20px;
+}
+
+.search_form.non-popup select[multiple],
+.search_form.non-popup textarea {
+  min-height: 80px;
+}
+.search_form.non-popup .view {
+  padding: 10px 0px 10px 30px;
+}
+
+.search-clear {
+  display: none;
+  clear: both;
+}
+
+.modal-search .search-clear {
+  display: block;
+}
+
+.modal-search .col-xs-12.col-sm-4.col-md-4.col-lg-4 {
+  float: none;
+}
+
+.modal-search .col-xs-12.col-sm-12.col-md-12.col-lg-4 {
+  float: left;
+}
+
+.modal-search .col-xs-12.col-sm-12.col-md-12.col-lg-8 {
+  float: left;
+  width: 70%;
+}
+
+@media (min-width: 992px) {
+  .modal-search .modal-lg {
+    width: 600px;
+  }
+}
+@media (max-width: 594px) {
+  .modal-search .col-xs-12.col-sm-12.col-md-12.col-lg-8 {
+    width: 100%;
+  }
+}
+
+.modal-search .row {
+  margin-bottom: 30px;
+}
+
+.modal-search .row .submitButtons {
+  float: right;
+}
+
+.modal-search .col-xs-12,
+.modal-search .col-sm-6,
+.modal-search .col-md-4,
+.modal-search .col-lg-4 {
+  width: 100%;
+}
+
+.modal-search .col-xs-12,
+.modal-search .col-sm-6,
+.modal-search .col-md-4,
+.modal-search .col-lg-4 {
+  float: left;
+}
+
+
+.modal-search .search_fields_basic .col-xs-12 {
+  width: 30%;
+}
+
+.modal-search .col-advanced-search .col-xs-12 {
+  width: 30%;
+}
+
+.modal-search .form-item {
+  float: left;
+  width: 70%;
+}
+
+@media (max-width: 594px) {
+  .modal-search .form-item {
+    width: 100%;
+  }
+}
+
+.modal-search .submitButtonsAdvanced {
+  float: right;
+  padding-right: 30px;
+}
+
+.list .pagination-unique td table.paginationTable td.paginationActionButtons:first-child {
+  padding-right: 60px;
 }
