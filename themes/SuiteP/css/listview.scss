@@ -1849,25 +1849,6 @@ div.qtip.qtip-default {
     clear: both;
   }
 
-  .modal-search .search-clear {
-    display: block;
-  }
-
-  .modal-search .col-xs-12.col-sm-4.col-md-4.col-lg-4 {
-    float: none;
-    width: initial;
-  }
-
-  .modal-search .col-xs-12.col-sm-12.col-md-12.col-lg-4 {
-    float: left;
-    width: 150px;
-  }
-
-  .modal-search .col-xs-12.col-sm-12.col-md-12.col-lg-8 {
-    float: left;
-    width: 70%;
-  }
-
   @media (min-width: 992px) {
     .modal-search .modal-lg {
       width: 600px;
@@ -1880,27 +1861,7 @@ div.qtip.qtip-default {
     }
   }
 
-  .modal-search .row {
-    margin-bottom: 30px;
-  }
 
-  .modal-search .row .submitButtons {
-    float: right;
-  }
-
-  .modal-search .col-xs-12.col-sm-6.col-md-4.col-lg-4 {
-    width: 100%;
-  }
-
-  .modal-search .col-xs-12.col-sm-6.col-md-4.col-lg-4 .col-xs-12 {
-    float: left;
-    width: 150px;
-  }
-
-  .modal-search .form-item {
-    float: left;
-    width: 70%;
-  }
 
   @media (max-width: 594px) {
     .modal-search .form-item {
@@ -2688,9 +2649,6 @@ div.qtip.qtip-default {
 
 #actionLinkTop,
 #actionLinkBottom {
-  font-size: 11px;
-  min-height: 16px;
-  line-height: 8px;
   position: relative;
 }
 
@@ -2727,110 +2685,6 @@ div.qtip.qtip-default {
   left: 0;
   right: auto;
   background-color: $list-view-action-menu-bg;
-}
-
-#detail_header_action_menu > .sugar_action_button > ul.subnav,
-#detail_header_action_menu > .sugar_action_button > ul.subnav li,
-#detail_header_action_menu > .sugar_action_button > ul.subnav a,
-#userEditActions > .sugar_action_button > ul.subnav,
-#userEditActions > .sugar_action_button > ul.subnav li,
-#userEditActions > .sugar_action_button > ul.subnav a,
-#userEditActions ul.clickMenu li ul.subnav,
-.listViewLinkButton > .sugar_action_button > ul.subnav,
-.listViewLinkButton > .sugar_action_button > ul.subnav li,
-.listViewLinkButton > .sugar_action_button > ul.subnav a,
-#selectLinkTop > .sugar_action_button > ul.subnav,
-#selectLinkTop > .sugar_action_button > ul.subnav li,
-#selectLinkTop > .sugar_action_button > ul.subnav a,
-#actionLinkTop ul.clickMenu li ul.subnav,
-#actionLinkTop > .sugar_action_button > ul.subnav,
-#actionLinkTop > .sugar_action_button > ul.subnav li,
-#actionLinkTop > .sugar_action_button > ul.subnav a
-#selectLinkBottom > .sugar_action_button > ul.subnav,
-#selectLinkBottom > .sugar_action_button > ul.subnav li,
-#selectLinkBottom > .sugar_action_button > ul.subnav a,
-#actionLinkBottom ul.clickMenu li ul.subnav,
-#actionLinkBottom > .sugar_action_button > ul.subnav,
-#actionLinkBottom > .sugar_action_button > ul.subnav li,
-#actionLinkBottom > .sugar_action_button > ul.subnav a ,
-#actionLinkTop .menuItem,
-#actionLinkBottom .menuItem {
-  background-color: $list-view-header-bg;
-  width: 100%;
-  line-height: 24px;
-  color: $list-view-button-color;
-  padding: 0 5px 0 7px;
-}
-
-#actionLinkTop .sugar_action_button .subnav.ddopen a:hover,
-#actionLinkBottom .sugar_action_button .subnav.ddopen a:hover,
-#actionLinkTop .sugar_action_button .subnav.ddopen li a.menuItemHilite,
-#actionLinkBottom .sugar_action_button .subnav.ddopen li a.menuItemHilite {
-  background-color: $list-view-action-menu-bg;
-  width: 83%;
-}
-
-#actionLinkTop .sugar_action_button .subnav.ddopen,
-#actionLinkBottom .sugar_action_button .subnav.ddopen,
-#actionLinkTop .sugar_action_button .subnav.ddopen li,
-#actionLinkBottom .sugar_action_button .subnav.ddopen li,
-#actionLinkTop .sugar_action_button .subnav.ddopen li a,
-#actionLinkBottom .sugar_action_button .subnav.ddopen li a {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  left: -1px;
-  min-width: 150px;
-}
-
-#actionLinkTop .sugar_action_button .subnav.ddopen li a:hover,
-#actionLinkBottom .sugar_action_button .subnav.ddopen li a:hover {
-  background-color: $list-view-action-menu-link-bg;
-}
-
-#actionLinkTop .sugar_action_button .subnav li a,
-#actionLinkBottom .sugar_action_button .subnav li a,
-#actionLinkTop .sugar_action_button .subnav.ddopen li a,
-#actionLinkBottom .sugar_action_button .subnav.ddopen li a {
-  margin: 5px 15px;
-  border-bottom: 2px solid $list-view-action-menu-separator;
-}
-
-#actionLinkTop .sugar_action_button .subnav.ddopen a:hover,
-#actionLinkBottom .sugar_action_button .subnav.ddopen a:hover {
-  width: 83%;
-  font-size: 11px;
-}
-
-.listViewLinkButton>.sugar_action_button>ul.subnav a:hover,
-#selectLinkTop>.sugar_action_button>ul.subnav a:hover,
-#selectLinkBottom>.sugar_action_button>ul.subnav a:hover {
-  background-color: #677785;
-}
-
-.listViewLinkButton>.sugar_action_button>ul.subnav,
-#selectLinkTop>.sugar_action_button>ul.subnav,
-#selectLinkBottom>.sugar_action_button>ul.subnav,
-.listViewLinkButton>.sugar_action_button>ul.subnav li,
-#selectLinkTop>.sugar_action_button>ul.subnav li,
-#selectLinkBottom>.sugar_action_button>ul.subnav li {
-  padding: 0;
-}
-
-.listViewLinkButton > .sugar_action_button > ul.subnav a,
-#selectLinkTop > .sugar_action_button > ul.subnav a,
-#actionLinkBottom > .sugar_action_button > ul.subnav a {
-  color: $list-view-button-color;
-}
-#selectLinkTop > .sugar_action_button > ul.subnav a.menuItem,
-#actionLinkBottom > .sugar_action_button > ul.subnav a.menuItem,
-#selectLinkTop > .sugar_action_button > ul.subnav a.menuItem:hover,
-#actionLinkBottom > .sugar_action_button > ul.subnav a.menuItem:hover,
-#selectLinkTop > .sugar_action_button > ul.subnav a.menuItemHilite,
-#actionLinkBottom > .sugar_action_button > ul.subnav a.menuItemHilite,
-#selectLinkTop > .sugar_action_button > ul.subnav a.menuItemHilite:hover,
-#actionLinkBottom > .sugar_action_button > ul.subnav a.menuItemHilite:hover {
-  width: 100%;
 }
 
 .search_form .view {
@@ -3177,27 +3031,6 @@ div.modal-header > h4 {
   letter-spacing: 1.2px;
 }
 
-ul.chooserList {
-  list-style-type: none;
-  min-height: 60px;
-}
-
-ul.chooserList > li {
-  padding: 10px;
-  margin-bottom: 2px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  border-radius: 2px;
-}
-
-ul.chooserList.green.ui-sortable > li {
-  background-color: #CCE8E2;
-}
-
-ul.chooserList.red.ui-sortable > li {
-  background-color: #FFAFA6;
-}
-
 div.modal-header {
   padding: 25px;
 }
@@ -3288,13 +3121,10 @@ div.qtip.qtip-default {
   font-weight: bold;
   white-space: nowrap;
 }
-.modal-content #search_form label {
-  color: #000000;
-}
 
 .modal-content .search_form .view input[type="text"],
 .modal-content .search_form .view textarea {
-  background-color: #D4F1EA;
+  background-color: $input-bg;
 }
 .search_form .view select,
 .search_form .view select#saved_search_select {
@@ -3302,7 +3132,7 @@ div.qtip.qtip-default {
 }
 .modal-content .search_form .view select,
 .modal-content .search_form .view select#saved_search_select {
-  border: 2px solid #A5E8D6;
+  border: 2px solid $input-bg;
 }
 
 .search_form .view .dateTimeRangeChoice {
@@ -3381,18 +3211,17 @@ div.qtip.qtip-default {
 
 .modal-search .col-xs-12.col-sm-4.col-md-4.col-lg-4 {
   float: none;
-  width: initial;
 }
 
 .modal-search .col-xs-12.col-sm-12.col-md-12.col-lg-4 {
   float: left;
-  width: 150px;
 }
 
 .modal-search .col-xs-12.col-sm-12.col-md-12.col-lg-8 {
   float: left;
   width: 70%;
 }
+
 @media (min-width: 992px) {
   .modal-search .modal-lg {
     width: 600px;
@@ -3412,19 +3241,34 @@ div.qtip.qtip-default {
   float: right;
 }
 
-.modal-search .col-xs-12.col-sm-6.col-md-4.col-lg-4 {
+.modal-search .col-xs-12,
+.modal-search .col-sm-6,
+.modal-search .col-md-4,
+.modal-search .col-lg-4 {
   width: 100%;
 }
 
-.modal-search .col-xs-12.col-sm-6.col-md-4.col-lg-4 .col-xs-12 {
+.modal-search .col-xs-12,
+.modal-search .col-sm-6,
+.modal-search .col-md-4,
+.modal-search .col-lg-4 {
   float: left;
-  width: 150px;
+}
+
+
+.modal-search .search_fields_basic .col-xs-12 {
+  width: 30%;
+}
+
+.modal-search .col-advanced-search .col-xs-12 {
+  width: 30%;
 }
 
 .modal-search .form-item {
   float: left;
   width: 70%;
 }
+
 @media (max-width: 594px) {
   .modal-search .form-item {
     width: 100%;
@@ -3439,4 +3283,3 @@ div.qtip.qtip-default {
 .list .pagination-unique td table.paginationTable td.paginationActionButtons:first-child {
   padding-right: 60px;
 }
-
