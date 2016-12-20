@@ -63,8 +63,9 @@ if(!empty($_REQUEST['sample'])){
 
 }else if(!empty($_REQUEST['uid'])){
     if($_REQUEST['module'] == "AOR_Reports"){
-        if(is_array($_REQUEST['uid'])){
-            foreach ($_REQUEST['uid'] as $report){
+        $records = explode(',', $_REQUEST['uid']);
+        if(is_array($records)){
+            foreach ($records as $report){
                 $report = BeanFactory::getBean("AOR_Reports", $report);
                 if(!ACLController::checkAccess($report->report_module, 'export', true)){
                     echo '<script>alert("'.$app_list_strings['LBL_REPORTS_RESTRICTED'].'");</script>';
