@@ -1154,29 +1154,6 @@
   display: inline-block;
 }
 
-.desktop_notifications > .btn-success {
-  background-color: $navbar-bg;
-  color: #F5F5F5;
-  border: none;
-}
-
-.desktop_notifications > .btn-success:hover {
-  background-color: $navbar-bg;
-  color: #F5F5F5;
-  border: none;
-}
-
-.desktop_notifications > .btn-success:active {
-  background-color: $navbar-bg;
-  color: #F5F5F5;
-  border: none
-}
-
-.desktop_notifications > .btn-success:focus {
-  background-color: $navbar-bg;
-  color: #F5F5F5;
-  border: none;
-}
 
 
 
@@ -1575,12 +1552,7 @@
     line-height: $navbar-height;
   }
 
-  //.navbar-toggle {
-  //  height: $navbar-height;
-  //}
-
   .mobile_menu {
-    //top: $navbar-height;
     left: 10px;
     -webkit-overflow-scrolling: touch;
   }
@@ -1624,6 +1596,9 @@
 
   .navbar-search .input-group-btn {
     top: 0;
+    background: $navbar-search-bg;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
   }
 
   .quickcreatetop .dropdown-menu {
@@ -1837,11 +1812,6 @@
     text-indent: -9999px;
   }
 
-  //.searchbutton:hover {
-  //  background-position: 0 8px;
-  //  background-color: transparent;
-  //}
-
   .desktop_notifications .btn-danger:hover {
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
     background-position: 0 0;
@@ -1890,6 +1860,31 @@
   .navbar-header {
     width: 49%;
     display: inline-block;
+  }
+
+
+  .desktop_notifications > .btn-success {
+    background-color: $navbar-bg;
+    color: #F5F5F5;
+    border: none;
+  }
+
+  .desktop_notifications > .btn-success:hover {
+    background-color: $navbar-bg;
+    color: #F5F5F5;
+    border: none;
+  }
+
+  .desktop_notifications > .btn-success:active {
+    background-color: $navbar-bg;
+    color: #F5F5F5;
+    border: none
+  }
+
+  .desktop_notifications > .btn-success:focus {
+    background-color: $navbar-bg;
+    color: #F5F5F5;
+    border: none;
   }
 }
 
@@ -2313,6 +2308,20 @@
   }
   .desktop-bar {
     width: 39%;
+  }
+  .navbar-form.searchform .input-group-btn {
+    background: $navbar-search-bg;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+  }
+  .navbar-form.searchform .input-group-btn .btn {
+    padding: 0 10px;
+    height: 36px;
+  }
+
+  .navbar-form.searchform .input-group-btn .btn:hover {
+    border: none;
+    border-width: 0;
   }
 }
 
