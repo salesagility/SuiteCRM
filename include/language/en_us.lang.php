@@ -3947,5 +3947,3 @@ $app_list_strings['day_list']['Thursday'] = 'Thursday';
 $app_list_strings['day_list']['Friday'] = 'Friday';
 $app_list_strings['day_list']['Saturday'] = 'Saturday';
 $app_list_strings['day_list']['Sunday'] = 'Sunday';
-
-$app_list_strings['LBL_REPORTS_RESTRICTED'] = 'A report you have selected is targeting a module you do not have access to. Please select a report with a target module you have access to.';
