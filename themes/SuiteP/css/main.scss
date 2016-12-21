@@ -91,6 +91,10 @@ a:hover {
   }
 }
 
+// Fix ajax loader in the edit view
+.mask {
+  z-index: 10 !important;
+}
 
 ::selection {background: $selection-bg;color:$selection-color;} /* Safari */
 ::-moz-selection {background: $selection-bg;color:$selection-color;} /* Firefox */
