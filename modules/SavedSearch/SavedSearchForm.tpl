@@ -45,7 +45,7 @@
 [dbg10 - SavedSearchForm start]
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-top: 0px none; margin-bottom: 4px" >
 <tr valign='top'>
-	<td width='34%' align='left' rowspan='4' colspan='2'>
+	<td width='34%' align='left' rowspan='4' colspan='2' {if $orderBySelectOnly}style="display:none;"{/if}>
 		<input id='displayColumnsDef' type='hidden' name='displayColumns'>
 		<input id='hideTabsDef' type='hidden' name='hideTabs'>
 		{$columnChooser}

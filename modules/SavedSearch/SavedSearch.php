@@ -100,7 +100,7 @@ class SavedSearch extends SugarBean {
 	}
 
 	// Saved Search Form
-	function getForm($module, $inline = true) {
+	function getForm($module, $inline = true, $orderBySelectOnly = false) {
 	    global $db, $current_user, $currentModule, $current_language, $app_strings;
         $json = getJSONobj();
 
@@ -139,6 +139,8 @@ class SavedSearch extends SugarBean {
         $sugarSmarty->assign('SAVED_SEARCHES_OPTIONS', get_select_options_with_id($savedSearchArray, $lastSavedView));
 
         $json = getJSONobj();
+
+		$sugarSmarty->assign('orderBySelectOnly', $orderBySelectOnly);
 
         return $sugarSmarty->fetch('modules/SavedSearch/SavedSearchForm.tpl');
 	}

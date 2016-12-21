@@ -154,6 +154,12 @@ class SearchForm{
         $header_txt = '';
         $footer_txt = '';
         $return_txt = '';
+
+        // it's an argument
+        // set search form layout option to show only the results list order by field option only
+        // TODO: bring it from user preferences or config
+        $orderBySelectOnly = true;
+
         $this->th->ss->assign('module', $this->module);
         $this->th->ss->assign('action', $this->action);
         $this->th->ss->assign('displayView', $this->displayView);
@@ -199,7 +205,7 @@ class SearchForm{
                         $this->th->ss->assign('DISPLAY_SEARCH_HELP', true);
                     }
                     $this->th->ss->assign('DISPLAY_SAVED_SEARCH', $this->displaySavedSearch);
-                    $this->th->ss->assign('SAVED_SEARCH', $this->displaySavedSearch());
+                    $this->th->ss->assign('SAVED_SEARCH', $this->displaySavedSearch($orderBySelectOnly));
                     //this determines whether the saved search subform should be rendered open or not
                     if(isset($_REQUEST['showSSDIV']) && $_REQUEST['showSSDIV']=='yes'){
                         $this->th->ss->assign('SHOWSSDIV', 'yes');
@@ -434,10 +440,10 @@ class SearchForm{
         return false;
     }
 
-    function displaySavedSearch()
+    function displaySavedSearch($orderBySelectOnly = false)
     {
         $savedSearch = new SavedSearch($this->listViewDefs[$this->module], $this->lv->data['pageData']['ordering']['orderBy'], $this->lv->data['pageData']['ordering']['sortOrder']);
-        $ret = $savedSearch->getForm($this->module, false);
+        $ret = $savedSearch->getForm($this->module, false, $orderBySelectOnly);
         $this->lastTemplateGroupChooser = $savedSearch->lastTemplateGroupChooser;
         return $ret;
     }
