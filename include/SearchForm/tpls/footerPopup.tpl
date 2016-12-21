@@ -80,10 +80,10 @@
                         qtipContent += '</table>';
 
                         if(qtipNeeded) {
-                            $('.searchLink .searchAppliedAlert').qtip({
+                            $('.searchAppliedAlertLink').qtip({
                                 content: qtipContent
                             });
-                            $('.searchLink .searchAppliedAlert').removeClass('hidden');
+                            $('.searchAppliedAlertLink').removeClass('hidden');
                         }
                     }
                 }, 100);
@@ -94,7 +94,6 @@
         onOpen: function() {},
 
         toggleSearchDialog: function(dialogType) {
-            $('#searchDialog').modal('toggle');
             SUGAR.searchForm.searchFormSelect('{/literal}{$module}{literal}|'+dialogType+'_search','{/literal}{$module}{literal}|'+(dialogType=='advanced'?'basic':'advanced')+'_search');
         }
 
