@@ -69,6 +69,9 @@ a:hover {
   .bootstrap-container .dropdown-menu em a {
     color: #F08377; }
 
+.mask {
+  z-index: 10 !important; }
+
 ::selection {
   background: #F08377;
   color: #FFFFFF; }
@@ -255,7 +258,7 @@ a:hover {
   z-index: 1000; }
 
 /* Breakpoints */
-@media (max-width: 1130px) {
+@media (max-width: 1200px) {
   .sidebar {
     width: 0;
     visibility: collapse; }
@@ -370,7 +373,7 @@ footer.collapsedSidebar {
   width: 48%; }
 
 /*SIDEBAR BREAK POINTS*/
-@media (min-width: 1131px) {
+@media (min-width: 1200px) {
   .sidebar {
     width: 20%; }
 
@@ -4128,8 +4131,8 @@ div#chartDashlets {
   margin-left: -125px; }
 
 td.dashlet-title {
-  line-height: 48px;
-  height: 52px; }
+  line-height: 40px;
+  height: 44px; }
 
 td.dashlet-title > h3 > span {
   margin-left: 8px; }
@@ -4845,7 +4848,7 @@ a.listViewTdToolsS1 {
   padding-left: 10px;
   padding-right: 10px; }
 
-.table-responsive.list > tbody > tr > td a {
+.table-responsive.list > tbody > tr > td > a {
   font-weight: bold;
   color: #E56455;
   border-bottom-color: #E56455;
@@ -7324,7 +7327,7 @@ div.qtip.qtip-default {
 
 .nav-tabs > li.tab-inline-pagination {
   float: right;
-  line-height: 32px; }
+  line-height: 24px; }
 
 .nav-tabs > li.tab-inline-pagination .btn-pagination[disabled] {
   background-color: #777777; }
@@ -7369,7 +7372,7 @@ div.qtip.qtip-default {
 
 .mobile-pagination {
   display: none;
-  line-height: 32px;
+  line-height: 24px;
   visibility: collapse; }
 
 .mobile-pagination .btn-pagination[disabled] {
@@ -7458,6 +7461,25 @@ div.qtip.qtip-default {
 
   .mobile-pagination .glyphicon-chevron-right {
     margin-left: 0px; } }
+#list_subpanel_activities .evenListRowS1 td:nth-of-type(2) a {
+  border-bottom: none; }
+
+#list_subpanel_activities .oddListRowS1 td:nth-of-type(2) a {
+  border-bottom: none; }
+
+#subpanel_history .evenListRowS1 td:nth-of-type(2) a {
+  border-bottom: none; }
+
+#subpanel_history .oddListRowS1 td:nth-of-type(2) a {
+  border-bottom: none; }
+
+.subpanel-table .SugarActionMenu .sugar_action_button {
+  min-height: 32px; }
+
+.subpanel-table .SugarActionMenu .single a {
+  min-height: 32px;
+  line-height: 32px; }
+
 /**** Edit view ***/
 div#searchResults {
   padding-bottom: 50px;
@@ -11579,7 +11601,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
 .content {
   /*Override bootstrap (needs to be stacked)*/ }
   .content .nav-tabs {
-    margin: 16px 0 16px 0;
+    margin: 12px 0 12px 0;
     border: hidden; }
   .content .dropdown-menu {
     padding: 4px 10px 4px 10px;
@@ -11595,7 +11617,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     cursor: pointer;
     margin: 0;
     letter-spacing: normal;
-    line-height: 32px; }
+    line-height: 24px; }
   .content .nav-tabs > li > a,
   .content .nav-tabs > li > a:focus,
   .content .nav-tabs > li > a:hover {
@@ -11607,7 +11629,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     margin: 0 2px 0 2px;
     border-color: #eee #eee #fff;
     letter-spacing: 2px;
-    line-height: 32px;
+    line-height: 24px;
     text-transform: uppercase; }
   .content .nav-tabs > li.active > a,
   .content .nav-tabs > li.active > a:focus,
@@ -11623,7 +11645,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     margin-right: 2px;
     border-color: #eee #eee #fff;
     letter-spacing: 2px;
-    line-height: 32px;
+    line-height: 24px;
     text-transform: uppercase; }
   .content .nav-tabs > li.active:nth-of-type(1) > a,
   .content .nav-tabs > li:nth-of-type(1) > a {
@@ -11655,9 +11677,9 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
   .content .nav > li > a.first-tab-xs {
     background-color: #778591;
     background-image: url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
-    background-position: right 16px top 24px;
+    background-position: right 12px top 18px;
     background-repeat: no-repeat;
-    padding-right: 32px;
+    padding-right: 24px;
     border-bottom: none; }
   .content #first-tab-menu-xs.dropdown-menu > li > a {
     border-bottom: 1px solid #93A0AB; }
@@ -11680,10 +11702,10 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
   .content #tab-actions > a {
     background-color: #F08377;
     background-image: url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_generic_arrow.png");
-    background-position: right 16px top 24px;
+    background-position: right 12px top 18px;
     background-repeat: no-repeat;
     cursor: pointer;
-    padding-right: 32px;
+    padding-right: 24px;
     border-color: #F08377;
     border-bottom: #FA988D; }
   .content #tab-actions > a:hover {
