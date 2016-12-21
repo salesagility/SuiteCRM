@@ -1154,6 +1154,32 @@
   display: inline-block;
 }
 
+.desktop_notifications > .btn-success {
+  background-color: $navbar-bg;
+  color: #F5F5F5;
+  border: none;
+}
+
+.desktop_notifications > .btn-success:hover {
+  background-color: $navbar-bg;
+  color: #F5F5F5;
+  border: none;
+}
+
+.desktop_notifications > .btn-success:active {
+  background-color: $navbar-bg;
+  color: #F5F5F5;
+  border: none
+}
+
+.desktop_notifications > .btn-success:focus {
+  background-color: $navbar-bg;
+  color: #F5F5F5;
+  border: none;
+}
+
+
+
 @media (max-width: 375px) {
   .navbar-search > .dropdown-menu {
     top: -($navbar-toolbar-height  + 12px);
