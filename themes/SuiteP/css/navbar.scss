@@ -1154,6 +1154,29 @@
   display: inline-block;
 }
 
+@media (max-width: 375px) {
+  .navbar-search > .dropdown-menu {
+    top: -($navbar-toolbar-height  + 12px);
+    bottom: auto;
+    left: auto;
+    right: -50px;
+    clear: both;
+    width: auto;
+  }
+}
+
+@media (min-width: 375px) and (max-width: 750px) {
+  .navbar-search > .dropdown-menu {
+    top: -($navbar-toolbar-height  + 12px);
+    bottom: auto;
+    left: auto;
+    right: 0;
+    clear: both;
+    width: auto;
+  }
+}
+
+
 @media (max-width: 750px) {
 
   .modulelinks .dropdown-menu {
@@ -1224,15 +1247,6 @@
   .navbar-search {
     position: relative;
     min-height: 28px;
-  }
-
-  .navbar-search > .dropdown-menu {
-    top: -($navbar-toolbar-height  + 12px);
-    bottom: auto;
-    left: auto;
-    right: 0;
-    clear: both;
-    width: auto;
   }
 
   .navbar-search .dropdown-menu {
@@ -2126,26 +2140,6 @@
     /*top: 14px;*/
     /*right: 6px;*/
   }
-
-  //.searchformdropdown button {
-  //  display: block;
-  //  background-color: transparent;
-  //  background-image: none, url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
-  //  background-position: 13px 10px;
-  //  background-repeat: no-repeat;
-  //  color: $navbar-menu-link-color;
-  //  //padding: 12px 12px 12px 12px;
-  //  margin-left: -50px;
-  //  border: none;
-  //  float: left;
-  //  overflow: hidden;
-  //  width: 50px;
-  //  text-indent: -9999px;
-  //}
-
-  //.searchformdropdown button:hover {
-  //  background-position: 13px -44px;
-  //}
 
   .navbar-search .query_string {
     font-size: 14px;
