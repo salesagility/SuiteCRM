@@ -38,6 +38,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
+[dbg2 - header start (SuiteP)]
 <div class="clear"></div>
 <div class='listViewBody'>
 <script type="text/javascript" src="{sugar_getjspath file='include/javascript/popup_parent_helper.js'}"></script>

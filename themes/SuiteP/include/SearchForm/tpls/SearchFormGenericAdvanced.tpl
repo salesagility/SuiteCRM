@@ -38,7 +38,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
-
+[dbg4 - SearchFormGenericAdvanced start (SuiteP)]
 <script>
 {literal}
 	$(function() {
@@ -95,6 +95,7 @@
 		&nbsp;
 	</div>
 </div>
+	[dbg6][DISPLAY_SAVED_SEARCH:{$DISPLAY_SAVED_SEARCH}]
 {if $DISPLAY_SAVED_SEARCH && !$searchFormInPopup}
 <div>
 	<div>
@@ -132,6 +133,52 @@
 </div>
 
 {/if}
+
+{if $DISPLAY_SAVED_SEARCH && $searchFormInPopup}
+	[dbg7 - 1]
+	<div>
+		{*
+		<div>
+			<a class='tabFormAdvLink' onhover href='javascript:toggleInlineSearch()'>
+				{capture assign="alt_show_hide"}{sugar_translate label='LBL_ALT_SHOW_OPTIONS'}{/capture}
+				{sugar_getimage alt=$alt_show_hide name="advanced_search" ext=".gif" other_attributes='border="0" id="up_down_img" '}&nbsp;{$APP.LNK_SAVED_VIEWS}
+			</a><br>
+			<input type='hidden' id='showSSDIV' name='showSSDIV' value='{$SHOWSSDIV}'><p>
+		</div>
+		*}
+		<div scope='row' width='10%' nowrap="nowrap">
+			{sugar_translate label='LBL_SAVE_SEARCH_AS' module='SavedSearch'}:
+		</div>
+		<div width='30%' nowrap>
+			<input type='text' name='saved_search_name'>
+			<input type='hidden' name='search_module' value=''>
+			<input type='hidden' name='saved_search_action' value=''>
+			<input title='{$APP.LBL_SAVE_BUTTON_LABEL}' value='{$APP.LBL_SAVE_BUTTON_LABEL}' class='button' type='button' name='saved_search_submit' onclick='SUGAR.savedViews.setChooser(); return SUGAR.savedViews.saved_search_action("save");'>
+		</div>
+		<div scope='row' width='10%' nowrap="nowrap">
+			{sugar_translate label='LBL_MODIFY_CURRENT_SEARCH' module='SavedSearch'}:
+		</div>
+		<div width='30%' nowrap>
+			<input class='button' onclick='SUGAR.savedViews.setChooser(); return SUGAR.savedViews.saved_search_action("update")' value='{$APP.LBL_UPDATE}' title='{$APP.LBL_UPDATE}' name='ss_update' id='ss_update' type='button' >
+			<input class='button' onclick='return SUGAR.savedViews.saved_search_action("delete", "{sugar_translate label='LBL_DELETE_CONFIRM' module='SavedSearch'}")' value='{$APP.LBL_DELETE}' title='{$APP.LBL_DELETE}' name='ss_delete' id='ss_delete' type='button'>
+			<br><span id='curr_search_name'></span>
+		</div>
+	</div>
+
+
+	<div>
+		<div colspan='6'>
+			[dbg8]
+			<div style='/*{$DISPLAYSS}*/' id='inlineSavedSearch' >
+				{$SAVED_SEARCH}
+			</div>
+			[dbg9]
+		</div>
+	</div>
+
+	[sbg7 - 2]
+{/if}
+
 {if $displayType != 'popupView'}
 <div>
 	<div class="submitButtonsAdvanced">
