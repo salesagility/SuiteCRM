@@ -5706,7 +5706,6 @@ label.selected-actions-label {
   label.hidden-mobile.selected-actions-label {
     display: block; } }
 div.modal-content {
-  width: 450px;
   margin: 0 auto;
   max-width: 100%; }
 
@@ -5830,7 +5829,7 @@ div.qtip.qtip-default {
   margin-right: 4px; }
 
 .search_form .view .dateTimeRangeChoiceClear {
-  display: block !important; }
+  display: block; }
 
 .search_form .view .col-lg-8 {
   width: initial; }
@@ -5882,35 +5881,12 @@ div.qtip.qtip-default {
   .search_form.non-popup .view search-clear {
     display: none;
     clear: both; }
-  .search_form.non-popup .view .modal-search .search-clear {
-    display: block; }
-  .search_form.non-popup .view .modal-search .col-xs-12.col-sm-4.col-md-4.col-lg-4 {
-    float: none;
-    width: initial; }
-  .search_form.non-popup .view .modal-search .col-xs-12.col-sm-12.col-md-12.col-lg-4 {
-    float: left;
-    width: 150px; }
-  .search_form.non-popup .view .modal-search .col-xs-12.col-sm-12.col-md-12.col-lg-8 {
-    float: left;
-    width: 70%; }
   @media (min-width: 992px) {
     .search_form.non-popup .view .modal-search .modal-lg {
       width: 600px; } }
   @media (max-width: 594px) {
     .search_form.non-popup .view .modal-search .col-xs-12.col-sm-12.col-md-12.col-lg-8 {
       width: 100%; } }
-  .search_form.non-popup .view .modal-search .row {
-    margin-bottom: 30px; }
-  .search_form.non-popup .view .modal-search .row .submitButtons {
-    float: right; }
-  .search_form.non-popup .view .modal-search .col-xs-12.col-sm-6.col-md-4.col-lg-4 {
-    width: 100%; }
-  .search_form.non-popup .view .modal-search .col-xs-12.col-sm-6.col-md-4.col-lg-4 .col-xs-12 {
-    float: left;
-    width: 150px; }
-  .search_form.non-popup .view .modal-search .form-item {
-    float: left;
-    width: 70%; }
   @media (max-width: 594px) {
     .search_form.non-popup .view .modal-search .form-item {
       width: 100%; } }
@@ -6509,6 +6485,829 @@ div.qtip.qtip-default {
   #selectedRecordsTop {
     float: left;
     max-width: 100px; } }
+.edit {
+  padding: 0 6px 12px 10px; }
+
+/* PAGINATION */
+.list tr.pagination-unique td {
+  padding: 0px; }
+
+.list tr.pagination-unique td table.paginationTable tr {
+  padding: 0px; }
+
+.list tr.pagination-unique td table.paginationTable td.paginationActionButtons {
+  background-color: #BFCAD3;
+  padding: 5px 0px 5px 0px; }
+
+.list tr.pagination-unique td table.paginationTable td.paginationChangeButtons {
+  background-color: #BFCAD3;
+  padding: 5px 5px 5px 0px; }
+
+.list tr td {
+  vertical-align: middle;
+  padding: 3px 8px 5px 5px; }
+
+listViewLinkButton {
+  min-height: 16px;
+  line-height: 0px;
+  position: relative;
+  padding: 1px; }
+
+#selectLinkTop {
+  min-height: 16px;
+  line-height: 0px;
+  position: relative;
+  padding: 1px; }
+
+#selectLinkBottom {
+  min-height: 16px;
+  line-height: 0px;
+  position: relative;
+  padding: 1px; }
+
+#actionLinkBottom {
+  min-height: 16px;
+  line-height: 0px;
+  position: relative;
+  padding: 1px; }
+
+.listViewLinkButton input[type=checkbox] {
+  margin-top: 5px; }
+
+#selectLinkTop input[type=checkbox] {
+  margin-top: 5px; }
+
+#selectLinkBottom input[type=checkbox] {
+  margin-top: 5px; }
+
+#actionLinkBottom input[type=checkbox] {
+  margin-top: 5px; }
+
+#actionLinkTop {
+  position: relative; }
+
+#actionLinkBottom {
+  position: relative; }
+
+#detail_header_action_menu li.sugar_action_button a#edit_button {
+  margin: 5px 10px 5px 9px; }
+
+#userEditActions li.sugar_action_button a {
+  margin: 5px 10px 5px 9px; }
+
+#actionLinkTop li.sugar_action_button a {
+  margin: 5px 10px 5px 9px; }
+
+#actionLinkBottom li.sugar_action_button a {
+  margin: 5px 10px 5px 9px; }
+
+.buttonOn,
+#detail_header_action_menu li.sugar_action_button,
+#userEditActions li.sugar_action_button,
+#actionLinkTop li.sugar_action_button,
+#actionLinkBottom li.sugar_action_button {
+  min-width: 32px;
+  padding: 11px 10px 12px 10px; }
+
+#select_actions_disabled_top {
+  padding: 4px 6px 4px 10px;
+  top: -1px;
+  position: relative;
+  height: 27px;
+  margin-right: 0px; }
+
+#select_actions_disabled_bottom {
+  padding: 4px 6px 4px 10px;
+  top: -1px;
+  position: relative;
+  height: 27px;
+  margin-right: 0px; }
+
+#detail_header_action_menu > .sugar_action_button > ul.subnav {
+  left: 0;
+  right: auto;
+  background-color: #7B8A96; }
+
+#userEditActions > .sugar_action_button > ul.subnav {
+  left: 0;
+  right: auto;
+  background-color: #7B8A96; }
+
+.listViewLinkButton > .sugar_action_button > ul.subnav {
+  left: 0;
+  right: auto;
+  background-color: #7B8A96; }
+
+#selectLinkTop > .sugar_action_button > ul.subnav {
+  left: 0;
+  right: auto;
+  background-color: #7B8A96; }
+
+#selectLinkBottom > .sugar_action_button > ul.subnav {
+  left: 0;
+  right: auto;
+  background-color: #7B8A96; }
+
+.search_form .view {
+  width: 100%;
+  margin: 0;
+  padding: 20px;
+  background-color: #E6E6E6;
+  border-radius: 3px;
+  font-size: 13px; }
+
+ul.clickMenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  vertical-align: bottom;
+  color: #F5F5F5;
+  display: inline-block;
+  border-radius: 3px; }
+
+.listViewLinkButton, .listViewLinkButton .sugar_action_button {
+  min-width: 32px;
+  margin-left: 8px; }
+
+#selectLinkTop, #selectLinkTop .sugar_action_button {
+  min-width: 32px;
+  margin-left: 8px; }
+
+#selectLinkBottom, #selectLinkBottom .sugar_action_button {
+  min-width: 32px;
+  margin-left: 8px; }
+
+.listViewLinkButton, .listViewLinkButton .selectActionsDisabled {
+  min-width: 32px;
+  margin-left: 8px; }
+
+#selectLinkTop, #selectLinkTop .selectActionsDisabled {
+  min-width: 32px;
+  margin-left: 8px; }
+
+ul.clickMenu li ul.subnav {
+  list-style: none;
+  position: absolute;
+  top: 20px;
+  margin: 0;
+  display: none;
+  float: left;
+  width: auto;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 8px 0;
+  z-index: 10;
+  overflow: hidden; }
+
+ul.clickMenu ul.subnav-sub {
+  list-style: none;
+  position: absolute;
+  top: 20px;
+  margin: 0;
+  display: none;
+  float: left;
+  width: auto;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 8px 0;
+  z-index: 10;
+  overflow: hidden; }
+
+ul.SugarActionMenuIESub {
+  list-style: none;
+  position: absolute;
+  top: 20px;
+  margin: 0;
+  display: none;
+  float: left;
+  width: auto;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 8px 0;
+  z-index: 10;
+  overflow: hidden; }
+
+td.paginationActionButtons ul.selectmenu > li > a {
+  padding: 0; }
+
+td.selectCol ul.selectmenu > li > a {
+  padding: 0; }
+
+ul#selectLink.clickMenu > li > a {
+  padding: 0; }
+
+.selectActionsDisabled a, #selectActionsDisabled a:hover {
+  float: left;
+  display: inline-block;
+  text-decoration: none;
+  color: #C9D2DA;
+  padding: 2px;
+  padding: 1px;
+  font-weight: normal;
+  position: relative; }
+
+.selectActionsDisabled a.parent-dropdown-handler {
+  top: 2px; }
+
+#select_actions_disabled_top > a.parent-dropdown-handler {
+  font-size: 14px; }
+
+#select_actions_disabled_bottom > a.parent-dropdown-handler {
+  font-size: 14px; }
+
+.sugar_action_button > .parent-dropdown-action-handler {
+  font-size: 13px;
+  line-height: 13px;
+  font-weight: normal; }
+
+.clickMenu.SugarActionMenu > li > ul > li {
+  font-weight: normal; }
+
+.list tr.oddListRowS1 td, .list tr.evenListRowS1 td {
+  padding-top: 15px;
+  padding-bottom: 12px;
+  padding-left: 10px;
+  padding-right: 10px; }
+
+div.list-view-rounded-corners > table {
+  border-collapse: separate;
+  border-spacing: 0; }
+
+tr.pagination-unique:nth-of-type(2) {
+  border-collapse: separate;
+  border-spacing: 0; }
+
+div.list-view-rounded-corners > table,
+tr.pagination-unique {
+  background: #F5F5F5; }
+
+.sugar_action_button {
+  height: 27px; }
+
+.clickMenu.subpanel.records.button.SugarActionMenu .sugar_action_button {
+  height: 100%; }
+
+table.subpanel-table ul.subpanel > a {
+  padding: 0px;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+
+.single a {
+  padding: 0px;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+
+.single > a {
+  padding: 0px;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+
+#actionLinkTop li.sugar_action_button {
+  padding: 0px;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+
+#actionLinkBottom li.sugar_action_button {
+  padding: 0px;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+
+table.subpanel-table li.sugar_action_button {
+  padding: 0px;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+
+.listViewLinkButton li.sugar_action_button {
+  padding: 0px;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+
+#selectLinkTop li.sugar_action_button {
+  padding: 0px;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+
+#selectLinkBottom li.sugar_action_button {
+  padding: 0px;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+
+table.subpanel-table .pagination .sugar_action_button {
+  padding: 0px;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+
+table.subpanel-table .pagination li.sugar_action_button > form > a {
+  padding: 0px;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+
+table.subpanel-table .pagination .sugar_action_button > form > a {
+  padding: 0px;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+
+table.subpanel-table .pagination .sugar_action_button > form > a {
+  padding: 0px;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px; }
+
+#actionLinkTop li.sugar_action_button:hover {
+  background-color: #778591; }
+
+#actionLinkBottom li.sugar_action_button:hover {
+  background-color: #778591; }
+
+table.subpanel-table li.sugar_action_button:hover {
+  background-color: #778591; }
+
+.listViewLinkButton li.sugar_action_button:hover {
+  background-color: #778591; }
+
+#selectLinkTop li.sugar_action_button:hover {
+  background-color: #778591; }
+
+#selectLinkBottom li.sugar_action_button:hover {
+  background-color: #778591; }
+
+table.subpanel-table .pagination .sugar_action_button:hover {
+  background-color: #778591; }
+
+table.subpanel-table .pagination li.sugar_action_button:hover > form > a {
+  background-color: #778591; }
+
+table.subpanel-table .pagination .sugar_action_button:hover > form > a {
+  background-color: #778591; }
+
+table.subpanel-table .pagination .sugar_action_button:hover > form > a {
+  background-color: #778591; }
+
+table.subpanel-table ul.subpanel a:hover {
+  background-color: #778591; }
+
+table.subpanel-table li.sugar_action_button:hover {
+  background-color: #778591; }
+
+table.subpanel-table .pagination .sugar_action_button:hover {
+  background-color: #778591; }
+
+table.subpanel-table .pagination li.sugar_action_button:hover > form > a {
+  background-color: #778591; }
+
+table.subpanel-table .pagination .sugar_action_button:hover > form > a {
+  background-color: #778591; }
+
+table.subpanel-table .pagination .sugar_action_button:hover > form > a {
+  background-color: #778591; }
+
+table.subpanel-table .pagination a {
+  background-color: #778591; }
+
+.subpanel-table ul.subnav {
+  background-color: #778591; }
+
+#actionLinkTop li.sugar_action_button.hover {
+  background-color: #778591; }
+
+#actionLinkBottom li.sugar_action_button.hover {
+  background-color: #778591; }
+
+table.subpanel-table li.sugar_action_button.hover {
+  background-color: #778591; }
+
+.listViewLinkButton li.sugar_action_button.hover {
+  background-color: #778591; }
+
+#selectLinkTop li.sugar_action_button.hover {
+  background-color: #778591; }
+
+#selectLinkBottom li.sugar_action_button.hover {
+  background-color: #778591; }
+
+table.subpanel-table .pagination .sugar_action_button.hover {
+  background-color: #778591; }
+
+table.subpanel-table .pagination li.sugar_action_button.hover > form > a {
+  background-color: #778591; }
+
+table.subpanel-table .pagination .sugar_action_button.hover > form > a {
+  background-color: #778591; }
+
+table.subpanel-table .pagination .sugar_action_button.hover > form > a {
+  background-color: #778591; }
+
+table.subpanel-table li.sugar_action_button.hover {
+  background-color: #778591; }
+
+table.subpanel-table .pagination .sugar_action_button.hover {
+  background-color: #778591; }
+
+table.subpanel-table .pagination li.sugar_action_button.hover > form > a {
+  background-color: #778591; }
+
+table.subpanel-table .pagination .sugar_action_button.hover > form > a {
+  background-color: #778591; }
+
+table.subpanel-table .pagination .sugar_action_button.hover > form > a {
+  background-color: #778591; }
+
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu {
+  line-height: 0px;
+  padding: 1px;
+  vertical-align: top; }
+
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
+  padding: 0px;
+  background-color: #94A6B5;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding-right: 4px;
+  min-width: 32px; }
+
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button:hover {
+  background-color: #778591; }
+
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button.hover {
+  background-color: #778591; }
+
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button input#massall.checkbox.massall {
+  float: left;
+  margin: 5px 0 0 4px; }
+
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button a#select_link {
+  padding: 0;
+  border: 1px solid transparent;
+  overflow: hidden;
+  display: block;
+  text-decoration: none;
+  float: left;
+  margin: 0 5px 0 0;
+  color: #FFFFFF; }
+
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav {
+  padding: 0;
+  width: auto;
+  background-color: #7B8A96;
+  line-height: 24px;
+  color: #FFFFFF;
+  left: 0;
+  right: auto; }
+
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li {
+  padding: 0;
+  background-color: #7B8A96;
+  width: 100%;
+  line-height: 24px;
+  color: #FFFFFF; }
+
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItem {
+  color: #FFFFFF;
+  width: 100%;
+  background-color: #7B8A96;
+  line-height: 24px;
+  padding: 0 5px 0 7px;
+  font-weight: normal; }
+
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItemHilite {
+  padding: 0 5px 0 7px;
+  font-weight: normal; }
+
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button span {
+  height: 15px; }
+
+div#content div#pagecontent form#MassUpdate table.list.view tbody tr td {
+  font-weight: 700; }
+
+.list tr.oddListRowS1 td.inline-email-td {
+  padding-top: 0;
+  padding-bottom: 0; }
+
+.list tr.evenListRowS1 td.inline-email-td {
+  padding-top: 0;
+  padding-bottom: 0; }
+
+label.hidden-mobile.selected-actions-label {
+  margin-bottom: initial;
+  font-size: 10.2px;
+  line-height: 17px;
+  letter-spacing: 1.2px; }
+
+label.hidden-desktop.selected-actions-label {
+  margin-bottom: initial;
+  font-size: 10.2px;
+  line-height: 17px;
+  letter-spacing: 1.2px; }
+
+label.hidden-mobile.selected-actions-label {
+  line-height: 12px; }
+
+label.hidden-desktop.selected-actions-label {
+  line-height: 12px; }
+
+label.selected-actions-label {
+  cursor: pointer; }
+
+@media (min-width: 480px) {
+  label.hidden-desktop.selected-actions-label {
+    display: block; }
+
+  label.hidden-mobile.selected-actions-label {
+    display: none; } }
+@media (max-width: 480px) {
+  label.hidden-desktop.selected-actions-label {
+    display: none; }
+
+  label.hidden-mobile.selected-actions-label {
+    display: block; } }
+#selectLink > li > label {
+  margin-bottom: initial;
+  top: -6px;
+  margin-right: 8px; }
+
+#selectLinkTop > li > label {
+  margin-bottom: initial;
+  top: -6px;
+  margin-right: 8px; }
+
+#selectLinkBottom > li > label {
+  margin-bottom: initial;
+  top: -6px;
+  margin-right: 8px; }
+
+#selectLink > li > label.disabled {
+  color: #C9D2DA; }
+
+#selectLinkTop > li > label.disabled {
+  color: #C9D2DA; }
+
+#selectLinkBottom > li > label.disabled {
+  color: #C9D2DA; }
+
+.bootstrap-checkbox-hidden {
+  display: none; }
+
+#actionLinkTop li.sugar_action_button ul.subnav.ddopen > li:last-child a {
+  border-bottom: none; }
+
+#actionLinkBottom li.sugar_action_button ul.subnav.ddopen > li:last-child a {
+  border-bottom: none; }
+
+li.sugar_action_button.hover.opened {
+  position: relative;
+  height: 40px;
+  top: 13px;
+  margin-top: -13px; }
+
+ul.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button label.glyphicon.bootstrap-checkbox {
+  margin-left: 4px; }
+
+div.modal-content {
+  margin: 0 auto;
+  max-width: 100%; }
+
+#columnsFilterDialog div.modal-content {
+  width: 450px; }
+
+div.modal-header > h4 {
+  font-size: 19px;
+  color: #534D64;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 300; }
+
+#columnsFilterList > div > h1 {
+  font-size: 12.5px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px; }
+
+div.modal-header {
+  padding: 25px; }
+
+#columnsFilterList {
+  padding: 30px; }
+
+ul.chooserList.green.ui-sortable {
+  margin-bottom: 30px; }
+
+div.modal-footer > button.btn.button.purple.btn-default {
+  background-color: #AA9DCC; }
+
+div.modal-footer > button.btn.button.purple.btn-default:hover {
+  background-color: #9589B3; }
+
+ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton {
+  top: -1px; }
+
+ul.clickMenu.selectmenu.SugarActionMenu.searchLink.listViewLinkButton {
+  top: -1px; }
+
+ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > li > a {
+  margin: 0;
+  padding: 5px 8px 7px 7px;
+  top: -1px; }
+
+ul.clickMenu.selectmenu.SugarActionMenu.searchLink.listViewLinkButton > li > a {
+  margin: 0;
+  padding: 5px 8px 7px 7px;
+  top: -1px; }
+
+div.qtip.qtip-default {
+  border: none; }
+
+.dateTimeRangeChoice select {
+  width: 125px; }
+
+.dateRangeInput {
+  width: 90px; }
+
+.templateGroupChooser {
+  width: 150px; }
+
+/* search form (and popup search form) */
+.search_form .view {
+  padding: 5px 0px 0px 30px; }
+
+.modal-content .search_form .view {
+  background-color: initial; }
+
+#search_form label {
+  font-weight: bold;
+  white-space: nowrap; }
+
+.modal-content .search_form .view input[type="text"] {
+  background-color: #D8F5EE; }
+
+.modal-content .search_form .view textarea {
+  background-color: #D8F5EE; }
+
+.search_form .view select {
+  padding: initial; }
+
+.search_form .view select#saved_search_select {
+  padding: initial; }
+
+.modal-content .search_form .view select {
+  border: 2px solid #D8F5EE; }
+
+.modal-content .search_form .view select#saved_search_select {
+  border: 2px solid #D8F5EE; }
+
+.search_form .view .dateTimeRangeChoice {
+  display: block;
+  float: left; }
+
+.search_form .view .dateTimeRangeChoice select {
+  width: 90px;
+  margin-right: 4px; }
+
+.search_form .view .dateTimeRangeChoiceClear {
+  display: block; }
+
+.search_form .view .col-lg-8 {
+  width: initial; }
+
+.search_form .view div.search_fields_basic {
+  line-height: 22px;
+  padding-top: 10px; }
+
+.search_form .view .col-xs-12 {
+  padding-right: 30px;
+  min-height: initial; }
+
+.search_form .view .col-xs-12 input[type="text"] {
+  width: 100%; }
+
+.search_form .view .col-xs-12 textarea {
+  width: 100%; }
+
+.search_form .view .templateGroupChooser {
+  width: 100%; }
+
+.search_form .view .search_fields_basic .col-lg-8 {
+  float: none;
+  padding: initial; }
+
+.search_form .view #inlineSavedSearch > table > tbody > tr > td {
+  width: 100%;
+  display: block;
+  float: none; }
+
+.search_form.non-popup input[type="text"] {
+  border: none;
+  height: 40px;
+  min-height: 40px;
+  padding: 5px;
+  line-height: 20px; }
+
+.search_form.non-popup select {
+  border: none;
+  height: 40px;
+  min-height: 40px;
+  padding: 5px;
+  line-height: 20px; }
+
+.search_form.non-popup textarea {
+  border: none;
+  height: 40px;
+  min-height: 40px;
+  padding: 5px;
+  line-height: 20px; }
+
+.search_form.non-popup select[multiple] {
+  min-height: 80px; }
+
+.search_form.non-popup textarea {
+  min-height: 80px; }
+
+.search_form.non-popup .view {
+  padding: 10px 0px 10px 30px; }
+
+.search-clear {
+  display: none;
+  clear: both; }
+
+.modal-search .search-clear {
+  display: block; }
+
+.modal-search .col-xs-12.col-sm-4.col-md-4.col-lg-4 {
+  float: none; }
+
+.modal-search .col-xs-12.col-sm-12.col-md-12.col-lg-4 {
+  float: left; }
+
+.modal-search .col-xs-12.col-sm-12.col-md-12.col-lg-8 {
+  float: left;
+  width: 70%; }
+
+@media (min-width: 992px) {
+  .modal-search .modal-lg {
+    width: 600px; } }
+@media (max-width: 594px) {
+  .modal-search .col-xs-12.col-sm-12.col-md-12.col-lg-8 {
+    width: 100%; } }
+.modal-search .row {
+  margin-bottom: 30px; }
+
+.modal-search .row .submitButtons {
+  float: right; }
+
+.modal-search .col-xs-12 {
+  width: 100%; }
+
+.modal-search .col-sm-6 {
+  width: 100%; }
+
+.modal-search .col-md-4 {
+  width: 100%; }
+
+.modal-search .col-lg-4 {
+  width: 100%; }
+
+.modal-search .col-xs-12 {
+  float: left; }
+
+.modal-search .col-sm-6 {
+  float: left; }
+
+.modal-search .col-md-4 {
+  float: left; }
+
+.modal-search .col-lg-4 {
+  float: left; }
+
+.modal-search .search_fields_basic .col-xs-12 {
+  width: 30%; }
+
+.modal-search .col-advanced-search .col-xs-12 {
+  width: 30%; }
+
+.modal-search .form-item {
+  float: left;
+  width: 70%; }
+
+@media (max-width: 594px) {
+  .modal-search .form-item {
+    width: 100%; } }
+.modal-search .submitButtonsAdvanced {
+  float: right;
+  padding-right: 30px; }
+
+.list .pagination-unique td table.paginationTable td.paginationActionButtons:first-child {
+  padding-right: 60px; }
+
 /**** Detail view ***/
 .favorite_icon_fill svg {
   height: 28px;
@@ -6521,7 +7320,7 @@ div.qtip.qtip-default {
 .moduleTitle .module-title-text {
   height: auto;
   line-height: 36px;
-  margin-bottom: 24px; }
+  margin-bottom: 12px; }
 
 .nav-tabs > li.tab-inline-pagination {
   float: right;
@@ -7962,7 +8761,7 @@ div.confirmTable {
   font-size: 26px;
   font-weight: 300;
   color: #534D64;
-  margin: 0 0 24px 0;
+  margin: 0 0 12px 0;
   float: left;
   letter-spacing: 2px;
   text-transform: uppercase; }
