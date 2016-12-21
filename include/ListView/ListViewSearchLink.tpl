@@ -41,15 +41,10 @@
 <ul class="clickMenu selectmenu searchLink SugarActionMenu listViewLinkButton listViewLinkButton_{$action_menu_location}">
     <li class="sugar_action_button">
         <a href="javascript:void(0)" class="glyphicon glyphicon-filter parent-dropdown-handler" onclick="listViewSearchIcon.toggleSearchDialog('basic'); $('#searchDialog .nav-tabs .active').removeClass('active'); $('#searchDialog .nav-tabs li').first().addClass('active'); $('#searchDialog').modal('toggle');"></a>
-
-        <!--
-        <span class="searchAppliedAlert hidden">&#10004</span>
-        <ul class="subnav">
-            <li><a class="menuItem" href="javascript:void(0)" onclick="listViewSearchIcon.toggleSearchDialog('basic');">{$APP.LBL_QUICK_SEARCH}‎</a></li>
-            <li><a class="menuItem" href="javascript:void(0)" onclick="listViewSearchIcon.toggleSearchDialog('advanced');">{$APP.LBL_ADVANCED_SEARCH}</a></li>
-        </ul>
-        <span></span>
-        -->
     </li>
 </ul>
-
+<ul class="searchAppliedAlert hidden clickMenu selectmenu searchAppliedAlertLink SugarActionMenu listViewLinkButton listViewLinkButton_{$action_menu_location}">
+    <li class="sugar_action_button">
+        <a href="javascript:void(0)" class="glyphicon glyphicon-list-alt parent-dropdown-handler"></a>
+    </li>
+</ul>

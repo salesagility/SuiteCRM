@@ -80,10 +80,10 @@
                         qtipContent += '</table>';
 
                         if(qtipNeeded) {
-                            $('.searchLink .searchAppliedAlert').qtip({
+                            $('.searchAppliedAlertLink').qtip({
                                 content: qtipContent
                             });
-                            $('.searchLink .searchAppliedAlert').removeClass('hidden');
+                            $('.searchAppliedAlertLink').removeClass('hidden');
                         }
                     }
                 }, 100);

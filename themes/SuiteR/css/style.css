@@ -6037,7 +6037,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton {
     top: -1px;
 }
 
-ul.clickMenu>li>span.searchAppliedAlert {
+ul.clickMenu.searchAppliedAlert {
     color: #000;
     background-image: none;
     text-align: center;

@@ -1706,18 +1706,8 @@ ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > l
 }
 /***/
 
-ul.clickMenu > li > span.searchAppliedAlert {
-  background-color: $navbar-alert-count-bg;
-  position: absolute;
-  line-height: 20px;
-  color: $default-btn-color;
-  height: 20px;
-  width: 20px;
-  border-radius: 30px;
-  left: 14px;
-  top: -16px;
-  background-image: none;
-  text-align: center;
+ul.clickMenu.searchAppliedAlert .sugar_action_button {
+  background-color:  $navbar-alert-count-bg;
 }
 
 div.qtip.qtip-default {
@@ -3396,7 +3386,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > l
   top: -1px;
 }
 
-ul.clickMenu.selectmenu.SugarActionMenu.searchLink.listViewLinkButton > li > a {
+ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li > a {
   margin: 0;
   padding: 5px 8px 7px 7px;
   top: -1px;
