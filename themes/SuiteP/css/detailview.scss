@@ -213,3 +213,13 @@
 #subpanel_history .oddListRowS1 td:nth-of-type(2) a {
   border-bottom: none;
 }
+
+// Fix subpanel button
+.subpanel-table .SugarActionMenu .sugar_action_button {
+  min-height: 32px;
+}
+
+.subpanel-table .SugarActionMenu .single a {
+  min-height: 32px;
+  line-height: 32px;
+}
