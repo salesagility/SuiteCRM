@@ -94,7 +94,6 @@
         onOpen: function() {},
 
         toggleSearchDialog: function(dialogType) {
-            $('#searchDialog').modal('toggle');
             SUGAR.searchForm.searchFormSelect('{/literal}{$module}{literal}|'+dialogType+'_search','{/literal}{$module}{literal}|'+(dialogType=='advanced'?'basic':'advanced')+'_search');
         }
 

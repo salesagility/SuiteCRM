@@ -40,7 +40,7 @@
 *}
 <ul class="clickMenu selectmenu searchLink listViewLinkButton listViewLinkButton_{$action_menu_location}">
     <li class="sugar_action_button">
-        <a href="javascript:void(0)" class="glyphicon glyphicon-filter parent-dropdown-handler"></a>
+        <a href="javascript:void(0)" class="glyphicon glyphicon-filter parent-dropdown-handler" onclick="$('#searchDialog').modal('toggle');"></a>
         <span class="searchAppliedAlert hidden">&#10004</span>
         <ul class="subnav">
             <li><a class="menuItem" href="javascript:void(0)" onclick="listViewSearchIcon.toggleSearchDialog('basic');">{$APP.LBL_QUICK_SEARCH}‎</a></li>
