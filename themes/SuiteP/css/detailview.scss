@@ -196,3 +196,20 @@
     margin-left: 0px;
   }
 }
+
+// Remove underline on the icons in activities panel and history panel
+#list_subpanel_activities  .evenListRowS1 td:nth-of-type(2) a {
+  border-bottom: none;
+}
+
+#list_subpanel_activities  .oddListRowS1 td:nth-of-type(2) a {
+  border-bottom: none;
+}
+
+#subpanel_history .evenListRowS1 td:nth-of-type(2) a {
+  border-bottom: none;
+}
+
+#subpanel_history .oddListRowS1 td:nth-of-type(2) a {
+  border-bottom: none;
+}
