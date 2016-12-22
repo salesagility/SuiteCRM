@@ -38,7 +38,6 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
-[dbg1 - footer start (suiteP)]
 </form>
 {literal}
 <script>

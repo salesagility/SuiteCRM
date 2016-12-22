@@ -38,7 +38,6 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
-[dbg3 - SearchFormGeneric start (SuiteP)]
 {{* If templateMeta.maxColumnsBasic is not set, use maxColumns *}}
 <input type='hidden' id="orderByInput" name='orderBy' value=''/>
 <input type='hidden' id="sortOrder" name='sortOrder' value=''/>
