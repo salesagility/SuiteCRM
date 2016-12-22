@@ -315,6 +315,18 @@ class aCase extends Basic {
 	}
 
 	function save($check_notify = FALSE){
+		// Fix for issue 1549: mass update the cases, and change the state value from open to close,
+		// Status value can still display New, Assigned, Pending Input (even though it should not)
+		if($this->module_name == 'Cases') {
+			if($this->state == 'Closed' && $this->status == 'Open_New') {
+				$this->status = 'Closed_Closed';
+			} elseif($this->state == 'Closed' && $this->status == 'Open_Assigned') {
+				$this->status = 'Closed_Closed';
+			} elseif($this->state == 'Closed' && $this->status == 'Open_Pending Input') {
+				$this->status = 'Closed_Closed';
+			}
+		}
+
 		return parent::save($check_notify);
 	}
 
