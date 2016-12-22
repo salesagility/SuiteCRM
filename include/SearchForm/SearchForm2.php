@@ -82,6 +82,12 @@ class SearchForm{
      */
     protected $options;
 
+    /**
+     * Store the Saved Search Data for listview
+     * @var null
+     */
+    private $savedSearchData = null;
+
     public function __construct($seed, $module, $action = 'index', $options = array())
     {
         $this->th = new TemplateHandler();
@@ -102,6 +108,15 @@ class SearchForm{
         );
         $this->searchColumns = array () ;
         $this->setOptions($options);
+    }
+
+    /**
+     * getter for saved search data
+     * (listview use for saved search chooser)
+     * @return mixed
+     */
+    public function getSavedSearchData() {
+        return $this->savedSearchData;
     }
 
     function setup($searchdefs, $searchFields = array(), $tpl, $displayView = 'basic_search', $listViewDefs = array()){
@@ -451,7 +466,9 @@ class SearchForm{
 
     function displaySavedSearchSelect(){
         $savedSearch = new SavedSearch($this->listViewDefs[$this->module], $this->lv->data['pageData']['ordering']['orderBy'], $this->lv->data['pageData']['ordering']['sortOrder']);
-        return $savedSearch->getSelect($this->module);
+        $savedSearchSelect = $savedSearch->getSelect($this->module, $savedSearchData);
+        $this->savedSearchData = $savedSearchData;
+        return $savedSearchSelect;
     }
 
 

@@ -200,7 +200,7 @@ class SavedSearch extends SugarBean {
 		return $chooser;
 	}
 
-    function getSelect($module) {
+    function getSelect($module, &$savedSearchData = null) {
 
 
         global $db, $current_user, $currentModule, $current_lang, $app_strings;
@@ -215,8 +215,10 @@ class SavedSearch extends SugarBean {
         $result = $db->query($query, true, "Error filling in saved search list: ");
 
         $savedSearchArray['_none'] = $app_strings['LBL_NONE'];
+		$savedSearchData['hasOptions'] = false;
         while ($row = $db->fetchByAssoc($result, -1, FALSE)) {
-            $savedSearchArray[$row['id']] = htmlspecialchars($row['name'], ENT_QUOTES);
+			$savedSearchData['hasOptions'] = true;
+			$savedSearchData['options'][$row['id']] = $savedSearchArray[$row['id']] = htmlspecialchars($row['name'], ENT_QUOTES);
         }
 
         $sugarSmarty = new Sugar_Smarty();
@@ -228,6 +230,7 @@ class SavedSearch extends SugarBean {
         else
             $selectedSearch = '';
 
+		$savedSearchData['selected'] = $selectedSearch;
         $sugarSmarty->assign('SAVED_SEARCHES_OPTIONS', get_select_options_with_id($savedSearchArray, $selectedSearch));
 
         return $sugarSmarty->fetch('modules/SavedSearch/SavedSearchSelects.tpl');
