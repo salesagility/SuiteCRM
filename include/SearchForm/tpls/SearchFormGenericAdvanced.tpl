@@ -1,4 +1,43 @@
-
+{*
+/**
+*
+* SugarCRM Community Edition is a customer relationship management program developed by
+* SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+*
+* SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+* Copyright (C) 2011 - 2016 SalesAgility Ltd.
+*
+* This program is free software; you can redistribute it and/or modify it under
+* the terms of the GNU Affero General Public License version 3 as published by the
+* Free Software Foundation with the addition of the following permission added
+* to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+* IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+* OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT
+* ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+* FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+* details.
+*
+* You should have received a copy of the GNU Affero General Public License along with
+* this program; if not, see http://www.gnu.org/licenses or write to the Free
+* Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+* 02110-1301 USA.
+*
+* You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+* SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+*
+* The interactive user interfaces in modified source and object code versions
+* of this program must display Appropriate Legal Notices, as required under
+* Section 5 of the GNU Affero General Public License version 3.
+*
+* In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+* these Appropriate Legal Notices must retain the display of the "Powered by
+* SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+* reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+* display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+*/
+*}
 <script>
 {literal}
 	$(function() {
@@ -63,7 +102,7 @@
 		&nbsp;
 	</td>
 </tr>	
-{if $DISPLAY_SAVED_SEARCH}
+{if $DISPLAY_SAVED_SEARCH && !$searchFormInPopup}
 <tr>
 	<td colspan='2'>
 		<a class='tabFormAdvLink' onhover href='javascript:toggleInlineSearch()'>
@@ -104,16 +143,18 @@
 <tr>
 	<td colspan='5'>
         <input tabindex='2' title='{$APP.LBL_SEARCH_BUTTON_TITLE}' onclick='SUGAR.savedViews.setChooser()' class='button' type='submit' name='button' value='{$APP.LBL_SEARCH_BUTTON_LABEL}' id='search_form_submit_advanced'/>&nbsp;
-        <input tabindex='2' title='{$APP.LBL_CLEAR_BUTTON_TITLE}'  onclick='SUGAR.searchForm.clear_form(this.form); document.getElementById("saved_search_select").options[0].selected=true; return false;' class='button' type='button' name='clear' id='search_form_clear_advanced' value='{$APP.LBL_CLEAR_BUTTON_LABEL}'/>
+        <input tabindex='2' title='{$APP.LBL_CLEAR_BUTTON_TITLE}'  onclick='SUGAR.searchForm.clear_form(this.form); if(document.getElementById("saved_search_select")){ldelim}document.getElementById("saved_search_select").options[0].selected=true;{rdelim} return false;' class='button' type='button' name='clear' id='search_form_clear_advanced' value='{$APP.LBL_CLEAR_BUTTON_LABEL}'/>
         {if $DOCUMENTS_MODULE}
         &nbsp;<input title="{$APP.LBL_BROWSE_DOCUMENTS_BUTTON_TITLE}" type="button" class="button" value="{$APP.LBL_BROWSE_DOCUMENTS_BUTTON_LABEL}" onclick='open_popup("Documents", 600, 400, "&caller=Documents", true, false, "");' />
         {/if}
+		{if !$searchFormInPopup}
         <a id="basic_search_link" href="javascript:void(0)" accesskey="{$APP.LBL_ADV_SEARCH_LNK_KEY}" >{$APP.LNK_BASIC_SEARCH}</a>
         <span class='white-space'>
             &nbsp;&nbsp;&nbsp;{if $SAVED_SEARCHES_OPTIONS}|&nbsp;&nbsp;&nbsp;<b>{$APP.LBL_SAVED_SEARCH_SHORTCUT}</b>&nbsp;
             {$SAVED_SEARCHES_OPTIONS} {/if}
             <span id='go_btn_span' style='display:none'><input tabindex='2' title='go_select' id='go_select'  onclick='SUGAR.searchForm.clear_form(this.form);' class='button' type='button' name='go_select' value=' {$APP.LBL_GO_BUTTON_LABEL} '/></span>	
         </span>
+		{/if}
 	</td>
 	<td class="help">
 	    {if $DISPLAY_SEARCH_HELP}

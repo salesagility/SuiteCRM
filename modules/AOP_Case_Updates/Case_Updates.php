@@ -234,11 +234,11 @@ function display_single_update(AOP_Case_Updates $update){
         }
         /*if standard update*/
         else {
-        $html = "<div id='lessmargin'><div id='caseStyleUser'>".getUpdateDisplayHead($update);
-        $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
-        $html .= nl2br(html_entity_decode($update->description));
-        $html .= "</div></div></div>";
-        return $html;
+            $html = "<div id='lessmargin'><div id='caseStyleUser'>".getUpdateDisplayHead($update);
+            $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
+            $html .= nl2br(html_entity_decode($update->description));
+            $html .= "</div></div></div>";
+            return $html;
         }
     }
 
@@ -302,7 +302,7 @@ function quick_edit_case_updates($case){
     if(isset($case->internal) && $case->internal){
         $internalChecked = "checked='checked'";
     }
-    $internal = $mod_strings['LBL_AOP_INTERNAL'];
+    $internal = $app_strings['LBL_AOP_INTERNAL'];
     $saveBtn = $app_strings['LBL_SAVE_BUTTON_LABEL'];
     $saveTitle = $app_strings['LBL_SAVE_BUTTON_TITLE'];
 
