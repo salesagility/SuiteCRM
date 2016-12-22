@@ -4675,6 +4675,16 @@ div.action_buttons form {
     float:left;
 }
 
+@media (max-width: 992px) {
+    .action_buttons_container {
+        display: block;
+    }
+
+    .action_buttons_container .action_buttons .button {
+        float: left;
+    }
+}
+
 .paginationWrapper {
     float:right;
 }
