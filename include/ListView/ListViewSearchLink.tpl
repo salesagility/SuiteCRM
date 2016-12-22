@@ -58,9 +58,9 @@
         </a>
         <ul class="subnav">
             <!-- TODO: @gymad translate!! -->
-            <li><a href="javascript:void(0)" class="parent-dropdown-action-handler" onclick="SUGAR.savedViews.shortcutDropdown('_none', '{$module}');">- None -</a></li>
+            <li><a href="javascript:void(0)" class="parent-dropdown-action-handler" onclick="SUGAR.savedViews.shortcutDropdown('_none', '{$savedSearchData.module}');">- None -</a></li>
             {foreach from=$savedSearchData.options key=id item=option}
-                <li><a href="javascript:void(0)" class="parent-dropdown-action-handler" onclick="SUGAR.savedViews.shortcutDropdown('{$id}', '{$module}');">{$option}</a>{if $id==$savedSearchData.selected}&nbsp;<label>&#10004</label>{/if}</li>
+                <li><a href="javascript:void(0)" class="parent-dropdown-action-handler"{if $id!=$savedSearchData.selected} onclick="SUGAR.savedViews.shortcutDropdown('{$id}', '{$savedSearchData.module}');"{/if}>{$option}{if $id==$savedSearchData.selected}&nbsp;&#10004{/if}</a></li>
             {/foreach}
         </ul>
         <span></span>
