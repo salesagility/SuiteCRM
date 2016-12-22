@@ -48,3 +48,18 @@
         <a href="javascript:void(0)" class="glyphicon glyphicon-list-alt parent-dropdown-handler"></a>
     </li>
 </ul>
+
+<ul class="action-link action-link-{$action_menu_location} clickMenu selectActions fancymenu show listViewLinkButton listViewLinkButton_{$action_menu_location}">
+    <li class="sugar_action_button">
+        <a href="javascript:void(0)" class="parent-dropdown-handler" onclick="return false;">
+            <label class="selected-actions-label">Saved Search</label>
+        </a>
+        <ul class="subnav">
+            <li><a href="javascript:void(0)" class="parent-dropdown-action-handler" onclick="">Email</a></li>
+            <li><a href="javascript:void(0)" class="parent-dropdown-action-handler" onclick="">Email</a></li>
+            <li><a href="javascript:void(0)" class="parent-dropdown-action-handler" onclick="">Email</a></li>
+            <li><a href="javascript:void(0)" class="parent-dropdown-action-handler" onclick="">Email</a></li>
+        </ul>
+        <span></span>
+    </li>
+</ul>
