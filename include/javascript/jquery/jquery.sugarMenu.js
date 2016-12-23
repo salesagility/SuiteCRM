@@ -215,10 +215,7 @@
                 $(this).css('height', '');
                 setTimeout(function(){
                   $('.subnav.ddopen').each(function(i,e){
-                    if($(e).hasClass('upper')) {
-                      $(e).css('top', parseInt($(e).css('top'))-($(e).find('a').length-1)*5 + 'px');
-                    }
-                    else {
+                    if(!$(e).hasClass('upper')) {
                       $(e).css('top', parseInt($(e).css('top')) + 10 + 'px');
                     }
                   })
