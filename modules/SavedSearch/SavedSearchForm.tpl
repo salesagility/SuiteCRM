@@ -90,10 +90,12 @@
             curr_search_name.appendChild(document.createTextNode('"'+x.options[x.selectedIndex].text+'"'));
 			document.getElementById('ss_update').disabled = false;
 			document.getElementById('ss_delete').disabled = false;
+			$('.hideUnusedSavedSearchElements').show();
 		}else{
 			document.getElementById('ss_update').disabled = true;
 			document.getElementById('ss_delete').disabled = true;
 			document.getElementById('curr_search_name').innerHTML = '';
+			$('.hideUnusedSavedSearchElements').hide();
 		}
 	}
 	//call scripts that need to get run onload of this form.  This function is called when image

@@ -259,6 +259,7 @@ class SearchForm{
         // return the form of the shown tab only
         if($this->showSavedSearchesOptions){
             $this->th->ss->assign('SAVED_SEARCHES_OPTIONS', $this->displaySavedSearchSelect());
+            $this->th->ss->assign('savedSearchData', $this->getSavedSearchData());
         }
         if ($this->module == 'Documents'){
             $this->th->ss->assign('DOCUMENTS_MODULE', true);
