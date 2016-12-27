@@ -53,12 +53,10 @@
 <ul class="action-link action-link-{$action_menu_location} clickMenu selectActions fancymenu show listViewLinkButton listViewLinkButton_{$action_menu_location}">
     <li class="sugar_action_button">
         <a href="javascript:void(0)" class="parent-dropdown-handler" onclick="return false;">
-            <!-- TODO: @gymad use translation here -->
-            <label class="selected-actions-label">Saved Search</label>
+            <label class="selected-actions-label">{$APP.LBL_SAVED_SEARCH_SHORTCUT}</label>
         </a>
         <ul class="subnav">
-            <!-- TODO: @gymad translate!! -->
-            <li><a href="javascript:void(0)" class="parent-dropdown-action-handler" onclick="SUGAR.savedViews.shortcutDropdown('_none', '{$savedSearchData.module}');">- None -</a></li>
+            <li><a href="javascript:void(0)" class="parent-dropdown-action-handler" onclick="SUGAR.savedViews.shortcutDropdown('_none', '{$savedSearchData.module}');">{$APP.LBL_NONE}</a></li>
             {foreach from=$savedSearchData.options key=id item=option}
                 <li><a href="javascript:void(0)" class="parent-dropdown-action-handler"{if $id!=$savedSearchData.selected} onclick="SUGAR.savedViews.shortcutDropdown('{$id}', '{$savedSearchData.module}');"{/if}>{$option}{if $id==$savedSearchData.selected}&nbsp;&#10004{/if}</a></li>
             {/foreach}
