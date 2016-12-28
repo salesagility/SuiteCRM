@@ -44,3 +44,25 @@
 .listViewPaginationTdS1, .listViewButtons, .search_form, .tablist, .utilsLink, .button, .tabForm {
     display: none;
 }
+
+.list tr th {
+    color: #534D64;
+}
+
+body {
+    background: #ffffff;
+    background: #ffffff;
+}
+
+table#mass_update_table {
+    color: #ffffff;
+    background-color: #ffffff;
+}
+
+.ui-state-highlight {
+    background: #ffffff;
+}
+
+.evenListRowS1 td {
+    background: #ffffff;
+}

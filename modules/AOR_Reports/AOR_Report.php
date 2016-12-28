@@ -700,7 +700,7 @@ class AOR_Report extends Basic {
             foreach($fields as $name => $att){
                 if($att['display']){
                     $html .= "<td class='' valign='top' align='left'>";
-                    if($att['link'] && $links){
+                    if($att['link']){
                         $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$att['module']."&action=DetailView&record=".$row[$att['alias'].'_id']."'>";
                     }
 
@@ -715,7 +715,7 @@ class AOR_Report extends Basic {
                     if($att['total']){
                         $totals[$name][] = $row[$name];
                     }
-                    if($att['link'] && $links) $html .= "</a>";
+                    if($att['link']) $html .= "</a>";
                     $html .= "</td>";
                 }
             }

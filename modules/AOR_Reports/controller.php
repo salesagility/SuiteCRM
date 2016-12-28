@@ -230,12 +230,14 @@ class AOR_ReportsController extends SugarController {
         $this->bean->user_parameters = requestToUserParameters();
 
         $printable = $this->bean->build_group_report(-1,false);
-        $stylesheet = file_get_contents(SugarThemeRegistry::current()->getCSSURL('style.css',false));
+        $stylesheetMain = file_get_contents(SugarThemeRegistry::current()->getCSSURL('style.css',false));
+        $stylesheetPrint = file_get_contents(SugarThemeRegistry::current()->getCSSURL('print.css',false));
         ob_clean();
         try{
             $pdf=new mPDF('en','A4','','DejaVuSansCondensed');
             $pdf->setAutoFont();
-            $pdf->WriteHTML($stylesheet,1);
+            $pdf->WriteHTML($stylesheetMain,1);
+            $pdf->WriteHTML($stylesheetPrint,1);
             $pdf->WriteHTML($head,2);
             $pdf->WriteHTML($printable,3);
             $pdf->Output($this->bean->name.'.pdf', "D");
