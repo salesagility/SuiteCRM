@@ -3978,6 +3978,10 @@ div.qtip.qtip-default {
   width: 70%;
 }
 
+.modal-search .form-item.radios > div {
+  margin-bottom: 10px;
+}
+
 @media (max-width: 594px) {
   .modal-search .form-item {
     width: 100%;

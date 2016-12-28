@@ -96,7 +96,7 @@
 </div>
 
 {if $DISPLAY_SAVED_SEARCH}
-<div>
+<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-advanced-search">
 	{if !$searchFormInPopup}
 	<div>
 		<a class='tabFormAdvLink' onhover href='javascript:toggleInlineSearch()'>
@@ -106,17 +106,19 @@
 		<input type='hidden' id='showSSDIV' name='showSSDIV' value='{$SHOWSSDIV}'><p>
 	</div>
 	{/if}
-	<div scope='row' width='10%' nowrap="nowrap">
-		{sugar_translate label='LBL_SAVE_SEARCH_AS' module='SavedSearch'}:
-	</div>
-	<div width='30%' nowrap>
-		<input type='text' name='saved_search_name'>
-		<input type='hidden' name='search_module' value=''>
-		<input type='hidden' name='saved_search_action' value=''>
-		<input title='{$APP.LBL_SAVE_BUTTON_LABEL}' value='{$APP.LBL_SAVE_BUTTON_LABEL}' class='button' type='button' name='saved_search_submit' onclick='SUGAR.savedViews.setChooser(); return SUGAR.savedViews.saved_search_action("save");'>
+	<div class="" scope='row' width='10%' nowrap="nowrap">
+		<div class="col-xs-12">
+			<label>{sugar_translate label='LBL_SAVE_SEARCH_AS' module='SavedSearch'}:</label>
+		</div>
+		<div class="form-item" width='30%' nowrap>
+			<input type='text' name='saved_search_name'>
+			<input type='hidden' name='search_module' value=''>
+			<input type='hidden' name='saved_search_action' value=''>
+			<input title='{$APP.LBL_SAVE_BUTTON_LABEL}' value='{$APP.LBL_SAVE_BUTTON_LABEL}' class='button' type='button' name='saved_search_submit' onclick='SUGAR.savedViews.setChooser(); return SUGAR.savedViews.saved_search_action("save");'>
+		</div>
 	</div>
 	<div class="hideUnusedSavedSearchElements" scope='row' width='10%' nowrap="nowrap"{if !$savedSearchData.selected} style="display: none;"{/if}>
-		{sugar_translate label='LBL_MODIFY_CURRENT_SEARCH' module='SavedSearch'}: <span id='curr_search_name'>"{$savedSearchData.options[$savedSearchData.selected]}"</span>
+		<label>{sugar_translate label='LBL_MODIFY_CURRENT_SEARCH' module='SavedSearch'}: <span id='curr_search_name'>"{$savedSearchData.options[$savedSearchData.selected]}"</span></label>
 	</div>
 	<div class="hideUnusedSavedSearchElements" width='30%' nowrap{if !$savedSearchData.selected} style="display: none;"{/if}>
 		<input class='button' onclick='SUGAR.savedViews.setChooser(); return SUGAR.savedViews.saved_search_action("update")' value='{$APP.LBL_UPDATE}' title='{$APP.LBL_UPDATE}' name='ss_update' id='ss_update' type='button' >
