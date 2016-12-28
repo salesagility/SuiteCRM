@@ -8895,17 +8895,17 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     #quickcreatetop {
-        margin-top: 10px;
+        margin: 25px;
     }
 
     #quickcreatetop a {
-        padding: 5px 32px 5px 12px;
+        padding: 13px 32px 13px 12px;
         background-color: #a2b2bf;
-        background-position: 80px -5px;
+        background-position: 90% 100%;
     }
 
     #quickcreatetop a:hover {
-        background-position: 80px -5px;
+        background-position: 90% 100%;
     }
 
     #search {
