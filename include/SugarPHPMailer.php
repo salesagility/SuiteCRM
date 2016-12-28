@@ -429,6 +429,22 @@ eoq;
             //PHPMailer will throw an error if the body is empty, so insert a blank space if body is empty
             $this->Body = " ";
         }
+	// EMAIL OPEN NOTIFICATION (MDN). EspaceNetworks.com 14-Aug-2015
+	// To enable/disable this feature,
+	// Edit config_override.php in the root folder of suitecrm.
+	//   $sugar_config['enable_email_open_notification'] == true;
+	// or change the word true to false to disable these notifications.
+	// Default setting is false/disable.
+        global $sugar_config; //EspaceNetworks.com
+        $feature = 'enable_email_open_notification';
+	if (!empty($sugar_config)) {
+		if (isset($sugar_config[$feature])) {
+			if ($sugar_config[$feature] == true) {
+				$this->ConfirmReadingTo = $this->From;
+			}
+		}
+		else $sugar_config[$feature] = false;
+	}	//EspaceNetworks.com -- end of Email Open Notification (MDN/Read Receipt).
         return parent::PreSend();
     }
 
