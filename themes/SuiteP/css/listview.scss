@@ -524,7 +524,7 @@ a.listViewTdToolsS1 {
   padding-right: 10px;
 }
 
-.table-responsive.list > tbody > tr > td a {
+.table-responsive.list > tbody > tr > td > a {
   font-weight: bold;
   color: $list-view-link-color;
   border-bottom-color: $list-view-link-color;
