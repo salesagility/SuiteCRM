@@ -50,35 +50,34 @@ class AOPAssignManager
     /**
      * AOPAssignManager constructor.
      *
-     * @param bool $ieX
+     * @param  InboundEmail|bool $ieX
      */
     public function __construct($ieX = false)
     {
         global $sugar_config;
         $this->ieX = $ieX;
+        $inboundDistributionMethod = '';
         if ($ieX) {
-            $inboundDistribMethod = $ieX->get_stored_options('distrib_method', '');
-        } else {
-            $inboundDistribMethod = '';
+            $inboundDistributionMethod = $ieX->get_stored_options('distrib_method', '');
         }
-        if ($this->isAOPFallback($inboundDistribMethod)) {
+        if ($this->isAOPFallback($inboundDistributionMethod)) {
             $this->distributionMethod = $sugar_config['aop']['distribution_method'];
             $this->aopFallback = true;
         } else {
-            $this->distributionMethod = $inboundDistribMethod;
+            $this->distributionMethod = $inboundDistributionMethod;
             $this->aopFallback = false;
         }
         $this->assignableUsers = $this->getAssignableUsers();
     }
 
     /**
-     * @param $distribMethod
+     * @param $distributionMethod
      *
      * @return bool
      */
-    private function isAOPFallback($distribMethod)
+    private function isAOPFallback($distributionMethod)
     {
-        return empty($distribMethod) || $distribMethod == 'AOPDefault';
+        return empty($distributionMethod) || $distributionMethod === 'AOPDefault';
     }
 
     /**
@@ -118,7 +117,7 @@ class AOPAssignManager
      */
     private function getAssignableUsers()
     {
-        if ($this->distributionMethod == 'singleUser') {
+        if ($this->distributionMethod === 'singleUser') {
             return array();
         }
         $distributionOptions = $this->getDistributionOptions();
@@ -135,11 +134,11 @@ class AOPAssignManager
                     $group_users = $security_group->get_linked_beans('users', 'User');
                     $users = array();
                     $r_users = array();
-                    if ($distributionOptions[2] != '') {
+                    if ($distributionOptions[2] !== '') {
                         $r_users = $this->getRoleUsers($distributionOptions[2]);
                     }
                     foreach ($group_users as $group_user) {
-                        if ($distributionOptions[2] != '' && !isset($r_users[$group_user->id])) {
+                        if ($distributionOptions[2] !== '' && !isset($r_users[$group_user->id])) {
                             continue;
                         }
                         $users[$group_user->id] = $group_user->name;
@@ -219,7 +218,7 @@ class AOPAssignManager
         if (!$this->leastBusyUsers) {
             $this->getLeastBusyCounts();
         }
-        $this->leastBusyUsers[$id] = $this->leastBusyUsers[$id] + 1;
+        $this->leastBusyUsers[$id] += 1;
     }
 
     /**
@@ -266,17 +265,18 @@ class AOPAssignManager
     {
         $id = empty($this->ieX) ? '' : $this->ieX->id;
         $file = create_cache_directory('modules/AOP_Case_Updates/Users/').$id.'lastUser.cache.php';
-        if (isset($_SESSION['AOPlastuser'][$id]) && $_SESSION['AOPlastuser'][$id] != '') {
-            $lastUserId = $_SESSION['AOPlastuser'][$id];
+        $lastUserId = '';
+        if (isset($_SESSION['AOPLastUser'][$id]) && $_SESSION['AOPLastUser'][$id] !== '') {
+            $lastUserId = $_SESSION['AOPLastUser'][$id];
         } elseif (is_file($file)) {
             include $file;
-            if (isset($lastUser['User']) && $lastUser['User'] != '') {
+            if (isset($lastUser['User']) && $lastUser['User'] !== '') {
                 $lastUserId = $lastUser['User'];
             }
         }
         $users = array_keys($this->assignableUsers);
-        $lastOffset = array_search($lastUserId, $users);
-        $newOffset = count($users) != 0 ? ($lastOffset + 1) % count($users) : 0;
+        $lastOffset = array_search($lastUserId, $users, false);
+        $newOffset = count($users) !== 0 ? ($lastOffset + 1) % count($users) : 0;
         if (!empty($users[$newOffset])) {
             return $users[$newOffset];
         }
@@ -292,7 +292,7 @@ class AOPAssignManager
     private function setLastRoundRobinUser($user_id)
     {
         $id = empty($this->ieX) ? '' : $this->ieX->id;
-        $_SESSION['AOPlastuser'][$id] = $user_id;
+        $_SESSION['AOPLastUser'][$id] = $user_id;
         $file = create_cache_directory('modules/AOP_Case_Updates/Users/').$id.'lastUser.cache.php';
         $arrayString = var_export_helper(array('User' => $user_id));
         $content = <<<eoq
@@ -301,7 +301,7 @@ class AOPAssignManager
 ?>
 eoq;
         if ($fh = @sugar_fopen($file, 'w')) {
-            fputs($fh, $content);
+            fwrite($fh, $content);
             fclose($fh);
         }
 

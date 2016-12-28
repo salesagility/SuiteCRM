@@ -43,26 +43,33 @@
 class CaseEventsHook
 {
 
-    private $diffFields = array(
+    private static $diffFields = array(
         array('field' => 'priority', 'display_field' => 'priority', 'display_name' => 'Priority'),
         array('field' => 'status', 'display_field' => 'status', 'display_name' => 'Status'),
-        array('field' => 'assigned_user_id', 'display_field' => 'assigned_user_name', 'display_name' => 'Assigned User'),
+        array(
+            'field'         => 'assigned_user_id',
+            'display_field' => 'assigned_user_name',
+            'display_name'  => 'Assigned User'
+        ),
         array('field' => 'type', 'display_field' => 'type', 'display_name' => 'Type'),
     );
 
     /**
      * @param SugarBean $old
      * @param SugarBean $new
+     *
      * @return array
      */
     private function compareBeans($old, $new)
     {
         $events = array();
-        foreach ($this->diffFields as $field) {
+        foreach (self::$diffFields as $field) {
             $fieldName = $field['field'];
             $displayField = $field['display_field'];
             $name = $field['display_name'];
-            if( (isset($old->$fieldName) ? $old->$fieldName : null) != (isset($new->$fieldName) ? $new->$fieldName : null)) {
+            if ((isset($old->$fieldName) ? $old->$fieldName : null) !==
+                (isset($new->$fieldName) ? $new->$fieldName : null)
+            ) {
                 $event = new AOP_Case_Events();
                 $oldDisplay = $old->$displayField;
                 $newDisplay = $new->$displayField;
@@ -86,7 +93,7 @@ class CaseEventsHook
             //New case so do nothing.
             return;
         }
-        if(isset($_REQUEST['module']) && $_REQUEST['module'] == 'Import') {
+        if (isset($_REQUEST['module']) && $_REQUEST['module'] === 'Import') {
             return;
         }
         $oldBean = new aCase();

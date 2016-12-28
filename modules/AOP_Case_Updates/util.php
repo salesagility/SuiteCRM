@@ -56,13 +56,13 @@ function getAOPAssignField($assignField, $value)
         $field .= "<input type='hidden' name='$assignField" . '[1]' . "' id='$assignField" . '[1]' . "' value=''  />";
     } else {
         $display = 'none';
-        if (isset($value[0]) && $value[0] == 'security_group') {
+        if (isset($value[0]) && $value[0] === 'security_group') {
             $display = '';
         }
         $field .= "<select type='text' style='display:$display' name='$assignField" . '[1]' . "' id='$assignField" . '[1]' . "' title='' tabindex='116'>" . get_select_options_with_id($securityGroups, isset($value[1]) ? $value[1] : null) . '</select>&nbsp;&nbsp;';
     }
     $display = 'none';
-    if (isset($value[0]) && ($value[0] == 'role' || $value[0] == 'security_group')) {
+    if (isset($value[0]) && ($value[0] === 'role' || $value[0] === 'security_group')) {
         $display = '';
     }
     $field .= "<select type='text' style='display:$display' name='$assignField" . '[2]' . "' id='$assignField" . '[2]' . "' title='' tabindex='116'>" . get_select_options_with_id($roles, isset($value[2]) ? $value[2] : null) . '</select>&nbsp;&nbsp;';
@@ -120,8 +120,8 @@ function getPortalEmailSettings()
 /**
  * Custom parse template method since sugars own does not deal with custom fields.
  *
- * @param $string
- * @param $bean_arr
+ * @param string $string
+ * @param array $bean_arr
  * @return string
  */
 function aop_parse_template($string, $bean_arr)
@@ -132,7 +132,7 @@ function aop_parse_template($string, $bean_arr)
 
         $focus = BeanFactory::getBean($bean_name, $bean_id);
 
-        if ($bean_name == 'Leads' || $bean_name == 'Prospects') {
+        if ($bean_name === 'Leads' || $bean_name === 'Prospects') {
             $bean_name = 'Contacts';
         }
 
@@ -142,7 +142,7 @@ function aop_parse_template($string, $bean_arr)
             }
         }
 
-        if (isset($this) && isset($this->module_dir) && $this->module_dir == 'EmailTemplates') {
+        if (isset($this) && isset($this->module_dir) && $this->module_dir === 'EmailTemplates') {
             $string = $this->parse_template_bean($string, $bean_name, $focus);
         } else {
             $emailTemplate = new EmailTemplate();

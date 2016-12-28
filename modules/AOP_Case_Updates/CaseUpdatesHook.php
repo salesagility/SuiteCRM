@@ -88,7 +88,7 @@ class CaseUpdatesHook
             if (!$case->state) {
                 $case->state = $app_list_strings['case_state_default_key'];
             }
-            if ($case->status == 'New') {
+            if ($case->status === 'New') {
                 $case->status = $app_list_strings['case_status_default_key'];
             }
 
@@ -101,7 +101,7 @@ class CaseUpdatesHook
 
             return;
         }
-        if ($_REQUEST['module'] == 'Import') {
+        if ($_REQUEST['module'] === 'Import') {
             return;
         }
         //Grab the update field and create a new update with it.
@@ -126,7 +126,7 @@ class CaseUpdatesHook
         $fileCount = $this->arrangeFilesArray();
 
         for ($x = 0; $x < $fileCount; ++$x) {
-            if ($_FILES['case_update_file']['error'][$x] == UPLOAD_ERR_NO_FILE) {
+            if ($_FILES['case_update_file']['error'][$x] === UPLOAD_ERR_NO_FILE) {
                 continue;
             }
             $uploadFile = new UploadFile('case_update_file' . $x);
@@ -142,7 +142,7 @@ class CaseUpdatesHook
         }
         $postPrefix = 'case_update_id_';
         foreach ($_POST as $key => $val) {
-            if (strpos($key, $postPrefix) !== 0 || empty($val)) {
+            if (empty($val) || strpos($key, $postPrefix) !== 0) {
                 continue;
             }
             //Val is selected doc id
@@ -163,6 +163,7 @@ class CaseUpdatesHook
 
     /**
      * @param $caseUpdateId
+     *
      * @return Note
      */
     private function newNote($caseUpdateId)
@@ -198,7 +199,7 @@ class CaseUpdatesHook
      */
     public function assignAccount($case, $event, $arguments)
     {
-        if ($arguments['module'] != 'Cases' || $arguments['related_module'] != 'Contacts') {
+        if ($arguments['module'] !== 'Cases' || $arguments['related_module'] !== 'Contacts') {
             return;
         }
         if (!isAOPEnabled()) {
@@ -219,7 +220,7 @@ class CaseUpdatesHook
      */
     public function saveEmailUpdate($email)
     {
-        if ($email->intent != 'createcase' || $email->parent_type != 'Cases') {
+        if ($email->intent !== 'createcase' || $email->parent_type !== 'Cases') {
             $GLOBALS['log']->warn('CaseUpdatesHook: saveEmailUpdate: Not a create case or wrong parent type');
 
             return;
@@ -248,19 +249,19 @@ class CaseUpdatesHook
         $beans = $ea->getBeansByEmailAddress($email->from_addr);
         $contact_id = null;
         foreach ($beans as $emailBean) {
-            if ($emailBean->module_name == 'Contacts' && !empty($emailBean->id)) {
+            if ($emailBean->module_name === 'Contacts' && !empty($emailBean->id)) {
                 $contact_id = $emailBean->id;
                 $this->linkAccountAndCase($email->parent_id, $emailBean->account_id);
             }
         }
-        $case_update = new AOP_Case_Updates();
-        $case_update->name = $email->name;
-        $case_update->contact_id = $contact_id;
+        $caseUpdate = new AOP_Case_Updates();
+        $caseUpdate->name = $email->name;
+        $caseUpdate->contact_id = $contact_id;
         $updateText = $this->unquoteEmail($email->description_html ? $email->description_html : $email->description);
-        $case_update->description = $updateText;
-        $case_update->internal = false;
-        $case_update->case_id = $email->parent_id;
-        $case_update->save();
+        $caseUpdate->description = $updateText;
+        $caseUpdate->internal = false;
+        $caseUpdate->case_id = $email->parent_id;
+        $caseUpdate->save();
         $notes = $email->get_linked_beans('notes', 'Notes');
         foreach ($notes as $note) {
             //Link notes to case update also
@@ -269,14 +270,14 @@ class CaseUpdatesHook
             $newNote->file_mime_type = $note->file_mime_type;
             $newNote->filename = $note->filename;
             $newNote->parent_type = 'AOP_Case_Updates';
-            $newNote->parent_id = $case_update->id;
+            $newNote->parent_id = $caseUpdate->id;
             $newNote->save();
             $srcFile = "upload://{$note->id}";
             $destFile = "upload://{$newNote->id}";
             copy($srcFile, $destFile);
         }
 
-        $this->updateCaseStatus($case_update->case_id);
+        $this->updateCaseStatus($caseUpdate->case_id);
     }
 
     /**
@@ -295,7 +296,7 @@ class CaseUpdatesHook
             return;
         }
         $case = BeanFactory::getBean('Cases', $caseId);
-        if (empty($case)) {
+        if (!empty($case->id)) {
             return;
         }
         if (array_key_exists($case->status, $statusMap)) {
@@ -308,6 +309,7 @@ class CaseUpdatesHook
 
     /**
      * @param $text
+     *
      * @return mixed|string
      */
     private function unquoteEmail($text)
@@ -328,40 +330,38 @@ class CaseUpdatesHook
      */
     public function closureNotifyPrep($case)
     {
-        if (isset($_REQUEST['module']) && $_REQUEST['module'] == 'Import') {
+        if (isset($_REQUEST['module']) && $_REQUEST['module'] === 'Import') {
             return;
         }
-        if ($case->state != 'Closed' || $case->fetched_row['state'] == 'Closed') {
+        $case->send_closure_email = true;
+        if ($case->state !== 'Closed' || $case->fetched_row['state'] === 'Closed') {
             $case->send_closure_email = false;
-        } else {
-            $case->send_closure_email = true;
         }
     }
 
     /**
      * @param aCase $case
-     * @param $event
-     * @param $arguments
      */
-    public function closureNotify($case, $event, $arguments)
+    public function closureNotify($case)
     {
-	    if (isset($_REQUEST['module']) && $_REQUEST['module'] == 'Import') {
+        if (isset($_REQUEST['module']) && $_REQUEST['module'] === 'Import') {
             return;
         }
-        if ($case->state != 'Closed' || !$case->send_closure_email) {
+        if ($case->state !== 'Closed' || !$case->send_closure_email) {
             return;
         }
-        $this->sendClosureEmail($case, $arguments['related_bean']);
+        $this->sendClosureEmail($case);
     }
 
     /**
      * @param aCase $case
+     *
      * @return bool
      */
     private function sendClosureEmail(aCase $case)
     {
         if (!isAOPEnabled()) {
-            return;
+            return true;
         }
         $GLOBALS['log']->warn('CaseUpdatesHook: sendClosureEmail called');
         require_once 'include/SugarPHPMailer.php';
@@ -374,7 +374,7 @@ class CaseUpdatesHook
 
         $emailTemplate = new EmailTemplate();
         $aop_config = $this->getAOPConfig();
-        $emailTemplate = $emailTemplate->retrieve($aop_config['case_closure_email_template_id']);
+        $emailTemplate->retrieve($aop_config['case_closure_email_template_id']);
 
         if (!$emailTemplate) {
             $GLOBALS['log']->warn('CaseUpdatesHook: sendClosureEmail template is empty');
@@ -402,15 +402,20 @@ class CaseUpdatesHook
         $email = $contact->emailAddress->getPrimaryAddress($contact);
 
         $mailer->addAddress($email);
-        if (!$mailer->Send()) {
-            $GLOBALS['log']->info('CaseUpdatesHook: Could not send email:  ' . $mailer->ErrorInfo);
 
-            return false;
-        } else {
-            $this->logEmail($email, $mailer, $case->id);
+        try {
+            if ($mailer->send()) {
+                $this->logEmail($email, $mailer, $case->id);
 
-            return true;
+                return true;
+            }
+        } catch (phpmailerException $exception) {
+            $GLOBALS['log']->fatal('CaseUpdatesHook: sending email Failed:  ' . $exception->getMessage());
         }
+
+        $GLOBALS['log']->info('CaseUpdatesHook: Could not send email:  ' . $mailer->ErrorInfo);
+
+        return false;
     }
 
     /**
@@ -423,10 +428,10 @@ class CaseUpdatesHook
      */
     public function creationNotify($bean, $event, $arguments)
     {
-	    if (isset($_REQUEST['module']) && $_REQUEST['module'] == 'Import') {
+        if (isset($_REQUEST['module']) && $_REQUEST['module'] === 'Import') {
             return;
         }
-        if ($arguments['module'] != 'Cases' || $arguments['related_module'] != 'Contacts') {
+        if ($arguments['module'] !== 'Cases' || $arguments['related_module'] !== 'Contacts') {
             return;
         }
         if (!$bean->fetched_row) {
@@ -444,6 +449,7 @@ class CaseUpdatesHook
      * @param EmailTemplate $template
      * @param aCase $bean
      * @param $contact
+     *
      * @return array
      */
     private function populateTemplate(EmailTemplate $template, aCase $bean, $contact)
@@ -452,13 +458,33 @@ class CaseUpdatesHook
         //Order of beans seems to matter here so we place contact first.
         $beans = array(
             'Contacts' => $contact->id,
-            'Cases' => $bean->id,
-            'Users' => $bean->assigned_user_id,
+            'Cases'    => $bean->id,
+            'Users'    => $bean->assigned_user_id,
         );
         $ret = array();
         $ret['subject'] = from_html(aop_parse_template($template->subject, $beans));
-        $ret['body'] = from_html($app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] . aop_parse_template(str_replace('$sugarurl', $sugar_config['site_url'], $template->body_html), $beans));
-        $ret['body_alt'] = strip_tags(from_html(aop_parse_template(str_replace('$sugarurl', $sugar_config['site_url'], $template->body), $beans)));
+        $ret['body'] = from_html(
+            $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] . aop_parse_template(
+                str_replace(
+                    '$sugarurl',
+                    $sugar_config['site_url'],
+                    $template->body_html
+                ),
+                $beans
+            )
+        );
+        $ret['body_alt'] = strip_tags(
+            from_html(
+                aop_parse_template(
+                    str_replace(
+                        '$sugarurl',
+                        $sugar_config['site_url'],
+                        $template->body
+                    ),
+                    $beans
+                )
+            )
+        );
 
         return $ret;
     }
@@ -479,12 +505,13 @@ class CaseUpdatesHook
     /**
      * @param aCase $bean
      * @param $contact
+     *
      * @return bool
      */
     private function sendCreationEmail(aCase $bean, $contact)
     {
         if (!isAOPEnabled()) {
-            return;
+            return true;
         }
         require_once 'include/SugarPHPMailer.php';
         $mailer = new SugarPHPMailer();
@@ -494,21 +521,21 @@ class CaseUpdatesHook
         $mailer->prepForOutbound();
         $mailer->setMailerForSystem();
 
-        $email_template = new EmailTemplate();
+        $emailTemplate = new EmailTemplate();
 
         $aop_config = $this->getAOPConfig();
-        $email_template = $email_template->retrieve($aop_config['case_creation_email_template_id']);
-        if (!$aop_config['case_creation_email_template_id'] || !$email_template) {
+        $emailTemplate->retrieve($aop_config['case_creation_email_template_id']);
+        if (!$emailTemplate || !$aop_config['case_creation_email_template_id']) {
             $GLOBALS['log']->warn('CaseUpdatesHook: sendCreationEmail template is empty');
 
             return false;
         }
 
         $emailSettings = getPortalEmailSettings();
-        $text = $this->populateTemplate($email_template, $bean, $contact);
+        $text = $this->populateTemplate($emailTemplate, $bean, $contact);
         $mailer->Subject = $text['subject'];
         $mailer->Body = $text['body'];
-        $mailer->IsHTML(true);
+        $mailer->isHTML(true);
         $mailer->AltBody = $text['body_alt'];
         $mailer->From = $emailSettings['from_address'];
         $mailer->FromName = $emailSettings['from_name'];
@@ -516,34 +543,39 @@ class CaseUpdatesHook
         if (empty($email) && !empty($contact->email1)) {
             $email = $contact->email1;
         }
-        $mailer->AddAddress($email);
-        if (!$mailer->Send()) {
-            $GLOBALS['log']->info('CaseUpdatesHook: Could not send email:  ' . $mailer->ErrorInfo);
+        $mailer->addAddress($email);
 
-            return false;
-        } else {
-            $this->logEmail($email, $mailer, $bean->id);
+        try {
+            if ($mailer->send()) {
+                $this->logEmail($email, $mailer, $bean->id);
 
-            return true;
+                return true;
+            }
+        } catch (phpmailerException $exception) {
+            $GLOBALS['log']->fatal('CaseUpdatesHook: sending email Failed:  ' . $exception->getMessage());
         }
+
+        $GLOBALS['log']->info('CaseUpdatesHook: Could not send email:  ' . $mailer->ErrorInfo);
+
+        return false;
     }
 
     /**
-     * @param $email
-     * @param $mailer
-     * @param null $caseId
+     * @param string $email
+     * @param SugarPHPMailer $mailer
+     * @param string $caseId
      */
-    private function logEmail($email, $mailer, $caseId = null)
+    private function logEmail($email, SugarPHPMailer $mailer, $caseId = null)
     {
         require_once 'modules/Emails/Email.php';
         $emailObj = new Email();
-        $emailObj->to_addrs = $email;
+        $emailObj->to_addrs_names = $email;
         $emailObj->type = 'out';
         $emailObj->deleted = '0';
         $emailObj->name = $mailer->Subject;
         $emailObj->description = $mailer->AltBody;
         $emailObj->description_html = $mailer->Body;
-        $emailObj->from_addr = $mailer->From;
+        $emailObj->from_addr_name = $mailer->From;
         if ($caseId) {
             $emailObj->parent_type = 'Cases';
             $emailObj->parent_id = $caseId;
@@ -570,7 +602,7 @@ class CaseUpdatesHook
     {
         global $current_user, $sugar_config;
         $email_template = new EmailTemplate();
-        if ($_REQUEST['module'] == 'Import') {
+        if ($_REQUEST['module'] === 'Import') {
             //Don't send email on import
             return;
         }
@@ -593,7 +625,14 @@ class CaseUpdatesHook
                     $GLOBALS['log']->info('AOPCaseUpdates: Calling send email');
                     $emails = array();
                     $emails[] = $contact->emailAddress->getPrimaryAddress($contact);
-                    $res = $caseUpdate->sendEmail($emails, $email_template, $signature, $caseUpdate->case_id, $addDelimiter, $contact->id);
+                    $caseUpdate->sendEmail(
+                        $emails,
+                        $email_template,
+                        $signature,
+                        $caseUpdate->case_id,
+                        $addDelimiter,
+                        $contact->id
+                    );
                 }
             }
         } else {
@@ -604,7 +643,14 @@ class CaseUpdatesHook
             $addDelimiter = false;
             if ($emails && $email_template) {
                 $GLOBALS['log']->info('AOPCaseUpdates: Calling send email');
-                $res = $caseUpdate->sendEmail($emails, $email_template, $signature, $caseUpdate->case_id, $addDelimiter, $caseUpdate->contact_id);
+                $caseUpdate->sendEmail(
+                    $emails,
+                    $email_template,
+                    $signature,
+                    $caseUpdate->case_id,
+                    $addDelimiter,
+                    $caseUpdate->contact_id
+                );
             }
         }
     }

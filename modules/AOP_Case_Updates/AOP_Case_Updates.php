@@ -227,17 +227,23 @@ class AOP_Case_Updates extends Basic
     }
 
     /**
-     * @param $emails
-     * @param $template
+     * @param array $emails
+     * @param EmailTemplate $template
      * @param array $signature
-     * @param null  $caseId
-     * @param bool  $addDelimiter
-     * @param null  $contactId
+     * @param null $caseId
+     * @param bool $addDelimiter
+     * @param null $contactId
      *
      * @return bool
      */
-    public function sendEmail($emails, $template, $signature = array(), $caseId = null, $addDelimiter = true, $contactId = null)
-    {
+    public function sendEmail(
+        $emails,
+        $template,
+        $signature = array(),
+        $caseId = null,
+        $addDelimiter = true,
+        $contactId = null
+    ) {
         $GLOBALS['log']->info('AOPCaseUpdates: sendEmail called');
         require_once 'include/SugarPHPMailer.php';
         $mailer = new SugarPHPMailer();
@@ -258,39 +264,42 @@ class AOP_Case_Updates extends Basic
         $emailSettings = getPortalEmailSettings();
         $text = $this->populateTemplate($template, $addDelimiter, $contactId);
         $mailer->Subject = $text['subject'];
-        $mailer->Body = $text['body'].$signatureHTML;
+        $mailer->Body = $text['body'] . $signatureHTML;
         $mailer->isHTML(true);
-        $mailer->AltBody = $text['body_alt'].$signaturePlain;
+        $mailer->AltBody = $text['body_alt'] . $signaturePlain;
         $mailer->From = $emailSettings['from_address'];
         $mailer->FromName = $emailSettings['from_name'];
         foreach ($emails as $email) {
             $mailer->addAddress($email);
         }
-        if ($mailer->send()) {
-            require_once 'modules/Emails/Email.php';
-            $emailObj = new Email();
-            $emailObj->to_addrs = implode(',', $emails);
-            $emailObj->type = 'out';
-            $emailObj->deleted = '0';
-            $emailObj->name = $mailer->Subject;
-            $emailObj->description = $mailer->AltBody;
-            $emailObj->description_html = $mailer->Body;
-            $emailObj->from_addr = $mailer->From;
-            if ($caseId) {
-                $emailObj->parent_type = 'Cases';
-                $emailObj->parent_id = $caseId;
+        try {
+            if ($mailer->send()) {
+                require_once 'modules/Emails/Email.php';
+                $emailObj = new Email();
+                $emailObj->to_addrs_names = implode(',', $emails);
+                $emailObj->type = 'out';
+                $emailObj->deleted = '0';
+                $emailObj->name = $mailer->Subject;
+                $emailObj->description = $mailer->AltBody;
+                $emailObj->description_html = $mailer->Body;
+                $emailObj->from_addr_name = $mailer->From;
+                if ($caseId) {
+                    $emailObj->parent_type = 'Cases';
+                    $emailObj->parent_id = $caseId;
+                }
+                $emailObj->date_sent = TimeDate::getInstance()->nowDb();
+                $emailObj->modified_user_id = '1';
+                $emailObj->created_by = '1';
+                $emailObj->status = 'sent';
+                $emailObj->save();
+
+                return true;
             }
-            $emailObj->date_sent = TimeDate::getInstance()->nowDb();
-            $emailObj->modified_user_id = '1';
-            $emailObj->created_by = '1';
-            $emailObj->status = 'sent';
-            $emailObj->save();
-        } else {
-            $GLOBALS['log']->info('AOPCaseUpdates: Could not send email:  '.$mailer->ErrorInfo);
-
-            return false;
+        } catch (phpmailerException $exception) {
+            $GLOBALS['log']->fatal('AOPCaseUpdates: sending email Failed:  ' . $exception->getMessage());
         }
+        $GLOBALS['log']->info('AOPCaseUpdates: Could not send email:  ' . $mailer->ErrorInfo);
 
-        return true;
+        return false;
     }
 }

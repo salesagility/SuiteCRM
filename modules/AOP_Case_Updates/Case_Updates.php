@@ -169,17 +169,20 @@ $(document).ready(function(){
 <div>
 EOD;
 
-    usort($updates, function ($a, $b) {
-        $aDate = $a->fetched_row['date_entered'];
-        $bDate = $b->fetched_row['date_entered'];
-        if ($aDate < $bDate) {
-            return -1;
-        } elseif ($aDate > $bDate) {
-            return 1;
-        }
+    usort(
+        $updates,
+        function ($a, $b) {
+            $aDate = $a->fetched_row['date_entered'];
+            $bDate = $b->fetched_row['date_entered'];
+            if ($aDate < $bDate) {
+                return -1;
+            } elseif ($aDate > $bDate) {
+                return 1;
+            }
 
-        return 0;
-    });
+            return 0;
+        }
+    );
 
     foreach ($updates as $update) {
         $html .= display_single_update($update, $hideImage);
@@ -218,10 +221,19 @@ function getUpdateDisplayHead(SugarBean $update)
     } else {
         $name = 'Unknown';
     }
-    $html = "<a href='' onclick='toggleCaseUpdate(\"".$update->id."\");return false;'>";
-    $html .= "<img  id='caseUpdate".$update->id."Image' class='caseUpdateImage' src='".SugarThemeRegistry::current()->getImageURL('basic_search.gif')."'>";
+    $html = "<a href='' onclick='toggleCaseUpdate(\"" . $update->id . "\");return false;'>";
+    $html .= "<img  id='caseUpdate" .
+             $update->id .
+             "Image' class='caseUpdateImage' src='" .
+             SugarThemeRegistry::current()->getImageURL('basic_search.gif') .
+             "'>";
     $html .= '</a>';
-    $html .= '<span>'.($update->internal ? '<strong>'.$mod_strings['LBL_INTERNAL'].'</strong> ' : '').$name.' '.$update->date_entered.'</span><br>';
+    $html .= '<span>' .
+             ($update->internal ? '<strong>' . $mod_strings['LBL_INTERNAL'] . '</strong> ' : '') .
+             $name .
+             ' ' .
+             $update->date_entered .
+             '</span><br>';
     $notes = $update->get_linked_beans('notes', 'Notes');
     if ($notes) {
         $html .= $mod_strings['LBL_AOP_CASE_ATTACHMENTS'];
@@ -247,16 +259,15 @@ function display_single_update(AOP_Case_Updates $update)
     if ($update->assigned_user_id) {
         /*if internal update*/
         if ($update->internal) {
-            $html = "<div id='caseStyleInternal'>".getUpdateDisplayHead($update);
-            $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
+            $html = "<div id='caseStyleInternal'>" . getUpdateDisplayHead($update);
+            $html .= "<div id='caseUpdate" . $update->id . "' class='caseUpdate'>";
             $html .= nl2br(html_entity_decode($update->description));
             $html .= '</div></div>';
 
             return $html;
-        } /*if standard update*/
-        else {
-            $html = "<div id='lessmargin'><div id='caseStyleUser'>".getUpdateDisplayHead($update);
-            $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
+        } /*if standard update*/ else {
+            $html = "<div id='lessmargin'><div id='caseStyleUser'>" . getUpdateDisplayHead($update);
+            $html .= "<div id='caseUpdate" . $update->id . "' class='caseUpdate'>";
             $html .= nl2br(html_entity_decode($update->description));
             $html .= '</div></div></div>';
 
@@ -266,8 +277,8 @@ function display_single_update(AOP_Case_Updates $update)
 
     /*if contact user*/
     if ($update->contact_id) {
-        $html = "<div id='extramargin'><div id='caseStyleContact'>".getUpdateDisplayHead($update);
-        $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
+        $html = "<div id='extramargin'><div id='caseStyleContact'>" . getUpdateDisplayHead($update);
+        $html .= "<div id='caseUpdate" . $update->id . "' class='caseUpdate'>";
         $html .= nl2br(html_entity_decode($update->description));
         $html .= '</div></div></div>';
 
@@ -299,6 +310,8 @@ function display_case_attachments($case)
  * The Quick edit for case updates which appears under update stream
  * Also includes the javascript for AJAX update.
  *
+ * @param $case
+ *
  * @return string - the html to be displayed and javascript
  */
 function quick_edit_case_updates($case)
@@ -306,7 +319,7 @@ function quick_edit_case_updates($case)
     global $action, $app_strings, $mod_strings;
 
     //on DetailView only
-    if ($action != 'DetailView') {
+    if ($action !== 'DetailView') {
         return;
     }
 
@@ -321,8 +334,8 @@ function quick_edit_case_updates($case)
     $roles = $acl->getUserRoles($id);
 
     //Return if user cannot edit cases
-    if (in_array('no edit cases', $roles) || $roles === 'no edit cases') {
-        return;
+    if ($roles === 'no edit cases' || in_array('no edit cases', $roles)) {
+        return '';
     }
     $internalChecked = '';
     if (isset($case->internal) && $case->internal) {
