@@ -63,7 +63,7 @@ class ImportController extends SugarController
         if (!isset($_REQUEST['import_module'])) {
             $_REQUEST['message'] = $mod_strings['LBL_ERROR_IMPORTS_NOT_SET_UP'];
             $this->view = 'error';
-            $this->_processed = true;
+			//$this->_processed = true;/*Fixed Bug # 2635*/
             return; // there is no module to load
         }
 
