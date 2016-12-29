@@ -452,6 +452,7 @@ $(function () {
             };
 
         }
+
         if (isDetailViewPage()) {
             tabActiveSelector = '#user_detailview_tabs.yui-navset.detailview_tabs.yui-navset-top ul.yui-nav li.selected a';
             tabFramesLength = 3;
@@ -459,7 +460,7 @@ $(function () {
                 // User Profile
                 'tab1': [
                     // User Profile & Employee Information
-                    'div#user_detailview_tabs.yui-navset.detailview_tabs.yui-navset-top div.yui-content',
+                    'form#user_detailview_tabs.yui-navset.detailview_tabs.yui-navset-top div.yui-content',
                     // Email Settings
                     '#email_options',
                     // Security Groups Management etc..
@@ -485,7 +486,7 @@ $(function () {
                 ]
             };
         }
-
+*/
         var tabsRefresh = function () {
             // hide all tabs..
             for (var i = 1; i <= tabFramesLength; i++) {
