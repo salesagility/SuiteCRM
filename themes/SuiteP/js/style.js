@@ -486,7 +486,7 @@ $(function () {
                 ]
             };
         }
-*/
+
         var tabsRefresh = function () {
             // hide all tabs..
             for (var i = 1; i <= tabFramesLength; i++) {
