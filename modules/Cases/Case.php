@@ -250,7 +250,7 @@ class aCase extends Basic
     public function get_contacts()
     {
         $this->load_relationship('contacts');
-        $query_array = $this->contacts->getQuery(array('return_as_array' => true));
+        $query_array=$this->contacts->getQuery();
 
         //update the select clause in the returned query.
         $query_array['select'] =
