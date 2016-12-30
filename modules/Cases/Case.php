@@ -274,7 +274,7 @@ class aCase extends Basic
         $app_list_strings = return_app_list_strings_language($current_language);
 
         $temp_array = $this->get_list_view_array();
-        $temp_array['NAME'] = (($this->name === '') ? '<em>blank</em>' : $this->name);
+        $temp_array['NAME'] = empty($this->name) ? '<em>blank</em>' : $this->name;
         $temp_array['PRIORITY'] =
             empty($this->priority) ? '' :
                 (!isset($app_list_strings[$this->field_name_map['priority']['options']][$this->priority]) ?
