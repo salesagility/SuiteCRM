@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -49,6 +46,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  *******************************************************************************/
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('modules/DynamicFields/DynamicField.php');
 require_once("data/Relationships/RelationshipFactory.php");
@@ -219,6 +220,17 @@ class SugarBean
     public $process_field_encrypted = false;
     public $acltype = 'module';
     public $additional_meta_fields = array();
+    public $notify_inworkflow;
+
+    public $name;
+    public $description;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $assigned_user_id;
+    public $created_by;
+    public $created_by_name;
+    public $modified_by_name;
     /**
      * Set to true in the child beans if the module supports importing
      */

@@ -1,10 +1,10 @@
 <?php
-/*********************************************************************************
+/**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -35,29 +35,34 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
+ */
 
 require_once('include/SugarObjects/templates/basic/Basic.php');
 
 class Person extends Basic
 {
-    var $photo;
+    public $photo;
+
     /**
      * @var bool controls whether or not to invoke the getLocalFormatttedName method with title and salutation
      */
-    var $createLocaleFormattedName = true;
+    public $createLocaleFormattedName = true;
 
     /**
      * @var Link2
      */
     public $email_addresses;
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->emailAddress = new SugarEmailAddress();
-	}
+    /**
+     * @var SugarEmailAddress
+     */
+    public $emailAddress;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->emailAddress = new SugarEmailAddress();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
@@ -162,7 +167,6 @@ class Person extends Basic
         // bug #39188 - store emails state before workflow make any changes
         $this->emailAddress->stash($this->id, $this->module_dir);
         parent::save($check_notify);
-        // $this->emailAddress->evaluateWorkflowChanges($this->id, $this->module_dir);
         $override_email = array();
         if(!empty($this->email1_set_in_workflow)) {
             $override_email['emailAddress0'] = $this->email1_set_in_workflow;
@@ -175,7 +179,6 @@ class Person extends Basic
         }
         if($ori_in_workflow === false || !empty($override_email)){
             $this->emailAddress->save($this->id, $this->module_dir, $override_email,'','','','',$this->in_workflow);
-            // $this->emailAddress->applyWorkflowChanges($this->id, $this->module_dir);
         }
 		return $this->id;
 	}
