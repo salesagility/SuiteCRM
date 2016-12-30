@@ -50,14 +50,15 @@
 {assign var="starting_choice" value="="}
 {/if}
 
+<div class="clear hidden dateTimeRangeChoiceClear"></div>
 <div class="dateTimeRangeChoice" style="white-space:nowrap !important;">
-<select id="{$id}_range_choice" name="{$id}_range_choice" style="width:125px !important;" onchange="{$id}_range_change(this.value);">
+<select id="{$id}_range_choice" name="{$id}_range_choice" onchange="{$id}_range_change(this.value);">
 {html_options options={{sugarvar key='options' string=true}} selected=$starting_choice}
 </select>
 </div>
 
 <div id="{$id}_range_div" style="{if preg_match('/^\[/', $smarty.request.{{$id_range}})  || $starting_choice == 'between'}display:none{else}display:''{/if};">
-<input autocomplete="off" type="text" name="range_{$id}" id="range_{$id}" value='{if empty($smarty.request.{{$id_range}}) && !empty($smarty.request.{{$original_id}})}{$smarty.request.{{$original_id}}}{else}{$smarty.request.{{$id_range}}}{/if}' title='{{$vardef.help}}' {{$displayParams.field}} {{if !empty($tabindex)}} tabindex='{{$tabindex}}' {{/if}} size="11" style="width:100px !important;">
+<input autocomplete="off" type="text" name="range_{$id}" id="range_{$id}" value='{if empty($smarty.request.{{$id_range}}) && !empty($smarty.request.{{$original_id}})}{$smarty.request.{{$original_id}}}{else}{$smarty.request.{{$id_range}}}{/if}' title='{{$vardef.help}}' {{$displayParams.field}} {{if !empty($tabindex)}} tabindex='{{$tabindex}}' {{/if}} size="11" class="dateRangeInput">
 {{if !$displayParams.hiddeCalendar}}
 {capture assign="other_attributes"}alt="{$APP.LBL_ENTER_DATE}" style="position:relative; top:6px" border="0" id="{$id}_trigger"{/capture}
 {sugar_getimage name="jscalendar" ext=".gif" other_attributes="$other_attributes"}
@@ -84,7 +85,7 @@ weekNumbers:false
 
 <div id="{$id}_between_range_div" style="{if $starting_choice=='between'}display:'';{else}display:none;{/if}">
 {assign var=date_value value={{sugarvar key='value' string=true}} }
-<input autocomplete="off" type="text" name="start_range_{$id}" id="start_range_{$id}" value='{$smarty.request.{{$id_range_start}} }' title='{{$vardef.help}}' {{$displayParams.field}} tabindex='{{$tabindex}}' size="11" style="width:100px !important;">
+<input autocomplete="off" type="text" name="start_range_{$id}" id="start_range_{$id}" value='{$smarty.request.{{$id_range_start}} }' title='{{$vardef.help}}' {{$displayParams.field}} tabindex='{{$tabindex}}' size="11" class="rangeDateInput">
 {{if !$displayParams.hiddeCalendar}}
 {capture assign="other_attributes"}align="absmiddle" border="0" id="start_range_{$id}_trigger"{/capture}
 {sugar_getimage name="jscalendar" ext=".gif" alt="$APP.LBL_ENTER_DATE other_attributes=$other_attributes"}
@@ -108,7 +109,7 @@ weekNumbers:false
 {{/if}} 
 {$APP.LBL_AND}
 {assign var=date_value value={{sugarvar key='value' string=true}} }
-<input autocomplete="off" type="text" name="end_range_{$id}" id="end_range_{$id}" value='{$smarty.request.{{$id_range_end}} }' title='{{$vardef.help}}' {{$displayParams.field}} tabindex='{{$tabindex}}' size="11" style="width:100px !important;" maxlength="10">
+<input autocomplete="off" type="text" name="end_range_{$id}" id="end_range_{$id}" value='{$smarty.request.{{$id_range_end}} }' title='{{$vardef.help}}' {{$displayParams.field}} tabindex='{{$tabindex}}' size="11" class="dateRangeInput" maxlength="10">
 {{if !$displayParams.hiddeCalendar}}
 {capture assign="other_attributes"}align="absmiddle" border="0" id="end_range_{$id}_trigger"{/capture}
 {sugar_getimage name="jscalendar" ext=".gif" alt="$APP.LBL_ENTER_DATE other_attributes=$other_attributes"}

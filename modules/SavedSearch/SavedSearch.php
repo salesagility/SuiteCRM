@@ -125,54 +125,8 @@ class SavedSearch extends SugarBean {
         $sugarSmarty->assign('UPDATE', $app_strings['LBL_UPDATE']);
 		$sugarSmarty->assign('SAVE', $app_strings['LBL_SAVE_BUTTON_LABEL']);
 
-        // Column Chooser
-        $chooser = new TemplateGroupChooser();
+		$chooser = $this->getTemplateGroupChooser($module);
 
-        $chooser->args['id'] = 'edit_tabs';
-        $chooser->args['left_size'] = 7;
-        $chooser->args['right_size'] = 7;
-        $chooser->args['values_array'][0] = array();
-        $chooser->args['values_array'][1] = array();
-
-        if(isset($_REQUEST['saved_search_select']) && $_REQUEST['saved_search_select']!='_none') {
-            $this->retrieveSavedSearch($_REQUEST['saved_search_select']);
-        }
-
-        if((!empty($_REQUEST['displayColumns']) && $_REQUEST['displayColumns'] != 'undefined') || (isset($this->contents['displayColumns']) && $this->contents['displayColumns'] != 'undefined')) {
-             // columns to display
-             if(!empty($_REQUEST['displayColumns']) && $_REQUEST['displayColumns'] != 'undefined') $temp_displayColumns = $_REQUEST['displayColumns'];
-             else $temp_displayColumns = $this->contents['displayColumns'];
-             foreach(explode('|', $temp_displayColumns) as $num => $name) {
-             		if (!isset($this->columns[$name])) {
-						// Ignore any column that is not on the list.
-             			continue;
-             		}
-                    $chooser->args['values_array'][0][$name] = trim(translate($this->columns[$name]['label'], $module), ':');
-             }
-             // columns not displayed
-             foreach(array_diff(array_keys($this->columns), array_values(explode('|', $temp_displayColumns))) as $num => $name) {
-                    $chooser->args['values_array'][1][$name] = trim(translate($this->columns[$name]['label'], $module), ':');
-             }
-        }
-        else {
-             foreach($this->columns as $name => $val) {
-                if(!empty($val['default']) && $val['default'])
-                    $chooser->args['values_array'][0][$name] = trim(translate($val['label'], $module), ':');
-                else
-                    $chooser->args['values_array'][1][$name] = trim(translate($val['label'], $module), ':');
-            }
-        }
-
-        if(!empty($_REQUEST['sortOrder'])) $this->sortOrder = $_REQUEST['sortOrder'];
-        if(!empty($_REQUEST['orderBy'])) $this->orderBy = $_REQUEST['orderBy'];
-
-        $chooser->args['left_name'] = 'display_tabs';
-        $chooser->args['right_name'] = 'hide_tabs';
-        $chooser->args['alt_tip'] = $app_strings['LBL_SORT'];
-
-        $chooser->args['left_label'] =  $app_strings['LBL_DISPLAY_COLUMNS'];
-        $chooser->args['right_label'] =  $app_strings['LBL_HIDE_COLUMNS'];
-        $chooser->args['title'] =  '';
         $sugarSmarty->assign('columnChooser', $chooser->display());
 
         $sugarSmarty->assign('selectedOrderBy', $this->orderBy);
@@ -187,6 +141,61 @@ class SavedSearch extends SugarBean {
         $json = getJSONobj();
 
         return $sugarSmarty->fetch('modules/SavedSearch/SavedSearchForm.tpl');
+	}
+
+	public function getTemplateGroupChooser($module) {
+		global $app_strings;
+
+		// Column Chooser
+		$chooser = new TemplateGroupChooser();
+
+		$chooser->args['id'] = 'edit_tabs';
+		$chooser->args['left_size'] = 7;
+		$chooser->args['right_size'] = 7;
+		$chooser->args['values_array'][0] = array();
+		$chooser->args['values_array'][1] = array();
+
+		if(isset($_REQUEST['saved_search_select']) && $_REQUEST['saved_search_select']!='_none') {
+			$this->retrieveSavedSearch($_REQUEST['saved_search_select']);
+		}
+
+		if((!empty($_REQUEST['displayColumns']) && $_REQUEST['displayColumns'] != 'undefined') || (isset($this->contents['displayColumns']) && $this->contents['displayColumns'] != 'undefined')) {
+			// columns to display
+			if(!empty($_REQUEST['displayColumns']) && $_REQUEST['displayColumns'] != 'undefined') $temp_displayColumns = $_REQUEST['displayColumns'];
+			else $temp_displayColumns = $this->contents['displayColumns'];
+			foreach(explode('|', $temp_displayColumns) as $num => $name) {
+				if (!isset($this->columns[$name])) {
+					// Ignore any column that is not on the list.
+					continue;
+				}
+				$chooser->args['values_array'][0][$name] = trim(translate($this->columns[$name]['label'], $module), ':');
+			}
+			// columns not displayed
+			foreach(array_diff(array_keys($this->columns), array_values(explode('|', $temp_displayColumns))) as $num => $name) {
+				$chooser->args['values_array'][1][$name] = trim(translate($this->columns[$name]['label'], $module), ':');
+			}
+		}
+		else {
+			foreach($this->columns as $name => $val) {
+				if(!empty($val['default']) && $val['default'])
+					$chooser->args['values_array'][0][$name] = trim(translate($val['label'], $module), ':');
+				else
+					$chooser->args['values_array'][1][$name] = trim(translate($val['label'], $module), ':');
+			}
+		}
+
+		if(!empty($_REQUEST['sortOrder'])) $this->sortOrder = $_REQUEST['sortOrder'];
+		if(!empty($_REQUEST['orderBy'])) $this->orderBy = $_REQUEST['orderBy'];
+
+		$chooser->args['left_name'] = 'display_tabs';
+		$chooser->args['right_name'] = 'hide_tabs';
+		$chooser->args['alt_tip'] = $app_strings['LBL_SORT'];
+
+		$chooser->args['left_label'] =  $app_strings['LBL_DISPLAY_COLUMNS'];
+		$chooser->args['right_label'] =  $app_strings['LBL_HIDE_COLUMNS'];
+		$chooser->args['title'] =  '';
+		$this->lastTemplateGroupChooser = $chooser;
+		return $chooser;
 	}
 
     function getSelect($module) {

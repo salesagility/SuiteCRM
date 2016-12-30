@@ -341,18 +341,19 @@ function quick_edit_case_updates($case)
     if (isset($case->internal) && $case->internal) {
         $internalChecked = "checked='checked'";
     }
-    $internal = $mod_strings['LBL_AOP_INTERNAL'];
+    $internal = $app_strings['LBL_AOP_INTERNAL'];
     $saveBtn = $app_strings['LBL_SAVE_BUTTON_LABEL'];
     $saveTitle = $app_strings['LBL_SAVE_BUTTON_TITLE'];
 
     $html = <<< EOD
     <form id='case_updates' enctype="multipart/form-data">
 
-
+    <div><label for="update_text">{$mod_strings['LBL_UPDATE_TEXT']}</label></div>
     <textarea id="update_text" name="update_text" cols="80" rows="4"></textarea>
 
+    <div><label>{$mod_strings['LBL_INTERNAL']}</label>
     <input id='internal' type='checkbox' name='internal' tabindex=0 title='' value='1' $internalChecked > $internal</input>
-    </br>
+    </div>
     <input type='button' value='$saveBtn' onclick="caseUpdates('$record')" title="$saveTitle" name="button"> </input>
 
 

@@ -1,10 +1,10 @@
-/**
- *
+{*
+/*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -35,79 +35,35 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
-
-.body {
-    font-size: 12px;
-}
-
-
-
-
-.buttonLogin {
-    border: 1px solid #444444;
-    font-size: 11px;
-    color: #ffffff;
-    background-color: #666666;
-    font-weight: bold;
-}
-
-table.tabForm td {
-    border: none;
-}
-
-p {
-    MARGIN-TOP: 0px;
-    MARGIN-BOTTOM: 10px;
-}
-
-form {
-    margin: 0px;
-}
-
-input[type="text"], input[type="password"], textarea {
-    width: 200px !important;
-}
-
-#recaptcha_image {
-    height: 47.5px !important;
-    width: 250px !important;
-}
-
-#recaptcha_image img {
-    height: 47.5px;
-    width: 250px;
-}
-
-.loginBox {
-    border: 1px solid #abc3d7;
-    padding: 20px;
-
-}
-
-.password {
-    padding: 5px 20px 5px 20px;
-    border: 1px solid #999;
-    border-top: 0px none;
-    background-color: #fff;
-}
-
-.password .login_more div:first-child {
-    text-align: right;
-}
-
-.password a {
-    text-decoration: none;
-}
-
-.password a img {
-    margin-right: 5px;
-}
-
-#forgot_password_dialog table {
-    margin-top: 10px;
-}
-
-.dashletPanelMenu .bd .bd-center {
-    padding-top: 0px;
-}
+ ********************************************************************************/
+*}
+{*
+ /*
+  * This template is now displays to the sub panel
+  */
+*}
+{$PAGINATION}
+<table cellpadding="0" cellspacing="0" border="0"  data-empty="{$APP.MSG_LIST_VIEW_NO_RESULTS_BASIC}" class="list view table-responsive">
+    <thead>
+        <tr>
+            {foreach from=$HEADER_CELLS key=colHeader item=header}
+                <th data-type="html">{$header}</th>
+            {/foreach}
+            <th data-type="html"><!-- extra th for the button --></th>
+        </tr>
+    </thead>
+    <tbody>
+    {foreach from=$ROWS key=rowHeader item=row}
+        <tr>
+            {foreach from=$row key=colHeader item=cell}
+                <td>{$cell}</td>
+            {/foreach}
+            <td>
+                {if $ROWS_BUTTONS.$rowHeader|@count gt 0}
+                    {sugar_action_menu id="$rowHeader" buttons=$ROWS_BUTTONS.$rowHeader class="clickMenu subpanel records fancymenu button" flat=false}
+                {/if}
+            </td>
+        </tr>
+    {/foreach}
+    </tbody>
+</table>
