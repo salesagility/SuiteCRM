@@ -1413,6 +1413,43 @@ width:350px;
     margin-bottom: 0;
 }
 
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime.free {
+    border-left: 4px solid  #ff0000;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime.busy {
+    border-left: 4px solid  #ff0000;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime {
+    border-left: 4px solid #75AF4F;
+    background-color: #fff;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime {
+    border-left: 4px solid #ff0000;
+}
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime.free {
+    border-left: 4px solid  #ff0000;
+}
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.free {
+    background-color: rgb(77, 94, 170);
+    border-color: #fff;
+}
+
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.busy {
+    background-color: rgb(170, 77, 77);
+    border-color: #fff;
+}
+
+
 /* calendar module styles */
 .monthFooter td
 {
@@ -3791,6 +3828,7 @@ ul.clickMenu>li, ul.SugarActionMenuIESub li {
     list-style: none;
     position: relative; /*--Declare X and Y axis base--*/
     cursor: pointer;
+    height: 29px;
 }
 
 ul.SugarActionMenuIESub li a,
@@ -3799,9 +3837,14 @@ ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .l
     text-decoration: none;
     float: left;
     font-weight: normal !important;
-    padding: 1px 10px 1px 10px !important;
+    padding: 1px 10px 1px 10px;
     color: #000;
-    font-size: 12px;
+    font-size: 11px;
+}
+ul.SugarActionMenuIESub li a > label,
+ul.clickMenu li a > label, .list tr.pagination td.buttons ul.clickMenu > li > a:link > label, .list tr.pagination td.buttons ul.clickMenu > li > a > label{
+    top: 0px;
+    position: relative;
 }
 
 .list tr.pagination td.buttons ul.clickMenu:hover > li > a:link, .list tr.pagination td.buttons ul.clickMenu:hover > li > a{
@@ -3817,11 +3860,14 @@ ul.clickMenu li a:hover{
 }
 
 ul.clickMenu li span { /*--Drop down trigger styles--*/
-    width: 22px;
+    width: 17px;
     height: 16px;
     float: left;
-    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -28px;
+    background: url('../../../../index.php?entryPoint=getImage&themeName=Suite7&imageName=actionMenuArrow.png') no-repeat 3px -28px;
     cursor: pointer;
+    margin: 5px 0px 0px 0px;
+    left: -5px;
+    position: relative;
 }
 
 ul.clickMenu li span.ab { /*--Drop down trigger styles--*/
@@ -3935,6 +3981,11 @@ ul.clickMenu li a.disabled {
     cursor:default !important;
 }
 
+ul.clickMenu li.sugar_action_button a.parent-dropdown-action-handler {
+    padding: 6px 10px 6px 10px;
+    border-radius: 4px;
+}
+
 .oddListRowS1:hover td ul.clickMenu.subpanel.records , .evenListRowS1:hover td ul.clickMenu.subpanel.records {
     background-image: -moz-linear-gradient(center top,
     #ffffff 0%,
@@ -3963,7 +4014,7 @@ ul.clickMenu li a.disabled {
 ul.clickMenu li ul.subnav li a,ul.clickMenu li ul.subnav li input, ul.subnav-sub li a, ul.SugarActionMenuIESub li a {
     float: left;
     background: #fff;
-    padding: 1px 10px !important;
+    padding: 1px 10px;
     border: 0px !important;
     /*width: 150px;*/
     width:100%;
@@ -3994,11 +4045,17 @@ ul.clickMenu li ul.subnav li a:hover,ul.clickMenu li ul.subnav li input:hover, u
 td.paginationActionButtons ul.clickMenu .massall,
 ul#selectLink.clickMenu .massall, td.selectCol .massall{
     float: left;
-    margin: 2px 0 0 4px;
+    margin: 7px 0 0 4px;
+}
+
+#select_link {
+    padding: 0px !important;
 }
 
 td.paginationActionButtons ul.selectmenu > li > a, td.selectCol ul.selectmenu > li > a, ul#selectLink.clickMenu > li > a {
-    padding: 0px !important;
+    padding: 7px 5px 9px 6px;
+    border-radius: 4px;
+    top: -1px;
 }
 
 ul.clickMenu.showLess .moreOverflow , ul.clickMenu.showLess .moduleMenuOverFlowLess, ul.clickMenu.showMore .moduleMenuOverFlowMore {
@@ -4053,12 +4110,22 @@ ul#selectLink.clickMenu {
     height: 17px;
     min-width: 20px;
     background-image: none;
+    top: -8px;
+    position: relative;
+}
+
+ul#selectLink.clickMenu .sugar_action_button {
+    height: 25px;
+}
+
+ul#selectLink.clickMenu .sugar_action_button span {
+    margin-top: 3px;
 }
 
 td.paginationActionButtons ul.clickMenu #massall,
 ul#selectLink.clickMenu #massall{
     float: left;
-    margin: 1px 4px;
+    margin: 5px 4px;
 }
 .selectActions.clickMenu {
     display: none;
@@ -4353,7 +4420,6 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 }
 
 ul.clickMenu>li, ul.SugarActionMenuIESub li {
-    padding: 5px 2px 5px 2px;
     background: #ffffff; /* Old browsers */
     /* IE9 SVG, needs conditional override of 'filter' to 'none' */
     background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2YzZjNmMyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUxJSIgc3RvcC1jb2xvcj0iI2VkZWRlZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
@@ -5362,6 +5428,19 @@ input[type=text].cstm_code {
     -moz-border-radius: 5px;
     border-radius: 5px;
     margin: 10px 60px 10px 10px;
+}
+
+#case_updates label {
+    margin-left: 10px;
+}
+
+#case_updates textarea {
+    margin-left: 10px;
+}
+
+#case_updates input[type=button] {
+    margin-left: 10px;
+    margin-top: 10px;
 }
 
 .caseUpdateImage {
@@ -6422,4 +6501,183 @@ select,
     outline: 0;
     -webkit-box-shadow: none;
     box-shadow: none;
+}
+
+label.hidden-mobile.selected-actions-label,
+label.hidden-desktop.selected-actions-label {
+    margin-bottom: initial;
+    font-size: 10.2px;
+    line-height: 17px;
+    letter-spacing: 1.2px;
+}
+
+label.hidden-mobile.selected-actions-label,
+label.hidden-desktop.selected-actions-label {
+    line-height: 25px;
+}
+
+.selectActionsDisabled label.hidden-mobile.selected-actions-label,
+.selectActionsDisabled label.hidden-desktop.selected-actions-label {
+    line-height: 15px;
+}
+
+
+label.selected-actions-label {
+    cursor: pointer;
+}
+
+
+@media (min-width: 480px) {
+
+    label.hidden-desktop.selected-actions-label {
+        display: block;
+    }
+
+    label.hidden-mobile.selected-actions-label {
+        display: none;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    label.hidden-desktop.selected-actions-label {
+        display: none;
+    }
+
+    label.hidden-mobile.selected-actions-label {
+        display: block;
+    }
+
+}
+
+
+div.modal-content {
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+#columnsFilterDialog div.modal-content {
+    width: 450px;
+}
+
+div.modal-header > h4 {
+    font-size: 19px;
+    color: #534D64;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 300;
+}
+
+#columnsFilterList > div > h1 {
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #000;
+}
+
+ul.chooserList {
+    list-style-type: none;
+    min-height: 60px;
+}
+
+ul.chooserList > li {
+    padding: 10px;
+    margin-bottom: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+ul.chooserList.green.ui-sortable > li {
+    background-color: #CCE8E2;
+}
+
+ul.chooserList.red.ui-sortable > li {
+    background-color: #777777;
+    color: white;
+}
+
+div.modal-header {
+    padding: 25px;
+}
+
+#columnsFilterList {
+    padding: 30px;
+}
+
+ul.chooserList.green.ui-sortable {
+    margin-bottom: 30px;
+}
+
+ul.chooserList.ui-sortable {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton {
+    top: -1px;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > li > a {
+    padding: 6px 6px 8px 5px;
+    border-radius: 4px;
+    top: 0px;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > li > a:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.paginationActionButtons input {
+    width: 30px;
+}
+
+
+ul.clickMenu.searchAppliedAlert {
+    background-image: none;
+    text-align: center;
+}
+
+.dateTimeRangeChoice select {
+    width:125px;
+}
+
+.dateRangeInput {
+    width:100px;
+}
+
+.templateGroupChooser {
+    width: 150px;
+}
+
+@media (max-width: 990px) {
+    .modal-search tr {
+        width: 100%;
+        display: block;
+        float: none;
+    }
+    .modal-search td {
+        width: 100%;
+        display: block;
+        float: none;
+    }
+    .modal-search .edit tr td[scope=row] {
+        width: 110px;
+        float: left;
+    }
+    .modal-search .edit.basic tr td {
+        clear: both;
+    }
+    .modal-search .helpIcon {
+        display: none;
+    }
+}
+
+@media (max-width: 360px) {
+    .modal-search .edit tr td[scope=row] {
+        width: 100%;
+        float: none;
+    }
 }

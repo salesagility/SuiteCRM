@@ -41,11 +41,13 @@
 
 {{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
-<div>
+<div class="detail-view">
+    <div class="mobile-pagination">{$PAGINATION}</div>
     {*display tabs*}
     {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
     <ul class="nav nav-tabs">
         {{if $useTabs}}
+            {{counter name="isection" start=0 print=false assign="isection"}}
             {{foreach name=section from=$sectionPanels key=label item=panel}}
                 {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
                 {* if tab *}
@@ -83,25 +85,74 @@
                     {* if panel skip*}
                 {{/if}}
             {{/foreach}}
+        {{else}}
+            {*
+                Since: SuieCRM 7.8
+                When action menus are enabled and When there are only panels and there are not any tabs,
+                make the first panel a tab so that the action menu looks correct. This is regardless of what the
+                meta/studio defines the first panel should always be tab.
+            *}
+            {if $config.enable_action_menu and $config.enable_action_menu != false}
+                {{foreach name=section from=$sectionPanels key=label item=panel}}
+                        {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
+                        {{counter name="tabCount" print=false}}
+                        {{if $tabCount == '0'}}
+                        <li role="presentation" class="active">
+                            <a id="tab{{$tabCount}}" data-toggle="tab" class="hidden-xs">
+                                {sugar_translate label='{{$label}}' module='{{$module}}'}
+                            </a>
+                            <a id="xstab{{$tabCount}}" href="#" class="visible-xs first-tab-xs dropdown-toggle" data-toggle="dropdown">
+                                {sugar_translate label='{{$label}}' module='{{$module}}'}
+                            </a>
+                        </li>
+                        {{else}}
+                            {* if panel skip *}
+                        {{/if}}
+                {{/foreach}}
+            {/if}
         {{/if}}
-        {if $config.enable_action_menu}
+        {if $config.enable_action_menu and $config.enable_action_menu != false}
         <li id="tab-actions" class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{$APP.LBL_LINK_ACTIONS}}</a>
             {{include file="themes/SuiteP/include/DetailView/actions_menu.tpl"}}
         </li>
+            <li class="tab-inline-pagination">
+                {{if $panelCount == 0}}
+                {{* Render tag for VCR control if SHOW_VCR_CONTROL is true *}}
+                {{if $SHOW_VCR_CONTROL}}
+                {$PAGINATION}
+                {{/if}}
+                {{counter name="panelCount" print=false}}
+                {{/if}}
+            </li>
         {/if}
     </ul>
-
+    {{counter name="tabCount" start=0 print=false assign="tabCount"}}
     <div class="clearfix"></div>
     {{if $useTabs}}
         <!-- TAB CONTENT USE TABS -->
         <div class="tab-content">
     {{else}}
+        {*
+           Since: SuieCRM 7.8
+           When action menus are enabled and When there are only panels and there are not any tabs,
+           make the first panel a tab so that the action menu looks correct. This is regardless of what the
+           meta/studio defines the first panel should always be tab.
+       *}
+        {if $config.enable_action_menu and $config.enable_action_menu != false}
+            {{if tabCount == 0}}
+                <!-- TAB CONTENT USE TABS -->
+                <div class="tab-content">
+            {{else}}
+                <!-- TAB CONTENT DOESN'T USE TABS -->
+                <div class="tab-content" style="padding: 0; border: 0;">
+            {{/if}}
+        {else}
             <!-- TAB CONTENT DOESN'T USE TABS -->
-        <div class="tab-content" style="padding: 0; border: 0;">
+            <div class="tab-content" style="padding: 0; border: 0;">
+        {/if}
     {{/if}}
         {* Loop through all top level panels first *}
-        {{counter name="tabCount" start=0 print=false assign="tabCount"}}
         {{if $useTabs}}
             {{foreach name=section from=$sectionPanels key=label item=panel}}
             {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
@@ -119,7 +170,28 @@
                 {{counter name="tabCount" print=false}}
             {{/foreach}}
         {{else}}
-            <div class="tab-pane-NOBOOTSTRAPTOGGLER panel-collapse"></div>
+            {*
+               Since: SuieCRM 7.8
+               When action menus are enabled and When there are only panels and there are not any tabs,
+               make the first panel a tab so that the action menu looks correct. This is regardless of what the
+               meta/studio defines the first panel should always be tab.
+           *}
+            {if $config.enable_action_menu and $config.enable_action_menu != false}
+                {{foreach name=section from=$sectionPanels key=label item=panel}}
+                    {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
+                        {{if $tabCount == '0'}}
+                            <div class="tab-pane-NOBOOTSTRAPTOGGLER active fade in" id='tab-content-{{$tabCount}}'>
+                                {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
+                            </div>
+                        {{else}}
+
+                        {{/if}}
+                    {{counter name="tabCount" print=false}}
+                {{/foreach}}
+            {else}
+                <!-- TAB CONTENT DOESN'T USE TABS -->
+                <div class="tab-pane-NOBOOTSTRAPTOGGLER panel-collapse"></div>
+            {/if}
         {{/if}}
     </div>
     {*display panels*}
@@ -127,46 +199,79 @@
         <div>&nbsp;</div>
         {{counter name="panelCount" start=-1 print=false assign="panelCount"}}
         {{foreach name=section from=$sectionPanels key=label item=panel}}
+
         {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
         {* if tab *}
         {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true && $useTabs)}}
         {*if tab skip*}
         {{else}}
-        {* if panel display*}
-        {*if panel collasped*}
-        {{if (isset($tabDefs[$label_upper].panelDefault) && $tabDefs[$label_upper].panelDefault == "collapsed") }}
-        {*collapse panel*}
-            {{assign var='collapse' value="panel-collapse collapse"}}
-            {{assign var='collapsed' value="collapsed"}}
-            {{assign var='collapseIcon' value="glyphicon glyphicon-plus"}}
-            {{assign var='panelHeadingCollapse' value="panel-heading-collapse"}}
-        {{else}}
-        {*expand panel*}
-            {{assign var='collapse' value="panel-collapse collapse in"}}
-            {{assign var='collapseIcon' value="glyphicon glyphicon-minus"}}
-            {{assign var='panelHeadingCollapse' value=""}}
-        {{/if}}
-        {{if $label != "LBL_AOP_CASE_UPDATES"}}
-            {{assign var='panelId' value="top-panel-$panelCount"}}
-        {{else}}
-            {{assign var='panelId' value="LBL_AOP_CASE_UPDATES"}}
-        {{/if}}
-        <div class="panel panel-default">
-            <div class="panel-heading {{$panelHeadingCollapse}}">
-                <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#{{$panelId}}" aria-expanded="false">
-                    <div class="col-xs-10 col-sm-11 col-md-11">
-                         {sugar_translate label='{{$label}}' module='{{$module}}'}
-                    </div>
-                </a>
+            {* if panel display*}
+            {*if panel collasped*}
+            {{if (isset($tabDefs[$label_upper].panelDefault) && $tabDefs[$label_upper].panelDefault == "collapsed") }}
+            {*collapse panel*}
+                {{assign var='collapse' value="panel-collapse collapse"}}
+                {{assign var='collapsed' value="collapsed"}}
+                {{assign var='collapseIcon' value="glyphicon glyphicon-plus"}}
+                {{assign var='panelHeadingCollapse' value="panel-heading-collapse"}}
+            {{else}}
+            {*expand panel*}
+                {{assign var='collapse' value="panel-collapse collapse in"}}
+                {{assign var='collapseIcon' value="glyphicon glyphicon-minus"}}
+                {{assign var='panelHeadingCollapse' value=""}}
+            {{/if}}
+            {{if $label != "LBL_AOP_CASE_UPDATES"}}
+                {{assign var='panelId' value="top-panel-$panelCount"}}
+            {{else}}
+                {{assign var='panelId' value="LBL_AOP_CASE_UPDATES"}}
+            {{/if}}
 
-            </div>
-            <div class="panel-body {{$collapse}}" id="{{$panelId}}">
-                <div class="tab-content">
-                    <!-- TAB CONTENT -->
-                    {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
+            {*
+               Since: SuieCRM 7.8
+               When action menus are enabled and When there are only panels and there are not any tabs,
+               make the first panel a tab so that the action menu looks correct. This is regardless of what the
+               meta/studio defines the first panel should always be tab.
+            *}
+            {if $config.enable_action_menu and $config.enable_action_menu != false}
+                {{if $panelCount == -1}}
+                    {* skip panel as it has been converted to a tab*}
+                {{else}}
+                    {* display panels as they have always been displayed *}
+                    <div class="panel panel-default">
+                        <div class="panel-heading {{$panelHeadingCollapse}}">
+                            <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#{{$panelId}}" aria-expanded="false">
+                                <div class="col-xs-10 col-sm-11 col-md-11">
+                                    {sugar_translate label='{{$label}}' module='{{$module}}'}
+                                </div>
+                            </a>
+                        </div>
+                        <div class="panel-body {{$collapse}}" id="{{$panelId}}">
+                            <div class="tab-content">
+                                <!-- TAB CONTENT -->
+                                {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
+                            </div>
+                        </div>
+                    </div>
+                {{/if}}
+            {else}
+                {* display panels as they have always been displayed *}
+                <div class="panel panel-default">
+                    <div class="panel-heading {{$panelHeadingCollapse}}">
+                        <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#{{$panelId}}" aria-expanded="false">
+                            <div class="col-xs-10 col-sm-11 col-md-11">
+                                {sugar_translate label='{{$label}}' module='{{$module}}'}
+                            </div>
+                        </a>
+
+                    </div>
+                    <div class="panel-body {{$collapse}}" id="{{$panelId}}">
+                        <div class="tab-content">
+                            <!-- TAB CONTENT -->
+                            {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            {/if}
+
 
         {{/if}}
         {{counter name="panelCount" print=false}}
