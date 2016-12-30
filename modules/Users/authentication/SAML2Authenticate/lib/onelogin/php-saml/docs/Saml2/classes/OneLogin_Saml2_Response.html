@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>    OneLogin&#039;s SAML PHP Toolkit &raquo; \OneLogin_Saml2_Response
+</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+            <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+            <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+        <![endif]-->
+        <script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script>
+        <script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script>
+        <script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script>
+        <script src="../js/bootstrap.js" type="text/javascript"></script>
+        <script src="../js/template.js" type="text/javascript"></script>
+        <script src="../js/prettify/prettify.min.js" type="text/javascript"></script>
+    
+            <link rel="shortcut icon" href="../img/favicon.ico"/>
+        <link rel="apple-touch-icon" href="../img/apple-touch-icon.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png"/>
+    </head>
+<body>
+
+        <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    <span class="icon-bar"></span> </a>
+                <a class="brand" href="../index.html">OneLogin&#039;s SAML PHP Toolkit</a>
+
+                <div class="nav-collapse">
+                    <ul class="nav">
+                        <li class="dropdown">
+                            <a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                API Documentation <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                                                                            </ul>
+                        </li>
+                        <li class="dropdown" id="classes-menu">
+                            <a href="../namespaces/default.html">Classes</a>
+                        </li>                        
+                        <li class="dropdown" id="charts-menu">
+                            <a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                Charts <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="../graph_class.html">
+                                        <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="go_to_top">
+            <a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>
+        </div>
+    </div>
+    
+    <div id="___" class="container">
+        <noscript>
+            <div class="alert alert-warning">
+                Javascript is disabled; several features are only available if Javascript is enabled.
+            </div>
+        </noscript>
+
+        
+            <style>
+        .deprecated h2 {
+            text-decoration: line-through;
+        }
+    </style>
+    <div class="row">
+        <div class="span4">
+                    <div class="btn-group view pull-right" data-toggle="buttons-radio">
+        <button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button>
+        <button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+    </div>
+    <div class="btn-group visibility" data-toggle="buttons-checkbox">
+        <button class="btn public active" title="Show public elements">Public</button>
+        <button class="btn protected" title="Show protected elements">Protected</button>
+        <button class="btn private" title="Show private elements">Private</button>
+        <button class="btn inherited active" title="Show inherited elements">Inherited</button>
+    </div>
+
+        <ul class="side-nav nav nav-list">
+        <li class="nav-header">
+            <i class="icon-custom icon-method"></i> Methods
+            <ul>
+                                                                                                    <li class="method public">
+        <a href="#method___construct" title="__construct :: Constructs the SAML Response object.">
+            <span class="description">Constructs the SAML Response object.</span><pre>__construct</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_isValid" title="isValid :: Determines if the SAML Response is valid using the certificate.">
+            <span class="description">Determines if the SAML Response is valid using the certificate.</span><pre>isValid</pre>
+        </a>
+    </li>
+                                                                                                        <li class="method public">
+        <a href="#method_getError" title="getError :: After execute a validation process, if fails this method returns the cause.">
+            <span class="description">After execute a validation process, if fails this method returns the cause.</span><pre>getError</pre>
+        </a>
+    </li>
+                                                                                                        <li class="method public">
+        <a href="#method_checkStatus" title="checkStatus :: Checks if the Status is success">
+            <span class="description">Checks if the Status is success</span><pre>checkStatus</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_getAudiences" title="getAudiences :: Gets the audiences.">
+            <span class="description">Gets the audiences.</span><pre>getAudiences</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_getIssuers" title="getIssuers :: Gets the Issuers (from Response and Assertion).">
+            <span class="description">Gets the Issuers (from Response and Assertion).</span><pre>getIssuers</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_getNameIdData" title="getNameIdData :: Gets the NameID Data provided by the SAML response from the IdP.">
+            <span class="description">Gets the NameID Data provided by the SAML response from the IdP.</span><pre>getNameIdData</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_getNameId" title="getNameId :: Gets the NameID provided by the SAML response from the IdP.">
+            <span class="description">Gets the NameID provided by the SAML response from the IdP.</span><pre>getNameId</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_getSessionNotOnOrAfter" title="getSessionNotOnOrAfter :: Gets the SessionNotOnOrAfter from the AuthnStatement.">
+            <span class="description">Gets the SessionNotOnOrAfter from the AuthnStatement.</span><pre>getSessionNotOnOrAfter</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_getSessionIndex" title="getSessionIndex :: Gets the SessionIndex from the AuthnStatement.">
+            <span class="description">Gets the SessionIndex from the AuthnStatement.</span><pre>getSessionIndex</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_getAttributes" title="getAttributes :: Gets the Attributes from the AttributeStatement element.">
+            <span class="description">Gets the Attributes from the AttributeStatement element.</span><pre>getAttributes</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_validateNumAssertions" title="validateNumAssertions :: Verifies that the document only contains a single Assertion (encrypted or not).">
+            <span class="description">Verifies that the document only contains a single Assertion (encrypted or not).</span><pre>validateNumAssertions</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_validateTimestamps" title="validateTimestamps :: Verifies that the document is still valid according Conditions Element.">
+            <span class="description">Verifies that the document is still valid according Conditions Element.</span><pre>validateTimestamps</pre>
+        </a>
+    </li>
+
+                                                                                                                                                                                                                        </ul>
+        </li>
+        <li class="nav-header protected">» Protected
+            <ul>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </ul>
+        </li>
+        <li class="nav-header private">» Private
+            <ul>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <li class="method private">
+                            <a href="#method__queryAssertion" title="_queryAssertion :: Extracts a node from the DOMDocument (Assertion).">
+                                <span class="description">Extracts a node from the DOMDocument (Assertion).</span><pre>_queryAssertion</pre>
+                            </a>
+                        </li>
+
+                                                                                                 <li class="method public">
+        <a href="#method_getError" title="getError :: After execute a validation process, if fails this method returns the cause">
+            <span class="description">After execute a validation process, if fails this method returns the cause</span><pre>getError</pre>
+        </a>
+    </li>
+
+                                                                                <li class="method private">
+                            <a href="#method__query" title="_query :: Extracts nodes that match the query from the DOMDocument (Response Menssage)">
+                                <span class="description">Extracts nodes that match the query from the DOMDocument (Response Menssage)</span><pre>_query</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method private">
+                            <a href="#method__decryptAssertion" title="_decryptAssertion :: Decrypts the Assertion (DOMDocument)">
+                                <span class="description">Decrypts the Assertion (DOMDocument)</span><pre>_decryptAssertion</pre>
+                            </a>
+                        </li>
+                                                </ul>
+        </li>
+        <li class="nav-header">
+            <i class="icon-custom icon-constant"></i> Constants
+            <ul>
+                            </ul>
+        </li>
+    </ul>
+
+
+        </div>
+
+        <div class="span8">
+            <div class="element class">
+                <h1>OneLogin_Saml2_Response</h1>
+                <small style="display: block; text-align: right">
+                                                        </small>
+                <p class="short_description">SAML 2 Authentication Response</p>
+                <div class="details">
+                    <div class="long_description">
+                        
+                    </div>
+                    <table class="table table-bordered">
+                                                                                                                                                                                                                                                            </table>
+
+                    <h3><i class="icon-custom icon-method"></i> Methods</h3>
+                                                                <a id="method___construct"></a>
+                        <div class="element clickable method public  method___construct" data-toggle="collapse" data-target=".method___construct .collapse">
+                            <h2>Constructs the SAML Response object.</h2>
+                            <pre>__construct(\OneLogin_Saml2_Settings $settings, string $response) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$settings</h4>
+                                                <code>\OneLogin_Saml2_Settings</code><p><p>Settings.</p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$response</h4>
+                                                <code>string</code><p><p>A UUEncoded SAML response from the IdP.</p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_isValid"></a>
+                        <div class="element clickable method public  method_isValid" data-toggle="collapse" data-target=".method_isValid .collapse">
+                            <h2>Determines if the SAML Response is valid using the certificate.</h2>
+                            <pre>isValid(string $requestId = null) : bool</pre>
+                            <div class="labels"></div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table"><tr>
+                                                            <th>
+                                                                throws
+                                                            </th>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th></th>
+                                                            <td></td>
+                                                        </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$requestId</h4>
+                                                <code>string</code><p><p>The ID of the AuthNRequest sent by this SP to the IdP</p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>bool</code><p><p>Validate the document</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+
+                                            <a id="method_checkStatus"></a>
+                        <div class="element clickable method public  method_checkStatus" data-toggle="collapse" data-target=".method_checkStatus .collapse">
+                            <h2>Checks if the Status is success</h2>
+                            <pre>checkStatus() </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    throws
+                                                </th>
+                                                <td>
+                                                                                                                                                                        
+                                                                                                                                                                        <p>If status is not success</p>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_getAudiences"></a>
+                        <div class="element clickable method public  method_getAudiences" data-toggle="collapse" data-target=".method_getAudiences .collapse">
+                            <h2>Gets the audiences.</h2>
+                            <pre>getAudiences() : array</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                            <h3>Response</h3>
+                                        <code>array</code><p><p>@audience The valid audiences of the response</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_getIssuers"></a>
+                        <div class="element clickable method public  method_getIssuers" data-toggle="collapse" data-target=".method_getIssuers .collapse">
+                            <h2>Gets the Issuers (from Response and Assertion).</h2>
+                            <pre>getIssuers() : array</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                            <h3>Response</h3>
+                                        <code>array</code><p><p>@issuers The issuers of the assertion/response</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_getNameIdData"></a>
+                        <div class="element clickable method public  method_getNameIdData" data-toggle="collapse" data-target=".method_getNameIdData .collapse">
+                            <h2>Gets the NameID Data provided by the SAML response from the IdP.</h2>
+                            <pre>getNameIdData() : array</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                            <h3>Response</h3>
+                                        <code>array</code><p><p>Name ID Data (Value, Format, NameQualifier, SPNameQualifier)</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_getNameId"></a>
+                        <div class="element clickable method public  method_getNameId" data-toggle="collapse" data-target=".method_getNameId .collapse">
+                            <h2>Gets the NameID provided by the SAML response from the IdP.</h2>
+                            <pre>getNameId() : string</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                            <h3>Response</h3>
+                                        <code>string</code><p><p>Name ID Value</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_getSessionNotOnOrAfter"></a>
+                        <div class="element clickable method public  method_getSessionNotOnOrAfter" data-toggle="collapse" data-target=".method_getSessionNotOnOrAfter .collapse">
+                            <h2>Gets the SessionNotOnOrAfter from the AuthnStatement.</h2>
+                            <pre>getSessionNotOnOrAfter() : \DateTime|null</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"><p>Could be used to set the local session expiration</p></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                            <h3>Response</h3>
+                                        <code>\DateTime|null</code><p><p>The SessionNotOnOrAfter value</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_getSessionIndex"></a>
+                        <div class="element clickable method public  method_getSessionIndex" data-toggle="collapse" data-target=".method_getSessionIndex .collapse">
+                            <h2>Gets the SessionIndex from the AuthnStatement.</h2>
+                            <pre>getSessionIndex() : string|null</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"><p>Could be used to be stored in the local session in order
+to be used in a future Logout Request that the SP could
+send to the SP, to set what specific session must be deleted</p></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                            <h3>Response</h3>
+                                        <code>string|null</code><p><p>The SessionIndex value</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_getAttributes"></a>
+                        <div class="element clickable method public  method_getAttributes" data-toggle="collapse" data-target=".method_getAttributes .collapse">
+                            <h2>Gets the Attributes from the AttributeStatement element.</h2>
+                            <pre>getAttributes() : array</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                            <h3>Response</h3>
+                                        <code>array</code><p><p>The attributes of the SAML Assertion</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_validateNumAssertions"></a>
+                        <div class="element clickable method public  method_validateNumAssertions" data-toggle="collapse" data-target=".method_validateNumAssertions .collapse">
+                            <h2>Verifies that the document only contains a single Assertion (encrypted or not).</h2>
+                            <pre>validateNumAssertions() : bool</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                            <h3>Response</h3>
+                                        <code>bool</code><p><p>TRUE if the document passes.</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_validateTimestamps"></a>
+                        <div class="element clickable method public  method_validateTimestamps" data-toggle="collapse" data-target=".method_validateTimestamps .collapse">
+                            <h2>Verifies that the document is still valid according Conditions Element.</h2>
+                            <pre>validateTimestamps() : bool</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                            <h3>Response</h3>
+                                        <code>bool</code><p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+
+                                            <a id="method_getError"></a>
+                        <div class="element clickable method public  method_getError" data-toggle="collapse" data-target=".method_getError .collapse">
+                            <h2>After execute a validation process, if fails this method returns the cause.</h2>
+                            <pre>getError() : string</pre>
+                            <div class="labels"></div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+                                    
+                                    <h3>Response</h3>
+                                        <code>string</code><p><p>Cause</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+
+                                            <a id="method__queryAssertion"></a>
+                        <div class="element clickable method private  method__queryAssertion" data-toggle="collapse" data-target=".method__queryAssertion .collapse">
+                            <h2>Extracts a node from the DOMDocument (Assertion).</h2>
+                            <pre>_queryAssertion(string $assertionXpath) : \DOMNodeList</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    throws
+                                                </th>
+                                                <td>
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$assertionXpath</h4>
+                                                <code>string</code><p><p>Xpath Expresion</p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>\DOMNodeList</code><p><p>The queried node</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method__query"></a>
+                        <div class="element clickable method private  method__query" data-toggle="collapse" data-target=".method__query .collapse">
+                            <h2>Extracts nodes that match the query from the DOMDocument (Response Menssage)</h2>
+                            <pre>_query(string $query) : \DOMNodeList</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$query</h4>
+                                                <code>string</code><p><p>Xpath Expresion</p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>\DOMNodeList</code><p><p>The queried nodes</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method__decryptAssertion"></a>
+                        <div class="element clickable method private  method__decryptAssertion" data-toggle="collapse" data-target=".method__decryptAssertion .collapse">
+                            <h2>Decrypts the Assertion (DOMDocument)</h2>
+                            <pre>_decryptAssertion(string $dom) : \DOMDocument</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    throws
+                                                </th>
+                                                <td>
+                                                                                                                                                                        
+                                                                                                                                                                        
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$dom</h4>
+                                                <code>string</code><p><p>DomDocument</p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>\DOMDocument</code><p><p>Decrypted Assertion</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                    
+                    
+                                                                <h3><i class="icon-custom icon-property"></i> Properties</h3>
+                                                    <a id="property__settings"> </a>
+                            <div class="element clickable property  protected property__settings" data-toggle="collapse" data-target=".property__settings .collapse">
+                                <h2>Settings</h2>
+                                <pre>_settings : \OneLogin_Saml2_Settings</pre>
+                                <div class="labels">
+                                                                                                        </div>
+                                <div class="row collapse">
+                                    <div class="detail-description">
+                                        <div class="long_description"></div>
+
+                                        <table class="table">
+                                                                                            <tr>
+                                                    <th>
+                                                        var
+                                                    </th>
+                                                    <td>
+                                                                                                                    
+                                                                                                            </td>
+                                                </tr>
+                                                                                            <tr>
+                                                    <th>
+                                                        
+                                                    </th>
+                                                    <td>
+                                                                                                            </td>
+                                                </tr>
+                                                                                    </table>
+
+                                                                                    <h3>Type(s)</h3>
+                                            <code>\OneLogin_Saml2_Settings</code>
+                                                                            </div>
+                                </div>
+                            </div>
+                                                    <a id="property_response"> </a>
+                            <div class="element clickable property  public property_response" data-toggle="collapse" data-target=".property_response .collapse">
+                                <h2>The decoded, unprocessed XML response provided to the constructor.</h2>
+                                <pre>response : string</pre>
+                                <div class="labels">
+                                                                                                        </div>
+                                <div class="row collapse">
+                                    <div class="detail-description">
+                                        <div class="long_description"></div>
+
+                                        <table class="table">
+                                                                                            <tr>
+                                                    <th>
+                                                        var
+                                                    </th>
+                                                    <td>
+                                                                                                                    
+                                                                                                            </td>
+                                                </tr>
+                                                                                            <tr>
+                                                    <th>
+                                                        
+                                                    </th>
+                                                    <td>
+                                                                                                            </td>
+                                                </tr>
+                                                                                    </table>
+
+                                                                                    <h3>Type(s)</h3>
+                                            <code>string</code>
+                                                                            </div>
+                                </div>
+                            </div>
+                                                    <a id="property_document"> </a>
+                            <div class="element clickable property  public property_document" data-toggle="collapse" data-target=".property_document .collapse">
+                                <h2>A DOMDocument class loaded from the SAML Response.</h2>
+                                <pre>document : \DomDocument</pre>
+                                <div class="labels">
+                                                                                                        </div>
+                                <div class="row collapse">
+                                    <div class="detail-description">
+                                        <div class="long_description"></div>
+
+                                        <table class="table">
+                                                                                            <tr>
+                                                    <th>
+                                                        var
+                                                    </th>
+                                                    <td>
+                                                                                                                    
+                                                                                                            </td>
+                                                </tr>
+                                                                                            <tr>
+                                                    <th>
+                                                        
+                                                    </th>
+                                                    <td>
+                                                                                                            </td>
+                                                </tr>
+                                                                                    </table>
+
+                                                                                    <h3>Type(s)</h3>
+                                            <code>\DomDocument</code>
+                                                                            </div>
+                                </div>
+                            </div>
+                                                    <a id="property_decryptedDocument"> </a>
+                            <div class="element clickable property  public property_decryptedDocument" data-toggle="collapse" data-target=".property_decryptedDocument .collapse">
+                                <h2>A DOMDocument class loaded from the SAML Response (Decrypted).</h2>
+                                <pre>decryptedDocument : \DomDocument</pre>
+                                <div class="labels">
+                                                                                                        </div>
+                                <div class="row collapse">
+                                    <div class="detail-description">
+                                        <div class="long_description"></div>
+
+                                        <table class="table">
+                                                                                            <tr>
+                                                    <th>
+                                                        var
+                                                    </th>
+                                                    <td>
+                                                                                                                    
+                                                                                                            </td>
+                                                </tr>
+                                                                                            <tr>
+                                                    <th>
+                                                        
+                                                    </th>
+                                                    <td>
+                                                                                                            </td>
+                                                </tr>
+                                                                                    </table>
+
+                                                                                    <h3>Type(s)</h3>
+                                            <code>\DomDocument</code>
+                                                                            </div>
+                                </div>
+                            </div>
+                                                    <a id="property_encrypted"> </a>
+                            <div class="element clickable property  public property_encrypted" data-toggle="collapse" data-target=".property_encrypted .collapse">
+                                <h2>The response contains an encrypted assertion.</h2>
+                                <pre>encrypted : boolean</pre>
+                                <div class="labels">
+                                                                                                        </div>
+                                <div class="row collapse">
+                                    <div class="detail-description">
+                                        <div class="long_description"></div>
+
+                                        <table class="table">
+                                                                                            <tr>
+                                                    <th>
+                                                        var
+                                                    </th>
+                                                    <td>
+                                                                                                                    
+                                                                                                            </td>
+                                                </tr>
+                                                                                            <tr>
+                                                    <th>
+                                                        
+                                                    </th>
+                                                    <td>
+                                                                                                            </td>
+                                                </tr>
+                                                                                    </table>
+
+                                                                                    <h3>Type(s)</h3>
+                                            <code>boolean</code>
+                                                                            </div>
+                                </div>
+                            </div>
+                                                            </div>
+            </div>
+            <a id="\OneLogin_Saml2_Response"></a>
+            <ul class="breadcrumb">
+                <li><a href="../index.html"><i class="icon-custom icon-class"></i></a></li>
+                    
+    
+    <li><span class="divider">\</span><a href="../namespaces/default.html">\</a></li>
+
+                <li class="active"><span class="divider">\</span><a href="../classes/OneLogin_Saml2_Response.html">OneLogin_Saml2_Response</a></li>
+            </ul>
+        </div>
+    </div>
+
+    </div>
+
+        <footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by
+            <a href="http://glyphicons.com/">Glyphicons</a>.<br/>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and<br/>
+            generated on Mon, 14 Apr 2014 20:25:55 +0100.<br/>
+    </footer>
+    </body>
+</html>

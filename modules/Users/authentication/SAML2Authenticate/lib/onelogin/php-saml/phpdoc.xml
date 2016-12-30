@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+    <title>OneLogin's SAML PHP Toolkit</title>
+    <parser>
+      <default-package-name>OneLogin_SAML_Toolkit</default-package-name>
+      <target>docs/Saml3</target>
+    </parser>
+    <extensions>
+      <extension>php</extension>
+   </extensions>
+    <transformer>
+      <target>docs/Saml3</target>
+    </transformer>
+    <transformations>
+    <template name="onelogin" />
+<!--    <template name="clean" /> -->
+    </transformations>
+    <files>
+        <directory>lib/Saml2/*</directory>
+        <ignore>lib/Saml/*</ignore>
+        <ignore>tests/*</ignore>
+        <ignore>demo1/*</ignore>
+        <ignore>demo2/*</ignore>
+        <ignore>demo-old/*</ignore>
+        <ignore>endpoints/*</ignore>
+        <ignore>extlib/*</ignore>
+        <ignore>locale/*</ignore>
+        <ignore>docs/*</ignore>
+        <ignore>vendor/*</ignore>
+        <ignore>compatibility.php</ignore>
+        <ignore>_toolkit_loader.php</ignore>
+        <ignore>settings.php</ignore>
+        <ignore>settings_example.php</ignore>
+        <ignore>advanced_settings.php</ignore>
+        <ignore>advanced_settings_example</ignore>
+    </files>
+</phpdoc>

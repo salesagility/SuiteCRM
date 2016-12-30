@@ -1,0 +1,28 @@
+<samlp:LogoutRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
+                     xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
+                     ID="ONELOGIN_ac72a76526cb6ca19f8438e73879a0e6c8ae5131"
+                     Version="2.0"
+                     IssueInstant="2014-03-31T18:23:24Z"
+                     Destination="http://idp.example.com/SingleLogoutService.php"
+                     >
+    <saml:Issuer>http://stuff.com/endpoints/metadata.php</saml:Issuer>
+    <saml:EncryptedID>
+        <xenc:EncryptedData xmlns:xenc="http://www.w3.org/2001/04/xmlenc#"
+                            xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"
+                            Type="http://www.w3.org/2001/04/xmlenc#Element"
+                            >
+            <xenc:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes128-cbc" />
+            <dsig:KeyInfo xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+                <xenc:EncryptedKey>
+                    <xenc:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-1_5" />
+                    <xenc:CipherData>
+                        <xenc:CipherValue>Dqhp3WPaoV7i2ry6ZywsfTa0ctWf9a37+BTPLlIycvpRqSObwvBoEGCezXpxUaMTNcFp6p7qSzyGpAbf/h3Qowt1gQqhTn04ofGOwXoMD21Pr5DCbjs9roU005DExjLCFKbf5P3de8QZh5Lcz3dVBU3y1Kc6wku/RuD/HfYBy7g=</xenc:CipherValue>
+                    </xenc:CipherData>
+                </xenc:EncryptedKey>
+            </dsig:KeyInfo>
+            <xenc:CipherData>
+                <xenc:CipherValue>h1PDxhhKkO/IyIb4G5JFoHnBhaNj7n8fh8jqjHhFkRZtwpS/9HXENF3R+1F6XeHs3YfhbLJDHJroQPJwh4PjRUQnPYHdH5YbriR59VI0H9DoMWaJvd9wEMnH6FniXak9npP8BFPhV0uW1r3ynZ8mfn6DkBzC/IORRsmDrQv3IAcp+3J/rRui51ccH60xkff4dWsBYHBIHspuDNz8EU02Ho+hSayN3x1e4WuSdIOF0SRkh4r1mQ00/q2PHExdxmHr4wLQe8DkBFmdt+FxuEpjOIzyWgdJ1TbvgfjBe7a10PiiPO3inMy29ObLo0l4fkHH</xenc:CipherValue>
+            </xenc:CipherData>
+        </xenc:EncryptedData>
+    </saml:EncryptedID>
+</samlp:LogoutRequest>

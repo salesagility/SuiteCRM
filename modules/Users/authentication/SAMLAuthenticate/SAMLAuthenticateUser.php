@@ -49,7 +49,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticateUser.php');
 
 
-class SAMLAuthenticateUser extends SugarAuthenticateUser{
+class SAMLAuthenticateUser extends SugarAuthenticateUser {
 	/**
 	 * Does the actual authentication of the user and returns an id that will be used
 	 * to load the current user (loadUserOnSession)

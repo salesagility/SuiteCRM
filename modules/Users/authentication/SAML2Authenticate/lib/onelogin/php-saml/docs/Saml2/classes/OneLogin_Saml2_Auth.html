@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>    OneLogin&#039;s SAML PHP Toolkit &raquo; \OneLogin_Saml2_Auth
+</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+            <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+            <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+        <![endif]-->
+        <script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script>
+        <script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script>
+        <script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script>
+        <script src="../js/bootstrap.js" type="text/javascript"></script>
+        <script src="../js/template.js" type="text/javascript"></script>
+        <script src="../js/prettify/prettify.min.js" type="text/javascript"></script>
+    
+            <link rel="shortcut icon" href="../img/favicon.ico"/>
+        <link rel="apple-touch-icon" href="../img/apple-touch-icon.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png"/>
+    </head>
+<body>
+
+        <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    <span class="icon-bar"></span> </a>
+                <a class="brand" href="../index.html">OneLogin&#039;s SAML PHP Toolkit</a>
+
+                <div class="nav-collapse">
+                    <ul class="nav">
+                        <li class="dropdown">
+                            <a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                API Documentation <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                                                                            </ul>
+                        </li>
+                        <li class="dropdown" id="classes-menu">
+                            <a href="../namespaces/default.html">Classes</a>
+                        </li>                         
+                        <li class="dropdown" id="charts-menu">
+                            <a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                Charts <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="../graph_class.html">
+                                        <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="go_to_top">
+            <a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>
+        </div>
+    </div>
+    
+    <div id="___" class="container">
+        <noscript>
+            <div class="alert alert-warning">
+                Javascript is disabled; several features are only available if Javascript is enabled.
+            </div>
+        </noscript>
+
+        
+            <style>
+        .deprecated h2 {
+            text-decoration: line-through;
+        }
+    </style>
+    <div class="row">
+        <div class="span4">
+                    <div class="btn-group view pull-right" data-toggle="buttons-radio">
+        <button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button>
+        <button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+    </div>
+    <div class="btn-group visibility" data-toggle="buttons-checkbox">
+        <button class="btn public active" title="Show public elements">Public</button>
+        <button class="btn protected" title="Show protected elements">Protected</button>
+        <button class="btn private" title="Show private elements">Private</button>
+        <button class="btn inherited active" title="Show inherited elements">Inherited</button>
+    </div>
+
+        <ul class="side-nav nav nav-list">
+        <li class="nav-header">
+            <i class="icon-custom icon-method"></i> Methods
+            <ul>
+                                                                                                    <li class="method public">
+        <a href="#method___construct" title="__construct :: Initializes the SP SAML instance.">
+            <span class="description">Initializes the SP SAML instance.</span><pre>__construct</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_getSettings" title="getSettings :: Returns the settings info">
+            <span class="description">Returns the settings info</span><pre>getSettings</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_setStrict" title="setStrict :: Set the strict mode active/disable">
+            <span class="description">Set the strict mode active/disable</span><pre>setStrict</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_processResponse" title="processResponse :: Process the SAML Response sent by the IdP.">
+            <span class="description">Process the SAML Response sent by the IdP.</span><pre>processResponse</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_processSLO" title="processSLO :: Process the SAML Logout Response / Logout Request sent by the IdP.">
+            <span class="description">Process the SAML Logout Response / Logout Request sent by the IdP.</span><pre>processSLO</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_redirectTo" title="redirectTo :: Redirects the user to the url past by parameter
+or to the url that we defined in our SSO Request.">
+            <span class="description">Redirects the user to the url past by parameter
+or to the url that we defined in our SSO Request.</span><pre>redirectTo</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_isAuthenticated" title="isAuthenticated :: Checks if the user is authenticated or not.">
+            <span class="description">Checks if the user is authenticated or not.</span><pre>isAuthenticated</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_getAttributes" title="getAttributes :: Returns the set of SAML attributes.">
+            <span class="description">Returns the set of SAML attributes.</span><pre>getAttributes</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_getNameId" title="getNameId :: Returns the nameID">
+            <span class="description">Returns the nameID</span><pre>getNameId</pre>
+        </a>
+    </li>
+                                                                                                        <li class="method public">
+        <a href="#method_getSessionIndex" title="getSessionIndex :: Returns the sessionIndex">
+            <span class="description">The SessionIndex of the assertion</span><pre>getSessionIndex</pre>
+        </a>
+    </li>
+                                                                                                        <li class="method public">
+        <a href="#method_getErrors" title="getErrors :: Returns if there were any error">
+            <span class="description">Returns if there were any error</span><pre>getErrors</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_getLastErrorReason" title="getLastErrorReason :: Returns the reason for the last error">
+            <span class="description">Returns the reason for the last error</span><pre>getLastErrorReason</pre>
+        </a>
+    </li>
+
+
+                                                                                                        <li class="method public">
+        <a href="#method_getAttribute" title="getAttribute :: Returns the requested SAML attribute">
+            <span class="description">Returns the requested SAML attribute</span><pre>getAttribute</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_login" title="login :: Initiates the SSO process.">
+            <span class="description">Initiates the SSO process.</span><pre>login</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_logout" title="logout :: Initiates the SLO process.">
+            <span class="description">Initiates the SLO process.</span><pre>logout</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_getSSOurl" title="getSSOurl :: Gets the SSO url.">
+            <span class="description">Gets the SSO url.</span><pre>getSSOurl</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_getSLOurl" title="getSLOurl :: Gets the SLO url.">
+            <span class="description">Gets the SLO url.</span><pre>getSLOurl</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_buildRequestSignature" title="buildRequestSignature :: Generates the Signature for a SAML Request">
+            <span class="description">Generates the Signature for a SAML Request</span><pre>buildRequestSignature</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_buildResponseSignature" title="buildResponseSignature :: Generates the Signature for a SAML Response">
+            <span class="description">Generates the Signature for a SAML Response</span><pre>buildResponseSignature</pre>
+        </a>
+    </li>
+
+                                                </ul>
+        </li>
+        <li class="nav-header protected">» Protected
+            <ul>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </ul>
+        </li>
+        <li class="nav-header private">» Private
+            <ul>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </ul>
+        </li>
+        <li class="nav-header">
+            <i class="icon-custom icon-constant"></i> Constants
+            <ul>
+                            </ul>
+        </li>
+    </ul>
+
+
+        </div>
+
+        <div class="span8">
+            <div class="element class">
+                <h1>OneLogin_Saml2_Auth</h1>
+                <small style="display: block; text-align: right">
+                                                        </small>
+                <p class="short_description">Main class of OneLogin&#039;s PHP Toolkit</p>
+                <div class="details">
+                    <div class="long_description">
+                        
+                    </div>
+                    <table class="table table-bordered">
+                                                                                                                                                                                                                                                            </table>
+
+                    <h3><i class="icon-custom icon-method"></i> Methods</h3>
+                                                                <a id="method___construct"></a>
+                        <div class="element clickable method public  method___construct" data-toggle="collapse" data-target=".method___construct .collapse">
+                            <h2>Initializes the SP SAML instance.</h2>
+                            <pre>__construct(array $oldSettings = null) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$oldSettings</h4>
+                                                <code>array</code><p><p>Setting data</p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_getSettings"></a>
+                        <div class="element clickable method public  method_getSettings" data-toggle="collapse" data-target=".method_getSettings .collapse">
+                            <h2>Returns the settings info</h2>
+                            <pre>getSettings() : array</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                            <h3>Response</h3>
+                                        <code>array</code><p><p>The settings data.</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_setStrict"></a>
+                        <div class="element clickable method public  method_setStrict" data-toggle="collapse" data-target=".method_setStrict .collapse">
+                            <h2>Set the strict mode active/disable</h2>
+                            <pre>setStrict(boolean $value) : array</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$value</h4>
+                                                <code>boolean</code><p><p>Strict parameter</p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>array</code><p><p>The settings data.</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_processResponse"></a>
+                        <div class="element clickable method public  method_processResponse" data-toggle="collapse" data-target=".method_processResponse .collapse">
+                            <h2>Process the SAML Response sent by the IdP.</h2>
+                            <pre>processResponse(string $requestId = null) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$requestId</h4>
+                                                <code>string</code><p><p>The ID of the AuthNRequest sent by this SP to the IdP</p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_processSLO"></a>
+                        <div class="element clickable method public  method_processSLO" data-toggle="collapse" data-target=".method_processSLO .collapse">
+                            <h2>Process the SAML Logout Response / Logout Request sent by the IdP.</h2>
+                            <pre>processSLO(boolean $keepLocalSession = false, string $requestId = null) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$keepLocalSession</h4>
+                                                <code>boolean</code><p><p>When false will destroy the local session, otherwise will destroy it</p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$requestId</h4>
+                                                <code>string</code><p><p>The ID of the LogoutRequest sent by this SP to the IdP</p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_redirectTo"></a>
+                        <div class="element clickable method public  method_redirectTo" data-toggle="collapse" data-target=".method_redirectTo .collapse">
+                            <h2>Redirects the user to the url past by parameter
+or to the url that we defined in our SSO Request.</h2>
+                            <pre>redirectTo(string $url = &#039;&#039;, array $parameters = array()) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$url</h4>
+                                                <code>string</code><p><p>The target URL to redirect the user.</p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$parameters</h4>
+                                                <code>array</code><p><p>Extra parameters to be passed as part of the url</p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_isAuthenticated"></a>
+                        <div class="element clickable method public  method_isAuthenticated" data-toggle="collapse" data-target=".method_isAuthenticated .collapse">
+                            <h2>Checks if the user is authenticated or not.</h2>
+                            <pre>isAuthenticated() : boolean</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                            <h3>Response</h3>
+                                        <code>boolean</code><p><p>True if the user is authenticated</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_getAttributes"></a>
+                        <div class="element clickable method public  method_getAttributes" data-toggle="collapse" data-target=".method_getAttributes .collapse">
+                            <h2>Returns the set of SAML attributes.</h2>
+                            <pre>getAttributes() : array</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                            <h3>Response</h3>
+                                        <code>array</code><p><p>Attributes of the user.</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_getNameId"></a>
+                        <div class="element clickable method public  method_getNameId" data-toggle="collapse" data-target=".method_getNameId .collapse">
+                            <h2>Returns the nameID</h2>
+                            <pre>getNameId() : string</pre>
+                            <div class="labels">                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                            <h3>Response</h3>
+                                        <code>string</code><p><p>The nameID of the assertion</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+
+                            <a id="method_getSessionIndex"></a>
+                        <div class="element clickable method public  method_getSessionIndex" data-toggle="collapse" data-target=".method_getSessionIndex .collapse">
+                            <h2>Returns the SessionIndex</h2>
+                            <pre>getSessionIndex() : string</pre>
+                            <div class="labels">                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                            <h3>Response</h3>
+                                        <code>string</code><p><p>The SessionIndex of the assertion</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+
+
+                                            <a id="method_getErrors"></a>
+                        <div class="element clickable method public  method_getErrors" data-toggle="collapse" data-target=".method_getErrors .collapse">
+                            <h2>Returns if there were any error</h2>
+                            <pre>getErrors() : array</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                            <h3>Response</h3>
+                                        <code>array</code><p><p>Errors</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+
+                                    <a id="method_getLastErrorReason"></a>
+                        <div class="element clickable method public  method_getLastErrorReason" data-toggle="collapse" data-target=".method_getLastErrorReason .collapse">
+                            <h2>Returns the reason for the last error</h2>
+                            <pre>getLastErrorReason() : string</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                            <h3>Response</h3>
+                                        <code>String</code><p><p>Error</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+
+                                            <a id="method_getAttribute"></a>
+                        <div class="element clickable method public  method_getAttribute" data-toggle="collapse" data-target=".method_getAttribute .collapse">
+                            <h2>Returns the requested SAML attribute</h2>
+                            <pre>getAttribute(string $name) : NULL || Array</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$name</h4>
+                                                <code>string</code><p><p>The requested attribute of the user.</p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>NULL</code><p><p>|| array Requested SAML attribute ($name).</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_login"></a>
+                        <div class="element clickable method public  method_login" data-toggle="collapse" data-target=".method_login .collapse">
+                            <h2>Initiates the SSO process.</h2>
+                            <pre>login(string $returnTo = null, $parameters = array(), $forceAuthn = false, $isPassive = false) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$returnTo</h4>
+                                                <code>string</code><p><p>The target URL the user should be returned to after login.</p></p>
+                                                <h4>$parameters</h4>
+                                                <code>array</code><p><p>Extra parameters to be added to the GET.</p></p>
+                                                <h4>$forceAuthn</h4>
+                                                <code>bool</code><p><p>When true the AuthNReuqest will set the ForceAuthn='true'.</p></p>
+                                                <h4>$isPassive</h4>
+                                                <code>bool</code><p><p>When true the AuthNReuqest will set the Ispassive='true'.</p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_logout"></a>
+                        <div class="element clickable method public  method_logout" data-toggle="collapse" data-target=".method_logout .collapse">
+                            <h2>Initiates the SLO process.</h2>
+                            <pre>logout(string $returnTo = null, array $parameters = array(), string $nameId = null, string $sessionIndex = null) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$returnTo</h4>
+                                                <code>string</code><p><p>The target URL the user should be returned to after logout.</p></p>
+                                                <h4>$parameters</h4>
+                                                <code>array</code><p><p>Extra parameters to be added to the GET.</p></p>
+                                                <h4>$nameId</h4>
+                                                <code>string</code><p><p>The NameID that will be set in the LogoutRequest.</p></p>
+                                                <h4>$sessionIndex</h4>
+                                                <code>string</code><p><p>The SessionIndex (taken from the SAML Response in the SSO process).</p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_getSSOurl"></a>
+                        <div class="element clickable method public  method_getSSOurl" data-toggle="collapse" data-target=".method_getSSOurl .collapse">
+                            <h2>Gets the SSO url.</h2>
+                            <pre>getSSOurl() : string</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                            <h3>Response</h3>
+                                        <code>string</code><p><p>The url of the Single Sign On Service</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_getSLOurl"></a>
+                        <div class="element clickable method public  method_getSLOurl" data-toggle="collapse" data-target=".method_getSLOurl .collapse">
+                            <h2>Gets the SLO url.</h2>
+                            <pre>getSLOurl() : string</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                            <h3>Response</h3>
+                                        <code>string</code><p><p>The url of the Single Logout Service</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_buildRequestSignature"></a>
+                        <div class="element clickable method public  method_buildRequestSignature" data-toggle="collapse" data-target=".method_buildRequestSignature .collapse">
+                            <h2>Generates the Signature for a SAML Request</h2>
+                            <pre>buildRequestSignature(string $samlRequest, string $relayState) : string</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$samlRequest</h4>
+                                                <code>string</code><p><p>The SAML Request</p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$relayState</h4>
+                                                <code>string</code><p><p>The RelayState</p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>string</code><p><p>A base64 encoded signature</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_buildResponseSignature"></a>
+                        <div class="element clickable method public  method_buildResponseSignature" data-toggle="collapse" data-target=".method_buildResponseSignature .collapse">
+                            <h2>Generates the Signature for a SAML Response</h2>
+                            <pre>buildResponseSignature(string $samlResponse, string $relayState) : string</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$samlResponse</h4>
+                                                <code>string</code><p><p>The SAML Response</p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$relayState</h4>
+                                                <code>string</code><p><p>The RelayState</p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>string</code><p><p>A base64 encoded signature</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                    
+                    
+                                                                <h3><i class="icon-custom icon-property"></i> Properties</h3>
+                                                    <a id="property__settings"> </a>
+                            <div class="element clickable property  private property__settings" data-toggle="collapse" data-target=".property__settings .collapse">
+                                <h2>Settings data.</h2>
+                                <pre>_settings : array</pre>
+                                <div class="labels">
+                                                                                                        </div>
+                                <div class="row collapse">
+                                    <div class="detail-description">
+                                        <div class="long_description"></div>
+
+                                        <table class="table">
+                                                                                            <tr>
+                                                    <th>
+                                                        var
+                                                    </th>
+                                                    <td>
+                                                                                                                    
+                                                                                                            </td>
+                                                </tr>
+                                                                                            <tr>
+                                                    <th>
+                                                        
+                                                    </th>
+                                                    <td>
+                                                                                                            </td>
+                                                </tr>
+                                                                                    </table>
+
+                                                                                    <h3>Type(s)</h3>
+                                            <code>array</code>
+                                                                            </div>
+                                </div>
+                            </div>
+                                                    <a id="property__attributes"> </a>
+                            <div class="element clickable property  private property__attributes" data-toggle="collapse" data-target=".property__attributes .collapse">
+                                <h2>User attributes data.</h2>
+                                <pre>_attributes : array</pre>
+                                <div class="labels">
+                                                                                                        </div>
+                                <div class="row collapse">
+                                    <div class="detail-description">
+                                        <div class="long_description"></div>
+
+                                        <table class="table">
+                                                                                            <tr>
+                                                    <th>
+                                                        var
+                                                    </th>
+                                                    <td>
+                                                                                                                    
+                                                                                                            </td>
+                                                </tr>
+                                                                                            <tr>
+                                                    <th>
+                                                        
+                                                    </th>
+                                                    <td>
+                                                                                                            </td>
+                                                </tr>
+                                                                                    </table>
+
+                                                                                    <h3>Type(s)</h3>
+                                            <code>array</code>
+                                                                            </div>
+                                </div>
+                            </div>
+                                                    <a id="property__nameid"> </a>
+                            <div class="element clickable property  private property__nameid" data-toggle="collapse" data-target=".property__nameid .collapse">
+                                <h2>NameID</h2>
+                                <pre>_nameid : string</pre>
+                                <div class="labels">
+                                                                                                        </div>
+                                <div class="row collapse">
+                                    <div class="detail-description">
+                                        <div class="long_description"></div>
+
+                                        <table class="table">
+                                                                                            <tr>
+                                                    <th>
+                                                        var
+                                                    </th>
+                                                    <td>
+                                                                                                                    
+                                                                                                            </td>
+                                                </tr>
+                                                                                            <tr>
+                                                    <th>
+                                                        
+                                                    </th>
+                                                    <td>
+                                                                                                            </td>
+                                                </tr>
+                                                                                    </table>
+
+                                                                                    <h3>Type(s)</h3>
+                                            <code>string</code>
+                                                                            </div>
+                                </div>
+                            </div>
+                                                    <a id="property__authenticated"> </a>
+                            <div class="element clickable property  private property__authenticated" data-toggle="collapse" data-target=".property__authenticated .collapse">
+                                <h2>If user is authenticated.</h2>
+                                <pre>_authenticated : boolean</pre>
+                                <div class="labels">
+                                                                                                        </div>
+                                <div class="row collapse">
+                                    <div class="detail-description">
+                                        <div class="long_description"></div>
+
+                                        <table class="table">
+                                                                                            <tr>
+                                                    <th>
+                                                        var
+                                                    </th>
+                                                    <td>
+                                                                                                                    
+                                                                                                            </td>
+                                                </tr>
+                                                                                            <tr>
+                                                    <th>
+                                                        
+                                                    </th>
+                                                    <td>
+                                                                                                            </td>
+                                                </tr>
+                                                                                    </table>
+
+                                                                                    <h3>Type(s)</h3>
+                                            <code>boolean</code>
+                                                                            </div>
+                                </div>
+                            </div>
+                                                    <a id="property__sessionIndex"> </a>
+                            <div class="element clickable property  private property__sessionIndex" data-toggle="collapse" data-target=".property__sessionIndex .collapse">
+                                <h2>SessionIndex. When the user is logged, this stored the from the AuthnStatement of the SAML Response.</h2>
+                                <pre>_sessionIndex : string</pre>
+                                <div class="labels">
+                                                                                                        </div>
+                                <div class="row collapse">
+                                    <div class="detail-description">
+                                        <div class="long_description"></div>
+
+                                        <table class="table">
+                                                                                            <tr>
+                                                    <th>
+                                                        var
+                                                    </th>
+                                                    <td>
+                                                                                                                    
+                                                                                                            </td>
+                                                </tr>
+                                                                                            <tr>
+                                                    <th>
+                                                        
+                                                    </th>
+                                                    <td>
+                                                                                                            </td>
+                                                </tr>
+                                                                                    </table>
+
+                                                                                    <h3>Type(s)</h3>
+                                            <code>boolean</code>
+                                                                            </div>
+                                </div>
+                            </div>                            
+                                                    <a id="property__errors"> </a>
+                            <div class="element clickable property  private property__errors" data-toggle="collapse" data-target=".property__errors .collapse">
+                                <h2>If any error.</h2>
+                                <pre>_errors : array</pre>
+                                <div class="labels">
+                                                                                                        </div>
+                                <div class="row collapse">
+                                    <div class="detail-description">
+                                        <div class="long_description"></div>
+
+                                        <table class="table">
+                                                                                            <tr>
+                                                    <th>
+                                                        var
+                                                    </th>
+                                                    <td>
+                                                                                                                    
+                                                                                                            </td>
+                                                </tr>
+                                                                                            <tr>
+                                                    <th>
+                                                        
+                                                    </th>
+                                                    <td>
+                                                                                                            </td>
+                                                </tr>
+                                                                                    </table>
+
+                                                                                    <h3>Type(s)</h3>
+                                            <code>array</code>
+                                                                            </div>
+                                </div>
+                            </div>
+                                                            </div>
+            </div>
+            <a id="\OneLogin_Saml2_Auth"></a>
+            <ul class="breadcrumb">
+                <li><a href="../index.html"><i class="icon-custom icon-class"></i></a></li>
+                    
+    
+    <li><span class="divider">\</span><a href="../namespaces/default.html">\</a></li>
+
+                <li class="active"><span class="divider">\</span><a href="../classes/OneLogin_Saml2_Auth.html">OneLogin_Saml2_Auth</a></li>
+            </ul>
+        </div>
+    </div>
+
+    </div>
+
+        <footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by
+            <a href="http://glyphicons.com/">Glyphicons</a>.<br/>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and<br/>
+            generated on Mon, 14 Apr 2014 20:25:55 +0100.<br/>
+    </footer>
+    </body>
+</html>

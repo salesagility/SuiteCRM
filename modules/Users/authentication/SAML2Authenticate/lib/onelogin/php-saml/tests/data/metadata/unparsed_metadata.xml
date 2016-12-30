@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+                     validUntil="2020-03-05T18:19:11Z"
+                     cacheDuration="PT1594475551S"
+                     entityID="http://stuff.com/endpoints/metadata.php">
+    <md:SPSSODescriptor AuthnRequestsSigned="false" WantAssertionsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                                     Location="http://stuff.com/endpoints/endpoints/sls.php"/>
+        <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
+        <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+                                     Location="http://stuff.com/endpoints/endpoints/acs.php"
+                                     index="1"/>
+    </md:SPSSODescriptor2>
+</md:EntityDescriptor>

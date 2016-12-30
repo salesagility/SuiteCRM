@@ -1,0 +1,7 @@
+service_name: travis-ci
+
+src_dir: lib
+
+coverage_clover: tests/build/logs/clover.xml
+
+json_path: tests/build/logs/coveralls-upload.json

@@ -61,6 +61,13 @@ class SAMLAuthenticate extends SugarAuthenticate {
 	 * @return SAMLAuthenticate
 	 */
 	function __construct(){
+        $deprecatedMessage = 'SAMLAuthenticate class is deprecated, please update your code instead use SAML2Authenticate';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
 		parent::__construct();
 	}
 

@@ -1,0 +1,36 @@
+language: php
+
+php:
+  - 5.6
+  - 5.5
+  - 5.4
+  - 5.3
+  - 7.0
+
+env:
+ - TRAVIS=true
+
+matrix:
+  fast_finish: true
+
+before_install:
+ - composer self-update || true
+ - composer install --prefer-source --no-interaction
+
+before_script:
+  - phpenv config-rm xdebug.ini
+
+script:
+  - vendor/bin/phpunit --bootstrap tests/bootstrap.php --configuration tests/phpunit.xml
+  - php vendor/bin/phpcpd --exclude tests --exclude vendor .
+  - php vendor/bin/phploc . --exclude vendor
+  - php vendor/bin/phploc lib/.
+  - mkdir -p tests/build/dependences
+  - php vendor/bin/pdepend --summary-xml=tests/build/logs/dependence-summary.xml --jdepend-chart=tests/build/dependences/jdepend.svg --overview-pyramid=tests/build/dependences/pyramid.svg  lib/.
+  - php vendor/bin/phpcs --standard=tests/ZendModStandard lib/Saml2 demo1 demo2 demo-old endpoints tests/src
+
+after_script:
+  - export TRAVIS=https://travis-ci.org/onelogin/php-saml
+  - echo $TRAVIS
+  - echo $TRAVIS_JOB_ID
+  - php vendor/bin/coveralls --config .coveralls.yml -v
