@@ -822,7 +822,7 @@ a.listViewTdToolsS1 {
 }
 
 #actionLinkTop {
-  top: -1px;
+  top: 1px;
 }
 
 #actionLinkBottom {
@@ -867,13 +867,13 @@ a.listViewTdToolsS1 {
 
 #select_actions_disabled_top {
   position: relative;
-  top: -1px;
+  top: 1px;
   padding: 4px 10px 4px 10px;
 }
 
 #select_actions_disabled_bottom {
   position: relative;
-  top: -1px;
+  top: 1px;
   padding: 4px 10px 4px 10px;
 }
 
@@ -2700,7 +2700,7 @@ listViewLinkButton {
 
 #select_actions_disabled_top{
   padding: 4px 6px 4px 10px;
-  top: -1px;
+  top: 1px;
   position: relative;
   height: 27px;
   margin-right: 0px;
@@ -2708,7 +2708,7 @@ listViewLinkButton {
 
 #select_actions_disabled_bottom {
   padding: 4px 6px 4px 10px;
-  top: -1px;
+  top: 1px;
   position: relative;
   height: 27px;
   margin-right: 0px;
@@ -3643,4 +3643,8 @@ div.qtip.qtip-default {
 
 .list .pagination-unique td table.paginationTable td.paginationActionButtons:first-child {
   padding-right: 60px;
+}
+
+.paginationActionButtons ul, .selectActionsDisabled {
+  float: left;
 }
