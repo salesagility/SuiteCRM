@@ -1988,8 +1988,12 @@ ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > l
 }
 /***/
 
-ul.clickMenu.searchAppliedAlert .sugar_action_button {
+ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li > a.glyphicon-remove {
   background-color:  $navbar-alert-count-bg;
+  padding: 0;
+  position: absolute;
+  right: -8px;
+  top: -6px;
 }
 
 div.qtip.qtip-default {
