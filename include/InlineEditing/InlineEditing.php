@@ -258,7 +258,8 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
         $fieldlist[$fieldname]['name'] = $aow_field;
         if (empty($value) == "") {
-            $value = str_replace("%", "", date($date_format));
+            $date_format_new = str_replace("%", "", $date_format);	
+			$value = date($date_format_new, strtotime($value));
         }
         $fieldlist[$fieldname]['value'] = $value;
     } else {
