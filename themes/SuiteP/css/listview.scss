@@ -3626,6 +3626,12 @@ div.qtip.qtip-default {
   }
 }
 
+@media (max-width: 460px) {
+  .modal-search .nav-tabs > li.active {
+    display: none;
+  }
+}
+
 .modal-search .submitButtonsAdvanced {
   float: right;
   padding-right: 30px;
