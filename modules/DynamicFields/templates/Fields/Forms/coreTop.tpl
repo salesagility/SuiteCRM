@@ -65,7 +65,7 @@
             {/if}
             <script>
                 addToValidate('popup_form', 'name', 'DBName', true, '{sugar_translate module="DynamicFields" label="COLUMN_TITLE_NAME"} [a-zA-Z_]');
-                addToValidateLength('popup_form', 'name', 'length', true, ' {sugar_translate module="DynamicFields" label="ERR_LENGHT"}', 25);
+                addToValidateLength('popup_form', 'name', 'length', true, ' {sugar_translate module="DynamicFields" label="ERR_LENGTH"}', 25);
                 addToValidateIsInArray('popup_form', 'name', 'in_array', true, '{sugar_translate module="DynamicFields" label="ERR_RESERVED_FIELD_NAME"}', '{$field_name_exceptions}', 'u==');
                 {if $hideLevel == 0}
                 addToValidateIsInArray('popup_form', 'name', 'in_array', true, '{sugar_translate module="DynamicFields" label="ERR_FIELD_NAME_ALREADY_EXISTS"}', '{$existing_field_names}', 'u==');
