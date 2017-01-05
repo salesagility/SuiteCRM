@@ -1988,12 +1988,32 @@ ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > l
 }
 /***/
 
+
 ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li > a.glyphicon-remove {
-  background-color:  $navbar-alert-count-bg;
-  padding: 0;
-  position: absolute;
-  right: -8px;
-  top: -6px;
+  background-color: $navbar-alert-count-bg;
+}
+
+@media (min-width: 800px) {
+
+  ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li > a.glyphicon-remove {
+    background-color: $navbar-alert-count-bg;
+    padding: 0;
+    position: absolute;
+    right: -8px;
+    top: -6px;
+  }
+
+}
+
+@media (max-width: 800px) {
+
+  ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li > a.glyphicon-remove {
+    background-color: $navbar-alert-count-bg;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    left: 1px;
+  }
+
 }
 
 div.qtip.qtip-default {
