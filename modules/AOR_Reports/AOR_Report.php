@@ -513,20 +513,20 @@ class AOR_Report extends Basic {
             while ($row = $this->db->fetchByAssoc($result)) {
                 if($html != '') $html .= '<br />';
 
-                $html .= $this->build_report_html($offset, $links, $row[$field_label], '', $extra);
+                $html .= $this->build_report_html($offset, $row[$field_label], '', $extra);
 
             }
         }
 
         if($html == ''){
-            $html = $this->build_report_html($offset, $links);
+            $html = $this->build_report_html($offset);
         }
         return $html;
 
     }
 
 
-    function build_report_html($offset = -1, $links = true, $group_value = '', $tableIdentifier = '', $extra = array()){
+    function build_report_html($offset = -1, $group_value = '', $tableIdentifier = '', $extra = array()){
 
         global $beanList, $sugar_config;
 
@@ -700,7 +700,7 @@ class AOR_Report extends Basic {
             foreach($fields as $name => $att){
                 if($att['display']){
                     $html .= "<td class='' valign='top' align='left'>";
-                    if($att['link'] && $links){
+                    if($att['link']){
                         $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$att['module']."&action=DetailView&record=".$row[$att['alias'].'_id']."'>";
                     }
 
@@ -715,7 +715,7 @@ class AOR_Report extends Basic {
                     if($att['total']){
                         $totals[$name][] = $row[$name];
                     }
-                    if($att['link'] && $links) $html .= "</a>";
+                    if($att['link']) $html .= "</a>";
                     $html .= "</td>";
                 }
             }
