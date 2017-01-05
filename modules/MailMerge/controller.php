@@ -39,9 +39,24 @@
 
 require_once('soap/SoapHelperFunctions.php');
 class MailMergeController extends SugarController{
-	function MailMergeController(){
-		parent::SugarController();
+	function __construct(){
+		parent::__construct();
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function MailMergeController(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
     public function action_search(){
         //set ajax view
@@ -59,7 +74,7 @@ class MailMergeController extends SugarController{
         $order_by = !empty($_REQUEST['order_by']) ? $_REQUEST['order_by'] : $lmodule.".name";
         $offset = !empty($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
         $response = array();
-        
+
         if(!empty($module)){
             $where = '';
             $deleted = '0';
@@ -110,7 +125,7 @@ class MailMergeController extends SugarController{
 
             $response['result'] = array('result_count'=>$row_count,'entry_list'=>$output_list);
         }
-        
+
         $json = getJSONobj();
         $json_response = $json->encode($response, true);
         print $json_response;

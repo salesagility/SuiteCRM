@@ -1,7 +1,7 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- 
+
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -35,7 +35,7 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-function Alerts(){};Alerts.prototype.enable=function(){if(!("Notification"in window)){Alerts.prototype.show({title:"This browser does not support desktop notifications"});return;}
+function Alerts(){};Alerts.prototype.replaceMessages=[];Alerts.prototype.enable=function(){if(!("Notification"in window)){Alerts.prototype.show({title:"This browser does not support desktop notifications"});return;}
 Notification.requestPermission(function(permission){if(permission==="granted"){Alerts.prototype.show({title:"Desktop notifications are now enabled for this web browser."});}
 else{Alerts.prototype.show({title:"Desktop notifications are disabled for this web browser. Use your browser preferences to enable them again."});}});}
 Alerts.prototype.requestPermission=function(){if(!("Notification"in window)){return;}
@@ -57,9 +57,10 @@ Alerts.prototype.redirectToLogin=function(){var getQueryParams=function(qs){qs=q
 return params;};var params=getQueryParams(document.location.search);if(params.entryPoint!='Changenewpassword'&&params.module!='Users'&&params.action!='Login'){document.location.href='index.php?module=Users&action=Login&loginErrorMessage=LBL_SESSION_EXPIRED';return true;}
 return false;}
 Alerts.prototype.updateManager=function(){var url='index.php?module=Alerts&action=get&to_pdf=1';$.ajax(url).done(function(data){if(data=='lost session'){Alerts.prototype.redirectToLogin();return false;}
-$('div#alerts').html(data);$('div.alerts').css('width','200px');var alertCount=$('#alerts').find('div.module-alert').size();$('.alert_count').html(alertCount);if(alertCount>0){$('.alertsButton').removeClass('btn-').addClass('btn-danger');}
-else{$('.alertsButton').removeClass('btn-danger').addClass('btn-success');}}).fail(function(){}).always(function(){});}
+for(replaceMessage in Alerts.prototype.replaceMessages){data=data.replace(Alerts.prototype.replaceMessages[replaceMessage].search,Alerts.prototype.replaceMessages[replaceMessage].replace);}
+$('div#alerts').html(data);$('div.alerts').css('width','200px');var alertCount=$('#alerts').find('div.module-alert').size();$('.alert_count').html(alertCount);if(alertCount>0){$('div#alerts').addClass('has-alerts');$('#desktop_notifications').addClass('has-alerts');$('.alertsButton').removeClass('btn-').addClass('btn-danger');$('.alert_count').removeClass('hidden');}
+else{$('#desktop_notifications').removeClass('has-alerts');$('div#alerts').removeClass('has-alerts');$('.alertsButton').removeClass('btn-danger').addClass('btn-success');$('.alert_count').addClass('hidden');}}).fail(function(){}).always(function(){});}
 Alerts.prototype.markAsRead=function(id){var url='index.php?module=Alerts&action=markAsRead&record='+id+'&to_pdf=1';$.ajax(url).done(function(data){Alerts.prototype.updateManager();}).fail(function(){}).always(function(){});}
 function AlertObj(){this.title='Alert';this.options={body:' ',url_redirect:null,target_module:null,type:'info'};}
-$(document).ready(function(){var updateMissed=function(){Alerts.prototype.updateManager();setTimeout(updateMissed,60000);}
+$(document).ready(function(){Alerts.prototype.replaceMessages=[{search:SUGAR.language.translate("app","MSG_JS_ALERT_MTG_REMINDER_CALL_MSG"),replace:""},{search:SUGAR.language.translate("app","MSG_JS_ALERT_MTG_REMINDER_MEETING_MSG"),replace:""},];var updateMissed=function(){Alerts.prototype.updateManager();setTimeout(updateMissed,60000);}
 setTimeout(updateMissed,2000);});

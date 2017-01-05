@@ -38,7 +38,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-
 class Meeting extends SugarBean {
 	// Stored fields
 	var $id;
@@ -114,8 +113,8 @@ class Meeting extends SugarBean {
 	/**
 	 * sole constructor
 	 */
-	function Meeting() {
-		parent::SugarBean();
+	public function __construct() {
+		parent::__construct();
 		$this->setupCustomFields('Meetings');
 		foreach($this->field_defs as $field) {
 			$this->field_name_map[$field['name']] = $field;
@@ -124,6 +123,20 @@ class Meeting extends SugarBean {
         if(!empty($GLOBALS['app_list_strings']['duration_intervals'])) {
             $this->minutes_values = $GLOBALS['app_list_strings']['duration_intervals'];
         }
+	}
+
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	public function Meeting(){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct();
 	}
 
 	/**
@@ -265,19 +278,63 @@ class Meeting extends SugarBean {
 		}
 
 		if(isset($_REQUEST['reminders_data'])) {
-			Reminder::saveRemindersDataJson('Meetings', $return_id, html_entity_decode($_REQUEST['reminders_data']));
+			$reminderData = json_encode(
+				$this->removeUnInvitedFromReminders(json_decode(html_entity_decode($_REQUEST['reminders_data']), true))
+			);
+			Reminder::saveRemindersDataJson('Meetings', $return_id, $reminderData);
 		}
 
 
 		return $return_id;
 	}
 
+	/**
+	 * @param array $reminders
+	 * @return array
+	 */
+	public function removeUnInvitedFromReminders($reminders) {
+
+		$reminderData = $reminders;
+		$uninvited = array();
+		foreach($reminders as $r => $reminder) {
+			foreach($reminder['invitees'] as $i => $invitee) {
+				switch($invitee['module']) {
+					case "Users":
+						if(in_array($invitee['module_id'], $this->users_arr) === false) {
+							// add to uninvited
+							$uninvited[] = $reminderData[$r]['invitees'][$i];
+							// remove user
+							unset($reminderData[$r]['invitees'][$i]);
+						}
+						break;
+					case "Contacts":
+						if(in_array($invitee['module_id'], $this->contacts_arr) === false) {
+							// add to uninvited
+							$uninvited[] = $reminderData[$r]['invitees'][$i];
+							// remove contact
+							unset($reminderData[$r]['invitees'][$i]);
+						}
+						break;
+					case "Leads":
+						if(in_array($invitee['module_id'], $this->leads_arr) === false) {
+							// add to uninvited
+							$uninvited[] = $reminderData[$r]['invitees'][$i];
+							// remove lead
+							unset($reminderData[$r]['invitees'][$i]);
+						}
+						break;
+				}
+			}
+		}
+		return $reminderData;
+	}
+
 	// this is for calendar
 	function mark_deleted($id) {
 
 		require_once("modules/Calendar/CalendarUtils.php");
-		CalendarUtils::correctRecurrences($this, $id);		
-		
+		CalendarUtils::correctRecurrences($this, $id);
+
 		global $current_user;
 
 		parent::mark_deleted($id);
@@ -421,7 +478,7 @@ class Meeting extends SugarBean {
         if(!empty($this->date_start))
         {
             $td = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(),$this->date_start);
-            if (!empty($td)) 
+            if (!empty($td))
             {
     	        if (!empty($this->duration_hours) && $this->duration_hours != '')
                 {
@@ -432,8 +489,8 @@ class Meeting extends SugarBean {
                     $td = $td->modify("+{$this->duration_minutes} mins");
                 }
                 $this->date_end = $td->format($GLOBALS['timedate']->get_date_time_format());
-            } 
-            else 
+            }
+            else
             {
                 $GLOBALS['log']->fatal("Meeting::save: Bad date {$this->date_start} for format ".$GLOBALS['timedate']->get_date_time_format());
             }
@@ -463,7 +520,7 @@ class Meeting extends SugarBean {
 		if (empty($this->email_reminder_time)) {
 			$this->email_reminder_time = -1;
 		}
-		if(empty($this->id)){ 
+		if(empty($this->id)){
 			$reminder_t = $GLOBALS['current_user']->getPreference('email_reminder_time');
 			if(isset($reminder_t))
 		    		$this->email_reminder_time = $reminder_t;
@@ -501,7 +558,14 @@ class Meeting extends SugarBean {
 		$mergeTime = $meeting_fields['DATE_START']; //$timedate->merge_date_time($meeting_fields['DATE_START'], $meeting_fields['TIME_START']);
 		$date_db = $timedate->to_db($mergeTime);
 		if($date_db	< $today	) {
-			$meeting_fields['DATE_START']= "<font class='overdueTask'>".$meeting_fields['DATE_START']."</font>";
+			if($meeting_fields['STATUS']=='Held' || $meeting_fields['STATUS']=='Not Held') 
+			{ 
+				$meeting_fields['DATE_START']= "<font>".$meeting_fields['DATE_START']."</font>";
+			} 
+			else 
+			{  
+				$meeting_fields['DATE_START']= "<font class='overdueTask'>".$meeting_fields['DATE_START']."</font>"; 
+			}
 		}else if($date_db	< $nextday) {
 			$meeting_fields['DATE_START'] = "<font class='todaysTask'>".$meeting_fields['DATE_START']."</font>";
 		} else {
@@ -566,7 +630,7 @@ class Meeting extends SugarBean {
 		$startdate = $timedate->fromDb($meeting->date_start);
 		$xtpl->assign("MEETING_STARTDATE", $timedate->asUser($startdate, $notifyUser)." ".TimeDate::userTimezoneSuffix($startdate, $notifyUser));
 		$enddate = $timedate->fromDb($meeting->date_end);
-		$xtpl->assign("MEETING_ENDDATE", $timedate->asUser($enddate, $notifyUser)." ".TimeDate::userTimezoneSuffix($enddate, $notifyUser));		
+		$xtpl->assign("MEETING_ENDDATE", $timedate->asUser($enddate, $notifyUser)." ".TimeDate::userTimezoneSuffix($enddate, $notifyUser));
 		$xtpl->assign("MEETING_HOURS", $meeting->duration_hours);
 		$xtpl->assign("MEETING_MINUTES", $meeting->duration_minutes);
 		$xtpl->assign("MEETING_DESCRIPTION", $meeting->description);
@@ -577,7 +641,7 @@ class Meeting extends SugarBean {
 
 		return $xtpl;
 	}
-	
+
 	/**
 	 * Redefine method to attach ics file to notification email
 	 */
@@ -588,24 +652,24 @@ class Meeting extends SugarBean {
         }
 
 		$notify_mail = parent::create_notification_email($notify_user);
-						
+
 		$path = SugarConfig::getInstance()->get('upload_dir','upload/') . $this->id;
 
 		require_once("modules/vCals/vCal.php");
 		$content = vCal::get_ical_event($this, $GLOBALS['current_user']);
-				
+
 		if(file_put_contents($path,$content)){
 			$notify_mail->AddAttachment($path, 'meeting.ics', 'base64', 'text/calendar');
 		}
-		return $notify_mail;		
+		return $notify_mail;
 	}
-	
+
 	/**
 	 * Redefine method to remove ics after email is sent
 	 */
 	public function send_assignment_notifications($notify_user, $admin){
 		parent::send_assignment_notifications($notify_user, $admin);
-		
+
 		$path = SugarConfig::getInstance()->get('upload_dir','upload/') . $this->id;
 		unlink($path);
 	}
@@ -764,7 +828,7 @@ class Meeting extends SugarBean {
                 }
 			}
 			require_once("modules/SecurityGroups/SecurityGroup.php");
-			$in_group = SecurityGroup::groupHasAccess($this->parent_type, $this->parent_id, 'view'); 
+			$in_group = SecurityGroup::groupHasAccess($this->parent_type, $this->parent_id, 'view');
         	/* END - SECURITY GROUPS */
 		}
 
@@ -797,7 +861,7 @@ class Meeting extends SugarBean {
                 }
 			}
 			require_once("modules/SecurityGroups/SecurityGroup.php");
-			$in_group = SecurityGroup::groupHasAccess('Contacts', $this->contact_id, 'view'); 
+			$in_group = SecurityGroup::groupHasAccess('Contacts', $this->contact_id, 'view');
         	/* END - SECURITY GROUPS */
 		}
 

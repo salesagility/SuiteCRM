@@ -278,7 +278,7 @@ function display_case_attachments($case){
  * @return string - the html to be displayed and javascript
  */
 function quick_edit_case_updates($case){
-    global $action;
+    global $action, $app_strings, $mod_strings;
 
     //on DetailView only
     if($action != 'DetailView') return;
@@ -299,18 +299,22 @@ function quick_edit_case_updates($case){
         return;
     }
     $internalChecked = '';
-    if($case->internal){
+    if(isset($case->internal) && $case->internal){
         $internalChecked = "checked='checked'";
     }
+    $internal = $mod_strings['LBL_AOP_INTERNAL'];
+    $saveBtn = $app_strings['LBL_SAVE_BUTTON_LABEL'];
+    $saveTitle = $app_strings['LBL_SAVE_BUTTON_TITLE'];
+
     $html = <<< EOD
     <form id='case_updates' enctype="multipart/form-data">
 
 
     <textarea id="update_text" name="update_text" cols="80" rows="4"></textarea>
 
-    <input id='internal' type='checkbox' name='internal' tabindex=0 title='' value='1' $internalChecked > Internal</input>
+    <input id='internal' type='checkbox' name='internal' tabindex=0 title='' value='1' $internalChecked > $internal</input>
     </br>
-    <input type='button' value='Save' onclick="caseUpdates('$record')" title="Save" name="button"> </input>
+    <input type='button' value='$saveBtn' onclick="caseUpdates('$record')" title="$saveTitle" name="button"> </input>
 
 
     </br>

@@ -471,7 +471,7 @@ function set_entry($session,$module_name, $name_value_list){
 		if(!is_array($value)){
 			$seed->$name = $value;
 		}else{
-			$seed->$value['name'] = $value['value'];
+			$seed->{$value['name']} = $value['value'];
 		}
 	}
     if (!self::$helperObject->checkACLAccess($seed, 'Save', $error, 'no_access') || ($seed->deleted == 1  && !self::$helperObject->checkACLAccess($seed, 'Delete', $error, 'no_access'))) {

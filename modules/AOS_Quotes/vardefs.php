@@ -338,6 +338,7 @@ $dictionary['AOS_Quotes'] = array(
                 'duplicate_merge_dom_value' => 0,
                 'audited' => false,
                 'reportable' => false,
+                'inline_edit' => false,
                 'function' =>
                     array(
                         'name' => 'display_lines',
@@ -753,6 +754,24 @@ $dictionary['AOS_Quotes'] = array(
                 'len' => '26,6',
             ),
 
+        'accounts' =>
+            array(
+                'name' => 'accounts',
+                'type' => 'link',
+                'relationship' => 'account_aos_quotes',
+                'module' => 'Accounts',
+                'bean_name' => 'Account',
+                'source' => 'non-db',
+            ),
+        'contacts' =>
+            array(
+                'name' => 'contacts',
+                'type' => 'link',
+                'relationship' => 'contact_aos_quotes',
+                'module' => 'Contacts',
+                'bean_name' => 'Contact',
+                'source' => 'non-db',
+            ),
         'opportunities' =>
             array(
                 'name' => 'opportunities',

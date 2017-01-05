@@ -62,7 +62,6 @@ function submitSearch(subpanel) {
     });
 
     var url = 'index.php?sugar_body_only=1&module='+module+'&subpanel='+subpanel+'&action=SubPanelViewer&inline=1&record='+id + '&layout_def_key='+submit_data.join('&');
-
     showSubPanel(subpanel,url,true);
 }
 
@@ -78,8 +77,17 @@ function clearSearch(subpanel) {
             $(this).val('');
         }
     });
-    $('#'+subpanel+'_search select').each(function() {
-        $(this).children().removeProp('selected');
-    });
+	
+	$('#'+subpanel+'_search select').each(function() {
+        var id_temp = $(this).attr("id");
+		if ($(this).is("[multiple]"))
+		{
+			$("#"+id_temp+" > option").attr("selected",false);
+		}
+		else
+		{
+			$("#"+id_temp).val( $("#"+id_temp+" option:first-child").val() );
+		}
+    });   
 
 }

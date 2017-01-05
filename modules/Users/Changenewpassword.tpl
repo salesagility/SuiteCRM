@@ -150,7 +150,7 @@ form
 		</tr>
 		<tr>
 			<td scope="row">{$MOD.LBL_NEW_PASSWORD2}:</td>
-			<td width="30%"><input type="password" size="26" tabindex="2" id="confirm_pwd" name="confirm_pwd" value="" onkeyup="password_confirmation();" /> <div id="comfirm_pwd_match" class="error" style="display: none;">mis-match</div></td>
+			<td width="30%"><input type="password" size="26" tabindex="2" id="confirm_pwd" name="confirm_pwd" value="" onkeyup="password_confirmation();" /> <div id="comfirm_pwd_match" class="error" style="display: none;">{$MOD.LBL_PASSWORD_MIS_MATCH}</div></td>
 		</tr>
 		<tr>
 			<td>{$CAPTCHA}</td>

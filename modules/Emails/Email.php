@@ -157,16 +157,31 @@ class Email extends SugarBean {
 	/**
 	 * sole constructor
 	 */
-	function Email()
+	public function __construct()
 	{
 	    global $current_user;
 	    $this->cachePath = sugar_cached('modules/Emails');
-		parent::SugarBean();
+		parent::__construct();
 
 		$this->emailAddress = new SugarEmailAddress();
 
 		$this->imagePrefix = rtrim($GLOBALS['sugar_config']['site_url'], "/")."/cache/images/";
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function Email(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 	function email2init() {
 		require_once('modules/Emails/EmailUI.php');
@@ -2218,7 +2233,7 @@ class Email extends SugarBean {
                 }
 			}
 			require_once("modules/SecurityGroups/SecurityGroup.php");
-			$in_group = SecurityGroup::groupHasAccess($this->parent_type, $this->parent_id, 'view'); 
+			$in_group = SecurityGroup::groupHasAccess($this->parent_type, $this->parent_id, 'view');
         	/* END - SECURITY GROUPS */
 		}
 		/* BEGIN - SECURITY GROUPS */
@@ -2248,7 +2263,7 @@ class Email extends SugarBean {
                 }
 			}
 			require_once("modules/SecurityGroups/SecurityGroup.php");
-			$in_group = SecurityGroup::groupHasAccess('Contacts', $this->contact_id, 'view'); 
+			$in_group = SecurityGroup::groupHasAccess('Contacts', $this->contact_id, 'view');
         	/* END - SECURITY GROUPS */
 		}
 		/* BEGIN - SECURITY GROUPS */
@@ -2362,9 +2377,9 @@ class Email extends SugarBean {
 		//if ($this->parent_type == 'Contacts') {
 			$query  = "SELECT contacts.first_name, contacts.last_name, contacts.phone_work, contacts.id, contacts.assigned_user_id contact_name_owner, 'Contacts' contact_name_mod FROM contacts, emails_beans ";
 			$query .= "WHERE emails_beans.email_id='$this->id' AND emails_beans.bean_id=contacts.id AND emails_beans.bean_module = 'Contacts' AND emails_beans.deleted=0 AND contacts.deleted=0";
-			if(!empty($this->parent_id)){
+			if(!empty($this->parent_id) && $this->parent_type == 'Contacts'){
 				$query .= " AND contacts.id= '".$this->parent_id."' ";
-			}else if(!empty($_REQUEST['record'])){
+			}else if(!empty($_REQUEST['record']) && !empty($_REQUEST['module']) && $_REQUEST['module'] == 'Contacts'){
 				$query .= " AND contacts.id= '".$_REQUEST['record']."' ";
 			}
 			$result =$this->db->query($query,true," Error filling in additional detail fields: ");
@@ -2592,7 +2607,7 @@ class Email extends SugarBean {
 
 		//Perform a count query needed for pagination.
 		$countQuery = $this->create_list_count_query($fullQuery);
-		
+
 		$count_rs = $this->db->query($countQuery, false, 'Error executing count query for imported emails search');
 		$count_row = $this->db->fetchByAssoc($count_rs);
 		$total_count = ($count_row != null) ? $count_row['c'] : 0;
@@ -2705,7 +2720,7 @@ class Email extends SugarBean {
              $query['where'] .= " AND NOT EXISTS ( SELECT id FROM notes n WHERE n.parent_id = emails.id AND n.deleted = 0 AND n.filename is not null )";
 
         $fullQuery = "SELECT " . $query['select'] . " " . $query['joins'] . " " . $query['where'];
-        
+
         return $fullQuery;
     }
         /**
@@ -2739,8 +2754,8 @@ class Email extends SugarBean {
 		          $additionalWhereClause[] = "{$properties['table_name']}.$db_key $opp '$searchValue' ";
 		      }
         }
-        
-        
+
+
 
         $isDateFromSearchSet = !empty($_REQUEST['searchDateFrom']);
         $isdateToSearchSet = !empty($_REQUEST['searchDateTo']);

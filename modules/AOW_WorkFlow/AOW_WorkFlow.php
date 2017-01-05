@@ -51,13 +51,27 @@ class AOW_WorkFlow extends Basic {
 	var $status;
 	var $run_when;
 
-	function AOW_WorkFlow($init=true){
-		parent::Basic();
+	public function __construct($init=true){
+		parent::__construct();
         if($init){
             $this->load_flow_beans();
             require_once('modules/AOW_WorkFlow/aow_utils.php');
         }
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function AOW_WorkFlow($init=true){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($init);
+    }
 
 	function bean_implements($interface){
 		switch($interface){
@@ -229,7 +243,9 @@ class AOW_WorkFlow extends Basic {
                 $condition = new AOW_Condition();
                 $condition->retrieve($row['id']);
                 $query = $this->build_query_where($condition,$module,$query);
-
+                if(empty($query)){
+                    return $query;
+                }
             }
             if($this->flow_run_on){
                 switch($this->flow_run_on){
@@ -387,12 +403,17 @@ class AOW_WorkFlow extends Basic {
                     $where_set = true;
                     break;
                 case 'SecurityGroup':
-                    if(file_exists('modules/SecurityGroups/SecurityGroup.php')){
-                        //TODO check bean in group
-                        return array();
-                        break;
+                    $sgModule = $condition_module->module_dir;
+                    if (isset($data['module']) && $data['module'] !== '') {
+                        $sgModule = $data['module'];
                     }
-
+                    $sql = 'EXISTS (SELECT 1 FROM securitygroups_records WHERE record_id = ' . $field . " AND module = '" . $sgModule . "' AND securitygroup_id = '" . $condition->value . "' AND deleted=0)";
+                    if ($sgModule === 'Users') {
+                        $sql = 'EXISTS (SELECT 1 FROM securitygroups_users WHERE user_id = ' . $field . " AND securitygroup_id = '" . $condition->value . "' AND deleted=0)";
+                    }
+                    $query['where'][] = $sql;
+                    $where_set = true;
+                    break;
                 case 'Value':
                 default:
                     $value = "'".$condition->value."'";
@@ -441,7 +462,7 @@ class AOW_WorkFlow extends Basic {
 
         if($this->flow_run_on){
 
-            // database time correction with the user's time-zoneqq 
+            // database time correction with the user's time-zoneqq
             $beanDateEnteredTimestamp = strtotime($timedate->asUser(new DateTime($timedate->fromDb($bean->date_entered))));
             $beanDateModifiedTimestamp = strtotime($timedate->asUser(new DateTime($timedate->fromDb($bean->date_modified))));
             $thisDateEnteredTimestamp = strtotime($this->date_entered);
@@ -543,7 +564,8 @@ class AOW_WorkFlow extends Basic {
                             $value = date('Y-m-d');
                             $field = strtotime(date('Y-m-d', $field));
                         } else {
-                            $value = $condition_bean->$params[0];
+                            $fieldName = $params[0];
+                            $value = $condition_bean->$fieldName;
                         }
 
                         if($params[1] != 'now'){

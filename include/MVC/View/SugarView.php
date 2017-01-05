@@ -86,12 +86,29 @@ class SugarView
     /**
      * Constructor which will peform the setup.
      */
-    public function SugarView(
+    public function __construct(
         $bean = null,
         $view_object_map = array()
         )
     {
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function SugarView($bean = null,
+        $view_object_map = array()
+        ){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($bean, $view_object_map);
+    }
+
 
     public function init(
         $bean = null,
@@ -516,6 +533,7 @@ class SugarView
                 require_once('include/GroupedTabs/GroupedTabStructure.php');
                 $groupedTabsClass = new GroupedTabStructure();
                 $modules = query_module_access_list($current_user);
+
                 //handle with submoremodules
                 $max_tabs = $current_user->getPreference('max_tabs');
                 // If the max_tabs isn't set incorrectly, set it within the range, to the default max sub tabs size
@@ -555,7 +573,6 @@ class SugarView
                 $ss->assign('currentGroupTab',$app_strings['LBL_TABGROUP_ALL']);
 
                 $usingGroupTabs = false;
-
                 $groupTabs[$app_strings['LBL_TABGROUP_ALL']]['modules'] = $fullModuleList;
 
             }
@@ -644,7 +661,7 @@ class SugarView
 
 
         }
-        
+
         if ( isset($extraTabs) && is_array($extraTabs) ) {
             // Adding shortcuts array to extra menu array for displaying shortcuts associated with each module
             $shortcutExtraMenu = array();
@@ -664,12 +681,12 @@ class SugarView
             }
             $ss->assign("shortcutExtraMenu",$shortcutExtraMenu);
         }
-       
+
        if(!empty($current_user)){
        	$ss->assign("max_tabs", $current_user->getPreference("max_tabs"));
-       } 
-      
-       
+       }
+
+
         $imageURL = SugarThemeRegistry::current()->getImageURL("dashboard.png");
         $homeImage = "<img src='$imageURL'>";
 		$ss->assign("homeImage",$homeImage);
@@ -718,37 +735,38 @@ class SugarView
         global $timedate, $login_error; // cn: bug 13855 - timedate not available to classic views.
         if (!empty($this->module))
             $currentModule = $this->module;
-        require_once ($file);
+        include_once ($file);
     }
 
     protected function _displayLoginJS()
     {
         global $sugar_config, $timedate;
 
+        $template = new Sugar_Smarty();
+
         if(isset($this->bean->module_dir)){
-            echo "<script>var module_sugar_grp1 = '{$this->bean->module_dir}';</script>";
+            $template->assign('MODULE_SUGAR_GRP1', $this->bean->module_dir);
         }
         if(isset($_REQUEST['action'])){
-            echo "<script>var action_sugar_grp1 = '{$_REQUEST['action']}';</script>";
+            $template->assign('ACTION_SUGAR_GRP1', $_REQUEST['action']);
         }
+
+
         echo '<script>jscal_today = 1000*' . $timedate->asUserTs($timedate->getNow()) . '; if(typeof app_strings == "undefined") app_strings = new Array();</script>';
         if (!is_file(sugar_cached("include/javascript/sugar_grp1.js"))) {
             $_REQUEST['root_directory'] = ".";
             require_once("jssource/minify_utils.php");
             ConcatenateFiles(".");
         }
-        echo getVersionedScript('cache/include/javascript/sugar_grp1_jquery.js');
-        echo getVersionedScript('cache/include/javascript/sugar_grp1_yui.js');
-        echo getVersionedScript('cache/include/javascript/sugar_grp1.js');
-        echo getVersionedScript('include/javascript/calendar.js');
-        echo <<<EOQ
-        <script>
-            if ( typeof(SUGAR) == 'undefined' ) {SUGAR = {}};
-            if ( typeof(SUGAR.themes) == 'undefined' ) SUGAR.themes = {};
-        </script>
-EOQ;
-        if(isset( $sugar_config['disc_client']) && $sugar_config['disc_client'])
-            echo getVersionedScript('modules/Sync/headersync.js');
+        $template->assign('SUGAR_GRP1_JQUERY', getVersionedPath('cache/include/javascript/sugar_grp1_jquery.js'));
+        $template->assign('SUGAR_GRP1_YUI', getVersionedPath('cache/include/javascript/sugar_grp1_yui.js'));
+        $template->assign('SUGAR_GRP1', getVersionedPath('cache/include/javascript/sugar_grp1.js'));
+        $template->assign('CALENDAR', getVersionedPath('include/javascript/calendar.js'));
+
+        if(isset( $sugar_config['disc_client']) && $sugar_config['disc_client']) {
+            $template->assign('HEADERSYNC', getVersionedPath('modules/Sync/headersync.js'));
+        }
+        echo $template->fetch('include/MVC/View/tpls/displayLoginJS.tpl');
     }
 
     /**
@@ -1249,7 +1267,7 @@ EOHTML;
 		$userTabs = query_module_access_list($current_user);
 		//If the home tab is in the user array use it as the default tab, otherwise use the first element in the tab array
 		$defaultTab = (in_array("Home",$userTabs)) ? "Home" : key($userTabs);
-		
+
         // Need to figure out what tab this module belongs to, most modules have their own tabs, but there are exceptions.
         if ( !empty($_REQUEST['module_tab']) )
             return $_REQUEST['module_tab'];

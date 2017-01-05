@@ -43,9 +43,24 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class ContractsParseRule extends BaseRule {
 
-function ContractsParseRule() {
-	
+function __construct() {
+
 }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function ContractsParseRule(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 function preParse($panels, $view) {
    if($view == 'EditView') {
@@ -54,13 +69,13 @@ function preParse($panels, $view) {
 	   	  	 foreach($row as $key=>$column) {
 				if($this->matches($column, '/^expiration_notice_date$/')) {
 	   	  	 	   $panels[$name][$rowCount][$key] = 'expiration_notice';
-				} 
-	   	  	 } //foreach 
+				}
+	   	  	 } //foreach
 	   	  } //foreach
 	   } //foreach
    } //if
-   return $panels; 	
+   return $panels;
 }
-	
+
 }
 ?>

@@ -39,7 +39,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="index.php">{$APP.LBL_BROWSER_TITLE}</a>
+            <a class="navbar-brand" href="index.php?module=Home&action=index">{$APP.LBL_BROWSER_TITLE}</a>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mobile_menu">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
@@ -356,7 +356,7 @@
             </div>
             <div id="desktop_notifications" class="dropdown nav navbar-nav navbar-right">
                 <button class="alertsButton dropdown-toggle btn btn-success" data-toggle="dropdown" aria-expanded="false">
-                   <span class="badge"><span class="alert_count" >0</span> <span class="glyphicon glyphicon-comment"></span>
+                   <span class="badge"><span class="alert_count hidden" >0</span> <span class="glyphicon glyphicon-bell"></span>
                 </button>
                 <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
             </div>
@@ -437,7 +437,7 @@
                     <h2 class="recent_h3">{$APP.LBL_FAVORITES}</h2>
                     <ul class="nav nav-pills nav-stacked">
                         {foreach from=$favoriteRecords item=item name=lastViewed}
-                            <div class="recently_viewed_link_container_sidebar" id="{$item.id}">
+                            <div class="recently_viewed_link_container_sidebar" id="{$item.id}_favorite">
                                 <li class="recentlinks_edit"><a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a></li>
                                 <li class="recentlinks" role="presentation">
                                     <a title="{$item.module_name}"

@@ -61,6 +61,7 @@
         -->
     </script>
     {/literal}
+    <link rel="stylesheet" href="themes/Suite7/css/bootstrap.min.css">
     {$SUGAR_CSS}
     <link rel="stylesheet" href="themes/Suite7/css/fontello.css">
     <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->

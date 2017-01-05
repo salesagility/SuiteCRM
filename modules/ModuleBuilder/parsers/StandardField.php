@@ -47,11 +47,6 @@ class StandardField extends DynamicField
 	var $custom_def = array();
 	var $base_def = array();
 	var $baseField;
-	
-
-    function __construct($module = '') {
-        parent::DynamicField($module);
-    }
     
     protected function loadCustomDef($field){
     	global $beanList;

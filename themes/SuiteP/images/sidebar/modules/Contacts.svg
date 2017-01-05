@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>acc_contacts_small</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="acc_contacts_small" stroke="#FFFFFF" stroke-width="1.5">
+            <g id="Group" transform="translate(1.000000, 1.000000)">
+                <ellipse id="Oval-1" cx="9.02040816" cy="4.42719046" rx="4.48979592" ry="4.42719046"></ellipse>
+                <path d="M17.1020408,16.8233237 C19.2819745,16.8233236 13.4837706,8.85438091 9.02040816,8.85438091 C4.5570457,8.85438091 -2.54176623,16.1192539 0.93877551,16.8233237 C4.41931725,17.5273936 14.9221071,16.8233239 17.1020408,16.8233237 Z" id="Oval-1"></path>
+            </g>
+        </g>
+    </g>
+</svg>

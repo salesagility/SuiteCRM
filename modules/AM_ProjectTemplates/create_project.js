@@ -51,36 +51,65 @@ function updateTips( t ) {
 }
 
 function confirmation(id){
+
+    var CreateProject = SUGAR.language.get('AM_ProjectTemplates', 'LBL_NEW_PROJECT');
+    var Cancel = SUGAR.language.get('AM_ProjectTemplates', 'LBL_CANCEL_PROJECT');
+
     $( "#dialog-confirm" ).dialog({
-        height: 250,
+        height: 400,
         width: 350,
         modal: false,
-        buttons: {
-            "Create Project": function() {
+        buttons: [
+            {
+                text: CreateProject,
+                click: function () {
+                    var name = $("#p_name");
+                    var start_date = $("#start_date"),
+                        allFields = $([]).add(name).add(start_date),
+                        tips = $(".validateTips");
 
-                var name = $( "#p_name" );
-                var start_date = $("#start_date"),
-                allFields = $( [] ).add( name).add( start_date ),
-                tips = $( ".validateTips" );
-
-                if ( check_form('project_form') ) {
-                    $( "#users tbody" ).append( "<tr>" +
-                        "<td>" + name.val() + "</td>" +
-                        "</tr>" );
-                    $("#project_form").submit()
+                    if (check_form('project_form')) {
+                        $("#users tbody").append("<tr>" +
+                            "<td>" + name.val() + "</td>" +
+                            "</tr>");
+                        $("#project_form").submit()
+                        $(this).dialog("close");
+                        name.removeClass("ui-state-error");
+                    }
+                },
+            },
+            {
+                text: Cancel,
+                click : function() {
+                    var name = $( "#p_name" );
+                    var start_date = $("#start_date");
+                    name.val('');
+                    start_date.val('');
                     $( this ).dialog( "close" );
                     name.removeClass( "ui-state-error" );
                 }
-            },
-            Cancel: function() {
-                var name = $( "#p_name" );
-                var start_date = $("#start_date");
-                name.val('');
-                start_date.val('');
-                $( this ).dialog( "close" );
-                name.removeClass( "ui-state-error" );
             }
-
-        }
+        ]
     });
+
+
+	$('#copy_all_tasks').click(function() {
+
+		var $this = $(this);
+		if ($this.is(':checked')) {
+			 $('#tasks').hide();
+			 $('#tasks_label').hide();
+		} else {
+			$('#tasks').show();
+			$('#tasks_label').show();
+		}
+	});
+
 }
+
+
+
+
+
+ //html =  '<a id="create_link" onclick="' + $("#view_gantt").attr('onclick') + '" class="utilsLink">' + $("#view_gantt").attr('value') + '</a>&nbsp;&nbsp;' + $(".moduleTitle .utils").html();
+ //$(".moduleTitle .utils").html(html);

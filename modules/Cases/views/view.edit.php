@@ -41,8 +41,22 @@ require_once('include/SugarTinyMCE.php');
 
 class CasesViewEdit extends ViewEdit {
 
+    function __construct(){
+        parent::__construct();
+    }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
     function CasesViewEdit(){
-        parent::ViewEdit();
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
     }
 
     function display(){
@@ -53,18 +67,15 @@ class CasesViewEdit extends ViewEdit {
             ?>
             <script>
                 $(document).ready(function(){
-                    $('#update_text').closest('td').html('');
-                    $('#update_text_label').closest('td').html('');
-                    $('#internal').closest('td').html('');
-                    $('#internal_label').closest('td').html('');
-                    $('#addFileButton').closest('td').html('');
-                    $('#case_update_form_label').closest('td').html('');
+                    $('#update_text').closest('.edit-view-row-item').html('');
+                    $('#update_text_label').closest('.edit-view-row-item').html('');
+                    $('#internal').closest('.edit-view-row-item').html('');
+                    $('#internal_label').closest('.edit-view-row-item').html('');
+                    $('#addFileButton').closest('.edit-view-row-item').html('');
+                    $('#case_update_form_label').closest('.edit-view-row-item').html('');
                 });
             </script>
         <?php
         }
-        $tiny = new SugarTinyMCE();
-        echo $tiny->getInstance('update_text,description', 'email_compose_light');
     }
-
 }

@@ -52,7 +52,7 @@
 		<td colspan='{if $prerow}{$colCount+1}{else}{$colCount}{/if}'>
 			<table border='0' cellpadding='0' cellspacing='0' width='100%' class='paginationTable'>
 				<tr>
-					<td nowrap="nowrap" width='2%' class='paginationActionButtons'>
+					<td nowrap="nowrap" class='paginationActionButtons'>
 						{if $prerow}
 
                         {sugar_action_menu id=$link_select_id params=$selectLink}
@@ -64,7 +64,7 @@
                         { if $actionDisabledLink ne "" }<div class='selectActionsDisabled' id='select_actions_disabled_{$action_menu_location}'>{$actionDisabledLink}<span class='ab'></span></div>{/if}
 						&nbsp;{$selectedObjectsSpan}		
 					</td>
-					<td  nowrap='nowrap' width='1%' align="right" class='paginationChangeButtons'>
+					<td  nowrap='nowrap' align="right" class='paginationChangeButtons' width="1%">
 						{if $pageData.urls.startPage}
 							<button type='button' id='listViewStartButton_{$action_menu_location}' name='listViewStartButton' title='{$navStrings.start}' class='button' {if $prerow}onclick='return sListView.save_checks(0, "{$moduleString}");'{else} onClick='location.href="{$pageData.urls.startPage}"' {/if}>
 								{sugar_getimage name="start" ext=".png" alt=$navStrings.start other_attributes='align="absmiddle" border="0" ' alt ="$alt_start"}
@@ -83,7 +83,11 @@
 								{sugar_getimage name="previous_off" ext=".png" alt=$navStrings.previous other_attributes='align="absmiddle" border="0" '}
 							</button>
 						{/if}
-							<span class='pageNumbers'>({if $pageData.offsets.lastOffsetOnPage == 0}0{else}{$pageData.offsets.current+1}{/if} - {$pageData.offsets.lastOffsetOnPage} {$navStrings.of} {if $pageData.offsets.totalCounted}{$pageData.offsets.total}{else}{$pageData.offsets.total}{if $pageData.offsets.lastOffsetOnPage != $pageData.offsets.total}+{/if}{/if})</span>
+					</td>
+					<td nowrap='nowrap' width="1%" class="paginationActionButtons">
+						<div class='pageNumbers'>({if $pageData.offsets.lastOffsetOnPage == 0}0{else}{$pageData.offsets.current+1}{/if} - {$pageData.offsets.lastOffsetOnPage} {$navStrings.of} {if $pageData.offsets.totalCounted}{$pageData.offsets.total}{else}{$pageData.offsets.total}{if $pageData.offsets.lastOffsetOnPage != $pageData.offsets.total}+{/if}{/if})</div>
+					</td>
+					<td nowrap='nowrap' align="right" class='paginationActionButtons' width="1%">
 						{if $pageData.urls.nextPage}
 							<button type='button' id='listViewNextButton_{$action_menu_location}' name='listViewNextButton' title='{$navStrings.next}' class='button' {if $prerow}onclick='return sListView.save_checks({$pageData.offsets.next}, "{$moduleString}")' {else} onClick='location.href="{$pageData.urls.nextPage}"'{/if}>
 								{sugar_getimage name="next" ext=".png" alt=$navStrings.next other_attributes='align="absmiddle" border="0" ' alt ="$alt_next"}
@@ -103,6 +107,7 @@
 							</button>
 						{/if}
 					</td>
+					<td nowrap='nowrap' width="4px" class="paginationActionButtons"></td>
 				</tr>
 			</table>
 		</td>

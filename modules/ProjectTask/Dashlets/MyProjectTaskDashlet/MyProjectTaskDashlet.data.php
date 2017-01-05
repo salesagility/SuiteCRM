@@ -51,7 +51,7 @@ $dashletData['MyProjectTaskDashlet']['searchFields'] = array(
         'default' => $current_user->name),
 
 );
-$dashletData['ProjectTaskDashlet']['columns'] = array(
+$dashletData['MyProjectTaskDashlet']['columns'] = array(
     'name' =>
         array(
             'width' => '30%',

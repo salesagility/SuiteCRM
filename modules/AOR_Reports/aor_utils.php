@@ -83,6 +83,22 @@ function requestToUserParameters()
                 'type' => $_REQUEST['parameter_type'][$key],
                 'value' => $_REQUEST['parameter_value'][$key],
             );
+
+            // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
+            if ($_REQUEST['parameter_type'][$key] === 'Date') {
+                $values = array();
+                $values[] = $_REQUEST['parameter_value'][0];
+                $values[] = $_REQUEST['parameter_value'][1];;
+                $values[] = $_REQUEST['parameter_value'][2];;
+                $values[] = $_REQUEST['parameter_value'][3];;
+
+                $params[$parameterId] = array(
+                    'id' => $parameterId,
+                    'operator' => $_REQUEST['parameter_operator'][$key],
+                    'type' => $_REQUEST['parameter_type'][$key],
+                    'value' => $values,
+                );
+            }
         }
     }
     return $params;
@@ -163,7 +179,7 @@ function getPeriodDate($date_time_period_list_selected)
     } else if ($date_time_period_list_selected == 'this_month') {
         $datetime_period = $datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m'), 1);
     } else if ($date_time_period_list_selected == 'last_month') {
-        $datetime_period = $datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m')-1, 1);
+        $datetime_period = $datetime_period->modify('first day of last month');
     } else if ($date_time_period_list_selected == 'this_quarter') {
         $thisMonth = $datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m'), 1);
         if ($thisMonth >= $q[1]['start'] && $thisMonth <= $q[1]['end']) {
@@ -186,13 +202,13 @@ function getPeriodDate($date_time_period_list_selected)
             $datetime_period = $q[1]['start']->sub(new DateInterval('P3M'));
         } else if ($thisMonth >= $q[2]['start'] && $thisMonth <= $q[2]['end']) {
             // quarter 2 - 3 months
-            $q[2]['start']->sub(new DateInterval('P3M'));
+            $datetime_period = $q[2]['start']->sub(new DateInterval('P3M'));
         } else if ($thisMonth >= $q[3]['start'] && $thisMonth <= $q[3]['end']) {
             // quarter 3 - 3 months
-            $q[3]['start']->sub(new DateInterval('P3M'));
+            $datetime_period = $q[3]['start']->sub(new DateInterval('P3M'));
         } else if ($thisMonth >= $q[4]['start'] && $thisMonth <= $q[4]['end']) {
             // quarter 4 - 3 months
-            $q[3]['start']->sub(new DateInterval('P3M'));
+            $datetime_period = $q[3]['start']->sub(new DateInterval('P3M'));
         }
     } else if ($date_time_period_list_selected == 'this_year') {
         $datetime_period = $datetime_period = $datetime_period->setDate($datetime_period->format('Y'), 1, 1);
@@ -202,6 +218,89 @@ function getPeriodDate($date_time_period_list_selected)
     // set time to 00:00:00
     $datetime_period = $datetime_period->setTime(0, 0, 0);
     return $datetime_period;
+}
+
+/**
+ * getPeriodDate
+ * @param $date_time_period_list_selected
+ * @return DateTime
+ */
+function getPeriodEndDate($dateTimePeriodListSelected)
+{
+    switch($dateTimePeriodListSelected) {
+        case 'today':
+        case 'yesterday':
+            $datetimePeriod = new DateTime();
+            break;
+        case 'this_week':
+            $datetimePeriod = new DateTime("next week monday");
+            $datetimePeriod->setTime(0, 0, 0);
+            break;
+        case 'last_week':
+            $datetimePeriod = new DateTime("this week monday");
+            $datetimePeriod->setTime(0, 0, 0);
+            break;
+        case 'this_month':
+            $datetimePeriod = new DateTime('first day of next month');
+            $datetimePeriod->setTime(0, 0, 0);
+            break;
+        case 'last_month':
+            $datetimePeriod = new DateTime("first day of this month");
+            $datetimePeriod->setTime(0, 0, 0);
+            break;
+        case 'this_quarter':
+            $thisMonth = new DateTime('first day of this month');
+            $thisMonth = $thisMonth->format('n');
+            if ($thisMonth < 4) {
+                // quarter 1
+                $datetimePeriod = new DateTime('first day of april');
+                $datetimePeriod->setTime(0, 0, 0);
+            } elseif ($thisMonth > 3 && $thisMonth < 7) {
+                // quarter 2
+                $datetimePeriod = new DateTime('first day of july');
+                $datetimePeriod->setTime(0, 0, 0);
+            } elseif ($thisMonth > 6 && $thisMonth < 10) {
+                // quarter 3
+                $datetimePeriod = new DateTime('first day of october');
+                $datetimePeriod->setTime(0, 0, 0);
+            } elseif ($thisMonth > 9) {
+                // quarter 4
+                $datetimePeriod = new DateTime('next year first day of january');
+                $datetimePeriod->setTime(0, 0, 0);
+            }
+            break;
+        case 'last_quarter':
+            $thisMonth = new DateTime('first day of this month');
+            $thisMonth = $thisMonth->format('n');
+            if ($thisMonth < 4) {
+                // previous quarter 1
+                $datetimePeriod = new DateTime('this year first day of january');
+                $datetimePeriod->setTime(0, 0, 0);
+            } elseif ($thisMonth > 3 && $thisMonth < 7) {
+                // previous quarter 2
+                $datetimePeriod = new DateTime('first day of april');
+                $datetimePeriod->setTime(0, 0, 0);
+            } elseif ($thisMonth > 6 && $thisMonth < 10) {
+                // previous quarter 3
+                $datetimePeriod = new DateTime('first day of july');
+                $datetimePeriod->setTime(0, 0, 0);
+            } elseif ($thisMonth > 9) {
+                // previous quarter 4
+                $datetimePeriod = new DateTime('first day of october');
+                $datetimePeriod->setTime(0, 0, 0);
+            }
+            break;
+        case 'this_year':
+            $datetimePeriod = new DateTime('next year first day of january');
+            $datetimePeriod->setTime(0, 0, 0);
+            break;
+        case 'last_year':
+            $datetimePeriod = new DateTime("this year first day of january");
+            $datetimePeriod->setTime(0, 0, 0);
+            break;
+    }
+
+    return $datetimePeriod;
 }
 
 /**

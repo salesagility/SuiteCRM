@@ -31,7 +31,7 @@ class AOR_Chart extends Basic {
 	var $table_name = 'aor_charts';
 	var $importable = true;
 	var $disable_row_level_security = true ;
-	
+
 	var $id;
 	var $name;
 	var $date_entered;
@@ -52,9 +52,24 @@ class AOR_Chart extends Basic {
 
 
 
-	function AOR_Chart(){
-		parent::Basic();
+	public function __construct(){
+		parent::__construct();
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function AOR_Chart(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
     function save_lines(array $post,AOR_Report $bean,$postKey){
         $seenIds = array();
@@ -342,18 +357,6 @@ EOF;
     //or stacked (false)
     private function getRGraphGroupedBarChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400, $grouped = false)
     {
-        //$keys = array_keys($chartTooltips);
-
-
-        $i=0;
-        foreach($chartDataValues as $rowKey => $row) {
-            foreach($row as $key => $value) {
-                $_tooltips[$rowKey][$key] = $chartTooltips[$i];
-                $i++;
-            }
-        }
-
-
         $dataArray = json_decode($chartDataValues);
         $grouping = 'grouped'; //$mainGroupField->label; //'grouped';
         if(!$grouped)
@@ -669,7 +672,7 @@ EOF;
             foreach($reportData as $key2 => $row2) {
                 if($row2[$xName] == $filter && !in_array($key, $usedKeys)) {
                     $data      [ $row[$xName]  ]   [] = (float) $row[$yName];
-                    $tooltips  [ $row[$xName]  ]   [] = $row[$zName];
+                    $tooltips  [ $row[$xName]  ]   [] = isset($row[$zName]) ? $row[$zName] : null;
                     $usedKeys[] = $key;
                 }
             }
@@ -717,7 +720,7 @@ EOF;
         $chart['tooltips']=array();
         foreach($reportData as $row){
             $chart['labels'][] = $this->getShortenedLabel($row[$xName]);
-            $chart['tooltips'][] = $row[$xName];
+            $chart['tooltips'][] = $row[$xName].': '.$row[$yName];
             $chart['data'][] = (float)$row[$yName];
 
         }

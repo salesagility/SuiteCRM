@@ -383,6 +383,10 @@ class SugarTheme
 			if (is_file("$cachedir/spriteCache.php"))
 				unlink("$cachedir/spriteCache.php");
 
+            if(strlen($cachedir)>1) {
+                rmdir_recursive($cachedir.'/modules');
+            }
+
         }
         elseif ( !inDeveloperMode() ) {
             // only update the caches if they have been changed in this request
@@ -704,19 +708,28 @@ EOHTML;
 	 * @param  string $height optional, defaults to the actual image's height
 	 * @param  string $ext optional, image extension (TODO can we deprecate this one ?)
      * @param  string $alt optional, only used when image contains something useful, i.e. "Sally's profile pic"
+     * @param  string $imageJSONEncode optional, some of template javascript need the exact image-html-string to build HTML contents so this parameter make a json_encode call on the return SVG or image source
+     * @param  string $forceExt optional, force image extension
      * @return string HTML image tag or sprite
      */
-    public function getImage(
-        $imageName,
-        $other_attributes = '',
-		$width = null,
-		$height = null,
-		$ext = null,
-        $alt = ''
-    )
-    {
-
+    public function getImage($imageName, $other_attributes = '', $width = null, $height = null, $ext = null, $alt = '', $imageJSONEncode = false, $forceExt = null) {
         static $cached_results = array();
+
+        // look for .svg first
+        if(strpos($imageName, '.svg') !== false) {
+            $ext = '';
+        } else {
+            // Look for SVG first
+            $imagePath = SugarThemeRegistry::current()->getImagePath().DIRECTORY_SEPARATOR.$imageName.'.svg';
+            if(file_exists($imagePath)) {
+                $ext = '.svg';
+            }
+        }
+
+        if($forceExt) {
+            $ext = $forceExt;
+        }
+
 
 		// trap deprecated use of image extension
 		if(is_null($ext)) {
@@ -765,9 +778,10 @@ EOHTML;
 		$attr_height = (is_null($height)) ? "" : "height=\"$height\"";
 
         if(strpos($cached_results[$imageName], 'svg') !== false){
-            return $cached_results[$imageName];
+            return $imageJSONEncode ? json_encode($cached_results[$imageName]) : $cached_results[$imageName];
         }
-		return $cached_results[$imageName] . " $attr_width $attr_height $other_attributes alt=\"$alt\" />";
+        $ret = $cached_results[$imageName] . " $attr_width $attr_height $other_attributes alt=\"$alt\" />";
+		return $imageJSONEncode ? json_encode($ret) : $ret;
     }
 
 	/**

@@ -55,13 +55,18 @@ $app_list_strings = array(
     'language_pack_name' => 'US English',
     'moduleList' => array(
             'Home' => 'Home',
+			'ResourceCalendar' => 'Resource Calendar',
             'Contacts' => 'Contacts',
             'Accounts' => 'Accounts',
+            'Alerts' => 'Alerts',
             'Opportunities' => 'Opportunities',
             'Cases' => 'Cases',
             'Notes' => 'Notes',
             'Calls' => 'Calls',
+            'TemplateSectionLine' => 'Template Section Line',
+            'Calls_Reschedule' => 'Calls Reschedule',
             'Emails' => 'Emails',
+            'EAPM' => 'EAPM',
             'Meetings' => 'Meetings',
             'Tasks' => 'Tasks',
             'Calendar' => 'Calendar',
@@ -106,7 +111,6 @@ $app_list_strings = array(
             'FAQ' => 'FAQ',
             'Newsletters' => 'Newsletters',
             'SugarFeed' => 'SuiteCRM Feed',
-            'KBDocuments' => 'Knowledge Base',
             'SugarFavorites' => 'SuiteCRM Favorites',
 
             'OAuthKeys' => 'OAuth Consumer Keys',
@@ -256,11 +260,11 @@ $app_list_strings = array(
             'Net 15' => 'Net 15',
             'Net 30' => 'Net 30',
         ),
-    'sales_stage_default_key' => 'Prospecting',
     'fts_type' => array(
         '' => '',
         'Elastic' => 'elasticsearch',
     ),
+    'sales_stage_default_key' => 'Prospecting',
     'sales_stage_dom' => array(
             'Prospecting' => 'Prospecting',
             'Qualification' => 'Qualification',
@@ -376,17 +380,6 @@ $app_list_strings = array(
             'male' => 'Male',
             'female' => 'Female',
         ),
-    //Note:  do not translate case_status_default_key
-//       it is the key for the default case_status_dom value
-    'case_status_default_key' => 'New',
-    'case_status_dom' => array(
-            'New' => 'New',
-            'Assigned' => 'Assigned',
-            'Closed' => 'Closed',
-            'Pending Input' => 'Pending Input',
-            'Rejected' => 'Rejected',
-            'Duplicate' => 'Duplicate',
-        ),
     'case_priority_default_key' => 'P2',
     'case_priority_dom' => array(
             'P1' => 'High',
@@ -448,14 +441,13 @@ $app_list_strings = array(
         'Hours' => 'Hours',
     ),
 
-    'project_priority_options' => array(
-        'High' => 'High',
-        'Medium' => 'Medium',
-        'Low' => 'Low',
+    'activity_status_type_dom' => array(''=>'--None--',
+        'active' => 'Active',
+        'inactive' => 'Inactive',
     ),
-    'project_priority_default' => 'Medium',
-    //Note:  do not translate record_type_default_key
-//       it is the key for the default record_type_module value
+
+    // Note:  do not translate record_type_default_key
+    //        it is the key for the default record_type_module value
     'record_type_default_key' => 'Accounts',
     'record_type_display' => array(
             '' => '',
@@ -620,8 +612,8 @@ $app_list_strings = array(
             'Active' => 'Active',
             'Inactive' => 'Inactive',
             'Complete' => 'Complete',
-            'In Queue' => 'In Queue',
-            'Sending' => 'Sending',
+            //'In Queue' => 'In Queue',
+            //'Sending' => 'Sending',
         ),
     'campaign_type_dom' => array(
             '' => '',
@@ -744,9 +736,6 @@ $app_list_strings = array(
     'dom_email_distribution' => array('' => '--None--',
         'direct' => 'Direct Assign',
         'roundRobin' => 'Round-Robin',
-        'leastBusy' => 'Least-Busy',
-    ),
-    'dom_email_distribution_for_auto_create' => array('roundRobin' => 'Round-Robin',
         'leastBusy' => 'Least-Busy',
     ),
     'dom_email_errors' => array(1 => 'Only select one user when Direct Assigning items.',
@@ -1101,6 +1090,7 @@ $app_strings = array(
     'LBL_OUTBOUND_EMAIL_ADD_SERVER' => 'Add Server...',
     'LBL_EMAIL_SMTP_SSL_OR_TLS' => 'Enable SMTP over SSL or TLS?',
     'LBL_NO_ACTION' => 'There is no action by that name.',
+    'LBL_NO_SHORTCUT_MENU' => 'There are no actions available.',
     'LBL_NO_DATA' => 'No Data',
     'LBL_ROUTING_ADD_RULE' => 'Add Rule',
     'LBL_ROUTING_ALL' => 'At Least',
@@ -1600,6 +1590,7 @@ $app_strings = array(
     'LBL_ADD_TO_PROSPECT_LIST_BUTTON_KEY' => 'L',
     'LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL' => 'Add To Target List',
     'LBL_ADD_TO_PROSPECT_LIST_BUTTON_TITLE' => 'Add To Target List',
+    'LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL_ACCOUNTS_CONTACTS' => 'Add Contacts To Target List',
     'LBL_ADDITIONAL_DETAILS_CLOSE_TITLE' => 'Click to Close',
     'LBL_ADDITIONAL_DETAILS_CLOSE' => 'Close',
     'LBL_ADDITIONAL_DETAILS' => 'Additional Details',
@@ -1651,6 +1642,7 @@ $app_strings = array(
     'LBL_CONTACT_LIST' => 'Contact List',
     'LBL_CONTACT' => 'Contact',
     'LBL_CONTACTS' => 'Contacts',
+    'LBL_CONTRACT' => 'Contract',
     'LBL_CONTRACTS' => 'Contracts',
     'LBL_COUNTRY' => 'Country:',
     'LBL_CREATE_BUTTON_LABEL' => 'Create',
@@ -1717,6 +1709,7 @@ $app_strings = array(
     'LBL_CAMPAIGNLOG' => 'CampaignLog',
     'LBL_CAMPAIGN_CONTACT' => 'Campaigns',
     'LBL_CAMPAIGN_ID' => 'campaign_id',
+    'LBL_CAMPAIGN_NONE' => 'None',
     'LBL_SITEMAP' => 'Sitemap',
     'LBL_THEME' => 'Theme:',
     'LBL_THEME_PICKER' => 'Page Style',
@@ -1739,9 +1732,6 @@ $app_strings = array(
     'LBL_LISTVIEW_TWO_REQUIRED' => 'Please select at least 2 records to proceed.',
     'LBL_LISTVIEW_LESS_THAN_TEN_SELECT' => 'Please select less than 10 records to proceed.',
     'LBL_LISTVIEW_ALL' => 'All',
-    'LBL_LISTVIEW_NONE' => 'Deselect All',
-    'LBL_LISTVIEW_OPTION_CURRENT' => 'Select This Page',
-    'LBL_LISTVIEW_OPTION_ENTIRE' => 'Select All',
     'LBL_LISTVIEW_OPTION_SELECTED' => 'Selected Records',
     'LBL_LISTVIEW_SELECTED_OBJECTS' => 'Selected: ',
 
@@ -1936,6 +1926,18 @@ $app_strings = array(
 
     'LBL_SUGAR_COPYRIGHT_SUB' => '&copy; 2004-2013 <a href="http://www.sugarcrm.com" target="_blank" class="copyRightLink">SugarCRM Inc.</a> All Rights Reserved.<br />SugarCRM is a trademark of SugarCRM, Inc. All other company and product names may be trademarks of the respective companies with which they are associated.',
 
+    'LBL_SCENARIO_SALES' => 'Sales',
+    'LBL_SCENARIO_MARKETING' => 'Marketing',
+    'LBL_SCENARIO_FINANCE' => 'Finance',
+    'LBL_SCENARIO_SERVICE' => 'Service',
+    'LBL_SCENARIO_PROJECT' => 'Project Management',
+
+    'LBL_SCENARIO_SALES_DESCRIPTION'=>'This scenario facilitates the management of sales items',
+    'LBL_SCENARIO_MAKETING_DESCRIPTION'=>'This scenario facilitates the management of marketing items',
+    'LBL_SCENARIO_FINANCE_DESCRIPTION'=>'This scenario facilitates the management of finance related items',
+    'LBL_SCENARIO_SERVICE_DESCRIPTION'=>'This scenario facilitates the management of service related items',
+    'LBL_SCENARIO_PROJECT_DESCRIPTION'=>'This scenario faciliates the management of project related items',
+
     'LBL_SYNC' => 'Sync',
     'LBL_TABGROUP_ALL' => 'All',
     'LBL_TABGROUP_ACTIVITIES' => 'Activities',
@@ -2093,13 +2095,22 @@ $app_strings = array(
     'LBL_REMOVE_FROM_FAVORITES' => 'Remove From My Favorites',
     //web to lead
     'LBL_GENERATE_WEB_TO_LEAD_FORM' => 'Generate Form',
-    'LBL_SAVE_WEB_TO_LEAD_FORM' => 'Save Web To Lead Form',
+    'LBL_SAVE_WEB_TO_LEAD_FORM' =>'Save Web Form',
+    'LBL_AVAILABLE_FIELDS'=>'Available Fields',
+    'LBL_FIRST_FORM_COLUMN'=>'First Form Column',
+    'LBL_SECOND_FORM_COLUMN'=>'Second Form Column',
+    'LBL_ASSIGNED_TO_REQUIRED'=>'Missing required field: Assigned to',
+    'LBL_RELATED_CAMPAIGN_REQUIRED'=>'Missing required field: Related campaign',
+    'LBL_TYPE_OF_PERSON_FOR_FORM'=>'Web form to create ',
+    'LBL_TYPE_OF_PERSON_FOR_FORM_DESC'=>'Submitting this form will create ',
 
     'LBL_PLEASE_SELECT' => 'Please Select',
     'LBL_REDIRECT_URL' => 'Redirect URL',
     'LBL_RELATED_CAMPAIGN' => 'Related campaign',
     'LBL_ADD_ALL_LEAD_FIELDS' => 'Add All Fields',
+    'LBL_RESET_ALL_LEAD_FIELDS' => 'Reset all Fields',
     'LBL_REMOVE_ALL_LEAD_FIELDS' => 'Remove All Fields',
+    'LBL_NEXT_BTN' => 'Next',
     'LBL_ONLY_IMAGE_ATTACHMENT' => 'Only the following supported image type attachments can be embedded: JPG, PNG.',
     'LBL_TRAINING' => 'Support',
     'ERR_DATABASE_CONN_DROPPED' => 'Error executing a query. Possibly, your database dropped the connection. Please refresh this page, you may need to restart you web server.',
@@ -2146,7 +2157,6 @@ $app_strings = array(
     'LBL_ADD_DASHLETS' => 'Add Dashlets',
     'LBL_CLOSE_DASHLETS' => 'Close',
     'LBL_OPTIONS' => 'Options',
-    'LBL_NUMBER_OF_COLUMNS' => 'Select the number of columns',
     'LBL_1_COLUMN' => '1 Column',
     'LBL_2_COLUMN' => '2 Column',
     'LBL_3_COLUMN' => '3 Column',
@@ -2423,6 +2433,9 @@ $app_strings = array(
     'ERR_A_REMINDER_IS_EMPTY_OR_INCORRECT' => 'A reminder is empty or incorrect.',
     'ERR_REMINDER_IS_NOT_SET_POPUP_OR_EMAIL' => 'Reminder is not set for either a popup or email.',
     'ERR_NO_INVITEES_FOR_REMINDER' => 'No invitees for reminder.',
+    'LBL_DELETE_REMINDER_CONFIRM' => 'Reminder doesn\'t include any invitees, do you want to remove the reminder?',
+    'LBL_DELETE_REMINDER' => 'Delete Reminder',
+    'LBL_OK' => 'Ok',
 
 );
 
@@ -3211,12 +3224,6 @@ $app_list_strings['aok_status_list']['In_Review'] = 'In Review';
 $app_list_strings['aok_status_list']['published_private'] = 'Private';
 $app_list_strings['aok_status_list']['published_public'] = 'Public';
 
-$app_list_strings['moduleList']['Reminders'] = 'Reminders';
-$app_list_strings['moduleListSingular']['Reminders'] = 'Reminder';
-
-$app_list_strings['moduleList']['Reminders_Invitees'] = 'Reminders_Invitees';
-$app_list_strings['moduleListSingular']['Reminders_Invitees'] = 'Reminder_Invitee';
-
 $app_list_strings['moduleList']['FP_events'] = 'Events';
 $app_list_strings['moduleList']['FP_Event_Locations'] = 'Locations';
 $app_list_strings['invite_template_list'][''] = '';
@@ -3246,13 +3253,15 @@ $app_list_strings['moduleList']['AOP_Case_Events'] = 'Case Events';
 $app_list_strings['moduleList']['AOP_Case_Updates'] = 'Case Updates';
 $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] = '========== Please reply above this line ==========';
 
+
+
 //aop
+$app_list_strings['case_state_default_key'] = 'Open';
 $app_list_strings['case_state_dom'] =
     array(
         'Open' => 'Open',
         'Closed' => 'Closed',
     );
-$app_list_strings['case_state_default_key'] = 'Open';
 $app_list_strings['case_status_default_key'] = 'Open_New';
 $app_list_strings['case_status_dom'] =
     array(
@@ -3297,15 +3306,6 @@ $app_list_strings['aor_format_options']['Ymd'] = 'Ymd';
 $app_list_strings['aor_format_options']['Y-m'] = 'Y-m';
 $app_list_strings['aor_format_options']['d/m/Y'] = 'd/m/Y';
 $app_list_strings['aor_format_options']['Y'] = 'Y';
-$app_list_strings['aor_sql_operator_list']['Equal_To'] = '=';
-$app_list_strings['aor_sql_operator_list']['Not_Equal_To'] = '!=';
-$app_list_strings['aor_sql_operator_list']['Greater_Than'] = '>';
-$app_list_strings['aor_sql_operator_list']['Less_Than'] = '<';
-$app_list_strings['aor_sql_operator_list']['Greater_Than_or_Equal_To'] = '>=';
-$app_list_strings['aor_sql_operator_list']['Less_Than_or_Equal_To'] = '<=';
-$app_list_strings['aor_sql_operator_list']['Contains'] = 'LIKE';
-$app_list_strings['aor_sql_operator_list']['Starts_With'] = 'LIKE';
-$app_list_strings['aor_sql_operator_list']['Ends_With'] = 'LIKE';
 $app_list_strings['aor_condition_operator_list']['And'] = 'And';
 $app_list_strings['aor_condition_operator_list']['OR'] = 'OR';
 $app_list_strings['aor_condition_type_list']['Value'] = 'Value';
@@ -3865,6 +3865,8 @@ $app_strings['LBL_LOGIN_AS'] = 'Login as ';
 $app_strings['LBL_LOGOUT_AS'] = 'Logout as ';
 $app_strings['LBL_SECURITYGROUP'] = 'Security Group';
 
+$app_list_strings['moduleList']['OutboundEmailAccounts'] = 'Outbound Email Accounts';
+
 //social
 $app_strings['FACEBOOK_USER_C'] = 'Facebook';
 $app_strings['TWITTER_USER_C'] = 'Twitter';
@@ -3884,6 +3886,7 @@ $app_strings['LBL_QUICK_TASK'] = 'Create Task';
 $app_strings['LBL_COLLECTION_TYPE'] = 'Type';
 
 $app_strings['LBL_ADD_TAB'] = 'Add Tab';
+$app_strings['LBL_EDIT_TAB'] = 'Edit Tabs';
 $app_strings['LBL_SUITE_DASHBOARD'] = 'SuiteCRM Dashboard';
 $app_strings['LBL_ENTER_DASHBOARD_NAME'] = 'Enter Dashboard Name:';
 $app_strings['LBL_NUMBER_OF_COLUMNS'] = 'Number of Columns:';
@@ -3892,7 +3895,59 @@ $app_strings['LBL_DELETE_DASHBOARD2'] = 'dashboard?';
 $app_strings['LBL_ADD_DASHBOARD_PAGE'] = 'Add a Dashboard Page';
 $app_strings['LBL_DELETE_DASHBOARD_PAGE'] = 'Remove Current Dashboard Page';
 $app_strings['LBL_RENAME_DASHBOARD_PAGE'] = 'Rename Dashboard Page';
+$app_strings['LBL_SUITE_DASHBOARD_ACTIONS'] = 'Actions';
 
 $app_strings['LBL_DISCOVER_SUITECRM'] = 'Discover SuiteCRM';
 
 $app_list_strings['collection_temp_list'] = array('Tasks' => 'Tasks', 'Meetings' => 'Meetings', 'Calls' => 'Calls', 'Notes' => 'Notes', 'Emails' => 'Emails');
+
+$app_list_strings['moduleList']['TemplateEditor'] = 'Template Part Editor';
+$app_strings['LBL_CONFIRM_CANCEL_INLINE_EDITING'] = "You have clicked away from the field you were editing without saving it. Click ok if you're happy to lose your change, or cancel if you would like to continue editing";
+$app_strings['LBL_LOADING_ERROR_INLINE_EDITING'] = "There was an error loading the field. Your session may have timed out. Please log in again to fix this";
+
+//SuiteSpots
+$app_list_strings['spots_areas'] = array(
+    'getSalesSpotsData' => 'Sales',
+    'getAccountsSpotsData' => 'Accounts',
+    'getLeadsSpotsData' => 'Leads',
+    'getServiceSpotsData' => 'Service',
+    'getMarketingSpotsData' => 'Marketing',
+    'getMarketingActivitySpotsData' => 'Marketing Activity',
+    'getActivitiesSpotsData' => 'Activities',
+    'getQuotesSpotsData' => 'Quotes'
+);
+
+$app_list_strings['moduleList']['Spots'] = 'Spots';
+
+$app_list_strings['moduleList']['AOBH_BusinessHours'] = 'Business Hours';
+$app_list_strings['business_hours_list']['0'] = '12am';
+$app_list_strings['business_hours_list']['1'] = '1am';
+$app_list_strings['business_hours_list']['2'] = '2am';
+$app_list_strings['business_hours_list']['3'] = '3am';
+$app_list_strings['business_hours_list']['4'] = '4am';
+$app_list_strings['business_hours_list']['5'] = '5am';
+$app_list_strings['business_hours_list']['6'] = '6am';
+$app_list_strings['business_hours_list']['7'] = '7am';
+$app_list_strings['business_hours_list']['8'] = '8am';
+$app_list_strings['business_hours_list']['9'] = '9am';
+$app_list_strings['business_hours_list']['10'] = '10am';
+$app_list_strings['business_hours_list']['11'] = '11am';
+$app_list_strings['business_hours_list']['12'] = '12pm';
+$app_list_strings['business_hours_list']['13'] = '1pm';
+$app_list_strings['business_hours_list']['14'] = '2pm';
+$app_list_strings['business_hours_list']['15'] = '3pm';
+$app_list_strings['business_hours_list']['16'] = '4pm';
+$app_list_strings['business_hours_list']['17'] = '5pm';
+$app_list_strings['business_hours_list']['18'] = '6pm';
+$app_list_strings['business_hours_list']['19'] = '7pm';
+$app_list_strings['business_hours_list']['20'] = '8pm';
+$app_list_strings['business_hours_list']['21'] = '9pm';
+$app_list_strings['business_hours_list']['22'] = '10pm';
+$app_list_strings['business_hours_list']['23'] = '11pm';
+$app_list_strings['day_list']['Monday'] = 'Monday';
+$app_list_strings['day_list']['Tuesday'] = 'Tuesday';
+$app_list_strings['day_list']['Wednesday'] = 'Wednesday';
+$app_list_strings['day_list']['Thursday'] = 'Thursday';
+$app_list_strings['day_list']['Friday'] = 'Friday';
+$app_list_strings['day_list']['Saturday'] = 'Saturday';
+$app_list_strings['day_list']['Sunday'] = 'Sunday';

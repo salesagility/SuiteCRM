@@ -2034,8 +2034,11 @@ function validate_manifest($manifest) {
     // takes a manifest.php manifest array and validates contents
     global $subdirs;
     global $sugar_version;
+	global $sugar_config;
     global $sugar_flavor;
 	global $mod_strings;
+
+	include_once('suitecrm_version.php');
 
     if(!isset($manifest['type'])) {
         return $mod_strings['ERROR_MANIFEST_TYPE'];
@@ -2047,31 +2050,92 @@ function validate_manifest($manifest) {
 		return $mod_strings['ERROR_PACKAGE_TYPE']. ": '" . $type . "'.";
     }
 
-    if(isset($manifest['acceptable_sugar_versions'])) {
-        $version_ok = false;
-        $matches_empty = true;
-        if(isset($manifest['acceptable_sugar_versions']['exact_matches'])) {
-            $matches_empty = false;
-            foreach($manifest['acceptable_sugar_versions']['exact_matches'] as $match) {
-                if($match == $sugar_version) {
-                    $version_ok = true;
-                }
-            }
-        }
-        if(!$version_ok && isset($manifest['acceptable_sugar_versions']['regex_matches'])) {
-            $matches_empty = false;
-            foreach($manifest['acceptable_sugar_versions']['regex_matches'] as $match) {
-                if(preg_match("/$match/", $sugar_version)) {
-                    $version_ok = true;
-                }
-            }
-        }
+	if(isset($manifest['acceptable_php_versions'])) {
+		$version_ok = false;
+		$matches_empty = true;
+		if(isset($manifest['acceptable_php_versions']['exact_matches'])) {
+			$matches_empty = false;
+			foreach($manifest['acceptable_php_versions']['exact_matches'] as $match) {
+				if($match == PHP_VERSION) {
+					$version_ok = true;
+				}
+			}
+		}
+		if(!$version_ok && isset($manifest['acceptable_php_versions']['regex_matches'])) {
+			$matches_empty = false;
+			foreach($manifest['acceptable_php_versions']['regex_matches'] as $match) {
+				if(preg_match("/$match/", PHP_VERSION)) {
+					$version_ok = true;
+				}
+			}
+		}
 
-        if(!$matches_empty && !$version_ok) {
-            return $mod_strings['ERROR_VERSION_INCOMPATIBLE']."<br />".
-            $mod_strings['ERR_UW_VERSION'].$sugar_version;
-        }
-    }
+		if(!$matches_empty && !$version_ok) {
+			return $mod_strings['ERROR_PHP_VERSION_INCOMPATIBLE']."<br />".
+			$mod_strings['ERR_UW_PHP_VERSION'].PHP_VERSION;
+		}
+	}
+
+
+	if(!isset($manifest['acceptable_suitecrm_versions'])) {
+		// If sugarcrm version set 'acceptable_sugar_versions', and acceptable_suitecrm_versions not set check on sugar version.
+		if (isset($manifest['acceptable_sugar_versions'])) {
+			$version_ok = false;
+			$matches_empty = true;
+			if (isset($manifest['acceptable_sugar_versions']['exact_matches'])) {
+				$matches_empty = false;
+				foreach ($manifest['acceptable_sugar_versions']['exact_matches'] as $match) {
+					if ($match == $sugar_version) {
+						$version_ok = true;
+					}
+				}
+			}
+			if (!$version_ok && isset($manifest['acceptable_sugar_versions']['regex_matches'])) {
+				$matches_empty = false;
+				foreach ($manifest['acceptable_sugar_versions']['regex_matches'] as $match) {
+					if (preg_match("/$match/", $sugar_version)) {
+						$version_ok = true;
+					}
+				}
+			}
+
+			if (!$matches_empty && !$version_ok) {
+				return $mod_strings['ERROR_VERSION_INCOMPATIBLE'] . "<br />" .
+				$mod_strings['ERR_UW_VERSION'] . $sugar_version;
+			}
+		}
+		else {
+			// if neither set reject
+			return $mod_strings['ERROR_NO_VERSION_SET'];
+		}
+	}
+	else {
+		// If sugarcrm version set 'acceptable_sugar_versions', and acceptable_suitecrm_versions set check only on suitecrm version
+		// If sugarcrm version not set 'acceptable_sugar_versions', and acceptable_suitecrm_versions set check only on suitecrm version
+		$version_ok = false;
+		$matches_empty = true;
+		if (isset($manifest['acceptable_suitecrm_versions']['exact_matches'])) {
+			$matches_empty = false;
+			foreach ($manifest['acceptable_suitecrm_versions']['exact_matches'] as $match) {
+				if ($match == $suitecrm_version) {
+					$version_ok = true;
+				}
+			}
+		}
+		if (!$version_ok && isset($manifest['acceptable_suitecrm_versions']['regex_matches'])) {
+			$matches_empty = false;
+			foreach ($manifest['acceptable_suitecrm_versions']['regex_matches'] as $match) {
+				if (preg_match("/$match/", $suitecrm_version)) {
+					$version_ok = true;
+				}
+			}
+		}
+
+		if (!$matches_empty && !$version_ok) {
+			return $mod_strings['ERROR_SUITECRM_VERSION_INCOMPATIBLE'] . "<br />" .
+			$mod_strings['ERR_UW_SUITECRM_VERSION'] . $suitecrm_version;
+		}
+	}
 
     if(isset($manifest['acceptable_sugar_flavors']) && sizeof($manifest['acceptable_sugar_flavors']) > 0) {
         $flavor_ok = false;
@@ -2089,6 +2153,7 @@ function validate_manifest($manifest) {
 
     return '';
 }
+
 }
 
 function unlinkUploadFiles() {
@@ -2239,31 +2304,12 @@ function resetUwSession() {
 }
 
 /**
+ * @deprecated
  * runs rebuild scripts
  */
 function UWrebuild() {
-	global $db;
-	global $path;
-	/*
-	//CCL - Comment this block out, it is called in end.php
-	logThis('Rebuilding everything...', $path);
-	require_once('modules/Administration/QuickRepairAndRebuild.php');
-	$randc = new RepairAndClear();
-    $randc->repairAndClearAll(array('clearAll'),array(translate('LBL_ALL_MODULES')), false, false);
-    */
-	$query = "DELETE FROM versions WHERE name='Rebuild Extensions'";
-	$db->query($query);
-	logThis('Registering rebuild record: '.$query, $path);
-	logThis('Rebuild done.', $path);
-
-	// insert a new database row to show the rebuild extensions is done
-	$id = create_guid();
-	$gmdate = gmdate('Y-m-d H:i:s');
-	$date_entered = db_convert("'$gmdate'", 'datetime');
-	$query = 'INSERT INTO versions (id, deleted, date_entered, date_modified, modified_user_id, created_by, name, file_version, db_version) '
-		. "VALUES ('$id', '0', $date_entered, $date_entered, '1', '1', 'Rebuild Extensions', '4.0.0', '4.0.0')";
-	$db->query($query);
-	logThis('Registering rebuild record in versions table: '.$query, $path);
+	
+	$GLOBALS['log']->deprecated('UWrebuild is deprecated');
 }
 
 function getCustomTables() {

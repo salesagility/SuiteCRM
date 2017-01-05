@@ -48,12 +48,27 @@ class Group extends User {
 	var $default_team;
 	var $importable = false;
 
-    
-	function Group() {
-		parent::User();
+
+	function __construct() {
+		parent::__construct();
 	}
 
-	/** 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function Group(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
+	/**
 	 * overrides SugarBean method
 	 */
 	function mark_deleted($id) {
@@ -75,7 +90,7 @@ class Group extends User {
 			$query .= " ORDER BY users.user_name";
 		return $query;
 	}
-	
-} // end class def 
+
+} // end class def
 
 ?>

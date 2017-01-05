@@ -72,9 +72,24 @@ class Relationship extends SugarBean {
 
 	var $_self_referencing;
 
-	function Relationship() {
-		parent::SugarBean();
+    public function __construct() {
+		parent::__construct();
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function Relationship(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 	/*returns true if the relationship is self referencing. equality check is performed for both table and
 	 * key names.
@@ -219,11 +234,11 @@ class Relationship extends SugarBean {
 		while (($row=$this->db->fetchByAssoc($result))!=null) {
 			$relationships[$row['relationship_name']] = $row;
 		}
-		
+
 		sugar_mkdir($this->cache_file_dir(), null, true);
         $out = "<?php \n \$relationships = " . var_export($relationships, true) . ";";
         sugar_file_put_contents_atomic(Relationship::cache_file_dir() . '/' . Relationship::cache_file_name_only(), $out);
-		
+
         require_once("data/Relationships/RelationshipFactory.php");
         SugarRelationshipFactory::deleteCache();
 	}
@@ -235,7 +250,7 @@ class Relationship extends SugarBean {
 	public static function cache_file_name_only() {
 		return 'relationships.cache.php';
 	}
-	
+
 	public static function delete_cache() {
 		$filename=Relationship::cache_file_dir().'/'.Relationship::cache_file_name_only();
 		if (file_exists($filename)) {

@@ -11,10 +11,10 @@ class AORReportsDashlet extends Dashlet {
     var $charts;
     var $onlyCharts;
 
-    function AORReportsDashlet($id, $def = array()) {
+    function __construct($id, $def = array()) {
 		global $current_user, $app_strings;
 
-        parent::Dashlet($id);
+        parent::__construct($id);
         $this->isConfigurable = true;
         $this->def = $def;
         if(empty($def['dashletTitle'])) {
@@ -41,6 +41,20 @@ class AORReportsDashlet extends Dashlet {
         $this->charts = !empty($def['charts']) ? $def['charts'] : array();
     }
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function AORReportsDashlet($id, $def = array()){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id, $def);
+    }
+
     public function display() {
         global $current_language;
         $mod_strings = return_module_language($current_language, 'AOR_Reports');
@@ -52,10 +66,10 @@ class AORReportsDashlet extends Dashlet {
         $dashletSmarty->assign('chartHTML',$this->getChartHTML());
         $dashletSmarty->assign('onlyCharts', $this->onlyCharts);
         $dashletSmarty->assign('parameters',json_encode(array(
-                                            'ids' => $this->def['parameter_id'],
-                                            'operators' => $this->def['parameter_operator'],
-                                            'types' => $this->def['parameter_type'],
-                                            'values' => $this->def['parameter_value'])));
+                                            'ids' => isset($this->def['parameter_id']) ? $this->def['parameter_id'] : null,
+                                            'operators' => isset($this->def['parameter_operator']) ? $this->def['parameter_operator'] : null,
+                                            'types' => isset($this->def['parameter_type']) ? $this->def['parameter_type'] : null,
+                                            'values' => isset($this->def['parameter_value']) ? $this->def['parameter_value'] : null)));
         return $dashletSmarty->fetch($dashletTemplate);
     }
 
@@ -120,6 +134,21 @@ class AORReportsDashlet extends Dashlet {
 //            $req['parameter_value'][1] = $firstValue;
 //        }
         $allowedKeys = array_flip(array('aor_report_id','dashletTitle','charts','onlyCharts','parameter_id','parameter_value','parameter_type','parameter_operator'));
+
+        // Fix for issue #1700 - save value as db type
+        for($i = 0; $i < count($req['parameter_value']); $i++) {
+            if(isset($req['parameter_value'][$i]) && $req['parameter_value'][$i] != '') {
+                global $current_user, $timedate;
+                $user_date_format = $timedate->get_date_format($current_user);
+
+                if (DateTime::createFromFormat($user_date_format, $req['parameter_value'][$i]) !== FALSE) {
+                    $date = DateTime::createFromFormat($user_date_format, $req['parameter_value'][$i]);
+                    $date->setTime(00, 00, 00);
+                    $req['parameter_value'][$i] = $timedate->asDb($date);
+                }
+            }
+        }
+
         $intersected = array_intersect_key($req,$allowedKeys);
         return $intersected;
     }

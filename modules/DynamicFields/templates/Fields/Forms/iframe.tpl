@@ -68,7 +68,7 @@
 <tr id='fieldListHelper' {if !$vardef.gen}style="display:none"{/if}>
 	<td></td>
 	<td>{html_options name="flo" id="fieldListOptions" options=$fieldOpts}
-		<input type='button' class='button' value="Insert Field" onclick="
+		<input type='button' class='button' value="{sugar_translate module='DynamicFields' label='LBL_INSERT_FIELD'}" onclick="
 			YAHOO.util.Dom.get('default').value += '{ldelim}' + YAHOO.util.Dom.get('fieldListOptions').value + '{rdelim}'
 		"></td> 
 </tr>

@@ -61,7 +61,7 @@ class SubPanel
 	var $search_query='';
 	var $collections = array();
 
-	function SubPanel($module, $record_id, $subpanel_id, $subpanelDef, $layout_def_key='', $collections = array() )
+	function __construct($module, $record_id, $subpanel_id, $subpanelDef, $layout_def_key='', $collections = array() )
 	{
 		global $beanList, $beanFiles, $focus, $app_strings;
 
@@ -92,14 +92,26 @@ class SubPanel
 		$this->buildSearchQuery();
 		if (empty($subpanelDef)) {
 			//load the subpanel by name.
-			if (!class_exists('MyClass')) {
-				require_once 'include/SubPanel/SubPanelDefinitions.php' ;
-			}
+			require_once 'include/SubPanel/SubPanelDefinitions.php' ;
 			$panelsdef=new SubPanelDefinitions($result,$layout_def_key);
 			$subpanelDef=$panelsdef->load_subpanel($subpanel_id, false, false, $this->search_query,$collections);
 			$this->subpanel_defs=$subpanelDef;
 
 		}
+	}
+
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	function SubPanel($module, $record_id, $subpanel_id, $subpanelDef, $layout_def_key='', $collections = array() ){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct($module, $record_id, $subpanel_id, $subpanelDef, $layout_def_key, $collections);
 	}
 
 	function setTemplateFile($template_file)
@@ -384,11 +396,23 @@ class SubPanel
 
 	function buildSearchQuery()
 	{
+		$thisPanel =& $this->subpanel_defs;
+		$subpanel_defs = $thisPanel->_instance_properties;
+
 		require_once('include/SubPanel/SubPanelSearchForm.php');
 
-		$module = 'Meetings';
-
-		$seed = new Meeting();
+		if (isset($subpanel_defs['type']) && $subpanel_defs['type'] == 'collection') {
+			$arrayValues = array_values($subpanel_defs['collection_list']);
+			$collection = array_shift($arrayValues);
+			$module = $collection['module'];
+		} else {
+			$module = $subpanel_defs['module'];
+		}
+		if($module) {
+			$seed = BeanFactory::getBean($module);
+		} else {
+			$seed = new Meeting();
+		}
 
 		$_REQUEST['searchFormTab'] = 'basic_search';
 		$searchForm = new SubPanelSearchForm($seed, $module, $this);
@@ -400,10 +424,11 @@ class SubPanel
 
 		$where_clauses = $searchForm->generateSearchWhere(true, $seed->module_dir);
 
-		if (count($where_clauses) > 0 )$this->search_query = '('. implode(' ) AND ( ', $where_clauses) . ')';
+		if (count($where_clauses) > 0 ) {
+			$this->search_query = '('. implode(' ) AND ( ', $where_clauses) . ')';
+		}
 		$GLOBALS['log']->info("Subpanel Where Clause: $this->search_query");
 
-		return print_r($where_clauses,true);
 	}
 
 	function get_searchdefs($module)
@@ -422,11 +447,19 @@ class SubPanel
 
 	function getSearchForm()
 	{
+
+		$thisPanel =& $this->subpanel_defs;
+		$subpanel_defs = $thisPanel->_instance_properties;
 		require_once('include/SubPanel/SubPanelSearchForm.php');
 
-		$module = 'Meetings';
-
-		$seed = new Meeting();
+		if (isset($subpanel_defs['type']) && $subpanel_defs['type'] == 'collection') {
+			$arrayValues = array_values($subpanel_defs['collection_list']);
+			$collection = array_shift($arrayValues);
+			$module = $collection['module'];
+		} else {
+			$module = $subpanel_defs['module'];
+		}
+		$seed = BeanFactory::getBean($module);
 
 		$searchForm = new SubPanelSearchForm($seed, $module, $this);
 
