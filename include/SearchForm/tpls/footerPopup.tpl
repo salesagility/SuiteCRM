@@ -87,14 +87,31 @@
                         }
                     }
                 }, 100);
+
+                var switchSearchTabLatestActiveInterval = setInterval(function(){
+                    listViewSearchIcon.switchSearchTabLatestActive();
+                }, 100);
+
             });
 
         },
 
         onOpen: function() {},
 
+        latestSearchDialogType: 'basic',
+
         toggleSearchDialog: function(dialogType) {
+            if (dialogType == 'latest') {
+                dialogType = this.latestSearchDialogType;
+            }
+            this.latestSearchDialogType = dialogType;
             SUGAR.searchForm.searchFormSelect('{/literal}{$module}{literal}|'+dialogType+'_search','{/literal}{$module}{literal}|'+(dialogType=='advanced'?'basic':'advanced')+'_search');
+        },
+
+        switchSearchTabLatestActive: function() {
+            $('.searchTabHandler').removeClass('active');
+            $('.searchTabHandler.'+this.latestSearchDialogType).addClass('active');
+
         }
 
     };
