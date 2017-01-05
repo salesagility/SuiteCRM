@@ -864,7 +864,7 @@ a.listViewTdToolsS1 {
 }
 
 #actionLinkTop {
-  top: -1px;
+  top: 1px;
 }
 
 .action-link-top {
@@ -933,13 +933,13 @@ a.listViewTdToolsS1 {
 
 #select_actions_disabled_top {
   position: relative;
-  top: -1px;
+  top: 1px;
   padding: 4px 10px 4px 10px;
 }
 
 #select_actions_disabled_bottom {
   position: relative;
-  top: -1px;
+  top: 1px;
   padding: 4px 10px 4px 10px;
 }
 
@@ -2963,6 +2963,7 @@ listViewLinkButton {
 
 #actionLinkTop{
   position: relative;
+  margin-left: 8px;
 }
 
 .action-link-top{
@@ -2972,6 +2973,7 @@ listViewLinkButton {
 
 #actionLinkBottom {
   position: relative;
+  margin-left: 8px;
 }
 
 .action-link-bottom {
@@ -3020,18 +3022,20 @@ listViewLinkButton {
 
 #select_actions_disabled_top{
   padding: 4px 6px 4px 10px;
-  top: -1px;
+  top: 1px;
   position: relative;
   height: 27px;
   margin-right: 0px;
+  margin-left: 8px;
 }
 
 #select_actions_disabled_bottom {
   padding: 4px 6px 4px 10px;
-  top: -1px;
+  top: 1px;
   position: relative;
   height: 27px;
   margin-right: 0px;
+  margin-left: 8px;
 }
 
 #detail_header_action_menu > .sugar_action_button > ul.subnav {
@@ -3095,7 +3099,7 @@ ul.clickMenu {
 
 #selectLinkBottom, #selectLinkBottom .sugar_action_button {
   min-width: 32px;
-  margin-left: 8px;
+  margin-left: 4px;
 }
 
 .listViewLinkButton, .listViewLinkButton .selectActionsDisabled {
@@ -3105,7 +3109,7 @@ ul.clickMenu {
 
 #selectLinkTop, #selectLinkTop .selectActionsDisabled {
   min-width: 32px;
-  margin-left: 8px;
+  margin-left: 0px;
 }
 
 ul.clickMenu li ul.subnav {
@@ -3992,6 +3996,12 @@ div.qtip.qtip-default {
   }
 }
 
+@media (max-width: 460px) {
+  .modal-search .nav-tabs > li.active {
+    display: none;
+  }
+}
+
 .modal-search .submitButtonsAdvanced {
   float: right;
   padding-right: 30px;
@@ -4003,4 +4013,18 @@ div.qtip.qtip-default {
 
 .list .pagination-unique td table.paginationTable td.paginationActionButtons:first-child {
   padding-right: 60px;
+}
+
+.paginationActionButtons > ul {
+  float: left;
+  height: 30px;
+}
+
+.selectActionsDisabled {
+  float: left;
+  height: 30px;
+}
+
+.paginationActionButtons .selectActionsDisabled {
+  margin: 0 3px 3px 0;
 }
