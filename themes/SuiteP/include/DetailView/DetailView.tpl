@@ -125,11 +125,13 @@
     {*display panels*}
     <div class="panel-content">
         <div>&nbsp;</div>
+        {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
         {{counter name="panelCount" start=-1 print=false assign="panelCount"}}
         {{foreach name=section from=$sectionPanels key=label item=panel}}
         {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
         {* if tab *}
         {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true && $useTabs)}}
+        {{counter name="tabCount" print=false}}
         {*if tab skip*}
         {{else}}
         {* if panel display*}
@@ -151,7 +153,15 @@
         {{else}}
             {{assign var='panelId' value="LBL_AOP_CASE_UPDATES"}}
         {{/if}}
+        {{if $useTabs}}
+            {{if $tabCount == 0}}
+                <div class="panel panel-default tab-panel-{{$tabCount}}" style="display: block;">
+            {{else}}
+                <div class="panel panel-default tab-panel-{{$tabCount}}" style="display: none;">
+            {{/if}}
+        {{else}}
         <div class="panel panel-default">
+        {{/if}}
             <div class="panel-heading {{$panelHeadingCollapse}}">
                 <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#{{$panelId}}" aria-expanded="false">
                     <div class="col-xs-10 col-sm-11 col-md-11">
@@ -193,6 +203,9 @@
         var selectTab = function(tab) {
             $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').hide();
             $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').eq(tab).show().addClass('active').addClass('in');
+
+            $('#content div.panel-content div.panel').hide();
+            $('#content div.panel-content div.panel.tab-panel-' + tab).show();
         };
 
         var selectTabOnError = function(tab) {
