@@ -50,6 +50,8 @@
 
         searchInfo: {/literal}{$searchInfoJson}{literal},
 
+        selectedSavedSearch: {/literal}'{$savedSearchData.selected}'{literal},
+
         infoInit: function() {
 
             $(function () {
@@ -102,7 +104,12 @@
 
         toggleSearchDialog: function(dialogType) {
             if (dialogType == 'latest') {
-                dialogType = this.latestSearchDialogType;
+                if(this.selectedSavedSearch != '') {
+                    dialogType = 'advanced';
+                }
+                else {
+                    dialogType = this.latestSearchDialogType;
+                }
             }
             this.latestSearchDialogType = dialogType;
             SUGAR.searchForm.searchFormSelect('{/literal}{$module}{literal}|'+dialogType+'_search','{/literal}{$module}{literal}|'+(dialogType=='advanced'?'basic':'advanced')+'_search');
