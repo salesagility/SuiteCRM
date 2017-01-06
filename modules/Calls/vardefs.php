@@ -329,6 +329,14 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
                 'source' => 'non-db',
                 'vname' => 'LBL_CONTACTS',
             ),
+        'aos_contracts' =>
+            array (
+                'name' => 'aos_contracts',
+                'type' => 'link',
+                'relationship' => 'aos_contracts_calls',
+                'source'=>'non-db',
+                'vname'=>'LBL_CONTRACT',
+            ),
         'users' =>
             array(
                 'name' => 'users',

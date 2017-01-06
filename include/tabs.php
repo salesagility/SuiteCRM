@@ -48,12 +48,27 @@ class SugarWidgetTabs
  var $tabs;
  var $current_key;
 
- function SugarWidgetTabs(&$tabs,$current_key,$jscallback)
+ function __construct(&$tabs,$current_key,$jscallback)
  {
    $this->tabs = $tabs;
    $this->current_key = $current_key;
    $this->jscallback = $jscallback;
  }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function SugarWidgetTabs(&$tabs,$current_key,$jscallback){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($tabs, $current_key, $jscallback);
+    }
+
 
  function display()
  {
@@ -62,10 +77,10 @@ class SugarWidgetTabs
 <script>
 var keys = [ <?php
 $tabs_count = count($this->tabs);
-for($i=0; $i < $tabs_count;$i++) 
+for($i=0; $i < $tabs_count;$i++)
 {
  $tab = $this->tabs[$i];
- echo "\"".$tab['key']."\""; 
+ echo "\"".$tab['key']."\"";
  if ($tabs_count > ($i + 1))
  {
    echo ",";

@@ -142,22 +142,22 @@ $dictionary['OutboundEmail'] = array ('table' => 'outbound_email',
 			'reportable' => false,
 		),
 	),
-	'indices' => array (
-		array(
-			'name' => 'outbound_email_pk',
-			'type' =>'primary',
-			'fields' => array(
-				'id'
-			)
-		),
-		array(
-			'name' => 'oe_user_id_idx',
-			'type' =>'index',
-			'fields' => array(
-				'id',
-				'user_id',
-			)
-		),
-	), /* end indices */
+	//'indices' => array (
+	//array(
+	//	'name' => 'outbound_email_pk',
+	//	'type' =>'primary',
+	//	'fields' => array(
+	//		'id'
+	//	)
+	//),
+	//array(
+	//	'name' => 'oe_user_id_idx',
+	//	'type' =>'index',
+	//	'fields' => array(
+	//		//'id',
+	//		'user_id',
+	//	)
+	//),
+	//), /* end indices */
 );
 

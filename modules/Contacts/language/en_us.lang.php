@@ -256,6 +256,7 @@ $mod_strings = array(
     'LBL_NO_JOOMLA_URL' => 'No portal URL specified',
     'LBL_PORTAL_USER_TYPE' => 'Portal User Type',
     'LBL_PORTAL_ACCOUNT_DISABLED' => 'Account Disabled',
+    'LBL_JOOMLA_ACCOUNT_ID' => 'Joomla Account ID',
 );
 
 ?>

@@ -63,10 +63,25 @@ class ListViewData {
 	 *
 	 * @return ListViewData
 	 */
-	function ListViewData() {
+	public function __construct() {
 		$this->limitName = 'list_max_entries_per_page';
 		$this->db = DBManagerFactory::getInstance('listviews');
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function ListViewData(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 	/**
 	 * checks the request for the order by and if that is not set then it checks the session for it

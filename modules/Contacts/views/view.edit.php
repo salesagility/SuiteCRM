@@ -44,7 +44,7 @@ class ContactsViewEdit extends ViewEdit
 {
  	public function __construct()
  	{
- 		parent::ViewEdit();
+ 		parent::__construct();
  		$this->useForSubpanel = true;
  		$this->useModuleQuickCreateTemplate = true;
  	}
@@ -81,7 +81,7 @@ class ContactsViewEdit extends ViewEdit
            }
            else {
                $this->ev->fieldDefs['portal_password']['value'] = '';
-               $this->ev->fieldDefs['portal_password1']['value'] = '';               
+               $this->ev->fieldDefs['portal_password1']['value'] = '';
            }
 		   echo getVersionedScript('modules/Contacts/Contact.js');
 		   echo '<script language="javascript">';

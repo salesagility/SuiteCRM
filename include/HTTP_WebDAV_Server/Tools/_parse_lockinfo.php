@@ -22,12 +22,12 @@
 
 /**
  * helper class for parsing LOCK request bodies
- * 
+ *
  * @package HTTP_WebDAV_Server
  * @author Hartmut Holzgraefe <hholzgra@php.net>
  * @version 0.99.1dev
  */
-class _parse_lockinfo 
+class _parse_lockinfo
 {
 	/**
 	 * success state flag
@@ -68,21 +68,21 @@ class _parse_lockinfo
 	 * @access private
 	 */
 	var $collect_owner = false;
-	
+
 	/**
 	 * constructor
 	 *
 	 * @param  string  path of stream to read
 	 * @access public
 	 */
-    function _parse_lockinfo($path) 
+    function __construct($path)
 	{
 		// we assume success unless problems occur
 		$this->success = true;
 
 		// remember if any input was parsed
 		$had_input = false;
-		
+
 		// open stream
 		$f_in = fopen($path, "r");
 		if (!$f_in) {
@@ -111,7 +111,7 @@ class _parse_lockinfo
 				$had_input = true;
 				$this->success &= xml_parse($xml_parser, $line, false);
 			}
-		} 
+		}
 
 		// finish parsing
 		if($had_input) {
@@ -126,9 +126,9 @@ class _parse_lockinfo
 		xml_parser_free($xml_parser);
 
 		// close input stream
-		fclose($f_in);		
+		fclose($f_in);
 	}
-    
+
 
 	/**
 	 * tag start handler
@@ -139,7 +139,7 @@ class _parse_lockinfo
 	 * @return void
 	 * @access private
 	 */
-    function _startElement($parser, $name, $attrs) 
+    function _startElement($parser, $name, $attrs)
     {
 		// namespace handling
         if (strstr($name, " ")) {
@@ -148,8 +148,8 @@ class _parse_lockinfo
             $ns = "";
             $tag = $name;
         }
-		
-  
+
+
         if ($this->collect_owner) {
 			// everything within the <owner> tag needs to be collected
             $ns_short = "";
@@ -178,7 +178,7 @@ class _parse_lockinfo
             }
         }
     }
-	
+
 	/**
 	 * data handler
 	 *
@@ -187,7 +187,7 @@ class _parse_lockinfo
 	 * @return void
 	 * @access private
 	 */
-    function _data($parser, $data) 
+    function _data($parser, $data)
     {
 		// only the <owner> tag has data content
         if ($this->collect_owner) {
@@ -203,7 +203,7 @@ class _parse_lockinfo
 	 * @return void
 	 * @access private
 	 */
-    function _endElement($parser, $name) 
+    function _endElement($parser, $name)
     {
 		// namespace handling
 		if (strstr($name, " ")) {

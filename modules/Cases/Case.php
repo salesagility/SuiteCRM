@@ -111,8 +111,8 @@ class aCase extends Basic {
 									'meeting_id'=>'meetings', 'call_id'=>'calls', 'email_id'=>'emails',
 									);
 
-	function aCase() {
-		parent::SugarBean();
+    public function __construct() {
+		parent::__construct();
 		global $sugar_config;
 		if(!$sugar_config['require_accounts']){
 			unset($this->required_fields['account_name']);
@@ -122,6 +122,20 @@ class aCase extends Basic {
         foreach ($this->field_defs as $name => $field) {
             $this->field_name_map[$name] = $field;
         }
+	}
+
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	function aCase(){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct();
 	}
 
 	var $new_schema = true;
@@ -154,7 +168,7 @@ class aCase extends Basic {
                 }
 			}
 			require_once("modules/SecurityGroups/SecurityGroup.php");
-			$in_group = SecurityGroup::groupHasAccess('Accounts', $this->account_id, 'view'); 
+			$in_group = SecurityGroup::groupHasAccess('Accounts', $this->account_id, 'view');
         	/* END - SECURITY GROUPS */
 		}
 			/* BEGIN - SECURITY GROUPS */

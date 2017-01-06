@@ -25,12 +25,6 @@ if (!defined('sugarEntry') || !sugarEntry)
 
 class ProjectViewGanttChart extends SugarView {
 
-    //Constructor
-    public function __construct() {
-        parent::SugarView();
-    }
-
-
     public function display() {
 
         global $db, $mod_strings, $app_list_strings;
@@ -193,7 +187,7 @@ class ProjectViewGanttChart extends SugarView {
                         <span id="exportToPDFSpan">
                             <?php
                                 if(ACLController::checkAccess('Project', 'edit', true)){
-                                    echo '<button id="add_button" class="gantt_button">Add New Task</button>';
+                                    echo '<button id="add_button" class="gantt_button">'.$mod_strings["LBL_ADD_NEW_TASK"].'</button>';
                                     echo '<input id="is_editable" name="is_editable" type="hidden" value="1" >';
                                 }
                             ?>

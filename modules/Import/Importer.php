@@ -622,7 +622,7 @@ class Importer
     {
         global $current_user;
 
-        $firstrow    = sugar_unserialize(base64_decode($_REQUEST['firstrow']));
+        $firstrow    = json_decode(html_entity_decode($_REQUEST['firstrow']),true);
         $mappingValsArr = $this->importColumns;
         $mapping_file = new ImportMap();
         if ( isset($_REQUEST['has_header']) && $_REQUEST['has_header'] == 'on')

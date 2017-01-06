@@ -356,7 +356,7 @@ class MysqliManager extends MysqlManager
 			"MySQLi Version" => @mysqli_get_client_info(),
 			"MySQLi Host Info" => @mysqli_get_host_info($this->database),
 			"MySQLi Server Info" => @mysqli_get_server_info($this->database),
-			"MySQLi Client Encoding" =>  @mysqli_client_encoding($this->database),
+			"MySQLi Client Encoding" =>  @mysqli_character_set_name($this->database),
 			"MySQL Character Set Settings" => join(", ", $charset_str),
 		);
 	}

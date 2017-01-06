@@ -64,10 +64,12 @@ $mod_strings = array (
     'LBL_IMAGE_UPLOAD_FAIL' => 'ERROR: uploaded file exceeded the max filesize: max filesize: ',
     'LBL_AOS_PRODUCT_CATEGORYS_NAME' => 'Product Category',
     'LBL_AOS_PRODUCT_CATEGORY' => 'Product Category ID',
+    'LBL_AOS_PRODUCT_CATEGORIES' => 'Product Categories',
     'LBL_COST_USDOLLAR' => 'Cost (Default Currency)',
     'LBL_PRICE_USDOLLAR' => 'Price (Default Currency)',
     'LBL_FILE_URL' => 'File URL',
     'LBL_CUSTOMERS_PURCHASED_PRODUCTS_SUBPANEL_TITLE' => 'Purchases',
+    'LBL_PRODUCTS_PURCHASES' => 'Purchases',
     'LBL_AOS_QUOTE_NAME' => 'Quote',
     'LBL_ACCOUNT_NAME' => 'Account',
 );

@@ -62,7 +62,7 @@ class SubPanelTiles
 	var $hidden_tabs=array(); //consumer of this class can array of tabs that should be hidden. the tab name
 							//should be the array.
 
-	function SubPanelTiles(&$focus, $layout_def_key='', $layout_def_override = '')
+	function __construct(&$focus, $layout_def_key='', $layout_def_override = '')
 	{
 		$this->focus = $focus;
 		$this->id = $focus->id;
@@ -70,6 +70,21 @@ class SubPanelTiles
 		$this->layout_def_key = $layout_def_key;
 		$this->subpanel_definitions=new SubPanelDefinitions($focus, $layout_def_key, $layout_def_override);
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function SubPanelTiles(&$focus, $layout_def_key='', $layout_def_override = ''){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($focus, $layout_def_key, $layout_def_override);
+    }
+
 
 	/*
 	 * Return the current selected or requested subpanel tab
@@ -327,7 +342,7 @@ if(document.DetailView != null &&
 			{
 				$div_display = 'none';
 			}
-				
+
 			if(isset($div_cookies[$cookie_name])){
 				//If defaultSubPanelExpandCollapse is set, ignore the cookie that remembers whether the panel is expanded or collapsed.
 				//To be used with the above 'collapsed' metadata setting so they will always be set the same when the page is loaded.

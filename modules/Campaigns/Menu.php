@@ -52,21 +52,23 @@ if(ACLController::checkAccess('Campaigns', 'edit', true))
 		"index.php?module=Campaigns&action=WizardHome&return_module=Campaigns&return_action=index", 
 		$mod_strings['LNL_NEW_CAMPAIGN_WIZARD'],"CampaignsWizard"
 	);
+/*
 if(ACLController::checkAccess('Campaigns', 'edit', true))
 	$module_menu[]=	array(
 		"index.php?module=Campaigns&action=EditView&return_module=Campaigns&return_action=index", 
 		$mod_strings['LNK_NEW_CAMPAIGN'],"CreateCampaigns"
 	);
+*/
 if(ACLController::checkAccess('Campaigns', 'list', true))
 	$module_menu[]=	array(
 		"index.php?module=Campaigns&action=index&return_module=Campaigns&return_action=index", 
 		$mod_strings['LNK_CAMPAIGN_LIST'],"Campaigns"
 	);
-if(ACLController::checkAccess('Campaigns', 'list', true))
-	$module_menu[]= array(
-		"index.php?module=Campaigns&action=newsletterlist&return_module=Campaigns&return_action=index", 
-		$mod_strings['LBL_NEWSLETTERS'], "Newsletters"
-	);
+//if(ACLController::checkAccess('Campaigns', 'list', true))
+//	$module_menu[]= array(
+//		"index.php?module=Campaigns&action=newsletterlist&return_module=Campaigns&return_action=index",
+//		$mod_strings['LBL_NEWSLETTERS'], "Newsletters"
+//	);
 if(ACLController::checkAccess('EmailTemplates', 'edit', true))
 	$module_menu[] = array(
 		"index.php?module=EmailTemplates&action=EditView&return_module=EmailTemplates&return_action=DetailView",

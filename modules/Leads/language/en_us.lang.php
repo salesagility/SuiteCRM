@@ -55,7 +55,7 @@ $mod_strings = array(
     'db_email2' => 'LBL_LIST_EMAIL_ADDRESS',
 
     //END DON'T CONVERT
-    'ERR_DELETE_RECORD' => 'en_us A record number must be specified to delete the lead.',
+    'ERR_DELETE_RECORD' => 'A record number must be specified to delete the lead.',
     'LBL_ACCOUNT_DESCRIPTION' => 'Account Description',
     'LBL_ACCOUNT_ID' => 'Account ID',
     'LBL_ACCOUNT_NAME' => 'Account Name:',

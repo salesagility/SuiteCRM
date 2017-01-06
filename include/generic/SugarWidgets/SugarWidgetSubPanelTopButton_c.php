@@ -56,7 +56,7 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
 
 	/** Take the keys for the strings and look them up.  Module is literal, the rest are label keys
 	*/
-	function SugarWidgetSubPanelTopButton($module='', $title='', $access_key='', $form_value='')
+	function __construct($module='', $title='', $access_key='', $form_value='')
 	{
 		global $app_strings;
 
@@ -251,9 +251,10 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
             $form = 'form' . $relationship_name;
             $button = '<form action="index.php" method="post" name="form" id="' . $form . "\">\n";
             foreach($formValues as $key => $value) {
-                $button .= "<input type='hidden' name='" . $key . "' value='" . $value . "' />\n";
+                if (empty($value->defs)) {
+                    $button .= "<input type='hidden' name='" . $key . "' value='" . $value . "' />\n";
+                }
             }
-
             // fill in additional form fields for all but action
             foreach($additionalFormFields as $key => $value) {
                 if($key != 'action') {

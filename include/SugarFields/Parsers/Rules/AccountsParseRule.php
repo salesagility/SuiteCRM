@@ -43,15 +43,30 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class AccountsParseRule extends BaseRule {
 
-function AccountsParseRule() {
-	
+function __construct() {
+
 }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function AccountsParseRule(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 function preParse($panels, $view) {
     if($view == 'DetailView') {
 		foreach($panels as $name=>$panel) {
 		   	foreach($panel as $rowCount=>$row) {
-		   	  	 foreach($row as $key=>$column) {  	
+		   	  	 foreach($row as $key=>$column) {
 		   	  	     if($this->matches($column, '/^parent_id$/')) {
 		   	  	 	 	$panels[$name][$rowCount][$key] = 'parent_name';
    		   	  	 	 } else if($this->matches($column, '/_address_(street|country)$/') && is_array($column) && isset($column['customCode'])) {
@@ -60,11 +75,11 @@ function preParse($panels, $view) {
 			   	  	 	 	$panels[$name][$rowCount][$key] = $column;
 		   	  	 	 	}
 		   	  	 	 }
-		   	  	 } //foreach 
+		   	  	 } //foreach
 		   	} //foreach
 		} //foreach
     }
-	return $panels;	
+	return $panels;
 }
 
 }

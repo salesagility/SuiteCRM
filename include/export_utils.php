@@ -1,11 +1,12 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,7 +37,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
 /*********************************************************************************
 
@@ -185,7 +186,13 @@ function export($type, $records = null, $members = false, $sample=false) {
         //Remove fields that are only used for logic
         if($members && (in_array($dbname, $remove_from_members)))
             continue;
-        
+
+        //If labels should not be exportable skip them
+        if (isset($focus->field_name_map[$key])  && isset( $focus->field_name_map[$key]['exportable'])
+            && $focus->field_name_map[$key]['exportable'] === false) {
+            continue;
+        }
+
         //default to the db name of label does not exist
         $field_labels[$key] = translateForExport($dbname,$focus);
     }
@@ -241,6 +248,12 @@ function export($type, $records = null, $members = false, $sample=false) {
 		{
             //getting content values depending on their types
             $fieldNameMapKey = $fields_array[$key];
+
+            //Dont export fields that have been explicitly marked not to be exportable
+            if (isset($focus->field_name_map[$fieldNameMapKey])  && isset($focus->field_name_map[$fieldNameMapKey]['exportable']) &&
+                $focus->field_name_map[$fieldNameMapKey]['exportable'] === false) {
+                continue;
+            }
 
             if (isset($focus->field_name_map[$fieldNameMapKey])  && $focus->field_name_map[$fieldNameMapKey]['type'])
             {
@@ -340,11 +353,93 @@ function export($type, $records = null, $members = false, $sample=false) {
             }
         }
 
+        $customRelateFields = array();
+        $selects = array();
+        foreach($records as $record) {
+            foreach($record as $recordKey => $recordValue) {
+                if(preg_match('/{relate\s+from=""([^"]+)""\s+to=""([^"]+)""}/', $recordValue, $matches)) {
+                    $marker = $matches[0];
+                    $relatedValue = '';
+
+                    $splits = explode('.', $matches[1]);
+                    $currentModule = $splits[0];
+                    $currentField = $splits[1];
+                    $currentBean = BeanFactory::getBean($currentModule);
+                    $currentTable = $currentBean->table_name;
+
+                    $splits = explode('.', $matches[2]);
+                    $relatedModule = $splits[0];
+                    $relatedField = $splits[1];
+                    $relatedBean = BeanFactory::getBean($relatedModule);
+                    $relatedTable = $relatedBean->table_name;
+
+                    $relatedLabel = "$relatedTable.name AS related_label, NULL AS related_label1";
+                    if(isset($relatedBean->field_defs['name']['source']) && $relatedBean->field_defs['name']['source'] == 'non-db') {
+                        //$relatedLabel = 'NULL AS related_label, NULL AS related_label1';
+                        if(
+                            !isset($relatedBean->field_defs['first_name']['source']) || $relatedBean->field_defs['first_name']['source'] != 'non-db' &&
+                            !isset($relatedBean->field_defs['last_name']['source']) || $relatedBean->field_defs['last_name']['source'] != 'non-db'
+                        ) {
+                            $relatedLabel = "$relatedTable.last_name AS related_label, $relatedTable.first_name AS related_label1";
+                        }
+                    }
+
+                    $relatedTableCustomJoin = '';
+                    $relatedFieldSelect = "NULL AS related_value";
+                    if(!isset($existsTables["{$relatedTable}_cstm"])) {
+                        $existsTables["{$relatedTable}_cstm"] = $db->tableExists("{$relatedTable}_cstm");
+                    }
+                    if($existsTables["{$relatedTable}_cstm"]) {
+                        $relatedTableCustomJoin = "
+                        JOIN {$relatedTable}_cstm ON {$relatedTable}_cstm.id_c = {$currentTable}_cstm.$relatedField
+                        ";
+                        $relatedFieldSelect = "{$currentTable}_cstm.$relatedField AS related_value";
+                    }
+
+                    $relatedTableJoin = "LEFT JOIN $relatedTable ON $relatedTable.id = {$currentTable}_cstm.id_c";
+                    if(isset($currentBean->field_defs[$relatedField])) {
+                        $relatedTableJoin = "LEFT JOIN $relatedTable ON $relatedTable.id = {$currentTable}_cstm.$relatedField";
+                    }
+
+                    //-- $relatedTable.id AS related_id,
+                    //-- {$currentTable}_cstm.id_c AS current_id_c,
+                    //-- {$relatedTable}_cstm.id_c AS related_id_c,
+                    $selects[] = "(SELECT $currentTable.id AS current_id,'$currentModule' AS current_module,'$currentField' AS current_field,'$relatedModule' AS related_module,'$relatedField' AS related_field,$relatedFieldSelect,$relatedLabel FROM $currentTable JOIN {$currentTable}_cstm ON {$currentTable}_cstm.id_c=$currentTable.id $relatedTableCustomJoin $relatedTableJoin WHERE $currentTable.id='{$record['id']}')";
+                }
+            }
+        }
+
+        $selects = array_unique($selects);
+
+
+        // grab custom related fields information
+
+        // query max length optimization, measured by mssql FreeTDS connection too
+        $queryMaxLength = 620000;
+        $query = '';
+        $i = 0;
+        $selectsCount = count($selects)-1;
+        foreach ($selects as $select) {
+            $queryTemp = $query.($i==0 ? $select : " UNION $select");
+            if ($i==$selectsCount || strlen($queryTemp) > $queryMaxLength) {
+                $result = $db->query($query, 'export error on custom related type: '.$query);
+                while ($val = $db->fetchByAssoc($result, false)) {
+                    $customRelateFields[$val['current_module']][$val['current_id']][$val['related_module']][$val['related_field']] = trim($val['related_label'].' '.$val['related_label1']);
+                }
+                $query = $select;
+            } else {
+                $query = $queryTemp;
+            }
+            $i++;
+        }
+
+
         foreach($records as $record)
         {
             $line = implode("\"" . getDelimiter() . "\"", $record);
             $line = "\"" . $line;
             $line .= "\"\r\n";
+            $line = parseRelateFields($line, $record, $customRelateFields);
             $content .= $line;
         }
 
@@ -354,6 +449,40 @@ function export($type, $records = null, $members = false, $sample=false) {
 
 }
 
+/**
+ * Parse custom related fields
+ * @param $line string CSV line
+ * @param $record array of current line
+ * @return mixed string CSV line
+ */
+function parseRelateFields($line, $record, $customRelateFields)
+{
+    while (preg_match('/{relate\s+from=""([^"]+)""\s+to=""([^"]+)""}/', $line, $matches)) {
+        $marker = $matches[0];
+        $relatedValue = '';
+
+        $splits = explode('.', $matches[1]);
+        $currentModule = $splits[0];
+        $currentField = $splits[1];
+
+        $splits = explode('.', $matches[2]);
+        $relatedModule = $splits[0];
+        $relatedField = $splits[1];
+
+        if ($currentModule != $record['related_type']) {
+            $GLOBALS['log']->debug('incorrect related type in export');
+        } else {
+            if (isset($customRelateFields[$currentModule][$record['id']][$relatedModule][$relatedField])) {
+                $relatedValue = $customRelateFields[$currentModule][$record['id']][$relatedModule][$relatedField];
+            } else {
+                $relatedValue = '';
+            }
+        }
+
+        $line = str_replace($marker, $relatedValue, $line);
+    }
+    return $line;
+}
 
 function generateSearchWhere($module, $query) {//this function is similar with function prepareSearchForm() in view.list.php
     $seed = loadBean($module);
@@ -424,7 +553,7 @@ function generateSearchWhere($module, $query) {//this function is similar with f
         $searchForm = new SearchForm($seed, $module);
         $searchForm->setup($searchdefs, $searchFields, 'SearchFormGeneric.tpl');
     }
-    $searchForm->populateFromArray(sugar_unserialize(base64_decode($query)));
+    $searchForm->populateFromArray(json_decode(html_entity_decode($query),true));
     $where_clauses = $searchForm->generateSearchWhere(true, $module);
     if (count($where_clauses) > 0 )$where = '('. implode(' ) AND ( ', $where_clauses) . ')';
         $GLOBALS['log']->info("Export Where Clause: {$where}");
