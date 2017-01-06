@@ -11,7 +11,7 @@ class UtilityLib
     {
         require_once 'suitecrm_version.php';
 
-        return array('suite_version' => $suitecrm_version);
+        return ['suite_version' => $suitecrm_version];
     }
 
     /**
@@ -27,12 +27,12 @@ class UtilityLib
         $username = $postData['username'];
         $password = $postData['password'];
 
-        if ($authController->login($username, $password,array('passwordEncrypted' => false))) {
+        if ($authController->login($username, $password, ['passwordEncrypted' => false])) {
             $usr = new \user();
 
-            return array('loginApproved' => true, 'userId' => $usr->retrieve_user_id($username));
+            return ['loginApproved' => true, 'userId' => $usr->retrieve_user_id($username)];
         } else {
-            return array('loginApproved' => false, 'userId' => null);
+            return ['loginApproved' => false, 'userId' => null];
         }
     }
 }
