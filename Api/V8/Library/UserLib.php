@@ -9,33 +9,33 @@ class UserLib
         global $beanList;
         $maxCount = 10;
 
-        $activityModules = array(
-            'Meetings' => array(
+        $activityModules = [
+            'Meetings' => [
                 'date_field' => 'date_start',
                 'status' => 'Planned',
                 'status_field' => 'status',
                 'status_opp' => '=',
-            ),
-            'Calls' => array(
+            ],
+            'Calls' => [
                 'date_field' => 'date_start',
                 'status' => 'Planned',
                 'status_field' => 'status',
                 'status_opp' => '=',
-            ),
-            'Tasks' => array(
+            ],
+            'Tasks' => [
                 'date_field' => 'date_due',
                 'status' => 'Not Started',
                 'status_field' => 'status',
                 'status_opp' => '=',
-            ),
-            'Opportunities' => array(
+            ],
+            'Opportunities' => [
                 'date_field' => 'date_closed',
-                'status' => array('Closed Won', 'Closed Lost'),
+                'status' => ['Closed Won', 'Closed Lost'],
                 'status_field' => 'sales_stage',
                 'status_opp' => '!=',
-            ),
-        );
-        $results = array();
+            ],
+        ];
+        $results = [];
         foreach ($activityModules as $module => $meta) {
             if (!self::check_modules_access($user, $module, 'read')) {
                 continue;
@@ -52,9 +52,10 @@ class UserLib
                 /* No limit */
                 -1, /* Max 10 items */
                 10, /*No Deleted */
-                0);
+                0
+            );
 
-            $result = array();
+            $result = [];
 
             if (isset($response['list'])) {
                 $result = $this->format_upcoming_activities_entries($response['list'], $meta['date_field']);
@@ -64,7 +65,7 @@ class UserLib
         }
 
         //Sort the result list by the date due flag in ascending order
-        usort($results, array($this, 'cmp_datedue'));
+        usort($results, [$this, 'cmp_datedue']);
 
         //Only return a subset of the results.
         $results = array_slice($results, 0, $maxCount);
@@ -74,16 +75,18 @@ class UserLib
 
     public function generateUpcomingActivitiesWhereClause($seed, $meta, $user)
     {
-        $query = array();
+        $query = [];
         $query_date = \TimeDate::getInstance()->nowDb();
         $query[] = " {$seed->table_name}.{$meta['date_field']} > '$query_date'"; //Add date filter
         $query[] = "{$seed->table_name}.assigned_user_id = '{$user->id}' "; //Add assigned user filter
         if (is_array($meta['status_field'])) {
             foreach ($meta['status'] as $field) {
-                $query[] = "{$seed->table_name}.{$meta['status_field']} {$meta['status_opp']} '".$GLOBALS['db']->quote($field)."' ";
+                $query[] = "{$seed->table_name}.{$meta['status_field']} {$meta['status_opp']} '"
+                    .$GLOBALS['db']->quote($field)."' ";
             }
         } else {
-            $query[] = "{$seed->table_name}.{$meta['status_field']} {$meta['status_opp']} '".$GLOBALS['db']->quote($meta['status'])."' ";
+            $query[] = "{$seed->table_name}.{$meta['status_field']} {$meta['status_opp']} '"
+                .$GLOBALS['db']->quote($meta['status'])."' ";
         }
 
         return implode(' AND ', $query);
@@ -100,10 +103,13 @@ class UserLib
                     return true;
                 } // if
                 return false;
-            } elseif ($action == 'write' && strcmp(strtolower($module_name),
-                    'users') == 0 && !$user->isAdminForModule($module_name)
+            } elseif ($action == 'write' && strcmp(
+                strtolower($module_name),
+                'users'
+            ) == 0 && !$user->isAdminForModule($module_name)
             ) {
-                //rrs bug: 46000 - If the client is trying to write to the Users module and is not an admin then we need to stop them
+                // rrs bug: 46000
+                // If the client is trying to write to the Users module and is not an admin then we need to stop them
                 return false;
             }
 
@@ -142,14 +148,14 @@ class UserLib
 
     public function format_upcoming_activities_entries($list, $date_field)
     {
-        $results = array();
+        $results = [];
         foreach ($list as $bean) {
-            $results[] = array(
+            $results[] = [
                 'id' => $bean->id,
                 'module' => $bean->module_dir,
                 'date_due' => $bean->$date_field,
                 'summary' => $bean->get_summary_text(),
-            );
+            ];
         }
 
         return $results;

@@ -15,7 +15,7 @@ class ModuleLib
         if (empty($filter)) {
             $filter = 'all';
         }
-        $modules = array();
+        $modules = [];
         $availModules = $this->get_user_module_list($user);
         switch ($filter) {
             case 'default':
@@ -25,7 +25,7 @@ class ModuleLib
             default:
                 $modules = $this->getModulesFromList(array_flip($availModules), $availModules);
         }
-        $ret = array();
+        $ret = [];
         $ret['data'] = $modules;
 
         return $ret;
@@ -81,6 +81,24 @@ class ModuleLib
     }
 
     /**
+     * @param String $filterString
+     * @return array
+     */
+    public function parseFilter($filterString)
+    {
+        $filter = [];
+        if (!empty($filterString)) {
+            $a = explode(',', $filterString);
+            foreach ($a as $b) {
+                $c = explode('=', $b);
+                $filter[$c[0]] = $c[1];
+            }
+        }
+
+        return $filter;
+    }
+
+    /**
      * @param $moduleType
      * @param $data
      *
@@ -121,7 +139,7 @@ class ModuleLib
     public function getModuleLayout($modules, $views, $types, $hash)
     {
         global $beanList, $beanFiles;
-        $results = array();
+        $results = [];
         foreach ($modules as $module_name) {
             $class_name = $beanList[$module_name];
             require_once $beanFiles[$class_name];
@@ -165,13 +183,13 @@ class ModuleLib
     public function getModulesFromList($list, $availModules)
     {
         global $app_list_strings;
-        $enabled_modules = array();
+        $enabled_modules = [];
         $availModulesKey = array_flip($availModules);
         foreach ($list as $key => $value) {
             if (isset($availModulesKey[$key])) {
                 $label = !empty($app_list_strings['moduleList'][$key]) ? $app_list_strings['moduleList'][$key] : '';
                 $acl = $this->checkModuleRoleAccess($key);
-                $enabled_modules[] = array('module_key' => $key, 'module_label' => $label, 'acls' => $acl);
+                $enabled_modules[] = ['module_key' => $key, 'module_label' => $label, 'acls' => $acl];
             }
         }
 
@@ -194,11 +212,11 @@ class ModuleLib
      */
     public function checkModuleRoleAccess($module)
     {
-        $results = array();
-        $actions = array('edit', 'delete', 'list', 'view', 'import', 'export');
+        $results = [];
+        $actions = ['edit', 'delete', 'list', 'view', 'import', 'export'];
         foreach ($actions as $action) {
             $access = \ACLController::checkAccess($module, $action, true);
-            $results[] = array('action' => $action, 'access' => $access);
+            $results[] = ['action' => $action, 'access' => $access];
         }
 
         return $results;
@@ -211,12 +229,12 @@ class ModuleLib
      *
      * @return array
      */
-    public function get_module_view_defs($module_name, $view, $type='')
+    public function get_module_view_defs($module_name, $type, $view)
     {
         global $viewdefs, $listViewDefs;
         require_once 'include/MVC/View/SugarView.php';
         $metadataFile = null;
-        $results = array();
+        $results = [];
         $view = strtolower($view);
         switch (strtolower($type)) {
             case 'default':
@@ -224,7 +242,7 @@ class ModuleLib
                 if ($view == 'subpanel') {
                     $results = $this->get_subpanel_defs($module_name, $type);
                 } else {
-                    $v = new \SugarView(null, array());
+                    $v = new \SugarView(null, []);
                     $v->module = $module_name;
                     $v->type = $view;
                     $fullView = ucfirst($view).'View';
@@ -282,7 +300,7 @@ class ModuleLib
     {
         global $current_language;
 
-        $results = array();
+        $results = [];
         if (!empty($modules)) {
             foreach ($modules as $mod) {
                 if (strtolower($mod) == 'app_strings') {
@@ -319,7 +337,7 @@ class ModuleLib
     {
         $tracker = new \Tracker();
         $entryList = $tracker->get_recently_viewed($userId, $module);
-        $module_results = array();
+        $module_results = [];
         foreach ($entryList as $entry) {
             $module_results[] = $entry;
         }
@@ -336,7 +354,7 @@ class ModuleLib
     public function get_subpanel_defs($module, $type)
     {
         global $beanList, $layout_defs;
-        $results = array();
+        $results = [];
         switch ($type) {
             case 'default':
             default:
@@ -379,12 +397,12 @@ class ModuleLib
         $result = $this->get_field_list($value, $fields, $translate);
         $tableName = $value->getTableName();
 
-        return array(
+        return [
             'module_name' => $module,
             'table_name' => $tableName,
             'module_fields' => $result['module_fields'],
             'link_fields' => $result['link_fields'],
-        );
+        ];
     }
 
     /**
@@ -396,22 +414,30 @@ class ModuleLib
      */
     public function get_field_list($value, $fields, $translate = true)
     {
-        $module_fields = array();
-        $link_fields = array();
+        $module_fields = [];
+        $link_fields = [];
         if (!empty($value->field_defs)) {
             foreach ($value->field_defs as $var) {
                 if (!empty($fields) && !in_array($var['name'], $fields)) {
                     continue;
                 }
-                if (isset($var['source']) && ($var['source'] != 'db' && $var['source'] != 'non-db' && $var['source'] != 'custom_fields') && $var['name'] != 'email1' && $var['name'] != 'email2' && (!isset($var['type']) || $var['type'] != 'relate')) {
+                if (isset($var['source']) && ($var['source'] != 'db'
+                    && $var['source'] != 'non-db'
+                    && $var['source'] != 'custom_fields')
+                    && $var['name'] != 'email1'
+                    && $var['name'] != 'email2'
+                    && (!isset($var['type']) || $var['type'] != 'relate')
+                ) {
                     continue;
                 }
-                if ((isset($var['source']) && $var['source'] == 'non_db') && (isset($var['type']) && $var['type'] != 'link')) {
+                if ((isset($var['source']) && $var['source'] == 'non_db')
+                    && (isset($var['type']) && $var['type'] != 'link')
+                ) {
                     continue;
                 }
                 $required = 0;
-                $options_dom = array();
-                $options_ret = array();
+                $options_dom = [];
+                $options_ret = [];
                 // Apparently the only purpose of this check is to make sure we only return fields
                 //   when we've read a record.  Otherwise this function is identical to get_module_field_list
                 if (isset($var['required']) && ($var['required'] || $var['required'] == 'true')) {
@@ -425,7 +451,7 @@ class ModuleLib
                 if (isset($var['options'])) {
                     $options_dom = translate($var['options'], $value->module_dir);
                     if (!is_array($options_dom)) {
-                        $options_dom = array();
+                        $options_dom = [];
                     }
                     foreach ($options_dom as $key => $oneOption) {
                         $options_ret[$key] = get_name_value($key, $oneOption);
@@ -436,7 +462,7 @@ class ModuleLib
                     $options_ret['type'] = get_name_value('type', $var['dbType']);
                 }
 
-                $entry = array();
+                $entry = [];
                 $entry['name'] = $var['name'];
                 $entry['type'] = $var['type'];
                 $entry['group'] = isset($var['group']) ? $var['group'] : '';
@@ -449,8 +475,10 @@ class ModuleLib
                     $link_fields[$var['name']] = $entry;
                 } else {
                     if ($translate) {
-                        $entry['label'] = isset($var['vname']) ? translate($var['vname'],
-                            $value->module_dir) : $var['name'];
+                        $entry['label'] = isset($var['vname']) ? translate(
+                            $var['vname'],
+                            $value->module_dir
+                        ) : $var['name'];
                     } else {
                         $entry['label'] = isset($var['vname']) ? $var['vname'] : $var['name'];
                     }
@@ -471,9 +499,11 @@ class ModuleLib
         } //if
 
         if ($value->module_dir == 'Meetings' || $value->module_dir == 'Calls') {
-            if (isset($module_fields['duration_minutes']) && isset($GLOBALS['app_list_strings']['duration_intervals'])) {
+            if (isset($module_fields['duration_minutes'])
+                && isset($GLOBALS['app_list_strings']['duration_intervals'])
+            ) {
                 $options_dom = $GLOBALS['app_list_strings']['duration_intervals'];
-                $options_ret = array();
+                $options_ret = [];
                 foreach ($options_dom as $key => $oneOption) {
                     $options_ret[$key] = get_name_value($key, $oneOption);
                 }
@@ -486,9 +516,9 @@ class ModuleLib
             require_once 'modules/Releases/Release.php';
             $seedRelease = new \Release();
             $options = $seedRelease->get_releases(true, 'Active');
-            $options_ret = array();
+            $options_ret = [];
             foreach ($options as $name => $value) {
-                $options_ret[] = array('name' => $name, 'value' => $value);
+                $options_ret[] = ['name' => $name, 'value' => $value];
             }
             if (isset($module_fields['fixed_in_release'])) {
                 $module_fields['fixed_in_release']['type'] = 'enum';
@@ -525,7 +555,7 @@ class ModuleLib
             $module_fields['created_by_name']['name'] = 'created_by_name';
         }
 
-        return array('module_fields' => $module_fields, 'link_fields' => $link_fields);
+        return ['module_fields' => $module_fields, 'link_fields' => $link_fields];
     }
 
     /**
@@ -546,15 +576,15 @@ class ModuleLib
             $file = '';
         }
 
-        return array(
-            'note_attachment' => array(
+        return [
+            'note_attachment' => [
                 'id' => $id,
                 'filename' => $note->filename,
                 'file' => $file,
                 'related_module_id' => $note->parent_id,
                 'related_module_name' => $note->parent_type,
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -567,7 +597,7 @@ class ModuleLib
     {
         global $beanList, $beanFiles;
 
-        $list = array();
+        $list = [];
 
         $in = "'".implode("', '", $id_list)."'";
 
@@ -593,18 +623,18 @@ class ModuleLib
             $list[] = $row['id'];
         }
 
-        $return_list = array();
+        $return_list = [];
 
         foreach ($list as $id) {
             $related_class_name = $beanList[$related_module];
             $related_mod = new $related_class_name();
             $related_mod->retrieve($id);
 
-            $return_list[] = array(
+            $return_list[] = [
                 'id' => $id,
                 'date_modified' => $related_mod->date_modified,
                 'deleted' => $related_mod->deleted,
-            );
+            ];
         }
 
         return $return_list;
@@ -624,15 +654,21 @@ class ModuleLib
         $count = 0;
         $failed = 0;
 
-        if ($this->new_handle_set_relationship($moduleName, $moduleId, $linkFieldName, $relatedIds, $nameValues,
-            false)
+        if ($this->new_handle_set_relationship(
+            $moduleName,
+            $moduleId,
+            $linkFieldName,
+            $relatedIds,
+            $nameValues,
+            false
+        )
         ) {
             ++$count;
         } else {
             ++$failed;
         } // else
 
-        return array('created' => $count, 'failed' => $failed);
+        return ['created' => $count, 'failed' => $failed];
     }
 
     /**
@@ -649,15 +685,21 @@ class ModuleLib
         $deleted = 0;
         $failed = 0;
 
-        if ($this->new_handle_set_relationship($moduleName, $moduleId, $linkFieldName, $relatedIds, $nameValues,
-            true)
+        if ($this->new_handle_set_relationship(
+            $moduleName,
+            $moduleId,
+            $linkFieldName,
+            $relatedIds,
+            $nameValues,
+            true
+        )
         ) {
             ++$deleted;
         } else {
             ++$failed;
         } // else
 
-        return array('deleted' => $deleted, 'failed' => $failed);
+        return ['deleted' => $deleted, 'failed' => $failed];
     }
 
     /**
@@ -675,8 +717,14 @@ class ModuleLib
         $failed = 0;
         $counter = 0;
         foreach ($moduleNames as $moduleName) {
-            if ($this->new_handle_set_relationship($moduleName, $moduleIds[$counter], $linkFieldNames[$counter],
-                $relatedIds[$counter], $nameValues[$counter], 0)
+            if ($this->new_handle_set_relationship(
+                $moduleName,
+                $moduleIds[$counter],
+                $linkFieldNames[$counter],
+                $relatedIds[$counter],
+                $nameValues[$counter],
+                0
+            )
             ) {
                 ++$count;
             } else {
@@ -685,7 +733,7 @@ class ModuleLib
             ++$counter;
         }
 
-        return array('created' => $count, 'failed' => $failed);
+        return ['created' => $count, 'failed' => $failed];
     }
 
     /**
@@ -703,8 +751,14 @@ class ModuleLib
         $counter = 0;
         $deleted = 0;
         foreach ($moduleNames as $moduleName) {
-            if ($this->new_handle_set_relationship($moduleName, $moduleIds[$counter], $linkFieldNames[$counter],
-                $relatedIds[$counter], $nameValues[$counter], 1)
+            if ($this->new_handle_set_relationship(
+                $moduleName,
+                $moduleIds[$counter],
+                $linkFieldNames[$counter],
+                $relatedIds[$counter],
+                $nameValues[$counter],
+                1
+            )
             ) {
                 ++$deleted;
             } else {
@@ -713,7 +767,7 @@ class ModuleLib
             ++$counter;
         }
 
-        return array('deleted' => $deleted, 'failed' => $failed);
+        return ['deleted' => $deleted, 'failed' => $failed];
     }
 
     /**
@@ -721,7 +775,7 @@ class ModuleLib
      * @param $from_module
      * @param $get_id
      *
-     * @return array|bool
+     * @return array|boolean
      */
     public function get_linked_records($get_module, $from_module, $get_id)
     {
@@ -744,7 +798,7 @@ class ModuleLib
         //bug: 38065
         if ($get_module == 'EmailAddresses') {
             $emails = $from_mod->emailAddress->addresses;
-            $email_arr = array();
+            $email_arr = [];
             foreach ($emails as $email) {
                 $email_arr[] = $email['email_address_id'];
             }
@@ -760,7 +814,7 @@ class ModuleLib
      * @param $module_1
      * @param $module_2
      *
-     * @return bool
+     * @return boolean
      */
     public function get_module_link_field($module_1, $module_2)
     {
@@ -801,7 +855,7 @@ class ModuleLib
      * @param $name_value_list
      * @param $delete
      *
-     * @return bool
+     * @return boolean
      */
     public function new_handle_set_relationship(
         $module_name,
@@ -826,7 +880,7 @@ class ModuleLib
 
         if ($mod->load_relationship($link_field_name)) {
             if (!$delete) {
-                $name_value_pair = array();
+                $name_value_pair = [];
                 if (!empty($name_value_list)) {
                     $relFields = $mod->$link_field_name->getRelatedFields();
                     if (!empty($relFields)) {

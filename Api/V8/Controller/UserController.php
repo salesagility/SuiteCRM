@@ -2,8 +2,8 @@
 
 namespace SuiteCRM\Api\V8\Controller;
 
-use Slim\Http\Request as Request;
-use Slim\Http\Response as Response;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use SuiteCRM\Api\Core\Api;
 use SuiteCRM\Api\V8\Library\UserLib;
 
@@ -12,11 +12,11 @@ class UserController extends Api
     /**
      * @param Request  $req
      * @param Response $res
-     * @param $args
+     * @param array $args
      *
      * @return Response
      */
-    public function getUpcomingActivities(Request $req, Response $res, $args)
+    public function getUpcomingActivities(Request $req, Response $res, array $args)
     {
         global $container;
         $lib = new UserLib();

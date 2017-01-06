@@ -2,8 +2,8 @@
 
 namespace SuiteCRM\Api\V8\Controller;
 
-use Slim\Http\Request as Request;
-use Slim\Http\Response as Response;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use SuiteCRM\Api\Core\Api;
 
 class ActionController extends Api
@@ -11,11 +11,11 @@ class ActionController extends Api
     /**
      * @param Request  $req
      * @param Response $res
-     * @param $args
+     * @param array $args
      *
      * @return Response
      */
-    public function performAction(Request $req, Response $res, $args)
+    public function performAction(Request $req, Response $res, array $args)
     {
         global $moduleList;
         $module = $args['module'];
@@ -38,7 +38,9 @@ class ActionController extends Api
 
                 return $this->generateResponse($res, 200, null, 'Success');
             } else {
-                $GLOBALS['log']->info(__FILE__.': '.__FUNCTION__.' called but action not matched.  Module = '.$module.' action '.$action);
+                $GLOBALS['log']->info(
+                    __FILE__.': '.__FUNCTION__.' called but action not matched.  Module = '.$module.' action '.$action
+                );
 
                 return $this->generateResponse($res, 404, 'Non-matched item', 'Failure');
             }

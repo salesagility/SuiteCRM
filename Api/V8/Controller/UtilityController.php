@@ -2,64 +2,24 @@
 
 namespace SuiteCRM\Api\V8\Controller;
 
-use AuthenticationController;
-use Firebase\JWT\JWT;
-use Slim\Http\Request as Request;
-use Slim\Http\Cookies as Cookies;
-use Slim\Http\Response as Response;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use SuiteCRM\Api\Core\Api;
 use SuiteCRM\Api\V8\Library\UtilityLib;
-use User;
 
 class UtilityController extends Api
 {
     //This is the millisecond time that the token is valid for
     //TODO decide appropriate timeout value
-    public $jwtValidTime = 86400;
+    const JWT_VALID_TIME = 86400;
 
     /**
-     * @var array
+     * @param Request $req
+     * @param Response $res
+     * @param array $args
+     * @return Response
      */
-    protected $sugarConfig;
-
-    /**
-     * @var Cookies
-     */
-    protected $cookies;
-
-    /**
-     * @var AuthenticationController
-     */
-    protected $authentication;
-
-    /**
-     * @var User
-     */
-    protected $currentUser;
-
-    /**
-     * @var JWT
-     */
-    protected $jwt;
-
-    /**
-     * UtilityController constructor.
-     * @param array $sugarConfig
-     * @param Cookies $cookies
-     * @param User $current_user
-     * @param AuthenticationController $authentication
-     * @param JWT $jwt
-     */
-    public function __construct($sugarConfig, $cookies, $current_user,$authentication, $jwt)
-    {
-        $this->sugarConfig = $sugarConfig;
-        $this->cookies = $cookies;
-        $this->currentUser = $current_user;
-        $this->authentication = $authentication;
-        $this->jwt = $jwt;
-    }
-
-    public function getServerInfo(Request $req, Response $res, $args)
+    public function getServerInfo(Request $req, Response $res, array $args)
     {
         $lib = new UtilityLib();
         $server_info = $lib->getServerInfo();
@@ -70,67 +30,31 @@ class UtilityController extends Api
     /**
      * @param Request $req
      * @param Response $res
-     * @param $args
+     * @param array $args
      * @return Response
      */
-    public function login(Request $req, Response $res, $args)
+    public function login(Request $req, Response $res, array $args)
     {
-        $jwtExpiry = $this->jwtValidTime;
+        global $sugar_config;
 
         $data = $req->getParsedBody();
 
-        $this->authentication->login($data['username'], $data['password'], ['passwordEncrypted' => false]);
-        if ($this->authentication->sessionAuthenticate()) {
+        $lib = new UtilityLib();
+        $login = $lib->login($data);
+
+        if ($login['loginApproved']) {
             $token = [
-                'userId' => $GLOBALS['current_user']->id,
-                'exp' => time() + $jwtExpiry,
+                'userId' => $login['userId'],
+                'exp' => time() + self::JWT_VALID_TIME,
             ];
 
             //Create the token
-            $jwt = $this->jwt->encode($token, $this->sugarConfig['unique_key']);
+            $jwt = \Firebase\JWT\JWT::encode($token, $sugar_config['unique_key']);
+            setcookie('SUITECRM_REST_API_TOKEN', json_encode($jwt));
 
-            //Add Cookie
-            $this->cookies->set('SUITECRM_REST_API_TOKEN', [
-                'value' => $jwt,
-                'path' => '/',
-                'httponly' => true,
-                'secure' => false
-            ]);
-            $res = $res->withHeader('Set-Cookie', $this->cookies->toHeaders());
-
-            return $this->generateResponse($res, 200, null, 'Success');
+            return $this->generateResponse($res, 200, $jwt, 'Success');
         } else {
             return $this->generateResponse($res, 401, null, 'Unauthorised');
         }
-    }
-
-    public function logout(Request $req, Response $res)
-    {
-        $this->cookies->set('SUITECRM_REST_API_TOKEN', [
-            'value' => 'deleted',
-            'path' => '/',
-            'expires' => 100,
-            'httponly' => true,
-            'secure' => false
-        ]);
-        $res = $res->withHeader('Set-Cookie', $this->cookies->toHeaders());
-        return $this->generateResponse($res, 200, null, 'Success');
-    }
-
-    /**
-     * @return array
-     */
-    public function getParams()
-    {
-        $pairs = explode('&', $_SERVER['QUERY_STRING']);
-        $vars = array();
-        foreach ($pairs as $pair) {
-            $nv = explode('=', $pair);
-            $name = urldecode($nv[0]);
-            $value = urldecode($nv[1]);
-            $vars[$name] = $value;
-        }
-
-        return $vars;
     }
 }
