@@ -279,7 +279,7 @@ $(function() {
 jQuery(function($){
     $('table.footable').footable({
         "breakpoints": {
-            "x-small": 480,
+            "x-small": 680,
             "small": 768,
             "medium": 992,
             "large": 1130,
@@ -452,6 +452,7 @@ $(function () {
             };
 
         }
+
         if (isDetailViewPage()) {
             tabActiveSelector = '#user_detailview_tabs.yui-navset.detailview_tabs.yui-navset-top ul.yui-nav li.selected a';
             tabFramesLength = 3;
@@ -459,7 +460,7 @@ $(function () {
                 // User Profile
                 'tab1': [
                     // User Profile & Employee Information
-                    'div#user_detailview_tabs.yui-navset.detailview_tabs.yui-navset-top div.yui-content',
+                    'form#user_detailview_tabs.yui-navset.detailview_tabs.yui-navset-top div.yui-content',
                     // Email Settings
                     '#email_options',
                     // Security Groups Management etc..
@@ -563,5 +564,51 @@ $(function () {
            });
        }
     });
+
+    var hideEmptyFormCellsOnTablet = function() {
+        if ($(window).width() <= 767) {
+            $('div#content div#pagecontent form#EditView div.edit.view table tbody tr td').each(function (i, e) {
+                $(e).find('slot').each(function(i,e){
+                    if($(e).html().trim() == '&nbsp;') {
+                        $(e).html('&nbsp;');
+                    }
+                });
+                if ($(e).html().trim() == '<slot>&nbsp;</slot>') {
+                    $(e).addClass('hidden');
+                    $(e).addClass('hiddenOnTablet');
+                }
+            });
+        }
+        else {
+            $('div#content div#pagecontent form#EditView div.edit.view table tbody tr td.hidden.hiddenOnTablet').each(function (i, e) {
+                $(e).removeClass('hidden');
+                $(e).removeClass('hiddenOnTablet');
+            });
+        }
+    }
+
+    $(window).click(function(){
+        hideEmptyFormCellsOnTablet();
+        setTimeout(function(){
+            hideEmptyFormCellsOnTablet();
+        }, 500);
+    });
+
+    $(window).resize(function(){
+        hideEmptyFormCellsOnTablet();
+    });
+
+    $(window).load(function(){
+        hideEmptyFormCellsOnTablet();
+    });
+
+    $(document).ready(function(){
+        hideEmptyFormCellsOnTablet();
+    });
+
+    setTimeout(function(){
+        hideEmptyFormCellsOnTablet();
+    }, 1500);
+
 
 });
