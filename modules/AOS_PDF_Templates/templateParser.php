@@ -60,7 +60,7 @@ class templateParser
                 $fieldName = $field_def['name'];
                 if ($field_def['type'] == 'currency') {
                     $repl_arr[$key . "_" . $fieldName] = currency_format_number($focus->$fieldName, $params = array('currency_symbol' => false));
-                } else if (($field_def['type'] == 'radioenum' || $field_def['type'] == 'enum') && isset($field_def['options'])) {
+                } else if (($field_def['type'] == 'radioenum' || $field_def['type'] == 'enum' || $field_def['type'] == 'dynamicenum') && isset($field_def['options'])) {
                     $repl_arr[$key . "_" . $fieldName] = translate($field_def['options'], $focus->module_dir, $focus->$fieldName);
                 } else if ($field_def['type'] == 'multienum' && isset($field_def['options'])) {
                     $repl_arr[$key . "_" . $fieldName] = implode(', ', unencodeMultienum($focus->$fieldName));
