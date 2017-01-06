@@ -3,7 +3,7 @@ if (!defined('sugarEntry')) {
     define('sugarEntry', true);
 }
 chdir('../../');
-require_once 'include/vendor/autoload.php';
+require_once 'vendor/autoload.php';
 require_once 'include/entryPoint.php';
 
 preg_match("/\/Api\/(.*?)\//", $_SERVER['REQUEST_URI'], $matches);

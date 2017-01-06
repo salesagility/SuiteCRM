@@ -16,14 +16,12 @@
     "phpunit/phpunit": "^3.7",
     "mikey179/vfsStream": "1.4.*"
   },
-  "autoload": {
-    "psr-4": {
-      "SuiteCRM\\Api\\": "Api"
-    }
-  },
   "scripts": {},
   "prefer-stable": true,
   "autoload": {
+    "psr-4": {
+      "SuiteCRM\\Api\\": "Api"
+    },
     "psr-0": {
       "": "src/"
     }
