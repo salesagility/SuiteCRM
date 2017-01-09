@@ -305,6 +305,7 @@ $(function() {
 });
 
 
+
 // JavaScript fix to remove unrequired classes on smaller screens where sidebar is obsolete
 $(window).resize(function () {
     if ($(window).width() < 979) {
@@ -608,5 +609,6 @@ $(function () {
     setTimeout(function(){
         hideEmptyFormCellsOnTablet();
     }, 1500);
-});
 
+
+});
