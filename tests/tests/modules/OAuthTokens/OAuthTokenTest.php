@@ -23,7 +23,7 @@ class OAuthTokenTest extends PHPUnit_Framework_TestCase
         error_reporting(E_ERROR | E_PARSE);
 
         $oauthToken = new OAuthToken();
-        $oauthToken->setState();
+        $oauthToken->setState($oauthToken->REQUEST);
 
         $this->assertEquals($oauthToken->REQUEST, $oauthToken->tstate);
     }
@@ -214,11 +214,11 @@ class OAuthTokenTest extends PHPUnit_Framework_TestCase
     public function testdisplayDateFromTs()
     {
         //test with empty array
-        $result = displayDateFromTs(array('' => ''), 'timestamp');
+        $result = displayDateFromTs(array('' => ''), 'timestamp', '');
         $this->assertEquals('', $result);
 
         //test with a valid array
-        $result = displayDateFromTs(array('TIMESTAMP' => '1272508903'), 'timestamp');
+        $result = displayDateFromTs(array('TIMESTAMP' => '1272508903'), 'timestamp', '');
         $this->assertEquals('04/29/2010 02:41', $result);
     }
 }
