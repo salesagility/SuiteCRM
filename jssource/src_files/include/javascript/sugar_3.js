@@ -1208,15 +1208,17 @@ function validate_form(formname, startsWith){
 									}
 								});
 
-								for (k = 0; k < current_fields.length; k++) {
-									if(isError != true) {
-										val = current_fields[k].toUpperCase();
-										if ((operator == "==" && val == item1) || (operator == "!=" && val != item1)) {
-											isError = true;
-											add_error_style(formname, validate[formname][i][nameIndex], 'Invalid Value: Field Name already exists');
+								if(document.getElementsByName('is_update')[0].value == 'false') {
+									for (k = 0; k < current_fields.length; k++) {
+										if(isError != true) {
+											val = current_fields[k].toUpperCase();
+											if ((operator == "==" && val == item1) || (operator == "!=" && val != item1)) {
+												isError = true;
+												add_error_style(formname, validate[formname][i][nameIndex], 'Invalid Value: Field Name already exists');
+											}
 										}
 									}
-								}
+								}s
 							break;
 							case 'verified':
 							if(trim(form[validate[formname][i][nameIndex]].value) == 'false'){
