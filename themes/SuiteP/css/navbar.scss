@@ -1,6 +1,17 @@
 /**** NAVBAR ****/
 @import 'variables';
 
+// Mix ins:
+@mixin alertButton() {
+  background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
+  background-position: 0 0;
+  background-color: $navbar-bg;
+  border: none;
+  box-shadow: none;
+}
+
+//Style
+
 .navbar-inverse {
   background: $navbar-bg;
 
@@ -1812,48 +1823,27 @@
   }
 
   .desktop_notifications .btn-danger:hover {
-    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
-    background-position: 0 0;
-    background-color: $navbar-bg;
-    border: none;
-    box-shadow: none;
+    @include alertButton();
   }
 
   .desktop_notifications .btn-danger:focus {
-    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
-    background-position: 0 0;
-    background-color: $navbar-bg;
-    border: none;
-    box-shadow: none;
+    @include alertButton();
   }
 
   .desktop_notifications .btn-danger:active {
-    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
-    background-position: 0 0;
-    background-color: $navbar-bg;
-    border: none;
+    @include alertButton();
   }
 
   .open > .dropdown-toggle.alertsButton.btn-danger:active {
-    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
-    background-position: 0 0;
-    background-color: $navbar-bg;
-    border: none;
-    box-shadow: none;
+    @include alertButton();
   }
 
   .open > .dropdown-toggle.alertsButton.btn-danger:focus {
-    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
-    background-position: 0 0;
-    background-color: $navbar-bg;
-    border: none;
+    @include alertButton();
   }
 
   .open > .dropdown-toggle.alertsButton.btn-danger:hover {
-    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_icon_alert.png");
-    background-position: 0 0;
-    background-color: $navbar-bg;
-    border: none;
+    @include alertButton();
   }
 
   .navbar-header {
@@ -1861,11 +1851,31 @@
     display: inline-block;
   }
 
+  #desktop_notifications {
+    .btn-success.active.focus,
+    .btn-success.active:focus,
+    .btn-success.active:hover,
+    .btn-success:active.focus,
+    .btn-success:active:focus,
+    .btn-success:active:hover {
+      @include alertButton();
+    }
+  }
+
+  #desktop_notifications.open {
+    >.dropdown-toggle.btn-success,
+    >.dropdown-toggle.btn-success.active,
+    >.dropdown-toggle.btn-success:active,
+    >.dropdown-toggle.btn-success.focus,
+    >.dropdown-toggle.btn-success:focus,
+    >.dropdown-toggle.btn-success:hover {
+      @include alertButton();
+    }
+  }
+
 
   .desktop_notifications > .btn-success {
-    background-color: $navbar-bg;
-    color: #F5F5F5;
-    border: none;
+    @include alertButton();
   }
 
   .desktop_notifications > .btn-success:hover {
@@ -1875,15 +1885,11 @@
   }
 
   .desktop_notifications > .btn-success:active {
-    background-color: $navbar-bg;
-    color: #F5F5F5;
-    border: none
+    @include alertButton();
   }
 
   .desktop_notifications > .btn-success:focus {
-    background-color: $navbar-bg;
-    color: #F5F5F5;
-    border: none;
+    @include alertButton();
   }
 }
 
