@@ -251,7 +251,7 @@ class ModuleController extends Api
         return $this->generateResponse(
             $res,
             200,
-            json_encode($lib->getModuleRelationships($related_module, $id_list)),
+            $lib->getModuleRelationships($related_module, $id_list),
             'Success'
         );
     }
@@ -399,9 +399,7 @@ class ModuleController extends Api
             || empty($moduleId)
             || empty($linkFieldName)
             || !is_array($relatedIds)
-            || !is_array($nameValues)
             || empty($relatedIds)
-            || empty($nameValues)
         ) {
             return $this->generateResponse($res, 400, 'Incorrect parameters', 'Failure');
         } else {
@@ -436,9 +434,7 @@ class ModuleController extends Api
             || empty($moduleId)
             || empty($linkFieldName)
             || !is_array($relatedIds)
-            || !is_array($nameValues)
             || empty($relatedIds)
-            || empty($nameValues)
         ) {
             return $this->generateResponse($res, 400, 'Incorrect parameters', 'Failure');
         } else {
@@ -471,9 +467,8 @@ class ModuleController extends Api
 
         if (!is_array($moduleNames) || !is_array($moduleIds)
             || !is_array($linkFieldNames) || !is_array($relatedIds)
-            || !is_array($nameValues) || empty($moduleNames)
-            || empty($moduleIds) || empty($linkFieldNames)
-            || empty($relatedIds) || empty($nameValues)
+            || empty($moduleNames) || empty($moduleIds)
+            || empty($linkFieldNames) || empty($relatedIds)
             || sizeof($moduleNames) != sizeof($moduleIds) || sizeof($moduleNames) != sizeof($linkFieldNames)
             || sizeof($moduleNames) != sizeof($relatedIds)
         ) {
@@ -524,15 +519,6 @@ class ModuleController extends Api
                 'Success'
             );
         }
-    }
-
-    /**
-     * @param Request  $req
-     * @param Response $res
-     * @param array $args
-     */
-    public function convertLead(Request $req, Response $res, array $args)
-    {
     }
 
     /**

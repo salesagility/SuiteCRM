@@ -453,14 +453,14 @@ class ModuleLib
                     if (!is_array($options_dom)) {
                         $options_dom = [];
                     }
-                    foreach ($options_dom as $key => $oneOption) {
-                        $options_ret[$key] = get_name_value($key, $oneOption);
-                    }
+//                    foreach ($options_dom as $key => $oneOption) {
+//                        $options_ret[$key] = get_name_value($key, $oneOption);
+//                    }
                 }
 
-                if (!empty($var['dbType']) && $var['type'] == 'bool') {
-                    $options_ret['type'] = get_name_value('type', $var['dbType']);
-                }
+//                if (!empty($var['dbType']) && $var['type'] == 'bool') {
+//                    $options_ret['type'] = get_name_value('type', $var['dbType']);
+//                }
 
                 $entry = [];
                 $entry['name'] = $var['name'];
@@ -629,6 +629,7 @@ class ModuleLib
             $related_class_name = $beanList[$related_module];
             $related_mod = new $related_class_name();
             $related_mod->retrieve($id);
+            $related_mod->fixUpFormatting();
 
             $return_list[] = [
                 'id' => $id,
