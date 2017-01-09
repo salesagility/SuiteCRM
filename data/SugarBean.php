@@ -5046,27 +5046,48 @@ class SugarBean
      * Construct where clause from a list of name-value pairs.
      * @param array $fields_array Name/value pairs for column checks
      * @param bool $deleted Optional, default true, if set to false deleted filter will not be added.
+     * @param string $whereString
      * @return string The WHERE clause
      */
-    public function get_where($fields_array, $deleted = true)
+    public function get_where($fields_array, $deleted = true, $whereString = 'WHERE')
     {
-        $where_clause = "";
+        $where_clause = '';
         foreach ($fields_array as $name => $value) {
-            if (!empty($where_clause)) {
-                $where_clause .= " AND ";
+            if (!isset($this->field_defs[$name])) {
+                continue;
             }
+
+            $field_defs = $this->field_defs[$name];
+            $source = isset($field_defs['source']) ? $field_defs['source'] : 'db';
+
+            if ($source !== 'db') {
+                continue;
+            }
+
+            if (empty($field_defs['table'])) {
+                if ($source === 'db') {
+                    $name = $this->table_name . '.' . $name;
+                } elseif ($source === 'custom_fields') {
+                    $name = $this->get_custom_table_name() . $name;
+                }
+            }
+
+            if (!empty($where_clause)) {
+                $where_clause .= ' AND ';
+            }
+
             $name = $this->db->getValidDBName($name);
 
-            $where_clause .= "$name = " . $this->db->quoted($value);
+            $where_clause .= $name . (is_null($value) ? ' IS NULL' : (' = ' . $this->db->quoted($value)));
         }
         if (!empty($where_clause)) {
             if ($deleted) {
-                return "WHERE $where_clause AND deleted=0";
+                return "$whereString $where_clause AND deleted=0";
             } else {
-                return "WHERE $where_clause";
+                return "$whereString $where_clause";
             }
         } else {
-            return "";
+            return '';
         }
     }
 
