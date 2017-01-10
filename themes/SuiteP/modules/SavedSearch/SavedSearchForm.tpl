@@ -1,11 +1,11 @@
 {*
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,32 +36,30 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-
-
+ */
 *}
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="border-top: 0px none; margin-bottom: 4px">
-    <tr valign='top'>
-        <td width='34%' align='left' rowspan='4' colspan='2' {if $orderBySelectOnly}style="display:none;"{/if}>
+<div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-advanced-search">
+        <div{if $orderBySelectOnly} style="display:none;"{/if}>
             <input id='displayColumnsDef' type='hidden' name='displayColumns'>
             <input id='hideTabsDef' type='hidden' name='hideTabs'>
             {$columnChooser}
             <br>
-        </td>
-        <td scope='row' align='left' width='10%'>
-            {sugar_translate label='LBL_ORDER_BY_COLUMNS' module='SavedSearch'}
+        </div>
+        <div class="col-xs-12">
+            <label>{sugar_translate label='LBL_ORDER_BY_COLUMNS' module='SavedSearch'}</label>
 
-        </td>
-        <td width='23%'>
+        </div>
+        <div class="form-item">
             <select name='orderBy' id='orderBySelect'>
             </select>
-        </td>
-        <td scope='row' width='10%'>
-            {sugar_translate label='LBL_DIRECTION' module='SavedSearch'}
-        </td>
-        <td width='23%'>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-advanced-search">
+        <div class="col-xs-12">
+            <label>{sugar_translate label='LBL_DIRECTION' module='SavedSearch'}</label>
+        </div>
+        <div class="form-item radios">
             <div><input id='sort_order_desc_radio' type='radio' name='sortOrder' value='DESC'
                         {if $selectedSortOrder == 'DESC'}checked{/if}>&nbsp;<span
                         onclick='document.getElementById("sort_order_desc_radio").checked = true'
@@ -72,10 +70,10 @@
                         onclick='document.getElementById("sort_order_asc_radio").checked = true'
                         style="cursor: pointer; cursor: hand">{$MOD.LBL_ASCENDING}</span>
             </div>
-        </td>
-    </tr>
+        </div>
+    </div>
 
-</table>
+</div>
 <script>
     SUGAR.savedViews.columnsMeta = {$columnsMeta};
     columnsMeta = {$columnsMeta};
