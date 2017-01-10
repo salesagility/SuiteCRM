@@ -66,7 +66,7 @@
                         {/foreach}
                         {foreach from=$modules.extra item=submodulename key=submodule}
                             <li role="presentation" data-test="2">
-                                <a href="javascript:void(0)" onclick="window.location.href = 'index.php{sugar_link module=$submodule link_only=1 extraparams=$extraparams}'">
+                                <a href="javascript:void(0)" onclick="window.location.href = '{sugar_link module=$submodule link_only=1 extraparams=$extraparams}'">
                                     {$submodulename}
                                     <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module={$submodule}'"></span>
                                     {*<span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'http://google.com'"></span>*}
