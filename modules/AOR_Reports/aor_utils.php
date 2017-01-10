@@ -215,8 +215,6 @@ function getPeriodDate($date_time_period_list_selected)
     } else if ($date_time_period_list_selected == 'last_year') {
         $datetime_period = $datetime_period = $datetime_period->setDate($datetime_period->format('Y') - 1, 1, 1);
     }
-    // set time to 00:00:00
-    //$datetime_period = $datetime_period->setTime(0, 0, 0);
     return $datetime_period;
 }
 
