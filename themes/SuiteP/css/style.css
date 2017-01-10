@@ -1149,11 +1149,12 @@ slot, #lead_queries_Div td {
     line-height: 20px;
     min-height: 48px;
     text-align: left;
-    white-space: nowrap;
+    white-space: pre-wrap;
     vertical-align: baseline;
     background-color: #F5F5F5;
     border: 1px solid transparent;
     border-radius: 4px;
+    word-wrap: break-word;
 }
 
 .detail-view-field a {
