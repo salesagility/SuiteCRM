@@ -43,11 +43,13 @@
     <tr>
         <td nowrap class="paginationWrapper">
             {if !empty($list_link)}
-            <button type="button" id="save_and_continue" class="hidden" title="{$app_strings.LBL_SAVE_AND_CONTINUE}" onClick="this.form.action.value='Save';if(check_form('EditView')){ldelim}sendAndRedirect('EditView', '{$app_strings.LBL_SAVING} {$module}...', '{$list_link}');{rdelim}">
-                {$app_strings.LBL_SAVE_AND_CONTINUE}
-            </button>
+                <script>
+                  SUGAR.saveAndContinue = function (elem) {ldelim}
+                    elem.form.action.value='Save';if(check_form('EditView')){ldelim}sendAndRedirect('EditView', '{$app_strings.LBL_SAVING} {$module}...', '{$list_link}');{rdelim}
+                  {rdelim}
+                </script>
         &nbsp;&nbsp;&nbsp;&nbsp;{else}
-                {* remove the other save and continue button next to teh view change log *}
+                {* remove the other save and continue button next to the view change log *}
                 {literal}
                     <script>
                         $(document).ready(function () {
