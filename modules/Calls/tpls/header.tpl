@@ -1,11 +1,10 @@
 {*
-/**
- *
+/*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,36 +35,7 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
+ ********************************************************************************/
+
 *}
-
-<script language="javascript">
-    var _form_id = '{$form_id}';
-    {literal}
-    SUGAR.util.doWhen(function(){
-        _form_id = (_form_id == '') ? 'EditView' : _form_id;
-        return document.getElementById(_form_id) != null;
-    }, SUGAR.themes.actionMenu);
-    {/literal}
-</script>
-{assign var='place' value="_FOOTER"} <!-- to be used for id for buttons with custom code in def files-->
-{{if empty($form.button_location) || $form.button_location == 'bottom'}}
-
-{{sugar_include type='smarty' file='include/EditView/actions_buttons.tpl'}}
-
-{{/if}}
-</form>
-{{if $externalJSFile}}
-{sugar_include include=$externalJSFile}
-{{/if}}
-
-{$set_focus_block}
-
-{{if isset($scriptBlocks)}}
-<!-- Begin Meta-Data Javascript -->
-{{$scriptBlocks}}
-<!-- End Meta-Data Javascript -->
-{{/if}}
-<script>SUGAR.util.doWhen("document.getElementById('EditView') != null",
-        function(){ldelim}SUGAR.util.buildAccessKeyLabels();{rdelim});
-</script>
+{{sugar_include type="smarty" file='include/EditView/header.tpl'}}
