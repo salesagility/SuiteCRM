@@ -1218,7 +1218,7 @@ function validate_form(formname, startsWith){
 											}
 										}
 									}
-								}s
+								}
 							break;
 							case 'verified':
 							if(trim(form[validate[formname][i][nameIndex]].value) == 'false'){
