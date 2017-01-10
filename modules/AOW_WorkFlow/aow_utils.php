@@ -84,17 +84,17 @@ function getRelatedModule($module, $rel_field){
     if($module == $rel_field){
         return $module;
     }
-    $relations = explode(':', $rel_fields);
+    $relations = explode(':', $rel_field);
     $mod = new $beanList[$module]();
     foreach ($relations as $r) {
-        if($mod->load_relationship($rel_field)){
-            $module = $mod->$rel_field->getRelatedModuleName();
+        if($mod->load_relationship($r)){
+            $module = $mod->$r->getRelatedModuleName();
             $mod = new $beanList[$module]();
         }
     }
     return $module;
-
 }
+
 
 
 function getModuleTreeData($module){
