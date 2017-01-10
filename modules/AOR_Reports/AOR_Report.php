@@ -117,7 +117,7 @@ class AOR_Report extends Basic {
         $chart->save_lines($_POST, $this, 'aor_chart_');
     }
 
-    function ACLAccess($view,$is_owner='not_set',$in_group='not_set', $target_module){
+    function ACLAccess($view,$is_owner='not_set',$in_group='not_set', $target_module = ""){
         $result = parent::ACLAccess($view,$is_owner,$in_group);
         if($result === true){
             if($target_module != ""){
