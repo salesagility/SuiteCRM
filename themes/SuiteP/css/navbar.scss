@@ -11,7 +11,6 @@
 }
 
 //Style
-
 .navbar-inverse {
   background: $navbar-bg;
 
@@ -41,7 +40,7 @@
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     overflow-y: auto;
-    min-width: 240px;
+    min-width: 185px;
 
     li {
       padding: 0;
@@ -406,37 +405,37 @@
 .mobileheader .dropdown-menu ul li a.recent-links-detail {
   display: inline-block;
   border: none;
-  width: 85%;
+  width: 80%;
 }
 
 .mobileheader .dropdown-menu ul li a.favorite-links-detail {
   display: inline-block;
   border: none;
-  width: 85%;
+  width: 80%;
 }
 
 .topnav .dropdown-menu li a.recent-links-detail {
   display: inline-block;
   border: none;
-  width: 85%;
+  width: 75%;
 }
 
 .topnav .dropdown-menu li a.favorite-links-detail {
   display: inline-block;
   border: none;
-  width: 85%;
+  width: 75%;
 }
 
 .with-actions .recent-links-detail {
   display: inline-block;
   border: none;
-  width: 85%;
+  width: 75%;
 }
 
 .with-actions .favorite-links-detail {
   display: inline-block;
   border: none;
-  width: 85%;
+  width: 75%;
 }
 
 .navbar-inverse .dropdown-menu li a.recent-links-edit {
@@ -593,13 +592,6 @@
   color: $navbar-link-color;
 }
 
-.globalLinks-desktop {
-  //margin-top: ($navbar-height / 4);
-}
-
-.globalLinks-desktop {
-  //margin-top: ($navbar-height / 4) + ($navbar-height / 6.5);
-}
 
 .globalLinks-desktop .user-dropdown li a {
   color: $navbar-menu-link-color;
@@ -2048,6 +2040,9 @@
     width: 28%;
   }
 
+  .desktop-toolbar .navbar-brand-container {
+    margin-left: 30px;
+  }
 
   .desktop-bar > .toolbar {
     display: inline-block;
