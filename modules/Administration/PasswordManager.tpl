@@ -257,7 +257,14 @@
 										<tr>
 											<td width="25%" scope="row">{$MOD.LBL_MAX_FAILED_LOGINS}:&nbsp{sugar_help text=$MOD.LBL_MAX_FAILED_LOGINS_HELP WIDTH=400}</td>
 											<td scope="row" width="25%" >
-												<input type='text' maxlength="3" and style="width:2em" name='userlockout_maxfailedlogins'  value='{$config.userlockout.maxfailedlogins}'>
+												<input type='text' maxlength="3" style="width:2em" name='userlockout_maxfailedlogins'  value='{$config.userlockout.maxfailedlogins}'>
+											</td>
+											<td>&nbsp;</td><td>&nbsp;</td>
+										</tr>
+										<tr>
+											<td width="25%" scope="row">{$MOD.LBL_AUTO_UNLOCK_TIME}:&nbsp{sugar_help text=$MOD.LBL_AUTO_UNLOCK_TIME_HELP WIDTH=400}</td>
+											<td scope="row" width="25%" >
+												<input type='text' maxlength="10" style="width:5em" name='userlockout_automaticunlocktime'  value='{$config.userlockout.automaticunlocktime}'>&nbsp;<span>{$MOD.LBL_AUTO_UNLOCK_TIME_UNITS}</span>
 											</td>
 											<td>&nbsp;</td><td>&nbsp;</td>
 										</tr>
@@ -530,6 +537,8 @@ function addcheck(form){{/literal}
 	addToValidate('ConfigurePasswordSettings', 'passwordsetting_systexpirationtime', 'int', form.required_sys_pwd_exp_time.checked,"{$MOD.ERR_PASSWORD_EXPIRE_TIME}" );
 	addToValidate('ConfigurePasswordSettings', 'passwordsetting_systexpirationlogin', 'int', form.required_sys_pwd_exp_login.checked,"{$MOD.ERR_PASSWORD_EXPIRE_LOGIN}" );
    {literal}}{/literal}
+  addToValidate('ConfigurePasswordSettings', 'userlockout_maxfailedlogins', 'int', false,"{$MOD.ERR_MAX_FAILED_LOGINS} ");
+  addToValidate('ConfigurePasswordSettings', 'userlockout_automaticunlocktime', 'int', false,"{$MOD.ERR_AUTOMATIC_UNLOCK_TIME} ");
 
 
 {literal}	}
