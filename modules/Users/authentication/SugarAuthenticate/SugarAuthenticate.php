@@ -93,7 +93,7 @@ class SugarAuthenticate{
 	 * @return boolean
 	 */
 	function loginAuthenticate($username, $password, $fallback=false, $PARAMS = array ()){
-		global $mod_strings;
+		global $mod_strings, $sugar_config;
 		unset($_SESSION['login_error']);
 		$usr= new user();
 		$usr_id=$usr->retrieve_user_id($username);
@@ -101,6 +101,10 @@ class SugarAuthenticate{
 		$_SESSION['login_error']='';
 		$_SESSION['waiting_error']='';
 		$_SESSION['hasExpiredPassword']='0';
+		if($usr->getPreference('user_locked_out')){
+		    $_SESSION['login_error'] = translate('ERR_USER_IS_LOCKED_OUT', 'Users');
+            return false;
+        }
 		if ($this->userAuthenticate->loadUserOnLogin($username, $password, $fallback, $PARAMS)) {
 			require_once('modules/Users/password_utils.php');
 			if(hasPasswordExpired($username)) {
@@ -118,10 +122,14 @@ class SugarAuthenticate{
 		{
 			//if(!empty($usr_id) && $res['lockoutexpiration'] > 0){
             if(!empty($usr_id)){
-				if (($logout=$usr->getPreference('loginfailed'))=='')
-	        		$usr->setPreference('loginfailed','1');
-	    		else
+				if (($logout=$usr->getPreference('loginfailed'))=='') {
+                    $usr->setPreference('loginfailed', '1');
+                }else{
 	        		$usr->setPreference('loginfailed',$logout+1);
+				}
+				if(!empty($sugar_config['max_failed_logins']) && ($logout+1) >= $sugar_config['max_failed_logins']){
+				    $usr->setPreference('user_locked_out', true);
+                }
 	    		$usr->savePreferencesToDB();
     		}
 		}
