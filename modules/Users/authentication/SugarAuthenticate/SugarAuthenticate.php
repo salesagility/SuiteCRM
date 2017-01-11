@@ -127,7 +127,7 @@ class SugarAuthenticate{
                 }else{
 	        		$usr->setPreference('loginfailed',$logout+1);
 				}
-				if(!empty($sugar_config['max_failed_logins']) && ($logout+1) >= $sugar_config['max_failed_logins']){
+				if(!empty($sugar_config['userlockout']['maxfailedlogins']) && ($logout+1) >= $sugar_config['userlockout']['maxfailedlogins']){
 				    $usr->setPreference('user_locked_out', true);
                 }
 	    		$usr->savePreferencesToDB();
