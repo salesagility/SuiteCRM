@@ -83,6 +83,21 @@ class SugarAuthenticate{
 		self::__construct();
 	}
 
+	private function isUserLockedOut(User $user){
+	    global $sugar_config;
+	    if(!$user->getPreference('user_locked_out')){
+	        return false;
+        }
+        if(empty($sugar_config['userlockout']['automaticunlocktime'])){
+	       return true;
+        }
+        $unlockCutoff = time() - ($sugar_config['userlockout']['automaticunlocktime'] * 60);
+        if($user->getPreference('user_locked_out_time') < $unlockCutoff){
+            return false;
+        }
+        return true;
+    }
+
 	/**
 	 * Authenticates a user based on the username and password
 	 * returns true if the user was authenticated false otherwise
@@ -101,7 +116,7 @@ class SugarAuthenticate{
 		$_SESSION['login_error']='';
 		$_SESSION['waiting_error']='';
 		$_SESSION['hasExpiredPassword']='0';
-		if($usr->getPreference('user_locked_out')){
+		if($this->isUserLockedOut($usr)){
 		    $_SESSION['login_error'] = translate('ERR_USER_IS_LOCKED_OUT', 'Users');
             return false;
         }
@@ -113,6 +128,8 @@ class SugarAuthenticate{
 			// now that user is authenticated, reset loginfailed
 			if ($usr->getPreference('loginfailed') != '' && $usr->getPreference('loginfailed') != 0) {
 				$usr->setPreference('loginfailed','0');
+				$usr->setPreference('user_locked_out', false);
+                $usr->setPreference('user_locked_out_time', '');
 				$usr->savePreferencesToDB();
 			}
 			return $this->postLoginAuthenticate();
@@ -129,6 +146,7 @@ class SugarAuthenticate{
 				}
 				if(!empty($sugar_config['userlockout']['maxfailedlogins']) && ($logout+1) >= $sugar_config['userlockout']['maxfailedlogins']){
 				    $usr->setPreference('user_locked_out', true);
+				    $usr->setPreference('user_locked_out_time', time());
                 }
 	    		$usr->savePreferencesToDB();
     		}

@@ -390,7 +390,8 @@ function get_sugar_config_defaults()
             'min_cron_interval' => 30, // minimal interval between cron jobs
         ),
         'userlockout' => array(
-            'maxfailedlogins' => '3',
+            'maxfailedlogins' => '0',
+            'automaticunlocktime' => '0',
         ),
     );
 
