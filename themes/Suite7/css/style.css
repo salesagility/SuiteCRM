@@ -6681,3 +6681,7 @@ ul.clickMenu.searchAppliedAlert {
         float: none;
     }
 }
+
+.action-link label {
+    padding: 5px 0 0 0;
+}
