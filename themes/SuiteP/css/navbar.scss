@@ -132,6 +132,10 @@
         }
       }
 
+      .currentTab a {
+        color: $navbar-link-color-hover;
+      }
+
       .currentTab a,
       .dropdown-toggle {
         font-size: $navbar-topnav-font-size;
@@ -1947,7 +1951,7 @@
     float: left;
     overflow-x: hidden;
     overflow-y: scroll;
-    width: 300px;
+    width: 256px;
 
   }
 
