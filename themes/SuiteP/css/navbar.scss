@@ -680,6 +680,14 @@
   color: $navbar-search-color;
 }
 
+.searchformdropdown .form-control:focus {
+  border-color: transparent;
+}
+
+.searchform .form-control:focus {
+  border-color: transparent;
+}
+
 .mobileheader .modulename a {
   background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.png");
   background-position: 92.5% 5px;
@@ -1182,6 +1190,7 @@
     right: 0;
     clear: both;
     width: auto;
+    overflow: visible;
   }
 }
 
@@ -1306,8 +1315,19 @@
     background-color: transparent;
   }
 
+  .navbar-search .dropdown-menu {
+    width: 300px;
+  }
 
+  .searchformdropdown .btn {
+    background-image: url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
+    background-color: $navbar-search-bg;
+  }
 
+  .searchformdropdown .btn:hover {
+    background-image: url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
+    background-color: $navbar-search-btn-bg;
+  }
   /* overridding bootstrap needs to be stacked */
   .globalLinks-mobile .btn-default.active.focus,
   .globalLinks-mobile .btn-default.active:focus,
@@ -1321,7 +1341,7 @@
     color: $default-btn-color;
     background-color: transparent;
     border-color: transparent;
-    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
+    background-image: url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
 
   }
 
@@ -2231,9 +2251,16 @@
     text-indent: -9999px;
   }
 
+  .searchformdropdown .btn {
+    background-color: $navbar-search-bg;
+  }
+
+  .searchformdropdown .btn:hover {
+    background-color: $navbar-search-btn-bg;
+  }
+
   .searchformdropdown button:focus {
     display: block;
-    background-color: transparent;
     background-image: none, url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
     background-position: 13px 10px;
     background-repeat: no-repeat;
@@ -2250,7 +2277,6 @@
   .searchformdropdown button {
     margin: 0;
     display: block;
-    background-color: transparent;
     background-image: none, url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
     background-position: 5px 10px;
     background-repeat: no-repeat;
