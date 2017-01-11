@@ -96,3 +96,7 @@
     {/foreach}
     </tbody>
 </table>
+
+<script>
+
+</script>

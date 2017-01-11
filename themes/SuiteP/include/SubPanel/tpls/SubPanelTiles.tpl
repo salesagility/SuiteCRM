@@ -50,6 +50,7 @@
         {literal}
         var SubpanelInit = function() {
             SubpanelInitTabNames({/literal}{$tab_names}{literal});
+          {/literal}$('.sub-panel .table-responsive').footable();{literal}
         }
         var SubpanelInitTabNames = function(tabNames) {
             subpanel_dd = new Array();

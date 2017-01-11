@@ -48,6 +48,8 @@ SUGAR.measurements = {
 };
 
 SUGAR.loaded_once = false;
+var FOOTABLE_LOADED_ONCE = false;
+
 
 $(document).ajaxStop( function() {
         // collapse subpanels when device is mobile / tablet
@@ -55,13 +57,8 @@ $(document).ajaxStop( function() {
             $('.panel-collapse').removeClass('in');
             $('.panel-heading-collapse a').removeClass('in');
             $('.panel-heading-collapse a').addClass('collapsed');
+            SUGAR.loaded_once = true;
         }
-
-        if(SUGAR.loaded_once == false) {
-          $('.sub-panel .table-responsive').footable();
-        }
-
-        SUGAR.loaded_once = true;
 });
 
 $(document).ready(function () {
