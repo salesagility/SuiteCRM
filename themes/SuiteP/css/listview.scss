@@ -4074,3 +4074,15 @@ div.qtip.qtip-default {
 .paginationActionButtons .selectActionsDisabled {
   margin: 0 3px 3px 0;
 }
+
+.searchTabHeader {
+  display: none;
+}
+
+@media (max-width: 460px) {
+
+  .searchTabHeader.active {
+    display: block;
+  }
+
+}

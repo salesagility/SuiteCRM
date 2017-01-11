@@ -132,6 +132,8 @@
             $('.searchTabHandler').removeClass('active');
             $('.searchTabHandler.' + this.getLatestSearchDialogType()).addClass('active');
 
+            $('.searchTabHeader').removeClass('active');
+            $('.searchTabHeader.' + this.getLatestSearchDialogType()).addClass('active');
         }
 
     };
