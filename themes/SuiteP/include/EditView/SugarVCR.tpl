@@ -49,11 +49,11 @@
                   {rdelim}
                 </script>
         &nbsp;&nbsp;&nbsp;&nbsp;{else}
-                {* remove the other save and continue button next to the view change log *}
+                {* remove the other save and continue button next to the view change log when you are on the last item on the list *}
                 {literal}
                     <script>
                         $(document).ready(function () {
-                          $('#new_save_and_continue').remove();
+                          $('#save_and_continue').remove();
                         })
                     </script>
                 {/literal}
