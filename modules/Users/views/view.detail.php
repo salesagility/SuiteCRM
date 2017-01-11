@@ -122,6 +122,11 @@ class UsersViewDetail extends ViewDetail {
                     }
                 }
             }
+            if(is_admin($current_user)){
+                if($this->bean->getPreference('user_locked_out')){
+                        $buttons[] = "<input title='".translate('LBL_UNLOCK_USER','Users')."' class='button' LANGUAGE=javascript onclick=\"this.form.return_module.value='Users'; this.form.return_action.value='DetailView'; this.form.action.value='UnlockUser'\" type='submit' name='unlock_user' value='".translate('LBL_UNLOCK_USER','Users')."'>";
+                }
+            }
         }
 
         $buttons = array_merge($buttons, $this->ss->get_template_vars('BUTTONS_HEADER'));

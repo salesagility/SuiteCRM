@@ -130,5 +130,17 @@ class UsersController extends SugarController
     {
         require 'modules/Users/Save.php';
     }
+
+    public function action_unlockuser(){
+        global $current_user;
+        if(!is_admin($current_user)){
+            SugarApplication::redirect("index.php?module=Users&record=".$_REQUEST['record']."&action=DetailView");
+            return;
+        }
+        $this->bean->setPreference('user_locked_out', false);
+        $this->bean->savePreferencesToDB();
+        SugarApplication::appendErrorMessage(translate('LBL_USER_UNLOCKED_MSG','Users'));
+        SugarApplication::redirect("index.php?module=Users&record=".$_REQUEST['record']."&action=DetailView");
+    }
 }	
 
