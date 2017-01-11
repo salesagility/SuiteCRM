@@ -186,7 +186,8 @@
                     $.post($('#search_form').attr('action'), {
                         displayColumns: cols.join('|'),
                         query: 'true',
-                        use_stored_query: 'true'
+                        use_stored_query: 'true',
+                        last_search_tab: listViewSearchIcon.getLatestSearchDialogType()
                     }, function () {
                         //close form and refresh page after save
                         $('#columnsFilterDialog > div > div > div.modal-footer > button.btn.button.purple.btn-default').click();

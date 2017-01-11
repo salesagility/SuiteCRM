@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -182,6 +182,13 @@ class SearchForm
         $this->th->ss->assign('module', $this->module);
         $this->th->ss->assign('action', $this->action);
         $this->th->ss->assign('displayView', $this->displayView);
+        $this->th->ss->assign('viewTab', $this->getViewTab());
+
+        $storeQuery = new StoreQuery();
+        $storeQuery->loadQuery($this->module);
+        $storeQuery->addToQuery('searchFormTab', $this->displayView);
+        $storeQuery->SaveQuery($this->module);
+
         $this->th->ss->assign('APP', $GLOBALS['app_strings']);
         //Show the tabs only if there is more than one
         if ($this->nbTabs > 1) {
@@ -291,6 +298,16 @@ class SearchForm
         }
 
         return $return_txt;
+    }
+
+    private function getViewTab()
+    {
+        $ret = 'basic';
+        if (preg_match('/^(basic|advanced)_search$/', $this->displayView, $matches)) {
+            $ret = $matches[1];
+        }
+
+        return $ret;
     }
 
     /**

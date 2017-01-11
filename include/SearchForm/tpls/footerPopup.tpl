@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,7 +37,7 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-*}
+ *}
 </div>
 </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
@@ -101,24 +101,36 @@
         onOpen: function () {
         },
 
-        latestSearchDialogType: 'basic',
+        // private
+        latestSearchDialogType: '{/literal}{$viewTab}{literal}',
+
+        // private
+        setLatestSearchDialogType: function (dialogType) {
+            $('input[name="selectedSearchTab"]').val(dialogType);
+            this.latestSearchDialogType = dialogType;
+        },
+
+        // public
+        getLatestSearchDialogType: function () {
+            return this.latestSearchDialogType;
+        },
 
         toggleSearchDialog: function (dialogType) {
             if (dialogType == 'latest') {
                 if (this.selectedSavedSearch != '') {
-                    dialogType = 'advanced';
+                    dialogType = latestSearchDialogType;
                 }
                 else {
-                    dialogType = this.latestSearchDialogType;
+                    dialogType = this.getLatestSearchDialogType();
                 }
             }
-            this.latestSearchDialogType = dialogType;
+            this.setLatestSearchDialogType(dialogType);
             SUGAR.searchForm.searchFormSelect('{/literal}{$module}{literal}|' + dialogType + '_search', '{/literal}{$module}{literal}|' + (dialogType == 'advanced' ? 'basic' : 'advanced') + '_search');
         },
 
         switchSearchTabLatestActive: function () {
             $('.searchTabHandler').removeClass('active');
-            $('.searchTabHandler.' + this.latestSearchDialogType).addClass('active');
+            $('.searchTabHandler.' + this.getLatestSearchDialogType()).addClass('active');
 
         }
 
