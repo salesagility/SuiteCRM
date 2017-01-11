@@ -690,4 +690,8 @@ $(function () {
                 $(e).closest('.sugar_action_button').removeClass('opened');
             }
         });
+
+        $('.subnav.upper.ddopen').each(function(i,e){
+            $(e).css('top', '-'+$(e).height()+'px');
+        });
     }, 100);
