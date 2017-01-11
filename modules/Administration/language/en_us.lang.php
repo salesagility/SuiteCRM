@@ -1262,5 +1262,9 @@ $mod_strings = array(
     'LBL_SECURITYGROUPS_SUGAROUTFITTERS_TITLE' => "SugarOutfitters",
     'LBL_SECURITYGROUPS_SUGAROUTFITTERS' => "Grab the latest version of SecuritySuite and find other SuiteCRM modules, themes, and integrations along with reviews, docs, support, and community verified versions.",
 
+    'LBL_USER_LOCKOUT' => 'User Lockout',
+    'LBL_MAX_FAILED_LOGINS' => 'Max failed logins',
+    'LBL_MAX_FAILED_LOGINS_HELP' => 'The number of failed logins before a user will have their account locked.',
+
 );
 

@@ -250,8 +250,18 @@
 									{/if}
 									</table>
 
-
-
+									<table id="userResetPassId" name="userResetPassName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+										<tr>
+											<th align="left" scope="row" colspan="2"><h4>{$MOD.LBL_USER_LOCKOUT}</h4></th>
+										</tr>
+										<tr>
+											<td width="25%" scope="row">{$MOD.LBL_MAX_FAILED_LOGINS}:&nbsp{sugar_help text=$MOD.LBL_MAX_FAILED_LOGINS_HELP WIDTH=400}</td>
+											<td scope="row" width="25%" >
+												<input type='text' maxlength="3" and style="width:2em" name='max_failed_logins'  value='{$config.max_failed_logins}'>
+											</td>
+											<td>&nbsp;</td><td>&nbsp;</td>
+										</tr>
+									</table>
 
 						<table id="emailTemplatesId" name="emailTemplatesName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 							<tr>
