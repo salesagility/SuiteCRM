@@ -184,6 +184,8 @@ class SearchForm
         $this->th->ss->assign('displayView', $this->displayView);
         $this->th->ss->assign('viewTab', $this->getViewTab());
 
+
+        require_once('modules/MySettings/StoreQuery.php');
         $storeQuery = new StoreQuery();
         $storeQuery->loadQuery($this->module);
         $storeQuery->addToQuery('searchFormTab', $this->displayView);
