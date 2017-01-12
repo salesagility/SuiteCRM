@@ -51,6 +51,12 @@
         var SubpanelInit = function() {
             SubpanelInitTabNames({/literal}{$tab_names}{literal});
           {/literal}$('.sub-panel .table-responsive').footable();{literal}
+          // collapse subpanels when device is mobile / tablet
+          if($(window).width() <= SUGAR.measurements.breakpoints.large) {
+            $('.panel-collapse').removeClass('in');
+            $('.panel-heading-collapse a').removeClass('in');
+            $('.panel-heading-collapse a').addClass('collapsed');
+          }
         }
         var SubpanelInitTabNames = function(tabNames) {
             subpanel_dd = new Array();

@@ -48,18 +48,6 @@ SUGAR.measurements = {
 };
 
 SUGAR.loaded_once = false;
-var FOOTABLE_LOADED_ONCE = false;
-
-
-$(document).ajaxStop( function() {
-        // collapse subpanels when device is mobile / tablet
-        if($(window).width() <= SUGAR.measurements.breakpoints.large && SUGAR.loaded_once == false) {
-            $('.panel-collapse').removeClass('in');
-            $('.panel-heading-collapse a').removeClass('in');
-            $('.panel-heading-collapse a').addClass('collapsed');
-            SUGAR.loaded_once = true;
-        }
-});
 
 $(document).ready(function () {
     loadSidebar();
