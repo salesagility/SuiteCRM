@@ -637,6 +637,7 @@ a.listViewTdToolsS1 {
   border-radius: 4px;
 
 }
+
 .action-link-top .sugar_action_button {
   background-color: $list-view-action-button-bg;
   padding: 0;
@@ -1986,6 +1987,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > l
 #columnsFilterDialog div.modal-content {
   width: 450px;
 }
+
 /***/
 
 ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly {
@@ -2007,6 +2009,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
   padding: 0px 1px 3px 1px;
   line-height: 0.8;
 }
+
 ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.glyphicon-remove:before {
   content: '';
 }
@@ -2181,8 +2184,6 @@ div.qtip.qtip-default {
       width: 100%;
     }
   }
-
-
 
   @media (max-width: 594px) {
     .modal-search .form-item {
@@ -2920,7 +2921,6 @@ div.qtip.qtip-default {
   }
 }
 
-
 .edit {
   padding: 0 6px 12px 10px;
 }
@@ -2930,11 +2930,9 @@ div.qtip.qtip-default {
   padding: 0px;
 }
 
-
 .list tr.pagination-unique td table.paginationTable tr {
   padding: 0px;
 }
-
 
 .list tr.pagination-unique td table.paginationTable td.paginationActionButtons {
   background-color: $list-view-toolbar-bg;
@@ -2986,36 +2984,34 @@ listViewLinkButton {
   padding: 1px;
 }
 
-
-.listViewLinkButton input[type=checkbox]  {
+.listViewLinkButton input[type=checkbox] {
   margin-top: 5px;
 }
 
-#selectLinkTop input[type=checkbox]  {
+#selectLinkTop input[type=checkbox] {
   margin-top: 5px;
 }
 
-#selectLinkBottom input[type=checkbox]  {
+#selectLinkBottom input[type=checkbox] {
   margin-top: 5px;
 }
 
-#actionLinkBottom input[type=checkbox]  {
+#actionLinkBottom input[type=checkbox] {
   margin-top: 5px;
 }
 
-.action-link-bottom input[type=checkbox]  {
+.action-link-bottom input[type=checkbox] {
   margin-top: 5px;
 }
 
-#actionLinkTop{
+#actionLinkTop {
   position: relative;
   margin-left: 8px;
 }
 
-.action-link-top{
+.action-link-top {
   position: relative;
 }
-
 
 #actionLinkBottom {
   position: relative;
@@ -3066,7 +3062,7 @@ listViewLinkButton {
   padding: 11px 10px 12px 10px;
 }
 
-#select_actions_disabled_top{
+#select_actions_disabled_top {
   padding: 4px 6px 4px 10px;
   top: 1px;
   position: relative;
@@ -3231,7 +3227,7 @@ ul#selectLink.clickMenu > li > a {
 
 }
 
-#select_actions_disabled_top > a.parent-dropdown-handler{
+#select_actions_disabled_top > a.parent-dropdown-handler {
   font-size: 14px;
 }
 
@@ -3286,7 +3282,7 @@ table.subpanel-table ul.subpanel > a {
   border-radius: 4px;
 }
 
-.single  a {
+.single a {
   padding: 0px;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
@@ -3377,13 +3373,12 @@ table.subpanel-table .pagination .sugar_action_button > form > a {
   border-radius: 4px;
 }
 
-table.subpanel-table .pagination .sugar_action_button > form > a  {
+table.subpanel-table .pagination .sugar_action_button > form > a {
   padding: 0px;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
   border-radius: 4px;
 }
-
 
 #actionLinkTop li.sugar_action_button:hover {
   background-color: $list-view-header-bg;
@@ -3533,7 +3528,6 @@ table.subpanel-table .pagination .sugar_action_button.hover > form > a {
   background-color: $list-view-header-bg;
 }
 
-
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu {
   line-height: 0px;
   padding: 1px;
@@ -3549,7 +3543,7 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
   min-width: 32px;
 }
 
-ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button:hover  {
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button:hover {
   background-color: $list-view-header-bg;
 }
 
@@ -3599,6 +3593,7 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.sub
   padding: 0 5px 0 7px;
   font-weight: normal;
 }
+
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItemHilite {
   padding: 0 5px 0 7px;
   font-weight: normal;
@@ -3710,7 +3705,6 @@ label.selected-actions-label {
   display: none;
 }
 
-
 #actionLinkTop li.sugar_action_button ul.subnav.ddopen > li:last-child a {
   border-bottom: none;
 }
@@ -3727,7 +3721,6 @@ label.selected-actions-label {
   border-bottom: none;
 }
 
-
 li.sugar_action_button.hover.opened {
   position: relative;
   height: 40px;
@@ -3738,8 +3731,6 @@ li.sugar_action_button.hover.opened {
 ul.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button label.glyphicon.bootstrap-checkbox {
   margin-left: 4px;
 }
-
-
 
 div.modal-content {
   margin: 0 auto;
@@ -3792,7 +3783,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.searchLink.listViewLinkButton {
   top: -1px;
 }
 
-ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > li > a{
+ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > li > a {
   margin: 0;
   padding: 5px 8px 7px 7px;
   top: -1px;
@@ -3809,7 +3800,7 @@ div.qtip.qtip-default {
 }
 
 .dateTimeRangeChoice select {
-  width:125px;
+  width: 125px;
 }
 
 .dateRangeInput {
@@ -3825,6 +3816,7 @@ div.qtip.qtip-default {
 .search_form .view {
   padding: 5px 0px 0px 30px;
 }
+
 .modal-content .search_form .view {
   background-color: initial;
 }
@@ -3972,6 +3964,7 @@ div.qtip.qtip-default {
     width: 600px;
   }
 }
+
 @media (max-width: 594px) {
   .modal-search .col-xs-12.col-sm-12.col-md-12.col-lg-8 {
     width: 100%;
@@ -4017,7 +4010,6 @@ div.qtip.qtip-default {
 .modal-search .col-lg-4 {
   float: left;
 }
-
 
 .modal-search .search_fields_basic .col-xs-12 {
   width: 30%;
@@ -4073,4 +4065,16 @@ div.qtip.qtip-default {
 
 .paginationActionButtons .selectActionsDisabled {
   margin: 0 3px 3px 0;
+}
+
+.searchTabHeader {
+  display: none;
+}
+
+@media (max-width: 460px) {
+
+  .searchTabHeader.active {
+    display: block;
+  }
+
 }
