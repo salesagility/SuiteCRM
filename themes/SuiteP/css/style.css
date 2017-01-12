@@ -1067,7 +1067,7 @@ footer.collapsedSidebar {
   background-color: #65697A;
   color: #A2A5AF;
   padding: 12px 12px 12px 12px;
-  border: 3px solid #65697A;
+  border: 0px solid transparent;
   border-radius: 3px;
   letter-spacing: 1px;
   line-height: normal;
@@ -1236,7 +1236,8 @@ footer.collapsedSidebar {
   background-position: 80px 2px;
   background-repeat: no-repeat;
   color: #FFFFFF;
-  padding: 11px 32px 12px 12px;
+  padding: 0px 32px 0px 12px;
+  line-height: 40px;
   border-radius: 3px;
   letter-spacing: 2px;
   text-align: center;
@@ -10373,6 +10374,9 @@ select#sales_stage_advanced {
 
   .col-sm-6 .edit-view-field input[type="text"] {
     width: 90%; }
+
+  .col-sm-6 [type=bool] {
+    line-height: 40px; }
 
   .col-sm-6 .edit-view-field textarea {
     width: 90%; }

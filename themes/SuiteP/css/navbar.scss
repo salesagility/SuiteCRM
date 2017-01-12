@@ -704,9 +704,8 @@
   background-color: $navbar-search-bg;
   color: $navbar-search-text-color;
   padding: 12px 12px 12px 12px;
-  border: 3px solid $navbar-search-bg;
+  border: 0px solid transparent;
   border-radius: 3px;
-  //float: left;
   letter-spacing: 1px;
   line-height: normal;
   width: 200px;
@@ -917,12 +916,6 @@
   margin-right: 15px;
 }
 
-.quickcreatetop {
-  //float: left;
-  //margin-top: ($navbar-height / 4);
-  //margin-right: 15px;
-}
-
 .quickcreatetop .dropdown-toggle {
   display: inline-block;
   font-size: 13px;
@@ -931,9 +924,9 @@
   background-position: 80px 2px;
   background-repeat: no-repeat;
   color: $navbar-quick-create-link-color;
-  padding: 11px 32px 12px 12px;
+  padding: 0px 32px 0px 12px;
+  line-height: $button-line-height;
   border-radius: 3px;
-  //float: left;
   letter-spacing: 2px;
   text-align: center;
   text-decoration: none;
@@ -949,7 +942,6 @@
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   text-decoration: none;
-  //background-position: 80px -56px;
 }
 
 .quickcreatetop .dropdown-menu {

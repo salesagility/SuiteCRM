@@ -2581,10 +2581,6 @@ input#btn_ActionLine.button[type="button"] {
   margin-bottom: 5px;
 }
 
-//.col-sm-6 .edit-view-field input[type="text"] {
-//  width: 90%;
-//}
-
 .edit-view-field #duration_hours {
   margin-right: 8px;
   width: 80px;
@@ -3422,6 +3418,10 @@ select#sales_stage_advanced {
 
   .col-sm-6 .edit-view-field input[type="text"] {
     width: 90%;
+  }
+
+  .col-sm-6 [type=bool] {
+    line-height: $input-line-height;
   }
 
   .col-sm-6 .edit-view-field textarea {
