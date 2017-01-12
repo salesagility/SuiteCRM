@@ -2635,6 +2635,14 @@ input#btn_ActionLine.button[type="button"] {
   width: 88%;
 }
 
+.edit-view-row-item  table {
+  background-color: $main-alternate-bg;
+}
+
+.edit-view-row-item  table {
+  background-color: $main-alternate-bg;
+}
+
 #conditionLines_head{
   background: none;
 }
@@ -3416,6 +3424,23 @@ select#sales_stage_advanced {
     width: 90%;
   }
 
+  .col-sm-6 .edit-view-field textarea {
+    width: 90%;
+  }
+
+  textarea#description {
+    width: 45%;
+  }
+
+  .col-sm-8.edit-view-field textarea {
+    width: 45%;
+  }
+
+  [field=bool].col-sm-8.edit-view-field {
+    height: $button-line-height;
+    line-height: $button-line-height;
+  }
+
   .col-sm-8.edit-view-field #parent_name {
     width: 45%;
   }
@@ -3423,7 +3448,26 @@ select#sales_stage_advanced {
   .col-sm-8.edit-view-field input.sqsEnabled {
     width: 45%;
   }
+}
 
+@media (min-width: 1025px) {
+  .col-sm-6 .col-sm-8.edit-view-field input.sqsEnabled {
+    width: 65%;
+  }
+
+
+  #EditView_tabs .edit [type="checkbox"][name=alt_checkbox] {
+    margin-top: 15px;
+  }
+
+  .edit-view-field [name=alt_checkbox] {
+    margin-top: 15px;
+  }
+
+  .edit-view-row-item [field=internal] {
+    height: $button-line-height;
+    line-height: $button-line-height;
+  }
 }
 
 .sub-header {
@@ -4945,6 +4989,12 @@ table tr#delegates_search {
   table#lineItems table tr td table tbody tr td span.hidden.alignedLabel {
     display: inline;
   }
+}
+
+/* popup in studio */
+.masked .yui-simple-dialog {
+  // Overridding inline style
+  z-index: 10!important;
 }
 
 /* popup dialog on home page */
