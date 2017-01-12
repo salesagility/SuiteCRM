@@ -1045,7 +1045,7 @@ footer.collapsedSidebar {
 
 .search_form label {
   font-weight: normal;
-  color: #817D8D; }
+  color: #afaabf; }
 
 .searchformdropdown .form-control:focus {
   border-color: transparent; }
@@ -1073,7 +1073,7 @@ footer.collapsedSidebar {
   line-height: normal;
   width: 200px;
   min-height: 40px;
-  -webkit-text-fill-color: #817D8D;
+  -webkit-text-fill-color: #afaabf;
   -webkit-box-shadow: 0 0 0 1000px #65697A inset; }
 
 .searchform .query_string:-webkit-autofill {
@@ -5131,7 +5131,7 @@ a.listViewTdToolsS1 {
 #massassign_form h3 {
   font-size: 14px;
   font-weight: normal;
-  color: #817D8D;
+  color: #afaabf;
   margin: 14px 20px 0 0; }
 
 #massassign_form .button {
@@ -5142,7 +5142,7 @@ a.listViewTdToolsS1 {
   margin-bottom: 0px; }
 
 #mass_update_table {
-  color: #817D8D; }
+  color: #afaabf; }
 
 #mass_update_table td {
   padding-left: 15px;
