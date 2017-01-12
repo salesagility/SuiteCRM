@@ -187,7 +187,8 @@
                         displayColumns: cols.join('|'),
                         query: 'true',
                         use_stored_query: 'true',
-                        last_search_tab: listViewSearchIcon.getLatestSearchDialogType()
+                        last_search_tab: listViewSearchIcon.getLatestSearchDialogType(),
+                        save_columns_order: 'true'
                     }, function () {
                         //close form and refresh page after save
                         $('#columnsFilterDialog > div > div > div.modal-footer > button.btn.button.purple.btn-default').click();
