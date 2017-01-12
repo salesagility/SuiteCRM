@@ -55,7 +55,7 @@
                         {foreach from=$modules.modules item=module key=modulekey}
                             <li role="presentation" data-test="1">
                                 {capture name=moduleTabId assign=moduleTabId}moduleTab_{$smarty.foreach.moduleList.index}_{$module}{/capture}
-                                <a href="javascript:void(0)" onclick="window.location.href = 'index.{sugar_link id=$moduleTabId module=$modulekey link_only=1 data=$module extraparams=$extraparams}'">
+                                <a href="javascript:void(0)" onclick="window.location.href = '{sugar_link id=$moduleTabId module=$modulekey link_only=1 data=$module extraparams=$extraparams}'">
                                     {$module}
                                     {if $modulekey !='Home' && $modulekey !='Calendar'}
                                         <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module={$modulekey}'"></span>
