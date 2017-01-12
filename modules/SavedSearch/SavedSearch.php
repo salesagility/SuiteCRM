@@ -307,7 +307,7 @@ class SavedSearch extends SugarBean
         $ignored_inputs = array('PHPSESSID', 'module', 'action', 'saved_search_name', 'saved_search_select', 'advanced', 'Calls_divs', 'ACLRoles_divs');
 
         $contents = $_REQUEST;
-        /*if ($id == null) */$focus->name = $contents['saved_search_name'];
+        $focus->name = $contents['saved_search_name'];
         $focus->search_module = $contents['search_module'];
 
         foreach ($contents as $input => $value) {
