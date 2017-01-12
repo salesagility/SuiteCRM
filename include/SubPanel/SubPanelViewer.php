@@ -90,10 +90,16 @@ $layout_def_key = '';
 if(!empty($_REQUEST['layout_def_key'])){
 	$layout_def_key = $_REQUEST['layout_def_key'];
 }
+require_once ('include/SubPanel/SubPanelDefinitions.php') ;
+// retrieve the definitions for all the available subpanels for this module from the subpanel
+$bean = BeanFactory::getBean($module);
+$spd = new SubPanelDefinitions ( $bean ) ;
+$aSubPanelObject = $spd->load_subpanel ( $subpanel ) ;
 
-$subpanel_object = new SubPanel($module, $record, $subpanel,null, $layout_def_key, $collection);
 
+$subpanel_object = new SubPanel($module, $record, $subpanel, $aSubPanelObject, $layout_def_key, $collection);
 $subpanel_object->setTemplateFile('include/SubPanel/SubPanelDynamic.html');
+
 echo (empty($_REQUEST['inline']))?$subpanel_object->get_buttons():'' ;  
 
 $subpanel_object->display();

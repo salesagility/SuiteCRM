@@ -68,7 +68,6 @@ $viewdefs['Contacts']['ConvertLead'] = array(
                 'title',
             ), 
             array (
-                
                 'last_name',
                 'department',
             ),
@@ -93,7 +92,8 @@ $viewdefs['Contacts']['ConvertLead'] = array(
                 'lead_source',
             ),
             array (
-                'email1'
+                'email1',
+
             ),
             array(
                 'description'

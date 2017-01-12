@@ -167,15 +167,6 @@
 					} else {
 						dropDownHandle = $(parent.find("span"));
 					}
-						if(menuNode.hasClass("fancymenu")){
-							dropDownHandle.addClass("ab");
-							dropDownHandle.tipTip({maxWidth: "auto",
-							   edgeOffset: 10,
-		                       content: "More Actions",
-		                       defaultPosition: "top"});
-
-						}
-
 
 
 						//add click handler to handle

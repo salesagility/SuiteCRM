@@ -42,5 +42,5 @@
 <div class="clear"></div>
 <div class="error">{$MOD.LBL_SYNCED_RECURRING_MSG}</div>
 {/if}
-{{include file='include/DetailView/header.tpl'}}
+{{sugar_include type="smarty" file='include/DetailView/header.tpl'}}
 

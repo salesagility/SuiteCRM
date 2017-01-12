@@ -972,7 +972,7 @@ function return_application_language($language)
     }
 
     $temp_app_strings = $app_strings;
-    $default_language = $sugar_config['default_language'];
+    $default_language = isset($sugar_config['default_language']) ? $sugar_config['default_language'] : null;
 
     $langs = array();
     if ($language != 'en_us') {
@@ -2318,6 +2318,14 @@ function getImagePath($image_name)
 
 function getWebPath($relative_path)
 {
+    $current_theme = SugarThemeRegistry::current();
+    $theme_directory = $current_theme->dirName;
+    if(strpos($relative_path, "themes".DIRECTORY_SEPARATOR.$theme_directory) === false) {
+        $test_path = SUGAR_PATH.DIRECTORY_SEPARATOR."themes".DIRECTORY_SEPARATOR.$theme_directory.DIRECTORY_SEPARATOR.$relative_path;
+        if(file_exists($test_path)) {
+            $resource_name = "themes".DIRECTORY_SEPARATOR.$theme_directory.DIRECTORY_SEPARATOR.$relative_path;
+        }
+    }
     //if it has  a :// then it isn't a relative path
     if (substr_count($relative_path, '://') > 0) {
         return $relative_path;
@@ -4279,8 +4287,16 @@ function createGroupUser($name)
 
 function _getIcon($iconFileName)
 {
-    $iconName = "icon_{$iconFileName}.gif";
-    $iconFound = SugarThemeRegistry::current()->getImageURL($iconName, false);
+    if(file_exists(SugarThemeRegistry::current()->getImagePath().DIRECTORY_SEPARATOR.'icon_'.$iconFileName.'.svg')) {
+        $iconName = "icon_{$iconFileName}.svg";
+        $iconFound = SugarThemeRegistry::current()->getImageURL($iconName, false);
+    }
+    else {
+        $iconName = "icon_{$iconFileName}.gif";
+        $iconFound = SugarThemeRegistry::current()->getImageURL($iconName, false);
+    }
+
+
 
     //First try un-ucfirst-ing the icon name
     if (empty($iconFound)) {

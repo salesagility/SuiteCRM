@@ -823,6 +823,15 @@ class ViewConvertLead extends SugarView
                 $newActivity->$key = $bean->id;
             }
 
+            //check users connected to bean
+            if($activity->load_relationship("users")){
+                $userList = $activity->users->getBeans();
+                if(count($userList) > 0 && $newActivity->load_relationship("users")) {
+                    foreach ($userList as $user) {
+                        $newActivity->users->add($user->id);
+                    }
+                }
+            }
             //parent (related to field) should be blank unless it is explicitly sent in
             //it is not sent in unless the account is being created as well during lead conversion
             $newActivity->parent_id =  $parentID;

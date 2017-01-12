@@ -64,7 +64,7 @@
 ModuleBuilder.setMode('{$TYPE}');
 closeMenus();
 {literal}
-//document.getElementById('HideHandle').parentNode.style.display = 'none';
+
 var MBLoader = new YAHOO.util.YUILoader({
     require : ["layout", "element", "tabview", "treeview", "history", "cookie", "sugarwidgets"],
     loadOptional: true,

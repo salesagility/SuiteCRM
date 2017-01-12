@@ -48,8 +48,8 @@
 		<tr>
 		<th colspan="4" align="left" ><h4>{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP2}</h4></th>
 		</tr>
-		<tr><td class="wizard-step-info" colspan="3"><label>{$MOD.LBL_WIZARD_BUDGET_MESSAGE}</label></td><td>&nbsp;</td></tr>
-		<tr><td class="datalabel" colspan="4">&nbsp;</td></tr>
+		<tr><td class="wizard-step-info" colspan="3"><label>{$MOD.LBL_WIZARD_BUDGET_MESSAGE}</label></td><td class="emptyField">&nbsp;</td></tr>
+		<tr class="emptyRow"><td class="datalabel" colspan="4">&nbsp;</td></tr>
 		<tr>
 		<td scope="col"><span sugar='slot14'>{$MOD.LBL_CAMPAIGN_BUDGET}</span sugar='slot'></td>
 		<td ><span sugar='slot14b'><input type="text" size="10" maxlength="15" id="budget" name="wiz_step2_budget" title="{$MOD.LBL_CAMPAIGN_BUDGET}" value="{$CAMP_BUDGET}"></span sugar='slot'></td>

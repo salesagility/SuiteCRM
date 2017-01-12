@@ -203,7 +203,7 @@ EOQ;
 							$secureLink = ($useSiteURL ? $sugar_config['site_url'] . '/' : '') . "public/{$id}";
 							// create a copy with correct extension by mime type
 							if(!file_exists('public')) {
-								sugar_mkdir('public', 777);
+								sugar_mkdir('public', 0777);
 							}
 							if(copy($file_location, "public/{$id}.{$mime_type}")) {
 								$secureLink .= ".{$mime_type}";

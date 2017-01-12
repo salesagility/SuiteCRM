@@ -815,6 +815,9 @@ function add_error_style(formname, input, txt, flash) {
 	                        tabView.selectTab(i);
 	                }
 	            }
+						  if(typeof selectTabOnErrorInputHandle == 'function') {
+								selectTabOnErrorInputHandle(inputHandle);
+							}
 	        }
 		}
 		window.setTimeout("inputsWithErrors[" + (inputsWithErrors.length - 1) + "].style.backgroundColor = '';", 2000);
@@ -1181,7 +1184,6 @@ function validate_form(formname, startsWith){
 								}
 							break;
 							case 'in_array':
-								arr = eval(validate[formname][i][arrIndex]);
 								operator = validate[formname][i][operatorIndex];
 								item1 = trim(form[validate[formname][i][nameIndex]].value);
 								if (operator.charAt(0) == 'u') {
@@ -1191,11 +1193,28 @@ function validate_form(formname, startsWith){
 									item1 = item1.toLowerCase();
 									operator = operator.substring(1);
 								}
-								for(j = 0; j < arr.length; j++){
-									val = arr[j];
-									if((operator == "==" && val == item1) || (operator == "!=" && val != item1)){
-										isError = true;
-										add_error_style(formname, validate[formname][i][nameIndex], invalidTxt + " " +	validate[formname][i][msgIndex]);
+								// Get all fields related to the selected module (including custom fields)
+								var current_fields = '';
+								var current_module = document.getElementsByName("view_module")[0].value;
+								$.ajax({
+									type: "GET",
+									url: "index.php?to_pdf=1&module=ModuleBuilder&action=getModuleFields&current_module=" + current_module,
+									async: false,
+									success: function(result) {
+										current_fields = JSON.parse(result);
+									},
+									error: function(xhr, status, error) {
+										var err = eval("(" + xhr.responseText + ")");
+									}
+								});
+
+								for (k = 0; k < current_fields.length; k++) {
+									if(isError != true) {
+										val = current_fields[k].toUpperCase();
+										if ((operator == "==" && val == item1) || (operator == "!=" && val != item1)) {
+											isError = true;
+											add_error_style(formname, validate[formname][i][nameIndex], 'Invalid Value: Field Name already exists');
+										}
 									}
 								}
 							break;

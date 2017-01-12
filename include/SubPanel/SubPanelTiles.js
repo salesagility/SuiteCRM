@@ -1,6 +1,9 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -28,9 +31,9 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 var request_id=0;var current_child_field='';var current_subpanel_url='';var child_field_loaded=new Object();var request_map=new Object();function get_module_name()
 {if(typeof(window.document.forms['DetailView'])=='undefined'){return'';}else{if(typeof(window.document.forms['DetailView'].elements['subpanel_parent_module'])!='undefined'&&window.document.forms['DetailView'].elements['subpanel_parent_module'].value!=''){return window.document.forms['DetailView'].elements['subpanel_parent_module'].value;}
@@ -125,7 +128,7 @@ return false;if(confirmMsg!=null){if(!confirm(confirmMsg)){if("function"===typeo
 {cancelCallback();}
 return false;}else{disableOnUnloadEditView(theForm);}}
 SUGAR.subpanelUtils.removeSubPanel();var button_elements=YAHOO.util.Selector.query('td.buttons',theDiv,false);YAHOO.util.Dom.setStyle(button_elements,'display','');button_elements=YAHOO.util.Selector.query('ul.SugarActionMenu',theDiv,false);YAHOO.util.Dom.setStyle(button_elements,'display','');return false;},loadSubpanelGroupFromMore:function(group){SUGAR.subpanelUtils.updateSubpanelMoreTab(group);SUGAR.subpanelUtils.loadSubpanelGroup(group);},updateSubpanelMoreTab:function(group){var moreTab=document.getElementById(SUGAR.subpanelUtils.subpanelMoreTab+'_sp_tab');moreTab.id=group+'_sp_tab';moreTab.getElementsByTagName('a')[0].innerHTML=group;moreTab.getElementsByTagName('a')[0].href="javascript:SUGAR.subpanelUtils.loadSubpanelGroup('"+group+"');";var menuLink=document.getElementById(group+'_sp_mm');menuLink.id=SUGAR.subpanelUtils.subpanelMoreTab+'_sp_mm';menuLink.href="javascript:SUGAR.subpanelUtils.loadSubpanelGroupFromMore('"+SUGAR.subpanelUtils.subpanelMoreTab+"');";menuLink.innerHTML=SUGAR.subpanelUtils.subpanelMoreTab;SUGAR.subpanelUtils.subpanelMoreTab=group;},removeSubPanel:function(){var currentPanelEl=null;if(typeof currentPanelDiv!='undefined'&&currentPanelDiv!=null){currentPanelEl=document.getElementById(currentPanelDiv);}
-if(currentPanelEl!=null){currentPanelEl.parentNode.removeChild(currentPanelEl);SUGAR.ajaxUI.cleanGlobals();currentPanelDiv=null;}},loadSubpanelGroup:function(group){if(group==SUGAR.subpanelUtils.currentSubpanelGroup)return;if(SUGAR.subpanelUtils.loadedGroups[group]){SUGAR.subpanelUtils.updateSubpanel(group);}else{SUGAR.subpanelUtils.loadedGroups.push(group);var needed=[];for(group_sp in SUGAR.subpanelUtils.subpanelGroups[group]){if(typeof(SUGAR.subpanelUtils.subpanelGroups[group][group_sp])=='string'&&!document.getElementById('whole_subpanel_'+SUGAR.subpanelUtils.subpanelGroups[group][group_sp])){needed.push(SUGAR.subpanelUtils.subpanelGroups[group][group_sp]);}}
+if(currentPanelEl!=null){currentPanelEl.parentNode.removeChild(currentPanelEl);SUGAR.ajaxUI.cleanGlobals();currentPanelDiv=null;}},loadSubpanelGroup:function(group){if(SUGAR.subpanelUtils.loadedGroups[group]){SUGAR.subpanelUtils.updateSubpanel(group);}else{SUGAR.subpanelUtils.loadedGroups.push(group);var needed=[];for(group_sp in SUGAR.subpanelUtils.subpanelGroups[group]){if(typeof(SUGAR.subpanelUtils.subpanelGroups[group][group_sp])=='string'&&!document.getElementById('whole_subpanel_'+SUGAR.subpanelUtils.subpanelGroups[group][group_sp])){needed.push(SUGAR.subpanelUtils.subpanelGroups[group][group_sp]);}}
 var success=function(){SUGAR.subpanelUtils.updateSubpanelEventHandlers(needed);SUGAR.subpanelUtils.updateSubpanels(group);};if(needed.length){ajaxStatus.showStatus(SUGAR.language.get('app_strings','LBL_LOADING'));SUGAR.util.retrieveAndFill(SUGAR.subpanelUtils.requestUrl+needed.join(','),'subpanel_list',null,success,null,true);}else{SUGAR.subpanelUtils.updateSubpanels(group);}}
 SUGAR.subpanelUtils.setGroupCookie(group);},updateSubpanels:function(group){var sp_list=document.getElementById('subpanel_list');for(sp in sp_list.childNodes){if(sp_list.childNodes[sp].id){sp_list.childNodes[sp].style.display='none';}}
 for(group_sp in SUGAR.subpanelUtils.subpanelGroups[group]){if(typeof(SUGAR.subpanelUtils.subpanelGroups[group][group_sp])!='string')

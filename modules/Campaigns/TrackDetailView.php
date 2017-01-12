@@ -164,7 +164,7 @@ if(isset($focus->campaign_type) && $focus->campaign_type == "NewsLetter"){
         $latest_marketing_id = '';
         if(isset($_REQUEST['mkt_id'])) $selected_marketing_id = $_REQUEST['mkt_id'];
 
-        $options_str .= '<option value="all">--None--</option>';
+        $options_str .= '<option value="all">'.$app_strings["LBL_CAMPAIGN_NONE"].'</option>';
         //query for all email marketing records related to this campaign
         $latest_marketing_query = "select id, name, date_modified from email_marketing where campaign_id = '$focus->id' order by date_modified desc";
 
