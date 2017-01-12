@@ -2581,9 +2581,9 @@ input#btn_ActionLine.button[type="button"] {
   margin-bottom: 5px;
 }
 
-.col-sm-6 .edit-view-field input[type="text"] {
-  width: 50%;
-}
+//.col-sm-6 .edit-view-field input[type="text"] {
+//  width: 90%;
+//}
 
 .edit-view-field #duration_hours {
   margin-right: 8px;
@@ -3411,6 +3411,19 @@ select#sales_stage_advanced {
   .col-sm-6 input[type="text"]#first_name {
     width: 48.5%;
   }
+
+  .col-sm-6 .edit-view-field input[type="text"] {
+    width: 90%;
+  }
+
+  .col-sm-8.edit-view-field #parent_name {
+    width: 45%;
+  }
+
+  .col-sm-8.edit-view-field input.sqsEnabled {
+    width: 45%;
+  }
+
 }
 
 .sub-header {
