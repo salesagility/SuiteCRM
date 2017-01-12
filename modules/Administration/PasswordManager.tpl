@@ -255,16 +255,32 @@
 											<th align="left" scope="row" colspan="2"><h4>{$MOD.LBL_USER_LOCKOUT}</h4></th>
 										</tr>
 										<tr>
-											<td width="25%" scope="row">{$MOD.LBL_MAX_FAILED_LOGINS}:&nbsp{sugar_help text=$MOD.LBL_MAX_FAILED_LOGINS_HELP WIDTH=400}</td>
+											<td width="25%" scope="row">{$MOD.LBL_ENABLE_MAX_FAILED_LOGINS}:</td>
 											<td scope="row" width="25%" >
-												<input type='text' maxlength="3" style="width:2em" name='userlockout_maxfailedlogins'  value='{$config.userlockout.maxfailedlogins}'>
+												<input type='checkbox' id="maxFailedLogin" {if $config.userlockout.maxfailedlogins}checked="checked"{/if}>&nbsp;
+											</td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr id="maxFailedLoginsRow">
+											<td width="25%" scope="row">{$MOD.LBL_MAX_FAILED_LOGINS}:&nbsp{sugar_help text=$MOD.LBL_MAX_FAILED_LOGINS_HELP WIDTH=400}</td>
+											<td scope="row" width="25%">
+												<input type='text' maxlength="3" style="width:2em" id='userlockout_maxfailedlogins' name='userlockout_maxfailedlogins'  value='{$config.userlockout.maxfailedlogins}'>
+											</td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td width="25%" scope="row">{$MOD.LBL_AUTO_UNLOCK}:&nbsp{sugar_help text=$MOD.LBL_AUTO_UNLOCK_HELP WIDTH=400}</td>
+											<td scope="row" width="25%" >
+												<input type='checkbox' id="autoUnlock" {if $config.userlockout.automaticunlocktime}checked="checked"{/if}>&nbsp;
 											</td>
 											<td>&nbsp;</td><td>&nbsp;</td>
 										</tr>
-										<tr>
+										<tr id="autoUnlockRow">
 											<td width="25%" scope="row">{$MOD.LBL_AUTO_UNLOCK_TIME}:&nbsp{sugar_help text=$MOD.LBL_AUTO_UNLOCK_TIME_HELP WIDTH=400}</td>
 											<td scope="row" width="25%" >
-												<input type='text' maxlength="10" style="width:5em" name='userlockout_automaticunlocktime'  value='{$config.userlockout.automaticunlocktime}'>&nbsp;<span>{$MOD.LBL_AUTO_UNLOCK_TIME_UNITS}</span>
+												<input type='text' maxlength="10" style="width:5em" id='userlockout_automaticunlocktime' name='userlockout_automaticunlocktime'  value='{$config.userlockout.automaticunlocktime}'>&nbsp;<span>{$MOD.LBL_AUTO_UNLOCK_TIME_UNITS}</span>
 											</td>
 											<td>&nbsp;</td><td>&nbsp;</td>
 										</tr>
@@ -525,6 +541,27 @@ document.getElementById('forgotpassword_checkbox').checked=true;
 
 {literal}
 <script>
+$(document).ready(function(){
+  $('#maxFailedLogin').change(function() {
+	if($('#maxFailedLogin').is(':checked')){
+      $('#maxFailedLoginsRow').show();
+    }else{
+		$('#maxFailedLoginsRow').hide();
+		$('#userlockout_maxfailedlogins').val(0);
+	}
+  });
+  $('#maxFailedLogin').change();
+	$('#autoUnlock').change(function() {
+	if($('#autoUnlock').is(':checked')){
+      $('#autoUnlockRow').show();
+    }else{
+		$('#autoUnlockRow').hide();
+	  	$('#userlockout_automaticunlocktime').val(0);
+	}
+  });
+  $('#autoUnlock').change();
+});
+
 function addcheck(form){{/literal}
 	addForm('ConfigurePasswordSettings');
 

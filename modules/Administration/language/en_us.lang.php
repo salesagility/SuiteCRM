@@ -1270,5 +1270,9 @@ $mod_strings = array(
     'LBL_AUTO_UNLOCK_TIME_UNITS' => 'minutes',
     'ERR_MAX_FAILED_LOGINS' => 'Please specify a valid value for the number of max failed logins',
     'ERR_AUTOMATIC_UNLOCK_TIME' => 'Please specify a valid value for the automatic unlock time',
+    'LBL_ENABLE_MAX_FAILED_LOGINS' => 'Lock users after a number of failed logins',
+    'LBL_ENABLE_MAX_FAILED_LOGINS_HELP' => '',
+    'LBL_AUTO_UNLOCK' => 'Automatically unlock locked users',
+    'LBL_AUTO_UNLOCK_HELP' => 'Unlock locked users after a configurable amount of time',
 );
 
