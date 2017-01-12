@@ -142,6 +142,11 @@ function buildEditField(){
                     var relate_js = getRelateFieldJS(field, module, id);
                     $(_this).append(relate_js);
                     SUGAR.util.evalScript($(_this).html());
+                    // Issue 2344 and 2499 changes - Dump existing QSProcessedFieldsArray to enable multiple QS on multiple rows.
+                    var fieldToCheck = 'EditView_' + field + '_display';
+                    if(fieldToCheck in QSProcessedFieldsArray) {
+                        delete QSProcessedFieldsArray[fieldToCheck];
+                    }
                     //Needs to be called to enable quicksearch/typeahead functionality on the field.
                     enableQS(true);
                 }
