@@ -118,7 +118,7 @@
         toggleSearchDialog: function (dialogType) {
             if (dialogType == 'latest') {
                 if (this.selectedSavedSearch != '') {
-                    dialogType = latestSearchDialogType;
+                    dialogType = 'advanced';
                 }
                 else {
                     dialogType = this.getLatestSearchDialogType();
