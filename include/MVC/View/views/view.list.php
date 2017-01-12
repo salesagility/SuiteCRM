@@ -145,7 +145,7 @@ class ViewList extends SugarView
             }
         }
         $this->storeQuery = new StoreQuery();
-        if (!isset($_REQUEST['query']) || (!isset($_REQUEST['save_columns_order']) || !$_REQUEST['save_columns_order'])) {
+        if (!isset($_REQUEST['query'])) {
             $this->storeQuery->loadQuery($this->module);
             $this->storeQuery->populateRequest();
         } else {
