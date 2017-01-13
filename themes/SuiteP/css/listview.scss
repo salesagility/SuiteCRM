@@ -544,6 +544,7 @@ a.listViewTdToolsS1 {
 
 #selectLinkTop {
   min-width: 32px;
+  margin-right: 5px;
 }
 
 #selectLinkTop .sugar_action_button {
@@ -552,6 +553,7 @@ a.listViewTdToolsS1 {
 
 #selectLinkBottom {
   min-width: 32px;
+  margin-right: 5px;
 }
 
 #selectLinkBottom .sugar_action_button {
@@ -3270,7 +3272,7 @@ listViewLinkButton {
   top: 1px; /* ??? */
   position: relative;
   height: 27px;
-  margin-right: 0px;
+  margin-right: 5px;
 }
 
 #select_actions_disabled_bottom {
@@ -3278,7 +3280,7 @@ listViewLinkButton {
   top: 1px; /* ??? */
   position: relative;
   height: 27px;
-  margin-right: 0px;
+  margin-right: 5px;
 }
 
 #detail_header_action_menu > .sugar_action_button > ul.subnav {
