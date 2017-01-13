@@ -1934,6 +1934,10 @@ div.modal-content {
   max-width: 100%;
 }
 
+.modal-search div.modal-content {
+  width: initial;
+}
+
 div.modal-header > h4 {
   font-size: 19px;
   color: $main-font-color;
