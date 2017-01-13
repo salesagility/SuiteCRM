@@ -365,10 +365,7 @@ function changeFirstTab(src) {
     $('#xstab0').html(selectedHtml);
 
     var i = $(src).attr('id').replace('tab','') - 1;
-    var desktopTab = '#tab' + i;
-    console.log(desktopTab);
     selectTab(parseInt(i));
-    console.log(parseInt(i));
     return true;
 }
 // End of custom jQuery
