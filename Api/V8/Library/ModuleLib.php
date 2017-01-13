@@ -291,35 +291,29 @@ class ModuleLib
     }
 
     /**
-     * @param $modules
-     * @param $hash
+     * @param array $modules
+     * @param boolean $hash
      *
      * @return array
      */
-    public function getLanguageDefinition($modules, $hash)
+    public function getLanguageDefinition(array $modules)
     {
         global $current_language;
 
         $results = [];
-        if (!empty($modules)) {
-            foreach ($modules as $mod) {
-                if (strtolower($mod) == 'app_strings') {
-                    $values = return_application_language($current_language);
-                    $key = 'app_strings';
-                } else {
-                    if (strtolower($mod) == 'app_list_strings') {
-                        $values = return_app_list_strings_language($current_language);
-                        $key = 'app_list_strings';
-                    } else {
-                        $values = return_module_language($current_language, $mod);
-                        $key = $mod;
-                    }
-                }
+        foreach ($modules as $mod) {
+            if (strtolower($mod) === 'app_strings') {
+                $values = return_application_language($current_language);
+                $key = 'app_strings';
+            } elseif (strtolower($mod) === 'app_list_strings') {
+                $values = return_app_list_strings_language($current_language);
+                $key = 'app_list_strings';
+            } else {
+                $values = return_module_language($current_language, $mod);
+                $key = $mod;
+            }
 
-                if (strtolower($hash) === 'true') {
-                    $values = md5(serialize($values));
-                }
-
+            if (!empty($values)) {
                 $results[$key] = $values;
             }
         }

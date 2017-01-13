@@ -277,9 +277,8 @@ class ModuleController extends Api
         }
     }
 
-    //SuiteCRM/service/api/v8/restapi.php/get_language_definition?modules[]=Accounts&modules[]=Emails
     /**
-     * @param Request  $req
+     * @param Request $req
      * @param Response $res
      * @param array $args
      *
@@ -290,18 +289,18 @@ class ModuleController extends Api
         $lib = new ModuleLib();
         $data = $req->getParsedBody();
 
-        $modules = '';
+        $modules = [];
         if (!empty($data['modules'])) {
             $modules = $data['modules'];
         }
 
-        $hash = 'false';
+        $result = $lib->getLanguageDefinition($modules);
 
-        if (isset($data['hash'])) {
-            $hash = $data['hash'];
+        if (!empty($result)) {
+            return $this->generateResponse($res, 200, $result, 'Success');
         }
 
-        return $this->generateResponse($res, 200, $lib->getLanguageDefinition($modules, $hash), 'Success');
+        return $this->generateResponse($res, 422, 'Invalid Modules', 'Failure');
     }
 
     //SuiteCRM/service/api/v8/restapi.php/get_last_viewed?modules[]=Accounts&modules[]=Emails
