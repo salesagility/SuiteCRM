@@ -55,7 +55,7 @@
                         {foreach from=$modules.modules item=module key=modulekey}
                             <li role="presentation" data-test="1">
                                 {capture name=moduleTabId assign=moduleTabId}moduleTab_{$smarty.foreach.moduleList.index}_{$module}{/capture}
-                                <a href="javascript:void(0)" onclick="window.location.href = 'index.php{sugar_link id=$moduleTabId module=$modulekey link_only=1 data=$module extraparams=$extraparams}'">
+                                <a href="javascript:void(0)" onclick="window.location.href = '{sugar_link id=$moduleTabId module=$modulekey link_only=1 data=$module extraparams=$extraparams}'">
                                     {$module}
                                     {if $modulekey !='Home' && $modulekey !='Calendar'}
                                         <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module={$modulekey}'"></span>
@@ -741,33 +741,8 @@
                     </ul>
                 </li>
             </ul>
-            {*<div id="globalLinks" class="dropdown nav navbar-nav globalLinks-desktop" >*}
-            {*<li id="usermenu" class="usermenu" aria-expanded="false">*}
-            {*<a>*}
-            {*<span class="user_icon"> </span> {$CURRENT_USER}*}
-            {*<span class="caret"></span>*}
-            {*</a>*}
-            {*</li>*}
 
-            {*<ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu1">*}
-            {*<li role="presentation">*}
-            {*<a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>*}
-            {*{$APP.LBL_PROFILE}*}
-            {*</a>*}
-            {*</li>*}
-            {*{foreach from=$GCLS item=GCL name=gcl key=gcl_key}*}
-            {*<li role="presentation">*}
-            {*<a id="{$gcl_key}_link"*}
-            {*href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>*}
-            {*</li>*}
-            {*{/foreach}*}
-            {*<li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'*}
-            {*class='utilsLink'>{$LOGOUT_LABEL}</a></li>*}
-            {*</ul>*}
-            {*</div>*}
         </div>
-
-
 </nav>
 <!--End Responsive Top Navigation Menu -->
 {if $THEME_CONFIG.display_sidebar}

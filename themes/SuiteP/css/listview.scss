@@ -760,8 +760,12 @@ a.listViewTdToolsS1 {
   margin-right: 10px;
 }
 
+#massassign_form .tabForm {
+  background-color: transparent;
+  margin-bottom: 0px;
+}
+
 #mass_update_table {
-  background-color: $default-btn-color;
   color: $navbar-search-color;
 }
 
@@ -1323,6 +1327,15 @@ a.listViewTdToolsS1 {
   width: 100%;
 }
 
+form#MassAssign_SecurityGroups {
+  background-color: #e6e6e6;
+  padding: 10px 20px 10px 20px;
+  margin: 20px 0 20px 0;
+  border-radius: 3px;
+  float: left;
+  width: 100%;
+}
+
 #massupdate_form {
   margin-top: 20px;
 }
@@ -1332,7 +1345,7 @@ a.listViewTdToolsS1 {
 }
 
 #mass_update_table tbody tr td {
-  padding-bottom: 15px;
+  padding-bottom: 0px;
 }
 
 /*** Search (ListView) ***/
@@ -2776,27 +2789,27 @@ ul.clickMenu {
 
 .listViewLinkButton, .listViewLinkButton .sugar_action_button {
   min-width: 32px;
-  margin-left: 8px;
+  margin-left: 0px;
 }
 
 #selectLinkTop, #selectLinkTop .sugar_action_button {
   min-width: 32px;
-  margin-left: 8px;
+  margin-left: 0px;
 }
 
 #selectLinkBottom, #selectLinkBottom .sugar_action_button {
   min-width: 32px;
-  margin-left: 8px;
+  margin-left: 0px;
 }
 
 .listViewLinkButton, .listViewLinkButton .selectActionsDisabled {
   min-width: 32px;
-  margin-left: 8px;
+  margin-left: 0px;
 }
 
 #selectLinkTop, #selectLinkTop .selectActionsDisabled {
   min-width: 32px;
-  margin-left: 8px;
+  margin-left: 0px;
 }
 
 ul.clickMenu li ul.subnav {

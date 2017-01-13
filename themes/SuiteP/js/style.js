@@ -49,21 +49,6 @@ SUGAR.measurements = {
 
 SUGAR.loaded_once = false;
 
-$(document).ajaxStop( function() {
-        // collapse subpanels when device is mobile / tablet
-        if($(window).width() <= SUGAR.measurements.breakpoints.large && SUGAR.loaded_once == false) {
-            $('.panel-collapse').removeClass('in');
-            $('.panel-heading-collapse a').removeClass('in');
-            $('.panel-heading-collapse a').addClass('collapsed');
-        }
-
-        if(SUGAR.loaded_once == false) {
-          $('.sub-panel .table-responsive').footable();
-        }
-
-        SUGAR.loaded_once = true;
-});
-
 $(document).ready(function () {
     loadSidebar();
     $("ul.clickMenu").each(function (index, node) {
@@ -375,9 +360,12 @@ $(document).ready(function() {
 
 
 function changeFirstTab(src) {
-    var selected = $(src);
+    var selected = $(src).attr('id');
     var selectedHtml = $(selected.context).html();
     $('#xstab0').html(selectedHtml);
+
+    var i = $(src).attr('id').replace('tab','') - 1;
+    selectTab(parseInt(i));
     return true;
 }
 // End of custom jQuery

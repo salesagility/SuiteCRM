@@ -11,7 +11,6 @@
 }
 
 //Style
-
 .navbar-inverse {
   background: $navbar-bg;
 
@@ -41,7 +40,7 @@
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     overflow-y: auto;
-    min-width: 240px;
+    min-width: 185px;
 
     li {
       padding: 0;
@@ -131,6 +130,10 @@
           //padding-top: 36px;
           //padding-bottom: 35px;
         }
+      }
+
+      .currentTab a {
+        color: $navbar-link-color-hover;
       }
 
       .currentTab a,
@@ -406,37 +409,37 @@
 .mobileheader .dropdown-menu ul li a.recent-links-detail {
   display: inline-block;
   border: none;
-  width: 85%;
+  width: 80%;
 }
 
 .mobileheader .dropdown-menu ul li a.favorite-links-detail {
   display: inline-block;
   border: none;
-  width: 85%;
+  width: 80%;
 }
 
 .topnav .dropdown-menu li a.recent-links-detail {
   display: inline-block;
   border: none;
-  width: 85%;
+  width: 75%;
 }
 
 .topnav .dropdown-menu li a.favorite-links-detail {
   display: inline-block;
   border: none;
-  width: 85%;
+  width: 75%;
 }
 
 .with-actions .recent-links-detail {
   display: inline-block;
   border: none;
-  width: 85%;
+  width: 75%;
 }
 
 .with-actions .favorite-links-detail {
   display: inline-block;
   border: none;
-  width: 85%;
+  width: 75%;
 }
 
 .navbar-inverse .dropdown-menu li a.recent-links-edit {
@@ -593,13 +596,6 @@
   color: $navbar-link-color;
 }
 
-.globalLinks-desktop {
-  //margin-top: ($navbar-height / 4);
-}
-
-.globalLinks-desktop {
-  //margin-top: ($navbar-height / 4) + ($navbar-height / 6.5);
-}
 
 .globalLinks-desktop .user-dropdown li a {
   color: $navbar-menu-link-color;
@@ -684,6 +680,14 @@
   color: $navbar-search-color;
 }
 
+.searchformdropdown .form-control:focus {
+  border-color: transparent;
+}
+
+.searchform .form-control:focus {
+  border-color: transparent;
+}
+
 .mobileheader .modulename a {
   background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=p_create_arrow.png");
   background-position: 92.5% 5px;
@@ -700,9 +704,8 @@
   background-color: $navbar-search-bg;
   color: $navbar-search-text-color;
   padding: 12px 12px 12px 12px;
-  border: 3px solid $navbar-search-bg;
+  border: 0px solid transparent;
   border-radius: 3px;
-  //float: left;
   letter-spacing: 1px;
   line-height: normal;
   width: 200px;
@@ -913,12 +916,6 @@
   margin-right: 15px;
 }
 
-.quickcreatetop {
-  //float: left;
-  //margin-top: ($navbar-height / 4);
-  //margin-right: 15px;
-}
-
 .quickcreatetop .dropdown-toggle {
   display: inline-block;
   font-size: 13px;
@@ -927,9 +924,8 @@
   background-position: 80px 2px;
   background-repeat: no-repeat;
   color: $navbar-quick-create-link-color;
-  padding: 11px 32px 12px 12px;
+  padding: 10px 32px 14px 12px;
   border-radius: 3px;
-  //float: left;
   letter-spacing: 2px;
   text-align: center;
   text-decoration: none;
@@ -945,7 +941,6 @@
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   text-decoration: none;
-  //background-position: 80px -56px;
 }
 
 .quickcreatetop .dropdown-menu {
@@ -1186,6 +1181,7 @@
     right: 0;
     clear: both;
     width: auto;
+    overflow: visible;
   }
 }
 
@@ -1310,8 +1306,19 @@
     background-color: transparent;
   }
 
+  .navbar-search .dropdown-menu {
+    width: 300px;
+  }
 
+  .searchformdropdown .btn {
+    background-image: url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
+    background-color: $navbar-search-bg;
+  }
 
+  .searchformdropdown .btn:hover {
+    background-image: url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
+    background-color: $navbar-search-btn-bg;
+  }
   /* overridding bootstrap needs to be stacked */
   .globalLinks-mobile .btn-default.active.focus,
   .globalLinks-mobile .btn-default.active:focus,
@@ -1325,7 +1332,7 @@
     color: $default-btn-color;
     background-color: transparent;
     border-color: transparent;
-    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
+    background-image: url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon_small.png");
 
   }
 
@@ -1955,7 +1962,7 @@
     float: left;
     overflow-x: hidden;
     overflow-y: scroll;
-    width: 300px;
+    width: 256px;
 
   }
 
@@ -2048,6 +2055,9 @@
     width: 28%;
   }
 
+  .desktop-toolbar .navbar-brand-container {
+    margin-left: 30px;
+  }
 
   .desktop-bar > .toolbar {
     display: inline-block;
@@ -2232,9 +2242,16 @@
     text-indent: -9999px;
   }
 
+  .searchformdropdown .btn {
+    background-color: $navbar-search-bg;
+  }
+
+  .searchformdropdown .btn:hover {
+    background-color: $navbar-search-btn-bg;
+  }
+
   .searchformdropdown button:focus {
     display: block;
-    background-color: transparent;
     background-image: none, url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
     background-position: 13px 10px;
     background-repeat: no-repeat;
@@ -2251,7 +2268,6 @@
   .searchformdropdown button {
     margin: 0;
     display: block;
-    background-color: transparent;
     background-image: none, url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
     background-position: 5px 10px;
     background-repeat: no-repeat;
