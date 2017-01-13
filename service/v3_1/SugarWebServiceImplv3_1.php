@@ -216,7 +216,8 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3 {
         if (!self::$helperObject->checkSessionAndModuleAccess($session, 'invalid_session', $module_name, 'write', 'no_access', $error)) {
             $GLOBALS['log']->info('End: SugarWebServiceImpl->set_entry');
             return;
-        } // if
+        } // if.3
+
         $class_name = $beanList[$module_name];
         require_once($beanFiles[$class_name]);
         $seed = new $class_name();
@@ -229,7 +230,8 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3 {
                 $seed->retrieve($value);
             }
         }
-
+        $GLOBALS['log']->fatal("before");
+        $GLOBALS['log']->fatal(print_r($seed, true));
         $return_fields = array();
         foreach($name_value_list as $name=>$value){
             if($module_name == 'Users' && !empty($seed->id) && ($seed->id != $current_user->id) && $name == 'user_hash'){
@@ -247,6 +249,9 @@ class SugarWebServiceImplv3_1 extends SugarWebServiceImplv3 {
                 $return_fields[] = $value['name'];
             }
         }
+        $GLOBALS['log']->fatal("after");
+        $GLOBALS['log']->fatal(print_r($seed, true));
+
         if (!self::$helperObject->checkACLAccess($seed, 'Save', $error, 'no_access') || ($seed->deleted == 1  && !self::$helperObject->checkACLAccess($seed, 'Delete', $error, 'no_access'))) {
             $GLOBALS['log']->info('End: SugarWebServiceImpl->set_entry');
             return;

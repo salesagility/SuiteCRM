@@ -38,7 +38,6 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
-
 <script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
 
 
@@ -303,9 +302,20 @@ function lvg_nav(m,id,act,offset,t){
     {literal}
     }
 }{/literal}
-{literal}
-    function lvg_dtails(id){{/literal}
-        return SUGAR.util.getAdditionalDetails( '{$pageData.bean.moduleDir|default:$params.module}',id, 'adspan_'+id);{literal}}{/literal}
+
+    function lvg_dtails(id, elem)
+	{ldelim}
+		var return_value = SUGAR.util.getAdditionalDetails( '{$pageData.bean.moduleDir|default:$params.module}',id, 'adspan_'+id);
+
+		if($('.button-toggle-expanded').length != 0)
+		{ldelim}
+			setInterval(function() {ldelim}
+				$('.ui-dialog').css('left', '37px');
+				$('.ui-dialog').css('top', '20px');
+				{rdelim}, 200);
+		{rdelim}
+        return return_value;
+	{rdelim}
 </script>
 <script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>
 {/if}

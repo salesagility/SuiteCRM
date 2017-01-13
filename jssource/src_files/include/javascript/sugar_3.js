@@ -3358,7 +3358,7 @@ SUGAR.util = function () {
 					}
 
 					$dialog.dialog('open');
-					$(".ui-dialog").appendTo("#content");
+					return $(".ui-dialog").appendTo("#content");
 				}
 
 				success = function(data) {

@@ -129,6 +129,7 @@ class ListViewSmarty extends ListViewDisplay{
             $this->ss->assign('hide_subpanels', true);
         }
 
+
 		$this->ss->assign('sugarconfig', $this->displayColumns);
 		$this->ss->assign('displayColumns', $this->displayColumns);
 		$this->ss->assign('APP',$app_strings);
@@ -231,6 +232,7 @@ class ListViewSmarty extends ListViewDisplay{
 
 		if(!$this->should_process) return $GLOBALS['app_strings']['LBL_SEARCH_POPULATE_ONLY'];
         global $app_strings, $sugar_version, $sugar_flavor, $server_unique_key, $currentModule, $app_list_strings;
+        $this->ss->assign('dataview', 'ListView');
         $this->ss->assign('moduleListSingular', $app_list_strings["moduleListSingular"]);
         $this->ss->assign('moduleList', $app_list_strings['moduleList']);
         $this->ss->assign('data', $this->data['data']);
