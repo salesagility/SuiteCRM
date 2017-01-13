@@ -228,8 +228,6 @@ function validateFormAndSave(field,id,module,type){
     });
 }
 
-
-
 /**
  * Checks if any of the parent elemenets of the current element have the class inlineEditActive this means they are within
  * the current element and have not clicked away from the field. Note we need to check on .cal_panel too for the calendar popup.
@@ -240,6 +238,7 @@ function validateFormAndSave(field,id,module,type){
 
 var ie_field, ie_id, ie_module, ie_type, ie_message_field;
 var clickListenerActive = false;
+
 function clickedawayclose(field,id,module, type){
     // Fix for issue #373 get name from system field name.
     message_field = 'LBL_' + field.toUpperCase();
@@ -257,6 +256,7 @@ function clickedawayclose(field,id,module, type){
     ie_message_field = message_field;
     clickListenerActive = true;
 }
+
 $(document).on('click', function (e) {
     if(clickListenerActive) {
         var field = ie_field;
@@ -272,23 +272,36 @@ $(document).on('click', function (e) {
             var user_value = getInputValue(field, type);
 
             /**
-             * A flag to fix Issue #2545, some parts of the site were comparing HTML to plain text, this flag checks
+             * A flag to fix Issue 2545, some parts of the site were comparing HTML to plain text, this flag checks
              * against Plain Text and normal HTML to trigger the alert/confirm dialogue box. Due to the function
-             * "LoadFieldHTMLValue" called on line 270, declared at line 509, comparison has to be done this way.
+             * "LoadFieldHTMLValue" called on line #270, declared at line #509, comparison has to be done this way.
              *
              * Additionally, auto populated fields (QS fields) have '_display' at the end of their field names which
              * throws off any form of comparison check. An additional check has to be done to ensure we're considering
              * these field names. An alternative solution would be to ensure these names do not have a trailing
              * '_display' in the field names in the future.
-             *
-             * @param fieldName = String of the field name with the trailing '_display' attached.
-             * @param alertFlag = Flag to trigger the alert/confirmation dialogue if the output/input doesn't match.
              */
+
+            // Return user value to empty string for comparison if undefined at this stage (empty field check fix)
+            if (user_value == undefined) {
+                user_value = '';
+            }
 
             if (outputValueParse != user_value && output_value != user_value) {
                 var fieldName = field + '_display';
-                user_value = $("#" + fieldName).val();
+                var replacementUserValue = $("#" + fieldName).val();
+
+                // Parsing empty text returns undefined, if the string returns anything other than undefined, replace
+                // user_value with this value.
+                if (replacementUserValue != undefined) {
+                    user_value = replacementUserValue;
+                }
             }
+
+            // Debug Output
+            console.log('Output Value: ' + output_value);
+            console.log('Output Value Parse: ' + outputValueParse);
+            console.log('User Value: ' + user_value);
 
             if (user_value == outputValueParse || user_value == output_value) {
                 var alertFlag = false;
