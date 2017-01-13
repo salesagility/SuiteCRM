@@ -265,7 +265,6 @@ $(document).on('click', function (e) {
         var type = ie_type;
         var message_field = ie_message_field;
 
-
         if (!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")) {
             var output_value = loadFieldHTMLValue(field, id, module);
             var outputValueParse = $(output_value).text();
@@ -297,11 +296,6 @@ $(document).on('click', function (e) {
                     user_value = replacementUserValue;
                 }
             }
-
-            // Debug Output
-            console.log('Output Value: ' + output_value);
-            console.log('Output Value Parse: ' + outputValueParse);
-            console.log('User Value: ' + user_value);
 
             if (user_value == outputValueParse || user_value == output_value) {
                 var alertFlag = false;
