@@ -45,6 +45,8 @@
 	    $("ul.clickMenu").each(function(index, node){
 	        $(node).sugarActionMenu();
 	    });
+
+        if($('.edit-view-pagination').children().length == 0) $('.saveAndContinue').remove();
     });
     {/literal}
 </script>
