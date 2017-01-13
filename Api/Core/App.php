@@ -14,7 +14,7 @@ $_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'];
 
 $version = $matches[1];
 
-$app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
+$app = new \Slim\App();
 
 $routeFiles = (array) glob('Api/'.$version.'/Route/*.php');
 
@@ -27,6 +27,14 @@ $container = $app->getContainer();
 foreach ($services as $service => $closure) {
     $container[$service] = $closure;
 }
+
+$container['errorHandler'] = function ($container) {
+    return function ($request, $response, $exception) use ($container) {
+        return $response->withStatus(500)
+            ->withHeader('Content-Type', 'text/html')
+            ->write('There\'s been an error');
+    };
+};
 
 if ($_SERVER['REQUEST_METHOD'] != 'OPTIONS') {
     $app->add(new \Slim\Middleware\JwtAuthentication([
