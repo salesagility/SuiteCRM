@@ -2234,7 +2234,11 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     background-color: $navbar-alert-count-bg;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
-    left: 1px;
+    left: 6px;
+    width: 26px;
+    height: 27px;
+    top: -1px;
+    padding: 6px;
   }
 
 }
@@ -4329,4 +4333,8 @@ div.qtip.qtip-default {
     display: block;
   }
 
+}
+
+td.paginationActionButtons ul.selectmenu>li>a.clearSearchIcon {
+  padding: 3px 4px 4px 7px;
 }
