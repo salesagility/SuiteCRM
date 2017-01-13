@@ -1,5 +1,4 @@
 {if !$columnsFilterDialogAdded}
-    <script src="include/javascript/jquery/jquery.ui.touch-punch.min.js"></script>
     <div id="columnsFilterDialog" class="modal fade modal-columns-filter" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
