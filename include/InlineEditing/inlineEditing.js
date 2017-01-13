@@ -264,13 +264,40 @@ $(document).on('click', function (e) {
         var module = ie_module;
         var type = ie_type;
         var message_field = ie_message_field;
+
+
         if (!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")) {
             var output_value = loadFieldHTMLValue(field, id, module);
+            var outputValueParse = $(output_value).text();
             var user_value = getInputValue(field, type);
-            // Fix for issue #373 strip HTML tags for correct comparison
-            var output_value_compare = $(output_value).text();
-            if (user_value != output_value_compare) {
-                var r = confirm(SUGAR.language.translate('app_strings', 'LBL_CONFIRM_CANCEL_INLINE_EDITING') + message_field);
+
+            /**
+             * A flag to fix Issue #2545, some parts of the site were comparing HTML to plain text, this flag checks
+             * against Plain Text and normal HTML to trigger the alert/confirm dialogue box. Due to the function
+             * "LoadFieldHTMLValue" called on line 270, declared at line 509, comparison has to be done this way.
+             *
+             * Additionally, auto populated fields (QS fields) have '_display' at the end of their field names which
+             * throws off any form of comparison check. An additional check has to be done to ensure we're considering
+             * these field names. An alternative solution would be to ensure these names do not have a trailing
+             * '_display' in the field names in the future.
+             *
+             * @param fieldName = String of the field name with the trailing '_display' attached.
+             * @param alertFlag = Flag to trigger the alert/confirmation dialogue if the output/input doesn't match.
+             */
+
+            if (outputValueParse != user_value && output_value != user_value) {
+                var fieldName = field + '_display';
+                user_value = $("#" + fieldName).val();
+            }
+
+            if (user_value == outputValueParse || user_value == output_value) {
+                var alertFlag = false;
+            } else {
+                var alertFlag = true;
+            }
+
+            if (alertFlag) {
+                var r = confirm(SUGAR.language.translate('app_strings', 'LBL_CONFIRM_CANCEL_INLINE_EDITING') + ' ' + message_field);
                 if (r == true) {
                     var output = setValueClose(output_value);
                     clickListenerActive = false;
