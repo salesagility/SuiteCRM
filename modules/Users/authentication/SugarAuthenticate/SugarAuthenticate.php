@@ -83,6 +83,15 @@ class SugarAuthenticate{
 		self::__construct();
 	}
 
+    /**
+     * Given a user returns true if this user is currently locked out based on the `user_locked_out` and
+     * on whether the unlock time has passed, if set.
+     *
+     * @see SugarAuthenticate::loginAuthenticate()
+     * @param User $user
+     *
+     * @return bool
+     */
 	private function isUserLockedOut(User $user){
 	    global $sugar_config;
 	    if(!$user->getPreference('user_locked_out')){
