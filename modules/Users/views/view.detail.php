@@ -122,8 +122,6 @@ class UsersViewDetail extends ViewDetail {
                         $buttons[] = "<input title='".translate('LBL_GENERATE_PASSWORD_BUTTON_TITLE','Users')."' class='button' LANGUAGE=javascript onclick='generatepwd(\"".$this->bean->id."\");' type='button' name='password' value='".translate('LBL_GENERATE_PASSWORD_BUTTON_LABEL','Users')."'>";
                     }
                 }
-            }
-            if (is_admin($current_user)) {
                 if ($this->bean->getPreference('user_locked_out')) {
                     $buttons[] =
                         "<input title='" .
