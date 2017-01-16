@@ -49,21 +49,6 @@ SUGAR.measurements = {
 
 SUGAR.loaded_once = false;
 
-$(document).ajaxStop( function() {
-        // collapse subpanels when device is mobile / tablet
-        if($(window).width() <= SUGAR.measurements.breakpoints.large && SUGAR.loaded_once == false) {
-            $('.panel-collapse').removeClass('in');
-            $('.panel-heading-collapse a').removeClass('in');
-            $('.panel-heading-collapse a').addClass('collapsed');
-        }
-
-        if(SUGAR.loaded_once == false) {
-          $('.sub-panel .table-responsive').footable();
-        }
-
-        SUGAR.loaded_once = true;
-});
-
 $(document).ready(function () {
     loadSidebar();
     $("ul.clickMenu").each(function (index, node) {
@@ -305,6 +290,7 @@ $(function() {
 });
 
 
+
 // JavaScript fix to remove unrequired classes on smaller screens where sidebar is obsolete
 $(window).resize(function () {
     if ($(window).width() < 979) {
@@ -374,9 +360,12 @@ $(document).ready(function() {
 
 
 function changeFirstTab(src) {
-    var selected = $(src);
+    var selected = $(src).attr('id');
     var selectedHtml = $(selected.context).html();
     $('#xstab0').html(selectedHtml);
+
+    var i = $(src).attr('id').replace('tab','') - 1;
+    selectTab(parseInt(i));
     return true;
 }
 // End of custom jQuery
@@ -483,7 +472,6 @@ $(function () {
             };
 
         }
-
         if (isDetailViewPage()) {
             tabActiveSelector = '#user_detailview_tabs.yui-navset.detailview_tabs.yui-navset-top ul.yui-nav li.selected a';
             tabFramesLength = 3;
@@ -491,7 +479,7 @@ $(function () {
                 // User Profile
                 'tab1': [
                     // User Profile & Employee Information
-                    'form#user_detailview_tabs.yui-navset.detailview_tabs.yui-navset-top div.yui-content',
+                    'div#user_detailview_tabs.yui-navset.detailview_tabs.yui-navset-top div.yui-content',
                     // Email Settings
                     '#email_options',
                     // Security Groups Management etc..
@@ -624,7 +612,6 @@ $(function () {
     setTimeout(function(){
         hideEmptyFormCellsOnTablet();
     }, 1500);
-});
 
     var listViewCheckboxInit = function() {
         var checkboxesInitialized = false;
@@ -691,3 +678,5 @@ $(function () {
             }
         });
     }, 100);
+
+});

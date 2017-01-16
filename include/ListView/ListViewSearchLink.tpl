@@ -45,11 +45,11 @@
 </ul>
 <ul class="searchAppliedAlert hidden clickMenu selectmenu searchAppliedAlertLink SugarActionMenu listViewLinkButton listViewLinkButton_{$action_menu_location}">
     <li class="sugar_action_button desktopOnly">
-        <a href="javascript:void(0)" class="glyphicon glyphicon-list-alt parent-dropdown-handler" onclick="SUGAR.savedViews.shortcutDropdown('_none', '{$savedSearchData.module}');"></a>
+        <a href="javascript:void(0)" class="glyphicon glyphicon-list-alt clearSearchIcon parent-dropdown-handler" onclick="SUGAR.savedViews.shortcutDropdown('_none', '{$savedSearchData.module}');"></a>
         <a href="javascript:void(0)" class="glyphicon glyphicon-remove" onclick="SUGAR.savedViews.shortcutDropdown('_none', '{$savedSearchData.module}');">&Cross;</a>
     </li>
     <li class="sugar_action_button mobileOnly">
-        <a href="javascript:void(0)" class="glyphicon glyphicon-list-alt parent-dropdown-handler" onclick=""></a>
+        <a href="javascript:void(0)" class="glyphicon glyphicon-list-alt clearSearchIcon parent-dropdown-handler" onclick=""></a>
         <a href="javascript:void(0)" class="glyphicon glyphicon-remove" onclick="SUGAR.savedViews.shortcutDropdown('_none', '{$savedSearchData.module}');"></a>
     </li>
 </ul>
