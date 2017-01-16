@@ -1,11 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -47,6 +46,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * based on the users validation
  *
  */
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 class SugarAuthenticate{
 	var $userAuthenticateClass = 'SugarAuthenticateUser';
 	var $authenticationDir = 'SugarAuthenticate';
@@ -116,7 +119,7 @@ class SugarAuthenticate{
 	 * @param string $password
 	 * @return boolean
 	 */
-	function loginAuthenticate($username, $password, $fallback=false, $PARAMS = array ()){
+	public function loginAuthenticate($username, $password, $fallback=false, $PARAMS = array ()){
 		global $mod_strings, $sugar_config;
 		unset($_SESSION['login_error']);
 		$usr= new user();
@@ -125,8 +128,8 @@ class SugarAuthenticate{
 		$_SESSION['login_error']='';
 		$_SESSION['waiting_error']='';
 		$_SESSION['hasExpiredPassword']='0';
-		if($this->isUserLockedOut($usr)){
-		    $_SESSION['login_error'] = translate('ERR_USER_IS_LOCKED_OUT', 'Users');
+        if ($this->isUserLockedOut($usr)) {
+            $_SESSION['login_error'] = translate('ERR_USER_IS_LOCKED_OUT', 'Users');
             return false;
         }
 		if ($this->userAuthenticate->loadUserOnLogin($username, $password, $fallback, $PARAMS)) {
@@ -146,16 +149,17 @@ class SugarAuthenticate{
 		}
 		else
 		{
-			//if(!empty($usr_id) && $res['lockoutexpiration'] > 0){
             if(!empty($usr_id)){
 				if (($logout=$usr->getPreference('loginfailed'))=='') {
                     $usr->setPreference('loginfailed', '1');
                 }else{
 	        		$usr->setPreference('loginfailed',$logout+1);
 				}
-				if(!empty($sugar_config['userlockout']['maxfailedlogins']) && ($logout+1) >= $sugar_config['userlockout']['maxfailedlogins']){
-				    $usr->setPreference('user_locked_out', true);
-				    $usr->setPreference('user_locked_out_time', time());
+                if (!empty($sugar_config['userlockout']['maxfailedlogins']) &&
+                    ($logout + 1) >= $sugar_config['userlockout']['maxfailedlogins']
+                ) {
+                    $usr->setPreference('user_locked_out', true);
+                    $usr->setPreference('user_locked_out_time', time());
                 }
 	    		$usr->savePreferencesToDB();
     		}
@@ -184,7 +188,7 @@ class SugarAuthenticate{
 	 * Once a user is authenticated on login this function will be called. Populate the session with what is needed and log anything that needs to be logged
 	 *
 	 */
-	function postLoginAuthenticate(){
+	public function postLoginAuthenticate(){
 
 		global $reset_language_on_default_user, $sugar_config;
 		
@@ -223,7 +227,7 @@ class SugarAuthenticate{
 	 * On every page hit this will be called to ensure a user is authenticated
 	 * @return boolean
 	 */
-	function sessionAuthenticate(){
+	public function sessionAuthenticate(){
 
 		global $module, $action, $allowed_actions;
 		$authenticated = false;
@@ -269,7 +273,7 @@ class SugarAuthenticate{
 	 * @return boolean
 	 */
 
-	function postSessionAuthenticate(){
+	public function postSessionAuthenticate(){
 
 		global $action, $allowed_actions, $sugar_config;
 		$_SESSION['userTime']['last'] = time();
@@ -298,7 +302,7 @@ class SugarAuthenticate{
 	 * Make sure a user isn't stealing sessions so check the ip to ensure that the ip address hasn't dramatically changed
 	 *
 	 */
-	function validateIP() {
+	public function validateIP() {
 		global $sugar_config;
 		// grab client ip address
 		$clientIP = query_client_ip();
@@ -345,7 +349,7 @@ class SugarAuthenticate{
 	 * Called when a user requests to logout
 	 *
 	 */
-	function logout(){
+	public function logout(){
 			session_start();
 			session_destroy();
 			ob_clean();
@@ -360,7 +364,7 @@ class SugarAuthenticate{
 	 * @param STRING $password
 	 * @return STRING $encoded_password
 	 */
-	static function encodePassword($password){
+	public static function encodePassword($password){
 		return strtolower(md5($password));
 	}
 
@@ -368,14 +372,14 @@ class SugarAuthenticate{
 	 * If a user may change there password through the Sugar UI
 	 *
 	 */
-	function canChangePassword(){
+	public function canChangePassword(){
 		return true;
 	}
 	/**
 	 * If a user may change there user name through the Sugar UI
 	 *
 	 */
-	function canChangeUserName(){
+	public function canChangeUserName(){
 		return true;
 	}
 
@@ -385,7 +389,7 @@ class SugarAuthenticate{
      *
      * This function allows the SugarAuthenticate subclasses to perform some pre login initialization as needed
      */
-    function pre_login()
+    public function pre_login()
     {
         if (isset($_SESSION['authenticated_user_id']))
         {
