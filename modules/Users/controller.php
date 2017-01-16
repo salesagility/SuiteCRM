@@ -139,6 +139,7 @@ class UsersController extends SugarController
         }
         $this->bean->setPreference('user_locked_out', false);
         $this->bean->setPreference('user_locked_out_time', '');
+        $this->bean->setPreference('loginfailed','0');
         $this->bean->savePreferencesToDB();
         SugarApplication::appendErrorMessage(translate('LBL_USER_UNLOCKED_MSG','Users'));
         SugarApplication::redirect("index.php?module=Users&record=".$_REQUEST['record']."&action=DetailView");
