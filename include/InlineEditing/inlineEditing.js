@@ -56,20 +56,20 @@ timer = null;
 
 function buildEditField(){
     $(".inlineEdit a").click(function (e) {
-    	
-    	if(e.which !== undefined && e.which === 2){
+
+        if(e.which !== undefined && e.which === 2){
             return;
         }
-        
+
         if(this.id != "inlineEditSaveButton") {
             var linkUrl = $(this).attr("href");
-			var linkTarget = $(this).attr("target");
-			
+            var linkTarget = $(this).attr("target");
+
             if (typeof clicks == 'undefined') {
                 clicks = 0;
             }
             clicks++;
-            
+
             if(e.ctrlKey && clicks == 1){
                 return;
             }
@@ -85,10 +85,10 @@ function buildEditField(){
 
                 timer = setTimeout(function () {
                     // if reaches end of timeout without another click follow link
-					if (linkTarget)
-						window.open(linkUrl, linkTarget);
-					else
-						window.location.href = linkUrl;
+                    if (linkTarget)
+                        window.open(linkUrl, linkTarget);
+                    else
+                        window.location.href = linkUrl;
                     clicks = 0;             //after action performed, reset counter
 
                 }, 500);
@@ -264,6 +264,7 @@ $(document).on('click', function (e) {
         var module = ie_module;
         var type = ie_type;
         var message_field = ie_message_field;
+        var alertFlag = true;
 
         if (!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")) {
             var output_value = loadFieldHTMLValue(field, id, module);
@@ -272,20 +273,15 @@ $(document).on('click', function (e) {
 
             /**
              * A flag to fix Issue 2545, some parts of the site were comparing HTML to plain text, this flag checks
-             * against Plain Text and normal HTML to trigger the alert/confirm dialogue box. Due to the function
-             * "LoadFieldHTMLValue" called on line #270, declared at line #509, comparison has to be done this way.
-             *
-             * Additionally, auto populated fields (QS fields) have '_display' at the end of their field names which
-             * throws off any form of comparison check. An additional check has to be done to ensure we're considering
-             * these field names. An alternative solution would be to ensure these names do not have a trailing
-             * '_display' in the field names in the future.
+             * against Plain Text and normal HTML to trigger the alert/confirm dialogue box.
              */
 
             // Return user value to empty string for comparison if undefined at this stage (empty field check fix)
-            if (user_value == undefined) {
+            if (typeof user_value === "undefined") {
                 user_value = '';
             }
 
+            // QS Fields have '_display' in their field names. An additional check for the this field name pattern.
             if (outputValueParse != user_value && output_value != user_value) {
                 var fieldName = field + '_display';
                 var replacementUserValue = $("#" + fieldName).val();
@@ -299,8 +295,6 @@ $(document).on('click', function (e) {
 
             if (user_value == outputValueParse || user_value == output_value) {
                 var alertFlag = false;
-            } else {
-                var alertFlag = true;
             }
 
             if (alertFlag) {
@@ -376,7 +370,7 @@ function getInputValue(field,type){
                 break;
             case 'bool':
                 if($('#'+ field).is(':checked')){
-                   return "on";
+                    return "on";
                 }else{
                     return "off";
                 }
@@ -418,7 +412,7 @@ function handleSave(field,id,module,type){
     }
 
     if(type == "parent") {
-            parent_type = $('#parent_type').val();
+        parent_type = $('#parent_type').val();
     }
 
 
@@ -499,16 +493,16 @@ function loadFieldHTML(field,module,id) {
         }
     );
     $.ajaxSetup({"async": true});
-     if(result.responseText){
-         try {
-             return (JSON.parse(result.responseText));
-         } catch(e) {
-             return false;
-         }
+    if(result.responseText){
+        try {
+            return (JSON.parse(result.responseText));
+        } catch(e) {
+            return false;
+        }
 
-     }else{
-         return false;
-     }
+    }else{
+        return false;
+    }
 
 
 }
