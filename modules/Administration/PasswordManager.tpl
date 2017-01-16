@@ -250,7 +250,7 @@
 									{/if}
 									</table>
 
-									<table id="userResetPassId" name="userResetPassName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+									<table id="userLockId" name="userLockName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 										<tr>
 											<th align="left" scope="row" colspan="2"><h4>{$MOD.LBL_USER_LOCKOUT}</h4></th>
 										</tr>
@@ -339,7 +339,7 @@
 											<tr>
 												<td width="25%" scope="row" valign='middle'>
 													{$MOD.LBL_LDAP_ENABLE}{sugar_help text=$MOD.LBL_LDAP_HELP_TXT}
-												</td><td valign='middle'><input name="system_ldap_enabled" id="system_ldap_enabled" class="checkbox"  type="checkbox" {$system_ldap_enabled_checked} onclick='toggleDisplay("ldap_display");enableDisablePasswordTable("system_ldap_enabled");'></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+												</td><td valign='middle'><input name="system_ldap_enabled" id="system_ldap_enabled" class="checkbox"  type="checkbox" {$system_ldap_enabled_checked} onclick='toggleDisplay("ldap_display");filterUserLock();enableDisablePasswordTable("system_ldap_enabled");'></td><td>&nbsp;</td><td>&nbsp;</td></tr>
 											<tr>
 												<td colspan='4'>
 													<table  cellspacing='0' cellpadding='1' id='ldap_display' style='display:{$ldap_display}' width='100%'>
@@ -488,7 +488,7 @@
                                     <input name="authenticationClass" id="system_saml_enabled" class="checkbox"
                                        value="SAMLAuthenticate" type="checkbox"
                                        {if $saml_enabled_checked}checked="1"{/if}
-                                       onclick='toggleDisplay("saml_display");enableDisablePasswordTable("system_saml_enabled");'>
+                                       onclick='toggleDisplay("saml_display");filterUserLock();enableDisablePasswordTable("system_saml_enabled");'>
                                     </td><td>&nbsp;</td><td>&nbsp;</td></tr>
                                  <tr>
                                     <td colspan='4'>
@@ -560,7 +560,16 @@ $(document).ready(function(){
 	}
   });
   $('#autoUnlock').change();
+  filterUserLock();
 });
+
+function filterUserLock(){
+  if($('#system_saml_enabled').is(':checked') || $('#system_ldap_enabled').is(':checked')){
+    $('#userLockId').hide();
+  }else{
+    $('#userLockId').show();
+  }
+}
 
 function addcheck(form){{/literal}
 	addForm('ConfigurePasswordSettings');
