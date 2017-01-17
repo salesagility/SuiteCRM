@@ -851,9 +851,20 @@ iframe.teamNoticeBox {
 
 
 .modal-cal-edit .modal-content {
-  width: 90%;
+  width: 95%;
 }
 
 .modal-cal-edit  .modal-lg {
-  width: 80%;
+  width: 90%;
+}
+
+
+@media (min-width: 1350px) {
+  .modal-cal-edit .modal-content {
+    width: 90%;
+  }
+
+  .modal-cal-edit  .modal-lg {
+    width: 80%;
+  }
 }
