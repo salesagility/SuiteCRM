@@ -549,6 +549,9 @@ a.listViewTdToolsS1 {
 #selectLinkBottom {
   min-width: 32px;
   margin-right: 5px;
+  position: relative;
+  line-height: 0;
+  min-height: 16px;
 }
 
 #selectLinkBottom .sugar_action_button {
@@ -797,18 +800,11 @@ a.listViewTdToolsS1 {
   margin-right: 5px;
 }
 
-#selectLinkBottom {
-  position: relative;
-  padding: 1px;
-  line-height: 0;
-  min-height: 16px;
-}
-
 #actionLinkBottom {
   position: relative;
-  padding: 1px;
-  line-height: 0;
   min-height: 16px;
+  font-size: 14px;
+  line-height: 0;
 }
 
 .action-link-bottom {
@@ -848,22 +844,11 @@ a.listViewTdToolsS1 {
   min-height: 16px;
 }
 
-#actionLinkBottom {
-  position: relative;
-  font-size: 14px;
-  line-height: 11px;
-  min-height: 16px;
-}
-
 .action-link-bottom {
   position: relative;
   font-size: 14px;
   line-height: 11px;
   min-height: 16px;
-}
-
-#actionLinkBottom {
-  left: -1px;
 }
 
 .action-link-bottom {
@@ -931,8 +916,9 @@ a.listViewTdToolsS1 {
 
 #select_actions_disabled_bottom {
   position: relative;
-  top: 1px;
-  padding: 4px 10px 4px 10px;
+  padding: 4px 6px 4px 10px;
+  height: 27px;
+  margin-right: 5px;
 }
 
 #detail_header_action_menu > .sugar_action_button > .subnav {
@@ -3138,20 +3124,6 @@ listViewLinkButton {
   padding: 1px;
 }
 
-#selectLinkBottom {
-  min-height: 16px;
-  line-height: 0px;
-  position: relative;
-  padding: 1px;
-}
-
-#actionLinkBottom {
-  min-height: 16px;
-  line-height: 0px;
-  position: relative;
-  padding: 1px;
-}
-
 .action-link-bottom {
   min-height: 16px;
   line-height: 0px;
@@ -3193,10 +3165,6 @@ listViewLinkButton {
 
 #actionLinkBottom input[type=checkbox] {
   margin-top: 5px;
-}
-
-#actionLinkBottom {
-  position: relative;
 }
 
 .action-link-bottom {
@@ -3241,14 +3209,6 @@ listViewLinkButton {
 .action-link-bottom li.sugar_action_button {
   min-width: 32px;
   padding: 11px 10px 12px 10px;
-}
-
-#select_actions_disabled_bottom {
-  padding: 4px 6px 4px 10px;
-  top: 1px; /* ??? */
-  position: relative;
-  height: 27px;
-  margin-right: 5px;
 }
 
 #detail_header_action_menu > .sugar_action_button > ul.subnav {
