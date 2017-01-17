@@ -542,11 +542,6 @@ a.listViewTdToolsS1 {
   border-bottom: none;
 }
 
-#selectLinkTop {
-  min-width: 32px;
-  margin-right: 5px;
-}
-
 #selectLinkTop .sugar_action_button {
   min-width: 32px;
 }
@@ -557,10 +552,6 @@ a.listViewTdToolsS1 {
 }
 
 #selectLinkBottom .sugar_action_button {
-  min-width: 32px;
-}
-
-#selectLinkTop {
   min-width: 32px;
 }
 
@@ -799,10 +790,11 @@ a.listViewTdToolsS1 {
 }
 
 #selectLinkTop {
-  position: relative;
-  padding: 1px;
-  line-height: 0;
   min-height: 16px;
+  line-height: 0px;
+  position: relative;
+  min-width: 32px;
+  margin-right: 5px;
 }
 
 #selectLinkBottom {
@@ -870,14 +862,6 @@ a.listViewTdToolsS1 {
   min-height: 16px;
 }
 
-#actionLinkTop {
-  top: 1px;
-}
-
-.action-link-top {
-  top: -1px;
-}
-
 #actionLinkBottom {
   left: -1px;
 }
@@ -939,9 +923,10 @@ a.listViewTdToolsS1 {
 }
 
 #select_actions_disabled_top {
+  padding: 4px 6px 4px 10px;
   position: relative;
-  top: 1px;
-  padding: 4px 10px 4px 10px;
+  height: 27px;
+  margin-right: 5px;
 }
 
 #select_actions_disabled_bottom {
@@ -3153,13 +3138,6 @@ listViewLinkButton {
   padding: 1px;
 }
 
-#selectLinkTop {
-  min-height: 16px;
-  line-height: 0px;
-  position: relative;
-  padding: 1px;
-}
-
 #selectLinkBottom {
   min-height: 16px;
   line-height: 0px;
@@ -3217,14 +3195,6 @@ listViewLinkButton {
   margin-top: 5px;
 }
 
-#actionLinkTop {
-  position: relative;
-}
-
-.action-link-top {
-  position: relative;
-}
-
 #actionLinkBottom {
   position: relative;
 }
@@ -3271,14 +3241,6 @@ listViewLinkButton {
 .action-link-bottom li.sugar_action_button {
   min-width: 32px;
   padding: 11px 10px 12px 10px;
-}
-
-#select_actions_disabled_top {
-  padding: 4px 6px 4px 10px;
-  top: 1px; /* ??? */
-  position: relative;
-  height: 27px;
-  margin-right: 5px;
 }
 
 #select_actions_disabled_bottom {
