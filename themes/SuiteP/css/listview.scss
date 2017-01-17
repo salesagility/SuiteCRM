@@ -2011,6 +2011,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > l
 #columnsFilterDialog div.modal-content {
   width: 450px;
 }
+
 /***/
 
 ul.clickMenu > li > span.searchAppliedAlert {
@@ -2166,8 +2167,6 @@ div.qtip.qtip-default {
       width: 100%;
     }
   }
-
-
 
   @media (max-width: 594px) {
     .modal-search .form-item {
@@ -2397,6 +2396,7 @@ div.qtip.qtip-default {
     padding: 0px;
   }
 }
+
 /*** Popup ***/
 .popupBody {
   padding: 0;
@@ -3127,11 +3127,9 @@ div.qtip.qtip-default {
   padding: 0px;
 }
 
-
 .list tr.pagination-unique td table.paginationTable tr {
   padding: 0px;
 }
-
 
 .list tr.pagination-unique td table.paginationTable td.paginationActionButtons {
   background-color: $list-view-toolbar-bg;
@@ -3203,19 +3201,19 @@ listViewLinkButton {
   margin-top: 5px;
 }
 
-.listViewLinkButton input[type=checkbox]  {
+.listViewLinkButton input[type=checkbox] {
   margin-top: 5px;
 }
 
-#selectLinkTop input[type=checkbox]  {
+#selectLinkTop input[type=checkbox] {
   margin-top: 5px;
 }
 
-#selectLinkBottom input[type=checkbox]  {
+#selectLinkBottom input[type=checkbox] {
   margin-top: 5px;
 }
 
-#actionLinkBottom input[type=checkbox]  {
+#actionLinkBottom input[type=checkbox] {
   margin-top: 5px;
 }
 
@@ -3591,7 +3589,6 @@ table.subpanel-table .pagination .sugar_action_button > form > a {
   border-radius: 4px;
 }
 
-
 #actionLinkTop li.sugar_action_button:hover {
   background-color: $list-view-header-bg;
 }
@@ -3740,7 +3737,6 @@ table.subpanel-table .pagination .sugar_action_button.hover > form > a {
   background-color: $list-view-header-bg;
 }
 
-
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu {
   line-height: 0px;
   padding: 1px;
@@ -3756,7 +3752,7 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
   min-width: 32px;
 }
 
-ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button:hover  {
+ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button:hover {
   background-color: $list-view-header-bg;
 }
 
@@ -4030,7 +4026,7 @@ div.qtip.qtip-default {
   width: 150px;
 }
 
-ul.clickMenu>li>span.searchAppliedAlert {
+ul.clickMenu > li > span.searchAppliedAlert {
   background-color: #F08377;
   position: absolute;
   line-height: 20px;
@@ -4056,7 +4052,7 @@ div.qtip.qtip-default {
 }
 
 .dateTimeRangeChoice select {
-  width:125px;
+  width: 125px;
 }
 
 .dateRangeInput {
@@ -4335,6 +4331,6 @@ div.qtip.qtip-default {
 
 }
 
-td.paginationActionButtons ul.selectmenu>li>a.clearSearchIcon {
+td.paginationActionButtons ul.selectmenu > li > a.clearSearchIcon {
   padding: 3px 4px 4px 7px;
 }
