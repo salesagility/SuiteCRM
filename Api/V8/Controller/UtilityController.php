@@ -50,7 +50,7 @@ class UtilityController extends Api
 
             //Create the token
             $jwt = \Firebase\JWT\JWT::encode($token, $sugar_config['unique_key']);
-            setcookie('SUITECRM_REST_API_TOKEN', json_encode($jwt),null,null,null,false,true);
+            setcookie('SUITECRM_REST_API_TOKEN', json_encode($jwt),null,null,null,isSSL(),true);
 
             return $this->generateResponse($res, 200, $jwt, 'Success');
         } else {
