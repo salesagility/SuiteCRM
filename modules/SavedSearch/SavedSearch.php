@@ -260,7 +260,7 @@ class SavedSearch extends SugarBean
         $query = $this->contents['query'];
         $orderBy = empty($this->contents['orderBy']) ? 'name' : $this->contents['orderBy'];
         //Reduce the params to avoid the problems caused by URL max length in IE.
-        header($header . '&saved_search_select=' . $saved_search_id . '&saved_search_select_name=' . $saved_search_name . '&orderBy=' . $orderBy . '&sortOrder=' . $this->contents['sortOrder'] . '&query=' . $query . '&searchFormTab=' . $search_form_tab . '&showSSDIV=' . $showDiv);
+        SugarApplication::headerRedirect($header . '&saved_search_select=' . $saved_search_id . '&saved_search_select_name=' . $saved_search_name . '&orderBy=' . $orderBy . '&sortOrder=' . $this->contents['sortOrder'] . '&query=' . $query . '&searchFormTab=' . $search_form_tab . '&showSSDIV=' . $showDiv);
     }
 
     function returnSavedSearchContents($id)
@@ -289,7 +289,7 @@ class SavedSearch extends SugarBean
     function handleDelete($id)
     {
         $this->mark_deleted($id);
-        header("Location: index.php?action=index&module={$_REQUEST['search_module']}&advanced={$_REQUEST['advanced']}&query=true&clear_query=true");
+        SugarApplication::headerRedirect("Location: index.php?action=index&module={$_REQUEST['search_module']}&advanced={$_REQUEST['advanced']}&query=true&clear_query=true");
     }
 
     function handleSave($prefix, $redirect = true, $useRequired = false, $id = null, $searchModuleBean)
@@ -377,7 +377,7 @@ class SavedSearch extends SugarBean
         $return_action = 'index';
         $ajaxLoad = empty($_REQUEST['ajax_load']) ? "" : "&ajax_load=" . $_REQUEST['ajax_load'];
         //Reduce the params to avoid the problems caused by URL max length in IE ( the reduced params can be get from saved search according to saved_search_id).
-        header("Location: index.php?action=$return_action&module=$return_module&saved_search_select={$saved_search_id}{$search_query}&advanced={$advanced}$ajaxLoad");
+        SugarApplication::headerRedirect("Location: index.php?action=$return_action&module=$return_module&saved_search_select={$saved_search_id}{$search_query}&advanced={$advanced}$ajaxLoad");
         die();
     }
 
