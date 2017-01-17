@@ -476,6 +476,12 @@ table.view {
   width: 100%;
 }
 
+[field=number] {
+  vertical-align: middle;
+  line-height: $input-line-height;
+  height: $input-line-height;
+}
+
 .view tr td input[type=checkbox] {
   vertical-align: middle;
 }
