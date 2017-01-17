@@ -671,27 +671,30 @@ if (typeof(ModuleBuilder) == 'undefined') {
 					// user refresh the page or came from direct url
 					(urlVars.module == 'ModuleBuilder' && urlVars.action == 'modulefield' && urlVars.view_package == ''))
 				) {
-					// switch on the preloader message
-					ModuleBuilder.preloader.on();
+					//Fix for issue #707: check if action is not clone
+					if(!(document.popup_form.action.value == 'CloneField')) {
+						// switch on the preloader message
+						ModuleBuilder.preloader.on();
 
-					// set callback functions
-					onSuccess = function(o){
-						// switch off preloader
-						ModuleBuilder.preloader.off();
-						// call the original callback
-						if(ModuleBuilder.updateContent(o)) {
+						// set callback functions
+						onSuccess = function (o) {
+							// switch off preloader
+							ModuleBuilder.preloader.off();
+							// call the original callback
+							if (ModuleBuilder.updateContent(o)) {
+								// refresh page content
+								ModuleBuilder.asyncRequest(YUI_HistoryBookmarkedState, ModuleBuilder.updateContent);
+							}
+						};
+						onFailure = function (o) {
+							// switch off preloader
+							ModuleBuilder.preloader.off();
+							// call the original callback
+							ModuleBuilder.failed(o);
 							// refresh page content
 							ModuleBuilder.asyncRequest(YUI_HistoryBookmarkedState, ModuleBuilder.updateContent);
-						}
-					};
-					onFailure = function(o) {
-						// switch off preloader
-						ModuleBuilder.preloader.off();
-						// call the original callback
-						ModuleBuilder.failed(o);
-						// refresh page content
-						ModuleBuilder.asyncRequest(YUI_HistoryBookmarkedState, ModuleBuilder.updateContent);
-					};
+						};
+					}
 				}
 			}
 			else {
