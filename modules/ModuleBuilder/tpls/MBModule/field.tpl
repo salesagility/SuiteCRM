@@ -54,7 +54,11 @@ addForm('popup_form');
 {if isset($package->name)}
     <input type='hidden' name='view_package' value='{$package->name}'>
 {/if}
-<input type='hidden' name='is_update' value='true'>
+{if $is_update}
+	<input type='hidden' name='is_update' value='true'>
+{else}
+	<input type='hidden' name='is_update' value='false'>
+{/if}
 	{if $hideLevel < 5}
 	    &nbsp;
 	    <input type='button' class='button' name='fsavebtn' value='{$mod_strings.LBL_BTN_SAVE}' 
