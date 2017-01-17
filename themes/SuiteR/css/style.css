@@ -5760,17 +5760,7 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
     line-height: 18.8571px;
     padding: 5px 8px 5px 8px;
 }
-#lineItems .product_group {}
-#lineItems .service_group {}
-#lineItems .add_product_line {}
-#lineItems .add_service_line {}
-#lineItems .group_total_amt {}
-#lineItems .group_discount_amount {}
-#lineItems .group_subtotal_amount {}
-#lineItems .group_tax_amount {}
-#lineItems .group_subtotal_tax_amount {}
-#lineItems .group_total_amount {}
-#lineItems  #addGroup {}
+
 /*Labels Next to Fields*/
 #lineItems  .alignedLabel {
     display: none;
