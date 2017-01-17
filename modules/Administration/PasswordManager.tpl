@@ -3,8 +3,8 @@
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -250,8 +250,41 @@
 									{/if}
 									</table>
 
-
-
+									<table id="userLockId" name="userLockName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+										<tr>
+											<th align="left" scope="row" colspan="2"><h4>{$MOD.LBL_USER_LOCKOUT}</h4></th>
+										</tr>
+										<tr>
+											<td width="25%" scope="row">{$MOD.LBL_ENABLE_MAX_FAILED_LOGINS}:</td>
+											<td scope="row" width="25%" >
+												<input type='checkbox' id="maxFailedLogin" {if $config.userlockout.maxfailedlogins}checked="checked"{/if}>&nbsp;
+											</td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr id="maxFailedLoginsRow">
+											<td width="25%" scope="row">{$MOD.LBL_MAX_FAILED_LOGINS}:&nbsp{sugar_help text=$MOD.LBL_MAX_FAILED_LOGINS_HELP WIDTH=400}</td>
+											<td scope="row" width="25%">
+												<input type='text' maxlength="3" style="width:2em" id='userlockout_maxfailedlogins' name='userlockout_maxfailedlogins'  value='{$config.userlockout.maxfailedlogins}'>
+											</td>
+											<td></td>
+											<td></td>
+										</tr>
+										<tr>
+											<td width="25%" scope="row">{$MOD.LBL_AUTO_UNLOCK}:&nbsp{sugar_help text=$MOD.LBL_AUTO_UNLOCK_HELP WIDTH=400}</td>
+											<td scope="row" width="25%" >
+												<input type='checkbox' id="autoUnlock" {if $config.userlockout.automaticunlocktime}checked="checked"{/if}>&nbsp;
+											</td>
+											<td>&nbsp;</td><td>&nbsp;</td>
+										</tr>
+										<tr id="autoUnlockRow">
+											<td width="25%" scope="row">{$MOD.LBL_AUTO_UNLOCK_TIME}:&nbsp{sugar_help text=$MOD.LBL_AUTO_UNLOCK_TIME_HELP WIDTH=400}</td>
+											<td scope="row" width="25%" >
+												<input type='text' maxlength="10" style="width:5em" id='userlockout_automaticunlocktime' name='userlockout_automaticunlocktime'  value='{$config.userlockout.automaticunlocktime}'>&nbsp;<span>{$MOD.LBL_AUTO_UNLOCK_TIME_UNITS}</span>
+											</td>
+											<td>&nbsp;</td><td>&nbsp;</td>
+										</tr>
+									</table>
 
 						<table id="emailTemplatesId" name="emailTemplatesName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 							<tr>
@@ -306,7 +339,7 @@
 											<tr>
 												<td width="25%" scope="row" valign='middle'>
 													{$MOD.LBL_LDAP_ENABLE}{sugar_help text=$MOD.LBL_LDAP_HELP_TXT}
-												</td><td valign='middle'><input name="system_ldap_enabled" id="system_ldap_enabled" class="checkbox"  type="checkbox" {$system_ldap_enabled_checked} onclick='toggleDisplay("ldap_display");enableDisablePasswordTable("system_ldap_enabled");'></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+												</td><td valign='middle'><input name="system_ldap_enabled" id="system_ldap_enabled" class="checkbox"  type="checkbox" {$system_ldap_enabled_checked} onclick='toggleDisplay("ldap_display");filterUserLock();enableDisablePasswordTable("system_ldap_enabled");'></td><td>&nbsp;</td><td>&nbsp;</td></tr>
 											<tr>
 												<td colspan='4'>
 													<table  cellspacing='0' cellpadding='1' id='ldap_display' style='display:{$ldap_display}' width='100%'>
@@ -455,7 +488,7 @@
                                     <input name="authenticationClass" id="system_saml_enabled" class="checkbox"
                                        value="SAMLAuthenticate" type="checkbox"
                                        {if $saml_enabled_checked}checked="1"{/if}
-                                       onclick='toggleDisplay("saml_display");enableDisablePasswordTable("system_saml_enabled");'>
+                                       onclick='toggleDisplay("saml_display");filterUserLock();enableDisablePasswordTable("system_saml_enabled");'>
                                     </td><td>&nbsp;</td><td>&nbsp;</td></tr>
                                  <tr>
                                     <td colspan='4'>
@@ -508,6 +541,36 @@ document.getElementById('forgotpassword_checkbox').checked=true;
 
 {literal}
 <script>
+$(document).ready(function(){
+  $('#maxFailedLogin').change(function() {
+	if($('#maxFailedLogin').is(':checked')){
+      $('#maxFailedLoginsRow').show();
+    }else{
+		$('#maxFailedLoginsRow').hide();
+		$('#userlockout_maxfailedlogins').val(0);
+	}
+  });
+  $('#maxFailedLogin').change();
+	$('#autoUnlock').change(function() {
+	if($('#autoUnlock').is(':checked')){
+      $('#autoUnlockRow').show();
+    }else{
+		$('#autoUnlockRow').hide();
+	  	$('#userlockout_automaticunlocktime').val(0);
+	}
+  });
+  $('#autoUnlock').change();
+  filterUserLock();
+});
+
+function filterUserLock(){
+  if($('#system_saml_enabled').is(':checked') || $('#system_ldap_enabled').is(':checked')){
+    $('#userLockId').hide();
+  }else{
+    $('#userLockId').show();
+  }
+}
+
 function addcheck(form){{/literal}
 	addForm('ConfigurePasswordSettings');
 
@@ -520,6 +583,8 @@ function addcheck(form){{/literal}
 	addToValidate('ConfigurePasswordSettings', 'passwordsetting_systexpirationtime', 'int', form.required_sys_pwd_exp_time.checked,"{$MOD.ERR_PASSWORD_EXPIRE_TIME}" );
 	addToValidate('ConfigurePasswordSettings', 'passwordsetting_systexpirationlogin', 'int', form.required_sys_pwd_exp_login.checked,"{$MOD.ERR_PASSWORD_EXPIRE_LOGIN}" );
    {literal}}{/literal}
+  addToValidate('ConfigurePasswordSettings', 'userlockout_maxfailedlogins', 'int', false,"{$MOD.ERR_MAX_FAILED_LOGINS} ");
+  addToValidate('ConfigurePasswordSettings', 'userlockout_automaticunlocktime', 'int', false,"{$MOD.ERR_AUTOMATIC_UNLOCK_TIME} ");
 
 
 {literal}	}

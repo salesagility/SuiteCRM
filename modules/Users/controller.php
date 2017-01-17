@@ -1,11 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -44,6 +43,11 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 require_once("include/OutboundEmail/OutboundEmail.php");
 
 class UsersController extends SugarController
@@ -129,6 +133,20 @@ class UsersController extends SugarController
     public function action_save()
     {
         require 'modules/Users/Save.php';
+    }
+
+    public function action_unlockuser(){
+        global $current_user;
+        if (!is_admin($current_user)) {
+            SugarApplication::redirect("index.php?module=Users&record=" . $_REQUEST['record'] . "&action=DetailView");
+            return;
+        }
+        $this->bean->setPreference('user_locked_out', false);
+        $this->bean->setPreference('user_locked_out_time', '');
+        $this->bean->setPreference('loginfailed', '0');
+        $this->bean->savePreferencesToDB();
+        SugarApplication::appendErrorMessage(translate('LBL_USER_UNLOCKED_MSG', 'Users'));
+        SugarApplication::redirect("index.php?module=Users&record=" . $_REQUEST['record'] . "&action=DetailView");
     }
 }	
 

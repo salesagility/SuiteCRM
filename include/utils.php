@@ -389,6 +389,10 @@ function get_sugar_config_defaults()
             'max_cron_runtime' => 30, // max runtime for cron jobs
             'min_cron_interval' => 30, // minimal interval between cron jobs
         ),
+        'userlockout' => array(
+            'maxfailedlogins' => '0',
+            'automaticunlocktime' => '0',
+        ),
     );
 
     if (!is_object($locale)) {

@@ -1262,5 +1262,16 @@ $mod_strings = array(
     'LBL_SECURITYGROUPS_SUGAROUTFITTERS_TITLE' => "SugarOutfitters",
     'LBL_SECURITYGROUPS_SUGAROUTFITTERS' => "Grab the latest version of SecuritySuite and find other SuiteCRM modules, themes, and integrations along with reviews, docs, support, and community verified versions.",
 
+    'LBL_USER_LOCKOUT' => 'User Lockout',
+    'LBL_MAX_FAILED_LOGINS' => 'Max failed logins',
+    'LBL_MAX_FAILED_LOGINS_HELP' => 'The number of failed logins before a user will have their account locked.',
+    'LBL_AUTO_UNLOCK_TIME' => 'Automatic user unlock time',
+    'LBL_AUTO_UNLOCK_TIME_HELP' => 'The number of minutes it takes for a user account to be automatically unlocked.',
+    'LBL_AUTO_UNLOCK_TIME_UNITS' => 'minutes',
+    'ERR_MAX_FAILED_LOGINS' => 'Please specify a valid value for the number of max failed logins',
+    'ERR_AUTOMATIC_UNLOCK_TIME' => 'Please specify a valid value for the automatic unlock time',
+    'LBL_ENABLE_MAX_FAILED_LOGINS' => 'Lock users after a number of failed logins',
+    'LBL_AUTO_UNLOCK' => 'Automatically unlock locked users',
+    'LBL_AUTO_UNLOCK_HELP' => 'Unlock locked users after a configurable amount of time',
 );
 

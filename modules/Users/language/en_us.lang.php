@@ -599,6 +599,8 @@ $mod_strings = array (
     'LBL_LIST_NONINHERITABLE' => "Not Inheritable",
     'LBL_PRIMARY_GROUP' => "Primary Group",
 	'LBL_PASSWORD_MIS_MATCH' => 'mis-match',
+	'LBL_UNLOCK_USER' => 'Unlock user',
+	'LBL_USER_UNLOCKED_MSG' => 'User unlocked',
 ); // END STRINGS DEFS
 
 ?>
