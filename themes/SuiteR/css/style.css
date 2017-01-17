@@ -5777,6 +5777,25 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
     visibility: collapse;
 }
 
+#lineItems .totals {
+    float: right;
+    width: 192px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#lineItems .totals label {
+    width: 50%;
+    font-weight: normal;
+    font-size: 12px;
+    float: left;
+}
+
+#lineItems .totals input {
+    width: 50%;
+    float: right;
+}
+
 /*Product Lines*/
 #lineItems #product_head > td {
     padding: 32px 0 8px 0;
@@ -5858,6 +5877,7 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 #lineItems .product_description {
     height: 50px;
 }
+
 
 /*Service Lines*/
 #lineItems  #service_head td {
