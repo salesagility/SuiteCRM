@@ -631,6 +631,15 @@ if (typeof(ModuleBuilder) == 'undefined') {
 				close: false
 			});
 
+			// get bookmarked url state
+			var YUI_HistoryBookmarkedState = YAHOO.util.History.getBookmarkedState('mbContent');
+			var urlVars = {};
+			var splits = YUI_HistoryBookmarkedState.split('&');
+			for(key in splits) {
+				var urlVar = splits[key].split('=');
+				urlVars[urlVar[0]] = urlVar[1];
+			}
+
 			if (typeof(successCall) == 'undefined') {
 				onSuccess = function(o) {
 					YAHOO.SUGAR.MessageBox.hide();
@@ -640,7 +649,9 @@ if (typeof(ModuleBuilder) == 'undefined') {
 						width: 500,
 						close: true
 					});
-					ModuleBuilder.updateContent(o);
+					if(urlVars.action != 'editLayout' && urlVars.view != 'listview') {
+						ModuleBuilder.updateContent(o);
+					}
 				}
 
 				onFailure = function(o) {
@@ -652,15 +663,6 @@ if (typeof(ModuleBuilder) == 'undefined') {
 						close: true
 					});
 					ModuleBuilder.updateContent(o);
-				}
-
-				// get bookmarked url state
-				var YUI_HistoryBookmarkedState = YAHOO.util.History.getBookmarkedState('mbContent');
-				var urlVars = {};
-				var splits = YUI_HistoryBookmarkedState.split('&');
-				for(key in splits) {
-					var urlVar = splits[key].split('=');
-					urlVars[urlVar[0]] = urlVar[1];
 				}
 
 				// check where we are and do it if we are in field editor in module builder
