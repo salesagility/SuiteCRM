@@ -6414,6 +6414,10 @@ select,
     box-shadow: none;
 }
 
+#fieldcontainer {
+    width: 920px;
+}
+
 #fieldcontainer .containerTitles {
     display: block;
     float: none;
