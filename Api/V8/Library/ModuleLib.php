@@ -292,7 +292,6 @@ class ModuleLib
 
     /**
      * @param array $modules
-     * @param boolean $hash
      *
      * @return array
      */
@@ -304,17 +303,14 @@ class ModuleLib
         foreach ($modules as $mod) {
             if (strtolower($mod) === 'app_strings') {
                 $values = return_application_language($current_language);
-                $key = 'app_strings';
             } elseif (strtolower($mod) === 'app_list_strings') {
                 $values = return_app_list_strings_language($current_language);
-                $key = 'app_list_strings';
             } else {
                 $values = return_module_language($current_language, $mod);
-                $key = $mod;
             }
 
             if (!empty($values)) {
-                $results[$key] = $values;
+                $results[$mod] = $values;
             }
         }
 
@@ -430,7 +426,6 @@ class ModuleLib
                     continue;
                 }
                 $required = 0;
-                $options_dom = [];
                 $options_ret = [];
                 // Apparently the only purpose of this check is to make sure we only return fields
                 //   when we've read a record.  Otherwise this function is identical to get_module_field_list
@@ -443,18 +438,11 @@ class ModuleLib
                 }
 
                 if (isset($var['options'])) {
-                    $options_dom = translate($var['options'], $value->module_dir);
-                    if (!is_array($options_dom)) {
-                        $options_dom = [];
+                    $options_ret = translate($var['options'], $value->module_dir);
+                    if (!is_array($options_ret)) {
+                        $options_ret = [];
                     }
-//                    foreach ($options_dom as $key => $oneOption) {
-//                        $options_ret[$key] = get_name_value($key, $oneOption);
-//                    }
                 }
-
-//                if (!empty($var['dbType']) && $var['type'] == 'bool') {
-//                    $options_ret['type'] = get_name_value('type', $var['dbType']);
-//                }
 
                 $entry = [];
                 $entry['name'] = $var['name'];

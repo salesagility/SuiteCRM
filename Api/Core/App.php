@@ -38,7 +38,7 @@ $container['errorHandler'] = function ($container) {
 
 if ($_SERVER['REQUEST_METHOD'] != 'OPTIONS') {
     $app->add(new \Slim\Middleware\JwtAuthentication([
-        'secure' => false,
+        'secure' => isSSL(),
         "cookie" => "SUITECRM_REST_API_TOKEN",
         'secret' => $sugar_config['unique_key'],
         'environment' => 'REDIRECT_HTTP_AUTHORIZATION',
