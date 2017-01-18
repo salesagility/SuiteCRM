@@ -3496,19 +3496,19 @@ select#sales_stage_advanced {
     width: 80%;
   }
 
-  .col-xs-12 [field=first_name].edit-view-field select {
+  .col-sm-12 [field=first_name].edit-view-field select {
     width: 30%;
   }
 
-  .col-xs-6 [field=first_name].edit-view-field select {
+  .col-sm-6 [field=first_name].edit-view-field select {
     width: 30%;
   }
 
-  .col-xs-12 [field=first_name].edit-view-field input[type="text"]#first_name {
-    width: 58%;
+  .col-sm-12 [field=first_name].edit-view-field input[type="text"]#first_name {
+    width: 68%;
   }
 
-  .col-xs-6 [field=first_name].edit-view-field input[type="text"]#first_name {
+  .col-sm-6 [field=first_name].edit-view-field input[type="text"]#first_name {
     width: 58%;
   }
 
@@ -3634,6 +3634,23 @@ select#sales_stage_advanced {
   [type="date"] img {
     margin-left: 8px;
   }
+
+  .col-xs-12 [field=first_name].edit-view-field select {
+    width: 15%;
+  }
+
+  .col-xs-12 [field=first_name].edit-view-field input[type="text"]#first_name {
+    width: 29%;
+  }
+
+  .col-sm-6 [field=first_name].edit-view-field select {
+    width: 30%;
+  }
+
+  .col-sm-6 [field=first_name].edit-view-field input[type="text"]#first_name {
+    width: 58%;
+  }
+
 }
 
 @media (min-width: 1024px) {
@@ -3780,21 +3797,21 @@ select#sales_stage_advanced {
     width: 72.25%;
   }
 
-  .col-xs-12 [field=first_name].edit-view-field select {
+  .col-sm-12 [field=first_name].edit-view-field select {
+    width: 15%;
+  }
+
+  .col-sm-6 [field=first_name].edit-view-field select {
     width: 30%;
   }
 
-  .col-xs-6 [field=first_name].edit-view-field select {
-    width: 30%;
+  .col-sm-12 [field=first_name].edit-view-field input[type="text"]#first_name {
+    width: 29.5%;
   }
 
-  .col-xs-12 [field=first_name].edit-view-field input[type="text"]#first_name {
+  .col-sm-6 [field=first_name].edit-view-field input[type="text"]#first_name {
     width: 59%;
   }
-
-  .col-xs-6 [field=first_name].edit-view-field input[type="text"]#first_name {
-    width: 59%;
-  }//
 
 }
 
