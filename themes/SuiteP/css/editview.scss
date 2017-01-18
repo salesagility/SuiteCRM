@@ -577,7 +577,6 @@ slot {
   line-height: 48px;
   text-align: left;
   vertical-align: baseline;
-  white-space: nowrap;
 }
 
 #html_div {
@@ -1990,7 +1989,7 @@ ul.clickMenu > li {
   color: $default-btn-color;
   cursor: pointer;
   padding: 5px;
-  margin: 0;
+  margin: 0 5px 0 0;
   border-radius: 3px;
   float: left;
   list-style: none;
@@ -2582,10 +2581,6 @@ input#btn_ActionLine.button[type="button"] {
   margin-bottom: 5px;
 }
 
-.col-sm-6 .edit-view-field input[type="text"] {
-  width: 50%;
-}
-
 .edit-view-field #duration_hours {
   margin-right: 8px;
   width: 80px;
@@ -2634,6 +2629,14 @@ input#btn_ActionLine.button[type="button"] {
 
 .col-sm-6 .edit-view-field[field="alt_address_street"] input[type="text"] {
   width: 88%;
+}
+
+.edit-view-row-item  table {
+  background-color: $main-alternate-bg;
+}
+
+.edit-view-row-item  table {
+  background-color: $main-alternate-bg;
 }
 
 #conditionLines_head{
@@ -3314,14 +3317,6 @@ table legend {
   padding: 4px;
 }
 
-form#MassAssign_SecurityGroups {
-  background-color: #e6e6e6;
-  padding: 10px 20px 10px 20px;
-  margin: 20px 0 0 0;
-  border-radius: 3px;
-  float: left;
-  width: 100%;
-}
 
 span.id-ff button {
   padding: 0;
@@ -3419,6 +3414,59 @@ select#sales_stage_advanced {
   }
   .col-sm-6 input[type="text"]#first_name {
     width: 48.5%;
+  }
+
+  .col-sm-6 .edit-view-field input[type="text"] {
+    width: 90%;
+  }
+
+  .col-sm-6 [type=bool] {
+    line-height: $input-line-height;
+  }
+
+  .col-sm-6 .edit-view-field textarea {
+    width: 90%;
+  }
+
+  .col-sm-12 .col-sm-8.edit-view-field textarea#description {
+    width: 45%;
+  }
+
+  .col-sm-12 .col-sm-8.edit-view-field textarea {
+    width: 45%;
+  }
+
+  [field=bool].col-sm-8.edit-view-field {
+    height: $button-line-height;
+    line-height: $button-line-height;
+  }
+
+  .col-sm-8.edit-view-field #parent_name {
+    width: 45%;
+  }
+
+  .col-sm-8.edit-view-field input.sqsEnabled {
+    width: 45%;
+  }
+}
+
+@media (min-width: 1025px) {
+  .col-sm-6 .col-sm-8.edit-view-field input.sqsEnabled {
+    width: 65%;
+  }
+
+
+  #EditView_tabs .edit [type="checkbox"][name=alt_checkbox] {
+    margin-top: 15px;
+  }
+
+  .edit-view-field [name=alt_checkbox] {
+    margin-top: 15px;
+  }
+
+  .edit-view-row-item [field=internal] {
+    height: $button-line-height;
+    line-height: $button-line-height;
   }
 }
 
@@ -4941,6 +4989,12 @@ table tr#delegates_search {
   table#lineItems table tr td table tbody tr td span.hidden.alignedLabel {
     display: inline;
   }
+}
+
+/* popup in studio */
+.masked .yui-simple-dialog {
+  // Overridding inline style
+  z-index: 10!important;
 }
 
 /* popup dialog on home page */
