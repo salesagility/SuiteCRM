@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -289,7 +289,6 @@ $(function () {
 });
 
 
-
 // JavaScript fix to remove unrequired classes on smaller screens where sidebar is obsolete
 $(window).resize(function () {
   if ($(window).width() < 979) {
@@ -359,13 +358,13 @@ $(document).ready(function () {
 
 
 function changeFirstTab(src) {
-    var selected = $(src).attr('id');
-    var selectedHtml = $(selected.context).html();
-    $('#xstab0').html(selectedHtml);
+  var selected = $(src).attr('id');
+  var selectedHtml = $(selected.context).html();
+  $('#xstab0').html(selectedHtml);
 
-    var i = $(src).attr('id').replace('tab','') - 1;
-    selectTab(parseInt(i));
-    return true;
+  var i = $(src).attr('id').replace('tab', '') - 1;
+  selectTab(parseInt(i));
+  return true;
 }
 // End of custom jQuery
 
@@ -470,40 +469,40 @@ $(function () {
         ]
       };
 
-        }
-        if (isDetailViewPage()) {
-            tabActiveSelector = '#user_detailview_tabs.yui-navset.detailview_tabs.yui-navset-top ul.yui-nav li.selected a';
-            tabFramesLength = 3;
-            tabFrames = {
-                // User Profile
-                'tab1': [
-                    // User Profile & Employee Information
-                    'div#user_detailview_tabs.yui-navset.detailview_tabs.yui-navset-top div.yui-content',
-                    // Email Settings
-                    '#email_options',
-                    // Security Groups Management etc..
-                    '#subpanel_list'
-                ],
-                // Advanced
-                'tab2': [
-                    // User Settings
-                    '#settings',
-                    // Locale Settings
-                    '#locale',
-                    // Calendar Options
-                    '#calendar_options',
-                    // Layout Options
-                    '#edit_tabs',
-                    // Security Groups Management etc..
-                    '#subpanel_list'
-                ],
-                // Access
-                'tab3': [
-                    // Security Groups Management etc..
-                    '#subpanel_list'
-                ]
-            };
-        }
+    }
+    if (isDetailViewPage()) {
+      tabActiveSelector = '#user_detailview_tabs.yui-navset.detailview_tabs.yui-navset-top ul.yui-nav li.selected a';
+      tabFramesLength = 3;
+      tabFrames = {
+        // User Profile
+        'tab1': [
+          // User Profile & Employee Information
+          'div#user_detailview_tabs.yui-navset.detailview_tabs.yui-navset-top div.yui-content',
+          // Email Settings
+          '#email_options',
+          // Security Groups Management etc..
+          '#subpanel_list'
+        ],
+        // Advanced
+        'tab2': [
+          // User Settings
+          '#settings',
+          // Locale Settings
+          '#locale',
+          // Calendar Options
+          '#calendar_options',
+          // Layout Options
+          '#edit_tabs',
+          // Security Groups Management etc..
+          '#subpanel_list'
+        ],
+        // Access
+        'tab3': [
+          // Security Groups Management etc..
+          '#subpanel_list'
+        ]
+      };
+    }
 
     var tabsRefresh = function () {
       // hide all tabs..
@@ -608,78 +607,78 @@ $(function () {
     hideEmptyFormCellsOnTablet();
   });
 
-    setTimeout(function(){
-        hideEmptyFormCellsOnTablet();
-    }, 1500);
+  setTimeout(function () {
+    hideEmptyFormCellsOnTablet();
+  }, 1500);
 
-var listViewCheckboxInit = function () {
-  var checkboxesInitialized = false;
-  var checkboxesInitializeInterval = false;
-  var checkboxesCountdown = 100;
-  var initializeBootstrapCheckboxes = function () {
-    if (!checkboxesInitialized) {
-      if ($('.glyphicon.bootstrap-checkbox').length == 0) {
-        if (!checkboxesInitializeInterval) {
-          checkboxesInitializeInterval = setInterval(function () {
-            checkboxesCountdown--;
-            if (checkboxesCountdown <= 0) {
-              clearInterval(checkboxesInitializeInterval);
-              return;
-            }
-            initializeBootstrapCheckboxes();
-          }, 100);
-        }
-      } else {
-        $('.glyphicon.bootstrap-checkbox').each(function (i, e) {
-          $(e).removeClass('hidden');
-          $(e).next().hide();
-          refreshListViewCheckbox(e);
-          if (!$(e).hasClass('initialized-checkbox')) {
-            $(e).click(function () {
-              $(this).next().click();
-              refreshListViewCheckbox($(this));
-            });
-            $(e).addClass('initialized-checkbox');
+  var listViewCheckboxInit = function () {
+    var checkboxesInitialized = false;
+    var checkboxesInitializeInterval = false;
+    var checkboxesCountdown = 100;
+    var initializeBootstrapCheckboxes = function () {
+      if (!checkboxesInitialized) {
+        if ($('.glyphicon.bootstrap-checkbox').length == 0) {
+          if (!checkboxesInitializeInterval) {
+            checkboxesInitializeInterval = setInterval(function () {
+              checkboxesCountdown--;
+              if (checkboxesCountdown <= 0) {
+                clearInterval(checkboxesInitializeInterval);
+                return;
+              }
+              initializeBootstrapCheckboxes();
+            }, 100);
           }
-        });
-
-        $('#selectLink > li > ul > li > a, #selectLinkTop > li > ul > li > a, #selectLinkBottom > li > ul > li > a').click(function (e) {
-          e.preventDefault();
+        } else {
           $('.glyphicon.bootstrap-checkbox').each(function (i, e) {
+            $(e).removeClass('hidden');
+            $(e).next().hide();
             refreshListViewCheckbox(e);
+            if (!$(e).hasClass('initialized-checkbox')) {
+              $(e).click(function () {
+                $(this).next().click();
+                refreshListViewCheckbox($(this));
+              });
+              $(e).addClass('initialized-checkbox');
+            }
           });
-        });
 
-        checkboxesInitialized = true;
-        clearInterval(checkboxesInitializeInterval);
-        checkboxesInitializeInterval = false;
+          $('#selectLink > li > ul > li > a, #selectLinkTop > li > ul > li > a, #selectLinkBottom > li > ul > li > a').click(function (e) {
+            e.preventDefault();
+            $('.glyphicon.bootstrap-checkbox').each(function (i, e) {
+              refreshListViewCheckbox(e);
+            });
+          });
+
+          checkboxesInitialized = true;
+          clearInterval(checkboxesInitializeInterval);
+          checkboxesInitializeInterval = false;
+        }
       }
-    }
+    };
+    initializeBootstrapCheckboxes();
   };
-  initializeBootstrapCheckboxes();
-};
-setInterval(function () {
-  listViewCheckboxInit();
-}, 100);
+  setInterval(function () {
+    listViewCheckboxInit();
+  }, 100);
 
 
-setInterval(function () {
-  $('.subnav').each(function (i, e) {
-    if ($(e).hasClass('ddopen')) {
-      $(e).closest('.sugar_action_button').addClass('hover');
-      if (!$(e).hasClass('upper')) {
-        $(e).closest('.sugar_action_button').addClass('opened');
+  setInterval(function () {
+    $('.subnav').each(function (i, e) {
+      if ($(e).hasClass('ddopen')) {
+        $(e).closest('.sugar_action_button').addClass('hover');
+        if (!$(e).hasClass('upper')) {
+          $(e).closest('.sugar_action_button').addClass('opened');
+        }
       }
-    }
-    else {
-      $(e).closest('.sugar_action_button').removeClass('hover');
-      $(e).closest('.sugar_action_button').removeClass('opened');
-    }
-  });
+      else {
+        $(e).closest('.sugar_action_button').removeClass('hover');
+        $(e).closest('.sugar_action_button').removeClass('opened');
+      }
+    });
 
-  $('.subnav.upper.ddopen').each(function (i, e) {
-    $(e).css('top', '-' + $(e).height() + 'px');
-  });
-}, 100);
+    $('.subnav.upper.ddopen').each(function (i, e) {
+      $(e).css('top', '-' + $(e).height() + 'px');
+    });
+  }, 100);
 
 });
