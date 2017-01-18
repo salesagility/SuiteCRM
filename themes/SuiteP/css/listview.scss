@@ -244,12 +244,26 @@ tr#pagination {
   width: 5em;
 }
 
-#selectedRecordsTopLabel {
+.selectedRecords {
+  display: inline;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  top: -8px;
+}
+
+.selectedRecords.label {
   color: $list-view-button-color;
 }
 
-#selectedRecordsTopValue {
-  color: $list-view-button-color;
+.selectedRecords.value {
+  margin-right: 8px;
+}
+
+@media (max-width: 480px) {
+  .selectedRecords.label {
+    display: none;
+  }
 }
 
 .td_alt {
@@ -3112,10 +3126,6 @@ div.qtip.qtip-default {
     font-size: 10px;
   }
 
-  #selectedRecordsTop {
-    float: left;
-    max-width: 100px;
-  }
 }
 
 .edit {
