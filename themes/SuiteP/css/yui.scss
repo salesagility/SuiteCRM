@@ -54,12 +54,20 @@
   width: 100%;
 }
 
+@media (min-width: 1024px) {
+
+  .yui-ac-container {
+    float: left;
+    width: 90%;
+  }
+}
+
 .yui-ac-content {
   position: absolute;
   background: $main-alternate-bg;
   border: 1px solid #808080;
   overflow: hidden;
-  width: 160px;
+  width: 100%;
   z-index: 9050;
 }
 
