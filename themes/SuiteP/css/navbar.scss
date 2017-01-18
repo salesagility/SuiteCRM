@@ -2125,6 +2125,26 @@
   }
 }
 
+.topnav #overflow-menu > li.with-actions .dropdown-menu {
+  display: none;
+  visibility: collapse;
+}
+
+.topnav #overflow-menu > li.with-actions > span > a {
+  padding: 12px 15px;
+  display: block;
+  border-bottom: none;
+}
+
+.topnav #overflow-menu > li.with-actions {
+  border-bottom: 1px solid $navbar-menu-seperator;
+}
+
+.topnav #overflow-menu > li.with-actions .notCurrentTabLeft {
+  display: none;
+  visibility: collapse;
+}
+
 @media (min-width: 1250px) {
   .desktop-bar {
     display: inline-block;
