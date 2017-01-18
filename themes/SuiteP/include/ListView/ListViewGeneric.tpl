@@ -187,6 +187,7 @@
 		</tr>
 		{include file='themes/SuiteP/include/ListView/ListViewPaginationTop.tpl'}
 	</thead>
+	<tbody>
 		{counter start=$pageData.offsets.current print=false assign="offset" name="offset"}
 		{foreach name=rowIteration from=$data key=id item=rowData}
 		    {counter name="offset" print=false}
@@ -213,7 +214,7 @@
 				<td>
                     {if $pageData.rowAccess[$id].edit}
 
-                        <a title='{$editLinkString}' id="edit-{$rowData.ID}"
+                        <a class="edit-link" title='{$editLinkString}' id="edit-{$rowData.ID}"
                            href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
                                 >
                             {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
@@ -280,7 +281,10 @@
     {assign var="selectLink" value=$selectLinkBottom}
     {assign var="actionsLink" value=$actionsLinkBottom}
     {assign var="action_menu_location" value="bottom"}
+	</tbody>
+	<tfoot>
     {include file='themes/SuiteP/include/ListView/ListViewPaginationBottom.tpl'}
+	</tfoot>
 	</table></div>
 {/if}
 {if $contextMenus}

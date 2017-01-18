@@ -58,6 +58,7 @@ class UploadFile
 	var $use_soap = false;
 	var $file;
 	var $file_ext;
+    public $mime_type;
 	protected static $url = "upload/";
 
 	/**

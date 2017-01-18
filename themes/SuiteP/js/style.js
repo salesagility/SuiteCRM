@@ -36,6 +36,19 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+SUGAR.measurements = {
+    "breakpoints": {
+        "x-small": 750,
+        "small": 768,
+        "medium": 992,
+        "large": 1130,
+        "x-large": 1250
+    }
+};
+
+SUGAR.loaded_once = false;
+
 $(document).ready(function () {
     loadSidebar();
     $("ul.clickMenu").each(function (index, node) {
@@ -276,17 +289,6 @@ $(function() {
     });
 });
 
-jQuery(function($){
-    $('table.footable').footable({
-        "breakpoints": {
-            "x-small": 680,
-            "small": 768,
-            "medium": 992,
-            "large": 1130,
-            "x-large": 1250
-        }
-    });
-})
 
 
 // JavaScript fix to remove unrequired classes on smaller screens where sidebar is obsolete
@@ -358,9 +360,12 @@ $(document).ready(function() {
 
 
 function changeFirstTab(src) {
-    var selected = $(src);
+    var selected = $(src).attr('id');
     var selectedHtml = $(selected.context).html();
     $('#xstab0').html(selectedHtml);
+
+    var i = $(src).attr('id').replace('tab','') - 1;
+    selectTab(parseInt(i));
     return true;
 }
 // End of custom jQuery

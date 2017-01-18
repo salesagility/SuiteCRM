@@ -48,7 +48,7 @@
 
 <!-- BEGIN: main -->
 <div class="list-view-rounded-corners">
-	<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view table-responsive">
+	<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view table-responsive inbound-email">
 		<thead>
 			<tr height="20">
 			<th scope='col'  nowrap width='2%'>
@@ -65,13 +65,15 @@
 			<th scope="col" width="11%" ><div><a href="{ORDER_BY}status" class="listViewThLinkS1">
 				{MOD.LBL_LIST_STATUS}{arrow_start}{status_arrow}{arrow_end}</a></div></th>
 			</tr>
+			<!-- BEGIN: list_nav_row -->
+			{PAGINATION}
+			<!-- END: list_nav_row -->
 		</thead>
 
-		<!-- BEGIN: list_nav_row -->
-		{PAGINATION}
-		<!-- END: list_nav_row -->
 
 
+
+		<tbody>
 		<!-- BEGIN: row -->
 		<tr height="20" class="{ROW_COLOR}S1">
 			<td scope='row' valign=TOP class="inline-email-td"><slot>{PREROW}</slot></td>
@@ -85,9 +87,11 @@
 			<td valign=TOP class="inline-email-td"><slot>{InboundEmail.SERVER_URL}</slot></td>
 			<td valign=TOP class="inline-email-td"><slot>{InboundEmail.STATUS}</slot></td>
 		</tr>
-
 		<!-- END: row -->
+		</tbody>
+		<tfoot>
 		{PAGINATION}
+		</tfoot>
 	</table>
 </div>
 <!-- END: main -->
