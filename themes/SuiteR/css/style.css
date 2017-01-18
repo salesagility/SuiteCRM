@@ -5760,21 +5760,30 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
     line-height: 18.8571px;
     padding: 5px 8px 5px 8px;
 }
-#lineItems .product_group {}
-#lineItems .service_group {}
-#lineItems .add_product_line {}
-#lineItems .add_service_line {}
-#lineItems .group_total_amt {}
-#lineItems .group_discount_amount {}
-#lineItems .group_subtotal_amount {}
-#lineItems .group_tax_amount {}
-#lineItems .group_subtotal_tax_amount {}
-#lineItems .group_total_amount {}
-#lineItems  #addGroup {}
+
 /*Labels Next to Fields*/
 #lineItems  .alignedLabel {
     display: none;
     visibility: collapse;
+}
+
+#lineItems .totals {
+    float: right;
+    width: 192px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#lineItems .totals label {
+    width: 50%;
+    font-weight: normal;
+    font-size: 12px;
+    float: left;
+}
+
+#lineItems .totals input {
+    width: 50%;
+    float: right;
 }
 
 /*Product Lines*/
@@ -5858,6 +5867,7 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 #lineItems .product_description {
     height: 50px;
 }
+
 
 /*Service Lines*/
 #lineItems  #service_head td {

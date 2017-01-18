@@ -476,6 +476,12 @@ table.view {
   width: 100%;
 }
 
+[field=number] {
+  vertical-align: middle;
+  line-height: $input-line-height;
+  height: $input-line-height;
+}
+
 .view tr td input[type=checkbox] {
   vertical-align: middle;
 }
@@ -550,11 +556,10 @@ table.view {
 
 #lineItems {
   display: inline;
-  font-size: 14px;
+  font-size: 11px;
   font-weight: 700;
   color: $main-font-color;
   padding: 0 0 0 8px;
-  line-height: 48px;
   text-align: left;
   vertical-align: baseline;
   white-space: nowrap;
@@ -2688,6 +2693,11 @@ input#btn_ActionLine.button[type="button"] {
   width: 50%;
 }
 
+#lineItems table {
+  font-size: 10px;
+}
+
+
 [field=line_items] {
   float: none;
   width: 100%;
@@ -2715,14 +2725,21 @@ table#lineItems tr td table tfoot tr td span {
   width: 20%;
 }
 
-table#lineItems tr td table tfoot tr td span input[type="text"] {
-  display: block;
-  float: none;
-}
-
 /*totals*/
 #lineItems .totals {
   float: right;
+  width: 256px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#lineItems .totals label {
+  width: 50%;
+  line-height: $input-line-height;
+}
+
+#lineItems .totals input {
+  width: 50%;
 }
 
 #lineItems #shipping_tax_amt_span {
@@ -2798,6 +2815,10 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
   width: 20%;
 }
 
+#lineItems .group > thead > tr > td[colspan="100"] {
+  width: 100%;
+}
+
 #lineItems .group button {
   padding: 0;
   line-height: 0;
@@ -2834,16 +2855,11 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems #product_head > td:nth-of-type(1) {
-  width: 75px;
+  width: 40px;
 }
 
 #lineItems .product_group {
-  width: 1000px;
-}
-
-#lineItems .product_group > tbody > tr:nth-of-type(1) > td {
-  padding-top: 32px;
-  padding-bottom: 8px;
+  width: $line-item-group-width;
 }
 
 #lineItems .product_group > tbody > tr:nth-of-type(2) > td {
@@ -2872,12 +2888,12 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 #lineItems .product_list_price {
   margin: 0 5px 0 0;
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .product_discount_text {
   margin: 0 5px 0 0;
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .product_discount_amount_select {
@@ -2886,12 +2902,12 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 #lineItems .product_unit_price {
   margin: 0 5px 0 0;
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .product_vat_amt_text {
   margin: 0 5px 0 0;
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .product_vat_amt_select {
@@ -2900,7 +2916,7 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 #lineItems .product_total_price {
   margin: 0 5px 0 0;
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .product_delete_line {
@@ -2932,7 +2948,6 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems .service_group > tbody > tr > td {
-  padding-top: 32px;
   padding-bottom: 32px;
   border-bottom: 1px solid #F5F5F5;
 }
@@ -2954,7 +2969,7 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems .service_group {
-  width: 1000px;
+  width: $line-item-group-width;
 }
 
 #lineItems .service_name {
@@ -2965,12 +2980,12 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 #lineItems .service_list_price {
   margin: 0 5px 0 0;
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .service_discount_text {
   margin: 0 5px 0 0;
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .service_discount_select {
@@ -2979,11 +2994,11 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 #lineItems .service_unit_price {
   margin: 0 5px 0 0;
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .service_vat_text {
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .service_vat_select {
@@ -2992,7 +3007,7 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 #lineItems .service_total_price {
   margin: 0 5px 0 0;
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .service_delete_line {
@@ -3041,6 +3056,69 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 #EditView #shipping_tax {
   margin-left: 8px;
+}
+
+@media (min-width: 1350px) {
+
+  #lineItems {
+    font-size: 13px;
+  }
+
+  #lineItems table {
+    font-size: 13px;
+  }
+
+  #lineItems #product_head > td:nth-of-type(1) {
+    width: 80px;
+  }
+
+  #lineItems .product_qty {
+    width: 80px;
+  }
+
+  #lineItems .product_list_price {
+    width: 80px;
+  }
+
+  #lineItems .product_discount_text {
+    width: 80px;
+  }
+
+  #lineItems .product_unit_price {
+    width: 80px;
+  }
+
+  #lineItems .product_vat_amt_text {
+    width: 80px;
+  }
+
+
+  #lineItems .product_total_price {
+    width: 80px;
+  }
+
+  #lineItems .service_list_price {
+    width: 80px;
+  }
+
+  #lineItems .service_discount_text {
+    width: 80px;
+  }
+
+  #lineItems .service_unit_price {
+    width: 80px;
+  }
+
+  #lineItems .service_vat_text {
+    width: 80px;
+  }
+
+  #lineItems .service_vat_select {
+  }
+
+  #lineItems .service_total_price {
+    width: 80px;
+  }
 }
 
 /*End of lineItems*/
