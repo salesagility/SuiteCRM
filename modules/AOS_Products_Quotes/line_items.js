@@ -557,7 +557,7 @@ function insertGroup()
     var footer_cell2 = footer_row2.insertCell(0);
     footer_cell2.scope="row";
     footer_cell2.colSpan="20";
-    footer_cell2.innerHTML="<span class='totals'><label>"+SUGAR.language.get(module_sugar_grp1, 'LBL_DISCOUNT_AMOUNT')+":</label></label><input name='group_discount_amount[]' id='"+ table.id +"discount_amount' class='group_discount_amount' maxlength='26' value='' title='' tabindex='120' type='text' readonly></label>";
+    footer_cell2.innerHTML="<span class='totals'><label>"+SUGAR.language.get(module_sugar_grp1, 'LBL_DISCOUNT_AMOUNT')+":</label><input name='group_discount_amount[]' id='"+ table.id +"discount_amount' class='group_discount_amount' maxlength='26' value='' title='' tabindex='120' type='text' readonly></label>";
 
     var footer_row3=tablefooter.insertRow(-1);
     var footer_cell3 = footer_row3.insertCell(0);
