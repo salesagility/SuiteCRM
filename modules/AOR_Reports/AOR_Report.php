@@ -715,7 +715,15 @@ class AOR_Report extends Basic {
                     if($att['function'] == 'COUNT' || !empty($att['params'])){
                         $html .= $row[$name];
                     } else {
-                        $html .= getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name],'',$currency_id);
+                        $field_string = getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name],'',$currency_id);
+                        if ($currency_id != '-99') {
+                            if (strpos($field_string, '$') !== false) {
+                                $currency = new Currency();
+                                $currency->retrieve($currency_id);
+                                $field_string = str_replace("$", $currency->symbol, $field_string);
+                            }
+                        }
+                        $html .= $field_string;
                     }
 
                     if($att['total']){
