@@ -2107,14 +2107,6 @@ div.qtip.qtip-default {
 
 .search_form .view .col-xs-12 input[type="text"],
 .search_form .view .col-xs-12 textarea {
-  width: 100%;
-}
-
-.search_form .view.basic .col-xs-12 input[type="text"] {
-  width: 80%
-}
-
-.search_form .view.basic .col-xs-12 textarea {
   width: 80%;
 }
 
@@ -2331,7 +2323,7 @@ div.qtip.qtip-default {
 
 .search_form .view .col-xs-12 input[type="text"],
 .search_form .view .col-xs-12 textarea {
-  width: 100%;
+  width: 80%;
 }
 
 .search_form .view .templateGroupChooser {
@@ -4143,11 +4135,11 @@ div.qtip.qtip-default {
 }
 
 .search_form .view .col-xs-12 input[type="text"] {
-  width: 100%;
+  width: 80%;
 }
 
 .search_form .view .col-xs-12 textarea {
-  width: 100%;
+  width: 80%;
 }
 
 .search_form .view .templateGroupChooser {
