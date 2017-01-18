@@ -374,3 +374,15 @@ function date_field_change(field){
     }
 }
 
+
+$(document).ready(function(){
+    /*
+    * Hide labels for conditions / actions
+    */
+    if(typeof SUGAR.themes.theme_name !== 'undefined' && SUGAR.themes.theme_name === "SuiteP") {
+      $('[field="condition_lines"]').parent().find('.label').remove();
+      $('#btn_ConditionLine').click(function() { $('[field="condition_lines"]').parent().find('.label').remove(); });
+      $('[field="action_lines"]').parent().find('.label').remove();
+      $('#btn_ActionLine').click(function() { $('[field="action_lines"]').parent().find('.label').remove(); });
+    }
+});
