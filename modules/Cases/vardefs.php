@@ -49,6 +49,16 @@ $dictionary['Case'] = array('table' => 'cases', 'audited' => true, 'unified_sear
             'type' => 'readonly',
             'source' => 'non-db',
         ),
+        'description' =>
+            array (
+                'name' => 'description',
+                'vname' => 'LBL_DESCRIPTION',
+                'type' => 'text',
+                'editor' => 'html',
+                'comment' => 'Full text of the description',
+                'rows' => 6,
+                'cols' => 80,
+            ),
 
         'account_name' =>
             array(
@@ -79,7 +89,6 @@ $dictionary['Case'] = array('table' => 'cases', 'audited' => true, 'unified_sear
                 'importable' => 'false',
                 'studio' => array("formula" => false),
             ),
-
         'account_id' =>
             array(
                 'name' => 'account_id',
@@ -306,6 +315,7 @@ $dictionary['Case'] = array('table' => 'cases', 'audited' => true, 'unified_sear
                 'vname' => 'LBL_UPDATE_TEXT',
                 'source' => 'non-db',
                 'type' => 'text',
+                'editor' => 'html',
                 'massupdate' => '0',
                 'default' => '',
                 'no_default' => false,

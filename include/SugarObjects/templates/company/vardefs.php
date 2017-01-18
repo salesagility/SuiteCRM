@@ -364,7 +364,7 @@ $vardefs= array (
 'relationships'=>array(
     strtolower($module).'_email_addresses' => 
     array(
-        'lhs_module'=> $module, 'lhs_table'=> strtolower($module), 'lhs_key' => 'id',
+        'lhs_module'=> $module, 'lhs_table'=> $table_name, 'lhs_key' => 'id',
         'rhs_module'=> 'EmailAddresses', 'rhs_table'=> 'email_addresses', 'rhs_key' => 'id',
         'relationship_type'=>'many-to-many',
         'join_table'=> 'email_addr_bean_rel', 'join_key_lhs'=>'bean_id', 'join_key_rhs'=>'email_address_id', 
@@ -372,7 +372,7 @@ $vardefs= array (
         'relationship_role_column_value'=>$module
     ),
     strtolower($module).'_email_addresses_primary' => 
-    array('lhs_module'=> $module, 'lhs_table'=> strtolower($module), 'lhs_key' => 'id',
+    array('lhs_module'=> $module, 'lhs_table'=> $table_name, 'lhs_key' => 'id',
         'rhs_module'=> 'EmailAddresses', 'rhs_table'=> 'email_addresses', 'rhs_key' => 'id',
         'relationship_type'=>'many-to-many',
         'join_table'=> 'email_addr_bean_rel', 'join_key_lhs'=>'bean_id', 'join_key_rhs'=>'email_address_id', 

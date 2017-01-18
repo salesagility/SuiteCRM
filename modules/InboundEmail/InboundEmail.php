@@ -1665,7 +1665,7 @@ class InboundEmail extends SugarBean {
 		global $sugar_config;
 		global $current_user;
 
-		$showFolders = unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+		$showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
 		if(empty($showFolders)) {
 			$showFolders = array();
@@ -2034,7 +2034,7 @@ class InboundEmail extends SugarBean {
 		$criteria .= (!empty($dateTo)) ? ' BEFORE "'.$timedate->fromString($dateTo)->format('d-M-Y').'"' : "";
 		//$criteria .= (!empty($from)) ? ' FROM "'.$from.'"' : "";
 
-		$showFolders = unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+		$showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
 		$out = array();
 
@@ -3939,12 +3939,13 @@ class InboundEmail extends SugarBean {
 			}
 
 			$q = "";
+            $queryUID = $this->db->quote($uid);
 			if ($this->isPop3Protocol()) {
 				$this->email->name = $app_strings['LBL_EMAIL_ERROR_MESSAGE_DELETED'];
-				$q = "DELETE FROM email_cache WHERE message_id = '{$uid}' AND ie_id = '{$this->id}' AND mbox = '{$this->mailbox}'";
+				$q = "DELETE FROM email_cache WHERE message_id = '{$queryUID}' AND ie_id = '{$this->id}' AND mbox = '{$this->mailbox}'";
 			} else {
 				$this->email->name = $app_strings['LBL_EMAIL_ERROR_IMAP_MESSAGE_DELETED'];
-				$q = "DELETE FROM email_cache WHERE imap_uid = {$uid} AND ie_id = '{$this->id}' AND mbox = '{$this->mailbox}'";
+				$q = "DELETE FROM email_cache WHERE imap_uid = '{$queryUID}' AND ie_id = '{$this->id}' AND mbox = '{$this->mailbox}'";
 			} // else
 			// delete local cache
 			$r = $this->db->query($q);
@@ -5033,7 +5034,7 @@ eoq;
 		if(empty($user)) $user = $current_user;
 
 		$emailSettings = $current_user->getPreference('emailSettings', 'Emails');
-		$emailSettings = is_string($emailSettings) ? unserialize($emailSettings) : $emailSettings;
+		$emailSettings = is_string($emailSettings) ? sugar_unserialize($emailSettings) : $emailSettings;
 
 		$this->autoImport = (isset($emailSettings['autoImport']) && !empty($emailSettings['autoImport'])) ? true : false;
 		return $this->autoImport;
@@ -5558,7 +5559,6 @@ eoq;
 	 * @param string String of uids, comma delimited
 	 */
 	function deleteMessageFromCache($uids) {
-		global $sugar_config;
 		global $app_strings;
 
 		// delete message cache file and email_cache file
@@ -5566,10 +5566,11 @@ eoq;
 
 		foreach($exUids as $uid) {
 			// local cache
+            $queryUID = $this->db->quote($uid);
 			if ($this->isPop3Protocol()) {
-				$q = "DELETE FROM email_cache WHERE message_id = '{$uid}' AND ie_id = '{$this->id}'";
+				$q = "DELETE FROM email_cache WHERE message_id = '{$queryUID}' AND ie_id = '{$this->id}'";
 			} else {
-				$q = "DELETE FROM email_cache WHERE imap_uid = {$uid} AND ie_id = '{$this->id}'";
+				$q = "DELETE FROM email_cache WHERE imap_uid = '{$queryUID}' AND ie_id = '{$this->id}'";
 			}
 			$r = $this->db->query($q);
 			if ($this->isPop3Protocol()) {
@@ -5918,7 +5919,7 @@ eoq;
 		$direction = 'desc';
 		$sortSerial = $current_user->getPreference('folderSortOrder', 'Emails');
 		if(!empty($sortSerial) && !empty($_REQUEST['ieId']) && !empty($_REQUEST['mbox'])) {
-			$sortArray = unserialize($sortSerial);
+			$sortArray = sugar_unserialize($sortSerial);
 			$sort = $sortArray[$_REQUEST['ieId']][$_REQUEST['mbox']]['current']['sort'];
 			$direction = $sortArray[$_REQUEST['ieId']][$_REQUEST['mbox']]['current']['direction'];
 		}
@@ -5973,7 +5974,7 @@ eoq;
 	    $usersList = $team->get_team_members(true);
 	    foreach($usersList as $userObject)
 	    {
-	        $previousSubscriptions = unserialize(base64_decode($userObject->getPreference('showFolders', 'Emails',$userObject)));
+	        $previousSubscriptions = sugar_unserialize(base64_decode($userObject->getPreference('showFolders', 'Emails',$userObject)));
 	        if($previousSubscriptions === FALSE)
 	            $previousSubscriptions = array();
 

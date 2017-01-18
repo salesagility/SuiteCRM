@@ -2762,8 +2762,21 @@ class SugarBean
         $xtpl->parse($template_name);
         $xtpl->parse($template_name . "_Subject");
 
-        $notify_mail->Body = from_html(trim($xtpl->text($template_name)));
-        $notify_mail->Subject = from_html($xtpl->text($template_name . "_Subject"));
+        // NOTE: Crowdin translation system requires some HTML tags in the template, namely <p> and <br>.
+        // These will go into the HTML version of the email, but not into the text version, nor the subject line.
+
+        $tempBody = from_html(trim($xtpl->text($template_name)));
+        $notify_mail->msgHTML($tempBody);
+
+        // Improve the text version of the email with some "reverse linkification",
+        // making "<a href=link>text</a>" links readable as "text [link]"
+        $tempBody = preg_replace(  '/<a href=([\"\']?)(.*?)\1>(.*?)<\/a>/', "\\3 [\\2]", $tempBody);
+
+        // all the other HTML tags get removed from the text version:
+        $notify_mail->AltBody = strip_tags($tempBody);
+
+        // strip_tags is used because subject lines NEVER include HTML tags, according to official specification:
+        $notify_mail->Subject = strip_tags(from_html($xtpl->text($template_name . "_Subject")));
 
         // cn: bug 8568 encode notify email in User's outbound email encoding
         $notify_mail->prepForOutbound();

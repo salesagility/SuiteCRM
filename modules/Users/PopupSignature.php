@@ -64,8 +64,7 @@ $GLOBALS['log']->info('EmailTemplate detail view');
 ///////////////////////////////////////////////////////////////////////////////
 ////	OUTPUT 
 echo insert_popup_header();
-echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_SIGNATURE'].' '.$focus->name), true); 
-
+echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_SIGNATURE'].' '.$focus->name), true);
 
 $xtpl = new XTemplate ('modules/Users/UserSignatureEditView.html');
 $xtpl->assign('MOD', $mod_strings);
@@ -87,9 +86,9 @@ $xtpl->assign('ID', $focus->id);
 $xtpl->assign('NAME', $focus->name);
 $xtpl->assign('SIGNATURE_TEXT', !empty($focus->signature_html) ? $focus->signature_html : $focus->signature);
 
-if(isset($_REQUEST['the_user_id']))
-	$xtpl->assign('THE_USER_ID', $_REQUEST['the_user_id']);
-
+if(isset($_REQUEST['the_user_id'])) {
+    $xtpl->assign('THE_USER_ID', $_REQUEST['the_user_id']);
+}
 $tiny = new SugarTinyMCE();
 $xtpl->assign("tinyjs", $tiny->getInstance('sigText'));
 

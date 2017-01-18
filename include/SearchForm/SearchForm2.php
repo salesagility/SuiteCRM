@@ -784,25 +784,29 @@ require_once('include/EditView/EditView2.php');
                              }
                          }
 
-                     } else {
-                         $operator = $operator != 'subquery' ? 'in' : $operator;
-                         foreach($parms['value'] as $val) {
-                             if($val != ' ' and $val != '') {
-                                 if (!empty($field_value)) {
-                                     $field_value .= ',';
-                                 }
-                                 $field_value .= $db->quoteType($type, $val);
-                             }
-                                 // Bug 41209: adding a new operator "isnull" here
-                                 // to handle the case when blank is selected from dropdown.
-                                 // In that case, $val is empty.
-                                 // When $val is empty, we need to use "IS NULL",
-                                 // as "in (null)" won't work
-                                 else if ($operator=='in') {
-                                     $operator = 'isnull';
-                                 }
-                         }
-                     }
+                      } else {
+                          $operator = $operator != 'subquery' ? 'in' : $operator;
+                          foreach($parms['value'] as $val) {
+                              if ($val != ' ' && $val != '') {
+                                  if (!empty($field_value)) {
+                                      $field_value .= ',';
+                                  }
+                                  if ($operator == 'subquery') {
+                                      $field_value .= $val;
+                                  } else {
+                                      $field_value .= $db->quoteType($type, $val);
+                                  }
+                              }
+                              // Bug 41209: adding a new operator "isnull" here
+                              // to handle the case when blank is selected from dropdown.
+                              // In that case, $val is empty.
+                              // When $val is empty, we need to use "IS NULL",
+                              // as "in (null)" won't work
+                              else if ($operator=='in') {
+                                  $operator = 'isnull';
+                              }
+                          }
+                      }
 
                  } else {
                      $field_value = $parms['value'];

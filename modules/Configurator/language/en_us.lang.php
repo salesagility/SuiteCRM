@@ -219,7 +219,7 @@ $mod_strings = array (
 	'LBL_LOGGER_FILENAME_SUFFIX' =>'Append after filename',
 	'LBL_VCAL_PERIOD' => 'vCal Updates Time Period:',
     'LBL_IMPORT_MAX_RECORDS' => 'Import - Maximum Number of Rows:',
-    'LBL_IMPORT_MAX_RECORDS_HELP' => 'Specify how many rows are allowed within import files. If the number of rows <br>in an import file exceeds this number, the user will be alerted. If no number<br> is entered, an unlimited number of rows are allowed.',
+    'LBL_IMPORT_MAX_RECORDS_HELP' => 'Specify how many rows are allowed within import files.<br>If the number of rows in an import file exceeds this number, the user will be alerted.<br>If no number is entered, an unlimited number of rows are allowed.',
 	'vCAL_HELP' => 'Use this setting to determine the number of months in advance of the current date that Free/Busy information for calls and meetings is published.<BR>To turn Free/Busy publishing off, enter "0".  The minimum is 1 month; the maximum is 12 months.',
     'LBL_PDFMODULE_NAME' => 'PDF Settings',
     'SUGARPDF_BASIC_SETTINGS' => 'Document Properties',
@@ -416,7 +416,6 @@ BSOFR',
 	//Wizard Scenarios
 	'LBL_WIZARD_SCENARIOS' => 'Your Scenarios',
 	'LBL_WIZARD_SCENARIOS_EMPTY_LIST' => 'No scenarios have been configured',
-	'LBL_WIZARD_LOCALE_DESC' => 'Specify how you would like data in SuiteCRM to be displayed, based on your geographical location. The settings you provide here will be the default settings. Users will be able set their own preferences.',
 	'LBL_WIZARD_SCENARIOS_DESC' => 'Choose which scenarios are appropriate for your installation.  These options can be changed post-install.',
 
     'LBL_WIZARD_TITLE' => 'Admin Wizard',

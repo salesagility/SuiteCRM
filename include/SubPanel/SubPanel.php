@@ -92,6 +92,7 @@ class SubPanel
 		$this->buildSearchQuery();
 		if (empty($subpanelDef)) {
 			//load the subpanel by name.
+			require_once 'include/SubPanel/SubPanelDefinitions.php' ;
 			$panelsdef=new SubPanelDefinitions($result,$layout_def_key);
 			$subpanelDef=$panelsdef->load_subpanel($subpanel_id, false, false, $this->search_query,$collections);
 			$this->subpanel_defs=$subpanelDef;

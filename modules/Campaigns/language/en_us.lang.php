@@ -53,7 +53,6 @@ $mod_strings = array (
 
 	'LBL_MODULE_NAME' => 'Campaigns',
 	'LBL_MODULE_TITLE' => 'Campaigns: Home',
-	'LBL_NEWSLETTER_TITLE'=>'Campaigns: Newsletters',
 	'LBL_SEARCH_FORM_TITLE' => 'Campaign Search',
 	'LBL_LIST_FORM_TITLE' => 'Campaign List',
 	'LBL_NEWSLETTER_LIST_FORM_TITLE' => 'Newsletter List',
