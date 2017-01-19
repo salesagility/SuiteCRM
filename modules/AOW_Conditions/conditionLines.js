@@ -304,7 +304,7 @@ function insertConditionLine(){
     condln++;
     condln_count++;
 
-    $('#conditionLines').find('tbody').last().find('select').change(function () {
+    $('.edit-view-field #conditionLines').find('tbody').last().find('select').change(function () {
         $(this).find('td').last().removeAttr("style");
         $(this).find('td').height($(this).find('td').last().height() + 8);
     });
@@ -381,7 +381,7 @@ function date_field_change(field){
 
 var checkConditionLines = setInterval(function() {
   // protect against session timeouts
-  if($('#conditionLines').length <= 0) clearInterval(checkConditionLines);
+  if($('.edit-view-field #conditionLines').length <= 0) clearInterval(checkConditionLines);
 
   $('#conditionLines').find('tbody').each(function() {
     $(this).find('td').last().removeAttr("style");

@@ -316,6 +316,11 @@ fieldset[disabled] .btn-primary.active {
   color: $main-font-color
 }
 
+.detail-view-field #conditionLines thead td:first-of-type {
+  height: 36px;
+}
+
+
 #conditionLines thead td:first-of-type {
   height: 32px;
   border-top-left-radius: 4px;
