@@ -304,16 +304,15 @@ fieldset[disabled] .btn-primary.active {
   display: block;
 }
 
-#conditionLines > thead td:first-of-type {
-}
-
 #conditionLines > thead td {
   background-color: $default-tab-bg;
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 4px;
   padding-right: 4px;
-  color: $main-font-color
+  color: $main-font-color;
+  font-weight: bold;
+  font-size: $page-font-size;
 }
 
 .detail-view-field #conditionLines thead td:first-of-type {
@@ -410,7 +409,7 @@ fieldset[disabled] .btn-primary.active {
   margin-top: 8px;
 }
 
-@media (max-width: 1600px) {
+@media (max-width: 1800px) {
   // Date type
   #conditionLines select[id$="][0]"] {
     width: 45%;
@@ -434,7 +433,7 @@ fieldset[disabled] .btn-primary.active {
 
 }
 
-@media (min-width: 1600px) {
+@media (min-width: 1800px) {
   // Date type
   #conditionLines select[id$="][0]"] {
     width: 24%;
@@ -453,6 +452,12 @@ fieldset[disabled] .btn-primary.active {
   }
 
 }
+
+[field="action_lines"] {
+  display: block;
+  width: 100%;
+}
+
 #conditionLines [type="button"] {
   background-color: $danger-btn-bg;
   padding: 0;
@@ -467,6 +472,71 @@ fieldset[disabled] .btn-primary.active {
   margin-right: 4px;
   border: 1px solid $danger-btn-bg;
   border-radius: 4px;
+}
+
+#actionLines {
+  display: block;
+}
+
+#actionLines > tr {
+  display: block;
+}
+
+#actionLines > tr > td {
+  display: block;
+}
+
+#actionLines td[field] label {
+  margin-right: 8px;
+}
+
+#actionLines > tr > td {
+  border: 1px solid $workflow-action-bg;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  margin-bottom: 4px;
+}
+
+#actionLines .action-table {
+  display: block;
+  width: 100%;
+}
+
+#actionLines .action-table tbody {
+  display: block;
+  width: 100%;
+}
+
+#actionLines .action-table tr {
+  display: block;
+  width: 100%;
+}
+
+
+#actionLines .action-table td {
+  display: inline-block;
+}
+
+#actionLines td[field=action] {
+  width: 70%;
+}
+
+#actionLines td[field=action] select {
+  margin-left: 20px;
+}
+
+#actionLines td[field=name] {
+  width: 25%;
+}
+
+#actionLines td[field=name] input[type=text] {
+  width: 80%;
+}
+
+#actionLines td[field=delete] {
+  width: 32px;
 }
 
 #deleteGroup img {
