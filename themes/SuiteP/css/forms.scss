@@ -291,6 +291,111 @@ fieldset[disabled] .btn-primary.active {
   display: none;
 }
 
+[field="condition_lines"].col-sm-8 {
+  display: block;
+  width: 100%;
+}
+
+#conditionLines {
+  display: block;
+}
+
+#conditionLines > thead {
+  display: block;
+}
+
+#conditionLines > thead > tr {
+  display: block;
+}
+
+
+#conditionLines > tbody {
+  display: block;
+}
+
+#conditionLines > tbody > tr {
+  display: block;
+}
+
+
+#conditionLines td:first-of-type {
+  display: inline-block;
+  width: 48px;
+}
+
+#conditionLines td:not(:first-of-type) {
+  display: inline-block;
+  width: 16.667%; // 100 / 6 columns
+}
+
+#conditionLines tbody td {
+  background-color: $detail-view-field-bg;
+  margin-bottom: 4px;
+  min-height: 64px;
+}
+
+#conditionLines tbody td:first-of-type {
+  padding-left: 8px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+#conditionLines tbody td:last-of-type {
+  padding-left: 8px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  width: 26%;
+}
+
+#conditionLines select {
+  width: 98%;
+}
+
+@media (max-width: 1600px) {
+  // Date type
+  #conditionLines select[id$="[3][0]"] {
+    width: 45%;
+    margin-bottom: 4px;
+  }
+
+  #conditionLines select[id$="[3][1]"] {
+    width: 45%;
+    margin-bottom: 4px;
+  }
+
+  #conditionLines input[id$="[3][2]"] {
+    width: 45%;
+    margin-bottom: 4px;
+  }
+
+  #conditionLines select[id$="[3][3]"] {
+    width: 45%;
+    margin-bottom: 4px;
+  }
+
+}
+
+@media (min-width: 1600px) {
+  // Date type
+  #conditionLines select[id$="[3][0]"] {
+    width: 24%;
+  }
+
+  #conditionLines select[id$="[3][1]"] {
+    width: 24%;
+  }
+
+  #conditionLines input[id$="[3][2]"] {
+    width: 24%;
+  }
+
+  #conditionLines select[id$="[3][3]"] {
+    width: 24%;
+  }
+
+}
 #conditionLines [type="button"] {
   background-color: $danger-btn-bg;
   padding: 0;
