@@ -158,7 +158,6 @@ class ListViewSmarty extends ListViewDisplay
         // handle save checks and stuff
         if($this->multiSelect)
         {
-            $this->ss->assign('selectedObjectsSpan', $this->buildSelectedObjectsSpan(true, (isset($_POST['mass'])) ? count($_POST['mass']): 0));
             $this->ss->assign('multiSelectData', $this->getMultiSelectData());
         } else {
             $this->ss->assign('multiSelectData', '<textarea style="display: none" name="uid"></textarea>');

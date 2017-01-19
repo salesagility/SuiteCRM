@@ -249,12 +249,26 @@ tr#pagination {
   width: 5em;
 }
 
-#selectedRecordsTopLabel {
+.selectedRecords {
+  display: inline;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  top: -8px;
+}
+
+.selectedRecords.label {
   color: $list-view-button-color;
 }
 
-#selectedRecordsTopValue {
-  color: $list-view-button-color;
+.selectedRecords.value {
+  margin-right: 8px;
+}
+
+@media (max-width: 480px) {
+  .selectedRecords.label {
+    display: none;
+  }
 }
 
 .td_alt {
@@ -2677,10 +2691,6 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     font-size: 10px;
   }
 
-  #selectedRecordsTop {
-    float: left;
-    max-width: 100px;
-  }
 }
 
 .edit {
@@ -3508,4 +3518,8 @@ ul.clickMenu > li > span.searchAppliedAlert {
 
 td.paginationActionButtons ul.selectmenu > li > a.clearSearchIcon {
   padding: 3px 4px 4px 7px;
+}
+
+.listViewEmpty .clearSearchIcon {
+  margin: 3px 0px 0px 8px;
 }
