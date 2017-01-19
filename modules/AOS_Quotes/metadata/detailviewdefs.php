@@ -29,7 +29,7 @@ array (
           ),
           7 => 
           array (
-            'customCode' => '<input type="submit" class="button" onClick="this.form.action.value=\'createOpportunity\';" value="{$MOD.LBL_CREATE_OPPORTUNITY}">',
+            'customCode' => '<input type="submit" class="button" onClick="document.location.href=\'index.php?module=Opportunities&action=EditView&return_module=AOS_Quotes&return_action=DetailView&return_id={$id}\'" value="{$MOD.LBL_CREATE_OPPORTUNITY}">',
             'sugar_html' => 
             array (
               'type' => 'submit',
@@ -39,14 +39,14 @@ array (
                 'class' => 'button',
                 'id' => 'create_contract_button',
                 'title' => '{$MOD.LBL_CREATE_OPPORTUNITY}',
-                'onclick' => 'this.form.action.value=\'createOpportunity\';',
+                'onclick' => 'document.location.href=\'index.php?module=Opportunities&action=EditView&return_module=AOS_Quotes&return_action=DetailView&return_id={$id}\'',
                 'name' => 'Create Opportunity',
               ),
             ),
           ),
           8 => 
           array (
-            'customCode' => '<input type="submit" class="button" onClick="this.form.action.value=\'createContract\';" value="{$MOD.LBL_CREATE_CONTRACT}">',
+            'customCode' => '<input type="submit" class="button" onClick="document.location.href=\'index.php?module=AOS_Contracts&action=EditView&return_module=AOS_Quotes&return_action=DetailView&return_id={$id}\'" value="{$MOD.LBL_CREATE_CONTRACT}">',
             'sugar_html' => 
             array (
               'type' => 'submit',
@@ -56,7 +56,7 @@ array (
                 'class' => 'button',
                 'id' => 'create_contract_button',
                 'title' => '{$MOD.LBL_CREATE_CONTRACT}',
-                'onclick' => 'this.form.action.value=\'createContract\';',
+                'onclick' => 'document.location.href=\'index.php?module=AOS_Contracts&action=EditView&return_module=AOS_Quotes&return_action=DetailView&return_id={$id}\'',
                 'name' => 'Create Contract',
               ),
             ),
