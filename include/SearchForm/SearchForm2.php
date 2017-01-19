@@ -286,7 +286,7 @@ class SearchForm
         $this->th->ss->assign('searchInfoJson', $this->getSearchInfoJson());
 
 
-        $searchFormInPopup = !in_array($this->module, isset($sugar_config['use_legacy_search']) ? $sugar_config['use_legacy_search'] : array());
+        $searchFormInPopup = !in_array($this->module, isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array());
         $this->th->ss->assign('searchFormInPopup', $searchFormInPopup);
 
         $return_txt = $this->th->displayTemplate($this->seed->module_dir, 'SearchForm_' . $this->parsedView, $this->locateFile($this->tpl));
