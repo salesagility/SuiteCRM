@@ -125,6 +125,10 @@ class SugarAuthenticate{
 		$usr= new user();
 		$usr_id=$usr->retrieve_user_id($username);
 		$usr->retrieve($usr_id);
+		$attempt=new LoginAttempts();
+		$attempt->username=$username;
+		$attempt->record_user_id=$usr_id;
+		$attempt->ip_address=query_client_ip();
 		$_SESSION['login_error']='';
 		$_SESSION['waiting_error']='';
 		$_SESSION['hasExpiredPassword']='0';
@@ -144,6 +148,8 @@ class SugarAuthenticate{
                 $usr->setPreference('user_locked_out_time', '');
 				$usr->savePreferencesToDB();
 			}
+			$attempt->success=true;
+			$attempt->save();
 			return $this->postLoginAuthenticate();
 
 		}
@@ -156,7 +162,8 @@ class SugarAuthenticate{
 	        		$usr->setPreference('loginfailed',$logout+1);
 				}
                 if (!empty($sugar_config['userlockout']['maxfailedlogins']) &&
-                    ($logout + 1) >= $sugar_config['userlockout']['maxfailedlogins']
+                    ($logout + 1) >= $sugar_config['userlockout']['maxfailedlogins'] &&
+					($this->checkAttemptsIP($attempt->ip_address, $attempt->record_user_id) + 1) >= $sugar_config['userlockout']['maxfailedlogins']
                 ) {
                     $usr->setPreference('user_locked_out', true);
                     $usr->setPreference('user_locked_out_time', time());
@@ -179,7 +186,8 @@ class SugarAuthenticate{
 		if(empty($_SESSION['login_error'])){
 			$_SESSION['login_error'] = translate('ERR_INVALID_PASSWORD', 'Users');
 		}
-
+		$attempt->success=false;
+		$attempt->save();
 		return false;
 
 	}
@@ -191,7 +199,7 @@ class SugarAuthenticate{
 	public function postLoginAuthenticate(){
 
 		global $reset_language_on_default_user, $sugar_config;
-		
+
 		//just do a little house cleaning here
 		unset($_SESSION['login_password']);
 		unset($_SESSION['login_error']);
@@ -342,7 +350,19 @@ class SugarAuthenticate{
 
 	}
 
-
+	/**
+	 * Check to see if the IP address failing to log in has any previous failures
+	 *
+	 */
+	public function checkAttemptsIP($ip, $userID){
+		global $db;
+		$sql='SELECT COUNT(*) as count FROM `loginattempts` WHERE ip_address="'.$ip.'" AND record_user_id="'.$userID.'" AND success="0"';
+		$res=$db->query($sql);
+		while($row = $db->fetchByAssoc($res)){
+			$count=$row['count'];
+		}
+		return $count;
+	}
 
 
 	/**
