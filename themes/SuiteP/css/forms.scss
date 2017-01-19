@@ -349,28 +349,44 @@ fieldset[disabled] .btn-primary.active {
   width: 26%;
 }
 
+
+#conditionLines td:first-of-type button {
+  margin-top: 8px;
+}
+
+#conditionLines input {
+  margin-top: 8px;
+}
+
+
+#conditionLines textarea {
+  margin-top: 8px;
+}
+
+
 #conditionLines select {
   width: 98%;
+  margin-top: 8px;
 }
 
 @media (max-width: 1600px) {
   // Date type
-  #conditionLines select[id$="[3][0]"] {
+  #conditionLines select[id$="][0]"] {
     width: 45%;
     margin-bottom: 4px;
   }
 
-  #conditionLines select[id$="[3][1]"] {
+  #conditionLines select[id$="][1]"] {
     width: 45%;
     margin-bottom: 4px;
   }
 
-  #conditionLines input[id$="[3][2]"] {
+  #conditionLines input[id$="][2]"] {
     width: 45%;
     margin-bottom: 4px;
   }
 
-  #conditionLines select[id$="[3][3]"] {
+  #conditionLines select[id$="][3]"] {
     width: 45%;
     margin-bottom: 4px;
   }
@@ -379,19 +395,19 @@ fieldset[disabled] .btn-primary.active {
 
 @media (min-width: 1600px) {
   // Date type
-  #conditionLines select[id$="[3][0]"] {
+  #conditionLines select[id$="][0]"] {
     width: 24%;
   }
 
-  #conditionLines select[id$="[3][1]"] {
+  #conditionLines select[id$="][1]"] {
     width: 24%;
   }
 
-  #conditionLines input[id$="[3][2]"] {
+  #conditionLines input[id$="][2]"] {
     width: 24%;
   }
 
-  #conditionLines select[id$="[3][3]"] {
+  #conditionLines select[id$="][3]"] {
     width: 24%;
   }
 
