@@ -9,9 +9,8 @@ use SuiteCRM\Api\V8\Library\UtilityLib;
 
 class UtilityController extends Api
 {
-    //This is the millisecond time that the token is valid for
-    //TODO decide appropriate timeout value
-    const JWT_VALID_TIME = 86400;
+    //default time in seconds that the token is valid for
+    const JWT_EXP_TIME = 14400;
 
     /**
      * @param Request $req
@@ -42,10 +41,12 @@ class UtilityController extends Api
         $lib = new UtilityLib();
         $login = $lib->login($data);
 
+        $expTime = !empty($sugar_config['api']['timeout']) ? (int)$sugar_config['api']['timeout'] : self::JWT_EXP_TIME;
+
         if ($login['loginApproved']) {
             $token = [
                 'userId' => $login['userId'],
-                'exp' => time() + self::JWT_VALID_TIME,
+                'exp' => time() + $expTime,
             ];
 
             //Create the token
@@ -59,4 +60,6 @@ class UtilityController extends Api
             return $this->generateResponse($res, 401, null, 'Unauthorised');
         }
     }
+
+
 }
