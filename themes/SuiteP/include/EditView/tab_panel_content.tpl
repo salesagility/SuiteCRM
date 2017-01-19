@@ -26,9 +26,9 @@
 
                         <!-- LABEL -->
                         {{if $smarty.foreach.colIteration.total > 1 && $colData.colspan != 3}}
-                            <div class="col-xs-12 col-sm-4 label">
+                            <div class="col-xs-12 col-sm-4 label" data-label="{{$fields[$colData.field.name].vname}}">
                         {{else}}
-                             <div class="col-xs-12 col-sm-2 label">
+                             <div class="col-xs-12 col-sm-2 label" data-label="{{$fields[$colData.field.name].vname}}">
                         {{/if}}
 
                                 {*label*}

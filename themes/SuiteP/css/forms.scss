@@ -283,6 +283,14 @@ fieldset[disabled] .btn-primary.active {
   border-radius: 4px;
 }
 
+.edit-view-row [data-label=LBL_CONDITION_LINES].label {
+  display: none;
+}
+
+.edit-view-row [data-label=LBL_ACTION_LINES].label {
+  display: none;
+}
+
 #conditionLines [type="button"] {
   background-color: $danger-btn-bg;
   padding: 0;
