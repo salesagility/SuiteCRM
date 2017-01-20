@@ -114,12 +114,14 @@ FieldComputer.prototype = {
 
   addFormula: function () {
     var field = this.formulaSelect.val();
-    if (field == "")
+    if (field == "") {
       return;
+    }
 
     var index = this.formulas.indexOf(field);
-    if (index !== -1)
+    if (index !== -1) {
       return;
+    }
 
     this.formulas.push(field);
     this.formulaContents.push("");
@@ -129,19 +131,22 @@ FieldComputer.prototype = {
 
   addRelationParameter: function () {
     var relation = this.relationParameterSelect.val();
-    if (relation == "")
+    if (relation == "") {
       return;
+    }
 
     var field = this.getCurrentRelationParameterFieldSelect().val();
-    if (field == "")
+    if (field == "") {
       return;
+    }
 
     var relationParameterType = this.relationParameterTypeSelect.val();
     var relationParameterTypeValue = (relationParameterType == "" || !this.isVisible(this.relationParameterTypeSelect)) ? "raw" : relationParameterType;
 
     for (var i = 0; i < this.relationParameters.length; i++) {
-      if (this.relationParameters[i] == relation && this.relationParameterFields[i] == field && this.relationParameterTypes[i] == relationParameterTypeValue)
+      if (this.relationParameters[i] == relation && this.relationParameterFields[i] == field && this.relationParameterTypes[i] == relationParameterTypeValue) {
         return;
+      }
     }
 
     this.relationParameters.push(relation);
@@ -160,8 +165,9 @@ FieldComputer.prototype = {
       }
     }
 
-    if (index == -1)
+    if (index == -1) {
       return;
+    }
 
     this.parameters.splice(index, 1);
     this.parameterTypes.splice(index, 1);
@@ -171,8 +177,9 @@ FieldComputer.prototype = {
 
   removeFormula: function (fieldName) {
     var index = this.formulas.indexOf(fieldName);
-    if (index === -1)
+    if (index === -1) {
       return;
+    }
 
     this.formulas.splice(index, 1);
     this.formulaContents.splice(index, 1);
@@ -189,8 +196,9 @@ FieldComputer.prototype = {
       }
     }
 
-    if (index == -1)
+    if (index == -1) {
       return;
+    }
 
     this.relationParameters.splice(index, 1);
     this.relationParameterFields.splice(index, 1);
@@ -200,10 +208,12 @@ FieldComputer.prototype = {
   },
 
   showHideTable: function (body) {
-    if (body.find('tr').length > 0)
+    if (body.find('tr').length > 0) {
       body.parent().show();
-    else
+    }
+    else {
       body.parent().hide();
+    }
   },
 
   recalculateParameterTable: function () {
@@ -251,8 +261,9 @@ FieldComputer.prototype = {
 
   formulaChanged: function (textbox, fieldName) {
     var index = this.formulas.indexOf(fieldName);
-    if (index === -1)
+    if (index === -1) {
       return;
+    }
 
     this.formulaContents[index] = $(textbox).val();
   },
@@ -290,22 +301,25 @@ FieldComputer.prototype = {
 var computers = [];
 
 function addParameter(line, containerName) {
-  if (computers[line] == undefined)
+  if (computers[line] == undefined) {
     computers[line] = new FieldComputer(line, containerName);
+  }
 
   computers[line].addParameter();
 }
 
 function addRelationParameter(line, containerName) {
-  if (computers[line] == undefined)
+  if (computers[line] == undefined) {
     computers[line] = new FieldComputer(line, containerName);
+  }
 
   computers[line].addRelationParameter();
 }
 
 function addFormula(line, containerName) {
-  if (computers[line] == undefined)
+  if (computers[line] == undefined) {
     computers[line] = new FieldComputer(line, containerName);
+  }
 
   computers[line].addFormula();
 }
