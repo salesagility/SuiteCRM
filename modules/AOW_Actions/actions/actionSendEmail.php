@@ -429,6 +429,27 @@ class actionSendEmail extends actionBase {
             $emailObj->status = 'sent';
             $emailObj->save();
 
+            // Fix for issue 1561 - Email Attachments Sent By Workflow Do Not Show In Related Activity.
+            foreach($attachments as $attachment) {
+                $note = new Note();
+                $note->id = create_guid();
+                $note->date_entered = $attachment->date_entered;
+                $note->date_modified = $attachment->date_modified;
+                $note->modified_user_id = $attachment->modified_user_id;
+                $note->assigned_user_id = $attachment->assigned_user_id;
+                $note->new_with_id = true;
+                $note->parent_id = $emailObj->id;
+                $note->parent_type = $attachment->parent_type;
+                $note->name = $attachment->name;;
+                $note->filename = $attachment->filename;
+                $note->file_mime_type = $attachment->file_mime_type;
+                $fileLocation = "upload://{$attachment->id}";
+                $dest = "upload://{$note->id}";
+                if(!copy($fileLocation, $dest)) {
+                    $GLOBALS['log']->debug("EMAIL 2.0: could not copy attachment file to $fileLocation => $dest");
+                }
+                $note->save();
+            }
             return true;
         }
         return false;
