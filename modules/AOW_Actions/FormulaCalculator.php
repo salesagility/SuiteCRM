@@ -245,7 +245,8 @@ class FormulaCalculator
                 $pos = strpos($evaluatedValue, $childItem['value']);
                 if ($pos !== false) {
                     $this->log("Going to replace child value '" . $childItem['value'] . "' in expression: " . $evaluatedValue);
-                    $evaluatedValue = substr_replace($evaluatedValue, $childItem['evaluatedValue'], $pos, strlen($childItem['value']));
+                    $evaluatedValue = substr_replace($evaluatedValue, $childItem['evaluatedValue'], $pos,
+                        strlen($childItem['value']));
                     $this->log("Replaced child value '" . $childItem['evaluatedValue'] . "'. New expression: " . $evaluatedValue);
                 }
             }
@@ -272,103 +273,132 @@ class FormulaCalculator
         }
 
         // Logical functions
-        if (($params = $this->evaluateFunctionParams("equal", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("equal", $text, $childItems)) != null) {
             return $params[0] == $params[1] ? "1" : "0";
+        }
 
-        if (($params = $this->evaluateFunctionParams("notEqual", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("notEqual", $text, $childItems)) != null) {
             return $params[0] != $params[1] ? "1" : "0";
+        }
 
-        if (($params = $this->evaluateFunctionParams("greaterThan", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("greaterThan", $text, $childItems)) != null) {
             return $params[0] > $params[1] ? "1" : "0";
+        }
 
-        if (($params = $this->evaluateFunctionParams("greaterThanOrEqual", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("greaterThanOrEqual", $text, $childItems)) != null) {
             return $params[0] >= $params[1] ? "1" : "0";
+        }
 
-        if (($params = $this->evaluateFunctionParams("lessThan", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("lessThan", $text, $childItems)) != null) {
             return $params[0] < $params[1] ? "1" : "0";
+        }
 
-        if (($params = $this->evaluateFunctionParams("lessThanOrEqual", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("lessThanOrEqual", $text, $childItems)) != null) {
             return $params[0] <= $params[1] ? "1" : "0";
+        }
 
-        if (($params = $this->evaluateFunctionParams("empty", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("empty", $text, $childItems)) != null) {
             return $params[0] == "" ? "1" : "0";
+        }
 
-        if (($params = $this->evaluateFunctionParams("notEmpty", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("notEmpty", $text, $childItems)) != null) {
             return $params[0] != "" ? "1" : "0";
+        }
 
-        if (($params = $this->evaluateFunctionParams("not", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("not", $text, $childItems)) != null) {
             return $params[0] == "0" ? "1" : "0";
+        }
 
-        if (($params = $this->evaluateFunctionParams("and", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("and", $text, $childItems)) != null) {
             return ($params[0] && $params[1]) ? "1" : "0";
+        }
 
-        if (($params = $this->evaluateFunctionParams("or", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("or", $text, $childItems)) != null) {
             return ($params[0] || $params[1]) ? "1" : "0";
+        }
 
         // Control functions
-        if (($params = $this->evaluateFunctionParams("ifThenElse", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("ifThenElse", $text, $childItems)) != null) {
             return $params[0] ? $params[1] : $params[2];
+        }
 
         // String functions
         if (($params = $this->evaluateFunctionParams("substring", $text, $childItems)) != null) {
             // Workaround for PHP < 5.4.8
-            if (isset($params[2]))
+            if (isset($params[2])) {
                 return mb_substr($params[0], intval($params[1]), intval($params[2]));
-            else
+            } else {
                 return mb_substr($params[0], intval($params[1]));
+            }
         }
 
-        if (($params = $this->evaluateFunctionParams("length", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("length", $text, $childItems)) != null) {
             return mb_strlen($params[0]);
+        }
 
-        if (($params = $this->evaluateFunctionParams("replace", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("replace", $text, $childItems)) != null) {
             return str_replace($params[0], $params[1], $params[2]);
+        }
 
         if (($params = $this->evaluateFunctionParams("position", $text, $childItems)) != null) {
             $pos = mb_strpos($params[0], $params[1]);
+
             return ($pos == false) ? -1 : $pos;
         }
 
-        if (($params = $this->evaluateFunctionParams("lowercase", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("lowercase", $text, $childItems)) != null) {
             return mb_strtolower($params[0]);
+        }
 
-        if (($params = $this->evaluateFunctionParams("uppercase", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("uppercase", $text, $childItems)) != null) {
             return mb_strtoupper($params[0]);
+        }
 
         // Mathematical calculations
-        if (($params = $this->evaluateFunctionParams("add", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("add", $text, $childItems)) != null) {
             return $this->parseFloat($params[0]) + $this->parseFloat($params[1]);
+        }
 
-        if (($params = $this->evaluateFunctionParams("subtract", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("subtract", $text, $childItems)) != null) {
             return $this->parseFloat($params[0]) - $this->parseFloat($params[1]);
+        }
 
-        if (($params = $this->evaluateFunctionParams("multiply", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("multiply", $text, $childItems)) != null) {
             return $this->parseFloat($params[0]) * $this->parseFloat($params[1]);
+        }
 
-        if (($params = $this->evaluateFunctionParams("divide", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("divide", $text, $childItems)) != null) {
             return $this->parseFloat($params[0]) / $this->parseFloat($params[1]);
+        }
 
-        if (($params = $this->evaluateFunctionParams("power", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("power", $text, $childItems)) != null) {
             return pow($this->parseFloat($params[0]), $this->parseFloat($params[1]));
+        }
 
-        if (($params = $this->evaluateFunctionParams("squareRoot", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("squareRoot", $text, $childItems)) != null) {
             return sqrt($this->parseFloat($params[0]));
+        }
 
-        if (($params = $this->evaluateFunctionParams("absolute", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("absolute", $text, $childItems)) != null) {
             return abs($this->parseFloat($params[0]));
+        }
 
         // Date functions
-        if (($params = $this->evaluateFunctionParams("now", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("now", $text, $childItems)) != null) {
             return date($params[0]);
+        }
 
-        if (($params = $this->evaluateFunctionParams("yesterday", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("yesterday", $text, $childItems)) != null) {
             return date($params[0], time() - 60 * 60 * 24);
+        }
 
-        if (($params = $this->evaluateFunctionParams("tomorrow", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("tomorrow", $text, $childItems)) != null) {
             return date($params[0], time() + 60 * 60 * 24);
+        }
 
-        if (($params = $this->evaluateFunctionParams("date", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("date", $text, $childItems)) != null) {
             return date($params[0], strtotime($params[1]));
+        }
 
         if (($params = $this->evaluateFunctionParams("datediff", $text, $childItems)) != null) {
             $d1 = new DateTime($params[0]);
@@ -393,41 +423,53 @@ class FormulaCalculator
             }
         }
 
-        if (($params = $this->evaluateFunctionParams("addYears", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("addYears", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'Y');
+        }
 
-        if (($params = $this->evaluateFunctionParams("addMonths", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("addMonths", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'M');
+        }
 
-        if (($params = $this->evaluateFunctionParams("addDays", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("addDays", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'D');
+        }
 
-        if (($params = $this->evaluateFunctionParams("addHours", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("addHours", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'H', true);
+        }
 
-        if (($params = $this->evaluateFunctionParams("addMinutes", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("addMinutes", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'M', true);
+        }
 
-        if (($params = $this->evaluateFunctionParams("addSeconds", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("addSeconds", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'S', true);
+        }
 
-        if (($params = $this->evaluateFunctionParams("subtractYears", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("subtractYears", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'Y', false, false);
+        }
 
-        if (($params = $this->evaluateFunctionParams("subtractMonths", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("subtractMonths", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'M', false, false);
+        }
 
-        if (($params = $this->evaluateFunctionParams("subtractDays", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("subtractDays", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'D', false, false);
+        }
 
-        if (($params = $this->evaluateFunctionParams("subtractHours", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("subtractHours", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'H', true, false);
+        }
 
-        if (($params = $this->evaluateFunctionParams("subtractMinutes", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("subtractMinutes", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'M', true, false);
+        }
 
-        if (($params = $this->evaluateFunctionParams("subtractSeconds", $text, $childItems)) != null)
+        if (($params = $this->evaluateFunctionParams("subtractSeconds", $text, $childItems)) != null) {
             return $this->modifyDate($params[0], $params[1], $params[2], 'S', true, false);
+        }
 
         return $text;
     }
@@ -437,7 +479,9 @@ class FormulaCalculator
      */
     private function logVardump($obj)
     {
-        if (!$this->debugEnabled) return;
+        if (!$this->debugEnabled) {
+            return;
+        }
 
         ob_start();
         var_dump($obj);
@@ -456,7 +500,9 @@ class FormulaCalculator
      */
     private function evaluateFunctionParams($functionName, $text, $childItems)
     {
-        if (!preg_match("/^\s*\{\s*$functionName\s*\(/i", $text)) return null;
+        if (!preg_match("/^\s*\{\s*$functionName\s*\(/i", $text)) {
+            return null;
+        }
 
         $this->log("Matched funcion name: " . $functionName);
 
@@ -511,8 +557,9 @@ class FormulaCalculator
                     }
                 }
 
-                if (!$replaced)
+                if (!$replaced) {
                     $this->log("Did not found any multi expression part.");
+                }
 
                 $resolvedParameters [] = $paramText;
             }
@@ -635,10 +682,12 @@ class FormulaCalculator
                 $evaluated = str_replace("{P$i}", $this->parameters[$i], $evaluated);
                 $evaluated = str_replace("{p$i}", $this->parameters[$i], $evaluated);
             }
-        } else if (preg_match("/{R[0-9]+}/i", $leaf)) {
-            for ($i = 0; $i < count($this->relationParameters); $i++) {
-                $evaluated = str_replace("{R$i}", $this->relationParameters[$i], $evaluated);
-                $evaluated = str_replace("{r$i}", $this->relationParameters[$i], $evaluated);
+        } else {
+            if (preg_match("/{R[0-9]+}/i", $leaf)) {
+                for ($i = 0; $i < count($this->relationParameters); $i++) {
+                    $evaluated = str_replace("{R$i}", $this->relationParameters[$i], $evaluated);
+                    $evaluated = str_replace("{r$i}", $this->relationParameters[$i], $evaluated);
+                }
             }
         }
 
