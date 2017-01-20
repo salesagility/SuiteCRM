@@ -95,7 +95,7 @@ function insertActionLine(){
     var c1 = x.insertCell(2);
     c1.scope="row";
     c1.setAttribute("field", "delete");
-  c1.innerHTML = "<span class='delete-btn'><a style='cursor: pointer;' id='aow_actions_delete_line" + actln + "' tabindex='116' onclick='markActionLineDeleted(" + actln + ")' class='btn btn-danger'><img src='themes/default/images/id-ff-clear.png' alt='X'></a></span>";;;;;;;;;
+  c1.innerHTML = "<span class='delete-btn'><a style='cursor: pointer;' id='aow_actions_delete_line" + actln + "' tabindex='116' onclick='markActionLineDeleted(" + actln + ")' class='btn btn-danger'><img src='themes/default/images/id-ff-clear.png' alt='X'></a></span>";
     c1.innerHTML += "<input type='hidden' name='aow_actions_deleted[" + actln + "]' id='aow_actions_deleted" + actln + "' value='0'><input type='hidden' name='aow_actions_id[" + actln + "]' id='aow_actions_id" + actln + "' value=''>";
 
 
@@ -105,7 +105,7 @@ function insertActionLine(){
 
     var a2 = y.insertCell(0);
     a2.colSpan = 2;
-  a2.innerHTML = "<div id ='action_parameter" + actln + "' ></div>";;;;;;;;;
+  a2.innerHTML = "<div id ='action_parameter" + actln + "' ></div>";
 
 
 
@@ -139,7 +139,7 @@ function getView(ln, id){
                 eval(document.getElementById('aow_script'+ln).innerHTML);
             }
         }
-    };;;;;;;;;
+    };
 
     var action = document.getElementById('aow_actions_action' + ln).value;
     var module = document.getElementById('flow_module').value;

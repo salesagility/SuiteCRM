@@ -593,6 +593,46 @@ fieldset[disabled] .btn-primary.active {
   min-height: 64px;
 }
 
+[data-workflow-action="create-record"] .name_label {
+  width: 70%;
+}
+
+[data-workflow-action="create-record"] .name_label {
+  width: 30%;
+}
+
+[data-workflow-action="create-record"] .lines tbody > tr > td {
+  background-color: $detail-view-field-bg;
+  margin-bottom: 4px;
+  min-height: 64px;
+}
+
+[data-workflow-action="create-record"] .lines tbody > tr > td:first-of-type button {
+  margin-top: 8px;
+  height: 48px;
+}
+
+[data-workflow-action="create-record"] .lines select {
+  margin-top: 8px;
+}
+
+[data-workflow-action="create-record"] .lines tbody > tr > td input {
+  margin-top: 8px;
+}
+
+[data-workflow-action="create-record"] .lines tbody > tr > td input.sqsEnabled {
+  width: 62.5%;
+}
+
+[data-workflow-action="create-record"] .lines tbody > tr > td input[type=checkbox] {
+  margin-top: 24px;
+}
+
+[data-workflow-action="create-record"] .lines tbody > tr > td textarea {
+  margin-top: 8px;
+  width: 95%;
+}
+
 [data-workflow-action-parameter] [colspan="4"] {
   display: block;
   width: 100%;
@@ -607,6 +647,34 @@ fieldset[disabled] .btn-primary.active {
   background-color: $detail-view-field-bg;
   margin-bottom: 4px;
   min-height: 64px;
+}
+
+[data-workflow-action="modify-record"] .lines tbody > tr > td td:first-of-type button {
+  margin-top: 8px;
+  height: 48px;
+}
+
+[data-workflow-action="modify-record"] .lines tbody > tr > td input {
+  margin-top: 8px;
+
+}
+
+[data-workflow-action="modify-record"] .lines tbody > tr > td input.sqsEnabled {
+  width: 62.5%;
+}
+
+[data-workflow-action="modify-record"] .lines tbody > tr > td input[type=checkbox] {
+  margin-top: 24px;
+}
+
+[data-workflow-action="modify-record"] .lines tbody > tr > td textarea {
+  margin-top: 8px;
+  width: 95%;
+}
+
+[data-workflow-action="modify-record"] .lines tbody > tr > td select {
+  width: 95%;
+  margin-top: 8px;
 }
 
 /** EditView action buttons ***/
