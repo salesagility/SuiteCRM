@@ -57,10 +57,11 @@ class actionComputeField extends actionBase
      *
      * @param string $id
      */
-    public function actionComputeField($id = '')
+    public function __construct($id = '')
     {
-        parent::actionBase($id);
+        parent::__construct($id);
     }
+
 
     /**
      * @return array
