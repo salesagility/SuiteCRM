@@ -533,7 +533,7 @@ class ViewConvertLead extends SugarView
                 {
                     $bean->load_relationship($leadsRel);
                     $relObject = $bean->$leadsRel->getRelationshipObject();
-                    if ($relObject->relationship_type == "one-to-many" && $bean->$leadsRel->_get_bean_position())
+                    if ($relObject->relationship_type == "one-to-many" && $bean->$leadsRel->getSide() == REL_LHS)
                     {
                         $id_field = $relObject->rhs_key;
                         $lead->$id_field = $bean->id;
@@ -897,7 +897,7 @@ class ViewConvertLead extends SugarView
 				$bean->new_with_id = true;
 				$contact->load_relationship ($contactRel) ;
 				$relObject = $contact->$contactRel->getRelationshipObject();
-				if ($relObject->relationship_type == "one-to-many" && $contact->$contactRel->_get_bean_position())
+				if ($relObject->relationship_type == "one-to-many" && $contact->$contactRel->getSide() == REL_LHS)
 				{
 					$id_field = $relObject->rhs_key;
 					$bean->$id_field = $contact->id;
