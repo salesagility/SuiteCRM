@@ -144,9 +144,8 @@ class UsersViewDetail extends ViewDetail {
         $this->ss->assign('IS_GROUP_OR_PORTAL', ($this->bean->is_group=='1' || $this->bean->portal_only=='1') ? true : false);
         if ( $show_roles ) {
             ob_start();
-//            echo "<div>";
+
             require_once('modules/ACLRoles/DetailUserAccess.php');
-//            echo "</div></div>";
 
 
             $role_html = ob_get_contents();
