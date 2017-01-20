@@ -48,8 +48,8 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 $mod_strings = array (
     'LBL_DELETE_USER_CONFIRM'           => 'When the User record is deleted, the corresponding Employee record will also be deleted. After the user is deleted, any workflow definitions and reports involving the user might need to be updated.<br/><br/> Deleting a User record cannot be undone.',
 
-	'LBL_DELETE_GROUP_CONFIRM'          => 'Are you sure you want to delete this Group User? Click OK to delete the User record.<br/>After clicking OK, you will be given the ability to reassign records assigned to the Group User to another user.',
-	'LBL_DELETE_PORTAL_CONFIRM'         => 'Are you sure you want to delete this Portal API User? Click OK to delete the User record.',
+    'LBL_DELETE_GROUP_CONFIRM'          => 'Are you sure you want to delete this Group User? Click OK to delete the User record.<br/>After clicking OK, you will be given the ability to reassign records assigned to the Group User to another user.',
+    'LBL_DELETE_PORTAL_CONFIRM'         => 'Are you sure you want to delete this Portal API User? Click OK to delete the User record.',
 
 
     'LNK_IMPORT_USERS' => 'Import Users',
@@ -94,11 +94,11 @@ $mod_strings = array (
     'LBL_ADDRESS_CITY' => 'Address City',
     'LBL_ADDRESS_COUNTRY' => 'Address Country',
     'LBL_ADDRESS_INFORMATION' => 'Address Information',
-    'LBL_ADDRESS_POSTALCODE' => 'Address Postal Code',
-    'LBL_ADDRESS_STATE' => 'Address State',
-    'LBL_ADDRESS_STREET' => 'Address Street',
-    'LBL_ADDRESS' => 'Address',
-    'LBL_ADMIN_USER' => 'System Administrator User',
+    'LBL_ADDRESS_POSTALCODE'  => 'Address Postal Code',
+    'LBL_ADDRESS_STATE'       => 'Address State',
+    'LBL_ADDRESS_STREET'      => 'Address Street',
+    'LBL_ADDRESS'             => 'Address',
+    'LBL_ADMIN_USER'          => 'System Administrator User',
 
 
     'LBL_ADMIN_DESC' => 'User can access the Administration page all records.',
@@ -107,7 +107,7 @@ $mod_strings = array (
     'LBL_PHOTO' => 'Photo',
 
     'LBL_ADMIN' => 'System Administrator',
-    'LBL_ADVANCED' => 'Advanced',
+    'LBL_ADVANCED'            => 'ADVANCED',
     'LBL_ANY_ADDRESS' => 'Any Address:',
     'LBL_ANY_EMAIL' => 'Any Email',
     'LBL_ANY_PHONE' => 'Any Phone',
@@ -383,7 +383,7 @@ $mod_strings = array (
     'LBL_TITLE' => 'Title',
     'LBL_USE_REAL_NAMES' => 'Show Full Names',
     'LBL_USE_REAL_NAMES_DESC' => 'Display users\' full names instead of their User Names in assignment fields.',
-    'LBL_USER_INFORMATION' => 'User Profile',
+    'LBL_USER_INFORMATION'    => 'USER PROFILE',
     'LBL_USER_LOCALE' => 'Locale Settings',
     'LBL_USER_NAME' => 'User Name',
     'LBL_USER_SETTINGS' => 'User Settings',
@@ -550,9 +550,9 @@ $mod_strings = array (
     'LBL_WIZARD_LOCALE' => 'Your Locale',
 
 	//Wizard Scenarios
-	'LBL_WIZARD_SCENARIOS' => 'Your Scenarios',
-	'LBL_WIZARD_SCENARIOS_EMPTY_LIST' => 'No scenarios have been configured',
-	'LBL_WIZARD_SCENARIOS_DESC' => 'Choose which scenarios are appropriate for your installation.  These options can be changed post-install.',
+    'LBL_WIZARD_SCENARIOS' => 'Your Scenarios',
+    'LBL_WIZARD_SCENARIOS_EMPTY_LIST' => 'No scenarios have been configured',
+    'LBL_WIZARD_SCENARIOS_DESC' => 'Choose which scenarios are appropriate for your installation.  These options can be changed post-install.',
 
     'LBL_WIZARD_SMTP' => 'Your Email Account',
     'LBL_WIZARD_PERSONALINFO_DESC' => 'Provide information about yourself. The information you provide about yourself will be visible to other SuiteCRM users.<br />Fields marked with <span class="required">*</span> are required.',
@@ -604,7 +604,7 @@ $mod_strings = array (
     'LBL_ENABLE_NOTIFICATIONS' => 'Enable Desktop Notifications',
     'LBL_LIST_NONINHERITABLE' => "Not Inheritable",
     'LBL_PRIMARY_GROUP' => "Primary Group",
-	'LBL_PASSWORD_MIS_MATCH' => 'mis-match',
+    'LBL_PASSWORD_MIS_MATCH' => 'mis-match',
 ); // END STRINGS DEFS
 
 ?>
