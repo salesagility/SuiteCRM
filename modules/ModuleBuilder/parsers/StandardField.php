@@ -124,8 +124,14 @@ class StandardField extends DynamicField
             		|| (isset($currdef[$property]) && $currdef[$property] != $newDef[$property])
             	)
             ){
-            	$this->custom_def[$property] =
-                    is_string($newDef[$property]) ? htmlspecialchars_decode($newDef[$property], ENT_QUOTES) : $newDef[$property];
+                // Fix for issue #1857 - unless it is a 'last_name' field and 'merge_filter' property,
+                // as we still need a 'selected' value for find duplicate function
+                if($this->module == 'Contacts' && $field->name == 'last_name' && isset($currdef[$property]) && $property == 'merge_filter') {
+                    $this->custom_def[$property] = $currdef[$property];
+                } else {
+                    $this->custom_def[$property] =
+                        is_string($newDef[$property]) ? htmlspecialchars_decode($newDef[$property], ENT_QUOTES) : $newDef[$property];
+                }
             }
             
             //Remove any orphaned entries
