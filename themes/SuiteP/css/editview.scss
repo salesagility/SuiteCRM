@@ -476,6 +476,12 @@ table.view {
   width: 100%;
 }
 
+[field=number] {
+  vertical-align: middle;
+  line-height: $input-line-height;
+  height: $input-line-height;
+}
+
 .view tr td input[type=checkbox] {
   vertical-align: middle;
 }
@@ -550,11 +556,10 @@ table.view {
 
 #lineItems {
   display: inline;
-  font-size: 14px;
+  font-size: 11px;
   font-weight: 700;
   color: $main-font-color;
   padding: 0 0 0 8px;
-  line-height: 48px;
   text-align: left;
   vertical-align: baseline;
   white-space: nowrap;
@@ -1240,7 +1245,6 @@ table.dateTime {
   margin-top: 8px;
   margin-right: 8px;
   clear: both;
-  width: 50%;
 }
 
 input.sqsEnabled {
@@ -1248,7 +1252,6 @@ input.sqsEnabled {
   margin-top: 8px;
   margin-right: 8px;
   clear: both;
-  width: 50%;
 }
 
 .pageNumbers {
@@ -2615,21 +2618,6 @@ input#btn_ActionLine.button[type="button"] {
   width: 60%;
 }
 
-.col-sm-6 .edit-view-field[field="billing_address_street"] input[type="text"] {
-  width: 88%;
-}
-
-.col-sm-6 .edit-view-field[field="primary_address_street"] input[type="text"] {
-  width: 88%;
-}
-
-.col-sm-6 .edit-view-field[field="shipping_address_street"] input[type="text"] {
-  width: 88%;
-}
-
-.col-sm-6 .edit-view-field[field="alt_address_street"] input[type="text"] {
-  width: 88%;
-}
 
 .edit-view-row-item  table {
   background-color: $main-alternate-bg;
@@ -2688,6 +2676,11 @@ input#btn_ActionLine.button[type="button"] {
   width: 50%;
 }
 
+#lineItems table {
+  font-size: 10px;
+}
+
+
 [field=line_items] {
   float: none;
   width: 100%;
@@ -2715,14 +2708,21 @@ table#lineItems tr td table tfoot tr td span {
   width: 20%;
 }
 
-table#lineItems tr td table tfoot tr td span input[type="text"] {
-  display: block;
-  float: none;
-}
-
 /*totals*/
 #lineItems .totals {
   float: right;
+  width: 256px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#lineItems .totals label {
+  width: 50%;
+  line-height: $input-line-height;
+}
+
+#lineItems .totals input {
+  width: 50%;
 }
 
 #lineItems #shipping_tax_amt_span {
@@ -2798,6 +2798,10 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
   width: 20%;
 }
 
+#lineItems .group > thead > tr > td[colspan="100"] {
+  width: 100%;
+}
+
 #lineItems .group button {
   padding: 0;
   line-height: 0;
@@ -2834,16 +2838,11 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems #product_head > td:nth-of-type(1) {
-  width: 75px;
+  width: 40px;
 }
 
 #lineItems .product_group {
-  width: 1000px;
-}
-
-#lineItems .product_group > tbody > tr:nth-of-type(1) > td {
-  padding-top: 32px;
-  padding-bottom: 8px;
+  width: $line-item-group-width;
 }
 
 #lineItems .product_group > tbody > tr:nth-of-type(2) > td {
@@ -2872,12 +2871,12 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 #lineItems .product_list_price {
   margin: 0 5px 0 0;
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .product_discount_text {
   margin: 0 5px 0 0;
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .product_discount_amount_select {
@@ -2886,12 +2885,12 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 #lineItems .product_unit_price {
   margin: 0 5px 0 0;
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .product_vat_amt_text {
   margin: 0 5px 0 0;
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .product_vat_amt_select {
@@ -2900,7 +2899,7 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 #lineItems .product_total_price {
   margin: 0 5px 0 0;
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .product_delete_line {
@@ -2932,7 +2931,6 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems .service_group > tbody > tr > td {
-  padding-top: 32px;
   padding-bottom: 32px;
   border-bottom: 1px solid #F5F5F5;
 }
@@ -2954,7 +2952,7 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 }
 
 #lineItems .service_group {
-  width: 1000px;
+  width: $line-item-group-width;
 }
 
 #lineItems .service_name {
@@ -2965,12 +2963,12 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 #lineItems .service_list_price {
   margin: 0 5px 0 0;
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .service_discount_text {
   margin: 0 5px 0 0;
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .service_discount_select {
@@ -2979,11 +2977,11 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 #lineItems .service_unit_price {
   margin: 0 5px 0 0;
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .service_vat_text {
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .service_vat_select {
@@ -2992,7 +2990,7 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 
 #lineItems .service_total_price {
   margin: 0 5px 0 0;
-  width: 80px;
+  width: 40px;
 }
 
 #lineItems .service_delete_line {
@@ -3043,6 +3041,69 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
   margin-left: 8px;
 }
 
+@media (min-width: 1350px) {
+
+  #lineItems {
+    font-size: 13px;
+  }
+
+  #lineItems table {
+    font-size: 13px;
+  }
+
+  #lineItems #product_head > td:nth-of-type(1) {
+    width: 80px;
+  }
+
+  #lineItems .product_qty {
+    width: 80px;
+  }
+
+  #lineItems .product_list_price {
+    width: 80px;
+  }
+
+  #lineItems .product_discount_text {
+    width: 80px;
+  }
+
+  #lineItems .product_unit_price {
+    width: 80px;
+  }
+
+  #lineItems .product_vat_amt_text {
+    width: 80px;
+  }
+
+
+  #lineItems .product_total_price {
+    width: 80px;
+  }
+
+  #lineItems .service_list_price {
+    width: 80px;
+  }
+
+  #lineItems .service_discount_text {
+    width: 80px;
+  }
+
+  #lineItems .service_unit_price {
+    width: 80px;
+  }
+
+  #lineItems .service_vat_text {
+    width: 80px;
+  }
+
+  #lineItems .service_vat_select {
+  }
+
+  #lineItems .service_total_price {
+    width: 80px;
+  }
+}
+
 /*End of lineItems*/
 
 .row {
@@ -3061,25 +3122,6 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
   height: 14px;
 }
 
-textarea#billing_address_street {
-  width: 88%;
-}
-
-textarea#shipping_address_street {
-  width: 88%;
-}
-
-textarea#primary_address_street {
-  width: 88%;
-}
-
-textarea#alt_address_street {
-  width: 88%;
-}
-
-textarea#description {
-  width: 100%;
-}
 
 .hr {
   background: $main-alternate-bg;
@@ -3389,35 +3431,118 @@ select#sales_stage_advanced {
 }
 
 @media (max-width: 768px) {
+  #BILLING_address_fieldset table tr {
+    border-bottom: none;
+  }
+
+  #SHIPPING_address_fieldset table tr {
+    border-bottom: none;
+  }
+
+  #BILLING_address_fieldset input[type=text] {
+    width: 100%;
+  }
+
+  #SHIPPING_address_fieldset input[type=text] {
+    width: 100%;
+  }
+
+  textarea#billing_address_street {
+    width: 100%;
+  }
+
+  textarea#shipping_address_street {
+    width: 100%;
+  }
+
+  textarea#primary_address_street {
+    width: 100%;
+  }
+
+  textarea#alt_address_street {
+    width: 100%;
+  }
+
+  textarea#description {
+    width: 100%;
+  }
+
   .detail-view-row .label.col-2-label {
     padding-left: 8px;
   }
-  .col-xs-6 input[type="text"]#first_name {
-    width: 48.5%;
-  }
-  .col-sm-6 input[type="text"]#first_name {
-    width: 48.5%;
+
+  .col-xs-12 [field=first_name].edit-view-field input[type="text"]#first_name {
+    width: 100%;
   }
 
-  .col-xs-12 input[type="text"]#first_name{
-    width: 38.40%;
+  .col-xs-6 [field=first_name].edit-view-field input[type="text"]#first_name {
+    width: 100%;
   }
 
-  .col-sm-12 input[type="text"]#first_name {
-    width: 38.40%;
+  .col-sm-12 .col-sm-8.edit-view-field input.sqsEnabled {
+    width: 100%;
+  }
+
+  .col-sm-6 .col-sm-8.edit-view-field input.sqsEnabled {
+    width: 100%;
+  }
+
+  .col-sm-8 .edit-view-field input[type="text"] {
+    width: 100%;
+  }
+
+  .col-sm-6 .edit-view-field input[type="text"] {
+    width: 100%;
+  }
+
+  [type="date"] img {
+    margin-left: 8px;
+  }
+
+  .col-sm-12 .edit-view-field[type="date"] input[type="text"] {
+    width: 92%;
+  }
+
+  .col-sm-6 .edit-view-field[type="date"] input[type="text"] {
+    width: 92%;
   }
 }
 
 @media (min-width: 768px) {
+
+  #BILLING_address_fieldset input[type=text] {
+    width: 100%;
+  }
+
+  #SHIPPING_address_fieldset input[type=text] {
+    width: 100%;
+  }
+
+  textarea#billing_address_street {
+    width: 100%;
+  }
+
+  textarea#shipping_address_street {
+    width: 100%;
+  }
+
+  textarea#primary_address_street {
+    width: 100%;
+  }
+
+  textarea#alt_address_street {
+    width: 100%;
+  }
+
+  textarea#description {
+    width: 100%;
+  }
+
   .col-xs-6 input[type="text"]#first_name {
     width: 48.5%;
   }
   .col-sm-6 input[type="text"]#first_name {
     width: 48.5%;
-  }
-
-  .col-sm-6 .edit-view-field input[type="text"] {
-    width: 90%;
   }
 
   .col-sm-6 [type=bool] {
@@ -3429,7 +3554,7 @@ select#sales_stage_advanced {
   }
 
   .col-sm-12 .col-sm-8.edit-view-field textarea#description {
-    width: 45%;
+    width: 100%;
   }
 
   .col-sm-12 .col-sm-8.edit-view-field textarea {
@@ -3441,20 +3566,220 @@ select#sales_stage_advanced {
     line-height: $button-line-height;
   }
 
-  .col-sm-8.edit-view-field #parent_name {
-    width: 45%;
+  .col-sm-12 .col-sm-8.edit-view-field input.sqsEnabled {
+    width: 80%;
   }
 
-  .col-sm-8.edit-view-field input.sqsEnabled {
-    width: 45%;
+  .col-sm-6 .col-sm-8.edit-view-field input.sqsEnabled {
+    width: 80%;
+  }
+
+  .col-sm-12 [field=first_name].edit-view-field select {
+    width: 30%;
+  }
+
+  .col-sm-6 [field=first_name].edit-view-field select {
+    width: 30%;
+  }
+
+  .col-sm-12 [field=first_name].edit-view-field input[type="text"]#first_name {
+    width: 68%;
+  }
+
+  .col-sm-6 [field=first_name].edit-view-field input[type="text"]#first_name {
+    width: 58%;
+  }
+
+  .col-sm-8 .edit-view-field input[type="text"] {
+    width: 100%;
+  }
+
+  .col-sm-6 .edit-view-field input[type="text"] {
+    width: 100%;
+  }
+
+  .email-address-options-container {
+    margin-top: 0;
+  }
+
+  [type="date"] input[type="text"] {
+    width: 90%;
+  }
+
+  [type="date"] img {
+    margin-left: 8px;
   }
 }
 
-@media (min-width: 1025px) {
-  .col-sm-6 .col-sm-8.edit-view-field input.sqsEnabled {
-    width: 65%;
+@media (min-width: 769px) {
+
+  #BILLING_address_fieldset input[type=text] {
+    width: 90%;
   }
 
+  #SHIPPING_address_fieldset input[type=text] {
+    width: 90%;
+  }
+
+  textarea#billing_address_street {
+    width: 90%;
+  }
+
+  textarea#shipping_address_street {
+    width: 90%;
+  }
+
+  textarea#primary_address_street {
+    width: 90%;
+  }
+
+  textarea#alt_address_street {
+    width: 90%;
+  }
+
+  textarea#description {
+    width: 90%;
+  }
+
+  .col-xs-6 input[type="text"]#first_name {
+    width: 48.5%;
+  }
+  .col-sm-6 input[type="text"]#first_name {
+    width: 48.5%;
+  }
+
+  .col-sm-6 [type=bool] {
+    line-height: $input-line-height;
+  }
+
+  .col-sm-6 .edit-view-field textarea {
+    width: 90%;
+  }
+
+  .col-sm-12 .col-sm-8.edit-view-field textarea#description {
+    width: 100%;
+  }
+
+  .col-sm-12 .col-sm-8.edit-view-field textarea {
+    width: 45%;
+  }
+
+  [field=bool].col-sm-8.edit-view-field {
+    height: $button-line-height;
+    line-height: $button-line-height;
+  }
+
+  .col-sm-12 .col-sm-8.edit-view-field input.sqsEnabled {
+    width: 45%;
+  }
+
+  .col-sm-6 .col-sm-8.edit-view-field input.sqsEnabled {
+    width: 90%;
+  }
+
+  .col-sm-12 [type=name].col-sm-8.edit-view-field input[type="text"] {
+    width: 45%;
+  }
+
+  .col-sm-12 [type=url].col-sm-8.edit-view-field input[type="text"] {
+    width: 45%;
+  }
+
+
+  .col-sm-12 [type=varchar].col-sm-8.edit-view-field input[type="text"] {
+    width: 45%;
+  }
+
+  .col-sm-12 [type=phone].col-sm-8.edit-view-field input[type="text"] {
+    width: 45%;
+  }
+  .col-sm-12 .col-sm-8 .edit-view-field input[type="text"] {
+    width: 85%;
+  }
+
+  .col-sm-6 .edit-view-field input[type="text"] {
+    width: 90%;
+  }
+
+  .email-address-options-container {
+    margin-top: 0;
+  }
+
+  [type="date"] input[type="text"] {
+    width: 90%;
+  }
+
+  [type="date"] img {
+    margin-left: 8px;
+  }
+
+  .col-xs-12 [field=first_name].edit-view-field select {
+    width: 15%;
+  }
+
+  .col-xs-12 [field=first_name].edit-view-field input[type="text"]#first_name {
+    width: 29%;
+  }
+
+  .col-sm-6 [field=first_name].edit-view-field select {
+    width: 30%;
+  }
+
+  .col-sm-6 [field=first_name].edit-view-field input[type="text"]#first_name {
+    width: 58%;
+  }
+
+}
+
+@media (min-width: 1024px) {
+  .col-sm-12 .col-sm-8.edit-view-field input.sqsEnabled {
+    width: 31.0%;
+  }
+
+  .col-sm-6 .col-sm-8.edit-view-field input.sqsEnabled {
+    width: 62.75%;
+  }
+
+  .col-sm-12 [type=varchar].col-sm-8.edit-view-field input[type="text"] {
+    width: 45.0%;
+  }
+
+  .col-sm-12 .edit-view-field input[type="text"] {
+    width: 90%;
+  }
+
+  .col-sm-6 .edit-view-field input[type="text"] {
+    width: 90%;
+  }
+
+
+  #BILLING_address_fieldset input[type=text] {
+    width: 90%;
+  }
+
+  #SHIPPING_address_fieldset input[type=text] {
+    width: 90%;
+  }
+
+  textarea#billing_address_street {
+    width: 90%;
+  }
+
+  textarea#shipping_address_street {
+    width: 90%;
+  }
+
+  textarea#primary_address_street {
+    width: 90%;
+  }
+
+  textarea#alt_address_street {
+    width: 90%;
+  }
+
+  .col-sm-12 .col-sm-8.edit-view-field textarea#description {
+    width: 120%;
+  }
 
   #EditView_tabs .edit [type="checkbox"][name=alt_checkbox] {
     margin-top: 15px;
@@ -3468,6 +3793,104 @@ select#sales_stage_advanced {
     height: $button-line-height;
     line-height: $button-line-height;
   }
+}
+
+@media (min-width: 1600px) {
+  .col-sm-12 .col-sm-8.edit-view-field input.sqsEnabled {
+    width: 36.0%;
+  }
+
+  .col-sm-6 .col-sm-8.edit-view-field input.sqsEnabled {
+    width: 72.25%;
+  }
+
+  .col-sm-12 [type=varchar].col-sm-8.edit-view-field input[type="text"] {
+    width: 45.0%;
+  }
+
+  .col-sm-6 .edit-view-field input[type="text"] {
+    width: 90%;
+  }
+
+
+  #BILLING_address_fieldset input[type=text] {
+    width: 90%;
+  }
+
+  #SHIPPING_address_fieldset input[type=text] {
+    width: 90%;
+  }
+
+  textarea#billing_address_street {
+    width: 90%;
+  }
+
+  textarea#shipping_address_street {
+    width: 90%;
+  }
+
+  textarea#primary_address_street {
+    width: 90%;
+  }
+
+  textarea#alt_address_street {
+    width: 90%;
+  }
+
+  .col-sm-12 .col-sm-8.edit-view-field textarea#description {
+    width: 120%;
+  }
+
+  #EditView_tabs .edit [type="checkbox"][name=alt_checkbox] {
+    margin-top: 15px;
+  }
+
+  .edit-view-field [name=alt_checkbox] {
+    margin-top: 15px;
+  }
+
+  .edit-view-row-item [field=internal] {
+    height: $button-line-height;
+    line-height: $button-line-height;
+  }
+
+
+  .col-xs-12 [field=first_name].edit-view-field select {
+    width: 30%;
+  }
+
+  .col-xs-6 [field=first_name].edit-view-field select {
+    width: 30%;
+  }
+
+  .col-xs-12 [field=first_name].edit-view-field input[type="text"]#first_name {
+    width: 58%;
+  }
+
+  .col-xs-6 [field=first_name].edit-view-field input[type="text"]#first_name {
+    width: 58%;
+  }
+
+  .col-sm-6 .col-sm-8.edit-view-field input.sqsEnabled {
+    width: 72.25%;
+  }
+
+  .col-sm-12 [field=first_name].edit-view-field select {
+    width: 15%;
+  }
+
+  .col-sm-6 [field=first_name].edit-view-field select {
+    width: 30%;
+  }
+
+  .col-sm-12 [field=first_name].edit-view-field input[type="text"]#first_name {
+    width: 29.5%;
+  }
+
+  .col-sm-6 [field=first_name].edit-view-field input[type="text"]#first_name {
+    width: 59%;
+  }
+
 }
 
 .sub-header {
@@ -4994,7 +5417,7 @@ table tr#delegates_search {
 /* popup in studio */
 .masked .yui-simple-dialog {
   // Overridding inline style
-  z-index: 10!important;
+  z-index: 100000!important;
 }
 
 /* popup dialog on home page */

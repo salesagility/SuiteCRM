@@ -158,7 +158,6 @@ class ListViewSmarty extends ListViewDisplay
         // handle save checks and stuff
         if($this->multiSelect)
         {
-            $this->ss->assign('selectedObjectsSpan', $this->buildSelectedObjectsSpan(true, (isset($_POST['mass'])) ? count($_POST['mass']): 0));
             $this->ss->assign('multiSelectData', $this->getMultiSelectData());
         } else {
             $this->ss->assign('multiSelectData', '<textarea style="display: none" name="uid"></textarea>');
@@ -189,7 +188,7 @@ class ListViewSmarty extends ListViewDisplay
             $this->ss->assign('contextMenuScript', $script);
         }
 
-        $this->ss->assign('showFilterIcon', !in_array($_REQUEST['module'], isset($sugar_config['use_legacy_search']) ? $sugar_config['use_legacy_search'] : array()));
+        $this->ss->assign('showFilterIcon', !in_array($_REQUEST['module'], isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array()));
 	}
 
     /**

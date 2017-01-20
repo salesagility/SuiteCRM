@@ -1345,9 +1345,6 @@ font[color=red] {
     width: 33.333333%;
   }
 
-  [type="relate"].edit-view-field input[type="text"] {
-    width: 340px;
-  }
   .dateTime input[type="text"] {
     width: 400px;
   }
@@ -1388,11 +1385,6 @@ font[color=red] {
 @media (max-width: 1130px) {
   .col-sm-6 #email1_span .email-address-option {
     width: 33%;
-  }
-
-  table#lineItems tr td table thead tr td table tbody tr td {
-    display: block;
-    float: left;
   }
 }
 
