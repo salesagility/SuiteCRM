@@ -150,6 +150,9 @@ class ViewList extends SugarView
             $this->storeQuery->populateRequest();
         } else {
             $this->storeQuery->saveFromRequest($this->module);
+            if($_REQUEST['use_stored_query']) {
+                die();
+            }
         }
 
         $this->seed = $this->bean;
