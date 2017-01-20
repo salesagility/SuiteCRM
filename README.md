@@ -1,4 +1,4 @@
-##SuiteCRM 7.8.0 Beta 2
+##SuiteCRM 7.8.0 RC
 
 [![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=develop)](https://travis-ci.org/salesagility/SuiteCRM)
 
