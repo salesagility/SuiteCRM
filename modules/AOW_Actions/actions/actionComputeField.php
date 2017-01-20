@@ -328,22 +328,22 @@ class actionComputeField extends actionBase
 			<div class='computeFieldContainer' id='$containerName'>
 				<fieldset>
 					<legend>" .
-                translate("LBL_COMPUTEFIELD_PARAMETERS", "AOW_Actions") .
-                "</legend>
+            translate("LBL_COMPUTEFIELD_PARAMETERS", "AOW_Actions") .
+            "</legend>
 					<div class='computeFieldParametersContainer'>
 						<table style='display: none;'>
 							<thead>
 								<tr>
 									<th></th>
 									<th>" .
-                translate("LBL_COMPUTEFIELD_FIELD_NAME", "AOW_Actions") .
-                "</th>
+            translate("LBL_COMPUTEFIELD_FIELD_NAME", "AOW_Actions") .
+            "</th>
 									<th>" .
-                translate("LBL_COMPUTEFIELD_VALUE_TYPE", "AOW_Actions") .
-                "</th>
+            translate("LBL_COMPUTEFIELD_VALUE_TYPE", "AOW_Actions") .
+            "</th>
 									<th>" .
-                translate("LBL_COMPUTEFIELD_IDENTIFIER", "AOW_Actions") .
-                "</th>
+            translate("LBL_COMPUTEFIELD_IDENTIFIER", "AOW_Actions") .
+            "</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -354,38 +354,38 @@ class actionComputeField extends actionBase
 						</select>
 						<select class='parameterTypeSelect' id='parameterTypeSelect$line'>
 							<option value='raw'>" .
-                translate("LBL_COMPUTEFIELD_RAW_VALUE", "AOW_Actions") .
-                "</option>
+            translate("LBL_COMPUTEFIELD_RAW_VALUE", "AOW_Actions") .
+            "</option>
 							<option value='formatted'>" .
-                translate("LBL_COMPUTEFIELD_FORMATTED_VALUE", "AOW_Actions") .
-                "</option>
+            translate("LBL_COMPUTEFIELD_FORMATTED_VALUE", "AOW_Actions") .
+            "</option>
 						</select>
 						<input type='button' class='button' onclick='addParameter($line, \"$containerName\");' value='" .
-                translate("LBL_COMPUTEFIELD_ADD_PARAMETER", "AOW_Actions") .
-                "' />
+            translate("LBL_COMPUTEFIELD_ADD_PARAMETER", "AOW_Actions") .
+            "' />
 					</div>
 				</fieldset>
 				<fieldset>
 					<legend>" .
-                translate("LBL_COMPUTEFIELD_RELATION_PARAMETERS", "AOW_Actions") .
-                "</legend>
+            translate("LBL_COMPUTEFIELD_RELATION_PARAMETERS", "AOW_Actions") .
+            "</legend>
 					<div class='computeFieldRelationParametersContainer'>
 						<table style='display: none;'>
 							<thead>
 								<tr>
 									<th></th>
 									<th>" .
-                translate("LBL_COMPUTEFIELD_RELATION", "AOW_Actions") .
-                "</th>
+            translate("LBL_COMPUTEFIELD_RELATION", "AOW_Actions") .
+            "</th>
 									<th>" .
-                translate("LBL_COMPUTEFIELD_FIELD_NAME", "AOW_Actions") .
-                "</th>
+            translate("LBL_COMPUTEFIELD_FIELD_NAME", "AOW_Actions") .
+            "</th>
 									<th>" .
-                translate("LBL_COMPUTEFIELD_VALUE_TYPE", "AOW_Actions") .
-                "</th>
+            translate("LBL_COMPUTEFIELD_VALUE_TYPE", "AOW_Actions") .
+            "</th>
 									<th>" .
-                translate("LBL_COMPUTEFIELD_IDENTIFIER", "AOW_Actions") .
-                "</th>
+            translate("LBL_COMPUTEFIELD_IDENTIFIER", "AOW_Actions") .
+            "</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -394,32 +394,32 @@ class actionComputeField extends actionBase
 						$relationOptions
 						<select class='relationParameterTypeSelect' id='relationParameterTypeSelect$line'>
 							<option value='raw'>" .
-                translate("LBL_COMPUTEFIELD_RAW_VALUE", "AOW_Actions") .
-                "</option>
+            translate("LBL_COMPUTEFIELD_RAW_VALUE", "AOW_Actions") .
+            "</option>
 							<option value='formatted'>" .
-                translate("LBL_COMPUTEFIELD_FORMATTED_VALUE", "AOW_Actions") .
-                "</option>
+            translate("LBL_COMPUTEFIELD_FORMATTED_VALUE", "AOW_Actions") .
+            "</option>
 						</select>
 						<input type='button' class='button' onclick='addRelationParameter($line, \"$containerName\");' value='" .
-                translate("LBL_COMPUTEFIELD_ADD_RELATION_PARAMETER", "AOW_Actions") .
-                "' />
+            translate("LBL_COMPUTEFIELD_ADD_RELATION_PARAMETER", "AOW_Actions") .
+            "' />
 					</div>
 				</fieldset>
 				<fieldset>
 					<legend>" .
-                translate("LBL_COMPUTEFIELD_FORMULAS", "AOW_Actions") .
-                "</legend>
+            translate("LBL_COMPUTEFIELD_FORMULAS", "AOW_Actions") .
+            "</legend>
 					<div class='computeFieldFormulaContainer'>
 						<table style='display: none;'>
 							<thead>
 								<tr>
 									<th></th>
 									<th>" .
-                translate("LBL_COMPUTEFIELD_FIELD_NAME", "AOW_Actions") .
-                "</th>
+            translate("LBL_COMPUTEFIELD_FIELD_NAME", "AOW_Actions") .
+            "</th>
 									<th>" .
-                translate("LBL_COMPUTEFIELD_FORMULA", "AOW_Actions") .
-                "</th>
+            translate("LBL_COMPUTEFIELD_FORMULA", "AOW_Actions") .
+            "</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -429,8 +429,8 @@ class actionComputeField extends actionBase
 							$moduleFieldsDropDown
 						</select>
 						<input type='button' class='button' onclick='addFormula($line, \"$containerName\");' value='" .
-                translate("LBL_COMPUTEFIELD_ADD_FORMULA", "AOW_Actions") .
-                "' />
+            translate("LBL_COMPUTEFIELD_ADD_FORMULA", "AOW_Actions") .
+            "' />
 					</div>
 				</fieldset>";
 
@@ -541,8 +541,8 @@ class actionComputeField extends actionBase
             $oppositeModule = $this->getOppositeModule($bean, $def);
 
             $optionsArray [] = array(
-                'value'    => $oneRelation['name'],
-                'module'   => translate($oppositeModule),
+                'value' => $oneRelation['name'],
+                'module' => translate($oppositeModule),
                 'relation' => $this->translate($oneRelation['vname'], $bean->module_name, $oppositeModule)
             );
 
@@ -566,8 +566,8 @@ class actionComputeField extends actionBase
             }
 
             $optionsArray [] = array(
-                'value'    => $name,
-                'module'   => $this->translate($relateField['module']),
+                'value' => $name,
+                'module' => $this->translate($relateField['module']),
                 'relation' => $this->translate($relateField['vname'], $bean->module_name, $relateField['module'])
             );
 
@@ -581,7 +581,7 @@ class actionComputeField extends actionBase
         $options = $this->createOptions($optionsArray);
 
         return "<select id='relationParameterSelect$line' class='relationParameterSelect'>$options</select>" .
-               $fieldSelects;
+            $fieldSelects;
     }
 
     /**
@@ -691,12 +691,12 @@ class actionComputeField extends actionBase
 
         foreach ($optionsArray as $option) {
             $options .= "<option value='" .
-                        $option['value'] .
-                        "'>" .
-                        $option['module'] .
-                        ' : ' .
-                        $option['relation'] .
-                        "</option>";
+                $option['value'] .
+                "'>" .
+                $option['module'] .
+                ' : ' .
+                $option['relation'] .
+                "</option>";
         }
 
         return $options;
@@ -724,12 +724,12 @@ class actionComputeField extends actionBase
     private function getOption($relationName, $oppositeModule)
     {
         return "<option value='" .
-               $oneRelation['name'] .
-               "'>" .
-               translate($oppositeModule) .
-               ' : ' .
-               translate($oneRelation['vname']) .
-               "</option>";
+            $oneRelation['name'] .
+            "'>" .
+            translate($oppositeModule) .
+            ' : ' .
+            translate($oneRelation['vname']) .
+            "</option>";
     }
 
     /**
