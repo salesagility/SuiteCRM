@@ -40,7 +40,9 @@
  * This file was contributed by diligent technology & business consulting GmbH <info@dtbc.eu>
  *
  */
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 $mod_strings = array(
     'LBL_ID' => 'ID',
     'LBL_DATE_ENTERED' => 'Date Created',
