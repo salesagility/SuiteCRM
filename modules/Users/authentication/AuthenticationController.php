@@ -123,6 +123,7 @@ class AuthenticationController
 	 */
 	public function login($username, $password, $PARAMS = array())
 	{
+		global $sugar_config;
 		//kbrill bug #13225
 		$_SESSION['loginAttempts'] = (isset($_SESSION['loginAttempts']))? $_SESSION['loginAttempts'] + 1: 1;
 		unset($GLOBALS['login_error']);
@@ -130,6 +131,21 @@ class AuthenticationController
 		if($this->loggedIn)return $this->loginSuccess;
 		LogicHook::initialize()->call_custom_logic('Users', 'before_login');
 
+		$usr = new user();
+		$usr_id = $usr->retrieve_user_id($username);
+		$usr->retrieve($usr_id);
+		$attempt = new LoginAttempts();
+		$attempt->username = $username;
+		$attempt->record_user_id = $usr_id;
+		$attempt->ip_address = query_client_ip();
+
+		if (!empty($sugar_config['userlockout']['maxfailedlogins']) &&
+		 	$this->checkAttemptsIP($attempt->ip_address) >= $sugar_config['iplockoutmax']){
+			$attempt->success = false;
+			$attempt->save();
+			return false;
+		}
+		
 		$this->loginSuccess = $this->authController->loginAuthenticate($username, $password, false, $PARAMS);
 		$this->loggedIn = true;
 
@@ -142,9 +158,10 @@ class AuthenticationController
 				unset($_SESSION['authenticated_user_id']);
 				$GLOBALS['log']->fatal('FAILED LOGIN: potential hack attempt:'.$GLOBALS['login_error']);
 				$this->loginSuccess = false;
+				$attempt->success = $this->loginSuccess;
+				$attempt->save();
 				return false;
 			}
-
 			//call business logic hook
 			if(isset($GLOBALS['current_user']))
 				$GLOBALS['current_user']->call_custom_logic('after_login');
@@ -179,8 +196,30 @@ class AuthenticationController
 			$GLOBALS['log']->fatal('FAILED LOGIN:attempts[' .$_SESSION['loginAttempts'] .'] - '. $username);
 		}
 		// if password has expired, set a session variable
-
+		$attempt->success = $this->loginSuccess;
+		$attempt->save();
 		return $this->loginSuccess;
+	}
+
+	/**
+	 * Check to see if the IP address failing to log in has any previous failures and how many
+	 *
+	 * @param string $ip
+	 *
+	 * @return int $count
+	 */
+	public function checkAttemptsIP($ip)
+	{
+		global $db;
+		$sql =
+			'SELECT COUNT(*) as count FROM `loginattempts` WHERE ip_address="' . $ip .
+			'" AND success="0" AND date_entered > DATE_SUB(NOW(), INTERVAL 5 MINUTE) ORDER BY `date_entered` DESC';
+		$res = $db->query($sql);
+		while ($row = $db->fetchByAssoc($res)) {
+			$count = $row['count'];
+		}
+
+		return $count;
 	}
 
 	/**
