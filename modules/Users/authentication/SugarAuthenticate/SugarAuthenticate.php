@@ -394,8 +394,12 @@ class SugarAuthenticate
     }
 
     /**
-     * Check to see if the IP address failing to log in has any previous failures
+     * Check to see if the IP address failing to log in has any previous failures and how many
      *
+     * @param string $ip
+     * @param string $userID
+     *
+     * @return int $count
      */
     public function checkAttemptsIP($ip, $userID)
     {
