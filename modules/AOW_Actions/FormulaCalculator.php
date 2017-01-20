@@ -38,6 +38,10 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+/**
+ * Class FormulaNode
+ */
 class FormulaNode
 {
     public $text;
@@ -64,6 +68,9 @@ class FormulaNode
     }
 }
 
+/**
+ * Class FormulaCalculator
+ */
 class FormulaCalculator
 {
     const startTerminal = "{";
@@ -79,6 +86,14 @@ class FormulaCalculator
     private $debugEnabled;
     private $debugFileName;
 
+    /**
+     * FormulaCalculator constructor.
+     *
+     * @param $parameters
+     * @param $relationParameters
+     * @param $currentModule
+     * @param $creatorUserId
+     */
     public function __construct($parameters, $relationParameters, $currentModule, $creatorUserId)
     {
         $this->parameters = $parameters;
@@ -94,28 +109,12 @@ class FormulaCalculator
         $this->debugFileName = isset($this->configurator->config[FormulaCalculator::configuratorName]['DebugFileName']) ? $this->configurator->config[FormulaCalculator::configuratorName]['DebugFileName'] : 'SweeterCalc.log';
     }
 
-    private function logVardump($obj)
-    {
-        if (!$this->debugEnabled)
-            return;
-
-        ob_start();
-        var_dump($obj);
-        $str = ob_get_contents();
-        ob_end_clean();
-
-        $this->log($str);
-    }
-
-    private function log($content)
-    {
-        if (!$this->debugEnabled)
-            return;
-
-        $currentContent = file_exists($this->debugFileName) ? file_get_contents($this->debugFileName) : "";
-        file_put_contents($this->debugFileName, $currentContent . "[" . date("Y-m-d H:i:s") . "] " . $content . "\n");
-    }
-
+    /**
+     * @param $formula
+     *
+     * @return mixed|string
+     * @throws Exception
+     */
     public function calculateFormula($formula)
     {
         try {
@@ -141,6 +140,80 @@ class FormulaCalculator
         }
     }
 
+    /**
+     * @param $content
+     */
+    private function log($content)
+    {
+        if (!$this->debugEnabled) {
+            return;
+        }
+
+        $currentContent = file_exists($this->debugFileName) ? file_get_contents($this->debugFileName) : "";
+        file_put_contents($this->debugFileName, $currentContent . "[" . date("Y-m-d H:i:s") . "] " . $content . "\n");
+    }
+
+    /**
+     * @param $content
+     *
+     * @return FormulaNode
+     */
+    private function createTree($content)
+    {
+        $rootNode = new FormulaNode($content, 0);
+
+        $this->findLexicalElementsOnLevel($content, 0, $rootNode);
+
+        return $rootNode;
+    }
+
+    /**
+     * @param $content
+     * @param $level
+     * @param $node
+     */
+    private function findLexicalElementsOnLevel($content, $level, &$node)
+    {
+        $characters = preg_split('//u', $content, -1, PREG_SPLIT_NO_EMPTY);
+        $terminalLevel = 0;
+        $hasChild = false;
+
+        $currentText = "";
+        for ($i = 0; $i < count($characters); $i++) {
+            $char = $characters[$i];
+
+            if ($terminalLevel > 0) {
+                $currentText .= $char;
+            }
+
+            if ($char === FormulaCalculator::startTerminal) {
+                if ($terminalLevel == 0) {
+                    $currentText .= $char;
+                }
+
+                $terminalLevel++;
+            } elseif ($char === FormulaCalculator::endTerminal) {
+                $terminalLevel--;
+
+                if ($terminalLevel == 0) {
+                    $newLevel = $level + 1;
+                    $newNode = new FormulaNode($currentText, $newLevel, $node);
+                    $node->addChild($newNode);
+
+                    $this->findLexicalElementsOnLevel(mb_substr($currentText, 1, -1), $newLevel, $newNode);
+
+                    $currentText = "";
+                    $hasChild = true;
+                }
+            }
+        }
+    }
+
+    /**
+     * @param $node
+     *
+     * @return int|mixed|string
+     */
     private function evaluateTreeLevel(&$node)
     {
         if ($node->isLeaf()) {
@@ -183,26 +256,12 @@ class FormulaCalculator
         return $node->evaluatedValue;
     }
 
-    private function evaluateFunctionParams($functionName, $text, $childItems)
-    {
-        if (!preg_match("/^\s*\{\s*$functionName\s*\(/i", $text))
-            return null;
-
-        $this->log("Matched funcion name: " . $functionName);
-
-        $params = $this->getFunctionParameters($functionName, $text, $childItems);
-
-        $this->log("Resolved parameters for function '$functionName': ");
-        $this->logVardump($params);
-
-        return $params;
-    }
-
-    private function parseFloat($value)
-    {
-        return floatval(str_replace(",", ".", $value));
-    }
-
+    /**
+     * @param $text
+     * @param array $childItems
+     *
+     * @return string
+     */
     private function evaluateNode($text, $childItems = array())
     {
         if (count($childItems) == 0) {
@@ -373,69 +432,49 @@ class FormulaCalculator
         return $text;
     }
 
-    private function modifyDate($format, $datestring, $ammount, $type, $isTime = false, $isAdd = true)
+    /**
+     * @param $obj
+     */
+    private function logVardump($obj)
     {
-        $prefix = $isTime ? 'PT' : 'P';
+        if (!$this->debugEnabled) return;
 
-        $datetime = new DateTime($datestring);
+        ob_start();
+        var_dump($obj);
+        $str = ob_get_contents();
+        ob_end_clean();
 
-        if ($isAdd)
-            $datetime->add(new DateInterval($prefix . $ammount . $type));
-        else
-            $datetime->sub(new DateInterval($prefix . $ammount . $type));
-
-        return $datetime->format($format);
+        $this->log($str);
     }
 
-    private function getParameterText($functionName, $text)
+    /**
+     * @param $functionName
+     * @param $text
+     * @param $childItems
+     *
+     * @return array|null
+     */
+    private function evaluateFunctionParams($functionName, $text, $childItems)
     {
-        $parameterText = preg_replace("/^\s*\{\s*" . $functionName . "\s*\(\s*/", "", $text, 1);
-        $parameterText = preg_replace("/\s*\)\s*\}\s*$/", "", $parameterText, 1);
+        if (!preg_match("/^\s*\{\s*$functionName\s*\(/i", $text)) return null;
 
-        return trim($parameterText);
-    }
+        $this->log("Matched funcion name: " . $functionName);
 
-    private function getParameterArray($functionName, $text)
-    {
-        $this->log("Extracting parameters for function '$functionName' ...");
+        $params = $this->getFunctionParameters($functionName, $text, $childItems);
 
-        $parameterText = $this->getParameterText($functionName, $text);
-
-        $characters = preg_split('//u', $parameterText, -1, PREG_SPLIT_NO_EMPTY);
-        $terminalLevel = 0;
-
-        $params = array();
-        $currentParam = "";
-        for ($i = 0; $i < count($characters); $i++) {
-            $char = $characters[$i];
-
-            if ($char === FormulaCalculator::startTerminal) {
-                $terminalLevel++;
-                $currentParam .= $char;
-            } else if ($char === FormulaCalculator::endTerminal) {
-                $terminalLevel--;
-                $currentParam .= $char;
-            } else if ($char === FormulaCalculator::parameterSeparatorTerminal) {
-                if ($terminalLevel == 0) {
-                    $params [] = $currentParam;
-                    $currentParam = "";
-                } else {
-                    $currentParam .= $char;
-                }
-            } else {
-                $currentParam .= $char;
-            }
-        }
-
-        $params [] = $currentParam;
-        $trimmed = array_map('trim', $params);
-
-        $this->log("Extracted parameters:");
+        $this->log("Resolved parameters for function '$functionName': ");
         $this->logVardump($params);
 
-        return $trimmed;
+        return $params;
     }
 
+    /**
+     * @param $functionName
+     * @param $text
+     * @param $childItems
+     *
+     * @return array
+     */
     private function getFunctionParameters($functionName, $text, $childItems)
     {
         $parameters = $this->getParameterArray($functionName, $text);
@@ -482,6 +521,111 @@ class FormulaCalculator
         return $resolvedParameters;
     }
 
+    /**
+     * @param $functionName
+     * @param $text
+     *
+     * @return array
+     */
+    private function getParameterArray($functionName, $text)
+    {
+        $this->log("Extracting parameters for function '$functionName' ...");
+
+        $parameterText = $this->getParameterText($functionName, $text);
+
+        $characters = preg_split('//u', $parameterText, -1, PREG_SPLIT_NO_EMPTY);
+        $terminalLevel = 0;
+
+        $params = array();
+        $currentParam = "";
+        for ($i = 0; $i < count($characters); $i++) {
+            $char = $characters[$i];
+
+            if ($char === FormulaCalculator::startTerminal) {
+                $terminalLevel++;
+                $currentParam .= $char;
+            } else {
+                if ($char === FormulaCalculator::endTerminal) {
+                    $terminalLevel--;
+                    $currentParam .= $char;
+                } else {
+                    if ($char === FormulaCalculator::parameterSeparatorTerminal) {
+                        if ($terminalLevel == 0) {
+                            $params [] = $currentParam;
+                            $currentParam = "";
+                        } else {
+                            $currentParam .= $char;
+                        }
+                    } else {
+                        $currentParam .= $char;
+                    }
+                }
+            }
+        }
+
+        $params [] = $currentParam;
+        $trimmed = array_map('trim', $params);
+
+        $this->log("Extracted parameters:");
+        $this->logVardump($params);
+
+        return $trimmed;
+    }
+
+    /**
+     * @param $functionName
+     * @param $text
+     *
+     * @return string
+     */
+    private function getParameterText($functionName, $text)
+    {
+        $parameterText = preg_replace("/^\s*\{\s*" . $functionName . "\s*\(\s*/", "", $text, 1);
+        $parameterText = preg_replace("/\s*\)\s*\}\s*$/", "", $parameterText, 1);
+
+        return trim($parameterText);
+    }
+
+    /**
+     * @param $value
+     *
+     * @return float
+     */
+    private function parseFloat($value)
+    {
+        return floatval(str_replace(",", ".", $value));
+    }
+
+    /**
+     * @param $format
+     * @param $datestring
+     * @param $ammount
+     * @param $type
+     * @param bool $isTime
+     * @param bool $isAdd
+     *
+     * @return string
+     */
+    private function modifyDate($format, $datestring, $ammount, $type, $isTime = false, $isAdd = true)
+    {
+        $prefix = $isTime ? 'PT' : 'P';
+
+        $datetime = new DateTime($datestring);
+
+        if ($isAdd) {
+            $datetime->add(new DateInterval($prefix . $ammount . $type));
+        } else {
+            $datetime->sub(new DateInterval($prefix . $ammount . $type));
+        }
+
+        return $datetime->format($format);
+    }
+
+    /**
+     * @param $leaf
+     *
+     * @return int|mixed|string
+     */
     private function evaluateLeaf($leaf)
     {
         $evaluated = $leaf;
@@ -503,6 +647,11 @@ class FormulaCalculator
         return $evaluated;
     }
 
+    /**
+     * @param $text
+     *
+     * @return int|string
+     */
     private function replaceGlobalVariables($text)
     {
         $evaluated = $text;
@@ -519,6 +668,12 @@ class FormulaCalculator
         return $evaluated;
     }
 
+    /**
+     * @param $globalVariableType
+     * @param $text
+     *
+     * @return int|string
+     */
     private function replaceGlobalVariable($globalVariableType, $text)
     {
         if (preg_match("/^\{$globalVariableType\(/i", $text)) {
@@ -534,11 +689,64 @@ class FormulaCalculator
         return $text;
     }
 
-    private function formatCounter($value, $digits)
+    /**
+     * @param $globalVariableType
+     * @param $parameterText
+     *
+     * @return int
+     */
+    private function getGlobalVariableConfig($globalVariableType, $parameterText)
     {
-        return sprintf("%0" . $digits . "d", $value);
+        switch ($globalVariableType) {
+            case 'GlobalCounter':
+                return $this->configurator->config[FormulaCalculator::configuratorName]['GlobalCounter'][$parameterText];
+            case 'GlobalCounterPerUser':
+                return $this->configurator->config[FormulaCalculator::configuratorName]['GlobalCounterPerUser'][$this->creatorUserId][$parameterText];
+            case 'GlobalCounterPerModule':
+                return $this->configurator->config[FormulaCalculator::configuratorName]['GlobalCounterPerModule'][$this->currentModule][$parameterText];
+            case 'GlobalCounterPerUserPerModule':
+                return $this->configurator->config[FormulaCalculator::configuratorName]['GlobalCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText];
+
+            case 'DailyCounter':
+                if ($this->configurator->config[FormulaCalculator::configuratorName]['DailyCounter'][$parameterText]['date'] ===
+                    date('Y-m-d')
+                ) {
+                    return $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounter'][$parameterText]['value'];
+                } else {
+                    return 0;
+                }
+            case 'DailyCounterPerUser':
+                if ($this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['date'] ===
+                    date('Y-m-d')
+                ) {
+                    return $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['value'];
+                } else {
+                    return 0;
+                }
+            case 'DailyCounterPerModule':
+                if ($this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUser'][$this->currentModule][$parameterText]['date'] ===
+                    date('Y-m-d')
+                ) {
+                    return $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUser'][$this->currentModule][$parameterText]['value'];
+                } else {
+                    return 0;
+                }
+            case 'DailyCounterPerUserPerModule':
+                if ($this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['date'] ===
+                    date('Y-m-d')
+                ) {
+                    return $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['value'];
+                } else {
+                    return 0;
+                }
+        }
     }
 
+    /**
+     * @param $globalVariableType
+     * @param $parameterText
+     * @param $value
+     */
     private function setGlobalVariableConfig($globalVariableType, $parameterText, $value)
     {
         switch ($globalVariableType) {
@@ -575,82 +783,14 @@ class FormulaCalculator
         $this->configurator->saveConfig();
     }
 
-    private function getGlobalVariableConfig($globalVariableType, $parameterText)
+    /**
+     * @param $value
+     * @param $digits
+     *
+     * @return string
+     */
+    private function formatCounter($value, $digits)
     {
-        switch ($globalVariableType) {
-            case 'GlobalCounter':
-                return $this->configurator->config[FormulaCalculator::configuratorName]['GlobalCounter'][$parameterText];
-            case 'GlobalCounterPerUser':
-                return $this->configurator->config[FormulaCalculator::configuratorName]['GlobalCounterPerUser'][$this->creatorUserId][$parameterText];
-            case 'GlobalCounterPerModule':
-                return $this->configurator->config[FormulaCalculator::configuratorName]['GlobalCounterPerModule'][$this->currentModule][$parameterText];
-            case 'GlobalCounterPerUserPerModule':
-                return $this->configurator->config[FormulaCalculator::configuratorName]['GlobalCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText];
-
-            case 'DailyCounter':
-                if ($this->configurator->config[FormulaCalculator::configuratorName]['DailyCounter'][$parameterText]['date'] === date('Y-m-d'))
-                    return $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounter'][$parameterText]['value'];
-                else
-                    return 0;
-            case 'DailyCounterPerUser':
-                if ($this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['date'] === date('Y-m-d'))
-                    return $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUser'][$this->creatorUserId][$parameterText]['value'];
-                else
-                    return 0;
-            case 'DailyCounterPerModule':
-                if ($this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUser'][$this->currentModule][$parameterText]['date'] === date('Y-m-d'))
-                    return $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUser'][$this->currentModule][$parameterText]['value'];
-                else
-                    return 0;
-            case 'DailyCounterPerUserPerModule':
-                if ($this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['date'] === date('Y-m-d'))
-                    return $this->configurator->config[FormulaCalculator::configuratorName]['DailyCounterPerUserPerModule'][$this->creatorUserId][$this->currentModule][$parameterText]['value'];
-                else
-                    return 0;
-        }
-    }
-
-    private function createTree($content)
-    {
-        $rootNode = new FormulaNode($content, 0);
-
-        $this->findLexicalElementsOnLevel($content, 0, $rootNode);
-
-        return $rootNode;
-    }
-
-    private function findLexicalElementsOnLevel($content, $level, &$node)
-    {
-        $characters = preg_split('//u', $content, -1, PREG_SPLIT_NO_EMPTY);
-        $terminalLevel = 0;
-        $hasChild = false;
-
-        $currentText = "";
-        for ($i = 0; $i < count($characters); $i++) {
-            $char = $characters[$i];
-
-            if ($terminalLevel > 0)
-                $currentText .= $char;
-
-            if ($char === FormulaCalculator::startTerminal) {
-                if ($terminalLevel == 0)
-                    $currentText .= $char;
-
-                $terminalLevel++;
-            } elseif ($char === FormulaCalculator::endTerminal) {
-                $terminalLevel--;
-
-                if ($terminalLevel == 0) {
-                    $newLevel = $level + 1;
-                    $newNode = new FormulaNode($currentText, $newLevel, $node);
-                    $node->addChild($newNode);
-
-                    $this->findLexicalElementsOnLevel(mb_substr($currentText, 1, -1), $newLevel, $newNode);
-
-                    $currentText = "";
-                    $hasChild = true;
-                }
-            }
-        }
+        return sprintf("%0" . $digits . "d", $value);
     }
 }
