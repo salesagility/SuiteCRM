@@ -65,7 +65,7 @@ class actionSendEmail extends actionBase {
         $checked = '';
         if(isset($params['individual_email']) && $params['individual_email']) $checked = 'CHECKED';
 
-        $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%'>";
+        $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%' data-workflow-action='send-email'>";
         $html .= "<tr>";
         $html .= '<td id="relate_label" scope="row" valign="top">'.translate("LBL_INDIVIDUAL_EMAILS","AOW_Actions").':';
         $html .= '</td>';

@@ -56,7 +56,7 @@ class actionModifyRecord extends actionCreateRecord {
         $modules = getModuleRelationships($bean->module_dir,'EditView', $params['rel_type']);
 
         $html = "<input type='hidden' name='aow_actions_param[".$line."][record_type]' id='aow_actions_param_record_type".$line."' value='' />";
-        $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%'>";
+        $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%' data-workflow-action='modify-record'>";
         $html .= "<tr>";
         $html .= '<td id="name_label" scope="row" valign="top">'.translate("LBL_RECORD_TYPE","AOW_Actions").':<span class="required">*</span>&nbsp;&nbsp;';
         $html .= "<select name='aow_actions_param[".$line."][rel_type]' id='aow_actions_param_rel_type".$line."'  onchange='show_mrModuleFields($line);'>".$modules."</select></td>";

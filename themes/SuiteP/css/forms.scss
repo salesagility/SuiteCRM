@@ -519,8 +519,18 @@ fieldset[disabled] .btn-primary.active {
   display: inline-block;
 }
 
+#actionLines .action-table > tbody > tr:first-of-type > td:first-of-type {
+  padding-left: 8px;
+}
+
+#actionLines .action-table > tbody > tr:first-of-type > td {
+  border-bottom: 1px solid $workflow-action-bg;
+  padding-top: 4px;
+}
+
 #actionLines td[field=action] {
-  width: 70%;
+  width: 65%;
+  height: 64px;
 }
 
 #actionLines td[field=action] select {
@@ -528,7 +538,8 @@ fieldset[disabled] .btn-primary.active {
 }
 
 #actionLines td[field=name] {
-  width: 25%;
+  width: 30%;
+  height: 64px;
 }
 
 #actionLines td[field=name] input[type=text] {
@@ -536,7 +547,16 @@ fieldset[disabled] .btn-primary.active {
 }
 
 #actionLines td[field=delete] {
-  width: 32px;
+  width: 5%;
+  height: 64px;
+}
+
+#actionLines td[field=delete] .delete-btn {
+  float: right;
+}
+
+#relate_label {
+  line-height: $input-line-height;
 }
 
 #deleteGroup img {
@@ -565,6 +585,28 @@ fieldset[disabled] .btn-primary.active {
 .btn-danger:focus {
   background-color: $danger-btn-bg;
   border: 1px solid $danger-btn-bg;
+}
+
+[data-workflow-action="create-record"] .lines tbody > tr > td {
+  background-color: $detail-view-field-bg;
+  margin-bottom: 4px;
+  min-height: 64px;
+}
+
+[data-workflow-action-parameter] [colspan="4"] {
+  display: block;
+  width: 100%;
+}
+
+[data-workflow-action-parameter] > td {
+  display: block;
+  width: 100%;
+}
+
+[data-workflow-action="modify-record"] .lines tbody > tr > td {
+  background-color: $detail-view-field-bg;
+  margin-bottom: 4px;
+  min-height: 64px;
 }
 
 /** EditView action buttons ***/
