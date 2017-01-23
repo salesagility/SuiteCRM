@@ -39,18 +39,18 @@
  */
 
 $dictionary['{{$class.name}}'] = array(
-	'table' => '{{$class.table_name}}',
-	'audited' => {{$class.audited}},
+    'table' => '{{$class.table_name}}',
+    'audited' => {{$class.audited}},
     'inline_edit' => true,
-	{{if !($class.templates|strstr:"file")}}
-	'duplicate_merge' => true,
-	{{/if}}
-	'fields' => {{$class.fields_string}},
-	'relationships' => {{$class.relationships}},
-	'optimistic_locking' => true,
-	{{if !empty($class.table_name) && !empty($class.templates)}}
-	'unified_search' => true,
-	{{/if}}
+{{if !($class.templates|strstr:"file")}}
+    'duplicate_merge' => true,
+{{/if}}
+    'fields' => {{$class.fields_string}},
+    'relationships' => {{$class.relationships}},
+    'optimistic_locking' => true,
+{{if !empty($class.table_name) && !empty($class.templates)}}
+    'unified_search' => true,
+{{/if}}
 );
 if (!class_exists('VardefManager')) {
         require_once('include/SugarObjects/VardefManager.php');
