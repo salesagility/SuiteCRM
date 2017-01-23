@@ -848,3 +848,43 @@ iframe.teamNoticeBox {
   overflow: auto;
   width: 100%;
 }
+
+
+.modal-cal-edit .modal-content {
+  width: 95%;
+}
+
+.modal-cal-edit  .modal-lg {
+  width: 90%;
+}
+
+.modal-calendar-user-list .modal-content {
+  width: 95%;
+}
+
+.modal-calendar-settings  .modal-content  {
+  width: 95%;
+}
+
+.modal-calendar-user-list .modal-content select {
+  color: $main-font-color;
+}
+
+@media (min-width: 1350px) {
+  .modal-cal-edit .modal-content {
+    width: 90%;
+  }
+
+  .modal-cal-edit  .modal-lg {
+    width: 80%;
+  }
+
+  .modal-calendar-user-list .modal-content {
+    width: 900px;
+  }
+
+  .modal-calendar-settings  .modal-content  {
+    width: 900px;
+  }
+}
+
