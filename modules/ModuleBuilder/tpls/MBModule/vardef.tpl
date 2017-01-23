@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,20 +39,20 @@
  */
 
 $dictionary['{{$class.name}}'] = array(
-	'table'=>'{{$class.table_name}}',
-	'audited'=>{{$class.audited}},
-    'inline_edit'=>true,
+	'table' => '{{$class.table_name}}',
+	'audited' => {{$class.audited}},
+    'inline_edit' => true,
 	{{if !($class.templates|strstr:"file")}}
-	'duplicate_merge'=>true,
+	'duplicate_merge' => true,
 	{{/if}}
-	'fields'=>{{$class.fields_string}},
-	'relationships'=>{{$class.relationships}},
-	'optimistic_locking'=>true,
+	'fields' => {{$class.fields_string}},
+	'relationships' => {{$class.relationships}},
+	'optimistic_locking' => true,
 	{{if !empty($class.table_name) && !empty($class.templates)}}
-	'unified_search'=>true,
+	'unified_search' => true,
 	{{/if}}
 );
-if (!class_exists('VardefManager')){
+if (!class_exists('VardefManager')) {
         require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('{{$class.name}}','{{$class.name}}', array({{$class.templates}}));
+VardefManager::createVardef('{{$class.name}}', '{{$class.name}}', array({{$class.templates}}));
