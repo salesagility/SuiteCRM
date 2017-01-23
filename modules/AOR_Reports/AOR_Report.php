@@ -1145,11 +1145,12 @@ class AOR_Report extends Basic {
                 if ($field->group_by == 1) {
                     $query['group_by'][] = $select_field;
                 }
-                elseif ($field->field_function != null) {
-                    $select_field = $field->field_function . '(' . $select_field . ')';
-                }
                 else {
                     $query['second_group_by'][] = $select_field;
+                }
+                
+                if ($field->field_function != null) {
+                    $select_field = $field->field_function . '(' . $select_field . ')';
                 }
 
                 if($field->sort_by != ''){
