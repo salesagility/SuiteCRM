@@ -555,6 +555,65 @@ fieldset[disabled] .btn-primary.active {
   float: right;
 }
 
+[data-workflow-action-line] td {
+  width: 25%;
+}
+
+[data-workflow-action-line] td:first-of-type {
+  width: 48px;
+}
+
+[data-workflow-action-line] select[id$="][0]"] {
+  width: 45%;
+  margin-bottom: 4px;
+}
+
+[data-workflow-action-line] select[id$="][1]"] {
+  width: 45%;
+  margin-bottom: 4px;
+}
+
+.col-sm-12 .edit-view-field [data-workflow-action-line] input[id$="][2]"] {
+  width: 45%;
+  margin-bottom: 4px;
+}
+
+.col-sm-12 .edit-view-field [data-workflow-action-line] input[id$="][2]"][type=checkbox] {
+  width: 16px;
+}
+
+[data-workflow-action-line] select[id$="][3]"] {
+  width: 45%;
+  margin-bottom: 4px;
+}
+
+[data-workflow-action="send-email"] > tbody > tr > td {
+  line-height: $input-line-height;
+}
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(1) > td {
+  width: 20%;
+}
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) {
+  width: 100%;
+}
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) td:nth-of-type(1) {
+  padding-left: 4px;
+}
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) td {
+  background-color: $detail-view-field-bg;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  width: 100%;
+}
+
+[data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) td input[type=text] {
+  width: 65%;
+}
+
 #relate_label {
   line-height: $input-line-height;
 }
@@ -587,48 +646,48 @@ fieldset[disabled] .btn-primary.active {
   border: 1px solid $danger-btn-bg;
 }
 
-[data-workflow-action="create-record"] .lines tbody > tr > td {
+[data-workflow-action] .lines tbody > tr > td {
   background-color: $detail-view-field-bg;
   margin-bottom: 4px;
   min-height: 64px;
 }
 
-[data-workflow-action="create-record"] .name_label {
+[data-workflow-action] .name_label {
   width: 70%;
 }
 
-[data-workflow-action="create-record"] .name_label {
+[data-workflow-action] .name_label {
   width: 30%;
 }
 
-[data-workflow-action="create-record"] .lines tbody > tr > td {
+[data-workflow-action] .lines tbody > tr > td {
   background-color: $detail-view-field-bg;
   margin-bottom: 4px;
   min-height: 64px;
 }
 
-[data-workflow-action="create-record"] .lines tbody > tr > td:first-of-type button {
+[data-workflow-action] .lines tbody > tr > td:first-of-type button {
   margin-top: 8px;
   height: 48px;
 }
 
-[data-workflow-action="create-record"] .lines select {
+[data-workflow-action] .lines select {
   margin-top: 8px;
 }
 
-[data-workflow-action="create-record"] .lines tbody > tr > td input {
+[data-workflow-action] .lines tbody > tr > td input {
   margin-top: 8px;
 }
 
-[data-workflow-action="create-record"] .lines tbody > tr > td input.sqsEnabled {
+[data-workflow-action] .lines tbody > tr > td input.sqsEnabled {
   width: 62.5%;
 }
 
-[data-workflow-action="create-record"] .lines tbody > tr > td input[type=checkbox] {
+[data-workflow-action] .lines tbody > tr > td input[type=checkbox] {
   margin-top: 24px;
 }
 
-[data-workflow-action="create-record"] .lines tbody > tr > td textarea {
+[data-workflow-action] .lines tbody > tr > td textarea {
   margin-top: 8px;
   width: 95%;
 }
@@ -641,40 +700,6 @@ fieldset[disabled] .btn-primary.active {
 [data-workflow-action-parameter] > td {
   display: block;
   width: 100%;
-}
-
-[data-workflow-action="modify-record"] .lines tbody > tr > td {
-  background-color: $detail-view-field-bg;
-  margin-bottom: 4px;
-  min-height: 64px;
-}
-
-[data-workflow-action="modify-record"] .lines tbody > tr > td td:first-of-type button {
-  margin-top: 8px;
-  height: 48px;
-}
-
-[data-workflow-action="modify-record"] .lines tbody > tr > td input {
-  margin-top: 8px;
-
-}
-
-[data-workflow-action="modify-record"] .lines tbody > tr > td input.sqsEnabled {
-  width: 62.5%;
-}
-
-[data-workflow-action="modify-record"] .lines tbody > tr > td input[type=checkbox] {
-  margin-top: 24px;
-}
-
-[data-workflow-action="modify-record"] .lines tbody > tr > td textarea {
-  margin-top: 8px;
-  width: 95%;
-}
-
-[data-workflow-action="modify-record"] .lines tbody > tr > td select {
-  width: 95%;
-  margin-top: 8px;
 }
 
 /** EditView action buttons ***/
