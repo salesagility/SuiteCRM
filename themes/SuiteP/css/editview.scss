@@ -2635,6 +2635,10 @@ input#btn_ActionLine.button[type="button"] {
   background: none;
 }
 
+#fieldLines {
+  display: block;
+}
+
 #actionLines {
   border: 1px solid transparent;
 }
@@ -4571,11 +4575,6 @@ object {
   color: $danger;
 }
 
-#report-editview-footer {
-  float: left;
-  width: 70%;
-}
-
 #detailpanel_fields,
 #detailpanel_conditions,
 #detailpanel_charts {
@@ -4649,10 +4648,6 @@ object {
 
 #report-editview-footer .drop-area.highlighted {
   background-color: #f7f7f7;
-}
-
-#report-editview-footer .tab-panels {
-  width: 110%;
 }
 
 .noGraphDataPoints {

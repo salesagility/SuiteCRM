@@ -1,9 +1,3 @@
-{literal}
-<style type="text/css">
-    #EditView_tabs {float: left;}
-</style>
-{/literal}
-
 <div id="report-editview-footer">
 
 
@@ -23,19 +17,8 @@
                 data: {},
                 dragAndDrop: false,
                 selectable: false,
-                onDragStop: function(node, e,thing){
-//                    var target = $(document.elementFromPoint(e.pageX - window.pageXOffset, e.pageY - window.pageYOffset));
-//                    if(node.type != 'field'){
-//                        return;
-//                    }
-//                    if(target.closest('#fieldLines').length > 0){
-//                        addNodeToFields(node);
-//                        updateChartDimensionSelects();
-//                    }else if(target.closest('#conditionLines').length > 0){
-//                        addNodeToConditions(node);
-//                    }
-
-                },
+              onDragStop: function (node, e, thing) {
+              },
                 onCanMoveTo: function(){
                     return false;
                 }
@@ -250,7 +233,7 @@
             var clearTreeDataFields = function() {
                 $('#module-name').html('');
                 $('#fieldTreeLeafs').html('');
-            }
+            };;;
 
 
         $('#report_module').change(function(){
@@ -303,6 +286,18 @@
 <div class="clear"></div>
 
 <div class="tab-panels">
+
+    <div class="edit view edit508" id="detailpanel_fields_select">
+        <h4>{$MOD.LBL_AOR_MODULETREE_SUBPANEL_TITLE}</h4>
+        <div id="fieldTree" class="dragbox aor_dragbox"></div>
+
+        <br>
+
+        <h4>{$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE} <span id="module-name"></span></h4>
+        <div id="fieldTreeLeafs" class="dragbox aor_dragbox"></div>
+
+    </div>
+
 
     <div class="edit view edit508 " id="detailpanel_fields">
         <table id="group_display_table" style="display: none;">
@@ -410,7 +405,6 @@
     $(function(){
 
         $('#EditView_tabs .clear').remove();
-        $('#EditView_tabs').attr('style', 'width: 78%;');
 
         $( '#aor_condition_parenthesis_btn' ).bind( "sortstart", function (event, ui) {
             ui.helper.css('margin-top', $(window).scrollTop() );
@@ -419,7 +413,7 @@
             ui.helper.css('margin-top', 0 );
         });
 
-        $(window).resize()
+      $(window).resize();;;
         {
             $('div.panel-heading a div').css({
                 width: $('div.panel-heading a').width() - 14
