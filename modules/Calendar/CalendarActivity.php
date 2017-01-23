@@ -298,7 +298,7 @@ class CalendarActivity
         $where = '(';
         $where .= call_user_func($callback, $field_date, $field_end_date, $start_day, $end_day);
 
-        if ($rel_table !== '') {
+        if (!empty($rel_table)) {
             $where .= " AND $rel_table.accept_status != 'decline'";
         }
 
