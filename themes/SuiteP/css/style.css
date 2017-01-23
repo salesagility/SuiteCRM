@@ -5296,6 +5296,11 @@ input#btn_ActionLine.button[type="button"] {
 
 
 .col-sm-6 .edit-view-field[field="billing_address_street"] input[type="text"],
+.col-sm-6 .edit-view-field[field="primary_address_street"] input[type="text"],
+.col-sm-6 .edit-view-field[field="shipping_address_street"] input[type="text"],
+.col-sm-6 .edit-view-field[field="alt_address_street"] input[type="text"]{
+    width: 88%;
+}
 
 #conditionLines_head,
 #fieldLines_head {
