@@ -4575,12 +4575,6 @@ object {
   color: $danger;
 }
 
-#detailpanel_fields,
-#detailpanel_conditions,
-#detailpanel_charts {
-  border-top: 1px solid lightgray;
-}
-
 #detailpanel_fields_select {
   margin-right: 20px;
   overflow-y: auto;
@@ -4612,20 +4606,35 @@ object {
 .aor_dragbox {
   overflow: scroll;
   height: 150px;
+  border: 1px solid $input-border;
+  border-radius: 4px;
+}
+
+.aor-module-panel {
+  padding: 16px 8px;
+  border: 1px solid $panel-border-bg;
 }
 
 #report-editview-footer .tab-togglers {
-  width: 80%;
+  clear: both;
+  height: $input-line-height;
+  margin-bottom: 0;
 }
 
 #report-editview-footer .tab-toggler {
-  display: block;
-  padding: 0 4px;
-  float: left;
+  display: inline-block;
+  padding: 0 1px 0 1px;
+}
+
+#report-editview-footer .tab-toggler .button {
+  margin-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  background-color: $default-tab-bg;
 }
 
 #report-editview-footer .tab-toggler.active .button {
-  background-color: $danger-btn-bg;
+  background-color: $active-tab-bg;
 }
 
 #report-editview-footer .parentheses-btn {
