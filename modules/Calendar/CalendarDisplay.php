@@ -190,6 +190,9 @@ class CalendarDisplay {
 		$date_format = $this->convertPHPToMomentFormat($GLOBALS['current_user']->getPreference('datef') . " " . $GLOBALS['current_user']->getPreference('timef'));
 		$ss->assign('datetime_user_format', $date_format);
 
+        $time_user_format = $this->convertPHPToMomentFormat($GLOBALS['current_user']->getPreference('timef'));
+        $ss->assign('time_user_format', $time_user_format);
+
 		$main = get_custom_file_if_exists("modules/Calendar/tpls/main.tpl");
 		$form_tpl = get_custom_file_if_exists("modules/Calendar/tpls/form.tpl");
 

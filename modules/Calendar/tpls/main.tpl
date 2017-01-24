@@ -66,6 +66,7 @@
 	global_end_time = "{$day_end_time}";
 	global_colorList = {$activityColors};
 	calendar_items = {$a_str};
+    global_user_time_format = "{$time_user_format}";
 
 	{literal}
 	views = {

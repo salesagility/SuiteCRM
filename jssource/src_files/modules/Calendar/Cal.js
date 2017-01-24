@@ -916,7 +916,7 @@ $($.fullCalendar).ready(function () {
          right: ''
        },
        lang: global_langPrefix,
-       views: views,
+       views: global_view,
        minTime: global_start_time,
        maxTime: global_end_time,
        selectHelper: true,
@@ -932,6 +932,8 @@ $($.fullCalendar).ready(function () {
        firstDay: global_start_week_day,
        height: global_basic_min_height,
        columnFormat: headerFormat,
+       timeFormat: global_user_time_format,
+       slotLabelFormat: global_user_time_format,
        select: function (date, jsEvent, view) {
          if (global_edit == true) {
            var date_start = date.format(global_datetime_format);
