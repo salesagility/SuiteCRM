@@ -68,7 +68,7 @@ function updateChartDimensionSelects(){
             if(key == select.data('value')){
                 selected = "selected='selected'";
             }
-            select.append($('<option '+selected+' ></option').val(key).text(val));
+            select.append($('<option '+selected+' ></option>').val(key).text(val));
         });
 
     });
