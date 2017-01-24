@@ -5678,8 +5678,8 @@ div.password {
 /* report layout */
 #report-editview-footer {width: 70%; float: left;}
 
-#detailpanel_fields_select {float: left; width: 20%; height: 640px; overflow-y: auto; margin-right: 20px;}
-.aor_dragbox {height: 250px; overflow: scroll;}
+#detailpanel_fields_select {float: left; width: 100%; overflow-y: auto; margin-right: 20px;}
+.aor_dragbox {height: 250px; overflow: auto;}
 #report-editview-footer .tab-togglers {width: 80%;}
 #report-editview-footer .tab-toggler {display: block; float: left;}
 #report-editview-footer .tab-toggler.active .button {background-color: #286090;}
