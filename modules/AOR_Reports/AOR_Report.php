@@ -1,12 +1,11 @@
 <?php
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,6 +37,7 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 class AOR_Report extends Basic {
     var $new_schema = true;
     var $module_dir = 'AOR_Reports';
@@ -116,6 +116,23 @@ class AOR_Report extends Basic {
         $chart = new AOR_Chart();
         $chart->save_lines($_POST, $this, 'aor_chart_');
     }
+
+    /**
+     * @param string $view
+     * @param string $is_owner
+     * @param string $in_group
+     * @return bool
+     */
+    public function ACLAccess($view, $is_owner = 'not_set', $in_group = 'not_set')
+    {
+        $result = parent::ACLAccess($view, $is_owner, $in_group);
+        if ($result && $this->report_module !== '') {
+            $result = ACLController::checkAccess($this->report_module, 'list', true);
+        }
+
+        return $result;
+    }
+
 
     function load_report_beans(){
         global $beanList, $app_list_strings;
@@ -957,6 +974,11 @@ class AOR_Report extends Basic {
         $query = '';
         $query_array = array();
 
+        //Check if the user has access to the target module
+        if(!(ACLController::checkAccess($this->report_module, 'list', true))) {
+            return false;
+        }
+
         $query_array = $this->build_report_query_select($query_array, $group_value);
         if(isset($extra['where']) && $extra['where']) {
             $query_array['where'][] = implode(' AND ', $extra['where']) . ' AND ';
@@ -1280,6 +1302,10 @@ class AOR_Report extends Basic {
                         }
                         // Bug: Prevents relationships from loading.
                         $new_condition_module = new $beanList[getRelatedModule($condition_module->module_dir,$rel)];
+                        //Check if the user has access to the related module
+                        if(!(ACLController::checkAccess($new_condition_module->module_name, 'list', true))) {
+                            return false;
+                        }
                         $oldAlias = $table_alias;
                         $table_alias = $table_alias.":".$rel;
                         $query = $this->build_report_query_join($rel, $table_alias, $oldAlias, $condition_module, 'relationship', $query, $new_condition_module);

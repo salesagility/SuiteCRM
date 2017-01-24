@@ -17,7 +17,7 @@
                 <td style="padding-right: 0px;" nowrap="" width="1%">
                     <div class="dashletToolSet">
                         <a href="javascript:void(0)"
-                                                   onclick="SUGAR.mySugar.configureDashlet('{$DASHLET_ID}'); return false;">
+                           aria-label="{$DASHLET_BUTTON_ARIA_EDIT}" onclick="SUGAR.mySugar.configureDashlet('{$DASHLET_ID}'); return false;">
 
                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                                  width="25px" height="25px" viewBox="0 0 512 512" enable-background="new 0 0 512 512"
@@ -32,7 +32,7 @@
 </svg>
                         </a>
                         <a href="javascript:void(0)"
-                               onclick="SUGAR.mySugar.retrieveCurrentPage(); return false;">
+                           aria-label="{$DASHLET_BUTTON_ARIA_REFRESH}" onclick="SUGAR.mySugar.retrieveCurrentPage(); return false;">
 
                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                                  width="25px" height="25px" viewBox="0 0 512 512" enable-background="new 0 0 512 512"
@@ -48,7 +48,7 @@
 </svg>
                         </a>
                         <a href="javascript:void(0)"
-                               onclick="SUGAR.mySugar.deleteDashlet('{$DASHLET_ID}'); return false;">
+                           aria-label="{$DASHLET_BUTTON_ARIA_DELETE}" onclick="SUGAR.mySugar.deleteDashlet('{$DASHLET_ID}'); return false;">
 
                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                                  width="25px" height="25px" viewBox="0 0 512 512" enable-background="new 0 0 512 512"

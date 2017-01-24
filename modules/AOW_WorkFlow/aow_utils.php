@@ -34,14 +34,16 @@ function getModuleFields($module, $view='EditView',$value = '', $valid = array()
         if(isset($beanList[$module]) && $beanList[$module]){
             $mod = new $beanList[$module]();
             foreach($mod->field_defs as $name => $arr){
-                if($arr['type'] != 'link' &&((!isset($arr['source']) || $arr['source'] != 'non-db') || ($arr['type'] == 'relate' && isset($arr['id_name']))) && (empty($valid) || in_array($arr['type'], $valid)) && $name != 'currency_name' && $name != 'currency_symbol'){
-                    if(isset($arr['vname']) && $arr['vname'] != ''){
-                        $fields[$name] = rtrim(translate($arr['vname'],$mod->module_dir), ':');
-                    } else {
-                        $fields[$name] = $name;
-                    }
-                    if($arr['type'] == 'relate' && isset($arr['id_name']) && $arr['id_name'] != ''){
-                        $unset[] = $arr['id_name'];
+                if(ACLController::checkAccess($mod->module_dir, 'list', true)) {
+                    if($arr['type'] != 'link' &&((!isset($arr['source']) || $arr['source'] != 'non-db') || ($arr['type'] == 'relate' && isset($arr['id_name']))) && (empty($valid) || in_array($arr['type'], $valid)) && $name != 'currency_name' && $name != 'currency_symbol'){
+                        if(isset($arr['vname']) && $arr['vname'] != ''){
+                            $fields[$name] = rtrim(translate($arr['vname'],$mod->module_dir), ':');
+                        } else {
+                            $fields[$name] = $name;
+                        }
+                        if($arr['type'] == 'relate' && isset($arr['id_name']) && $arr['id_name'] != ''){
+                            $unset[] = $arr['id_name'];
+                        }
                     }
                 }
             } //End loop.

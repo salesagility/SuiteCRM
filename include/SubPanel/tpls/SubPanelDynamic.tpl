@@ -1,11 +1,10 @@
-<?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+{*
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,11 +36,34 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-
-/*
- * Created on Aug 2, 2007
- *
- * To change the template for this generated file go to
- * Window - Preferences - PHPeclipse - PHP - Code Templates
- */
-?>
+*}
+{*
+ /*
+  * This template is now displays to the sub panel
+  */
+*}
+{$PAGINATION}
+<table cellpadding="0" cellspacing="0" border="0"  data-empty="{$APP.MSG_LIST_VIEW_NO_RESULTS_BASIC}" class="list view table-responsive">
+    <thead>
+        <tr>
+            {foreach from=$HEADER_CELLS key=colHeader item=header}
+                <th data-type="html">{$header}</th>
+            {/foreach}
+            <th data-type="html"><!-- extra th for the button --></th>
+        </tr>
+    </thead>
+    <tbody>
+    {foreach from=$ROWS key=rowHeader item=row}
+        <tr>
+            {foreach from=$row key=colHeader item=cell}
+                <td>{$cell}</td>
+            {/foreach}
+            <td>
+                {if $ROWS_BUTTONS.$rowHeader|@count gt 0}
+                    {sugar_action_menu id="$rowHeader" buttons=$ROWS_BUTTONS.$rowHeader class="clickMenu subpanel records fancymenu button" flat=false}
+                {/if}
+            </td>
+        </tr>
+    {/foreach}
+    </tbody>
+</table>

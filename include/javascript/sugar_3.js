@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -34,7 +35,7 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 if(typeof(SUGAR)=="undefined"){SUGAR={namespace:function(ns){SUGAR[ns]=SUGAR[ns]||{};return((typeof SUGAR[ns]==="object")&&(SUGAR[ns]!==null))?SUGAR[ns]:false;},append:function(target,obj){for(var prop in obj){if(obj[prop]!==void 0)target[prop]=obj[prop];}
 return target;}};}
 SUGAR.namespace("themes");SUGAR.namespace("tour");SUGAR.namespace("sugarHome");SUGAR.namespace("subpanelUtils");SUGAR.namespace("ajaxStatusClass");SUGAR.namespace("tabChooser");SUGAR.namespace("utils");SUGAR.namespace("savedViews");SUGAR.namespace("dashlets");SUGAR.namespace("unifiedSearchAdvanced");SUGAR.namespace("searchForm");SUGAR.namespace("language");SUGAR.namespace("Studio");SUGAR.namespace("contextMenu");SUGAR.namespace("config");var nameIndex=0;var typeIndex=1;var requiredIndex=2;var msgIndex=3;var jstypeIndex=5;var minIndex=10;var maxIndex=11;var altMsgIndex=15;var compareToIndex=7;var arrIndex=12;var operatorIndex=13;var callbackIndex=16;var allowblank=8;var validate=new Array();var maxHours=24;var requiredTxt='Missing Required Field:';var invalidTxt='Invalid Value:';var secondsSinceLoad=0;var alertsTimeoutId;var inputsWithErrors=new Array();var tabsWithErrors=new Array();var lastSubmitTime=0;var alertList=new Array();var oldStartsWith='';function isSupportedIE(){var userAgent=navigator.userAgent.toLowerCase();if(userAgent.indexOf("msie")!=-1&&userAgent.indexOf("mac")==-1&&userAgent.indexOf("opera")==-1){var version=navigator.appVersion.match(/MSIE (\d+\.\d+)/)[1];if(version>=5.5&&version<10){return true;}else{return false;}}}
@@ -413,7 +414,7 @@ sugarListView.prototype.toggleSelected();}
 sugarListView.prototype.toggleSelected=function(){var numSelected=sugarListView.get_num_selected();var selectedRecords=document.getElementById("selectedRecordsTop");var selectActions=document.getElementById("selectActions");var selectActionsDisabled=document.getElementById("selectActionsDisabled");if(numSelected>0){$(selectedRecords).removeAttr("style").addClass("show");$(".selectActionsDisabled").hide();jQuery('ul[name=selectActions]').each(function(){jQuery(this).removeAttr("style").addClass("show");});}else{$(selectedRecords).hide();$(".selectActionsDisabled").removeAttr("style").addClass("show");jQuery('ul[name=selectActions]').each(function(){jQuery(this).hide();});}}
 sugarListView.prototype.updateUid=function(cb,form){if(form.name=='MassUpdate'&&form.uid&&form.uid.value&&cb.value&&form.uid.value.indexOf(cb.value)!=-1){if(form.uid.value.indexOf(','+cb.value)!=-1){form.uid.value=form.uid.value.replace(','+cb.value,'');}else if(form.uid.value.indexOf(cb.value+',')!=-1){form.uid.value=form.uid.value.replace(cb.value+',','');}else if(form.uid.value.indexOf(cb.value)!=-1){form.uid.value=form.uid.value.replace(cb.value,'');}}}
 sugarListView.prototype.check_entire_list=function(form,field,value,list_count){count=0;$(document.MassUpdate.massall).each(function(){$(this).attr('checked',true).attr('disabled',true);});for(i=0;i<form.elements.length;i++){if(form.elements[i].name==field&&form.elements[i].disabled==false){if(form.elements[i].checked!=value)count++;form.elements[i].checked=value;form.elements[i].disabled=true;}}
-document.MassUpdate.select_entire_list.value=1;sugarListView.update_count(list_count,false);sugarListView.prototype.toggleSelected();}
+document.MassUpdate.select_entire_list.value=1;sugarListView.update_count(list_count,false);sugarListView.prototype.toggleSelected();$('input[name="massall"]').prop('checked',true);$('.glyphicon.bootstrap-checkbox').each(function(i,e){if(typeof refreshListViewCheckbox!=='undefined'){refreshListViewCheckbox(e);}});}
 sugarListView.prototype.check_all=function(form,field,value,pageTotal){count=0;$(document.MassUpdate.massall).each(function(){$(this).attr('checked',value);});if(document.MassUpdate.select_entire_list&&document.MassUpdate.select_entire_list.value==1)
 {sugarListView.prototype.toggleSelected();$(document.MassUpdate.massall).each(function(){$(this).attr('disabled',true);});}
 else
@@ -539,8 +540,7 @@ document.getElementById('displayColumnsDef').value=displayColumnsDef.join('|');d
 if(action=='save'){if(document.search_form.saved_search_name.value.replace(/^\s*|\s*$/g,'')==''){alert(SUGAR.language.get('app_strings','LBL_SAVED_SEARCH_ERROR'));return;}}
 if(document.search_form.saved_search_action)
 {document.search_form.saved_search_action.value=action;document.search_form.search_module.value=document.search_form.module.value;document.search_form.module.value='SavedSearch';document.search_form.action.value='index';}
-SUGAR.ajaxUI.submitForm(document.search_form);},shortcut_select:function(selectBox,module){selecturl='index.php?module=SavedSearch&search_module='+module+'&action=index&saved_search_select='+selectBox.options[selectBox.selectedIndex].value
-if(typeof(document.getElementById('searchFormTab'))!='undefined'){selecturl=selecturl+'&searchFormTab='+document.search_form.searchFormTab.value;}
+SUGAR.ajaxUI.submitForm(document.search_form);},shortcut_select:function(selectBox,module){this.shortcutDropdown(selectBox.options[selectBox.selectedIndex].value,module);},shortcutDropdown:function(value,module){selecturl='index.php?module=SavedSearch&search_module='+module+'&action=index&saved_search_select='+value;if(typeof(document.getElementById('searchFormTab'))!='undefined'){selecturl=selecturl+'&searchFormTab='+document.search_form.searchFormTab.value;}
 if(document.getElementById('showSSDIV')&&typeof(document.getElementById('showSSDIV')!='undefined')){selecturl=selecturl+'&showSSDIV='+document.getElementById('showSSDIV').value;}
 document.location.href=selecturl;},handleForm:function(){SUGAR.tabChooser.movementCallback=function(left_side,right_side){while(document.getElementById('orderBySelect').childNodes.length!=0){document.getElementById('orderBySelect').removeChild(document.getElementById('orderBySelect').lastChild);}
 var selectedIndex=0;var nodeCount=-1;for(i in left_side.childNodes){if(typeof left_side.childNodes[i].nodeName!='undefined'&&left_side.childNodes[i].nodeName.toLowerCase()=='option'&&typeof SUGAR.savedViews.columnsMeta[left_side.childNodes[i].value]!='undefined'&&typeof SUGAR.savedViews.columnsMeta[left_side.childNodes[i].value]['sortable']=='undefined'&&SUGAR.savedViews.columnsMeta[left_side.childNodes[i].value]['sortable']!=false){nodeCount++;optionNode=document.createElement('option');optionNode.value=left_side.childNodes[i].value;optionNode.innerHTML=left_side.childNodes[i].innerHTML;document.getElementById('orderBySelect').appendChild(optionNode);if(optionNode.value==SUGAR.savedViews.selectedOrderBy)
@@ -552,7 +552,9 @@ else
 {document.search_form.orderBy.options.value=SUGAR.savedViews.selectedOrderBy;}}
 if(SUGAR.savedViews.selectedSortOrder=='DESC')document.getElementById('sort_order_desc_radio').checked=true;else document.getElementById('sort_order_asc_radio').checked=true;}};}();SUGAR.searchForm=function(){var url;return{searchFormSelect:function(view,previousView){var module=view.split('|')[0];var theView=view.split('|')[1];var handleDisplay=function(){document.search_form.searchFormTab.value=theView;patt=module+"(.*)SearchForm$";divId=document.search_form.getElementsByTagName('div');for(i=0;i<divId.length;i++){if(divId[i].id.match(module)==module){if(divId[i].id.match('SearchForm')=='SearchForm'){if(document.getElementById(divId[i].id).style.display==''){previousTab=divId[i].id.match(patt)[1];}
 document.getElementById(divId[i].id).style.display='none';}}}
-adv=document.getElementById('advanced_search_link');bas=document.getElementById('basic_search_link');adv.setAttribute('accesskey','');bas.setAttribute('accesskey','');a_key=SUGAR.language.get("app_strings","LBL_ADV_SEARCH_LNK_KEY");if(theView==='advanced_search'){bas.setAttribute('accesskey',a_key);}else{adv.setAttribute('accesskey',a_key);}
+adv=document.getElementById('advanced_search_link');bas=document.getElementById('basic_search_link');if(adv!==null){adv.setAttribute('accesskey','');}
+if(bas!==null){bas.setAttribute('accesskey','');}
+a_key=SUGAR.language.get("app_strings","LBL_ADV_SEARCH_LNK_KEY");if(theView==='advanced_search'){if(bas!==null){bas.setAttribute('accesskey',a_key);}}else{if(adv!==null){adv.setAttribute('accesskey',a_key);}}
 document.getElementById(module+theView+'SearchForm').style.display='';if(previousView){thepreviousView=previousView.split('|')[1];}
 else{thepreviousView=previousTab;}
 thepreviousView=thepreviousView.replace(/_search/,"");for(num in document.search_form.elements){if(document.search_form.elements[num]){el=document.search_form.elements[num];pattern="^(.*)_"+thepreviousView+"$";if(typeof el.type!='undefined'&&typeof el.name!='undefined'&&el.name.match(pattern)){advanced_input_name=el.name.match(pattern)[1];advanced_input_name=advanced_input_name+"_"+theView.replace(/_search/,"");if(typeof document.search_form[advanced_input_name]!='undefined')
@@ -581,6 +583,7 @@ SUGAR.searchForm.clearBasicSearchOrderToDefault(form);SUGAR.savedViews.clearColu
 if(!SUGAR.tabChooser.frozenOptions[left_name]){SUGAR.tabChooser.frozenOptions[left_name]=[];}
 if(!SUGAR.tabChooser.frozenOptions[left_name][right_name]){SUGAR.tabChooser.frozenOptions[left_name][right_name]=[];}
 if(typeof target=='array'){for(var i in target){SUGAR.tabChooser.frozenOptions[left_name][right_name][target[i]]=true;}}else{SUGAR.tabChooser.frozenOptions[left_name][right_name][target]=true;}},buildSelectHTML:function(info){var text="<select";if(typeof(info['select']['size'])!='undefined'){text+=" size=\""+info['select']['size']+"\"";}
+if(typeof(info['select']['id'])!='undefined'){text+=" id=\""+info['select']['id']+"\"";}
 if(typeof(info['select']['name'])!='undefined'){text+=" name=\""+info['select']['name']+"\"";}
 if(typeof(info['select']['style'])!='undefined'){text+=" style=\""+info['select']['style']+"\"";}
 if(typeof(info['select']['onchange'])!='undefined'){text+=" onChange=\""+info['select']['onchange']+"\"";}

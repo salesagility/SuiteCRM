@@ -96,7 +96,7 @@ foreach ($_POST['mass'] as $message_id) {
 	if (empty($marketing->inbound_email_id)) {
 
 		echo "<p>";
-		echo "<h4>{$mod_strings['ERR_NO_MAILBOX']}</h4>";
+		echo "<h4 class=\"header-4\">{$mod_strings['ERR_NO_MAILBOX']}</h4>";
 		echo "<BR><a href='index.php?module=EmailMarketing&action=EditView&record={$marketing->id}'>$marketing->name</a>";
 		echo "</p>";
 		sugar_die('');
