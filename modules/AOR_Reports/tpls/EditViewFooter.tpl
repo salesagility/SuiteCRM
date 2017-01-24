@@ -268,7 +268,6 @@
     </script>
 
     {/literal}
-    <div>&nbsp;</div>
     <div class="panel default-panel aor-module-panel">
         <div class="panel-body panel-collapse collapse in">
             <div class="row edit-view-row">
@@ -287,7 +286,6 @@
             </div>
         </div>
     </div>
-    <div>&nbsp;</div>
     <div class="nav nav-tabs tab-togglers">
         <div class="tab-toggler toggle-detailpanel_fields active">
             <h4 class="button">{$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE}</h4>
@@ -299,7 +297,7 @@
             <h4 class="button">{$MOD.LBL_AOR_CHARTS_SUBPANEL_TITLE}</h4>
         </div>
     </div>
-    <div class="panel default-panel aor-module-panel">
+    <div class="panel default-panel aor-line-items-panel">
         <div class="panel-body panel-collapse collapse in">
             <div class="tab-panels">
                 <div class="edit view edit508 " id="detailpanel_fields">

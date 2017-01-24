@@ -4611,14 +4611,35 @@ object {
 }
 
 .aor-module-panel {
-  padding: 16px 8px;
   border: 1px solid $panel-border-bg;
+  margin-top: 8px;
+  padding: 16px 8px;
+
+}
+
+.aor-module-panel .col-sm-5 {
+  width: 49.00%;
+}
+
+.aor-module-panel .col-sm-2 {
+  width: 2.00%;
+}
+
+.aor-module-panel h4 {
+  margin-bottom: 8px;//
 }
 
 #report-editview-footer .tab-togglers {
+  border-top-left-radius: 0;
   clear: both;
   height: $input-line-height;
   margin-bottom: 0;
+}
+
+.aor-line-items-panel {
+  border: 1px solid $panel-border-bg;
+  margin-top: 0;
+  padding: 16px 8px;
 }
 
 #report-editview-footer .tab-toggler {
