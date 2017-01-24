@@ -2664,6 +2664,11 @@ thead#fieldLines_head > tr > td:nth-of-type(3) {
   width: 10%;
 }
 
+thead#fieldLines_head > tr > td:nth-of-type(5) {
+  width: 5%;
+}
+
+
 thead#fieldLines_head > tr > td:nth-of-type(4) {
   width: 5%;
 }
@@ -2830,6 +2835,8 @@ thead#conditionLines_head > tr > td:last-of-type {
 }
 
 
+
+
 #actionLines {
   border: 1px solid transparent;
 }
@@ -2857,6 +2864,126 @@ thead#conditionLines_head > tr > td:last-of-type {
   clear: both;
   width: 100%;
 }
+
+
+
+#chartLines {
+  display: table;
+  width: 100%;
+}
+
+#chartHead {
+  background: none;
+}
+
+thead#chartHead > tr > td {
+  padding-right: 8px;
+  background-color: $default-tab-bg;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+// remove button
+thead#chartHead > tr > td:first-of-type {
+  border-top-left-radius: 4px;
+}
+
+thead#chartHead > tr > td:nth-of-type(1) {
+  width: 40px;
+  height: 32px;
+}
+// module
+thead#chartHead > tr > td:nth-of-type(2) {
+  width: 10%;
+}
+//
+thead#chartHead > tr > td:nth-of-type(3) {
+  width: 10%;
+}
+
+thead#chartHead > tr > td:nth-of-type(4) {
+  width: 5%;
+}
+
+thead#chartHead > tr > td:nth-of-type(6) {
+  width: 15%;
+}
+
+thead#chartHead > tr > td:nth-of-type(7) {
+  width: 10%;
+}
+
+thead#chartHead > tr > td:nth-of-type(8) {
+  width: 10%;
+}
+
+thead#chartHead > tr > td:nth-of-type(9) {
+  width: 5%;
+}
+
+thead#chartHead > tr > td:nth-of-type(10) {
+  width: 10%;
+}
+
+thead#chartHead > tr > td:nth-of-type(11) {
+  width: 10%;
+}
+
+[aor-chart-line-body]:first-of-type td {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: none;
+  border-bottom: 4px solid $main-alternate-bg;
+}
+
+[aor-chart-line-body] td  {
+  background-color: $detail-view-field-bg;
+  border-top: 2px solid $main-alternate-bg;
+  border-bottom: 2px solid $main-alternate-bg;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  line-height: $input-line-height;
+  padding-bottom: 8px;
+  padding-right: 4px;
+  padding-top: 8px;
+}
+
+[aor-chart-line-body] td:first-of-type {
+  padding-left: 4px;
+}
+
+[aor-chart-line-body] td  .button {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+
+
+// charts border fix
+[aor-chart-line-body] td:first-of-type > td {
+  border-bottom: none;
+  border: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+// last
+thead#conditionLines_head > tr > td:last-of-type {
+  border-top-right-radius: 4px;//
+}
+
+#detailpanel_fields > table td {
+  line-height: $input-line-height;
+  padding-left: 8px;
+  padding-right: 4px;
+}
+
+#conditionLines {
+  display: block;
+  margin-top: 8px;
+}
+
 
 /*Line Items*/
 #lineItems #service_head {

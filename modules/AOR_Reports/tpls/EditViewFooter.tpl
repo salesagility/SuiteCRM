@@ -369,7 +369,7 @@
                             <tbody></tbody>
                         </table>
                     </div>
-                    <button id="addChartButton" type="button">{$MOD.LBL_ADD_CHART}</button>
+                    <button id="addChartButton" class="button" type="button">{$MOD.LBL_ADD_CHART}</button>
                 </div>
             </div>
         </div>
