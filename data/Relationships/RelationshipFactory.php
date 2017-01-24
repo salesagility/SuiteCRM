@@ -1,15 +1,11 @@
 <?php
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,6 +37,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once 'data/Relationships/SugarRelationship.php';
 
@@ -86,7 +86,7 @@ class SugarRelationshipFactory
     public static function deleteCache()
     {
         $file = self::getInstance()->getCacheFile();
-        if (sugar_is_file($file)) {
+        if (is_file($file)) {
             unlink($file);
         }
     }
@@ -109,7 +109,7 @@ class SugarRelationshipFactory
         $type = isset($def['true_relationship_type']) ? $def['true_relationship_type'] : $def['relationship_type'];
         switch ($type) {
             case 'many-to-many':
-                if (isset($def['rhs_module']) && $def['rhs_module'] == 'EmailAddresses') {
+                if (isset($def['rhs_module']) && $def['rhs_module'] === 'EmailAddresses') {
                     require_once 'data/Relationships/EmailAddressRelationship.php';
 
                     return new EmailAddressRelationship($def);
@@ -162,7 +162,7 @@ class SugarRelationshipFactory
 
     protected function loadRelationships()
     {
-        if (sugar_is_file($this->getCacheFile())) {
+        if (is_file($this->getCacheFile())) {
             include $this->getCacheFile();
             $this->relationships = $relationships;
         } else {
@@ -196,7 +196,7 @@ class SugarRelationshipFactory
         foreach ($dictionary as $key => $def) {
             if (!empty($def['relationships'])) {
                 foreach ($def['relationships'] as $relKey => $relDef) {
-                    if ($key == $relKey) { //Relationship only entry, we need to capture everything
+                    if ($key === $relKey) { //Relationship only entry, we need to capture everything
                         $relationships[$key] = array_merge(array('name' => $key), (array) $def, (array) $relDef);
                     } else {
                         $relationships[$relKey] = array_merge(array('name' => $relKey), (array) $relDef);

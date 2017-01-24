@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -51,8 +51,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('modules/DynamicFields/DynamicField.php');
-require_once("data/Relationships/RelationshipFactory.php");
+require_once 'modules/DynamicFields/DynamicField.php';
+require_once "data/Relationships/RelationshipFactory.php";
 
 
 /**
@@ -378,11 +378,19 @@ class SugarBean
         $this->custom_fields->setup($this);
     }
 
+    /**
+     * @param $interface
+     *
+     * @return bool
+     */
     public function bean_implements($interface)
     {
         return false;
     }
 
+    /**
+     * @param bool $force
+     */
     public function populateDefaultValues($force = false)
     {
         if (!is_array($this->field_defs)) {
@@ -779,6 +787,14 @@ class SugarBean
         return $parentbean->process_union_list_query($parentbean, $final_query, $row_offset, $limit, $max, '', $subpanel_def, $final_query_rows, $secondary_queries);
     }
 
+    /**
+     * @param $subpanel_list
+     * @param $subpanel_def
+     * @param $parentbean
+     * @param $order_by
+     *
+     * @return array
+     */
     protected static function build_sub_queries_for_union($subpanel_list, $subpanel_def, $parentbean, $order_by)
     {
 
@@ -860,8 +876,8 @@ class SugarBean
 
                 $subquery = $submodule->create_new_list_query('', $subwhere, $list_fields, $params, 0, '', true, $parentbean, $singleSelect);
 
-                $subquery['select'] = $subquery['select'] . " , '$panel_name' panel_name ";
-                $subquery['from'] = $subquery['from'] . $query_array['join'];
+                $subquery['select'] .= " , '$panel_name' panel_name ";
+                $subquery['from'] .= $query_array['join'];
                 $subquery['query_array'] = $query_array;
                 $subquery['params'] = $params;
 
@@ -2064,6 +2080,9 @@ class SugarBean
         return blowfishEncode($this->getEncryptKey(), $value);
     }
 
+    /**
+     * @return string
+     */
     protected function getEncryptKey()
     {
         if (empty(static::$field_key)) {
@@ -3348,6 +3367,11 @@ class SugarBean
         return $ret_array['select'] . $ret_array['from'] . $ret_array['where'] . $ret_array['order_by'];
     }
 
+    /**
+     * @param $field
+     *
+     * @return bool|string
+     */
     public function get_relationship_field($field)
     {
         foreach ($this->field_defs as $field_def => $value) {
@@ -3662,6 +3686,9 @@ class SugarBean
         }
     }
 
+    /**
+     * @return bool
+     */
     public function hasCustomFields()
     {
         return !empty($GLOBALS['dictionary'][$this->object_name]['custom_fields']);
@@ -4143,6 +4170,14 @@ class SugarBean
         return true;
     }
 
+    /**
+     * @param $module
+     * @param $id
+     * @param $fields
+     * @param bool $return_array
+     *
+     * @return string
+     */
     public function getRelatedFields($module, $id, $fields, $return_array = false)
     {
         if (empty($GLOBALS['beanList'][$module])) {
@@ -4188,7 +4223,7 @@ class SugarBean
         $owner = (empty($row['owner'])) ? '' : $row['owner'];
         foreach ($fields as $alias) {
             $this->$alias = (!empty($row[$alias])) ? $row[$alias] : '';
-            $alias = $alias . '_owner';
+            $alias .= '_owner';
             $this->$alias = $owner;
             $a_mod = $alias . '_mod';
             $this->$a_mod = $module;
@@ -4222,24 +4257,21 @@ class SugarBean
                     if (empty($this->$id_name)) {
                         $this->fill_in_link_field($id_name, $field);
                     }
-                    if (!empty($this->$id_name) && ($this->object_name != $related_module || ($this->object_name == $related_module && $this->$id_name != $this->id))) {
-                        if (isset($GLOBALS['beanList'][$related_module])) {
-                            $class = $GLOBALS['beanList'][$related_module];
+                    if (!empty($this->$id_name) &&
+                        ($this->object_name != $related_module ||
+                         ($this->object_name == $related_module && $this->$id_name != $this->id))
+                    ) {
+                        if (!empty($this->$id_name) && isset($this->$name)) {
 
-                            if (!empty($this->$id_name) && file_exists($GLOBALS['beanFiles'][$class]) && isset($this->$name)) {
-                                require_once($GLOBALS['beanFiles'][$class]);
-                                $mod = new $class();
-
-                                // disable row level security in order to be able
-                                // to retrieve related bean properties (bug #44928)
-
-                                $mod->retrieve($this->$id_name);
-
+                            $mod = BeanFactory::getBean($related_module, $this->$id_name);
+                            if ($mod) {
                                 if (!empty($field['rname'])) {
                                     $rname = $field['rname'];
                                     $this->$name = $mod->$rname;
-                                } else if (isset($mod->name)) {
-                                    $this->$name = $mod->name;
+                                } else {
+                                    if (isset($mod->name)) {
+                                        $this->$name = $mod->name;
+                                    }
                                 }
                             }
                         }
@@ -4261,6 +4293,10 @@ class SugarBean
         $fill_in_rel_depth--;
     }
 
+    /**
+     * @param $linkFieldName
+     * @param $def
+     */
     public function fill_in_link_field($linkFieldName, $def)
     {
         $idField = $linkFieldName;
@@ -4313,7 +4349,7 @@ class SugarBean
      * @param int $row_offset
      * @param int $limit
      * @param int $max
-     * @param int $show_deleted
+     *
      * @return array Fetched data.
      *
      * Internal function, do not override.
@@ -4529,7 +4565,7 @@ class SugarBean
         $directory = $this->deleteFileDirectory();
 
         foreach ($files as $file) {
-            if (sugar_is_file('upload://deleted/' . $directory . '/' . $file)
+            if (is_file('upload://deleted/' . $directory . '/' . $file)
                 && !sugar_rename('upload://deleted/' . $directory . '/' . $file, 'upload://' . $file)
             ) {
                 $GLOBALS['log']->error('Could not move file ' . $directory . '/' . $file . ' from deleted directory');
@@ -4678,10 +4714,10 @@ class SugarBean
 
         $directory = $this->deleteFileDirectory();
 
-        $isCreated = sugar_is_dir('upload://deleted/' . $directory);
+        $isCreated = is_dir('upload://deleted/' . $directory);
         if (!$isCreated) {
             sugar_mkdir('upload://deleted/' . $directory, 0777, true);
-            $isCreated = sugar_is_dir('upload://deleted/' . $directory);
+            $isCreated = is_dir('upload://deleted/' . $directory);
         }
         if (!$isCreated) {
             return false;
@@ -5066,11 +5102,20 @@ class SugarBean
     {
     }
 
+    /**
+     * @param $list_form
+     * @param $xTemplateSection
+     *
+     * @return mixed
+     */
     public function &parse_additional_headers(&$list_form, $xTemplateSection)
     {
         return $list_form;
     }
 
+    /**
+     * @param $currentModule
+     */
     public function assign_display_fields($currentModule)
     {
         global $timedate;
@@ -5108,6 +5153,13 @@ class SugarBean
         }
     }
 
+    /**
+     * @param $table
+     * @param $relate_values
+     * @param bool $check_duplicates
+     * @param bool $do_update
+     * @param null $data_values
+     */
     public function set_relationship($table, $relate_values, $check_duplicates = true, $do_update = false, $data_values = null)
     {
         $where = '';
@@ -5145,6 +5197,13 @@ class SugarBean
         }
     }
 
+    /**
+     * @param $table
+     * @param $values
+     * @param $select_id
+     *
+     * @return array
+     */
     public function retrieve_relationships($table, $values, $select_id)
     {
         $query = "SELECT $select_id FROM $table WHERE deleted = 0  ";
@@ -5176,6 +5235,11 @@ class SugarBean
         }
     }
 
+    /**
+     * @param $name
+     *
+     * @return bool
+     */
     public function getRealKeyFromCustomFieldAssignedKey($name)
     {
         if ($this->custom_fields->avail_fields[$name]['ext1']) {
