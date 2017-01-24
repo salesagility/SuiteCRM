@@ -4583,10 +4583,7 @@ object {
 
 #detailpanel_fields_select {
   margin-right: 20px;
-  float: left;
   overflow-y: auto;
-  width: 20%;
-  height: 640px;
 }
 
 @media (max-width: 767px) {
@@ -4614,7 +4611,7 @@ object {
 
 .aor_dragbox {
   overflow: scroll;
-  height: 250px;
+  height: 150px;
 }
 
 #report-editview-footer .tab-togglers {

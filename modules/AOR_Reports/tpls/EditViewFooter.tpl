@@ -233,10 +233,8 @@
             var clearTreeDataFields = function() {
                 $('#module-name').html('');
                 $('#fieldTreeLeafs').html('');
-            };;;
-
-
-        $('#report_module').change(function(){
+            };
+          $('#report_module').change(function () {
             report_module = $(this).val();
             loadTreeData($(this).val());
             clearTreeDataFields();
@@ -271,6 +269,25 @@
 
 {/literal}
 
+    <div class="panel default-panel">
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="row edit-view-row">
+                    <div class="col-sm-12">
+                        <div class="col-sm-6">
+                            <h4>{$MOD.LBL_AOR_MODULETREE_SUBPANEL_TITLE}</h4>
+                            <div id="fieldTree" class="dragbox aor_dragbox"></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4>{$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE} <span id="module-name"></span></h4>
+                            <div id="fieldTreeLeafs" class="dragbox aor_dragbox"></div>
+                            <div class="edit view edit508" id="detailpanel_fields_select"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <div class="tab-togglers">
     <div class="tab-toggler toggle-detailpanel_fields active">
@@ -284,19 +301,8 @@
     </div>
 </div>
 <div class="clear"></div>
-
 <div class="tab-panels">
 
-    <div class="edit view edit508" id="detailpanel_fields_select">
-        <h4>{$MOD.LBL_AOR_MODULETREE_SUBPANEL_TITLE}</h4>
-        <div id="fieldTree" class="dragbox aor_dragbox"></div>
-
-        <br>
-
-        <h4>{$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE} <span id="module-name"></span></h4>
-        <div id="fieldTreeLeafs" class="dragbox aor_dragbox"></div>
-
-    </div>
 
 
     <div class="edit view edit508 " id="detailpanel_fields">
@@ -337,11 +343,11 @@
                 </tr>
             </tbody>
         </table>
-                <div class="drop-area" id="fieldLines" style="min-height: 450px;">
+        <div class="drop-area" id="fieldLines">
                 </div>
     </div>
     <div class="edit view edit508 hidden" id="detailpanel_conditions">
-        <div class="drop-area" id="conditionLines"  style="min-height: 450px;">
+        <div class="drop-area" id="conditionLines">
         </div>
         <hr>
         <table>
@@ -413,8 +419,8 @@
             ui.helper.css('margin-top', 0 );
         });
 
-      $(window).resize();;;
-        {
+      $(window).resize();
+      {
             $('div.panel-heading a div').css({
                 width: $('div.panel-heading a').width() - 14
             });
