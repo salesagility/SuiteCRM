@@ -2958,7 +2958,13 @@ thead#chartHead > tr > td:nth-of-type(11) {
   padding-right: 0;
 }
 
+.aor-line-items-panel thead td {
+  color: darken($main-font-color, 100%);
+}
 
+.aor-line-items-panel td {
+  color: $main-font-color;
+}
 
 // charts border fix
 [aor-chart-line-body] td:first-of-type > td {

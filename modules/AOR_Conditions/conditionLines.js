@@ -448,28 +448,27 @@ function insertConditionHeader(){
     }
 
     var b=x.insertCell(nxtCell++);
-    b.style.color="rgb(0,0,0)";
+    
     b.innerHTML=SUGAR.language.get('AOR_Conditions', 'LBL_MODULE_PATH');
 
     var c=x.insertCell(nxtCell++);
-    c.style.color="rgb(0,0,0)";
+    
     c.innerHTML=SUGAR.language.get('AOR_Conditions', 'LBL_FIELD');
 
     var d=x.insertCell(nxtCell++);
-    d.style.color="rgb(0,0,0)";
+    
     d.innerHTML=SUGAR.language.get('AOR_Conditions', 'LBL_OPERATOR');
 
     var e=x.insertCell(nxtCell++);
-    e.style.color="rgb(0,0,0)";
+    
     e.innerHTML=SUGAR.language.get('AOR_Conditions', 'LBL_VALUE_TYPE');
 
     var f=x.insertCell(nxtCell++);
-    f.style.color="rgb(0,0,0)";
+    
     f.innerHTML=SUGAR.language.get('AOR_Conditions', 'LBL_VALUE');
 
     if(view === 'EditView') {
         var h = x.insertCell(-1);
-        h.style.color = "rgb(0,0,0)";
         h.innerHTML = SUGAR.language.get('AOR_Conditions', 'LBL_PARAMETER');
     }
 }
