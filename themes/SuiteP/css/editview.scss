@@ -2631,13 +2631,204 @@ input#btn_ActionLine.button[type="button"] {
   background: none;
 }
 
+#fieldLines {
+  display: table;
+  width: 100%;
+}
+
 #fieldLines_head {
   background: none;
 }
 
+thead#fieldLines_head > tr > td {
+  padding-right: 8px;
+  background-color: $default-tab-bg;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+// remove button
+thead#fieldLines_head > tr > td:first-of-type {
+  border-top-left-radius: 4px;
+}
+
+thead#fieldLines_head > tr > td:nth-of-type(1) {
+  width: 40px;
+  height: 32px;
+}
+// module
+thead#fieldLines_head > tr > td:nth-of-type(2) {
+  width: 10%;
+}
+//
+thead#fieldLines_head > tr > td:nth-of-type(3) {
+  width: 10%;
+}
+
+thead#fieldLines_head > tr > td:nth-of-type(4) {
+  width: 5%;
+}
+
+thead#fieldLines_head > tr > td:nth-of-type(6) {
+  width: 15%;
+}
+
+thead#fieldLines_head > tr > td:nth-of-type(7) {
+  width: 10%;
+}
+
+thead#fieldLines_head > tr > td:nth-of-type(8) {
+  width: 10%;
+}
+
+thead#fieldLines_head > tr > td:nth-of-type(9) {
+  width: 5%;
+}
+
+thead#fieldLines_head > tr > td:nth-of-type(10) {
+  width: 10%;
+}
+
+thead#fieldLines_head > tr > td:nth-of-type(11) {
+  width: 10%;
+}
+
+[aor-field-line-body]:first-of-type td {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: none;
+  border-bottom: 4px solid $main-alternate-bg;
+}
+
+[aor-field-line-body] td  {
+  background-color: $detail-view-field-bg;
+  border-top: 2px solid $main-alternate-bg;
+  border-bottom: 2px solid $main-alternate-bg;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  line-height: $input-line-height;
+  padding-bottom: 8px;
+  padding-right: 4px;
+  padding-top: 8px;
+}
+
+[aor-field-line-body] td:first-of-type {
+  padding-left: 4px;
+}
+
+// last
+thead#fieldLines_head > tr > td:last-of-type {
+  border-top-right-radius: 4px;//
+}
+
+#detailpanel_fields > table td {
+  line-height: $input-line-height;
+  padding-left: 8px;
+  padding-right: 4px;
+}
+
 #fieldLines {
   display: block;
+  margin-top: 8px;
 }
+
+
+#conditionLines {
+  display: table;
+  width: 100%;
+}
+
+#conditionLines_head {
+  background: none;
+}
+
+thead#conditionLines_head > tr > td {
+  padding-right: 8px;
+  background-color: $default-tab-bg;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+// remove button
+thead#conditionLines_head > tr > td:first-of-type {
+  border-top-left-radius: 4px;
+}
+
+thead#conditionLines_head > tr > td:nth-of-type(1) {
+  width: 40px;
+  height: 32px;
+}
+// module
+thead#conditionLines_head > tr > td:nth-of-type(2) {
+  width: 10%;
+}
+//
+thead#conditionLines_head > tr > td:nth-of-type(3) {
+  width: 10%;
+}
+
+thead#conditionLines_head > tr > td:nth-of-type(4) {
+  width: 10%;
+}
+
+thead#conditionLines_head > tr > td:nth-of-type(5) {
+  width: 10%;
+}
+
+thead#conditionLines_head > tr > td:nth-of-type(6) {
+  width: 10%;
+}
+
+thead#conditionLines_head > tr > td:nth-of-type(7) {
+  width: 35%;
+}
+
+thead#conditionLines_head > tr > td:nth-of-type(8) {
+  width: 5%;
+}
+
+
+[aor-condition-line-body]:first-of-type td {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: none;
+  border-bottom: 4px solid $main-alternate-bg;
+}
+
+[aor-condition-line-body] td  {
+  background-color: $detail-view-field-bg;
+  border-top: 2px solid $main-alternate-bg;
+  border-bottom: 2px solid $main-alternate-bg;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  line-height: $input-line-height;
+  padding-bottom: 8px;
+  padding-right: 4px;
+  padding-top: 8px;
+}
+
+[aor-condition-line-body] td:first-of-type {
+  padding-left: 4px;
+}
+
+// last
+thead#conditionLines_head > tr > td:last-of-type {
+  border-top-right-radius: 4px;//
+}
+
+#detailpanel_fields > table td {
+  line-height: $input-line-height;
+  padding-left: 8px;
+  padding-right: 4px;
+}
+
+#conditionLines {
+  display: block;
+  margin-top: 8px;
+}
+
 
 #actionLines {
   border: 1px solid transparent;
@@ -4626,7 +4817,12 @@ object {
 }
 
 .aor-module-panel h4 {
-  margin-bottom: 8px;//
+  margin-bottom: 8px;
+}
+
+.aor-remove-btn {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 #report-editview-footer .tab-togglers {

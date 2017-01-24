@@ -293,6 +293,7 @@ function insertFieldLine(){
 
     tablebody = document.createElement("tbody");
     tablebody.id = "aor_fields_body" + fieldln;
+    tablebody.setAttribute('aor-field-line-body', '');
     document.getElementById('fieldLines').appendChild(tablebody);
 
 
@@ -301,7 +302,7 @@ function insertFieldLine(){
 
     var a = x.insertCell(0);
     if(action_sugar_grp1 == 'EditView'){
-        a.innerHTML = "<button type='button' id='aor_fields_delete_line" + fieldln + "' class='button' value='' tabindex='116' onclick='markFieldLineDeleted(" + fieldln + ")'><img src='themes/"+SUGAR.themes.theme_name+"/images/id-ff-remove-nobg.png' alt=''></button><br>";
+        a.innerHTML = "<button type='button' id='aor_fields_delete_line" + fieldln + "' class='button aor-remove-btn' value='' tabindex='116' onclick='markFieldLineDeleted(" + fieldln + ")'><img src='themes/"+SUGAR.themes.theme_name+"/images/id-ff-remove-nobg.png' alt=''></button><br>";
         a.innerHTML += "<input type='hidden' name='aor_fields_deleted[" + fieldln + "]' id='aor_fields_deleted" + fieldln + "' value='0'><input type='hidden' name='aor_fields_id[" + fieldln + "]' id='aor_fields_id" + fieldln + "' value=''>";
     } else{
         a.innerHTML = fieldln +1;
