@@ -4928,7 +4928,7 @@ object {
 }
 
 .aor_dragbox {
-  overflow: scroll;
+  overflow: auto;
   height: 150px;
   border: 1px solid $input-border;
   border-radius: 4px;
