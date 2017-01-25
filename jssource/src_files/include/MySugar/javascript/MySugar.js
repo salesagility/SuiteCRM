@@ -163,11 +163,12 @@ SUGAR.mySugar = function() {
 			ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_LOADING'));
       configureDlg = new YAHOO.widget.SimpleDialog("dlg", {
         visible:false,
-        width:"510",
         effect:[{effect:YAHOO.widget.ContainerEffect.FADE,duration:0.5}],
-        fixedcenter:true,
+        fixedcenter: false,
         modal:true,
-        draggable:false
+        draggable:false,
+        x: 0,
+        zIndex: 11
       });
 
       
