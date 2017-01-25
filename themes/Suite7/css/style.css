@@ -5821,6 +5821,7 @@ table tr#delegates_search {
 /* fix schedule bar popup on calendar */
 .ui-front, .ui-dialog {
     z-index: 1100 !important;
+    left: 1531px !important;
 }
 
 .panel-heading {
