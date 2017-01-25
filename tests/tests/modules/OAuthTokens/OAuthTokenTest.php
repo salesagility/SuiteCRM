@@ -213,6 +213,11 @@ class OAuthTokenTest extends PHPUnit_Framework_TestCase
 
     public function testdisplayDateFromTs()
     {
+        //test passing in OAuthToken
+        $seed = new OAuthToken('123', '456');
+        $result = displayDateFromTs($seed, 'timestamp');
+        $this->assertEquals('', $result);
+
         //test with empty array
         $result = displayDateFromTs(array('' => ''), 'timestamp');
         $this->assertEquals('', $result);
