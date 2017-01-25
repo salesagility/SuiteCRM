@@ -8,6 +8,7 @@ $sugar_config['default_max_tabs'] = 10;
 $sugar_config['suitecrm_version'] = $suitecrm_version;
 $sugar_config['sugar_version'] = $sugar_version;
 $sugar_config['sugarbeet'] = false;
+$sugar_config['enable_action_menu'] = true;
 
 ksort($sugar_config);
 write_array_to_file('sugar_config', $sugar_config, 'config.php');

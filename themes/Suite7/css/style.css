@@ -1413,6 +1413,43 @@ width:350px;
     margin-bottom: 0;
 }
 
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime.free {
+    border-left: 4px solid  #ff0000;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime.busy {
+    border-left: 4px solid  #ff0000;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime {
+    border-left: 4px solid #75AF4F;
+    background-color: #fff;
+}
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime {
+    border-left: 4px solid #ff0000;
+}
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime.free {
+    border-left: 4px solid  #ff0000;
+}
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.free {
+    background-color: rgb(77, 94, 170);
+    border-color: #fff;
+}
+
+
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.busy {
+    background-color: rgb(170, 77, 77);
+    border-color: #fff;
+}
+
+
 /* calendar module styles */
 .monthFooter td
 {
@@ -5364,6 +5401,19 @@ input[type=text].cstm_code {
     margin: 10px 60px 10px 10px;
 }
 
+#case_updates label {
+    margin-left: 10px;
+}
+
+#case_updates textarea {
+    margin-left: 10px;
+}
+
+#case_updates input[type=button] {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
 .caseUpdateImage {
     margin:0 5px 0 0;
 }
@@ -6018,23 +6068,29 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
     line-height: 0;
 }
 
-#lineItems .group_name {}
-#lineItems .delete_group {}
-#lineItems .product_group {}
-#lineItems .service_group {}
-#lineItems .add_product_line {}
-#lineItems .add_service_line {}
-#lineItems .group_total_amt {}
-#lineItems .group_discount_amount {}
-#lineItems .group_subtotal_amount {}
-#lineItems .group_tax_amount {}
-#lineItems .group_subtotal_tax_amount {}
-#lineItems .group_total_amount {}
-#lineItems  #addGroup {}
 /*Labels Next to Fields*/
 #lineItems  .alignedLabel {
     display: none;
     visibility: collapse;
+}
+
+#lineItems .totals {
+    float: right;
+    width: 192px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#lineItems .totals label {
+    width: 50%;
+    font-weight: normal;
+    font-size: 12px;
+    float: left;
+}
+
+#lineItems .totals input {
+    width: 50%;
+    float: right;
 }
 
 /*Product Lines*/
