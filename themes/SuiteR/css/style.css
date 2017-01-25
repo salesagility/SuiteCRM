@@ -5563,6 +5563,7 @@ table tr#delegates_search {
 /* fix schedule bar popup on calendar */
 .ui-front, .ui-dialog {
     z-index: 1100 !important;
+    top: 510px !important;
 }
 
 .panel-heading {
