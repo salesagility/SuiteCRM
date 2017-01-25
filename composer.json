@@ -9,6 +9,8 @@
     "vendor-dir": "vendor"
   },
   "require": {
+    "phpmailer/phpmailer": "^5.2",
+    "mnsami/composer-custom-directory-installer": "^1.1"
   },
   "require-dev": {
     "phpunit/phpunit": "^3.7",
@@ -21,5 +23,9 @@
       "": "src/"
     }
   },
-  "extra": {}
+  "extra":{
+    "installer-paths":{
+      "./include/phpmailer/": ["phpmailer/phpmailer"]
+    }
+  }
 }
