@@ -68,4 +68,5 @@ $mod_strings = array (
   'LBL_OPENING_HOURS' => 'Opening Hours',
   'LBL_CLOSING_HOURS' => 'Closing Hours',
   'LBL_DAY' => 'Day',
+  'LBL_OPEN' => 'Open',
 );

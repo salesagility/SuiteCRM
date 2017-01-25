@@ -423,6 +423,7 @@ $dictionary['Document'] = array('table' => 'documents',
             'relationship' => 'aos_contracts_documents',
             'source' => 'non-db',
             'module' => 'AOS_Contracts',
+            'vname' => 'LBL_AOS_CONTRACTS',
         ),
 
     ),

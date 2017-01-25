@@ -65,6 +65,7 @@ $mod_strings = array (
     'LBL_ASCENDING' => 'Ascending', 
     'LBL_DESCENDING' => 'Descending',
     'LBL_MODIFY_CURRENT_SEARCH'=> 'Modify current search',
+    'LBL_CREATED_BY'=> 'Created by',
 
 );
 

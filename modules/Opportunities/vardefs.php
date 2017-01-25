@@ -387,6 +387,7 @@ $dictionary['Opportunity'] = array('table' => 'opportunities', 'audited' => true
                 'module' => 'AOS_Quotes',
                 'bean_name' => 'AOS_Quotes',
                 'source' => 'non-db',
+                'vname' => 'LBL_AOS_QUOTES',
             ),
         'aos_contracts' =>
             array(
@@ -396,6 +397,7 @@ $dictionary['Opportunity'] = array('table' => 'opportunities', 'audited' => true
                 'module' => 'AOS_Contracts',
                 'bean_name' => 'AOS_Contracts',
                 'source' => 'non-db',
+                'vname' => 'LBL_AOS_CONTRACTS',
             ),
     ),
     'indices' => array(

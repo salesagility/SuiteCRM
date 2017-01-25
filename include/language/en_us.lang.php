@@ -115,6 +115,9 @@ $app_list_strings = array(
 
             'OAuthKeys' => 'OAuth Consumer Keys',
             'OAuthTokens' => 'OAuth Tokens',
+            'Calls_Reschedule' => 'Calls Reschedule',
+
+
         ),
 
     'moduleListSingular' => array(
@@ -1706,7 +1709,7 @@ $app_strings = array(
     'LBL_LESS' => 'less',
     'LBL_CAMPAIGN' => 'Campaign:',
     'LBL_CAMPAIGNS' => 'Campaigns',
-    'LBL_CAMPAIGNLOG' => 'CampaignLog',
+    'LBL_CAMPAIGNLOG' => 'Campaign Log',
     'LBL_CAMPAIGN_CONTACT' => 'Campaigns',
     'LBL_CAMPAIGN_ID' => 'campaign_id',
     'LBL_CAMPAIGN_NONE' => 'None',

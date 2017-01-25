@@ -102,5 +102,6 @@ $mod_strings = array (
     
     'LBL_CAMPAIGNS' => 'Campaigns',
 	'LBL_LIST_MARKETING_NAME' => 'Marketing Id',
+	'LBL_RELATED_NAME' => 'Related Name',
 );
 ?>

@@ -431,7 +431,7 @@ $dictionary['AOS_Products_Quotes'] = array(
         'product_id' => array(
             'required' => false,
             'name' => 'product_id',
-            'vname' => '',
+            'vname' => 'LBL_PRODUCT_ID',
             'type' => 'id',
             'massupdate' => 0,
             'comments' => '',
@@ -477,6 +477,7 @@ $dictionary['AOS_Products_Quotes'] = array(
             'module' => 'AOS_Products',
             'bean_name' => 'AOS_Products',
             'source' => 'non-db',
+            'vname' => 'LBL_AOS_PRODUCTS',
          ),
         'aos_contracts' => array(
             'name' => 'aos_contracts',
@@ -485,6 +486,7 @@ $dictionary['AOS_Products_Quotes'] = array(
             'module' => 'AOS_Contracts',
             'bean_name' => 'AOS_Contracts',
             'source' => 'non-db',
+            'vname' => 'LBL_AOS_CONTRACTS',
          ),
         'aos_quotes' => array(
             'name' => 'aos_quotes',
@@ -493,6 +495,7 @@ $dictionary['AOS_Products_Quotes'] = array(
             'module' => 'AOS_Quotes',
             'bean_name' => 'AOS_Quotes',
             'source' => 'non-db',
+            'vname' => 'LBL_AOS_QUOTES',
          ),
         'aos_invoices' => array(
             'name' => 'aos_invoices',
@@ -501,6 +504,7 @@ $dictionary['AOS_Products_Quotes'] = array(
             'module' => 'AOS_Invoices',
             'bean_name' => 'AOS_Invoices',
             'source' => 'non-db',
+            'vname' => 'LBL_AOS_INVOICES',
         ),
     ),
     'indices' => array(

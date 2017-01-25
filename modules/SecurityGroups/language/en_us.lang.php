@@ -31,7 +31,8 @@ $mod_strings = array (
   'LBL_USERS' => 'Users',
   'LBL_USERS_SUBPANEL_TITLE' => 'Users',
   'LBL_ROLES_SUBPANEL_TITLE' => 'Roles',
-  
+  'LBL_ROLES' => 'Roles',
+
   'LBL_CONFIGURE_SETTINGS' => 'Configure',
   'LBL_ADDITIVE' => 'Additive Rights',
   'LBL_ADDITIVE_DESC' => "User gets greatest rights of all roles assigned to the user or the user's group(s)",

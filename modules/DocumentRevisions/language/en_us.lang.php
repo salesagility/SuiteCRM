@@ -69,6 +69,7 @@ $mod_strings = array (
 
 	'LBL_DOC_NAME' => 'Document Name:',
 	'LBL_DOC_VERSION' => 'Revision:',
+	'LBL_CREATED_BY_NAME' => 'Created by',
 
 	//document revisions.
 	'LBL_REV_LIST_REVISION' => 'Revision',

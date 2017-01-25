@@ -788,6 +788,7 @@ $dictionary['AOS_Quotes'] = array(
                 'relationship' => 'aos_quotes_project',
                 'source' => 'non-db',
                 'module' => 'Project',
+                'vname' => 'LBL_AOS_QUOTES_PROJECT',
             ),
         'aos_quotes_aos_invoices' =>
             array(
@@ -796,6 +797,7 @@ $dictionary['AOS_Quotes'] = array(
                 'relationship' => 'aos_quotes_aos_invoices',
                 'source' => 'non-db',
                 'module' => 'AOS_Invoices',
+                'vname' => 'LBL_AOS_QUOTES_AOS_INVOICES',
             ),
         'aos_quotes_aos_contracts' =>
             array(
@@ -804,6 +806,7 @@ $dictionary['AOS_Quotes'] = array(
                 'relationship' => 'aos_quotes_aos_contracts',
                 'source' => 'non-db',
                 'module' => 'AOS_Contracts',
+                'vname' => 'LBL_AOS_QUOTES_AOS_CONTRACTS',
             ),
         'aos_products_quotes' =>
             array(
@@ -813,6 +816,7 @@ $dictionary['AOS_Quotes'] = array(
                 'module' => 'AOS_Products_Quotes',
                 'bean_name' => 'AOS_Products_Quotes',
                 'source' => 'non-db',
+                'vname' => 'LBL_AOS_PRODUCTS_QUOTES',
             ),
 
         'aos_line_item_groups' =>
@@ -823,6 +827,7 @@ $dictionary['AOS_Quotes'] = array(
                 'module' => 'AOS_Line_Item_Groups',
                 'bean_name' => 'AOS_Line_Item_Groups',
                 'source' => 'non-db',
+                'vname' => 'LBL_AOS_LINE_ITEM_GROUPS',
             ),
 
     ),

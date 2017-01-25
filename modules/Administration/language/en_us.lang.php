@@ -365,6 +365,8 @@ $mod_strings = array(
     'LBL_LIST_SYSTEM_KEY' => 'System Key',
     'LBL_LIST_SYSTEM_NAME' => 'System Name',
     'LBL_LIST_VIEW' => 'List',
+    'LBL_LIST_SYMBOL' => 'Category',
+    'LBL_LIST_RATE' => 'Value',
 
     'LBL_LDAP_TITLE' => 'LDAP Support',
     'LBL_LDAP_ENABLE' => 'Enable LDAP Authentication',

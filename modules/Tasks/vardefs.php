@@ -290,6 +290,7 @@ $dictionary['Task'] = array('table' => 'tasks',
         'contact_parent' =>
             array(
                 'name' => 'contact_parent',
+                'vname' => 'LBL_CONTACT_PARENT',
                 'type' => 'link',
                 'relationship' => 'contact_tasks_parent',
                 'source' => 'non-db',

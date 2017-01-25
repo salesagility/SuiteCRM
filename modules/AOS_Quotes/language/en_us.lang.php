@@ -201,5 +201,11 @@ $mod_strings = array (
     'LBL_SHIPPING_TAX_AMT_USDOLLAR' => 'Shipping Tax (Default Currency)',
     'LBL_GRAND_TOTAL_USDOLLAR' => 'Grand Total (Default Currency)',
     'LBL_QUOTE_TO' => 'Quote To',
+    'LBL_AOS_QUOTES_AOS_CONTRACTS' => 'Quotes : Contacts',
+    'LBL_AOS_QUOTES_AOS_INVOICES' => 'Quotes : Invoices',
+    'LBL_AOS_LINE_ITEM_GROUPS' => 'Line item groups',
+    'LBL_AOS_PRODUCTS_QUOTES' => 'Product quotes',
+    'LBL_AOS_QUOTES_PROJECT' => 'Quotes project',
+    'LBL_SUBTOTAL_TAX_AMOUNT_USDOLLAR' => 'Subtotal tax ammount/US Dollar',
 );
 ?>

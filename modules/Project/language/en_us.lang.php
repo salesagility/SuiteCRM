@@ -199,6 +199,7 @@ $mod_strings = array(
 	'LBL_PROJECTS_SEARCH' => 'Search Projects',
 	'LBL_USERS_SEARCH' => 'Search Users',
 	'LBL_CONTACTS_SEARCH' => 'Select  Contacts',
+	'LBL_PROJECT_CONTACTS_1_FROM_CONTACTS_TITLE' => 'Contacts : Contacts',
 	'LBL_RESOURCE_CHART_SEARCH_BUTTON' => 'Search',
 	
 	'LBL_CHART_TYPE' => 'Type',
@@ -209,6 +210,8 @@ $mod_strings = array(
 	'LBL_RESOURCE_CHART_MONTH' => 'Month',
 	'LBL_RESOURCE_CHART_QUARTER' => 'Quarter',
  	'LBL_ALL_RESOURCES' => 'All Resources',
+	'LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_PROJECT_TITLE' => 'Project templates',
+	'LBL_AOS_QUOTES_PROJECT' => 'Quotes project',
 
 );
 ?>

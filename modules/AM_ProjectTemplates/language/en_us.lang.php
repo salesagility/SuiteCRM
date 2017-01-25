@@ -141,6 +141,7 @@ $mod_strings = array(
 	'LBL_NO_ACCESS' => 'You have no access to create $module',
 	'LBL_SCHEDULING_FORM_TITLE' => 'Resource List',
 	'LBL_NONE' => 'None',
+	'LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_PROJECT_TITLE' => 'Project templates',
 
 
 );

@@ -528,6 +528,7 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
                 'module' => 'Calls_Reschedule',
                 'bean_name' => 'Calls_Reschedule',
                 'source' => 'non-db',
+                'vname' => 'LBL_CALLS_RESCHEDULE',
             ),
     ),
     'indices' => array(

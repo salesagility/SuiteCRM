@@ -526,6 +526,7 @@ $dictionary['Contact'] = array('table' => 'contacts', 'audited' => true,
                     'module' => 'AOS_Quotes',
                     'bean_name' => 'AOS_Quotes',
                     'source' => 'non-db',
+                    'vname' => 'LBL_AOS_QUOTES',
                 ),
             'aos_invoices' =>
                 array(
@@ -535,6 +536,7 @@ $dictionary['Contact'] = array('table' => 'contacts', 'audited' => true,
                     'module' => 'AOS_Invoices',
                     'bean_name' => 'AOS_Invoices',
                     'source' => 'non-db',
+                    'vname' => 'LBL_AOS_INVOICES',
                 ),
             'aos_contracts' =>
                 array(
@@ -544,6 +546,7 @@ $dictionary['Contact'] = array('table' => 'contacts', 'audited' => true,
                     'module' => 'AOS_Contracts',
                     'bean_name' => 'AOS_Contracts',
                     'source' => 'non-db',
+                    'vname' => 'LBL_AOS_CONTRACTS',
                 ),
             'e_invite_status_fields' =>
                 array(

@@ -174,6 +174,8 @@ $mod_strings = array(
     'LBL_POLLMONITOREDINBOXESAOP' => 'AOP Poll Monitored Inboxes',
     'LBL_AORRUNSCHEDULEDREPORTS' => 'Run scheduled reports',
     'LBL_PROCESSAOW_WORKFLOW' => 'Process AOW Workflow',
+
+    'LBL_SCHEDULER_TIMES' => 'Scheduler times',
 );
 
 global $sugar_config;

@@ -44,5 +44,6 @@ $mod_strings = array (
     'LBL_TOTAL_AMT_USDOLLAR' => 'Total (Default Currency)',
     'LBL_GROUP_TOTAL_USDOLLAR' => 'Group Total (Default Currency)',
     'LBL_SUBTOTAL_TAX_AMOUNT_USDOLLAR' => 'Subtotal + Tax (Default Currency)',
+    'LBL_PARENT_ID' => 'Parent ID',
 );
 ?>
