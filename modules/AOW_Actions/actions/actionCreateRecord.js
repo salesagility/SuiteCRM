@@ -44,7 +44,7 @@ function show_crModuleFields(ln){
 
                 //document.getElementById('aow_action_div'+ln).innerHTML ="<select tabindex='116' name='service_vat[]' id='service_vat'>" + cr_fields[ln] + "</select>";
             }
-        };;;;;;;
+        };
 
         var callback2 = {
             success: function(result) {
@@ -56,7 +56,7 @@ function show_crModuleFields(ln){
 
                 //document.getElementById('aow_action_div'+ln).innerHTML ="<select tabindex='116' name='service_vat[]' id='service_vat'>" + cr_fields[ln] + "</select>";
             }
-        };;;;;;;
+        };
 
         YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&view=EditView&action=getModuleFields&aow_module="+cr_module[ln],callback);
         YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&action=getModuleRelationships&aow_module="+cr_module[ln],callback2);
@@ -82,7 +82,7 @@ function show_crModuleField(ln, cln, value, type_value){
             failure: function(result) {
                 document.getElementById('crLine'+ln+'_fieldType'+cln).innerHTML = '';
             }
-        };;;;;;;
+        };
         var callback2 = {
             success: function(result) {
                 document.getElementById('crLine'+ln+'_field'+cln).innerHTML = result.responseText;
@@ -92,7 +92,7 @@ function show_crModuleField(ln, cln, value, type_value){
             failure: function(result) {
                 document.getElementById('crLine'+ln+'_field'+cln).innerHTML = '';
             }
-        };;;;;;;
+        };
 
         var aow_field_name = "aow_actions_param["+ln+"][value]["+cln+"]";
         var aow_field_type_name = "aow_actions_param["+ln+"][value_type]["+cln+"]";
@@ -154,7 +154,7 @@ function show_crRelField(ln, cln, value, type_value){
             failure: function(result) {
                 document.getElementById('crRelLine'+ln+'_fieldType'+cln).innerHTML = '';
             }
-        };;;;;;;
+        };
         var callback2 = {
             success: function(result) {
                 document.getElementById('crRelLine'+ln+'_field'+cln).innerHTML = result.responseText;
@@ -164,7 +164,7 @@ function show_crRelField(ln, cln, value, type_value){
             failure: function(result) {
                 document.getElementById('crRelLine'+ln+'_field'+cln).innerHTML = '';
             }
-        };;;;;;;
+        };
 
 
         var aow_field_name = "aow_actions_param["+ln+"][rel_value]["+cln+"]";
@@ -192,7 +192,7 @@ function show_crRelFieldType(ln, cln, value){
         failure: function(result) {
             document.getElementById('crRelLine'+ln+'_field'+cln).innerHTML = '';
         }
-    };;;;;;;
+    };
 
     flow_module = document.getElementById('flow_module').value;
     var aow_field = document.getElementById('aow_actions_param'+ln+'_rel'+cln).value;
@@ -295,21 +295,21 @@ function show_mrModuleFields(ln){
             success: function(result) {
                 cr_module[ln] = result.responseText;
             }
-        };;;;;;;
+        };
 
         var callback2 = {
             success: function(result) {
                 cr_fields[ln] = result.responseText;
                 document.getElementById('addcrline'+ln).style.display = '';
             }
-        };;;;;;;
+        };
 
         var callback3 = {
             success: function(result) {
                 cr_relationships[ln] = result.responseText;
                 document.getElementById('addcrrelline'+ln).style.display = '';
             }
-        };;;;;;;
+        };
 
         YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&action=getRelatedModule&aow_module="+cr_module[ln]+"&rel_field="+rel_module,callback);
         YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&view=EditView&action=getModuleFields&aow_module="+cr_module[ln]+"&rel_field="+rel_module,callback2);
