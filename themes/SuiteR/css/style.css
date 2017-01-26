@@ -6131,6 +6131,25 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
     color: #444444;
 }
 
+#selectLinkTop .ddopen {
+    top: 25px!important;
+}
+
+#selectLinkBottom .ddopen {
+    top: 25px!important;
+}
+
+#actionLinkTop .ddopen {
+    top: 25px!important;
+}
+
+#actionLinkBottom .ddopen {
+    top: 25px!important;
+}
+
+ul.clickMenu.SugarActionMenu.listViewLinkButton > li .ddopen {
+    top: 25px!important;
+}
 
 .paginationActionButtons .parent-dropdown-handler:hover * {
     color: #3C8DBC;
