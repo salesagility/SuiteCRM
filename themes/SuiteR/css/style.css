@@ -6071,10 +6071,18 @@ ul.clickMenu.searchAppliedAlert {
     ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly {
         display: none;
     }
+
+    .desktopOnly {
+        display: none;
+    }
 }
 
 @media (min-width: 992px) {
     ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.mobileOnly {
+        display: none;
+    }
+
+    .mobileOnly {
         display: none;
     }
 }
