@@ -52,8 +52,8 @@
                 {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true)}}
                 {*if tab display*}
                     {{counter name="tabCount" print=false}}
-                    {{if $tabCount == '0'}}
-                        <li role="presentation" class="active">
+
+                        <li role="presentation" class="{{if $tabCount == '0'}}active{{else}}hidden-xs{{/if}} main-tabs">
                             <a id="tab{{$tabCount}}" data-toggle="tab" class="hidden-xs">
                                 {sugar_translate label='{{$label}}' module='{{$module}}'}
                             </a>
@@ -63,22 +63,19 @@
                             <ul id="first-tab-menu-xs" class="dropdown-menu">
                                 {{counter name="tabCountXS" start=-1 print=false assign="tabCountXS"}}
                                 {{foreach name=sectionXS from=$sectionPanels key=label item=panelXS}}
-                                {{counter name="tabCountXS" print=false}}
-                                <li role="presentation">
-                                    <a id="tab{{$tabCountXS}}" data-toggle="tab" onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
-                                        {sugar_translate label='{{$label}}' module='{{$module}}'}
-                                    </a>
-                                </li>
+                                    {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
+                                    {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab === true)}}
+                                        {{counter name="tabCountXS" print=false}}
+                                        <li role="presentation">
+                                            <a id="mobiletab{{$tabCount}}-{{$tabCountXS}}" data-toggle="tab" onclick="changeFirstTab(this, '{{$tabCountXS}}');">
+                                                {sugar_translate label='{{$label}}' module='{{$module}}'}
+                                            </a>
+                                        </li>
+                                    {{/if}}
                                 {{/foreach}}
                             </ul>
                         </li>
-                    {{else}}
-                        <li role="presentation" class="hidden-xs">
-                            <a id="tab{{$tabCount}}" data-toggle="tab">
-                                {sugar_translate label='{{$label}}' module='{{$module}}'}
-                            </a>
-                        </li>
-                    {{/if}}
+
                 {{else}}
                     {* if panel skip*}
                 {{/if}}
@@ -190,35 +187,26 @@
 
     <script type="text/javascript">
 
-        var selectTab = function(tab) {
-            $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').hide();
-            $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').eq(tab).show().addClass('active').addClass('in');
-        };
-
         var selectTabOnError = function(tab) {
             selectTab(tab);
-            $('#content ul.nav.nav-tabs li').removeClass('active');
-            $('#content ul.nav.nav-tabs li a').css('color', '');
+            $('#content ul.nav.nav-tabs li.main-tabs').removeClass('active');
+            $('#content ul.nav.nav-tabs li.main-tabs a').css('color', '');
 
-            $('#content ul.nav.nav-tabs li').eq(tab).find('a').first().css('color', 'red');
-            $('#content ul.nav.nav-tabs li').eq(tab).addClass('active');
+            $('#content ul.nav.nav-tabs li.main-tabs').eq(tab).find('a').first().css('color', 'red');
+            $('#content ul.nav.nav-tabs li.main-tabs').eq(tab).addClass('active');
 
         };
-
-        var selectTabOnErrorInputHandle = function(inputHandle) {
-            var tab = $(inputHandle).closest('.tab-pane-NOBOOTSTRAPTOGGLER').attr('id').match(/^detailpanel_(.*)$/)[1];
-            selectTabOnError(tab);
-        };
-
 
         $(function(){
-            $('#content ul.nav.nav-tabs li').click(function(e){
+            $('#content ul.nav.nav-tabs li.main-tabs').click(function(e){
                 if(typeof $(this).find('a').first().attr('id') != 'undefined') {
-                    var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
-                    selectTab(tab);
+                    if($(this).find('a').first().attr('id').match(/^tab(.)*$/) !== null) {
+                        var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
+                        selectTab(tab);
+                    }
                 }
             });
-            $('#content ul.nav.nav-tabs li.active').each(function(e){
+            $('#content ul.nav.nav-tabs li.main-tabs.active').each(function(e){
                 if(typeof $(this).find('a').first().attr('id') != 'undefined') {
                     var tab = parseInt($(this).find('a').first().attr('id').match(/^tab(.)*$/)[1]);
                     selectTab(tab);

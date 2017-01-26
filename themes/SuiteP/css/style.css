@@ -3881,6 +3881,7 @@ a.first-tab-xs {
 
 #first-tab-menu-xs.dropdown-menu > li > a{
     border-bottom: 1px solid #93A0AB;
+    cursor: pointer;
 }
 
 #first-tab-menu-xs.dropdown-menu > li:last-of-type > a{
@@ -10932,6 +10933,10 @@ table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButt
     opacity: 1;
 }
 
+.dcQuickEdit {
+    position: relative;
+    z-index: 1;
+}
 
 /* admin / inbound emails styles */
 

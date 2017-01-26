@@ -357,14 +357,54 @@ $(document).ready(function() {
 });
 
 
-function changeFirstTab(src) {
-    var selected = $(src);
-    var selectedHtml = $(selected.context).html();
-    $('#xstab0').html(selectedHtml);
-    return true;
+function changeFirstTab(src, tab, useSelectTab) {
+    if(typeof useSelectTab === 'undefined') {
+        var useSelectTab = true;
+    }
+    if(useSelectTab) {
+        selectTab(tab, 1);
+    }
+
+    changeEditViewTab(tab);
+
+    return false;
 }
 // End of custom jQuery
 
+
+var changeEditViewTab = function(tab) {
+    $('ul.nav.nav-tabs li a.visible-xs.first-tab-xs.dropdown-toggle').each(function(i, e){
+        $(e).closest('li').addClass('hidden-xs');
+    });
+    $('ul.nav.nav-tabs li a#xstab'+tab+'.visible-xs.first-tab-xs.dropdown-toggle').closest('li').removeClass('hidden-xs');
+};
+
+var selectTabTilt = 0;
+var selectTabOverride = false;
+var selectTab = function(tab, tilt) {
+    if(typeof tilt !== undefined && parseInt(tilt) > 0) {
+        selectTabTilt = parseInt(tilt);
+        selectTabOverride = tab;
+    }
+    if(selectTabTilt == 0) {
+        if(selectTabOverride !== false) {
+            tab = selectTabOverride;
+            selectTabOverride = false;
+        }
+        $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').hide();
+        $('#content div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').eq(tab).show().addClass('active').addClass('in');
+        changeEditViewTab(tab);
+    }
+    else {
+        selectTabTilt--;
+    }
+};
+
+var selectTabOnErrorInputHandle = function(inputHandle) {
+    var tab = $(inputHandle).closest('.tab-pane-NOBOOTSTRAPTOGGLER').attr('id').match(/^detailpanel_(.*)$/)[1];
+    selectTabOnError(tab);
+    $('#EditView_tabs ul.nav.nav-tabs li.main-tabs').eq(tab).click();
+};
 
 // fix for tab navigation on user profile for SuiteP theme
 
