@@ -2966,6 +2966,11 @@ thead#chartHead > tr > td:nth-of-type(11) {
   color: $main-font-color;
 }
 
+
+.aor-line-items-panel .drop-area {
+  min-height: 62px;
+}
+
 // charts border fix
 [aor-chart-line-body] td:first-of-type > td {
   border-bottom: none;

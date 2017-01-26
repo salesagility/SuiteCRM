@@ -5325,6 +5325,11 @@ object{
     margin-bottom: 8px;
 }
 
+.aor-line-items-panel .drop-area {
+    min-height: 62px;
+}
+
+
 #report-editview-footer .tab-togglers {width: 80%;}
 #report-editview-footer .tab-toggler {display: block; float: left;}
 #report-editview-footer .tab-toggler.active .button {background-color: #286090;}
@@ -5333,6 +5338,9 @@ object{
 #report-editview-footer .parenthesis-line strong {font-size: 18px}
 #report-editview-footer .drop-area.highlighted {background-color: #f7f7f7;}
 
+.aor-line-items-panel .drop-area {
+    min-height: 62px;
+}
 
 /*Rgraph charts*/
 .noGraphDataPoints
