@@ -308,10 +308,8 @@ function insertFieldLine(){
         a.innerHTML = fieldln +1;
     }
   a.innerHTML += "<input type='hidden' name='aor_fields_field_order[" + fieldln + "]' id='aor_fields_field_order" + fieldln + "' value='" + fieldln + "'>";
-  a.style.width = ''; // 5%
 
     var b = x.insertCell(1);
-    b.style.width = ''; // 12%
     var viewStyle = 'display:none';
     if(action_sugar_grp1 == 'EditView'){viewStyle = '';}
     b.innerHTML = "<input type='hidden' name='aor_fields_module_path["+ fieldln +"]' id='aor_fields_module_path" + fieldln + "' value=''>";
@@ -319,7 +317,6 @@ function insertFieldLine(){
     b.innerHTML += "<span id='aor_fields_module_path_display" + fieldln + "'></span>";
 
     var b1 = x.insertCell(2);
-    b1.style.width = ''; // 12%
     var viewStyle = 'display:none';
     if(action_sugar_grp1 == 'EditView'){viewStyle = '';}
     b1.innerHTML = "<input type='hidden' name='aor_fields_field["+ fieldln +"]' id='aor_fields_field" + fieldln + "' value=''>";
@@ -329,37 +326,28 @@ function insertFieldLine(){
     var c = x.insertCell(3);
     c.innerHTML = "<input name='aor_fields_display["+ fieldln +"]' value='0' type='hidden'>";
     c.innerHTML += "<input id='aor_fields_display" + fieldln + "' name='aor_fields_display["+ fieldln +"]' value='1' type='checkbox' CHECKED>";
-    c.style.width = ''; // 5%
 
     var d = x.insertCell(4);
     d.innerHTML = "<input name='aor_fields_link["+ fieldln +"]' value='0' type='hidden'>";
     d.innerHTML += "<input id='aor_fields_link" + fieldln + "' name='aor_fields_link["+ fieldln +"]' value='1' type='checkbox'>";
-    d.style.width = ''; // 5%
 
     var e = x.insertCell(5);
     e.innerHTML = "<input name='aor_fields_label["+ fieldln +"]' id='aor_fields_label" + fieldln + "' size='20' maxlength='150' value='' type='text'>";
-    e.style.width = ''; // 12%
 
     var f = x.insertCell(6);
     f.id='aor_fields_fieldFunction'+fieldln;
-    f.style.width = ''; // 10%
 
     var g=x.insertCell(7);
     g.innerHTML = "<select type='text' name='aor_fields_sort_by["+ fieldln +"]' id='aor_fields_sort_by" + fieldln + "'>"+sort_by_values+"</select>";
-    g.style.width = ''; // 10%
 
     var h=x.insertCell(8);
     h.innerHTML = "<input name='aor_fields_group_by["+ fieldln +"]' value='0' type='hidden'>";
     h.innerHTML += "<input id='aor_fields_group_by" + fieldln + "' name='aor_fields_group_by["+ fieldln +"]' value='1' type='checkbox'>";
-    h.style.width = ''; // 10%
 
     var i=x.insertCell(9);
     i.innerHTML = "<select type='text' name='aor_fields_format["+ fieldln +"]' id='aor_fields_format" + fieldln + "' style='display:none;'>" + format_values + "</select>";
-    i.style.width = ''; // 10%
-
     var h=x.insertCell(10);
     h.innerHTML = "<select type='text' name='aor_fields_total["+ fieldln +"]' id='aor_fields_total" + fieldln + "'>"+total_values+"</select>";
-    h.style.width = ''; // 10%
 
     fieldln++;
     fieldln_count++;

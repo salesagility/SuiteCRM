@@ -512,7 +512,6 @@ function insertConditionLine(condition){
         } else{
             a.innerHTML = condln +1 + "<input class='aor_conditions_id' type='hidden' name='aor_conditions_id[" + condln + "]' id='aor_conditions_id" + condln + "' value=''>";
         }
-        a.style.width = ''; // 5%
 
 
         if(view == 'EditView') {
@@ -522,7 +521,6 @@ function insertConditionLine(condition){
         }
 
         var b = x.insertCell(nxtCell++);
-        b.style.width = '1'; // 5%
         b.className = 'condition-sortable-handle';
         var viewStyle = 'display:none';
         if (action_sugar_grp1 == 'EditView') {
@@ -538,7 +536,6 @@ function insertConditionLine(condition){
 
 
         var c = x.insertCell(nxtCell++);
-        c.style.width = '1'; // 5%
         c.className = 'condition-sortable-handle';
         var viewStyle = 'display:none';
         if (action_sugar_grp1 == 'EditView') {
@@ -555,21 +552,17 @@ function insertConditionLine(condition){
 
         var d = x.insertCell(nxtCell++);
         d.id = 'aor_conditions_operatorInput' + condln;
-        d.style.width = '1'; // 5%
 
         var e = x.insertCell(nxtCell++);
         e.id = 'aor_conditions_fieldTypeInput' + condln;
-        e.style.width = '1'; // 5%
 
         var f = x.insertCell(nxtCell++);
         f.id = 'aor_conditions_fieldInput' + condln;
-        f.style.width = ''; // 30%
 
 
         if (view === 'EditView') {
             var h = x.insertCell(-1);
             h.innerHTML += "<input id='aor_conditions_parameter" + condln + "' name='aor_conditions_parameter[" + condln + "]' value='1' type='checkbox'>";
-            h.style.width = ''; // 10%
         }
 
     }
