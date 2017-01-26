@@ -270,10 +270,8 @@ function insertConditionLine(){
     } else{
         a.innerHTML = condln +1;
     }
-    a.style.width = ''; // 5%
 
     var b = x.insertCell(1);
-    b.style.width = ''; // 15%
     var viewStyle = 'display:none';
     if(action_sugar_grp1 == 'EditView'){viewStyle = '';}
     b.innerHTML = "<select style='"+viewStyle+"' name='aow_conditions_module_path["+ condln +"][0]' id='aow_conditions_module_path" + condln + "' value='' title='' tabindex='116' onchange='showConditionCurrentModuleFields(" + condln + ");'>" + flow_rel_modules + "</select>";
@@ -281,7 +279,6 @@ function insertConditionLine(){
     b.innerHTML += "<span style='"+viewStyle+"' id='aow_conditions_module_path_label" + condln + "' ></span>";
 
     var c = x.insertCell(2);
-    c.style.width = ''; // 15%
     var viewStyle = 'display:none';
     if(action_sugar_grp1 == 'EditView'){viewStyle = '';}
     c.innerHTML = "<select style='"+viewStyle+"' name='aow_conditions_field["+ condln +"]' id='aow_conditions_field" + condln + "' value='' title='' tabindex='116' onchange='showModuleField(" + condln + ");'>" + flow_fields + "</select>";
@@ -291,15 +288,12 @@ function insertConditionLine(){
 
     var d = x.insertCell(3);
     d.id='aow_conditions_operatorInput'+condln;
-    d.style.width = ''; // 15%
 
     var e = x.insertCell(4);
     e.id='aow_conditions_fieldTypeInput'+condln;
-    e.style.width = ''; // 15%
 
     var f = x.insertCell(5);
     f.id='aow_conditions_fieldInput'+condln;
-    f.style.width = ''; // 30%
 
     condln++;
     condln_count++;

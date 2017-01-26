@@ -118,7 +118,7 @@ function show_crModuleFieldType(ln, cln, value){
         failure: function(result) {
             document.getElementById('crLine'+ln+'_field'+cln).innerHTML = '';
         }
-    };;;;;;;
+    };
 
     flow_module = document.getElementById('flow_module').value;
     var aow_field = document.getElementById('aow_actions_param'+ln+'_field'+cln).value;
