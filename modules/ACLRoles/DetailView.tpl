@@ -43,7 +43,15 @@
 
 *}
 
-
+<script>
+    {literal}
+    $(document).ready(function(){
+        $("ul.clickMenu").each(function(index, node){
+            $(node).sugarActionMenu();
+        });
+    });
+    {/literal}
+</script>
 <form action="index.php" method="post" name="DetailView" id="form">
 
 			<input type="hidden" name="module" value="ACLRoles">
@@ -54,11 +62,10 @@
 			<input type='hidden' name='return_action' value='{$RETURN.action}'>
 			<input type='hidden' name='return_module' value='{$RETURN.module}'>
 			<input type="hidden" name="action">
-
 {php}
     $APP = $this->get_template_vars('APP');
     $this->append('buttons',
-    <<<EOD
+     <<<EOD
     <input title="{$APP['LBL_EDIT_BUTTON_TITLE']}" accessKey="{$APP['LBL_EDIT_BUTTON_KEY']}" class="button" onclick="var _form = $('#form')[0]; _form.action.value='EditView'; _form.submit();" type="submit" name="button" value="{$APP['LBL_EDIT_BUTTON']}" />
 EOD
     );
@@ -74,6 +81,7 @@ EOD
     );
 {/php}
             {sugar_action_menu id="userEditActions" class="clickMenu fancymenu" buttons="$buttons"}
+
 		</form>
 		</p>
 		<p>
