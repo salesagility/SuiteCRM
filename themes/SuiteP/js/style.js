@@ -364,7 +364,7 @@ function changeFirstTab(src) {
     var selectedHtml = $(selected.context).html();
     $('#xstab0').html(selectedHtml);
 
-    var i = $(src).attr('id').replace('tab','') - 1;
+    var i = $(src).parents('li').index();
     selectTab(parseInt(i));
     return true;
 }
