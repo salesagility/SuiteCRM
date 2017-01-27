@@ -60,7 +60,6 @@ class SugarWidgetSubPanelTopSummaryButton extends SugarWidgetSubPanelTopButton
 
 		$json_encoded_php_array = $this->_create_json_encoded_popup_request($popup_request_data);
 		$title = $app_strings['LBL_ACCUMULATED_HISTORY_BUTTON_TITLE'];
-		//$accesskey = $app_strings['LBL_ACCUMULATED_HISTORY_BUTTON_KEY'];
 		$value = $app_strings['LBL_ACCUMULATED_HISTORY_BUTTON_LABEL'];
 		$module_name = 'Activities';
 		$id = $widget_data['focus']->id;

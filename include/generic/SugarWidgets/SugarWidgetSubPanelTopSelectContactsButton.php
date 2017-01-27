@@ -78,7 +78,6 @@ class SugarWidgetSubPanelTopSelectContactsButton extends SugarWidgetSubPanelTopS
 		$initial_filter = '';
 
 		$this->title = $app_strings['LBL_SELECT_CONTACT_BUTTON_TITLE'];
-		//$this->accesskey = $app_strings['LBL_SELECT_CONTACT_BUTTON_KEY'];
 		$this->value = $app_strings['LBL_SELECT_CONTACT_BUTTON_LABEL'];
 
 		$this->module_name = 'Contacts';
