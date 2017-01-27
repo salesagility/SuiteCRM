@@ -325,23 +325,29 @@
 //				// todo: !@#
 //			};
 //
-			var getAttachmentsForRemove = function() {
-				var attachmentsForRemove = [];
-				$('#step1_uploader input[type="checkbox"]').each(function(){
-					if($(this).attr('name') == 'remove_attachment[]' && $(this).prop('checked')) {
-						attachmentsForRemove.push($(this).val());
+					var getAttachmentsForRemove = function() {
+						var attachmentsForRemove = [];
+						$('#step1_uploader input[type="checkbox"]').each(function(){
+							if($(this).attr('name') == 'remove_attachment[]' && $(this).prop('checked')) {
+								attachmentsForRemove.push($(this).val());
+							}
+						});
+						return attachmentsForRemove;
+					};
+					if(document.getElementById('editorType').checked){
+						var html_body = $("#body_html_ta").val();
+					}else{
+						html_body = $('#email_template_editor').getMozaikValue();
 					}
-				});
-				return attachmentsForRemove;
-			};
 
-			$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(), {
-				'func': func,
-				'campaignId': $('input[name="campaign_id"]').val(),
-				'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
-				'body_html': $('#email_template_editor').getMozaikValue(),
-				'name': $('#template_name').val(),
-				'subject': $('#template_subject').val(),
+					$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(), {
+						'func': func,
+						'campaignId': $('input[name="campaign_id"]').val(),
+						'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
+						'body_html': html_body,
+						'name': $('#template_name').val(),
+						'subject': $('#template_subject').val(),
+						'direct_html_c': document.getElementById('editorType').checked,
 //				'attachmentsAdd': getAttachmentsForAdd(),
 				'attachmentsRemove': getAttachmentsForRemove()
 			}, function(resp){
@@ -478,7 +484,7 @@
 						<div class="clear"></div>
 						<div class="form-group">
 							<span>{$MOD.LBL_EDIT_OPT_OUT|replace:' ':'&nbsp'}</span><input onclick="toggle_tracker_url(this);" name="is_optout" id="is_optout" tabindex='2' type="checkbox" {$IS_OPTOUT_CHECKED}/>
-							<input type='button' tabindex="0" onclick='{$INSERT_URL_ONCLICK}' class='button hidden' value='{$MOD.LBL_INSERT_URL_REF}'>
+							<input type='button' tabindex="0" onclick='insertTracker()' class='button hidden' value='{$MOD.LBL_INSERT_URL_REF}'>
 						</div>
 					</div>
 				</div>
@@ -518,15 +524,19 @@
 								$('input[name="update_exists_template"]').prop('checked', true);
 							});
 
-							$('#template_option_create').click(function(){
-								$('#template_id_select_frm').hide();
-								$('#template_name_input_frm').show();
-								$('#template_id_name_space_separator').hide();
-								$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').hide();
-								$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').show();
-								$('input[name="update_exists_template"]').prop('checked', false);
-								emailTemplateCopyId = null;
-							});
+													$('#template_option_create').click(function(){
+														$('#template_id_select_frm').hide();
+														$('#template_name_input_frm').show();
+														$('#template_id_name_space_separator').hide();
+														$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').hide();
+														$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').show();
+														$('input[name="update_exists_template"]').prop('checked', false);
+														$("#template_name").val("");
+														$("#template_subject").val("");
+														$('#template_id').val("");
+														$(".mozaik-elem").remove();
+														emailTemplateCopyId = null;
+													});
 
 							$('#template_option_copy').click(function(){
 								$('#template_id_select_frm').show();
@@ -554,49 +564,82 @@
 							// fix lost buttons
 							$('#show_buttons_frm').removeClass('hidden');
 
-						});
-						{/literal}
-					</script>
-					<div class="form-group clear-block">
-						<!--<label>{$MOD.LBL_TEMPLATE|replace:' ':'&nbsp'}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>-->
-						<div id="template_id_select_frm">
-							<label>{$MOD.LBL_TEMPLATE_FIELD}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
-							<select  class="form-control input-sm" id="template_id" name='template_id' tabindex='2' onchange="onEmailTemplateChange(this, '{$MOD.LBL_COPY_OF}');" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
-						</div>
-						<div class="clear">&nbsp;</div>
-						<br style="disply:none;" id="template_id_name_space_separator">
-						<div id="template_name_input_frm">
-							<label>{$MOD.LBL_NAME}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
-							<input type="text" class="form-control input-sm" id="template_name" name="template_name" value="{$template_name}" maxlength="255" size="100">
-							<span class="form-group hidden">
+
+												});
+												function insertTracker(){
+													if(document.getElementById('editorType').checked){
+														if($('#trackerUrlSelect').val() == '-1') {
+															alert(SUGAR.language.translate('Campaigns', 'LBL_SELECT_EMAIL_TRACKER'));
+															return;
+														}
+														var text = $('select[name="tracker_url"] option:selected').val();
+														text = text.replace('{','');
+														text = text.replace('}','');
+														$('#body_html_ta').prop("selectionStart");
+														var value = "<a href='" + $('select[name="tracker_url"] option:selected').val() + "'>" + text + "</a>";
+														insertAtCursor($('#body_html_ta'), value);
+													}else{
+														{/literal}
+														{$INSERT_URL_ONCLICK}
+														{literal}
+													}
+
+
+
+												}
+
+
+												function insertAtCursor(myField, myValue) {
+													var cursorPosStart = $('#body_html_ta').prop('selectionStart');
+													var cursorPosEnd = $('#body_html_ta').prop('selectionEnd');
+													var v = $('#body_html_ta').val();
+													var textBefore = v.substring(0,  cursorPosStart );
+													var textAfter  = v.substring( cursorPosEnd, v.length );
+													$('#body_html_ta').val( textBefore+ myValue +textAfter );
+
+												}
+												{/literal}
+											</script>
+											<div class="form-group clear-block">
+												<!--<label>{$MOD.LBL_TEMPLATE|replace:' ':'&nbsp'}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>-->
+												<div id="template_id_select_frm">
+													<label>{$MOD.LBL_TEMPLATE_FIELD}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
+													<select  class="form-control input-sm" id="template_id" name='template_id' tabindex='2' onchange="onEmailTemplateChange(this, '{$MOD.LBL_COPY_OF}');" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
+												</div>
+												<div class="clear">&nbsp;</div>
+												<br style="disply:none;" id="template_id_name_space_separator">
+												<div id="template_name_input_frm">
+													<label>{$MOD.LBL_NAME}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
+													<input type="text" class="form-control input-sm" id="template_name" name="template_name" value="{$template_name}" maxlength="255" size="100">
+													<span class="form-group hidden">
 								<label>{$MOD.LBL_UPDATE_TEMPLATE|replace:' ':'&nbsp'}</label>
 								<input type="checkbox" name="update_exists_template" class="form-checkbox input-sm hidden">
 							</span>
-						</div>
-						<script>
-							{literal}
-							$(function(){
-								if(document.getElementById('template_id').value) {
-									onEmailTemplateChange(document.getElementById('template_id'), '{$MOD.LBL_COPY_OF}');
-								}
-							});
-							{/literal}
-						</script>
-					</div>
-					<div id="template_messages"></div>
-					<div class="button-group" id="show_buttons_frm">
-						<input type="button" id="LBL_SAVE_EMAIL_TEMPLATE_BTN" value="{$MOD.LBL_SAVE_EMAIL_TEMPLATE_BTN}" onclick="EmailTemplateController('save')">
-					<!-- </div> -->
-					<!-- <div class="button-group-seperator"></div> -->
-					<!-- <div class="button-group"> -->
-						<input type="button" id="LBL_CREATE_EMAIL_TEMPLATE_BTN" value="{$MOD.LBL_CREATE_EMAIL_TEMPLATE_BTN}" onclick="EmailTemplateController('create')" class="">
-					</div>
-				</div>
-			</div>
-			<div class="template-panel-container panel-toolbar ">
-				<div class="template-container">
-					<h2>{$MOD.LBL_TRACKED_URLS}</h2>
-					<div class="clear"></div>
+												</div>
+												<script>
+													{literal}
+													$(function(){
+														if(document.getElementById('template_id').value) {
+															onEmailTemplateChange(document.getElementById('template_id'), '{$MOD.LBL_COPY_OF}');
+														}
+													});
+													{/literal}
+												</script>
+											</div>
+											<div id="template_messages"></div>
+											<div class="button-group" id="show_buttons_frm">
+												<input type="button" id="LBL_SAVE_EMAIL_TEMPLATE_BTN" value="{$MOD.LBL_SAVE_EMAIL_TEMPLATE_BTN}" onclick="saveTemplate('save')">
+												<!-- </div> -->
+												<!-- <div class="button-group-seperator"></div> -->
+												<!-- <div class="button-group"> -->
+												<input type="button" id="LBL_CREATE_EMAIL_TEMPLATE_BTN" value="{$MOD.LBL_CREATE_EMAIL_TEMPLATE_BTN}" onclick="saveTemplate('create')" class="">
+											</div>
+										</div>
+									</div>
+									<div class="template-panel-container panel-toolbar ">
+										<div class="template-container">
+											<h2>{$MOD.LBL_TRACKED_URLS}</h2>
+											<div class="clear"></div>
 
 					<div class="form-group clear-block">
 						<select class="form-control input-sm" tabindex='0' id="trackerUrlSelect" name='tracker_url' onchange='setTrackerUrlSelectVisibility();'>
@@ -605,14 +648,14 @@
 						</select>
 					</div>
 
-					<div class="button-group">
-						<input type="button" value="{$MOD.LBL_INSERT_TRACKER_BTN}" onclick="EmailTrackerController('insert', '{$CAMPAIGN_ID}');">
-					</div>
-					<div class="button-group-seperator"></div>
-					<div class="button-group">
-						<input type='button' id="LBL_CREATE_TRACKER_BTN" tabindex="0" class='button' value='{$MOD.LBL_CREATE_TRACKER_BTN}' onclick="EmailTrackerController('create', '{$CAMPAIGN_ID}')">
-						<input type='button' id="LBL_EDIT_TRACKER_BTN" tabindex="0" class='button' value='{$MOD.LBL_EDIT_TRACKER_BTN}' onclick="EmailTrackerController('edit', '{$CAMPAIGN_ID}')">
-					</div>
+											<div class="button-group">
+												<input type="button" value="{$MOD.LBL_INSERT_TRACKER_BTN}" onclick="insertTracker();">
+											</div>
+											<div class="button-group-seperator"></div>
+											<div class="button-group">
+												<input type='button' id="LBL_CREATE_TRACKER_BTN" tabindex="0" class='button' value='{$MOD.LBL_CREATE_TRACKER_BTN}' onclick="EmailTrackerController('create', '{$CAMPAIGN_ID}')">
+												<input type='button' id="LBL_EDIT_TRACKER_BTN" tabindex="0" class='button' value='{$MOD.LBL_EDIT_TRACKER_BTN}' onclick="EmailTrackerController('edit', '{$CAMPAIGN_ID}')">
+											</div>
 
 				</div>
 				<div class="template-container">
@@ -680,17 +723,68 @@
 								setTrackerUrlSelectVisibility();
 							});
 
-						</script>
-						<script type="text/javascript">
-							function toggle_tracker_url(isoptout) {
-								tracker_url = document.getElementById('tracker_url_add');
-								if (isoptout.checked) {
-									tracker_url.disabled=true;
-									tracker_url.value="index.php?entryPoint=removeme";
-								} else {
-									tracker_url.disabled=false;
-								}
-							}
+													function saveTemplate(saveType){
+
+														if(document.getElementById('editorType').checked){
+
+															if($('#template_name').val() == '') {
+																alert(SUGAR.language.translate('Campaigns', 'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
+																$('#template_name').focus();
+																return;
+															}
+
+															if(saveType == "create"){
+																$('input[name="update_exists_template"]').prop('checked', false);
+															}
+
+															var func = emailTemplateCopyId || $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
+															$.post('index.php?entryPoint=emailTemplateData&func=wizardUpdate&rand='+Math.random(), {
+																'func': func,
+																'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
+																'body_html': $('#body_html_ta').val(),
+																'name': $('#template_name').val(),
+																'subject': $('#template_subject').val(),
+																'direct_html_c': document.getElementById('editorType').checked
+															}, function(resp){
+																resp = JSON.parse(resp);
+																if(!emailTemplateCopyId && func == 'createCopy') {
+																	emailTemplateCopyId = resp.data.id;
+																	$('#template_id').append('<option value="' + resp.data.id + '">' + resp.data.name + '</option>');
+																	$('#template_id').val(resp.data.id);
+
+																	$('input[name="update_exists_template"]').prop('checked', true);
+
+																	$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().removeClass('hidden');
+																	$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().next().removeClass('hidden');
+																}
+
+																$('#template_messages').html('');
+																if(resp.msgs.length) {
+																	showTemplateSaveMessages(resp.msgs);
+																}
+																if(saveType == "create"){
+																	$('#template_option_select').click();
+																}
+
+
+															});
+														}else{
+															EmailTemplateController(saveType);
+														}
+
+													}
+
+												</script>
+												<script type="text/javascript">
+													function toggle_tracker_url(isoptout) {
+														tracker_url = document.getElementById('tracker_url_add');
+														if (isoptout.checked) {
+															tracker_url.disabled=true;
+															tracker_url.value="index.php?entryPoint=removeme";
+														} else {
+															tracker_url.disabled=false;
+														}
+													}
 
 							var setFieldErrorMessage = function(field, message) {
 								$('#' + field).css('background-color', 'red');
@@ -751,39 +845,80 @@
 								}
 							};
 
-							$(function(){
-								$('.errorable').focus(function(){
-									$(this).css('background-color', 'initial');
-								});
-							});
-						</script>
-						{/literal}
-						<div class="panel-toolbar">
-							<div class="template-container-full">
-								<h2>{$MOD.LBL_SUBJECT}</h2>
-								<div class="form-group clear-block">
-									<input type="text" id="template_subject" name="template_subject" value="{$template_subject}" class="form-control input-sm"  maxlength="255" size="100" onclick="onClickTemplateSubject(this);">
+													$(function(){
+														$('.errorable').focus(function(){
+															$(this).css('background-color', 'initial');
+														});
+													});
+													function toggleEditor(){
+														if(document.getElementById('editorType').checked){
+															$("#html_direct").show();
+															$("#mozaik_editor").hide();
+
+														}else{
+															$("#mozaik_editor").show();
+															$("#html_direct").hide();
+
+														}
+													}
+													function showPreview(){
+														document.getElementById('html_preview').contentWindow.document.open();
+														document.getElementById('html_preview').contentWindow.document.write($("#body_html_ta").val());
+														document.getElementById('html_preview').contentWindow.document.close();
+													}
+
+												</script>
+												{/literal}
+												<div class="panel-toolbar">
+													<div class="template-container-full">
+														<h2>{$MOD.LBL_SUBJECT}</h2>
+														<div class="form-group clear-block">
+															<input type="text" id="template_subject" name="template_subject" value="{$template_subject}" class="form-control input-sm"  maxlength="255" size="100" onclick="onClickTemplateSubject(this);">
+														</div>
+													</div>
+												</div>
+
+												<div class="panel-toolbar">
+													&nbsp;&nbsp;&nbsp; <h2>Input Direct HTML</h2> &nbsp;&nbsp;<input type="checkbox" id="editorType"   onchange="toggleEditor()">
+
+												</div>
+
+												<div class="panel-toolbar">
+
+													<div class="template-container-full" id="mozaik_editor">
+														<label>{$MOD.LBL_CLICK_TO_ADD}</label>
+														<br>
+														{$BODY_MOZAIK}
+													</div>
+													<!--
+                                                    <iframe id="html_frame" src="" style="width:100%; height:500px"></iframe>
+                                                    <pre id="email_template_view"></pre>
+                                                    -->
+												</div>
+												<div class="panel-toolbar">
+													<div class="template-container-full" id="html_direct" style="display:none">
+														<h2>HTML:</h2>
+														<div class="form-group clear-block">
+															<textarea id="body_html_ta" name ="body_html_ta" class="form-control input-sm"   rows="20"></textarea>
+														</div>
+														<div class="form-group clear-block">
+															<button type="button" onclick="showPreview()">Preview</button>
+														</div>
+														<div class="form-group clear-block">
+															<iframe id="html_preview" width="100%" height="500">
+
+															</iframe>
+														</div>
+													</div>
+
+												</div>
+
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="panel-toolbar">
-
-							<div class="template-container-full">
-								<label>{$MOD.LBL_CLICK_TO_ADD}</label>
-								<br>
-								{$BODY_MOZAIK}
-							</div>
-							<!--
-                            <iframe id="html_frame" src="" style="width:100%; height:500px"></iframe>
-                            <pre id="email_template_view"></pre>
-                            -->
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div id="step2" style="display: none;">
+							<div id="step2" style="display: none;">
 
 		<div class="template-panel">
 			<div class="template-panel-container panel">

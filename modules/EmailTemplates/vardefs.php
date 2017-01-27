@@ -191,6 +191,21 @@ $dictionary['EmailTemplate'] = array(
             'options' => 'emailTemplates_type_list',
             'comment' => 'Type of the email template'
         ),
+        'direct_html_c' =>
+            array(
+                'name' => 'direct_html_c',
+                'label' => 'LBL_DIRECT_HTML',
+                'type' => 'bool',
+                'help' => '',
+                'comment' => '',
+                'default_value' => '', //key of entry in specified list
+                'massupdate' => false, // true or false
+                'required' => false, // true or false
+                'reportable' => true, // true or false
+                'audited' => true, // true or false
+                'importable' => 'true', // 'true', 'false' or 'required'
+                'duplicate_merge' => false, // true or false
+            ),
     ),
     'indices' => array(
         array(
