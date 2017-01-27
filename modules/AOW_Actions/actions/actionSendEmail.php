@@ -94,7 +94,7 @@ class actionSendEmail extends actionBase {
         $html .= '<td valign="top" scope="row">';
 
         $html .='<button type="button" onclick="add_emailLine('.$line.')"><img src="'.SugarThemeRegistry::current()->getImageURL('id-ff-add.png').'"></button>';
-        $html .= '<table id="emailLine'.$line.'_table" width="100%"></table>';
+        $html .= '<table id="emailLine'.$line.'_table" width="100%" class="email-line"></table>';
         $html .= '</td>';
         $html .= "</tr>";
         $html .= "</table>";

@@ -3880,7 +3880,6 @@ span#quickcreateplus{
     font-weight: bold;
     background-color: #3C8DBC;
     line-height: 20px;
-    /*border-bottom: 1px solid #757083;*/
 }
 
 
@@ -5382,11 +5381,7 @@ object{
     height: 22px;
     position: relative;
 }
-/*
-#fieldChoices .field.required .field-header{
-    background-color: red;
-}
-*/
+
 #fieldChoices .field-type {
     float: left;
     padding: 2px;
@@ -5639,19 +5634,15 @@ table#lineItems,
 #lineItems td {
     background: none !important;
 }
-
-#actionLines,
-#actionLines table,
-#actionLines tr,
-#actionLines td {
-    border: 1px solid transparent !important;
-}
-
-#actionLines,
-#actionLines table,
 #line_items table {
     clear: both;
     border-radius: 4px;
+    width: 100%;
+}
+
+#actionLines,
+#actionLines table {
+    clear: both;
     width: 100%;
 }
 
@@ -5664,11 +5655,50 @@ table#actionLines > tr > td > table td:first-of-type {
 }
 
 
-table#actionLines > tr > td > table, #line_items table > tr > td > table {
+#line_items table > tr > td > table {
     background: #F5F5F5;
     margin: 16px 0 0 0 !important;
     clear: both;
     display: block;
+    border: 1px solid #dddddd;
+}
+
+.action-table {
+    margin: 16px 0 0 0 !important;
+    clear: both;
+    display: block;
+    border: 1px solid #dddddd;
+}
+
+.action-table > tbody {
+    display: block;
+}
+
+.action-table > tbody > tr {
+    display: block;
+}
+
+.action-table > tbody > tr:first-child > td {
+    display: inline-block;
+}
+
+.action-table > tbody > tr:first-child > td:first-child {
+    width: 50%;
+}
+
+.action-table > tbody > tr:first-child > td:nth-child(2) {
+    width: 40%;
+}
+
+.action-table > tbody > tr:first-child > td:last-child .delete-btn {
+    float: right;
+
+}
+
+.action-table > tbody > tr:first-child > td:last-child .delete-btn .btn-danger {
+    background-color: #3C8DBC;
+    border-color: #3C8DBC;
+    padding: 0 4px;
 }
 
 #conditionLines td,  #fieldLines td {
@@ -5679,7 +5709,6 @@ table#actionLines > tr > td > table, #line_items table > tr > td > table {
 #lineItems table > thead:nth-child(1) > tr > td:nth-child(1) [type="text"] {
     width: 50% !important;
 }
-
 
 [field=line_items] {
     float: none;

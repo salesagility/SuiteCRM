@@ -382,7 +382,11 @@ function date_field_change(field){
 
 var checkActionCreateRecordLines = setInterval(function () {
   // protect against session timeouts
-  if ($('.lines').length <= 0) clearInterval(checkConditionLines);
+  if ($('.lines').length <= 0) clearInterval(checkActionCreateRecordLines);
+  if (SUGAR.themes.theme_name !== 'SuiteP') {
+      clearInterval(checkActionCreateRecordLines);
+      return;
+  }
 
   $('.lines').find('tbody').each(function () {
     $(this).find('td').last().removeAttr("style");

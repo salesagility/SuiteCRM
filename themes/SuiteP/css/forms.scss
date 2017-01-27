@@ -552,12 +552,20 @@ fieldset[disabled] .btn-primary.active {
   float: right;
 }
 
+#actionLines td[field=delete] .delete-btn .btn {
+  padding: 0 0 0 0;
+}
+
 [data-workflow-action-line] td {
-  width: 25%;
 }
 
 [data-workflow-action-line] td:first-of-type {
   width: 48px;
+}
+
+
+[data-workflow-action-line] td:nth-of-type(3) select {
+  width: auto;
 }
 
 [data-workflow-action-line] select[id$="][0]"] {
@@ -601,14 +609,13 @@ fieldset[disabled] .btn-primary.active {
 }
 
 [data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) td {
-  background-color: $detail-view-field-bg;
   padding-bottom: 8px;
   padding-top: 8px;
   width: 100%;
 }
 
 [data-workflow-action="send-email"] > tbody > tr:nth-of-type(2) > td:nth-of-type(2) td input[type=text] {
-  width: 65%;
+  width: auto;
 }
 
 #relate_label {
@@ -644,10 +651,39 @@ fieldset[disabled] .btn-primary.active {
 }
 
 [data-workflow-action] .lines tbody > tr > td {
-  background-color: $detail-view-field-bg;
   margin-bottom: 4px;
   min-height: 64px;
+  padding-left: 8px;
+  padding-right: 8px;
 }
+
+[data-workflow-action] .relationship tbody > tr > td {
+  padding-left: 8px;
+  padding-right: 8px;
+  min-height: 64px;
+}
+
+[data-workflow-action] .email-line tbody > tr > td {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+[data-workflow-action] .email-line tbody > tr > td select {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+[data-workflow-action] .email-line tbody > tr > td button {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+[data-workflow-action] .email-line tbody > tr > td input {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+
 
 [data-workflow-action] .name_label {
   width: 70%;
@@ -658,7 +694,6 @@ fieldset[disabled] .btn-primary.active {
 }
 
 [data-workflow-action] .lines tbody > tr > td {
-  background-color: $detail-view-field-bg;
   margin-bottom: 4px;
   min-height: 64px;
 }
@@ -688,6 +723,8 @@ fieldset[disabled] .btn-primary.active {
   margin-top: 8px;
   width: 95%;
 }
+
+
 
 [data-workflow-action-parameter] [colspan="4"] {
   display: block;
