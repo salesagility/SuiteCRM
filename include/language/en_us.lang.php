@@ -2078,6 +2078,7 @@ $app_strings = array(
     'MSG_JS_ALERT_MTG_REMINDER_NO_LOCATION' => 'Location isn\'t set.',
     'MSG_JS_ALERT_MTG_REMINDER_NO_START_DATE' => 'Start date isn\'t defined.',
     'MSG_LIST_VIEW_NO_RESULTS_BASIC' => 'No results found.',
+    'MSG_LIST_VIEW_NO_RESULTS_CHANGE_CRITERIA' => 'No results found... Perhaps change your search criteria and try again?',
     'MSG_LIST_VIEW_NO_RESULTS' => 'No results found for <item1>',
     'MSG_LIST_VIEW_NO_RESULTS_SUBMSG' => 'Create <item1> as a new <item2>',
     'MSG_LIST_VIEW_CHANGE_SEARCH' => 'or change your search criteria',
