@@ -1,6 +1,9 @@
 /**** Dashboard ***/
 @import 'variables';
 
+.modal-add-dashlet div.modal-content {
+  width: 80%;
+}
 
 .dashletcontainer.col-33 {
   width: 33.333%;
@@ -519,7 +522,8 @@ td.dashlet-title > h3 > span {
 
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel {
   top: initial;
-  left: -50%;
+  left: 0;
+  right: auto;
   box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
   margin: 0 auto;
   border: none;
