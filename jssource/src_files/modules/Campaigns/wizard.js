@@ -457,7 +457,6 @@ var onEmailTemplateChange = function(elem, namePrefixCopyOf, templateIdDefault, 
                 $('input[name="update_exists_template"]').prop('checked', true);
                 autoCheckUpdateCheckbox();
                 $('#body_html_ta').html(results.data.body_html);
-                $('#body_html_ta').html(results.data.body_html);
                 if(document.getElementById('editorType').checked === true){
                     if(results.data.direct_html_c == 0){
                         $('#editorType').click();
