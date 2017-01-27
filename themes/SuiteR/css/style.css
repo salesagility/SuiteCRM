@@ -290,7 +290,7 @@ th, td {
     margin-top: 2px;
     margin-bottom: 10px;
     text-align: right;
-    white-space:nowrap;
+    white-space: inherit;
 }
 
 .detail tr td > li {
@@ -474,6 +474,8 @@ table#tabFormPagination td,  #tabFormPagination, #EditView > table#tabFormPagina
     padding: 4px 6px 4px 6px;
     white-space:nowrap;
 }
+
+
 
 .other .edit td {
     background: transparent !important;
@@ -2635,6 +2637,7 @@ button[disabled]:hover, input[type=submit][disabled]:hover, input[type=reset][di
 
 .dashletNonTable {
     padding: 0 5px 0 10px;
+    min-width: 100px;
 }
 
 a.crumbLink {
@@ -4453,9 +4456,9 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     border:none;
 }
 
-@media (max-width:980px) {
+@media (max-width:380px) {
     .dashletNonTable {
-      display:none;
+      display: compact;
     }
 
     .dashletcontainer {
