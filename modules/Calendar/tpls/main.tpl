@@ -191,7 +191,7 @@
 	});
 </script>
 
-<div class="modal fade modal-cal-edit" tabindex="-1" role="dialog">
+<div class="modal fade modal-cal-edit" tabindex="-1" role="dialog" id="calendar_modal">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">

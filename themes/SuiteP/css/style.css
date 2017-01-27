@@ -145,13 +145,13 @@ div.p_login #loginform .input-group input#user_name, #user_name:-webkit-autofill
 
 div.p_login #loginform .input-group input#user_name {
     background-position: 12px 9px;
-	background-repeat: no-repeat;
+    background-repeat: no-repeat;
     background-image: none, url("../../../../themes/SuiteP/images/login_bg.svg");
 }
 
 div.p_login #loginform .input-group input#user_password {
     background-position: 12px -51px;
-	background-repeat: no-repeat;
+    background-repeat: no-repeat;
     background-image: none, url("../../../../themes/SuiteP/images/login_bg.png");
 }
 
@@ -192,12 +192,12 @@ div.p_login #loginform #bigbutton:hover {
 
 #bootstrap-container {
     background-color: #f5f5f5;
-    margin-top: 110px !important;
+    margin-top: 65px !important;
 }
 
 li#usermenu a {
     background-color: #534d64;
-    padding: 35px 0px 10px 0px;
+    padding: 22px 0px 10px 0px;
     font-size: 14px;
 }
 
@@ -308,7 +308,7 @@ div#pageContainer td.dashletcontainer div.hd .icon {
 
 .sidebar {
     position: fixed;
-    top: 90px;
+    top: 60px;
     bottom: 0;
     left: 0;
     z-index: 1000;
@@ -319,7 +319,7 @@ div#pageContainer td.dashletcontainer div.hd .icon {
 }
 
 #actionMenuSidebar {
-    margin-bottom: 24px;
+    margin-bottom: 15px;
 }
 
 #actionMenuSidebar_top {
@@ -484,7 +484,7 @@ div#pageContainer td.dashletcontainer div.hd .icon {
     width: 100%;
     min-height: 48px;
     padding: 16px 8px 16px 0px;
-    line-height: 24px;
+    /*line-height: 24px;*/
 }
 
 .side-bar-action-icon {
@@ -509,7 +509,7 @@ div#pageContainer td.dashletcontainer div.hd .icon {
 
 .button-toggle-collapsed {
     position: fixed;
-    top: 100px;
+    top: 70px;
     background: #778591;
     z-index: 1000;
     height: 30px;
@@ -523,7 +523,7 @@ div#pageContainer td.dashletcontainer div.hd .icon {
 
 .button-toggle-expanded {
     position: fixed;
-    top: 100px;
+    top: 70px;
     background: #778591;
     z-index: 1000;
     height: 30px;
@@ -744,7 +744,7 @@ li.favoritelinks img {
 
 #content {
     width: 100%;
-    padding: 30px 3% 40px 3%;
+    padding: 10px 3% 30px 3%;
 }
 
 #bootstrap-container.col-md-offset-2 {
@@ -1076,7 +1076,7 @@ th, td {
 }
 
 .basic textarea {
-    height: 48px;
+    /*height: 48px;*/
     width: 100%;
 }
 
@@ -1097,14 +1097,14 @@ th, td {
 
 .detail-view-row, .detail-view-row-item {
     margin: 0 0 2px 0;
-    min-width: 48px;
-    min-height: 24px;
+    /*min-width: 48px;
+    min-height: 24px;*/
 }
 
 .edit-view-row, .edit-view-row-item {
     margin: 0 0 8px 0;
-    min-width: 48px;
-    min-height: 24px;
+    /*min-width: 48px;
+    min-height: 24px;*/
 }
 
 .detail-view-row .label, .edit-view-row .label, #lineItems {
@@ -1113,7 +1113,7 @@ th, td {
     padding: 0 0 0 8px;
     font-size: 14px;
     font-weight: 700;
-    line-height: 48px;
+    /*line-height: 48px;*/
     text-align: left;
     white-space: nowrap;
     vertical-align: baseline;
@@ -1124,7 +1124,7 @@ slot, #lead_queries_Div td {
       color: #534D64;
       font-size: 14px;
       font-weight: 700;
-      line-height: 48px;
+      /*line-height: 48px;*/
       text-align: left;
       white-space: nowrap;
       vertical-align: baseline;
@@ -1136,18 +1136,18 @@ slot, #lead_queries_Div td {
 }
 
 .dataField {
-    min-height: 48px;
-    line-height: 48px;
+    /*min-height: 48px;
+    line-height: 48px;*/
 }
 
 .detail-view-field {
     color: #534D64;
     display: inline;
-    padding:  12px;
+    padding:  10px;
     font-size: 14px;
     font-weight: 400;
-    line-height: 20px;
-    min-height: 48px;
+    /*line-height: 20px;
+    min-height: 48px;*/
     text-align: left;
     vertical-align: baseline;
     background-color: #F5F5F5;
@@ -1177,7 +1177,7 @@ slot, #lead_queries_Div td {
 
 .edit-view-field textarea,
 .inline_edit_field textarea {
-    line-height: 24px;
+    /*line-height: 24px;*/
     padding-top: 14px;
 }
 
@@ -1455,7 +1455,7 @@ button#listViewEndButton_top img, button#listViewEndButton_bottom img {
 }
 
 .list tr.pagination td table td button {
-    width: 25px;
+    /*width: 25px;*/
 }
 
 .list tr.pagination td table td a:link, .list tr.pagination td table td a:visited, .reportGroupByDataChildTablelistViewThS1 a:link, .reportGroupByDataChildTablelistViewThS1 a:visited {
@@ -1483,7 +1483,7 @@ button#listViewEndButton_top img, button#listViewEndButton_bottom img {
 .td_alt, .list tr th, .list tr td[scope=col], .edit .list tr th, .edit .list tr td[scope=col] {
     font-weight: 800;
     text-align: left;
-    padding: 16px 10px 16px 10px !important;
+    padding: 11px 10px 11px 10px !important;
     border-left: none;
     border-right: none;
     white-space: nowrap;
@@ -1708,7 +1708,7 @@ table#mass_update_table {
 
 table#mass_update_table td {
     padding-left: 15px;
-    line-height: 40px;
+    /*line-height: 40px;*/
 }
 
 table#mass_update_table td select {
@@ -1732,7 +1732,7 @@ table#mass_update_table td select {
 
     table#mass_update_table td {
         padding-left: 0;
-        line-height: 30px;
+        /*line-height: 30px;*/
     }
 
 }
@@ -2823,11 +2823,13 @@ table.dateTime {
 }
 
 #parent_name, input.sqsEnabled {
+/*
     display: inline-block;
     clear: both;
     margin-top: 8px;
     width: 50%;
     margin-right: 8px;
+    */
 }
 
 .pageNumbers {
@@ -3200,8 +3202,8 @@ table#goto_date_trigger_div_t thead {
 
 .yui-calendar .calheader {
     padding: 4px;
-    height: 48px;
-    line-height: 48px;
+    /*height: 48px;
+    line-height: 48px;*/
 }
 
 .yui-calendar .calnavleft {
@@ -3357,11 +3359,11 @@ a:link, a:visited, a:hover {
 .moduleTitle h2 {
     display: block;
     float: left;
-    font-size: 26px;
+    font-size: 20px;
     color: #534D64;
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin: 0px 0 40px 0;
+    margin: 0px 0 10px 0;
     font-weight: 300;
 }
 
@@ -3812,18 +3814,18 @@ ul.yui-nav li.selected {
 
 ul.nav-tabs {
     border: hidden;
-    margin: 16px 0 16px 0;
+    /*margin: 16px 0 16px 0;*/
 }
 
 ul.nav-tabs > li > a, ul.nav-tabs > li.active > a:focus {
     font-weight: 400;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     font-size: 13px;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
     background-color: #BFCAD3;
     margin: 0 2px 0 2px;
     color: #ffffff;
-    line-height: 32px;
+    /*line-height: 32px;*/
     border-color: #eee #eee #fff;
     cursor: pointer;
 }
@@ -3933,7 +3935,7 @@ li#tab-actions > a {
     padding-right: 42px;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
     background-repeat: no-repeat;
-    background-position: 80% 120%;
+    background-position: 80% 103%;
     background-origin: border-box;
     background-size: 10px 95px;
     border-color: #F08377;
@@ -3993,7 +3995,7 @@ div.tab-content {
     border-bottom-left-radius: 4px;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
-    margin-bottom: 30px;
+    /*margin-bottom: 30px;*/
 }
 
 #basic_search_link {
@@ -4450,11 +4452,11 @@ iframe.teamNoticeBox {
 }
 
 .globalLinks-desktop ul{
-    top: 90px !important;
+    top: 60px !important;
 }
 
 .globalLinks-desktop #usermenu {
-    height: 90px;
+    height: 60px;
 }
 .iconed {
     padding: 5px 5px 2px 0;
@@ -4552,8 +4554,8 @@ iframe.teamNoticeBox {
 }
 
 td.dashlet-title {
-    height: 52px;
-    line-height: 48px;
+    height: 35px;
+    /*line-height: 48px;*/
 }
 
 td.dashlet-title > h3 > span {
@@ -5221,7 +5223,7 @@ input[type=button].btn-info:active, input[type=button].btn-info:focus {
 }
 
 #EditView_tabs .id-ff-remove, #EditView_tabs .edit [type="radio"]  {
-    margin-top: 8px;
+    /*margin-top: 8px;*/
 }
 
 #EditView_tabs .edit [type="radio"], #EditView_tabs .edit [type="checkbox"]  {
@@ -5260,8 +5262,8 @@ input#btn_ActionLine.button[type="button"] {
 
 #deleteGroup img {
     content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-clear.png');
-    height: 32px;
-    width: 32px;
+    height: 30px;
+    width: 30px;
 }
 
 #EditView_tabs .edit input, #EditView_tabs .edit textarea {
@@ -5270,16 +5272,16 @@ input#btn_ActionLine.button[type="button"] {
 }
 
 .col-sm-6 .edit-view-field input[type="text"] {
-    width: 50%;
+    /*width: 50%;*/
 }
 
 .edit-view-field #duration_hours {
-    width: 80px;
+    /*width: 80px;*/
     margin-right: 8px;
 }
 
 .col-sm-6 .edit-view-field input[type="text"].datetimecombo_date {
-    width: 84px;
+    /*width: 84px;*/
 }
 .col-sm-6 .edit-view-field .datetimecombo_time_section {
     display: inline-block;
@@ -5291,7 +5293,7 @@ input#btn_ActionLine.button[type="button"] {
 }
 
 #primary_address_street, #alt_address_street {
-    width: 60%;
+    /*width: 60%;*/
 }
 
 
@@ -5299,7 +5301,7 @@ input#btn_ActionLine.button[type="button"] {
 .col-sm-6 .edit-view-field[field="primary_address_street"] input[type="text"],
 .col-sm-6 .edit-view-field[field="shipping_address_street"] input[type="text"],
 .col-sm-6 .edit-view-field[field="alt_address_street"] input[type="text"]{
-    width: 88%;
+    /*width: 88%;*/
 }
 
 #conditionLines_head,
@@ -5599,8 +5601,8 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 #EditView #shipping_tax_amt,
 #EditView #tax_amount,
 #EditView #total_amount {
-    max-width: 40%;
-    width: 40%;
+    /*max-width: 40%;
+    width: 40%;*/
 }
 
 #EditView #shipping_tax {
@@ -5669,15 +5671,15 @@ div.col-sm-6 #email1_span td.email-address-add-button {
 
 .emailaddresses > tbody:nth-child(1) > tr > td:nth-child(1) button img {
     content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
-    height: 32px;
-    width: 32px;
+    height: 30px;
+    width: 30px;
 }
 
 
 .emailaddresses button {
     content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
-    height: 34px;
-    width: 34px;
+    height: 30px;
+    width: 30px;
     line-height: 0;
 }
 
@@ -5720,7 +5722,7 @@ textarea#primary_address_street, textarea#alt_address_street {
 }
 
 textarea#description {
-    width: 100%;
+    /*width: 100%;*/
 }
 
 .dropdown-menu {
@@ -5769,7 +5771,7 @@ textarea#description {
     color: #fff;
     background-color: #5d5670;
     text-decoration: none;
-    padding: 12px 15px 12px 15px !important;
+    padding: 10px 15px 10px 15px !important;
     display: block;
     font-size: 14px;
     border-bottom: 1px solid #757083;
@@ -5799,7 +5801,7 @@ textarea#description {
 
 .recent_h3 {
     color: #ffffff;
-    line-height:42px;
+    /*line-height:42px;*/
 }
 
 .recent_h3 > strong {
@@ -5812,8 +5814,8 @@ textarea#description {
 
 ul.nav li.topnav a {
     border-top: 3px solid #534d64;
-    padding-top: 36px;
-    padding-bottom: 35px;
+    padding-top: 22px;
+    /*padding-bottom: 35px;*/
 }
 
 ul.nav li.topnav a:hover {
@@ -5833,10 +5835,10 @@ li.topnav {
     margin: 0;
     font-size: 1.1em;
     font-size: 13px;
-    height: 90px;
-    letter-spacing: 2px;
-    line-height: 95px;
-    padding: 0 7px 0 7px;
+    height: 60px;
+    letter-spacing: 1px;
+    line-height: 65px;
+    padding: 0 5px 0 5px;
     text-transform: uppercase;
 }
 
@@ -6009,13 +6011,13 @@ li.topnav ul.dropdown-menu li:last-child a {
     cursor: pointer;
     font-size: 13px !important;
     margin: 0 0 0 0;
-    padding: 0 20px 0 20px;
+    padding: 0 15px 0 15px;
     border-radius: 3px;
     text-transform: uppercase;
     font-weight: 500;
     letter-spacing: 1px;
-    height: 40px;
-    line-height: 40px;
+    height: 30px;
+    line-height: 30px;
 }
 button, html input[type=button], input[type=reset], input[type=submit],
 .button, input[type=button], input[type=reset]{
@@ -6059,10 +6061,10 @@ button[disabled], input[type="submit"][disabled], input[type="reset"][disabled],
     border-radius: 3px;
     text-transform: uppercase;
     font-weight: 500;
-    padding: 0 20px 0 20px;
+    /*padding: 0 20px 0 20px;
     letter-spacing: 1px;
     height: 40px;
-    line-height: 40px;
+    line-height: 40px;*/
 }
 
 .yui-layout-hd .button, .yui-layout-hd input[type=submit], .yui-layout-hd input[type=button] {
@@ -6115,8 +6117,8 @@ input[type=text], input[type=password], input[type=email], input:not([type]), te
 }
 
 input[type=text], input[type=password], input[type=email], input:not([type]) {
-    line-height: 40px;
-    min-height: 48px;
+    /*line-height: 40px;
+    min-height: 48px;*/
 }
 
 .search_form input[type=text], .search_form textarea {
@@ -6124,7 +6126,7 @@ input[type=text], input[type=password], input[type=email], input:not([type]) {
 }
 
 div.search_fields_basic {
-    line-height: 48px;
+    /*line-height: 48px;*/
 }
 
 div.search_fields_basic select[multiple] {
@@ -6151,7 +6153,7 @@ div.search_fields_basic:nth-of-type(3n+1) {
 }
 
 div.search_name_basic input {
-    width: 75%;
+    /*width: 75%;*/
 }
 
 div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeRangeChoice + div {
@@ -6176,12 +6178,12 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
     float: left;
     width: 128px;
     color: #ffffff;
-    line-height: 18px;
+    /*line-height: 18px;*/
 }
 
 .qtip-title-buttons {
     display: inline-block;
-    width: 46px;
+    /*width: 46px;*/
     float: right;
     vertical-align: middle;
     padding: 0 0 0 4px;
@@ -6190,7 +6192,7 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
 .qtip-title-buttons a {
     padding-left: 8px;
     color: #ffffff;
-    margin: 0 0 0 4px;
+    margin: 0 4px 0 4px;
     padding: 0;
 }
 
@@ -6319,7 +6321,7 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
 /*lg-col-*/
 @media (min-width: 1260px) {
     li.topnav {
-        padding: 0 5px 0 5px;
+        padding: 0 3px 0 3px;
     }
 }
 
@@ -6355,7 +6357,7 @@ div.search_fields_basic .dateTimeRangeChoice, div.search_fields_basic .dateTimeR
 }
 
 textarea {
-    width: 50%;
+    /*width: 50%;*/
 }
 
 select[size],
@@ -6367,15 +6369,15 @@ select {
     border-radius: 4px;
     padding: 0px 35px 0px 5px;
     background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right #ffffff;
-    background-size: 52px 52px;
+    background-size: 30px 30px;
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
     outline: 0;
     scrollbar-base-color: #A5E8D6;
     scrollbar-arrow-color: #A5E8D6;
-    height: 52px;
-    line-height: 52px;
+    /*height: 52px;
+    line-height: 52px;*/
     color: #534D64;
 }
 
@@ -6412,12 +6414,14 @@ option:checked {
     border-size: 1px;
     border-color: #A5E8D6;
     border-radius: 4px;
-    padding: 16px 55px 16px 5px;
+    padding: 4px 6px;/*16px 55px 16px 5px;*/
     background: url("../../../../themes/SuiteP/images/forms/select.ico") no-repeat right #ffffff;
+    /*
     background-size: 52px 52px;
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
+    */
 }
 
 select[multiple] {
@@ -6534,20 +6538,20 @@ ul::-webkit-resizer
 
 .navbar-inverse .navbar-brand {
     color: #ffffff;
-    height: 90px;
-    line-height: 90px;
+    height: 60px;
+    line-height: 60px;
     padding: 0;
     display: inline;
     background-image: url('../../../../themes/SuiteP/images/p_icon_home.png');
     background-repeat: no-repeat;
-    background-position: 0px 35px;
+    background-position: 0px 20px;
     text-indent: -9999px;
     overflow: hidden;
     width: 40px;
 }
 
 .navbar-inverse .navbar-brand:hover {
-    background-position: 0px -145px;
+    background-position: 0px -160px;
 }
 
 .btn-success {
@@ -6659,7 +6663,7 @@ table legend {
 
 #searchform {
     margin-right: -10px;
-    margin-top: 25px;
+    margin-top: 10px;
     margin-right: 15px;
 }
 
@@ -6693,8 +6697,7 @@ form#MassAssign_SecurityGroups {
     padding: 0;
 }
 
-#searchform input#query_string,
-#searchform input#query_string:-webkit-autofill {
+#searchform input#query_string {
     background-color: #65697A;
     float: left;
     border: 3px solid #65697A;
@@ -6750,12 +6753,13 @@ a#advanced_search_link {
     text-transform: uppercase;
     font-weight: 500;
     letter-spacing: 1px;
-    height: 40px;
-    line-height: 40px;
+    height: 30px;
+    line-height: 30px;
     display: inline-block;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
     background-repeat: no-repeat;
-    background-position: 173px 2px;
+    /*background-position: 173px 2px;*/
+    background-position: 90% 4%;
 }
 
 a#advanced_search_link:hover {
@@ -6774,12 +6778,13 @@ a#basic_search_link {
     text-transform: uppercase;
     font-weight: 500;
     letter-spacing: 1px;
-    height: 40px;
-    line-height: 40px;
+    height: 30px;
+    line-height: 30px;
     display: inline-block;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_up_arrow.png");
     background-repeat: no-repeat;
-    background-position: 136px 13px;
+    /*background-position: 136px 13px;*/
+    background-position: 90% 65%;
 }
 
 a#basic_search_link:hover {
@@ -7137,7 +7142,7 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     font-size: 14px;
     padding: 8px;
     display: inherit;
-    height: 48px;
+    /*height: 48px;*/
     line-height: 32px;
 }
 
@@ -7188,7 +7193,7 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 }
 
 .ui-state-highlight {
-    height: 48px;
+    /*height: 48px;*/
     border: 1px solid #778591;
     border-radius: 4px;
     background: #E6E6E6;
@@ -7514,7 +7519,7 @@ h3 span {
 
 #quickcreatetop {
     float: left;
-    margin-top: 25px;
+    margin-top: 10px;
     margin-right: 15px;
 }
 
@@ -7585,7 +7590,7 @@ h3 span {
 #desktop_notifications {
     float: left;
     width: 44px;
-    height: 48px;
+    /*height: 48px;*/
     margin-right: 15px;
     background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert.svg"), url("../../../../themes/SuiteP/images/p_icon_alert.png");
     background-repeat: no-repeat;
@@ -7777,10 +7782,10 @@ h3 span {
 
 @media (min-width: 768px) and (min-height: 381px) {
     .mobile-bar #globalLinks {
-        height: 90px;
+        height: 48px;
     }
     .mobile-bar ul.dropdown-menu.user-dropdown{
-        top: 78px !important;
+        top: 48px !important;
         left: -140px !important;
     }
 
@@ -7791,10 +7796,10 @@ h3 span {
 
 @media (min-width: 768px) and (min-height: 381px) {
     .mobile-bar #globalLinks {
-        height: 90px;
+        height: 48px;
     }
     .mobile-bar ul.dropdown-menu.user-dropdown{
-        top: 78px !important;
+        top: 48px !important;
         left: -140px !important;
     }
 
@@ -7988,9 +7993,9 @@ object {
     font-family: 'Lato', Lato, Arial, sans-serif;
     font-size: 12px;
     background: #ffffff;
-    border: none;
+    border: 1px solid #cccccc;
     -webkit-border-radius: 0px;
-    border-radius: 4px;
+    border-radius: 0px;
 }
 
 .qtip-tipped .qtip-titlebar {
@@ -8117,15 +8122,15 @@ object {
     color: white;
     padding: 0px;
     vertical-align: middle;
-    height: 52px;
+    height: 32px;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
 }
 
 .panel-default > .panel-heading > div {
     color: #ffffff;
-    height: 52px;
-    line-height: 52px;
+    height: 32px;
+    line-height: 32px;
     font-weight: 500;
     font-size: 14px !important;
     background-color: #66727D;
@@ -8146,27 +8151,27 @@ object {
 
 .panel-default > .panel-heading {
     display: block;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
 }
 
 .panel-default > .panel-heading > a {
     color: #ffffff;
     display: block;
-    height: 52px;
+    height: 32px;
     font-weight: 500;
     font-size: 14px !important;
     background-color: #66727D;
-    padding: 15px 10px 0 10px;
+    padding: 6px 10px 0 10px;
 }
 
 .panel-default.sub-panel > .panel-heading  > a {
     color: #ffffff;
     display: block;
-    height: 52px;
+    height: 32px;
     font-weight: 500;
     font-size: 14px !important;
     background-color: #66727D;
-    padding: 10px 10px 0 10px;
+    padding: 0px 10px 0 10px;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
 }
@@ -8650,7 +8655,7 @@ div.list-view-rounded-corners > table th:last-of-type {
 
 #history_search table td:nth-of-type(2) select[multiple],
 #history_search table td:nth-of-type(2) select[size] {
-    height: 48px;
+    /*height: 48px;*/
 }
 
 #history_search table td:nth-of-type(8) div {
@@ -8665,13 +8670,15 @@ div.list-view-rounded-corners > table th:last-of-type {
     font-weight: 700;
 }
 
-/*////////////////////////////////////////////////////////////////////////////////////////// MEDIA QUERIES //////////*/
+nav.navbar{
+    min-height: 60px;
+}/*////////////////////////////////////////////////////////////////////////////////////////// MEDIA QUERIES //////////*/
 
 @media (max-width: 1560px) {
 
     .navbar-fixed-top {
-        height: 90px;
-        max-height: 90px;
+        height: 60px;
+        max-height: 60px;
     }
 
     #searchform {
@@ -8731,8 +8738,15 @@ div.list-view-rounded-corners > table th:last-of-type {
         border-radius: 3px;
         padding: 12px 12px 12px 12px;
         height: auto;
+        left: -185px;
     }
-
+ #search #query_string {
+        left: -100px;
+        top: 48px;
+        padding-top: 7px;
+        padding-bottom: 7px;
+        margin-top: -9px;
+    }   
     #usermenucollapsed, #usermenucollapsed-mobile {
         background-color: transparent;
         height: 42px;
@@ -8740,7 +8754,7 @@ div.list-view-rounded-corners > table th:last-of-type {
         background-image: none, url("../../../../themes/SuiteP/images/p_user_icon.svg"), url("../../../../themes/SuiteP/images/p_user_icon.png");
         background-repeat: no-repeat;
         background-position: 0 0 !important;
-        margin-top: 14px;
+        margin-top: 0px;
         border: none;
         margin-left: 0px;
     }
@@ -8948,7 +8962,7 @@ div.list-view-rounded-corners > table th:last-of-type {
         overflow: hidden;
         padding: 12px 0px 12px 0px;
         width: 28px;
-        height: 40px!important;
+        height: 28px!important;
     }
 
     #search.open #searchbutton {
@@ -8990,26 +9004,28 @@ div.list-view-rounded-corners > table th:last-of-type {
 
 @media (min-width: 750px) {
     .modulename {
-        line-height: 90px;
+        line-height: 60px;
     }
 
     .navbar-toggle {
-        height: 90px;
+        height: 60px;
     }
 
     #mobile_menu {
-        top: 90px;
+        top: 60px;
         left: 10px;
         -webkit-overflow-scrolling: touch;
     }
 
     #search .dropdown-menu {
         position: absolute;
-        top: 14px;
+        /*top: 14px;*/
         right:  0;
         bottom: auto;
         left: -224px;
+        margin-top:-60px;
         background: transparent;
+        margin-top: -60px !important;
     }
 
     #search .dropdown-menu,
@@ -9030,7 +9046,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     #quickcreatetop {
-        margin-top: 25px;
+        /*margin-top: 25px;*/
     }
 
     #quickcreatetop a {
@@ -9073,7 +9089,7 @@ div.list-view-rounded-corners > table th:last-of-type {
         float: left;
         width: 44px;
         height: 48px;
-        margin-top: 22px;
+        margin-top: 10px;
         margin-right: 10px;
         background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert.svg"), url("../../../../themes/SuiteP/images/p_icon_alert.png");
         background-repeat: no-repeat;
@@ -9090,7 +9106,7 @@ div.list-view-rounded-corners > table th:last-of-type {
 
 
     #search.open #searchbutton {
-        margin: 25px 15px 0 0;
+        /*margin: 25px 15px 0 0;*/
         background-color: transparent;
         border: none;
         background-image: url("../../../../themes/SuiteP/images/sidebar/modules/search-close.svg");
@@ -9109,10 +9125,10 @@ div.list-view-rounded-corners > table th:last-of-type {
 
 
     #searchbutton {
-        margin: 25px 15px 0 0;
+        /*margin: 15px 15px 0 0;*/
         background-color: transparent;
         border: none;
-        background-image: url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
+        background-image: none,url("../../../../themes/SuiteP/images/p_search_button.svg"), url("../../../../themes/SuiteP/images/p_search_button.png");
         background-repeat: no-repeat;
         background-position: 0px -46px;
         text-indent: -9999px;
@@ -9775,7 +9791,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     #usermenucollapsed:hover {
-        background-position: 0 -99px;
+        background-position: 0 -99px !important;
     }
 
     #search .dropdown-menu {
@@ -10933,6 +10949,14 @@ table.list.view.subpanel-table tr.pagination button.button[name="listViewEndButt
 }
 
 
+
+/*calander bootstrap modal was using modal-lg which was 900px so the elements were getting shrinked*/
+#calendar_modal .modal-dialog{
+    width:90%;
+    /*height:100%;*/
+}
+
+
 /* admin / inbound emails styles */
 
 div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination td table tbody tr {
@@ -11085,8 +11109,8 @@ div#content div#pagecontent form#MassUpdate table.list.view tbody tr.pagination 
 /* list items */
 
 div#content div#pagecontent form#MassUpdate table.list.view tbody tr td {
-    padding-top: 0;
-    padding-bottom: 0;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 }
 
 /* edit form */
