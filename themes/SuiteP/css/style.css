@@ -3554,7 +3554,7 @@ ul.subpanelTablist li a.activeSubTab:hover {
 .list tr td[scope=col] a:link,
 .list tr td[scope=col] a:visited,
 .list tr.pagination td table td span.pageNumbers {
-    color: #ffffff;
+    color: #534D64;
 }
 
 
