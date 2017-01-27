@@ -212,8 +212,12 @@ function navigate(direction, noValidation, noSave){
             if(typeof campaignBudget != 'undefined' && campaignBudget) {
                 finish_button.style.display = '';
             }
-        }else{
-            if(current_step.value<1){
+            if($('[name="record"]').val() == ""){
+                $("#wiz_submit_button").hide();
+            }
+
+        } else {
+            if (current_step.value < 1) {
                 back_button_div.style.display = 'none';
             }else{
                 back_button_div.style.display = '';
@@ -267,14 +271,9 @@ function campaignCreateAndRefreshPage() {
             $('input[name="record"]').val(response.record);
             $('input[name="campaign_id"]').val(response.record);
             $('input[name="action"]').val('WizardTargetListSave');
+            $("#wiz_submit_button").show();
         }
     });
-    //var wizform = document.getElementById('wizform');
-    //if(typeof wizform.direction != 'undefined') {
-    //    wizform.action.value = 'WizardNewsletterSave';
-    //    wizform.direction.value = 'continue_targetList';
-    //}
-    //wizform.submit();
 }
 
 function campaignUpdate() {
@@ -457,13 +456,24 @@ var onEmailTemplateChange = function(elem, namePrefixCopyOf, templateIdDefault, 
                 $('#template_id').val(results.data.id);
                 $('input[name="update_exists_template"]').prop('checked', true);
                 autoCheckUpdateCheckbox();
+                $('#body_html_ta').html(results.data.body_html);
+                $('#body_html_ta').html(results.data.body_html);
+                if(document.getElementById('editorType').checked === true){
+                    if(results.data.direct_html_c == 0){
+                        $('#editorType').click();
 
-                $('#template_name').val( ($('#update_exists_template').prop('checked') ? namePrefixCopyOf : '') + results.data.name);
+                    }
+                }else{
+                    if(results.data.direct_html_c == 1){
+                        $('#editorType').click();
+
+                    }
+                }
+                $('#template_id').val(results.data.id);
+                $('#template_name').val(($('#update_exists_template').prop('checked') ? namePrefixCopyOf : '') + results.data.name);
                 $('#template_subject').val(results.data.subject);
-
                 showEmailTemplateAttachments(results.data.attachments, lblLnkRemove);
-
-                if(typeof callback != 'undefined') {
+                if (typeof callback != 'undefined') {
                     callback();
                 }
             }

@@ -366,6 +366,7 @@ function EmailTemplateController(action) {
 			'body_html': $('#email_template_editor').getMozaikValue(),
 			'name': $('#template_name').val(),
 			'subject': $('#template_subject').val(),
+			'direct_html_c': document.getElementById('editorType').checked
 		}, function(resp){
 			// todo: hide preloader or loading message..
 			resp = JSON.parse(resp);

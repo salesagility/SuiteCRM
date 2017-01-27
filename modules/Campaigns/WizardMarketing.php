@@ -163,14 +163,12 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
     else if(count($mrkt_lists) > 1) {
         if(!empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']) && in_array($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'], $mrkt_lists)) {
 
-            if (!isset($_REQUEST['func']) || (empty($_REQUEST['func']) && $_REQUEST['func'] != 'createEmailMarketing')) {
+            if (empty($_REQUEST['func']) && $_REQUEST['func'] != 'createEmailMarketing') {
                 $mrkt_focus->retrieve($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
 
             } else {
                 // if user clicks create from the email marking sub panel
                 $mrkt_focus->retrieve($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
-                $mrkt_focus->id = create_guid();
-                $mrkt_focus->name = '';
                 // clone
                 $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'] = $mrkt_focus->id;
             }
@@ -182,13 +180,13 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
 
 
 
-//        if(!empty($mrkt_lists)){
-//            //reverse array so we always use the most recent one:
-//            $mrkt_lists = array_reverse($mrkt_lists);
-//            $mrkt_focus->retrieve($mrkt_lists[0]);
-//            $mrkt_focus->id = '';
-//            //$mrkt_focus->name = $mod_strings['LBL_COPY_OF'] . ' '. $mrkt_focus->name;
-//        }
+        //        if(!empty($mrkt_lists)){
+        //            //reverse array so we always use the most recent one:
+        //            $mrkt_lists = array_reverse($mrkt_lists);
+        //            $mrkt_focus->retrieve($mrkt_lists[0]);
+        //            $mrkt_focus->id = '';
+        //            //$mrkt_focus->name = $mod_strings['LBL_COPY_OF'] . ' '. $mrkt_focus->name;
+        //        }
     }
     else {
         unset($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
@@ -343,7 +341,7 @@ echo $javascript->getScript();
         $campaign_focus->load_relationship('prospectlists');
         $prospectlists=$campaign_focus->prospectlists->get();
 
-    
+
     $pl_count = 0;
     $pl_lists = 0;
     if(!empty($prospectlists)){
@@ -781,5 +779,5 @@ if(isset($_SESSION['msg']) && $_SESSION['msg']) {
 if(!empty($_REQUEST['func'])) {
     echo '<input type="hidden" id="func" value="'.$_REQUEST['func'].'">';
 }
-      $ss->display('modules/Campaigns/WizardMarketing.html');
+$ss->display('modules/Campaigns/WizardMarketing.html');
 ?>
