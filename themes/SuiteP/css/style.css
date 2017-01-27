@@ -4026,6 +4026,10 @@ div#chartDashlets {
     white-space: nowrap;
 }
 
+.wrap-text {
+    white-space: normal;
+}
+
 td.teamset-row, .edit tr td.teamset-row, .edit tr td table tr td.teamset-row {
     padding: 5px !important;
 }
@@ -4268,6 +4272,13 @@ ul#selectLink.clickMenu li ul.subnav {
 
 ul#detailViewActions.clickMenu {
     margin-top: 2px !important;
+}
+
+li#tab-actions:only-child > ul.dropdown-menu {
+    right: auto;
+    left: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 4px;
 }
 
 #selectActions.clickMenu {
