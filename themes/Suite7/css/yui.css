@@ -1060,6 +1060,8 @@ span.yui-carousel-first-button-disabled {
 
 .yui-panel-container.shadow {
     padding: 2px 4px 0 2px;
+    left: 216px !important;
+    top: 35px !important;
 }
 
 .yui-panel-container.shadow .underlay {
