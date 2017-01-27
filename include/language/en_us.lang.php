@@ -1062,7 +1062,6 @@ $app_strings = array(
     'LBL_ICON_COLUMN_1' => 'Column' /*for 508 compliance fix*/,
     'LBL_ICON_COLUMN_2' => '2 Columns' /*for 508 compliance fix*/,
     'LBL_ICON_COLUMN_3' => '3 Columns' /*for 508 compliance fix*/,
-    'LBL_ADVANCED_SEARCH' => 'Advanced Search' /*for 508 compliance fix*/,
     'LBL_ID_FF_ADD' => 'Add' /*for 508 compliance fix*/,
     'LBL_HIDE_SHOW' => 'Hide/Show' /*for 508 compliance fix*/,
     'LBL_DELETE_INLINE' => 'Delete' /*for 508 compliance fix*/,
