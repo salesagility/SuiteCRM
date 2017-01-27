@@ -114,16 +114,5 @@ $mod_strings = array (
 	'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
 
 	'LBL_BUG_INFORMATION' => 'Overview',
-
-    //For export labels
-	'LBL_FOUND_IN_RELEASE_NAME' => 'Found In Release Name',
-    'LBL_PORTAL_VIEWABLE' => 'Portal Viewable',
-    'LBL_EXPORT_ASSIGNED_USER_NAME' => 'Assigned User Name',
-    'LBL_EXPORT_ASSIGNED_USER_ID' => 'Assigned User ID',
-    'LBL_EXPORT_FIXED_IN_RELEASE_NAMR' => 'Fixed in Release Name',
-    'LBL_EXPORT_MODIFIED_USER_ID' => 'Modified By ID',
-    'LBL_EXPORT_CREATED_BY' => 'Created By ID',
-
-
   );
 ?>
