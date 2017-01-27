@@ -429,15 +429,17 @@ ul.yui-nav li.selected {
   display: inline-block;
   padding: 0 0 0 4px;
   float: right;
-  width: 46px;
   vertical-align: middle;
+}
+
+.qtip-title-buttons a:first-of-type {
+  margin: 0 0 0 4px;
 }
 
 .qtip-title-buttons a {
   color: $qtip-btn-color;
-  padding: 0;
-  padding-left: 8px;
-  margin: 0 0 0 4px;
+  padding: 0 4px;
+  margin: 0;
 }
 
 .qtip-title-buttons a:hover {
