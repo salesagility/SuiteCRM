@@ -1089,7 +1089,7 @@ $mod_strings = array(
     'LBL_LANGUAGE_PACKS' => 'Language Packs' /*for 508 compliance fix*/,
     'LBL_PATCH_UPGRADES' => 'Patch Upgrades' /*for 508 compliance fix*/,
     'LBL_ADVANCED_SEARCH' => 'Advanced Search' /*for 508 compliance fix*/,
-    'LBL_BASIC_SEARCH' => 'Basic Search' /*for 508 compliance fix*/,
+    'LBL_BASIC_FILTER' => 'Quick Filter' /*for 508 compliance fix*/,
     'LBL_PROCESSING' => 'Processing' /*for 508 compliance fix*/,
 
     'LBL_MI_IN_ACTIONVIEWMAP' => 'Installing Action View Map',

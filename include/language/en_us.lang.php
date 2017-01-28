@@ -1828,6 +1828,7 @@ $app_strings = array(
     'LBL_FILTER_BUTTON_LABEL' => 'Filter',
     'LBL_FILTER_BUTTON_TITLE' => 'Filter',
     'LBL_FILTER' => 'Filter',
+    'LBL_SEARCH' => 'Search',
     'LBL_SEARCH_ALT' => '',
     'LBL_SEARCH_TIPS' => 'Press the search button or click enter to get an exact match for them.',
     'LBL_SEARCH_TIPS_2' => 'Press the search button or click enter to get an exact match for',
