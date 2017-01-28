@@ -44,7 +44,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">{$APP.LBL_SEARCH_HEADER_TITLE}</h4>
+                <h4 class="modal-title">{$APP.LBL_FILTER_HEADER_TITLE}</h4>
                 <!-- Nav tabs -->
                 <h5 class="searchTabHeader mobileOnly basic active">{$APP.LBL_QUICK_FILTER}</h5>
                 <h5 class="searchTabHeader mobileOnly advanced">{$APP.LBL_ADVANCED_FILTER}</h5>
