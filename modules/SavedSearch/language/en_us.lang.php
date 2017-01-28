@@ -64,7 +64,7 @@ $mod_strings = array (
     'LBL_PREVIOUS_SAVED_SEARCH_HELP' => 'Edit or Delete an existing Saved Filter.',
     'LBL_ASCENDING' => 'Ascending', 
     'LBL_DESCENDING' => 'Descending',
-    'LBL_MODIFY_CURRENT_SEARCH'=> 'Modify current filter',
+    'LBL_MODIFY_CURRENT_FILTER'=> 'Modify current filter',
 
 );
 

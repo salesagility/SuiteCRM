@@ -127,7 +127,7 @@
                        onclick='SUGAR.savedViews.setChooser(); return SUGAR.savedViews.saved_search_action("save");'>
             </td>
             <td scope='row' width='10%' nowrap="nowrap">
-                {sugar_translate label='LBL_MODIFY_CURRENT_SEARCH' module='SavedSearch'}:
+                {sugar_translate label='LBL_MODIFY_CURRENT_FILTER' module='SavedSearch'}:
             </td>
             <td width='30%' nowrap>
                 <input class='button'

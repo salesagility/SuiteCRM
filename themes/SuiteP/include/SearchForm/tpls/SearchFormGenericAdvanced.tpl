@@ -123,7 +123,7 @@
             </div>
             <div class="hideUnusedSavedSearchElements" scope='row' width='10%'
                  nowrap="nowrap"{if !$savedSearchData.selected} style="display: none;"{/if}>
-                <label>{sugar_translate label='LBL_MODIFY_CURRENT_SEARCH' module='SavedSearch'}: <span
+                <label>{sugar_translate label='LBL_MODIFY_CURRENT_FILTER' module='SavedSearch'}: <span
                             id='curr_search_name'>"{$savedSearchData.options[$savedSearchData.selected]}"</span></label>
             </div>
             <div class="hideUnusedSavedSearchElements" width='30%'
