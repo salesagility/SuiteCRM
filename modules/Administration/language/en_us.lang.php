@@ -1088,7 +1088,7 @@ $mod_strings = array(
     'LBL_EAPM_SETTINGS_DESC' => 'Select external applications for which users can provide their account information in order to access from within SuiteCRM.',
     'LBL_LANGUAGE_PACKS' => 'Language Packs' /*for 508 compliance fix*/,
     'LBL_PATCH_UPGRADES' => 'Patch Upgrades' /*for 508 compliance fix*/,
-    'LBL_ADVANCED_SEARCH' => 'Advanced Search' /*for 508 compliance fix*/,
+    'LBL_ADVANCED_FILTER' => 'Advanced Filter' /*for 508 compliance fix*/,
     'LBL_BASIC_FILTER' => 'Quick Filter' /*for 508 compliance fix*/,
     'LBL_PROCESSING' => 'Processing' /*for 508 compliance fix*/,
 

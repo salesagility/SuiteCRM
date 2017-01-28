@@ -336,13 +336,13 @@ $out = <<<EOQ
 				<p><strong>{$mod_strings['LBL_WELCOME_PLEASE_READ_BELOW']}</strong></p>
 				<span onclick="showtime('sys_comp');" style="cursor:pointer;cursor:hand">
 				    <span id='basic_sys_comp'><img alt="{$mod_strings['LBL_BASIC_FILTER']}" src="themes/default/images/basic_search.gif" border="0"></span>
-				    <span id='adv_sys_comp' style='display:none'><img alt="{$mod_strings['LBL_ADVANCED_SEARCH']}" src="themes/default/images/advanced_search.gif" border="0"></span>
+				    <span id='adv_sys_comp' style='display:none'><img alt="{$mod_strings['LBL_ADVANCED_FILTER']}" src="themes/default/images/advanced_search.gif" border="0"></span>
 				    &nbsp;{$mod_strings['REQUIRED_SYS_COMP']}
 				</span>
 				<div id='sys_comp' >{$mod_strings['REQUIRED_SYS_COMP_MSG']}</div>
 				<span onclick="showtime('sys_check');" style="cursor:pointer;cursor:hand">
 				    <span id='basic_sys_check'><img alt="{$mod_strings['LBL_BASIC_FILTER']}" src="themes/default/images/basic_search.gif" border="0"></span>
-					<span id='adv_sys_check' style='display:none'><img alt="{$mod_strings['LBL_ADVANCED_SEARCH']}" src="themes/default/images/advanced_search.gif" border="0"></span>
+					<span id='adv_sys_check' style='display:none'><img alt="{$mod_strings['LBL_ADVANCED_FILTER']}" src="themes/default/images/advanced_search.gif" border="0"></span>
 					&nbsp;{$mod_strings['REQUIRED_SYS_CHK']}
 				</span>
 				<div id='sys_check' >{$mod_strings['REQUIRED_SYS_CHK_MSG']}</div>
