@@ -113,7 +113,7 @@ class SearchForm {
         }
 
         $this->bean = $seedBean;
-        $this->tabs = array(array('title'  => $app_strings['LNK_BASIC_SEARCH'],
+        $this->tabs = array(array('title'  => $app_strings['LNK_BASIC_FILTER'],
                                   'link'   => $module . '|basic_search',
                                   'key'    => $module . '|basic_search'),
                             array('title'  => $app_strings['LNK_ADVANCED_FILTER'],
