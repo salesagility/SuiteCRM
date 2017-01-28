@@ -101,7 +101,7 @@ class SearchForm
             'key' => $module . '|basic_search',
             'name' => 'basic',
             'displayDiv' => ''),
-            array('title' => $GLOBALS['app_strings']['LNK_ADVANCED_SEARCH'],
+            array('title' => $GLOBALS['app_strings']['LNK_ADVANCED_FILTER'],
                 'link' => $module . '|advanced_search',
                 'key' => $module . '|advanced_search',
                 'name' => 'advanced',
@@ -149,7 +149,7 @@ class SearchForm
         }
         if ($this->showAdvanced) {
             $this->nbTabs++;
-            $this->tabs[] = array('title' => $GLOBALS['app_strings']['LNK_ADVANCED_SEARCH'],
+            $this->tabs[] = array('title' => $GLOBALS['app_strings']['LNK_ADVANCED_FILTER'],
                 'link' => $this->module . '|advanced_search',
                 'key' => $this->module . '|advanced_search',
                 'name' => 'advanced',

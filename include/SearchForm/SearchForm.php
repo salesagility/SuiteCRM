@@ -116,7 +116,7 @@ class SearchForm {
         $this->tabs = array(array('title'  => $app_strings['LNK_BASIC_SEARCH'],
                                   'link'   => $module . '|basic_search',
                                   'key'    => $module . '|basic_search'),
-                            array('title'  => $app_strings['LNK_ADVANCED_SEARCH'],
+                            array('title'  => $app_strings['LNK_ADVANCED_FILTER'],
                                   'link'   => $module . '|advanced_search',
                                   'key'    => $module . '|advanced_search'));
 
