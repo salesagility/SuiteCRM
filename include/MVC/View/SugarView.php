@@ -1420,6 +1420,7 @@ EOHTML;
             }
         }
 
+
         return $params;
     }
 
@@ -1444,7 +1445,7 @@ EOHTML;
     	if($this->action == "ListView" || $this->action == "index") {
     	    if (!empty($iconPath) && !$browserTitle) {
     	    	if (SugarThemeRegistry::current()->directionality == "ltr") {
-    	    		return $app_strings['LBL_SEARCH']."&nbsp;"
+    	    		return $app_strings['LBL_SEARCH_ALT']."&nbsp;"
     	    			 . "$firstParam";
 
     	    	} else {

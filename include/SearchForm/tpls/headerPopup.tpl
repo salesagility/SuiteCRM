@@ -44,15 +44,15 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">{$APP.LBL_SEARCH_HEADER_TITLE}</h4>
+                <h4 class="modal-title">{$APP.LBL_FILTER_HEADER_TITLE}</h4>
                 <!-- Nav tabs -->
-                <h5 class="searchTabHeader mobileOnly basic active">{$APP.LBL_QUICK_SEARCH}</h5>
+                <h5 class="searchTabHeader mobileOnly basic active">{$APP.LBL_QUICK_FILTER}</h5>
                 <h5 class="searchTabHeader mobileOnly advanced">{$APP.LBL_ADVANCED_SEARCH}</h5>
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="searchTabHandler basic active"><a href="javascript:void(0)"
                                                                  onclick="listViewSearchIcon.toggleSearchDialog('basic'); return false;"
                                                                  aria-controls="searchList" role="tab"
-                                                                 data-toggle="tab">{$APP.LBL_QUICK_SEARCH}</a></li>
+                                                                 data-toggle="tab">{$APP.LBL_QUICK_FILTER}</a></li>
                     <li class="searchTabHandler advanced"><a href="javascript:void(0)"
                                                              onclick="listViewSearchIcon.toggleSearchDialog('advanced'); return false;"
                                                              aria-controls="searchList" role="tab"
