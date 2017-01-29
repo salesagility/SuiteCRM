@@ -43,7 +43,7 @@
     <ul class="action-link action-link-{$action_menu_location} clickMenu selectActions fancymenu show listViewLinkButton listViewLinkButton_{$action_menu_location}">
         <li class="sugar_action_button">
             <a href="javascript:void(0)" class="parent-dropdown-handler" onclick="return false;">
-                <label class="selected-actions-label">{$APP.LBL_SAVED_SEARCH_SHORTCUT}</label>
+                <label class="selected-actions-label">{$APP.LBL_SAVED_FILTER_SHORTCUT}</label>
             </a>
             <ul class="subnav">
                 {foreach from=$savedSearchData.options key=id item=option}

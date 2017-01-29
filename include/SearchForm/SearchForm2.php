@@ -96,12 +96,12 @@ class SearchForm
         $this->seed = $seed;
         $this->module = $module;
         $this->action = $action;
-        $this->tabs = array(array('title' => $GLOBALS['app_strings']['LNK_BASIC_SEARCH'],
+        $this->tabs = array(array('title' => $GLOBALS['app_strings']['LNK_BASIC_FILTER'],
             'link' => $module . '|basic_search',
             'key' => $module . '|basic_search',
             'name' => 'basic',
             'displayDiv' => ''),
-            array('title' => $GLOBALS['app_strings']['LNK_ADVANCED_SEARCH'],
+            array('title' => $GLOBALS['app_strings']['LNK_ADVANCED_FILTER'],
                 'link' => $module . '|advanced_search',
                 'key' => $module . '|advanced_search',
                 'name' => 'advanced',
@@ -141,7 +141,7 @@ class SearchForm
         $this->tabs = array();
         if ($this->showBasic) {
             $this->nbTabs++;
-            $this->tabs[] = array('title' => $GLOBALS['app_strings']['LNK_BASIC_SEARCH'],
+            $this->tabs[] = array('title' => $GLOBALS['app_strings']['LNK_BASIC_FILTER'],
                 'link' => $this->module . '|basic_search',
                 'key' => $this->module . '|basic_search',
                 'name' => 'basic',
@@ -149,7 +149,7 @@ class SearchForm
         }
         if ($this->showAdvanced) {
             $this->nbTabs++;
-            $this->tabs[] = array('title' => $GLOBALS['app_strings']['LNK_ADVANCED_SEARCH'],
+            $this->tabs[] = array('title' => $GLOBALS['app_strings']['LNK_ADVANCED_FILTER'],
                 'link' => $this->module . '|advanced_search',
                 'key' => $this->module . '|advanced_search',
                 'name' => 'advanced',
