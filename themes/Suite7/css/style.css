@@ -3640,7 +3640,7 @@ ul.clickMenu li a:hover {
 }
 
 ul.clickMenu li span { /*--Drop down trigger styles--*/
-  width: 17px;
+  min-width: 17px;
   height: 16px;
   float: left;
   background: url('../../../../index.php?entryPoint=getImage&themeName=Suite7&imageName=actionMenuArrow.png') no-repeat 3px -28px;
@@ -3767,6 +3767,10 @@ ul.clickMenu li a.disabled {
 ul.clickMenu li.sugar_action_button a.parent-dropdown-action-handler {
   padding: 6px 10px 6px 10px;
   border-radius: 4px;
+}
+
+#detail_header_action_menu > .sugar_action_button {
+  line-height: 24px;
 }
 
 .oddListRowS1:hover td ul.clickMenu.subpanel.records, .evenListRowS1:hover td ul.clickMenu.subpanel.records {
@@ -3937,6 +3941,88 @@ ul#detailViewActions.clickMenu {
 }
 
 #selectActions.clickMenu {
+  display: none;
+}
+
+
+
+@media (max-width: 992px) {
+  ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly {
+    display: none;
+  }
+}
+
+@media (min-width: 992px) {
+  ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.mobileOnly {
+    display: none;
+  }
+}
+
+#selectedRecordsTop,
+#selectedRecordsBottom {
+  background-position-y: -22px;
+  background-position-x: 95%;
+  padding-right: 10px;
+  display: block!important;
+  margin-top: 0px;
+  height: 20px;
+  line-height: 20px;
+}
+
+
+ul.clickMenu.searchAppliedAlert.selectmenu.SugarActionMenu.listViewLinkButton {
+  padding: 0;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly a {
+  line-height: 15px;
+}
+
+ul.listViewLinkButton > li {
+  padding: 0;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li {
+  padding: 0;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li > a.glyphicon-remove {
+  font-weight: bold;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.glyphicon-remove {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  line-height: 0.8;
+  font-weight: bold;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.glyphicon-remove:before {
+  content: '';
+}
+
+.paginationActionButtons .parent-dropdown-handler {
+  padding: 0 0 0 5px;
+}
+
+.paginationActionButtons .parent-dropdown-handler label {
+  margin-bottom: 0px;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.glyphicon-remove {
+  line-height: 20px;
+}
+
+.listViewEmpty ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li > a {
+  line-height: 25px;
+}
+
+.parent-dropdown-handler .selected-actions-label {
+  padding-right: 5px;
+}
+
+.showsearch {
   display: none;
 }
 

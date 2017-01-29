@@ -1555,6 +1555,7 @@ EOHTML;
             }
         }
 
+
         return $params;
     }
 
@@ -1576,11 +1577,12 @@ EOHTML;
             $firstParam = $this->module;
         }
 
-        $iconPath = $this->getModuleTitleIconPath($this->module);
-        if ($this->action == "ListView" || $this->action == "index") {
-            if (!empty($iconPath) && !$browserTitle) {
-                if (SugarThemeRegistry::current()->directionality == "ltr") {
-                    return $app_strings['LBL_SEARCH'] . "&nbsp;" . "$firstParam";
+    	$iconPath = $this->getModuleTitleIconPath($this->module);
+    	if($this->action == "ListView" || $this->action == "index") {
+    	    if (!empty($iconPath) && !$browserTitle) {
+    	    	if (SugarThemeRegistry::current()->directionality == "ltr") {
+    	    		return $app_strings['LBL_SEARCH_ALT']."&nbsp;"
+    	    			 . "$firstParam";
 
                 } else {
                     return "$firstParam" . "&nbsp;" . $app_strings['LBL_SEARCH'];

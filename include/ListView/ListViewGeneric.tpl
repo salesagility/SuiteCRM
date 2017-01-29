@@ -101,7 +101,9 @@
             {$APP.LBL_NO_DATA}
         </p>
 	{/if}
-		{$APP.MSG_LIST_VIEW_CHANGE_SEARCH}
+		<p class="msg">
+			{$APP.MSG_LIST_VIEW_CHANGE_SEARCH}
+		</p>
 		{if $showFilterIcon}
 			{include file='include/ListView/ListViewSearchLink.tpl'}
 		{/if}
