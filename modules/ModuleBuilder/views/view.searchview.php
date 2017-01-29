@@ -106,7 +106,7 @@ class ViewSearchView extends ViewListView
  		switch ( $this->editLayout )
  		{
  			default:
-                $searchLabel = 'LBL_' . str_replace('SEARCH', 'FILTER', strtoupper ( $this->editLayout)) ;
+ 				$searchLabel = 'LBL_' . strtoupper ( $this->editLayout) ;
  		}
 
         $layoutLabel = 'LBL_LAYOUTS' ;

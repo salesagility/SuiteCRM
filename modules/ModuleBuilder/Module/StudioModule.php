@@ -253,15 +253,15 @@ class StudioModule
 		require_once ('modules/ModuleBuilder/parsers/views/SearchViewMetaDataParser.php') ;
 
 		$nodes = array () ;
-        foreach ( array ( MB_BASICSEARCH => 'LBL_BASIC_FILTER' , MB_ADVANCEDSEARCH => 'LBL_ADVANCED_FILTER' ) as $view => $label )
+        foreach ( array ( MB_BASICSEARCH => 'LBL_BASIC_SEARCH' , MB_ADVANCEDSEARCH => 'LBL_ADVANCED_SEARCH' ) as $view => $label )
         {
         	try
         	{
         		$parser = new SearchViewMetaDataParser ( $view , $this->module ) ;
         		$title = translate ( $label ) ;
-        		if($label == 'LBL_BASIC_FILTER'){
+        		if($label == 'LBL_BASIC_SEARCH'){
 					$name = 'BasicSearch';
-				}elseif($label == 'LBL_ADVANCED_FILTER'){
+				}elseif($label == 'LBL_ADVANCED_SEARCH'){
 					$name = 'AdvancedSearch';
 				}else{
 					$name = str_replace ( ' ', '', $title ) ;

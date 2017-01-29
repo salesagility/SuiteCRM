@@ -393,9 +393,9 @@ if( $show_files == true ){
 	echo '<br/><br/>';
 
     echo '<div style="text-align: left; cursor: hand; cursor: pointer; text-decoration: underline;'.(($mode == 'Enable' || $mode == 'Disable')?'display:none;':'').'" onclick=\'this.style.display="none"; toggleDisplay("more");\'id="all_text">
-        '.SugarThemeRegistry::current()->getImage('advanced_search', '', null, null, ".gif", $mod_strings['LBL_ADVANCED_FILTER']).$mod_strings['LBL_UW_SHOW_DETAILS'].'</div><div id=\'more\' style=\'display: none\'>
+        '.SugarThemeRegistry::current()->getImage('advanced_search', '', null, null, ".gif", $mod_strings['LBL_ADVANCED_SEARCH']).$mod_strings['LBL_UW_SHOW_DETAILS'].'</div><div id=\'more\' style=\'display: none\'>
               <div style="text-align: left; cursor: hand; cursor: pointer; text-decoration: underline;" onclick=\'document.getElementById("all_text").style.display=""; toggleDisplay("more");\'>'
-         .SugarThemeRegistry::current()->getImage('basic_search', '', null, null, ".gif", $mod_strings['LBL_BASIC_FILTER']).$mod_strings['LBL_UW_HIDE_DETAILS'].'</div><br>';
+         .SugarThemeRegistry::current()->getImage('basic_search', '', null, null, ".gif", $mod_strings['LBL_BASIC_SEARCH']).$mod_strings['LBL_UW_HIDE_DETAILS'].'</div><br>';
     echo '<input type="checkbox" checked onclick="toggle_these(' . count($new_studio_mod_files) . ',' . count($new_files) . ', this)"> '.$mod_strings['LBL_UW_CHECK_ALL'];
 	echo '<ul>';
 	foreach( $new_sugar_mod_files as $the_file ){
