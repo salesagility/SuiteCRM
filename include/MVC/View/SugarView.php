@@ -83,6 +83,8 @@ class SugarView
     var $responseTime;
     var $fileResources;
 
+    private $settings = array();
+
     /**
      * Constructor which will peform the setup.
      */
@@ -849,6 +851,14 @@ EOHTML;
             $config_js = $this->getSugarConfigJS();
             if(!empty($config_js)){
                 echo "<script>\n".implode("\n", $config_js)."</script>\n";
+            }
+
+            if ($this->hasDomJS()){
+                echo "
+                        <script type='text/javascript'>
+                        SUGAR.append(SUGAR, { settings:".$this->getDomJS()." } );
+                        </script>
+                        ";
             }
 
             if ( isset($sugar_config['email_sugarclient_listviewmaxselect']) ) {
@@ -1695,4 +1705,64 @@ EOHTML;
     }
 
 
+
+    public function addDomJS($data, $scope){
+        $this->settings[$scope] = $this->suite_array_merge_deep_array($data);
+    }
+
+    public function getDomJS(){
+        return(json_encode($this->settings));
+    }
+
+    public function hasDomJS(){
+        return(!empty($this->settings));
+    }
+
+    /**
+     * Merges multiple arrays, recursively, and returns the merged array.
+     * https://api.drupal.org/api/drupal/includes!bootstrap.inc/function/drupal_array_merge_deep_array/7
+     */
+    function suite_array_merge_deep_array($arrays){
+        $result = array();
+
+        foreach ($arrays as $array) {
+            foreach ($array as $key => $value) {
+                // Renumber integer keys as array_merge_recursive() does. Note that PHP
+                // automatically converts array keys that are integer strings (e.g., '1')
+                // to integers.
+                if (is_integer($key)) {
+                    $result [] = $value;
+                }
+                // Recurse when both values are arrays.
+                elseif (isset($result [$key]) && is_array($result [$key]) && is_array($value)) {
+                    $result [$key] = $this->sugar_array_merge_deep_array(array($result [$key], $value));
+                }
+                // Otherwise, use the latter value, overriding any previous value.
+                else {
+                    $result [$key] = $value;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+     function getVardefsData($module_dir){
+         $data = array();
+         $bean = SugarModule::get($module_dir)->loadBean();
+
+         if($bean !== false){
+             foreach($bean->field_defs as $field_name => $def){
+                 $data[$module_dir][$field_name] = $def;
+                 if (isset($def['required'])){
+                     $data[$module_dir][$field_name]['required'] = $def['required'];
+                 }
+                 else{
+                     $data[$module_dir][$field_name]['required'] = false;
+                 }
+             }
+         }
+         unset($bean);
+         return array($data);
+     }
 }
