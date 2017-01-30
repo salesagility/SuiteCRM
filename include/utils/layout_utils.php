@@ -283,19 +283,25 @@ EOHTML;
         echo $sugar_config['meta_tags']['IE_COMPAT_MODE'];
     }
 
-    echo "<title>{$app_strings['LBL_BROWSER_TITLE']}</title>" . $themeCSS;
+    echo "<title>{$app_strings['LBL_BROWSER_TITLE']}</title>";
+    echo '<link href="themes/'.SugarThemeRegistry::current().'/css/bootstrap.min.css" rel="stylesheet">';
+    echo $themeCSS;
     if ($includeJS)
     {
         $charset = isset($app_strings['LBL_CHARSET']) ? $app_strings['LBL_CHARSET'] : $sugar_config['default_charset'];
         echo '<meta http-equiv="Content-Type" content="text/html; charset="{$charset}">';
+        echo '<script type="text/javascript" src="' . getJSPath('cache/include/javascript/sugar_grp1_jquery.js') . '"></script>';
         echo '<script type="text/javascript" src="' . getJSPath('cache/include/javascript/sugar_grp1_yui.js') . '"></script>';
         echo '<script type="text/javascript" src="' . getJSPath('cache/include/javascript/sugar_grp1.js') . '"></script>';
     }
     /* Fix to include files required to make pop-ups responsive */
     echo '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
     echo '<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />';
-    echo '<link href="themes/SuiteR/css/bootstrap.min.css" rel="stylesheet">';
-    echo '<link href="themes/SuiteR/css/colourSelector.php" rel="stylesheet">';
+
+    if(SugarThemeRegistry::current() == "SuiteR") {
+        echo '<link href="themes/SuiteR/css/colourSelector.php" rel="stylesheet">';
+    }
+
     echo '</head>';
     echo  '<body class="popupBody">';
 }

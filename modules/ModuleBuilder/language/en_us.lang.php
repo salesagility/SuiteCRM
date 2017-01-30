@@ -1,11 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,8 +36,11 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array(
     'LBL_LOADING' => 'Loading' /*for 508 compliance fix*/,
@@ -126,7 +129,7 @@ $mod_strings = array(
             'Default' => '<b>Default</b> fields appear in ListViews that are not customized by users.'
         ),
         'searchViewEditor' => array(
-            'modify' => 'All of the fields that can be displayed in the <b>Search</b> form appear here.<br><br>The <b>Default</b> column contains the fields that will be displayed in the Search form.<br/><br/>The <b>Hidden</b> column contains fields available for you as an admin to add to the Search form.'
+            'modify' => 'All of the fields that can be displayed in the <b>Filter</b> form appear here.<br><br>The <b>Default</b> column contains the fields that will be displayed in the Search form.<br/><br/>The <b>Hidden</b> column contains fields available for you as an admin to add to the Search form.'
         ,
             'savebtn' => 'Clicking <b>Save & Deploy</b> will save all changes and make them active',
             'Hidden' => '<b>Hidden</b> fields do not appear in the Search.',
@@ -195,7 +198,6 @@ $mod_strings = array(
             'searchBtn' => 'Customize the module\'s <b>Search</b> layouts.<br><br>Determine what fields can be used to filter records that appear in the ListView.',
             'viewBtnQuickCreate' => 'Customize the module\'s <b>QuickCreate</b> layout.<br><br>The QuickCreate form appears in subpanels and in the Emails module.',
             'addLayoutHelp' => "To create a custom layout for a Security Group select the appropriate Security Group and the layout from which to copy from as a starting point.",
-
             'searchHelp' => 'The <b>Search</b> forms that can be customized appear here.<br><br>Search forms contain fields for filtering records.<br><br>Click an icon to select the search layout to edit.',
             'dashletHelp' => 'The <b>SuiteCRM Dashlet</b> layouts that can be customized appear here.<br><br>The SuiteCRM Dashlet will be available to add to the pages in the Home module.',
             'DashletListViewBtn' => 'The <b>SuiteCRM Dashlet ListView</b> displays records based on the SuiteCRM Dashlet search filters.',
@@ -203,8 +205,8 @@ $mod_strings = array(
             'popupHelp' => 'The <b>Popup</b> layouts that can be customized appear here.<br>',
             'PopupListViewBtn' => 'The <b>Popup ListView</b> displays records based on the Popup search views.',
             'PopupSearchViewBtn' => 'The <b>Popup Search</b> views records for the Popup listview.',
-            'BasicSearchBtn' => 'Customize the <b>Basic Search</b> form that appears in the Basic Search tab in the Search area for the module.',
-            'AdvancedSearchBtn' => 'Customize the <b>Advanced Search</b> form that appears in the Advanced Search tab in the Search area for the module.',
+            'BasicSearchBtn' => 'Customize the <b>Quick Filter</b> form that appears in the Quick Filter tab in the Search area for the module.',
+            'AdvancedSearchBtn' => 'Customize the <b>Advanced Filter</b> form that appears in the Advanced Search tab in the Search area for the module.',
             'portalHelp' => 'Manage and customize the <b>SuiteCRM Portal</b>.',
             'SPUploadCSS' => 'Upload a <b>Style Sheet</b> for the SuiteCRM Portal.',
             'SPSync' => '<b>Sync</b> customizations to the SuiteCRM Portal instance.',
@@ -214,7 +216,6 @@ $mod_strings = array(
             'relationshipHelp' => '<b>Relationships</b> can be created between the module and another deployed module.<br><br> Relationships are visually expressed through subpanels and relate fields in the module records.<br><br>Select one of the following relationship <b>Types</b> for the module:<br><br> <b>One-to-One</b> - Both modules\' records will contain relate fields.<br><br> <b>One-to-Many</b> - The Primary Module\'s record will contain a subpanel, and the Related Module\'s record will contain a relate field.<br><br> <b>Many-to-Many</b> - Both modules\' records will display subpanels.<br><br> Select the <b>Related Module</b> for the relationship. <br><br>If the relationship type involves subpanels, select the subpanel view for the appropriate modules.<br><br> Click <b>Save</b> to create the relationship.',
             'convertLeadHelp' => 'Here you can add modules to the convert layout screen and modify the layouts of existing ones.<br/>
 		You can re-order the modules by dragging their rows in the table.<br/><br/>
-
 		<b>Module:</b> The name of the module.<br/><br/>
 		<b>Required:</b> Required modules must be created or selected before the lead can be converted.<br/><br/>
 		<b>Copy Data:</b> If checked, fields from the lead will be copied to fields with the same name in the newly created records.<br/><br/>
@@ -354,9 +355,9 @@ $mod_strings = array(
     'LBL_ADD_FIELDS' => 'Add Custom Fields',
     'LBL_AVAILABLE_SUBPANELS' => 'Available Subpanels',
     'LBL_ADVANCED' => 'Advanced',
-    'LBL_ADVANCED_SEARCH' => 'Advanced Search',
+    'LBL_ADVANCED_SEARCH' => 'Advanced Filter',
     'LBL_BASIC' => 'Basic',
-    'LBL_BASIC_SEARCH' => 'Basic Search',
+    'LBL_BASIC_SEARCH' => 'Quick Filter',
     'LBL_CURRENT_LAYOUT' => 'Layout',
     'LBL_CURRENCY' => 'Currency',
     'LBL_CUSTOM' => 'Custom',
@@ -402,8 +403,8 @@ $mod_strings = array(
     'LBL_SUBPANELS' => 'Subpanels',
     'LBL_SUBPANEL' => 'Subpanel',
     'LBL_SUBPANEL_TITLE' => 'Title:',
-    'LBL_SEARCH_FORMS' => 'Search',
-    'LBL_SEARCH' => 'Search',
+    'LBL_SEARCH_FORMS' => 'Filter',
+    'LBL_FILTER' => 'Filter',
     'LBL_STAGING_AREA' => 'Staging Area (drag and drop items here)',
     'LBL_SUGAR_FIELDS_STAGE' => 'SuiteCRM Fields (click items to add to staging area)',
     'LBL_SUGAR_BIN_STAGE' => 'SuiteCRM Bin (click items to add to staging area)',
@@ -467,7 +468,7 @@ $mod_strings = array(
     'LBL_QUESTION_EDIT' => 'Select a module to edit.',
     'LBL_QUESTION_LAYOUT' => 'Select a layout to edit.',
     'LBL_QUESTION_SUBPANEL' => 'Select a subpanel to edit.',
-    'LBL_QUESTION_SEARCH' => 'Select a search layout to edit.',
+    'LBL_QUESTION_SEARCH' => 'Select a filter layout to edit.',
     'LBL_QUESTION_MODULE' => 'Select a module component to edit.',
     'LBL_QUESTION_PACKAGE' => 'Select a package to edit, or create a new package.',
     'LBL_QUESTION_EDITOR' => 'Select a tool.',
@@ -682,7 +683,7 @@ $mod_strings = array(
     'LBL_REMOVE_CUSTOM' => 'Remove Customizations',
     'LBL_CLEAR_RELATIONSHIPS' => 'Clear Relationships',
     'LBL_RESET_LABELS' => 'Reset Labels',
-    'LBL_RESET_LAYOUTS' => 'Reset Layouts"',
+    'LBL_RESET_LAYOUTS' => 'Reset Layouts',
     'LBL_REMOVE_FIELDS' => 'Remove Custom Fields',
     'LBL_CLEAR_EXTENSIONS' => 'Clear Extensions',
     'LBL_HISTORY_TIMESTAMP' => 'TimeStamp',

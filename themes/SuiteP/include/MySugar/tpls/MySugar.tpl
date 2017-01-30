@@ -65,7 +65,7 @@
 
 {$chartResources}
 {$mySugarChartResources}
-<div>
+<div class="dashboard">
     {*display tabs*}
     <ul class="nav nav-tabs nav-dashboard">
 
@@ -75,7 +75,6 @@
                     <a id="tab{$tabNum}" href="#tab_content_{$tabNum}" data-toggle="tab" {if !$lock_homepage}ondblclick="renameTab({$tabNum})"{/if} onClick="retrievePage({$tabNum});" class="hidden-xs">
                         {$dashboardPages.$tabNum.pageTitle}
                     </a>
-
 
                     <a id="xstab{$tabNum}" href="#" class="visible-xs first-tab-xs dropdown-toggle" data-toggle="dropdown">
                         {$dashboardPages.$tabNum.pageTitle}
@@ -103,7 +102,7 @@
 
         {if !$lock_homepage}
             <li id="tab-actions" class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Actions{$APP.LBL_LINK_ACTIONS}</a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">{$dashboardActions}{$APP.LBL_LINK_ACTIONS}</a>
                 {include file='themes/SuiteP/include/MySugar/tpls/actions_menu.tpl'}
             </li>
         {/if}

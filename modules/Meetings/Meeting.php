@@ -558,7 +558,14 @@ class Meeting extends SugarBean {
 		$mergeTime = $meeting_fields['DATE_START']; //$timedate->merge_date_time($meeting_fields['DATE_START'], $meeting_fields['TIME_START']);
 		$date_db = $timedate->to_db($mergeTime);
 		if($date_db	< $today	) {
-			$meeting_fields['DATE_START']= "<font class='overdueTask'>".$meeting_fields['DATE_START']."</font>";
+			if($meeting_fields['STATUS']=='Held' || $meeting_fields['STATUS']=='Not Held') 
+			{ 
+				$meeting_fields['DATE_START']= "<font>".$meeting_fields['DATE_START']."</font>";
+			} 
+			else 
+			{  
+				$meeting_fields['DATE_START']= "<font class='overdueTask'>".$meeting_fields['DATE_START']."</font>"; 
+			}
 		}else if($date_db	< $nextday) {
 			$meeting_fields['DATE_START'] = "<font class='todaysTask'>".$meeting_fields['DATE_START']."</font>";
 		} else {
@@ -894,21 +901,18 @@ class Meeting extends SugarBean {
 	/**
 	 * @see SugarBean::afterImportSave()
 	 */
-	public function afterImportSave()
-	{
-	    if ( $this->parent_type == 'Contacts' ) {
-	        $this->load_relationship('contacts');
-	        if ( !$this->contacts->relationship_exists('contacts',array('id'=>$this->parent_id)) )
-	            $this->contacts->add($this->parent_id);
-	    }
-	    elseif ( $this->parent_type == 'Leads' ) {
-	        $this->load_relationship('leads');
-	        if ( !$this->leads->relationship_exists('leads',array('id'=>$this->parent_id)) )
-	            $this->leads->add($this->parent_id);
-	    }
+    public function afterImportSave()
+    {
+        if ($this->parent_type === 'Contacts') {
+            $this->load_relationship('contacts');
+            $this->contacts->add($this->parent_id);
+        } elseif ($this->parent_type === 'Leads') {
+            $this->load_relationship('leads');
+            $this->leads->add($this->parent_id);
+        }
 
-	    parent::afterImportSave();
-	}
+        parent::afterImportSave();
+    }
 
     public function getDefaultStatus()
     {

@@ -74,7 +74,14 @@
 		{if $rowCounter % 2 == 0}
 		<tr>
 		{/if}
-			<td width="50%" align="left"><a id="{$module.id}_icon" href="javascript:void(0)" onclick="{$module.onclick}" style="text-decoration:none"><img  class="module_icon" src="{sugar_getimagepath file_name=$module.module_name file_extension='svg'}"><span id="mbLBLL" class="mbLBLL">{$module.title}</span></a><br /></td>
+			<td width="50%" align="left"><a id="{$module.id}_icon" href="javascript:void(0)" onclick="{$module.onclick}" style="text-decoration:none">
+					{capture name="dashlet_img_capture" assign="dashlet_img"}{sugar_getimagepath file_name=$module.module_name file_extension='svg'}{/capture}
+					{if !empty($dashlet_img)}
+						<img src="{$dashlet_img}"/>
+					{else}
+						<img src="themes/SuiteP/images/basic.svg"/>
+					{/if}
+					<span id="mbLBLL" class="mbLBLL">{$module.title}</span></a><br /></td>
 		{if $rowCounter % 2 == 1}
 		</tr>
 		{/if}
@@ -122,33 +129,23 @@
 
 {if $moduleName == 'Home'}
 <div id="webDashlets" style="height:400px;display:none;">
-	<h3>{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}</h3>
 	<div id="webDashletsList">
 	<table width="95%">
 	    <tr>
-	        <td scope="row"></td>
-	        <td><input type="text" id="web_address" value="http://" style="width: 400px"   title="{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}"/></td>
+	        <td scope="row">{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}</td>
+	        <td>
+				<input type="text" id="web_address" value="http://" style="width: 400px"   title="{sugar_translate label='LBL_WEBSITE_TITLE' module='Home'}"/>
+				<input type="button" name="create" value="{$APP.LBL_ADD_BUTTON}" onclick="return SUGAR.mySugar.addDashlet('iFrameDashlet', 'web', document.getElementById('web_address').value);" />
+			</td>
         </tr>
-        <tr>
-            <td colspan="2">
-                <input type="button" name="create" value="{$APP.LBL_ADD_BUTTON}" 
-                    onclick="return SUGAR.mySugar.addDashlet('iFrameDashlet', 'web', document.getElementById('web_address').value);" />
-            </td>
-        </tr>
+		<tr>
+			<td scope="row">{sugar_translate label='LBL_RSS_TITLE' module='Home'}</td>
+			<td>
+				<input type="text" id="rss_address" value="http://" style="width: 400px"  title="{sugar_translate label='LBL_RSS_TITLE' module='Home'}" />
+				<input type="button" name="create" value="{$APP.LBL_ADD_BUTTON}" onclick="return SUGAR.mySugar.addDashlet('RSSDashlet', 'web', document.getElementById('rss_address').value);" />
+			</td>
+		</tr>
     </table>
-    <h3>{sugar_translate label='LBL_RSS_TITLE' module='Home'}</h3>
-	<table width="95%">
-        <tr>
-	        <td scope="row"></td>
-	        <td><input type="text" id="rss_address" value="http://" style="width: 400px"  title="{sugar_translate label='LBL_RSS_TITLE' module='Home'}" /></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input type="button" name="create" value="{$APP.LBL_ADD_BUTTON}" 
-                    onclick="return SUGAR.mySugar.addDashlet('RSSDashlet', 'web', document.getElementById('rss_address').value);" />
-            </td>
-        </tr>
-	</table>
 	</div>
 </div>
 {/if}

@@ -137,6 +137,36 @@
                 </td>
             </tr>
             {/foreach}
+            <script>
+                {literal}
+                // Make sure to change dates back to the user format
+                $(document).ready(function() {
+                    $('.date_input').each(function(index, elem) {
+                        var value = $(this).val();
+                        var formatString = cal_date_format.replace(/%/g, '').toLowerCase().replace(/y/g, 'yy').replace(/m/g, 'mm').replace(/d/g, 'dd');
+
+                        // From DB format
+                        var date_reg_format = '([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})';
+                        myregexp = new RegExp(date_reg_format);
+                        if(myregexp.test(value)) {
+                            // Split timestamp into [ Y, M, D ]
+                            var t = value.split(/[- :]/);
+                            // Apply each element to the Date function
+                            var dateObject = new Date(Date.UTC(t[0], t[1]-1, t[2]));
+                            value = $.datepicker.formatDate(formatString, dateObject);
+                            // From user format
+                        } else {
+                            if (isDate(value)) {
+                                var dateObject = getDateObject(value);
+                            }
+                            value = $.datepicker.formatDate(formatString, dateObject);
+                        }
+
+                        $(this).val(value);
+                    });
+                });
+                {/literal}
+            </script>
             <tr>
                 <td scope='row'>
 

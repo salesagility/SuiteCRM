@@ -203,7 +203,7 @@ class SubPanelTilesTabs extends SubPanelTiles
             $displayTabs = array();
             $otherTabs = array();
 
-    	    foreach ($groups as $key=>$tab)
+    	    foreach ($groups as $key => $tab)
     		{
                 $display = false;
                 foreach($tab['modules'] as $subkey=>$subtab)
@@ -226,10 +226,10 @@ class SubPanelTilesTabs extends SubPanelTiles
                 {
                     $relevantTabs = SubPanelTilesTabs::applyUserCustomLayoutToTabs($tabs, $key);
 
-                    $sugarTabs[$key] = array(//'url'=>'index.php?module=' . $_REQUEST['module'] . '&record=' . $_REQUEST['record'] . '&action=' . $_REQUEST['action']. '&subpanel=' . $key.'#tabs',
-                                         //'url'=>"javascript:SUGAR.util.retrieveAndFill('index.php?to_pdf=1&module=MySettings&action=LoadTabSubpanels&loadModule={$_REQUEST['module']}&record={$_REQUEST['record']}&subpanel=$key','subpanel_list',null,null,null);",
-                                         'label'=>( !empty($tab['label']) ? $tab['label']: $key ),
-                                         'type'=>$selected);
+                    $sugarTabs[$key] = array(
+                             'label'=>( !empty($tab['label']) ? $tab['label']: $key ),
+                             'type'=>$selected
+                    );
 
                     $otherTabs[$key] = array('key'=>$key, 'tabs'=>array());
 
@@ -269,7 +269,8 @@ class SubPanelTilesTabs extends SubPanelTiles
             $retTabs = array_intersect($tabs, array_map('strtolower', $groups[$selectedGroup]['modules']));
         }
 
-		return $retTabs;
+        // Use javascript to filter tabs.
+		return $tabs;
 	}
 }
 ?>

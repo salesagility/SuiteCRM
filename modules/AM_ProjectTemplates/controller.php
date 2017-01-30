@@ -31,7 +31,7 @@ class AM_ProjectTemplatesController extends SugarController {
 
     function action_create_project(){
 
-        global $current_user, $db;
+        global $current_user, $db, $mod_strings;
 
         $project_name = $_POST['p_name'];
         $template_id = $_POST['template_id'];
@@ -163,7 +163,7 @@ class AM_ProjectTemplatesController extends SugarController {
 
 
         //redirct to new project
-        SugarApplication::appendErrorMessage('New project created.');
+        SugarApplication::appendErrorMessage($mod_strings["LBL_NEW_PROJECT_CREATED"]);
         $params = array(
             'module'=> 'Project',
             'action'=>'DetailView',
@@ -345,14 +345,14 @@ class AM_ProjectTemplatesController extends SugarController {
     }
    //returns tasks for predecessor in the add task pop-up form
     function action_get_predecessors(){
-
+        global $mod_strings;
         $project_template = new AM_ProjectTemplates();
         $project_template->retrieve($_REQUEST["project_id"]);
 
 		//Get tasks
 		$project_template->load_relationship('am_tasktemplates_am_projecttemplates');
 		$tasks = $project_template->get_linked_beans('am_tasktemplates_am_projecttemplates','AM_TaskTemplates');
-		echo '<option rel="0" value="0">None</option>';
+		echo '<option rel="0" value="0">'.$mod_strings["LBL_NONE"].'</option>';
         foreach ($tasks as $task) {
             echo '<option rel="'.$task->task_number.'" value="'.$task->task_number.'">'.$task->name.'</opion>';
         }

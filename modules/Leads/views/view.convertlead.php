@@ -533,7 +533,7 @@ class ViewConvertLead extends SugarView
                 {
                     $bean->load_relationship($leadsRel);
                     $relObject = $bean->$leadsRel->getRelationshipObject();
-                    if ($relObject->relationship_type == "one-to-many" && $bean->$leadsRel->_get_bean_position())
+                    if ($relObject->relationship_type == "one-to-many" && $bean->$leadsRel->getSide() == REL_LHS)
                     {
                         $id_field = $relObject->rhs_key;
                         $lead->$id_field = $bean->id;
@@ -823,6 +823,15 @@ class ViewConvertLead extends SugarView
                 $newActivity->$key = $bean->id;
             }
 
+            //check users connected to bean
+            if($activity->load_relationship("users")){
+                $userList = $activity->users->getBeans();
+                if(count($userList) > 0 && $newActivity->load_relationship("users")) {
+                    foreach ($userList as $user) {
+                        $newActivity->users->add($user->id);
+                    }
+                }
+            }
             //parent (related to field) should be blank unless it is explicitly sent in
             //it is not sent in unless the account is being created as well during lead conversion
             $newActivity->parent_id =  $parentID;
@@ -888,7 +897,7 @@ class ViewConvertLead extends SugarView
 				$bean->new_with_id = true;
 				$contact->load_relationship ($contactRel) ;
 				$relObject = $contact->$contactRel->getRelationshipObject();
-				if ($relObject->relationship_type == "one-to-many" && $contact->$contactRel->_get_bean_position())
+				if ($relObject->relationship_type == "one-to-many" && $contact->$contactRel->getSide() == REL_LHS)
 				{
 					$id_field = $relObject->rhs_key;
 					$bean->$id_field = $contact->id;

@@ -303,6 +303,7 @@ function showSubPanel(child_field,url,force_load,layout_def_key)
 		var returnstuff = http_fetch_sync(url+ '&inline=' + inline + '&ajaxSubpanel=true');
 		request_id++;
 		got_data(returnstuff, inline);
+		$('#whole_subpanel_'+child_field+' .table-responsive').footable();
 	}
 	else
 	{
@@ -658,7 +659,6 @@ SUGAR.subpanelUtils = function() {
 		/* call setGroupCookie */
 
 		loadSubpanelGroup: function(group){
-			if(group == SUGAR.subpanelUtils.currentSubpanelGroup) return;
 
 			if(SUGAR.subpanelUtils.loadedGroups[group]){
 				SUGAR.subpanelUtils.updateSubpanel(group);

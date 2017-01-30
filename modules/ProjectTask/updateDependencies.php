@@ -49,47 +49,48 @@ class updateDependencies {
 
             $diff = $this->count_days($bean->date_finish, $bean->fetched_row['date_finish']); //Gets the difference in days
 
-            foreach($tasks as $task){ //loop through all dependant tasks
+            if($tasks) {
+                foreach ($tasks as $task) { //loop through all dependant tasks
 
-                $rel_type = $task->relationship_type;//Determine their dependency type
+                    $rel_type = $task->relationship_type;//Determine their dependency type
 
-                if($rel_type == 'FS'){//if its a Finish to start
-                    //Modify the task's start and end date dependant on the difference in days
-                    $start = new DateTime($task->date_start);
-                    $start = $start->modify($diff);
-                    $startdate = $start->format('Y-m-d');
-
-                    $duration = $task->duration - 1;//take one off to maintain correct gantt bar length
-
-                    $enddate = $start->modify('+'.$duration.' days');
-                    $enddate = $enddate->format('Y-m-d');
-
-                    $task->date_start = $startdate;
-                    $task->date_finish = $enddate;
-                    $task->save();
-
-                }
-                else if($rel_type == 'SS'){//if its a start to start
-                    //check if the tasks duration has not been changed so that it does not update when the parent tasks duration is changed
-                    if($bean->fetched_row['duration'] == $bean->duration){
-
+                    if ($rel_type == 'FS') {//if its a Finish to start
+                        //Modify the task's start and end date dependant on the difference in days
                         $start = new DateTime($task->date_start);
                         $start = $start->modify($diff);
                         $startdate = $start->format('Y-m-d');
 
-                        $duration = $task->duration - 1;
+                        $duration = $task->duration - 1;//take one off to maintain correct gantt bar length
 
-                        $enddate = $start->modify('+'.$duration.' days');
+                        $enddate = $start->modify('+' . $duration . ' days');
                         $enddate = $enddate->format('Y-m-d');
 
                         $task->date_start = $startdate;
                         $task->date_finish = $enddate;
                         $task->save();
 
+                    } else if ($rel_type == 'SS') {//if its a start to start
+                        //check if the tasks duration has not been changed so that it does not update when the parent tasks duration is changed
+                        if ($bean->fetched_row['duration'] == $bean->duration) {
+
+                            $start = new DateTime($task->date_start);
+                            $start = $start->modify($diff);
+                            $startdate = $start->format('Y-m-d');
+
+                            $duration = $task->duration - 1;
+
+                            $enddate = $start->modify('+' . $duration . ' days');
+                            $enddate = $enddate->format('Y-m-d');
+
+                            $task->date_start = $startdate;
+                            $task->date_finish = $enddate;
+                            $task->save();
+
+                        }
+
                     }
 
                 }
-
             }
 
         }

@@ -134,6 +134,21 @@ class AORReportsDashlet extends Dashlet {
 //            $req['parameter_value'][1] = $firstValue;
 //        }
         $allowedKeys = array_flip(array('aor_report_id','dashletTitle','charts','onlyCharts','parameter_id','parameter_value','parameter_type','parameter_operator'));
+
+        // Fix for issue #1700 - save value as db type
+        for($i = 0; $i < count($req['parameter_value']); $i++) {
+            if(isset($req['parameter_value'][$i]) && $req['parameter_value'][$i] != '') {
+                global $current_user, $timedate;
+                $user_date_format = $timedate->get_date_format($current_user);
+
+                if (DateTime::createFromFormat($user_date_format, $req['parameter_value'][$i]) !== FALSE) {
+                    $date = DateTime::createFromFormat($user_date_format, $req['parameter_value'][$i]);
+                    $date->setTime(00, 00, 00);
+                    $req['parameter_value'][$i] = $timedate->asDb($date);
+                }
+            }
+        }
+
         $intersected = array_intersect_key($req,$allowedKeys);
         return $intersected;
     }

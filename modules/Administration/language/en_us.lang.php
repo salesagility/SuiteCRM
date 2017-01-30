@@ -82,6 +82,14 @@ $mod_strings = array(
     'LBL_WEEKS' => 'Weeks',
     'LBL_MONTHS' => 'Months',
 
+    'LBL_MONDAY' => 'Monday',
+    'LBL_TUESDAY' => 'Tuesday',
+    'LBL_WEDNESDAY' => 'Wednesday',
+    'LBL_THURSDAY' => 'Thursday',
+    'LBL_FRIDAY' => 'Friday',
+    'LBL_SATURDAY' => 'Saturday',
+    'LBL_SUNDAY' => 'Sunday',
+
     'LBL_PUBLIC_KEY' => 'Public Key',
     'LBL_PRIVATE_KEY' => 'Private Key',
 
@@ -1080,8 +1088,8 @@ $mod_strings = array(
     'LBL_EAPM_SETTINGS_DESC' => 'Select external applications for which users can provide their account information in order to access from within SuiteCRM.',
     'LBL_LANGUAGE_PACKS' => 'Language Packs' /*for 508 compliance fix*/,
     'LBL_PATCH_UPGRADES' => 'Patch Upgrades' /*for 508 compliance fix*/,
-    'LBL_ADVANCED_SEARCH' => 'Advanced Search' /*for 508 compliance fix*/,
-    'LBL_BASIC_SEARCH' => 'Basic Search' /*for 508 compliance fix*/,
+    'LBL_ADVANCED_SEARCH' => 'Advanced Filter' /*for 508 compliance fix*/,
+    'LBL_BASIC_SEARCH' => 'Quick Filter' /*for 508 compliance fix*/,
     'LBL_PROCESSING' => 'Processing' /*for 508 compliance fix*/,
 
     'LBL_MI_IN_ACTIONVIEWMAP' => 'Installing Action View Map',
@@ -1209,6 +1217,7 @@ $mod_strings = array(
     'LBL_AOP_JOOMLA_ACCOUNT_CREATION_EMAIL_TEMPLATE' => 'Joomla Support Portal Account Creation Template',
 
     'LBL_AOP_BUSINESS_HOURS_SETTINGS' => 'Business Hours',
+    'LBL_AOP_BUSINESS_HOURS_DESC' => 'Change the business hours',
     'LBL_AOP_OPENING_DAYS' => 'Opening Days',
     'LBL_AOP_OPENING_HOURS' => 'Opening Hours',
     'LBL_AOP_CLOSING_HOURS' => 'Closing Hours',
