@@ -363,7 +363,7 @@ class SugarBean
         else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
-        static::__construct();
+        self::__construct();
     }
 
     /**
