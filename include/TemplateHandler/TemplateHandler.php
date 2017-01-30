@@ -107,6 +107,28 @@ class TemplateHandler {
                 unlink($cacheDir . $e);
             }
         }
+
+        /**
+         * Due to a change since 7.7, the tpl files may also exist in the current theme folder.
+         *
+         * So we need to also clear tpl files in eg cache/[Current Theme]/[modules]/**.tpl
+         * The tpl files for each theme should be cleared for consistency.
+         */
+        $cacheDir = rtrim($GLOBALS['sugar_config']['cache_dir'], '/\\');
+        $themesDir = array_filter(glob($cacheDir.'/themes/*'), 'is_dir');
+
+        foreach($themesDir as $theme) {
+            $tplDir = $theme.'/modules/'. $module . '/';
+            if(!file_exists($tplDir)) continue;
+            $d = dir($tplDir);
+            while($e = $d->read()) {
+                if(!empty($view) && $e != $view ) continue;
+                $end =strlen($e) - 4;
+                if(is_file($tplDir. $e) && $end > 1 && substr($e, $end) == '.tpl') {
+                    unlink($tplDir . $e);
+                }
+            }
+        }
     }
 
     /**

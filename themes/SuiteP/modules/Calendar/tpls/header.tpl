@@ -43,15 +43,15 @@
 
 <div class="clear"></div>
 
-<div style='float:left; width: 50%;'>
+<div style='float:left; width: 70%;'>
 {foreach name=tabs from=$tabs key=k item=tab}
 	<input type="button" class="button" {if $view == $k} selected {/if} id="{$tabs_params[$k].id}" title="{$tabs_params[$k].title}" value="{$tabs_params[$k].title}" onclick="{$tabs_params[$k].link}">
 {/foreach}
 </div>
 
-<div style="float:left; text-align: right; width: 50%; font-size: 12px;">
+<div style="float:left; text-align: right; width: 30%; font-size: 12px;">
 	{if $view == "sharedWeek" || $view == "sharedMonth"}
-		<button id="userListButtonId" type="button" class="btn btn-info" data-toggle="modal" data-target=".modal-calendar-user-list">{$MOD.LBL_EDIT_USERLIST}</button>
+		<input id="userListButtonId" type="button" class="btn btn-info" value="{$MOD.LBL_EDIT_USERLIST}" data-toggle="modal" data-target=".modal-calendar-user-list"">
 	{/if}
 	{if $view != 'year' && !$print}
 	<span class="dateTime">
@@ -81,7 +81,7 @@
 					</script>
 	</span>
 	{/if}
-	<input type="button" id="" class="button" data-toggle="modal" data-target=".modal-calendar-settings" value="{$MOD.LBL_SETTINGS}">
+	<input type="button" id="" class="btn btn-info" data-toggle="modal" data-target=".modal-calendar-settings" value="{$MOD.LBL_SETTINGS}">
 </div>
 
 <div style='clear: both;'></div>

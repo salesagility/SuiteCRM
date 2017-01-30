@@ -11,7 +11,7 @@
         {/literal}
     </script>
     {*{if $show_subpanel_tabs}*}
-        <ul class="noBullet" id="subpanel_list">
+        <ul id="subpanel_list" class="noBullet subpanel_list">
             {foreach from=$subpanel_tabs key=i item=subpanel_tab}
                 <li class="noBullet" id="whole_subpanel_{$subpanel_tab}">
                     <!--subpanel-title -->
@@ -73,6 +73,22 @@
 {/if}
 <script>
     var ModuleSubPanels = {$module_sub_panels};
+    {literal}
+
+    var updateSubpanelGroup = function() {
+        // Filter subpanels to show the current tab
+        if (typeof SUGAR.subpanelUtils.currentSubpanelGroup !== "undefined") {
+            SUGAR.subpanelUtils.loadSubpanelGroup(SUGAR.subpanelUtils.currentSubpanelGroup);
+            clearCheckSubpanelGroup();
+        }
+    };
+
+    var checkSubpanelGroup =  setInterval(updateSubpanelGroup, 100);
+
+    var clearCheckSubpanelGroup = function() {
+        clearInterval(checkSubpanelGroup);
+    };
+    {/literal}
 </script>
 
     {*{/if}*}

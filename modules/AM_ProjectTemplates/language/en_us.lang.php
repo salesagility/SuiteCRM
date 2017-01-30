@@ -48,7 +48,6 @@ $mod_strings = array(
     'LBL_MODIFIED_NAME' => 'Modified By Name',
     'LBL_CREATED' => 'Created By',
     'LBL_CREATED_ID' => 'Created By Id',
-    'LBL_DESCRIPTION' => 'Notes',
     'LBL_DELETED' => 'Deleted',
     'LBL_NAME' => 'Template Name',
     'LBL_CREATED_USER' => 'Created by User',
@@ -76,12 +75,13 @@ $mod_strings = array(
     'LBL_AM_TASKTEMPLATES_AM_PROJECTTEMPLATES_FROM_AM_TASKTEMPLATES_TITLE' => 'Task Templates',
 	'LBL_AM_PROJECTTEMPLATES_USERS_1_TITLE' => 'Users',
 	'LBL_AM_PROJECTTEMPLATES_CONTACTS_1_TITLE' => 'Contacts',
-	'LBL_AM_PROJECTTEMPLATES_RESOURCES_TITLE' => 'Select Resources',	
+	'LBL_AM_PROJECTTEMPLATES_RESOURCES_TITLE' => 'Select Resources',
+	'LBL_NEW_PROJECT_CREATED' => 'New Project Created',
+	'LBL_NEW_PROJECT' => 'Create Project',
+	'LBL_CANCEL_PROJECT' => 'Cancel',
 
 	'LBL_SUBTASK' => 'Task',
 	'LBL_MILESTONE_FLAG' => 'Milestone',
-	'LBL_TASK_NAME' => 'Task Name',
-	'LBL_PREDECESSORS' => 'Predecessors',
 	'LBL_RELATIONSHIP_TYPE' => 'Relation Type',
     'LBL_LAG' => 'Lag',
     'LBL_DAYS' => 'Days',
@@ -104,12 +104,9 @@ $mod_strings = array(
     'LBL_LIST_ASSIGNED_USER' => 'Project Manager',
     'LBL_UNASSIGNED' => 'Unassigned',
     'LBL_PROJECT_USERS_1_FROM_USERS_TITLE' => 'Resources',
-	'LBL_PERCENT_COMPLETE' => '% Complete',
     'LBL_DELETE_TASK' => 'Delete Task',
 	'LBL_VIEW_DETAIL' => 'View Details',
 	'LBL_ADD_NEW_TASK' => 'Add New Task',
-    'LBL_START' => 'Start',
-    'LBL_FINISH' => 'Finish',
 	'LBL_ASSIGNED_USER_NAME' => 'Project Manager:',
 
     'LBL_TASK_ID' => 'ID',
@@ -143,7 +140,7 @@ $mod_strings = array(
 	'LBL_CANCEL_CREATE_INVITEE' => 'Cancel',
 	'LBL_NO_ACCESS' => 'You have no access to create $module',
 	'LBL_SCHEDULING_FORM_TITLE' => 'Resource List',
-	'LBL_REMOVE' => 'rem',
+	'LBL_NONE' => 'None',
 
 
 );

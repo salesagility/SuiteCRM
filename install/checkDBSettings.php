@@ -93,7 +93,7 @@ function checkDBSettings($silent=false) {
 
         $dbconfig = array(
                 "db_host_name" => $_SESSION['setup_db_host_name'],
-                "db_host_instance" => $_SESSION['setup_db_host_instance'],
+                "db_host_instance" => isset($_SESSION['setup_db_host_instance']) ? $_SESSION['setup_db_host_instance'] : null,
         );
 
         if(!empty($_SESSION['setup_db_port_num'])) {

@@ -257,7 +257,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
     } else if (isset($fieldlist[$fieldname]['type']) && ($fieldlist[$fieldname]['type'] == 'date')) {
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
         $fieldlist[$fieldname]['name'] = $aow_field;
-        if (empty($value) == "") {
+        if (empty($value)) {
             $value = str_replace("%", "", date($date_format));
         }
         $fieldlist[$fieldname]['value'] = $value;
@@ -318,6 +318,15 @@ function saveField($field, $id, $module, $value)
                 $bean->parent_type = $_REQUEST['parent_type'];
                 $bean->fill_in_additional_parent_fields(); // get up to date parent info as need it to display name
             }
+        }else if ($bean->field_defs[$field]['type'] == "currency"){
+			if (stripos($field, 'usdollar')) {
+				$newfield = str_replace("_usdollar", "", $field);
+				$bean->$newfield = $value;
+			}
+			else{
+				$bean->$field = $value;
+			}
+            
         }else{
             $bean->$field = $value;
         }
@@ -490,7 +499,15 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 	{
 		$value = '<a href='.$value.' target="_blank">'.$value.'</a>';
 	}
-
+	
+	if($vardef['type'] == "currency"){
+		if($_REQUEST['view'] != "DetailView"){			
+			$value = currency_format_number($value);		
+		}
+		else
+			$value = format_number($value);		
+	}
+	
     return $value;
 }
 

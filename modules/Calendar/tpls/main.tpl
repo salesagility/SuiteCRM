@@ -220,6 +220,50 @@
 	</div><!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade modal-cal-tasks-edit" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+				<h4 class="modal-title" id="title-cal-tasks-edit">{$MOD.LNK_TASK}</h4>
+			</div>
+			<div class="modal-body">
+				<!--->
+				<div class="container-fluid">
+
+				</div>
+				<!--->
+			</div>
+			<div class="modal-footer">
+				<button id="btn-view-task" class="button" type="button">{$MOD.LNK_TASK_VIEW}</button>
+				<button id="btn-tasks-full-form" class="button" type="button">{$APP.LBL_FULL_FORM_BUTTON_LABEL}</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade modal-cal-events-edit" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+				<h4 class="modal-title" id="title-cal-events-edit">{$MOD.LNK_EVENT}</h4>
+			</div>
+			<div class="modal-body">
+				<!--->
+				<div class="container-fluid">
+
+				</div>
+				<!--->
+			</div>
+			<div class="modal-footer">
+				<button id="btn-view-events" class="button" type="button">{$MOD.LNK_EVENT_VIEW}</button>
+				<button id="btn-events-full-form" class="button" type="button">{$APP.LBL_FULL_FORM_BUTTON_LABEL}</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
+
 {if $settings}
 {sugar_include type="smarty" file=$settings}
 {/if}
@@ -276,6 +320,5 @@ YAHOO.util.Event.onDOMReady(function(){
 <script src='{sugar_getjspath file="modules/Calendar/fullcalendar/fullcalendar.min.js"}'></script>
 <script src='{sugar_getjspath file="modules/Calendar/fullcalendar/lang-all.js"}'></script>
 
-<div class='monthCalBody'><h5 class='calSharedUser' id='user_name1'></h5></div>
-<div id='calendar1'></div>
+<div id='calendarContainer'></div>
 {sugar_getscript file="modules/Calendar/Cal.js"}

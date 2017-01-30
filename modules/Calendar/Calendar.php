@@ -49,9 +49,9 @@ require_once('modules/Calendar/CalendarActivity.php');
 class Calendar {
 
 	public $activityList = array("FP_events" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
-								 "Meeting" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
-								 "Call" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
-								 "Task" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_due"),
+								 "Meetings" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
+								 "Calls" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
+								 "Tasks" => array("showCompleted" => true,"start" =>  "date_due", "end" => "date_due"),
 //								 "ProjectTask" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_finish"),
 	//							 "Project" => array("showCompleted" => true,"start" =>  "estimated_start_date", "end" => "estimated_end_date")
 								 );
@@ -227,8 +227,12 @@ class Calendar {
 		$i = 0;
 		foreach($this->acts_arr as $user_id => $acts){
 			if(isset($acts) && empty($acts)){
+				$shared_calendar_separate = $GLOBALS['current_user']->getPreference('calendar_display_shared_separate');
+				if(is_null($shared_calendar_separate)) {
+					$shared_calendar_separate = SugarConfig::getInstance()->get('calendar.calendar_display_shared_separate', true);
+				}
 				//if no calendar items we add the user to the list.
-				if($GLOBALS['current_user']->getPreference('calendar_display_shared_separate')){
+				if($shared_calendar_separate){
 					//$this->items[ $item['user_id'] ][] = $item;
 					$this->items[ $user_id ][] = array();
 				}else{
@@ -301,7 +305,12 @@ class Calendar {
 					}
 
 
-				if($GLOBALS['current_user']->getPreference('calendar_display_shared_separate')){
+				$shared_calendar_separate = $GLOBALS['current_user']->getPreference('calendar_display_shared_separate');
+				if(is_null($shared_calendar_separate)) {
+					$shared_calendar_separate = SugarConfig::getInstance()->get('calendar.calendar_display_shared_separate', true);
+				}
+				//if no calendar items we add the user to the list.
+				if($shared_calendar_separate){
 					$this->items[ $item['user_id'] ][] = $item;
 				}else{
 					$this->items[ $GLOBALS['current_user']->id ][] = $item;

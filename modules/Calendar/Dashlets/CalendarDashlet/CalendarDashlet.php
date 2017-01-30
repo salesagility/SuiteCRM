@@ -38,7 +38,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-
+require_once ('modules/Calendar/Calendar.php');
 require_once('include/Dashlets/Dashlet.php');
 
 
@@ -59,7 +59,11 @@ class CalendarDashlet extends Dashlet {
 			$this->title = $def['title'];  
 			
 		if(!empty($def['view']))
-			$this->view = $def['view'];			
+			$this->view = $def['view'];
+
+		// seedBean is need to set the calendar icon
+		$this->seedBean  = BeanFactory::newBean('Calendar');
+		$this->seedBean->module_name = 'Calendar';
              
     }
 

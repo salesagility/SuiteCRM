@@ -95,13 +95,10 @@ class DocumentTest extends PHPUnit_Framework_TestCase
         //execute the method with attributes preset and verify attributes are set accordingly
         $document->fill_in_additional_detail_fields();
 
-        $this->assertRegExp(
-            '~'
-            .preg_quote("<a href='index.php?entryPoint=download&id=&type=Documents' target='_blank'><img src=\"themes/$current_theme/images/def_image_inline.gif?v=")
-            .'[\w-]+'
-            .preg_quote('"    border="0" alt="View" /></a>')
-            .'~',
-            $document->file_url);
+        // test the urls instead of the a tag itself
+        $this->assertRegExp('~/images/def_image_inline~', $document->file_url);
+        $this->assertRegExp('~index.php\?entryPoint=download&id=&type=Documents~', $document->file_url);
+        //
         $this->assertEquals('index.php?entryPoint=download&type=Documents&id=', $document->file_url_noimage);
     }
 
@@ -159,9 +156,7 @@ class DocumentTest extends PHPUnit_Framework_TestCase
                 'LAST_REV_CREATED_NAME' => 'test',
                 'IS_TEMPLATE' => '0',
                 'FILE_URL' => '~'
-                                .preg_quote('<a href=\'index.php?entryPoint=download&id=&type=Documents\' target=\'_blank\'><img src="themes/'.$current_theme.'/images/def_image_inline.gif?v=')
-                                .'[\w-]+'
-                                .preg_quote('"    border="0" alt="View" /></a>')
+                                .'<a href=\'index.php\?entryPoint=download\&id=\&type=Documents\' target=\'_blank\'><img src="themes/\w+/images/def_image_inline\.\w+\?v='
                                 .'~',
                 'FILE_URL_NOIMAGE' => 'index.php?entryPoint=download&type=Documents&id=',
                 'LAST_REV_CREATED_BY' => 'test',
