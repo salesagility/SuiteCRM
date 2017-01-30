@@ -5687,12 +5687,23 @@ table#actionLines > tr > td > table td:first-of-type {
 }
 
 .action-table > tbody > tr:first-child > td:nth-child(2) {
-    width: 40%;
+    width: 45%;
+}
+
+.action-table > tbody >  tr:first-child > td input {
+    margin-left: 4px;
+}
+
+.action-table > tbody >  tr:first-child > td select {
+    margin-left: 4px;
+}
+
+.action-table > tbody >  tr:first-child > td:last-child {
+    width: auto;
 }
 
 .action-table > tbody > tr:first-child > td:last-child .delete-btn {
     float: right;
-
 }
 
 .action-table > tbody > tr:first-child > td:last-child .delete-btn .btn-danger {
@@ -5701,10 +5712,28 @@ table#actionLines > tr > td > table td:first-of-type {
     padding: 0 4px;
 }
 
+
+@media (max-width: 992px) {
+    .action-table > tbody >  tr:first-child > td {
+        display: inline-block;
+        width: 40%;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .action-table > tbody > tr:first-child > td {
+        display: inline-block;
+        width: 44%;
+    }
+}
+
+.edit tr td [data-workflow-action] td {
+    vertical-align: middle;
+}
+
 #conditionLines td,  #fieldLines td {
     padding: 8px;
 }
-
 
 #lineItems table > thead:nth-child(1) > tr > td:nth-child(1) [type="text"] {
     width: 50% !important;
@@ -5729,10 +5758,13 @@ table#lineItems {
 table#lineItems tr td table tfoot tr td span {
     width: 20%;
 }
+
 table#lineItems tr td table tfoot tr td span input[type="text"] {
     display: block;
     float: none;
 }
+
+
 
 
 /*totals*/

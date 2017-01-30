@@ -5808,6 +5808,119 @@ div.password {
     height: 20px;
 }
 
+.edit tr td table #conditionLines_head td {
+    padding-left: 2px!important; /*overriding .edit.tr td table which also has an !important*/
+    pading-right: 2px!important;
+}
+
+.action-table {
+    border: 1px solid grey;
+    border-radius: 4px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.action-table > tbody {
+    display: block;
+}
+
+.action-table > tbody > tr  {
+    display: block;
+}
+
+.action-table > tbody > tr:first-child > td:first-child {
+    width: 50%;
+}
+
+.action-table > tbody >  tr:first-child > td {
+    display: inline-block;
+    width: 45%;
+}
+
+@media (max-width: 992px) {
+    .action-table > tbody >  tr:first-child > td {
+        display: inline-block;
+        width: 40%;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .action-table > tbody >  tr:first-child > td {
+        display: inline-block;
+        width: 44%;
+    }
+}
+
+.action-table > tbody >  tr:first-child > td input {
+    margin-left: 4px;
+}
+
+.action-table > tbody >  tr:first-child > td select {
+    margin-left: 4px;
+}
+
+.action-table > tbody >  tr:first-child > td:last-child {
+    width: auto;
+}
+
+.action-table > tbody >  tr:first-child > td:last-child > .delete-btn {
+    float: right;
+}
+
+#conditionLines tbody td select {
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+
+#conditionLines tbody td input {
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+[data-workflow-action-line] select {
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+[data-workflow-action-line] input {
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.relationship select {
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.relationship input {
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.relationship td {
+    padding-bottom: 2px !important;
+    padding-top: 2px !important;
+}
+
+
+.edit tr td table [data-workflow-action-line] > td {
+    padding-bottom: 2px !important;
+    padding-top: 2px !important;
+}
+
+[data-workflow-action-line] > td:first-child {
+    width: 18px;
+}
+
+[data-workflow-action-line] > td:nth-of-type(2) {
+    width: 125px;
+
+
+[data-workflow-action-line] > td:nth-of-type(3) {
+    width: 18px;
+}
+
 /* campaign wizard / target list*/
 ul.target-list {
     list-style-type: none;
@@ -5982,7 +6095,6 @@ table#actionLines > tr > td > table td:first-of-type {
 
 
 table#actionLines > tr > td > table, #line_items table > tr > td > table {
-    background: #F5F5F5;
     margin: 16px 0 0 0 !important;
     clear: both;
     display: block;

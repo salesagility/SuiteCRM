@@ -511,6 +511,28 @@ fieldset[disabled] .btn-primary.active {
   width: 100%;
 }
 
+[data-workflow-action-parameter] input.sqsEnabled {
+  margin-top: 0px;
+  width: 50%;
+}
+
+.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="create-record"] input.sqsEnabled {
+  width: 65%;
+}
+
+.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="modify-record"] input.sqsEnabled {
+  width: 65%;
+}
+
+.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="send-email"] input.sqsEnabled {
+  width: 10%;
+}
+
+.col-sm-12 .col-sm-8.edit-view-field [data-workflow-action-parameter] [data-workflow-action="send-email"] .id-ff.multiple > button{
+  margin-left: 0;
+}
+
+
 
 #actionLines .action-table td {
   display: inline-block;
@@ -556,7 +578,8 @@ fieldset[disabled] .btn-primary.active {
   padding: 0 0 0 0;
 }
 
-[data-workflow-action-line] td {
+.edit tr td [data-workflow-action] td {
+  vertical-align: middle;
 }
 
 [data-workflow-action-line] td:first-of-type {
@@ -577,6 +600,7 @@ fieldset[disabled] .btn-primary.active {
   width: 45%;
   margin-bottom: 4px;
 }
+
 
 .col-sm-12 .edit-view-field [data-workflow-action-line] input[id$="][2]"] {
   width: 45%;
