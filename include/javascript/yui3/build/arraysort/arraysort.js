@@ -5,4 +5,55 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("arraysort",function(C){var B=C.Lang,A=B.isValue,D=B.isString;C.ArraySort={compare:function(F,E,G){if(!A(F)){if(!A(E)){return 0;}else{return 1;}}else{if(!A(E)){return -1;}}if(D(F)){F=F.toLowerCase();}if(D(E)){E=E.toLowerCase();}if(F<E){return(G)?1:-1;}else{if(F>E){return(G)?-1:1;}else{return 0;}}}};},"3.3.0",{requires:["yui-base"]});
+YUI.add('arraysort', function(Y) {
+
+var LANG = Y.Lang,
+    ISVALUE = LANG.isValue,
+    ISSTRING = LANG.isString;
+
+Y.ArraySort = {
+    /**
+     * Comparator function for simple case-insensitive string sorting.
+     *
+     * @method compare
+     * @param a {Object} First sort argument.
+     * @param b {Object} Second sort argument.
+     * @param desc {Boolean} True if sort direction is descending, false if
+     * sort direction is ascending.
+     * @return {Boolean} Return -1 when a < b. Return 0 when a = b.
+     * Return 1 when a > b.
+     */
+    compare: function(a, b, desc) {
+        if(!ISVALUE(a)) {
+            if(!ISVALUE(b)) {
+                return 0;
+            }
+            else {
+                return 1;
+            }
+        }
+        else if(!ISVALUE(b)) {
+            return -1;
+        }
+
+        if(ISSTRING(a)) {
+            a = a.toLowerCase();
+        }
+        if(ISSTRING(b)) {
+            b = b.toLowerCase();
+        }
+        if(a < b) {
+            return (desc) ? 1 : -1;
+        }
+        else if (a > b) {
+            return (desc) ? -1 : 1;
+        }
+        else {
+            return 0;
+        }
+    }
+};
+
+
+
+}, '3.3.0' ,{requires:['yui-base']});

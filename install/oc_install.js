@@ -1,6 +1,9 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -28,9 +31,24 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-function toggleOfflineClientInstallation(){var theForm=document.forms[0];if(!theForm.oc_install.checked){theForm.oc_server_url.disabled="disabled";theForm.oc_username.disabled="disabled";theForm.oc_password.disabled="disabled";}
-else{theForm.oc_server_url.disabled='';theForm.oc_username.disabled='';theForm.oc_password.disabled='';}}
+
+
+
+function toggleOfflineClientInstallation(){
+   var theForm = document.forms[0];
+
+   if(!theForm.oc_install.checked ){
+      theForm.oc_server_url.disabled = "disabled";
+      theForm.oc_username.disabled = "disabled";
+      theForm.oc_password.disabled = "disabled";
+   }
+   else {
+      theForm.oc_server_url.disabled = '';
+      theForm.oc_username.disabled = '';
+      theForm.oc_password.disabled = '';
+   }
+}

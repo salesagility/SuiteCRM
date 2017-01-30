@@ -5,4 +5,109 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("datasource-arrayschema",function(B){var A=function(){A.superclass.constructor.apply(this,arguments);};B.mix(A,{NS:"schema",NAME:"dataSourceArraySchema",ATTRS:{schema:{}}});B.extend(A,B.Plugin.Base,{initializer:function(C){this.doBefore("_defDataFn",this._beforeDefDataFn);},_beforeDefDataFn:function(E){var D=(B.DataSource.IO&&(this.get("host") instanceof B.DataSource.IO)&&B.Lang.isString(E.data.responseText))?E.data.responseText:E.data,C=B.DataSchema.Array.apply.call(this,this.get("schema"),D);if(!C){C={meta:{},results:D};}this.get("host").fire("response",B.mix({response:C},E));return new B.Do.Halt("DataSourceArraySchema plugin halted _defDataFn");}});B.namespace("Plugin").DataSourceArraySchema=A;},"3.3.0",{requires:["datasource-local","plugin","dataschema-array"]});
+YUI.add('datasource-arrayschema', function(Y) {
+
+/**
+ * Extends DataSource with schema-parsing on array data.
+ *
+ * @module datasource
+ * @submodule datasource-arrayschema
+ */
+
+/**
+ * Adds schema-parsing to the DataSource Utility.
+ * @class DataSourceArraySchema
+ * @extends Plugin.Base
+ */    
+var DataSourceArraySchema = function() {
+    DataSourceArraySchema.superclass.constructor.apply(this, arguments);
+};
+
+Y.mix(DataSourceArraySchema, {
+    /**
+     * The namespace for the plugin. This will be the property on the host which
+     * references the plugin instance.
+     *
+     * @property NS
+     * @type String
+     * @static
+     * @final
+     * @value "schema"
+     */
+    NS: "schema",
+
+    /**
+     * Class name.
+     *
+     * @property NAME
+     * @type String
+     * @static
+     * @final
+     * @value "dataSourceArraySchema"
+     */
+    NAME: "dataSourceArraySchema",
+
+    /////////////////////////////////////////////////////////////////////////////
+    //
+    // DataSourceArraySchema Attributes
+    //
+    /////////////////////////////////////////////////////////////////////////////
+
+    ATTRS: {
+        schema: {
+            //value: {}
+        }
+    }
+});
+
+Y.extend(DataSourceArraySchema, Y.Plugin.Base, {
+    /**
+    * Internal init() handler.
+    *
+    * @method initializer
+    * @param config {Object} Config object.
+    * @private
+    */
+    initializer: function(config) {
+        this.doBefore("_defDataFn", this._beforeDefDataFn);
+    },
+
+    /**
+     * Parses raw data into a normalized response.
+     *
+     * @method _beforeDefDataFn
+     * <dl>
+     * <dt>tId (Number)</dt> <dd>Unique transaction ID.</dd>
+     * <dt>request (Object)</dt> <dd>The request.</dd>
+     * <dt>callback (Object)</dt> <dd>The callback object with the following properties:
+     *     <dl>
+     *         <dt>success (Function)</dt> <dd>Success handler.</dd>
+     *         <dt>failure (Function)</dt> <dd>Failure handler.</dd>
+     *     </dl>
+     * </dd>
+     * <dt>data (Object)</dt> <dd>Raw data.</dd>
+     * </dl>
+     * @protected
+     */
+    _beforeDefDataFn: function(e) {
+        var data = (Y.DataSource.IO && (this.get("host") instanceof Y.DataSource.IO) && Y.Lang.isString(e.data.responseText)) ? e.data.responseText : e.data,
+            response = Y.DataSchema.Array.apply.call(this, this.get("schema"), data);
+            
+        // Default
+        if(!response) {
+            response = {
+                meta: {},
+                results: data
+            };
+        }
+        
+        this.get("host").fire("response", Y.mix({response:response}, e));
+        return new Y.Do.Halt("DataSourceArraySchema plugin halted _defDataFn");
+    }
+});
+    
+Y.namespace('Plugin').DataSourceArraySchema = DataSourceArraySchema;
+
+
+
+}, '3.3.0' ,{requires:['datasource-local', 'plugin', 'dataschema-array']});

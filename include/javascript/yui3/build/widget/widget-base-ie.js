@@ -5,4 +5,52 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("widget-base-ie",function(a){var d="boundingBox",f="contentBox",c="height",e="offsetHeight",g="",b=a.UA.ie,i=b<7,h=a.Widget.getClassName("tmp","forcesize"),j=a.Widget.getClassName("content","expanded");a.Widget.prototype._uiSizeCB=function(l){var n=this.get(d),k=this.get(f),m=this._bbs;if(m===undefined){this._bbs=m=!(b<8&&n.get("ownerDocument").get("compatMode")!="BackCompat");}if(m){k.toggleClass(j,l);}else{if(l){if(i){n.addClass(h);}k.set(e,n.get(e));if(i){n.removeClass(h);}}else{k.setStyle(c,g);}}};},"3.3.0",{requires:["widget-base"]});
+YUI.add('widget-base-ie', function(Y) {
+
+/**
+ * IE specific support for the widget-base module.
+ *
+ * @module widget-base-ie
+ */
+var BOUNDING_BOX = "boundingBox",
+    CONTENT_BOX = "contentBox",
+    HEIGHT = "height",
+    OFFSET_HEIGHT = "offsetHeight",
+    EMPTY_STR = "",
+    IE = Y.UA.ie,
+    heightReallyMinHeight = IE < 7,
+    bbTempExpanding = Y.Widget.getClassName("tmp", "forcesize"),
+    contentExpanded = Y.Widget.getClassName("content", "expanded");
+
+// TODO: Ideally we want to re-use the base _uiSizeCB impl
+Y.Widget.prototype._uiSizeCB = function(expand) {
+
+    var bb = this.get(BOUNDING_BOX),
+        cb = this.get(CONTENT_BOX),
+        borderBoxSupported = this._bbs;
+
+    if(borderBoxSupported === undefined) {
+        this._bbs = borderBoxSupported = !(IE < 8 && bb.get("ownerDocument").get("compatMode") != "BackCompat"); 
+    }
+
+    if (borderBoxSupported) {
+        cb.toggleClass(contentExpanded, expand);
+    } else {
+        if (expand) {
+            if (heightReallyMinHeight) {
+                bb.addClass(bbTempExpanding);
+            }
+
+            cb.set(OFFSET_HEIGHT, bb.get(OFFSET_HEIGHT));
+
+            if (heightReallyMinHeight) {
+                bb.removeClass(bbTempExpanding);
+            }
+        } else {
+            cb.setStyle(HEIGHT, EMPTY_STR);
+        }
+    }
+};
+
+
+}, '3.3.0' ,{requires:['widget-base']});

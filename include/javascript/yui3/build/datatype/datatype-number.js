@@ -5,4 +5,148 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("datatype-number-parse",function(b){var a=b.Lang;b.mix(b.namespace("DataType.Number"),{parse:function(d){var c=(d===null)?d:+d;if(a.isNumber(c)){return c;}else{return null;}}});b.namespace("Parsers").number=b.DataType.Number.parse;},"3.3.0",{requires:["yui-base"]});YUI.add("datatype-number-format",function(b){var a=b.Lang;b.mix(b.namespace("DataType.Number"),{format:function(j,e){if(a.isNumber(j)){e=e||{};var d=(j<0),f=j+"",n=e.decimalPlaces,c=e.decimalSeparator||".",m=e.thousandsSeparator,l,g,k,h;if(a.isNumber(n)&&(n>=0)&&(n<=20)){f=j.toFixed(n);}if(c!=="."){f=f.replace(".",c);}if(m){l=f.lastIndexOf(c);l=(l>-1)?l:f.length;g=f.substring(l);for(k=0,h=l;h>0;h--){if((k%3===0)&&(h!==l)&&(!d||(h>1))){g=m+g;}g=f.charAt(h-1)+g;k++;}f=g;}f=(e.prefix)?e.prefix+f:f;f=(e.suffix)?f+e.suffix:f;return f;}else{return(a.isValue(j)&&j.toString)?j.toString():"";}}});},"3.3.0",{requires:["yui-base"]});YUI.add("datatype-number",function(a){},"3.3.0",{use:["datatype-number-parse","datatype-number-format"]});
+YUI.add('datatype-number-parse', function(Y) {
+
+/**
+ * Parse number submodule.
+ *
+ * @module datatype
+ * @submodule datatype-number-parse
+ * @for DataType.Number
+ */
+
+var LANG = Y.Lang;
+
+Y.mix(Y.namespace("DataType.Number"), {
+    /**
+     * Converts data to type Number.
+     *
+     * @method parse
+     * @param data {String | Number | Boolean} Data to convert. The following
+     * values return as null: null, undefined, NaN, "".
+     * @return {Number} A number, or null.
+     */
+    parse: function(data) {
+        var number = (data === null) ? data : +data;
+        if(LANG.isNumber(number)) {
+            return number;
+        }
+        else {
+            return null;
+        }
+    }
+});
+
+// Add Parsers shortcut
+Y.namespace("Parsers").number = Y.DataType.Number.parse;
+
+
+}, '3.3.0' ,{requires:['yui-base']});
+YUI.add('datatype-number-format', function(Y) {
+
+/**
+ * Number submodule.
+ *
+ * @module datatype
+ * @submodule datatype-number
+ */
+
+/**
+ * Format number submodule.
+ *
+ * @module datatype
+ * @submodule datatype-number-format
+ */
+ 
+/**
+ * DataType.Number provides a set of utility functions to operate against Number objects.
+ *
+ * @class DataType.Number
+ * @static
+ */
+var LANG = Y.Lang;
+
+Y.mix(Y.namespace("DataType.Number"), {
+     /**
+     * Takes a Number and formats to string for display to user.
+     *
+     * @method format
+     * @param data {Number} Number.
+     * @param config {Object} (Optional) Optional configuration values:
+     *  <dl>
+     *   <dt>prefix {String}</dd>
+     *   <dd>String prepended before each number, like a currency designator "$"</dd>
+     *   <dt>decimalPlaces {Number}</dd>
+     *   <dd>Number of decimal places to round. Must be a number 0 to 20.</dd>
+     *   <dt>decimalSeparator {String}</dd>
+     *   <dd>Decimal separator</dd>
+     *   <dt>thousandsSeparator {String}</dd>
+     *   <dd>Thousands separator</dd>
+     *   <dt>suffix {String}</dd>
+     *   <dd>String appended after each number, like " items" (note the space)</dd>
+     *  </dl>
+     * @return {String} Formatted number for display. Note, the following values
+     * return as "": null, undefined, NaN, "".
+     */
+    format: function(data, config) {
+        if(LANG.isNumber(data)) {
+            config = config || {};
+
+            var isNeg = (data < 0),
+                output = data + "",
+                decPlaces = config.decimalPlaces,
+                decSep = config.decimalSeparator || ".",
+                thouSep = config.thousandsSeparator,
+                decIndex,
+                newOutput, count, i;
+
+            // Decimal precision
+            if(LANG.isNumber(decPlaces) && (decPlaces >= 0) && (decPlaces <= 20)) {
+                // Round to the correct decimal place
+                output = data.toFixed(decPlaces);
+            }
+
+            // Decimal separator
+            if(decSep !== "."){
+                output = output.replace(".", decSep);
+            }
+
+            // Add the thousands separator
+            if(thouSep) {
+                // Find the dot or where it would be
+                decIndex = output.lastIndexOf(decSep);
+                decIndex = (decIndex > -1) ? decIndex : output.length;
+                // Start with the dot and everything to the right
+                newOutput = output.substring(decIndex);
+                // Working left, every third time add a separator, every time add a digit
+                for (count = 0, i=decIndex; i>0; i--) {
+                    if ((count%3 === 0) && (i !== decIndex) && (!isNeg || (i > 1))) {
+                        newOutput = thouSep + newOutput;
+                    }
+                    newOutput = output.charAt(i-1) + newOutput;
+                    count++;
+                }
+                output = newOutput;
+            }
+
+            // Prepend prefix
+            output = (config.prefix) ? config.prefix + output : output;
+
+            // Append suffix
+            output = (config.suffix) ? output + config.suffix : output;
+
+            return output;
+        }
+        // Not a Number, just return as string
+        else {
+            return (LANG.isValue(data) && data.toString) ? data.toString() : "";
+        }
+    }
+});
+
+
+}, '3.3.0' ,{requires:['yui-base']});
+
+
+YUI.add('datatype-number', function(Y){}, '3.3.0' ,{use:['datatype-number-parse', 'datatype-number-format']});
+

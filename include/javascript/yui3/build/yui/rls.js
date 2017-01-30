@@ -5,4 +5,64 @@ http://developer.yahoo.com/yui/license.html
 version: 3.3.0
 build: 3167
 */
-YUI.add("rls",function(a){a._rls=function(g){var d=a.config,f=d.rls||{m:1,v:a.version,gv:d.gallery,env:1,lang:d.lang,"2in3v":d["2in3"],"2v":d.yui2,filt:d.filter,filts:d.filters,tests:1},b=d.rls_base||"load?",e=d.rls_tmpl||function(){var h="",i;for(i in f){if(i in f&&f[i]){h+=i+"={"+i+"}&";}}return h;}(),c;f.m=g;f.env=a.Object.keys(YUI.Env.mods);f.tests=a.Features.all("load",[a]);c=a.Lang.sub(b+e,f);d.rls=f;d.rls_tmpl=e;return c;};},"3.3.0",{requires:["get","features"]});
+YUI.add('rls', function(Y) {
+
+/**
+ * Implentation for building the remote loader service url.
+ * @method _rls
+ * @param {Array} what the requested modules.
+ * @since 3.2.0
+ * @return {string} the url for the remote loader service call.
+ */
+Y._rls = function(what) {
+
+    var config = Y.config,
+
+        // the configuration
+        rls = config.rls || {
+            m: 1, // required in the template
+            v: Y.version,
+            gv: config.gallery,
+            env: 1, // required in the template
+            lang: config.lang,
+            '2in3v': config['2in3'],
+            '2v': config.yui2,
+            filt: config.filter,
+            filts: config.filters,
+            tests: 1 // required in the template
+        },
+
+        // The rls base path
+        rls_base = config.rls_base || 'load?',
+
+        // the template
+        rls_tmpl = config.rls_tmpl || function() {
+            var s = '', param;
+            for (param in rls) {
+                if (param in rls && rls[param]) {
+                    s += param + '={' + param + '}&';
+                }
+            }
+            // console.log('rls_tmpl: ' + s);
+            return s;
+        }(),
+
+        url;
+
+    // update the request
+    rls.m = what;
+    rls.env = Y.Object.keys(YUI.Env.mods);
+    rls.tests = Y.Features.all('load', [Y]);
+
+    url = Y.Lang.sub(rls_base + rls_tmpl, rls);
+
+    config.rls = rls;
+    config.rls_tmpl = rls_tmpl;
+
+    // console.log(url);
+    return url;
+};
+
+
+
+}, '3.3.0' ,{requires:['get','features']});

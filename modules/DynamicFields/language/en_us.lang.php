@@ -108,6 +108,7 @@ $mod_strings = array(
     'LBL_AUDITED' => 'Audited',
     'LBL_REPORTABLE' => 'Reportable',
     'ERR_RESERVED_FIELD_NAME' => "Reserved Keyword",
+    'ERR_LENGHT' => "Reserved Keywordaaaaaaaaaaa",
     'ERR_SELECT_FIELD_TYPE' => 'Please Select a Field Type',
     'ERR_FIELD_NAME_ALREADY_EXISTS' => 'Field Name already exists',
     'LBL_BTN_ADD' => 'Add',
