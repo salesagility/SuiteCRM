@@ -429,15 +429,17 @@ ul.yui-nav li.selected {
   display: inline-block;
   padding: 0 0 0 4px;
   float: right;
-  width: 46px;
   vertical-align: middle;
+}
+
+.qtip-title-buttons a:first-of-type {
+  margin: 0 0 0 4px;
 }
 
 .qtip-title-buttons a {
   color: $qtip-btn-color;
-  padding: 0;
-  padding-left: 8px;
-  margin: 0 0 0 4px;
+  padding: 0 4px;
+  margin: 0;
 }
 
 .qtip-title-buttons a:hover {
@@ -848,3 +850,43 @@ iframe.teamNoticeBox {
   overflow: auto;
   width: 100%;
 }
+
+
+.modal-cal-edit .modal-content {
+  width: 95%;
+}
+
+.modal-cal-edit  .modal-lg {
+  width: 90%;
+}
+
+.modal-calendar-user-list .modal-content {
+  width: 95%;
+}
+
+.modal-calendar-settings  .modal-content  {
+  width: 95%;
+}
+
+.modal-calendar-user-list .modal-content select {
+  color: $main-font-color;
+}
+
+@media (min-width: 1350px) {
+  .modal-cal-edit .modal-content {
+    width: 90%;
+  }
+
+  .modal-cal-edit  .modal-lg {
+    width: 80%;
+  }
+
+  .modal-calendar-user-list .modal-content {
+    width: 900px;
+  }
+
+  .modal-calendar-settings  .modal-content  {
+    width: 900px;
+  }
+}
+

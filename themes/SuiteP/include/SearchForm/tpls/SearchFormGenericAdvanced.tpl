@@ -123,7 +123,7 @@
             </div>
             <div class="hideUnusedSavedSearchElements" scope='row' width='10%'
                  nowrap="nowrap"{if !$savedSearchData.selected} style="display: none;"{/if}>
-                <label>{sugar_translate label='LBL_MODIFY_CURRENT_SEARCH' module='SavedSearch'}: <span
+                <label>{sugar_translate label='LBL_MODIFY_CURRENT_FILTER' module='SavedSearch'}: <span
                             id='curr_search_name'>"{$savedSearchData.options[$savedSearchData.selected]}"</span></label>
             </div>
             <div class="hideUnusedSavedSearchElements" width='30%'
@@ -167,9 +167,9 @@
                 <div style="display: none">
                     {/if}
                     <a id="basic_search_link" href="javascript:void(0)"
-                       accesskey="{$APP.LBL_ADV_SEARCH_LNK_KEY}">{$APP.LNK_BASIC_SEARCH}</a>
+                       accesskey="{$APP.LBL_ADV_SEARCH_LNK_KEY}">{$APP.LNK_BASIC_FILTER}</a>
         <span class='white-space'>
-            &nbsp;&nbsp;&nbsp;{if $SAVED_SEARCHES_OPTIONS}|&nbsp;&nbsp;&nbsp;<b>{$APP.LBL_SAVED_SEARCH_SHORTCUT}</b>&nbsp;
+            &nbsp;&nbsp;&nbsp;{if $SAVED_SEARCHES_OPTIONS}|&nbsp;&nbsp;&nbsp;<b>{$APP.LBL_SAVED_FILTER_SHORTCUT}</b>&nbsp;
             {$SAVED_SEARCHES_OPTIONS} {/if}
             <span id='go_btn_span' style='display:none'><input tabindex='2' title='go_select' id='go_select'
                                                                onclick='SUGAR.searchForm.clear_form(this.form);'
