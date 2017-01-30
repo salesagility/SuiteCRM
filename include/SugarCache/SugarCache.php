@@ -178,9 +178,30 @@ function sugar_cache_put($key, $value, $ttl = null)
  *
  * @param String $key -- Key from global namespace
  */
-function sugar_cache_clear($key)
+function sugar_cache_clear($key, $group = 'default')
 {
-    unset(SugarCache::instance()->$key);
+    if(get_class(SugarCache::instance()) == 'SugarCachePHPCacheLite'){
+        SugarCache::instance()->remove($key, $group);
+    }
+    else{
+        unset(SugarCache::instance()->$key);
+    }
+}
+
+/**
+* Clean the Cache for a given group
+*
+* @param string $group
+*/
+function sugar_cache_clean_group($group = 'default')
+{
+    global $log;
+    $msg = 'Cache backend do not support groups to clean group: ';
+    if(get_class(SugarCache::instance()) == 'SugarCachePHPCacheLite'){
+        SugarCache::instance()->clean($group);
+        $msg = 'Clean clean group: ';
+    }
+    $log->info($msg . $group);
 }
 
 /**
@@ -200,8 +221,9 @@ function sugar_cache_reset()
  */
 function sugar_cache_reset_full()
 {
-    SugarCache::instance()->resetFull();
-    SugarCache::cleanOpcodes();
+     SugarCache::cleanOpcodes();
+    $a = SugarCache::instance()->resetFull();
+    return $a;
 }
 
 /**
@@ -249,4 +271,38 @@ function sugar_cache_validate()
 function external_cache_retrieve_helper($key)
 {
     return SugarCache::instance()->$key;
+}
+
+/**
+* Retrieves the query result row as an associative array
+* from the cache or the database
+*
+* @param string $query
+* @param string $group
+* @param  bool     $dieOnError True if we want to call die if the query returns errors
+* @param  string   $msg        Message to log if error occurs
+* @param  bool     $suppress   Flag to suppress all error output unless in debug logging mode.
+* @param  bool     $keepResult True if we want to push this result into the $lastResult array.
+* @param  bool     $exceptionOnError true if we want to throw an Exception immediately on error
+* @return a result row as an associative array
+*/
+
+function getCacheQueryAssoc($query, $group, $dieOnError = false, $msg = '', $suppress = false, $keepResult = false, $exceptionOnError = false)
+{
+    global $db, $log;
+    $t1 = microtime(true);
+    $group_id = base64_encode(serialize(array('group' => $group, 'id' => $query)));
+    $a = SugarCache::instance()->$group_id;
+    $t = microtime(true) - $t1;
+
+    if(empty($a)){
+        $r = $db->query($query, $dieOnError = false, $msg = '', $suppress = false, $keepResult = false, $exceptionOnError = false);
+        $a = $db->fetchByAssoc($r);
+        SugarCache::instance()->set($group_id, $a, null);
+    }
+    else{
+        $log->info('CACHE HIT! Query: '. $query);
+        $log->info('CACHE HIT! Query Execution Time:'.$t);
+    }
+    return($a);
 }

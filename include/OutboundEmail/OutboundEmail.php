@@ -111,8 +111,7 @@ class OutboundEmail {
 	function getUsersMailerForSystemOverride($user_id)
 	{
 	    $query = "SELECT id FROM outbound_email WHERE user_id = '{$user_id}' AND type = 'system-override' ORDER BY name";
-		$rs = $this->db->query($query);
-		$row = $this->db->fetchByAssoc($rs);
+        $row = getCacheQueryAssoc($query, get_class());
 		if(!empty($row['id']))
 		{
 		  $oe = new OutboundEmail();
@@ -253,8 +252,7 @@ class OutboundEmail {
 			$mailer = "AND id = '{$mailer_id}'";
 		} elseif(!empty($ieId)) {
 			$q = "SELECT stored_options FROM inbound_email WHERE id = '{$ieId}'";
-			$r = $this->db->query($q);
-			$a = $this->db->fetchByAssoc($r);
+            $a = getCacheQueryAssoc($q, get_class());
 
 			if(!empty($a)) {
 				$opts = unserialize(base64_decode($a['stored_options']));
@@ -266,8 +264,7 @@ class OutboundEmail {
 		}
 
 		$q = "SELECT id FROM outbound_email WHERE user_id = '{$user->id}' {$mailer}";
-		$r = $this->db->query($q);
-		$a = $this->db->fetchByAssoc($r);
+        $a = getCacheQueryAssoc($q, get_class());
 
 		if(empty($a)) {
 			$ret = $this->getSystemMailerSettings();
@@ -315,8 +312,7 @@ class OutboundEmail {
 			$mailer = "id = '{$mailer_id}'";
 		} elseif(!empty($ieId)) {
 			$q = "SELECT stored_options FROM inbound_email WHERE id = '{$ieId}'";
-			$r = $this->db->query($q);
-			$a = $this->db->fetchByAssoc($r);
+            $a = getCacheQueryAssoc($q, get_class());
 
 			if(!empty($a)) {
 				$opts = unserialize(base64_decode($a['stored_options']));
@@ -337,8 +333,7 @@ class OutboundEmail {
 		} // if
 
 		$q = "SELECT id FROM outbound_email WHERE {$mailer}";
-		$r = $this->db->query($q);
-		$a = $this->db->fetchByAssoc($r);
+        $a = getCacheQueryAssoc($q, get_class());
 
 		if(empty($a)) {
 			$ret = $this->getSystemMailerSettings();
@@ -357,8 +352,7 @@ class OutboundEmail {
 
 	    // first check that a system default exists
 	    $q = "SELECT id FROM outbound_email WHERE type = 'system'";
-		$r = $this->db->query($q);
-		$a = $this->db->fetchByAssoc($r);
+        $a = getCacheQueryAssoc($q, get_class());
 		if (!empty($a)) {
 		    // next see if the admin preference for using the system outbound is set
             $admin = new Administration();
@@ -376,8 +370,7 @@ class OutboundEmail {
 	 */
 	function getSystemMailerSettings() {
 		$q = "SELECT id FROM outbound_email WHERE type = 'system'";
-		$r = $this->db->query($q);
-		$a = $this->db->fetchByAssoc($r);
+        $a = getCacheQueryAssoc($q, get_class());
 
 		if(empty($a)) {
 			$this->id = "";
@@ -410,8 +403,7 @@ class OutboundEmail {
 	function retrieve($id) {
 		require_once('include/utils/encryption_utils.php');
 		$q = "SELECT * FROM outbound_email WHERE id = '{$id}'";
-		$r = $this->db->query($q);
-		$a = $this->db->fetchByAssoc($r);
+        $a = getCacheQueryAssoc($q, get_class());
 
 		if(!empty($a)) {
 			foreach($a as $k => $v) {
@@ -493,6 +485,7 @@ class OutboundEmail {
 		}
 
 		$this->db->query($q, true);
+        sugar_cache_clean_group(get_class());
 		return $this;
 	}
 
@@ -501,8 +494,7 @@ class OutboundEmail {
 	 */
 	function saveSystem() {
 		$q = "SELECT id FROM outbound_email WHERE type = 'system'";
-		$r = $this->db->query($q);
-		$a = $this->db->fetchByAssoc($r);
+        $a = getCacheQueryAssoc($q, get_class());
 
 		if(empty($a)) {
 			$a['id'] = ''; // trigger insert
@@ -541,6 +533,7 @@ class OutboundEmail {
         $query = "UPDATE outbound_email set ".implode(', ', $updvalues)." WHERE type='system-override' ";
 
 	    $this->db->query($query);
+        sugar_cache_clean_group(get_class());
 	}
 	/**
 	 * Remove all of the user override accounts.
@@ -549,6 +542,7 @@ class OutboundEmail {
 	function removeUserOverrideAccounts()
 	{
 	    $query = "DELETE FROM outbound_email WHERE type = 'system-override'";
+        sugar_cache_clean_group(get_class());
 		return $this->db->query($query);
 	}
 	/**
@@ -560,6 +554,7 @@ class OutboundEmail {
 		}
 
 		$q = "DELETE FROM outbound_email WHERE id = ".$this->db->quoted($this->id);
+        sugar_cache_clean_group(get_class());
 		return $this->db->query($q);
 	}
 

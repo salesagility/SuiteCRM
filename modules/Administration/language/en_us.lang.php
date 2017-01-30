@@ -606,6 +606,8 @@ $mod_strings = array(
     'LBL_REBUILD_AUDIT_SKIP' => 'Audit table for %1$s already exists. skipping...<BR>',
     'LBL_REBUILD_CONFIG_DESC' => 'Rebuilds config.php by updating version and adding defaults when not explicitly declared',
     'LBL_REBUILD_CONFIG' => 'Rebuild Config File',
+    'LBL_RESET_CACHE' => 'Flush the cache.',
+    'LBL_RESET_CACHE_DESC' => 'Flush the cache in its entirety including the local and external store along with the opcodes',
     'LBL_REBUILD_DASHLETS_DESC_SHORT' => 'Rebuilds the SuiteCRM Dashlets cache file',
     'LBL_REBUILD_DASHLETS_DESC_SUCCESS' => 'SuiteCRM Dashlets cache file rebuilt.',
     'LBL_REBUILD_DASHLETS_DESC' => 'Removing SuiteCRM Dashlets cache and scanning known directories for SuiteCRM Dashlet files.',
@@ -1267,6 +1269,6 @@ $mod_strings = array(
 	'LBL_BUSINESS_HOURS_FROM' => 'From',
 	'LBL_BUSINESS_HOURS_TO' => 'To',
 	'LBL_BUSINESS_HOURS_OPEN' => "Open",
-
+    'MSG_CACHE_CLEANED' => 'The cache is now clean.',
+    'MSG_NOT_CACHE_CLEANED' => 'The cache could not be cleaned',
 );
-

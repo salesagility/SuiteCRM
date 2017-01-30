@@ -89,6 +89,10 @@ if(strpos($server_software,'Microsoft-IIS') === false) {
     <td> <?php echo $mod_strings['LBL_REBUILD_CONFIG_DESC'] ; ?> </td>
 </tr>
 <tr>
+    <td scope="row"><?php echo SugarThemeRegistry::current()->getImage('Rebuild','align="absmiddle" border="0"',null,null,'.gif',$mod_strings['LBL_RESET_CACHE']); ?>&nbsp;<a href="./index.php?module=Administration&action=ResetCache"><?php echo $mod_strings['LBL_RESET_CACHE']; ?></a></td>
+    <td> <?php echo $mod_strings['LBL_RESET_CACHE_DESC'] ; ?> </td>
+</tr>
+<tr>
 	<td scope="row"><?php echo SugarThemeRegistry::current()->getImage('Rebuild','align="absmiddle" border="0"',null,null,'.gif',$mod_strings['LBL_REBUILD_REL_TITLE']); ?>&nbsp;<a href="./index.php?module=Administration&action=RebuildRelationship"><?php echo $mod_strings['LBL_REBUILD_REL_TITLE']; ?></a></td>
 	<td> <?php echo $mod_strings['LBL_REBUILD_REL_DESC'] ; ?> </td>
 </tr>

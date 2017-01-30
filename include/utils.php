@@ -622,9 +622,10 @@ function get_user_array($add_blank = true, $status = 'Active', $user_id = '', $u
         $locale = new Localization();
     }
 
-    if ($from_cache) {
-        $key_name = $add_blank.$status.$user_id.$use_real_name.$user_name_filter.$portal_filter;
-        $user_array = get_register_value('user_array', $key_name);
+	if($from_cache) {
+        $key_name = 'User_'.$add_blank. $status . $user_id . $use_real_name . $user_name_filter . $portal_filter;
+        $group_id = base64_encode(serialize(array('group' => 'User', 'id' => $key_name)));
+        $user_array = sugar_cache_retrieve($group_id);
     }
 
     if (empty($user_array)) {
@@ -701,7 +702,7 @@ function get_user_array($add_blank = true, $status = 'Active', $user_id = '', $u
 
         $user_array = $temp_result;
         if ($from_cache) {
-            set_register_value('user_array', $key_name, $temp_result);
+            sugar_cache_put($group_id, $temp_result);
         }
     }
 
