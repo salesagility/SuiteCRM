@@ -232,6 +232,7 @@ SUGAR.mySugar = function() {
 		 * @param bool dynamic does the script load dynamic javascript, set to true if you user needs to refresh the dashlet after load
 		 */
 		retrieveDashlet: function(id, url, callback, dynamic, pageReload, pageTabElement) {
+
 			var _pageReload = typeof pageReload == 'undefined' ? false : pageReload;
       var _pageTabElement = typeof pageTabElement == 'undefined' || pageTabElement.length == 0 ? false : pageTabElement;
       if(!_pageTabElement && SUGAR.mySugar.currentDashlet && $('#' + SUGAR.mySugar.currentDashlet.id).closest('.tab-pane').length > 0) {
@@ -266,7 +267,7 @@ SUGAR.mySugar = function() {
 				}
 
 
-				$(SUGAR.mySugar.currentDashlet)
+				$('#dashlet_entire_' + id)
 					.find('.bd-center')
 					.html(updateDashlet);
 
