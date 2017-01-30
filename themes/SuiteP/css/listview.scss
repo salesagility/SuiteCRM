@@ -3429,6 +3429,13 @@ ul.clickMenu > li > span.searchAppliedAlert {
   }
 }
 
+@media (max-width: 460px) {
+  .modal-search .form-item {
+    float: none;
+    width: initial;
+  }
+}
+
 .modal-search .row {
   margin-bottom: 30px;
 }
@@ -3465,9 +3472,11 @@ ul.clickMenu > li > span.searchAppliedAlert {
   width: 30%;
 }
 
-.modal-search .form-item {
-  float: left;
-  width: 70%;
+@media (min-width: 460px) {
+  .modal-search .form-item {
+    float: left;
+    width: 70%;
+  }
 }
 
 .modal-search .form-item.radios > div {
