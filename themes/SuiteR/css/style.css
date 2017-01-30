@@ -3935,7 +3935,7 @@ span#quickcreateplus{
 /* Padding for sidebar items */
 
 .nav > li > a {
-    padding:8px 0 8px 0;
+    padding:8px 8px;
 }
 
 li.moremenu {
