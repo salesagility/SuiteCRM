@@ -6026,7 +6026,8 @@ ul.chooserList.red.ui-sortable > li {
 }
 
 div.modal-header {
-    padding: 25px;
+    padding: 25px 25px 0px 25px;
+    border-bottom: none;
 }
 
 #columnsFilterList {
