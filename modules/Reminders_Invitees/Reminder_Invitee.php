@@ -140,7 +140,7 @@ class Reminder_Invitee extends Basic {
 	 * Delete reminders invitees multiple.
 	 *
 	 * @param string $reminderId Related Reminder GUID
-	 * @param array $inviteeIds (optional) Exluded Invitees GUIDs, the invitee will not deleted if this argument contains that. Default is empty array.
+	 * @param array $inviteeIds (optional) Excluded Invitees GUIDs, the invitee will not deleted if this argument contains that. Default is empty array.
 	 */
     public static function deleteRemindersInviteesMultiple($reminderId, $inviteeIds = array()) {
         $invitees = BeanFactory::getBean('Reminders_Invitees')->get_full_list("", "reminders_invitees.reminder_id = '$reminderId'");

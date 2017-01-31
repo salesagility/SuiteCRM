@@ -106,6 +106,8 @@ $dictionary['Reminder']['indices'] = array (
     array('name' =>'idx_reminder_deleted', 'type'=>'index', 'fields'=>array('deleted')),
     array('name' =>'idx_reminder_related_event_module', 'type'=>'index', 'fields'=>array('related_event_module')),
     array('name' =>'idx_reminder_related_event_module_id', 'type'=>'index', 'fields'=>array('related_event_module_id')),
+    array('name' =>'idx_reminder_popup', 'type'=>'index', 'fields'=>array('popup')),
+    array('name' =>'idx_reminder_email', 'type'=>'index', 'fields'=>array('email')),
 );
 
 if (!class_exists('VardefManager')){
