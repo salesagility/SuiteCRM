@@ -4002,10 +4002,6 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
   content: '';
 }
 
-.paginationActionButtons .parent-dropdown-handler {
-  padding: 0 0 0 5px;
-}
-
 .paginationActionButtons .parent-dropdown-handler label {
   margin-bottom: 0px;
 }
@@ -4046,8 +4042,6 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
 }
 
 .selectActionsDisabled span.ab {
-  border-left: 1px #ccc solid;
-  margin-left: 10px;
   padding-left: 5px;
 }
 
@@ -4316,6 +4310,11 @@ ul.clickMenu > li, ul.SugarActionMenuIESub li {
   font-size: 12px;
 }
 
+ul.clickMenu > li:hover, ul.SugarActionMenuIESub li:hover {
+  background: red;
+  color: white;
+}
+
 .selectActionsDisabled {
   padding: 5px 8px 5px 8px;
   margin: 0 3px 0 3px;
@@ -4331,7 +4330,7 @@ ul.clickMenu > li, ul.SugarActionMenuIESub li {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0); /* IE6-8 */
   border: solid 1px #999999;
   color: #121212;
-  border-radius: 2px;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 12px;
 }
@@ -6613,11 +6612,6 @@ ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > l
   padding: 6px 6px 8px 5px;
   border-radius: 4px;
   top: 0px;
-}
-
-ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > li > a:hover {
-  background-color: #fff;
-  color: #000;
 }
 
 .paginationActionButtons input {
