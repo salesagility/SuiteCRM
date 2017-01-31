@@ -165,8 +165,6 @@
                            value="{$APP.LBL_BROWSE_DOCUMENTS_BUTTON_LABEL}"
                            onclick='open_popup("Documents", 600, 400, "&caller=Documents", true, false, "");'/>
                 {/if}
-                <a id="basic_search_link" href="javascript:void(0)"
-                   accesskey="{$APP.LBL_ADV_SEARCH_LNK_KEY}">{$APP.LNK_BASIC_FILTER}</a>
         <span class='white-space'>
             &nbsp;&nbsp;&nbsp;{if $SAVED_SEARCHES_OPTIONS}|&nbsp;&nbsp;&nbsp;<b>{$APP.LBL_SAVED_FILTER_SHORTCUT}</b>&nbsp;
             {$SAVED_SEARCHES_OPTIONS} {/if}
