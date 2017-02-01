@@ -43,8 +43,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * *******************************************************************************/
 
 $mod_strings = array(
-	'LBL_BASIC_SEARCH'					=> 'Basic Search',
-	'LBL_ADVANCED_SEARCH'				=> 'Advanced Search',
+	'LBL_BASIC_SEARCH'					=> 'Quick Filter',
+	'LBL_ADVANCED_SEARCH'				=> 'Advanced Filter',
 	'LBL_BASIC_TYPE'					=> 'Basic Type',
 	'LBL_ADVANCED_TYPE'					=> 'Advanced Type',
 	'LBL_SYSOPTS_1'						=> 'Select from the following system configuration options below.',

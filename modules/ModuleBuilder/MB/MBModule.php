@@ -468,21 +468,17 @@ class MBModule
         $smarty->left_delimiter = '{{' ;
         $smarty->right_delimiter = '}}' ;
         $smarty->assign ( 'class', $class ) ;
-        //write sugar generated class
-        $fp = sugar_fopen ( $path . '/' . $class [ 'name' ] . '_sugar.php', 'w' ) ;
-        fwrite ( $fp, $smarty->fetch ( 'modules/ModuleBuilder/tpls/MBModule/Class.tpl' ) ) ;
-        fclose ( $fp ) ;
+
+        if (! file_exists ( $path . '/' . $class [ 'name' ] . '.php' )) {
+            $fp = sugar_fopen($path . '/' . $class ['name'] . '.php', 'w');
+            fwrite($fp, $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/Class.tpl'));
+            fclose($fp);
+        }
         //write vardefs
         $fp = sugar_fopen ( $path . '/vardefs.php', 'w' ) ;
         fwrite ( $fp, $smarty->fetch ( 'modules/ModuleBuilder/tpls/MBModule/vardef.tpl' ) ) ;
         fclose ( $fp ) ;
-
-        if (! file_exists ( $path . '/' . $class [ 'name' ] . '.php' ))
-        {
-            $fp = sugar_fopen ( $path . '/' . $class [ 'name' ] . '.php', 'w' ) ;
-            fwrite ( $fp, $smarty->fetch ( 'modules/ModuleBuilder/tpls/MBModule/DeveloperClass.tpl' ) ) ;
-            fclose ( $fp ) ;
-        }
+        
         if (! file_exists ( $path . '/metadata' ))
             mkdir_recursive ( $path . '/metadata' ) ;
         if (! empty ( $this->config [ 'studio' ] ))
