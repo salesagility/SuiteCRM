@@ -2452,8 +2452,6 @@ $app_strings = array(
 
     'LBL_FILTER_HEADER_TITLE' => 'Filter',
 
-    'LBL_AOP_INTERNAL' => 'Internal',
-
 );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
