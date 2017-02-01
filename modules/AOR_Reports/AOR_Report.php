@@ -1178,13 +1178,15 @@ class AOR_Report extends Basic {
         $ChartRow = new AOR_Chart();
         $ChartRow->retrieve($row['id']);
 
+
+
         if($beanList[$this->report_module]){
             $module = new $beanList[$this->report_module]();
 
             $query['id_select'][$module->table_name] = $this->db->quoteIdentifier($module->table_name).".id AS '".$module->table_name."_id'";
             $query['id_select_group'][$module->table_name] = $this->db->quoteIdentifier($module->table_name).".id";
 
-            $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND deleted = 0 ORDER BY field_order ASC";
+            $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND deleted = 0 AND (field_order = $ChartRow->x_field OR field_order = $ChartRow->y_field) ORDER BY field_order ASC";
 
             $result = $this->db->query($sql);
 
