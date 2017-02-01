@@ -1162,14 +1162,22 @@ class AOR_Report extends Basic {
     }
 
 
-
+    /**
+     * @param array $query
+     * @param string $group_value
+     * @return array
+     */
     function build_report_query_select_chart($query = array(), $group_value =''){
         global $beanList, $timedate;
-//        if($beanList['AOR_Charts']){
-//            $chartbean = BeanFactory::newBean('AOR_Charts');
-//            $chartbean->get_list()
-//
-//        }
+        $chartbean = BeanFactory::newBean('AOR_Charts');
+
+        $sql = "SELECT id FROM aor_charts WHERE aor_report_id = '".$this->id."' AND deleted = 0 ORDER BY name ASC";
+
+        $row = $this->db->fetchOne($sql);
+
+        $ChartRow = new AOR_Chart();
+        $ChartRow->retrieve($row['id']);
+
         if($beanList[$this->report_module]){
             $module = new $beanList[$this->report_module]();
 
@@ -1190,6 +1198,12 @@ class AOR_Report extends Basic {
 
                 $field = new AOR_Field();
                 $field->retrieve($row['id']);
+                $reportId = "aor_charts.aor_report_id ='".$row['id']."'";
+                $chartEnt = $chartbean->get_full_list(
+                    "name",
+                    $reportId
+                    );
+
 
                 $field->label = str_replace(' ','_',$field->label).$i;
 
