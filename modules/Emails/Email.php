@@ -1078,7 +1078,8 @@ class Email extends SugarBean {
                  }
 			}
 
-			parent::save($check_notify);
+			// croessler: has the parent-bean or its id been modified? compare via fetched-row...
+            // if so, delete the old relation and add the new one. one email can only be related to one parent, not multiple parents.
 
 			if(!empty($this->parent_type) && !empty($this->parent_id)) {
                 if(!empty($this->fetched_row) && !empty($this->fetched_row['parent_id']) && !empty($this->fetched_row['parent_type'])) {
