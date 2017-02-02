@@ -91,7 +91,9 @@ class Reminder extends Basic
     {
         $savedReminderIds = array();
         foreach ($remindersData as $reminderData) {
-            if (isset($_POST['isDuplicate']) && $_POST['isDuplicate']) $reminderData->id = '';
+            if (isset($_POST['isDuplicate']) && $_POST['isDuplicate']) {
+                $reminderData->id = '';
+            }
             $reminderBean = BeanFactory::getBean('Reminders', $reminderData->id);
             $reminderBean->popup = $reminderData->popup;
             $reminderBean->email = $reminderData->email;
@@ -104,7 +106,8 @@ class Reminder extends Basic
             $reminderId = $reminderBean->id;
             Reminder_Invitee::saveRemindersInviteesData($reminderId, $reminderData->invitees);
         }
-        $reminders = BeanFactory::getBean('Reminders')->get_full_list("", "reminders.related_event_module = '$eventModule' AND reminders.related_event_module_id = '$eventModuleId'");
+        $reminders = BeanFactory::getBean('Reminders')->get_full_list("",
+            "reminders.related_event_module = '$eventModule' AND reminders.related_event_module_id = '$eventModuleId'");
         if ($reminders) {
             foreach ($reminders as $reminder) {
                 if (!in_array($reminder->id, $savedReminderIds)) {
@@ -133,6 +136,7 @@ class Reminder extends Basic
         if (!$remindersDataJson && json_last_error()) {
             throw new Exception(json_last_error_msg());
         }
+
         return $remindersDataJson;
     }
 
@@ -149,7 +153,8 @@ class Reminder extends Basic
     {
         if (!isset(self::$remindersData[$eventModule][$eventModuleId]) || !$eventModuleId || $isDuplicate) {
             $ret = array();
-            $reminders = BeanFactory::getBean('Reminders')->get_full_list("reminders.date_entered", "reminders.related_event_module = '$eventModule' AND reminders.related_event_module_id = '$eventModuleId'");
+            $reminders = BeanFactory::getBean('Reminders')->get_full_list("reminders.date_entered",
+                "reminders.related_event_module = '$eventModule' AND reminders.related_event_module_id = '$eventModuleId'");
             if ($reminders) {
                 foreach ($reminders as $reminder) {
                     $ret[] = array(
@@ -164,6 +169,7 @@ class Reminder extends Basic
             }
             self::$remindersData[$eventModule][$eventModuleId] = $ret;
         }
+
         return self::$remindersData[$eventModule][$eventModuleId];
     }
 
@@ -199,7 +205,8 @@ class Reminder extends Basic
         $eventModuleId = $reminder->related_event_module_id;
         $event = BeanFactory::getBean($eventModule, $eventModuleId);
         if ($event && (!isset($event->status) || $event->status != 'Held')) {
-            $invitees = BeanFactory::getBean('Reminders_Invitees')->get_full_list('', "reminders_invitees.reminder_id = '$reminderId'");
+            $invitees = BeanFactory::getBean('Reminders_Invitees')->get_full_list('',
+                "reminders_invitees.reminder_id = '$reminderId'");
             foreach ($invitees as $invitee) {
                 $inviteeModule = $invitee->related_invitee_module;
                 $inviteeModuleId = $invitee->related_invitee_module_id;
@@ -217,6 +224,7 @@ class Reminder extends Basic
                 }
             }
         }
+
         return $emails;
     }
 
@@ -224,11 +232,13 @@ class Reminder extends Basic
     {
         global $timedate;
         $reminders = array();
-        $reminderBeans = BeanFactory::getBean('Reminders')->get_full_list('', "reminders.email = 1 AND reminders.email_sent = 0");
+        $reminderBeans = BeanFactory::getBean('Reminders')->get_full_list('',
+            "reminders.email = 1 AND reminders.email_sent = 0");
         if (!empty($reminderBeans)) {
             foreach ($reminderBeans as $reminderBean) {
-                $eventBean = BeanFactory::getBean($reminderBean->related_event_module, $reminderBean->related_event_module_id);
-                if($eventBean) {
+                $eventBean = BeanFactory::getBean($reminderBean->related_event_module,
+                    $reminderBean->related_event_module_id);
+                if ($eventBean) {
                     $remind_ts = $timedate->fromUser($eventBean->date_start)->modify("-{$reminderBean->timer_email} seconds")->ts;
                     $now_ts = $timedate->getNow()->ts;
                     if ($now_ts >= $remind_ts) {
@@ -239,6 +249,7 @@ class Reminder extends Basic
                 }
             }
         }
+
         return $reminders;
     }
 
@@ -279,7 +290,7 @@ class Reminder extends Basic
         $dateTimeMax = $db->convert($db->quoted($dateTimeMax), 'datetime');
 
         // Original jsAlert used to a meeting integration.
-
+        // TODO: Remove as meeting integration is never implemented
         ///////////////////////////////////////////////////////////////////////
         ////	MEETING INTEGRATION
         $meetingIntegration = null;
@@ -292,75 +303,203 @@ class Reminder extends Basic
         ////	END MEETING INTEGRATION
         ///////////////////////////////////////////////////////////////////////
 
-        $popupReminders = BeanFactory::getBean('Reminders')->get_full_list('', "reminders.popup = 1");
+        // Pre-calculated values in seconds
+        $_24hours = 24;
+        $_1hour = 3600;
 
-        if ($popupReminders) {
-            foreach ($popupReminders as $popupReminder) {
-                $relatedEvent = BeanFactory::getBean($popupReminder->related_event_module, $popupReminder->related_event_module_id);
-                if ($relatedEvent &&
-                    (!isset($relatedEvent->status) || $relatedEvent->status == 'Planned') &&
-                    (!isset($relatedEvent->date_start) || (strtotime($relatedEvent->date_start) >= strtotime(self::unQuoteTime($dateTimeNow)) && strtotime($relatedEvent->date_start) <= strtotime(self::unQuoteTime($dateTimeMax)))) &&
-                    (!$checkDecline || ($checkDecline && !self::isDecline($relatedEvent, BeanFactory::getBean('Users', $current_user->id))))
-                ) {
-                    // The original popup/alert reminders check the accept_status field in related users/leads/contacts etc. and filtered these users who not decline this event.
-                    $invitees = BeanFactory::getBean('Reminders_Invitees')->get_full_list('', "reminders_invitees.reminder_id = '{$popupReminder->id}' AND reminders_invitees.related_invitee_module_id = '{$current_user->id}'");
-                    if ($invitees) {
-                        foreach ($invitees as $invitee) {
-                            // need to concatenate since GMT times can bridge two local days
-                            $timeStart = strtotime($db->fromConvert(isset($relatedEvent->date_start) ? $relatedEvent->date_start : date(TimeDate::DB_DATETIME_FORMAT), 'datetime'));
-                            $timeRemind = $popupReminder->timer_popup;
-                            $timeStart -= $timeRemind;
+        /**
+         * In case the user changes the duration dom dropdown
+         * We need to ensure that we know how many calendar slots there can be in a day.
+         * This is used to limit the query the default should be 96 possible calendar slots in a day.
+         */
+        $_smallestEventPeriod = array_reduce(
+            array_keys($app_list_strings['duration_dom']),
+            function ($carry, $item) {
 
-                            $url = 'index.php?action=DetailView&module=' . $popupReminder->related_event_module . '&record=' . $popupReminder->related_event_module_id;
-                            $instructions = $app_strings['MSG_JS_ALERT_MTG_REMINDER_MEETING_MSG'];
-
-                            if ($popupReminder->related_event_module == 'Meetings') {
-                                ///////////////////////////////////////////////////////////////////
-                                ////	MEETING INTEGRATION
-                                if (!empty($meetingIntegration) && $meetingIntegration->isIntegratedMeeting($popupReminder->related_event_module_id)) {
-                                    $url = $meetingIntegration->miUrlGetJsAlert((array)$popupReminder);
-                                    $instructions = $meetingIntegration->miGetJsAlertInstructions();
-                                }
-                                ////	END MEETING INTEGRATION
-                                ///////////////////////////////////////////////////////////////////
-                            }
-
-                            $meetingName = from_html(isset($relatedEvent->name) ? $relatedEvent->name : $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_EVENT_NAME']);
-                            $desc1 = from_html(isset($relatedEvent->description) ? $relatedEvent->description : $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_DESCRIPTION']);
-                            $location = from_html(isset($relatedEvent->location) ? $relatedEvent->location : $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_LOCATION']);
-
-                            $relatedToMeeting = $alert->getRelatedName($popupReminder->related_event_module, $popupReminder->related_event_module_id);
-
-                            $description = empty($desc1) ? '' : $app_strings['MSG_JS_ALERT_MTG_REMINDER_AGENDA'] . $desc1 . "\n";
-                            $description = $description . "\n" . $app_strings['MSG_JS_ALERT_MTG_REMINDER_STATUS'] . (isset($relatedEvent->status) ? $relatedEvent->status : '') . "\n" . $app_strings['MSG_JS_ALERT_MTG_REMINDER_RELATED_TO'] . $relatedToMeeting;
-
-
-                            if (isset($relatedEvent->date_start)) {
-                                $time_dbFromConvert = $db->fromConvert($relatedEvent->date_start, 'datetime');
-                                $time = $timedate->to_display_date_time($time_dbFromConvert);
-                                if (!$time) {
-                                    $time = $relatedEvent->date_start;
-                                }
-                                if (!$time) {
-                                    $time = $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_START_DATE'];
-                                }
-                            } else {
-                                $time = $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_START_DATE'];
-                            }
-
-                            // standard functionality
-                            $alert->addAlert($app_strings['MSG_JS_ALERT_MTG_REMINDER_MEETING'], $meetingName,
-                                $app_strings['MSG_JS_ALERT_MTG_REMINDER_TIME'] . $time,
-                                $app_strings['MSG_JS_ALERT_MTG_REMINDER_LOC'] . $location .
-                                $description .
-                                $instructions,
-                                $timeStart - strtotime($alertDateTimeNow),
-                                $url
-                            );
-                        }
-                    }
+                if (empty($carry) && empty($item)) {
+                    $carry = $item;
+                } elseif (empty($carry) && !empty($item) && is_numeric($item)) {
+                    $carry = $item;
+                } elseif ($item < $carry) {
+                    $carry = $item;
                 }
+
+                return $carry;
             }
+        );
+
+        $_maxReminderPeriod = $app_list_strings['reminder_max_time'];
+        // By default: There are 96 possible slots in 24hours that a reminder can refer to.
+        $_maxEventsInADay = ceil(($_1hour / $_smallestEventPeriod) * $_24hours);
+        $userNOW = $alertDateTimeNow;
+
+        /**
+         * Optimisation:
+         * Use a single query with a limit to get all the information needed.
+         *
+         * Starting with the current user id with the following table relationships
+         * $current_user->id: Reminder Invitees -< Reminders -< Reminder -< [Meeting/Call] -< [Meeting/Call]_user
+         *
+         * Returns Meetings_<field> or Calls_<field> depending if the reminder_related_event_module is set to Meetings
+         * or Calls.
+         *
+         * It limited by the total number of slots that can be in a calendar day. Since the user is only interested in
+         * alerts which are a day ahead. It is reasonable to assume that a user will not need more than the 96 by
+         * default.
+         *
+         * This means we can optimise the how many results need to be processed each time the user requests the meeting
+         *
+         */
+        $popupReminders = $db->query("
+SELECT 
+	m.name as Meetings_name, 
+	m.description as Meetings_description, 
+	m.date_start as Meetings_date_start, 
+	m.duration_hours as Meetings_duration_hours, 
+	m.duration_minutes as Meetings_duration_minutes, 
+	m.location as Meetings_location, 
+	m.status as Meetings_status, 
+	m.parent_type as Meetings_parent_type, 
+	m.parent_id as Meetings_parent_id, 
+	c.name as Calls_name, 
+	c.description as Calls_description, 
+	c.date_start as Calls_date_start, 
+	c.duration_hours as Calls_duration_hours, 
+	c.duration_minutes as Calls_duration_minutes, 
+	c.status as Calls_status,
+	c.parent_type as Calls_parent_type, 
+	c.parent_id as Calls_parent_id, 
+	ri.related_invitee_module as reminder_invitees_related_invitee_module, 
+	ri.related_invitee_module_id as reminder_invitees_related_invitee_module_id, 
+	r.id as reminder_id, 
+	r.timer_popup as reminder_timer_popup,
+	r.related_event_module as reminder_related_event_module,
+	r.related_event_module_id as reminder_related_event_module_id 
+FROM 
+	reminders_invitees ri 
+	JOIN reminders r ON r.id = ri.reminder_id 
+	AND r.popup = 1 
+	LEFT JOIN meetings m ON m.id = r.related_event_module_id 
+	AND r.related_event_module = 'Meetings' 
+	LEFT JOIN meetings_users mu ON mu.meeting_id = m.id
+    AND ri.related_invitee_module = 'Users' 
+    AND mu.user_id = ri.related_invitee_module_id
+    AND mu.accept_status LIKE 'accept'
+	LEFT JOIN calls c ON c.id = r.related_event_module_id 
+	AND r.related_event_module = 'Calls' 
+	LEFT JOIN calls_users cu ON cu.call_id = c.id
+    AND ri.related_invitee_module = 'Users' 
+    AND cu.user_id = ri.related_invitee_module_id
+    AND cu.accept_status LIKE 'accept'
+WHERE 
+	ri.related_invitee_module = 'Users' 
+	AND ri.related_invitee_module_id = '{$current_user->id}' 
+	AND r.deleted != 1 
+	AND 
+	(
+		(
+			m.date_start > DATE_SUB(CAST('{$userNOW}' AS datetime), INTERVAL {$_maxReminderPeriod} SECOND) 
+			AND m.deleted != 1
+		) 
+		OR (
+			c.date_start > DATE_SUB(CAST('{$userNOW}' AS datetime), INTERVAL {$_maxReminderPeriod} SECOND) 
+			AND c.deleted != 1
+		)
+	)
+ORDER BY 
+	m.date_end ASC 
+LIMIT 
+	{$_maxEventsInADay}
+");
+        if (!empty($popupReminders->num_rows) && $popupReminders->num_rows > 0) {
+            while ($row = $db->fetchByAssoc($popupReminders)) {
+
+                switch ($row['reminder_related_event_module']) {
+                    case 'Calls':
+                        $date_start = $row['Calls_date_start'];
+                        $name = $row['Calls_name'];
+                        $description = $row['Calls_description'];
+                        $duration_hours = $row['Calls_duration_hours'];
+                        $duration_minutes = $row['Calls_duration_minutes'];
+                        $duration_duration_minutes = $row['Calls_duration_minutes'];
+                        $status = $row['Calls_status'];
+                        break;
+                    case 'Meetings':
+                        $date_start = $row['Meetings_date_start'];
+                        $name = $row['Meetings_name'];
+                        $description = $row['Meetings_description'];
+                        $duration_hours = $row['Meetings_duration_hours'];
+                        $duration_minutes = $row['Meetings_duration_minutes'];
+                        $duration_location = $row['Meetings_location'];
+                        $status = $row['Meetings_status'];
+                        $event_parent_type = $row['Meetings_parent_type'];
+                        $event_parent_id = $row['Meetings_parent_id'];
+                        break;
+                    default:
+                        return;
+                }
+
+                $timeStart = strtotime(
+                    $db->fromConvert(isset($date_start) ? $date_start : date(TimeDate::DB_DATETIME_FORMAT),
+                        'datetime')
+                );
+                $timeRemind = $row['reminder_timer_popup'];
+                $timeStart -= $timeRemind;
+
+                $url = 'index.php?action=DetailView&module=' . $row['reminder_related_event_module'] . '&record=' . $row['reminder_related_event_module_id'];
+                $instructions = $app_strings['MSG_JS_ALERT_MTG_REMINDER_MEETING_MSG'];
+
+                if ($row['reminder_related_event_module'] == 'Meetings') {
+                    // TODO: Remove as meeting integration is never implemented
+                    ///////////////////////////////////////////////////////////////////
+                    ////	MEETING INTEGRATION
+                    if (!empty($meetingIntegration) && $meetingIntegration->isIntegratedMeeting($row['reminder_related_event_module_id'])) {
+                        $url = $meetingIntegration->miUrlGetJsAlert((array)BeanFactory::getBean('Reminders',
+                            $row['reminder_id']));
+                        $instructions = $meetingIntegration->miGetJsAlertInstructions();
+                    }
+                    ////	END MEETING INTEGRATION
+                    ///////////////////////////////////////////////////////////////////
+                }
+
+                $meetingName = from_html(isset($name) ? $name : $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_EVENT_NAME']);
+                $desc1 = from_html(isset($description) ? $description : $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_DESCRIPTION']);
+                $location = from_html(isset($location) ? $location : $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_LOCATION']);
+
+                $relatedToMeeting = $alert->getRelatedName(
+                    $event_parent_type,
+                    $event_parent_id
+                );
+
+                $description = empty($desc1) ? '' : $app_strings['MSG_JS_ALERT_MTG_REMINDER_AGENDA'] . $desc1 . "\n";
+                $description = $description . "\n" . $app_strings['MSG_JS_ALERT_MTG_REMINDER_STATUS'] . (isset($status) ? $status : '') . "\n" . $app_strings['MSG_JS_ALERT_MTG_REMINDER_RELATED_TO'] . $relatedToMeeting;
+
+
+                if (isset($date_start)) {
+                    $time_dbFromConvert = $db->fromConvert($date_start, 'datetime');
+                    $time = $timedate->to_display_date_time($time_dbFromConvert);
+                    if (!$time) {
+                        $time = $date_start;
+                    }
+                    if (!$time) {
+                        $time = $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_START_DATE'];
+                    }
+                } else {
+                    $time = $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_START_DATE'];
+                }
+
+                // standard functionality
+                $alert->addAlert($app_strings['MSG_JS_ALERT_MTG_REMINDER_MEETING'], $meetingName,
+                    $app_strings['MSG_JS_ALERT_MTG_REMINDER_TIME'] . $time,
+                    $app_strings['MSG_JS_ALERT_MTG_REMINDER_LOC'] . $location .
+                    $description .
+                    $instructions,
+                    $timeStart - strtotime($alertDateTimeNow),
+                    $url
+                );
+            }
+        } elseif (!empty($db->lastError())) {
+            $GLOBALS['log']->fatal($db->lastError());
         }
     }
 
@@ -368,8 +507,11 @@ class Reminder extends Basic
     {
         $ret = '';
         for ($i = 0; $i < strlen($timestr); $i++) {
-            if ($timestr[$i] != "'") $ret .= $timestr[$i];
+            if ($timestr[$i] != "'") {
+                $ret .= $timestr[$i];
+            }
         }
+
         return $ret;
     }
 
@@ -390,6 +532,7 @@ class Reminder extends Basic
                 }
             }
         }
+
         return false;
     }
 
@@ -408,8 +551,10 @@ class Reminder extends Basic
                 }
                 $ret[] = $row['accept_status'];
             }
+
             return $ret;
         }
+
         return null;
     }
 
@@ -422,6 +567,7 @@ class Reminder extends Basic
 				{$eventIdField} = '{$event->id}' AND
 				deleted = 0
 		";
+
         return $query;
     }
 
@@ -439,6 +585,7 @@ class Reminder extends Basic
 				{$personIdField} = '{$person->id}' AND
 				deleted = 0
 		";
+
         return $query;
     }
 
@@ -455,6 +602,7 @@ class Reminder extends Basic
         if (!$ret && json_last_error()) {
             throw new Exception(json_last_error_msg());
         }
+
         return $ret;
     }
 
@@ -501,7 +649,9 @@ class Reminder extends Basic
                 $reminder->save();
             }
         }
-        if ($reminderInvitees = BeanFactory::getBean('Reminders_Invitees')->get_full_list('', 'reminders_invitees.deleted = 1')) {
+        if ($reminderInvitees = BeanFactory::getBean('Reminders_Invitees')->get_full_list('',
+            'reminders_invitees.deleted = 1')
+        ) {
             foreach ($reminderInvitees as $invitee) {
                 $invitee->deleted = 0;
                 $invitee->save();
@@ -532,17 +682,18 @@ class Reminder extends Basic
         }
     }
 
-	/**
-	 * @param string $eventModule 'Calls' or 'Meetings'
-	 */
+    /**
+     * @param string $eventModule 'Calls' or 'Meetings'
+     */
     private static function upgradeEventReminders($eventModule)
     {
         global $db;
 
         $eventBean = BeanFactory::getBean($eventModule);
-        $events = $eventBean->get_full_list('', "{$eventBean->table_name}.date_start >  {$db->convert('', 'today')} AND ({$eventBean->table_name}.reminder_time != -1 OR ({$eventBean->table_name}.email_reminder_time != -1 AND {$eventBean->table_name}.email_reminder_sent != 1))");
+        $events = $eventBean->get_full_list('',
+            "{$eventBean->table_name}.date_start >  {$db->convert('', 'today')} AND ({$eventBean->table_name}.reminder_time != -1 OR ({$eventBean->table_name}.email_reminder_time != -1 AND {$eventBean->table_name}.email_reminder_sent != 1))");
         if ($events) {
-			foreach ($events as $event) {
+            foreach ($events as $event) {
 
                 $oldReminderPopupChecked = false;
                 $oldReminderPopupTimer = null;
@@ -592,6 +743,7 @@ class Reminder extends Basic
                 $ret[] = $row;
             }
         }
+
         return $ret;
     }
 
@@ -604,8 +756,16 @@ class Reminder extends Basic
      * @param int $oldReminderEmailTimer
      * @param array $oldInvitees
      */
-    private static function migrateReminder($eventModule, $eventModuleId, $oldReminderPopupChecked, $oldReminderPopupTimer, $oldReminderEmailChecked, $oldReminderEmailTimer, $oldReminderEmailSent, $oldInvitees)
-    {
+    private static function migrateReminder(
+        $eventModule,
+        $eventModuleId,
+        $oldReminderPopupChecked,
+        $oldReminderPopupTimer,
+        $oldReminderEmailChecked,
+        $oldReminderEmailTimer,
+        $oldReminderEmailSent,
+        $oldInvitees
+    ) {
 
         $reminder = BeanFactory::getBean('Reminders');
         $reminder->popup = $oldReminderPopupChecked;
@@ -632,6 +792,7 @@ class Reminder extends Basic
             $newInvitee->related_invitee_module_id = self::getRelatedInviteeModuleIdFromInviteeArray($invitee);
             $newInvitee->save();
         }
+
         return $ret;
     }
 
@@ -698,6 +859,7 @@ class Reminder extends Basic
         $tpl->assign('remindersDataJson', Reminder::loadRemindersDataJson($event->module_name, $event->id));
         $tpl->assign('remindersDefaultValuesDataJson', Reminder::loadRemindersDefaultValuesDataJson());
         $tpl->assign('remindersDisabled', json_encode(true));
+
         return $tpl->fetch('modules/Reminders/tpls/reminders.tpl');
     }
 
