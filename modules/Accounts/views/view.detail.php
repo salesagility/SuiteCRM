@@ -72,7 +72,8 @@ class AccountsViewDetail extends ViewDetail {
 
 		if(empty($this->bean->id)){
 			global $app_strings;
-			sugar_die($app_strings['ERROR_NO_RECORD']);
+			print('<h1 class="error">' . $app_strings['ERROR_NO_RECORD'] . '</h1>');
+	        return;
 		}
 
 		require_once('modules/AOS_PDF_Templates/formLetter.php');
@@ -107,10 +108,6 @@ class AccountsViewDetail extends ViewDetail {
 		$this->ss->assign("custom_code_billing", $push_billing);
 		$this->ss->assign("custom_code_shipping", $push_shipping);
 
-        if(empty($this->bean->id)){
-			global $app_strings;
-			sugar_die($app_strings['ERROR_NO_RECORD']);
-		}
 		echo $this->dv->display();
  	}
 }

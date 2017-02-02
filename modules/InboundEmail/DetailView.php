@@ -55,7 +55,8 @@ $GLOBALS['log']->info("InboundEmails DetailView");
 $focus = new InboundEmail();
 $focus->retrieve($_REQUEST['record']);
 if (empty($focus->id)) {
-	sugar_die($app_strings['ERROR_NO_RECORD']);
+	print('<h1 class="error">' . $app_strings['ERROR_NO_RECORD'] . '</h1>');
+	return;
 } // if
 $focus->checkImap();
 $detailView = new DetailView();
