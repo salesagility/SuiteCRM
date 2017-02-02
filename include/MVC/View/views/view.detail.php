@@ -99,7 +99,7 @@ class ViewDetail extends SugarView
     {
         if(empty($this->bean->id)){
             print('<h1 class="error">' . $GLOBALS['app_strings']['ERROR_NO_RECORD'] . '</h1>');
-	        return;
+	    return;
         }
         $this->dv->process();
         echo $this->dv->display();
