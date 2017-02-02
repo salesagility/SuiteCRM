@@ -416,24 +416,24 @@ LIMIT
 
                 switch ($row['reminder_related_event_module']) {
                     case 'Calls':
-                        $date_start = $row['Calls_date_start'];
-                        $name = $row['Calls_name'];
-                        $description = $row['Calls_description'];
-                        $duration_hours = $row['Calls_duration_hours'];
-                        $duration_minutes = $row['Calls_duration_minutes'];
-                        $duration_duration_minutes = $row['Calls_duration_minutes'];
-                        $status = $row['Calls_status'];
+                        $date_start =& $row['Calls_date_start'];
+                        $name =& $row['Calls_name'];
+                        $description =& $row['Calls_description'];
+                        $duration_hours =& $row['Calls_duration_hours'];
+                        $duration_minutes =& $row['Calls_duration_minutes'];
+                        $duration_duration_minutes =& $row['Calls_duration_minutes'];
+                        $status =& $row['Calls_status'];
                         break;
                     case 'Meetings':
-                        $date_start = $row['Meetings_date_start'];
-                        $name = $row['Meetings_name'];
-                        $description = $row['Meetings_description'];
-                        $duration_hours = $row['Meetings_duration_hours'];
-                        $duration_minutes = $row['Meetings_duration_minutes'];
-                        $duration_location = $row['Meetings_location'];
-                        $status = $row['Meetings_status'];
-                        $event_parent_type = $row['Meetings_parent_type'];
-                        $event_parent_id = $row['Meetings_parent_id'];
+                        $date_start =& $row['Meetings_date_start'];
+                        $name =& $row['Meetings_name'];
+                        $description =& $row['Meetings_description'];
+                        $duration_hours =& $row['Meetings_duration_hours'];
+                        $duration_minutes =& $row['Meetings_duration_minutes'];
+                        $duration_location =& $row['Meetings_location'];
+                        $status =& $row['Meetings_status'];
+                        $event_parent_type =& $row['Meetings_parent_type'];
+                        $event_parent_id =& $row['Meetings_parent_id'];
                         break;
                     default:
                         return;
