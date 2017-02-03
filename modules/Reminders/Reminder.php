@@ -328,11 +328,10 @@ class Reminder extends Basic
             }
         );
 
-        $_maxReminderPeriod = $app_list_strings['reminder_max_time'];
         // By default: There are 96 possible slots in 24hours that a reminder can refer to.
-        $_maxEventsInADay = ceil(($_1hour / $_smallestEventPeriod) * $_24hours);
-        $userNOW = $alertDateTimeNow;
 
+        $_maxEventsInADay = ceil(($_1hour / $_smallestEventPeriod) * $_24hours);
+        $userNOW = $timedate->getNow(true)->sub(new DateInterval('PT'. $app_list_strings['reminder_max_time'].'S'))->asDb(false);
         /**
          * Optimisation:
          * Use a single query with a limit to get all the information needed.
@@ -371,8 +370,24 @@ class Reminder extends Basic
 
         }
 
-        $popupReminders = $db->query("
-SELECT 
+        switch ($sugar_config['dbconfig']['db_type']) {
+            case "mssql":
+                $limitTop = "TOP {$_maxEventsInADay}".PHP_EOL;
+                $limitBottom = " ";
+                break;
+            case "mysql":
+                $limitTop = " ";
+                $limitBottom = "LIMIT {$_maxEventsInADay}";
+
+                break;
+            default:
+                break;
+        }
+
+
+
+        $query ="
+SELECT {$limitTop}
 	m.name as Meetings_name, 
 	m.description as Meetings_description, 
 	m.date_start as Meetings_date_start, 
@@ -425,19 +440,20 @@ WHERE
 	AND 
 	(
 		(
-			m.date_start > DATE_SUB(CAST('{$userNOW}' AS datetime), INTERVAL {$_maxReminderPeriod} SECOND) 
+			m.date_start > CAST('{$userNOW}' AS datetime) 
 			AND m.deleted != 1
 		) 
 		OR (
-			c.date_start > DATE_SUB(CAST('{$userNOW}' AS datetime), INTERVAL {$_maxReminderPeriod} SECOND) 
+			c.date_start > CAST('{$userNOW}' AS datetime) 
 			AND c.deleted != 1
 		)
 	)
 ORDER BY 
-	m.date_start, c.date_start ASC 
-LIMIT 
-	{$_maxEventsInADay}
-");
+	m.date_start ASC, c.date_start ASC
+{$limitBottom}
+";
+        $popupReminders = $db->query($query);
+
         if (!empty($popupReminders->num_rows) && $popupReminders->num_rows > 0) {
             while ($row = $db->fetchByAssoc($popupReminders)) {
 
