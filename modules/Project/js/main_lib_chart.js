@@ -29,7 +29,7 @@ $(function() {
 
   //message for ajax loading screen
     var msg = '<div><br />' +
-        '<h1><img align="absmiddle" src="themes/'+SUGAR.themes.theme_name+'/images/img_loading.gif"> ' + loading + '</h1>' + '</div>';
+        '<h1><img align="absmiddle" src="themes/default/images/img_loading.gif"> ' + loading + '</h1>' + '</div>';
     //on button click re-generate the chart
     $(document.body).on('click','#create_link', function(e) {
         $(".qtip").remove(); //Clear all tooltips before re-generating the chart
