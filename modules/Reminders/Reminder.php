@@ -403,7 +403,8 @@ FROM
 	JOIN reminders r ON r.id = ri.reminder_id 
 	AND r.popup = 1 
 	LEFT JOIN meetings m ON m.id = r.related_event_module_id 
-	AND r.related_event_module = 'Meetings' 
+	AND r.related_event_module = 'Meetings'
+	AND m.status = 'Planned'
 	LEFT JOIN meetings_users mu ON mu.meeting_id = m.id
 	{$meetingParentJoin}
     AND ri.related_invitee_module = 'Users' 
@@ -411,6 +412,7 @@ FROM
     AND mu.accept_status LIKE 'accept'
 	LEFT JOIN calls c ON c.id = r.related_event_module_id 
 	AND r.related_event_module = 'Calls' 
+	AND c.status = 'Planned'
 	LEFT JOIN calls_users cu ON cu.call_id = c.id
     AND ri.related_invitee_module = 'Users' 
     AND cu.user_id = ri.related_invitee_module_id
