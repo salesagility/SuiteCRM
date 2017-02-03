@@ -350,6 +350,27 @@ class Reminder extends Basic
          * This means we can optimise the how many results need to be processed each time the user requests the meeting
          *
          */
+        // Generate Related to (parent)queries
+        $callParentSelect = PHP_EOL;
+        $callParentJoin = PHP_EOL;
+        $meetingParentSelect = PHP_EOL;
+        $meetingParentJoin = PHP_EOL;
+        foreach ($app_list_strings['parent_type_display'] as $module => $label) {
+            $f = BeanFactory::getBean($module);
+            $table = $f->table_name;
+            if(is_subclass_of($f, 'Person')) {
+                $callParentSelect .= "\t". " CONCAT(CONCAT(c_" . $table . ".first_name, ' '), c_" . $table . ".last_name) as Calls_parent_name_" . $table . "," . PHP_EOL;
+                $meetingParentSelect .= "\t". " CONCAT(CONCAT(m_" . $table . ".first_name, ' '), m_" . $table . ".last_name) as Meetings_parent_name_" . $table . "," . PHP_EOL;
+
+            } else {
+                $callParentSelect .= "\t". "c_" . $table . ".name as Calls_parent_name_" . $table . "," . PHP_EOL;
+                $meetingParentSelect .= "\t". "m_" . $table . ".name as Meetings_parent_name_" . $table . "," . PHP_EOL;
+            }
+            $callParentJoin .= "\t". "LEFT JOIN " . $table . " " . "c_" . $table . " ON c.parent_id = " . "c_" . $table . ".id" . PHP_EOL;
+            $meetingParentJoin .= "\t". "LEFT JOIN " . $table . " " . "m_" . $table . " ON m.parent_id = " . "m_" . $table . ".id" . PHP_EOL;
+
+        }
+
         $popupReminders = $db->query("
 SELECT 
 	m.name as Meetings_name, 
@@ -361,6 +382,7 @@ SELECT
 	m.status as Meetings_status, 
 	m.parent_type as Meetings_parent_type, 
 	m.parent_id as Meetings_parent_id, 
+    {$meetingParentSelect}
 	c.name as Calls_name, 
 	c.description as Calls_description, 
 	c.date_start as Calls_date_start, 
@@ -369,6 +391,7 @@ SELECT
 	c.status as Calls_status,
 	c.parent_type as Calls_parent_type, 
 	c.parent_id as Calls_parent_id, 
+    {$callParentSelect} 
 	ri.related_invitee_module as reminder_invitees_related_invitee_module, 
 	ri.related_invitee_module_id as reminder_invitees_related_invitee_module_id, 
 	r.id as reminder_id, 
@@ -382,6 +405,7 @@ FROM
 	LEFT JOIN meetings m ON m.id = r.related_event_module_id 
 	AND r.related_event_module = 'Meetings' 
 	LEFT JOIN meetings_users mu ON mu.meeting_id = m.id
+	{$meetingParentJoin}
     AND ri.related_invitee_module = 'Users' 
     AND mu.user_id = ri.related_invitee_module_id
     AND mu.accept_status LIKE 'accept'
@@ -391,6 +415,7 @@ FROM
     AND ri.related_invitee_module = 'Users' 
     AND cu.user_id = ri.related_invitee_module_id
     AND cu.accept_status LIKE 'accept'
+    {$callParentJoin}
 WHERE 
 	ri.related_invitee_module = 'Users' 
 	AND ri.related_invitee_module_id = '{$current_user->id}' 
@@ -407,7 +432,7 @@ WHERE
 		)
 	)
 ORDER BY 
-	m.date_end ASC 
+	m.date_start, c.date_start ASC 
 LIMIT 
 	{$_maxEventsInADay}
 ");
@@ -423,6 +448,11 @@ LIMIT
                         $duration_minutes =& $row['Calls_duration_minutes'];
                         $duration_duration_minutes =& $row['Calls_duration_minutes'];
                         $status =& $row['Calls_status'];
+                        $event_parent_type =& $row['Calls_parent_type'];
+                        $event_parent_id =& $row['Calls_parent_id'];
+                        $f = BeanFactory::getBean($event_parent_type);
+                        $table = $f->table_name;
+                        $event_parent_name =& $row['Calls_parent_name_'.$table];
                         break;
                     case 'Meetings':
                         $date_start =& $row['Meetings_date_start'];
@@ -434,6 +464,9 @@ LIMIT
                         $status =& $row['Meetings_status'];
                         $event_parent_type =& $row['Meetings_parent_type'];
                         $event_parent_id =& $row['Meetings_parent_id'];
+                        $f = BeanFactory::getBean($event_parent_type);
+                        $table = $f->table_name;
+                        $event_parent_name =& $row['Meetings_parent_name_'.$table];
                         break;
                     default:
                         return;
@@ -466,10 +499,7 @@ LIMIT
                 $desc1 = from_html(isset($description) ? $description : $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_DESCRIPTION']);
                 $location = from_html(isset($location) ? $location : $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_LOCATION']);
 
-                $relatedToMeeting = $alert->getRelatedName(
-                    $event_parent_type,
-                    $event_parent_id
-                );
+                $relatedToMeeting = $event_parent_name;
 
                 $description = empty($desc1) ? '' : $app_strings['MSG_JS_ALERT_MTG_REMINDER_AGENDA'] . $desc1 . "\n";
                 $description = $description . "\n" . $app_strings['MSG_JS_ALERT_MTG_REMINDER_STATUS'] . (isset($status) ? $status : '') . "\n" . $app_strings['MSG_JS_ALERT_MTG_REMINDER_RELATED_TO'] . $relatedToMeeting;
