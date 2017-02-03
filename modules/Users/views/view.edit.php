@@ -44,9 +44,18 @@ require_once('modules/Users/UserViewHelper.php');
 
 class UsersViewEdit extends ViewEdit {
 var $useForSubpanel = true;
- 	function __construct(){
- 		parent::__construct();
- 	}
+    function __construct(){
+        parent::__construct();
+
+        $recordid = $_REQUEST['record'];
+        $currentuserid = $GLOBALS['current_user']->id;
+        $isAdmin = $GLOBALS['current_user']->isAdminForModule('Users');
+        if( $recordid == $currentuserid || $isAdmin) {
+
+        }else{
+            SugarApplication::redirect("index.php?module=Home&action=index");
+        }
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
