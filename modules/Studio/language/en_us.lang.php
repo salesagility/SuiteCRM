@@ -45,23 +45,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $mod_strings = array (
 'LBL_EDIT_LAYOUT'=>'Edit Layout',
-'LBL_EDIT_ROWS'=>'Edit Rows',
-'LBL_EDIT_COLUMNS'=>'Edit Columns',
-'LBL_EDIT_LABELS'=>'Edit Labels',
 'LBL_EDIT_FIELDS'=>'Edit Custom Fields',
-'LBL_ADD_FIELDS'=>'Add Custom Fields',
-'LBL_DISPLAY_HTML'=>'Display HTML Code',
 'LBL_SELECT_FILE'=> 'Select File',
 'LBL_SAVE_LAYOUT'=> 'Save Layout',
-'LBL_SELECT_A_SUBPANEL' => 'Select a Subpanel',
-'LBL_SELECT_SUBPANEL' => 'Select Subpanel',
 'LBL_MODULE_TITLE' => 'Studio',
 'LBL_TOOLBOX' => 'Toolbox',
-'LBL_STAGING_AREA' => 'Staging Area (drag and drop items here)',
 'LBL_SUGAR_FIELDS_STAGE' => 'SuiteCRM Fields (click items to add to staging area)',
-'LBL_SUGAR_BIN_STAGE' => 'SuiteCRM Bin (click items to add to staging area)',
 'LBL_VIEW_SUGAR_FIELDS' => 'View SuiteCRM Fields',
-'LBL_VIEW_SUGAR_BIN' => 'View SuiteCRM Bin',
 'LBL_FAILED_TO_SAVE' => 'Failed To Save',
 'LBL_CONFIRM_UNSAVE' => 'Any changes will go unsaved. Are you sure you would like to continue?',
 'LBL_PUBLISHING' => 'Publishing ...',
@@ -91,43 +81,19 @@ $mod_strings = array (
 'LBL_SW_RENAME_TABS'=>'Rename Tabs',
 'LBL_SW_EDIT_GROUPTABS'=>'Configure Group Tabs',
 'LBL_SW_EDIT_PORTAL'=>'Edit Portal',
-'LBL_SW_EDIT_WORKFLOW'=>'Edit Workflow',
 'LBL_SW_REPAIR_CUSTOMFIELDS'=>'Repair Custom Fields',
 'LBL_SW_MIGRATE_CUSTOMFIELDS'=>'Migrate Custom Fields',
-
-
-//SELECT MODULE WIZARD
-'LBL_SMW_WELCOME'=>'<h2>Welcome to Studio!</h2><br><b>Please select a module from below.',
-
-//SELECT MODULE ACTION
-'LBL_SMA_WELCOME'=>'<h2>Edit a Module</h2>What do you want to do with that module?<br><b>Please select what action you would like to take.',
-'LBL_SMA_EDIT_CUSTOMFIELDS'=>'Edit Custom Fields',
-'LBL_SMA_EDIT_LAYOUT'=>'Edit Layout',
-'LBL_SMA_EDIT_LABELS' =>'Edit Labels',
 
 //Manager Backups History
 'LBL_MB_PREVIEW'=>'Preview',
 'LBL_MB_RESTORE'=>'Restore',
 'LBL_MB_DELETE'=>'Delete',
-'LBL_MB_COMPARE'=>'Compare',
-'LBL_MB_WELCOME'=> '<h2>History</h2><br> History allows you to view previously deployed editions of the file you are currently working on. You can compare and restore previous versions. If you do restore a file it will become your working file. You must deploy it before it is visible by everyone else.<br> What would you like to do today?<br><b> Please select from the options below.</b>',
 
 //EDIT DROP DOWNS
 'LBL_ED_CREATE_DROPDOWN'=> 'Create a Drop Down',
-'LBL_ED_WELCOME'=>'<h2>Drop Down Editor</h2><br><b>You can either edit an existing drop down or create a new drop down.',
 'LBL_DROPDOWN_NAME' => 'Dropdown Name:',
 'LBL_DROPDOWN_LANGUAGE' => 'Dropdown Language:',
 'LBL_TABGROUP_LANGUAGE' => 'Language:',
-
-//EDIT CUSTOM FIELDS
-'LBL_EC_WELCOME'=>'<h2>Custom Field Editor</h2><br><b>You can either view and edit an existing custom field, create a new custom field or clean the custom field cache.',
-'LBL_EC_VIEW_CUSTOMFIELDS'=> 'View Custom Fields',
-'LBL_EC_CREATE_CUSTOMFIELD'=>'Create Custom Field',
-'LBL_EC_CLEAR_CACHE'=>'Clear Cache',
-
-//SELECT MODULE
-'LBL_SM_WELCOME'=> '<h2>History</h2><br><b>Please select the file you would like to view.</b>',
-//END WIZARDS
 
 //DROP DOWN EDITOR
 'LBL_DD_DISPALYVALUE'=>'Display Value',
@@ -141,7 +107,6 @@ $mod_strings = array (
 'LBL_BTN_HISTORY'=>'History',
 'LBL_BTN_NEXT'=>'Next',
 'LBL_BTN_BACK'=>'Back',
-'LBL_BTN_ADDCOLS'=>'Add Columns',
 'LBL_BTN_ADDROWS'=>'Add Rows',
 'LBL_BTN_UNDO'=>'Undo',
 'LBL_BTN_REDO'=>'Redo',
@@ -149,7 +114,6 @@ $mod_strings = array (
 'LBL_BTN_TABINDEX'=>'Edit Tabbing Order',
 
 //TABS
-'LBL_TAB_SUBTABS'=>'Sub Tabs',
 'LBL_MODULES'=>'Modules',
 //nsingh: begin bug#15095 fix
 'LBL_MODULE_NAME' => 'Administration',
@@ -163,7 +127,6 @@ $mod_strings = array (
 'LBL_ADD_GROUP'=>'Add Filter',
 'LBL_NEW_GROUP'=>'New Group',
 'LBL_RENAME_TABS'=>'Rename Modules',
-'LBL_DISPLAY_OTHER_TAB' => 'Display \'Other\' Tab',
 
 //LIST VIEW EDITOR
 'LBL_DEFAULT'=>'Default',
@@ -177,17 +140,6 @@ $mod_strings = array (
 'ERROR_INVALID_KEY_VALUE'=> "Error: Invalid Key Value: [']",
 
 //SUGAR PORTAL
-'LBL_SW_SUGARPORTAL'=>'SuiteCRM Portal',
-'LBL_SMP_WELCOME'=>' Please select a module you would like to edit from the list below',
-'LBL_SP_WELCOME'=>'Welcome to Studio for SuiteCRM Portal. You can either choose to edit modules here or sync to a portal instance.<br> Please choose from the list below.',
-'LBL_SP_SYNC'=>'Portal Sync',
-'LBL_SYNCP_WELCOME'=>'Please enter the url to the portal instance you wish to update then press the Go button.<br> This will bring up a prompt for your user name and password.<br> Please enter your SuiteCRM user name and password and press the Begin Sync button.',
-'LBL_LISTVIEWP_DESCRIPTION'=>'There are two columns below: Default which are the fields that will be displayed and Available which are the fields that are not displayed, but are available for displaying. Just drag the fields between the two columns. You can also reorder the items in a column by dragging and dropping them.',
-'LBL_SP_STYLESHEET'=>'Upload a Style Sheet',
-'LBL_SP_UPLOADSTYLE'=>'Click on the browse button and select a style sheet from your computer to upload.<br> The next time you sync down to portal it will bring down the style sheet along with it.',
-'LBL_SP_UPLOADED'=> 'Uploaded',
-'ERROR_SP_UPLOADED'=>'Please ensure that you are uploading a css style sheet.',
-'LBL_SP_PREVIEW'=>'Here is a preview of what your style sheet will look like',
 
 	'LBL_SAVE' => 'Save' /*for 508 compliance fix*/,
 	'LBL_UNDO' => 'Undo' /*for 508 compliance fix*/,
