@@ -49,9 +49,7 @@ class UsersViewDetail extends ViewDetail {
         $recordid = $_REQUEST['record'];
         $currentuserid = $GLOBALS['current_user']->id;
         $isAdmin = $GLOBALS['current_user']->isAdminForModule('Users');
-        if( $recordid == $currentuserid || $isAdmin) {
-
-        }else{
+        if( !($recordid == $currentuserid || $isAdmin)) {
             SugarApplication::redirect("index.php?module=Home&action=index");
         }
     }
