@@ -3688,7 +3688,7 @@ SUGAR.savedViews = function () {
 		},
 		shortcutDropdown: function (value, module) {
 			//build url
-			selecturl = 'index.php?module=SavedSearch&search_module=' + module + '&action=index&saved_search_select=' + selectBox.options[selectBox.selectedIndex].value
+			selecturl = 'index.php?module=SavedSearch&search_module=' + module + '&action=index&saved_search_select=' + value
 			//add searchFormTab to url if it is available.  This determines what tab to render
 			if (typeof(document.getElementById('searchFormTab')) != 'undefined') {
 				selecturl = selecturl + '&searchFormTab=' + document.search_form.searchFormTab.value;
