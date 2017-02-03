@@ -1316,18 +1316,18 @@ function getUserVariable($localVarName, $varName) {
 
             $end_record = $end_record-1;
 
-$script_href = "<a  name=\"thispage\" class=\"menuItem\" onmouseover='hiliteItem(this,\"yes\");' onmouseout=\"unhiliteItem(this);\" onclick='if (document.MassUpdate.select_entire_list.value==1){document.MassUpdate.select_entire_list.value=0;sListView.check_all(document.MassUpdate, \"mass[]\", true, $this->records_per_page)}else {sListView.check_all(document.MassUpdate, \"mass[]\", true)};' href=\"#\">{$this->local_app_strings['LBL_LISTVIEW_OPTION_CURRENT']}&nbsp;&#x28;{$this->records_per_page}&#x29;&#x200E;</a>"
- . "<a  name=\"selectall\" class=\"menuItem\" onmouseover='hiliteItem(this,\"yes\");' onmouseout=\"unhiliteItem(this);\" onclick='sListView.check_entire_list(document.MassUpdate, \"mass[]\",true,{$row_count});' href=\"#\">{$this->local_app_strings['LBL_LISTVIEW_OPTION_ENTIRE']}&nbsp;&#x28;{$row_count}&#x29;&#x200E;</a>"
- . "<a  name=\"deselect\" class=\"menuItem\" onmouseover='hiliteItem(this,\"yes\");' onmouseout=\"unhiliteItem(this);\" onclick='sListView.clear_all(document.MassUpdate, \"mass[]\", false);' href=\"#\">{$this->local_app_strings['LBL_LISTVIEW_NONE']}</a>";
+$script_href = "<a  name=\"thispage\" class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'if (document.MassUpdate.select_entire_list.value==1){document.MassUpdate.select_entire_list.value=0;sListView.check_all(document.MassUpdate, \"mass[]\", true, $this->records_per_page)}else {sListView.check_all(document.MassUpdate, \"mass[]\", true)};\' href=\'#\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_CURRENT']}&nbsp;&#x28;{$this->records_per_page}&#x29;&#x200E;</a>"
+ . "<a  name=\"selectall\" class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'sListView.check_entire_list(document.MassUpdate, \"mass[]\",true,{$row_count});\' href=\'#\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_ENTIRE']}&nbsp;&#x28;{$row_count}&#x29;&#x200E;</a>"
+ . "<a  name=\"deselect\" class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'sListView.clear_all(document.MassUpdate, \"mass[]\", false);\' href=\'#\'>{$this->local_app_strings['LBL_LISTVIEW_NONE']}</a>";
 
 $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'border=0', null, null, ".gif", $app_strings['LBL_CLOSEINLINE']);
 
             echo "<script>
                 function select_dialog() {
                 	var \$dialog = \$('<div></div>')
-					.html('<a  name=\"thispage\" class=\"menuItem\" onmouseover='hiliteItem(this,\"yes\");' onmouseout=\"unhiliteItem(this);\" onclick='if (document.MassUpdate.select_entire_list.value==1){document.MassUpdate.select_entire_list.value=0;sListView.check_all(document.MassUpdate, \"mass[]\", true, $this->records_per_page)}else {sListView.check_all(document.MassUpdate, \"mass[]\", true)};' href=\"javascript:void(0)\">{$this->local_app_strings['LBL_LISTVIEW_OPTION_CURRENT']}&nbsp;&#x28;{$this->records_per_page}&#x29;&#x200E;</a>"
-                . "<a  name=\"selectall\" class=\"menuItem\" onmouseover='hiliteItem(this,\"yes\");' onmouseout=\"unhiliteItem(this);\" onclick='sListView.check_entire_list(document.MassUpdate, \"mass[]\",true,{$row_count});' href=\"javascript:void(0)\">{$this->local_app_strings['LBL_LISTVIEW_OPTION_ENTIRE']}&nbsp;&#x28;{$row_count}&#x29;&#x200E;</a>"
-                . "<a  name=\"deselect\" class=\"menuItem\" onmouseover='hiliteItem(this,\"yes\");' onmouseout=\"unhiliteItem(this);\" onclick='sListView.clear_all(document.MassUpdate, \"mass[]\", false);' href=\"javascript:void(0)\">{$this->local_app_strings['LBL_LISTVIEW_NONE']}</a>')
+					.html('<a  name=\"thispage\" class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'if (document.MassUpdate.select_entire_list.value==1){document.MassUpdate.select_entire_list.value=0;sListView.check_all(document.MassUpdate, \"mass[]\", true, $this->records_per_page)}else {sListView.check_all(document.MassUpdate, \"mass[]\", true)};\' href=\'javascript:void(0)\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_CURRENT']}&nbsp;&#x28;{$this->records_per_page}&#x29;&#x200E;</a>"
+                . "<a  name=\"selectall\" class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'sListView.check_entire_list(document.MassUpdate, \"mass[]\",true,{$row_count});\' href=\'javascript:void(0)\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_ENTIRE']}&nbsp;&#x28;{$row_count}&#x29;&#x200E;</a>"
+                . "<a  name=\"deselect\" class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'sListView.clear_all(document.MassUpdate, \"mass[]\", false);\' href=\'javascript:void(0)\'>{$this->local_app_strings['LBL_LISTVIEW_NONE']}</a>')
 					.dialog({
 						autoOpen: false,
 						width: 150
@@ -1389,9 +1389,9 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
                 echo "<script>
                 function mailmerge_dialog(el) {
                    	var \$dialog = \$('<div></div>')
-					.html('<a  class=\"menuItem\" onmouseover='hiliteItem(this,\"yes\");' onmouseout=\"unhiliteItem(this);\" onclick=\'return sListView.send_form(true, \"MailMerge\", \"index.php\", \"{$this->local_app_strings['LBL_LISTVIEW_NO_SELECTED']}\")\' href=\"javascript:void(0)\">{$this->local_app_strings['LBL_LISTVIEW_OPTION_SELECTED']}</a>"
-                        . "<a  class=\"menuItem\" onmouseover='hiliteItem(this,\"yes\");' onmouseout=\"unhiliteItem(this);\" href=\"index.php?action=index&module=MailMerge\">{$this->local_app_strings['LBL_LISTVIEW_OPTION_CURRENT']}</a>"
-                        . "<a  class=\"menuItem\" onmouseover='hiliteItem(this,\"yes\");' onmouseout=\"unhiliteItem(this);\" href=\"index.php?action=index&module=MailMerge&entire=true\">{$this->local_app_strings['LBL_LISTVIEW_OPTION_ENTIRE']}</a>')
+					.html('<a  class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'return sListView.send_form(true, \"MailMerge\", \"index.php\", \"{$this->local_app_strings['LBL_LISTVIEW_NO_SELECTED']}\")\' href=\'javascript:void(0)\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_SELECTED']}</a>"
+                        . "<a  class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' href=\'index.php?action=index&module=MailMerge\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_CURRENT']}</a>"
+                        . "<a  class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' href=\'index.php?action=index&module=MailMerge&entire=true\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_ENTIRE']}</a>')
 					.dialog({
 						autoOpen: false,
 						title: '". $this->local_app_strings['LBL_MAILMERGE']."',
