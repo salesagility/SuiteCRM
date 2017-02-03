@@ -45,13 +45,6 @@ class UsersViewDetail extends ViewDetail {
 
     function __construct(){
         parent::__construct();
-
-        $recordid = $_REQUEST['record'];
-        $currentuserid = $GLOBALS['current_user']->id;
-        $isAdmin = $GLOBALS['current_user']->isAdminForModule('Users');
-        if( !($recordid == $currentuserid || $isAdmin)) {
-            SugarApplication::redirect("index.php?module=Home&action=index");
-        }
     }
 
     /**
