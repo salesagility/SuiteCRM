@@ -227,7 +227,7 @@ function gen_chart(blockui){
     var dataString = '&pid=' + pid;
 
     var msg = '<div><br />' +
-        '<h1><img align="absmiddle" src="themes/'+SUGAR.themes.theme_name+'/images/img_loading.gif"> ' + loading + '</h1>' + '</div>';
+        '<h1><img align="absmiddle" src="themes/default/images/img_loading.gif"> ' + loading + '</h1>' + '</div>';
     //call blockui
     if(blockui == '1'){
         block();
@@ -391,7 +391,7 @@ function get_predecessors(){
 //Used to create ajax loading effect using the blockUI jquery plugin
 function block(){
     var msg = '<div><br />' +
-        '<h1><img align="absmiddle" src="themes/'+SUGAR.themes.theme_name+'/images/img_loading.gif"> ' + loading + '</h1>' + '</div>';
+        '<h1><img align="absmiddle" src="themes/default/images/img_loading.gif"> ' + loading + '</h1>' + '</div>';
 
     $.blockUI({//ajax loading screen
         message:msg,
