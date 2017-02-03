@@ -740,24 +740,28 @@
                 $admin->retrieveSettings('system');
 
                 $user_merge = $current_user->getPreference('mailmerge_on');
-                if ($user_merge == 'on' && isset($admin->settings['system_mailmerge_on']) && $admin->settings['system_mailmerge_on']) {
-                    echo ")\' href=\'javascript:void(0)\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_SELECTED']}</a>" . "<a style=\'width: 150px\' class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' href=\'index.php?action=index&module=MailMerge\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_CURRENT']}</a>" . "<a style=\'width: 150px\' class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' href=\'index.php?action=index&module=MailMerge&entire=true\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_ENTIRE']}</a>')
+                if($user_merge == 'on' && isset($admin->settings['system_mailmerge_on']) && $admin->settings['system_mailmerge_on']) {
+                    echo "<script>
+                function mailmerge_dialog(el) {
+                   	var \$dialog = \$('<div></div>')
+					.html('<a  class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' onclick=\'return sListView.send_form(true, \"MailMerge\", \"index.php\", \"{$this->local_app_strings['LBL_LISTVIEW_NO_SELECTED']}\")\' href=\'javascript:void(0)\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_SELECTED']}</a>"
+                        . "<a  class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' href=\'index.php?action=index&module=MailMerge\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_CURRENT']}</a>"
+                        . "<a  class=\'menuItem\' onmouseover=\'hiliteItem(this,\"yes\");\' onmouseout=\'unhiliteItem(this);\' href=\'index.php?action=index&module=MailMerge&entire=true\'>{$this->local_app_strings['LBL_LISTVIEW_OPTION_ENTIRE']}</a>')
 					.dialog({
 						autoOpen: false,
-						title: '" . $this->local_app_strings['LBL_MAILMERGE'] . "',
+						title: '". $this->local_app_strings['LBL_MAILMERGE']."',
 						width: 150,
 						position: {
 						    my: myPos,
 						    at: atPos,
-						    of:; \$(el)
+						    of: \$(el)
 					 	}
-					})
+					});
 
                 }
             </script>";
-                    $merge_link = "&nbsp;|&nbsp;<a id='mailmerge_link' onclick='return mailmerge_dialog(this)'; href=\"javascript:void(0)\">" . $this->local_app_strings['LBL_MAILMERGE'] . "</a>";
-                }
-                else {
+                    $merge_link = "&nbsp;|&nbsp;<a id='mailmerge_link' onclick='return mailmerge_dialog(this)'; href=\"javascript:void(0)\">".$this->local_app_strings['LBL_MAILMERGE']."</a>";
+                } else {
                     $merge_link = "&nbsp;";
                 }
 
