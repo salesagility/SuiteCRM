@@ -358,16 +358,16 @@ class Reminder extends Basic
         foreach ($app_list_strings['parent_type_display'] as $module => $label) {
             $f = BeanFactory::getBean($module);
             $table = $f->table_name;
-            if(is_subclass_of($f, 'Person')) {
-                $callParentSelect .= "\t". " CONCAT(CONCAT(c_" . $table . ".first_name, ' '), c_" . $table . ".last_name) as Calls_parent_name_" . $table . "," . PHP_EOL;
-                $meetingParentSelect .= "\t". " CONCAT(CONCAT(m_" . $table . ".first_name, ' '), m_" . $table . ".last_name) as Meetings_parent_name_" . $table . "," . PHP_EOL;
+            if (is_subclass_of($f, 'Person')) {
+                $callParentSelect .= "\t" . " CONCAT(CONCAT(c_" . $table . ".first_name, ' '), c_" . $table . ".last_name) as Calls_parent_name_" . $table . "," . PHP_EOL;
+                $meetingParentSelect .= "\t" . " CONCAT(CONCAT(m_" . $table . ".first_name, ' '), m_" . $table . ".last_name) as Meetings_parent_name_" . $table . "," . PHP_EOL;
 
             } else {
-                $callParentSelect .= "\t". "c_" . $table . ".name as Calls_parent_name_" . $table . "," . PHP_EOL;
-                $meetingParentSelect .= "\t". "m_" . $table . ".name as Meetings_parent_name_" . $table . "," . PHP_EOL;
+                $callParentSelect .= "\t" . "c_" . $table . ".name as Calls_parent_name_" . $table . "," . PHP_EOL;
+                $meetingParentSelect .= "\t" . "m_" . $table . ".name as Meetings_parent_name_" . $table . "," . PHP_EOL;
             }
-            $callParentJoin .= "\t". "LEFT JOIN " . $table . " " . "c_" . $table . " ON c.parent_id = " . "c_" . $table . ".id" . PHP_EOL;
-            $meetingParentJoin .= "\t". "LEFT JOIN " . $table . " " . "m_" . $table . " ON m.parent_id = " . "m_" . $table . ".id" . PHP_EOL;
+            $callParentJoin .= "\t" . "LEFT JOIN " . $table . " " . "c_" . $table . " ON c.parent_id = " . "c_" . $table . ".id" . PHP_EOL;
+            $meetingParentJoin .= "\t" . "LEFT JOIN " . $table . " " . "m_" . $table . " ON m.parent_id = " . "m_" . $table . ".id" . PHP_EOL;
 
         }
 
@@ -452,7 +452,7 @@ LIMIT
                         $event_parent_id =& $row['Calls_parent_id'];
                         $f = BeanFactory::getBean($event_parent_type);
                         $table = $f->table_name;
-                        $event_parent_name =& $row['Calls_parent_name_'.$table];
+                        $event_parent_name =& $row['Calls_parent_name_' . $table];
                         break;
                     case 'Meetings':
                         $date_start =& $row['Meetings_date_start'];
@@ -466,7 +466,7 @@ LIMIT
                         $event_parent_id =& $row['Meetings_parent_id'];
                         $f = BeanFactory::getBean($event_parent_type);
                         $table = $f->table_name;
-                        $event_parent_name =& $row['Meetings_parent_name_'.$table];
+                        $event_parent_name =& $row['Meetings_parent_name_' . $table];
                         break;
                     default:
                         return;
