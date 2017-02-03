@@ -198,7 +198,7 @@ class SugarEmailAddress extends SugarBean {
 
     /**
      * Saves email addresses for a parent bean.
-     * The base class SugarBean::save($check_notify) method is never called from SugarEmailAddresses::save(...)
+     * The base class SugarBean::save($check_notify) method is never called from SugarEmailAddresses::saveEmail(...)
      * The method's signature has been changed to correctly represent the save method call for SugarEmailAddress.
      * @param string $id Parent bean ID
      * @param string $module Parent bean's module
@@ -212,7 +212,8 @@ class SugarEmailAddress extends SugarBean {
      */
     public function saveEmail($id, $module, $new_addrs = array(), $primary='', $replyTo='', $invalid='', $optOut='', $in_workflow = false) {
         if(gettype($id) == "boolean") {
-            $GLOBALS['log']->fatal('SugarEmailAddress::save() Invalid arguments - Parent method SugarBean::save($checknotify) is not implemented. Please pass the correct arguments into SugarEmailAddress::save()');
+            $GLOBALS['log']->fatal('SugarEmailAddress::saveEmail() Invalid arguments - Parent method SugarBean::save
+            ($checknotify) is not implemented. Please pass the correct arguments into SugarEmailAddress::saveEmail()');
         }
 
         if(empty($this->addresses) || $in_workflow) {
