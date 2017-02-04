@@ -3,7 +3,7 @@
 {foreach from=$Results item=result}
     <div class="alert alert-{if $result->type != null}{$result->type}{else}info{/if} alert-dismissible module-alert" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="Alerts.prototype.markAsRead('{$result->id}');"><span aria-hidden="true">&times;</span></button>
-        <h4>
+        <h4 class="alert-header">
         {if $result->url_redirect != null && !($result->url_redirect|strstr:"fake_") }
         <a class="alert-link text-{if $result->type != null}{$result->type}{else}info{/if}" href="index.php?module=Alerts&action=redirect&record={$result->id}">
         {/if}
@@ -17,7 +17,7 @@
         </a>
         {/if}
         </h4>
-        <p>
+        <p class="alert-body">
             {$result->name|nl2br}<br/>
             {$result->description|nl2br}
         </p>

@@ -29,7 +29,7 @@ class formLetter{
 	static function LVSmarty(){
 		global $app_strings, $sugar_config;
 		if (preg_match('/^6\./', $sugar_config['sugar_version'])) {
-			$script = '<a href="#" style="width: 150px" class="menuItem" onmouseover="hiliteItem(this,\'yes\');" onmouseout="unhiliteItem(this);" onclick="showPopup()">'.$app_strings['LBL_GENERATE_LETTER'].'</a>';
+			$script = '<a href="#" class="menuItem" onmouseover="hiliteItem(this,\'yes\');" onmouseout="unhiliteItem(this);" onclick="showPopup()">'.$app_strings['LBL_GENERATE_LETTER'].'</a>';
 		}
 		else{
 			$script = ' <input class="button" type="button" value="'.$app_strings['LBL_GENERATE_LETTER'].'" ' .'onClick="showPopup();">';
