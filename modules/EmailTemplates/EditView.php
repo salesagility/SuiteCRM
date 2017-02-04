@@ -171,6 +171,17 @@ if (isset($focus->text_only) && $focus->text_only) {
     $xtpl->assign("TEXTONLY_VALUE", "0");
 }
 
+if(isset($focus->direct_html_c) && $focus->direct_html_c){
+    $xtpl->assign("DIRECT_HTML_CHECKED","CHECKED");
+    $xtpl->assign("DIRECT_HTML_VALUE","1");
+    $xtpl->assign("DIRECT_HTML_VISIBILITY","");
+    $xtpl->assign("MOZAIK_VISIBILITY","display:none;");
+}else{
+    $xtpl->assign("DIRECT_HTML_VALUE","0");
+    $xtpl->assign("DIRECT_HTML_VISIBILITY","display:none;");
+    $xtpl->assign("MOZAIK_VISIBILITY","");
+}
+
 require_once("modules/EmailTemplates/templateFields.php");
 
 $xtpl->assign("FIELD_DEFS_JS", generateFieldDefsJS2());
