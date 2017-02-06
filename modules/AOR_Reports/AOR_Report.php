@@ -1048,17 +1048,15 @@ class AOR_Report extends Basic
 
     function buildReportQueryChart($group_value = '', $extra = array())
     {
-        global $beanList;
-
-        $module = new $beanList[$this->report_module]();
-
-        $query = '';
-        $query_array = array();
-
         //Check if the user has access to the target module
         if (!(ACLController::checkAccess($this->report_module, 'list', true))) {
             return false;
         }
+
+        global $beanList;
+        $module = new $beanList[$this->report_module]();
+        $query = '';
+        $query_array = array();
 
         $query_array = $this->build_report_query_select_chart($query_array, $group_value);
 
