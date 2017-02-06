@@ -1172,29 +1172,14 @@ class AOR_Report extends Basic
                 $field->retrieve($row['id']);
 
                 $field->label = str_replace(' ', '_', $field->label) . $i;
-
-                $path = unserialize(base64_decode($field->module_path));
-
                 $field_module = $module;
                 $table_alias = $field_module->table_name;
                 $oldAlias = $table_alias;
-                if (!empty($path[0]) && $path[0] != $module->module_dir) {
-                    foreach ($path as $rel) {
-                        $new_field_module = new $beanList[getRelatedModule($field_module->module_dir, $rel)];
-                        $oldAlias = $table_alias;
-                        $table_alias = $table_alias . ":" . $rel;
-                        $query =
-                            $this->build_report_query_join(
-                                $rel,
-                                $table_alias,
-                                $oldAlias,
-                                $field_module,
-                                'relationship',
-                                $query,
-                                $new_field_module);
-                        $field_module = $new_field_module;
-                    }
-                }
+
+                //build joins for each external related field
+                list($oldAlias, $table_alias, $query, $field_module) = $this->BuildJoinsForEachExternalRelatedField($query,
+                    $field, $module, $beanList, $field_module, $table_alias, $oldAlias);
+
                 $data = $this->BuildDataForRelateType($field_module, $field);
 
                 list($table_alias, $query, $field_module) = $this->BuildDataForLinkType($query, $data, $beanList,
