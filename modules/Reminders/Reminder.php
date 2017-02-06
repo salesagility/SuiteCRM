@@ -446,8 +446,8 @@ ORDER BY
                     $f = BeanFactory::getBean($module);
                     $table = $f->table_name;
                     if (is_subclass_of($f, 'Person')) {
-                        $callParentSelect .= "\t" . "(c_" . $table . ".first_name + ' ' + c_" . $table . ".last_name) as Calls_parent_name_" . $table . "," . PHP_EOL;
-                        $meetingParentSelect .= "\t" . "(m_" . $table . ".first_name + ' ' + m_" . $table . ".last_name) as Meetings_parent_name_" . $table . "," . PHP_EOL;
+                        $callParentSelect .= "\t" . " CONCAT(CONCAT(c_" . $table . ".first_name, ' '), c_" . $table . ".last_name) as Calls_parent_name_" . $table . "," . PHP_EOL;
+                        $meetingParentSelect .= "\t" . " CONCAT(CONCAT(m_" . $table . ".first_name, ' '), m_" . $table . ".last_name) as Meetings_parent_name_" . $table . "," . PHP_EOL;
 
                     } else {
                         $callParentSelect .= "\t" . "c_" . $table . ".name as Calls_parent_name_" . $table . "," . PHP_EOL;
@@ -459,7 +459,6 @@ ORDER BY
                 $limitTop = " ";
                 $limitBottom = "LIMIT {$_maxEventsInADay}";
                 $query ="
-USE suitecrm;
 SELECT
 	m.name as Meetings_name, 
 	m.description as Meetings_description, 
@@ -531,7 +530,6 @@ ORDER BY
         }
 
         $popupReminders = $db->query($query);
-
         if (empty($db->last_error)) {
             while ($row = $db->fetchByAssoc($popupReminders)) {
 
