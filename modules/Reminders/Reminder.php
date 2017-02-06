@@ -354,40 +354,113 @@ class Reminder extends Basic
         $callParentJoin = PHP_EOL;
         $meetingParentSelect = PHP_EOL;
         $meetingParentJoin = PHP_EOL;
-        foreach ($app_list_strings['parent_type_display'] as $module => $label) {
-            $f = BeanFactory::getBean($module);
-            $table = $f->table_name;
-            if (is_subclass_of($f, 'Person')) {
-                $callParentSelect .= "\t" . " CONCAT(CONCAT(c_" . $table . ".first_name, ' '), c_" . $table . ".last_name) as Calls_parent_name_" . $table . "," . PHP_EOL;
-                $meetingParentSelect .= "\t" . " CONCAT(CONCAT(m_" . $table . ".first_name, ' '), m_" . $table . ".last_name) as Meetings_parent_name_" . $table . "," . PHP_EOL;
 
-            } else {
-                $callParentSelect .= "\t" . "c_" . $table . ".name as Calls_parent_name_" . $table . "," . PHP_EOL;
-                $meetingParentSelect .= "\t" . "m_" . $table . ".name as Meetings_parent_name_" . $table . "," . PHP_EOL;
-            }
-            $callParentJoin .= "\t" . "LEFT JOIN " . $table . " " . "c_" . $table . " ON c.parent_id = " . "c_" . $table . ".id" . PHP_EOL;
-            $meetingParentJoin .= "\t" . "LEFT JOIN " . $table . " " . "m_" . $table . " ON m.parent_id = " . "m_" . $table . ".id" . PHP_EOL;
-
-        }
 
         switch ($sugar_config['dbconfig']['db_type']) {
             case "mssql":
+                foreach ($app_list_strings['parent_type_display'] as $module => $label) {
+                    $f = BeanFactory::getBean($module);
+                    $table = $f->table_name;
+                    if (is_subclass_of($f, 'Person')) {
+                        $callParentSelect .= "\t" . "(c_" . $table . ".first_name + ' ' + c_" . $table . ".last_name) as Calls_parent_name_" . $table . "," . PHP_EOL;
+                        $meetingParentSelect .= "\t" . "(m_" . $table . ".first_name + ' ' + m_" . $table . ".last_name) as Meetings_parent_name_" . $table . "," . PHP_EOL;
+
+                    } else {
+                        $callParentSelect .= "\t" . "c_" . $table . ".name as Calls_parent_name_" . $table . "," . PHP_EOL;
+                        $meetingParentSelect .= "\t" . "m_" . $table . ".name as Meetings_parent_name_" . $table . "," . PHP_EOL;
+                    }
+                    $callParentJoin .= "\t" . "LEFT JOIN " . $table . " " . "c_" . $table . " ON c.parent_id = " . "c_" . $table . ".id" . PHP_EOL;
+                    $meetingParentJoin .= "\t" . "LEFT JOIN " . $table . " " . "m_" . $table . " ON m.parent_id = " . "m_" . $table . ".id" . PHP_EOL;
+
+                }
                 $limitTop = "TOP {$_maxEventsInADay}".PHP_EOL;
                 $limitBottom = " ";
+                $query ="
+SELECT {$limitTop}
+	m.name as Meetings_name, 
+	m.description as Meetings_description, 
+	m.date_start as Meetings_date_start, 
+	m.duration_hours as Meetings_duration_hours, 
+	m.duration_minutes as Meetings_duration_minutes, 
+	m.location as Meetings_location, 
+	m.status as Meetings_status, 
+	m.parent_type as Meetings_parent_type, 
+	m.parent_id as Meetings_parent_id, 
+    {$meetingParentSelect}
+	c.name as Calls_name, 
+	c.description as Calls_description, 
+	c.date_start as Calls_date_start, 
+	c.duration_hours as Calls_duration_hours, 
+	c.duration_minutes as Calls_duration_minutes, 
+	c.status as Calls_status,
+	c.parent_type as Calls_parent_type, 
+	c.parent_id as Calls_parent_id, 
+    {$callParentSelect} 
+	ri.related_invitee_module as reminder_invitees_related_invitee_module, 
+	ri.related_invitee_module_id as reminder_invitees_related_invitee_module_id, 
+	r.id as reminder_id, 
+	r.timer_popup as reminder_timer_popup,
+	r.related_event_module as reminder_related_event_module,
+	r.related_event_module_id as reminder_related_event_module_id 
+FROM 
+	reminders_invitees ri 
+	JOIN reminders r ON r.id = ri.reminder_id 
+	AND r.popup = 1 
+	LEFT JOIN meetings m ON m.id = r.related_event_module_id 
+	AND r.related_event_module = 'Meetings'
+	AND m.status = 'Planned'
+	LEFT JOIN meetings_users mu ON mu.meeting_id = m.id
+	{$meetingParentJoin}
+    AND ri.related_invitee_module = 'Users' 
+    AND mu.user_id = ri.related_invitee_module_id
+    AND mu.accept_status LIKE 'accept'
+	LEFT JOIN calls c ON c.id = r.related_event_module_id 
+	AND r.related_event_module = 'Calls' 
+	AND c.status = 'Planned'
+	LEFT JOIN calls_users cu ON cu.call_id = c.id
+    AND ri.related_invitee_module = 'Users' 
+    AND cu.user_id = ri.related_invitee_module_id
+    AND cu.accept_status LIKE 'accept'
+    {$callParentJoin}
+WHERE 
+	ri.related_invitee_module = 'Users' 
+	AND ri.related_invitee_module_id = '{$current_user->id}' 
+	AND r.deleted != 1 
+	AND 
+	(
+		(
+			m.date_start > CAST('{$userNOW}' AS datetime) 
+			AND m.deleted != 1
+		) 
+		OR (
+			c.date_start > CAST('{$userNOW}' AS datetime) 
+			AND c.deleted != 1
+		)
+	)
+ORDER BY 
+	m.date_start ASC, c.date_start ASC
+";
                 break;
             case "mysql":
+                foreach ($app_list_strings['parent_type_display'] as $module => $label) {
+                    $f = BeanFactory::getBean($module);
+                    $table = $f->table_name;
+                    if (is_subclass_of($f, 'Person')) {
+                        $callParentSelect .= "\t" . "(c_" . $table . ".first_name + ' ' + c_" . $table . ".last_name) as Calls_parent_name_" . $table . "," . PHP_EOL;
+                        $meetingParentSelect .= "\t" . "(m_" . $table . ".first_name + ' ' + m_" . $table . ".last_name) as Meetings_parent_name_" . $table . "," . PHP_EOL;
+
+                    } else {
+                        $callParentSelect .= "\t" . "c_" . $table . ".name as Calls_parent_name_" . $table . "," . PHP_EOL;
+                        $meetingParentSelect .= "\t" . "m_" . $table . ".name as Meetings_parent_name_" . $table . "," . PHP_EOL;
+                    }
+                    $callParentJoin .= "\t" . "LEFT JOIN " . $table . " " . "c_" . $table . " ON c.parent_id = " . "c_" . $table . ".id" . PHP_EOL;
+                    $meetingParentJoin .= "\t" . "LEFT JOIN " . $table . " " . "m_" . $table . " ON m.parent_id = " . "m_" . $table . ".id" . PHP_EOL;
+                }
                 $limitTop = " ";
                 $limitBottom = "LIMIT {$_maxEventsInADay}";
-
-                break;
-            default:
-                break;
-        }
-
-
-
-        $query ="
-SELECT {$limitTop}
+                $query ="
+USE suitecrm;
+SELECT
 	m.name as Meetings_name, 
 	m.description as Meetings_description, 
 	m.date_start as Meetings_date_start, 
@@ -452,9 +525,14 @@ ORDER BY
 	m.date_start ASC, c.date_start ASC
 {$limitBottom}
 ";
+                break;
+            default:
+                break;
+        }
+
         $popupReminders = $db->query($query);
 
-        if (!empty($popupReminders->num_rows) && $popupReminders->num_rows > 0) {
+        if (empty($db->last_error)) {
             while ($row = $db->fetchByAssoc($popupReminders)) {
 
                 switch ($row['reminder_related_event_module']) {
