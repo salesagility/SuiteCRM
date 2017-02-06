@@ -1143,7 +1143,8 @@ class AOR_Report extends Basic
 
             while ($row = $this->db->fetchByAssoc($result)) {
 
-                $query = $this->createQueryForChart($query, $group_value, $row, $chartbean, $i, $module, $beanList, $timedate);
+                $query = $this->createQueryForChart($query, $group_value, $row, $chartbean, $i, $module, $beanList,
+                    $timedate);
 
                 ++$i;
             }
@@ -1176,14 +1177,13 @@ class AOR_Report extends Basic
                 $table_alias = $field_module->table_name;
                 $oldAlias = $table_alias;
 
-                //build joins for each external related field
                 list($oldAlias, $table_alias, $query, $field_module) = $this->BuildJoinsForEachExternalRelatedField($query,
                     $field, $module, $beanList, $field_module, $table_alias, $oldAlias);
 
                 $data = $this->BuildDataForRelateType($field_module, $field);
 
                 list($table_alias, $query, $field_module) = $this->BuildDataForLinkType($query, $data, $beanList,
-                    $field_module, $oldAlias, $field,$table_alias);
+                    $field_module, $oldAlias, $field, $table_alias);
 
                 $query = $this->BuildDataForCurrencyType($query, $data, $field_module, $table_alias);
 
@@ -1935,44 +1935,31 @@ class AOR_Report extends Basic
         $table_alias = $field_module->table_name;
         $oldAlias = $table_alias;
 
-        //build joins for each external related field
         list($oldAlias, $table_alias, $query, $field_module) = $this->BuildJoinsForEachExternalRelatedField($query,
             $field, $module, $beanList, $field_module, $table_alias, $oldAlias);
 
-        //Build by Data type
-        //build data for related field
         $data = $this->BuildDataForRelateType($field_module, $field);
 
-        //build data for links
         list($table_alias, $query, $field_module) = $this->BuildDataForLinkType($query, $data, $beanList,
             $field_module, $oldAlias, $field, $table_alias);
 
-        //build data for currency type
         $query = $this->BuildDataForCurrencyType($query, $data, $field_module, $table_alias);
 
-        //build data for custom fields
         list($data, $select_field, $query) = $this->BuildDataForCustomField($query, $data, $table_alias, $field,
             $field_module);
 
-        //build data for date time
         $select_field = $this->BuildDataForDateType($field, $data, $select_field, $timedate);
 
-        //SetTableAlias
         $query = $this->SetTableAlias($query, $field, $table_alias);
 
-        //SetGroupBy
         list($query, $select_field) = $this->SetGroupBy($query, $field, $select_field);
 
-        //SetSortBy
         $query = $this->SetSortBy($query, $field, $select_field);
-
 
         $query['select'][] = $select_field . " AS '" . $field->label . "'";
 
         if ($field->group_display == 1 && $group_value) {
             $query['where'][] = $select_field . " = '" . $group_value . "' AND ";
-
-            return $query;
         }
 
         return $query;
