@@ -906,7 +906,7 @@ class AOR_Report extends Basic
         }
 
 
-        $query_array = $this->build_report_query_select($query_array, $group_value);
+        $query_array = $this->buildReportQuerySelect($query_array, $group_value);
 
 
         if (isset($extra['where']) && $extra['where']) {
@@ -1143,8 +1143,7 @@ class AOR_Report extends Basic
 
             while ($row = $this->db->fetchByAssoc($result)) {
 
-                $query = $this->createQueryForChart($query, $group_value, $row, $chartbean, $i, $module, $beanList,
-                    $timedate);
+                $query = $this->createQuery($query, $group_value, $row, $i, $module, $beanList, $timedate);
 
                 ++$i;
             }
@@ -1153,7 +1152,7 @@ class AOR_Report extends Basic
         return $query;
     }
 
-    function build_report_query_select($query = array(), $group_value = '')
+    function buildReportQuerySelect($query = array(), $group_value = '')
     {
         global $beanList, $timedate;
 
@@ -1169,40 +1168,7 @@ class AOR_Report extends Basic
             $i = 0;
             while ($row = $this->db->fetchByAssoc($result)) {
 
-                $field = new AOR_Field();
-                $field->retrieve($row['id']);
-
-                $field->label = str_replace(' ', '_', $field->label) . $i;
-                $field_module = $module;
-                $table_alias = $field_module->table_name;
-                $oldAlias = $table_alias;
-
-                list($oldAlias, $table_alias, $query, $field_module) = $this->BuildJoinsForEachExternalRelatedField($query,
-                    $field, $module, $beanList, $field_module, $table_alias, $oldAlias);
-
-                $data = $this->BuildDataForRelateType($field_module, $field);
-
-                list($table_alias, $query, $field_module) = $this->BuildDataForLinkType($query, $data, $beanList,
-                    $field_module, $oldAlias, $field, $table_alias);
-
-                $query = $this->BuildDataForCurrencyType($query, $data, $field_module, $table_alias);
-
-                list($data, $select_field, $query) = $this->BuildDataForCustomField($query, $data, $table_alias, $field,
-                    $field_module);
-
-                $select_field = $this->BuildDataForDateType($field, $data, $select_field, $timedate);
-
-                $query = $this->SetTableAlias($query, $field, $table_alias);
-
-                list($query, $select_field) = $this->SetGroupBy($query, $field, $select_field);
-
-                $query = $this->SetSortBy($query, $field, $select_field);
-
-                $query['select'][] = $select_field . " AS '" . $field->label . "'";
-
-                if ($field->group_display == 1 && $group_value) {
-                    $query['where'][] = $select_field . " = '" . $group_value . "' AND ";
-                }
+                $query = $this->createQuery($query, $group_value, $row, $i, $module, $beanList, $timedate);
 
                 ++$i;
             }
@@ -1913,22 +1879,17 @@ class AOR_Report extends Basic
      * @param $query
      * @param $group_value
      * @param $row
-     * @param $chartbean
      * @param $i
      * @param $module
      * @param $beanList
      * @param $timedate
      * @return mixed
+     * @internal param $chartbean
      */
-    private function createQueryForChart($query, $group_value, $row, $chartbean, $i, $module, $beanList, $timedate)
+    private function createQuery($query, $group_value, $row, $i, $module, $beanList, $timedate)
     {
         $field = new AOR_Field();
         $field->retrieve($row['id']);
-        $reportId = "aor_charts.aor_report_id ='" . $row['id'] . "'";
-        $chartEnt = $chartbean->get_full_list(
-            "name",
-            $reportId
-        );
 
         $field->label = str_replace(' ', '_', $field->label) . $i;
         $field_module = $module;
