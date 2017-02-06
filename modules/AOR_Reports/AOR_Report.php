@@ -359,13 +359,7 @@ class AOR_Report extends Basic
                 $query_array['sort_by'][] = $field_label . ' ' . $field->sort_by;
             }
 
-            if ($field->format && in_array($data['type'], array('date', 'datetime', 'datetimecombo'))) {
-                if (in_array($data['type'], array('datetime', 'datetimecombo'))) {
-                    $select_field = $this->db->convert($select_field, 'add_tz_offset');
-                }
-                $select_field = $this->db->convert($select_field, 'date_format',
-                    array($timedate->getCalFormat($field->format)));
-            }
+            $select_field = $this->BuildDataForDateType($field, $data, $select_field, $timedate);
 
             if ($field->field_function != null) {
                 $select_field = $field->field_function . '(' . $select_field . ')';
@@ -1058,7 +1052,7 @@ class AOR_Report extends Basic
         $query = '';
         $query_array = array();
 
-        $query_array = $this->build_report_query_select_chart($query_array, $group_value);
+        $query_array = $this->buildReportQuerySelectForChart($query_array, $group_value);
 
         if (isset($extra['where']) && $extra['where']) {
             $query_array['where'][] = implode(' AND ', $extra['where']) . ' AND ';
@@ -1124,7 +1118,7 @@ class AOR_Report extends Basic
      * @param string $group_value
      * @return array
      */
-    function build_report_query_select_chart($query = array(), $group_value = '')
+    function buildReportQuerySelectForChart($query = array(), $group_value = '')
     {
         global $beanList, $timedate;
         $chartbean = BeanFactory::newBean('AOR_Charts');
@@ -1149,82 +1143,7 @@ class AOR_Report extends Basic
 
             while ($row = $this->db->fetchByAssoc($result)) {
 
-                $field = new AOR_Field();
-                $field->retrieve($row['id']);
-                $reportId = "aor_charts.aor_report_id ='" . $row['id'] . "'";
-                $chartEnt = $chartbean->get_full_list(
-                    "name",
-                    $reportId
-                );
-                $field->label = str_replace(' ', '_', $field->label) . $i;
-
-                $field_module = $module;
-                $table_alias = $field_module->table_name;
-
-
-                $oldAlias = $table_alias;
-
-                //build joins for each external related field
-                list($oldAlias, $table_alias, $query, $field_module) = $this->BuildJoinsForEachExternalRelatedField($query,
-                    $field, $module, $beanList, $field_module, $table_alias, $oldAlias);
-
-                //Build by Data type
-                //build data for related field
-                $data = $this->BuildDataForRelateType($field_module, $field);
-
-                //build data for links
-                list($table_alias, $query, $field_module) = $this->BuildDataForLinkType($query, $data, $beanList,
-                    $field_module, $oldAlias, $field,$table_alias);
-
-                //build data for currency type
-                $query = $this->BuildDataForCurrencyType($query, $data, $field_module, $table_alias);
-
-                //build data for custom fields
-                if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
-                    $select_field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $field->field;
-                    $query = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm',
-                        $table_alias, $field_module, 'custom', $query);
-                } else {
-                    $select_field = $this->db->quoteIdentifier($table_alias) . '.' . $field->field;
-                }
-
-                //build data for date time
-                if ($field->format && in_array($data['type'], array('date', 'datetime', 'datetimecombo'))) {
-                    if (in_array($data['type'], array('datetime', 'datetimecombo'))) {
-                        $select_field = $this->db->convert($select_field, 'add_tz_offset');
-                    }
-                    $select_field = $this->db->convert($select_field, 'date_format',
-                        array($timedate->getCalFormat($field->format)));
-                }
-
-
-                if ($field->link && isset($query['id_select'][$table_alias])) {
-                    $query['select'][] = $query['id_select'][$table_alias];
-                    $query['second_group_by'][] = $query['id_select_group'][$table_alias];
-                    unset($query['id_select'][$table_alias]);
-                }
-
-
-                if ($field->group_by == 1) {
-                    $query['group_by'][] = $select_field;
-                } elseif ($field->field_function != null) {
-                    $select_field = $field->field_function . '(' . $select_field . ')';
-                } else {
-                    $query['second_group_by'][] = $select_field;
-                }
-
-
-                if ($field->sort_by != '') {
-                    $query['sort_by'][] = $select_field . " " . $field->sort_by;
-                }
-
-
-                $query['select'][] = $select_field . " AS '" . $field->label . "'";
-
-                if ($field->group_display == 1 && $group_value) {
-                    $query['where'][] = $select_field . " = '" . $group_value . "' AND ";
-                }
-
+                $query = $this->createQueryForChart($query, $group_value, $row, $chartbean, $i, $module, $beanList, $timedate);
 
                 ++$i;
             }
@@ -1283,39 +1202,16 @@ class AOR_Report extends Basic
 
                 $query = $this->BuildDataForCurrencyType($query, $data, $field_module, $table_alias);
 
-                if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
-                    $select_field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $field->field;
-                    $query = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm',
-                        $table_alias, $field_module, 'custom', $query);
-                } else {
-                    $select_field = $this->db->quoteIdentifier($table_alias) . '.' . $field->field;
-                }
+                list($data, $select_field, $query) = $this->BuildDataForCustomField($query, $data, $table_alias, $field,
+                    $field_module);
 
-                if ($field->format && in_array($data['type'], array('date', 'datetime', 'datetimecombo'))) {
-                    if (in_array($data['type'], array('datetime', 'datetimecombo'))) {
-                        $select_field = $this->db->convert($select_field, 'add_tz_offset');
-                    }
-                    $select_field = $this->db->convert($select_field, 'date_format',
-                        array($timedate->getCalFormat($field->format)));
-                }
+                $select_field = $this->BuildDataForDateType($field, $data, $select_field, $timedate);
 
-                if ($field->link && isset($query['id_select'][$table_alias])) {
-                    $query['select'][] = $query['id_select'][$table_alias];
-                    $query['second_group_by'][] = $query['id_select_group'][$table_alias];
-                    unset($query['id_select'][$table_alias]);
-                }
+                $query = $this->SetTableAlias($query, $field, $table_alias);
 
-                if ($field->group_by == 1) {
-                    $query['group_by'][] = $select_field;
-                } elseif ($field->field_function != null) {
-                    $select_field = $field->field_function . '(' . $select_field . ')';
-                } else {
-                    $query['second_group_by'][] = $select_field;
-                }
+                list($query, $select_field) = $this->SetGroupBy($query, $field, $select_field);
 
-                if ($field->sort_by != '') {
-                    $query['sort_by'][] = $select_field . " " . $field->sort_by;
-                }
+                $query = $this->SetSortBy($query, $field, $select_field);
 
                 $query['select'][] = $select_field . " AS '" . $field->label . "'";
 
@@ -1919,6 +1815,179 @@ class AOR_Report extends Basic
 
                 return $query;
             }
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param $query
+     * @param $data
+     * @param $table_alias
+     * @param $field
+     * @param $field_module
+     * @return array
+     */
+    private function BuildDataForCustomField($query, $data, $table_alias, $field, $field_module)
+    {
+        if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
+            $select_field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $field->field;
+            $query = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm',
+                $table_alias, $field_module, 'custom', $query);
+
+            return array($data, $select_field, $query);
+        } else {
+            $select_field = $this->db->quoteIdentifier($table_alias) . '.' . $field->field;
+
+            return array($data, $select_field, $query);
+        }
+    }
+
+    /**
+     * @param $field
+     * @param $data
+     * @param $select_field
+     * @param $timedate
+     * @return string
+     */
+    private function BuildDataForDateType($field, $data, $select_field, $timedate)
+    {
+        if ($field->format && in_array($data['type'], array('date', 'datetime', 'datetimecombo'))) {
+            if (in_array($data['type'], array('datetime', 'datetimecombo'))) {
+                $select_field = $this->db->convert($select_field, 'add_tz_offset');
+            }
+            $select_field = $this->db->convert($select_field, 'date_format',
+                array($timedate->getCalFormat($field->format)));
+
+            return $select_field;
+        }
+
+        return $select_field;
+    }
+
+    /**
+     * @param $query
+     * @param $field
+     * @param $table_alias
+     * @return mixed
+     */
+    private function SetTableAlias($query, $field, $table_alias)
+    {
+        if ($field->link && isset($query['id_select'][$table_alias])) {
+            $query['select'][] = $query['id_select'][$table_alias];
+            $query['second_group_by'][] = $query['id_select_group'][$table_alias];
+            unset($query['id_select'][$table_alias]);
+
+            return $query;
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param $query
+     * @param $field
+     * @param $select_field
+     * @return array
+     */
+    private function SetGroupBy($query, $field, $select_field)
+    {
+        if ($field->group_by == 1) {
+            $query['group_by'][] = $select_field;
+
+            return array($query, $select_field);
+        } elseif ($field->field_function != null) {
+            $select_field = $field->field_function . '(' . $select_field . ')';
+
+            return array($query, $select_field);
+        } else {
+            $query['second_group_by'][] = $select_field;
+
+            return array($query, $select_field);
+        }
+    }
+
+    /**
+     * @param $query
+     * @param $field
+     * @param $select_field
+     * @return mixed
+     */
+    private function SetSortBy($query, $field, $select_field)
+    {
+        if ($field->sort_by != '') {
+            $query['sort_by'][] = $select_field . " " . $field->sort_by;
+
+            return $query;
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param $query
+     * @param $group_value
+     * @param $row
+     * @param $chartbean
+     * @param $i
+     * @param $module
+     * @param $beanList
+     * @param $timedate
+     * @return mixed
+     */
+    private function createQueryForChart($query, $group_value, $row, $chartbean, $i, $module, $beanList, $timedate)
+    {
+        $field = new AOR_Field();
+        $field->retrieve($row['id']);
+        $reportId = "aor_charts.aor_report_id ='" . $row['id'] . "'";
+        $chartEnt = $chartbean->get_full_list(
+            "name",
+            $reportId
+        );
+
+        $field->label = str_replace(' ', '_', $field->label) . $i;
+        $field_module = $module;
+        $table_alias = $field_module->table_name;
+        $oldAlias = $table_alias;
+
+        //build joins for each external related field
+        list($oldAlias, $table_alias, $query, $field_module) = $this->BuildJoinsForEachExternalRelatedField($query,
+            $field, $module, $beanList, $field_module, $table_alias, $oldAlias);
+
+        //Build by Data type
+        //build data for related field
+        $data = $this->BuildDataForRelateType($field_module, $field);
+
+        //build data for links
+        list($table_alias, $query, $field_module) = $this->BuildDataForLinkType($query, $data, $beanList,
+            $field_module, $oldAlias, $field, $table_alias);
+
+        //build data for currency type
+        $query = $this->BuildDataForCurrencyType($query, $data, $field_module, $table_alias);
+
+        //build data for custom fields
+        list($data, $select_field, $query) = $this->BuildDataForCustomField($query, $data, $table_alias, $field,
+            $field_module);
+
+        //build data for date time
+        $select_field = $this->BuildDataForDateType($field, $data, $select_field, $timedate);
+
+        //SetTableAlias
+        $query = $this->SetTableAlias($query, $field, $table_alias);
+
+        //SetGroupBy
+        list($query, $select_field) = $this->SetGroupBy($query, $field, $select_field);
+
+        //SetSortBy
+        $query = $this->SetSortBy($query, $field, $select_field);
+
+
+        $query['select'][] = $select_field . " AS '" . $field->label . "'";
+
+        if ($field->group_display == 1 && $group_value) {
+            $query['where'][] = $select_field . " = '" . $group_value . "' AND ";
+
+            return $query;
         }
 
         return $query;
