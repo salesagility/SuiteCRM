@@ -204,7 +204,7 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         $this->assertGreaterThan(0, strlen($actual));
     }
 
-    public function testbuild_report_query_select()
+    public function testbuild_ReportQuerySelect()
     {
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';

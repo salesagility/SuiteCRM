@@ -1142,9 +1142,7 @@ class AOR_Report extends Basic
             $i = 0;//not used only for testing dt
 
             while ($row = $this->db->fetchByAssoc($result)) {
-
                 $query = $this->createQuery($query, $group_value, $row, $i, $module, $beanList, $timedate);
-
                 ++$i;
             }
         }
@@ -1167,9 +1165,7 @@ class AOR_Report extends Basic
             $result = $this->db->query($sql);
             $i = 0;
             while ($row = $this->db->fetchByAssoc($result)) {
-
                 $query = $this->createQuery($query, $group_value, $row, $i, $module, $beanList, $timedate);
-
                 ++$i;
             }
         }
