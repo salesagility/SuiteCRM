@@ -1156,50 +1156,23 @@ class AOR_Report extends Basic
                     "name",
                     $reportId
                 );
-
-
                 $field->label = str_replace(' ', '_', $field->label) . $i;
-
-                $path = unserialize(base64_decode($field->module_path));
 
                 $field_module = $module;
                 $table_alias = $field_module->table_name;
+
+
                 $oldAlias = $table_alias;
 
+                //build joins for each external related field
+                list($oldAlias, $table_alias, $query, $field_module) = $this->BuildJoinsForEachExternalRelatedField($query,
+                    $field, $module, $beanList, $field_module, $table_alias, $oldAlias);
 
-                if (!empty($path[0]) && $path[0] != $module->module_dir) {
-                    foreach ($path as $rel) {
-                        $new_field_module = new $beanList[getRelatedModule($field_module->module_dir, $rel)];
-                        $oldAlias = $table_alias;
-                        $table_alias = $table_alias . ":" . $rel;
-                        $query =
-                            $this->build_report_query_join(
-                                $rel,
-                                $table_alias,
-                                $oldAlias,
-                                $field_module,
-                                'relationship',
-                                $query,
-                                $new_field_module);
-                        $field_module = $new_field_module;
-                    }
-                }
+                //Build by Data type
+                //build data for related field
+                $data = $this->BuildDataForRelateType($field_module, $field);
 
-
-                $data = $field_module->field_defs[$field->field];
-
-
-                if ($data['type'] == 'relate' && isset($data['id_name'])) {
-                    $field->field = $data['id_name'];
-                    $data_new = $field_module->field_defs[$field->field];
-                    if (isset($data_new['source']) && $data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])) {
-                        $data_new['type'] = 'link';
-                        $data_new['relationship'] = $data['link'];
-                    }
-                    $data = $data_new;
-                }
-
-
+                //build data for links
                 if ($data['type'] == 'link' && $data['source'] == 'non-db') {
                     $new_field_module = new $beanList[getRelatedModule($field_module->module_dir,
                         $data['relationship'])];
@@ -1210,7 +1183,7 @@ class AOR_Report extends Basic
                     $field->field = 'id';
                 }
 
-
+                //build data for currency type
                 if ($data['type'] == 'currency' && isset($field_module->field_defs['currency_id'])) {
                     if ((isset($field_module->field_defs['currency_id']['source']) && $field_module->field_defs['currency_id']['source'] == 'custom_fields')) {
                         $query['select'][$table_alias . '_currency_id'] = $this->db->quoteIdentifier($table_alias . '_cstm') . ".currency_id AS '" . $table_alias . "_currency_id'";
@@ -1221,7 +1194,7 @@ class AOR_Report extends Basic
                     }
                 }
 
-
+                //build data for custom fields
                 if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                     $select_field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $field->field;
                     $query = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm',
@@ -1230,7 +1203,7 @@ class AOR_Report extends Basic
                     $select_field = $this->db->quoteIdentifier($table_alias) . '.' . $field->field;
                 }
 
-
+                //build data for date time
                 if ($field->format && in_array($data['type'], array('date', 'datetime', 'datetimecombo'))) {
                     if (in_array($data['type'], array('datetime', 'datetimecombo'))) {
                         $select_field = $this->db->convert($select_field, 'add_tz_offset');
@@ -1318,17 +1291,7 @@ class AOR_Report extends Basic
                         $field_module = $new_field_module;
                     }
                 }
-                $data = $field_module->field_defs[$field->field];
-
-                if ($data['type'] == 'relate' && isset($data['id_name'])) {
-                    $field->field = $data['id_name'];
-                    $data_new = $field_module->field_defs[$field->field];
-                    if (isset($data_new['source']) && $data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])) {
-                        $data_new['type'] = 'link';
-                        $data_new['relationship'] = $data['link'];
-                    }
-                    $data = $data_new;
-                }
+                $data = $this->BuildDataForRelateType($field_module, $field);
 
                 if ($data['type'] == 'link' && $data['source'] == 'non-db') {
                     $new_field_module = new $beanList[getRelatedModule($field_module->module_dir,
@@ -1865,6 +1828,74 @@ class AOR_Report extends Basic
                 }
             }
             $data[] = $row;
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param $query
+     * @param $field
+     * @param $module
+     * @param $beanList
+     * @param $field_module
+     * @param $table_alias
+     * @param $oldAlias
+     * @return array
+     */
+    private function BuildJoinsForEachExternalRelatedField(
+        $query,
+        $field,
+        $module,
+        $beanList,
+        $field_module,
+        $table_alias,
+        $oldAlias
+    ) {
+        $path = unserialize(base64_decode($field->module_path));
+        $pathExists = !empty($path[0]);
+        $PathIsNotModuleDir = $path[0] != $module->module_dir;
+        if ($pathExists && $PathIsNotModuleDir) {
+            foreach ($path as $rel) {
+                $new_field_module = new $beanList[getRelatedModule($field_module->module_dir, $rel)];
+                $oldAlias = $table_alias;
+                $table_alias = $table_alias . ":" . $rel;
+                $query =
+                    $this->build_report_query_join(
+                        $rel,
+                        $table_alias,
+                        $oldAlias,
+                        $field_module,
+                        'relationship',
+                        $query,
+                        $new_field_module);
+                $field_module = $new_field_module;
+            }
+
+            return array($oldAlias, $table_alias, $query, $field_module);
+        }
+
+        return array($oldAlias, $table_alias, $query, $field_module);
+    }
+
+    /**
+     * @param $field_module
+     * @param $field
+     * @return mixed
+     */
+    private function BuildDataForRelateType($field_module, $field)
+    {
+        $data = $field_module->field_defs[$field->field];
+        if ($data['type'] == 'relate' && isset($data['id_name'])) {
+            $field->field = $data['id_name'];
+            $data_new = $field_module->field_defs[$field->field];
+            if (isset($data_new['source']) && $data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])) {
+                $data_new['type'] = 'link';
+                $data_new['relationship'] = $data['link'];
+            }
+            $data = $data_new;
+
+            return $data;
         }
 
         return $data;
