@@ -1173,26 +1173,11 @@ class AOR_Report extends Basic
                 $data = $this->BuildDataForRelateType($field_module, $field);
 
                 //build data for links
-                if ($data['type'] == 'link' && $data['source'] == 'non-db') {
-                    $new_field_module = new $beanList[getRelatedModule($field_module->module_dir,
-                        $data['relationship'])];
-                    $table_alias = $data['relationship'];
-                    $query = $this->build_report_query_join($data['relationship'], $table_alias, $oldAlias,
-                        $field_module, 'relationship', $query, $new_field_module);
-                    $field_module = $new_field_module;
-                    $field->field = 'id';
-                }
+                list($table_alias, $query, $field_module) = $this->BuildDataForLinkType($query, $data, $beanList,
+                    $field_module, $oldAlias, $field,$table_alias);
 
                 //build data for currency type
-                if ($data['type'] == 'currency' && isset($field_module->field_defs['currency_id'])) {
-                    if ((isset($field_module->field_defs['currency_id']['source']) && $field_module->field_defs['currency_id']['source'] == 'custom_fields')) {
-                        $query['select'][$table_alias . '_currency_id'] = $this->db->quoteIdentifier($table_alias . '_cstm') . ".currency_id AS '" . $table_alias . "_currency_id'";
-                        $query['second_group_by'][] = $this->db->quoteIdentifier($table_alias . '_cstm') . ".currency_id";
-                    } else {
-                        $query['select'][$table_alias . '_currency_id'] = $this->db->quoteIdentifier($table_alias) . ".currency_id AS '" . $table_alias . "_currency_id'";
-                        $query['second_group_by'][] = $this->db->quoteIdentifier($table_alias) . ".currency_id";
-                    }
-                }
+                $query = $this->BuildDataForCurrencyType($query, $data, $field_module, $table_alias);
 
                 //build data for custom fields
                 if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
@@ -1293,25 +1278,10 @@ class AOR_Report extends Basic
                 }
                 $data = $this->BuildDataForRelateType($field_module, $field);
 
-                if ($data['type'] == 'link' && $data['source'] == 'non-db') {
-                    $new_field_module = new $beanList[getRelatedModule($field_module->module_dir,
-                        $data['relationship'])];
-                    $table_alias = $data['relationship'];
-                    $query = $this->build_report_query_join($data['relationship'], $table_alias, $oldAlias,
-                        $field_module, 'relationship', $query, $new_field_module);
-                    $field_module = $new_field_module;
-                    $field->field = 'id';
-                }
+                list($table_alias, $query, $field_module) = $this->BuildDataForLinkType($query, $data, $beanList,
+                    $field_module, $oldAlias, $field,$table_alias);
 
-                if ($data['type'] == 'currency' && isset($field_module->field_defs['currency_id'])) {
-                    if ((isset($field_module->field_defs['currency_id']['source']) && $field_module->field_defs['currency_id']['source'] == 'custom_fields')) {
-                        $query['select'][$table_alias . '_currency_id'] = $this->db->quoteIdentifier($table_alias . '_cstm') . ".currency_id AS '" . $table_alias . "_currency_id'";
-                        $query['second_group_by'][] = $this->db->quoteIdentifier($table_alias . '_cstm') . ".currency_id";
-                    } else {
-                        $query['select'][$table_alias . '_currency_id'] = $this->db->quoteIdentifier($table_alias) . ".currency_id AS '" . $table_alias . "_currency_id'";
-                        $query['second_group_by'][] = $this->db->quoteIdentifier($table_alias) . ".currency_id";
-                    }
-                }
+                $query = $this->BuildDataForCurrencyType($query, $data, $field_module, $table_alias);
 
                 if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                     $select_field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $field->field;
@@ -1899,6 +1869,59 @@ class AOR_Report extends Basic
         }
 
         return $data;
+    }
+
+    /**
+     * @param $query
+     * @param $data
+     * @param $beanList
+     * @param $field_module
+     * @param $oldAlias
+     * @param $field
+     * @param $table_alias
+     * @return array
+     */
+    private function BuildDataForLinkType($query, $data, $beanList, $field_module, $oldAlias, $field, $table_alias)
+    {
+        if ($data['type'] == 'link' && $data['source'] == 'non-db') {
+            $new_field_module = new $beanList[getRelatedModule($field_module->module_dir,
+                $data['relationship'])];
+            $table_alias = $data['relationship'];
+            $query = $this->build_report_query_join($data['relationship'], $table_alias, $oldAlias,
+                $field_module, 'relationship', $query, $new_field_module);
+            $field_module = $new_field_module;
+            $field->field = 'id';
+
+            return array($table_alias, $query, $field_module);
+        }
+
+        return array($table_alias, $query, $field_module);
+    }
+
+    /**
+     * @param $query
+     * @param $data
+     * @param $field_module
+     * @param $table_alias
+     * @return mixed
+     */
+    private function BuildDataForCurrencyType($query, $data, $field_module, $table_alias)
+    {
+        if ($data['type'] == 'currency' && isset($field_module->field_defs['currency_id'])) {
+            if ((isset($field_module->field_defs['currency_id']['source']) && $field_module->field_defs['currency_id']['source'] == 'custom_fields')) {
+                $query['select'][$table_alias . '_currency_id'] = $this->db->quoteIdentifier($table_alias . '_cstm') . ".currency_id AS '" . $table_alias . "_currency_id'";
+                $query['second_group_by'][] = $this->db->quoteIdentifier($table_alias . '_cstm') . ".currency_id";
+
+                return $query;
+            } else {
+                $query['select'][$table_alias . '_currency_id'] = $this->db->quoteIdentifier($table_alias) . ".currency_id AS '" . $table_alias . "_currency_id'";
+                $query['second_group_by'][] = $this->db->quoteIdentifier($table_alias) . ".currency_id";
+
+                return $query;
+            }
+        }
+
+        return $query;
     }
 
 }
