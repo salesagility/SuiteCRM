@@ -40,6 +40,10 @@
  */
 class AOR_Report extends Basic
 {
+    const CHART_TYPE_PCHART = 'pchart';
+    const CHART_TYPE_CHARTJS = 'chartjs';
+    const CHART_TYPE_RGRAPH = 'rgraph';
+
     var $new_schema = true;
     var $module_dir = 'AOR_Reports';
     var $object_name = 'AOR_Report';
@@ -171,11 +175,6 @@ class AOR_Report extends Basic
 
         return $fields;
     }
-
-    const CHART_TYPE_PCHART = 'pchart';
-    const CHART_TYPE_CHARTJS = 'chartjs';
-    const CHART_TYPE_RGRAPH = 'rgraph';
-
 
     public function buildMultiGroupReport($offset = -1, $links = true, $level = 2, $path = array())
     {
@@ -999,6 +998,7 @@ class AOR_Report extends Basic
     function build_report_chart($chartIds = null, $chartType = self::CHART_TYPE_PCHART)
     {
         global $beanList;
+        $html = '';
         $linkedCharts = $this->get_linked_beans('aor_charts', 'AOR_Charts');
         if (!$linkedCharts) {
             //No charts to display
@@ -1008,72 +1008,15 @@ class AOR_Report extends Basic
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND deleted = 0 ORDER BY field_order ASC";
         $result = $this->db->query($sql);
 
-        $fields = array();
-        $i = 0;
         $mainGroupField = null;
+        $fields = array();
 
-        while ($row = $this->db->fetchByAssoc($result)) {
+        $this->createLabels($result, $beanList, $fields, $mainGroupField, $row);
 
-            $field = new AOR_Field();
-            $field->retrieve($row['id']);
-
-            $path = unserialize(base64_decode($field->module_path));
-
-            $field_bean = new $beanList[$this->report_module]();
-
-            $field_module = $this->report_module;
-            $field_alias = $field_bean->table_name;
-            if ($path[0] != $this->report_module) {
-                foreach ($path as $rel) {
-                    if (empty($rel)) {
-                        continue;
-                    }
-                    $field_module = getRelatedModule($field_module, $rel);
-                    $field_alias = $field_alias . ':' . $rel;
-                }
-            }
-            $label = str_replace(' ', '_', $field->label) . $i;
-            $fields[$label]['field'] = $field->field;
-            $fields[$label]['label'] = $field->label;
-            $fields[$label]['display'] = $field->display;
-            $fields[$label]['function'] = $field->field_function;
-            $fields[$label]['module'] = $field_module;
-            $fields[$label]['alias'] = $field_alias;
-            $fields[$label]['link'] = $field->link;
-            $fields[$label]['total'] = $field->total;
-            $fields[$label]['params'] = $field->format;
-
-
-            // get the main group
-
-            if ($field->group_display) {
-
-                // if we have a main group already thats wrong cause only one main grouping field possible
-                if (!is_null($mainGroupField)) {
-                    $GLOBALS['log']->fatal('main group already found');
-                }
-
-                $mainGroupField = $field;
-            }
-
-            ++$i;
-        }
-
-        $query = $this->build_report_query_chart();//this is where it needs to branch one report for normal queries and one for charts
+        $query = $this->buildReportQueryChart();//this is where it needs to branch one report for normal queries and one for charts
         $result = $this->db->query($query);
-        $data = array();
-        while ($row = $this->db->fetchByAssoc($result, false)) {
-            foreach ($fields as $name => $att) {
+        $data = $this->BuildDataRowsForChart($result, $fields);
 
-                $currency_id = isset($row[$att['alias'] . '_currency_id']) ? $row[$att['alias'] . '_currency_id'] : '';
-
-                if ($att['function'] != 'COUNT' && empty($att['params']) && !is_numeric($row[$name])) {
-                    $row[$name] = trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'],
-                        'DetailView', $row[$name], '', $currency_id)));
-                }
-            }
-            $data[] = $row;
-        }
         $fields = $this->getReportFields();
 
         switch ($chartType) {
@@ -1103,7 +1046,7 @@ class AOR_Report extends Basic
     }
 
 
-    function build_report_query_chart($group_value = '', $extra = array())
+    function buildReportQueryChart($group_value = '', $extra = array())
     {
         global $beanList;
 
@@ -1117,15 +1060,12 @@ class AOR_Report extends Basic
             return false;
         }
 
-
         $query_array = $this->build_report_query_select_chart($query_array, $group_value);
-
 
         if (isset($extra['where']) && $extra['where']) {
             $query_array['where'][] = implode(' AND ', $extra['where']) . ' AND ';
         }
         $query_array = $this->build_report_query_where($query_array);
-
 
         foreach ($query_array['select'] as $select) {
             $query .= ($query == '' ? 'SELECT ' : ', ') . $select;
@@ -1847,6 +1787,89 @@ class AOR_Report extends Basic
         }
 
         return $query;
+    }
+
+    /**
+     * @param $result
+     * @param $beanList
+     * @param $fields
+     * @param $mainGroupField
+     * @param $row
+     */
+    private function createLabels($result, $beanList, &$fields, &$mainGroupField, &$row)
+    {
+        $i = 0;
+
+        while ($row = $this->db->fetchByAssoc($result)) {
+
+            $field = new AOR_Field();
+            $field->retrieve($row['id']);
+
+            $path = unserialize(base64_decode($field->module_path));
+
+            $field_bean = new $beanList[$this->report_module]();
+
+            $field_module = $this->report_module;
+            $field_alias = $field_bean->table_name;
+            if ($path[0] != $this->report_module) {
+                foreach ($path as $rel) {
+                    if (empty($rel)) {
+                        continue;
+                    }
+                    $field_module = getRelatedModule($field_module, $rel);
+                    $field_alias = $field_alias . ':' . $rel;
+                }
+            }
+            $label = str_replace(' ', '_', $field->label) . $i;
+            $fields[$label]['field'] = $field->field;
+            $fields[$label]['label'] = $field->label;
+            $fields[$label]['display'] = $field->display;
+            $fields[$label]['function'] = $field->field_function;
+            $fields[$label]['module'] = $field_module;
+            $fields[$label]['alias'] = $field_alias;
+            $fields[$label]['link'] = $field->link;
+            $fields[$label]['total'] = $field->total;
+            $fields[$label]['params'] = $field->format;
+
+
+            // get the main group
+
+            if ($field->group_display) {
+
+                // if we have a main group already thats wrong cause only one main grouping field possible
+                if (!is_null($mainGroupField)) {
+                    $GLOBALS['log']->fatal('main group already found');
+                }
+
+                $mainGroupField = $field;
+            }
+
+            ++$i;
+        }
+    }
+
+    /**
+     * @param $result
+     * @param $fields
+     * @return array
+     */
+    private function BuildDataRowsForChart($result, $fields)
+    {
+        $data = array();
+        while ($row = $this->db->fetchByAssoc($result, false)) {
+            foreach ($fields as $name => $att) {
+
+                $currency_id = isset($row[$att['alias'] . '_currency_id']) ? $row[$att['alias'] . '_currency_id'] : '';
+
+                if ($att['function'] != 'COUNT' && empty($att['params']) && !is_numeric($row[$name])) {
+                    $row[$name] = trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'],
+                        'DetailView', $row[$name], '', $currency_id)));
+                }
+            }
+            $data[] = $row;
+        }
+
+        return $data;
     }
 
 }
