@@ -116,7 +116,7 @@ class Popup_Picker
 	    }
 		foreach($focus->get_linked_fields() as $field => $def) {
 			if ($focus->load_relationship($field)) {
-				$relTable = $focus->$field->getRelatedTableName();
+				$relTable = BeanFactory::getBean($focus->$field->getRelatedModuleName())->table_name;
 	        	if (in_array($relTable, array_keys($activitiesRels)))
         		{
         			$varname = "focus_" . $relTable . "_list";
