@@ -1345,12 +1345,8 @@ class AOR_Report extends Basic
                     }
 
                     //check for custom selectable parameter from report
-                    if (!empty($this->user_parameters[$condition->id]) && $condition->parameter) {
-                        $condParam = $this->user_parameters[$condition->id];
-                        $condition->value = $condParam['value'];
-                        $condition->operator = $condParam['operator'];
-                        $condition->value_type = $condParam['type'];
-                    }
+                    //buildConditionParams
+                    $this->buildConditionParams($condition);
 
                     //what type of condition is it?
                     switch ($condition->value_type) {
@@ -1368,13 +1364,13 @@ class AOR_Report extends Basic
                                     break;
                             }
 
+                            //setValueSuffix
+                            $value = $this->setValueSuffix($data, $condition_module, $condition,
+                                $table_alias);
 
                             if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
-                                $value = $condition_module->table_name . '_cstm.' . $condition->value;
                                 $query = $this->build_report_query_join($condition_module->table_name . '_cstm',
                                     $table_alias . '_cstm', $table_alias, $condition_module, 'custom', $query);
-                            } else {
-                                $value = ($table_alias ? "`$table_alias`" : $condition_module->table_name) . '.' . $condition->value;
                             }
                             break;
 
@@ -1997,6 +1993,41 @@ class AOR_Report extends Basic
             $field = $this->db->quoteIdentifier($table_alias) . '.' . $condition->field;
 
             return $field;
+        }
+    }
+
+    /**
+     * @param $data
+     * @param $condition_module
+     * @param $condition
+     * @param $table_alias
+     * @return string
+     */
+    private function setValueSuffix($data, $condition_module, $condition, $table_alias)
+    {
+        if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
+            $value = $condition_module->table_name . '_cstm.' . $condition->value;
+
+            return $value;
+        } else {
+            $value = ($table_alias ? "`$table_alias`" : $condition_module->table_name) . '.' . $condition->value;
+
+            return $value;
+        }
+    }
+
+    /**
+     * @param $condition
+     */
+    private function buildConditionParams($condition)
+    {
+        if (!empty($this->user_parameters[$condition->id])) {
+            if ($condition->parameter) {
+                $condParam = $this->user_parameters[$condition->id];
+                $condition->value = $condParam['value'];
+                $condition->operator = $condParam['operator'];
+                $condition->value_type = $condParam['type'];
+            }
         }
     }
 
