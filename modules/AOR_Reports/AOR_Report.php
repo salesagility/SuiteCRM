@@ -1329,23 +1329,20 @@ class AOR_Report extends Basic
                             list($data, $condition) = $this->primeDataForRelate($data, $condition, $condition_module);
                             break;
                         case 'link':
-                            list($table_alias, $query, $condition_module) = $this->primeDateForLink($query,
+                            list($table_alias, $query, $condition_module) = $this->primeDataForLink($query,
                                 $data, $beanList, $condition_module, $oldAlias, $path, $rel, $condition, $table_alias);
                             break;
                     }
 
 
                     //check if its a custom field the set the field parameter
-                    //setFieldSuffix
                     $field = $this->setFieldSuffix($data, $table_alias, $condition);
 
-                    if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
-                        $query = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm',
-                            $table_alias, $condition_module, 'custom', $query);
-                    }
+                    //buildJoinQueryForCustomFields
+                    $query = $this->buildJoinQueryForCustomFields($query, $data, $table_alias,
+                        $condition_module);
 
                     //check for custom selectable parameter from report
-                    //buildConditionParams
                     $this->buildConditionParams($condition);
 
                     //what type of condition is it?
@@ -1356,17 +1353,27 @@ class AOR_Report extends Basic
 
                             switch ($data['type']) {
                                 case 'relate':
-                                    list($data, $condition) = $this->primeDataForRelate($data, $condition, $condition_module);
+                                    list($data, $condition) = $this->primeDataForRelate($data, $condition,
+                                        $condition_module);
                                     break;
                                 case 'link':
-                                    list($table_alias, $query, $condition_module) = $this->primeDateForLink($query,
-                                        $data, $beanList, $condition_module, $oldAlias, $path, $rel, $condition, $table_alias);
+                                    list($table_alias, $query, $condition_module) = $this->primeDataForLink($query,
+                                        $data, $beanList, $condition_module, $oldAlias, $path, $rel, $condition,
+                                        $table_alias);
                                     break;
                             }
 
+
+                            $tableName = $condition_module->table_name;
+                            $fieldName = $condition->value;
+                            $dataSourceIsSet = isset($data['source']);
+                            if ($dataSourceIsSet) {
+                                $isCustomField = ($data['source'] == 'custom_fields') ? true : false;
+                            }
+
                             //setValueSuffix
-                            $value = $this->setValueSuffix($data, $condition_module, $condition,
-                                $table_alias);
+                            $value = $this->setValueSuffix($isCustomField, $tableName, $table_alias, $fieldName);
+
 
                             if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                                 $query = $this->build_report_query_join($condition_module->table_name . '_cstm',
@@ -1383,14 +1390,16 @@ class AOR_Report extends Basic
                                 $params = $condition->value;
                             }
 
-                            if ($params[0] == 'now') {
-                                if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
-                                    $value = 'GetDate()';
-                                } else {
-                                    $value = 'NOW()';
-                                }
-                            } else {
-                                if ($params[0] == 'today') {
+                            $firstParam = $params[0];
+                            switch ($firstParam) {
+                                case 'now':
+                                    if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
+                                        $value = 'GetDate()';
+                                    } else {
+                                        $value = 'NOW()';
+                                    }
+                                    break;
+                                case 'today':
                                     if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
                                         //$field =
                                         $value = 'CAST(GETDATE() AS DATE)';
@@ -1398,17 +1407,22 @@ class AOR_Report extends Basic
                                         $field = 'DATE(' . $field . ')';
                                         $value = 'Curdate()';
                                     }
-                                } else {
-                                    $data = $condition_module->field_defs[$params[0]];
+                                    break;
+                                default:
+                                    $data = $condition_module->field_defs[$firstParam];
                                     if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
-                                        $value = $condition_module->table_name . '_cstm.' . $params[0];
+                                        $value = $condition_module->table_name . '_cstm.' . $firstParam;
+                                    } else {
+                                        $value = $condition_module->table_name . '.' . $firstParam;
+                                    }
+
+                                    if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                                         $query = $this->build_report_query_join($condition_module->table_name . '_cstm',
                                             $table_alias . '_cstm', $table_alias, $condition_module, 'custom', $query);
-                                    } else {
-                                        $value = $condition_module->table_name . '.' . $params[0];
                                     }
-                                }
+                                    break;
                             }
+
 
                             if ($params[1] != 'now') {
                                 switch ($params[3]) {
@@ -1946,7 +1960,7 @@ class AOR_Report extends Basic
      * @param $table_alias
      * @return array
      */
-    private function primeDateForLink(
+    private function primeDataForLink(
         $query,
         $data,
         $beanList,
@@ -1996,21 +2010,24 @@ class AOR_Report extends Basic
         }
     }
 
+
     /**
-     * @param $data
-     * @param $condition_module
-     * @param $condition
-     * @param $table_alias
+     * @param $isCustomField
+     * @param $tableName
+     * @param $tableAlias
+     * @param $fieldName
+     * @param string $suffix
      * @return string
      */
-    private function setValueSuffix($data, $condition_module, $condition, $table_alias)
+    private function setValueSuffix($isCustomField, $tableName, $tableAlias, $fieldName, $suffix = '_cstm')
     {
-        if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
-            $value = $condition_module->table_name . '_cstm.' . $condition->value;
+
+        if ($isCustomField) {
+            $value = $tableName . $suffix . '.' . $fieldName;
 
             return $value;
         } else {
-            $value = ($table_alias ? "`$table_alias`" : $condition_module->table_name) . '.' . $condition->value;
+            $value = ($tableAlias ? "`$tableAlias`" : $tableName) . '.' . $fieldName;
 
             return $value;
         }
@@ -2029,6 +2046,25 @@ class AOR_Report extends Basic
                 $condition->value_type = $condParam['type'];
             }
         }
+    }
+
+    /**
+     * @param $query
+     * @param $data
+     * @param $table_alias
+     * @param $condition_module
+     * @return string
+     */
+    private function buildJoinQueryForCustomFields($query, $data, $table_alias, $condition_module)
+    {
+        if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
+            $query = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm',
+                $table_alias, $condition_module, 'custom', $query);
+
+            return $query;
+        }
+
+        return $query;
     }
 
 }
