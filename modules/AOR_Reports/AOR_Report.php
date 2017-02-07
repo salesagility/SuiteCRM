@@ -1336,12 +1336,12 @@ class AOR_Report extends Basic
 
 
                     //check if its a custom field the set the field parameter
+                    //setFieldSuffix
+                    $field = $this->setFieldSuffix($data, $table_alias, $condition);
+
                     if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
-                        $field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $condition->field;
                         $query = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm',
                             $table_alias, $condition_module, 'custom', $query);
-                    } else {
-                        $field = $this->db->quoteIdentifier($table_alias) . '.' . $condition->field;
                     }
 
                     //check for custom selectable parameter from report
@@ -1979,6 +1979,25 @@ class AOR_Report extends Basic
         }
 
         return array($table_alias, $query, $condition_module);
+    }
+
+    /**
+     * @param $data
+     * @param $table_alias
+     * @param $condition
+     * @return string
+     */
+    private function setFieldSuffix($data, $table_alias, $condition)
+    {
+        if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
+            $field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $condition->field;
+
+            return $field;
+        } else {
+            $field = $this->db->quoteIdentifier($table_alias) . '.' . $condition->field;
+
+            return $field;
+        }
     }
 
 }
