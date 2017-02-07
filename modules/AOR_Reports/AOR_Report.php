@@ -1298,6 +1298,8 @@ class AOR_Report extends Basic
                 $condition_module = $module;
                 $table_alias = $condition_module->table_name;
                 $oldAlias = $table_alias;
+
+                //check if relationship to field outside this module is set for condition
                 if (!empty($path[0]) && $path[0] != $module->module_dir) {
                     foreach ($path as $rel) {
                         if (empty($rel)) {
@@ -1316,35 +1318,41 @@ class AOR_Report extends Basic
                         $condition_module = $new_condition_module;
                     }
                 }
+
+                //check if condition is in the allowed operator list
                 if (isset($aor_sql_operator_list[$condition->operator])) {
                     $where_set = false;
 
                     $data = $condition_module->field_defs[$condition->field];
+                    //check data type of field
+                    //if its type relate
+                    if ($data['type'] == 'relate' ) {
+                        //primeDataForRelate
+                        list($data,$condition) = $this->primeDataForRelate($data, $condition, $condition_module);
 
-                    if ($data['type'] == 'relate' && isset($data['id_name'])) {
-                        $condition->field = $data['id_name'];
-                        $data_new = $condition_module->field_defs[$condition->field];
-                        if (!empty($data_new['source']) && $data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])) {
-                            $data_new['type'] = 'link';
-                            $data_new['relationship'] = $data['link'];
-                        }
-                        $data = $data_new;
                     }
 
-                    if ($data['type'] == 'link' && $data['source'] == 'non-db') {
-                        $new_field_module = new $beanList[getRelatedModule($condition_module->module_dir,
-                            $data['relationship'])];
-                        $table_alias = $data['relationship'];
-                        $query = $this->build_report_query_join($data['relationship'], $table_alias, $oldAlias,
-                            $condition_module, 'relationship', $query, $new_field_module);
-                        $condition_module = $new_field_module;
+                    //if its type link
+                    if ($data['type'] == 'link') {
+                        //primeDateForLink
+                        if($data['source'] == 'non-db'){
+                            $new_field_module = new $beanList[getRelatedModule($condition_module->module_dir,
+                                $data['relationship'])];
+                            $table_alias = $data['relationship'];
+                            $query = $this->build_report_query_join($data['relationship'], $table_alias, $oldAlias,
+                                $condition_module, 'relationship', $query, $new_field_module);
+                            $condition_module = $new_field_module;
 
-                        // Debugging: security groups conditions - It's a hack to just get the query working
-                        if ($condition_module->module_dir = 'SecurityGroups' && count($path) > 1) {
-                            $table_alias = $oldAlias . ':' . $rel;
+                            // Debugging: security groups conditions - It's a hack to just get the query working
+                            if ($condition_module->module_dir = 'SecurityGroups' && count($path) > 1) {
+                                $table_alias = $oldAlias . ':' . $rel;
+                            }
+                            $condition->field = 'id';
                         }
-                        $condition->field = 'id';
+
                     }
+
+                    //check if its a custom field the set the field parameter
                     if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                         $field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $condition->field;
                         $query = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm',
@@ -1353,6 +1361,7 @@ class AOR_Report extends Basic
                         $field = $this->db->quoteIdentifier($table_alias) . '.' . $condition->field;
                     }
 
+                    //check for custom selectable parameter from report
                     if (!empty($this->user_parameters[$condition->id]) && $condition->parameter) {
                         $condParam = $this->user_parameters[$condition->id];
                         $condition->value = $condParam['value'];
@@ -1360,8 +1369,10 @@ class AOR_Report extends Basic
                         $condition->value_type = $condParam['type'];
                     }
 
+                    //what type of condition is it?
                     switch ($condition->value_type) {
-                        case 'Field':
+                        case 'Field': // is it a specific field
+                            //processWhereConditionForTypeField
                             $data = $condition_module->field_defs[$condition->value];
 
                             if ($data['type'] == 'relate' && isset($data['id_name'])) {
@@ -1392,7 +1403,8 @@ class AOR_Report extends Basic
                             }
                             break;
 
-                        case 'Date':
+                        case 'Date': //is it a date
+                            //processWhereConditionForTypeDate
                             $params = unserialize(base64_decode($condition->value));
 
                             // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
@@ -1443,7 +1455,8 @@ class AOR_Report extends Basic
                             }
                             break;
 
-                        case 'Multi':
+                        case 'Multi': //are there multiple conditions setup
+                            //processWhereConditionForTypeMulti
                             $sep = ' AND ';
                             if ($condition->operator == 'Equal_To') {
                                 $sep = ' OR ';
@@ -1462,7 +1475,8 @@ class AOR_Report extends Basic
                             $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $value;
                             $where_set = true;
                             break;
-                        case "Period":
+                        case "Period": //is it a period of time
+                            //processWhereConditionForTypePeriod
                             if (array_key_exists($condition->value, $app_list_strings['date_time_period_list'])) {
                                 $params = $condition->value;
                             } else {
@@ -1470,11 +1484,15 @@ class AOR_Report extends Basic
                             }
                             $value = '"' . getPeriodDate($params)->format('Y-m-d H:i:s') . '"';
                             break;
-                        case "CurrentUserID":
+                        case "CurrentUserID": //not sure what this is for
+                            //processWhereConditionForTypeCurrentUser
                             global $current_user;
                             $value = '"' . $current_user->id . '"';
                             break;
-                        case 'Value':
+                        case 'Value': //is it a specific value
+                            //processWhereConditionForTypeValue
+                            $value = "'" . $this->db->quote($condition->value) . "'";
+                            break;
                         default:
                             $value = "'" . $this->db->quote($condition->value) . "'";
                             break;
@@ -1920,6 +1938,29 @@ class AOR_Report extends Basic
         }
 
         return $query;
+    }
+
+    /**
+     * @param $data
+     * @param $condition
+     * @param $condition_module
+     * @return array
+     */
+    private function primeDataForRelate($data, $condition, $condition_module)
+    {
+        if (isset($data['id_name'])) {
+            $condition->field = $data['id_name'];
+            $data_new = $condition_module->field_defs[$condition->field];
+            if (!empty($data_new['source']) && $data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])) {
+                $data_new['type'] = 'link';
+                $data_new['relationship'] = $data['link'];
+            }
+            $data = $data_new;
+
+            return array($data,$condition);
+        }
+
+        return array($data,$condition);
     }
 
 }
