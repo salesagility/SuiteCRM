@@ -1105,13 +1105,13 @@ class MysqlManager extends DBManager
 	{
 		$ctype = $this->getColumnType($type);
 		if($ctype == "datetime") {
-			return $this->convert($this->quoted("0000-00-00 00:00:00"), "datetime");
+			return 'NULL';
 		}
 		if($ctype == "date") {
-			return $this->convert($this->quoted("0000-00-00"), "date");
+			return 'NULL';
 		}
 		if($ctype == "time") {
-			return $this->convert($this->quoted("00:00:00"), "time");
+			return 'NULL';
 		}
 		return parent::emptyValue($type);
 	}
