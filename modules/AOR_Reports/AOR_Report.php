@@ -1322,35 +1322,18 @@ class AOR_Report extends Basic
                 //check if condition is in the allowed operator list
                 if (isset($aor_sql_operator_list[$condition->operator])) {
                     $where_set = false;
-
                     $data = $condition_module->field_defs[$condition->field];
-                    //check data type of field
-                    //if its type relate
-                    if ($data['type'] == 'relate' ) {
-                        //primeDataForRelate
-                        list($data,$condition) = $this->primeDataForRelate($data, $condition, $condition_module);
-
+                    //check data type of field and process
+                    switch ($data['type']) {
+                        case 'relate':
+                            list($data, $condition) = $this->primeDataForRelate($data, $condition, $condition_module);
+                            break;
+                        case 'link':
+                            list($table_alias, $query, $condition_module) = $this->primeDateForLink($query,
+                                $data, $beanList, $condition_module, $oldAlias, $path, $rel, $condition, $table_alias);
+                            break;
                     }
 
-                    //if its type link
-                    if ($data['type'] == 'link') {
-                        //primeDateForLink
-                        if($data['source'] == 'non-db'){
-                            $new_field_module = new $beanList[getRelatedModule($condition_module->module_dir,
-                                $data['relationship'])];
-                            $table_alias = $data['relationship'];
-                            $query = $this->build_report_query_join($data['relationship'], $table_alias, $oldAlias,
-                                $condition_module, 'relationship', $query, $new_field_module);
-                            $condition_module = $new_field_module;
-
-                            // Debugging: security groups conditions - It's a hack to just get the query working
-                            if ($condition_module->module_dir = 'SecurityGroups' && count($path) > 1) {
-                                $table_alias = $oldAlias . ':' . $rel;
-                            }
-                            $condition->field = 'id';
-                        }
-
-                    }
 
                     //check if its a custom field the set the field parameter
                     if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
@@ -1375,25 +1358,17 @@ class AOR_Report extends Basic
                             //processWhereConditionForTypeField
                             $data = $condition_module->field_defs[$condition->value];
 
-                            if ($data['type'] == 'relate' && isset($data['id_name'])) {
-                                $condition->value = $data['id_name'];
-                                $data_new = $condition_module->field_defs[$condition->value];
-                                if ($data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])) {
-                                    $data_new['type'] = 'link';
-                                    $data_new['relationship'] = $data['link'];
-                                }
-                                $data = $data_new;
+                            switch ($data['type']) {
+                                case 'relate':
+                                    list($data, $condition) = $this->primeDataForRelate($data, $condition, $condition_module);
+                                    break;
+                                case 'link':
+                                    list($table_alias, $query, $condition_module) = $this->primeDateForLink($query,
+                                        $data, $beanList, $condition_module, $oldAlias, $path, $rel, $condition, $table_alias);
+                                    break;
                             }
 
-                            if ($data['type'] == 'link' && $data['source'] == 'non-db') {
-                                $new_field_module = new $beanList[getRelatedModule($condition_module->module_dir,
-                                    $data['relationship'])];
-                                $table_alias = $data['relationship'];
-                                $query = $this->build_report_query_join($data['relationship'], $table_alias, $oldAlias,
-                                    $condition_module, 'relationship', $query, $new_field_module);
-                                $condition_module = $new_field_module;
-                                $condition->field = 'id';
-                            }
+
                             if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                                 $value = $condition_module->table_name . '_cstm.' . $condition->value;
                                 $query = $this->build_report_query_join($condition_module->table_name . '_cstm',
@@ -1957,10 +1932,53 @@ class AOR_Report extends Basic
             }
             $data = $data_new;
 
-            return array($data,$condition);
+            return array($data, $condition);
         }
 
-        return array($data,$condition);
+        return array($data, $condition);
+    }
+
+    /**
+     * @param $query
+     * @param $data
+     * @param $beanList
+     * @param $condition_module
+     * @param $oldAlias
+     * @param $path
+     * @param $rel
+     * @param $condition
+     * @param $table_alias
+     * @return array
+     */
+    private function primeDateForLink(
+        $query,
+        $data,
+        $beanList,
+        $condition_module,
+        $oldAlias,
+        $path,
+        $rel,
+        $condition,
+        $table_alias
+    ) {
+        if ($data['source'] == 'non-db') {
+            $new_field_module = new $beanList[getRelatedModule($condition_module->module_dir,
+                $data['relationship'])];
+            $table_alias = $data['relationship'];
+            $query = $this->build_report_query_join($data['relationship'], $table_alias, $oldAlias,
+                $condition_module, 'relationship', $query, $new_field_module);
+            $condition_module = $new_field_module;
+
+            // Debugging: security groups conditions - It's a hack to just get the query working
+            if ($condition_module->module_dir = 'SecurityGroups' && count($path) > 1) {
+                $table_alias = $oldAlias . ':' . $rel;
+            }
+            $condition->field = 'id';
+
+            return array($table_alias, $query, $condition_module);
+        }
+
+        return array($table_alias, $query, $condition_module);
     }
 
 }
