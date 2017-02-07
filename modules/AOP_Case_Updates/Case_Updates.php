@@ -44,7 +44,11 @@
  */
 function display_updates($focus)
 {
-    global $mod_strings;
+    global $mod_strings, $current_view;
+
+    if ($current_view->type == 'list') {
+        return;
+    }
 
     $hideImage = SugarThemeRegistry::current()->getImageURL('basic_search.gif');
     $showImage = SugarThemeRegistry::current()->getImageURL('advanced_search.gif');
