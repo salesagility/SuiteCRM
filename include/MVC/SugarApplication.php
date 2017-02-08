@@ -682,7 +682,7 @@ class SugarApplication
 	}
 
 	/**
-	 * classic redirect to another URL, but check first that URL start with "Location:"... 
+	 * classic redirect to another URL, but check first that URL start with "Location:"...
 	 * @param $header_URL
 	 */
 	public static function headerRedirect($header_URL) {
@@ -696,28 +696,19 @@ class SugarApplication
 	}
 
     /**
-	 * Redirect to another URL
+	 * Add an error message for the user
 	 *
 	 * @access	public
-	 * @param	string	$url	The URL to redirect to
+	 * @param	string
 	 */
  	public static function appendErrorMessage($error_message)
 	{
-        if (empty($_SESSION['user_error_message']) || !is_array($_SESSION['user_error_message'])){
-            $_SESSION['user_error_message'] = array();
-        }
-		$_SESSION['user_error_message'][] = $error_message;
+        SugarApplication::appendMessage($error_message, 'error');
 	}
 
     public static function getErrorMessages()
 	{
-		if (isset($_SESSION['user_error_message']) && is_array($_SESSION['user_error_message']) ) {
-            $msgs = $_SESSION['user_error_message'];
-            unset($_SESSION['user_error_message']);
-            return $msgs;
-        }else{
-            return array();
-        }
+        return SugarApplication::getMessages('error');
 	}
 
 	/**
@@ -814,4 +805,60 @@ class SugarApplication
             return "index.php?".http_build_query($vars);
         }
 	}
+
+    /**
+     * Set a message which reflects the status of the performed operation.
+     *
+     * @param string $message the message to be displayed to the user.
+     * For consistency with other messages, it should begin with a capital letter and end with a period.
+     *
+     * @param string $type the type of the message. Values allowed: error, info, alert, okay, warning.
+     *
+     * @param boolean $repeat if this is FALSE and the message is already set, then the message won't be repeated.
+     *
+     */
+    public static function appendMessage($message, $type = 'info', $repeat = true){
+        if (!empty($message)) {
+            $type = preg_replace('[^a-z]', '', strtolower($type));
+            if (!isset($_SESSION['suite_messages'][$type]) || !is_array($_SESSION['suite_messages'][$type])) {
+                $_SESSION['suite_messages'][$type] = array();
+            }
+            if (($repeat) || (!in_array($message, $_SESSION['suite_messages'][$type]))) {
+                $_SESSION['suite_messages'][$type][] = $message;
+            }
+        }
+    }
+
+    /**
+     * Return all messages that have been set.
+     *
+     * @param string $type optional, values allowed: error, info, alert, okay, warning.
+     *
+     * @param boolean $clear_qeue optional, set to FALSE if you do not want to clear the messages queue
+     *
+     * @return associative array, the key is the message type, the value an array of messages.
+     * If the $type parameter is passed, you get only that type, or an empty array if there are no such messages.
+     * If $type is not passed, all message types are returned, or an empty array if none exist.
+     */
+    public static function getMessages($type = null, $clear_queue = true){
+
+        $messages = array();
+
+        if (isset($_SESSION['suite_messages'])) {
+            if (isset($type)) {
+                if (isset($_SESSION['suite_messages'][$type])) {
+                    $messages[$type] = $_SESSION['suite_messages'][$type];
+                    if ($clear_queue) {
+                        unset($_SESSION['suite_messages'][$type]);
+                    }
+                }
+            } else {
+                $messages = $_SESSION['suite_messages'];
+                if ($clear_queue) {
+                    unset($_SESSION['suite_messages']);
+                }
+            }
+        }
+        return($messages);
+    }
 }

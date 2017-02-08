@@ -723,18 +723,13 @@ class SugarView
         if ($retModTabs) {
             return $ss->fetch($themeObject->getTemplate('_headerModuleList.tpl'));
         } else {
-            $ss->display($headerTpl);
-
-            $this->includeClassicFile('modules/Administration/DisplayWarnings.php');
-
-            $errorMessages = SugarApplication::getErrorMessages();
-            if (!empty($errorMessages)) {
-                foreach ($errorMessages as $error_message) {
-                    echo '<p class="error">' . $error_message . '</p>';
-                }
+            $messages = SugarApplication::getMessages();
+            if (!empty($messages)) {
+                $ss->assign("messages", $messages);
             }
+            $ss->display($headerTpl);
+            $this->includeClassicFile('modules/Administration/DisplayWarnings.php');
         }
-
     }
 
     public function getModuleMenuHTML()
