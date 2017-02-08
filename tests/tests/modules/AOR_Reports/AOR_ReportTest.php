@@ -95,7 +95,6 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
     public function testbuild_report_chart()
     {
         error_reporting(E_ERROR | E_PARSE);
-        $this->markTestSkipped('Skipping pChart Test');
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
 
