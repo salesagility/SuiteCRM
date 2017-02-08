@@ -402,13 +402,7 @@ class AOR_Report extends Basic
                 $query .= ' ' . $query_group_by;
             }
 
-            if (isset($query_array['sort_by'])) {
-                $query_sort_by = '';
-                foreach ($query_array['sort_by'] as $sort_by) {
-                    $query_sort_by .= ($query_sort_by == '' ? 'ORDER BY ' : ', ') . $sort_by;
-                }
-                $query .= ' ' . $query_sort_by;
-            }
+            $query = $this->buildQuerySortBy($query_array, $query);
             $result = $this->db->query($query);
 
             while ($row = $this->db->fetchByAssoc($result)) {
@@ -910,26 +904,9 @@ class AOR_Report extends Basic
 
         $query = $this->buildQueryWhere($query_array, $query);
 
-        if (isset($query_array['group_by'])) {
-            $query_group_by = '';
-            foreach ($query_array['group_by'] as $group_by) {
-                $query_group_by .= ($query_group_by == '' ? 'GROUP BY ' : ', ') . $group_by;
-            }
-            if (isset($query_array['second_group_by']) && $query_group_by != '') {
-                foreach ($query_array['second_group_by'] as $group_by) {
-                    $query_group_by .= ', ' . $group_by;
-                }
-            }
-            $query .= ' ' . $query_group_by;
-        }
+        $query = $this->buildQueryGroupBy2($query_array, $query);
 
-        if (isset($query_array['sort_by'])) {
-            $query_sort_by = '';
-            foreach ($query_array['sort_by'] as $sort_by) {
-                $query_sort_by .= ($query_sort_by == '' ? 'ORDER BY ' : ', ') . $sort_by;
-            }
-            $query .= ' ' . $query_sort_by;
-        }
+        $query = $this->buildQuerySortBy($query_array, $query);
 
         return $query;
 
@@ -978,6 +955,7 @@ class AOR_Report extends Basic
         try {
             $query = $this->buildReportQueryChart();//this is where it needs to branch one report for normal queries and one for charts
         } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
         $result = $this->db->query($query);
         $data = $this->BuildDataRowsForChart($result, $fields);
@@ -1028,45 +1006,22 @@ class AOR_Report extends Basic
         try {
             $query_array = $this->buildQueryArrayWhere($query_array,$extra);
         } catch (Exception $e) {
+            throw new Exception('Caught exception:'. $e->getMessage(),$e->getCode());
         }
 
-        //buildQuerySelect
         $query = $this->buildQuerySelect($query_array, $query);
 
-        //buildQueryGroupBy
         $query = $this->buildQueryGroupBy($query_array, $query);
 
-        //buildQueryFrom
         $query = $this->buildQueryFrom($module, $query);
 
-        //buildQueryJoin
         $query = $this->buildQueryJoin($query_array, $query);
 
-        //buildQueryWhere
         $query = $this->buildQueryWhere($query_array, $query);
 
-        //buildQueryGroupBy2
-        if (isset($query_array['group_by'])) {
-            $query_group_by = '';
-            foreach ($query_array['group_by'] as $group_by) {
-                $query_group_by .= ($query_group_by == '' ? 'GROUP BY ' : ', ') . $group_by;
-            }
-            if (isset($query_array['second_group_by']) && $query_group_by != '') {
-                foreach ($query_array['second_group_by'] as $group_by) {
-                    $query_group_by .= ', ' . $group_by;
-                }
-            }
-            $query .= ' ' . $query_group_by;
-        }
+        $query = $this->buildQueryGroupBy2($query_array, $query);
 
-        //buildQuerySortBy
-        if (isset($query_array['sort_by'])) {
-            $query_sort_by = '';
-            foreach ($query_array['sort_by'] as $sort_by) {
-                $query_sort_by .= ($query_sort_by == '' ? 'ORDER BY ' : ', ') . $sort_by;
-            }
-            $query .= ' ' . $query_sort_by;
-        }
+        $query = $this->buildQuerySortBy($query_array, $query);
 
         return $query;
 
@@ -2466,6 +2421,51 @@ class AOR_Report extends Basic
             }
             $query_where = $this->queryWhereRepair($query_where);
             $query .= ' ' . $query_where;
+
+            return $query;
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param $query_array
+     * @param $query
+     * @return array
+     */
+    private function buildQueryGroupBy2($query_array, $query)
+    {
+        if (isset($query_array['group_by'])) {
+            $query_group_by = '';
+            foreach ($query_array['group_by'] as $group_by) {
+                $query_group_by .= ($query_group_by == '' ? 'GROUP BY ' : ', ') . $group_by;
+            }
+            if (isset($query_array['second_group_by']) && $query_group_by != '') {
+                foreach ($query_array['second_group_by'] as $group_by) {
+                    $query_group_by .= ', ' . $group_by;
+                }
+            }
+            $query .= ' ' . $query_group_by;
+
+            return $query;
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param $query_array
+     * @param $query
+     * @return string
+     */
+    private function buildQuerySortBy($query_array, $query)
+    {
+        if (isset($query_array['sort_by'])) {
+            $query_sort_by = '';
+            foreach ($query_array['sort_by'] as $sort_by) {
+                $query_sort_by .= ($query_sort_by == '' ? 'ORDER BY ' : ', ') . $sort_by;
+            }
+            $query .= ' ' . $query_sort_by;
 
             return $query;
         }
