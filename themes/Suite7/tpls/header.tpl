@@ -76,3 +76,8 @@
 <main>
     <div id="content" {if !$AUTHENTICATED}class="noLeftColumn" {/if}>
         <table style=""" id="contentTable"><tr><td>
+{foreach from=$messages item=typedmessages key=type}
+{foreach from=$typedmessages item=msg}
+<div class="message {$type}">{$msg}</div>
+{/foreach}
+{/foreach}

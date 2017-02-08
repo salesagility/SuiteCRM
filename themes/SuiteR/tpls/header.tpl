@@ -61,3 +61,8 @@
         <div id="content">
             <div id="pagecontent">
 {/if}
+{foreach from=$messages item=typedmessages key=type}
+{foreach from=$typedmessages item=msg}
+ <div class="message {$type}">{$msg}</div>
+{/foreach}
+{/foreach}
