@@ -912,7 +912,12 @@ class AOR_Report extends Basic
         if (isset($extra['where']) && $extra['where']) {
             $query_array['where'][] = implode(' AND ', $extra['where']) . ' AND ';
         }
-        $query_array = $this->build_report_query_where($query_array);
+
+
+        try {
+            $query_array = $this->build_report_query_where($query_array);
+        } catch (Exception $e) {
+        }
 
 
         foreach ($query_array['select'] as $select) {
@@ -1302,7 +1307,7 @@ class AOR_Report extends Basic
 
             //checkIfUserIsAllowAccessToModule
             if (!$this->checkIfUserIsAllowedAccessToRelatedModules($rowArray, $module, $beanList)) {
-                return false;
+                throw new Exception('User Not Allowed Access To Module');
             }
 
 
