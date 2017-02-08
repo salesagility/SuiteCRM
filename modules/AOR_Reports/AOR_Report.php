@@ -391,21 +391,8 @@ class AOR_Report extends Basic
 
             $query .= ' FROM ' . $module->table_name . ' ';
 
-            if (isset($query_array['join'])) {
-                foreach ($query_array['join'] as $join) {
-                    $query .= $join;
-                }
-            }
-            if (isset($query_array['where'])) {
-                $query_where = '';
-                foreach ($query_array['where'] as $where) {
-                    $query_where .= ($query_where == '' ? 'WHERE ' : ' ') . $where;
-                }
-
-                $query_where = $this->queryWhereRepair($query_where);
-
-                $query .= ' ' . $query_where;
-            }
+            $query = $this->buildQueryJoin($query_array, $query);
+            $query = $this->buildQueryWhere($query_array, $query);
 
             if (isset($query_array['group_by'])) {
                 $query_group_by = '';
@@ -915,29 +902,13 @@ class AOR_Report extends Basic
 
         $query = $this->buildQuerySelect($query_array, $query);
 
-        if (empty($query_array['group_by'])) {
-            foreach ($query_array['id_select'] as $select) {
-                $query .= ', ' . $select;
-            }
-        }
+        $query = $this->buildQueryGroupBy($query_array, $query);
 
-        $query .= ' FROM ' . $this->db->quoteIdentifier($module->table_name) . ' ';
+        $query = $this->buildQueryFrom($module, $query);
 
-        if (isset($query_array['join'])) {
-            foreach ($query_array['join'] as $join) {
-                $query .= $join;
-            }
-        }
-        if (isset($query_array['where'])) {
-            $query_where = '';
-            foreach ($query_array['where'] as $where) {
-                $query_where .= ($query_where == '' ? 'WHERE ' : ' ') . $where;
-            }
+        $query = $this->buildQueryJoin($query_array, $query);
 
-            $query_where = $this->queryWhereRepair($query_where);
-
-            $query .= ' ' . $query_where;
-        }
+        $query = $this->buildQueryWhere($query_array, $query);
 
         if (isset($query_array['group_by'])) {
             $query_group_by = '';
@@ -1063,31 +1034,16 @@ class AOR_Report extends Basic
         $query = $this->buildQuerySelect($query_array, $query);
 
         //buildQueryGroupBy
-        if (empty($query_array['group_by'])) {
-            foreach ($query_array['id_select'] as $select) {
-                $query .= ', ' . $select;
-            }
-        }
+        $query = $this->buildQueryGroupBy($query_array, $query);
 
         //buildQueryFrom
-        $query .= ' FROM ' . $this->db->quoteIdentifier($module->table_name) . ' ';
+        $query = $this->buildQueryFrom($module, $query);
 
         //buildQueryJoin
-        if (isset($query_array['join'])) {
-            foreach ($query_array['join'] as $join) {
-                $query .= $join;
-            }
-        }
+        $query = $this->buildQueryJoin($query_array, $query);
 
         //buildQueryWhere
-        if (isset($query_array['where'])) {
-            $query_where = '';
-            foreach ($query_array['where'] as $where) {
-                $query_where .= ($query_where == '' ? 'WHERE ' : ' ') . $where;
-            }
-            $query_where = $this->queryWhereRepair($query_where);
-            $query .= ' ' . $query_where;
-        }
+        $query = $this->buildQueryWhere($query_array, $query);
 
         //buildQueryGroupBy2
         if (isset($query_array['group_by'])) {
@@ -2445,7 +2401,76 @@ class AOR_Report extends Basic
             $query .= ($query == '' ? 'SELECT ' : ', ') . $select;
         }
 
-        return array($query);
+        return $query;
+    }
+
+    /**
+     * @param $query_array
+     * @param $query
+     * @return array
+     */
+    private function buildQueryGroupBy($query_array, $query)
+    {
+        if (empty($query_array['group_by'])) {
+            foreach ($query_array['id_select'] as $select) {
+                $query .= ', ' . $select;
+            }
+
+            return $query;
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param $module
+     * @param $query
+     * @return string
+     */
+    private function buildQueryFrom($module, $query)
+    {
+        $query .= ' FROM ' . $this->db->quoteIdentifier($module->table_name) . ' ';
+
+        return $query;
+    }
+
+    /**
+     * @param $query_array
+     * @param $query
+     * @return array
+     */
+    private function buildQueryJoin($query_array, $query)
+    {
+        if (isset($query_array['join'])) {
+            foreach ($query_array['join'] as $join) {
+                $query .= $join;
+            }
+
+            return  $query;
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param $query_array
+     * @param $query
+     * @return array
+     */
+    private function buildQueryWhere($query_array, $query)
+    {
+        if (isset($query_array['where'])) {
+            $query_where = '';
+            foreach ($query_array['where'] as $where) {
+                $query_where .= ($query_where == '' ? 'WHERE ' : ' ') . $where;
+            }
+            $query_where = $this->queryWhereRepair($query_where);
+            $query .= ' ' . $query_where;
+
+            return $query;
+        }
+
+        return $query;
     }
 
 }
