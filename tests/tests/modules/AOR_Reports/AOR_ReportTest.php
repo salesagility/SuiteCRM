@@ -94,8 +94,8 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
 
     public function testbuild_report_chart()
     {
+        error_reporting(E_ERROR | E_PARSE);
         $this->markTestSkipped('Skipping pChart Test');
-
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
 
@@ -107,6 +107,7 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
 
     public function testbuild_group_report()
     {
+        error_reporting(E_ERROR | E_PARSE);
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
         $aor_Report->id = '1';
@@ -131,6 +132,7 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
 
     public function testbuild_report_html()
     {
+        error_reporting(E_ERROR | E_PARSE);
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
 

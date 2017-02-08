@@ -3,7 +3,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:noNamespaceSchemaLocation   = "http://schema.phpunit.de/3.7/phpunit.xsd"
 backupGlobals                   = "true"
 backupStaticAttributes          = "false"
-colors                          = "false"
+colors                          = "true"
 convertNoticesToExceptions      = "true"
 convertWarningsToExceptions     = "true"
 convertErrorsToExceptions       = "true"
@@ -15,6 +15,9 @@ bootstrap                       = "bootstrap.php"
 <testsuites>
     <testsuite name="AllTests">
         <directory>tests/</directory>
+    </testsuite>
+    <testsuite name="AOR Reports Tests">
+        <directory>tests/modules/AOR_Reports/</directory>
     </testsuite>
 </testsuites>
 </phpunit>
