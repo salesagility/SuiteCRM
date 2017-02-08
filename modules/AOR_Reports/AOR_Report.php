@@ -1290,10 +1290,22 @@ class AOR_Report extends Basic
 
             $sql = "SELECT id FROM aor_conditions WHERE aor_report_id = '" . $this->id . "' AND deleted = 0 ORDER BY condition_order ASC";
             $result = $this->db->query($sql);
-
+//            $resultCopy = $this->db->query($sql);;
             $tiltLogicOp = true;
 
+            $rowArray = array();
             while ($row = $this->db->fetchByAssoc($result)) {
+                array_push($rowArray,$row);
+            }
+
+            //checkIfUserIsAllowAccessToModule
+            if(!$this->checkIfUserIsAllowedAccessToRelatedModules($rowArray, $module, $beanList)){
+                return false;
+            }
+
+
+//            while ($row = $this->db->fetchByAssoc($result)) {
+            foreach($rowArray as $row){
                 $condition = new AOR_Condition();
                 $condition->retrieve($row['id']);
 
@@ -1303,9 +1315,9 @@ class AOR_Report extends Basic
                 $condition_module = $module;
                 $table_alias = $condition_module->table_name;
                 $oldAlias = $table_alias;
-
+                $isRelationshipExternalModule = !empty($path[0]) && $path[0] != $module->module_dir;
                 //check if relationship to field outside this module is set for condition
-                if (!empty($path[0]) && $path[0] != $module->module_dir) {
+                if ($isRelationshipExternalModule) {
                     //loop over each relationship field and check if allowed access
                     foreach ($path as $rel) {
                         if (empty($rel)) {
@@ -1313,10 +1325,6 @@ class AOR_Report extends Basic
                         }
                         // Bug: Prevents relationships from loading.
                         $new_condition_module = new $beanList[getRelatedModule($condition_module->module_dir, $rel)];
-                        //Check if the user has access to the related module
-                        if (!(ACLController::checkAccess($new_condition_module->module_name, 'list', true))) {
-                            return false;
-                        }
                         $oldAlias = $table_alias;
                         $table_alias = $table_alias . ":" . $rel;
                         $query = $this->build_report_query_join($rel, $table_alias, $oldAlias, $condition_module,
@@ -2377,6 +2385,44 @@ class AOR_Report extends Basic
         }
 
         return array($value, $query);
+    }
+
+    /**
+     * @param $rowArray
+     * @param $module
+     * @param $beanList
+     * @return array
+     */
+    private function checkIfUserIsAllowedAccessToRelatedModules($rowArray, $module, $beanList)
+    {
+        $isAllowed = true;
+        foreach ($rowArray as $row) {
+            $condition = new AOR_Condition();
+            $condition->retrieve($row['id']);
+
+            //path is stored as base64 encoded serialized php object
+            $path = unserialize(base64_decode($condition->module_path));
+
+            $condition_module = $module;
+            $isRelationshipExternalModule = !empty($path[0]) && $path[0] != $module->module_dir;
+            if ($isRelationshipExternalModule) {
+                //loop over each relationship field and check if allowed access
+                foreach ($path as $rel) {
+                    if (empty($rel)) {
+                        continue;
+                    }
+                    // Bug: Prevents relationships from loading.
+                    $new_condition_module = new $beanList[getRelatedModule($condition_module->module_dir, $rel)];
+                    //Check if the user has access to the related module
+                    if (!(ACLController::checkAccess($new_condition_module->module_name, 'list', true))) {
+                            $isAllowed =  false;
+                    }
+                }
+            }
+
+        }
+
+        return $isAllowed;
     }
 
 }
