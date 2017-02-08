@@ -484,7 +484,10 @@ class AOR_Report extends Basic
 
         $_group_value = $this->db->quote($group_value);
 
-        $report_sql = $this->buildReportQuery($_group_value, $extra);
+        try {
+            $report_sql = $this->buildReportQuery($_group_value, $extra);
+        } catch (Exception $e) {
+        }
 
         // Fix for issue 1232 - items listed in a single report, should adhere to the same standard as ListView items.
         if ($sugar_config['list_max_entries_per_page'] != '') {
@@ -907,7 +910,10 @@ class AOR_Report extends Basic
             ++$i;
         }
 
-        $sql = $this->buildReportQuery();
+        try {
+            $sql = $this->buildReportQuery();
+        } catch (Exception $e) {
+        }
         $result = $this->db->query($sql);
 
         while ($row = $this->db->fetchByAssoc($result)) {
@@ -950,13 +956,12 @@ class AOR_Report extends Basic
      * @param string $group_value
      * @param array $extra
      * @return array|bool|string
+     * @throws Exception
      */
     function buildReportQuery($group_value = '', $extra = array())
     {
         global $beanList;
-
         $module = new $beanList[$this->report_module]();
-
         $query = '';
         $query_array = array();
 
@@ -965,14 +970,12 @@ class AOR_Report extends Basic
             return false;
         }
 
-
-        $query_array = $this->buildReportQuerySelect($query_array, $group_value);
-
         try {
+            $query_array = $this->buildReportQuerySelect($query_array, $group_value);
             $query_array = $this->buildQueryArrayWhere($query_array,$extra);
         } catch (Exception $e) {
+            throw new Exception('Caught exception:'. $e->getMessage(),$e->getCode());
         }
-
 
         $query = $this->buildQuerySelect($query_array, $query);
 
@@ -1022,7 +1025,7 @@ class AOR_Report extends Basic
      * @param string $chartType
      * @return string
      */
-    function build_report_chart($chartIds = null, $chartType = self::CHART_TYPE_PCHART)
+    function buildReportChart($chartIds = null, $chartType = self::CHART_TYPE_PCHART)
     {
         global $beanList;
         $html = '';
@@ -1040,12 +1043,12 @@ class AOR_Report extends Basic
 
         $this->createLabels($result, $beanList, $fields, $mainGroupField, $row);
 
-
         try {
             $query = $this->buildReportQueryChart();//this is where it needs to branch one report for normal queries and one for charts
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
+
         $result = $this->db->query($query);
         $data = $this->BuildDataRowsForChart($result, $fields);
 

@@ -100,7 +100,7 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
 
         //execute the method and verify that it returns chart display script. strings returned vary due to included chart id.
         $expected = '<script src="modules/AOR_Charts/lib/pChart/imagemap.js"></script>';
-        $result = $aor_Report->build_report_chart();
+        $result = $aor_Report->buildReportChart();
         $this->assertStringStartsWith($expected, $result);
     }
 

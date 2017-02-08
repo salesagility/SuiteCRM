@@ -153,7 +153,7 @@ class AOR_ReportsController extends SugarController {
 
     protected function action_chartReport()
     {
-        $this->bean->build_report_chart(null, AOR_Report::CHART_TYPE_CHARTJS);
+        $this->bean->buildReportChart(null, AOR_Report::CHART_TYPE_CHARTJS);
 
         die;
     }
