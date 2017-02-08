@@ -199,11 +199,11 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         $aor_Report->report_module = 'Accounts';
 
         //execute the method without any parameters and verify that it returns a non empty string
-        $actual = $aor_Report->build_report_query();
+        $actual = $aor_Report->buildReportQuery();
         $this->assertGreaterThan(0, strlen($actual));
 
         //execute the method with parameter and verify that it returns a non empty string
-        $actual = $aor_Report->build_report_query('name');
+        $actual = $aor_Report->buildReportQuery('name');
         $this->assertGreaterThan(0, strlen($actual));
     }
 

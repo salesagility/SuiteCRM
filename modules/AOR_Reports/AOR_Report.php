@@ -484,7 +484,7 @@ class AOR_Report extends Basic
 
         $_group_value = $this->db->quote($group_value);
 
-        $report_sql = $this->build_report_query($_group_value, $extra);
+        $report_sql = $this->buildReportQuery($_group_value, $extra);
 
         // Fix for issue 1232 - items listed in a single report, should adhere to the same standard as ListView items.
         if ($sugar_config['list_max_entries_per_page'] != '') {
@@ -907,7 +907,7 @@ class AOR_Report extends Basic
             ++$i;
         }
 
-        $sql = $this->build_report_query();
+        $sql = $this->buildReportQuery();
         $result = $this->db->query($sql);
 
         while ($row = $this->db->fetchByAssoc($result)) {
@@ -951,7 +951,7 @@ class AOR_Report extends Basic
      * @param array $extra
      * @return array|bool|string
      */
-    function build_report_query($group_value = '', $extra = array())
+    function buildReportQuery($group_value = '', $extra = array())
     {
         global $beanList;
 
