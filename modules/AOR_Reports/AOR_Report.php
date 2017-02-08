@@ -1261,7 +1261,8 @@ class AOR_Report extends Basic
         return $where;
     }
 
-    private function getAllowedOperatorList(){
+    private function getAllowedOperatorList()
+    {
         $aor_sql_operator_list['Equal_To'] = '=';
         $aor_sql_operator_list['Not_Equal_To'] = '!=';
         $aor_sql_operator_list['Greater_Than'] = '>';
@@ -1271,6 +1272,7 @@ class AOR_Report extends Basic
         $aor_sql_operator_list['Contains'] = 'LIKE';
         $aor_sql_operator_list['Starts_With'] = 'LIKE';
         $aor_sql_operator_list['Ends_With'] = 'LIKE';
+
         return $aor_sql_operator_list;
     }
 
@@ -1295,17 +1297,17 @@ class AOR_Report extends Basic
 
             $rowArray = array();
             while ($row = $this->db->fetchByAssoc($result)) {
-                array_push($rowArray,$row);
+                array_push($rowArray, $row);
             }
 
             //checkIfUserIsAllowAccessToModule
-            if(!$this->checkIfUserIsAllowedAccessToRelatedModules($rowArray, $module, $beanList)){
+            if (!$this->checkIfUserIsAllowedAccessToRelatedModules($rowArray, $module, $beanList)) {
                 return false;
             }
 
 
-//            while ($row = $this->db->fetchByAssoc($result)) {
-            foreach($rowArray as $row){
+            //build where statement
+            foreach ($rowArray as $row) {
                 $condition = new AOR_Condition();
                 $condition->retrieve($row['id']);
 
@@ -2408,14 +2410,13 @@ class AOR_Report extends Basic
             if ($isRelationshipExternalModule) {
                 //loop over each relationship field and check if allowed access
                 foreach ($path as $rel) {
-                    if (empty($rel)) {
-                        continue;
-                    }
-                    // Bug: Prevents relationships from loading.
-                    $new_condition_module = new $beanList[getRelatedModule($condition_module->module_dir, $rel)];
-                    //Check if the user has access to the related module
-                    if (!(ACLController::checkAccess($new_condition_module->module_name, 'list', true))) {
-                            $isAllowed =  false;
+                    if (!empty($rel)) {
+                        // Bug: Prevents relationships from loading.
+                        $new_condition_module = new $beanList[getRelatedModule($condition_module->module_dir, $rel)];
+                        //Check if the user has access to the related module
+                        if (!(ACLController::checkAccess($new_condition_module->module_name, 'list', true))) {
+                            $isAllowed = false;
+                        }
                     }
                 }
             }
