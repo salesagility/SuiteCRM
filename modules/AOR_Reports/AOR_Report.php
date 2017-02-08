@@ -1293,6 +1293,7 @@ class AOR_Report extends Basic
                 $condition = new AOR_Condition();
                 $condition->retrieve($row['id']);
 
+                //path is stored as base64 encoded serialized php object
                 $path = unserialize(base64_decode($condition->module_path));
 
                 $condition_module = $module;
@@ -1301,6 +1302,7 @@ class AOR_Report extends Basic
 
                 //check if relationship to field outside this module is set for condition
                 if (!empty($path[0]) && $path[0] != $module->module_dir) {
+                    //loop over each relationship field and check if allowed access
                     foreach ($path as $rel) {
                         if (empty($rel)) {
                             continue;
@@ -1402,64 +1404,19 @@ class AOR_Report extends Basic
                             }
 
                             $firstParam = $params[0];
-                            switch ($firstParam) {
-                                case 'now':
-                                    if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
-                                        $value = 'GetDate()';
-                                    } else {
-                                        $value = 'NOW()';
-                                    }
-                                    break;
-                                case 'today':
-                                    if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
-                                        //$field =
-                                        $value = 'CAST(GETDATE() AS DATE)';
-                                    } else {
-                                        $field = 'DATE(' . $field . ')';
-                                        $value = 'Curdate()';
-                                    }
-                                    break;
-                                default:
-                                    break;
-                            }
-
-                            if (!($firstParam == 'now' || $firstParam == 'today')) {
-                                $data = $condition_module->field_defs[$firstParam];
-                                $tableName = $condition_module->table_name;
-                                $table_alias = $tableName;
-                                $fieldName = $firstParam;
-                                $dataSourceIsSet = isset($data['source']);
-                                if ($dataSourceIsSet) {
-                                    $isCustomField = ($data['source'] == 'custom_fields') ? true : false;
-                                }
-
-                                //setValueSuffix
-                                $value = $this->setFieldTablesSuffix($isCustomField, $tableName, $table_alias,
-                                    $fieldName);
-                                $query = $this->buildJoinQueryForCustomFields($isCustomField, $query,
-                                    $table_alias, $tableName, $condition_module);
-
-
-                            }
-
+                            list($value, $field,$query) = $this->processForDateFrom(
+                                $firstParam,
+                                $sugar_config,
+                                $field,
+                                $query,
+                                $condition_module);
 
                             $secondParam = $params[1];
                             $thirdParam = $params[2];
                             $fourthParam = $params[3];
-                            if ($secondParam != 'now') {
-                                switch ($fourthParam) {
-                                    case 'business_hours';
-                                        //business hours not implemented for query, default to hours
-                                        $fourthParam = 'hours';
-                                    default:
-                                        if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
-                                            $value = "DATEADD(" . $fourthParam . ",  " . $app_list_strings['aor_date_operator'][$secondParam] . " $thirdParam, $value)";
-                                        } else {
-                                            $value = "DATE_ADD($value, INTERVAL " . $app_list_strings['aor_date_operator'][$secondParam] . " $thirdParam " . $fourthParam . ")";
-                                        }
-                                        break;
-                                }
-                            }
+                            $value = $this->processForDateOther($secondParam, $fourthParam, $sugar_config,
+                                $app_list_strings, $thirdParam, $value);
+
                             break;
 
                         case 'Multi': //are there multiple conditions setup
@@ -2115,4 +2072,117 @@ class AOR_Report extends Basic
             return $query;
         }
 
+    /**
+     * @param $firstParam
+     * @param $sugar_config
+     * @param $field
+     * @return array
+     */
+    private function processForDateFrom($firstParam, $sugar_config, $field,$query, $condition_module)
+    {
+        switch ($firstParam) {
+            case 'now':
+                if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
+                    $value = 'GetDate()';
+                } else {
+                    $value = 'NOW()';
+                }
+                break;
+            case 'today':
+                if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
+                    //$field =
+                    $value = 'CAST(GETDATE() AS DATE)';
+                } else {
+                    $field = 'DATE(' . $field . ')';
+                    $value = 'Curdate()';
+                }
+                break;
+            default:
+                $data = $condition_module->field_defs[$firstParam];
+                $tableName = $condition_module->table_name;
+                $table_alias = $tableName;
+                $fieldName = $firstParam;
+                $dataSourceIsSet = isset($data['source']);
+                if ($dataSourceIsSet) {
+                    $isCustomField = ($data['source'] == 'custom_fields') ? true : false;
+                }
+
+                //setValueSuffix
+                $value = $this->setFieldTablesSuffix($isCustomField, $tableName, $table_alias,
+                    $fieldName);
+                $query = $this->buildJoinQueryForCustomFields($isCustomField, $query,
+                    $table_alias, $tableName, $condition_module);
+
+
+                break;
+        }
+
+        return array($value, $field,$query);
     }
+
+    /**
+     * @param $query
+     * @param $firstParam
+     * @param $condition_module
+     * @return array
+     */
+    private function processForDateFromCustomField($query, $firstParam, $condition_module)
+    {
+
+            $data = $condition_module->field_defs[$firstParam];
+            $tableName = $condition_module->table_name;
+            $table_alias = $tableName;
+            $fieldName = $firstParam;
+            $dataSourceIsSet = isset($data['source']);
+            if ($dataSourceIsSet) {
+                $isCustomField = ($data['source'] == 'custom_fields') ? true : false;
+            }
+
+            //setValueSuffix
+            $value = $this->setFieldTablesSuffix($isCustomField, $tableName, $table_alias,
+                $fieldName);
+            $query = $this->buildJoinQueryForCustomFields($isCustomField, $query,
+                $table_alias, $tableName, $condition_module);
+
+            return array($value, $query);
+
+    }
+
+    /**
+     * @param $secondParam
+     * @param $fourthParam
+     * @param $sugar_config
+     * @param $app_list_strings
+     * @param $thirdParam
+     * @param $value
+     * @return string
+     */
+    private function processForDateOther(
+        $secondParam,
+        $fourthParam,
+        $sugar_config,
+        $app_list_strings,
+        $thirdParam,
+        $value
+    ) {
+        if ($secondParam != 'now') {
+            switch ($fourthParam) {
+                case 'business_hours';
+                    //business hours not implemented for query, default to hours
+                    $fourthParam = 'hours';
+                default:
+                    if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
+                        $value = "DATEADD(" . $fourthParam . ",  " . $app_list_strings['aor_date_operator'][$secondParam] . " $thirdParam, $value)";
+                    } else {
+                        $value = "DATE_ADD($value, INTERVAL " . $app_list_strings['aor_date_operator'][$secondParam] . " $thirdParam " . $fourthParam . ")";
+                    }
+                    break;
+            }
+
+            return $value;
+        }
+
+        return $value;
+    }
+
+}
