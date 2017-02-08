@@ -1335,12 +1335,20 @@ class AOR_Report extends Basic
                     }
 
 
+                    $tableName = $table_alias;
+                    $fieldName = $condition->field;
+                    $dataSourceIsSet = isset($data['source']);
+                    if ($dataSourceIsSet) {
+                        $isCustomField = ($data['source'] == 'custom_fields') ? true : false;
+                    }
+                    //setValueSuffix
+                    $field = $this->setFieldTablesSuffix($isCustomField, $tableName, $table_alias, $fieldName);
+
                     //check if its a custom field the set the field parameter
-                    $field = $this->setFieldSuffix($data, $table_alias, $condition);
+//                    $field = $this->setFieldSuffixOld($data, $table_alias, $condition);
 
                     //buildJoinQueryForCustomFields
-                    $query = $this->buildJoinQueryForCustomFields($query, $data, $table_alias,
-                        $condition_module);
+                    $query = $this->buildJoinQueryForCustomFields($isCustomField, $query, $table_alias, $condition_module);
 
                     //check for custom selectable parameter from report
                     $this->buildConditionParams($condition);
@@ -1372,13 +1380,13 @@ class AOR_Report extends Basic
                             }
 
                             //setValueSuffix
-                            $value = $this->setValueSuffix($isCustomField, $tableName, $table_alias, $fieldName);
+                            $value = $this->setFieldTablesSuffix($isCustomField, $tableName, $table_alias, $fieldName);
+                            $query = $this->buildJoinQueryForCustomFields($isCustomField, $query, $table_alias, $condition_module);
 
-
-                            if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
-                                $query = $this->build_report_query_join($condition_module->table_name . '_cstm',
-                                    $table_alias . '_cstm', $table_alias, $condition_module, 'custom', $query);
-                            }
+//                            if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
+//                                $query = $this->build_report_query_join($condition_module->table_name . '_cstm',
+//                                    $table_alias . '_cstm', $table_alias, $condition_module, 'custom', $query);
+//                            }
                             break;
 
                         case 'Date': //is it a date
@@ -1997,7 +2005,7 @@ class AOR_Report extends Basic
      * @param $condition
      * @return string
      */
-    private function setFieldSuffix($data, $table_alias, $condition)
+    private function setFieldSuffixOld($data, $table_alias, $condition)
     {
         if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
             $field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $condition->field;
@@ -2019,7 +2027,7 @@ class AOR_Report extends Basic
      * @param string $suffix
      * @return string
      */
-    private function setValueSuffix($isCustomField, $tableName, $tableAlias, $fieldName, $suffix = '_cstm')
+    private function setFieldTablesSuffix($isCustomField, $tableName, $tableAlias, $fieldName, $suffix = '_cstm')
     {
 
         if ($isCustomField) {
@@ -2049,15 +2057,16 @@ class AOR_Report extends Basic
     }
 
     /**
+     * @param $isCustomField
      * @param $query
-     * @param $data
      * @param $table_alias
      * @param $condition_module
      * @return string
+     * @internal param $data
      */
-    private function buildJoinQueryForCustomFields($query, $data, $table_alias, $condition_module)
+    private function buildJoinQueryForCustomFields($isCustomField, $query, $table_alias, $condition_module)
     {
-        if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
+        if ($isCustomField) {
             $query = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm',
                 $table_alias, $condition_module, 'custom', $query);
 
