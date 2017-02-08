@@ -102,7 +102,7 @@ class DashletsDialog {
 
                     $imageName = SugarThemeRegistry::current()->getImageURL(basename($dashletMeta[$files['class']]['icon']), false);
                     if ( !empty($imageName) ) {
-                        if (sugar_is_file($imageName))
+                        if (is_file($imageName))
                             $icon = '<img src="' . $imageName .'" alt="" border="0" align="absmiddle" />';  //leaving alt tag blank on purpose for 508
                         else
                             $icon = '';

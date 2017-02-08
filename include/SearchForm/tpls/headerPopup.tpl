@@ -1,10 +1,11 @@
+{*
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,78 +37,26 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-.body {
-    font-size: 12px;
-}
-
-
-
-
-.buttonLogin {
-    border: 1px solid #444444;
-    font-size: 11px;
-    color: #ffffff;
-    background-color: #666666;
-    font-weight: bold;
-}
-
-table.tabForm td {
-    border: none;
-}
-
-p {
-    MARGIN-TOP: 0px;
-    MARGIN-BOTTOM: 10px;
-}
-
-form {
-    margin: 0px;
-}
-
-input[type="text"], input[type="password"], textarea {
-    width: 200px !important;
-}
-
-#recaptcha_image {
-    height: 47.5px !important;
-    width: 250px !important;
-}
-
-#recaptcha_image img {
-    height: 47.5px;
-    width: 250px;
-}
-
-.loginBox {
-    border: 1px solid #abc3d7;
-    padding: 20px;
-
-}
-
-.password {
-    padding: 5px 20px 5px 20px;
-    border: 1px solid #999;
-    border-top: 0px none;
-    background-color: #fff;
-}
-
-.password .login_more div:first-child {
-    text-align: right;
-}
-
-.password a {
-    text-decoration: none;
-}
-
-.password a img {
-    margin-right: 5px;
-}
-
-#forgot_password_dialog table {
-    margin-top: 10px;
-}
-
-.dashletPanelMenu .bd .bd-center {
-    padding-top: 0px;
-}
+*}
+<div id="searchDialog" class="modal fade modal-search" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{$APP.LBL_FILTER_HEADER_TITLE}</h4>
+                <!-- Nav tabs -->
+                <h5 class="searchTabHeader mobileOnly basic active">{$APP.LBL_QUICK_FILTER}</h5>
+                <h5 class="searchTabHeader mobileOnly advanced">{$APP.LBL_ADVANCED_SEARCH}</h5>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="searchTabHandler basic active"><a href="javascript:void(0)"
+                                                                 onclick="listViewSearchIcon.toggleSearchDialog('basic'); return false;"
+                                                                 aria-controls="searchList" role="tab"
+                                                                 data-toggle="tab">{$APP.LBL_QUICK_FILTER}</a></li>
+                    <li class="searchTabHandler advanced"><a href="javascript:void(0)"
+                                                             onclick="listViewSearchIcon.toggleSearchDialog('advanced'); return false;"
+                                                             aria-controls="searchList" role="tab"
+                                                             data-toggle="tab">{$APP.LBL_ADVANCED_SEARCH}</a></li>
+                </ul>
+            </div>
+            <div class="modal-body" id="searchList">
