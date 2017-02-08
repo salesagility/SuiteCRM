@@ -1358,12 +1358,41 @@ class AOR_Report extends Basic
 
                     $conditionType = $condition->value_type;
                     //what type of condition is it?
-                    list($data, $condition, $table_alias, $query, $condition_module, $tableName, $fieldName, $dataSourceIsSet, $isCustomField, $value, $params, $field, $where_set, $current_user) = $this->buildQueryForConditionType($query,
-                        $conditionType, $condition_module, $condition, $beanList, $oldAlias, $path, $rel, $table_alias,
-                        $sugar_config, $field, $app_list_strings, $aor_sql_operator_list, $tiltLogicOp, $current_user);
+                    list(
+                        $data,
+                        $condition,
+                        $table_alias,
+                        $query,
+                        $condition_module,
+                        $tableName,
+                        $fieldName,
+                        $dataSourceIsSet,
+                        $isCustomField,
+                        $value,
+                        $params,
+                        $field,
+                        $where_set,
+                        $current_user
+                        ) = $this->buildQueryForConditionType(
+                        $query,
+                        $conditionType,
+                        $condition_module,
+                        $condition,
+                        $beanList,
+                        $oldAlias,
+                        $path,
+                        $rel,
+                        $table_alias,
+                        $sugar_config,
+                        $field,
+                        $app_list_strings,
+                        $aor_sql_operator_list,
+                        $tiltLogicOp
+                    );
 
                     //handle like conditions
-                    Switch ($condition->operator) {
+                    $conditionOperator = $condition->operator;
+                    Switch ($conditionOperator) {
                         case 'Contains':
                             $value = "CONCAT('%', " . $value . " ,'%')";
                             break;
@@ -1414,563 +1443,625 @@ class AOR_Report extends Basic
                     }
                     $tiltLogicOp = false;
                 } else {
-                        if ($condition->parenthesis) {
-                            if ($condition->parenthesis == 'START') {
-                                $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . '(';
-                                $tiltLogicOp = true;
-                            } else {
-                                $query['where'][] = ')';
-                                $tiltLogicOp = false;
-                            }
+                    if ($condition->parenthesis) {
+                        if ($condition->parenthesis == 'START') {
+                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . '(';
+                            $tiltLogicOp = true;
                         } else {
-                            $GLOBALS['log']->debug('illegal condition');
+                            $query['where'][] = ')';
+                            $tiltLogicOp = false;
                         }
+                    } else {
+                        $GLOBALS['log']->debug('illegal condition');
                     }
-
                 }
-
-                if (isset($query['where']) && $query['where']) {
-                    array_unshift($query['where'], '(');
-                    $query['where'][] = ') AND ';
-                }
-                $query['where'][] = $module->table_name . ".deleted = 0 " . $this->build_report_access_query($module,
-                        $module->table_name);
 
             }
 
-            if ($closure) {
-                $query['where'][] = ')';
+            if (isset($query['where']) && $query['where']) {
+                array_unshift($query['where'], '(');
+                $query['where'][] = ') AND ';
             }
+            $query['where'][] = $module->table_name . ".deleted = 0 " . $this->build_report_access_query($module,
+                    $module->table_name);
 
-            return $query;
         }
 
-        /**
-         * @param $result
-         * @param $beanList
-         * @param $fields
-         * @param $mainGroupField
-         * @param $row
-         */
-        private
-        function createLabels($result, $beanList, &$fields, &$mainGroupField, &$row)
-        {
-            $i = 0;
-
-            while ($row = $this->db->fetchByAssoc($result)) {
-
-                $field = new AOR_Field();
-                $field->retrieve($row['id']);
-
-                $path = unserialize(base64_decode($field->module_path));
-
-                $field_bean = new $beanList[$this->report_module]();
-
-                $field_module = $this->report_module;
-                $field_alias = $field_bean->table_name;
-                if ($path[0] != $this->report_module) {
-                    foreach ($path as $rel) {
-                        if (empty($rel)) {
-                            continue;
-                        }
-                        $field_module = getRelatedModule($field_module, $rel);
-                        $field_alias = $field_alias . ':' . $rel;
-                    }
-                }
-                $label = str_replace(' ', '_', $field->label) . $i;
-                $fields[$label]['field'] = $field->field;
-                $fields[$label]['label'] = $field->label;
-                $fields[$label]['display'] = $field->display;
-                $fields[$label]['function'] = $field->field_function;
-                $fields[$label]['module'] = $field_module;
-                $fields[$label]['alias'] = $field_alias;
-                $fields[$label]['link'] = $field->link;
-                $fields[$label]['total'] = $field->total;
-                $fields[$label]['params'] = $field->format;
-
-
-                // get the main group
-
-                if ($field->group_display) {
-
-                    // if we have a main group already thats wrong cause only one main grouping field possible
-                    if (!is_null($mainGroupField)) {
-                        $GLOBALS['log']->fatal('main group already found');
-                    }
-
-                    $mainGroupField = $field;
-                }
-
-                ++$i;
-            }
+        if ($closure) {
+            $query['where'][] = ')';
         }
 
-        /**
-         * @param $result
-         * @param $fields
-         * @return array
-         */
-        private
-        function BuildDataRowsForChart($result, $fields)
-        {
-            $data = array();
-            while ($row = $this->db->fetchByAssoc($result, false)) {
-                foreach ($fields as $name => $att) {
+        return $query;
+    }
 
-                    $currency_id = isset($row[$att['alias'] . '_currency_id']) ? $row[$att['alias'] . '_currency_id'] : '';
+    /**
+     * @param $result
+     * @param $beanList
+     * @param $fields
+     * @param $mainGroupField
+     * @param $row
+     */
+    private
+    function createLabels(
+        $result,
+        $beanList,
+        &$fields,
+        &$mainGroupField,
+        &$row
+    ) {
+        $i = 0;
 
-                    if ($att['function'] != 'COUNT' && empty($att['params']) && !is_numeric($row[$name])) {
-                        $row[$name] = trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'],
-                            'DetailView', $row[$name], '', $currency_id)));
-                    }
-                }
-                $data[] = $row;
-            }
+        while ($row = $this->db->fetchByAssoc($result)) {
 
-            return $data;
-        }
+            $field = new AOR_Field();
+            $field->retrieve($row['id']);
 
-        /**
-         * @param $query
-         * @param $field
-         * @param $module
-         * @param $beanList
-         * @param $field_module
-         * @param $table_alias
-         * @param $oldAlias
-         * @return array
-         */
-        private
-        function BuildJoinsForEachExternalRelatedField(
-            $query,
-            $field,
-            $module,
-            $beanList,
-            $field_module,
-            $table_alias,
-            $oldAlias
-        ) {
             $path = unserialize(base64_decode($field->module_path));
-            $pathExists = !empty($path[0]);
-            $PathIsNotModuleDir = $path[0] != $module->module_dir;
-            if ($pathExists && $PathIsNotModuleDir) {
+
+            $field_bean = new $beanList[$this->report_module]();
+
+            $field_module = $this->report_module;
+            $field_alias = $field_bean->table_name;
+            if ($path[0] != $this->report_module) {
                 foreach ($path as $rel) {
-                    $new_field_module = new $beanList[getRelatedModule($field_module->module_dir, $rel)];
-                    $oldAlias = $table_alias;
-                    $table_alias = $table_alias . ":" . $rel;
-                    $query =
-                        $this->build_report_query_join(
-                            $rel,
-                            $table_alias,
-                            $oldAlias,
-                            $field_module,
-                            'relationship',
-                            $query,
-                            $new_field_module);
-                    $field_module = $new_field_module;
+                    if (empty($rel)) {
+                        continue;
+                    }
+                    $field_module = getRelatedModule($field_module, $rel);
+                    $field_alias = $field_alias . ':' . $rel;
+                }
+            }
+            $label = str_replace(' ', '_', $field->label) . $i;
+            $fields[$label]['field'] = $field->field;
+            $fields[$label]['label'] = $field->label;
+            $fields[$label]['display'] = $field->display;
+            $fields[$label]['function'] = $field->field_function;
+            $fields[$label]['module'] = $field_module;
+            $fields[$label]['alias'] = $field_alias;
+            $fields[$label]['link'] = $field->link;
+            $fields[$label]['total'] = $field->total;
+            $fields[$label]['params'] = $field->format;
+
+
+            // get the main group
+
+            if ($field->group_display) {
+
+                // if we have a main group already thats wrong cause only one main grouping field possible
+                if (!is_null($mainGroupField)) {
+                    $GLOBALS['log']->fatal('main group already found');
                 }
 
-                return array($oldAlias, $table_alias, $query, $field_module);
+                $mainGroupField = $field;
+            }
+
+            ++$i;
+        }
+    }
+
+    /**
+     * @param $result
+     * @param $fields
+     * @return array
+     */
+    private
+    function BuildDataRowsForChart(
+        $result,
+        $fields
+    ) {
+        $data = array();
+        while ($row = $this->db->fetchByAssoc($result, false)) {
+            foreach ($fields as $name => $att) {
+
+                $currency_id = isset($row[$att['alias'] . '_currency_id']) ? $row[$att['alias'] . '_currency_id'] : '';
+
+                if ($att['function'] != 'COUNT' && empty($att['params']) && !is_numeric($row[$name])) {
+                    $row[$name] = trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'],
+                        'DetailView', $row[$name], '', $currency_id)));
+                }
+            }
+            $data[] = $row;
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param $query
+     * @param $field
+     * @param $module
+     * @param $beanList
+     * @param $field_module
+     * @param $table_alias
+     * @param $oldAlias
+     * @return array
+     */
+    private
+    function BuildJoinsForEachExternalRelatedField(
+        $query,
+        $field,
+        $module,
+        $beanList,
+        $field_module,
+        $table_alias,
+        $oldAlias
+    ) {
+        $path = unserialize(base64_decode($field->module_path));
+        $pathExists = !empty($path[0]);
+        $PathIsNotModuleDir = $path[0] != $module->module_dir;
+        if ($pathExists && $PathIsNotModuleDir) {
+            foreach ($path as $rel) {
+                $new_field_module = new $beanList[getRelatedModule($field_module->module_dir, $rel)];
+                $oldAlias = $table_alias;
+                $table_alias = $table_alias . ":" . $rel;
+                $query =
+                    $this->build_report_query_join(
+                        $rel,
+                        $table_alias,
+                        $oldAlias,
+                        $field_module,
+                        'relationship',
+                        $query,
+                        $new_field_module);
+                $field_module = $new_field_module;
             }
 
             return array($oldAlias, $table_alias, $query, $field_module);
         }
 
-        /**
-         * @param $field_module
-         * @param $field
-         * @return mixed
-         */
-        private
-        function BuildDataForRelateType($field_module, $field)
-        {
-            $data = $field_module->field_defs[$field->field];
-            if ($data['type'] == 'relate' && isset($data['id_name'])) {
-                $field->field = $data['id_name'];
-                $data_new = $field_module->field_defs[$field->field];
-                if (isset($data_new['source']) && $data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])) {
-                    $data_new['type'] = 'link';
-                    $data_new['relationship'] = $data['link'];
-                }
-                $data = $data_new;
+        return array($oldAlias, $table_alias, $query, $field_module);
+    }
 
-                return $data;
+    /**
+     * @param $field_module
+     * @param $field
+     * @return mixed
+     */
+    private
+    function BuildDataForRelateType(
+        $field_module,
+        $field
+    ) {
+        $data = $field_module->field_defs[$field->field];
+        if ($data['type'] == 'relate' && isset($data['id_name'])) {
+            $field->field = $data['id_name'];
+            $data_new = $field_module->field_defs[$field->field];
+            if (isset($data_new['source']) && $data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])) {
+                $data_new['type'] = 'link';
+                $data_new['relationship'] = $data['link'];
             }
+            $data = $data_new;
 
             return $data;
         }
 
-        /**
-         * @param $query
-         * @param $data
-         * @param $beanList
-         * @param $field_module
-         * @param $oldAlias
-         * @param $field
-         * @param $table_alias
-         * @return array
-         */
-        private
-        function BuildDataForLinkType($query, $data, $beanList, $field_module, $oldAlias, $field, $table_alias)
-        {
-            if ($data['type'] == 'link' && $data['source'] == 'non-db') {
-                $new_field_module = new $beanList[getRelatedModule($field_module->module_dir,
-                    $data['relationship'])];
-                $table_alias = $data['relationship'];
-                $query = $this->build_report_query_join($data['relationship'], $table_alias, $oldAlias,
-                    $field_module, 'relationship', $query, $new_field_module);
-                $field_module = $new_field_module;
-                $field->field = 'id';
+        return $data;
+    }
 
-                return array($table_alias, $query, $field_module);
-            }
+    /**
+     * @param $query
+     * @param $data
+     * @param $beanList
+     * @param $field_module
+     * @param $oldAlias
+     * @param $field
+     * @param $table_alias
+     * @return array
+     */
+    private
+    function BuildDataForLinkType(
+        $query,
+        $data,
+        $beanList,
+        $field_module,
+        $oldAlias,
+        $field,
+        $table_alias
+    ) {
+        if ($data['type'] == 'link' && $data['source'] == 'non-db') {
+            $new_field_module = new $beanList[getRelatedModule($field_module->module_dir,
+                $data['relationship'])];
+            $table_alias = $data['relationship'];
+            $query = $this->build_report_query_join($data['relationship'], $table_alias, $oldAlias,
+                $field_module, 'relationship', $query, $new_field_module);
+            $field_module = $new_field_module;
+            $field->field = 'id';
 
             return array($table_alias, $query, $field_module);
         }
 
-        /**
-         * @param $query
-         * @param $data
-         * @param $field_module
-         * @param $table_alias
-         * @return mixed
-         */
-        private
-        function BuildDataForCurrencyType($query, $data, $field_module, $table_alias)
-        {
-            if ($data['type'] == 'currency' && isset($field_module->field_defs['currency_id'])) {
-                if ((isset($field_module->field_defs['currency_id']['source']) && $field_module->field_defs['currency_id']['source'] == 'custom_fields')) {
-                    $query['select'][$table_alias . '_currency_id'] = $this->db->quoteIdentifier($table_alias . '_cstm') . ".currency_id AS '" . $table_alias . "_currency_id'";
-                    $query['second_group_by'][] = $this->db->quoteIdentifier($table_alias . '_cstm') . ".currency_id";
+        return array($table_alias, $query, $field_module);
+    }
 
-                    return $query;
-                } else {
-                    $query['select'][$table_alias . '_currency_id'] = $this->db->quoteIdentifier($table_alias) . ".currency_id AS '" . $table_alias . "_currency_id'";
-                    $query['second_group_by'][] = $this->db->quoteIdentifier($table_alias) . ".currency_id";
+    /**
+     * @param $query
+     * @param $data
+     * @param $field_module
+     * @param $table_alias
+     * @return mixed
+     */
+    private
+    function BuildDataForCurrencyType(
+        $query,
+        $data,
+        $field_module,
+        $table_alias
+    ) {
+        if ($data['type'] == 'currency' && isset($field_module->field_defs['currency_id'])) {
+            if ((isset($field_module->field_defs['currency_id']['source']) && $field_module->field_defs['currency_id']['source'] == 'custom_fields')) {
+                $query['select'][$table_alias . '_currency_id'] = $this->db->quoteIdentifier($table_alias . '_cstm') . ".currency_id AS '" . $table_alias . "_currency_id'";
+                $query['second_group_by'][] = $this->db->quoteIdentifier($table_alias . '_cstm') . ".currency_id";
 
-                    return $query;
-                }
-            }
-
-            return $query;
-        }
-
-        /**
-         * @param $query
-         * @param $data
-         * @param $table_alias
-         * @param $field
-         * @param $field_module
-         * @return array
-         */
-        private
-        function BuildDataForCustomField($query, $data, $table_alias, $field, $field_module)
-        {
-            if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
-                $select_field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $field->field;
-                $query = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm',
-                    $table_alias, $field_module, 'custom', $query);
-
-                return array($data, $select_field, $query);
+                return $query;
             } else {
-                $select_field = $this->db->quoteIdentifier($table_alias) . '.' . $field->field;
+                $query['select'][$table_alias . '_currency_id'] = $this->db->quoteIdentifier($table_alias) . ".currency_id AS '" . $table_alias . "_currency_id'";
+                $query['second_group_by'][] = $this->db->quoteIdentifier($table_alias) . ".currency_id";
 
-                return array($data, $select_field, $query);
+                return $query;
             }
         }
 
-        /**
-         * @param $field
-         * @param $data
-         * @param $select_field
-         * @param $timedate
-         * @return string
-         */
-        private
-        function BuildDataForDateType($field, $data, $select_field, $timedate)
-        {
-            if ($field->format && in_array($data['type'], array('date', 'datetime', 'datetimecombo'))) {
-                if (in_array($data['type'], array('datetime', 'datetimecombo'))) {
-                    $select_field = $this->db->convert($select_field, 'add_tz_offset');
-                }
-                $select_field = $this->db->convert($select_field, 'date_format',
-                    array($timedate->getCalFormat($field->format)));
+        return $query;
+    }
 
-                return $select_field;
+    /**
+     * @param $query
+     * @param $data
+     * @param $table_alias
+     * @param $field
+     * @param $field_module
+     * @return array
+     */
+    private
+    function BuildDataForCustomField(
+        $query,
+        $data,
+        $table_alias,
+        $field,
+        $field_module
+    ) {
+        if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
+            $select_field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $field->field;
+            $query = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm',
+                $table_alias, $field_module, 'custom', $query);
+
+            return array($data, $select_field, $query);
+        } else {
+            $select_field = $this->db->quoteIdentifier($table_alias) . '.' . $field->field;
+
+            return array($data, $select_field, $query);
+        }
+    }
+
+    /**
+     * @param $field
+     * @param $data
+     * @param $select_field
+     * @param $timedate
+     * @return string
+     */
+    private
+    function BuildDataForDateType(
+        $field,
+        $data,
+        $select_field,
+        $timedate
+    ) {
+        if ($field->format && in_array($data['type'], array('date', 'datetime', 'datetimecombo'))) {
+            if (in_array($data['type'], array('datetime', 'datetimecombo'))) {
+                $select_field = $this->db->convert($select_field, 'add_tz_offset');
             }
+            $select_field = $this->db->convert($select_field, 'date_format',
+                array($timedate->getCalFormat($field->format)));
 
             return $select_field;
         }
 
-        /**
-         * @param $query
-         * @param $field
-         * @param $table_alias
-         * @return mixed
-         */
-        private
-        function SetTableAlias($query, $field, $table_alias)
-        {
-            if ($field->link && isset($query['id_select'][$table_alias])) {
-                $query['select'][] = $query['id_select'][$table_alias];
-                $query['second_group_by'][] = $query['id_select_group'][$table_alias];
-                unset($query['id_select'][$table_alias]);
+        return $select_field;
+    }
 
-                return $query;
-            }
-
-            return $query;
-        }
-
-        /**
-         * @param $query
-         * @param $field
-         * @param $select_field
-         * @return array
-         */
-        private
-        function SetGroupBy($query, $field, $select_field)
-        {
-            if ($field->group_by == 1) {
-                $query['group_by'][] = $select_field;
-
-                return array($query, $select_field);
-            } elseif ($field->field_function != null) {
-                $select_field = $field->field_function . '(' . $select_field . ')';
-
-                return array($query, $select_field);
-            } else {
-                $query['second_group_by'][] = $select_field;
-
-                return array($query, $select_field);
-            }
-        }
-
-        /**
-         * @param $query
-         * @param $field
-         * @param $select_field
-         * @return mixed
-         */
-        private
-        function SetSortBy($query, $field, $select_field)
-        {
-            if ($field->sort_by != '') {
-                $query['sort_by'][] = $select_field . " " . $field->sort_by;
-
-                return $query;
-            }
+    /**
+     * @param $query
+     * @param $field
+     * @param $table_alias
+     * @return mixed
+     */
+    private
+    function SetTableAlias(
+        $query,
+        $field,
+        $table_alias
+    ) {
+        if ($field->link && isset($query['id_select'][$table_alias])) {
+            $query['select'][] = $query['id_select'][$table_alias];
+            $query['second_group_by'][] = $query['id_select_group'][$table_alias];
+            unset($query['id_select'][$table_alias]);
 
             return $query;
         }
 
-        /**
-         * @param $query
-         * @param $group_value
-         * @param $row
-         * @param $i
-         * @param $module
-         * @param $beanList
-         * @param $timedate
-         * @return mixed
-         * @internal param $chartbean
-         */
-        private
-        function createQuery($query, $group_value, $row, $i, $module, $beanList, $timedate)
-        {
-            $field = new AOR_Field();
-            $field->retrieve($row['id']);
+        return $query;
+    }
 
-            $field->label = str_replace(' ', '_', $field->label) . $i;
-            $field_module = $module;
-            $table_alias = $field_module->table_name;
-            $oldAlias = $table_alias;
+    /**
+     * @param $query
+     * @param $field
+     * @param $select_field
+     * @return array
+     */
+    private
+    function SetGroupBy(
+        $query,
+        $field,
+        $select_field
+    ) {
+        if ($field->group_by == 1) {
+            $query['group_by'][] = $select_field;
 
-            list($oldAlias, $table_alias, $query, $field_module) = $this->BuildJoinsForEachExternalRelatedField($query,
-                $field, $module, $beanList, $field_module, $table_alias, $oldAlias);
+            return array($query, $select_field);
+        } elseif ($field->field_function != null) {
+            $select_field = $field->field_function . '(' . $select_field . ')';
 
-            $data = $this->BuildDataForRelateType($field_module, $field);
+            return array($query, $select_field);
+        } else {
+            $query['second_group_by'][] = $select_field;
 
-            list($table_alias, $query, $field_module) = $this->BuildDataForLinkType($query, $data, $beanList,
-                $field_module, $oldAlias, $field, $table_alias);
+            return array($query, $select_field);
+        }
+    }
 
-            $query = $this->BuildDataForCurrencyType($query, $data, $field_module, $table_alias);
-
-            list($data, $select_field, $query) = $this->BuildDataForCustomField($query, $data, $table_alias, $field,
-                $field_module);
-
-            $select_field = $this->BuildDataForDateType($field, $data, $select_field, $timedate);
-
-            $query = $this->SetTableAlias($query, $field, $table_alias);
-
-            list($query, $select_field) = $this->SetGroupBy($query, $field, $select_field);
-
-            $query = $this->SetSortBy($query, $field, $select_field);
-
-            $query['select'][] = $select_field . " AS '" . $field->label . "'";
-
-            if ($field->group_display == 1 && $group_value) {
-                $query['where'][] = $select_field . " = '" . $group_value . "' AND ";
-            }
+    /**
+     * @param $query
+     * @param $field
+     * @param $select_field
+     * @return mixed
+     */
+    private
+    function SetSortBy(
+        $query,
+        $field,
+        $select_field
+    ) {
+        if ($field->sort_by != '') {
+            $query['sort_by'][] = $select_field . " " . $field->sort_by;
 
             return $query;
         }
 
-        /**
-         * @param $data
-         * @param $condition
-         * @param $condition_module
-         * @return array
-         */
-        private
-        function primeDataForRelate($data, $condition, $condition_module)
-        {
-            if (isset($data['id_name'])) {
-                $condition->field = $data['id_name'];
-                $data_new = $condition_module->field_defs[$condition->field];
-                if (!empty($data_new['source']) && $data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])) {
-                    $data_new['type'] = 'link';
-                    $data_new['relationship'] = $data['link'];
-                }
-                $data = $data_new;
+        return $query;
+    }
 
-                return array($data, $condition);
+    /**
+     * @param $query
+     * @param $group_value
+     * @param $row
+     * @param $i
+     * @param $module
+     * @param $beanList
+     * @param $timedate
+     * @return mixed
+     * @internal param $chartbean
+     */
+    private
+    function createQuery(
+        $query,
+        $group_value,
+        $row,
+        $i,
+        $module,
+        $beanList,
+        $timedate
+    ) {
+        $field = new AOR_Field();
+        $field->retrieve($row['id']);
+
+        $field->label = str_replace(' ', '_', $field->label) . $i;
+        $field_module = $module;
+        $table_alias = $field_module->table_name;
+        $oldAlias = $table_alias;
+
+        list($oldAlias, $table_alias, $query, $field_module) = $this->BuildJoinsForEachExternalRelatedField($query,
+            $field, $module, $beanList, $field_module, $table_alias, $oldAlias);
+
+        $data = $this->BuildDataForRelateType($field_module, $field);
+
+        list($table_alias, $query, $field_module) = $this->BuildDataForLinkType($query, $data, $beanList,
+            $field_module, $oldAlias, $field, $table_alias);
+
+        $query = $this->BuildDataForCurrencyType($query, $data, $field_module, $table_alias);
+
+        list($data, $select_field, $query) = $this->BuildDataForCustomField($query, $data, $table_alias, $field,
+            $field_module);
+
+        $select_field = $this->BuildDataForDateType($field, $data, $select_field, $timedate);
+
+        $query = $this->SetTableAlias($query, $field, $table_alias);
+
+        list($query, $select_field) = $this->SetGroupBy($query, $field, $select_field);
+
+        $query = $this->SetSortBy($query, $field, $select_field);
+
+        $query['select'][] = $select_field . " AS '" . $field->label . "'";
+
+        if ($field->group_display == 1 && $group_value) {
+            $query['where'][] = $select_field . " = '" . $group_value . "' AND ";
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param $data
+     * @param $condition
+     * @param $condition_module
+     * @return array
+     */
+    private
+    function primeDataForRelate(
+        $data,
+        $condition,
+        $condition_module
+    ) {
+        if (isset($data['id_name'])) {
+            $condition->field = $data['id_name'];
+            $data_new = $condition_module->field_defs[$condition->field];
+            if (!empty($data_new['source']) && $data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])) {
+                $data_new['type'] = 'link';
+                $data_new['relationship'] = $data['link'];
             }
+            $data = $data_new;
 
             return array($data, $condition);
         }
 
-        /**
-         * @param $query
-         * @param $data
-         * @param $beanList
-         * @param $condition_module
-         * @param $oldAlias
-         * @param $path
-         * @param $rel
-         * @param $condition
-         * @param $table_alias
-         * @return array
-         */
-        private
-        function primeDataForLink(
-            $query,
-            $data,
-            $beanList,
-            $condition_module,
-            $oldAlias,
-            $path,
-            $rel,
-            $condition,
-            $table_alias
-        ) {
-            if ($data['source'] == 'non-db') {
-                $new_field_module = new $beanList[getRelatedModule($condition_module->module_dir,
-                    $data['relationship'])];
-                $table_alias = $data['relationship'];
-                $query = $this->build_report_query_join($data['relationship'], $table_alias, $oldAlias,
-                    $condition_module, 'relationship', $query, $new_field_module);
-                $condition_module = $new_field_module;
+        return array($data, $condition);
+    }
 
-                // Debugging: security groups conditions - It's a hack to just get the query working
-                if ($condition_module->module_dir = 'SecurityGroups' && count($path) > 1) {
-                    $table_alias = $oldAlias . ':' . $rel;
-                }
-                $condition->field = 'id';
+    /**
+     * @param $query
+     * @param $data
+     * @param $beanList
+     * @param $condition_module
+     * @param $oldAlias
+     * @param $path
+     * @param $rel
+     * @param $condition
+     * @param $table_alias
+     * @return array
+     */
+    private
+    function primeDataForLink(
+        $query,
+        $data,
+        $beanList,
+        $condition_module,
+        $oldAlias,
+        $path,
+        $rel,
+        $condition,
+        $table_alias
+    ) {
+        if ($data['source'] == 'non-db') {
+            $new_field_module = new $beanList[getRelatedModule($condition_module->module_dir,
+                $data['relationship'])];
+            $table_alias = $data['relationship'];
+            $query = $this->build_report_query_join($data['relationship'], $table_alias, $oldAlias,
+                $condition_module, 'relationship', $query, $new_field_module);
+            $condition_module = $new_field_module;
 
-                return array($table_alias, $query, $condition_module);
+            // Debugging: security groups conditions - It's a hack to just get the query working
+            if ($condition_module->module_dir = 'SecurityGroups' && count($path) > 1) {
+                $table_alias = $oldAlias . ':' . $rel;
             }
+            $condition->field = 'id';
 
             return array($table_alias, $query, $condition_module);
         }
 
-        /**
-         * @param $data
-         * @param $table_alias
-         * @param $condition
-         * @return string
-         */
-        private
-        function setFieldSuffixOld($data, $table_alias, $condition)
-        {
-            if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
-                $field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $condition->field;
+        return array($table_alias, $query, $condition_module);
+    }
 
-                return $field;
-            } else {
-                $field = $this->db->quoteIdentifier($table_alias) . '.' . $condition->field;
+    /**
+     * @param $data
+     * @param $table_alias
+     * @param $condition
+     * @return string
+     */
+    private
+    function setFieldSuffixOld(
+        $data,
+        $table_alias,
+        $condition
+    ) {
+        if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
+            $field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $condition->field;
 
-                return $field;
+            return $field;
+        } else {
+            $field = $this->db->quoteIdentifier($table_alias) . '.' . $condition->field;
+
+            return $field;
+        }
+    }
+
+
+    /**
+     * @param $isCustomField
+     * @param $tableName
+     * @param $tableAlias
+     * @param $fieldName
+     * @param string $suffix
+     * @return string
+     */
+    private
+    function setFieldTablesSuffix(
+        $isCustomField,
+        $tableName,
+        $tableAlias,
+        $fieldName,
+        $suffix = '_cstm'
+    ) {
+
+        if ($isCustomField) {
+            $value = $tableName . $suffix . '.' . $fieldName;
+
+            return $value;
+        } else {
+            $value = ($tableAlias ? "`$tableAlias`" : $tableName) . '.' . $fieldName;
+
+            return $value;
+        }
+    }
+
+    /**
+     * @param $condition
+     */
+    private
+    function buildConditionParams(
+        $condition
+    ) {
+        if (!empty($this->user_parameters[$condition->id])) {
+            if ($condition->parameter) {
+                $condParam = $this->user_parameters[$condition->id];
+                $condition->value = $condParam['value'];
+                $condition->operator = $condParam['operator'];
+                $condition->value_type = $condParam['type'];
             }
         }
+    }
 
+    /**
+     * @param $isCustomField
+     * @param $query
+     * @param $table_alias
+     * @param $tableName
+     * @param $condition_module
+     * @return string
+     * @internal param $data
+     */
+    private
+    function buildJoinQueryForCustomFields(
+        $isCustomField,
+        $query,
+        $table_alias,
+        $tableName,
+        $condition_module
+    ) {
+        if ($isCustomField) {
 
-        /**
-         * @param $isCustomField
-         * @param $tableName
-         * @param $tableAlias
-         * @param $fieldName
-         * @param string $suffix
-         * @return string
-         */
-        private
-        function setFieldTablesSuffix($isCustomField, $tableName, $tableAlias, $fieldName, $suffix = '_cstm')
-        {
-
-            if ($isCustomField) {
-                $value = $tableName . $suffix . '.' . $fieldName;
-
-                return $value;
-            } else {
-                $value = ($tableAlias ? "`$tableAlias`" : $tableName) . '.' . $fieldName;
-
-                return $value;
-            }
-        }
-
-        /**
-         * @param $condition
-         */
-        private
-        function buildConditionParams($condition)
-        {
-            if (!empty($this->user_parameters[$condition->id])) {
-                if ($condition->parameter) {
-                    $condParam = $this->user_parameters[$condition->id];
-                    $condition->value = $condParam['value'];
-                    $condition->operator = $condParam['operator'];
-                    $condition->value_type = $condParam['type'];
-                }
-            }
-        }
-
-        /**
-         * @param $isCustomField
-         * @param $query
-         * @param $table_alias
-         * @param $tableName
-         * @param $condition_module
-         * @return string
-         * @internal param $data
-         */
-        private
-        function buildJoinQueryForCustomFields($isCustomField, $query, $table_alias, $tableName, $condition_module)
-        {
-            if ($isCustomField) {
-
-                $query = $this->build_report_query_join(
-                    $tableName . '_cstm',
-                    $table_alias . '_cstm',
-                    $table_alias,
-                    $condition_module,
-                    'custom',
-                    $query);
-
-                return $query;
-            }
+            $query = $this->build_report_query_join(
+                $tableName . '_cstm',
+                $table_alias . '_cstm',
+                $table_alias,
+                $condition_module,
+                'custom',
+                $query);
 
             return $query;
         }
+
+        return $query;
+    }
 
     /**
      * @param $firstParam
@@ -1978,7 +2069,7 @@ class AOR_Report extends Basic
      * @param $field
      * @return array
      */
-    private function processForDateFrom($firstParam, $sugar_config, $field,$query, $condition_module)
+    private function processForDateFrom($firstParam, $sugar_config, $field, $query, $condition_module)
     {
         switch ($firstParam) {
             case 'now':
@@ -2017,7 +2108,7 @@ class AOR_Report extends Basic
                 break;
         }
 
-        return array($value, $field,$query);
+        return array($value, $field, $query);
     }
 
     /**
@@ -2029,22 +2120,22 @@ class AOR_Report extends Basic
     private function processForDateFromCustomField($query, $firstParam, $condition_module)
     {
 
-            $data = $condition_module->field_defs[$firstParam];
-            $tableName = $condition_module->table_name;
-            $table_alias = $tableName;
-            $fieldName = $firstParam;
-            $dataSourceIsSet = isset($data['source']);
-            if ($dataSourceIsSet) {
-                $isCustomField = ($data['source'] == 'custom_fields') ? true : false;
-            }
+        $data = $condition_module->field_defs[$firstParam];
+        $tableName = $condition_module->table_name;
+        $table_alias = $tableName;
+        $fieldName = $firstParam;
+        $dataSourceIsSet = isset($data['source']);
+        if ($dataSourceIsSet) {
+            $isCustomField = ($data['source'] == 'custom_fields') ? true : false;
+        }
 
-            //setValueSuffix
-            $value = $this->setFieldTablesSuffix($isCustomField, $tableName, $table_alias,
-                $fieldName);
-            $query = $this->buildJoinQueryForCustomFields($isCustomField, $query,
-                $table_alias, $tableName, $condition_module);
+        //setValueSuffix
+        $value = $this->setFieldTablesSuffix($isCustomField, $tableName, $table_alias,
+            $fieldName);
+        $query = $this->buildJoinQueryForCustomFields($isCustomField, $query,
+            $table_alias, $tableName, $condition_module);
 
-            return array($value, $query);
+        return array($value, $query);
 
     }
 
@@ -2117,8 +2208,7 @@ class AOR_Report extends Basic
         $field,
         $app_list_strings,
         $aor_sql_operator_list,
-        $tiltLogicOp,
-        $current_user
+        $tiltLogicOp
     ) {
         switch ($conditionType) {
             case 'Field': // is it a specific field
