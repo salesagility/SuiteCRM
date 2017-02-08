@@ -1261,10 +1261,7 @@ class AOR_Report extends Basic
         return $where;
     }
 
-    function build_report_query_where($query = array())
-    {
-        global $beanList, $app_list_strings, $sugar_config;
-
+    private function getAllowedOperatorList(){
         $aor_sql_operator_list['Equal_To'] = '=';
         $aor_sql_operator_list['Not_Equal_To'] = '!=';
         $aor_sql_operator_list['Greater_Than'] = '>';
@@ -1274,6 +1271,13 @@ class AOR_Report extends Basic
         $aor_sql_operator_list['Contains'] = 'LIKE';
         $aor_sql_operator_list['Starts_With'] = 'LIKE';
         $aor_sql_operator_list['Ends_With'] = 'LIKE';
+        return $aor_sql_operator_list;
+    }
+
+    function build_report_query_where($query = array())
+    {
+        global $beanList, $app_list_strings, $sugar_config;
+        $aor_sql_operator_list = $this->getAllowedOperatorList();
 
         $closure = false;
         if (!empty($query['where'])) {
@@ -1392,55 +1396,15 @@ class AOR_Report extends Basic
 
                     //handle like conditions
                     $conditionOperator = $condition->operator;
-                    Switch ($conditionOperator) {
-                        case 'Contains':
-                            $value = "CONCAT('%', " . $value . " ,'%')";
-                            break;
-                        case 'Starts_With':
-                            $value = "CONCAT(" . $value . " ,'%')";
-                            break;
-                        case 'Ends_With':
-                            $value = "CONCAT('%', " . $value . ")";
-                            break;
-                    }
+                    $value = $this->handleLikeConditions($conditionOperator, $value);
 
                     if ($condition->value_type == 'Value' && !$condition->value && $condition->operator == 'Equal_To') {
                         $value = "{$value} OR {$field} IS NULL";
                     }
 
-                    if (!$where_set) {
-                        if ($condition->value_type == "Period") {
-                            if (array_key_exists($condition->value, $app_list_strings['date_time_period_list'])) {
-                                $params = $condition->value;
-                            } else {
-                                $params = base64_decode($condition->value);
-                            }
-                            $date = getPeriodEndDate($params)->format('Y-m-d H:i:s');
-                            $value = '"' . getPeriodDate($params)->format('Y-m-d H:i:s') . '"';
+                    list($value, $query) = $this->whereNotSet($query, $where_set, $condition,
+                        $app_list_strings, $tiltLogicOp, $aor_sql_operator_list, $field, $value);
 
-                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND '));
-                            $tiltLogicOp = false;
-
-                            switch ($aor_sql_operator_list[$condition->operator]) {
-                                case "=":
-                                    $query['where'][] = $field . ' BETWEEN ' . $value . ' AND ' . '"' . $date . '"';
-                                    break;
-                                case "!=":
-                                    $query['where'][] = $field . ' NOT BETWEEN ' . $value . ' AND ' . '"' . $date . '"';
-                                    break;
-                                case ">":
-                                case "<":
-                                case ">=":
-                                case "<=":
-                                    $query['where'][] = $field . ' ' . $aor_sql_operator_list[$condition->operator] . ' ' . $value;
-                                    break;
-                            }
-                        } else {
-                            if (!$where_set) {
-                                $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $field . ' ' . $aor_sql_operator_list[$condition->operator] . ' ' . $value;
-                            }
-                        }
-                    }
                     $tiltLogicOp = false;
                 } else {
                     if ($condition->parenthesis) {
@@ -2331,6 +2295,88 @@ class AOR_Report extends Basic
             $where_set,
             $current_user
         );
+    }
+
+    /**
+     * @param $conditionOperator
+     * @param $value
+     * @return string
+     */
+    private function handleLikeConditions($conditionOperator, $value)
+    {
+        Switch ($conditionOperator) {
+            case 'Contains':
+                $value = "CONCAT('%', " . $value . " ,'%')";
+                break;
+            case 'Starts_With':
+                $value = "CONCAT(" . $value . " ,'%')";
+                break;
+            case 'Ends_With':
+                $value = "CONCAT('%', " . $value . ")";
+                break;
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param $query
+     * @param $where_set
+     * @param $condition
+     * @param $app_list_strings
+     * @param $tiltLogicOp
+     * @param $aor_sql_operator_list
+     * @param $field
+     * @param $value
+     * @return array
+     */
+    private function whereNotSet(
+        $query,
+        $where_set,
+        $condition,
+        $app_list_strings,
+        $tiltLogicOp,
+        $aor_sql_operator_list,
+        $field,
+        $value
+    ) {
+        if (!$where_set) {
+            if ($condition->value_type == "Period") {
+                if (array_key_exists($condition->value, $app_list_strings['date_time_period_list'])) {
+                    $params = $condition->value;
+                } else {
+                    $params = base64_decode($condition->value);
+                }
+                $date = getPeriodEndDate($params)->format('Y-m-d H:i:s');
+                $value = '"' . getPeriodDate($params)->format('Y-m-d H:i:s') . '"';
+
+                $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND '));
+                $tiltLogicOp = false;
+
+                switch ($aor_sql_operator_list[$condition->operator]) {
+                    case "=":
+                        $query['where'][] = $field . ' BETWEEN ' . $value . ' AND ' . '"' . $date . '"';
+                        break;
+                    case "!=":
+                        $query['where'][] = $field . ' NOT BETWEEN ' . $value . ' AND ' . '"' . $date . '"';
+                        break;
+                    case ">":
+                    case "<":
+                    case ">=":
+                    case "<=":
+                        $query['where'][] = $field . ' ' . $aor_sql_operator_list[$condition->operator] . ' ' . $value;
+                        break;
+                }
+
+                return array($value, $query, $tiltLogicOp);
+            } else {
+                $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $field . ' ' . $aor_sql_operator_list[$condition->operator] . ' ' . $value;
+
+                return array($value, $query);
+            }
+        }
+
+        return array($value, $query);
     }
 
 }
