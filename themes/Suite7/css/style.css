@@ -6678,3 +6678,30 @@ ul.clickMenu.searchAppliedAlert {
 .action-link label {
   padding: 5px 0 0 0;
 }
+
+.message {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.info {
+    background-color: #d8f5ee;
+    color: #778591;
+}
+
+.alert {
+    background-color: #F5E79E;
+    color: #ad9d4a;
+}
+
+.working {
+    background-color: #e6e6e6;
+    color: #898a8a;
+}
+
+.okay {
+    background-color: #83c489;
+    color: #fff;
+}
