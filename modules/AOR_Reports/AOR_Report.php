@@ -1356,111 +1356,11 @@ class AOR_Report extends Basic
                     //check for custom selectable parameter from report
                     $this->buildConditionParams($condition);
 
+                    $conditionType = $condition->value_type;
                     //what type of condition is it?
-                    switch ($condition->value_type) {
-                        case 'Field': // is it a specific field
-                            //processWhereConditionForTypeField
-                            $data = $condition_module->field_defs[$condition->value];
-
-                            switch ($data['type']) {
-                                case 'relate':
-                                    list($data, $condition) = $this->primeDataForRelate($data, $condition,
-                                        $condition_module);
-                                    break;
-                                case 'link':
-                                    list($table_alias, $query, $condition_module) = $this->primeDataForLink($query,
-                                        $data, $beanList, $condition_module, $oldAlias, $path, $rel, $condition,
-                                        $table_alias);
-                                    break;
-                            }
-
-
-                            $tableName = $condition_module->table_name;
-                            $fieldName = $condition->value;
-                            $dataSourceIsSet = isset($data['source']);
-                            if ($dataSourceIsSet) {
-                                $isCustomField = ($data['source'] == 'custom_fields') ? true : false;
-                            }
-
-                            //setValueSuffix
-                            $value = $this->setFieldTablesSuffix($isCustomField, $tableName, $table_alias, $fieldName);
-                            $query = $this->buildJoinQueryForCustomFields($isCustomField, $query, $table_alias,
-                                $tableName,
-                                $condition_module);
-
-//                            if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
-//                                $query = $this->build_report_query_join($condition_module->table_name . '_cstm',
-//                                    $table_alias . '_cstm', $table_alias, $condition_module, 'custom', $query);
-//                            }
-                            break;
-
-                        case 'Date': //is it a date
-                            //processWhereConditionForTypeDate
-                            $params = unserialize(base64_decode($condition->value));
-
-                            // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
-                            if ($params == false) {
-                                $params = $condition->value;
-                            }
-
-                            $firstParam = $params[0];
-                            list($value, $field,$query) = $this->processForDateFrom(
-                                $firstParam,
-                                $sugar_config,
-                                $field,
-                                $query,
-                                $condition_module);
-
-                            $secondParam = $params[1];
-                            $thirdParam = $params[2];
-                            $fourthParam = $params[3];
-                            $value = $this->processForDateOther($secondParam, $fourthParam, $sugar_config,
-                                $app_list_strings, $thirdParam, $value);
-
-                            break;
-
-                        case 'Multi': //are there multiple conditions setup
-                            //processWhereConditionForTypeMulti
-                            $sep = ' AND ';
-                            if ($condition->operator == 'Equal_To') {
-                                $sep = ' OR ';
-                            }
-                            $multi_values = unencodeMultienum($condition->value);
-                            if (!empty($multi_values)) {
-                                $value = '(';
-                                foreach ($multi_values as $multi_value) {
-                                    if ($value != '(') {
-                                        $value .= $sep;
-                                    }
-                                    $value .= $field . ' ' . $aor_sql_operator_list[$condition->operator] . " '" . $multi_value . "'";
-                                }
-                                $value .= ')';
-                            }
-                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $value;
-                            $where_set = true;
-                            break;
-                        case "Period": //is it a period of time
-                            //processWhereConditionForTypePeriod
-                            if (array_key_exists($condition->value, $app_list_strings['date_time_period_list'])) {
-                                $params = $condition->value;
-                            } else {
-                                $params = base64_decode($condition->value);
-                            }
-                            $value = '"' . getPeriodDate($params)->format('Y-m-d H:i:s') . '"';
-                            break;
-                        case "CurrentUserID": //not sure what this is for
-                            //processWhereConditionForTypeCurrentUser
-                            global $current_user;
-                            $value = '"' . $current_user->id . '"';
-                            break;
-                        case 'Value': //is it a specific value
-                            //processWhereConditionForTypeValue
-                            $value = "'" . $this->db->quote($condition->value) . "'";
-                            break;
-                        default:
-                            $value = "'" . $this->db->quote($condition->value) . "'";
-                            break;
-                    }
+                    list($data, $condition, $table_alias, $query, $condition_module, $tableName, $fieldName, $dataSourceIsSet, $isCustomField, $value, $params, $field, $where_set, $current_user) = $this->buildQueryForConditionType($query,
+                        $conditionType, $condition_module, $condition, $beanList, $oldAlias, $path, $rel, $table_alias,
+                        $sugar_config, $field, $app_list_strings, $aor_sql_operator_list, $tiltLogicOp, $current_user);
 
                     //handle like conditions
                     Switch ($condition->operator) {
@@ -2183,6 +2083,164 @@ class AOR_Report extends Basic
         }
 
         return $value;
+    }
+
+    /**
+     * @param $query
+     * @param $conditionType
+     * @param $condition_module
+     * @param $condition
+     * @param $beanList
+     * @param $oldAlias
+     * @param $path
+     * @param $rel
+     * @param $table_alias
+     * @param $sugar_config
+     * @param $field
+     * @param $app_list_strings
+     * @param $aor_sql_operator_list
+     * @param $tiltLogicOp
+     * @param $current_user
+     * @return array
+     */
+    private function buildQueryForConditionType(
+        $query,
+        $conditionType,
+        $condition_module,
+        $condition,
+        $beanList,
+        $oldAlias,
+        $path,
+        $rel,
+        $table_alias,
+        $sugar_config,
+        $field,
+        $app_list_strings,
+        $aor_sql_operator_list,
+        $tiltLogicOp,
+        $current_user
+    ) {
+        switch ($conditionType) {
+            case 'Field': // is it a specific field
+                //processWhereConditionForTypeField
+                $data = $condition_module->field_defs[$condition->value];
+
+                switch ($data['type']) {
+                    case 'relate':
+                        list($data, $condition) = $this->primeDataForRelate($data, $condition,
+                            $condition_module);
+                        break;
+                    case 'link':
+                        list($table_alias, $query, $condition_module) = $this->primeDataForLink($query,
+                            $data, $beanList, $condition_module, $oldAlias, $path, $rel, $condition,
+                            $table_alias);
+                        break;
+                }
+
+
+                $tableName = $condition_module->table_name;
+                $fieldName = $condition->value;
+                $dataSourceIsSet = isset($data['source']);
+                if ($dataSourceIsSet) {
+                    $isCustomField = ($data['source'] == 'custom_fields') ? true : false;
+                }
+
+                //setValueSuffix
+                $value = $this->setFieldTablesSuffix($isCustomField, $tableName, $table_alias, $fieldName);
+                $query = $this->buildJoinQueryForCustomFields($isCustomField, $query, $table_alias,
+                    $tableName,
+                    $condition_module);
+
+//                            if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
+//                                $query = $this->build_report_query_join($condition_module->table_name . '_cstm',
+//                                    $table_alias . '_cstm', $table_alias, $condition_module, 'custom', $query);
+//                            }
+                break;
+
+            case 'Date': //is it a date
+                //processWhereConditionForTypeDate
+                $params = unserialize(base64_decode($condition->value));
+
+                // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
+                if ($params == false) {
+                    $params = $condition->value;
+                }
+
+                $firstParam = $params[0];
+                list($value, $field, $query) = $this->processForDateFrom(
+                    $firstParam,
+                    $sugar_config,
+                    $field,
+                    $query,
+                    $condition_module);
+
+                $secondParam = $params[1];
+                $thirdParam = $params[2];
+                $fourthParam = $params[3];
+                $value = $this->processForDateOther($secondParam, $fourthParam, $sugar_config,
+                    $app_list_strings, $thirdParam, $value);
+
+                break;
+
+            case 'Multi': //are there multiple conditions setup
+                //processWhereConditionForTypeMulti
+                $sep = ' AND ';
+                if ($condition->operator == 'Equal_To') {
+                    $sep = ' OR ';
+                }
+                $multi_values = unencodeMultienum($condition->value);
+                if (!empty($multi_values)) {
+                    $value = '(';
+                    foreach ($multi_values as $multi_value) {
+                        if ($value != '(') {
+                            $value .= $sep;
+                        }
+                        $value .= $field . ' ' . $aor_sql_operator_list[$condition->operator] . " '" . $multi_value . "'";
+                    }
+                    $value .= ')';
+                }
+                $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $value;
+                $where_set = true;
+                break;
+            case "Period": //is it a period of time
+                //processWhereConditionForTypePeriod
+                if (array_key_exists($condition->value, $app_list_strings['date_time_period_list'])) {
+                    $params = $condition->value;
+                } else {
+                    $params = base64_decode($condition->value);
+                }
+                $value = '"' . getPeriodDate($params)->format('Y-m-d H:i:s') . '"';
+                break;
+            case "CurrentUserID": //not sure what this is for
+                //processWhereConditionForTypeCurrentUser
+                global $current_user;
+                $value = '"' . $current_user->id . '"';
+                break;
+            case 'Value': //is it a specific value
+                //processWhereConditionForTypeValue
+                $value = "'" . $this->db->quote($condition->value) . "'";
+                break;
+            default:
+                $value = "'" . $this->db->quote($condition->value) . "'";
+                break;
+        }
+
+        return array(
+            $data,
+            $condition,
+            $table_alias,
+            $query,
+            $condition_module,
+            $tableName,
+            $fieldName,
+            $dataSourceIsSet,
+            $isCustomField,
+            $value,
+            $params,
+            $field,
+            $where_set,
+            $current_user
+        );
     }
 
 }
