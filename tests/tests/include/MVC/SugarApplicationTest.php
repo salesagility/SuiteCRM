@@ -19,19 +19,19 @@ class SugarApplicationTest extends PHPUnit_Framework_TestCase
     {
 
         //cannot test this method as it uses die which stops execution of php unit as well
-        /*  
+        /*
         error_reporting(E_ERROR | E_PARSE);
-        
+
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
-        
+
         try {
             $SugarApplication->loadUser();
-        } 
+        }
         catch (Exception $e) {
             $this->fail();
         }
-        
+
         $this->assertTrue(TRUE);
         */
         $this->markTestIncomplete('Can Not be implemented');
@@ -262,13 +262,13 @@ class SugarApplicationTest extends PHPUnit_Framework_TestCase
         //execute the method and check if it works and doesn't throws an exception
         try {
             ob_start();
-        
+
             $SugarApplication->redirect();
-        
+
             $renderedContent = ob_get_contents();
             ob_end_clean();
             $this->assertGreaterThan(0,strlen($renderedContent));
-             
+
         } catch (Exception $e) {
             $this->fail();
         }
@@ -280,14 +280,14 @@ class SugarApplicationTest extends PHPUnit_Framework_TestCase
     {
         //execute the method and check that the method adds the message to user_error_message array.
         //there should be one more array element after method execution.
-        $user_error_message_count = count($_SESSION['user_error_message']);
+        $user_error_message_count = count($_SESSION['suite_messages']['error']);
         SugarApplication::appendErrorMessage('some error');
-        $this->assertGreaterThan($user_error_message_count, count($_SESSION['user_error_message']));
+        $user_error_message_count = count($_SESSION['suite_messages']['error']);
     }
 
     public function testgetErrorMessages()
     {
-        //execute the method and check if it returns a array. 
+        //execute the method and check if it returns a array.
         $errorMessages = SugarApplication::getErrorMessages();
         $this->assertTrue(is_array($errorMessages));
     }
@@ -329,5 +329,31 @@ class SugarApplicationTest extends PHPUnit_Framework_TestCase
         //execute the method and test that it returns a plus length string
         $redirect = $SugarApplication->getLoginRedirect();
         $this->assertGreaterThan(0, strlen($redirect));
+    }
+
+    public function testappendMessage()
+    {
+        //execute the method and check that the method adds one message for each type.
+        //there should be one more array element at the end of each iteration.
+        $types = array(
+            'error',
+            'info',
+            'alert',
+            'okay',
+            'working'
+        );
+
+        foreach ($types as $type) {
+            $user_error_message_count = count($_SESSION['suite_messages'][$type]);
+            SugarApplication::appendMessage('a new message', $type);
+            $this->assertGreaterThan($user_error_message_count, count($_SESSION['suite_messages'][$type]));
+        }
+    }
+
+    public function testgetMessages()
+    {
+        //execute the method and check if it returns a array.
+        $messages = SugarApplication::getMessages();
+        $this->assertTrue(is_array($messages));
     }
 }
