@@ -232,6 +232,21 @@ $scheduler-free-color: #6a80e6;
 $scheduler-free-border-color: #FFFFFF;
 $scheduler-busy-color: #e67c73;
 
-
 // Line Items
 $line-item-group-width: 100%;
+
+// Messages
+$info-message-text-color: #778591;
+$info-message-bg-color: #d8f5ee;
+$error-message-text-color: #fff;
+$error-message-bg-color: #f08377;
+$alert-message-text-color: #ad9d4a;
+$alert-message-bg-color: #F5E79E;
+$okay-message-text-color: #fff;
+$okay-message-bg-color: #83c489;
+$working-message-text-color: #898a8a;
+$working-message-bg-color: #e6e6e6;
+$message-padding: 10px;
+$message-margin-bottom: 20px;
+$message-border: 1px solid transparent;
+$message-border-radius: 4px;

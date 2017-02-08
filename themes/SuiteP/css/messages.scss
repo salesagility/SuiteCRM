@@ -1,0 +1,34 @@
+/**** Messages ***/
+@import 'variables';
+
+.message {
+padding: $message-padding;
+margin-bottom: $message-margin-bottom;
+border: $message-border;
+border-radius: $message-border-radius;
+}
+
+.error {
+    color: $error-message-text-color;
+    background-color: $error-message-bg-color;
+}
+
+.info {
+    color: $info-message-text-color;
+    background-color: $info-message-bg-color;
+}
+
+.alert {
+    color: $alert-message-text-color;
+    background-color: $alert-message-bg-color;
+}
+
+.okay {
+    color: $okay-message-text-color;
+    background-color: $okay-message-bg-color;
+}
+
+.working {
+    color: $working-message-text-color;
+    background-color: $working-message-bg-color;
+}
