@@ -380,15 +380,14 @@ class AOR_Report extends Basic
                 }
             }
             $query_array['where'][] = $select_field . " IS NOT NULL AND ";
-            if (isset($extra['where']) && $extra['where']) {
-                $query_array['where'][] = implode(' AND ', $extra['where']) . ' AND ';
+
+
+            try {
+                $query_array = $this->buildQueryArrayWhere($query_array,$extra);
+            } catch (Exception $e) {
             }
 
-            $query_array = $this->build_report_query_where($query_array);
-
-            foreach ($query_array['select'] as $select) {
-                $query .= ($query == '' ? 'SELECT ' : ', ') . $select;
-            }
+            $query = $this->buildQuerySelect($query_array, $query);
 
             $query .= ' FROM ' . $module->table_name . ' ';
 
@@ -908,21 +907,13 @@ class AOR_Report extends Basic
 
         $query_array = $this->buildReportQuerySelect($query_array, $group_value);
 
-
-        if (isset($extra['where']) && $extra['where']) {
-            $query_array['where'][] = implode(' AND ', $extra['where']) . ' AND ';
-        }
-
-
         try {
-            $query_array = $this->build_report_query_where($query_array);
+            $query_array = $this->buildQueryArrayWhere($query_array,$extra);
         } catch (Exception $e) {
         }
 
 
-        foreach ($query_array['select'] as $select) {
-            $query .= ($query == '' ? 'SELECT ' : ', ') . $select;
-        }
+        $query = $this->buildQuerySelect($query_array, $query);
 
         if (empty($query_array['group_by'])) {
             foreach ($query_array['id_select'] as $select) {
@@ -1012,7 +1003,11 @@ class AOR_Report extends Basic
 
         $this->createLabels($result, $beanList, $fields, $mainGroupField, $row);
 
-        $query = $this->buildReportQueryChart();//this is where it needs to branch one report for normal queries and one for charts
+
+        try {
+            $query = $this->buildReportQueryChart();//this is where it needs to branch one report for normal queries and one for charts
+        } catch (Exception $e) {
+        }
         $result = $this->db->query($query);
         $data = $this->BuildDataRowsForChart($result, $fields);
 
@@ -1049,7 +1044,7 @@ class AOR_Report extends Basic
     {
         //Check if the user has access to the target module
         if (!(ACLController::checkAccess($this->report_module, 'list', true))) {
-            return false;
+            throw new Exception('User Not Allowed Access To This Module',101);
         }
 
         global $beanList;
@@ -1057,41 +1052,44 @@ class AOR_Report extends Basic
         $query = '';
         $query_array = array();
 
-        $query_array = $this->buildReportQuerySelectForChart($query_array, $group_value);
+        $query_array = $this->buildQueryArraySelectForChart($query_array, $group_value);
 
-        if (isset($extra['where']) && $extra['where']) {
-            $query_array['where'][] = implode(' AND ', $extra['where']) . ' AND ';
-        }
-        $query_array = $this->build_report_query_where($query_array);
-
-        foreach ($query_array['select'] as $select) {
-            $query .= ($query == '' ? 'SELECT ' : ', ') . $select;
+        try {
+            $query_array = $this->buildQueryArrayWhere($query_array,$extra);
+        } catch (Exception $e) {
         }
 
+        //buildQuerySelect
+        $query = $this->buildQuerySelect($query_array, $query);
+
+        //buildQueryGroupBy
         if (empty($query_array['group_by'])) {
             foreach ($query_array['id_select'] as $select) {
                 $query .= ', ' . $select;
             }
         }
 
+        //buildQueryFrom
         $query .= ' FROM ' . $this->db->quoteIdentifier($module->table_name) . ' ';
 
+        //buildQueryJoin
         if (isset($query_array['join'])) {
             foreach ($query_array['join'] as $join) {
                 $query .= $join;
             }
         }
+
+        //buildQueryWhere
         if (isset($query_array['where'])) {
             $query_where = '';
             foreach ($query_array['where'] as $where) {
                 $query_where .= ($query_where == '' ? 'WHERE ' : ' ') . $where;
             }
-
             $query_where = $this->queryWhereRepair($query_where);
-
             $query .= ' ' . $query_where;
         }
 
+        //buildQueryGroupBy2
         if (isset($query_array['group_by'])) {
             $query_group_by = '';
             foreach ($query_array['group_by'] as $group_by) {
@@ -1105,6 +1103,7 @@ class AOR_Report extends Basic
             $query .= ' ' . $query_group_by;
         }
 
+        //buildQuerySortBy
         if (isset($query_array['sort_by'])) {
             $query_sort_by = '';
             foreach ($query_array['sort_by'] as $sort_by) {
@@ -1123,7 +1122,7 @@ class AOR_Report extends Basic
      * @param string $group_value
      * @return array
      */
-    function buildReportQuerySelectForChart($query = array(), $group_value = '')
+    function buildQueryArraySelectForChart($query = array(), $group_value = '')
     {
         global $beanList, $timedate;
         $chartbean = BeanFactory::newBean('AOR_Charts');
@@ -1281,10 +1280,14 @@ class AOR_Report extends Basic
         return $aor_sql_operator_list;
     }
 
-    function build_report_query_where($query = array())
+    function buildQueryArrayWhere($query = array(), $extra = array())
     {
         global $beanList, $app_list_strings, $sugar_config;
         $aor_sql_operator_list = $this->getAllowedOperatorList();
+
+        if (isset($extra['where']) && $extra['where']) {
+            $query_array['where'][] = implode(' AND ', $extra['where']) . ' AND ';
+        }
 
         $closure = false;
         if (!empty($query['where'])) {
@@ -1307,7 +1310,7 @@ class AOR_Report extends Basic
 
             //checkIfUserIsAllowAccessToModule
             if (!$this->checkIfUserIsAllowedAccessToRelatedModules($rowArray, $module, $beanList)) {
-                throw new Exception('User Not Allowed Access To Module');
+                throw new Exception('User Not Allowed Access To Module', 102);
             }
 
 
@@ -2429,6 +2432,20 @@ class AOR_Report extends Basic
         }
 
         return $isAllowed;
+    }
+
+    /**
+     * @param $query_array
+     * @param $query
+     * @return array
+     */
+    private function buildQuerySelect($query_array, $query)
+    {
+        foreach ($query_array['select'] as $select) {
+            $query .= ($query == '' ? 'SELECT ' : ', ') . $select;
+        }
+
+        return array($query);
     }
 
 }

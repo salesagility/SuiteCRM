@@ -256,7 +256,7 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
 
         //execute the method and verify that it retunrs expected results
         $expected = array('where' => array('accounts.deleted = 0 '));
-        $actual = $aor_Report->build_report_query_where();
+        $actual = $aor_Report->buildQueryArrayWhere();
         $this->assertSame($expected, $actual);
     }
 }
