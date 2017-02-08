@@ -91,6 +91,10 @@ class AOR_Report extends Basic
     }
 
 
+    /**
+     * @param $interface
+     * @return bool
+     */
     function bean_implements($interface)
     {
         switch ($interface) {
@@ -101,6 +105,9 @@ class AOR_Report extends Basic
         return false;
     }
 
+    /**
+     * @param bool $check_notify
+     */
     function save($check_notify = false)
     {
 
@@ -144,6 +151,9 @@ class AOR_Report extends Basic
     }
 
 
+    /**
+     *
+     */
     function load_report_beans()
     {
         global $beanList, $app_list_strings;
@@ -163,6 +173,9 @@ class AOR_Report extends Basic
     }
 
 
+    /**
+     * @return array
+     */
     function getReportFields()
     {
         $fields = array();
@@ -176,6 +189,14 @@ class AOR_Report extends Basic
         return $fields;
     }
 
+    /**
+     * @param int $offset
+     * @param bool $links
+     * @param int $level
+     * @param array $path
+     * @return null|string
+     * @throws Exception
+     */
     public function buildMultiGroupReport($offset = -1, $links = true, $level = 2, $path = array())
     {
         global $beanList;
@@ -234,6 +255,11 @@ class AOR_Report extends Basic
         throw new Exception('incorrect state');
     }
 
+    /**
+     * @param null $reportId
+     * @param int $level
+     * @return array
+     */
     private function getGroupDisplayFieldByReportId($reportId = null, $level = 1)
     {
 
@@ -261,6 +287,10 @@ class AOR_Report extends Basic
     }
 
 
+    /**
+     * @param $query
+     * @return array
+     */
     private function dbSelect($query)
     {
         $results = $this->db->query($query);
@@ -273,6 +303,11 @@ class AOR_Report extends Basic
         return $rows;
     }
 
+    /**
+     * @param $header
+     * @param $body
+     * @return string
+     */
     private function getMultiGroupFrameHTML($header, $body)
     {
         $html = '<div class="multi-group-list" style="border: 1px solid black; padding: 10px;">
@@ -283,6 +318,10 @@ class AOR_Report extends Basic
         return $html;
     }
 
+    /**
+     * @param $html
+     * @return mixed
+     */
     private function addDataIdValueToInnertext($html)
     {
         preg_match('/\sdata-id-value\s*=\s*"([^"]*)"/', $html, $match);
@@ -292,6 +331,12 @@ class AOR_Report extends Basic
     }
 
 
+    /**
+     * @param int $offset
+     * @param bool $links
+     * @param array $extra
+     * @return string
+     */
     function build_group_report($offset = -1, $links = true, $extra = array())
     {
         global $beanList, $timedate;
@@ -424,6 +469,14 @@ class AOR_Report extends Basic
     }
 
 
+    /**
+     * @param int $offset
+     * @param bool $links
+     * @param string $group_value
+     * @param string $tableIdentifier
+     * @param array $extra
+     * @return string
+     */
     function build_report_html($offset = -1, $links = true, $group_value = '', $tableIdentifier = '', $extra = array())
     {
 
@@ -653,6 +706,11 @@ class AOR_Report extends Basic
         return $html;
     }
 
+    /**
+     * @param $beanList
+     * @param $group_value
+     * @return string
+     */
     private function getModuleFieldByGroupValue($beanList, $group_value)
     {
         $moduleFieldByGroupValues = array();
@@ -696,6 +754,11 @@ class AOR_Report extends Basic
         return $moduleFieldByGroupValue;
     }
 
+    /**
+     * @param $fields
+     * @param $totals
+     * @return string
+     */
     function getTotalHTML($fields, $totals)
     {
         global $app_list_strings;
@@ -762,6 +825,11 @@ class AOR_Report extends Basic
         return $html;
     }
 
+    /**
+     * @param $type
+     * @param $totals
+     * @return float|int|string
+     */
     function calculateTotal($type, $totals)
     {
         switch ($type) {
@@ -776,11 +844,18 @@ class AOR_Report extends Basic
         }
     }
 
+    /**
+     * @param $field
+     * @return string
+     */
     private function encloseForCSV($field)
     {
         return '"' . $field . '"';
     }
 
+    /**
+     *
+     */
     function build_report_csv()
     {
         global $beanList;
@@ -871,6 +946,11 @@ class AOR_Report extends Basic
     }
 
 
+    /**
+     * @param string $group_value
+     * @param array $extra
+     * @return array|bool|string
+     */
     function build_report_query($group_value = '', $extra = array())
     {
         global $beanList;
@@ -912,6 +992,10 @@ class AOR_Report extends Basic
 
     }
 
+    /**
+     * @param $query_where
+     * @return mixed
+     */
     private function queryWhereRepair($query_where)
     {
 
@@ -933,6 +1017,11 @@ class AOR_Report extends Basic
     }
 
 
+    /**
+     * @param null $chartIds
+     * @param string $chartType
+     * @return string
+     */
     function build_report_chart($chartIds = null, $chartType = self::CHART_TYPE_PCHART)
     {
         global $beanList;
@@ -989,6 +1078,12 @@ class AOR_Report extends Basic
     }
 
 
+    /**
+     * @param string $group_value
+     * @param array $extra
+     * @return array|string
+     * @throws Exception
+     */
     function buildReportQueryChart($group_value = '', $extra = array())
     {
         //Check if the user has access to the target module
@@ -1065,6 +1160,11 @@ class AOR_Report extends Basic
         return $query;
     }
 
+    /**
+     * @param array $query
+     * @param string $group_value
+     * @return array|mixed
+     */
     function buildReportQuerySelect($query = array(), $group_value = '')
     {
         global $beanList, $timedate;
@@ -1088,6 +1188,16 @@ class AOR_Report extends Basic
         return $query;
     }
 
+    /**
+     * @param $name
+     * @param $alias
+     * @param $parentAlias
+     * @param SugarBean $module
+     * @param $type
+     * @param array $query
+     * @param SugarBean|null $rel_module
+     * @return array
+     */
     function build_report_query_join(
         $name,
         $alias,
@@ -1145,6 +1255,11 @@ class AOR_Report extends Basic
         return $query;
     }
 
+    /**
+     * @param SugarBean $module
+     * @param $alias
+     * @return string
+     */
     function build_report_access_query(SugarBean $module, $alias)
     {
 
@@ -1176,6 +1291,9 @@ class AOR_Report extends Basic
         return $where;
     }
 
+    /**
+     * @return mixed
+     */
     private function getAllowedOperatorList()
     {
         $aor_sql_operator_list['Equal_To'] = '=';
@@ -1191,6 +1309,12 @@ class AOR_Report extends Basic
         return $aor_sql_operator_list;
     }
 
+    /**
+     * @param array $query
+     * @param array $extra
+     * @return array|mixed|string
+     * @throws Exception
+     */
     function buildQueryArrayWhere($query = array(), $extra = array())
     {
         global $beanList, $app_list_strings, $sugar_config;
