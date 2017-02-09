@@ -38,42 +38,43 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+require_once('modules/AOW_WorkFlow/aow_utils.php');
+require_once('modules/AOR_Reports/aor_utils.php');
+
 class AOR_Report extends Basic
 {
     const CHART_TYPE_PCHART = 'pchart';
     const CHART_TYPE_CHARTJS = 'chartjs';
     const CHART_TYPE_RGRAPH = 'rgraph';
 
-    var $new_schema = true;
-    var $module_dir = 'AOR_Reports';
-    var $object_name = 'AOR_Report';
-    var $table_name = 'aor_reports';
-    var $importable = true;
-    var $disable_row_level_security = true;
+    public $new_schema = true;
+    public $module_dir = 'AOR_Reports';
+    public $object_name = 'AOR_Report';
+    public $table_name = 'aor_reports';
+    public $importable = true;
+    public $disable_row_level_security = true;
 
-    var $id;
-    var $name;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $modified_by_name;
-    var $created_by;
-    var $created_by_name;
-    var $description;
-    var $deleted;
-    var $created_by_link;
-    var $modified_user_link;
-    var $assigned_user_id;
-    var $assigned_user_name;
-    var $assigned_user_link;
-    var $report_module;
+    public $id;
+    public $name;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $modified_by_name;
+    public $created_by;
+    public $created_by_name;
+    public $description;
+    public $deleted;
+    public $created_by_link;
+    public $modified_user_link;
+    public $assigned_user_id;
+    public $assigned_user_name;
+    public $assigned_user_link;
+    public $report_module;
 
     function __construct()
     {
         parent::__construct();
         $this->load_report_beans();
-        require_once('modules/AOW_WorkFlow/aow_utils.php');
-        require_once('modules/AOR_Reports/aor_utils.php');
     }
 
     /**
@@ -369,7 +370,7 @@ class AOR_Report extends Basic
                     $oldAlias = $table_alias;
                     $table_alias = $table_alias . ":" . $rel;
 
-                    $query_array = $this->build_report_query_join($rel, $table_alias, $oldAlias, $field_module,
+                    $query_array = $this->buildReportQueryJoin($rel, $table_alias, $oldAlias, $field_module,
                         'relationship', $query_array, $new_field_module);
                     $field_module = $new_field_module;
                 }
@@ -394,7 +395,7 @@ class AOR_Report extends Basic
             if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                 $select_field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $field->field;
                 // Fix for #1251 - added a missing parameter to the function call
-                $query_array = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm',
+                $query_array = $this->buildReportQueryJoin($table_alias . '_cstm', $table_alias . '_cstm',
                     $table_alias, $field_module, 'custom', $query);
             } else {
                 $select_field = $this->db->quoteIdentifier($table_alias) . '.' . $field->field;
@@ -428,7 +429,7 @@ class AOR_Report extends Basic
 
 
             try {
-                $query_array = $this->buildQueryArrayWhere($query_array,$extra);
+                $query_array = $this->buildQueryArrayWhere($query_array, $extra);
             } catch (Exception $e) {
             }
 
@@ -972,9 +973,9 @@ class AOR_Report extends Basic
 
         try {
             $query_array = $this->buildReportQuerySelect($query_array, $group_value);
-            $query_array = $this->buildQueryArrayWhere($query_array,$extra);
+            $query_array = $this->buildQueryArrayWhere($query_array, $extra);
         } catch (Exception $e) {
-            throw new Exception('Caught exception:'. $e->getMessage(),$e->getCode());
+            throw new Exception('Caught exception:' . $e->getMessage(), $e->getCode());
         }
 
         $query = $this->buildQuerySelect($query_array, $query);
@@ -1046,7 +1047,7 @@ class AOR_Report extends Basic
         try {
             $query = $this->buildReportQueryChart();//this is where it needs to branch one report for normal queries and one for charts
         } catch (Exception $e) {
-            echo 'Caught exception: ',  $e->getMessage(), "\n";
+            echo 'Caught exception: ', $e->getMessage(), "\n";
         }
 
         $result = $this->db->query($query);
@@ -1091,7 +1092,7 @@ class AOR_Report extends Basic
     {
         //Check if the user has access to the target module
         if (!(ACLController::checkAccess($this->report_module, 'list', true))) {
-            throw new Exception('User Not Allowed Access To This Module',101);
+            throw new Exception('User Not Allowed Access To This Module', 101);
         }
 
         global $beanList;
@@ -1102,9 +1103,9 @@ class AOR_Report extends Basic
         $query_array = $this->buildQueryArraySelectForChart($query_array, $group_value);
 
         try {
-            $query_array = $this->buildQueryArrayWhere($query_array,$extra);
+            $query_array = $this->buildQueryArrayWhere($query_array, $extra);
         } catch (Exception $e) {
-            throw new Exception('Caught exception:'. $e->getMessage(),$e->getCode());
+            throw new Exception('Caught exception:' . $e->getMessage(), $e->getCode());
         }
 
         $query = $this->buildQuerySelect($query_array, $query);
@@ -1201,7 +1202,7 @@ class AOR_Report extends Basic
      * @param SugarBean|null $rel_module
      * @return array
      */
-    function build_report_query_join(
+    function buildReportQueryJoin(
         $name,
         $alias,
         $parentAlias,
@@ -1375,7 +1376,7 @@ class AOR_Report extends Basic
                         $new_condition_module = new $beanList[getRelatedModule($condition_module->module_dir, $rel)];
                         $oldAlias = $table_alias;
                         $table_alias = $table_alias . ":" . $rel;
-                        $query = $this->build_report_query_join($rel, $table_alias, $oldAlias, $condition_module,
+                        $query = $this->buildReportQueryJoin($rel, $table_alias, $oldAlias, $condition_module,
                             'relationship', $query, $new_condition_module);
                         $condition_module = $new_condition_module;
                     }
@@ -1615,7 +1616,7 @@ class AOR_Report extends Basic
                 $oldAlias = $table_alias;
                 $table_alias = $table_alias . ":" . $rel;
                 $query =
-                    $this->build_report_query_join(
+                    $this->buildReportQueryJoin(
                         $rel,
                         $table_alias,
                         $oldAlias,
@@ -1682,7 +1683,7 @@ class AOR_Report extends Basic
             $new_field_module = new $beanList[getRelatedModule($field_module->module_dir,
                 $data['relationship'])];
             $table_alias = $data['relationship'];
-            $query = $this->build_report_query_join($data['relationship'], $table_alias, $oldAlias,
+            $query = $this->buildReportQueryJoin($data['relationship'], $table_alias, $oldAlias,
                 $field_module, 'relationship', $query, $new_field_module);
             $field_module = $new_field_module;
             $field->field = 'id';
@@ -1742,7 +1743,7 @@ class AOR_Report extends Basic
     ) {
         if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
             $select_field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $field->field;
-            $query = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm',
+            $query = $this->buildReportQueryJoin($table_alias . '_cstm', $table_alias . '_cstm',
                 $table_alias, $field_module, 'custom', $query);
 
             return array($data, $select_field, $query);
@@ -1965,7 +1966,7 @@ class AOR_Report extends Basic
             $new_field_module = new $beanList[getRelatedModule($condition_module->module_dir,
                 $data['relationship'])];
             $table_alias = $data['relationship'];
-            $query = $this->build_report_query_join($data['relationship'], $table_alias, $oldAlias,
+            $query = $this->buildReportQueryJoin($data['relationship'], $table_alias, $oldAlias,
                 $condition_module, 'relationship', $query, $new_field_module);
             $condition_module = $new_field_module;
 
@@ -2069,7 +2070,7 @@ class AOR_Report extends Basic
     ) {
         if ($isCustomField) {
 
-            $query = $this->build_report_query_join(
+            $query = $this->buildReportQueryJoin(
                 $tableName . '_cstm',
                 $table_alias . '_cstm',
                 $table_alias,
@@ -2260,11 +2261,6 @@ class AOR_Report extends Basic
                 $query = $this->buildJoinQueryForCustomFields($isCustomField, $query, $table_alias,
                     $tableName,
                     $condition_module);
-
-//                            if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
-//                                $query = $this->build_report_query_join($condition_module->table_name . '_cstm',
-//                                    $table_alias . '_cstm', $table_alias, $condition_module, 'custom', $query);
-//                            }
                 break;
 
             case 'Date': //is it a date
@@ -2528,7 +2524,7 @@ class AOR_Report extends Basic
                 $query .= $join;
             }
 
-            return  $query;
+            return $query;
         }
 
         return $query;
