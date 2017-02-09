@@ -71,7 +71,7 @@ class AOR_Report extends Basic
     public $assigned_user_link;
     public $report_module;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->load_report_beans();
@@ -80,7 +80,7 @@ class AOR_Report extends Basic
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOR_Report()
+    public function AOR_Report()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -96,7 +96,7 @@ class AOR_Report extends Basic
      * @param $interface
      * @return bool
      */
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         switch ($interface) {
             case 'ACL':
@@ -109,7 +109,7 @@ class AOR_Report extends Basic
     /**
      * @param bool $check_notify
      */
-    function save($check_notify = false)
+    public function save($check_notify = false)
     {
 
         // TODO: process of saveing the fields and conditions is too long so we will have to make some optimization on save_lines functions
@@ -155,7 +155,7 @@ class AOR_Report extends Basic
     /**
      *
      */
-    function load_report_beans()
+    public function load_report_beans()
     {
         global $beanList, $app_list_strings;
 
@@ -177,7 +177,7 @@ class AOR_Report extends Basic
     /**
      * @return array
      */
-    function getReportFields()
+    public function getReportFields()
     {
         $fields = array();
         foreach ($this->get_linked_beans('aor_fields', 'AOR_Fields') as $field) {
@@ -338,7 +338,7 @@ class AOR_Report extends Basic
      * @param array $extra
      * @return string
      */
-    function build_group_report($offset = -1, $links = true, $extra = array())
+    public function build_group_report($offset = -1, $links = true, $extra = array())
     {
         global $beanList, $timedate;
 
@@ -478,7 +478,7 @@ class AOR_Report extends Basic
      * @param array $extra
      * @return string
      */
-    function build_report_html($offset = -1, $links = true, $group_value = '', $tableIdentifier = '', $extra = array())
+    public function build_report_html($offset = -1, $links = true, $group_value = '', $tableIdentifier = '', $extra = array())
     {
 
         global $beanList, $sugar_config;
@@ -763,7 +763,7 @@ class AOR_Report extends Basic
      * @param $totals
      * @return string
      */
-    function getTotalHTML($fields, $totals)
+    public function getTotalHTML($fields, $totals)
     {
         global $app_list_strings;
 
@@ -834,7 +834,7 @@ class AOR_Report extends Basic
      * @param $totals
      * @return float|int|string
      */
-    function calculateTotal($type, $totals)
+    public function calculateTotal($type, $totals)
     {
         switch ($type) {
             case 'SUM':
@@ -860,7 +860,7 @@ class AOR_Report extends Basic
     /**
      *
      */
-    function build_report_csv()
+    public function build_report_csv()
     {
         global $beanList;
         ini_set('zlib.output_compression', 'Off');
@@ -959,7 +959,7 @@ class AOR_Report extends Basic
      * @return array|bool|string
      * @throws Exception
      */
-    function buildReportQuery($group_value = '', $extra = array())
+    public function buildReportQuery($group_value = '', $extra = array())
     {
         global $beanList;
         $module = new $beanList[$this->report_module]();
@@ -1026,7 +1026,7 @@ class AOR_Report extends Basic
      * @param string $chartType
      * @return string
      */
-    function buildReportChart($chartIds = null, $chartType = self::CHART_TYPE_PCHART)
+    public function buildReportChart($chartIds = null, $chartType = self::CHART_TYPE_PCHART)
     {
         global $beanList;
         $html = '';
@@ -1049,6 +1049,8 @@ class AOR_Report extends Basic
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
+
+//      use query to get results from database of choice
 
         $result = $this->db->query($query);
         $data = $this->BuildDataRowsForChart($result, $fields);
@@ -1088,7 +1090,7 @@ class AOR_Report extends Basic
      * @return array|string
      * @throws Exception
      */
-    function buildReportQueryChart($group_value = '', $extra = array())
+    public function buildReportQueryChart($group_value = '', $extra = array())
     {
         //Check if the user has access to the target module
         if (!(ACLController::checkAccess($this->report_module, 'list', true))) {
@@ -1132,7 +1134,7 @@ class AOR_Report extends Basic
      * @param string $group_value
      * @return array
      */
-    function buildQueryArraySelectForChart($query = array(), $group_value = '')
+    public function buildQueryArraySelectForChart($query = array(), $group_value = '')
     {
         global $beanList, $timedate;
         $chartbean = BeanFactory::newBean('AOR_Charts');
@@ -1169,7 +1171,7 @@ class AOR_Report extends Basic
      * @param string $group_value
      * @return array|mixed
      */
-    function buildReportQuerySelect($query = array(), $group_value = '')
+    public function buildReportQuerySelect($query = array(), $group_value = '')
     {
         global $beanList, $timedate;
 
@@ -1202,7 +1204,7 @@ class AOR_Report extends Basic
      * @param SugarBean|null $rel_module
      * @return array
      */
-    function buildReportQueryJoin(
+    public function buildReportQueryJoin(
         $name,
         $alias,
         $parentAlias,
@@ -1264,7 +1266,7 @@ class AOR_Report extends Basic
      * @param $alias
      * @return string
      */
-    function build_report_access_query(SugarBean $module, $alias)
+    public function build_report_access_query(SugarBean $module, $alias)
     {
 
         $module->table_name = $alias;
@@ -1319,7 +1321,7 @@ class AOR_Report extends Basic
      * @return array|mixed|string
      * @throws Exception
      */
-    function buildQueryArrayWhere($query = array(), $extra = array())
+    public function buildQueryArrayWhere($query = array(), $extra = array())
     {
         global $beanList, $app_list_strings, $sugar_config;
         $aor_sql_operator_list = $this->getAllowedOperatorList();
@@ -1502,8 +1504,7 @@ class AOR_Report extends Basic
      * @param $mainGroupField
      * @param $row
      */
-    private
-    function createLabels(
+    private function createLabels(
         $result,
         $beanList,
         &$fields,
@@ -1565,8 +1566,7 @@ class AOR_Report extends Basic
      * @param $fields
      * @return array
      */
-    private
-    function BuildDataRowsForChart(
+    private function BuildDataRowsForChart(
         $result,
         $fields
     ) {
@@ -1597,8 +1597,7 @@ class AOR_Report extends Basic
      * @param $oldAlias
      * @return array
      */
-    private
-    function BuildJoinsForEachExternalRelatedField(
+    private function BuildJoinsForEachExternalRelatedField(
         $query,
         $field,
         $module,
@@ -1638,8 +1637,7 @@ class AOR_Report extends Basic
      * @param $field
      * @return mixed
      */
-    private
-    function BuildDataForRelateType(
+    private function BuildDataForRelateType(
         $field_module,
         $field
     ) {
@@ -1669,8 +1667,7 @@ class AOR_Report extends Basic
      * @param $table_alias
      * @return array
      */
-    private
-    function BuildDataForLinkType(
+    private function BuildDataForLinkType(
         $query,
         $data,
         $beanList,
@@ -1701,8 +1698,7 @@ class AOR_Report extends Basic
      * @param $table_alias
      * @return mixed
      */
-    private
-    function BuildDataForCurrencyType(
+    private function BuildDataForCurrencyType(
         $query,
         $data,
         $field_module,
@@ -1733,8 +1729,7 @@ class AOR_Report extends Basic
      * @param $field_module
      * @return array
      */
-    private
-    function BuildDataForCustomField(
+    private function BuildDataForCustomField(
         $query,
         $data,
         $table_alias,
@@ -1761,8 +1756,7 @@ class AOR_Report extends Basic
      * @param $timedate
      * @return string
      */
-    private
-    function BuildDataForDateType(
+    private function BuildDataForDateType(
         $field,
         $data,
         $select_field,
@@ -1787,8 +1781,7 @@ class AOR_Report extends Basic
      * @param $table_alias
      * @return mixed
      */
-    private
-    function SetTableAlias(
+    private function SetTableAlias(
         $query,
         $field,
         $table_alias
@@ -1810,8 +1803,7 @@ class AOR_Report extends Basic
      * @param $select_field
      * @return array
      */
-    private
-    function SetGroupBy(
+    private function SetGroupBy(
         $query,
         $field,
         $select_field
@@ -1837,8 +1829,7 @@ class AOR_Report extends Basic
      * @param $select_field
      * @return mixed
      */
-    private
-    function SetSortBy(
+    private function SetSortBy(
         $query,
         $field,
         $select_field
@@ -1863,8 +1854,7 @@ class AOR_Report extends Basic
      * @return mixed
      * @internal param $chartbean
      */
-    private
-    function createQuery(
+    private function createQuery(
         $query,
         $group_value,
         $row,
@@ -1917,8 +1907,7 @@ class AOR_Report extends Basic
      * @param $condition_module
      * @return array
      */
-    private
-    function primeDataForRelate(
+    private function primeDataForRelate(
         $data,
         $condition,
         $condition_module
@@ -1950,8 +1939,7 @@ class AOR_Report extends Basic
      * @param $table_alias
      * @return array
      */
-    private
-    function primeDataForLink(
+    private function primeDataForLink(
         $query,
         $data,
         $beanList,
@@ -1983,30 +1971,6 @@ class AOR_Report extends Basic
     }
 
     /**
-     * @param $data
-     * @param $table_alias
-     * @param $condition
-     * @return string
-     */
-    private
-    function setFieldSuffixOld(
-        $data,
-        $table_alias,
-        $condition
-    ) {
-        if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
-            $field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $condition->field;
-
-            return $field;
-        } else {
-            $field = $this->db->quoteIdentifier($table_alias) . '.' . $condition->field;
-
-            return $field;
-        }
-    }
-
-
-    /**
      * @param $isCustomField
      * @param $tableName
      * @param $tableAlias
@@ -2014,8 +1978,7 @@ class AOR_Report extends Basic
      * @param string $suffix
      * @return string
      */
-    private
-    function setFieldTablesSuffix(
+    private function setFieldTablesSuffix(
         $isCustomField,
         $tableName,
         $tableAlias,
@@ -2037,10 +2000,7 @@ class AOR_Report extends Basic
     /**
      * @param $condition
      */
-    private
-    function buildConditionParams(
-        $condition
-    ) {
+    private function buildConditionParams($condition) {
         if (!empty($this->user_parameters[$condition->id])) {
             if ($condition->parameter) {
                 $condParam = $this->user_parameters[$condition->id];
@@ -2060,8 +2020,7 @@ class AOR_Report extends Basic
      * @return string
      * @internal param $data
      */
-    private
-    function buildJoinQueryForCustomFields(
+    private function buildJoinQueryForCustomFields(
         $isCustomField,
         $query,
         $table_alias,
@@ -2130,34 +2089,6 @@ class AOR_Report extends Basic
         }
 
         return array($value, $field, $query);
-    }
-
-    /**
-     * @param $query
-     * @param $firstParam
-     * @param $condition_module
-     * @return array
-     */
-    private function processForDateFromCustomField($query, $firstParam, $condition_module)
-    {
-
-        $data = $condition_module->field_defs[$firstParam];
-        $tableName = $condition_module->table_name;
-        $table_alias = $tableName;
-        $fieldName = $firstParam;
-        $dataSourceIsSet = isset($data['source']);
-        if ($dataSourceIsSet) {
-            $isCustomField = ($data['source'] == 'custom_fields') ? true : false;
-        }
-
-        //setValueSuffix
-        $value = $this->setFieldTablesSuffix($isCustomField, $tableName, $table_alias,
-            $fieldName);
-        $query = $this->buildJoinQueryForCustomFields($isCustomField, $query,
-            $table_alias, $tableName, $condition_module);
-
-        return array($value, $query);
-
     }
 
     /**
