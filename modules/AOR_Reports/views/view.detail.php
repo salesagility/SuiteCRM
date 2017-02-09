@@ -22,10 +22,14 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
-require_once 'include/MVC/View/views/view.detail.php';
-require_once 'modules/AOW_WorkFlow/aow_utils.php';
-require_once 'modules/AOR_Reports/aor_utils.php';
+include_once __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'rootPath.php';
+require_once ROOTPATH.'/include/MVC/View/views/view.detail.php';
+require_once ROOTPATH.'/modules/AOW_WorkFlow/aow_utils.php';
+require_once ROOTPATH.'/modules/AOR_Reports/aor_utils.php';
 class AOR_ReportsViewDetail extends ViewDetail {
+    public function __construct()
+    {        
+    }
 
     private function getReportParameters(){
         if(!$this->bean->id){
@@ -59,14 +63,14 @@ class AOR_ReportsViewDetail extends ViewDetail {
             }
         }
         return $parameters;
+        return $parameters;
     }
 
     public function preDisplay() {
         global $app_list_strings;
         parent::preDisplay();
+        $test = $this->view_object_map['test'];
         $this->ss->assign('report_module',$this->bean->report_module);
-
-
 
         $this->bean->user_parameters = requestToUserParameters();
 
@@ -80,10 +84,11 @@ class AOR_ReportsViewDetail extends ViewDetail {
         $this->ss->assign('charts_content', $chartsHTML);
 
         $this->ss->assign('report_content', $reportHTML);
+        $this->ss->assign('hidden_field',$this->bean->report_module);
 
         echo "<input type='hidden' name='report_module' id='report_module' value='{$this->bean->report_module}'>";
-        if (!is_file('cache/jsLanguage/AOR_Conditions/' . $GLOBALS['current_language'] . '.js')) {
-            require_once ('include/language/jsLanguage.php');
+        if (!is_file(ROOTPATH.'/cache/jsLanguage/AOR_Conditions/' . $GLOBALS['current_language'] . '.js')) {
+            require_once (ROOTPATH.'/include/language/jsLanguage.php');
             jsLanguage::createModuleStringsCache('AOR_Conditions', $GLOBALS['current_language']);
         }
         echo '<script src="cache/jsLanguage/AOR_Conditions/'. $GLOBALS['current_language'] . '.js"></script>';

@@ -38,8 +38,12 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-require_once('modules/AOW_WorkFlow/aow_utils.php');
-require_once('modules/AOR_Reports/aor_utils.php');
+include_once __DIR__.DIRECTORY_SEPARATOR.'rootPath.php';
+require_once ROOTPATH.'/modules/AOW_WorkFlow/aow_utils.php';
+require_once ROOTPATH.'/modules/AOR_Reports/aor_utils.php';
+require_once ROOTPATH.'/modules/AOR_Reports/models/ReportFactory.php';
+
+use modules\AOR_Reports\models\ReportFactory as ReportFactory;
 
 class AOR_Report extends Basic
 {
@@ -47,6 +51,7 @@ class AOR_Report extends Basic
     const CHART_TYPE_CHARTJS = 'chartjs';
     const CHART_TYPE_RGRAPH = 'rgraph';
 
+    private $reportFactory;
     public $new_schema = true;
     public $module_dir = 'AOR_Reports';
     public $object_name = 'AOR_Report';
@@ -75,6 +80,7 @@ class AOR_Report extends Basic
     {
         parent::__construct();
         $this->load_report_beans();
+        $this->reportFactory = new ReportFactory();
     }
 
     /**

@@ -22,9 +22,9 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
-
-require_once("modules/AOW_WorkFlow/aow_utils.php");
-require_once("modules/AOR_Reports/aor_utils.php");
+include_once __DIR__.DIRECTORY_SEPARATOR.'rootPath.php';
+require_once ROOTPATH.'/modules/AOW_WorkFlow/aow_utils.php';
+require_once ROOTPATH.'/modules/AOR_Reports/aor_utils.php';
 
 class AOR_ReportsController extends SugarController {
 
@@ -656,6 +656,11 @@ class AOR_ReportsController extends SugarController {
         }
         die;
 
+    }
+
+    protected function action_DetailView(){
+        $this->view = 'detail';
+        $this->view_object_map['test'] = 'test';
     }
 
 }
