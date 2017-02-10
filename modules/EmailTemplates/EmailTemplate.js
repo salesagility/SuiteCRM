@@ -1,7 +1,7 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -72,7 +72,7 @@ window.parent.$('.ui-dialog-content:visible').dialog('close');var func=emailTemp
 else{if(!emailTemplateCopyId&&func=='createCopy'){emailTemplateCopyId=resp.data.id;$('option[value='+resp.data.id+']').html($('#template_name').val());$('input[name="update_exists_template"]').prop('checked',true);}else{$('option[value='+resp.data.id+']').html($('#template_name').val());}
 $('#template_messages').html('');if(resp.msgs.length){showTemplateSaveMessages(resp.msgs);}}});}
 var create=function(){if($('#template_name').val()==''){alert(SUGAR.language.translate('Campaigns','LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));return}
-window.parent.$('.ui-dialog-content:visible').dialog('close');$('input[name="update_exists_template"]').prop('checked',false);var func=emailTemplateCopyId||$('input[name="update_exists_template"]').prop('checked')?'update':'createCopy';$('#template_messages').html(SUGAR.language.translate('Campaigns','LBL_TEMPLATE_SAVING'));$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(),{'func':func,'emailTemplateId':emailTemplateCopyId?emailTemplateCopyId:$('#template_id').val(),'body_html':$('#email_template_editor').getMozaikValue(),'name':$('#template_name').val(),'subject':$('#template_subject').val(),},function(resp){resp=JSON.parse(resp);if(resp.error){console.error(resp.error);}
+window.parent.$('.ui-dialog-content:visible').dialog('close');$('input[name="update_exists_template"]').prop('checked',false);var func=emailTemplateCopyId||$('input[name="update_exists_template"]').prop('checked')?'update':'createCopy';$('#template_messages').html(SUGAR.language.translate('Campaigns','LBL_TEMPLATE_SAVING'));$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(),{'func':func,'emailTemplateId':emailTemplateCopyId?emailTemplateCopyId:$('#template_id').val(),'body_html':$('#email_template_editor').getMozaikValue(),'name':$('#template_name').val(),'subject':$('#template_subject').val(),'direct_html_c':document.getElementById('editorType').checked},function(resp){resp=JSON.parse(resp);if(resp.error){console.error(resp.error);}
 else{if(!emailTemplateCopyId&&func=='createCopy'){emailTemplateCopyId=resp.data.id;$('#template_id').append('<option value="'+resp.data.id+'">'+resp.data.name+'</option>');$('#template_id').val(resp.data.id);$('input[name="update_exists_template"]').prop('checked',true);$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().removeClass('hidden');$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().next().removeClass('hidden');}
 $('#template_messages').html('');if(resp.msgs.length){showTemplateSaveMessages(resp.msgs);}
 $('#template_option_select').click();}});}

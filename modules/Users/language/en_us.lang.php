@@ -105,7 +105,7 @@ $mod_strings = array(
     'LBL_PHOTO' => 'Photo',
 
     'LBL_ADMIN' => 'System Administrator',
-    'LBL_ADVANCED' => 'ADVANCED',
+    'LBL_ADVANCED' => 'Advanced',
     'LBL_ANY_ADDRESS' => 'Any Address:',
     'LBL_ANY_EMAIL' => 'Any Email',
     'LBL_ANY_PHONE' => 'Any Phone',
@@ -381,7 +381,7 @@ $mod_strings = array(
     'LBL_TITLE' => 'Title',
     'LBL_USE_REAL_NAMES' => 'Show Full Names',
     'LBL_USE_REAL_NAMES_DESC' => 'Display users\' full names instead of their User Names in assignment fields.',
-    'LBL_USER_INFORMATION' => 'USER PROFILE',
+    'LBL_USER_INFORMATION' => 'User Profile',
     'LBL_USER_LOCALE' => 'Locale Settings',
     'LBL_USER_NAME' => 'User Name',
     'LBL_USER_SETTINGS' => 'User Settings',
