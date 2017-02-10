@@ -33,75 +33,31 @@ class AOR_ReportsViewDetail extends ViewDetail {
     {        
     }
 
-//    private function getReportParameters(){
-//        if(!$this->bean->id){
-//            return array();
-//        }
-//        $conditions = $this->bean->get_linked_beans('aor_conditions','AOR_Conditions', 'condition_order');
-//        $parameters = array();
-//        foreach($conditions as $condition){
-//            if(!$condition->parameter){
-//                continue;
-//            }
-//            $condition->module_path = implode(":",unserialize(base64_decode($condition->module_path)));
-//            if($condition->value_type == 'Date'){
-//                $condition->value = unserialize(base64_decode($condition->value));
-//            }
-//            $condition_item = $condition->toArray();
-//            $display = getDisplayForField($condition->module_path, $condition->field, $this->bean->report_module);
-//            $condition_item['module_path_display'] = $display['module'];
-//            $condition_item['field_label'] = $display['field'];
-//            if(!empty($this->bean->user_parameters[$condition->id])){
-//                $param = $this->bean->user_parameters[$condition->id];
-//                $condition_item['operator'] = $param['operator'];
-//                $condition_item['value_type'] = $param['type'];
-//                $condition_item['value'] = $param['value'];
-//            }
-//            if(isset($parameters[$condition_item['condition_order']])) {
-//                $parameters[] = $condition_item;
-//            }
-//            else {
-//                $parameters[$condition_item['condition_order']] = $condition_item;
-//            }
-//        }
-//        return $parameters;
-//        return $parameters;
-//    }
-
     public function preDisplay() {
-        global $app_list_strings;
         parent::preDisplay();
-        $test = $this->view_object_map['test'];
         $params =  $this->view_object_map['reportParams'];
-
-
-//        $this->bean->user_parameters = requestToUserParameters();
-
-        //$reportHTML = $this->bean->build_group_report(0,true);
-        $reportHTML = $this->bean->buildMultiGroupReport(0,true);
-
-        $chartsHTML = $this->bean->buildReportChart(null, AOR_Report::CHART_TYPE_RGRAPH);
-
-        $chartsPerRow = $this->bean->graphs_per_row;
+        $reportHTML =  $this->view_object_map['reportHTML'];
+        $chartsHTML =  $this->view_object_map['chartsHTML'];
+        $chartsPerRow =  $this->view_object_map['chartsPerRow'];
 
         $this->ss->assign('charts_content', $chartsHTML);
         $this->ss->assign('report_content', $reportHTML);
         $this->ss->assign('hidden_field',$this->bean->report_module);
         $this->ss->assign('report_module',$this->bean->report_module);
 
+
+
+
+        //TODO: Move markup from view to tpl
         echo "<input type='hidden' name='report_module' id='report_module' value='{$this->bean->report_module}'>";
         if (!is_file(ROOTPATH.'/cache/jsLanguage/AOR_Conditions/' . $GLOBALS['current_language'] . '.js')) {
             require_once (ROOTPATH.'/include/language/jsLanguage.php');
             jsLanguage::createModuleStringsCache('AOR_Conditions', $GLOBALS['current_language']);
         }
         echo '<script src="cache/jsLanguage/AOR_Conditions/'. $GLOBALS['current_language'] . '.js"></script>';
-
-//        $params = $this->getReportParameters();
         echo "<script>var reportParameters = ".json_encode($params).";</script>";
-
         $resizeGraphsPerRow = <<<EOD
-
-       <script>
+        <script>
         function resizeGraphsPerRow()
         {
                 var maxWidth = 900;
@@ -122,13 +78,10 @@ class AOR_ReportsViewDetail extends ViewDetail {
                     graphs[i].height = maxHeight;
                 else
                     graphs[i].height = graphWidth * 0.9;
-
-
                 /*
                 var text_size = Math.min(12, (graphWidth / 1000) * 12 );
                 if(text_size < 6)text_size=6;
                 if(text_size > maxTextSize) text_size = maxTextSize;
-
                 if(     graphs[i] !== undefined
                     &&  graphs[i].__object__ !== undefined
                     &&  graphs[i].__object__["properties"] !== undefined
@@ -148,11 +101,7 @@ class AOR_ReportsViewDetail extends ViewDetail {
                 }
         }
         </script>
-
 EOD;
-
-
-
         echo $resizeGraphsPerRow;
         echo "<script> $(document).ready(function(){resizeGraphsPerRow();}); </script>";
         echo "<script> $(window).resize(function(){resizeGraphsPerRow();}); </script>";

@@ -77,7 +77,6 @@ class AOR_ReportsController extends SugarController {
         $offset = !empty($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
         if(!empty($this->bean->id)){
             $this->bean->user_parameters = requestToUserParameters();
-            //echo $this->bean->build_report_html($offset, true,$group,$tableId);
             echo $this->bean->build_group_report($offset, true);
         }
 
@@ -662,16 +661,26 @@ class AOR_ReportsController extends SugarController {
 
     protected function action_DetailView(){
         $this->view = 'detail';
-//        $this->bean->user_parameters = requestToUserParameters();
         $model = new Model();
+
         $reportParams =$model->getReportParameters($this->bean);
         $this->view_object_map['reportParams'] =$reportParams;
-        $this->view_object_map['test'] = 'test';
+
+        $reportHTML = $this->bean->buildMultiGroupReport(0,true);
+        $this->view_object_map['reportHTML'] =$reportHTML;
+
+        $chartsHTML = $this->bean->buildReportChart(null, AOR_Report::CHART_TYPE_RGRAPH);
+        $this->view_object_map['chartsHTML'] =$chartsHTML;
+
+        $chartsPerRow = $this->bean->graphs_per_row;
+        $this->view_object_map['chartsPerRow'] =$chartsPerRow;
+
     }
 
     protected function action_EditView(){
         $this->view = 'edit';
         $model = new Model();
+
         $conditions = $model->getConditionLines($this->bean);
         $this->view_object_map['aorconditions'] =$conditions;
 
@@ -680,7 +689,6 @@ class AOR_ReportsController extends SugarController {
 
         $charts = $model->getChartLines($this->bean);
         $this->view_object_map['aorcharts'] =$charts;
-
     }
 
 }
