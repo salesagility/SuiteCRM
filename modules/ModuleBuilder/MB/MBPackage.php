@@ -825,6 +825,7 @@ class MBPackage
                         continue;
                     }
                     $custommodules[$value] = $this->getCustomModules($value);
+                    foreach ($custommodules[$value] as $va) {
                         switch ($va) {
                             case 'language':
                                 $return[$value][$va] = $mod_strings['LBL_EC_CUSTOMFIELD'];
