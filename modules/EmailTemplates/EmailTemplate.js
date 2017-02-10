@@ -41,13 +41,7 @@ document[form].variable_text.value=document[form].variable_name.options[document
 function addVariables(the_select,the_module,form){the_select.options.length=0;for(var i=0;i<field_defs[the_module].length;i++){var new_option=document.createElement("option");new_option.value="$"+field_defs[the_module][i].name;new_option.text=field_defs[the_module][i].value;the_select.options.add(new_option,i);}
 showVariable(form);}
 function toggle_text_only(firstRun){if(typeof(firstRun)=='undefined')
-
-firstRun=false;if(firstRun && ! use_mozaik ){
- setTimeout("tinyMCE.execCommand('mceAddControl', false, 'body_text');",500);
- var tiny=tinyMCE.getInstanceById('body_text');
-}
-var text_only=document.getElementById('text_only');if(document.getElementById('toggle_textonly').checked==true){document.getElementById('body_text_div').style.display='none';document.getElementById('toggle_textarea_option').style.display='none';document.getElementById('text_div').style.display='block';text_only.value=1;}else{document.getElementById('body_text_div').style.display='inline';document.getElementById('toggle_textarea_option').style.display='inline';document.getElementById('text_div').style.display='none';text_only.value=0;}
-
+firstRun=false;var text_only=document.getElementById('text_only');if(document.getElementById('toggle_textonly').checked==true){document.getElementById('body_text_div').style.display='none';document.getElementById('toggle_textarea_option').style.display='none';document.getElementById('text_div').style.display='block';text_only.value=1;}else{document.getElementById('body_text_div').style.display='inline';document.getElementById('toggle_textarea_option').style.display='inline';document.getElementById('text_div').style.display='none';text_only.value=0;}
 update_textarea_button();}
 function update_textarea_button()
 {if(document.getElementById('text_div').style.display=='none'){document.getElementById('toggle_textarea_elem').value=toggle_textarea_elem_values[0];}else{document.getElementById('toggle_textarea_elem').value=toggle_textarea_elem_values[1];}}
@@ -55,51 +49,20 @@ function toggle_textarea_edit(obj)
 {if(document.getElementById('text_div').style.display=='none')
 {document.getElementById('text_div').style.display='block';}else{document.getElementById('text_div').style.display='none';}
 update_textarea_button();}
-
-if ( use_mozaik ) {
- function setTinyHTML(text){
-  var tiny=tinyMCE.getInstanceById('body_text');
-  if(tiny.getContent()!=null){
-    tiny.setContent(text)
-  } else {
-    setTimeout(setTinyHTML(text),1000);
-  }
- }
-}
-
+function setTinyHTML(text){var tiny=tinyMCE.getInstanceById('body_text');if(tiny.getContent()!=null){tiny.setContent(text)}else{setTimeout(setTinyHTML(text),1000);}}
 function stripTags(str){var theText=new String(str);if(theText!='undefined'){return theText.replace(/<\/?[^>]+>/gi,'');}}
 function insert_variable_text(myField,myValue){if(document.selection){myField.focus();sel=document.selection.createRange();sel.text=myValue;}
 else if(myField.selectionStart||myField.selectionStart=='0'){var startPos=myField.selectionStart;var endPos=myField.selectionEnd;myField.value=myField.value.substring(0,startPos)
 +myValue
 +myField.value.substring(endPos,myField.value.length);}else{myField.value+=myValue;}}
-
-function insert_variable_html(text){
-  tinyMCE.activeEditor.execCommand('mceInsertRawHTML',false, ' ' + text + ' <span id="_cursor" />' );
-  tinyMCE.activeEditor.selection.select(tinyMCE.activeEditor.dom.select('#_cursor')[0]); //select the inserted element
-  tinyMCE.activeEditor.selection.collapse(0); //collapses the selection to the end of the range, so the cursor is after the inserted element
-  tinyMCE.activeEditor.dom.remove('_cursor'); //remove the element
-}
-
+function insert_variable_html(text){tinyMCE.activeEditor.execCommand('mceInsertRawHTML',false,text);}
 function insert_variable_html_link(text,url){var thelink="<a href='"+url+"' > "+text+" </a>";insert_variable_html(thelink);}
-
 function insert_variable(text,mozaikId){if(mozaikId=='template_subject'){var value=$('#template_subject').val();var caret=parseInt($('#template_subject').attr('data-caret-position'));var before=value.substring(0,caret);var after=value.substring(caret);$('#template_subject').val(before+$('select[name=variable_name]').val()+after);return;}
-
 if(!mozaikId){mozaikId='mozaik';}
-
-if($('#'+mozaikId+' .mozaik-list .mozaik-elem').length>0 || ! use_mozaik){
-  if(document.getElementById('toggle_textonly')&&document.getElementById('toggle_textonly').checked==true){
-    insert_variable_text(document.getElementById('body_text_plain'),text);
-  } else {
-    insert_variable_html(text);
-  }
- }
-}
-
-
+if($('#'+mozaikId+' .mozaik-list .mozaik-elem').length>0){if(document.getElementById('toggle_textonly')&&document.getElementById('toggle_textonly').checked==true){insert_variable_text(document.getElementById('body_text_plain'),text);}else{insert_variable_html(text);}}}
 var doGetCaretPosition=function(oField){var iCaretPos=0;if(document.selection){oField.focus();var oSel=document.selection.createRange();oSel.moveStart('character',-oField.value.length);iCaretPos=oSel.text.length;}
 else if(oField.selectionStart||oField.selectionStart=='0')
 iCaretPos=oField.selectionStart;return iCaretPos;}
-
 var onClickTemplateSubject=function(elem){$(elem).attr('data-caret-position',doGetCaretPosition(elem));$('#insert_variable_to_subject_btn').show();$('#insert_variable_to_body_btn').hide();}
 var onClickTemplateBody=function(){$('#insert_variable_to_subject_btn').hide();$('#insert_variable_to_body_btn').show();}
 var $templateManagerDialogX=0;var $templateManagerDialogY=0;var $templateManagerDialog=null;function createTemplateManagerDialog(parent){$('#templateManagerDialog').dialog({width:'50%',position:{my:"left top",at:"left bottom",of:parent}});}

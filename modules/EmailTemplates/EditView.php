@@ -6,15 +6,11 @@ require_once('modules/Campaigns/utils.php');
 //if campaign_id is passed then we assume this is being invoked from the campaign module and in a popup.
 $has_campaign = true;
 $inboundEmail = true;
-$use_mozaik = false;
 if (!isset($_REQUEST['campaign_id']) || empty($_REQUEST['campaign_id'])) {
     $has_campaign = false;
 }
 if (!isset($_REQUEST['inboundEmail']) || empty($_REQUEST['inboundEmail'])) {
     $inboundEmail = false;
-}
-if (isset($_REQUEST['use_mozaik']) && ($_REQUEST['use_mozaik']=='1')) {
-    $use_mozaik = true;
 }
 $focus = new EmailTemplate();
 
@@ -208,16 +204,10 @@ $xtpl->assign("TYPE_OPTIONS", get_select_options_with_id($app_list_strings['reco
 if (isset($focus->body)) $xtpl->assign("BODY", $focus->body); else $xtpl->assign("BODY", "");
 if (isset($focus->body_html)) $xtpl->assign("BODY_HTML", $focus->body_html); else $xtpl->assign("BODY_HTML", "");
 
-if ( $use_mozaik ) {
-    require_once('include/SuiteMozaik.php');
-    $mozaik = new SuiteMozaik();
-    $xtpl->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_text'));
-    $xtpl->assign('use_mozaik' , '<script type="text/javascript" language="Javascript">var use_mozaik=1; </script>' );
-} else {
-    $toggle_mce="function togle_tinyMCE() { var x = document.getElementById('body_text');if (x.style.display === 'none') {x.style.display = 'inline';}}togle_tinyMCE();" ;
-    $xtpl->assign('TOGGLE_TINY' , $toggle_mce );
-    $xtpl->assign('use_mozaik' , '<script type="text/javascript" language="Javascript">var use_mozaik=0; </script>' );
-}
+require_once('include/SuiteMozaik.php');
+$mozaik = new SuiteMozaik();
+$xtpl->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_text'));
+
 
 if (true) {
     if (!isTouchScreen()) {
@@ -228,9 +218,6 @@ if (true) {
         $tiny->defaultConfig['plugins'] .= ",fullpage";
         $tinyHtml = $tiny->getInstance();
         $xtpl->assign("tiny", $tinyHtml);
-        if ( ! $use_mozaik ) {
-            $xtpl->assign("my_tiny", $tinyHtml);
-        }
     }
     ///////////////////////////////////////
     ////	MACRO VARS
