@@ -188,15 +188,6 @@
 						</td>
 					</tr>
 					<tr>
-						<td>&nbsp;</td>
-						<td colspan='4'>
-							<input  name="direct_html"  id="direct_html" onclick="htmlToggle();" type="checkbox" {DIRECT_HTML_CHECKED}/>
-							<input  name="direct_html_c"  id="direct_html_c"  type="hidden" value='{DIRECT_HTML_VALUE}'/>
-
-							&nbsp;Direct HTML
-						</td>
-					</tr>
-					<tr>
 						<td valign="top" scope="row">
 							{MOD.LBL_BODY}
 						</td>
@@ -205,25 +196,20 @@
 						<td colspan="4" >
 
 
-							<div id="mozaik_container" style="{MOZAIK_VISIBILITY}">
-								{BODY_MOZAIK}
-							</div>
+							{BODY_MOZAIK}
 
 
 							<div id='body_text_div'>
-								<textarea id='body_text' tabindex='0' name='body_html' cols="100" rows="40" style="display: none;">{BODY_HTML}</textarea>
+							<textarea id='body_text' tabindex='0' name='body_html' cols="100" rows="40" style="display: none;">{BODY_HTML}</textarea>
 							</div>
-							<br>
+                            <br>
 							<div id='toggle_textarea_option'>
-								<input id='toggle_textarea_elem' onclick="toggle_textarea_edit(this);" type="button" name="toggle_html" value="{MOD.LBL_EDIT_ALT_TEXT}"/>
-							</div>
-							<div id='html_text_div'>
-								<textarea id='body_html_ta' tabindex='0' name='body_html_ta' cols="100" rows="20" style="{DIRECT_HTML_VISIBILITY}">{BODY_HTML}</textarea>
-							</div>
-							<br>
-							<div id="text_div" style="display: none">
-								<textarea id='body_text_plain'  tabindex='0' name='body' cols="100" rows="40" >{BODY}</textarea>
-							</div>
+                                <input id='toggle_textarea_elem' onclick="toggle_textarea_edit(this);" type="button" name="toggle_html" value="{MOD.LBL_EDIT_ALT_TEXT}"/>
+                            </div>
+                            <br>
+                            <div id="text_div" style="display: none">
+                                <textarea id='body_text_plain'  tabindex='0' name='body' cols="100" rows="40" >{BODY}</textarea>
+                            </div>
 						</td>
 <!-- END: textarea -->
 					</tr>
@@ -266,29 +252,15 @@ multi_selector.addElement( document.getElementById('my_file'));
 //call the function on load, this will hide the tinyMCE editor if needed
 toggle_text_only(true);
 
-	function toggle_portal_flag() {
-		{TOGGLE_JS}
-	}
-
-	function htmlToggle(){
-		if(document.getElementById('direct_html').checked){
-			$("#mozaik_container").hide();
-			$("#body_html_ta").show();
-			$("#direct_html_c").val("1");
-		}
-		else{
-			$("#mozaik_container").show();
-			$("#body_html_ta").hide();
-			$("#direct_html_c").val("0");
-		}
-
-	}
-	<!-- BEGIN: NoInbound5 -->
-	addVariables(document.EditView.variable_name,'{DEFAULT_MODULE}');
-	<!-- END: NoInbound5 -->
-	focus_obj = document.EditView.body;
-	toggle_portal_flag();
-	update_textarea_button();
+function toggle_portal_flag() {
+	{TOGGLE_JS}
+}
+<!-- BEGIN: NoInbound5 -->
+addVariables(document.EditView.variable_name,'{DEFAULT_MODULE}');
+<!-- END: NoInbound5 -->
+focus_obj = document.EditView.body;
+toggle_portal_flag();
+update_textarea_button();
 </script>
 
 

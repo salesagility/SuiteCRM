@@ -340,9 +340,9 @@ class jjwg_MapsController extends SugarController {
         // Selected Area IDs - Validate
         $selected_ids = array();
         foreach ($_POST['selected_ids'] as $sel_id) {
-//            if (is_guid($sel_id)) {
+            if (is_guid($sel_id)) {
                 $selected_ids[] = $sel_id;
-//            }
+            }
         }
         $result['selected_ids'] = $selected_ids;
 
@@ -393,10 +393,8 @@ class jjwg_MapsController extends SugarController {
         }
 
         // JSON Encoded $result
-        $out['message'] = $result['message'] ;
-        $out['list']['name'] = $result['object_name'] ;
         header('Content-Type: application/json');
-        echo @json_encode($out);
+        echo @json_encode($result);
     }
 
     /**

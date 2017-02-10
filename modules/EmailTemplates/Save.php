@@ -46,9 +46,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-if($_POST['direct_html_c'] == "1"){
-    $_POST['body_html'] = $_REQUEST['body_html_ta'];
-}
+
 $focus = new EmailTemplate();
 require_once('include/formbase.php');
 $focus = populateFromPost('', $focus);
