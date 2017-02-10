@@ -56,104 +56,94 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
     // set the filename for this control
     $file = create_cache_directory('include/InlineEditing/') . $module . $view . $alt_type . $fieldname . '.tpl';
 
+    if (!isset($vardef)) {
+        require_once($beanFiles[$beanList[$module]]);
+        $focus = new $beanList[$module];
+        $vardef = $focus->getFieldDefinition($fieldname);
+    }
+
+    $displayParams = array();
+    //$displayParams['formName'] = 'EditView';
+
+    // if this is the id relation field, then don't have a pop-up selector.
+    if ($vardef['type'] == 'relate' && $vardef['id_name'] == $vardef['name']) {
+        $vardef['type'] = 'varchar';
+    }
+
+    if (isset($vardef['precision'])) unset($vardef['precision']);
+
+    //$vardef['precision'] = $locale->getPrecedentPreference('default_currency_significant_digits', $current_user);
+
+    //TODO Fix datetimecomebo
+    //temp work around
+    if ($vardef['type'] == 'datetime') {
+        $vardef['type'] = 'datetimecombo';
+    }
+
+    // trim down textbox display
+    if ($vardef['type'] == 'text') {
+        $vardef['rows'] = 2;
+        $vardef['cols'] = 32;
+    }
+
+    // create the dropdowns for the parent type fields
+    if ($vardef['type'] == 'parent_type') {
+        $vardef['type'] = 'enum';
+    }
+
+    if ($vardef['type'] == 'link') {
+        $vardef['type'] = 'relate';
+        $vardef['rname'] = 'name';
+        $vardef['id_name'] = $vardef['name'] . '_id';
+        if ((!isset($vardef['module']) || $vardef['module'] == '') && $focus->load_relationship($vardef['name'])) {
+            $vardef['module'] = $focus->{$vardef['name']}->getRelatedModuleName();
+        }
+
+    }
+
+    //check for $alt_type
+    if ($alt_type != '') {
+        $vardef['type'] = $alt_type;
+    }
+
+    // remove the special text entry field function 'getEmailAddressWidget'
+    if (isset($vardef['function'])
+        && ($vardef['function'] == 'getEmailAddressWidget'
+            || $vardef['function']['name'] == 'getEmailAddressWidget')
+    )
+        unset($vardef['function']);
+
+    if (isset($vardef['name']) && ($vardef['name'] == 'date_modified')) {
+        $vardef['name'] = 'aow_temp_date';
+    }
+
+    // load SugarFieldHandler to render the field tpl file
+    static $sfh;
+
+    if (!isset($sfh)) {
+        require_once('include/SugarFields/SugarFieldHandler.php');
+        $sfh = new SugarFieldHandler();
+    }
+
+    if (array_key_exists('group',$vardef)) {
+        $fieldlist = array();
+        $contents = '';
+        foreach ($bean->field_defs as $field_def) {
+            if ($field_def['group'] == $vardef['group']) {
+                $contents .= $sfh->displaySmarty('fields', $field_def, $view, $displayParams);
+                $fieldlist[$field_def['name']] = $field_def;
+                $key = $field_def['name'];
+                $fieldlist[$field_def['name']]['value'] = $bean->$key;
+            }
+        }
+    } else {
+        $contents = $sfh->displaySmarty('fields', $vardef, $view, $displayParams);
+    }
+
     if (!is_file($file)
         || inDeveloperMode()
         || !empty($_SESSION['developerMode'])
     ) {
-
-        if (!isset($vardef)) {
-            require_once($beanFiles[$beanList[$module]]);
-            $focus = new $beanList[$module];
-            $vardef = $focus->getFieldDefinition($fieldname);
-        }
-
-        $displayParams = array();
-        //$displayParams['formName'] = 'EditView';
-
-        // if this is the id relation field, then don't have a pop-up selector.
-        if ($vardef['type'] == 'relate' && $vardef['id_name'] == $vardef['name']) {
-            $vardef['type'] = 'varchar';
-        }
-
-        if (isset($vardef['precision'])) unset($vardef['precision']);
-
-        //$vardef['precision'] = $locale->getPrecedentPreference('default_currency_significant_digits', $current_user);
-
-        //TODO Fix datetimecomebo
-        //temp work around
-        if ($vardef['type'] == 'datetime') {
-            $vardef['type'] = 'datetimecombo';
-        }
-
-        // trim down textbox display
-        if ($vardef['type'] == 'text') {
-            $vardef['rows'] = 2;
-            $vardef['cols'] = 32;
-        }
-
-        // create the dropdowns for the parent type fields
-        if ($vardef['type'] == 'parent_type') {
-            $vardef['type'] = 'enum';
-        }
-
-        if ($vardef['type'] == 'link') {
-            $vardef['type'] = 'relate';
-            $vardef['rname'] = 'name';
-            $vardef['id_name'] = $vardef['name'] . '_id';
-            if ((!isset($vardef['module']) || $vardef['module'] == '') && $focus->load_relationship($vardef['name'])) {
-                $vardef['module'] = $focus->{$vardef['name']}->getRelatedModuleName();
-            }
-
-        }
-
-        //check for $alt_type
-        if ($alt_type != '') {
-            $vardef['type'] = $alt_type;
-        }
-
-        // remove the special text entry field function 'getEmailAddressWidget'
-        if (isset($vardef['function'])
-            && ($vardef['function'] == 'getEmailAddressWidget'
-                || $vardef['function']['name'] == 'getEmailAddressWidget')
-        )
-            unset($vardef['function']);
-
-        if (isset($vardef['name']) && ($vardef['name'] == 'date_modified')) {
-            $vardef['name'] = 'aow_temp_date';
-        }
-
-        // load SugarFieldHandler to render the field tpl file
-        static $sfh;
-
-        if (!isset($sfh)) {
-            require_once('include/SugarFields/SugarFieldHandler.php');
-            $sfh = new SugarFieldHandler();
-        }
-
-        $contents = $sfh->displaySmarty('fields', $vardef, $view, $displayParams);
-
-        // Remove all the copyright comments
-        $contents = preg_replace('/\{\*[^\}]*?\*\}/', '', $contents);
-        // remove extra wrong javascript which breaks auto complete on flexi relationship parent fields
-        $contents = preg_replace("/<script language=\"javascript\">if\(typeof sqs_objects == \'undefined\'\){var sqs_objects = new Array;}sqs_objects\[\'EditView_parent_name\'\].*?<\/script>/","",$contents);
-
-
-        if ($view == 'EditView' && ($vardef['type'] == 'relate' || $vardef['type'] == 'parent')) {
-
-            $contents = str_replace('"' . $vardef['id_name'] . '"', '{/literal}"{$fields.' . $vardef['name'] . '.id_name}"{literal}', $contents);
-            $contents = str_replace('"' . $vardef['name'] . '"', '{/literal}"{$fields.' . $vardef['name'] . '.name}"{literal}', $contents);
-            // regex below fixes button javascript for flexi relationship
-            if($vardef['type'] == 'parent') {
-                $contents = str_replace("onclick='open_popup(document.{\$form_name}.parent_type.value, 600, 400, \"\", true, false, {literal}{\"call_back_function\":\"set_return\",\"form_name\":\"EditView\",\"field_to_name_array\":{\"id\":{/literal}\"{\$fields.parent_name.id_name}", "onclick='open_popup(document.{\$form_name}.parent_type.value, 600, 400, \"\", true, false, {literal}{\"call_back_function\":\"set_return\",\"form_name\":\"EditView\",\"field_to_name_array\":{\"id\":{/literal}\"parent_id", $contents);
-            }
-        }
-
-        // hack to disable one of the js calls in this control
-        if (isset($vardef['function']) && ($vardef['function'] == 'getCurrencyDropDown' || $vardef['function']['name'] == 'getCurrencyDropDown'))
-            $contents .= "{literal}<script>function CurrencyConvertAll() { return; }</script>{/literal}";
-
-
-
         // Save it to the cache file
         if ($fh = @sugar_fopen($file, 'w')) {
             fputs($fh, $contents);
@@ -185,7 +175,6 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
 
     $ss->assign('CALENDAR_FDOW', $current_user->get_first_day_of_week());
 
-    $fieldlist = array();
     if (!isset($focus) || !($focus instanceof SugarBean))
         require_once($beanFiles[$beanList[$module]]);
     $focus = new $beanList[$module];
@@ -290,7 +279,6 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
 
         return ($sfh->displaySmarty($parentfieldlist, $fieldlist[$fieldname], 'ListView', $displayParams));
     }
-
     $ss->assign("fields", $fieldlist);
     $ss->assign("form_name", $view);
     $ss->assign("bean", $focus);
@@ -319,14 +307,14 @@ function saveField($field, $id, $module, $value)
                 $bean->fill_in_additional_parent_fields(); // get up to date parent info as need it to display name
             }
         }else if ($bean->field_defs[$field]['type'] == "currency"){
-			if (stripos($field, 'usdollar')) {
-				$newfield = str_replace("_usdollar", "", $field);
-				$bean->$newfield = $value;
-			}
-			else{
-				$bean->$field = $value;
-			}
-            
+            if (stripos($field, 'usdollar')) {
+                $newfield = str_replace("_usdollar", "", $field);
+                $bean->$newfield = $value;
+            }
+            else{
+                $bean->$field = $value;
+            }
+
         }else{
             $bean->$field = $value;
         }
@@ -446,7 +434,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
     }
 
     //if field is of type radio.
-     if ($vardef['type'] == "radioenum" || $vardef['type'] == "enum" || $vardef['type'] == "dynamicenum") {
+    if ($vardef['type'] == "radioenum" || $vardef['type'] == "enum" || $vardef['type'] == "dynamicenum") {
         $value = $app_list_strings[$vardef['options']][$value];
     }
 
@@ -495,19 +483,19 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
             $value .= "</a>";
         }
     }
-	if($vardef['type'] == "url")
-	{
-		$value = '<a href='.$value.' target="_blank">'.$value.'</a>';
-	}
-	
-	if($vardef['type'] == "currency"){
-		if($_REQUEST['view'] != "DetailView"){			
-			$value = currency_format_number($value);		
-		}
-		else
-			$value = format_number($value);		
-	}
-	
+    if($vardef['type'] == "url")
+    {
+        $value = '<a href='.$value.' target="_blank">'.$value.'</a>';
+    }
+
+    if($vardef['type'] == "currency"){
+        if($_REQUEST['view'] != "DetailView"){
+            $value = currency_format_number($value);
+        }
+        else
+            $value = format_number($value);
+    }
+
     return $value;
 }
 
@@ -543,4 +531,3 @@ function checkAccess($bean){
         return false;
     }
 }
-
