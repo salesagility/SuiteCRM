@@ -7,7 +7,7 @@
  */
 namespace modules\AOR_Reports\models;
 
-abstract class abstractReport implements iReport
+abstract class AbstractReport implements ReportInterface
 {
     private $queryFactory;
     private $markupFactory;

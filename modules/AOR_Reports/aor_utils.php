@@ -29,46 +29,46 @@
  * @param $field
  * @return array
  */
-function getDisplayForField($modulePath, $field, $reportModule)
-{
-    global $app_list_strings;
-    $modulePathDisplay = array();
-    $currentBean = BeanFactory::getBean($reportModule);
-    $modulePathDisplay[] = $currentBean->module_name;
-    if (is_array($modulePath)) {
-        $split = $modulePath;
-    } else {
-        $split = explode(':', $modulePath);
-    }
-    if ($split && $split[0] == $currentBean->module_dir) {
-        array_shift($split);
-    }
-    foreach ($split as $relName) {
-        if (empty($relName)) {
-            continue;
-        }
-        if (!empty($currentBean->field_name_map[$relName]['vname'])) {
-            $moduleLabel = trim(translate($currentBean->field_name_map[$relName]['vname'], $currentBean->module_dir), ':');
-        }
-        $thisModule = getRelatedModule($currentBean->module_dir, $relName);
-        $currentBean = BeanFactory::getBean($thisModule);
-
-        if (!empty($moduleLabel)) {
-            $modulePathDisplay[] = $moduleLabel;
-        } else {
-            $modulePathDisplay[] = $currentBean->module_name;
-        }
-    }
-    $fieldDisplay = $currentBean->field_name_map[$field]['vname'];
-    $fieldDisplay = translate($fieldDisplay, $currentBean->module_dir);
-    $fieldDisplay = trim($fieldDisplay, ':');
-    foreach($modulePathDisplay as &$module) {
-        $module = isset($app_list_strings['aor_moduleList'][$module]) ? $app_list_strings['aor_moduleList'][$module] : (
-            isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module
-        );
-    }
-    return array('field' => $fieldDisplay, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay)));
-}
+//function getDisplayForField($modulePath, $field, $reportModule)
+//{
+//    global $app_list_strings;
+//    $modulePathDisplay = array();
+//    $currentBean = BeanFactory::getBean($reportModule);
+//    $modulePathDisplay[] = $currentBean->module_name;
+//    if (is_array($modulePath)) {
+//        $split = $modulePath;
+//    } else {
+//        $split = explode(':', $modulePath);
+//    }
+//    if ($split && $split[0] == $currentBean->module_dir) {
+//        array_shift($split);
+//    }
+//    foreach ($split as $relName) {
+//        if (empty($relName)) {
+//            continue;
+//        }
+//        if (!empty($currentBean->field_name_map[$relName]['vname'])) {
+//            $moduleLabel = trim(translate($currentBean->field_name_map[$relName]['vname'], $currentBean->module_dir), ':');
+//        }
+//        $thisModule = getRelatedModule($currentBean->module_dir, $relName);
+//        $currentBean = BeanFactory::getBean($thisModule);
+//
+//        if (!empty($moduleLabel)) {
+//            $modulePathDisplay[] = $moduleLabel;
+//        } else {
+//            $modulePathDisplay[] = $currentBean->module_name;
+//        }
+//    }
+//    $fieldDisplay = $currentBean->field_name_map[$field]['vname'];
+//    $fieldDisplay = translate($fieldDisplay, $currentBean->module_dir);
+//    $fieldDisplay = trim($fieldDisplay, ':');
+//    foreach($modulePathDisplay as &$module) {
+//        $module = isset($app_list_strings['aor_moduleList'][$module]) ? $app_list_strings['aor_moduleList'][$module] : (
+//            isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module
+//        );
+//    }
+//    return array('field' => $fieldDisplay, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay)));
+//}
 
 function requestToUserParameters()
 {
@@ -104,52 +104,52 @@ function requestToUserParameters()
     return $params;
 }
 
-function getConditionsAsParameters($report, $override = array())
-{
-    if (empty($report)) {
-        return array();
-    }
-
-    global $app_list_strings;
-    $conditions = array();
-    foreach ($report->get_linked_beans('aor_conditions', 'AOR_Conditions') as $key => $condition) {
-        if (!$condition->parameter) {
-            continue;
-        }
-
-        $path = unserialize(base64_decode($condition->module_path));
-        $field_module = $report->report_module;
-        if ($path[0] != $report->report_module) {
-            foreach ($path as $rel) {
-                if (empty($rel)) {
-                    continue;
-                }
-                $field_module = getRelatedModule($field_module, $rel);
-            }
-        }
-
-        $additionalConditions = unserialize(base64_decode($condition->value));
-
-
-        $value = isset($override[$condition->id]['value']) ? $override[$condition->id]['value'] : $value = $condition->value;
-
-
-        $field = getModuleField($field_module, $condition->field, "parameter_value[$key]", 'EditView', $value);
-        $disp = getDisplayForField($path, $condition->field, $report->report_module);
-        $conditions[] = array(
-            'id' => $condition->id,
-            'operator' => $condition->operator,
-            'operator_display' => $app_list_strings['aor_operator_list'][$condition->operator],
-            'value_type' => $condition->value_type,
-            'value' => $value,
-            'field_display' => $disp['field'],
-            'module_display' => $disp['module'],
-            'field' => $field,
-            'additionalConditions' => $additionalConditions
-        );
-    }
-    return $conditions;
-}
+//function getConditionsAsParameters($report, $override = array())
+//{
+//    if (empty($report)) {
+//        return array();
+//    }
+//
+//    global $app_list_strings;
+//    $conditions = array();
+//    foreach ($report->get_linked_beans('aor_conditions', 'AOR_Conditions') as $key => $condition) {
+//        if (!$condition->parameter) {
+//            continue;
+//        }
+//
+//        $path = unserialize(base64_decode($condition->module_path));
+//        $field_module = $report->report_module;
+//        if ($path[0] != $report->report_module) {
+//            foreach ($path as $rel) {
+//                if (empty($rel)) {
+//                    continue;
+//                }
+//                $field_module = getRelatedModule($field_module, $rel);
+//            }
+//        }
+//
+//        $additionalConditions = unserialize(base64_decode($condition->value));
+//
+//
+//        $value = isset($override[$condition->id]['value']) ? $override[$condition->id]['value'] : $value = $condition->value;
+//
+//
+//        $field = getModuleField($field_module, $condition->field, "parameter_value[$key]", 'EditView', $value);
+//        $disp = getDisplayForField($path, $condition->field, $report->report_module);
+//        $conditions[] = array(
+//            'id' => $condition->id,
+//            'operator' => $condition->operator,
+//            'operator_display' => $app_list_strings['aor_operator_list'][$condition->operator],
+//            'value_type' => $condition->value_type,
+//            'value' => $value,
+//            'field_display' => $disp['field'],
+//            'module_display' => $disp['module'],
+//            'field' => $field,
+//            'additionalConditions' => $additionalConditions
+//        );
+//    }
+//    return $conditions;
+//}
 
 /**
  * getPeriodDate

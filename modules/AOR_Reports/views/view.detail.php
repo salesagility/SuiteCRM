@@ -26,53 +26,56 @@ include_once __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'rootPath.php'
 require_once ROOTPATH.'/include/MVC/View/views/view.detail.php';
 require_once ROOTPATH.'/modules/AOW_WorkFlow/aow_utils.php';
 require_once ROOTPATH.'/modules/AOR_Reports/aor_utils.php';
+
+
 class AOR_ReportsViewDetail extends ViewDetail {
     public function __construct()
     {        
     }
 
-    private function getReportParameters(){
-        if(!$this->bean->id){
-            return array();
-        }
-        $conditions = $this->bean->get_linked_beans('aor_conditions','AOR_Conditions', 'condition_order');
-        $parameters = array();
-        foreach($conditions as $condition){
-            if(!$condition->parameter){
-                continue;
-            }
-            $condition->module_path = implode(":",unserialize(base64_decode($condition->module_path)));
-            if($condition->value_type == 'Date'){
-                $condition->value = unserialize(base64_decode($condition->value));
-            }
-            $condition_item = $condition->toArray();
-            $display = getDisplayForField($condition->module_path, $condition->field, $this->bean->report_module);
-            $condition_item['module_path_display'] = $display['module'];
-            $condition_item['field_label'] = $display['field'];
-            if(!empty($this->bean->user_parameters[$condition->id])){
-                $param = $this->bean->user_parameters[$condition->id];
-                $condition_item['operator'] = $param['operator'];
-                $condition_item['value_type'] = $param['type'];
-                $condition_item['value'] = $param['value'];
-            }
-            if(isset($parameters[$condition_item['condition_order']])) {
-                $parameters[] = $condition_item;
-            }
-            else {
-                $parameters[$condition_item['condition_order']] = $condition_item;
-            }
-        }
-        return $parameters;
-        return $parameters;
-    }
+//    private function getReportParameters(){
+//        if(!$this->bean->id){
+//            return array();
+//        }
+//        $conditions = $this->bean->get_linked_beans('aor_conditions','AOR_Conditions', 'condition_order');
+//        $parameters = array();
+//        foreach($conditions as $condition){
+//            if(!$condition->parameter){
+//                continue;
+//            }
+//            $condition->module_path = implode(":",unserialize(base64_decode($condition->module_path)));
+//            if($condition->value_type == 'Date'){
+//                $condition->value = unserialize(base64_decode($condition->value));
+//            }
+//            $condition_item = $condition->toArray();
+//            $display = getDisplayForField($condition->module_path, $condition->field, $this->bean->report_module);
+//            $condition_item['module_path_display'] = $display['module'];
+//            $condition_item['field_label'] = $display['field'];
+//            if(!empty($this->bean->user_parameters[$condition->id])){
+//                $param = $this->bean->user_parameters[$condition->id];
+//                $condition_item['operator'] = $param['operator'];
+//                $condition_item['value_type'] = $param['type'];
+//                $condition_item['value'] = $param['value'];
+//            }
+//            if(isset($parameters[$condition_item['condition_order']])) {
+//                $parameters[] = $condition_item;
+//            }
+//            else {
+//                $parameters[$condition_item['condition_order']] = $condition_item;
+//            }
+//        }
+//        return $parameters;
+//        return $parameters;
+//    }
 
     public function preDisplay() {
         global $app_list_strings;
         parent::preDisplay();
         $test = $this->view_object_map['test'];
-        $this->ss->assign('report_module',$this->bean->report_module);
+        $params =  $this->view_object_map['reportParams'];
 
-        $this->bean->user_parameters = requestToUserParameters();
+
+//        $this->bean->user_parameters = requestToUserParameters();
 
         //$reportHTML = $this->bean->build_group_report(0,true);
         $reportHTML = $this->bean->buildMultiGroupReport(0,true);
@@ -82,9 +85,9 @@ class AOR_ReportsViewDetail extends ViewDetail {
         $chartsPerRow = $this->bean->graphs_per_row;
 
         $this->ss->assign('charts_content', $chartsHTML);
-
         $this->ss->assign('report_content', $reportHTML);
         $this->ss->assign('hidden_field',$this->bean->report_module);
+        $this->ss->assign('report_module',$this->bean->report_module);
 
         echo "<input type='hidden' name='report_module' id='report_module' value='{$this->bean->report_module}'>";
         if (!is_file(ROOTPATH.'/cache/jsLanguage/AOR_Conditions/' . $GLOBALS['current_language'] . '.js')) {
@@ -93,7 +96,7 @@ class AOR_ReportsViewDetail extends ViewDetail {
         }
         echo '<script src="cache/jsLanguage/AOR_Conditions/'. $GLOBALS['current_language'] . '.js"></script>';
 
-        $params = $this->getReportParameters();
+//        $params = $this->getReportParameters();
         echo "<script>var reportParameters = ".json_encode($params).";</script>";
 
         $resizeGraphsPerRow = <<<EOD

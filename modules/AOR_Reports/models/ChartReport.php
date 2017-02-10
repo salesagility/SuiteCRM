@@ -7,7 +7,7 @@
  */
 namespace modules\AOR_Reports\models;
 
-class ChartReport extends abstractReport
+class ChartReport extends AbstractReport
 {
     public function __construct($queryFactory, $markupFactory)
     {

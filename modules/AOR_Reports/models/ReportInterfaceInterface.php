@@ -7,7 +7,7 @@
  */
 namespace modules\AOR_Reports\models;
 
-interface iReport
+interface ReportInterface
 {
     public function getContent();
 }

@@ -21,10 +21,12 @@
  *
  * @author SalesAgility <info@salesagility.com>
  */
-
 include_once __DIR__.DIRECTORY_SEPARATOR.'rootPath.php';
 require_once ROOTPATH.'/modules/AOW_WorkFlow/aow_utils.php';
 require_once ROOTPATH.'/modules/AOR_Reports/aor_utils.php';
+require_once ROOTPATH.'/modules/AOR_Reports/models/ModelAORReports.php';
+
+use modules\AOR_Reports\models\ModelAORReports as Model;
 
 class AOR_ReportsController extends SugarController {
 
@@ -660,7 +662,25 @@ class AOR_ReportsController extends SugarController {
 
     protected function action_DetailView(){
         $this->view = 'detail';
+//        $this->bean->user_parameters = requestToUserParameters();
+        $model = new Model();
+        $reportParams =$model->getReportParameters($this->bean);
+        $this->view_object_map['reportParams'] =$reportParams;
         $this->view_object_map['test'] = 'test';
+    }
+
+    protected function action_EditView(){
+        $this->view = 'edit';
+        $model = new Model();
+        $conditions = $model->getConditionLines($this->bean);
+        $this->view_object_map['aorconditions'] =$conditions;
+
+        $fields = $model->getFieldLines($this->bean);
+        $this->view_object_map['aorfields'] =$fields;
+
+        $charts = $model->getChartLines($this->bean);
+        $this->view_object_map['aorcharts'] =$charts;
+
     }
 
 }
