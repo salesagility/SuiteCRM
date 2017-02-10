@@ -90,9 +90,9 @@
 
    <div class="hr"></div>
     <div>
-    <table border="0" cellpadding="30" id="importTable" style="width:60% !important;">
+    <table border="0" cellpadding="30" id="importTable" class="step4">
     <tr>
-        <td  width="40%" colspan="2">
+        <td  width="100%" colspan="2">
            <table id="DupeCheck" class="themeSettings edit view noBorder" style='margin-bottom:0px;' border="0" cellspacing="10" cellpadding="0"  width = '100%'>
                 <tr>
                     <td align="right">

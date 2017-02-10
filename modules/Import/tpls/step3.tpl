@@ -91,7 +91,7 @@
 <div class="hr"></div>
 
 
-<table border="0" cellspacing="0" cellpadding="0" width="100%" id="importTable" class="detail view">
+<table border="0" cellspacing="0" cellpadding="0" width="100%" id="importTable" class="detail view step3">
 {foreach from=$rows key=key item=item name=rows}
 {if $smarty.foreach.rows.first}
 <tr>

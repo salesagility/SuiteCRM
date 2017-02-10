@@ -678,7 +678,7 @@ document.getElementById('addrow').onclick = function(){
     removeButton.id = 'deleterow_' + rownum;
     removeButton.className = "removeButton";
     var imgButton = document.createElement("img");
-    imgButton.src = "index.php?entryPoint=getImage&themeName=Sugar&imageName=id-ff-remove.png";
+    imgButton.src = "themes/"+SUGAR.themes.theme_name+"/images/id-ff-remove.png";
     removeButton.appendChild(imgButton);
 
 
@@ -745,7 +745,6 @@ function toggleDefaultColumnVisibility(hide)
     }
 
     YAHOO.util.Dom.setStyle('default_column_header_span', 'display', newStyle);
-    YAHOO.util.Dom.setStyle('default_column_header', 'backgroundColor', bgColor);
 
     //Toggle all rows.
     var columnCount = document.getElementById('{$this->currentFormID}').columncount.value;

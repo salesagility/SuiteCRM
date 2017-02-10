@@ -91,6 +91,54 @@ a:hover {
   }
 }
 
+/* Import Wizard */
+.wizard-panel {
+  background-color: $main-alternate-bg;
+  border-radius: 4px;
+  padding: 24px;
+}
+
+.wizard-panel [type=file] {
+  display: inline-block;
+}
+
+.wizard-panel div.confirmTable {
+  width: 100%;
+}
+
+
+.wizard-panel #importTable td {
+  background-color: $main-alternate-bg;
+  line-height: $input-line-height;
+}
+
+.wizard-panel #importTable td button.removeButton {
+  background-color: $danger-btn-bg;
+  border: none;
+  border-radius: 4px;
+  height: $button-line-height;
+  line-height: $button-line-height;
+  margin: 4px;
+}
+
+
+.wizard-panel .step4 > tbody,
+.wizard-panel .step4 > tbody > tr,
+.wizard-panel .step4 > tbody > tr > td,
+.wizard-panel .step4 {
+  display: block;
+}
+
+.wizard-panel #DupeCheck > tbody,
+.wizard-panel #DupeCheck > tbody > tr,
+.wizard-panel #DupeCheck {
+  display: block;
+}
+
+.wizard-panel #DupeCheck > tbody > tr > td {
+  display: inline-block;
+}
+
 /* ??? */
 // Fix ajax loader in the edit view
 // Since the z-index is inline the only way to override it is to use the !important
