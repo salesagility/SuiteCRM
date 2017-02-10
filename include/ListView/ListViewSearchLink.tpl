@@ -47,7 +47,7 @@
             </a>
             <ul class="subnav">
                 {foreach from=$savedSearchData.options key=id item=option}
-                    <li><a href="javascript:void(0)" class="parent-dropdown-action-handler"{if $id!=$savedSearchData.selected} onclick="SUGAR.savedViews.shortcutDropdown('{$id}', '{$savedSearchData.module}');"{/if}>{$option}{if $id==$savedSearchData.selected}&nbsp;&#10004{/if}</a></li>
+                    <li><a href="javascript:void(0)" class="parent-dropdown-action-handler"{if $id!=$savedSearchData.selected} onclick="SUGAR.savedViews.shortcutDropdown('{$id}', '{if $savedSearchData.module}{$savedSearchData.module}{else}{$pageData.bean.moduleName}{/if}');"{/if}>{$option}{if $id==$savedSearchData.selected}&nbsp;&#10004{/if}</a></li>
                 {/foreach}
             </ul>
             <span></span>
@@ -62,11 +62,11 @@
 </ul>
 <ul class="searchAppliedAlert hidden clickMenu selectmenu searchAppliedAlertLink SugarActionMenu listViewLinkButton listViewLinkButton_{$action_menu_location}">
     <li class="sugar_action_button desktopOnly">
-        <a href="javascript:void(0)" class="glyphicon glyphicon-list-alt clearSearchIcon parent-dropdown-handler" onclick="SUGAR.savedViews.shortcutDropdown('_none', '{$savedSearchData.module}');"></a>
-        <a href="javascript:void(0)" class="glyphicon glyphicon-remove" onclick="SUGAR.savedViews.shortcutDropdown('_none', '{$savedSearchData.module}');">&Cross;</a>
+        <a href="javascript:void(0)" class="glyphicon glyphicon-list-alt clearSearchIcon parent-dropdown-handler" onclick="SUGAR.savedViews.shortcutDropdown('_none', '{if $savedSearchData.module}{$savedSearchData.module}{else}{$pageData.bean.moduleName}{/if}');"></a>
+        <a href="javascript:void(0)" class="glyphicon glyphicon-remove" onclick="SUGAR.savedViews.shortcutDropdown('_none', '{if $savedSearchData.module}{$savedSearchData.module}{else}{$pageData.bean.moduleName}{/if}');">&Cross;</a>
     </li>
     <li class="sugar_action_button mobileOnly">
         <a href="javascript:void(0)" class="glyphicon glyphicon-list-alt clearSearchIcon parent-dropdown-handler" onclick=""></a>
-        <a href="javascript:void(0)" class="glyphicon glyphicon-remove" onclick="SUGAR.savedViews.shortcutDropdown('_none', '{$savedSearchData.module}');"></a>
+        <a href="javascript:void(0)" class="glyphicon glyphicon-remove" onclick="SUGAR.savedViews.shortcutDropdown('_none', '{if $savedSearchData.module}{$savedSearchData.module}{else}{$pageData.bean.moduleName}{/if}');"></a>
     </li>
 </ul>
