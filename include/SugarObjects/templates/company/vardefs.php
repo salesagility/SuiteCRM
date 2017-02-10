@@ -102,7 +102,6 @@ $vardefs = array(
             'len' => '150',
             'comment' => 'The street address used for billing address',
             'group' => 'billing_address',
-            'parent' => true,
             'merge_filter' => 'enabled',
         ),
         'billing_address_street_2' => array(
