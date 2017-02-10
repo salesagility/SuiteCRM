@@ -4,6 +4,8 @@ class SuiteMozaik {
 
     private $mozaikPath = 'include/javascript/mozaik';
     private $vendorPath;
+    
+    public $use_rwd = false ;
 
     private static $defaultThumbnails = array(
         'headline' => array(
@@ -112,9 +114,15 @@ HTML;
     }
 
     public function getIncludeHTML() {
+        
+        if ( $this->use_rwd ) {
+            $mozaikHtml = "<script src='{$this->mozaikPath}/jquery.mozaik.js'></script>";
+        } else {
+            $mozaikHtml = "<script src='{$this->mozaikPath}/jquery.gozaik.js'></script>";
+        }
         $html = <<<HTML
 <link rel="stylesheet" href="{$this->mozaikPath}/jquery.mozaik.css">
-<script src='{$this->mozaikPath}/jquery.mozaik.js'></script>
+{$mozaikHtml}
 HTML;
         return $html;
     }
@@ -185,6 +193,7 @@ HTML;
         if(is_numeric($width)) {
             $width .= 'px';
         }
+
         $mozaikHTML = $this->getDependenciesHTML();
         $mozaikHTML .= $this->getIncludeHTML();
         $thumbs = $this->getThumbs($group);
@@ -201,6 +210,7 @@ $(window).mouseup(function(){
      $('#{$textareaId}').val($('#{$elementId}').getMozaikValue({width: '{$width}'}));
 
      // fix table editor panel
+
      var found = false;
      $('.mce-tinymce').each(function(i,e){
         if(!$(e).hasClass('mce-tinymce-inline-inside') && $(e).css('display') == 'block'){
