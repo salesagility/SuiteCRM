@@ -805,7 +805,7 @@ class MBPackage
         if (!file_exists($path) || !is_dir($path)) {
             return array($mod_strings['LBL_EC_NOCUSTOM'] => '');
         } else {
-            if (!$module) {
+            if ($module != false) {
                 $path = $path . $module . '/';
             }
             $scanlisting = scandir($path);
@@ -828,14 +828,40 @@ class MBPackage
                     foreach ($custommodules[$value] as $va) {
                         switch ($va) {
                             case 'language':
-                            case 'Ext':
                                 $return[$value][$va] = $mod_strings['LBL_EC_CUSTOMFIELD'];
                                 break;
                             case 'metadata':
                                 $return[$value][$va] = $mod_strings['LBL_EC_CUSTOMLAYOUT'];
                                 break;
+                            case 'Ext':
+                                $return[$value][$va] = $mod_strings['LBL_EC_CUSTOMFIELD'];
+                                break;
                             case '':
-                                $return[$value . ' ' . $mod_strings['LBL_EC_EMPTYCUSTOM']] = '';
+                                $return[$value][$va] = $mod_strings['LBL_EC_EMPTYCUSTOM'];
+                                break;
+                            case 'views':
+                                $return[$value][$va] = $mod_strings['LBL_EC_VIEWS'];
+                                break;
+                            case 'SugarFeeds':
+                                $return[$value][$va] = $mod_strings['LBL_EC_SUGARFEEDS'];
+                                break;
+                            case 'Dashlets':
+                                $return[$value][$va] = $mod_strings['LBL_EC_DASHLETS'];
+                                break;
+                            case 'css':
+                                $return[$value][$va] = $mod_strings['LBL_EC_CSS'];
+                                break;
+                            case 'tpls':
+                                $return[$value][$va] = $mod_strings['LBL_EC_TPLS'];
+                                break;
+                            case 'images':
+                                $return[$value][$va] = $mod_strings['LBL_EC_IMAGES'];
+                                break;
+                            case 'js':
+                                $return[$value][$va] = $mod_strings['LBL_EC_JS'];
+                                break;
+                            case 'qtip':
+                                $return[$value][$va] = $mod_strings['LBL_EC_QTIP'];
                                 break;
                             default:
                                 $return[$value][$va] = $mod_strings['LBL_UNDEFINED'];
