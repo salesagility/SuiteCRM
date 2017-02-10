@@ -41,9 +41,11 @@
 include_once __DIR__.DIRECTORY_SEPARATOR.'rootPath.php';
 require_once ROOTPATH.'/modules/AOW_WorkFlow/aow_utils.php';
 require_once ROOTPATH.'/modules/AOR_Reports/aor_utils.php';
-require_once ROOTPATH.'/modules/AOR_Reports/models/ReportFactory.php';
+require_once ROOTPATH.'/modules/AOR_Reports/models/report/ReportFactory.php';
+require_once ROOTPATH.'/modules/AOR_Reports/models/ModelAORReports.php';
 
-use modules\AOR_Reports\models\ReportFactory as ReportFactory;
+use modules\AOR_Reports\models\ModelAORReports as Model;
+use modules\AOR_Reports\models\report\ReportFactory as ReportFactory;
 
 class AOR_Report extends Basic
 {
@@ -1036,11 +1038,6 @@ class AOR_Report extends Basic
     {
         global $beanList;
         $html = '';
-        $linkedCharts = $this->get_linked_beans('aor_charts', 'AOR_Charts');
-        if (!$linkedCharts) {
-            //No charts to display
-            return '';
-        }
 
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND deleted = 0 ORDER BY field_order ASC";
         $result = $this->db->query($sql);
@@ -1078,6 +1075,15 @@ class AOR_Report extends Basic
                 break;
         }
         $x = 0;
+
+
+
+        $linkedCharts = $this->get_linked_beans('aor_charts', 'AOR_Charts');
+        if (!$linkedCharts) {
+            //No charts to display
+            return '';
+        }
+
         foreach ($linkedCharts as $chart) {
             if ($chartIds !== null && !in_array($chart->id, $chartIds)) {
                 continue;

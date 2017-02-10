@@ -30,7 +30,8 @@ require_once ROOTPATH.'/modules/AOR_Reports/aor_utils.php';
 
 class AOR_ReportsViewDetail extends ViewDetail {
     public function __construct()
-    {        
+    {
+        parent::__construct();
     }
 
     public function preDisplay() {
@@ -44,8 +45,6 @@ class AOR_ReportsViewDetail extends ViewDetail {
         $this->ss->assign('report_content', $reportHTML);
         $this->ss->assign('hidden_field',$this->bean->report_module);
         $this->ss->assign('report_module',$this->bean->report_module);
-
-
 
 
         //TODO: Move markup from view to tpl
@@ -107,7 +106,4 @@ EOD;
         echo "<script> $(window).resize(function(){resizeGraphsPerRow();}); </script>";
 
     }
-
-
-
 }

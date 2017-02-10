@@ -5,8 +5,9 @@
  * Date: 10/02/17
  * Time: 09:12
  */
-
 namespace modules\AOR_Reports\models;
+use modules\AOR_Reports\models\report\ReportFactory;
+
 include_once __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'rootPath.php';
 include_once ROOTPATH.'/data/BeanFactory.php';
 
@@ -53,7 +54,7 @@ class ModelAORReports
      * @param $field
      * @return array
      */
-    public function getViewDisplayForField($modulePath, $field, $reportModule)
+    private function getViewDisplayForField($modulePath, $field, $reportModule)
     {
         global $app_list_strings;
         $modulePathDisplay = array();
@@ -235,7 +236,7 @@ class ModelAORReports
     }
 
 
-    public function getEditDisplayForField($modulePath, $field, $reportModule){
+    private function getEditDisplayForField($modulePath, $field, $reportModule){
         $modulePathDisplay = array();
         $currentBean = \BeanFactory::getBean($reportModule);
         $modulePathDisplay[] = $currentBean->module_name;
@@ -285,5 +286,146 @@ class ModelAORReports
         return $module;
 
     }
+
+
+    /**
+     * @param null $chartIds
+     * @param string $chartType
+     * @return string
+     */
+    public function buildReportChart($bean, $beanList, $chartIds = null, $chartType = self::CHART_TYPE_PCHART)
+    {
+//        global $beanList;
+//        $html = '';
+
+        $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND deleted = 0 ORDER BY field_order ASC";
+        $result = $bean->db->query($sql);
+        $mainGroupField = null;
+        $fields = array();
+
+        $report = ReportFactory::makeReport('chart');
+        $report->setBean($bean);
+        $report->setBeanList($beanList);
+        $report->setFields($fields);
+        $report->setMainGroupField($mainGroupField);
+        $report->setResult($result);
+
+        $reportContent = $report->getReport();
+
+        die();
+        $this->createLabelData($result, $beanList, $fields, $mainGroupField);
+
+        try {
+            $query = $this->buildReportQueryChart();//this is where it needs to branch one report for normal queries and one for charts
+        } catch (Exception $e) {
+            echo 'Caught exception: ', $e->getMessage(), "\n";
+        }
+
+//      use query to get results from database of choice
+
+        $result = $this->db->query($query);
+        $data = $this->BuildDataRowsForChart($result, $fields);
+
+        $fields = $this->getReportFields();
+
+        switch ($chartType) {
+            case self::CHART_TYPE_PCHART:
+                $html = '<script src="modules/AOR_Charts/lib/pChart/imagemap.js"></script>';
+                break;
+            case self::CHART_TYPE_CHARTJS:
+                $html = '<script src="modules/AOR_Reports/js/Chart.js"></script>';
+                break;
+            case self::CHART_TYPE_RGRAPH:
+                if ($_REQUEST['module'] != 'Home') {
+                    require_once('include/SuiteGraphs/RGraphIncludes.php');
+                }
+
+                break;
+        }
+        $x = 0;
+
+
+
+        $linkedCharts = $this->get_linked_beans('aor_charts', 'AOR_Charts');
+        if (!$linkedCharts) {
+            //No charts to display
+            return '';
+        }
+
+        foreach ($linkedCharts as $chart) {
+            if ($chartIds !== null && !in_array($chart->id, $chartIds)) {
+                continue;
+            }
+            $html .= $chart->buildChartHTML($data, $fields, $x, $chartType, $mainGroupField);
+            $x++;
+        }
+
+        return $html;
+    }
+
+
+    /**
+     * @param $result
+     * @param $beanList
+     * @param $fields
+     * @param $mainGroupField
+     */
+    private function createLabelData(
+        $result,
+        $beanList,
+        &$fields,
+        &$mainGroupField
+    ) {
+        $i = 0;
+
+        while ($row = $this->db->fetchByAssoc($result)) {
+
+            $field = new AOR_Field();
+            $field->retrieve($row['id']);
+
+            $path = unserialize(base64_decode($field->module_path));
+
+            $field_bean = new $beanList[$this->report_module]();
+
+            $field_module = $this->report_module;
+            $field_alias = $field_bean->table_name;
+            if ($path[0] != $this->report_module) {
+                foreach ($path as $rel) {
+                    if (empty($rel)) {
+                        continue;
+                    }
+                    $field_module = getRelatedModule($field_module, $rel);
+                    $field_alias = $field_alias . ':' . $rel;
+                }
+            }
+            $label = str_replace(' ', '_', $field->label) . $i;
+            $fields[$label]['field'] = $field->field;
+            $fields[$label]['label'] = $field->label;
+            $fields[$label]['display'] = $field->display;
+            $fields[$label]['function'] = $field->field_function;
+            $fields[$label]['module'] = $field_module;
+            $fields[$label]['alias'] = $field_alias;
+            $fields[$label]['link'] = $field->link;
+            $fields[$label]['total'] = $field->total;
+            $fields[$label]['params'] = $field->format;
+
+
+            // get the main group
+
+            if ($field->group_display) {
+
+                // if we have a main group already thats wrong cause only one main grouping field possible
+                if (!is_null($mainGroupField)) {
+                    $GLOBALS['log']->fatal('main group already found');
+                }
+
+                $mainGroupField = $field;
+            }
+
+            ++$i;
+        }
+    }
+
+
 
 }
