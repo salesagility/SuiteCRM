@@ -120,7 +120,7 @@ EOD
 EOD
 ,
     <<<EOD
-            <input type="submit" class="button" id="editEmailTemplatesButtonMozaik" title="{$app_strings['LBL_EDIT_BUTTON_TITLE_MOZAIK']}" accessKey="{$app_strings['LBL_EDIT_BUTTON_KEY_MOZAIK']}" onclick="this.form.return_module.value='EmailTemplates'; this.form.return_action.value='DetailView'; this.form.return_id.value='{$focus->id}'; this.form.use_mozaik.value='1' ; this.form.action.value='EditView'" value="{$app_strings['LBL_EDIT_BUTTON_TITLE_MOZAIK']}">
+            <input type="submit" class="button" id="editEmailTemplatesButtonMozaik" title="{$mod_strings['LBL_EDIT_BUTTON_TITLE_MOZAIK']}" accessKey="{$app_strings['LBL_EDIT_BUTTON_KEY_MOZAIK']}" onclick="this.form.return_module.value='EmailTemplates'; this.form.return_action.value='DetailView'; this.form.return_id.value='{$focus->id}'; this.form.use_mozaik.value='1' ; this.form.action.value='EditView'" value="{$mod_strings['LBL_EDIT_BUTTON_TITLE_MOZAIK']}">
 EOD
 );
 require_once('include/Smarty/plugins/function.sugar_action_menu.php');
