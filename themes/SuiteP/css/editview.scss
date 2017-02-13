@@ -3721,6 +3721,12 @@ select#sales_stage_advanced {
     width: 29%;
   }
 
+  .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12 [field=first_name].edit-view-field input[type="text"]#first_name {
+    width: calc(100% - 115px);
+    float: right;
+    margin-right: 10%;
+  }
+
   .col-sm-6 [field=first_name].edit-view-field select {
     width: 30%;
   }
