@@ -130,5 +130,21 @@ class UsersController extends SugarController
     {
         require 'modules/Users/Save.php';
     }
+
+    protected function action_editview()
+    {
+        $this->view = 'edit';
+        if (!(is_admin($GLOBALS['current_user']) || $_REQUEST['record'] == $GLOBALS['current_user']->id)) {
+            SugarApplication::redirect("index.php?module=Home&action=index");
+        }
+    }
+
+    protected function action_detailview()
+    {
+        $this->view = 'detail';
+        if (!(is_admin($GLOBALS['current_user']) || $_REQUEST['record'] == $GLOBALS['current_user']->id)) {
+            SugarApplication::redirect("index.php?module=Home&action=index");
+        }
+    }
 }	
 
