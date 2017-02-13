@@ -119,10 +119,10 @@
 
 {{if $displayParams.copy}}
 <tr>
-<td scope='row' NOWRAP>
+<td scope='row' class="checkbox-label" NOWRAP>
 {sugar_translate label='LBL_COPY_ADDRESS_FROM_LEFT' module=''}:
 </td>
-<td>
+<td class="checkbox-container">
 <input id="{{$displayParams.key}}_checkbox" name="{{$displayParams.key}}_checkbox" type="checkbox" onclick="{{$displayParams.key}}_address.syncFields();">
 </td>
 </tr>

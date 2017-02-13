@@ -5678,3 +5678,11 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
   }
 }
 
+form[name="EditView"] .checkbox-label {
+  float: left;
+}
+
+form[name="EditView"] .checkbox-container {
+  width: auto;
+}
+
