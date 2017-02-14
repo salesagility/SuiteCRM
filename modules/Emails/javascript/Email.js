@@ -222,22 +222,21 @@ function multiFiles( list_target){
 					}
 				}}, null);
                 //AJAX call ends
-
-                // New file input
-                new_element = document.createElement('input');
-                new_element.type = 'file';
-                // new_element.name = 'email_attachment' +up++;
-
-                // Add new element
-                this.parentNode.insertBefore(new_element, this);
-                // Apply 'update' to element
-                this.multi_selector.addElement(new_element);
-                // Update list
-                this.multi_selector.addListRow(this);
-                // Hide this: we can't use display:none because Safari doesn't like it
-                //this.style.display='none';
-                //display none works fine for FF and IE
-                this.style.display = 'none';
+				if(!mozaik.uploadPathField) {
+					// New file input
+					new_element = document.createElement('input');
+					new_element.type = 'file';
+					// Add new element
+					this.parentNode.insertBefore(new_element, this);
+					// Apply 'update' to element
+					this.multi_selector.addElement(new_element);
+					// Update list
+					this.multi_selector.addListRow(this);
+					// Hide this: we can't use display:none because Safari doesn't like it
+					//this.style.display='none';
+					//display none works fine for FF and IE
+					this.style.display = 'none';
+				}
                 //later for Safari add following
                 //this.style.position = 'absolute';
                 //this.style.left = '-5000px';
