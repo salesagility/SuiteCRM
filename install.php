@@ -37,7 +37,9 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
- 
+
+require_once 'include/utils.php';
+
 @session_start();
 if(isset($_REQUEST['clear_session']) || !empty($_SESSION['loginAttempts'])) {
 	session_destroy();
@@ -51,9 +53,9 @@ if(isset($_POST['smtp_tab_selected'])) {
     $_POST = array_merge($_POST, $_POST[$_POST['smtp_tab_selected']]);
 }
 
-//session_destroy();
-if (version_compare(phpversion(),'5.2.0') < 0) {
-	$msg = 'Minimum PHP version required is 5.2.0.  You are using PHP version  '. phpversion();
+// Check php version
+if (check_php_version() === false) {
+	$msg = 'Minimum PHP version required is '.constant('MIN_PHP_VERSION').'.  You are using PHP version  '.constant('PHP_VERSION');
     die($msg);
 }
 $session_id = session_id();
@@ -66,7 +68,6 @@ $GLOBALS['sql_queries'] = 0;
 require_once('include/SugarLogger/LoggerManager.php');
 require_once('sugar_version.php');
 require_once('suitecrm_version.php');
-require_once('include/utils.php');
 require_once('install/install_utils.php');
 require_once('install/install_defaults.php');
 require_once('include/TimeDate.php');
