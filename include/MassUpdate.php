@@ -462,6 +462,7 @@ eoq;
 						case "account_name":$even = !$even; $newhtml .= $this->addAccountID($displayname,  $field["id_name"]); break;
 						case "bool": $even = !$even; $newhtml .= $this->addBool($displayname,  $field["name"]); break;
 						case "enum":
+						case "dynamicenum":
 						case "multienum":
 							if(!empty($field['isMultiSelect']))
 							{
@@ -1331,6 +1332,7 @@ EOQ;
                     case "account_name":
                     case "bool":
                     case "enum":
+					case "dynamicenum":
                     case "multienum":
                     case "radioenum":
                     case "datetimecombo":
