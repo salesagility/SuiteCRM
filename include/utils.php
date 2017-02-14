@@ -44,6 +44,7 @@
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
+require_once 'php_version.php';
 require_once 'include/SugarObjects/SugarConfig.php';
 require_once 'include/utils/security_utils.php';
 
@@ -2965,64 +2966,34 @@ function decodeJavascriptUTF8($str)
 }
 
 /**
- * Will check if a given PHP version string is supported (tested on this ver),
- * unsupported (results unknown), or invalid (something will break on this
- * ver).  Do not pass in any pararameter to default to a check against the
+ * Will check if a given PHP version string is accepted or not.
+ * Do not pass in any pararameter to default to a check against the
  * current environment's PHP version.
  *
- * @return 1 implies supported, 0 implies unsupported, -1 implies invalid
+ * @return  boolean  true if it's an accepted version
  */
-function check_php_version($sys_php_version = '')
-{
-    $sys_php_version = empty($sys_php_version) ? constant('PHP_VERSION') : $sys_php_version;
-    // versions below $min_considered_php_version considered invalid by default,
-    // versions equal to or above this ver will be considered depending
-    // on the rules that follow
-    $min_considered_php_version = '5.3.0';
+function check_php_version($sys_php_version = '') {
+	if ($sys_php_version === '') {
+		$sys_php_version = constant('PHP_VERSION') ;
+	}
 
-    // only the supported versions,
-    // should be mutually exclusive with $invalid_php_versions
-    $supported_php_versions = array(
-        '5.3.0',
-    );
+	// versions below MIN_PHP_VERSION are not accepted, so return early.
+	if (version_compare($sys_php_version, constant('MIN_PHP_VERSION'), '<') === true) {
+		return false ;
+	}
 
-    // invalid versions above the $min_considered_php_version,
-    // should be mutually exclusive with $supported_php_versions
+	// If there are some bug ridden versions, we should include them here
+	// and check immediately for one of this versions
+	$bug_php_versions = array() ;
 
-    // SugarCRM prohibits install on PHP 5.2.7 on all platforms
-    $invalid_php_versions = array('5.2.7');
+	foreach ($bug_php_versions as $v) {
+		if (version_compare($sys_php_version, $v, '=') === true) {
+			return false ;
+		}
+	}
 
-    // default unsupported
-    $retval = 0;
-
-    // versions below $min_considered_php_version are invalid
-    if (1 == version_compare($sys_php_version, $min_considered_php_version, '<')) {
-        $retval = -1;
-    }
-
-    // supported version check overrides default unsupported
-    foreach ($supported_php_versions as $ver) {
-        if (1 == version_compare($sys_php_version, $ver, 'eq') || strpos($sys_php_version, $ver) !== false) {
-            $retval = 1;
-            break;
-        }
-    }
-
-    // invalid version check overrides default unsupported
-    foreach ($invalid_php_versions as $ver) {
-        if (1 == version_compare($sys_php_version, $ver, 'eq') && strpos($sys_php_version, $ver) !== false) {
-            $retval = -1;
-            break;
-        }
-    }
-
-    //allow a redhat distro to install, regardless of version.  We are assuming the redhat naming convention is followed
-    //and the php version contains 'rh' characters
-    if (strpos($sys_php_version, 'rh') !== false) {
-        $retval = 1;
-    }
-
-    return $retval;
+	// Everything else is fair game
+	return true ;
 }
 
 /**
@@ -4432,6 +4403,9 @@ function str_split_php4($string, $length = 1)
     return $return;
 }
 
+/*
+ * WONTFIX: Not updating this.. This should be removed !!!
+ */
 if (version_compare(phpversion(), '5.0.0', '<')) {
     function str_split($string, $length = 1)
     {
