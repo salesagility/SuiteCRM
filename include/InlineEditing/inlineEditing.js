@@ -58,7 +58,6 @@ if($("#inline_edit_icon").length) {
 var view = action_sugar_grp1;
 var currentModule = module_sugar_grp1;
 
-
 var clicks = 0;
 timer = null;
 
@@ -110,7 +109,6 @@ function buildEditField(){
         }
     });
 
-
     var onInlineEditDblClick = function(elem, e) {
         var _this = elem;
         e.preventDefault();
@@ -139,6 +137,7 @@ function buildEditField(){
             var validation = getValidationRules(field,module,id);
             //Do ajax call to retrieve the html elements of the field.
             var html = loadFieldHTML(field,module,id);
+            var element = document.getElementsByName(field);
             var currentFields = parseHTMLArray(html);
             var count = (html.match(/<input/g) || []).length;
 
@@ -319,6 +318,7 @@ $(document).on('click', function (e) {
         var type = ie_type;
         var message_field = ie_message_field;
         var alertFlag = true;
+        globalFieldName = field;
 
         if (!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")) {
             var openingValue = loadFieldHTML(field,module,id);
@@ -368,7 +368,7 @@ $(document).on('click', function (e) {
             if (alertFlag) {
                 var r = confirm(SUGAR.language.translate('app_strings', 'LBL_CONFIRM_CANCEL_INLINE_EDITING') + ' ' + message_field);
                 if (r == true) {
-                    var output = setValueClose(output_to_field);
+                    var output = setValueClose(globalFieldName,output_to_field);
                     clickListenerActive = false;
                 } else {
                     $("#" + field).focus();
@@ -376,7 +376,7 @@ $(document).on('click', function (e) {
                 }
             } else {
                 // user hasn't changed value so can close field without warning them first
-                var output = setValueClose(output_to_field);
+                var output = setValueClose(globalFieldName,output_to_field);
                 clickListenerActive = false;
             }
         }
@@ -487,7 +487,7 @@ function handleSave(field,id,module,type) {
         }
 
         var output_value = saveFieldHTML(field,module,id,value, parent_type);
-        var output = setValueClose(output_value);
+        var output = setValueClose(globalFieldName,output_value);
     } else {
         var numberOfFields = field.length;
         for (i = 0; i<numberOfFields; i++) {
@@ -503,7 +503,7 @@ function handleSave(field,id,module,type) {
                 var output_value = saveFieldHTML(fieldName,module,id,currentValue,parent_type);
             }
         }
-        var output = setValueClose(field);
+        var output = setValueClose(globalFieldName,field);
     }
 }
 
@@ -513,27 +513,10 @@ function handleSave(field,id,module,type) {
  * @param value
  */
 
-function setValueClose(value){
+function setValueClose(fieldname,value){
     var closeArray = Array.isArray(value);
     if (closeArray === true) {
-        var numberOfElements = value.length;
-        var outputValue = "";
-
-        for (i = 0; i<numberOfElements; i++) {
-            var currentValue = getInputValue(value[i]['name'],'varchar');
-
-            if (currentValue != value[i]['value']) {
-                displayValue = currentValue;
-            } else {
-                displayValue = value[i]['value'];
-            }
-
-            if (i < numberOfElements) {
-                outputValue += displayValue + "<br />";
-            } else {
-                outputValue += displayValue;
-            }
-        }
+        var outputValue = closeOutput(fieldname,value);
 
         $.get('themes/SuiteR/images/inline_edit_icon.svg', function(data) {
             $(".inlineEditActive").html("");
@@ -549,6 +532,72 @@ function setValueClose(value){
     }
 
     buildEditField();
+}
+
+/**
+ * Returns the original format of the field that is being inline edited. Multiple fields previously did not return in
+ * the same format that they were in prior to being edited with inline editing.
+ * @param fieldname
+ * @param value
+ */
+
+function closeOutput(fieldname, value){
+    var numberOfElements = value.length;
+
+    var fieldPossibilities = [
+        'primary_address_street',
+        'alt_address_street',
+        'billing_address_street'
+    ];
+
+    for (i=0; i<fieldPossibilities.length; i++) {
+        if (fieldPossibilities[i] === fieldname){
+            addressParse = fieldPossibilities[i].split("_");
+            var typeOfAddress = addressParse[0];
+        }
+    }
+
+    if (typeof typeOfAddress !== "undefined") {
+        outputValue = "";
+        var line1 = "";
+        var line2 = "";
+        var line3 = "";
+
+        for (i=0; i<numberOfElements; i++) {
+            var currentKey = value[i]['name'];
+            var currentValue = getInputValue(currentKey,"varchar");
+
+            if (currentKey == typeOfAddress + "_address_street") {
+                line1 += currentValue + " ";
+            } else if (currentKey == typeOfAddress + "_address_city" || currentKey == typeOfAddress + "_address_state" || currentKey == typeOfAddress + "_address_postalcode") {
+                line2 += currentValue + " ";
+            } else if (currentKey == typeOfAddress + "_address_country") {
+                line3 += currentValue + " ";
+            }
+        }
+
+        outputValue += line1 + "<br />" + line2 + "<br />" + line3;
+
+        return outputValue;
+    } else {
+        for (i = 0; i<numberOfElements; i++) {
+
+            var currentValue = getInputValue(value[i]['name'],'varchar');
+            if (currentValue != value[i]['value']) {
+                displayValue = currentValue;
+            } else {
+                displayValue = value[i]['value'];
+            }
+
+            if (i < numberOfElements) {
+                outputValue += displayValue + "<br />";
+            } else {
+                outputValue += displayValue;
+            }
+        }
+
+        return outputValue;
+    }
 }
 
 /**
@@ -619,8 +668,6 @@ function loadFieldHTML(field,module,id) {
     }else{
         return false;
     }
-
-
 }
 
 /**
