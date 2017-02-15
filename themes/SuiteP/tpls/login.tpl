@@ -118,14 +118,14 @@
                 <div id="generate_success" class='error' style="display:inline;"></div>
                 <br>
                 <div class="input-group">
-                    <span class="input-group-addon logininput glyphicon glyphicon-user"></span>
+                    {*<span class="input-group-addon logininput glyphicon glyphicon-user"></span>*}
                     <input type="text" class="form-control" size='26' id="fp_user_name" name="fp_user_name"
                            value='{$LOGIN_USER_NAME}'
                            placeholder="{sugar_translate module="Users" label="LBL_USER_NAME"}"/>
                 </div>
                 <br>
                 <div class="input-group">
-                    <span class="input-group-addon logininput glyphicon glyphicon-envelope"></span>
+                    {*<span class="input-group-addon logininput glyphicon glyphicon-envelope"></span>*}
                     <input type="text" class="form-control" size='26' id="fp_user_mail" name="fp_user_mail" value=''
                            placeholder="{sugar_translate module="Users" label="LBL_EMAIL"}">
                 </div>
