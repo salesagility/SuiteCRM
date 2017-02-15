@@ -23,9 +23,13 @@
     padding: 0;
     overflow: hidden;
     width: 48px;
-    height: 48px;
+    height: $navbar-height;
     text-indent: -9999px;
     content: '';
+  }
+
+  a:hover.with-home-icon {
+    background-image: url('../../../../themes/SuiteP/images/p_icon_home_hover.png');
   }
 
   .dropdown-menu > li > a {
