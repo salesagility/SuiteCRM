@@ -2025,6 +2025,10 @@ ul.clickMenu li a {
   text-decoration: none;
 }
 
+ul.clickMenu li a.clearSearchIcon {
+  margin: 3px 0px 0px 8px;
+}
+
 ul.clickMenu li.single a {
   padding-right: 8px;
 }
