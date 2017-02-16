@@ -255,6 +255,12 @@ class ListViewSmarty extends ListViewDisplay
 
 
     private function getSearchIcon() {
+        global $sugar_config;
+
+        $searchFormInPopup = !in_array($_REQUEST['module'], isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array());
+        if($sugar_config['save_query'] == 'populate_only' && !$searchFormInPopup) {
+            return ;
+        }
         $ss = new Sugar_Smarty();
         return $ss->fetch('include/ListView/ListViewSearchLink.tpl') . '<br>';
     }
