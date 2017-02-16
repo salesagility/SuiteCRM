@@ -1,6 +1,6 @@
 <?php
 if (!defined('sugarEntry') || !sugarEntry) {
-	die('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 if (!isset($install_script) || !$install_script) {
-	die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
+    die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 
 $langDropDown = get_select_options_with_id($supportedLanguages, $current_language);
@@ -55,18 +55,17 @@ $langHeader = get_language_header();
 // load javascripts
 include('jssource/JSGroupings.php');
 $jsSrc = '';
-foreach($sugar_grp1_yui as $jsFile => $grp) {
+foreach ($sugar_grp1_yui as $jsFile => $grp) {
     $jsSrc .= "\t<script src=\"$jsFile\"></script>\n";
 }
 
-///////////////////////////////////////////////////////////////////////////////
 ////	START OUTPUT
 
 $msg = sprintf(
-	$mod_strings['LBL_OLD_PHP_MSG'], 
-	constant('SUITECRM_PHP_REC_VERSION'),
-	constant('SUITECRM_PHP_MIN_VERSION'),
-	constant('PHP_VERSION')
+    $mod_strings['LBL_OLD_PHP_MSG'],
+    constant('SUITECRM_PHP_REC_VERSION'),
+    constant('SUITECRM_PHP_MIN_VERSION'),
+    constant('PHP_VERSION')
 );
 
 $out = <<<EOQ
@@ -115,11 +114,9 @@ $out = <<<EOQ
 
                 <input type="hidden" name="current_step" value="{$next_step}">
                 {$mod_strings['LBL_WELCOME_CHOOSE_LANGUAGE']}: <select name="language" onchange='onLangSelect(this);';>{$langDropDown}</select>
-                <input class="acceptButton" type="button" name="goto" value="{$mod_strings['LBL_NEXT']}" id="button_next" disabled="disabled" title="{$mod_strings['LBL_LICENCE_TOOLTIP']}" onclick="callSysCheck();"/>
-                <input type="hidden" name="goto" id='hidden_goto' value="{$mod_strings['LBL_BACK']}" />
+                <input class="acceptButton" type="submit" name="goto" value="{$mod_strings['LBL_NEXT']}" id="button_next" disabled="disabled" title="{$mod_strings['LBL_LICENCE_TOOLTIP']}" />
+                <input type="hidden" name="goto" id='hidden_goto' value="{$mod_strings['LBL_NEXT']}" />
             </div>
-
-
 
 	    </form>
 	    <div style="clear:both;"></div>
@@ -134,158 +131,7 @@ $out = <<<EOQ
     </footer>
     </div>
 <script>
-    function showtime(div){
 
-        if(document.getElementById(div).style.display == ''){
-            document.getElementById(div).style.display = 'none';
-            document.getElementById('adv_'+div).style.display = '';
-            document.getElementById('basic_'+div).style.display = 'none';
-            }
-            else {
-            document.getElementById(div).style.display = '';
-            document.getElementById('adv_'+div).style.display = 'none';
-            document.getElementById('basic_'+div).style.display = '';
-            }
-
-        }
-</script>
-<script>
-/*
-    $(".rslides").responsiveSlides({
-        auto: true,             // Boolean: Animate automatically, true or false
-        speed: 800,            // Integer: Speed of the transition, in milliseconds
-        timeout: 6000,          // Integer: Time between slide transitions, in milliseconds
-        pager: false,           // Boolean: Show pager, true or false
-        random: false,          // Boolean: Randomize the order of the slides, true or false
-        pause: false,           // Boolean: Pause on hover, true or false
-        pauseControls: true,    // Boolean: Pause when hovering controls, true or false
-        prevText: "",   // String: Text for the "previous" button
-        nextText: "",       // String: Text for the "next" button
-        maxwidth: "",           // Integer: Max-width of the slideshow, in pixels
-        navContainer: "ul",       // Selector: Where controls should be appended to, default is after the 'ul'
-        manualControls: "",     // Selector: Declare custom pager navigation
-        namespace: "rslides",   // String: Change the default namespace used
-        before: function(){},   // Function: Before callback
-        after: function(){}     // Function: After callback
-    });
-    $("#slider2").responsiveSlides({
-        nav: true,
-        speed: 500,
-        //maxwidth: 750,
-        namespace: "centered-btns",
-        speed: 800,            // Integer: Speed of the transition, in milliseconds
-        timeout: 6000,          // Integer: Time between slide transitions, in milliseconds
-	});
-*/
-</script>
-
-<script>
-var msgPanel;
-function callSysCheck(){
-
-            //begin main function that will be called
-            ajaxCall = function(msg_panel){
-                //create success function for callback
-
-                getPanel = function() {
-                var args = {    width:"300px",
-                                modal:true,
-                                fixedcenter: true,
-                                constraintoviewport: false,
-                                underlay:"shadow",
-                                close:false,
-                                draggable:true,
-
-                                effect:{effect:YAHOO.widget.ContainerEffect.FADE, duration:.5},
-                                zindex: 1000
-                               } ;
-                        msg_panel = new YAHOO.widget.Panel('p_msg', args);
-                        //If we haven't built our panel using existing markup,
-                        //we can set its content via script:
-                        msg_panel.setHeader("{$mod_strings['LBL_LICENSE_CHKENV_HEADER']}");
-                        msg_panel.setBody(document.getElementById("checkingDiv").innerHTML);
-                        msg_panel.render(document.body);
-                        msgPanel = msg_panel;
-                }
-
-
-                passed = function(url){
-                    document.setConfig.goto.value="{$mod_strings['LBL_NEXT']}";
-                    document.getElementById('hidden_goto').value="{$mod_strings['LBL_NEXT']}";
-                    document.setConfig.current_step.value="{$next_step}";
-                    document.setConfig.submit();
-                    window.focus();
-                }
-                success = function(o) {
-                    if (o.responseText.indexOf('passed')>=0){
-                        if ( YAHOO.util.Selector.query('button', 'p_msg', true) != null )
-                            YAHOO.util.Selector.query('button', 'p_msg', true).style.display = 'none';
-                        //scsbody =  "<table cellspacing='0' cellpadding='0' border='0' align='center'><tr><td>";
-						scsbody = '<h1>{$mod_strings['LBL_LICENSE_CHKENV_HEADER']}</h1>';
-                        scsbody += "<p><img src='install/processing.gif' alt=\"{$mod_strings['LBL_CREATE_CACHE']}\"></p>";
-                        scsbody += "<p>{$mod_strings['LBL_LICENSE_CHECK_PASSED']}<br>{$mod_strings['LBL_CREATE_CACHE']}</p>";
-                        //scsbody += "<div id='cntDown'>{$mod_strings['LBL_THREE']}</div>";
-                        //scsbody += "</td></tr></table>";
-                        //scsbody += "<script>countdown(3);<\/script>";
-                        //msgPanel.setBody(scsbody);
-                        //msgPanel.render();
-						$('#content').html(scsbody);
-                        //countdown(3);
-                        //window.setTimeout('passed("install.php?goto=next")', 2500);
-                        passed("install.php?goto=next");
-
-                    }else{
-                        //turn off loading message
-                        //msgPanel.hide();
-                        $('#content p').remove();
-                        document.getElementById('sysCheckMsg').style.display = '';
-                        /* document.getElementById('licenseDiv').style.display = 'none'; */
-                        document.getElementById('sysCheckMsg').innerHTML=o.responseText;
-                    }
-
-
-                }//end success
-
-                //set loading message and create url
-                postData = "checkInstallSystem=true&to_pdf=1&sugar_body_only=1";
-
-                //if this is a call already in progress, then just return
-                    if(typeof ajxProgress != 'undefined'){
-                        return;
-                    }
-
-                //getPanel();
-                //msgPanel.show;
-				
-				$('#content').addClass('preloading');
-				$('#content').html('<h1>{$mod_strings['LBL_LICENSE_CHKENV_HEADER']}</h1>' + document.getElementById("checkingDiv").innerHTML);
-						
-                var ajxProgress = YAHOO.util.Connect.asyncRequest('POST','install.php', {success: success, failure: success}, postData);
-
-
-            };//end ajaxCall method
-              ajaxCall();
-            return;
-}
-
-    function countdown(num){
-        //scsbody =  "<table cellspacing='0' cellpadding='0' border='0' align='center'><tr><td>";
-		scsbody = '<h1>{$mod_strings['LBL_LICENSE_CHKENV_HEADER']}</h1>';
-        scsbody += "<p>{$mod_strings['LBL_LICENSE_CHECK_PASSED']}</p>";
-        scsbody += "<div id='cntDown'>{$mod_strings['LBL_LICENSE_REDIRECT']}"+num+"</div>";
-        //scsbody += "</td></tr></table>";
-        //msgPanel.setBody(scsbody);
-        //msgPanel.render();
-		$('#content').html(scsbody);
-        if(num >0){
-             num = num-1;
-             setTimeout("countdown("+num+")",1000);
-        }
-    }
-
-</script>
-
-<script>
 function onLangSelect(e) {
     $("input[name=current_step]").attr('name', '_current_step');
     $("input[name=goto]").attr('name', '_goto');
@@ -298,4 +144,3 @@ function onLangSelect(e) {
 EOQ;
 
 echo $out;
-
