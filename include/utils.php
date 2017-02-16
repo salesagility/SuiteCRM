@@ -2970,30 +2970,39 @@ function decodeJavascriptUTF8($str)
  * Do not pass in any pararameter to default to a check against the
  * current environment's PHP version.
  *
- * @return  boolean  true if it's an accepted version
+ * @param string Version to check against, defaults to the current environment's.
+ *
+ * @return  integer  1 if version is greater than the recommended PHP version, 
+ *                   0 if version is between minimun and recomended PHP versions, 
+ *                   -1 otherwise (less than minimum or buggy version)
  */
 function check_php_version($sys_php_version = '') {
 	if ($sys_php_version === '') {
-		$sys_php_version = constant('PHP_VERSION') ;
+		$sys_php_version = constant('PHP_VERSION');
 	}
 
 	// versions below MIN_PHP_VERSION are not accepted, so return early.
-	if (version_compare($sys_php_version, constant('MIN_PHP_VERSION'), '<') === true) {
-		return false ;
+	if (version_compare($sys_php_version, constant('SUITECRM_PHP_MIN_VERSION'), '<') === true) {
+		return -1;
 	}
 
 	// If there are some bug ridden versions, we should include them here
 	// and check immediately for one of this versions
-	$bug_php_versions = array() ;
+	$bug_php_versions = array();
 
 	foreach ($bug_php_versions as $v) {
 		if (version_compare($sys_php_version, $v, '=') === true) {
-			return false ;
+			return -1;
 		}
 	}
 
+	// If the checked version is between the minimum and recommended versions, return 0
+	if (version_compare($sys_php_version, constant('SUITECRM_PHP_REC_VERSION'), '<') === true) {
+		return 0;
+	}
+
 	// Everything else is fair game
-	return true ;
+	return 1;
 }
 
 /**

@@ -675,7 +675,9 @@ $contact_user_link_guid',
 
 	'LBL_MORE_OPTIONS_TITLE' => 'More options',
 	'LBL_START' => '',
-	'LBL_DB_CONN_ERR' => 'Database error'
+	'LBL_DB_CONN_ERR' => 'Database error',
+	'LBL_OLD_PHP' => 'Old PHP Version Detected !',
+	'LBL_OLD_PHP_OK' => 'I\'m aware of the risks and wish to continue.',
 
 
 );

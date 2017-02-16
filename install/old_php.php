@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+	die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -38,30 +40,17 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-if( !isset( $install_script ) || !$install_script ){
-    die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
+if (!isset($install_script) || !$install_script) {
+	die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
-// $mod_strings come from calling page.
 
 $langDropDown = get_select_options_with_id($supportedLanguages, $current_language);
 
+$_SESSION['setup_old_php'] = get_boolean_from_request('setup_old_php');
 
+$checked = (isset($_SESSION['setup_old_php']) && !empty($_SESSION['setup_old_php'])) ? 'checked="on"' : '';
 
-
-$_SESSION['setup_license_accept']   = get_boolean_from_request('setup_license_accept');
-$_SESSION['license_submitted']      = true;
-
-// setup session variables (and their defaults) if this page has not yet been submitted
-if(!isset($_SESSION['license_submitted']) || !$_SESSION['license_submitted']){
-    $_SESSION['setup_license_accept'] = false;
-}
-
-$checked = (isset($_SESSION['setup_license_accept']) && !empty($_SESSION['setup_license_accept'])) ? 'checked="on"' : '';
-
-require_once("install/install_utils.php");
-$license_file = getLicenseContents("LICENSE.txt");
 $langHeader = get_language_header();
-
 
 // load javascripts
 include('jssource/JSGroupings.php');
@@ -73,7 +62,15 @@ foreach($sugar_grp1_yui as $jsFile => $grp) {
 ///////////////////////////////////////////////////////////////////////////////
 ////	START OUTPUT
 
-$langHeader = get_language_header();
+$msg = 'The recommended PHP version to install SuiteCRM is ';
+$msg .= constant('SUITECRM_PHP_REC_VERSION').'<br />';
+$msg .= 'Although the minimum PHP version required is ';
+$msg .= constant('SUITECRM_PHP_MIN_VERSION').', ';
+$msg .= 'is not recommended due to the large number of fixed bugs, including security fixes, ';
+$msg .= 'released in the more modern versions.<br />';
+$msg .= 'You are using PHP version '.constant('PHP_VERSION').', which is EOL: <a href="http://php.net/eol.php">http://php.net/eol.php</a>.<br />';
+$msg .= 'Please consider upgrading your PHP version. Instructions on <a href="http://php.net/migration70">http://php.net/migration70</a>. ';
+
 $out = <<<EOQ
 <!DOCTYPE HTML>
 <html {$langHeader}>
@@ -84,10 +81,8 @@ $out = <<<EOQ
    <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_TITLE_WELCOME']} {$setup_sugar_version} {$mod_strings['LBL_WELCOME_SETUP_WIZARD']}, {$mod_strings['LBL_LICENSE_ACCEPTANCE']}</title>
    <link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
    <link rel="stylesheet" href="install/install2.css" type="text/css">
-   <link rel="stylesheet" href="themes/SuiteP/css/responsiveslides.css" type="text/css">
    <link rel="stylesheet" href="themes/SuiteP/css/themes.css" type="text/css">
    <script src="include/javascript/jquery/jquery-min.js"></script>
-   <script src="themes/SuiteP/js/responsiveslides.min.js"></script>
     $jsSrc
    <script type="text/javascript">
     <!--
@@ -96,17 +91,9 @@ $out = <<<EOQ
     -->
     </script>
     <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
-    <script type="text/javascript" src="install/license.js"></script>
+    <script type="text/javascript" src="install/old_php.js"></script>
     <link rel="stylesheet" href="themes/SuiteP/css/fontello.css">
     <link rel="stylesheet" href="themes/SuiteP/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
-    <style>
-        /*
-        #install_box {
-            max-width: 1000px;
-            margin: 20px auto;
-        }
-        */
-    </style>
 </head>
 <body onload="javascript:toggleNextButton();document.getElementById('button_next2').focus();">
     <!--SuiteCRM installer-->
@@ -117,29 +104,12 @@ $out = <<<EOQ
                 <h1 id="welcomelink">{$mod_strings['LBL_TITLE_WELCOME']} {$setup_sugar_version} {$mod_strings['LBL_WELCOME_SETUP_WIZARD']}</h1>
                 <div class="install_img"><a href="https://suitecrm.com" target="_blank"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
             </header>
-            <div id="wrapper" style="display:none;">
-                <div class="rslides_container">
-                    <ul class="rslides" id="slider2">
-                        <li><img src="themes/SuiteP/images/SuiteScreen1.png" alt="" class="sliderimg"></li>
-                             <li><img src="themes/SuiteP/images/SuiteScreen2.png" alt="" class="sliderimg"></li>
-                            <li><img src="themes/SuiteP/images/SuiteScreen3.png" alt="" class="sliderimg"></li>
-                            <li><img src="themes/SuiteP/images/SuiteScreen4.png" alt="" class="sliderimg"></li>
-                    </ul>
-                </div>
-            </div>
-
-            <!--
-            <div id='licenseDivToggler' style="text-align: center;"><a href="javascript:void(0);" onclick="javascript:$('#licenseDiv').toggle();">Show Software License</a></div>
-            -->
 		<div id="content">
-            <div id='licenseDiv' style="/* display: none; */">
-                <textarea class="licensetext" cols="80" rows="20" readonly>{$license_file}</textarea>
-            </div>
+			<h2>{$mod_strings['LBL_OLD_PHP']}</h2>
+			<div class="floatbox full">{$msg}</div>
             <div id="licenseaccept">
-                <input type="checkbox" class="checkbox" name="setup_license_accept" id="button_next2" onClick='toggleNextButton();' {$checked} />
-                <a href='javascript:void(0)' onClick='toggleLicenseAccept();toggleNextButton();'>{$mod_strings['LBL_LICENSE_I_ACCEPT']}</a>
-                <input type="button" class="button" name="print_license" id="button_print_license" value="{$mod_strings['LBL_LICENSE_PRINTABLE']}"
-                onClick='window.open("install.php?page=licensePrint&language={$current_language}");' />
+                <input type="checkbox" class="checkbox" name="setup_old_php" id="button_next2" onClick='toggleNextButton();' {$checked} />
+                <a href='javascript:void(0)' onClick='toggleOldPHP();toggleNextButton();'>{$mod_strings['LBL_OLD_PHP_OK']}</a>
             </div>
 		</div>
             <hr>
@@ -159,9 +129,7 @@ $out = <<<EOQ
 	    <div style="clear:both;"></div>
 	</div>
 	<div id="checkingDiv" style="display:none">
-	    <!-- <table cellspacing='0' cellpadding='0' border='0' align='center'><tr><td> -->
             <p><img src='install/processing.gif' alt="{$mod_strings['LBL_LICENSE_CHECKING']}"> <br>{$mod_strings['LBL_LICENSE_CHECKING']}</p>
-        <!-- </td></tr></table> -->
     </div>
 	<footer id="install_footer">
         <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
@@ -184,6 +152,7 @@ $out = <<<EOQ
         }
 </script>
 <script>
+/*
     $(".rslides").responsiveSlides({
         auto: true,             // Boolean: Animate automatically, true or false
         speed: 800,            // Integer: Speed of the transition, in milliseconds
@@ -208,7 +177,8 @@ $out = <<<EOQ
         namespace: "centered-btns",
         speed: 800,            // Integer: Speed of the transition, in milliseconds
         timeout: 6000,          // Integer: Time between slide transitions, in milliseconds
-    });
+	});
+*/
 </script>
 
 <script>
@@ -328,25 +298,6 @@ function onLangSelect(e) {
 </body>
 </html>
 EOQ;
-if (check_php_version() === -1) {
-	if(empty($mod_strings['LBL_MINIMUM_PHP_VERSION'])){
-		$mod_strings['LBL_MINIMUM_PHP_VERSION'] = 'The minimum PHP version required is '.constant('SUITECRM_PHP_MIN_VERSION');
-	}
 
-$php_verison_warning =<<<eoq
-	    <table width="100%" cellpadding="0" cellpadding="0" border="0" class="Welcome">
-			<tr>
-		      <td colspan="2"  align="center" id="ready_image"><IMG src="include/images/install_themes.jpg" width="698" height="190" alt="Sugar Themes" border="0"></td>
-		    </tr>
-			<th colspan="2" align="center">
-				<h1><span class='error'><b>{$mod_strings['LBL_MINIMUM_PHP_VERSION']}</b></span></h1>
-			</th>
-			<tr>
-		      <td colspan="2" align="center" id="ready_image"><IMG src="include/images/install_themes.jpg" width="698" height="190" alt="Sugar Themes" border="0"></td>
-		    </tr>
-	</table>
-eoq;
-	$out = $php_verison_warning;
-}
 echo $out;
-?>
+
