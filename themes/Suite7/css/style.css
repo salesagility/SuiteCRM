@@ -5890,6 +5890,10 @@ table tr#delegates_search {
   z-index: 16000;
 }
 
+.modal-lg{
+  display: table;
+}
+
 .qtip-titlebar {
   padding: 5px 24px 5px 10px;
 }
