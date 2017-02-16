@@ -44,9 +44,10 @@
  */
 function display_updates($focus)
 {
-    global $mod_strings, $current_view;
+    global $mod_strings, $current_view, $sugar_config;
 
-    if ($current_view->type == 'list') {
+    $searchFormInPopup = !in_array($_REQUEST['module'], isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array());
+    if ($current_view->type == 'list' && $searchFormInPopup) {
         return;
     }
 
