@@ -745,12 +745,12 @@ a.listViewTdToolsS1 {
 }
 
 #massassign_form select {
-  border: 3px solid #94a6b5;  /* TODO : change colour to dynamic!!*/
+  border: 3px solid $mass-assign-select-border-color;
   height: 30px;
   line-height: 22px;
   font-size: 12px;
   letter-spacing: 1px;
-  background: url(../../../../themes/SuiteP/images/forms/select_94a6b5.png) no-repeat right #fff; /* TODO : change colour to dynamic!!*/
+  background: url(../../../../themes/SuiteP/images/forms/select_94a6b5.png) no-repeat right $filters-input-bg;
   background-size: 34px 50px;
   padding: 0 35px 0 9px;
 }
@@ -1373,7 +1373,7 @@ a.listViewTdToolsS1 {
 }
 
 form#MassAssign_SecurityGroups {
-  background-color: #e6e6e6;
+  background-color: $panel-border-bg;
   padding: 10px 20px 4px 20px;
   margin: 4px 0 62px 0;
   border-radius: 3px;
