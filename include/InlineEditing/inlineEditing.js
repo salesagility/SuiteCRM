@@ -542,12 +542,14 @@ function setValueClose(fieldname,value){
  */
 
 function closeOutput(fieldname, value){
+    // Address Fields in Edit View
     var numberOfElements = value.length;
 
     var fieldPossibilities = [
         'primary_address_street',
         'alt_address_street',
-        'billing_address_street'
+        'billing_address_street',
+        'shipping_address_street'
     ];
 
     for (i=0; i<fieldPossibilities.length; i++) {
