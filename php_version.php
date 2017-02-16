@@ -1,7 +1,11 @@
 <?php
 if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
+	die('Not A Valid Entry Point');
 }
 
-define('MIN_PHP_VERSION', '5.3.0');
+// The absolute minimum version on which to install SuiteCRM
+define('SUITECRM_PHP_MIN_VERSION', '5.3.0');
+
+// The minimum recommended version on which to install SuiteCRM
+define('SUITECRM_PHP_REC_VERSION', '7.0.0');
 

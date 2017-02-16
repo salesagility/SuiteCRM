@@ -74,7 +74,7 @@ if (version_compare(phpversion(),'5.2.0') >=0) {
 
 	$errors = preflightCheck();
 
-	if (check_php_version() === false) {
+	if (check_php_version() === -1) {
         $phpVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} ".constant('PHP_VERSION')." </span></b>";
         $error_txt = '<span class="error">'.$phpVersion.'</span>';
         if(count($errors) == 0)
@@ -312,8 +312,8 @@ $diffs ='';
 ///////////////////////////////////////////////////////////////////////////////
 //php version suggestion
     $php_suggested_ver = '';
-	if(check_php_version() === false){
-		$php_suggested_ver=$mod_strings['LBL_CURRENT_PHP_VERSION'].phpversion().$mod_strings['LBL_RECOMMENDED_PHP_VERSION'];
+	if(check_php_version() === 0){
+		$php_suggested_ver=$mod_strings['LBL_CURRENT_PHP_VERSION'].phpversion().$mod_strings['LBL_RECOMMENDED_PHP_VERSION_1'].constant('SUITECRM_PHP_REC_VERSION').$mod_strings['LBL_RECOMMENDED_PHP_VERSION_2'];
 	}
 	if(empty($mod_strings['LBL_UPGRADE_TAKES_TIME_HAVE_PATIENCE'])){
 		$mod_strings['LBL_UPGRADE_TAKES_TIME_HAVE_PATIENCE'] = 'Upgrade may take some time';
