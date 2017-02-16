@@ -621,6 +621,10 @@ table.subpanelTabForm {
     padding-left:10px !important;
     padding-top:10px !important;
 }
+
+.search_form label {
+    white-space: normal;
+}
 /* sitemap */
 
 #sitemap {
@@ -3646,6 +3650,10 @@ h4,
 
 .modal {
     z-index: 16000;
+}
+
+.modal-lg{
+    display: table;
 }
 
 .qtip-titlebar {

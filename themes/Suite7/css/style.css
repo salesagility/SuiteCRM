@@ -1104,6 +1104,10 @@ div.indent_right {
   padding-top: 10px !important;
 }
 
+.search_form label {
+  white-space: normal;
+}
+
 /* sitemap */
 
 #sitemap {
@@ -5884,6 +5888,10 @@ table tr#delegates_search {
 
 .modal {
   z-index: 16000;
+}
+
+.modal-lg{
+  display: table;
 }
 
 .qtip-titlebar {
