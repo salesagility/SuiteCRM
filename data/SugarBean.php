@@ -1244,7 +1244,7 @@ class SugarBean
     public function isOwner($user_id)
     {
         //if we don't have an id we must be the owner as we are creating it
-        if (!isset($this->id)) {
+        if (!isset($this->id) || $this->id == "[SELECT_ID_LIST]") {
             return true;
         }
         //if there is an assigned_user that is the owner
