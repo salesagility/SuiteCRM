@@ -1208,7 +1208,7 @@ class AOR_Report extends Basic {
                         $join = $module->$name->getJoin($params, true);
                         $query['join'][$alias] = $join['join'];
                         if($rel_module != null) {
-                            $query['join'][$alias] .= $this->build_report_access_query($rel_module, $name);
+                            $query['join'][$alias] .= $this->build_report_access_query($rel_module, "`$alias`");
                         }
                         $query['id_select'][$alias] = $join['select']." AS '".$alias."_id'";
                         $query['id_select_group'][$alias] = $join['select'];
