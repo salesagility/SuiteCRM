@@ -316,8 +316,10 @@ $(document).on('click', function (e) {
         var id = ie_id;
         var module = ie_module;
         var type = ie_type;
-        var message_field = ie_message_field;
+        var messagePrompt = "";
+        var changedFields = [];
         var alertFlag = true;
+        var save = false;
         globalFieldName = field;
 
         if (!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")) {
@@ -331,32 +333,69 @@ $(document).on('click', function (e) {
                 var outputValueParse = output_value;
             }
 
-            var user_value = getInputValue(field, type);
+            if (typeof textArray !== "undefined") {
+                var currentValues = [];
 
-            /**
-             * A flag to fix Issue 2545, some parts of the site were comparing HTML to plain text, this flag checks
-             * against Plain Text and normal HTML to trigger the alert/confirm dialogue box.
-             */
+                for (i=0; i<textArray.length; i++) {
+                    var user_value = getInputValue(textArray[i]['name'], type);
 
-            // Return user value to empty string for comparison if undefined at this stage (empty field check fix)
-            if (typeof user_value === "undefined") {
-                user_value = '';
-            }
+                    // Return user value to empty string for comparison if undefined at this stage (empty field check fix)
+                    if (typeof user_value === "undefined") {
+                        user_value = '';
+                    }
 
-            // QS Fields have '_display' in their field names. An additional check for the this field name pattern.
-            if (outputValueParse != user_value && output_value != user_value) {
-                var fieldName = field + '_display';
-                var replacementUserValue = $("#" + fieldName).val();
+                    currentValues.push(user_value);
+                }
 
-                // Parsing empty text returns undefined, if the string returns anything other than undefined, replace
-                // user_value with this value.
-                if (replacementUserValue != undefined) {
-                    user_value = replacementUserValue;
+                for (i=0; i<textArray.length; i++) {
+                    if (textArray[i]['value'] !== currentValues[i]) {
+                        changedFields.push(textArray[i]['name']);
+                    }
+                }
+            } else {
+                var user_value = getInputValue(field, type);
+                /**
+                 * A flag to fix Issue 2545, some parts of the site were comparing HTML to plain text, this flag checks
+                 * against Plain Text and normal HTML to trigger the alert/confirm dialogue box.
+                 */
+
+                // Return user value to empty string for comparison if undefined at this stage (empty field check fix)
+                if (typeof user_value === "undefined") {
+                    user_value = '';
+                }
+
+                // QS Fields have '_display' in their field names. An additional check for the this field name pattern.
+                if (outputValueParse != user_value && output_value != user_value) {
+                    var fieldName = field + '_display';
+                    var replacementUserValue = $("#" + fieldName).val();
+
+                    // Parsing empty text returns undefined, if the string returns anything other than undefined, replace
+                    // user_value with this value.
+                    if (replacementUserValue != undefined) {
+                        user_value = replacementUserValue;
+                    }
+                }
+
+                var currentValues = user_value;
+
+                if (currentValues !== outputValueParse) {
+                    changedFields.push(field);
                 }
             }
 
-            if (user_value == outputValueParse || user_value == output_value) {
-                var alertFlag = false;
+            // Set the alert flag if there are changes, otherwise, disable the prompt by setting to false.
+            if (typeof changedFields === "undefined" || changedFields == "") {
+                alertFlag = false;
+            } else {
+                // Display message in the dialogue box for accepting to lose changes.
+                for (i=0; i<changedFields.length; i++) {
+                    if  (i == (changedFields.length - 1)) {
+                        messagePrompt += changedFields[i];
+                    } else {
+                        messagePrompt += changedFields[i] + ", ";
+                    }
+                }
+                alertFlag = true;
             }
 
             if (typeof textArray === 'undefined') {
@@ -366,17 +405,17 @@ $(document).on('click', function (e) {
             }
 
             if (alertFlag) {
-                var r = confirm(SUGAR.language.translate('app_strings', 'LBL_CONFIRM_CANCEL_INLINE_EDITING') + ' ' + message_field);
+                var r = confirm(SUGAR.language.translate('app_strings', 'LBL_CONFIRM_CANCEL_INLINE_EDITING') + ' ' + messagePrompt);
                 if (r == true) {
-                    var output = setValueClose(globalFieldName,output_to_field);
+                    var output = setValueClose(globalFieldName,output_to_field,save);
                     clickListenerActive = false;
                 } else {
-                    $("#" + field).focus();
+                    $("#" + changedFields[0]).focus();
                     e.preventDefault();
                 }
             } else {
                 // user hasn't changed value so can close field without warning them first
-                var output = setValueClose(globalFieldName,output_to_field);
+                var output = setValueClose(globalFieldName,output_to_field,save);
                 clickListenerActive = false;
             }
         }
@@ -474,6 +513,7 @@ function getInputValue(field,type){
 
 function handleSave(field,id,module,type) {
     var detectArray = Array.isArray(field);
+    var save = true;
 
     if (detectArray === false) {
         var value = getInputValue(field,type);
@@ -487,7 +527,7 @@ function handleSave(field,id,module,type) {
         }
 
         var output_value = saveFieldHTML(field,module,id,value, parent_type);
-        var output = setValueClose(globalFieldName,output_value);
+        var output = setValueClose(globalFieldName,output_value,save);
     } else {
         var numberOfFields = field.length;
         for (i = 0; i<numberOfFields; i++) {
@@ -503,7 +543,7 @@ function handleSave(field,id,module,type) {
                 var output_value = saveFieldHTML(fieldName,module,id,currentValue,parent_type);
             }
         }
-        var output = setValueClose(globalFieldName,field);
+        var output = setValueClose(globalFieldName,field,save);
     }
 }
 
@@ -513,10 +553,10 @@ function handleSave(field,id,module,type) {
  * @param value
  */
 
-function setValueClose(fieldname,value){
+function setValueClose(fieldname,value,save){
     var closeArray = Array.isArray(value);
     if (closeArray === true) {
-        var outputValue = closeOutput(fieldname,value);
+        var outputValue = closeOutput(fieldname,value,save);
 
         $.get('themes/SuiteR/images/inline_edit_icon.svg', function(data) {
             $(".inlineEditActive").html("");
@@ -541,9 +581,10 @@ function setValueClose(fieldname,value){
  * @param value
  */
 
-function closeOutput(fieldname, value){
+function closeOutput(fieldname,value,save){
     // Address Fields in Edit View
     var numberOfElements = value.length;
+    var outputValue = "";
 
     var fieldPossibilities = [
         'primary_address_street',
@@ -560,14 +601,19 @@ function closeOutput(fieldname, value){
     }
 
     if (typeof typeOfAddress !== "undefined") {
-        outputValue = "";
         var line1 = "";
         var line2 = "";
         var line3 = "";
 
         for (i=0; i<numberOfElements; i++) {
             var currentKey = value[i]['name'];
-            var currentValue = getInputValue(currentKey,"varchar");
+
+            if (save === true) {
+                var currentValue = getInputValue(currentKey,"varchar");
+            } else {
+                var currentValue = value[i]['value'];
+            }
+
 
             if (currentKey == typeOfAddress + "_address_street") {
                 line1 += currentValue + " ";
