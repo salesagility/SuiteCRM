@@ -47,8 +47,8 @@ require_once('include/EditView/EditView2.php');
  */
 class DetailView2 extends EditView
 {
-    var $view = 'DetailView';
-
+    public $view = 'DetailView';
+    public $defs;
     /**
      * DetailView constructor
      * This is the DetailView constructor responsible for processing the new

@@ -71,15 +71,7 @@ if (isset($_REQUEST['offset']) or isset($_REQUEST['record'])) {
 	$focus=$result;
 } else {
 	$header_URL = "Location: index.php?module=Accounts&action=index";
-
-    if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
-        $href = $matches[1];
-        SugarApplication::redirect($href);
-    }
-    else {
-        header($header_URL);
-    }
-
+    SugarApplication::headerRedirect($header_URL);
 }
 
 // For all campaigns show the same ROI interface
