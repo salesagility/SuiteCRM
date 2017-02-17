@@ -244,13 +244,6 @@ $(document).ready(function() {ldelim}
         });
 
         $('a[data-toggle="collapse-edit"]').click(function(e){
-          // this == <a> link in the header of the panel:
-          //
-          // .panel
-          //     .panel-header
-          //        (a || a.collapsed) == this
-          //     .panel-body
-          //
             if($(this).hasClass('collapsed')) {
               // Expand panel
                 // Change style of .panel-header
