@@ -239,7 +239,6 @@ $(document).ready(function() {ldelim}
             if(typeof $(this).parent().find('a').first().attr('id') != 'undefined') {
                 var tab = parseInt($(this).parent().find('a').first().attr('id').match(/^tab(.)*$/)[1]);
                 selectTab(tab);
-                console.log(tab)
             }
         });
 
