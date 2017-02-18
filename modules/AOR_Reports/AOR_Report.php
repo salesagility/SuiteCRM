@@ -96,10 +96,12 @@ class AOR_Report extends Basic {
 
         // TODO: process of saveing the fields and conditions is too long so we will have to make some optimization on save_lines functions
         set_time_limit(3600);
-
+        
+        $duplicate = false;
         if (empty($this->id)){
             unset($_POST['aor_conditions_id']);
             unset($_POST['aor_fields_id']);
+            $duplicate = true;
         }
 
         parent::save($check_notify);
@@ -114,7 +116,7 @@ class AOR_Report extends Basic {
 
         require_once('modules/AOR_Charts/AOR_Chart.php');
         $chart = new AOR_Chart();
-        $chart->save_lines($_POST, $this, 'aor_chart_');
+        $chart->save_lines($_POST, $this, 'aor_chart_', $duplicate);
     }
 
     /**
