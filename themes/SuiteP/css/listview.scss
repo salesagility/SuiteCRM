@@ -728,11 +728,31 @@ a.listViewTdToolsS1 {
   font-size: 14px;
   font-weight: normal;
   color: $navbar-search-color;
-  margin: 14px 20px 0 0;
+  margin: 5px 17px 0 0;
+}
+
+#massassign_form h3 span {
+  color: $mass-assign-color;
+  font-size: 13px;
 }
 
 #massassign_form .button {
-  margin-right: 10px;
+  margin-right: 3px;
+  letter-spacing: 2px;
+  line-height: 30px;
+  height: 30px;
+  padding-right: 17px;
+}
+
+#massassign_form select {
+  border: 3px solid $mass-assign-select-border-color;
+  height: 30px;
+  line-height: 22px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  background: url(../../../../themes/SuiteP/images/forms/select_94a6b5.png) no-repeat right $filters-input-bg;
+  background-size: 34px 50px;
+  padding: 0 35px 0 9px;
 }
 
 #massassign_form .tabForm {
@@ -745,8 +765,12 @@ a.listViewTdToolsS1 {
 }
 
 #mass_update_table td {
-  padding-left: 15px;
-  line-height: 40px;
+  padding-left: 17px;
+  line-height: 27px;
+}
+
+#mass_update_table.tabForm td {
+  color: $mass-assign-color;
 }
 
 #mass_update_table td select {
@@ -1349,9 +1373,9 @@ a.listViewTdToolsS1 {
 }
 
 form#MassAssign_SecurityGroups {
-  background-color: #e6e6e6;
-  padding: 10px 20px 10px 20px;
-  margin: 20px 0 20px 0;
+  background-color: $panel-border-bg;
+  padding: 10px 20px 4px 20px;
+  margin: 4px 0 62px 0;
   border-radius: 3px;
   float: left;
   width: 100%;
