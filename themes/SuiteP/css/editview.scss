@@ -2043,8 +2043,12 @@ ul.clickMenu > li > span {
   margin-top: 9px;
   width: 16px;
   height: 16px;
+}
 
-
+@-moz-document url-prefix() {
+  ul.clickMenu:first-child > li > span {
+    margin-right: -7px;
+  }
 }
 
 .inlineButtons ul.clickMenu > li > span {
