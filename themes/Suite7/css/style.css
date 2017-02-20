@@ -3584,7 +3584,6 @@ ul.clickMenu form {
 ul.SugarActionMenuIESub li a:hover, ul.clickMenu.SugarActionMenu li a:hover, ul.clickMenu.SugarActionMenu li span.subhover:hover,
 ul#globalLinksSubnav li a:hover, ul#quickCreateULSubnav li a:hover,
 ul.clickMenu li ul.subnav li a:hover, ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover { /*--Hover effect for subnav links--*/
-
   background-color: #f10202;
   border-color: #f10202;
   color: #fff;
@@ -4310,7 +4309,8 @@ ul.clickMenu > li, ul.SugarActionMenuIESub li {
   font-size: 12px;
 }
 
-ul.clickMenu > li:hover, ul.SugarActionMenuIESub li:hover {
+ul.clickMenu > li:hover, ul.SugarActionMenuIESub li:hover,
+ul.clickMenu > li:hover > a:first-child {
   background: red;
   color: white;
 }
