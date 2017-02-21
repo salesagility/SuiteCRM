@@ -588,7 +588,7 @@ class AOR_Report extends Basic
             $total_rows = $assoc['c'];
         }
 
-        $html = "<table class='list' id='report_table_" . $tableIdentifier . "' width='100%' cellspacing='0' cellpadding='0' border='0' repeat_header='1'>";
+        $html = "<table class='list aor_reports' id='report_table_" . $tableIdentifier . "' width='100%' cellspacing='0' cellpadding='0' border='0' repeat_header='1'>";
 
         if ($offset >= 0) {
             $start = 0;
@@ -647,7 +647,7 @@ class AOR_Report extends Basic
                 $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='button'  disabled='disabled'>
                         <img src='" . SugarThemeRegistry::current()->getImageURL('next_off.gif') . "' alt='Next' align='absmiddle' border='0'>
                     </button>
-                     <button type='button' id='listViewEndButton_top' name='listViewEndButton' title='End' class='button'  disabled='disabled'>
+                     <button type='button' id='listViewEndButton_top$dashletPaginationButtons' name='listViewEndButton' title='End' class='button'  disabled='disabled'>
                         <img src='" . SugarThemeRegistry::current()->getImageURL('end_off.gif') . "' alt='End' align='absmiddle' border='0'>
                     </button>";
 

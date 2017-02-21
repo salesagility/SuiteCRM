@@ -15,7 +15,13 @@
                                 'parameter_value' : params['values'],
                                 action : 'changeReportPage'}).done(
                             function(data){
-                              $('#report_table_' + table_id).replaceWith(data);
+                              var _data = $(data);
+                              // Fix the icons in the dashlet pagination.
+                              _data.find('.paginationChangeButtons').find('button').each(function(i,v){
+                                $(this).attr('id', $(this).attr('id')+'dashlet');
+                                $(this).addClass('btn-aor-reports-dashlet-pagination');
+                              });
+                              $('#report_table_' + table_id).replaceWith(_data);
                             }
                     );
                 }
