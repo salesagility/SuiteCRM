@@ -262,6 +262,7 @@ class ListViewSmarty extends ListViewDisplay
             return ;
         }
         $ss = new Sugar_Smarty();
+        $ss->assign('currentModule', $_REQUEST['module']);
         return $ss->fetch('include/ListView/ListViewSearchLink.tpl') . '<br>';
     }
 
