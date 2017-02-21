@@ -6498,7 +6498,6 @@ select,
 label.hidden-mobile.selected-actions-label,
 label.hidden-desktop.selected-actions-label {
   margin-bottom: initial;
-  font-size: 10.2px;
   line-height: 17px;
   letter-spacing: 1.2px;
 }
