@@ -143,7 +143,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading {{$panelHeadingCollapse}}">
-                    <a class="{{$collapsed}}" role="button" data-toggle="collapse" aria-expanded="false">
+                    <a class="{{$collapsed}}" role="button" data-toggle="collapse-edit" aria-expanded="false">
                         <div class="col-xs-10 col-sm-11 col-md-11">
                             {sugar_translate label='{{$label}}' module='{{$module}}'}
                         </div>
@@ -222,26 +222,26 @@ $(document).ready(function() {ldelim}
             }
         });
 
-        $('a[data-toggle="collapse"]').click(function(e){
-            var content;
+        $('a[data-toggle="collapse-edit"]').click(function(e){
+          // this == <a> link in the header of the panel:
+          //
+          // .panel
+          //     .panel-header
+          //        (a || a.collapsed) == this
+          //     .panel-body
+          //
             if($(this).hasClass('collapsed')) {
+              // Expand panel
+                // Change style of .panel-header
                 $(this).removeClass('collapsed');
-                if($(this).closest('.panel-content').length) {
-                    content = $(this).closest('.panel-content').find('.panel-body.panel-collapse.collapse');
-                }
-                else if($(this).closest('.panel.panel-default').length){
-                    content = $(this).closest('.panel.panel-default').next();
-                }
-                content.addClass('in');
+                // Expand .panel-body
+                $(this).parents('.panel').find('.panel-body').removeClass('in').addClass('in');
             } else {
+              // Collapse panel
+                // Change style of .panel-header
                 $(this).addClass('collapsed');
-                if($(this).closest('.panel-content').length) {
-                    content = $(this).closest('.panel-content').find('.panel-body.panel-collapse.collapse');
-                }
-                else if($(this).closest('.panel.panel-default').length){
-                    content = $(this).closest('.panel.panel-default').next();
-                }
-                content.removeClass('in');
+                // Collapse .panel-body
+                $(this).parents('.panel').find('.panel-body').removeClass('in').removeClass('in');
             }
         });
     });
