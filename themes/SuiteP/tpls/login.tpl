@@ -89,8 +89,10 @@
                 <input type="hidden" name="{$key}" value="{$var}">
             {/foreach}
             {if !empty($SELECT_LANGUAGE)}
-                {sugar_translate module="Users" label="LBL_LANGUAGE"}:
-                <select name='login_language' onchange="switchLanguage(this.value)">{$SELECT_LANGUAGE}</select>
+                <div class="login-language-chooser" >
+                    {sugar_translate module="Users" label="LBL_LANGUAGE"}:
+                    <select name='login_language' onchange="switchLanguage(this.value)">{$SELECT_LANGUAGE}</select>
+                </div>
             {/if}
             <br>
             <div class="input-group">
