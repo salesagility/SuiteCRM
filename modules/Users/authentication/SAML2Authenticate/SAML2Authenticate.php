@@ -129,7 +129,7 @@ class SAML2Authenticate extends SugarAuthenticate {
      */
     public function logout()
     {
-        if($this->samlLogoutAuth) {
+        if ($this->samlLogoutAuth && !empty($this->samlLogoutAuth->getSLOurl())) {
             $this->samlLogoutAuth->logout(
                 $this->samlLogoutArgs['returnTo'],
                 $this->samlLogoutArgs['parameters'],
@@ -138,6 +138,10 @@ class SAML2Authenticate extends SugarAuthenticate {
                 $this->samlLogoutArgs['false'],
                 $this->samlLogoutArgs['nameIdFormat']
             );
+        } else {
+            // TODO: SLO Url need for SAML2, add it to SAML2 authentication settings
+            $GLOBALS['log']->debug('SLO Url need for SAML2, add it to SAML2 authentication settings');
+            SugarApplication::redirect('index.php');
         }
     }
 
