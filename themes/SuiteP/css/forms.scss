@@ -344,6 +344,12 @@ fieldset[disabled] .btn-primary.active {
 
 #conditionLines > tbody > tr {
   display: block;
+  background-color: #f5f5f5;
+  border-bottom: 5px $main-alternate-bg solid;
+}
+
+#conditionLines > tbody > tr > td {
+  vertical-align: top;
 }
 
 
@@ -580,6 +586,10 @@ fieldset[disabled] .btn-primary.active {
 
 .edit tr td [data-workflow-action] td {
   vertical-align: middle;
+}
+
+[data-workflow-action-line] {
+  vertical-align: top;
 }
 
 [data-workflow-action-line] td:first-of-type {

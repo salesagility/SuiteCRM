@@ -372,13 +372,3 @@ function date_field_change(field){
         showElem(field + '[3]');
     }
 }
-
-var checkConditionLines = setInterval(function() {
-  // protect against session timeouts
-  if($('.edit-view-field #conditionLines').length <= 0) clearInterval(checkConditionLines);
-
-  $('#conditionLines').find('tbody').each(function() {
-    $(this).find('td').last().removeAttr("style");
-    $(this).find('td').height($(this).find('td').last().height() + 8);
-  })
-}, 700);

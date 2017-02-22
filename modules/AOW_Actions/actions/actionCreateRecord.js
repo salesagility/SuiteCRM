@@ -379,17 +379,3 @@ function date_field_change(field){
         showElem(field + '[3]');
     }
 }
-
-var checkActionCreateRecordLines = setInterval(function () {
-  // protect against session timeouts
-  if ($('.lines').length <= 0) clearInterval(checkActionCreateRecordLines);
-  if (SUGAR.themes.theme_name !== 'SuiteP') {
-      clearInterval(checkActionCreateRecordLines);
-      return;
-  }
-
-  $('.lines').find('tbody').each(function () {
-    $(this).find('td').last().removeAttr("style");
-    $(this).find('td').height($(this).find('td').last().height() + 8);
-  })
-}, 700);
