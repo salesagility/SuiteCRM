@@ -44,6 +44,11 @@ var LBL_REQUEST_SUBMIT = '{sugar_translate module="Users" label="LBL_REQUEST_SUB
 var LBL_SHOWOPTIONS = '{sugar_translate module="Users" label="LBL_SHOWOPTIONS"}';
 var LBL_HIDEOPTIONS = '{sugar_translate module="Users" label="LBL_HIDEOPTIONS"}';
 </script>
+
+{if $LOGIN_ERROR_MESSAGE}
+	<p align='center' class='error'>{$LOGIN_ERROR_MESSAGE}</p>
+{/if}
+
 <table cellpadding="0" align="center" width="100%" cellspacing="0" border="0" style="margin-top: 100px;">
 	<tr>
 		<td align="center">
