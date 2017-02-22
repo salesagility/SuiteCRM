@@ -556,7 +556,8 @@ EOCSS;
         foreach ($required as $name=>$display) {
             $print_required_array .= "required['$name'] = '". sanitize($display) . "';\n";
         }
-        $sqsWaitImage = SugarThemeRegistry::current()->getImageURL('sqsWait.gif');
+        $currentTheme = SugarThemeRegistry::current();
+        $sqsWaitImage = $currentTheme->getImageURL('sqsWait.gif');
 
         return <<<EOJAVASCRIPT
 
@@ -678,7 +679,7 @@ document.getElementById('addrow').onclick = function(){
     removeButton.id = 'deleterow_' + rownum;
     removeButton.className = "removeButton";
     var imgButton = document.createElement("img");
-    imgButton.src = "index.php?entryPoint=getImage&themeName=Sugar&imageName=id-ff-remove.png";
+    imgButton.src = "index.php?entryPoint=getImage&themeName={$currentTheme}&imageName=id-ff-remove.png";
     removeButton.appendChild(imgButton);
 
 
