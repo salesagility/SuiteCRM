@@ -38,6 +38,21 @@ $(document).ready(function() {
             var fieldType = $('#aor_conditions_value_type\\['+ln+'\\]').val();
             _form.append('<input type="hidden" name="parameter_type[]" value="'+fieldType+'">');
             var fieldInput = $('#aor_conditions_value\\['+ln+'\\]').val();
+            if($('#aor_conditions_value\\['+ln+'\\]\\[0\\]').length){
+                var fieldValue = $('#aor_conditions_value\\['+ln+'\\]\\[0\\]').val();
+                var fieldSign = $('#aor_conditions_value\\['+ln+'\\]\\[1\\]').val();
+                var fieldNumber = $('#aor_conditions_value\\['+ln+'\\]\\[2\\]').val();
+                var fieldTime = $('#aor_conditions_value\\['+ln+'\\]\\[3\\]').val();
+                _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldValue+'">');
+                _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldSign+'">');
+                _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldNumber+'">');
+                _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldTime+'">');
+            }
+            if($('#aor_conditions_value\\['+index+'\\]').hasClass('date_input')) { // only change to DB format if its a date
+                if ($('#aor_conditions_value\\[' + ln + '\\]').hasClass('date_input')) {
+                    fieldInput = $.datepicker.formatDate('yy-mm-dd', new Date(fieldInput));
+                }
+            }
             _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldInput+'">');
         });
 
