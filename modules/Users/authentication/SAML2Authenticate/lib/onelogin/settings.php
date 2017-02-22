@@ -39,7 +39,7 @@
  */
 
 $spBaseUrl = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].'/';
-$spBasePath = 'index.php?action=Login&module=Users';
+$spBasePath = (strlen(dirname($_SERVER['PHP_SELF'])) > 1 ? dirname($_SERVER['PHP_SELF']) : '').'/index.php?action=Login&module=Users';
 $settingsInfo = array (
     'sp' => array (
         'entityId' => $spBaseUrl.$spBasePath,
