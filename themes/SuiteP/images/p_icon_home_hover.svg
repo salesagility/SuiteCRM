@@ -13,7 +13,10 @@
    version="1.1"
    id="svg2"
    inkscape:version="0.91 r"
-   sodipodi:docname="p_icon_home.svg">
+   sodipodi:docname="p_icon_home_hover.svg"
+   inkscape:export-filename="/var/www/html/sdk/instances/suitecrm-development-mysql/themes/SuiteP/images/p_icon_home.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <metadata
      id="metadata18">
     <rdf:RDF>
@@ -62,7 +65,7 @@
       <polygon
          points="2.8274286,9.6328392 2.8274286,20 8.4197921,20 8.4197921,14.173824 12.037122,14.173824 12.037122,20 17.213984,20 17.213984,9.6205748 20,9.6205748 9.9582441,0 0,9.52268 0,9.6328392 "
          id="polygon12"
-         style="fill:#ffffff"
+         style="fill:#f08377;fill-opacity:1"
          transform="translate(2,178)" />
     </g>
   </g>
