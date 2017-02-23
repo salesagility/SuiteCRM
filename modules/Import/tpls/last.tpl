@@ -40,20 +40,7 @@
 
 *}
 
-{literal}
-<style>
-    #tabListContainer ul.subpanelTablist li a.current
-    {
-        padding-left: 10px;
-    }
-div.resultsTable {
-    overflow: auto;
-    width: 1056px;
-    padding-top: 20px;
-    position: relative;
-}
-</style>
-{/literal}
+
 
 <h2>
 	<p>{$MOD.LBL_SUMMARY}</p>
@@ -101,7 +88,7 @@ div.resultsTable {
 <table width="100%" id="tabListContainerTable" cellpadding="0" cellspacing="0" border="0">
     <tr>
         <td nowrap id="tabListContainerTD">
-            <div id="tabListContainer" class="yui-module yui-scroll">
+            <div id="tabListContainer" class="yui-module yui-scroll import-stage-4">
                 <div class="yui-hd">
                     <span class="yui-scroll-controls" style="visibility:hidden">
                         <a title="scroll left" class="yui-scrollup"><em>scroll left</em></a>
@@ -109,7 +96,7 @@ div.resultsTable {
                     </span>
                 </div>
                 <div class="yui-bd">
-                    <ul class="subpanelTablist" id="tabList">
+                    <ul class="subpanelTablist import-stage-4-tabs" id="tabList">
                         <li id="pageNumIW_0" class="active" >
                             <a id="pageNumIW_0_anchor" class="current" href="javascript:SUGAR.IV.togglePages('0');">
                             <span id="pageNum_0_input_span" style="display:none;">
@@ -157,8 +144,8 @@ div.resultsTable {
 </table>
 
 <div style='width:100%'>
-    <div id="pageNumIW_0_div">{$RESULTS_TABLE}</div>
-    <div id="pageNumIW_1_div" style="display:none;" ><br/>
+    <div id="pageNumIW_0_div" class="scroll-h">{$RESULTS_TABLE}</div>
+    <div id="pageNumIW_1_div" class="scroll-h" style="display:none;" ><br/>
         {if $dupeCount > 0}
             <a href ="{$dupeFile}" target='_blank'>{$MOD.LNK_DUPLICATE_LIST}</a><br />
         {/if}
@@ -168,14 +155,14 @@ div.resultsTable {
             {$DUP_TABLE}
         </div>
     </div>
-    <div id="pageNumIW_2_div" style="display: none;" ><br/>
+    <div id="pageNumIW_2_div" class="scroll-h" style="display: none;" ><br/>
         {$MOD.LBL_ERROR_HELP}
         {if $errorCount > 0}
             <br/><br/>
             <a href="{$errorFile}" target='_blank'>{$MOD.LNK_ERROR_LIST}</a><br />
             <a href ="{$errorrecordsFile}" target='_blank'>{$MOD.LNK_RECORDS_SKIPPED_DUE_TO_ERROR}</a><br />
         {/if}
-        <div id="errors_table" class="resultsTable">
+        <div id="errors_table"  class="scroll-h resultsTable">
             {$ERROR_TABLE}
         </div>
     </div>
