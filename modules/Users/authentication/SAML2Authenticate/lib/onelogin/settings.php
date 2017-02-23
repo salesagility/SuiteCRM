@@ -42,21 +42,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$spBaseUrl = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['SERVER_NAME'].'/';
-$spBasePath = (strlen(dirname($_SERVER['PHP_SELF'])) > 1 ? dirname($_SERVER['PHP_SELF']) : '').'/index.php?action=Login&module=Users';
+$spBase = $GLOBALS['sugar_config']['site_url'].'/index.php?action=Login&module=Users';
 $settingsInfo = array (
     'sp' => array (
-        'entityId' => $spBaseUrl.$spBasePath,
+        'entityId' => $spBase,
         'assertionConsumerService' => array (
-            'url' => $spBaseUrl.$spBasePath,
+            'url' => $spBase,
         ),
         'singleLogoutService' => array (
-            'url' => $spBaseUrl.$spBasePath,
+            'url' => $spBase,
         ),
         'NameIDFormat' => 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
     ),
     'idp' => array (
-        'entityId' => $spBaseUrl.$spBasePath,
+        'entityId' => $spBase,
         'singleSignOnService' => array (
             'url' => isset($GLOBALS['sugar_config']['SAML_loginurl']) ? $GLOBALS['sugar_config']['SAML_loginurl'] : '',
         ),
