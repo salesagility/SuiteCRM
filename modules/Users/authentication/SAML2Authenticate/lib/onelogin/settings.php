@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,40 +36,32 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
-/*********************************************************************************
-
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
-
-
-
-// record the last theme the user used
-$current_user->setPreference('lastTheme',$theme);
-$GLOBALS['current_user']->call_custom_logic('before_logout');
-
-if(method_exists($authController->authController, 'preLogout')) {
-	$authController->authController->preLogout();
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
 
-// submitted by Tim Scott from SugarCRM forums
-foreach($_SESSION as $key => $val) {
-	$_SESSION[$key] = ''; // cannot just overwrite session data, causes segfaults in some versions of PHP	
-}
-if(isset($_COOKIE[session_name()])) {
-	setcookie(session_name(), '', time()-42000, '/',null,false,true);
-}
-
-//Update the tracker_sessions table
-// clear out the authenticating flag
-session_destroy();
-
-LogicHook::initialize();
-$GLOBALS['logic_hook']->call_custom_logic('Users', 'after_logout');
-
-/** @var AuthenticationController $authController */
-$authController->authController->logout();
+$spBase = $GLOBALS['sugar_config']['site_url'].'/index.php?action=Login&module=Users';
+$settingsInfo = array (
+    'sp' => array (
+        'entityId' => $spBase,
+        'assertionConsumerService' => array (
+            'url' => $spBase,
+        ),
+        'singleLogoutService' => array (
+            'url' => $spBase,
+        ),
+        'NameIDFormat' => 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+    ),
+    'idp' => array (
+        'entityId' => $spBase,
+        'singleSignOnService' => array (
+            'url' => isset($GLOBALS['sugar_config']['SAML_loginurl']) ? $GLOBALS['sugar_config']['SAML_loginurl'] : '',
+        ),
+        'singleLogoutService' => array (
+            'url' => isset($GLOBALS['sugar_config']['SAML_logouturl']) ? $GLOBALS['sugar_config']['SAML_logouturl'] : '',
+        ),
+        'x509cert' => isset($GLOBALS['sugar_config']['SAML_X509Cert']) ? $GLOBALS['sugar_config']['SAML_X509Cert'] : '',
+    ),
+);
