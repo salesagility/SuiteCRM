@@ -72,7 +72,6 @@ $mod_strings = array (
   'LBL_START_DATE' => 'start date',
   'LBL_END_DATE' => 'End Date/Time',
   'LBL_BUDGET' => 'Budget',
-  'LBL_FP_EVENTS_FP_EXPENSES_1_FROM_FP_EXPENSES_TITLE' => 'Expenses',
   'LBL_INVITE_PDF' => 'Send Invites',
   'LBL_INVITE_EMAIL' => 'Send Invite as Email',
   'LBL_PDF_TEMPLATE' => 'Invite PDF Template',

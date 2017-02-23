@@ -1,11 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,20 +36,18 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
-/*********************************************************************************
- * Description:    Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 
-$mod_strings = array (
-    'LBL_DELETE_USER_CONFIRM'           => 'When the User record is deleted, the corresponding Employee record will also be deleted. After the user is deleted, any workflow definitions and reports involving the user might need to be updated.<br/><br/> Deleting a User record cannot be undone.',
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-	'LBL_DELETE_GROUP_CONFIRM'          => 'Are you sure you want to delete this Group User? Click OK to delete the User record.<br/>After clicking OK, you will be given the ability to reassign records assigned to the Group User to another user.',
-	'LBL_DELETE_PORTAL_CONFIRM'         => 'Are you sure you want to delete this Portal API User? Click OK to delete the User record.',
+$mod_strings = array(
+    'LBL_DELETE_USER_CONFIRM' => 'When the User record is deleted, the corresponding Employee record will also be deleted. After the user is deleted, any workflow definitions and reports involving the user might need to be updated.<br/><br/> Deleting a User record cannot be undone.',
+
+    'LBL_DELETE_GROUP_CONFIRM' => 'Are you sure you want to delete this Group User? Click OK to delete the User record.<br/>After clicking OK, you will be given the ability to reassign records assigned to the Group User to another user.',
+    'LBL_DELETE_PORTAL_CONFIRM' => 'Are you sure you want to delete this Portal API User? Click OK to delete the User record.',
 
 
     'LNK_IMPORT_USERS' => 'Import Users',
@@ -385,7 +383,7 @@ $mod_strings = array (
     'LBL_USE_REAL_NAMES_DESC' => 'Display users\' full names instead of their User Names in assignment fields.',
     'LBL_USER_INFORMATION' => 'User Profile',
     'LBL_USER_LOCALE' => 'Locale Settings',
-    'LBL_USER_NAME' => 'User Name',
+    'LBL_USER_NAME' => 'Username',
     'LBL_USER_SETTINGS' => 'User Settings',
     'LBL_USER_TYPE' => 'User Type',
     'LBL_USER_ACCESS' => 'Access',
@@ -549,10 +547,10 @@ $mod_strings = array (
     'LBL_WIZARD_PERSONALINFO' => 'Your Information',
     'LBL_WIZARD_LOCALE' => 'Your Locale',
 
-	//Wizard Scenarios
-	'LBL_WIZARD_SCENARIOS' => 'Your Scenarios',
-	'LBL_WIZARD_SCENARIOS_EMPTY_LIST' => 'No scenarios have been configured',
-	'LBL_WIZARD_SCENARIOS_DESC' => 'Choose which scenarios are appropriate for your installation.  These options can be changed post-install.',
+    //Wizard Scenarios
+    'LBL_WIZARD_SCENARIOS' => 'Your Scenarios',
+    'LBL_WIZARD_SCENARIOS_EMPTY_LIST' => 'No scenarios have been configured',
+    'LBL_WIZARD_SCENARIOS_DESC' => 'Choose which scenarios are appropriate for your installation.  These options can be changed post-install.',
 
     'LBL_WIZARD_SMTP' => 'Your Email Account',
     'LBL_WIZARD_PERSONALINFO_DESC' => 'Provide information about yourself. The information you provide about yourself will be visible to other SuiteCRM users.<br />Fields marked with <span class="required">*</span> are required.',
@@ -590,9 +588,9 @@ $mod_strings = array (
     'LBL_SUITE_POWERED_BY' => "Powered By SugarCRM",
     'LBL_SUITE_TOP' => "Back to top",
     'LBL_SUITE_PRINT' => "Print this page",
-    'LBL_SUITE_DESC1' => 'SuiteCRM has been written and assembled by SalesAgility, one of the worlds most knowledgeable SugarCRM consultancies.',
-    'LBL_SUITE_DESC2' => 'SuiteCRM is intended to deliver on the promise of SugarCRM - a freely available open source CRM project that combines great functionality, with community and commitment.',
-    'LBL_SUITE_DESC3' => 'There will be no licenced software as part of the project managed by SalesAgility. All the code is free. All the code is available for free download. There is no hidden agenda to charge for access to the code. It is and always will be free and open source. There will be no paid-for versions.',
+    'LBL_SUITE_DESC1' => 'SuiteCRM has been written and assembled by <a href="https://salesagility.com">SalesAgility</a>.  The Program is provided AS IS, without warranty.  Licensed under AGPLv3.',
+    'LBL_SUITE_DESC2' => 'This program is free software; you can redistribute it and/or modify it under the terms of the GNU Affero General Public License version 3 as published by the Free Software Foundation, including the additional permission set forth in the source code header.',
+    'LBL_SUITE_DESC3' => 'SuiteCRM is a trademark of SalesAgility Ltd. All other company and product names may be trademarks of the respective companies with which they are associated.',
     'LBL_QUICK_ACCOUNT' => 'Create Account',
     'LBL_QUICK_CONTACT' => 'Create Contact',
     'LBL_QUICK_OPPORTUNITY' => 'Create Opportunity',
@@ -604,7 +602,7 @@ $mod_strings = array (
     'LBL_ENABLE_NOTIFICATIONS' => 'Enable Desktop Notifications',
     'LBL_LIST_NONINHERITABLE' => "Not Inheritable",
     'LBL_PRIMARY_GROUP' => "Primary Group",
-	'LBL_PASSWORD_MIS_MATCH' => 'mis-match',
+    'LBL_PASSWORD_MIS_MATCH' => 'mis-match',
 ); // END STRINGS DEFS
 
 ?>

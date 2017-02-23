@@ -1,11 +1,11 @@
-<?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+{*
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,13 +36,27 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-/*********************************************************************************
-
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
-?>
+ */
+*}
+<div id="searchDialog" class="modal fade modal-search" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{$APP.LBL_FILTER_HEADER_TITLE}</h4>
+                <!-- Nav tabs -->
+                <h5 class="searchTabHeader mobileOnly basic active">{$APP.LBL_QUICK_FILTER}</h5>
+                <h5 class="searchTabHeader mobileOnly advanced">{$APP.LBL_ADVANCED_SEARCH}</h5>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="searchTabHandler basic active"><a href="javascript:void(0)"
+                                                                 onclick="listViewSearchIcon.toggleSearchDialog('basic'); return false;"
+                                                                 aria-controls="searchList" role="tab"
+                                                                 data-toggle="tab">{$APP.LBL_QUICK_FILTER}</a></li>
+                    <li class="searchTabHandler advanced"><a href="javascript:void(0)"
+                                                             onclick="listViewSearchIcon.toggleSearchDialog('advanced'); return false;"
+                                                             aria-controls="searchList" role="tab"
+                                                             data-toggle="tab">{$APP.LBL_ADVANCED_SEARCH}</a></li>
+                </ul>
+            </div>
+            <div class="modal-body" id="searchList">
