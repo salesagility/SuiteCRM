@@ -1,6 +1,23 @@
 /**** Edit view ***/
 @import 'variables';
 
+/*Import VCard*/
+.import-vcard {
+  background-color: $main-alternate-bg;
+  padding: 16px;
+  border-radius: 4px;
+
+  #vcard_file {
+    margin-top: 10px;
+    margin-buttom: 10px;
+  }
+
+  .button {
+    margin-top: 10px;
+    margin-buttom: 10px;
+  }
+}
+
 div#searchResults {
   padding-bottom: 50px;
   overflow-y: auto;
@@ -4142,10 +4159,6 @@ hr {
 
 }
 
-#forgotpasslink {
-  margin: 10px 0 0 0;
-}
-
 .teamNoticeBox {
   border: none;
 }
@@ -4966,10 +4979,7 @@ object {
     font-size: 1em;
   }
 
-  .content {
-    margin: 0 0 0 0;
-    width: 100%;
-  }
+
 
   #pageContainer {
     margin: 0 0 0 0;

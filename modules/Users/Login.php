@@ -87,9 +87,10 @@ if(isset($_COOKIE['loginErrorMessage'])) {
 }
 if(isset($_REQUEST['loginErrorMessage'])) {
     if (isset($mod_strings[$_REQUEST['loginErrorMessage']])) {
-        echo "<p align='center' class='error' > ". $mod_strings[$_REQUEST['loginErrorMessage']]. "</p>";
+        $sugar_smarty->assign("LOGIN_ERROR_MESSAGE", $mod_strings[$_REQUEST['loginErrorMessage']]);
     } else if (isset($app_strings[$_REQUEST['loginErrorMessage']])) {
-        echo "<p align='center' class='error' > ". $app_strings[$_REQUEST['loginErrorMessage']]. "</p>";
+
+        $sugar_smarty->assign("LOGIN_ERROR_MESSAGE",  $app_strings[$_REQUEST['loginErrorMessage']]);
     }
 }
 

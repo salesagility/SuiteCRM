@@ -731,6 +731,10 @@ a.listViewTdToolsS1 {
   margin: 14px 20px 0 0;
 }
 
+#massassign_form h3 span {
+  color: $mass-assign-color;
+}
+
 #massassign_form .button {
   margin-right: 10px;
 }
@@ -747,6 +751,10 @@ a.listViewTdToolsS1 {
 #mass_update_table td {
   padding-left: 15px;
   line-height: 40px;
+}
+
+#mass_update_table.tabForm td {
+  color: $mass-assign-color;
 }
 
 #mass_update_table td select {
