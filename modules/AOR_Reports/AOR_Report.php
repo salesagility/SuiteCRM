@@ -707,7 +707,20 @@ class AOR_Report extends Basic {
                 if($att['display']){
                     $html .= "<td class='' valign='top' align='left'>";
                     if($att['link'] && $links){
-                        $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$att['module']."&action=DetailView&record=".$row[$att['alias'].'_id']."'>";
+                        if(
+                            !empty(array_key_exists($att['field'], $field_bean->field_name_map)) &&
+                            !empty($field_bean->field_name_map[$field->field]['type']) &&
+                            $field_bean->field_name_map[$att['field']]['type'] == 'relate' &&
+                            $field_bean->field_name_map[$att['field']]['source'] == 'non-db'
+                        ) {
+                            $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$field_bean->field_name_map[$field->field]['module']."&action=DetailView&record=".$row[$name]."'>";
+                        }
+                        elseif(!empty($row[$att['alias'].'_id'])) {
+                            $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$att['module']."&action=DetailView&record=".$row[$att['alias'].'_id']."'>";
+                        }
+                        else {
+                            $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$att['module']."&action=DetailView&record=".$row['ID0']."'>";
+                        }
                     }
 
                     $currency_id = isset($row[$att['alias'].'_currency_id']) ? $row[$att['alias'].'_currency_id'] : '';
@@ -1383,27 +1396,37 @@ class AOR_Report extends Basic {
                             break;
 
                         case 'Date':
+                            global $timedate;
+                            $hours = $timedate->getUserUTCOffset()/60;
                             $params = unserialize(base64_decode($condition->value));
 
                             // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
                             if($params == false) {
-                                $params = $condition->value;
+                                if(!isset($this->count)) $this->count = 0;
+                                $this->count++;
+                                if(in_array("undefined", $_REQUEST['parameter_value'])){
+                                    $undefined = array("undefined");
+                                    $_REQUEST['parameter_value'] = array_diff($_REQUEST['parameter_value'], $undefined);
+                                }
+                                $params = array_slice($_REQUEST['parameter_value'], ($this->count -1) *4, 4 );
+
                             }
 
                             if ($params[0] == 'now') {
-                                if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
-                                    $value = 'GetDate()';
-                                } else {
-                                    $value = 'NOW()';
-                                }
+                                $value = $this->db->convert("", "utc_datetime");
+                                $field = $this->db->convert($this->db->convert($field, "add_time", array($hours, '00')), "date_cast");
                             } else if($params[0] == 'today'){
-                                if($sugar_config['dbconfig']['db_type'] == 'mssql'){
-                                    //$field =
-                                    $value  = 'CAST(GETDATE() AS DATE)';
-                                } else {
-                                    $field = 'DATE('.$field.')';
-                                    $value = 'Curdate()';
-                                }
+                                $field = $this->db->convert($this->db->convert($field, "add_time", array($hours, '00')), "date_cast");
+                                //Cast UTC + timezone as date
+                                $value =
+                                    $this->db->convert(
+
+                                        $this->db->convert(
+                                            $this->db->convert("", "utc_datetime"),
+                                            "add_time",
+                                            array($hours, '00')),
+                                        "date_cast"
+                                    );
                             } else {
                                 $data = $condition_module->field_defs[$params[0]];
                                 if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
@@ -1446,18 +1469,54 @@ class AOR_Report extends Basic {
                             $where_set = true;
                             break;
                         case "Period":
+                            global $timedate;
+                            $hours = $timedate->getUserUTCOffset()/60;
+
                             if (array_key_exists($condition->value, $app_list_strings['date_time_period_list'])) {
                                 $params = $condition->value;
                             } else {
                                 $params = base64_decode($condition->value);
                             }
-                            $value = '"' . getPeriodDate($params)->format('Y-m-d H:i:s') . '"';
+
+                            $field = $this->db->convert(
+                                $this->db->convert($field , "add_time", array($hours, "00")),
+                                "date_cast" );
+
+                            $value = $this->db->convert(
+                                $this->db->convert($this->db->quoted(getPeriodDate($params)->format('Y-m-d H:i:s')) , "add_time", array($hours, "00")),
+                                "date_cast" );
                             break;
                         case "CurrentUserID":
                             global $current_user;
                             $value = '"' . $current_user->id . '"';
                             break;
                         case 'Value':
+
+                            global $timedate;
+                            $hours = $timedate->getUserUTCOffset()/60;
+                            $utc = new DateTimeZone("UTC");
+                            $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $condition->value, $utc);
+                            //Can also get passed just a date, so check if a date and not datetime is passed
+                            if($dateTime === FALSE) {
+                                $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $condition->value . " 00:00:00", $utc);
+                            }
+                            //If its a datetime field, then modify the query to meet difference in UTC
+                            if ($dateTime !== FALSE) {
+
+                                $field = $this->db->convert(
+                                    $this->db->convert($field, "add_time", array($hours, "00")),
+                                    "date_cast"
+                                );
+                                $value = $this->db->convert(
+                                    $this->db->convert($this->db->quoted($dateTime->format('Y-m-d H:i:s')), "add_time", array($hours, "00")),
+                                    "date_cast"
+                                );
+
+                            }
+                            else{
+                                $value = "'" . $this->db->quote($condition->value) . "'";
+                            }
+                            break;
                         default:
                             $value = "'" . $this->db->quote($condition->value) . "'";
                             break;
@@ -1488,27 +1547,32 @@ class AOR_Report extends Basic {
                                 $params = base64_decode($condition->value);
                             }
                             $date = getPeriodEndDate($params)->format('Y-m-d H:i:s');
-                            $value = '"' . getPeriodDate($params)->format('Y-m-d H:i:s') . '"';
 
                             $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND '));
                             $tiltLogicOp = false;
 
                             switch ($aor_sql_operator_list[$condition->operator]) {
                                 case "=":
-                                    $query['where'][] = $field . ' BETWEEN ' . $value .  ' AND ' . '"' . $date . '"';
+                                    $query['where'][] = $field . ' BETWEEN ' . $value .  ' AND ' . $this->db->convert( $this->db->quoted($date), "date_cast") ;
                                     break;
                                 case "!=":
-                                    $query['where'][] = $field . ' NOT BETWEEN ' . $value .  ' AND ' . '"' . $date . '"';
+                                    $query['where'][] = $field . ' NOT BETWEEN ' . $value .  ' AND ' .  $this->db->convert($this->db->quoted($date), "date_cast");
+                                    break;
+                                case ">=":
+                                    $query['where'][] = "((" .$field . ' BETWEEN ' . $value .  ' AND ' .  $this->db->convert($this->db->quoted($date), "date_cast")
+                                        . ") OR (" . $field . ' > ' . $value ."))";
+                                    break;
+                                case "<=":
+                                    $query['where'][] = "((" .$field . ' BETWEEN ' . $value .  ' AND ' .  $this->db->convert($this->db->quoted($date), "date_cast")
+                                        . ") OR (" . $field . ' < ' . $value ."))";
                                     break;
                                 case ">":
                                 case "<":
-                                case ">=":
-                                case "<=":
                                     $query['where'][] = $field . ' ' . $aor_sql_operator_list[$condition->operator] . ' ' . $value;
                                     break;
                             }
                         } else {
-                            if (!$where_set) $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $field . ' ' . $aor_sql_operator_list[$condition->operator] . ' ' . $value;
+                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $field . ' ' . $aor_sql_operator_list[$condition->operator] . ' ' . $value;
                         }
                     }
                     $tiltLogicOp = false;

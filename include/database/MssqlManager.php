@@ -1156,6 +1156,10 @@ class MssqlManager extends DBManager
                 return 'DATEADD(minute, ' . $operation . abs($getUserUTCOffset) . ', ' . $string . ')';
             case 'avg':
                 return "avg($string)";
+	    case 'date_cast':
+                return "CAST(" . $string . " AS DATE)";
+            case 'utc_datetime':
+                return "GETUTCDATE()";
         }
 
         return "$string";
