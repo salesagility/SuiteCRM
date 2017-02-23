@@ -3459,6 +3459,7 @@ SE.settings = {
         SE.settings.settingsDialog.show();
         SE.folders.lazyLoadSettings();
         SE.accounts.lazyLoad();
+      $(window).scrollLeft(0);
     },
 
 
