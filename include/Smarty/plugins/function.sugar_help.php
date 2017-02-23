@@ -79,15 +79,7 @@ function smarty_function_sugar_help($params, &$smarty)
 
 			$click .=",'".$params['myPos']."','".$params['atPos']."'";
 	}
-    switch(SugarThemeRegistry::current()) {
-        case "SuiteP":
-            $helpImage = 'themes/'.SugarThemeRegistry::current().'/images/helpInline.png';
-            break;
-        default:
-            $helpImage = SugarThemeRegistry::current()->getImageURL('helpInline.png');
-            break;
-    }
-
+    $helpImage = SugarThemeRegistry::current()->getImageURL('helpInline.png');
 	$click .= " );" ;
     $alt_tag = $GLOBALS['app_strings']['LBL_ALT_INFO'];
     return <<<EOHTML
