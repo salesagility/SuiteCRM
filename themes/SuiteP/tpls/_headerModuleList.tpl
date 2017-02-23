@@ -291,10 +291,6 @@
             {literal}
                 <script>
                   var windowResize = function() {
-
-                    // only run if the desktop toolbar is in view
-                    if($(window).width() < 1201) { return true; }
-
                     // Since the height can be changed in Sass.
                     // Take a measurement of the initial desktop navigation bar height with just one menu item
                     $('.desktop-toolbar ul.navbar-nav > li').not('.all').addClass('hidden');
