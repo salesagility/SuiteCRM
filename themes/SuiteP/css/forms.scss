@@ -309,22 +309,18 @@ fieldset[disabled] .btn-primary.active {
 
 .btn-danger {
   background-color: $danger-btn-bg;
-  border: 1px solid $danger-btn-bg;
 }
 
 .btn-danger:hover {
-  background-color: $danger-btn-bg;
-  border: 1px solid $danger-btn-bg;
+  background-color: $danger-btn-bg-hover;
 }
 
 .btn-danger:active {
   background-color: $danger-btn-bg;
-  border: 1px solid $danger-btn-bg;
 }
 
 .btn-danger:focus {
   background-color: $danger-btn-bg;
-  border: 1px solid $danger-btn-bg;
 }
 
 /** EditView action buttons ***/
@@ -1297,6 +1293,16 @@ div.email-address-line-container:not(:nth-of-type(2)) div.email-address-option l
 
 .col-sm-6 #email1_span .email-address-option {
   width: 33.33%;
+}
+
+// Overriding inline style
+// TODO replace with modal dialog
+#settingsDialog_c {
+  z-index: 20;
+}
+
+#testOutboundDialog_c {
+  z-index: 20;
 }
 
 font[color=red] {

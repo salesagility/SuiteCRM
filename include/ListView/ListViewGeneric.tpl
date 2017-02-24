@@ -42,7 +42,7 @@
 
 
 *}
-
+{include file='include/ListView/ListViewColumnsFilterDialog.tpl'}
 <script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
 
 
@@ -101,6 +101,12 @@
             {$APP.LBL_NO_DATA}
         </p>
 	{/if}
+		<p class="msg">
+			{$APP.MSG_LIST_VIEW_CHANGE_SEARCH}
+		</p>
+		{if $showFilterIcon}
+			{include file='include/ListView/ListViewSearchLink.tpl'}
+		{/if}
 	</div>
 {/if}
 {$multiSelectData}

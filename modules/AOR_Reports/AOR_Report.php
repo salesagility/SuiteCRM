@@ -1,12 +1,11 @@
 <?php
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,6 +37,7 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 class AOR_Report extends Basic {
     var $new_schema = true;
     var $module_dir = 'AOR_Reports';
@@ -117,13 +117,19 @@ class AOR_Report extends Basic {
         $chart->save_lines($_POST, $this, 'aor_chart_');
     }
 
-    function ACLAccess($view,$is_owner='not_set',$in_group='not_set', $target_module){
-        $result = parent::ACLAccess($view,$is_owner,$in_group);
-        if($result === true){
-            if($target_module != ""){
-                $result = ACLController::checkAccess($this->report_module, 'list', true);
-            }
+    /**
+     * @param string $view
+     * @param string $is_owner
+     * @param string $in_group
+     * @return bool
+     */
+    public function ACLAccess($view, $is_owner = 'not_set', $in_group = 'not_set')
+    {
+        $result = parent::ACLAccess($view, $is_owner, $in_group);
+        if ($result && $this->report_module !== '') {
+            $result = ACLController::checkAccess($this->report_module, 'list', true);
         }
+
         return $result;
     }
 

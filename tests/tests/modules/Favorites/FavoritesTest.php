@@ -23,8 +23,8 @@ class FavoritesTest extends PHPUnit_Framework_TestCase
 
         $favorites = new Favorites();
 
-        //test without any ID. testing with an invalid ID will throw fatal error
-        $result = $favorites->deleteFavorite();
+        //testing with an empty ID
+        $result = $favorites->deleteFavorite('');
         $this->assertEquals(false, $result);
     }
 
