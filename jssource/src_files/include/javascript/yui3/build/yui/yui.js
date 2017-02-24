@@ -103,7 +103,7 @@ if (typeof YUI != 'undefined') {
     var proto, prop,
         VERSION = '3.3.0',
         PERIOD = '.',
-        BASE = 'http://yui.yahooapis.com/',
+        BASE = 'https://yui-s.yahooapis.com/',
         DOC_LABEL = 'yui3-js-enabled',
         NOOP = function() {},
         SLICE = Array.prototype.slice,

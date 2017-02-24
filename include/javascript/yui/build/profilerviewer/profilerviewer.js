@@ -1039,7 +1039,7 @@ version: 2.9.0
 		 * @default "http://yui.yahooapis.com/2.5.0/build/charts/assets/charts.swf"
 		 */
 		this.setAttributeConfig('swfUrl', {
-			value: attr.swfUrl || "http://yui.yahooapis.com/2.5.0/build/charts/assets/charts.swf"
+			value: attr.swfUrl || "https://yui-s.yahooapis.com/2.5.0/build/charts/assets/charts.swf"
 		});
 
         /**

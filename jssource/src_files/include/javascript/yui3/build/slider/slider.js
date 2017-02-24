@@ -435,8 +435,8 @@ Y.SliderBase = Y.extend( SliderBase, Y.Widget, {
 
             // Unfortunate hack to avoid requesting image resources from the
             // combo service.  The combo service does not serve images.
-            if (base.indexOf('http://yui.yahooapis.com/combo') === 0) {
-                base = 'http://yui.yahooapis.com/' + Y.version + '/build/';
+            if (base.indexOf('https://yui-s.yahooapis.com/combo') === 0) {
+                base = 'https://yui-s.yahooapis.com/' + Y.version + '/build/';
             }
 
             // <img src="/path/to/build/slider/assets/skins/sam/thumb-x.png">
