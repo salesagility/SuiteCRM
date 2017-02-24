@@ -38,7 +38,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
-
+{include file='include/ListView/ListViewColumnsFilterDialog.tpl'}
 <script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
 
 
@@ -68,6 +68,11 @@
 {if count($data) == 0}
 	{assign var="hideTable" value=true}
 	<div class="list view listViewEmpty">
+        {if $showFilterIcon}
+			<div class="filterContainer">
+                {include file='include/ListView/ListViewSearchLink.tpl'}
+			</div>
+        {/if}
 		{if $displayEmptyDataMesssages}
         {if strlen($query) == 0}
                 {capture assign="createLink"}<a href="?module={$pageData.bean.moduleDir}&action=EditView&return_module={$pageData.bean.moduleDir}&return_action=DetailView">{$APP.LBL_CREATE_BUTTON_LABEL}</a>{/capture}
@@ -77,19 +82,18 @@
                     {$APP.MSG_EMPTY_LIST_VIEW_NO_RESULTS|replace:"<item2>":$createLink|replace:"<item3>":$importLink}
                 </p>
         {elseif $query == "-advanced_search"}
-            <p class="msg">
-                {$APP.MSG_LIST_VIEW_NO_RESULTS_BASIC}
+            <p class="msg emptyResults">
+                {$APP.MSG_LIST_VIEW_NO_RESULTS_CHANGE_CRITERIA}
             </p>
         {else}
             <p class="msg">
                 {capture assign="quotedQuery"}"{$query}"{/capture}
                 {$APP.MSG_LIST_VIEW_NO_RESULTS|replace:"<item1>":$quotedQuery}
             </p>
-            <p class = "submsg">
+            <p class="submsg">
                 <a href="?module={$pageData.bean.moduleDir}&action=EditView&return_module={$pageData.bean.moduleDir}&return_action=DetailView">
                     {$APP.MSG_LIST_VIEW_NO_RESULTS_SUBMSG|replace:"<item1>":$quotedQuery|replace:"<item2>":$singularModule}
                 </a>
-
             </p>
         {/if}
     {else}

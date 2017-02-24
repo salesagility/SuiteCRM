@@ -621,6 +621,10 @@ table.subpanelTabForm {
     padding-left:10px !important;
     padding-top:10px !important;
 }
+
+.search_form label {
+    white-space: normal;
+}
 /* sitemap */
 
 #sitemap {
@@ -2167,7 +2171,6 @@ ul.clickMenu li span.ab:hover {
 
 ul.clickMenu>li, ul.SugarActionMenuIESub li {
     background-color: #eeeeee;
-    float: left;
     margin: 0;
     list-style: none;
     position: relative; /*--Declare X and Y axis base--*/
@@ -2178,6 +2181,7 @@ ul.clickMenu>li, ul.SugarActionMenuIESub li {
     transition: all 0.3s ease-out;
     padding:5px;
     color:#ffffff;
+    height: 25px;
 }
 
 ul.SugarActionMenuIESub li a,
@@ -2185,8 +2189,9 @@ ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .l
     display: block;
     text-decoration: none;
     float: left;
-    margin:0 5px 0 0;
+    margin: 0px 4px 0 0;
     color: #333333;
+    padding: 3px 3px 0px 8px;
 }
 
 .list tr.pagination td.buttons ul.clickMenu:hover > li > a:link, .list tr.pagination td.buttons ul.clickMenu:hover > li > a{
@@ -2202,17 +2207,25 @@ ul.clickMenu li a:hover{
 }
 
 ul.clickMenu li span { /*--Drop down trigger styles--*/
-    width: 22px;
-    height: 16px;
+    min-width: 15px;
+    height: 25px;
     float: left;
-    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -28px;
+    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 0px -24px;
     cursor: pointer;
+}
+
+#selectLink li span {
+    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 0px -28px;
 }
 
 ul.clickMenu li span.ab { /*--Drop down trigger styles--*/
     border-left: 1px #aaa solid;
     /* Remove the padding, not needed when we select records */
     /* padding-left: 5px; */
+}
+
+#select_link {
+    padding: 0px;
 }
 
 ul.clickMenu li span.subhover {
@@ -2354,11 +2367,12 @@ ul.clickMenu li ul.subnav li a:hover,ul.clickMenu li ul.subnav li input:hover, u
 td.paginationActionButtons ul.clickMenu .massall,
 ul#selectLink.clickMenu .massall, td.selectCol .massall{
     float: left;
-    margin: 2px 0 0 4px;
+    margin: 6px 0 0 0px;
 }
 
 td.paginationActionButtons ul.selectmenu > li > a, td.selectCol ul.selectmenu > li > a, ul#selectLink.clickMenu > li > a {
-    padding: 0 !important;
+    padding: 5px 5px 5px 5px;
+    margin: 0;
 }
 
 ul.clickMenu.showLess .moreOverflow , ul.clickMenu.showLess .moduleMenuOverFlowLess, ul.clickMenu.showMore .moduleMenuOverFlowMore {
@@ -2366,7 +2380,7 @@ ul.clickMenu.showLess .moreOverflow , ul.clickMenu.showLess .moduleMenuOverFlowL
 }
 
 ul#selectLink.clickMenu {
-    height: 17px;
+    height: 28px;
     min-width: 20px;
     background-image: none;
 }
@@ -2415,14 +2429,13 @@ ul#detailViewActions.clickMenu {
     width: 17px;
     height: 17px;
     float: left;
-    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -28px;
+    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -30px;
     opacity: .5;
 }
 
 .selectActionsDisabled span.ab {
     border-left: 1px #ccc solid;
-    margin-left: 10px;
-    padding-left: 5px;
+    margin: 6px 5px 2px -2px;
 }
 
 .selectActionsDisabled a, #selectActionsDisabled a:hover {
@@ -2430,7 +2443,7 @@ ul#detailViewActions.clickMenu {
     display: block;
     text-decoration: none !important;
     color: #999 !important;
-    padding: 1px 0 0 0 !important;
+    padding: 1px 0 0 0;
     text-shadow: 1px 1px #FFFFFF;
     font-weight: normal;
     font-size: 13px;
@@ -2512,8 +2525,8 @@ ul.clickMenu li ul.subnav li a:hover .showLessArrow, ul.clickMenu li ul.subnav l
 }
 
 .selectActionsDisabled {
-    padding: 3px 8px 3px 8px;
-    margin: 0 3px 0 3px;
+    /*padding: 3px 8px 3px 8px;
+    margin: 0 3px 0 3px;*/
     background: #cccccc; /* Old browsers */
     color: #121212;
     cursor: pointer;
@@ -3639,6 +3652,10 @@ h4,
     z-index: 16000;
 }
 
+.modal-lg{
+    display: table;
+}
+
 .qtip-titlebar {
     padding:  5px 24px 5px 10px;
 }
@@ -4370,6 +4387,9 @@ select,
     .search_form {
         display: none;
     }
+    .modal-search .search_form {
+        display: block;
+    }
 }
 
 /* Custom styling for recently viewed on sidebar */
@@ -4602,6 +4622,13 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
         float: left;
         background: url("../../../../index.php?entryPoint=getImage&themeName=suiteresponsive&imageName=actionMenuArrow.png") no-repeat scroll 6px -28px transparent;
         cursor: pointer;
+        margin: 4px 0px 0px 0;
+        left: -6px;
+        position: relative;
+    }
+    #selectLink li span {
+        margin: 0;
+        left: 0px
     }
 }
 
@@ -5977,5 +6004,279 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
     margin: 0 5px 0 0;
 }
 
+
+label.hidden-mobile.selected-actions-label,
+label.hidden-desktop.selected-actions-label {
+    margin-bottom: initial;
+    font-size: 10.2px;
+    line-height: 17px;
+    letter-spacing: 1.2px;
+}
+
+label.hidden-mobile.selected-actions-label,
+label.hidden-desktop.selected-actions-label {
+    line-height: 20px;
+}
+
+label.selected-actions-label {
+    cursor: pointer;
+}
+
+
+@media (min-width: 480px) {
+
+    label.hidden-desktop.selected-actions-label {
+        display: block;
+    }
+
+    label.hidden-mobile.selected-actions-label {
+        display: none;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    label.hidden-desktop.selected-actions-label {
+        display: none;
+    }
+
+    label.hidden-mobile.selected-actions-label {
+        display: block;
+    }
+
+}
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
+
+div.modal-content {
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+#columnsFilterDialog div.modal-content {
+    width: 450px;
+}
+
+div.modal-header > h4 {
+    font-size: 19px;
+    color: #534D64;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 300;
+}
+
+#columnsFilterList > div > h1 {
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+}
+
+ul.chooserList {
+    list-style-type: none;
+    min-height: 60px;
+}
+
+ul.chooserList > li {
+    padding: 10px;
+    margin-bottom: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+ul.chooserList.green.ui-sortable > li {
+    background-color: #CCE8E2;
+}
+
+ul.chooserList.red.ui-sortable > li {
+    background-color: #3C8DBC;
+}
+
+div.modal-header {
+    padding: 25px;
+}
+
+#columnsFilterList {
+    padding: 30px;
+}
+
+ul.chooserList.green.ui-sortable {
+    margin-bottom: 30px;
+}
+
+ul.chooserList.ui-sortable {
+    padding-left: 0;
+}
+
+
+ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton {
+    top: -1px;
+}
+
+ul.clickMenu.searchAppliedAlert {
+    color: #000;
+    background-image: none;
+    text-align: center;
+    padding: 5px 15px 5px 0px;
+}
+
+.paginationActionButtons input {
+    width: 30px;
+}
+
+.paginationActionButtons .selectActionsDisabled {
+    height: 27px;
+}
+
+.paginationActionButtons .sugar_action_button {
+    height: 25px;
+    padding: 0;
+}
+
+
+@media (max-width: 992px) {
+    ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly {
+        display: none;
+    }
+
+    .desktopOnly {
+        display: none;
+    }
+}
+
+@media (min-width: 992px) {
+    ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.mobileOnly {
+        display: none;
+    }
+
+    .mobileOnly {
+        display: none;
+    }
+}
+
+
+#selectedRecordsTop,
+#selectedRecordsBottom {
+    background-position-x: 95%;
+    padding-right: 10px;
+    color: #444444;
+    display: block!important;
+}
+
+ul.clickMenu.searchAppliedAlert.selectmenu.SugarActionMenu.listViewLinkButton {
+    padding: 0;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly a {
+    line-height: 15px;
+}
+
+ul.listViewLinkButton > li {
+    padding: 0;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li {
+    padding: 0;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li > a.glyphicon-remove {
+    font-weight: bold;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.glyphicon-remove {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    line-height: 0.8;
+    font-weight: bold;
+}
+
+ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.glyphicon-remove:before {
+    content: '';
+}
+
+.paginationActionButtons .parent-dropdown-handler {
+    padding: 0 0 0 5px;
+}
+
+.paginationActionButtons .parent-dropdown-handler label {
+    margin-bottom: 0px;
+    height: 25px;
+    line-height: 25px;
+    color: #444444;
+}
+
+#selectLinkTop .ddopen {
+    top: 25px!important;
+}
+
+#selectLinkBottom .ddopen {
+    top: 25px!important;
+}
+
+#actionLinkTop .ddopen {
+    top: 25px!important;
+}
+
+#actionLinkBottom .ddopen {
+    top: 25px!important;
+}
+
+ul.clickMenu.SugarActionMenu.listViewLinkButton > li .ddopen {
+    top: 25px!important;
+}
+
+.paginationActionButtons .parent-dropdown-handler:hover * {
+    color: #3C8DBC;
+}
+
+.dateTimeRangeChoice select {
+    width:125px;
+}
+
+.dateRangeInput {
+    width:100px !important;
+}
+
+.templateGroupChooser {
+    width: 150px;
+}
+
+@media (max-width: 990px) {
+    .modal-search tr {
+        width: 100%;
+        display: block;
+        float: none;
+        border: none;
+    }
+    .modal-search td {
+        width: 100%;
+        display: block;
+        float: none;
+    }
+    .modal-search .edit tr td[scope=row] {
+        width: 110px;
+        float: left;
+    }
+    .modal-search .edit.basic tr td {
+        clear: both;
+    }
+    .modal-search .helpIcon {
+      display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .modal-search .edit > table {
+        border: none;
+    }
+}
+
+@media (max-width: 360px) {
+    .modal-search .edit tr td[scope=row] {
+        width: 100%;
+        float: none;
+    }
+}

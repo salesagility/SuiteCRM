@@ -1992,7 +1992,7 @@ ul.clickMenu > li {
   color: $default-btn-color;
   cursor: pointer;
   padding: 5px;
-  margin: 0;
+  margin: 0 5px 0 0;
   border-radius: 3px;
   float: left;
   list-style: none;
@@ -4142,10 +4142,6 @@ hr {
 
 }
 
-#forgotpasslink {
-  margin: 10px 0 0 0;
-}
-
 .teamNoticeBox {
   border: none;
 }
@@ -4966,10 +4962,7 @@ object {
     font-size: 1em;
   }
 
-  .content {
-    margin: 0 0 0 0;
-    width: 100%;
-  }
+
 
   #pageContainer {
     margin: 0 0 0 0;
@@ -5417,7 +5410,7 @@ table tr#delegates_search {
 /* popup in studio */
 .masked .yui-simple-dialog {
   // Overridding inline style
-  z-index: 10!important;
+  z-index: 100000!important;
 }
 
 /* popup dialog on home page */

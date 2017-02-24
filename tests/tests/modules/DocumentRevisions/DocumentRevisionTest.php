@@ -118,7 +118,7 @@ class DocumentRevisionTest extends PHPUnit_Framework_TestCase
 
         //execute the method and test if it works and does not throws an exception.
         try {
-            $documentRevision->fill_document_name_revision();
+            $documentRevision->fill_document_name_revision('dummy_id');
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail();

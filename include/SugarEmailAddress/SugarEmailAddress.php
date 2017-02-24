@@ -180,8 +180,25 @@ class SugarEmailAddress extends SugarBean {
     }
 
     /**
+     * @deprecated
+     * @param bool $check_notify
+     * @return null
+     */
+    public function save($check_notify = false) {
+        $deprecatedMessage = 'SugarEmailAddress::save() function calls are deprecated use SugarEmailAddress::saveEmail() function instead';
+        if (isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        } else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+
+        list($id, $module, $new_addrs, $primary, $replyTo, $invalid, $optOut, $in_workflow) = func_get_args();
+        return $this->saveEmail($id, $module, $new_addrs, $primary, $replyTo, $invalid, $optOut, $in_workflow);
+    }
+
+    /**
      * Saves email addresses for a parent bean.
-     * The base class SugarBean::save($check_notify) method is never called from SugarEmailAddresses::save(...)
+     * The base class SugarBean::save($check_notify) method is never called from SugarEmailAddresses::saveEmail(...)
      * The method's signature has been changed to correctly represent the save method call for SugarEmailAddress.
      * @param string $id Parent bean ID
      * @param string $module Parent bean's module
@@ -193,9 +210,10 @@ class SugarEmailAddress extends SugarBean {
      * @param bool $in_workflow
      * @return null
      */
-    public function save($id, $module, $new_addrs = array(), $primary='', $replyTo='', $invalid='', $optOut='', $in_workflow = false) {
+    public function saveEmail($id, $module, $new_addrs = array(), $primary='', $replyTo='', $invalid='', $optOut='', $in_workflow = false) {
         if(gettype($id) == "boolean") {
-            $GLOBALS['log']->fatal('SugarEmailAddress::save() Invalid arguments - Parent method SugarBean::save($checknotify) is not implemented. Please pass the correct arguments into SugarEmailAddress::save()');
+            $GLOBALS['log']->fatal('SugarEmailAddress::saveEmail() Invalid arguments - Parent method SugarBean::save
+            ($checknotify) is not implemented. Please pass the correct arguments into SugarEmailAddress::saveEmail()');
         }
 
         if(empty($this->addresses) || $in_workflow) {
@@ -274,24 +292,6 @@ class SugarEmailAddress extends SugarBean {
             $this->db->query($eabr_unlink);
         }
         $this->stateBeforeWorkflow = null;
-    }
-
-    /**
-     * Moved implementation _save to save.
-     * For backward compatibility the _save method has been preserved as a facade to save. In case it's used by a child
-     * class.
-     * @param string $id Parent bean ID
-     * @param string $module Parent bean's module
-     * @param array $new_addrs Override of $_REQUEST vars, used to handle non-standard bean saves
-     * @param string $primary GUID of primary address
-     * @param string $replyTo GUID of reply-to address
-     * @param string $invalid GUID of invalid address
-     * @param string $optOut
-     * @param bool $in_workflow
-     * @return NULL
-     */
-    private function _save($id, $module, $new_addrs = array(), $primary='', $replyTo='', $invalid='', $optOut='', $in_workflow = false) {
-        $this->save($id, $module, $new_addrs, $primary, $replyTo, $invalid, $optOut, $in_workflow);
     }
 
     /**

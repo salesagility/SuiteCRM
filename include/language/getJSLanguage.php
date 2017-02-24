@@ -71,7 +71,7 @@ function getJSLanguage()
     }
     if (empty($_REQUEST['module']) || $_REQUEST['module'] === 'app_strings') {
         $file = sugar_cached('jsLanguage/').$lang.'.js';
-        if (!sugar_is_file($file)) {
+        if (!is_file($file)) {
             jsLanguage::createAppStringsCache($lang);
         }
     } else {
@@ -83,7 +83,7 @@ function getJSLanguage()
             return;
         }
         $file = sugar_cached('jsLanguage/').$module.'/'.$lang.'.js';
-        if (!sugar_is_file($file)) {
+        if (!is_file($file)) {
             jsLanguage::createModuleStringsCache($module, $lang);
         }
     }
