@@ -494,6 +494,7 @@ document.getElementById('custom_delimiter').onchange = function()
 }
 
 document.getElementById('toggleImportOptions').onclick = function() {
+    setPreview();
     if (document.getElementById('importOptions').style.display == 'none'){
         document.getElementById('importOptions').style.display = '';
         document.getElementById('toggleImportOptions').value='  {$mod_strings['LBL_HIDE_ADVANCED_OPTIONS']}  ';
@@ -603,7 +604,6 @@ if(deselectEl)
 {$getNumberJs}
 {$getNameJs}
 setSigDigits();
-setPreview();
 setSymbolValue(document.getElementById('currency_select').selectedIndex);
 
 EOJAVASCRIPT;
