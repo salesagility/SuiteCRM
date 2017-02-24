@@ -1332,7 +1332,7 @@ EOQ;
                     case "account_name":
                     case "bool":
                     case "enum":
-					case "dynamicenum":
+		    case "dynamicenum":
                     case "multienum":
                     case "radioenum":
                     case "datetimecombo":
