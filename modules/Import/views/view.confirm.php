@@ -603,6 +603,7 @@ if(deselectEl)
 {$getNumberJs}
 {$getNameJs}
 setSigDigits();
+setPreview();
 setSymbolValue(document.getElementById('currency_select').selectedIndex);
 
 EOJAVASCRIPT;
