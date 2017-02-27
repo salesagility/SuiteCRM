@@ -119,7 +119,7 @@ HTML;
         return $html;
     }
 
-    public function getElementHTML($contents = '', $textareaId = null, $elementId = 'mozaik', $width = 'initial', $thumbs = array(), $tinyMCESetup = 'tinyMCE: {}') {
+    public function getElementHTML($contents = '', $textareaId = null, $elementId = 'mozaik', $width = '600', $thumbs = array(), $tinyMCESetup = 'tinyMCE: {}') {
         if(is_numeric($width)) {
             $width .= 'px';
         }
@@ -181,7 +181,7 @@ HTML;
         return $html;
     }
 
-    public function getAllHTML($contents = '', $textareaId = null, $elementId = 'mozaik', $width = 'initial', $group = '', $tinyMCESetup = 'tinyMCE: {}') {
+    public function getAllHTML($contents = '', $textareaId = null, $elementId = 'mozaik', $width = '600', $group = '', $tinyMCESetup = 'tinyMCE: {}') {
         if(is_numeric($width)) {
             $width .= 'px';
         }

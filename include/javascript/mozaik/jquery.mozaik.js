@@ -37,7 +37,7 @@ var mozaik = {
     getToolPluginIconListHTML: function(toolPlugins, name) {
         var html = '';
         for(var i=0; i<toolPlugins.length; i++) {
-            plugin = toolPlugins[i];
+            var plugin = toolPlugins[i];
             html += '<li class="mozaik-tool-btn mozaik-tool-'+plugin.name+'" style="background-image: url('+plugin.image+');"><a href="javascript:;" onclick="'+plugin.callback+'(this, \''+name+'\');" title="'+plugin.title+'">&nbsp;</a></li>';
         }
         return html;
@@ -290,7 +290,7 @@ var plgBackground = {
             if(!style && $('#mozaik-style-' + i).length==0) {
                 $.get(settings.base + settings.style, function(css){
                     if(css) {
-                        splits = css.split('}');
+                        var splits = css.split('}');
                         for(var i=0; i<splits.length-1; i++) {
                             splits[i] = "\n" + '#' + namespace + ' ' + splits[i];
                         }
@@ -524,7 +524,7 @@ var plgBackground = {
                         $(sel).each(function(l, el){
                             if(($(el).hasClass('mozaik-inner') || $(el).closest('.mozaik-inner').length) && !$(el).hasClass('mozaik-tools') && !$(el).closest('.mozaik-tools').length) {
 
-                                // corrigate inline font-size and line height style
+                                // correct inline font-size and line height style
                                 var fontFamily = $(el).css('font-family');
                                 var fontSize = $(el).css('font-size');
                                 var lineHeight = $(el).css('line-height');
@@ -534,7 +534,7 @@ var plgBackground = {
                                 $(el).css('line-height', lineHeight);
                                 $(el).css('color', color);
 
-                                // corrigate template section margins and paddings..
+                                // correct template section margins and paddings..
                                 var padding = $(el).css('padding-top') + ' ' + $(el).css('padding-right') + ' ' + $(el).css('padding-bottom') + ' ' + $(el).css('padding-left');
                                 var margin = $(el).css('margin-top') + ' ' + $(el).css('margin-right') + ' ' + $(el).css('margin-bottom') + ' ' + $(el).css('margin-left');
                                 $(el).css('padding', padding);
