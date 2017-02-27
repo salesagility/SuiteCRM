@@ -140,6 +140,7 @@ class MysqliManager extends MysqlManager
 
 		$this->query_time = microtime(true) - $this->query_time;
 		$GLOBALS['log']->info('Query Execution Time:'.$this->query_time);
+		$this->dump_slow_queries($sql);
 
 		// This is some heavy duty debugging, leave commented out unless you need this:
 		/*
