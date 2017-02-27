@@ -218,7 +218,7 @@
   }
 
   #EditView_tabs .tab-content {
-    background-color: #ffffff;
+    background-color: $tab-bg;
     padding: 24px;
     margin-bottom: $tab-margin-bottom;
     border: 1px solid transparent;
@@ -228,7 +228,7 @@
   }
 
   .detail-view .tab-content {
-    background-color: #ffffff;
+    background-color: $tab-bg;
     padding: 24px;
     margin-bottom: $tab-margin-bottom;
     border: 1px solid transparent;
@@ -239,7 +239,7 @@
 }
 
 .dashboard .tab-content {
-  background-color: #ffffff;
+  background-color: $tab-bg;
   padding: 24px;
   margin-bottom: 30px;
   border: 1px solid transparent;
