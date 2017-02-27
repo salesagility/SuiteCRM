@@ -96,6 +96,9 @@ var mozaik = {
     currentWidth: false,
 
     setWidth: function(width) {
+        if(parseInt(width) <= 0) {
+            width: 'initial';
+        }
         if(width) {
             mozaik.currentWidth = width;
         }
