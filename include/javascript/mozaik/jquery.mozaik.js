@@ -14,8 +14,16 @@ var mozaik = {
         return html;
     },
 
-    getEditorListHTML: function() {
-        var html = '<ul class="mozaik-list"></ul>';
+    getEditorListHTML: function(width) {
+        console.log(width);
+        var left = false;
+        if(width != 'initial' && parseInt(width) > 0) {
+            left = true;
+        }
+        var html =
+          '<ul class="mozaik-list">'+
+          (left ? '   <li class="mozaik-width-set"><span class="handler" href="javascript:;" title="Resize" data-width="'+parseInt(width)+'"></span></li>' : '') +
+          '</ul>';
         return html;
     },
 
@@ -74,6 +82,31 @@ var mozaik = {
     //    var html = '<div class="mozaik-preloader"><img alt="loading.." src="img/725.gif"></div>';
     //    return html;
     //}
+
+    widthSetInit: function() {
+        setInterval(function(){
+            $('.mozaik-width-set .handler').each(function(i,e){
+                var width = parseInt($(e).attr('data-width'));
+                var left = (($(e).closest('.mozaik-width-set').width()-width) / 2) - 25;
+                $(e).css('left', left+'px');
+            });
+        }, 500);
+    },
+
+    currentWidth: false,
+
+    setWidth: function(width) {
+        if(width) {
+            mozaik.currentWidth = width;
+        }
+        if(mozaik.currentWidth) {
+            $('.mozaik-width-set .handler').each(function (i, e) {
+                $(e).attr('data-width', parseInt(mozaik.currentWidth));
+                $(e).closest('.mozaik-list').find('.mozaik-inner').css('max-width', mozaik.currentWidth);
+                $(e).closest('.mozaik-list').find('.mozaik-inner').css('margin', '0 auto');
+            });
+        }
+    }
 
 };
 
@@ -282,7 +315,7 @@ var plgBackground = {
             $(e).html('');
 
             // add 'canvas' area
-            $(e).append(mozaik.getEditorListHTML());
+            $(e).append(mozaik.getEditorListHTML(settings.width));
 
             var $mozaik = $(e).find('.mozaik-list').first();
 
@@ -326,6 +359,7 @@ var plgBackground = {
                 style = style.replace(/;\s*;/, ';');
                 var listElemHTML = mozaik.getEditorListElementHTML(name, html, settings.ace, style, toolPlugins);
                 $mozaik.append(listElemHTML);
+                mozaik.setWidth();
                 var editables = name && settings.thumbs[name].editables ? settings.thumbs[name].editables.split(',') : settings.editables.split(',');
                 $.each(editables, function(i,e){
                     var sels = '.mozaik-inner'; //, .mozaik-inner ' + e;
@@ -458,6 +492,8 @@ var plgBackground = {
 
                 $(e).find('.mozaik-thumbs').show();
                 //$(e).find('.mozaik-preloader').hide();
+
+                mozaik.widthSetInit();
             });
 
         });
