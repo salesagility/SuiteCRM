@@ -1,5 +1,17 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
+if (!defined('sugarEntry') || !sugarEntry || !defined('SUGAR_ENTRY') || !SUGAR_ENTRY) {
+    die('Not A Valid Entry Point');
+}
+if (defined('sugarEntry')) {
+    $deprecatedMessage = 'sugarEntry is deprecated use SUGAR_ENTRY instead';
+    if (isset($GLOBALS['log'])) {
+        $GLOBALS['log']->deprecated($deprecatedMessage);
+    } else {
+        trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+    }
+}
+
 
 $dashletData['jjwg_Adress_CacheDashlet']['searchFields'] = array('date_entered' => array('default' => ''),
     'date_modified' => array('default' => ''),

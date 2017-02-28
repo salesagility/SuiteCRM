@@ -42,7 +42,11 @@ require_once '../vendor/autoload.php';
 
 /* bootstrap sugarcrm */
 chdir('../');
-define('sugarEntry',TRUE);
+
+// TODO: sugarEntry is deprecated use SUGAR_ENTRY instead
+define('sugarEntry', true);
+define('SUGAR_ENTRY', true);
+
 global $sugar_config, $db;
 require_once 'include/utils.php';
 require_once 'include/modules.php';

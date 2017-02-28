@@ -1,5 +1,17 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point'); 
+
+if (!defined('sugarEntry') || !sugarEntry || !defined('SUGAR_ENTRY') || !SUGAR_ENTRY) {
+    die('Not A Valid Entry Point');
+}
+if (defined('sugarEntry')) {
+    $deprecatedMessage = 'sugarEntry is deprecated use SUGAR_ENTRY instead';
+    if (isset($GLOBALS['log'])) {
+        $GLOBALS['log']->deprecated($deprecatedMessage);
+    } else {
+        trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+    }
+}
+ 
 
 if(ACLController::checkAccess('jjwg_Maps', 'edit', true)) $module_menu[]=Array("index.php?module=jjwg_Maps&action=EditView&return_module=jjwg_Maps&return_action=index", $GLOBALS['mod_strings']['LNK_NEW_MAP'], "Create", 'jjwg_Maps');
 if(ACLController::checkAccess('jjwg_Maps', 'list', true)) $module_menu[]=Array("index.php?module=jjwg_Maps&action=index&return_module=jjwg_Maps&return_action=DetailView", $GLOBALS['mod_strings']['LNK_MAP_LIST'], "List_Maps", 'jjwg_Maps');

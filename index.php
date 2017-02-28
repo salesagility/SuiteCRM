@@ -1,7 +1,13 @@
 <?php
 
-if (!defined('sugarEntry')) {
-    define('sugarEntry', true);
+if (!defined('sugarEntry') || !defined('SUGAR_ENTRY')) {
+    // TODO: sugarEntry is deprecated use SUGAR_ENTRY instead
+    if (!defined('sugarEntry')) {
+        define('sugarEntry', true);
+    }
+    if (!defined('SUGAR_ENTRY')) {
+        define('SUGAR_ENTRY', true);
+    }
 }
 /**
  *

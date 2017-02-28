@@ -47,9 +47,19 @@
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-if (!defined('sugarEntry') || !sugarEntry) {
+
+if (!defined('sugarEntry') || !sugarEntry || !defined('SUGAR_ENTRY') || !SUGAR_ENTRY) {
     die('Not A Valid Entry Point');
 }
+if (defined('sugarEntry')) {
+    $deprecatedMessage = 'sugarEntry is deprecated use SUGAR_ENTRY instead';
+    if (isset($GLOBALS['log'])) {
+        $GLOBALS['log']->deprecated($deprecatedMessage);
+    } else {
+        trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+    }
+}
+
 $mod_strings = array(
     'LBL_MODULE_NAME' => 'Home',
     'LBL_MODULES_TO_SEARCH' => 'Modules to Search',
