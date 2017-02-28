@@ -44,9 +44,29 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $module_name = 'Emails';
 $listViewDefs[$module_name] = array(
+    'FROM_ADDR'=> array(
+        'width' => '32',
+        'label' => 'LBL_LIST_FROM_ADDR',
+        'default' => true,
+    ),
+    'FROM_ADDR_NAME'=> array(
+        'width' => '32',
+        'label' => 'LBL_LIST_FROM_ADDR',
+        'default' => false,
+    ),
+    'CONTACT_NAME'=> array(
+        'width' => '32',
+        'label' => 'LBL_LIST_CONTACT_NAME',
+        'default' => false,
+    ),
+    'TO_ADDRS_NAMES'=> array(
+        'width' => '32',
+        'label' => 'LBL_LIST_TO_ADDR',
+        'default' => false,
+    ),
     'NAME' => array(
         'width' => '32',
-        'label' => 'LBL_NAME',
+        'label' => 'LBL_LIST_SUBJECT',
         'default' => true,
         'link' => true
     ),
@@ -55,7 +75,11 @@ $listViewDefs[$module_name] = array(
         'label' => 'LBL_ASSIGNED_TO_NAME',
         'module' => 'Employees',
         'id' => 'ASSIGNED_USER_ID',
-        'default' => true
+        'default' => false
     ),
-
+    'DATE_ENTERED'=> array(
+        'width' => '32',
+        'label' => 'LBL_DATE_ENTERED',
+        'default' => true,
+    ),
 );
