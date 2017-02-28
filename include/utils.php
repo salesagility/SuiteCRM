@@ -2494,9 +2494,9 @@ function values_to_keys($array)
     return $new_array;
 }
 
-function clone_relationship(&$db, $tables = array(), $from_column, $from_id, $to_id)
+function clone_relationship(&$db, $tables, $from_column, $from_id, $to_id)
 {
-    foreach ($tables as $table) {
+    foreach ((array)$tables as $table) {
         if ($table == 'emails_beans') {
             $query = "SELECT * FROM $table WHERE $from_column='$from_id' and bean_module='Leads'";
         } else {
