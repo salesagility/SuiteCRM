@@ -38,9 +38,19 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
- if (!defined('sugarEntry') || !sugarEntry) {literal}{
+
+if (!defined('sugarEntry') || !sugarEntry || !defined('SUGAR_ENTRY') || !SUGAR_ENTRY) {ldelim}
     die('Not A Valid Entry Point');
-}{/literal}
+{rdelim}
+if (defined('sugarEntry')) {ldelim}
+    $deprecatedMessage = 'sugarEntry is deprecated use SUGAR_ENTRY instead';
+    if (isset($GLOBALS['log'])) {ldelim}
+        $GLOBALS['log']->deprecated($deprecatedMessage);
+    {rdelim} else {ldelim}
+        trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+    {rdelim}
+{rdelim}
+
 
 global $mod_strings, $app_strings, $sugar_config;
  

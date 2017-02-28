@@ -28,7 +28,7 @@ class AOD_LogicHooks{
         if($bean->module_name == 'AOD_Index'){
             return;
         }
-        if(defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')){
+        if((defined('sugarEntry') || (defined('SUGAR_ENTRY') && SUGAR_ENTRY)) && defined('SUGARCRM_IS_INSTALLING')){
             return;
         }
         try{
@@ -43,7 +43,7 @@ class AOD_LogicHooks{
         if($bean->module_name == 'AOD_Index'){
             return;
         }
-        if(defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')){
+        if((defined('sugarEntry') || (defined('SUGAR_ENTRY') && SUGAR_ENTRY)) && defined('SUGARCRM_IS_INSTALLING')){
             return;
         }
         try{
@@ -58,7 +58,7 @@ class AOD_LogicHooks{
         if($bean->module_name == 'AOD_Index'){
             return;
         }
-        if(defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')){
+        if((defined('sugarEntry') || (defined('SUGAR_ENTRY') && SUGAR_ENTRY)) && defined('SUGARCRM_IS_INSTALLING')){
             return;
         }
         try{

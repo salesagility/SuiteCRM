@@ -21,7 +21,11 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
-if(!defined('sugarEntry'))define('sugarEntry', true);
+if (!defined('sugarEntry') || !defined('SUGAR_ENTRY')) {
+    // TODO: sugarEntry is deprecated use SUGAR_ENTRY instead
+    define('sugarEntry', true);
+    define('SUGAR_ENTRY', true);
+}
 require_once 'modules/AOP_Case_Updates/util.php';
 if(!isAOPEnabled()){
     return;

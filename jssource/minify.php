@@ -1,5 +1,9 @@
 <?php
-if(!defined('sugarEntry'))define('sugarEntry', true);
+if (!defined('sugarEntry') || !defined('SUGAR_ENTRY')) {
+    // TODO: sugarEntry is deprecated use SUGAR_ENTRY instead
+    define('sugarEntry', true);
+    define('SUGAR_ENTRY', true);
+}
 
 //assumes jsmin.php is in same directory
     if(isset($_REQUEST['root_directory'])){
@@ -11,7 +15,19 @@ if(!defined('sugarEntry'))define('sugarEntry', true);
 //if we are coming from browser
 
 if(isset($_REQUEST['root_directory'])){
-	if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+	
+if (!defined('sugarEntry') || !sugarEntry || !defined('SUGAR_ENTRY') || !SUGAR_ENTRY) {
+    die('Not A Valid Entry Point');
+}
+if (defined('sugarEntry')) {
+    $deprecatedMessage = 'sugarEntry is deprecated use SUGAR_ENTRY instead';
+    if (isset($GLOBALS['log'])) {
+        $GLOBALS['log']->deprecated($deprecatedMessage);
+    } else {
+        trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+    }
+}
+
 
     require_once('include/utils/sugar_file_utils.php');
 
