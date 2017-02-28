@@ -47,20 +47,25 @@ $viewdefs[$module_name]['EditView'] = array(
             array('label' => '10', 'field' => '30')
         ),
     ),
-
     'panels' => array(
-        'default' => array(
 
+        'LBL_EMAIL_INFORMATION' => array(
             array(
                 'name',
-                'assigned_user_name',
+                'date_entered' => array(
+                    'name' => 'date_entered',
+                    'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+                    'label' => 'LBL_DATE_ENTERED',
+                ),
             ),
 
             array(
-                'description',
+                'description' => array(
+                    'name' => 'description',
+                    'label' => 'LBL_DESCRIPTION'
+                ),
             ),
-        ),
-
-    ),
+        )
+    )
 
 );
