@@ -67,7 +67,7 @@ $entry_point_registry = array(
     'DetailUserRole' => array('file' => 'modules/ACLRoles/DetailUserRole.php', 'auth' => true),
     'getYUIComboFile' => array('file' => 'include/javascript/getYUIComboFile.php', 'auth' => false),
     'UploadFileCheck' => array('file' => 'modules/Configurator/UploadFileCheck.php', 'auth' => true),
-    'SAML'=>  array('file' => 'modules/Users/authentication/SAMLAuthenticate/index.php', 'auth' => false),
+	'SAML'=>  array('file' => 'modules/Users/authentication/SAMLAuthenticate/index.php', 'auth' => false),
     'jslang'=> array('file' => 'include/language/getJSLanguage.php', 'auth' => true),
 	'deleteAttachment' => array('file' => 'include/SugarFields/Fields/Image/deleteAttachment.php', 'auth' => false),
 	'responseEntryPoint' => array('file' => 'modules/FP_events/responseEntryPoint.php', 'auth' => false),

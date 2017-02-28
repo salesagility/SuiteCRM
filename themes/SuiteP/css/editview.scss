@@ -1,6 +1,23 @@
 /**** Edit view ***/
 @import 'variables';
 
+/*Import VCard*/
+.import-vcard {
+  background-color: $main-alternate-bg;
+  padding: 16px;
+  border-radius: 4px;
+
+  #vcard_file {
+    margin-top: 10px;
+    margin-buttom: 10px;
+  }
+
+  .button {
+    margin-top: 10px;
+    margin-buttom: 10px;
+  }
+}
+
 div#searchResults {
   padding-bottom: 50px;
   overflow-y: auto;
@@ -2025,6 +2042,10 @@ ul.clickMenu li a {
   text-decoration: none;
 }
 
+ul.clickMenu li a.clearSearchIcon {
+  margin: 3px 0px 0px 8px;
+}
+
 ul.clickMenu li.single a {
   padding-right: 8px;
 }
@@ -2043,8 +2064,12 @@ ul.clickMenu > li > span {
   margin-top: 9px;
   width: 16px;
   height: 16px;
+}
 
-
+@-moz-document url-prefix() {
+  ul.clickMenu:first-child > li > span {
+    margin-right: -7px;
+  }
 }
 
 .inlineButtons ul.clickMenu > li > span {
@@ -4140,10 +4165,6 @@ hr {
     max-height: 50%;
   }
 
-}
-
-#forgotpasslink {
-  margin: 10px 0 0 0;
 }
 
 .teamNoticeBox {

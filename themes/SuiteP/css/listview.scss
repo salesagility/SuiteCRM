@@ -3025,11 +3025,23 @@ table.subpanel-table li.sugar_action_button {
   border-radius: 4px;
 }
 
+@-moz-document url-prefix() {
+  #selectLinkTop li.sugar_action_button {
+    padding-left: 7px;
+  }
+}
+
 #selectLinkBottom li.sugar_action_button {
   padding: 0px;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
   border-radius: 4px;
+}
+
+@-moz-document url-prefix() {
+  #selectLinkBottom li.sugar_action_button {
+    padding-left: 7px;
+  }
 }
 
 table.subpanel-table .pagination .sugar_action_button {
@@ -3522,10 +3534,6 @@ ul.clickMenu > li > span.searchAppliedAlert {
 
 .searchTabHeader {
   display: none;
-}
-
-td.paginationActionButtons ul.selectmenu > li > a.clearSearchIcon {
-  padding: 3px 4px 4px 7px;
 }
 
 .listViewEmpty .clearSearchIcon {
