@@ -903,9 +903,13 @@ class SugarBean
      * @param array $secondary_queries
      * @return array $fetched data.
      */
-    public function process_union_list_query($parent_bean, $query,
-                                             $row_offset, $limit = -1, $max_per_page = -1, $where = '', $subpanel_def, $query_row_count = '', $secondary_queries = array())
+    public function process_union_list_query($parent_bean = null, $query = '',
+                                             $row_offset = 0, $limit = -1, $max_per_page = -1, $where = '', $subpanel_def, $query_row_count = '', $secondary_queries = array())
     {
+        if (empty($query)) {
+            throw new Exception("empty query");
+        }
+
         $db = DBManagerFactory::getInstance('listviews');
         /**
          * if the row_offset is set to 'end' go to the end of the list
@@ -955,7 +959,12 @@ class SugarBean
 
         if ($performSecondQuery) {
             if (!empty($limit) && $limit != -1 && $limit != -99) {
-                $result = $db->limitQuery($query, $row_offset, $limit, true, "Error retrieving $parent_bean->object_name list: ");
+                if (empty($parent_bean)) {
+                    $objectName = '[empty parent bean]';
+                } else {
+                    $objectName = $parent_bean->object_name;
+                }
+                $result = $db->limitQuery($query, $row_offset, $limit, true, "Error retrieving $objectName list: ");
             } else {
                 $result = $db->query($query, true, "Error retrieving $this->object_name list: ");
             }
