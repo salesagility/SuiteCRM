@@ -1313,9 +1313,14 @@ protected function checkQuery($sql, $object_name = false)
      * @param bool $is_related_query
      * @return string SQL insert statement
      */
-	public function generateInsertSQL(SugarBean $bean, $select_query, $start, $count = -1, $table, $is_related_query = false)
+	public function generateInsertSQL(SugarBean $bean, $select_query, $start, $count = -1, $table = '', $is_related_query = false)
 	{
 		$this->log->info('call to DBManager::generateInsertSQL() is deprecated');
+
+		if (!$table) {
+			throw new Exception('empty table name');
+		}
+
 		global $sugar_config;
 
 		$rows_found = 0;
