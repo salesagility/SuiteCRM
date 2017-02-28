@@ -4076,7 +4076,7 @@ function getTrackerSubstring($name)
     return $chopped;
 }
 
-function generate_search_where($field_list = array(), $values = array(), &$bean, $add_custom_fields = false, $module = '')
+function generate_search_where($field_list, $values, &$bean, $add_custom_fields = false, $module = '')
 {
     $where_clauses = array();
     $like_char = '%';
