@@ -2526,8 +2526,13 @@ protected function checkQuery($sql, $object_name = false)
 	 * @param  string $tablename      Optional, table name
 	 * @return string SQL column definitions
 	 */
-	protected function columnSQLRep($fieldDefs, $ignoreRequired = false, $tablename)
+	protected function columnSQLRep($fieldDefs, $ignoreRequired, $tablename)
 	{
+		// set $ignoreRequired = false by default
+		if (!is_bool($ignoreRequired)) {
+			$ignoreRequired = false;
+		}
+
 		$columns = array();
 
 		if ($this->isFieldArray($fieldDefs)) {
