@@ -750,7 +750,7 @@ EOQ;
 	  * @param id_name name of the id in vardef
 	  * @param mod_type name of the module, either "Contact" or "Releases" currently
 	  */
-	function addUserName($displayname, $varname, $id_name='', $mod_type){
+	function addUserName($displayname, $varname, $id_name, $mod_type){
 		global $app_strings;
 
 		if(empty($id_name))
@@ -817,7 +817,7 @@ EOHTML;
 	  * @param id_name name of the id in vardef
 	  * @param mod_type name of the module, either "Contact" or "Releases" currently
 	  */
-	function addGenericModuleID($displayname, $varname, $id_name='', $mod_type){
+	function addGenericModuleID($displayname, $varname, $id_name, $mod_type){
 		global $app_strings;
 
 		if(empty($id_name))
