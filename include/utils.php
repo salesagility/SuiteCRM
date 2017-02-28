@@ -2668,9 +2668,15 @@ function number_empty($value)
     return empty($value) && $value != '0';
 }
 
-function get_bean_select_array($add_blank = true, $bean_name, $display_columns, $where = '', $order_by = '', $blank_is_none = false)
+function get_bean_select_array($add_blank, $bean_name, $display_columns, $where = '', $order_by = '', $blank_is_none = false)
 {
     global $beanFiles;
+
+    // set $add_blank = true by default
+    if (!is_bool($add_blank)) {
+        $add_blank = true;
+    }
+
     require_once $beanFiles[$bean_name];
     $focus = new $bean_name();
     $user_array = array();
