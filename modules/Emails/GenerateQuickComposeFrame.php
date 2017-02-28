@@ -1,11 +1,10 @@
 <?php
-/**
- *
+/*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,21 +35,19 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
+
+
+/**
+ * Render the quick compose frame needed by the UI.  The data is returned as a JSOn
+ * object and consumed by the client in an ajax call.
  */
 
-$module_name = 'Emails';
-$searchdefs[$module_name] = array(
-    'templateMeta' => array(
-        'maxColumns' => '3',
-        'maxColumnsBasic' => '4',
-        'widths' => array('label' => '10', 'field' => '30'),
-    ),
-    'layout' => array(
-        'basic_search' => array(
-            'name'
-        ),
-        'advanced_search' => array(
-            'name',
-        ),
-    ),
-);
+require_once('modules/Emails/EmailUI.php');
+$em = new EmailUI();
+$out = $em->displayQuickComposeEmailFrame();
+		
+@ob_end_clean();
+ob_start();
+echo $out;
+ob_end_flush();
