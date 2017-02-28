@@ -154,7 +154,7 @@ function getTagAttribute($name, $contents, $filter = '') {
  * @param $tableClass Optional table class parameter value
  * @return Array of table elements found
  */
-function getTables($tableClass = null, $contents) {
+function getTables($tableClass = null, $contents = '') {
    preg_match_all("'(<table[^>]*?>)(.*?)(</table[^>]*?>)'si", $contents, $matches, PREG_SET_ORDER);
    if($tableClass == null) {
    	  return $matches;
