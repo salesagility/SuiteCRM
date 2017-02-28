@@ -3177,4 +3177,111 @@ eoq;
             unset($this->modifiedFieldDefs[$field]);
             }
     	}
+
+    /**
+     * Check whether the user has access to a particular view for the current bean/module
+     *
+     * Sets the ACL to ACL_ALLOW_OWNER only
+     * @param $view string required, the view to determine access for i.e. DetailView, ListView...
+     * @param bool|string $is_owner bool optional, this is part of the ACL check if the current user is an owner they will receive different access
+     * @param bool|string $in_group
+     * @return bool
+     */
+    public function ACLAccess($view, $is_owner = 'not_set', $in_group = 'not_set')
+    {
+        global $current_user;
+
+        $view = strtolower($view);
+        switch ($view) {
+            case 'list':
+            case 'index':
+            case 'listview':
+                $view = "list";
+                $_SESSION['ACL'][$current_user->id][$this->module_dir]['module'][$view]['aclaccess'] = ACL_ALLOW_OWNER;
+                break;
+            case 'edit':
+            case 'save':
+            case 'popupeditview':
+            case 'editview':
+                $view = "edit";
+                $_SESSION['ACL'][$current_user->id][$this->module_dir]['module'][$view]['aclaccess'] = ACL_ALLOW_OWNER;
+                break;
+            case 'view':
+            case 'detail':
+            case 'detailview':
+                $view = "view";
+                $_SESSION['ACL'][$current_user->id][$this->module_dir]['module'][$view]['aclaccess'] = ACL_ALLOW_OWNER;
+                break;
+            case 'delete':
+                $view = "delete";
+                $_SESSION['ACL'][$current_user->id][$this->module_dir]['module'][$view]['aclaccess'] = ACL_ALLOW_OWNER;
+                break;
+            case 'export':
+                $view = "export";
+                break;
+            case 'import':
+                $view = "import";
+                $is_owner = true;
+                break;
+            default:
+                return true;
+        }
+
+        if ($is_owner === 'not_set') {
+            $is_owner = $this->isOwner($current_user->id);
+            if ($view == 'edit' && !$is_owner && !empty($this->id)) {
+                $class = get_class($this);
+                $temp = new $class();
+                if (!empty($this->fetched_row) && !empty($this->fetched_row['id']) && !empty($this->fetched_row['assigned_user_id']) && !empty($this->fetched_row['created_by'])) {
+                    $temp->populateFromRow($this->fetched_row);
+                } else {
+                    $temp->retrieve($this->id);
+                }
+                $is_owner = $temp->isOwner($current_user->id);
+            }
+            // prevent admins from listing other users emails
+            if ($view == 'list' && $current_user->isAdmin() && !empty($this->id)) {
+                $class = get_class($this);
+                $temp = new $class();
+                if (!empty($this->fetched_row) && !empty($this->fetched_row['id']) && !empty($this->fetched_row['assigned_user_id']) && !empty($this->fetched_row['created_by'])) {
+                    $temp->populateFromRow($this->fetched_row);
+                } else {
+                    $temp->retrieve($this->id);
+                }
+                $is_owner = $temp->assigned_user_id == $current_user->id;
+            }
+        }
+
+
+
+        return ACLAction::userHasAccess($current_user->id, $this->module_dir, $view, $this->acltype, $is_owner, false);
+    }
+
+    /**
+     * Returns true of false if the user_id passed is the owner
+     *
+     * @param string $user_id GUID
+     * @return bool
+     */
+    public function isOwner($user_id)
+    {
+        //if we don't have an id we must be the owner as we are creating it
+        if (!isset($this->id) || $this->id == "[SELECT_ID_LIST]") {
+            return true;
+        }
+
+        //if there is an assigned_user that is the owner
+        if (!empty($this->fetched_row['assigned_user_id'])) {
+            if ($this->fetched_row['assigned_user_id'] == $user_id) {
+                return true;
+            }
+            return false;
+        } elseif (isset($this->assigned_user_id)) {
+            if ($this->assigned_user_id == $user_id) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
 } // end class def
