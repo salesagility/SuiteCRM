@@ -51,7 +51,7 @@ $listViewDefs[$module_name] = array(
     ),
     'FROM_ADDR_NAME'=> array(
         'width' => '32',
-        'label' => 'LBL_LIST_FROM_ADDR',
+        'label' => 'LBL_FROM_NAME',
         'default' => false,
     ),
     'CONTACT_NAME'=> array(
