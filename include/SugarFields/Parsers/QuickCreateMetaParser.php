@@ -274,7 +274,7 @@ function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $ma
    $panels = array();
    $panels['default'] = $metarow;
    $panels = $this->appplyRules($moduleDir, $panels);
-   return $this->createFileContents($moduleDir, $panels, $templateMeta, $filePath);
+   return $this->createFileContents($moduleDir, $panels, $templateMeta);
 
 
 }

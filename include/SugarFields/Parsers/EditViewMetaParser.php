@@ -352,7 +352,7 @@ function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $ma
       $templateMeta = $this->mergeTemplateMeta($templateMeta, $moduleDir, $masterCopy);
    }
    $panels = $this->applyRules($moduleDir, $panels);
-   return $this->createFileContents($moduleDir, $panels, $templateMeta, $filePath);
+   return $this->createFileContents($moduleDir, $panels, $templateMeta);
 }
 
 

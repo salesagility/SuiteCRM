@@ -552,7 +552,7 @@ function applyPostRules($moduleDir, $panels) {
    return $panels;
 }
 
-function createFileContents($moduleDir, $panels, $templateMeta=array(), $htmlFilePath) {
+function createFileContents($moduleDir, $panels, $templateMeta=array()) {
 
 $header = "<?php\n\n";
 
