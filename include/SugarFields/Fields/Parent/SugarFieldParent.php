@@ -161,8 +161,8 @@ class SugarFieldParent extends SugarFieldRelate {
         return false;
     }
     
-    function createQuickSearchCode($formName = 'EditView', $vardef){
-        
+    function createQuickSearchCode($formName = 'EditView', $vardef = array()){
+
         require_once('include/QuickSearchDefaults.php');
         $json = getJSONobj();
         
