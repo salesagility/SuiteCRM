@@ -155,7 +155,7 @@ class LanguageManager
 	 * @param string module_dir the module_dir to clear
 	 * @param string lang the name of the language file we are clearing this is for sugar_cache
 	 */
-	static function _clearCache($module_dir = '', $lang){
+	static function _clearCache($module_dir, $lang){
 		if(!empty($module_dir) && !empty($lang)){
 			$file = sugar_cached('modules/').$module_dir.'/language/'.$lang.'.lang.php';
 			if(file_exists($file)){
