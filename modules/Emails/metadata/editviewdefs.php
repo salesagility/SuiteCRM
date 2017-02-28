@@ -51,18 +51,16 @@ $viewdefs[$module_name]['EditView'] = array(
 
         'LBL_EMAIL_INFORMATION' => array(
             array(
-                'name',
-                'date_entered' => array(
-                    'name' => 'date_entered',
-                    'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-                    'label' => 'LBL_DATE_ENTERED',
+                0 => array(
+                    'name' => 'name',
+                    'label' => 'LBL_SUBJECT'
                 ),
             ),
 
             array(
-                'description' => array(
+                0 => array(
                     'name' => 'description',
-                    'label' => 'LBL_DESCRIPTION'
+                    'label' => 'LBL_BODY'
                 ),
             ),
         )
