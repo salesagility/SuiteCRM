@@ -82,14 +82,12 @@ var mozaik = {
     //    return html;
     //}
 
-    widthSetInit: function() {
-        setInterval(function(){
-            $('.mozaik-width-set .handler').each(function(i,e){
-                var width = parseInt($(e).attr('data-width'));
-                var left = (($(e).closest('.mozaik-width-set').width()-width) / 2) - 25;
-                $(e).css('left', left+'px');
-            });
-        }, 500);
+    refreshWidthSet: function() {
+        $('.mozaik-width-set .handler').each(function(i,e){
+            var width = parseInt($(e).attr('data-width'));
+            var left = (($(e).closest('.mozaik-width-set').width()-width) / 2) - 25;
+            $(e).css('left', left+'px');
+        });
     },
 
     currentWidth: false,
@@ -107,6 +105,7 @@ var mozaik = {
                 $(e).closest('.mozaik-list').find('.mozaik-inner').css('max-width', mozaik.currentWidth);
                 $(e).closest('.mozaik-list').find('.mozaik-inner').css('margin', '0 auto');
             });
+            mozaik.refreshWidthSet();
         }
     }
 
@@ -318,6 +317,7 @@ var plgBackground = {
 
             // add 'canvas' area
             $(e).append(mozaik.getEditorListHTML(settings.width));
+            mozaik.refreshWidthSet();
 
             var $mozaik = $(e).find('.mozaik-list').first();
 
@@ -495,7 +495,7 @@ var plgBackground = {
                 $(e).find('.mozaik-thumbs').show();
                 //$(e).find('.mozaik-preloader').hide();
 
-                mozaik.widthSetInit();
+                mozaik.refreshWidthSet();
             });
 
         });
