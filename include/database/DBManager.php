@@ -1318,7 +1318,7 @@ protected function checkQuery($sql, $object_name = false)
 		$this->log->info('call to DBManager::generateInsertSQL() is deprecated');
 
 		if (!$table) {
-			throw new Exception('empty table name');
+			$GLOBALS['log']->fatal('empty table name');
 		}
 
 		global $sugar_config;

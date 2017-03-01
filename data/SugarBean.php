@@ -615,7 +615,7 @@ class SugarBean
                                                   $row_offset = 0, $limit = -1, $max = -1, $show_deleted = 0, $subpanel_def)
     {
         if (empty($parentbean)) {
-            throw new Exception('empty parent bean');
+            $GLOBALS['log']->fatal('empty parent bean');
         }
         $secondary_queries = array();
         global $layout_edit_mode;
@@ -910,7 +910,7 @@ class SugarBean
                                              $row_offset = 0, $limit = -1, $max_per_page = -1, $where = '', $subpanel_def, $query_row_count = '', $secondary_queries = array())
     {
         if (empty($query)) {
-            throw new Exception('empty query');
+            $GLOBALS['log']->fatal('empty query');
         }
 
         $db = DBManagerFactory::getInstance('listviews');
