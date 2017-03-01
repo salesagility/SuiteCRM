@@ -15,7 +15,6 @@ var mozaik = {
     },
 
     getEditorListHTML: function(width) {
-        console.log(width);
         var left = false;
         if(width != 'initial' && parseInt(width) > 0) {
             left = true;
