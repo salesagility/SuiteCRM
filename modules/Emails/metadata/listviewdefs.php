@@ -37,13 +37,39 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+$viewdefs['Emails']['ListView'] = array(
+    'templateMeta' => array(
+        'form' => array(
+            'buttons' =>
+                array(
+                    'EDIT',
+                    array(
+                        'customCode' => '<a class="btn" data-action="compose-email">{$MOD.LBL_COMPOSEEMAIL} <span class="glyphicon glyphicon-envelope"></span></a>'
+                    ),
+                    array(
+                        'customCode' => '<a class="btn" data-action="configure-email"><span class="glyphicon glyphicon-cog"></span></a>'
+                    ),
+                    array(
+                        'customCode' => '<a class="btn" data-action="refresh-email"><span class="glyphicon glyphicon-refresh"></span></a>'
+                    ),
+                    array(
+                        'customCode' => '<a class="btn" data-action="open-folder-email"><span class="glyphicon glyphicon-folder-open"></span></a>'
+                    ),
+                ),
+        ),
+        'includes' => array(
+            0 =>
+                array(
+                    'file' => 'modules/Emails/javascript/list.view.js',
+                ),
+        ),
+    )
+);
 
-$module_name = 'Emails';
-$listViewDefs[$module_name] = array(
+$listViewDefs['Emails'] = array(
     'FROM_ADDR'=> array(
         'width' => '32',
         'label' => 'LBL_LIST_FROM_ADDR',
