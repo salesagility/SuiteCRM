@@ -519,8 +519,13 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
 
 
 
-function getDateField($module, $aow_field, $view='EditView', $value, $field_option = true){
+function getDateField($module, $aow_field, $view, $value, $field_option = true){
     global $app_list_strings;
+
+    // set $view = 'EditView' as default
+    if (!$view) {
+        $view = 'EditView';
+    }
 
     $value = json_decode(html_entity_decode_utf8($value), true);
 
