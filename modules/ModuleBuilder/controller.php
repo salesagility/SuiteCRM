@@ -915,17 +915,5 @@ class ModuleBuilderController extends SugarController
         }
     }
 
-    function action_getModuleFields ()
-    {
-        if(isset($_REQUEST['current_module']) && $_REQUEST['current_module'] !== '') {
-            $current_module = $_REQUEST['current_module'];
-            $bean = BeanFactory::getBean($current_module);
-            $field_defs = $bean->getFieldDefinitions();
-            $keys = array_keys($field_defs);
-
-            echo json_encode($keys);
-        }
-    }
-
 }
 ?>

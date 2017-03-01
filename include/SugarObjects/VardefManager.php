@@ -170,7 +170,7 @@ class VardefManager{
 
         $out="<?php \n \$GLOBALS[\"dictionary\"][\"". $object . "\"]=" . var_export($data, true) .";";
         sugar_file_put_contents_atomic($file, $out);
-        if ( sugar_is_file($file) && is_readable($file)) {
+        if ( is_file($file) && is_readable($file)) {
             include($file);
         }
 
