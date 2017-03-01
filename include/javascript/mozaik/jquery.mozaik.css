@@ -234,18 +234,18 @@ div.mozaik-preloader {
 
 /* margin set */
 .mozaik-width-set {
-    width: 100%;
-    float: none;
     display: block;
+    float: none;
     height: 0px;
     position: relative;
+    width: 100%;
 }
 
 .mozaik-width-set .handler {
+    height: 0px;
+    left: 0;
     position: absolute;
     top: 0;
-    left: 0;
-    z-index: 10;
     width: 0px;
-    height: 0px;
+    z-index: 10;
 }
