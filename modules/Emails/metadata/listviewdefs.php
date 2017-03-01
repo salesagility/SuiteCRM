@@ -45,7 +45,6 @@ $viewdefs['Emails']['ListView'] = array(
         'form' => array(
             'buttons' =>
                 array(
-                    'EDIT',
                     array(
                         'customCode' => '<a class="btn" data-action="compose-email">{$MOD.LBL_COMPOSEEMAIL} <span class="glyphicon glyphicon-envelope"></span></a>'
                     ),
