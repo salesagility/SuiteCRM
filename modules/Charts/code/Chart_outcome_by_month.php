@@ -239,8 +239,13 @@ echo get_validate_chart_js();
 	* All Rights Reserved..
 	* Contributor(s): ______________________________________..
 	*/
-	function gen_xml($date_start='1971-10-15', $date_end='2010-10-15', $user_id=array('1'), $cache_file_name='a_file', $refresh=false,$current_module_strings) {
-		global $app_strings, $app_list_strings, $charset, $lang, $barChartColors, $current_user;
+	function gen_xml($date_start='1971-10-15', $date_end='2010-10-15', $user_id=array('1'), $cache_file_name='a_file', $refresh=false,$current_module_strings = array()) {
+		global $app_strings, $app_list_strings, $charset, $lang, $barChartColors, $current_user, $current_language;
+
+		// set $current_module_strings to 'Charts' module strings by default
+		if (empty($current_module_strings)) {
+			$current_module_strings = return_module_language($current_language, 'Charts');
+		}
 
 		$kDelim = $current_user->getPreference('num_grp_sep');
 		global $timedate;
