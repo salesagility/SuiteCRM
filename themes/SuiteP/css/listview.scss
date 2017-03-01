@@ -3352,10 +3352,14 @@ ul.clickMenu > li > span.searchAppliedAlert {
 
 // list-view-action-buttons
 
+.list-view-action-buttons {
+  margin-right: 5px;
+}
+
 .list-view-action-buttons > li {
   display: inline-block;
   background-color: transparent;
-  margin-right: 5px;
+  padding: 0 2px 0 2px;
 }
 
 .list-view-action-buttons > li .btn {
