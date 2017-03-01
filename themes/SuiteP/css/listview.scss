@@ -3350,6 +3350,23 @@ ul.clickMenu > li > span.searchAppliedAlert {
   background-repeat: no-repeat;
 }
 
+// list-view-action-buttons
+
+.list-view-action-buttons > li {
+  display: inline-block;
+  background-color: transparent;
+  margin-right: 5px;
+}
+
+.list-view-action-buttons > li .btn {
+  background-color: $list-view-action-button-bg;
+  border: 0;
+  color: $default-btn-color;
+  margin: 0 0 0 0;
+  padding: 4px 4px 4px 4px;
+  font-size: 13px;
+}
+
 /* search form (and popup search form) */
 
 .modal-content .search_form .view input[type="text"] {

@@ -317,3 +317,15 @@ function lvg_nav(m,id,act,offset,t){
 </script>
 <script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>
 {/if}
+
+
+{if isset($templateMeta)}
+    {if isset($templateMeta.includes)}
+        {counter assign="num_includes" start=0 print=false}
+        {if count($templateMeta.includes) > $num_includes}
+            {foreach from=$templateMeta.includes key=k item=i}
+				<script type="text/javascript" src="{sugar_getjspath file=$i.file}"></script>
+            {/foreach}
+        {/if}
+    {/if}
+{/if}
