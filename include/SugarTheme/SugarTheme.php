@@ -1196,23 +1196,36 @@ class SugarThemeRegistry
         )
     {
         // make sure the we know the sugar version
-        global $sugar_version;
+        global $sugar_version, $suitecrm_version;
         if (empty($sugar_version))
         {
             include('sugar_version.php');
+        }
+        if (empty($suitecrm_version)) {
+            include('suitecrm_version.php');
         }
 
         // Assume theme is designed for 5.5.x if not specified otherwise
         if ( !isset($themedef['version']) )
             $themedef['version']['regex_matches'] = array('5\.5\.*');
 
+        if (!isset($themedef['version']['regex_matches_acceptable_suitecrm'])) {
+            $themedef['version']['regex_matches_acceptable_suitecrm'] = array('^7\.[0-8][^\d]');
+        }
+
         // Check to see if theme is valid for this version of Sugar; return false if not
         $version_ok = false;
+        $versionOkSuite = false;
         if( isset($themedef['version']['exact_matches']) ){
             $matches_empty = false;
             foreach( $themedef['version']['exact_matches'] as $match ){
                 if( $match == $GLOBALS['sugar_version'] ){
                     $version_ok = true;
+                }
+            }
+            foreach( $themedef['version']['exact_matches_acceptable_suitecrm'] as $match ){
+                if( $match == $GLOBALS['suitecrm_version'] ){
+                    $versionOkSuite = true;
                 }
             }
         }
@@ -1223,8 +1236,13 @@ class SugarThemeRegistry
                     $version_ok = true;
                 }
             }
+            foreach( $themedef['version']['regex_matches_acceptable_suitecrm'] as $match ){
+                if( preg_match( "/$match/", $GLOBALS['suitecrm_version'] ) ){
+                    $versionOkSuite = true;
+                }
+            }
         }
-        if ( !$version_ok )
+        if (!$version_ok || !$versionOkSuite)
             return false;
 
         $theme = new SugarTheme($themedef);
