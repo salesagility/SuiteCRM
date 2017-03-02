@@ -264,7 +264,7 @@
 	                       {sugar_field parentFieldArray=$rowData vardef=$params displayType=ListView field=$col}
 
 						{/if}
-						{if empty($rowData.$col) && empty($params.customCode)}&nbsp;{/if}
+						{if empty($rowData.$col) && empty($params.customCode)}{/if}
 						{if $params.link && !$params.customCode}
 							</{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN}>
 	                    {/if}
