@@ -117,6 +117,13 @@ $listViewDefs['Emails'] = array(
         'default' => true,
         'link' => true
     ),
+    'HAS_ATTACHMENT'=> array(
+        'width' => '32',
+        'label' => 'LBL_HAS_ATTACHMENT_INDICATOR',
+        'default' => true,
+        'sortable' => false,
+        'hide_header_label' => true,
+    ),
     'ASSIGNED_USER_NAME' => array(
         'width' => '9',
         'label' => 'LBL_ASSIGNED_TO_NAME',

@@ -308,6 +308,7 @@ $mod_strings = array (
 	'LBL_EMAILTEMPLATE_MESSAGE_MULTIPLE_RECIPIENTS' => 'Using an email template containing contact variables, such as the contact name, to send emails to multiple recipients may have unexpected results. It is recommended that you use an email campaign for mass mailings.',
 	'LBL_CHECK_ATTACHMENTS'=>'Please Check Attachments!',
 	'LBL_HAS_ATTACHMENTS' => 'This email already has attachment(s). Would you like to keep the attachment(s)?',
+    'LBL_HAS_ATTACHMENT_INDICATOR' => 'Has Attachments',
 	'ERR_MISSING_REQUIRED_FIELDS' => 'Missing required field',
     'ERR_INVALID_REQUIRED_FIELDS' => 'Invalid required field',
 	'LBL_FILTER_BY_RELATED_BEAN' => 'Only show recipients related to',

@@ -338,6 +338,24 @@ $dictionary['Email'] = array(
             ),
         ),
 
+        'has_attachment' => array(
+            'name' => 'has_attachment',
+            'vname' => 'LBL_HAS_ATTACHMENT_INDICATOR',
+            'type' => 'function',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'studio' => 'visible',
+            'inline_edit' => false,
+            'function' => array(
+                'name' => 'displayHasAttachmentField',
+                'returns' => 'html',
+                'include' => 'modules/Emails/include/displayHasAttachmentField.php',
+                'onListView' =>  true
+            ),
+        ),
+
         /* relationship collection attributes */
         /* added to support InboundEmail */
         'accounts' => array(
