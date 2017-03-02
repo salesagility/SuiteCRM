@@ -118,7 +118,7 @@
 			{if $prerow}
 				<th class="td_alt">&nbsp;</th>
 			{/if}
-			{if !empty($quickViewLinks)}
+			{if !(isset($templateMeta.options.hide_edit_link) && $templateMeta.options.hide_edit_link === true) && !empty($quickViewLinks)}
 				<th class='td_alt quick_view_links'>&nbsp;</th>
 			{/if}
 			{counter start=0 name="colCounter" print=false assign="colCounter"}
@@ -212,16 +212,18 @@
 				{if !empty($quickViewLinks)}
 	            {capture assign=linkModule}{if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$pageData.bean.moduleDir}{/if}{/capture}
 	            {capture assign=action}{if $act}{$act}{else}EditView{/if}{/capture}
-				<td>
-                    {if $pageData.rowAccess[$id].edit}
-
-                        <a class="edit-link" title='{$editLinkString}' id="edit-{$rowData.ID}"
-                           href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
-                                >
-                            {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
-                            {sugar_getimage name="edit_inline.gif" attr='border="0" ' alt="$alt_edit"}</a>
-                    {/if}
-	            </td>
+				{if isset($templateMeta.options.hide_edit_link) && $templateMeta.options.hide_edit_link === true}
+				{else}
+					<td>
+                        {if $pageData.rowAccess[$id].edit && !empty($quickViewLinks)}
+							<a class="edit-link" title='{$editLinkString}' id="edit-{$rowData.ID}"
+							   href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
+							>
+                                {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
+                                {sugar_getimage name="edit_inline.gif" attr='border="0" ' alt="$alt_edit"}</a>
+                        {/if}
+					</td>
+				{/if}
 
 				{/if}
 				{counter start=0 name="colCounter" print=false assign="colCounter"}

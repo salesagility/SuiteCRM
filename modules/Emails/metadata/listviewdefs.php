@@ -65,6 +65,9 @@ $viewdefs['Emails']['ListView'] = array(
                     'file' => 'modules/Emails/javascript/list.view.js',
                 ),
         ),
+        'options' => array(
+            'hide_edit_link' => true
+        )
     )
 );
 
