@@ -44,5 +44,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 class EmailsViewDetail extends ViewDetail {
+    public function display()
+    {
+        $this->bean->status = 'read';
+        $this->bean->save();
+        parent::display();
+    }
 
 }
