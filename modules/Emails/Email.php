@@ -2537,7 +2537,6 @@ class Email extends SugarBean {
 					$email_fields['CREATE_RELATED'] = $this->quickCreateForm();
 				break;
 			}
-
 		}
 
 		//BUG 17098 - MFH changed $this->from_addr to $this->to_addrs

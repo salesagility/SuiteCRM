@@ -1,5 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,7 +36,9 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $dictionary['Email'] = array(
     'table' => 'emails',
@@ -319,6 +320,24 @@ $dictionary['Email'] = array(
             'comment' => 'ID of Sugar object referenced by parent_type (deprecated as of 4.2)',
         ),
 
+        'indicator' => array(
+            'name' => 'indicator',
+            'vname' => 'LBL_INDICATOR',
+            'type' => 'function',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'studio' => 'visible',
+            'inline_edit' => false,
+            'function' => array(
+                'name' => 'displayIndicatorField',
+                'returns' => 'html',
+                'include' => 'modules/Emails/include/displayIndicatorField.php',
+                'onListView' =>  true
+            ),
+        ),
+
         /* relationship collection attributes */
         /* added to support InboundEmail */
         'accounts' => array(
@@ -585,5 +604,10 @@ $dictionary['Email'] = array(
     ) // end indices
 );
 
-VardefManager::createVardef('Emails', 'Email', array('security_groups',
-));
+VardefManager::createVardef(
+    'Emails',
+    'Email',
+    array(
+        'security_groups',
+    )
+);

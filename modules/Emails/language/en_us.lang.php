@@ -48,6 +48,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $mod_strings = array (
     'LBL_EMAIL_INFORMATION' => 'EMAIL',
+    'LBL_EMPTY'                 => ' ',
 	'LBL_FW'					=> 'FW:',
 	'LBL_RE'					=> 'RE:',
 
@@ -273,6 +274,7 @@ $mod_strings = array (
 	'LBL_WARN_NO_USERS'			=> 'No Users are selected',
     'LBL_WARN_NO_USERS_OR_TEAM' => 'Please select either a user or team for assignment.',
     'LBL_IMPORT_STATUS_TITLE'	=> 'Status',
+    'LBL_INDICATOR'         	=> 'Indicator',
 	'LBL_LIST_STATUS'			=> 'Status',
 	'LBL_LIST_TITLE_GROUP_INBOX'=> 'Group Inbox',
 	'LBL_LIST_TITLE_MY_DRAFTS'	=> 'My Drafts',
