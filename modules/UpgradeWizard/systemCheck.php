@@ -76,33 +76,35 @@ $filesOut = "
 
 $isWindows = is_windows();
 foreach($files as $file) {
-	if($isWindows) {
-		if(!is_writable_windows($file)) {
-			logThis('WINDOWS: File ['.$file.'] not readable - saving for display');
-			// don't warn yet - we're going to use this to check against replacement files
-			$filesNotWritable[$i] = $file;
-			$filesNWPerms[$i] = substr(sprintf('%o',fileperms($file)), -4);
-			$filesOut .= "<tr>".
-							"<td><span class='error'>{$file}</span></td>".
-							"<td>{$filesNWPerms[$i]}</td>".
-							"<td>".$mod_strings['ERR_UW_CANNOT_DETERMINE_USER']."</td>".
-							"<td>".$mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP']."</td>".
-						  "</tr>";
-		}
-	} else {
-		if(!is_writable($file)) {
-			logThis('File ['.$file.'] not writable - saving for display');
-			// don't warn yet - we're going to use this to check against replacement files
-			$filesNotWritable[$i] = $file;
-			$filesNWPerms[$i] = substr(sprintf('%o',fileperms($file)), -4);
-			$owner = posix_getpwuid(fileowner($file));
-			$group = posix_getgrgid(filegroup($file));
-			$filesOut .= "<tr>".
+	if(file_exists($file)) {
+		if($isWindows) {
+			if(!is_writable_windows($file)) {
+				logThis('WINDOWS: File ['.$file.'] not readable - saving for display');
+				// don't warn yet - we're going to use this to check against replacement files
+				$filesNotWritable[$i] = $file;
+				$filesNWPerms[$i] = substr(sprintf('%o',fileperms($file)), -4);
+				$filesOut .= "<tr>".
+								"<td><span class='error'>{$file}</span></td>".
+								"<td>{$filesNWPerms[$i]}</td>".
+								"<td>".$mod_strings['ERR_UW_CANNOT_DETERMINE_USER']."</td>".
+								"<td>".$mod_strings['ERR_UW_CANNOT_DETERMINE_GROUP']."</td>".
+							  "</tr>";
+			}
+		} else {
+			if(!is_writable($file)) {
+				logThis('File ['.$file.'] not writable - saving for display');
+				// don't warn yet - we're going to use this to check against replacement files
+				$filesNotWritable[$i] = $file;
+				$filesNWPerms[$i] = substr(sprintf('%o',fileperms($file)), -4);
+				$owner = posix_getpwuid(fileowner($file));
+				$group = posix_getgrgid(filegroup($file));
+				$filesOut .= "<tr>".
 							"<td><span class='error'>{$file}</span></td>".
 							"<td>{$filesNWPerms[$i]}</td>".
 							"<td>".$owner['name']."</td>".
 							"<td>".$group['name']."</td>".
 						  "</tr>";
+			}
 		}
 	}
 	$i++;
