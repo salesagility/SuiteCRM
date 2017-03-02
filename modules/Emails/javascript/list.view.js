@@ -14,4 +14,9 @@ $(document).ready(function(){
  $('[data-action=emails-open-folder]').click(function(){
    alert('open folder email placeholder');
  });
+
+ // look for new
+  $('.email-indicator .email-new').each(function(i, v){
+    $(this).parents('tr').addClass('email-new-record');
+  });
 });

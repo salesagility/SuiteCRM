@@ -25,3 +25,21 @@
   font-weight: 900;
   line-height: 20px;
 }
+
+.email-new-record.oddListRowS1:hover td {
+  background-color: $table-focus-bg;
+}
+
+.email-new-record.evenListRowS1:hover td {
+  background-color: $table-focus-bg;
+}
+
+.email-new-record.oddListRowS1 td {
+  background-color: $email-new-record-bg-odd;
+  font-weight: 900;
+}
+
+.email-new-record.evenListRowS1 td {
+  background-color: $email-new-record-bg-even;
+  font-weight: 900;
+}
