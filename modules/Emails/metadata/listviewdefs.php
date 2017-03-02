@@ -46,16 +46,16 @@ $viewdefs['Emails']['ListView'] = array(
             'buttons' =>
                 array(
                     array(
-                        'customCode' => '<a class="btn" data-action="compose-email">{$MOD.LBL_COMPOSEEMAIL} <span class="glyphicon glyphicon-envelope"></span></a>'
+                        'customCode' => '<a class="btn" data-action="emails-compose" title="{$MOD.LBL_COMPOSEEMAIL}"><span class="glyphicon glyphicon-envelope"></span></a>'
                     ),
                     array(
-                        'customCode' => '<a class="btn" data-action="configure-email"><span class="glyphicon glyphicon-cog"></span></a>'
+                        'customCode' => '<a class="btn" data-action="emails-configure" title="{$MOD.LBL_EMAILSETTINGS}"><span class="glyphicon glyphicon-cog"></span></a>'
                     ),
                     array(
-                        'customCode' => '<a class="btn" data-action="refresh-email"><span class="glyphicon glyphicon-refresh"></span></a>'
+                        'customCode' => '<a class="btn" data-action="emails-check-new-email" title="{$MOD.LBL_BUTTON_CHECK_TITLE}"><span class="glyphicon glyphicon-refresh"></span></a>'
                     ),
                     array(
-                        'customCode' => '<a class="btn" data-action="open-folder-email"><span class="glyphicon glyphicon-folder-open"></span></a>'
+                        'customCode' => '<a class="btn" data-action="emails-open-folder" title="{$MOD.LBL_SELECT_FOLDER}"><span class="glyphicon glyphicon-folder-open"></span></a>'
                     ),
                 ),
         ),

@@ -118,6 +118,7 @@ $mod_strings = array (
 	'LBL_EMAILS_TASKS_REL'		=> 'Emails:Tasks',
 	'LBL_EMAILS_USERS_REL'		=> 'Emails:Users',
     'LBL_EMPTY_FOLDER'          => 'No Emails to display',
+    'LBL_SELECT_FOLDER'         => 'Select Folder',
 	'LBL_ERROR_SENDING_EMAIL'	=> 'Error Sending email',
 	'LBL_ERROR_SAVING_DRAFT'	=> 'Error Saving Draft',
 	'LBL_FROM_NAME'				=> 'From Name',
