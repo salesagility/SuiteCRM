@@ -156,8 +156,10 @@
 									<a href='javascript:sListView.order_checks("ASC", "{$params.orderBy|default:$colHeader|lower}" , "{$pageData.bean.moduleDir}{"2_"}{$pageData.bean.objectName|upper}{"_ORDER_BY"}")' class='listViewThLinkS1'>
 								{/if}
 							{/if}
+							{if isset($params.hide_header_label) && $params.hide_header_label == true}
+							{else}
 							{sugar_translate label=$params.label module=$pageData.bean.moduleDir}
-							&nbsp;&nbsp;
+						&nbsp;&nbsp;  {/if}
 							{if $params.orderBy|default:$colHeader|lower == $pageData.ordering.orderBy}
 								{if $pageData.ordering.sortOrder == 'ASC'}
 									{capture assign="imageName"}arrow_down.{$arrowExt}{/capture}
@@ -176,7 +178,10 @@
 							</a>
 						{else}
 							{if !isset($params.noHeader) || $params.noHeader == false}
-							  {sugar_translate label=$params.label module=$pageData.bean.moduleDir}
+                                {if isset($params.hide_header_label) && $params.hide_header_label == true}
+                                {else}
+                                    {sugar_translate label=$params.label module=$pageData.bean.moduleDir}
+									&nbsp;&nbsp;  {/if}
 							{/if}
 						{/if}
 						</div>
