@@ -4973,36 +4973,6 @@ class SugarBean
                     $cache[$field] = strtoupper($field);
                 }
 
-                // Call function field on each bean / record
-                if (isset($this->field_defs[$field]['function'])) {
-
-                    $this->field_defs[$field]['type'] = 'multienum';
-
-                    if (is_array($this->field_defs[$field]['function'])) {
-                        $this->field_defs[$field]['function']['preserveFunctionValue'] = true;
-                    }
-
-                    $function = $this->field_defs[$field]['function'];
-
-                    if (is_array($function) && isset($function['name'])) {
-                        $function_name = $this->field_defs[$field]['function']['name'];
-                    } else {
-                        $function_name = $this->field_defs[$field]['function'];
-                    }
-                    if (!empty($this->field_defs[$field]['function']['returns']) && $this->field_defs[$field]['function']['returns'] == 'html') {
-                        if (!empty($this->field_defs[$field]['function']['include'])) {
-                            require_once($this->field_defs[$field]['function']['include']);
-                        }
-                        $value = call_user_func($function_name, $this, $field, $this->$field, 'ListView');
-                        $this->$field = $value;
-                    } else {
-                        if (!isset($function['params']) || !is_array($function['params'])) {
-                            $this->field_defs[$field]['options'] = call_user_func($function_name, $this, $field, $this->$field, 'ListView');
-                        } else {
-                            $this->field_defs[$field]['options'] = call_user_func_array($function_name, $function['params']);
-                        }
-                    }
-                }
                 //Fields hidden by Dependent Fields
                 if (isset($value['hidden']) && $value['hidden'] === true) {
                     $return_array[$cache[$field]] = "";
