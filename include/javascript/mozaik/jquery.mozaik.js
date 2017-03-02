@@ -46,7 +46,7 @@ var mozaik = {
     getMozaikInnerHTML: function(name, innertext, style) {
         //style = ($(innertext).attr('style') ? $(innertext).attr('style') + ';' : '') + style;
         //style = style.replace(/;\s*;/, ';');
-        var html = '<div class="mozaik-inner"' + (name ? ' data-name="' + name + '"' : '') + ' style="' + style + '">' + innertext + '</div>';
+        var html = '<div class="mozaik-inner"' + (name ? ' data-name="' + name + '"' : '') + ' style="background-color: #fafafa; ' + style + '">' + innertext + '</div>';
         return html;
     },
 
@@ -358,7 +358,8 @@ var plgBackground = {
                 });
                 $mozaik.find('.mozaik-elem:last-child .mozaik-tool-copy').bind('click', function(){
                     var html = $(this).closest('.mozaik-elem').find('.mozaik-inner').html();
-                    addEditorListElement(false, html, scrollDown, toolPlugins);
+                    var style = $(this).closest('.mozaik-elem').find('.mozaik-inner').attr('style');
+                    addEditorListElement(false, html, scrollDown, toolPlugins, style);
                 });
 
                 if(scrollDown) {
