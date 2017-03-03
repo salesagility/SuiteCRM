@@ -43,11 +43,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die ('Not A Valid Entry Point');
 }
 
-class EmailsViewDetail extends ViewDetail {
+class EmailsViewDetail extends ViewDetail
+{
     public function display()
     {
-        $this->bean->status = 'read';
-        $this->bean->save();
+        switch ($this->bean->status) {
+            case 'unread':
+                $this->bean->status = 'read';
+                $this->bean->save();
+                break;
+            default:
+                break;
+        }
         parent::display();
     }
 
