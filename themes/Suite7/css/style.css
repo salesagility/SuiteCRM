@@ -1104,6 +1104,10 @@ div.indent_right {
   padding-top: 10px !important;
 }
 
+.search_form label {
+  white-space: normal;
+}
+
 /* sitemap */
 
 #sitemap {
@@ -3584,7 +3588,6 @@ ul.clickMenu form {
 ul.SugarActionMenuIESub li a:hover, ul.clickMenu.SugarActionMenu li a:hover, ul.clickMenu.SugarActionMenu li span.subhover:hover,
 ul#globalLinksSubnav li a:hover, ul#quickCreateULSubnav li a:hover,
 ul.clickMenu li ul.subnav li a:hover, ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover { /*--Hover effect for subnav links--*/
-
   background-color: #f10202;
   border-color: #f10202;
   color: #fff;
@@ -4002,10 +4005,6 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
   content: '';
 }
 
-.paginationActionButtons .parent-dropdown-handler {
-  padding: 0 0 0 5px;
-}
-
 .paginationActionButtons .parent-dropdown-handler label {
   margin-bottom: 0px;
 }
@@ -4046,8 +4045,6 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
 }
 
 .selectActionsDisabled span.ab {
-  border-left: 1px #ccc solid;
-  margin-left: 10px;
   padding-left: 5px;
 }
 
@@ -4316,6 +4313,12 @@ ul.clickMenu > li, ul.SugarActionMenuIESub li {
   font-size: 12px;
 }
 
+ul.clickMenu > li:hover, ul.SugarActionMenuIESub li:hover,
+ul.clickMenu > li:hover > a:first-child {
+  background: red;
+  color: white;
+}
+
 .selectActionsDisabled {
   padding: 5px 8px 5px 8px;
   margin: 0 3px 0 3px;
@@ -4331,7 +4334,7 @@ ul.clickMenu > li, ul.SugarActionMenuIESub li {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0); /* IE6-8 */
   border: solid 1px #999999;
   color: #121212;
-  border-radius: 2px;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 12px;
 }
@@ -5886,6 +5889,10 @@ table tr#delegates_search {
   z-index: 16000;
 }
 
+.modal-lg{
+  display: table;
+}
+
 .qtip-titlebar {
   padding: 5px 24px 5px 10px;
 }
@@ -6499,7 +6506,6 @@ select,
 label.hidden-mobile.selected-actions-label,
 label.hidden-desktop.selected-actions-label {
   margin-bottom: initial;
-  font-size: 10.2px;
   line-height: 17px;
   letter-spacing: 1.2px;
 }
@@ -6613,11 +6619,6 @@ ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > l
   padding: 6px 6px 8px 5px;
   border-radius: 4px;
   top: 0px;
-}
-
-ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton > li > a:hover {
-  background-color: #fff;
-  color: #000;
 }
 
 .paginationActionButtons input {

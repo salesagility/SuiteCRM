@@ -58,22 +58,29 @@ class actionCreateRecord extends actionBase {
         $checked = 'CHECKED';
         if(isset($params['relate_to_workflow']) && !$params['relate_to_workflow']) $checked = '';
 
-        $html = "<table border='0' cellpadding='0' cellspacing='0' width='100%'>";
+        $html = "<table border='0' cellpadding='0' cellspacing='0' width='100%' data-workflow-action='create-record'>";
         $html .= "<tr>";
-        $html .= '<td id="name_label" scope="row" valign="top">'.translate("LBL_RECORD_TYPE","AOW_Actions").':<span class="required">*</span>&nbsp;&nbsp;';
+        $html .= '<td id="name_label" class="name_label" scope="row" valign="top"><label>' .
+                 translate("LBL_RECORD_TYPE", "AOW_Actions") .
+                 '</label>:<span class="required">
+*</span>&nbsp;&nbsp;';
         $html .= "<select name='aow_actions_param[".$line."][record_type]' id='aow_actions_param_record_type".$line."'  onchange='show_crModuleFields($line);'>".get_select_options_with_id($modules, $params['record_type'])."</select></td>";
-        $html .= '<td id="relate_label" scope="row" valign="top">'.translate("LBL_RELATE_WORKFLOW","AOW_Actions").':&nbsp;&nbsp;';
+        $html .= '<td id="relate_label" class="relate_label" scope="row" valign="top"><label>' .
+                 translate("LBL_RELATE_WORKFLOW", "AOW_Actions") .
+                 '</label>:';
         $html .= "<input type='hidden' name='aow_actions_param[".$line."][relate_to_workflow]' value='0' >";
         $html .= "<input type='checkbox' id='aow_actions_param[".$line."][relate_to_workflow]' name='aow_actions_param[".$line."][relate_to_workflow]' value='1' $checked></td>";
         $html .= "</tr>";
         $html .= "<tr>";
-        $html .= '<td colspan="4" scope="row"><table id="crLine'.$line.'_table" width="100%"></table></td>';
+        $html .= '<td colspan="4" scope="row"><table id="crLine' .
+                 $line .
+                 '_table" width="100%" class="lines"></table></td>';
         $html .= "</tr>";
         $html .= "<tr>";
         $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate("LBL_ADD_FIELD","AOW_Actions").'" id="addcrline'.$line.'" onclick="add_crLine('.$line.')" /></td>';
         $html .= "</tr>";
         $html .= "<tr>";
-        $html .= '<td colspan="4" scope="row"><table id="crRelLine'.$line.'_table" width="100%"></table></td>';
+        $html .= '<td colspan="4" scope="row"><table id="crRelLine'.$line.'_table" width="100%" class="relationship"></table></td>';
         $html .= "</tr>";
         $html .= "<tr>";
         $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate("LBL_ADD_RELATIONSHIP","AOW_Actions").'" id="addcrrelline'.$line.'" onclick="add_crRelLine('.$line.')" /></td>';

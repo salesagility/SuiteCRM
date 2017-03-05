@@ -209,7 +209,7 @@ class StoreQuery
                 // Bug 39580 - Added 'EmailTreeLayout','EmailGridWidths' to the list as these are added merely as side-effects of the fact that we store the entire
                 // $_REQUEST object which includes all cookies.  These are potentially quite long strings as well.
                 $blockVariables = array('mass', 'uid', 'massupdate', 'delete', 'merge', 'selectCount', 'current_query_by_page', 'EmailTreeLayout', 'EmailGridWidths');
-                if ($_REQUEST['use_stored_query']) {
+                if (isset($_REQUEST['use_store_query']) && $_REQUEST['use_stored_query']) {
                     $this->query = array_merge(StoreQuery::getStoredQueryForUser($name), $_REQUEST);
                 } else {
                     $this->query = $_REQUEST;

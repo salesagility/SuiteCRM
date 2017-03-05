@@ -219,7 +219,7 @@ class ListViewSmarty extends ListViewDisplay
      */
     function display($end = true) {
 
-        if(!$this->should_process) return $GLOBALS['app_strings']['LBL_SEARCH_POPULATE_ONLY'];
+        if(!$this->should_process) return $this->getSearchIcon().$GLOBALS['app_strings']['LBL_SEARCH_POPULATE_ONLY'];
         global $app_strings, $sugar_version, $sugar_flavor, $currentModule, $app_list_strings;
         $this->ss->assign('moduleListSingular', $app_list_strings["moduleListSingular"]);
         $this->ss->assign('moduleList', $app_list_strings['moduleList']);
@@ -252,6 +252,21 @@ class ListViewSmarty extends ListViewDisplay
 
         return $str . $this->ss->fetch($this->tpl) . (($end) ? $strend : '');
     }
+
+
+    private function getSearchIcon() {
+        global $sugar_config;
+
+        $searchFormInPopup = !in_array($_REQUEST['module'], isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array());
+        if($sugar_config['save_query'] == 'populate_only' && !$searchFormInPopup) {
+            return ;
+        }
+        $ss = new Sugar_Smarty();
+        $ss->assign('currentModule', $_REQUEST['module']);
+        return $ss->fetch('include/ListView/ListViewSearchLink.tpl') . '<br>';
+    }
+
+
     function displayEnd() {
         $str = '';
         if($this->show_mass_update_form) {
