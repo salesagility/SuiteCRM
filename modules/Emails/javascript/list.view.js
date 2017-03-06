@@ -17,6 +17,6 @@ $(document).ready(function(){
 
  // look for new
   $('.email-indicator .email-new').each(function(i, v){
-    $(this).parents('tr').addClass('email-new-record');
+    $(this).closest('tr').addClass('email-new-record');
   });
 });
