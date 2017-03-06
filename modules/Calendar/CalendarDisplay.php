@@ -173,7 +173,7 @@ class CalendarDisplay {
 		$user_default_date_start  = $timedate->asUser($timedate->getNow());
 		$ss->assign('user_default_date_start',$user_default_date_start);
 		// end form
-		$location_array = "";
+		$location_array = array();
 		foreach($this->views as $view){
 			$location_array[] = $view;
 		}
