@@ -211,7 +211,6 @@ var plgBackground = {
             namespace: false,
             ace: true,
             width: '600px',
-            bgColor: '#fafafa',
             toolPlugins: [plgBackground],
             uploadPathField: null
         }, options);
@@ -321,7 +320,7 @@ var plgBackground = {
 
             // add template particular
             var addEditorListElement = function(name, html, scrollDown, toolPlugins, style) {
-                style = (style ? style + ';' : '') + 'background-color: '+settings.bgColor+';max-width:' + settings.width;
+                style = (style ? style + ';' : '') + 'max-width:' + settings.width;
                 style = style.replace(/;\s*;/, ';');
                 var listElemHTML = mozaik.getEditorListElementHTML(name, html, settings.ace, style, toolPlugins);
                 $mozaik.append(listElemHTML);
@@ -387,10 +386,10 @@ var plgBackground = {
                     length = -1;
                 }
                 if(length == 0) {
-                    html = mozaik.getMozaikInnerHTML(false, html, 'background-color: '+settings.bgColor+';max-width:' + settings.width);
+                    html = mozaik.getMozaikInnerHTML(false, html, 'max-width:' + settings.width);
                 }
                 else if(length == -1) {
-                    html = mozaik.getEditorListElementHTML(false, html, settings.ace, 'background-color: '+settings.bgColor+';max-width:' + settings.width, settings.toolPlugins);
+                    html = mozaik.getEditorListElementHTML(false, html, settings.ace, 'max-width:' + settings.width, settings.toolPlugins);
                 }
                 if(!$(html).find('.mozaik-inner').length) {
                     html = '<div>' + html + '</div>'
@@ -547,6 +546,7 @@ var plgBackground = {
                                     if($(el).css('width', '100%')) {
                                         $(el).css('width', 'initial');
                                     }
+                                    $(el).css('background-color', $(el).css('background-color'));
                                 }
 
                                 // corrigate inline styles..
