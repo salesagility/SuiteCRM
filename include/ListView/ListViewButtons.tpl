@@ -1,6 +1,4 @@
-{if !isset($templateMeta.form.buttons)}
-
-{else}
+{if isset($templateMeta.form.buttons)}
 <ul class="list-view-action-buttons">
 
     {counter assign="num_action_buttons" start=0 print=false}
