@@ -77,39 +77,12 @@ $listViewDefs['Emails'] = array(
         'label' => 'LBL_LIST_FROM_ADDR',
         'default' => true,
     ),
-    'FROM_ADDR_NAME'=> array(
-        'width' => '32',
-        'label' => 'LBL_FROM_NAME',
-        'default' => false,
-    ),
-    'STATUS'=> array(
-        'width' => '32',
-        'label' => 'LBL_LIST_STATUS',
-        'default' => false,
-        'hide_header_label' => false
-    ),
-    'FLAGGED'=> array(
-        'width' => '32',
-        'label' => 'LBL_EMAIL_FLAGGED',
-        'default' => false,
-        'hide_header_label' => false
-    ),
     'INDICATOR'=> array(
         'width' => '32',
         'label' => 'LBL_INDICATOR',
         'default' => true,
         'sortable' => false,
         'hide_header_label' => true,
-    ),
-    'CONTACT_NAME'=> array(
-        'width' => '32',
-        'label' => 'LBL_LIST_CONTACT_NAME',
-        'default' => false,
-    ),
-    'TO_ADDRS_NAMES'=> array(
-        'width' => '32',
-        'label' => 'LBL_LIST_TO_ADDR',
-        'default' => false,
     ),
     'NAME' => array(
         'width' => '32',
