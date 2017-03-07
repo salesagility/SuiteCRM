@@ -72,7 +72,7 @@ $viewdefs['Emails']['ListView'] = array(
 );
 
 $listViewDefs['Emails'] = array(
-    'FROM_ADDR'=> array(
+    'FROM_ADDR_NAME'=> array(
         'width' => '32',
         'label' => 'LBL_LIST_FROM_ADDR',
         'default' => true,
@@ -108,5 +108,10 @@ $listViewDefs['Emails'] = array(
         'width' => '32',
         'label' => 'LBL_DATE_ENTERED',
         'default' => true,
+    ),
+    'TO_ADDRS_NAMES'=> array(
+        'width' => '32',
+        'label' => 'LBL_LIST_TO_ADDR',
+        'default' => false,
     ),
 );
