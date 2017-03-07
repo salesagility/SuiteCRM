@@ -38,6 +38,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
+{sugar_include include=$includes}
 {include file='include/ListView/ListViewColumnsFilterDialog.tpl'}
 <script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
 
@@ -118,7 +119,7 @@
 			{if $prerow}
 				<th class="td_alt">&nbsp;</th>
 			{/if}
-			{if !(isset($templateMeta.options.hide_edit_link) && $templateMeta.options.hide_edit_link === true) && !empty($quickViewLinks)}
+			{if !(isset($options.hide_edit_link) && $options.hide_edit_link === true) && !empty($quickViewLinks)}
 				<th class='td_alt quick_view_links'>&nbsp;</th>
 			{/if}
 			{counter start=0 name="colCounter" print=false assign="colCounter"}
@@ -323,16 +324,4 @@ function lvg_nav(m,id,act,offset,t){
         return SUGAR.util.getAdditionalDetails( '{$pageData.bean.moduleDir|default:$params.module}',id, 'adspan_'+id);{literal}}{/literal}
 </script>
 <script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>
-{/if}
-
-
-{if isset($templateMeta)}
-    {if isset($templateMeta.includes)}
-        {counter assign="num_includes" start=0 print=false}
-        {if count($templateMeta.includes) > $num_includes}
-            {foreach from=$templateMeta.includes key=k item=i}
-				<script type="text/javascript" src="{sugar_getjspath file=$i.file}"></script>
-            {/foreach}
-        {/if}
-    {/if}
 {/if}
