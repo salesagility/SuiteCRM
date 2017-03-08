@@ -218,7 +218,7 @@
 				{if !empty($quickViewLinks)}
 	            {capture assign=linkModule}{if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$pageData.bean.moduleDir}{/if}{/capture}
 	            {capture assign=action}{if $act}{$act}{else}EditView{/if}{/capture}
-				{if isset($templateMeta.options.hide_edit_link) && $templateMeta.options.hide_edit_link === true}
+				{if isset($options.hide_edit_link) && $options.hide_edit_link === true}
 				{else}
 					<td>
                         {if $pageData.rowAccess[$id].edit && !empty($quickViewLinks)}
