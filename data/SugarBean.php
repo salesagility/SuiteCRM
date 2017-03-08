@@ -611,11 +611,11 @@ class SugarBean
      *
      * Internal Function, do not override.
      */
-    public static function get_union_related_list($parentbean = null, $order_by = "", $sort_order = '', $where = "",
-                                                  $row_offset = 0, $limit = -1, $max = -1, $show_deleted = 0, $subpanel_def)
+    public static function get_union_related_list($parentbean, $order_by = "", $sort_order = '', $where = "",
+                                                  $row_offset = 0, $limit = -1, $max = -1, $show_deleted = 0, $subpanel_def = null)
     {
-        if (empty($parentbean)) {
-            $GLOBALS['log']->fatal('empty parent bean');
+        if (is_null($subpanel_def)) {
+            $GLOBALS['log']->fatal('subpanel_def is null');
         }
         $secondary_queries = array();
         global $layout_edit_mode;
@@ -906,11 +906,11 @@ class SugarBean
      * @param array $secondary_queries
      * @return array $fetched data.
      */
-    public function process_union_list_query($parent_bean = null, $query = '',
-                                             $row_offset = 0, $limit = -1, $max_per_page = -1, $where = '', $subpanel_def, $query_row_count = '', $secondary_queries = array())
+    public function process_union_list_query($parent_bean, $query,
+                                             $row_offset, $limit = -1, $max_per_page = -1, $where = '', $subpanel_def = null, $query_row_count = '', $secondary_queries = array())
     {
-        if (empty($query)) {
-            $GLOBALS['log']->fatal('empty query');
+        if (is_null($subpanel_def)) {
+            $GLOBALS['log']->fatal('subpanel_def is null');
         }
 
         $db = DBManagerFactory::getInstance('listviews');
