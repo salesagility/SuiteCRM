@@ -1,11 +1,10 @@
-<?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,25 +35,27 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
-/*********************************************************************************
+$(document).ready(function(){
+ $('[data-action=emails-compose]').click(function(){
+   alert('compose email placeholder');
+ });
 
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- *********************************************************************************/
+ $('[data-action=emails-configure]').click(function(){
+   alert('configure email placeholder');
+ });
 
-global $mod_strings;
-global $current_user;
+ $('[data-action=emails-check-new-email]').click(function(){
+   alert('check new email placeholder');
+ });
 
-$default = 'index.php?module=Emails&action=ListView&assigned_user_id='.$current_user->id;
+ $('[data-action=emails-open-folder]').click(function(){
+   alert('open folder email placeholder');
+ });
 
-$e = new Email();
-
-// my inbox
-if(ACLController::checkAccess('Emails', 'edit', true))$module_menu[]=Array("index.php?module=Emails&action=EditView&return_module=Emails&return_action=index", $mod_strings['LNK_NEW_SEND_EMAIL'],"Create", 'Emails');
-if(ACLController::checkAccess('Emails', 'list', true))$module_menu[]=Array("index.php?module=Emails&action=index&return_module=Emails&return_action=DetailView", $mod_strings['LNK_VIEW_MY_INBOX'],"List", 'Emails');
-
-
-?>
+ // look for new
+  $('.email-indicator .email-new').each(function(i, v){
+    $(this).closest('tr').addClass('email-new-record');
+  });
+});
