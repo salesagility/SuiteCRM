@@ -123,7 +123,7 @@ class ListViewSmarty extends ListViewDisplay
 
         $this->ss->assign('sugarconfig', $this->displayColumns);
         $this->ss->assign('displayColumns', $this->displayColumns);
-        $this->ss->assign('option', isset($this->templateMeta['options']) ? $this->templateMeta['options'] : null);
+        $this->ss->assign('options', isset($this->templateMeta['options']) ? $this->templateMeta['options'] : null);
         $this->ss->assign('form', isset($this->templateMeta['form']) ? $this->templateMeta['form'] : null);
         $this->ss->assign('includes', isset($this->templateMeta['includes']) ? $this->templateMeta['includes'] : null);
 
