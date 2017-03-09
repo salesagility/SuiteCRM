@@ -3427,7 +3427,7 @@ class InboundEmail extends SugarBean {
 	 * @param array $breadcrumb Default 0, build up of the parts mapping
 	 * @param bool $forDisplay Default false
 	 */
-	function saveAttachments($msgNo, $parts, $emailId, $breadcrumb='0', $forDisplay) {
+	function saveAttachments($msgNo, $parts, $emailId, $breadcrumb, $forDisplay) {
 		global $sugar_config;
 		/*
 			Primary body types for a part of a mail structure (imap_fetchstructure returned object)
@@ -3440,6 +3440,11 @@ class InboundEmail extends SugarBean {
 			6 => video
 			7 => other
 		*/
+
+		// set $breadcrumb = '0' as default
+		if (!$breadcrumb) {
+			$breadcrumb = '0';
+		}
 
 		foreach($parts as $k => $part) {
 			$thisBc = $k+1;
@@ -5904,7 +5909,7 @@ eoq;
 	 * @param string mbox Name of mailbox using dot notation paths to display
 	 * @param string $forceRefresh Flag to use cache or not
 	 */
-	function displayFolderContents($mbox, $forceRefresh='false', $page) {
+	function displayFolderContents($mbox, $forceRefresh='false', $page = 1) {
 		global $current_user;
 
 		$delimiter = $this->get_stored_options('folderDelimiter');
