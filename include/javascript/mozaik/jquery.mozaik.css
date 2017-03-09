@@ -230,3 +230,21 @@ div.mozaik-preloader {
     background: #fff;
     height: 400px;
 }
+
+/* margin set */
+.mozaik-width-set {
+    display: block;
+    float: none;
+    height: 0;
+    position: relative;
+    width: 100%;
+}
+
+.mozaik-width-set .handler {
+    height: 0;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 0;
+    z-index: 10;
+}
