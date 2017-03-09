@@ -206,8 +206,9 @@ if (isset($focus->body_html)) $xtpl->assign("BODY_HTML", $focus->body_html); els
 
 require_once('include/SuiteMozaik.php');
 $mozaik = new SuiteMozaik();
-$templateWidth = 600;
-$xtpl->assign('template_width', $templateWidth);
+$templateWidth = '100%';
+$templateContentsWidth = '600';
+$xtpl->assign('template_contents_width', $templateContentsWidth);
 $xtpl->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_text', 'email_template_editor', $templateWidth));
 
 

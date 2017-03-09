@@ -4,6 +4,19 @@ if(mozaik || $.mozaik) {
 
 // mozaik helpers (private)
 var mozaik = {
+
+    parseStyle: function (style) {
+        var styles = style.split(';');
+        var css = {};
+        for(var i in styles) {
+            if(styles[i].trim()) {
+                var splits = styles[i].split(':');
+                css[splits[0].trim()] = splits[1].trim();
+            }
+        }
+        return css;
+    },
+
     getThumbnailListHTML: function(id, thumbs, base) {
         var html = '<ul class="mozaik-thumbs" id="' + id + '" title="'+SUGAR.language.translate('Campaigns', 'LBL_CLICK_TO_ADD')+'">';
         for(var name in thumbs) {
@@ -44,9 +57,28 @@ var mozaik = {
     },
 
     getMozaikInnerHTML: function(name, innertext, style) {
-        //style = ($(innertext).attr('style') ? $(innertext).attr('style') + ';' : '') + style;
-        //style = style.replace(/;\s*;/, ';');
-        var html = '<div class="mozaik-inner"' + (name ? ' data-name="' + name + '"' : '') + ' style="' + style + '">' + innertext + '</div>';
+        // TODO: add default colors settings to jquery plugin default settings (don't apply only the browser generated styles because it's user defined contents and it is not pre-defined values by dev!!!!)
+        bgcolor = '#FEFEFE';
+        bgoutercolor = '#778591';
+
+        var bgorig = false;
+        if(style) {
+            var css = mozaik.parseStyle(style);
+            if(css['background-color']) {
+                bgorig = css['background-color'];
+            }
+        }
+        if(!$('<div>'+innertext+'</div>').find('.mozaik-inner-contents').length) {
+            if(bgorig) {
+                bgcolor = bgorig;
+            }
+            innertext = '<div class="mozaik-inner-contents" style="background-color: '+bgcolor+';">'+innertext+'</div>';
+        } else {
+            if(bgorig) {
+                bgoutercolor = bgorig;
+            }
+        }
+        var html = '<div class="mozaik-inner"' + (name ? ' data-name="' + name + '"' : '') + ' style="' + style + '; background-color: '+bgoutercolor+';">' + innertext + '</div>';
         return html;
     },
 
@@ -75,6 +107,27 @@ var mozaik = {
     //    return html;
     //}
 
+    setFullBgColor: function(bgColor) {
+        // TODO: implement this for set the template full-width bg-color for total space area. (100% as default) - selector at $('.mozaik-inner')
+        $('.mozaik-inner').css('background-color', bgColor);
+    },
+
+    setFullWidth: function(width) {
+        // TODO: implement this for set the template contents-width for inner space area. (600px by default) - selector at $('.mozaik-inner-contents')
+        $('.mozaik-inner').css('width', width);
+        $('.mozaik-inner').css('max-width', width);
+    },
+
+    setContentsBgColor: function(bgColor) {
+        // TODO: implement this for set the template contents bg-color for inner space area. (600px by default) - selector at $('.mozaik-inner-contents')
+        $('.mozaik-inner-contents').css('background-color', bgColor);
+    },
+
+    setContentsWidth: function(width) {
+        $('.mozaik-inner-contents').css('width', width);
+        $('.mozaik-inner-contents').css('max-width', width);
+    },
+
 };
 
 
@@ -88,7 +141,7 @@ var plgBackground = {
     onClick: function(elem, name) {
         if(!$(elem).attr('data-initialized')) {
             // TODO : add colorpicker to packagist and composer
-            var $mozaikInner = $(elem).closest('.mozaik-elem').find('.mozaik-inner');
+            var $mozaikInner = $(elem).closest('.mozaik-elem').find('.mozaik-inner-contents');
             $(elem).ColorPicker({
                 onShow: function (colpkr) {
                     //Function to convert hex format to a rgb color
@@ -212,7 +265,7 @@ var plgBackground = {
             style: 'tpls/default/styles/default.css',
             namespace: false,
             ace: true,
-            width: '600px',
+            width: '100%',
             toolPlugins: [plgBackground],
             uploadPathField: null
         }, options);
@@ -328,7 +381,7 @@ var plgBackground = {
                 $mozaik.append(listElemHTML);
                 var editables = name && settings.thumbs[name].editables ? settings.thumbs[name].editables.split(',') : settings.editables.split(',');
                 $.each(editables, function(i,e){
-                    var sels = '.mozaik-inner'; //, .mozaik-inner ' + e;
+                    var sels = '.mozaik-inner-contents'; //, .mozaik-inner ' + e;
                     var config = settings.tinyMCE;
                     config.selector = sels;
                     config.inline = true;
@@ -419,6 +472,13 @@ var plgBackground = {
                     $mozaik.css('overflow-x', 'auto');
                 }
 
+                // fix stylesheet on template
+                $('.mozaik-inner, .mozaik-inner-contents').each(function(i,e){
+                    var css = mozaik.parseStyle($(e).attr('style'));
+                    $(e).attr('style', '');
+                    $(e).css(css);
+                });
+
             };
             onResize();
 
@@ -457,6 +517,7 @@ var plgBackground = {
                 });
 
                 $(e).find('.mozaik-thumbs').show();
+                onResize();
                 //$(e).find('.mozaik-preloader').hide();
             });
 
@@ -506,7 +567,7 @@ var plgBackground = {
         var settings = $.extend({
             inlineStyles: false,
             applyStyles: true,
-            width: '600px'
+            width: '100%'
         }, options);
 
         var ret = [];
@@ -522,7 +583,7 @@ var plgBackground = {
                         var sel = parts[0];
                         var defs = parts[1];
                         $(sel).each(function(l, el){
-                            if(($(el).hasClass('mozaik-inner') || $(el).closest('.mozaik-inner').length) && !$(el).hasClass('mozaik-tools') && !$(el).closest('.mozaik-tools').length) {
+                            if(($(el).hasClass('mozaik-inner-contents') || $(el).closest('.mozaik-inner-contents').length) && !$(el).hasClass('mozaik-tools') && !$(el).closest('.mozaik-tools').length) {
 
                                 // corrigate inline font-size and line height style
                                 var fontFamily = $(el).css('font-family');
@@ -543,7 +604,7 @@ var plgBackground = {
                                 if($(el).hasClass('mozaik-clear')) {
                                     $(el).css('height', '0');
                                 }
-                                if($(el).hasClass('mozaik-inner')) {
+                                if($(el).hasClass('mozaik-inner-contents')) {
                                     if($(el).css('width', '100%')) {
                                         $(el).css('width', 'initial');
                                     }

@@ -9,13 +9,16 @@
 }
 
 .mozaik-inner {
-    max-width: 600px;
     width: auto;
     margin: 0 auto;
-    padding: 0 30px;
+    padding: 0;
     -webkit-box-shadow: 0px 40px 40px -40px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 40px 40px -40px rgba(0,0,0,0.75);
     box-shadow: 0px 40px 40px -40px rgba(0,0,0,0.75);
+}
+.mozaik-inner-contents {
+    width: 600px;
+    padding: 0 30px;
 }
 
 .mozaik-clear {clear: both; height: 0;}
