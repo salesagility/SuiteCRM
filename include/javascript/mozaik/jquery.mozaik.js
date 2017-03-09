@@ -123,9 +123,11 @@ var mozaik = {
         $('.mozaik-inner-contents').css('background-color', bgColor);
     },
 
+    lastContentsWidth: false,
     setContentsWidth: function(width) {
         $('.mozaik-inner-contents').css('width', width);
         $('.mozaik-inner-contents').css('max-width', width);
+        mozaik.lastContentsWidth = width;
     },
 
 };
@@ -379,6 +381,9 @@ var plgBackground = {
                 style = style.replace(/;\s*;/, ';');
                 var listElemHTML = mozaik.getEditorListElementHTML(name, html, settings.ace, style, toolPlugins);
                 $mozaik.append(listElemHTML);
+                if(mozaik.lastContentsWidth) {
+                    mozaik.setContentsWidth(mozaik.lastContentsWidth);
+                }
                 var editables = name && settings.thumbs[name].editables ? settings.thumbs[name].editables.split(',') : settings.editables.split(',');
                 $.each(editables, function(i,e){
                     var sels = '.mozaik-inner-contents'; //, .mozaik-inner ' + e;
