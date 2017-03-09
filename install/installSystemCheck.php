@@ -41,7 +41,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $_SESSION['setup_license_accept'] = true;
 
-function runCheck($install_script = false, $mod_strings){
+function runCheck($install_script, $mod_strings){
 installLog("Begin System Check Process *************");
 
 if( !isset( $install_script ) || !$install_script ){
