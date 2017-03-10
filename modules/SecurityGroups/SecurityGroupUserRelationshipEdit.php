@@ -1,7 +1,6 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-require_once('XTemplate/xtpl.php');
 require_once('modules/SecurityGroups/SecurityGroupUserRelationship.php');
 require_once('modules/SecurityGroups/Forms.php');
 require_once('include/utils.php');
@@ -44,7 +43,7 @@ $quicksearch_js = $qsd->getQSScripts();
 $quicksearch_js .= '<script type="text/javascript" language="javascript">sqs_objects = ' . $json->encode($sqs_objects) . '</script>';
 echo $quicksearch_js;
 
-$xtpl=new XTemplate ('modules/SecurityGroups/SecurityGroupUserRelationshipEdit.html');
+$xtpl=new \SuiteCRM\XTemplate ('modules/SecurityGroups/SecurityGroupUserRelationshipEdit.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 

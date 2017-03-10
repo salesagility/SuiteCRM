@@ -34,7 +34,7 @@ r26565 - 2007-09-11 11:09:20 -0700 (Tue, 11 Sep 2007) - clee - Changed to just u
 r26564 - 2007-09-11 11:03:41 -0700 (Tue, 11 Sep 2007) - clee - Fixed issues with multienum custom type.  
 Added:
 trunk/include/SugarFields/Fields/MultiEnum/DetailView.tpl
-trunk/include/Smarty/plugins/modifier.multienum_to_array.php
+trunk/custom/include/Smarty/plugins/modifier.multienum_to_array.php
 Touched:
 trunk/include/SugarFields/Fields/MultiEnum/EditView.tpl
 trunk/include/SugarFields/Fields/MultiEnum/SugarFieldMultiEnum.php

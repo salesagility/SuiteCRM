@@ -193,7 +193,7 @@ if(!empty($focus->job_interval)) {
 
 
 // TEMPLATE ASSIGNMENTS
-$xtpl = new XTemplate('modules/Schedulers/EditView.html');
+$xtpl = new \SuiteCRM\XTemplate('modules/Schedulers/EditView.html');
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	PARSING FOR BASIC SETUP

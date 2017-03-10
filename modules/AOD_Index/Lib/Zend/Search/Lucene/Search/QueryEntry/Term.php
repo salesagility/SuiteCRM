@@ -21,7 +21,7 @@
  */
 
 /** Zend_Search_Lucene_Search_QueryEntry */
-require_once 'Zend/Search/Lucene/Search/QueryEntry.php';
+
 
 /**
  * @category   Zend
@@ -87,7 +87,7 @@ class Zend_Search_Lucene_Search_QueryEntry_Term extends Zend_Search_Lucene_Searc
             $this->_similarity = $parameter;
         } else {
             /** Zend_Search_Lucene_Search_Query_Fuzzy */
-            require_once 'Zend/Search/Lucene/Search/Query/Fuzzy.php';
+
             $this->_similarity = Zend_Search_Lucene_Search_Query_Fuzzy::DEFAULT_MIN_SIMILARITY;
         }
     }
@@ -103,7 +103,7 @@ class Zend_Search_Lucene_Search_QueryEntry_Term extends Zend_Search_Lucene_Searc
     {
         if ($this->_fuzzyQuery) {
             /** Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy */
-            require_once 'Zend/Search/Lucene/Search/Query/Preprocessing/Fuzzy.php';
+
             $query = new Zend_Search_Lucene_Search_Query_Preprocessing_Fuzzy($this->_term,
                                                                              $encoding,
                                                                              ($this->_field !== null)?
@@ -117,7 +117,7 @@ class Zend_Search_Lucene_Search_QueryEntry_Term extends Zend_Search_Lucene_Searc
 
 
         /** Zend_Search_Lucene_Search_Query_Preprocessing_Term */
-        require_once 'Zend/Search/Lucene/Search/Query/Preprocessing/Term.php';
+
         $query = new Zend_Search_Lucene_Search_Query_Preprocessing_Term($this->_term,
                                                                         $encoding,
                                                                         ($this->_field !== null)?

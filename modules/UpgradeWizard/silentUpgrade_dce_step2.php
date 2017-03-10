@@ -1,4 +1,5 @@
 <?php
+use SuiteCRM\SugarLogger\LoggerManager;
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -494,7 +495,7 @@ if($upgradeType == constant('DCE_INSTANCE')){
     $isDCEInstance = true;
     $configOptions = $sugar_config['dbconfig'];
 
-	$GLOBALS['log']	= LoggerManager::getLogger('SugarCRM');
+	$GLOBALS['log']	= LoggerManager::getLogger();
 	$db				= &DBManagerFactory::getInstance();
        		///////////////////////////////////////////////////////////////////////////////
 	////	MAKE SURE PATCH IS COMPATIBLE
@@ -815,17 +816,12 @@ if(file_exists($newtemplate_path . '/modules/Configurator/Configurator.php')){
 }
 
 //unset the logger previously instantiated
-if(file_exists($newtemplate_path . '/include/SugarLogger/LoggerManager.php')){
-	set_upgrade_progress('logger','in_progress');
-	if(!class_exists('LoggerManager')){
-
-	}
-	if(class_exists('LoggerManager')){
-		unset($GLOBALS['log']);
-		$GLOBALS['log'] = LoggerManager::getLogger('SugarCRM');
-	}
-	set_upgrade_progress('logger','done');
+set_upgrade_progress('logger', 'in_progress');
+if (class_exists('\\SuiteCRM\\SugarLogger\\LoggerManager')) {
+    unset($GLOBALS['log']);
+    $GLOBALS['log'] = LoggerManager::getLogger();
 }
+set_upgrade_progress('logger', 'done');
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	RECORD ERRORS

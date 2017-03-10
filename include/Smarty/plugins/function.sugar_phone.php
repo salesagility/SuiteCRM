@@ -25,7 +25,7 @@ r36563 - 2008-06-11 10:36:05 -0700 (Wed, 11 Jun 2008) - jmertic - Bug 22877: Mak
 Added:
 - include/SugarFields/Fields/Phone/WirelessDetailView.tpl
 Touched:
-- include/Smarty/plugins/function.sugar_phone.php
+- custom/include/Smarty/plugins/function.sugar_phone.php
 - include/SugarWireless/css/wireless.css
 
 r29406 - 2007-11-08 16:36:28 -0800 (Thu, 08 Nov 2007) - bsoufflet - Bug 17690 : [RC] No license and/or entry point check in the files
@@ -34,7 +34,7 @@ r28844 - 2007-10-24 22:52:24 -0700 (Wed, 24 Oct 2007) - clee - Fix for 16807
 It appears that the formats may be giving some trouble.  It is best to consolidate the formatting to a known skype format.  Adding function in include/utils.php to format the phone number to a known skype format that will work for sure.
 Modified:
 include/utils.php
-include/Smarty/plugins/function.sugar_phone.php
+custom/include/Smarty/plugins/function.sugar_phone.php
 Code review by Ajay
 
 r28841 - 2007-10-24 20:11:24 -0700 (Wed, 24 Oct 2007) - ajay - 16807: added support for skypeout in detail view..

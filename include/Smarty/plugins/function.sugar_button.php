@@ -52,7 +52,7 @@ r55979 - 2010-04-19 13:15:20 -0700 (Mon, 19 Apr 2010) - jmertic - Bug 36062 - Fi
 r55022 - 2010-03-02 09:14:24 -0800 (Tue, 02 Mar 2010) - clee - Bug:36066
 We are setting a new target when a form is invoked.  This opens up a new window/tab.  I've changed the full form functionality to not open a new window/tab.
 Modified:
-include/Smarty/plugins/function.sugar_button.php
+custom/include/Smarty/plugins/function.sugar_button.php
 
 r54870 - 2010-02-24 07:41:23 -0800 (Wed, 24 Feb 2010) - roger - bug: 35958 - make the quick create save button blue.
 
@@ -89,8 +89,8 @@ include/generic/SugarWidgets/SugarWidgetSubpanelTopScheduleCallButton.php
 include/generic/SugarWidgets/SugarWidgetSubpanelTopScheduleMeetingButton.php
 include/javascript/sugar_3.js
 include/SearchForm/tpls/header.tpl
-include/Smarty/plugins/function.sugar_button.php
-include/Smarty/plugins/function.sugarvar_teamset.php
+custom/include/Smarty/plugins/function.sugar_button.php
+custom/include/Smarty/plugins/function.sugarvar_teamset.php
 include/SugarFields/Fields/Collection/ViewSugarFieldCollection.php
 include/SugarFields/Fields/Collection/CollectionEditView.tpl
 include/SugarFields/Fields/Collection/SugarFieldCollection.js
@@ -143,13 +143,13 @@ Touched:
 - modules/Contacts/ContactFormBase.php
 - modules/ProspectLists/ProspectListFormBase.php
 - include/formbase.php
-- include/Smarty/plugins/function.sugar_button.php
+- custom/include/Smarty/plugins/function.sugar_button.php
 - include/EditView/EditView2.php
 
 r30452 - 2007-12-14 13:28:17 -0800 (Fri, 14 Dec 2007) - clee - Fix for 18019
-Need to add code to set the return_id value in include/Smarty/plugins/function.sugar_button.php when clicking on the Duplicate button so that this value is passed into the EditView and a cancel operation can return the user to the previous screen correctly.
+Need to add code to set the return_id value in custom/include/Smarty/plugins/function.sugar_button.php when clicking on the Duplicate button so that this value is passed into the EditView and a cancel operation can return the user to the previous screen correctly.
 Modified:
-include/Smarty/plugins/function.sugar_button.php
+custom/include/Smarty/plugins/function.sugar_button.php
 
 r29427 - 2007-11-09 09:24:11 -0800 (Fri, 09 Nov 2007) - clee - Fix for 17450
 Need extra check for cancel from shortcut menu where action is set, but no return_id or id value exists.
@@ -157,21 +157,21 @@ Need extra check for cancel from shortcut menu where action is set, but no retur
 r29426 - 2007-11-09 08:54:58 -0800 (Fri, 09 Nov 2007) - clee - Fix for 17450
 The subpanel quick creates full form button generated was not setting a return_action value.  As a result, it defaulted to the previous action ("SubPanelViewer").  Upon cancel, the MVC attempted to run the action for which there was no record.
 Modified:
-include/Smarty/plugins/function.sugar_button.php
+custom/include/Smarty/plugins/function.sugar_button.php
 Code Review: Roger
 
 r28804 - 2007-10-24 09:14:09 -0700 (Wed, 24 Oct 2007) - clee - Fix for 16894
 Modified function.sugar_button.php to make extra checks to see if the return action is set to DetailView, that a valid id value is set.  Otherwise, there's no way to pull up the DetailView contents.
 Modified:
-include/Smarty/plugins/function.sugar_button.php
+custom/include/Smarty/plugins/function.sugar_button.php
 Code Review by Roger.
 
 r28777 - 2007-10-23 17:33:25 -0700 (Tue, 23 Oct 2007) - bsoufflet - bug 16861
 
 r28771 - 2007-10-23 17:23:13 -0700 (Tue, 23 Oct 2007) - clee - Fix for 16740
-Fixed include/Smarty/plugins/function.sugar_button.php file.   The button for Audit log was being created with the $_REQUEST id.  However, this value was built for the first request so subsequent requests to view the Audit log would always go back to the id built in the cached .tpl file.  Modified to use {$fields.id.value} instead.
+Fixed custom/include/Smarty/plugins/function.sugar_button.php file.   The button for Audit log was being created with the $_REQUEST id.  However, this value was built for the first request so subsequent requests to view the Audit log would always go back to the id built in the cached .tpl file.  Modified to use {$fields.id.value} instead.
 Modified:
-Fixed include/Smarty/plugins/function.sugar_button.php
+Fixed custom/include/Smarty/plugins/function.sugar_button.php
 
 r28643 - 2007-10-22 13:58:23 -0700 (Mon, 22 Oct 2007) - majed - bug #16757
 fixes duplicate so it returns to the detail view of the new record instead of the index page
@@ -191,12 +191,12 @@ include/DetailView/header.tpl
 include/EditView/EditView2.php
 include/EditView/header.tpl
 include/EditView/SugarVCR.php
-include/Smarty/plugins/function.sugar_button.php
+custom/include/Smarty/plugins/function.sugar_button.php
 include/SugarFields/Parsers/MetaParser.php
 
 r24941 - 2007-08-01 12:53:34 -0700 (Wed, 01 Aug 2007) - roger - RRS: bug 13806. Set the return_action to DetailView for the Edit button.
 
-r24531 - 2007-07-23 01:25:31 -0700 (Mon, 23 Jul 2007) - clee - Fix for 13778.  Changed include/Smarty/plugins/function.sugar_button.php so that FIND_DUPLICATE button will set return_action to "DetailView" (used only in Contacts and Accounts DetailView Meta-data files).
+r24531 - 2007-07-23 01:25:31 -0700 (Mon, 23 Jul 2007) - clee - Fix for 13778.  Changed custom/include/Smarty/plugins/function.sugar_button.php so that FIND_DUPLICATE button will set return_action to "DetailView" (used only in Contacts and Accounts DetailView Meta-data files).
 
 r24352 - 2007-07-16 10:56:01 -0700 (Mon, 16 Jul 2007) - roger - RRS: bug 13627.
 

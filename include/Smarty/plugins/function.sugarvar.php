@@ -28,7 +28,7 @@ r42807 - 2008-12-29 11:16:59 -0800 (Mon, 29 Dec 2008) - dwong - Branch from trun
 r30629 - 2007-12-26 08:01:12 -0800 (Wed, 26 Dec 2007) - clee - Changed SugarFieldText.php to automatically set the smarty modifier url2html to be true for DetailViews.  Changed function.sugarvar.php to check for this modifier and render the appropriate call to the smarty modifier.
 Modified:
 include/SugarFields/Text/SugarFieldText.php
-include/Smarty/plugins/function.sugarvar.php
+custom/include/Smarty/plugins/function.sugarvar.php
 
 r23083 - 2007-05-24 16:39:44 -0700 (Thu, 24 May 2007) - clee - Code cleanup.
 
