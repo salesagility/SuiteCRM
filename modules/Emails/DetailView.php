@@ -145,9 +145,9 @@ $GLOBALS['log']->info("Email detail view");
 $show_forward = true;
 if ($email_type == 'archived') {
 	echo getClassicModuleTitle('Emails', array($mod_strings['LBL_ARCHIVED_EMAIL'],$focus->name), true);
-	$xtpl=new XTemplate ('modules/Emails/DetailView.html');
+	$xtpl=new \SuiteCRM\XTemplate ('modules/Emails/DetailView.html');
 } else {
-	$xtpl=new XTemplate ('modules/Emails/DetailViewSent.html');
+	$xtpl=new \SuiteCRM\XTemplate ('modules/Emails/DetailViewSent.html');
 	if($focus->type == 'out') {
 		echo getClassicModuleTitle('Emails', array($mod_strings['LBL_SENT_MODULE_NAME'],$focus->name), true);
 		//$xtpl->assign('DISABLE_REPLY_BUTTON', 'NONE');
@@ -365,7 +365,7 @@ if($show_raw) {
 EOD;
 }
 
-require_once('include/Smarty/plugins/function.sugar_action_menu.php');
+require_once('custom/include/Smarty/plugins/function.sugar_action_menu.php');
 $action_button = smarty_function_sugar_action_menu(array(
     'id' => 'detail_header_action_menu',
     'buttons' => $buttons,
@@ -439,7 +439,7 @@ if($show_raw) {
 EOD;
 }
 
-require_once('include/Smarty/plugins/function.sugar_action_menu.php');
+require_once('custom/include/Smarty/plugins/function.sugar_action_menu.php');
 $action_button_sent_email = smarty_function_sugar_action_menu(array(
     'id' => 'detail_header_action_menu',
     'buttons' => $buttons_sent_email,

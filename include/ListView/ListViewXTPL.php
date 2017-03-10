@@ -87,7 +87,7 @@ class ListViewXTPL extends ListViewDisplay{
 		parent::process($file, $data, $html_var);
 		$this->data = $data;
 		$html_var = strtoupper($html_var);
-		$this->xtpl = new XTemplate($file);
+		$this->xtpl = new \SuiteCRM\XTemplate($file);
 		$this->xtpl->assign('MOD', $GLOBALS['mod_strings']);
 		$this->xtpl->assign('APP', $GLOBALS['app_strings']);
 		$this->xtpl->assign('BG_HILITE', $hilite_bg);

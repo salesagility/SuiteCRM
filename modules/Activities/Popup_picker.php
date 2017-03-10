@@ -377,8 +377,8 @@ class Popup_Picker
             }
 
         } // end Notes
-
-        $xtpl = new XTemplate('modules/Activities/Popup_picker.html');
+		
+        $xtpl=new \SuiteCRM\XTemplate ('modules/Activities/Popup_picker.html');
 
         $xtpl->assign('MOD', $mod_strings);
         $xtpl->assign('APP', $app_strings);

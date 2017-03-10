@@ -23,7 +23,7 @@
 /**
  * Framework base exception
  */
-require_once 'Zend/Search/Lucene/Exception.php';
+
 
 
 /**

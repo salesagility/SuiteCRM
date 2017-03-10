@@ -124,7 +124,7 @@ if ($is_edit) {
 
 
 	$GLOBALS['log']->info("Releases edit view");
-	$xtpl=new XTemplate ('modules/Releases/EditView.html');
+	$xtpl=new \SuiteCRM\XTemplate ('modules/Releases/EditView.html');
 	$xtpl->assign("MOD", $mod_strings);
 	$xtpl->assign("APP", $app_strings);
 

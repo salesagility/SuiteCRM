@@ -22,7 +22,7 @@
 
 
 /** Zend_Search_Lucene_FSM */
-require_once 'Zend/Search/Lucene/FSM.php';
+
 
 /**
  * @category   Zend
@@ -194,7 +194,7 @@ class Zend_Search_Lucene_Search_BooleanExpressionRecognizer extends Zend_Search_
     public function finishExpression()
     {
         if ($this->getState() != self::ST_LITERAL) {
-            require_once 'Zend/Search/Lucene/Exception.php';
+
             throw new Zend_Search_Lucene_Exception('Literal expected.');
         }
 
@@ -215,7 +215,7 @@ class Zend_Search_Lucene_Search_BooleanExpressionRecognizer extends Zend_Search_
     public function emptyOperatorAction()
     {
         /** Zend_Search_Lucene_Search_QueryParser */
-        require_once 'Zend/Search/Lucene/Search/QueryParser.php';
+
 
         if (Zend_Search_Lucene_Search_QueryParser::getDefaultOperator() == Zend_Search_Lucene_Search_QueryParser::B_AND) {
             // Do nothing
@@ -233,7 +233,7 @@ class Zend_Search_Lucene_Search_BooleanExpressionRecognizer extends Zend_Search_
     public function emptyNotOperatorAction()
     {
         /** Zend_Search_Lucene_Search_QueryParser */
-        require_once 'Zend/Search/Lucene/Search/QueryParser.php';
+
 
         if (Zend_Search_Lucene_Search_QueryParser::getDefaultOperator() == Zend_Search_Lucene_Search_QueryParser::B_AND) {
             // Do nothing

@@ -40,7 +40,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-require_once('include/Sugar_Smarty.php');
+require_once('include/Smarty/Sugar_Smarty.php');
 require_once('include/externalAPI/ExternalAPIFactory.php');
 
 

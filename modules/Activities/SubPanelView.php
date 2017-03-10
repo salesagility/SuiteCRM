@@ -220,12 +220,12 @@ foreach ($focus_notes_list as $note) {
 
 if ($currentModule == 'Contacts')
 {
-	$xtpl=new XTemplate ('modules/Activities/SubPanelViewContacts.html');
+	$xtpl=new \SuiteCRM\XTemplate ('modules/Activities/SubPanelViewContacts.html');
 	$xtpl->assign("CONTACT_ID", $focus->id);
 }
 else
 {
-	$xtpl=new XTemplate ('modules/Activities/SubPanelView.html');
+	$xtpl=new \SuiteCRM\XTemplate ('modules/Activities/SubPanelView.html');
 }
 
 $xtpl->assign("DELETE_INLINE_PNG",  SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"', null,null,'.gif',$app_strings['LNK_DELETE']));

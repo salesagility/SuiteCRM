@@ -22,7 +22,7 @@
 
 
 /** Zend_Search_Lucene_Document */
-require_once 'Zend/Search/Lucene/Document.php';
+
 
 
 /**

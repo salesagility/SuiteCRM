@@ -7,7 +7,7 @@ if (!defined('sugarEntry') || !sugarEntry)
 
 require_once('include/utils.php');
 require_once('include/export_utils.php');
-require_once("include/Sugar_Smarty.php");
+require_once("include/Smarty/Sugar_Smarty.php");
 require_once('modules/jjwg_Maps/jjwg_Maps.php');
 
 class jjwg_MapsController extends SugarController {
