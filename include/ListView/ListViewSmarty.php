@@ -50,25 +50,27 @@ require_once('include/contextMenus/contextMenu.php');
 class ListViewSmarty extends ListViewDisplay
 {
 
-    var $data;
-    var $ss; // the smarty object
-    var $displayColumns;
-    var $searchColumns; // set by view.list.php
-    var $tpl;
-    var $moduleString;
-    var $export = true;
-    var $delete = true;
-    var $select = true;
-    var $mailMerge = true;
-    var $email = true;
-    var $targetList = false;
-    var $multiSelect = true;
-    var $quickViewLinks = true;
-    var $lvd;
-    var $mergeduplicates = true;
-    var $contextMenus = true;
-    var $showMassupdateFields = true;
-    var $menu_location = 'top';
+    public $data;
+    public $ss; // the smarty object
+    public $displayColumns;
+    public $searchColumns; // set by view.list.php
+    public $tpl;
+    public $moduleString;
+    public $export = true;
+    public $delete = true;
+    public $select = true;
+    public $mailMerge = true;
+    public $email = true;
+    public $targetList = false;
+    public $multiSelect = true;
+    public $quickViewLinks = true;
+    public $lvd;
+    public $mergeduplicates = true;
+    public $contextMenus = true;
+    public $showMassupdateFields = true;
+    public $menu_location = 'top';
+    public $templateMeta = array();
+
     /**
      * Constructor, Smarty object immediately available after
      *
@@ -84,13 +86,14 @@ class ListViewSmarty extends ListViewDisplay
      *
      * @param file file Template file to use
      * @param data array from ListViewData
-     * @param html_var string the corresponding html var in xtpl per row
+     * @param html_public string the corresponding html public in xtpl per row
      *
      */
-    function process($file, $data, $htmlVar) {
+    function process($file, $data, $htmlpublic) {
+        global $mod_strings;
         if(!$this->should_process)return;
         global $odd_bg, $even_bg, $hilite_bg, $app_strings, $sugar_config;
-        parent::process($file, $data, $htmlVar);
+        parent::process($file, $data, $htmlpublic);
 
         $this->tpl = $file;
         $this->data = $data;
@@ -120,11 +123,16 @@ class ListViewSmarty extends ListViewDisplay
 
         $this->ss->assign('sugarconfig', $this->displayColumns);
         $this->ss->assign('displayColumns', $this->displayColumns);
+        $this->ss->assign('options', isset($this->templateMeta['options']) ? $this->templateMeta['options'] : null);
+        $this->ss->assign('form', isset($this->templateMeta['form']) ? $this->templateMeta['form'] : null);
+        $this->ss->assign('includes', isset($this->templateMeta['includes']) ? $this->templateMeta['includes'] : null);
+
         $this->ss->assign('APP',$app_strings);
+        $this->ss->assign('MOD',$mod_strings);
 
         $this->ss->assign('bgHilite', $hilite_bg);
         $this->ss->assign('colCount', count($this->displayColumns) + 10);
-        $this->ss->assign('htmlVar', strtoupper($htmlVar));
+        $this->ss->assign('htmlpublic', strtoupper($htmlpublic));
         $this->ss->assign('moduleString', $this->moduleString);
         $this->ss->assign('editLinkString', $app_strings['LBL_EDIT_BUTTON']);
         $this->ss->assign('viewLinkString', $app_strings['LBL_VIEW_BUTTON']);

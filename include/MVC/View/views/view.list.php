@@ -100,6 +100,10 @@ class ViewList extends SugarView
 
         $this->listViewDefs = $listViewDefs;
 
+        if(isset($viewdefs[$this->module]['ListView']['templateMeta'])) {
+            $this->lv->templateMeta = $viewdefs[$this->module]['ListView']['templateMeta'];
+        }
+
         if (!empty($this->bean->object_name) && isset($_REQUEST[$module . '2_' . strtoupper($this->bean->object_name) . '_offset'])) {//if you click the pagination button, it will populate the search criteria here
             if (!empty($_REQUEST['current_query_by_page'])) {//The code support multi browser tabs pagination
                 $blockVariables = array('mass', 'uid', 'massupdate', 'delete', 'merge', 'selectCount', 'request_data', 'current_query_by_page', $module . '2_' . strtoupper($this->bean->object_name) . '_ORDER_BY');
