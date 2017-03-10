@@ -49,7 +49,9 @@ $viewdefs['Users']['DetailView'] = array (
                      * To customise in an upgrade safe way, You need to create custom view instead.
                      * Then override UsersViewDetail::preDisplay().
                      */
-                    'buttons' => array (),
+                    'buttons' => array (
+                        array('customCode' => '<input title="'.translate('LBL_GENERATE_PASSWORD_BUTTON_TITLE','Users').'" class="button" LANGUAGE=javascript onclick="generatepwd(\'{$fields.id.value}\');" type="button" name="password" value="'.translate('LBL_GENERATE_PASSWORD_BUTTON_LABEL','Users').'">"')
+                    ),
                 ),
             'maxColumns' => '2',
             'widths' =>
