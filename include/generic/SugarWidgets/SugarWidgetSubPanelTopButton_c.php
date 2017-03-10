@@ -251,9 +251,10 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
             $form = 'form' . $relationship_name;
             $button = '<form action="index.php" method="post" name="form" id="' . $form . "\">\n";
             foreach($formValues as $key => $value) {
-                $button .= "<input type='hidden' name='" . $key . "' value='" . $value . "' />\n";
+                if (empty($value->defs)) {
+                    $button .= "<input type='hidden' name='" . $key . "' value='" . $value . "' />\n";
+                }
             }
-
             // fill in additional form fields for all but action
             foreach($additionalFormFields as $key => $value) {
                 if($key != 'action') {

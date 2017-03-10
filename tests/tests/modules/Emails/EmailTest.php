@@ -86,10 +86,6 @@ class EmailTest extends PHPUnit_Framework_TestCase
     {
         $email = new Email();
 
-        //test without a filename
-        $result = $email->email2GetMime();
-        $this->assertEquals('application/octet-stream', $result);
-
         //test with a filename
         $result = $email->email2GetMime('config.php');
         $this->assertEquals('text/x-php', $result);
@@ -112,11 +108,11 @@ class EmailTest extends PHPUnit_Framework_TestCase
 
         //test with one of required attribute set
         $email->type = 'draft';
-        $this->assertEquals(false,  $email->isDraftEmail());
+        $this->assertEquals(false,  $email->isDraftEmail(array()));
 
         //test with both of required attribute set
         $email->status = 'draft';
-        $this->assertEquals(true,  $email->isDraftEmail());
+        $this->assertEquals(true,  $email->isDraftEmail(array()));
     }
 
     public function testgetNamePlusEmailAddressesForCompose()
@@ -753,6 +749,7 @@ class EmailTest extends PHPUnit_Framework_TestCase
     public function testget_list_view_data()
     {
         $email = new Email();
+        $current_theme = SugarThemeRegistry::current();
 
         $email->from_addr_name = 'Admin';
         $email->id = 1;
@@ -769,7 +766,7 @@ class EmailTest extends PHPUnit_Framework_TestCase
                 'FROM_ADDR' => null,
                 'QUICK_REPLY' => '<a  href="index.php?module=Emails&action=Compose&replyForward=true&reply=reply&record=1&inbound_email_id=1">Reply</a>',
                 'STATUS' => null,
-                'CREATE_RELATED' => '~'.preg_quote('<a href="index.php?module=Cases&action=EditView&inbound_email_id=1" ><img src="themes/SuiteR/images/CreateCases.gif?v=').'[\w-]+'.preg_quote('"    border="0" alt="Create Cases" />Create Case</a>').'~',
+                'CREATE_RELATED' => '~index.php\?module=Cases&action=EditView&inbound_email_id=1~',
                 'CONTACT_NAME' => '</a>abc@email.com<a>',
                 'CONTACT_ID' => '',
                 'ATTACHMENT_IMAGE' => null,
@@ -790,11 +787,9 @@ class EmailTest extends PHPUnit_Framework_TestCase
     public function testquickCreateForm()
     {
         $email = new Email();
+        $sugar_theme = SugarThemeRegistry::current();
 
-        $expected = '~'.preg_quote("Quick Create&nbsp;<a id='' onclick='return quick_create_overlib(\"\", \"SuiteR\", this);' href=\"#\" ><img src=\"themes/SuiteR/images/advanced_search.gif?v=")
-            .'[\w-]+'
-            .preg_quote("\"    border='0' align='absmiddle' alt=\"Quick Create\" /></a>")
-            .'~';
+        $expected = '~/images/advanced_search~';
 
         $actual = $email->quickCreateForm();
         $this->assertRegExp($expected, $actual);

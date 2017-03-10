@@ -57,6 +57,21 @@ function __construct() {
 
 }
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function MetaParser(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 function parse() {
    return "NOT AVAILABLE";
 }
@@ -139,7 +154,7 @@ function getTagAttribute($name, $contents, $filter = '') {
  * @param $tableClass Optional table class parameter value
  * @return Array of table elements found
  */
-function getTables($tableClass = null, $contents) {
+function getTables($tableClass = null, $contents = '') {
    preg_match_all("'(<table[^>]*?>)(.*?)(</table[^>]*?>)'si", $contents, $matches, PREG_SET_ORDER);
    if($tableClass == null) {
    	  return $matches;
@@ -537,7 +552,7 @@ function applyPostRules($moduleDir, $panels) {
    return $panels;
 }
 
-function createFileContents($moduleDir, $panels, $templateMeta=array(), $htmlFilePath) {
+function createFileContents($moduleDir, $panels, $templateMeta=array()) {
 
 $header = "<?php\n\n";
 

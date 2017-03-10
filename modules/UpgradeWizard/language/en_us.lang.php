@@ -305,7 +305,7 @@ $mod_strings = array(
 	'LBL_WORKFLOW' => 'Workflow' /*for 508 compliance fix*/,
 	'LBL_UPGRADE' => 'Upgrade' /*for 508 compliance fix*/,
 	'LBL_PROCESSING' => 'Processing' /*for 508 compliance fix*/,
-	
+	'ERROR_NO_VERSION_SET' => 'Compatible version is not set in manifest file',	
 	'ERR_UW_PHP_FILE_ERRORS'					=> array(
 													1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
 													2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
@@ -316,5 +316,4 @@ $mod_strings = array(
 													7 => 'Failed to write file to disk.',
 													8 => 'File upload stopped by extension.',
 ),
-	'ERROR_NO_VERSION_SET' => 'Compatible version is not set in manifest file',
 );

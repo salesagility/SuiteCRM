@@ -2304,31 +2304,12 @@ function resetUwSession() {
 }
 
 /**
+ * @deprecated
  * runs rebuild scripts
  */
 function UWrebuild() {
-	global $db;
-	global $path;
-	/*
-	//CCL - Comment this block out, it is called in end.php
-	logThis('Rebuilding everything...', $path);
-	require_once('modules/Administration/QuickRepairAndRebuild.php');
-	$randc = new RepairAndClear();
-    $randc->repairAndClearAll(array('clearAll'),array(translate('LBL_ALL_MODULES')), false, false);
-    */
-	$query = "DELETE FROM versions WHERE name='Rebuild Extensions'";
-	$db->query($query);
-	logThis('Registering rebuild record: '.$query, $path);
-	logThis('Rebuild done.', $path);
-
-	// insert a new database row to show the rebuild extensions is done
-	$id = create_guid();
-	$gmdate = gmdate('Y-m-d H:i:s');
-	$date_entered = db_convert("'$gmdate'", 'datetime');
-	$query = 'INSERT INTO versions (id, deleted, date_entered, date_modified, modified_user_id, created_by, name, file_version, db_version) '
-		. "VALUES ('$id', '0', $date_entered, $date_entered, '1', '1', 'Rebuild Extensions', '4.0.0', '4.0.0')";
-	$db->query($query);
-	logThis('Registering rebuild record in versions table: '.$query, $path);
+	
+	$GLOBALS['log']->deprecated('UWrebuild is deprecated');
 }
 
 function getCustomTables() {

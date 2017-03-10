@@ -108,7 +108,7 @@ class MassUpdate
 		unset($_REQUEST['current_query_by_page']);
 		unset($_REQUEST[session_name()]);
 		unset($_REQUEST['PHPSESSID']);
-		$query = base64_encode(serialize($_REQUEST));
+		$query = json_encode($_REQUEST);
 
         $bean = loadBean($_REQUEST['module']);
        $order_by_name = $bean->module_dir.'2_'.strtoupper($bean->object_name).'_ORDER_BY' ;
@@ -324,6 +324,26 @@ eoq;
 							} // if
 	                    } // if
 
+						// Fix for issue 1549: mass update the cases, and change the state value from open to close,
+						// Status value can still display New, Assigned, Pending Input (even though it should not)
+						foreach ($newbean->field_name_map as $field_name) {
+							if( isset($field_name['type']) && $field_name['type'] == 'dynamicenum' )  {
+								if( isset($field_name['parentenum']) && $field_name['parentenum'] != '' ) {
+									$parentenum_name = $field_name['parentenum'];
+									// Updated parent field value.
+									$parentenum_value = $newbean->$parentenum_name;
+
+									$dynamic_field_name = $field_name['name'];
+									// Dynamic field set value.
+									list($dynamic_field_value) = explode('_', $newbean->$dynamic_field_name);
+
+									if($parentenum_value != $dynamic_field_value) {
+										// Change to the default value of the correct value set.
+										$newbean->$dynamic_field_name = $parentenum_value . '_' . $parentenum_value;
+									}
+								}
+							}
+						}
 
 						$newbean->save($check_notify);
 						if (!empty($email_address_id)) {
@@ -730,7 +750,7 @@ EOQ;
 	  * @param id_name name of the id in vardef
 	  * @param mod_type name of the module, either "Contact" or "Releases" currently
 	  */
-	function addUserName($displayname, $varname, $id_name='', $mod_type){
+	function addUserName($displayname, $varname, $id_name, $mod_type){
 		global $app_strings;
 
 		if(empty($id_name))
@@ -797,7 +817,7 @@ EOHTML;
 	  * @param id_name name of the id in vardef
 	  * @param mod_type name of the module, either "Contact" or "Releases" currently
 	  */
-	function addGenericModuleID($displayname, $varname, $id_name='', $mod_type){
+	function addGenericModuleID($displayname, $varname, $id_name, $mod_type){
 		global $app_strings;
 
 		if(empty($id_name))
@@ -1238,7 +1258,7 @@ EOQ;
         }
 	/* bug 31271: using false to not add all bean fields since some beans - like SavedReports
 	   can have fields named 'module' etc. which may break the query */
-        $query = sugar_unserialize(base64_decode($query));
+		$query = json_decode(html_entity_decode($query),true);
         $searchForm->populateFromArray($query, null, true);
         $this->searchFields = $searchForm->searchFields;
         $where_clauses = $searchForm->generateSearchWhere(true, $module);

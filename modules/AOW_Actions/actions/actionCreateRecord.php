@@ -30,6 +30,21 @@ class actionCreateRecord extends actionBase {
         parent::__construct($id);
     }
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function actionCreateRecord($id = ''){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id);
+    }
+
+
     function loadJS(){
 
         return array('modules/AOW_Actions/actions/actionCreateRecord.js');
@@ -45,11 +60,16 @@ class actionCreateRecord extends actionBase {
         $copy_email_addresses_checked = '';
         if(isset($params['copy_email_addresses']) && $params['copy_email_addresses']) $copy_email_addresses_checked = 'CHECKED';
 
-        $html = "<table border='0' cellpadding='0' cellspacing='0' width='100%'>";
+        $html = "<table border='0' cellpadding='0' cellspacing='0' width='100%' data-workflow-action='create-record'>";
         $html .= "<tr>";
-        $html .= '<td id="name_label" scope="row" valign="top">'.translate("LBL_RECORD_TYPE","AOW_Actions").':<span class="required">*</span>&nbsp;&nbsp;';
+        $html .= '<td id="name_label" class="name_label" scope="row" valign="top"><label>' .
+                 translate("LBL_RECORD_TYPE", "AOW_Actions") .
+                 '</label>:<span class="required">
+*</span>&nbsp;&nbsp;';
         $html .= "<select name='aow_actions_param[".$line."][record_type]' id='aow_actions_param_record_type".$line."'  onchange='show_crModuleFields($line);'>".get_select_options_with_id($modules, $params['record_type'])."</select></td>";
-        $html .= '<td id="relate_label" scope="row" valign="top">'.translate("LBL_RELATE_WORKFLOW","AOW_Actions").':&nbsp;&nbsp;';
+        $html .= '<td id="relate_label" class="relate_label" scope="row" valign="top"><label>' .
+                 translate("LBL_RELATE_WORKFLOW", "AOW_Actions") .
+                 '</label>:';
         $html .= "<input type='hidden' name='aow_actions_param[".$line."][relate_to_workflow]' value='0' >";
         $html .= "<input type='checkbox' id='aow_actions_param[".$line."][relate_to_workflow]' name='aow_actions_param[".$line."][relate_to_workflow]' value='1' $checked></td>";
         $html .= '<td id="copy_email_addresses_label" scope="row" valign="top">'.translate("LBL_COPY_EMAIL_ADDRESSES_WORKFLOW","AOW_Actions").':&nbsp;&nbsp;';
@@ -57,13 +77,15 @@ class actionCreateRecord extends actionBase {
         $html .= "<input type='checkbox' id='aow_actions_param[".$line."][copy_email_addresses]' name='aow_actions_param[".$line."][copy_email_addresses]' value='1' $copy_email_addresses_checked></td>";
         $html .= "</tr>";
         $html .= "<tr>";
-        $html .= '<td colspan="4" scope="row"><table id="crLine'.$line.'_table" width="100%"></table></td>';
+        $html .= '<td colspan="4" scope="row"><table id="crLine' .
+                 $line .
+                 '_table" width="100%" class="lines"></table></td>';
         $html .= "</tr>";
         $html .= "<tr>";
         $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate("LBL_ADD_FIELD","AOW_Actions").'" id="addcrline'.$line.'" onclick="add_crLine('.$line.')" /></td>';
         $html .= "</tr>";
         $html .= "<tr>";
-        $html .= '<td colspan="4" scope="row"><table id="crRelLine'.$line.'_table" width="100%"></table></td>';
+        $html .= '<td colspan="4" scope="row"><table id="crRelLine'.$line.'_table" width="100%" class="relationship"></table></td>';
         $html .= "</tr>";
         $html .= "<tr>";
         $html .= '<td colspan="4" scope="row"><input type="button" tabindex="116" style="display:none" class="button" value="'.translate("LBL_ADD_RELATIONSHIP","AOW_Actions").'" id="addcrrelline'.$line.'" onclick="add_crRelLine('.$line.')" /></td>';
@@ -200,6 +222,8 @@ class actionCreateRecord extends actionBase {
                                     $date = gmdate($dformat);
                                 } else if($params['value'][$key][0] == 'field'){
                                     $date = $record->fetched_row[$params['field'][$key]];
+                                } else if ($params['value'][$key][0] == 'today') {
+                                    $date = $params['value'][$key][0];
                                 } else {
                                     $date = $bean->fetched_row[$params['value'][$key][0]];
                                 }

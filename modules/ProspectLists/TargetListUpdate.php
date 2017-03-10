@@ -130,7 +130,7 @@ if ( $relationship != '' ) {
 				$contact->load_relationship('prospect_lists');
 				$contact->prospect_lists->add($_REQUEST['prospect_list']);
 			}
-			break;
+			
 		}
 		else{
 			$focus->load_relationship($relationship);

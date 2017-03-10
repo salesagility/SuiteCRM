@@ -8,6 +8,21 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView {
      parent::__construct();
    }
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function Jjwg_MapsViewGeocoded_Counts(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
   function display() {
 
     echo '<div class="moduleTitle"><h2>'.$GLOBALS['mod_strings']['LBL_GEOCODED_COUNTS'].'</h2><div class="clear"></div></div>';
@@ -71,13 +86,13 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView {
 
     $export_url = './index.php?module=jjwg_Maps&action=export_geocoding_addresses&display_module=';
 
-    echo '<a target="_blank" href="'.htmlspecialchars($export_url).'Accounts">'.$GLOBALS['app_strings']['LBL_EXPORT'].' '.$GLOBALS['app_strings']['LBL_ACCOUNTS'].'</a>';
+    echo '<a target="_blank" href="'.htmlspecialchars($export_url).$GLOBALS['app_strings']['LBL_ACCOUNTS'].'">'.$GLOBALS['app_strings']['LBL_EXPORT'].' '.$GLOBALS['app_strings']['LBL_ACCOUNTS'].'</a>';
     echo '<br /><br />';
-    echo '<a target="_blank" href="'.htmlspecialchars($export_url).'Contacts">'.$GLOBALS['app_strings']['LBL_EXPORT'].' '.$GLOBALS['app_strings']['LBL_CONTACTS'].'</a>';
+    echo '<a target="_blank" href="'.htmlspecialchars($export_url).$GLOBALS['app_strings']['LBL_CONTACTS'].'">'.$GLOBALS['app_strings']['LBL_EXPORT'].' '.$GLOBALS['app_strings']['LBL_CONTACTS'].'</a>';
     echo '<br /><br />';
-    echo '<a target="_blank" href="'.htmlspecialchars($export_url).'Leads">'.$GLOBALS['app_strings']['LBL_EXPORT'].' '.$GLOBALS['app_strings']['LBL_LEADS'].'</a>';
+    echo '<a target="_blank" href="'.htmlspecialchars($export_url).$GLOBALS['app_strings']['LBL_LEADS'].'">'.$GLOBALS['app_strings']['LBL_EXPORT'].' '.$GLOBALS['app_strings']['LBL_LEADS'].'</a>';
     echo '<br /><br />';
-    echo '<a target="_blank" href="'.htmlspecialchars($export_url).'Prospects">'.$GLOBALS['app_strings']['LBL_EXPORT'].' Prospects'.'</a>';
+    echo '<a target="_blank" href="'.htmlspecialchars($export_url).$GLOBALS['app_strings']['LBL_PROSPECTS'].'">'.$GLOBALS['app_strings']['LBL_EXPORT'].' '.$GLOBALS['app_strings']['LBL_PROSPECTS'].'</a>';
     echo '<br /><br />';
 
     echo '<br /><br />';

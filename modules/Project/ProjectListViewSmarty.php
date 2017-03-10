@@ -1,6 +1,7 @@
 <?php
 
 require_once('include/ListView/ListViewSmarty.php');
+require_once('ProjectListViewData.php');
 
 // custom/modules/Project/ProjectListViewSmarty.php
 
@@ -10,6 +11,21 @@ class ProjectListViewSmarty extends ListViewSmarty {
 
         parent::__construct();
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function ProjectListViewSmarty(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
     function buildExportLink($id = 'export_link') {
 
@@ -28,7 +44,7 @@ class ProjectListViewSmarty extends ListViewSmarty {
 
         } else { // Newer v6.5+
 
-            $script = "<a href='javascript:void(0)' id='export_listview_top' ".
+            $script = "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id='export_listview_top' ".
                     "onclick=\"return sListView.send_form(true, '{$_REQUEST['module']}', " .
                     "'index.php?entryPoint=export', " .
                     "'{$app_strings['LBL_LISTVIEW_NO_SELECTED']}')\">{$app_strings['LBL_EXPORT']}</a>" .

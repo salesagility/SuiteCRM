@@ -96,6 +96,21 @@ class ProspectList extends SugarBean {
 
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function ProspectList(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 	var $new_schema = true;
 
 	function get_summary_text()
@@ -175,10 +190,10 @@ class ProspectList extends SugarBean {
 
 		// query all custom fields in the fields_meta_data table for the modules which are being exported
 		$db = DBManagerFactory::getInstance();
-		$result = $db->query("select name, custom_module from fields_meta_data where custom_module in ('" .
-					implode("', '", array_keys($members)) . "')",
-					true,
-					"ProspectList::create_export_members_query() : error querying custom fields");
+		$result = $db->query("select name, custom_module, type, ext1, ext2, ext3, ext4 from fields_meta_data where custom_module in ('" .
+			implode("', '", array_keys($members)) . "')",
+			true,
+			"ProspectList::create_export_members_query() : error querying custom fields");
 
 		// cycle through the custom fields and put them in the members array according to
 		// what module the field belongs
@@ -193,13 +208,19 @@ class ProspectList extends SugarBean {
 				if ($membername == $val['custom_module'])
 				{
 					$memberarr['has_custom_fields'] = true;
-					$memberarr['fields'][$fieldname] =
-						strtolower($membername) . '_cstm.'.$fieldname . ' AS ' . $fieldname;
+					if($val['type']=='relate') {
+						// show related value in report..
+						$memberarr['fields'][$fieldname] = "'{{$val['type']} from=\"{$val['custom_module']}.{$val['name']}\" to=\"{$val['ext2']}.{$val['ext3']}\"}' AS " . $fieldname;
+					}
+					else {
+						$memberarr['fields'][$fieldname] =
+							strtolower($membername) . '_cstm.' . $fieldname . ' AS ' . $fieldname;
+					}
 				}
 				// else, only if for this module no entry exists for this field, query an empty string
 				else if (!isset($memberarr['fields'][$val['name']]))
 				{
-					$memberarr['fields'][$fieldname] = "'' AS " . $fieldname;
+					$memberarr['fields'][$fieldname] = "null AS " . $fieldname;
 				}
 			}
 		}

@@ -122,6 +122,5 @@ while($list = $campaign->db->fetchByAssoc($listresult))
 
 $header_URL = "Location: index.php?action=DetailView&module=Campaigns&record={$_REQUEST['record']}";
 $GLOBALS['log']->debug("about to post header URL of: $header_URL");
-
-header($header_URL);
+SugarApplication::headerRedirect($header_URL);
 ?>

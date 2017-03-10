@@ -113,12 +113,12 @@ class MeetingTest extends PHPUnit_Framework_TestCase
         $meeting = new Meeting();
 
         //test with empty string params
-        $expected = 'SELECT meetings.*, users.user_name as assigned_user_name   FROM meetings   LEFT JOIN users ON meetings.assigned_user_id=users.id  where meetings.deleted=0';
+        $expected = 'SELECT meetings.*, users.user_name as assigned_user_name  ,meetings_cstm.jjwg_maps_lng_c,meetings_cstm.jjwg_maps_lat_c,meetings_cstm.jjwg_maps_geocode_status_c,meetings_cstm.jjwg_maps_address_c FROM meetings   LEFT JOIN users ON meetings.assigned_user_id=users.id  LEFT JOIN meetings_cstm ON meetings.id = meetings_cstm.id_c  where meetings.deleted=0';
         $actual = $meeting->create_export_query('', '');
         $this->assertSame($expected, $actual);
 
         //test with valid string params
-        $expected = 'SELECT meetings.*, users.user_name as assigned_user_name   FROM meetings   LEFT JOIN users ON meetings.assigned_user_id=users.id  where users.user_name="" AND meetings.deleted=0';
+        $expected = 'SELECT meetings.*, users.user_name as assigned_user_name  ,meetings_cstm.jjwg_maps_lng_c,meetings_cstm.jjwg_maps_lat_c,meetings_cstm.jjwg_maps_geocode_status_c,meetings_cstm.jjwg_maps_address_c FROM meetings   LEFT JOIN users ON meetings.assigned_user_id=users.id  LEFT JOIN meetings_cstm ON meetings.id = meetings_cstm.id_c  where users.user_name="" AND meetings.deleted=0';
         $actual = $meeting->create_export_query('meetings.id', 'users.user_name=""');
         $this->assertSame($expected, $actual);
     }
@@ -155,6 +155,7 @@ class MeetingTest extends PHPUnit_Framework_TestCase
     public function testget_list_view_data()
     {
         $meeting = new Meeting();
+        $current_theme = SugarThemeRegistry::current();
 
         //preset required attribute values
         $meeting->status == 'Planned';
@@ -177,7 +178,7 @@ class MeetingTest extends PHPUnit_Framework_TestCase
                       'CONTACT_ID' => 1,
                       'REPEAT_INTERVAL' => '1',
                       'PARENT_MODULE' => 'Accounts',
-                      'SET_COMPLETE' => '<a id=\'\' onclick=\'SUGAR.util.closeActivityPanel.show("Meetings","","Held","listview","1");\'><img src="themes/SuiteR/images/close_inline.png?v=fqXdFZ_r6FC1K7P_Fy3mVw"     border=\'0\' alt="Close" /></a>',
+                      'SET_COMPLETE' => '<a id=\'\' onclick=\'SUGAR.util.closeActivityPanel.show("Meetings","","Held","listview","1");\'><img src="themes/'.$current_theme.'/images/close_inline.png?v=fqXdFZ_r6FC1K7P_Fy3mVw"     border=\'0\' alt="Close" /></a>',
                       'DATE_START' => '<font class=\'overdueTask\'></font>',
                       'REMINDER_CHECKED' => false,
                       'EMAIL_REMINDER_CHECKED' => false,
@@ -317,7 +318,7 @@ class MeetingTest extends PHPUnit_Framework_TestCase
 
         //execute the method and test if it works and does not throws an exception.
         try {
-            $meeting->save_relationship_changes();
+            $meeting->save_relationship_changes(false);
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail();

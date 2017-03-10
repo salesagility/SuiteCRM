@@ -94,6 +94,21 @@ class Localization {
 		$this->loadCurrencies();
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function Localization(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 	/**
 	 * returns an array of Sugar Config defaults that are determined by locale settings
 	 * @return array
@@ -249,8 +264,8 @@ class Localization {
 			'YEN' => array(	'name'		=> 'Japanese Yen',
 							'iso4217'	=> 'JPY',
 							'symbol'	=> '¥'),
-			'MXM' => array(	'name'		=> 'Mexican Pesos',
-							'iso4217'	=> 'MXM',
+			'MXN' => array(	'name'		=> 'Mexican Pesos',
+							'iso4217'	=> 'MXN',
 							'symbol'	=> '$'),
 			'SGD' => array(	'name'		=> 'Singaporean Dollars',
 							'iso4217'	=> 'SGD',

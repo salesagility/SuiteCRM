@@ -165,19 +165,8 @@ function insert_variable_html(text) {
 	//inst.execCommand('mceInsertRawHTML', false, text);
 }
 
-function insert_variable_html_link(text) {
-
-	the_label = document.getElementById('url_text').value;
-	if(typeof(the_label) =='undefined'){
-		the_label = label;
-	}
-
-	//remove surounding parenthesis around the label
-	if(the_label[0] == '{' && the_label[the_label.length-1] == '}'){
-		the_label = the_label.substring(1,the_label.length-1);
-	}
-
-	var thelink = "<a href='" + text + "' > "+the_label+" </a>";
+function insert_variable_html_link(text, url) {
+	var thelink = "<a href='" +url + "' > "+text+" </a>";
 	insert_variable_html(thelink);
 }
 /*
@@ -186,6 +175,18 @@ function insert_variable_html_link(text) {
  * will call the html (tinyMCE eidtor) insert function
  */
 function insert_variable(text, mozaikId) {
+	if(mozaikId == 'template_subject') {
+		// insert into the subject instead of the body
+		//$('#template_subject').val($('#template_subject').val()+$('select[name=variable_name]').val());
+
+    var value = $('#template_subject').val();
+    var caret = parseInt($('#template_subject').attr('data-caret-position'));
+    var before = value.substring(0, caret);
+    var after = value.substring(caret);
+    $('#template_subject').val(before + $('select[name=variable_name]').val() + after);
+    return;
+	}
+
 	if(!mozaikId) {
 		mozaikId = 'mozaik';
 	}
@@ -199,5 +200,367 @@ function insert_variable(text, mozaikId) {
 			insert_variable_html(text);
 		}
 	}
-}			
+}
 
+
+/*
+ ** Returns the caret (cursor) position of the specified text field.
+ ** Return value range is 0-oField.value.length.
+ */
+var doGetCaretPosition = function(oField) {
+
+  // Initialize
+  var iCaretPos = 0;
+
+  // IE Support
+  if (document.selection) {
+
+    // Set focus on the element
+    oField.focus();
+
+    // To get cursor position, get empty selection range
+    var oSel = document.selection.createRange();
+
+    // Move selection start to 0 position
+    oSel.moveStart('character', -oField.value.length);
+
+    // The caret position is selection length
+    iCaretPos = oSel.text.length;
+  }
+
+  // Firefox support
+  else if (oField.selectionStart || oField.selectionStart == '0')
+    iCaretPos = oField.selectionStart;
+
+  // Return results
+  return iCaretPos;
+}
+
+var onClickTemplateSubject = function(elem) {
+  $(elem).attr('data-caret-position', doGetCaretPosition(elem));
+  $('#insert_variable_to_subject_btn').show();
+  $('#insert_variable_to_body_btn').hide();
+}
+
+var onClickTemplateBody = function() {
+  $('#insert_variable_to_subject_btn').hide();
+  $('#insert_variable_to_body_btn').show();
+}
+
+
+var $templateManagerDialogX = 0;
+var $templateManagerDialogY = 0;
+var $templateManagerDialog = null;
+function createTemplateManagerDialog (parent) {
+	$('#templateManagerDialog').dialog({
+		width: '50%',
+		position: { my: "left top", at: "left bottom", of: parent }
+	});
+}
+
+var showTemplateSaveMessages = function(msgs){
+	$('#template_messages').html('');
+	$.each(msgs, function(i, msg){
+		$('#template_messages').append(SUGAR.language.translate('Campaigns', msg) + '<br>');
+	});
+	setTimeout(function(){
+		$('#template_messages').hide(1000, function(){
+			$('#template_messages').html('');
+			$('#template_messages').show();
+		});
+	}, 3000);
+};
+
+function EmailTemplateController(action) {
+	var lastNameValue = $('#template_name').val();
+	var lastSubjectValue = $('#template_subject').val();
+	var revertValues = function() {
+		$('#template_name').val(lastNameValue);
+		$('#template_subject').val(lastSubjectValue);
+		window.parent.$('.ui-dialog-content:visible').dialog('close');
+	}
+
+	var save = function(update) {
+		if($('#template_name').val() == '') {
+			alert(SUGAR.language.translate('Campaigns', 'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
+			$('#template_name').focus();
+			return;
+		}
+
+		//if($('#template_subject').val() == '') {
+		//	if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_EMPTY_SUBJECT'))) {
+		//		$('#template_subject').focus();
+		//		return;
+		//	}
+		//}
+
+		//if($('#template_id').val() != '') {
+		//	if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_OVERWRITE_QUESTION'))) {
+		//		return;
+		//	}
+		//}
+
+		window.parent.$('.ui-dialog-content:visible').dialog('close');
+
+		var func = emailTemplateCopyId || $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
+
+		$('#template_messages').html(SUGAR.language.translate('Campaigns', 'LBL_TEMPLATE_SAVING'));
+		$.post('index.php?entryPoint=emailTemplateData&func=wizardUpdate&rand='+Math.random(), {
+			'func': func,
+			'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
+			'body_html': $('#email_template_editor').getMozaikValue(),
+			'name': $('#template_name').val(),
+			'subject': $('#template_subject').val(),
+		}, function(resp){
+			// todo: hide preloader or loading message..
+			resp = JSON.parse(resp);
+			if(resp.error) {
+				// todo: show error
+				console.error(resp.error);
+			}
+			else {
+
+				if(!emailTemplateCopyId && func == 'createCopy') {
+					emailTemplateCopyId = resp.data.id;
+
+					$('option[value='+resp.data.id+']').html($('#template_name').val());
+
+					$('input[name="update_exists_template"]').prop('checked', true);
+				} else {
+					$('option[value='+resp.data.id+']').html($('#template_name').val());
+				}
+
+        $('#template_messages').html('');
+				if(resp.msgs.length) {
+					showTemplateSaveMessages(resp.msgs);
+				}
+
+			}
+		});
+
+	}
+
+	var create = function() {
+
+		if($('#template_name').val() == '') {
+			alert(SUGAR.language.translate('Campaigns', 'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
+			return
+		}
+
+		//if($('#template_subject').val() == '') {
+		//	if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_EMPTY_SUBJECT'))) {
+		//		return
+		//	}
+		//}
+
+		window.parent.$('.ui-dialog-content:visible').dialog('close');
+		$('input[name="update_exists_template"]').prop('checked', false);
+
+
+		var func = emailTemplateCopyId || $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
+
+		$('#template_messages').html(SUGAR.language.translate('Campaigns', 'LBL_TEMPLATE_SAVING'));
+		$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(), {
+			'func': func,
+			'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
+			'body_html': $('#email_template_editor').getMozaikValue(),
+			'name': $('#template_name').val(),
+			'subject': $('#template_subject').val(),
+		}, function(resp){
+			// todo: hide preloader or loading message..
+			resp = JSON.parse(resp);
+			if(resp.error) {
+				// todo: show error
+				console.error(resp.error);
+			}
+			else {
+
+				if(!emailTemplateCopyId && func == 'createCopy') {
+					emailTemplateCopyId = resp.data.id;
+					$('#template_id').append('<option value="' + resp.data.id + '">' + resp.data.name + '</option>');
+					$('#template_id').val(resp.data.id);
+
+					$('input[name="update_exists_template"]').prop('checked', true);
+
+					$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().removeClass('hidden');
+					$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().next().removeClass('hidden');
+				}
+
+        $('#template_messages').html('');
+				if(resp.msgs.length) {
+					showTemplateSaveMessages(resp.msgs);
+				}
+
+				$('#template_option_select').click();
+
+			}
+		});
+	}
+
+	switch (action) {
+		case "create":
+			create();
+			break;
+		case "save":
+			save();
+			break;
+		default:
+			break;
+	}
+	console.log('EmailTemplateController()', action)
+}
+
+function EmailTrackerController(action, campaignId) {
+	var _campaignId = campaignId;
+	var lastURLValue = $('#url_text').val();
+	var lastNameValue = $('#tracker_name').val();
+	var lastSubjectValue = $('#template_subject').val();
+	var revertValues = function() {
+		$('#url_text').val(lastURLValue);
+		$('#tracker_name').val(lastNameValue);
+		$('#template_subject').val(lastSubjectValue);
+		window.parent.$('.ui-dialog-content:visible').dialog('close');
+	}
+
+	var create = function () {
+		var trackerName = $('#url_text').val();
+		var trackerURL = $('#tracker_url_add').val();
+
+		if($('#url_text').val() == '' || $('#tracker_url_add').val() == '') {
+			alert(SUGAR.language.translate('Campaigns', 'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
+			return;
+		}
+
+
+		if(!trackerName) {
+			errors.push({field: 'tracker_name', message: SUGAR.language.translate('Campaigns', 'ERR_REQUIRED_TRACKER_NAME')});
+		}
+		if(!trackerURL) {
+			errors.push({field: 'tracker_url', message: SUGAR.language.translate('Campaigns', 'ERR_REQUIRED_TRACKER_URL')});
+		}
+		hideFieldErrorMessages();
+		window.parent.$('.ui-dialog-content:visible').dialog('close');
+
+		$.post('index.php?entryPoint=campaignTrackerSave', {
+			module: 'CampaignTrackers',
+			record: '', // TODO .. campaign tracker ID on update
+			action: 'Save',
+			campaign_id: _campaignId,
+			tracker_name: trackerName,
+			tracker_url: trackerURL,
+			is_optout: $('#is_optout').prop('checked') ? 'on' : '',
+			response_json: true
+		}, function (resp) {
+			resp = JSON.parse(resp);
+			if (resp.data.id) {
+				// TODO do it only when user want to create a new one as "copy and save.." function
+				$('select[name="tracker_url"]').append('<option value="{' + trackerName + '}" data-id="'+resp.data.id+'" data-url="'+trackerURL+'">' + trackerName + ' : ' + trackerURL + '</option>');
+				$('select[name="tracker_url"]').val('{' + trackerName + '}');
+				$('#url_text').val('{' + trackerName + '}');
+			}
+			setTrackerUrlSelectVisibility();
+		});
+	}
+
+	var save = function () {
+		var trackerName = $('#url_text').val();
+		var trackerURL = $('#tracker_url_add').val();
+
+		if($('#url_text').val() == '' || $('#tracker_url_add').val() == '') {
+			alert(SUGAR.language.translate('Campaigns', 'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
+			return;
+		}
+
+
+		if(!trackerName) {
+			errors.push({field: 'tracker_name', message: SUGAR.language.translate('Campaigns', 'ERR_REQUIRED_TRACKER_NAME')});
+		}
+		if(!trackerURL) {
+			errors.push({field: 'tracker_url', message: SUGAR.language.translate('Campaigns', 'ERR_REQUIRED_TRACKER_URL')});
+		}
+		hideFieldErrorMessages();
+		window.parent.$('.ui-dialog-content:visible').dialog('close');
+
+		$.post('index.php?entryPoint=campaignTrackerSave', {
+			module: 'CampaignTrackers',
+			record: $('select[name="tracker_url"] option:selected').attr('data-id'), // TODO .. campaign tracker ID on update
+			action: 'Save',
+			campaign_id: _campaignId,
+			tracker_name: trackerName,
+			tracker_url: trackerURL,
+			is_optout: $('#is_optout').prop('checked') ? 'on' : '',
+			response_json: true
+		}, function (resp) {
+			resp = JSON.parse(resp);
+			if (resp.data.id) {
+				// TODO do it only when user want to create a new one as "copy and save.." function
+				$('select[name="tracker_url"] option:selected').text(trackerName + ' : ' + trackerURL );
+				$('select[name="tracker_url"] option:selected').attr(trackerName + ' : ' + trackerURL );
+				$('select[name="tracker_url"] option:selected').val('{' + trackerName + '}');
+			}
+			setTrackerUrlSelectVisibility();
+		});
+	}
+
+	switch (action) {
+		case "create":
+			$('#url_text').val('');
+			$('#tracker_name').val('');
+			$('#tracker_url_add').val('');
+			$('#is_optout').attr('checked', false);
+			$('#tracker_url_add').removeAttr('disabled')
+			createTemplateManagerDialog($('#LBL_CREATE_TRACKER_BTN'));
+			$('#templateManagerActionOK').val($('#LBL_CREATE_TRACKER_BTN').val());
+			$('#templateManagerDialog').children('div').addClass('hidden');
+			$('#emailTrackerDialog').removeClass('hidden');
+			$('#templateManagerDialogActions').removeClass('hidden');
+			$('#templateManagerActionOK').val(SUGAR.language.translate('Campaigns', 'LBL_CREATE_TRACKER_BTN'));
+			$('#templateManagerActionOK').unbind();
+			$('#templateManagerActionCancel').unbind();
+			$('#templateManagerActionOK').click(create);
+			$('#templateManagerActionCancel').click(revertValues);
+			$('#templateManagerDialog').show();
+			break;
+		case "insert":
+			if($('#trackerUrlSelect').val() == '-1') {
+				alert(SUGAR.language.translate('Campaigns', 'LBL_SELECT_EMAIL_TRACKER'));
+				return;
+			}
+			var text = $('select[name="tracker_url"] option:selected').val();
+			text = text.replace('{','');
+			text = text.replace('}','');
+			insert_variable_html_link(text, $('select[name="tracker_url"] option:selected').val());
+			break;
+		case "edit":
+			// if -- Create -- is selected
+			if($('#trackerUrlSelect').val() == '-1') {
+				alert(SUGAR.language.translate('Campaigns', 'LBL_SELECT_EMAIL_TRACKER'));
+				return;
+			}
+
+			var text = $('select[name="tracker_url"] option:selected').val();
+			text = text.replace('{','');
+			text = text.replace('}','');
+			$('#url_text').val(text);
+			$('#tracker_url_add').val($('select[name="tracker_url"] option:selected').attr('data-url'));
+			$('#tracker_name').val('');
+			$('#template_subject').val('');
+			$('#templateManagerActionOK').val(SUGAR.language.translate('Campaigns', 'LBL_EDIT_TRACKER_BTN'));
+			createTemplateManagerDialog($('#LBL_CREATE_TRACKER_BTN'));
+			$('#templateManagerDialog').children('div').addClass('hidden');
+			$('#emailTrackerDialog').removeClass('hidden');
+			$('#templateManagerDialogActions').removeClass('hidden');
+			$('#templateManagerActionOK').unbind();
+			$('#templateManagerActionCancel').unbind();
+			$('#templateManagerActionOK').click(save);
+			$('#templateManagerActionCancel').click(revertValues);
+			$('#templateManagerDialog').show();
+			break;
+		default:
+			break;
+	}}
+
+$(document).on( "mousemove", function(event) {
+	$templateManagerDialogX = event.pageX;
+	$templateManagerDialogY = event.pageY;
+});

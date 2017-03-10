@@ -45,6 +45,21 @@ class ViewPopup extends SugarView{
 		parent::__construct();
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function ViewPopup(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 	function display(){
 		global $popupMeta, $mod_strings;
 
@@ -103,7 +118,7 @@ class ViewPopup extends SugarView{
             if(!empty($_REQUEST['current_query_by_page'])) {
                 $blockVariables = array('mass', 'uid', 'massupdate', 'delete', 'merge', 'selectCount',
                     'sortOrder', 'orderBy', 'request_data', 'current_query_by_page');
-                $current_query_by_page = sugar_unserialize(base64_decode($_REQUEST['current_query_by_page']));
+                $current_query_by_page = json_decode(html_entity_decode($_REQUEST['current_query_by_page']),true);
                 foreach($current_query_by_page as $search_key=>$search_value) {
                     if($search_key != $this->module.'2_'.strtoupper($this->bean->object_name).'_offset'
                     	&& !in_array($search_key, $blockVariables)) {

@@ -85,6 +85,21 @@ class PopupSmarty extends ListViewSmarty{
 	}
 
     /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function PopupSmarty($seed, $module){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($seed, $module);
+    }
+
+
+    /**
      * Assign several arrow image attributes to TemplateHandler smarty. Such as width, height, etc.
      *
      * @return void
@@ -251,7 +266,7 @@ class PopupSmarty extends ListViewSmarty{
            $this->_popupMeta['create']['createButton'] = translate($this->_popupMeta['create']['createButton']);
         }
 		$this->th->ss->assign('popupMeta', $this->_popupMeta);
-        $this->th->ss->assign('current_query', base64_encode(serialize($_REQUEST)));
+        $this->th->ss->assign('current_query', htmlentities(json_encode(($_REQUEST))));
 		$this->th->ss->assign('customFields', $this->customFieldDefs);
 		$this->th->ss->assign('numCols', NUM_COLS);
 		$this->th->ss->assign('massUpdateData', $this->massUpdateData);

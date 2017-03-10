@@ -12,13 +12,28 @@ class AccountsListViewSmarty extends ListViewSmarty {
 
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function AccountsListViewSmarty(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 
 	protected function buildAddAccountContactsToTargetList()
 	{
 		global $app_strings;
 		unset($_REQUEST[session_name()]);
 		unset($_REQUEST['PHPSESSID']);
-		$current_query_by_page = base64_encode(serialize($_REQUEST));
+		$current_query_by_page = htmlentities(json_encode($_REQUEST));
 
 		$js = <<<EOF
              if(sugarListView.get_checks_count() < 1) {
@@ -87,7 +102,7 @@ class AccountsListViewSmarty extends ListViewSmarty {
  			open_popup('ProspectLists','600','400','',true,false,{ 'call_back_function':'set_return_and_save_targetlist', 'form_name':'targetlist_form','field_to_name_array':{'id':'prospect_list'}, 'passthru_data':{'do_contacts' : 1 }   } );
 EOF;
 		$js = str_replace(array("\r","\n"),'',$js);
-		return "<a href='javascript:void(0)' id=\"targetlist_listview_". $loc ." \" onclick=\"$js\">{$app_strings['LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL_ACCOUNTS_CONTACTS']}</a>";
+		return "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id=\"targetlist_listview \" onclick=\"$js\">{$app_strings['LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL_ACCOUNTS_CONTACTS']}</a>";
 	}
 
 

@@ -119,7 +119,14 @@ foreach ($admin_group_header as $key=>$values) {
                     continue;
                 }
                 $colnum+=1;
-                $header_image[$j][$i]= SugarThemeRegistry::current()->getImage($admin_option[0],'border="0" align="absmiddle"',null,null,'.gif',translate($admin_option[1],'Administration'));
+                $header_image[$j][$i]= SugarThemeRegistry::current()->getImage(
+                    $admin_option[0],
+                    'border="0" align="absmiddle"',
+                    null,
+                    null,
+                    '.svg',
+                    translate($admin_option[1],'Administration')
+                );
                 $url[$j][$i] = $admin_option[3];
                 if(!empty($admin_option[5])) {
                 	$onclick[$j][$i] = $admin_option[5];

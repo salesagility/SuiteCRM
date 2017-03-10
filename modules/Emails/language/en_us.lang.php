@@ -47,6 +47,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 $mod_strings = array (
+    'LBL_EMAIL_INFORMATION' => 'EMAIL',
+    'LBL_EMPTY'                 => ' ',
 	'LBL_FW'					=> 'FW:',
 	'LBL_RE'					=> 'RE:',
 
@@ -55,9 +57,6 @@ $mod_strings = array (
 	'LBL_QS_DISABLED'                   => '(QuickSearch is not availible for this module. Please use the select button.)',
 	'LBL_SIGNATURE_PREPEND'				=> 'Signature above reply',
     'LBL_EMAIL_DEFAULT_DESCRIPTION' 	=> 'Here is the quote you requested (You can change this text)',
-    'LBL_EMAIL_QUOTE_FOR' => 'Quote for: ',
-    'LBL_QUOTE_LAYOUT_DOES_NOT_EXIST_ERROR' => 'quote layout file does not exist: $layout',
-    'LBL_QUOTE_LAYOUT_REGISTERED_ERROR' => 'quote layout is not registered in modules/Quotes/Layouts.php',
 
 
 	'LBL_CONFIRM_DELETE'		=> 'Are you sure you want to delete this folder?',
@@ -120,9 +119,9 @@ $mod_strings = array (
 	'LBL_EMAILS_TASKS_REL'		=> 'Emails:Tasks',
 	'LBL_EMAILS_USERS_REL'		=> 'Emails:Users',
     'LBL_EMPTY_FOLDER'          => 'No Emails to display',
+    'LBL_SELECT_FOLDER'         => 'Select Folder',
 	'LBL_ERROR_SENDING_EMAIL'	=> 'Error Sending email',
 	'LBL_ERROR_SAVING_DRAFT'	=> 'Error Saving Draft',
-	'LBL_FORWARD_HEADER'		=> 'Begin forwarded message:',
 	'LBL_FROM_NAME'				=> 'From Name',
 	'LBL_FROM'					=> 'From:',
 	'LBL_REPLY_TO'				=> 'Reply To:',
@@ -144,14 +143,12 @@ $mod_strings = array (
 	'LBL_PROJECT_SUBPANEL_TITLE'=> 'Projects',
 	'LBL_PROJECT_TASK_SUBPANEL_TITLE'=> 'Project Tasks',
     'LBL_RAW'                  => 'Raw Email',
-	'LBL_SAVE_AS_DRAFT_BUTTON_KEY'=> 'R',
 	'LBL_SAVE_AS_DRAFT_BUTTON_LABEL'=> 'Save Draft',
 	'LBL_SAVE_AS_DRAFT_BUTTON_TITLE'=> 'Save Draft',
 	'LBL_SEARCH_FORM_DRAFTS_TITLE'=> 'Search Drafts',
 	'LBL_SEARCH_FORM_SENT_TITLE'=> 'Search Sent Emails',
 	'LBL_SEARCH_FORM_TITLE'		=> 'Email Search',
 	'LBL_SEND_ANYWAYS'			=> 'This email has no subject.  Send/save anyway?',
-	'LBL_SEND_BUTTON_KEY'		=> 'S',
 	'LBL_SEND_BUTTON_LABEL'		=> 'Send',
 	'LBL_SEND_BUTTON_TITLE'		=> 'Send',
 	'LBL_SEND'					=> 'SEND',
@@ -209,7 +206,6 @@ $mod_strings = array (
 
     // for All emails
     'LBL_BUTTON_RAW_TITLE'   => 'Show Raw Message',
-    'LBL_BUTTON_RAW_KEY'     => 'e',
     'LBL_BUTTON_RAW_LABEL'   => 'Show Raw',
     'LBL_BUTTON_RAW_LABEL_HIDE' => 'Hide Raw',
 
@@ -219,8 +215,6 @@ $mod_strings = array (
 	'LBL_BUTTON_CHECK_KEY'		=> 'c',
 	'LBL_BUTTON_FORWARD'		=> 'Forward',
 	'LBL_BUTTON_FORWARD_TITLE'	=> 'Forward This Email',
-	'LBL_BUTTON_FORWARD_KEY'	=> 'f',
-	'LBL_BUTTON_REPLY_KEY'		=> 'r',
 	'LBL_BUTTON_REPLY_TITLE'	=> 'Reply',
 	'LBL_BUTTON_REPLY'			=> 'Reply',
         'LBL_BUTTON_REPLY_ALL'		=> 'Reply All',
@@ -244,10 +238,8 @@ $mod_strings = array (
 	'LBL_ALL'					=> 'All',
 	'LBL_ASSIGN_WARN'			=> 'Ensure that all 2 options are selected.',
 	'LBL_BACK_TO_GROUP'			=> 'Back to Group Inbox',
-	'LBL_BUTTON_DISTRIBUTE_KEY'	=> 'a',
 	'LBL_BUTTON_DISTRIBUTE_TITLE'=> 'Assign',
 	'LBL_BUTTON_DISTRIBUTE'		=> 'Assign',
-	'LBL_BUTTON_GRAB_KEY'		=> 't',
 	'LBL_BUTTON_GRAB_TITLE'		=> 'Take from Group',
 	'LBL_BUTTON_GRAB'			=> 'Take from Group',
 	'LBL_CREATE_BUG'			=> 'Create Bug',
@@ -264,7 +256,6 @@ $mod_strings = array (
 	'LBL_NO_GRAB_DESC'			=> 'There were no items available.  Try again in a moment.',
 	'LBL_QUICK_REPLY'			=> 'Reply',
 	'LBL_REPLIED'				=> 'Replied',
-	'LBL_SELECT_TEAM'			=> 'Select Teams',
 	'LBL_TAKE_ONE_TITLE'		=> 'Reps',
 	'LBL_TITLE_SEARCH_RESULTS'	=> 'Search Results',
 	'LBL_TO'					=> 'To: ',
@@ -283,13 +274,13 @@ $mod_strings = array (
 	'LBL_WARN_NO_USERS'			=> 'No Users are selected',
     'LBL_WARN_NO_USERS_OR_TEAM' => 'Please select either a user or team for assignment.',
     'LBL_IMPORT_STATUS_TITLE'	=> 'Status',
+    'LBL_INDICATOR'         	=> 'Indicator',
 	'LBL_LIST_STATUS'			=> 'Status',
 	'LBL_LIST_TITLE_GROUP_INBOX'=> 'Group Inbox',
 	'LBL_LIST_TITLE_MY_DRAFTS'	=> 'My Drafts',
 	'LBL_LIST_TITLE_MY_INBOX'	=> 'My Inbox',
 	'LBL_LIST_TITLE_MY_SENT'	=> 'My Sent Email',
 	'LBL_LIST_TITLE_MY_ARCHIVES'=> 'My Archived Emails',
-    'LBL_ACTIVITIES_REPORTS' 	=> 'Activities Report',
 
 	'LNK_CHECK_MY_INBOX'		=> 'Check My Mail',
 	'LNK_DATE_SENT'				=> 'Date Sent',
@@ -317,6 +308,7 @@ $mod_strings = array (
 	'LBL_EMAILTEMPLATE_MESSAGE_MULTIPLE_RECIPIENTS' => 'Using an email template containing contact variables, such as the contact name, to send emails to multiple recipients may have unexpected results. It is recommended that you use an email campaign for mass mailings.',
 	'LBL_CHECK_ATTACHMENTS'=>'Please Check Attachments!',
 	'LBL_HAS_ATTACHMENTS' => 'This email already has attachment(s). Would you like to keep the attachment(s)?',
+    'LBL_HAS_ATTACHMENT_INDICATOR' => 'Has Attachments',
 	'ERR_MISSING_REQUIRED_FIELDS' => 'Missing required field',
     'ERR_INVALID_REQUIRED_FIELDS' => 'Invalid required field',
 	'LBL_FILTER_BY_RELATED_BEAN' => 'Only show recipients related to',
@@ -394,7 +386,6 @@ $mod_strings = array (
 	'LBL_EMAILSETTINGS' => 'Email Settings' /*for 508 compliance fix*/,
 
 	// SNIP
-	'LBL_CONTACTS_SUBPANEL_TITLE_SNIP' => 'Email Contacts',
 	'LBL_EMAILS_MEETINGS_REL' => 'Emails:Meetings',
 	'LBL_DATE_CREATED' => 'Date Created',
 	'LBL_DATE_MODIFIED' => 'Date Modified',

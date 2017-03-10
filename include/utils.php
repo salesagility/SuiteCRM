@@ -972,7 +972,7 @@ function return_application_language($language)
     }
 
     $temp_app_strings = $app_strings;
-    $default_language = $sugar_config['default_language'];
+    $default_language = isset($sugar_config['default_language']) ? $sugar_config['default_language'] : null;
 
     $langs = array();
     if ($language != 'en_us') {
@@ -2318,6 +2318,14 @@ function getImagePath($image_name)
 
 function getWebPath($relative_path)
 {
+    $current_theme = SugarThemeRegistry::current();
+    $theme_directory = $current_theme->dirName;
+    if(strpos($relative_path, "themes".DIRECTORY_SEPARATOR.$theme_directory) === false) {
+        $test_path = SUGAR_PATH.DIRECTORY_SEPARATOR."themes".DIRECTORY_SEPARATOR.$theme_directory.DIRECTORY_SEPARATOR.$relative_path;
+        if(file_exists($test_path)) {
+            $resource_name = "themes".DIRECTORY_SEPARATOR.$theme_directory.DIRECTORY_SEPARATOR.$relative_path;
+        }
+    }
     //if it has  a :// then it isn't a relative path
     if (substr_count($relative_path, '://') > 0) {
         return $relative_path;
@@ -2486,9 +2494,9 @@ function values_to_keys($array)
     return $new_array;
 }
 
-function clone_relationship(&$db, $tables = array(), $from_column, $from_id, $to_id)
+function clone_relationship(&$db, $tables, $from_column, $from_id, $to_id)
 {
-    foreach ($tables as $table) {
+    foreach ((array)$tables as $table) {
         if ($table == 'emails_beans') {
             $query = "SELECT * FROM $table WHERE $from_column='$from_id' and bean_module='Leads'";
         } else {
@@ -2660,9 +2668,15 @@ function number_empty($value)
     return empty($value) && $value != '0';
 }
 
-function get_bean_select_array($add_blank = true, $bean_name, $display_columns, $where = '', $order_by = '', $blank_is_none = false)
+function get_bean_select_array($add_blank, $bean_name, $display_columns, $where = '', $order_by = '', $blank_is_none = false)
 {
     global $beanFiles;
+
+    // set $add_blank = true by default
+    if (!is_bool($add_blank)) {
+        $add_blank = true;
+    }
+
     require_once $beanFiles[$bean_name];
     $focus = new $bean_name();
     $user_array = array();
@@ -4068,7 +4082,7 @@ function getTrackerSubstring($name)
     return $chopped;
 }
 
-function generate_search_where($field_list = array(), $values = array(), &$bean, $add_custom_fields = false, $module = '')
+function generate_search_where($field_list, $values, &$bean, $add_custom_fields = false, $module = '')
 {
     $where_clauses = array();
     $like_char = '%';
@@ -4279,8 +4293,16 @@ function createGroupUser($name)
 
 function _getIcon($iconFileName)
 {
-    $iconName = "icon_{$iconFileName}.gif";
-    $iconFound = SugarThemeRegistry::current()->getImageURL($iconName, false);
+    if(file_exists(SugarThemeRegistry::current()->getImagePath().DIRECTORY_SEPARATOR.'icon_'.$iconFileName.'.svg')) {
+        $iconName = "icon_{$iconFileName}.svg";
+        $iconFound = SugarThemeRegistry::current()->getImageURL($iconName, false);
+    }
+    else {
+        $iconName = "icon_{$iconFileName}.gif";
+        $iconFound = SugarThemeRegistry::current()->getImageURL($iconName, false);
+    }
+
+
 
     //First try un-ucfirst-ing the icon name
     if (empty($iconFound)) {
@@ -4360,8 +4382,16 @@ function html_entity_decode_utf8($string)
     static $trans_tbl;
     // replace numeric entities
     //php will have issues with numbers with leading zeros, so do not include them in what we send to code2utf.
-    $string = preg_replace('~&#x0*([0-9a-f]+);~ei', 'code2utf(hexdec("\\1"))', $string);
-    $string = preg_replace('~&#0*([0-9]+);~e', 'code2utf(\\1)', $string);
+
+    $string = preg_replace_callback('~&#x0*([0-9a-f]+);~i',
+        function($matches) {
+            return code2utf(hexdec($matches[1]));
+        }, $string);
+    $string = preg_replace_callback('~&#0*([0-9]+);~',
+        function($matches) {
+            return code2utf($matches[1]);
+        }, $string);
+
     // replace literal entities
     if (!isset($trans_tbl)) {
         $trans_tbl = array();
@@ -5291,7 +5321,7 @@ function assignConcatenatedValue(SugarBean $bean, $fieldDef, $value)
  */
 function sugar_unserialize($value)
 {
-    preg_match('/[oc]:\d+:/i', $value, $matches);
+    preg_match('/[oc]:[^:]*\d+:/i', $value, $matches);
 
     if (count($matches)) {
         return false;

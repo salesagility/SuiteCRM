@@ -99,10 +99,12 @@ if(isset($_REQUEST['wiz_new_mbox']) && ($_REQUEST['wiz_new_mbox']=='1')){
     if (!empty($_REQUEST['error'])){
             //an error was found during inbound save.  This means the save was allowed but the inbound box had problems, return user to wizard
             //and display error message
-            header("Location: index.php?action=WizardEmailSetup&module=Campaigns&error=true");
+            $header_URL = "Location: index.php?action=WizardEmailSetup&module=Campaigns&error=true";
+        SugarApplication::headerRedirect($header_URL);
     }else{
         //set navigation details
-        header("Location: index.php?action=index&module=Campaigns");
+        $header_URL = "Location: index.php?action=index&module=Campaigns";
+        SugarApplication::headerRedirect($header_URL);
     }
 
 /*

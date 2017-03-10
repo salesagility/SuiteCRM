@@ -317,7 +317,7 @@ class SugarTheme
             }
         }
         if ( !inDeveloperMode() ) {
-            if ( sugar_is_file($cachedfile = sugar_cached($this->getFilePath().'/pathCache.php'))) {
+            if ( is_file($cachedfile = sugar_cached($this->getFilePath().'/pathCache.php'))) {
                 $caches = unserialize(file_get_contents($cachedfile));
                 if ( isset($caches['jsCache']) )
                     $this->_jsCache       = $caches['jsCache'];
@@ -329,7 +329,7 @@ class SugarTheme
                     $this->_templateCache = $caches['templateCache'];
             }
             $cachedfile = sugar_cached($this->getFilePath().'/spriteCache.php');
-			if(!empty($GLOBALS['sugar_config']['use_sprites']) && sugar_is_file($cachedfile)) {
+			if(!empty($GLOBALS['sugar_config']['use_sprites']) && is_file($cachedfile)) {
 				$this->_spriteCache = unserialize(sugar_file_get_contents($cachedfile));
 			}
         }
@@ -382,6 +382,10 @@ class SugarTheme
                 unlink("$cachedir/pathCache.php");
 			if (is_file("$cachedir/spriteCache.php"))
 				unlink("$cachedir/spriteCache.php");
+
+            if(strlen($cachedir)>1) {
+                rmdir_recursive($cachedir.'/modules');
+            }
 
         }
         elseif ( !inDeveloperMode() ) {
@@ -673,17 +677,17 @@ EOHTML;
             return $this->_templateCache[$templateName];
 
         $templatePath = '';
-        if (sugar_is_file('custom/'.$this->getTemplatePath().'/'.$templateName))
+        if (is_file('custom/'.$this->getTemplatePath().'/'.$templateName))
             $templatePath = 'custom/'.$this->getTemplatePath().'/'.$templateName;
-        elseif (sugar_is_file($this->getTemplatePath().'/'.$templateName))
+        elseif (is_file($this->getTemplatePath().'/'.$templateName))
             $templatePath = $this->getTemplatePath().'/'.$templateName;
         elseif (isset($this->parentTheme)
                 && SugarThemeRegistry::get($this->parentTheme) instanceOf SugarTheme
                 && ($filename = SugarThemeRegistry::get($this->parentTheme)->getTemplate($templateName)) != '')
             $templatePath = $filename;
-        elseif (sugar_is_file('custom/'.$this->getDefaultTemplatePath().'/'.$templateName))
+        elseif (is_file('custom/'.$this->getDefaultTemplatePath().'/'.$templateName))
             $templatePath = 'custom/'.$this->getDefaultTemplatePath().'/'.$templateName;
-        elseif (sugar_is_file($this->getDefaultTemplatePath().'/'.$templateName))
+        elseif (is_file($this->getDefaultTemplatePath().'/'.$templateName))
             $templatePath = $this->getDefaultTemplatePath().'/'.$templateName;
         else {
             $GLOBALS['log']->warn("Template $templateName not found");
@@ -704,19 +708,28 @@ EOHTML;
 	 * @param  string $height optional, defaults to the actual image's height
 	 * @param  string $ext optional, image extension (TODO can we deprecate this one ?)
      * @param  string $alt optional, only used when image contains something useful, i.e. "Sally's profile pic"
+     * @param  string $imageJSONEncode optional, some of template javascript need the exact image-html-string to build HTML contents so this parameter make a json_encode call on the return SVG or image source
+     * @param  string $forceExt optional, force image extension
      * @return string HTML image tag or sprite
      */
-    public function getImage(
-        $imageName,
-        $other_attributes = '',
-		$width = null,
-		$height = null,
-		$ext = null,
-        $alt = ''
-    )
-    {
-
+    public function getImage($imageName, $other_attributes = '', $width = null, $height = null, $ext = null, $alt = '', $imageJSONEncode = false, $forceExt = null) {
         static $cached_results = array();
+
+        // look for .svg first
+        if(strpos($imageName, '.svg') !== false) {
+            $ext = '';
+        } else {
+            // Look for SVG first
+            $imagePath = SugarThemeRegistry::current()->getImagePath().DIRECTORY_SEPARATOR.$imageName.'.svg';
+            if(file_exists($imagePath)) {
+                $ext = '.svg';
+            }
+        }
+
+        if($forceExt) {
+            $ext = $forceExt;
+        }
+
 
 		// trap deprecated use of image extension
 		if(is_null($ext)) {
@@ -765,9 +778,10 @@ EOHTML;
 		$attr_height = (is_null($height)) ? "" : "height=\"$height\"";
 
         if(strpos($cached_results[$imageName], 'svg') !== false){
-            return $cached_results[$imageName];
+            return $imageJSONEncode ? json_encode($cached_results[$imageName]) : $cached_results[$imageName];
         }
-		return $cached_results[$imageName] . " $attr_width $attr_height $other_attributes alt=\"$alt\" />";
+        $ret = $cached_results[$imageName] . " $attr_width $attr_height $other_attributes alt=\"$alt\" />";
+		return $imageJSONEncode ? json_encode($ret) : $ret;
     }
 
 	/**
@@ -931,13 +945,13 @@ EOHTML;
         )
     {
         // return now if the extension matches that of which we are looking for
-        if ( sugar_is_file($imageName) )
+        if ( is_file($imageName) )
             return $imageName;
         $pathParts = pathinfo($imageName);
         foreach ( $this->imageExtensions as $extension )
             if ( isset($pathParts['extension']) )
                 if ( ( $extension != $pathParts['extension'] )
-                        && sugar_is_file($pathParts['dirname'].'/'.$pathParts['filename'].'.'.$extension) )
+                        && is_file($pathParts['dirname'].'/'.$pathParts['filename'].'.'.$extension) )
                     return $pathParts['dirname'].'/'.$pathParts['filename'].'.'.$extension;
 
         return '';
@@ -953,7 +967,7 @@ EOHTML;
      */
     public function getCSSURL($cssFileName, $returnURL = true)
     {
-        if ( isset($this->_cssCache[$cssFileName]) && sugar_is_file(sugar_cached($this->_cssCache[$cssFileName])) ) {
+        if ( isset($this->_cssCache[$cssFileName]) && is_file(sugar_cached($this->_cssCache[$cssFileName])) ) {
             if ( $returnURL )
                 return getJSPath("cache/".$this->_cssCache[$cssFileName]);
             else
@@ -968,15 +982,15 @@ EOHTML;
                 && ($filename = SugarThemeRegistry::get($this->parentTheme)->getCSSURL($cssFileName,false)) != '')
             $cssFileContents .= file_get_contents($filename);
         else {
-            if (sugar_is_file($defaultFileName))
+            if (is_file($defaultFileName))
                 $cssFileContents .= file_get_contents($defaultFileName);
-            if (sugar_is_file('custom/'.$defaultFileName))
+            if (is_file('custom/'.$defaultFileName))
                 $cssFileContents .= file_get_contents('custom/'.$defaultFileName);
         }
-        if (sugar_is_file($fullFileName)) {
+        if (is_file($fullFileName)) {
             $cssFileContents .= file_get_contents($fullFileName);
         }
-        if (sugar_is_file('custom/'.$fullFileName)) {
+        if (is_file('custom/'.$fullFileName)) {
             $cssFileContents .= file_get_contents('custom/'.$fullFileName);
         }
         if (empty($cssFileContents)) {
@@ -1002,7 +1016,7 @@ EOHTML;
         }
 
         // minify the css
-        if ( !inDeveloperMode() && !sugar_is_file($cssFilePath) ) {
+        if ( !inDeveloperMode() && !is_file($cssFilePath) ) {
             $cssFileContents = cssmin::minify($cssFileContents);
         }
 
@@ -1027,7 +1041,7 @@ EOHTML;
      */
     public function getJSURL($jsFileName, $returnURL = true)
     {
-        if ( isset($this->_jsCache[$jsFileName]) && sugar_is_file(sugar_cached($this->_jsCache[$jsFileName])) ) {
+        if ( isset($this->_jsCache[$jsFileName]) && is_file(sugar_cached($this->_jsCache[$jsFileName])) ) {
             if ( $returnURL )
                 return getJSPath("cache/".$this->_jsCache[$jsFileName]);
             else
@@ -1042,14 +1056,14 @@ EOHTML;
                 && ($filename = SugarThemeRegistry::get($this->parentTheme)->getJSURL($jsFileName,false)) != ''    && !in_array($jsFileName,$this->ignoreParentFiles)) {
            $jsFileContents .= file_get_contents($filename);
        } else {
-            if (sugar_is_file($defaultFileName))
+            if (is_file($defaultFileName))
                 $jsFileContents .= file_get_contents($defaultFileName);
-            if (sugar_is_file('custom/'.$defaultFileName))
+            if (is_file('custom/'.$defaultFileName))
                 $jsFileContents .= file_get_contents('custom/'.$defaultFileName);
         }
-        if (sugar_is_file($fullFileName))
+        if (is_file($fullFileName))
             $jsFileContents .= file_get_contents($fullFileName);
-        if (sugar_is_file('custom/'.$fullFileName))
+        if (is_file('custom/'.$fullFileName))
             $jsFileContents .= file_get_contents('custom/'.$fullFileName);
         if (empty($jsFileContents)) {
             $GLOBALS['log']->warn("Javascript File $jsFileName not found");
@@ -1060,7 +1074,7 @@ EOHTML;
         $jsFilePath = create_cache_directory($fullFileName);
 
         // minify the js
-        if ( !inDeveloperMode()&& !sugar_is_file(str_replace('.js','-min.js',$jsFilePath)) ) {
+        if ( !inDeveloperMode()&& !is_file(str_replace('.js','-min.js',$jsFilePath)) ) {
             $jsFileContents = SugarMin::minify($jsFileContents);
             $jsFilePath = str_replace('.js','-min.js',$jsFilePath);
             $fullFileName = str_replace('.js','-min.js',$fullFileName);
@@ -1097,8 +1111,8 @@ EOHTML;
         $imageArray = array();
         foreach ( $pathsToSearch as $path )
         {
-            if (!sugar_is_dir($path)) $path = "custom/$path";
-            if (sugar_is_dir($path) && is_readable($path) && $dir = opendir($path)) {
+            if (!is_dir($path)) $path = "custom/$path";
+            if (is_dir($path) && is_readable($path) && $dir = opendir($path)) {
                 while (($file = readdir($dir)) !== false) {
                     if ($file == ".."
                             || $file == "."
@@ -1182,35 +1196,35 @@ class SugarThemeRegistry
         )
     {
         // make sure the we know the sugar version
-        global $sugar_version;
-        if (empty($sugar_version))
-        {
-            include('sugar_version.php');
+        global $suitecrm_version;
+        if (empty($suitecrm_version)) {
+            include('suitecrm_version.php');
         }
 
-        // Assume theme is designed for 5.5.x if not specified otherwise
-        if ( !isset($themedef['version']) )
-            $themedef['version']['regex_matches'] = array('5\.5\.*');
+        if (!isset($themedef['version']['regex_matches'])) {
+            $themedef['version']['regex_matches'] = array('^7\.[0-8][^\d]');
+        }
 
         // Check to see if theme is valid for this version of Sugar; return false if not
-        $version_ok = false;
+
+        $versionOk = false;
         if( isset($themedef['version']['exact_matches']) ){
             $matches_empty = false;
             foreach( $themedef['version']['exact_matches'] as $match ){
-                if( $match == $GLOBALS['sugar_version'] ){
-                    $version_ok = true;
+                if( $match == $GLOBALS['suitecrm_version'] ){
+                    $versionOk = true;
                 }
             }
         }
-        if( !$version_ok && isset($themedef['version']['regex_matches']) ){
+        if( !$versionOk && isset($themedef['version']['regex_matches']) ){
             $matches_empty = false;
             foreach( $themedef['version']['regex_matches'] as $match ){
-                if( preg_match( "/$match/", $GLOBALS['sugar_version'] ) ){
-                    $version_ok = true;
+                if( preg_match( "/$match/", $GLOBALS['suitecrm_version'] ) ){
+                    $versionOk = true;
                 }
             }
         }
-        if ( !$version_ok )
+        if (!$versionOk)
             return false;
 
         $theme = new SugarTheme($themedef);
@@ -1316,14 +1330,14 @@ class SugarThemeRegistry
 
         // check for a default themedef file
         $themedefDefault = array();
-        if ( sugar_is_file("custom/themes/default/themedef.php") ) {
+        if ( is_file("custom/themes/default/themedef.php") ) {
             $themedef = array();
             require("custom/themes/default/themedef.php");
             $themedefDefault = $themedef;
         }
 
         foreach ($dirs as $dirPath ) {
-            if (sugar_is_dir('./'.$dirPath) && is_readable('./'.$dirPath) && $dir = opendir('./'.$dirPath)) {
+            if (is_dir('./'.$dirPath) && is_readable('./'.$dirPath) && $dir = opendir('./'.$dirPath)) {
                 while (($file = readdir($dir)) !== false) {
                     if ($file == ".."
                             || $file == "."
@@ -1331,8 +1345,8 @@ class SugarThemeRegistry
                             || $file == "CVS"
                             || $file == "Attic"
                             || $file == "default"
-                            || !sugar_is_dir("./$dirPath".$file)
-                            || !sugar_is_file("./{$dirPath}{$file}/themedef.php")
+                            || !is_dir("./$dirPath".$file)
+                            || !is_file("./{$dirPath}{$file}/themedef.php")
                             )
                         continue;
                     $themedef = array();

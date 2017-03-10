@@ -163,9 +163,15 @@ EOQ;
 		if (!isset($_REQUEST['published'])) $focus->published = 'off';
 
 		$this->handleAttachmentsProcessImages($focus, $redirect, $useSiteURL, $entryPoint, $useUploadFolder);
+		return $focus;
 	}
 
 	public function handleAttachmentsProcessImages($focus, $redirect, $useSiteURL = false, $entryPoint = 'download', $useUploadFolder = false) {
+		$return_id = $this->processImages($focus, $useSiteURL, $entryPoint, $useUploadFolder);
+		return $this->handleAttachments($focus, $redirect, $return_id);
+	}
+
+	public function processImages(&$focus, $useSiteURL, $entryPoint, $useUploadFolder) {
 		global $sugar_config;
 		$preProcessedImages = array();
 		$emailTemplateBodyHtml = from_html($focus->body_html);
@@ -194,14 +200,21 @@ EOQ;
 						$GLOBALS['log']->debug("EMAIL Template could not copy attachment to $newFileLocation");
 					} else {
 						if($useUploadFolder) {
-							$secureLink = ($useSiteURL ? $sugar_config['site_url'] . '/' : '') . "upload/{$id}";
+							$secureLink = ($useSiteURL ? $sugar_config['site_url'] . '/' : '') . "public/{$id}";
+							// create a copy with correct extension by mime type
+							if(!file_exists('public')) {
+								sugar_mkdir('public', 0777);
+							}
+							if(copy($file_location, "public/{$id}.{$mime_type}")) {
+								$secureLink .= ".{$mime_type}";
+							}
 						}
 						else {
 							$secureLink = ($useSiteURL ? $sugar_config['site_url'] . '/' : '') . "index.php?entryPoint=" . $entryPoint . "&type=Notes&id={$id}&filename=" . $match;
 						}
 
 						$emailTemplateBodyHtml = str_replace("cache/images/$match", $secureLink, $emailTemplateBodyHtml);
-						unlink($file_location);
+						//unlink($file_location);
 						$preProcessedImages[$filename] = $id;
 					}
 				} // if
@@ -212,10 +225,11 @@ EOQ;
 		} else {
 			$check_notify = FALSE;
 		}
-		$focus->body_html = $emailTemplateBodyHtml;
+		if($preProcessedImages) {
+			$focus->body_html = $emailTemplateBodyHtml;
+		}
 		$return_id = $focus->save($check_notify);
-
-		return $this->handleAttachments($focus, $redirect, $return_id);
+		return $return_id;
 	}
 
 	public function handleAttachments($focus, $redirect, $return_id) {

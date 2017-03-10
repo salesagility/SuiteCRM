@@ -157,7 +157,7 @@ function smarty_function_sugar_action_menu($params, &$smarty)
                 ));
             } else if(strlen($item)) {
                 array_push($menus['items'],array(
-                   'html' => $item
+                    'html' => $item
                 ));
             }
         }

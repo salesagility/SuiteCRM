@@ -36,9 +36,17 @@ class Gantt {
 
     public function draw($start_date, $end_date, $tasks){
 
-        $time_span = $this->year_month($start_date, $end_date);
-        $day_count = $this->count_days($start_date, $end_date);
+		$day_count = $this->count_days($start_date, $end_date);
+		$diff_interval = 30 - $day_count;
+		if( $diff_interval <= 0 )
+			$time_span = $this->year_month($start_date, $end_date);
+		else
+			$time_span = $this->year_month($start_date, $end_date, $diff_interval);
+
        // $project_length = $this->time_range($start_date, $end_date);
+
+
+
 
         //Generate main table and the first row containing the months
         echo '<table class="main_table"><tr class="month_row">';
@@ -205,13 +213,15 @@ class Gantt {
     }
 
 
+
     //Returns an array containing the years, months and days between two dates
-    public function year_month($start_date, $end_date)
+    public function year_month($start_date, $end_date, $diff_interval=1)
     {
         $begin = new DateTime( $start_date );
         $end = new DateTime( $end_date);
-        $end->add(new DateInterval('P1D')); //Add 1 day to include the end date as a day
-        $interval = new DateInterval('P1D'); // 1 month interval
+        $end->add(new DateInterval('P'. $diff_interval .'D')); //Add 1 day to include the end date as a day
+        
+		$interval = new DateInterval('P1D'); // 1 month interval
         $period = new DatePeriod($begin, $interval, $end);
         $aResult = array();
 

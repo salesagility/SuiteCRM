@@ -106,8 +106,8 @@ if(!empty($_REQUEST['assigned_user_id'])){
     $web_assigned_user = $_REQUEST['assigned_user_id'];
 }
 
-
- $lead = new Lead();
+$typeOfPerson = !empty($_REQUEST['typeOfPerson']) ? $_REQUEST['typeOfPerson'] : 'Lead';
+ $person = new $typeOfPerson();
  $fieldsMetaData = new FieldsMetaData();
  $xtpl=new XTemplate ('modules/Campaigns/WebToLeadForm.html');
  $xtpl->assign("MOD", $mod_strings);
@@ -116,7 +116,7 @@ if(!empty($_REQUEST['assigned_user_id'])){
 include_once 'WebToLeadFormBuilder.php';
 $Web_To_Lead_Form_html = WebToLeadFormBuilder::generate(
     $_REQUEST,
-    $lead,
+    $person,
     $moduleDir,
     $site_url,
     $web_post_url,

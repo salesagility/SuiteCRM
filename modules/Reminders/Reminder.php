@@ -66,20 +66,6 @@ class Reminder extends Basic
 
     private static $remindersData = array();
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    public function bean_implements($interface)
-    {
-        switch ($interface) {
-            case 'ACL':
-                return true;
-        }
-        return false;
-    }
-
     // ---- save and load remainders on EditViews
 
     /**
@@ -236,19 +222,20 @@ class Reminder extends Basic
 
     private static function getUnsentEmailReminders()
     {
-        global $db;
+        global $timedate;
         $reminders = array();
         $reminderBeans = BeanFactory::getBean('Reminders')->get_full_list('', "reminders.email = 1 AND reminders.email_sent = 0");
         if (!empty($reminderBeans)) {
             foreach ($reminderBeans as $reminderBean) {
                 $eventBean = BeanFactory::getBean($reminderBean->related_event_module, $reminderBean->related_event_module_id);
-                $dateStart = $eventBean->date_start;
-                $time = strtotime($db->fromConvert($dateStart, 'datetime'));
-                $dateStart = date(TimeDate::DB_DATETIME_FORMAT, $time);
-                $remind_ts = $GLOBALS['timedate']->fromDb($db->fromConvert($dateStart, 'datetime'))->modify("-{$reminderBean->timer_email} seconds")->ts;
-                $now_ts = $GLOBALS['timedate']->getNow()->ts;
-                if ($now_ts >= $remind_ts) {
-                    $reminders[$reminderBean->id] = $reminderBean;
+                if($eventBean) {
+                    $remind_ts = $timedate->fromUser($eventBean->date_start)->modify("-{$reminderBean->timer_email} seconds")->ts;
+                    $now_ts = $timedate->getNow()->ts;
+                    if ($now_ts >= $remind_ts) {
+                        $reminders[$reminderBean->id] = $reminderBean;
+                    }
+                } else {
+                    $reminderBean->mark_deleted($reminderBean->id);
                 }
             }
         }
@@ -545,16 +532,17 @@ class Reminder extends Basic
         }
     }
 
-    /**
-     * @param string $eventModule 'Calls' or 'Meetings'
-     */
+	/**
+	 * @param string $eventModule 'Calls' or 'Meetings'
+	 */
     private static function upgradeEventReminders($eventModule)
     {
+        global $db;
 
         $eventBean = BeanFactory::getBean($eventModule);
-        $events = BeanFactory::getBean($eventModule)->get_full_list('', "{$eventBean->table_name}.date_start >  '2015-11-01 00:00:00' AND ({$eventBean->table_name}.reminder_time != -1 OR ({$eventBean->table_name}.email_reminder_time != -1 AND {$eventBean->table_name}.email_reminder_sent != 1))");
+        $events = $eventBean->get_full_list('', "{$eventBean->table_name}.date_start >  {$db->convert('', 'today')} AND ({$eventBean->table_name}.reminder_time != -1 OR ({$eventBean->table_name}.email_reminder_time != -1 AND {$eventBean->table_name}.email_reminder_sent != 1))");
         if ($events) {
-            foreach ($events as $event) {
+			foreach ($events as $event) {
 
                 $oldReminderPopupChecked = false;
                 $oldReminderPopupTimer = null;

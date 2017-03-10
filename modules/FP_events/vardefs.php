@@ -294,6 +294,15 @@ $dictionary['FP_events'] = array(
                 'side' => 'right',
                 'vname' => 'LBL_FP_EVENT_LOCATIONS_FP_EVENTS_1_FROM_FP_EVENTS_TITLE',
             ),
+        'activity_status_type' =>
+            array(
+                'name' => 'activity_status_type',
+                'vname' => 'LBL_ACTIVITY_STATUS',
+                'type' => 'enum',
+                'options' => 'activity_status_type_dom',
+                'len' => '255',
+                'default' => '',
+            ),
     ),
     'relationships' => array(),
     'optimistic_locking' => true,

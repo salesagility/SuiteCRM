@@ -156,6 +156,7 @@ $dictionary['AOW_WorkFlow'] = array(
                 'duplicate_merge_dom_value' => 0,
                 'audited' => false,
                 'reportable' => false,
+                'inline_edit' => false,
                 'function' =>
                     array(
                         'name' => 'display_condition_lines',
@@ -176,6 +177,7 @@ $dictionary['AOW_WorkFlow'] = array(
                 'duplicate_merge_dom_value' => 0,
                 'audited' => false,
                 'reportable' => false,
+                'inline_edit' => false,
                 'function' =>
                     array(
                         'name' => 'display_action_lines',

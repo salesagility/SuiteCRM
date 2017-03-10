@@ -302,6 +302,24 @@ $dictionary['Contact'] = array('table' => 'contacts', 'audited' => true,
                 'vname' => 'LBL_PROJECTS_RESOURCES',
             ),
 
+            'am_projecttemplates_resources' => array(
+                'name' => 'am_projecttemplates_resources',
+                'type' => 'link',
+                'relationship' => 'am_projecttemplates_contacts_resources',
+                'source' => 'non-db',
+                'vname' => 'LBL_PROJECTS_RESOURCES',
+            ),
+
+            'am_projecttemplates_contacts_1' =>
+                array(
+                    'name' => 'am_projecttemplates_contacts_1',
+                    'type' => 'link',
+                    'relationship' => 'am_projecttemplates_contacts_1',
+                    'source' => 'non-db',
+                    'module' => 'AM_ProjectTemplates',
+                    'bean_name' => 'AM_ProjectTemplates',
+                    'vname' => 'LBL_PROJECT_CONTACTS_1_FROM_PROJECT_TITLE',
+                ),
 
             'tasks' =>
                 array(

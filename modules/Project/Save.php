@@ -129,6 +129,8 @@ if ($sugarbean->is_template){
     header("Location: index.php?action=ProjectTemplatesDetailView&module=Project&record=$return_id&return_module=Project&return_action=ProjectTemplatesEditView");
 }
 else{
+	//customize default retrun view to make it to redirect to GanttChart view
+	$_REQUEST['return_url'] = "index.php?module=Project&action=view_GanttChart&project_id=" . $return_id;
     handleRedirect($return_id,'Project');
 }
 ?>

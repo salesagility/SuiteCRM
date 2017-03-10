@@ -303,12 +303,12 @@ $out = <<<EOQ
    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
    <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_TITLE_ARE_YOU_READY']}</title>   <link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
    <link rel="stylesheet" href="install/install2.css" type="text/css">
-   <link rel="stylesheet" href="themes/Suite7/css/responsiveslides.css" type="text/css">
-   <link rel="stylesheet" href="themes/Suite7/css/themes.css" type="text/css">
-   <link rel="stylesheet" href="themes/Suite7/css/fontello.css">
-   <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
+   <link rel="stylesheet" href="themes/SuiteP/css/responsiveslides.css" type="text/css">
+   <link rel="stylesheet" href="themes/SuiteP/css/themes.css" type="text/css">
+   <link rel="stylesheet" href="themes/SuiteP/css/fontello.css">
+   <link rel="stylesheet" href="themes/SuiteP/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
    <script src="include/javascript/jquery/jquery-min.js"></script>
-   <script src="themes/Suite7/js/responsiveslides.min.js"></script>
+   <script src="themes/SuiteP/js/responsiveslides.min.js"></script>
 </head>
 <body>
     <!--SuiteCRM installer-->

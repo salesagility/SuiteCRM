@@ -76,6 +76,21 @@ class Administration extends SugarBean {
         $this->setupCustomFields('Administration');
     }
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function Administration(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
     function retrieveSettings($category = FALSE, $clean=false) {
         // declare a cache for all settings
         $settings_cache = sugar_cache_retrieve('admin_settings_cache');

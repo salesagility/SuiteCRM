@@ -130,19 +130,6 @@ Relationship::delete_cache () ;
 if (empty ( $_REQUEST [ 'silent' ] ))
     echo $mod_strings [ 'LBL_REBUILD_REL_UPD_WARNING' ] ;
 
-// clear the database row if it exists (just to be sure)
-$query = "DELETE FROM versions WHERE name='Rebuild Relationships'" ;
-$log->info ( $query ) ;
-$db->query ( $query ) ;
-
-// insert a new database row to show the rebuild relationships is done
-$id = create_guid () ;
-$gmdate = gmdate('Y-m-d H:i:s');
-$date_entered = db_convert ( "'$gmdate'", 'datetime' ) ;
-$query = 'INSERT INTO versions (id, deleted, date_entered, date_modified, modified_user_id, created_by, name, file_version, db_version) ' . "VALUES ('$id', '0', $date_entered, $date_entered, '1', '1', 'Rebuild Relationships', '4.0.0', '4.0.0')" ;
-$log->info ( $query ) ;
-$db->query ( $query ) ;
-
 $rel = new Relationship();
 Relationship::delete_cache();
 $rel->build_relationship_cache();

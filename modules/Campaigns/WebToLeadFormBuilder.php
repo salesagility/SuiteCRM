@@ -180,7 +180,7 @@ HTML;
 
     // bool
 
-    private static function getFieldBoolHTML($fieldName, $fieldRequired, $fieldLabel, $webRequiredSymbol, $fieldRequired) {
+    private static function getFieldBoolHTML($fieldName, $fieldRequired, $fieldLabel, $webRequiredSymbol) {
         $_required = $fieldRequired ? ' required' : '';
         $html = self::getFieldLabelHTML($fieldLabel, $fieldRequired, $webRequiredSymbol);
         $html .= "<input type=\"checkbox\" id=\"$fieldName\" name=\"$fieldName\"$_required>";
@@ -267,7 +267,7 @@ HTML;
     }
 
     private static function getArrayOfFieldInfo($lead, $colsField, &$requiredFields) {
-        $field_vname= preg_replace('/:$/','',translate($lead->field_defs[$colsField]['vname'],'Leads'));
+        $field_vname= preg_replace('/:$/','',translate($lead->field_defs[$colsField]['vname'], $lead->module_dir));
         $field_name= $colsField;
         $field_label = $field_vname .": ";
         if(isset($lead->field_defs[$colsField]['custom_type']) && $lead->field_defs[$colsField]['custom_type'] != null){
@@ -358,7 +358,7 @@ HTML;
                             $foundField = true;
                         }
                         elseif ($field_type == 'bool') {
-                            $colHtml .= self::getFieldBoolHTML($field_name, $field_required, $field_label, $webRequiredSymbol, $field_required);
+                            $colHtml .= self::getFieldBoolHTML($field_name, $field_required, $field_label, $webRequiredSymbol);
                             $foundField = true;
                             if (!in_array($lead->field_defs[$colsFields[$j]]['name'], $bool_fields)) {
                                 array_push($bool_fields, $lead->field_defs[$colsFields[$j]]['name']);

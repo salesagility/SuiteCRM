@@ -1,11 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,8 +36,11 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array(
     'LBL_LOADING' => 'Loading' /*for 508 compliance fix*/,
@@ -126,7 +129,7 @@ $mod_strings = array(
             'Default' => '<b>Default</b> fields appear in ListViews that are not customized by users.'
         ),
         'searchViewEditor' => array(
-            'modify' => 'All of the fields that can be displayed in the <b>Search</b> form appear here.<br><br>The <b>Default</b> column contains the fields that will be displayed in the Search form.<br/><br/>The <b>Hidden</b> column contains fields available for you as an admin to add to the Search form.'
+            'modify' => 'All of the fields that can be displayed in the <b>Filter</b> form appear here.<br><br>The <b>Default</b> column contains the fields that will be displayed in the Search form.<br/><br/>The <b>Hidden</b> column contains fields available for you as an admin to add to the Search form.'
         ,
             'savebtn' => 'Clicking <b>Save & Deploy</b> will save all changes and make them active',
             'Hidden' => '<b>Hidden</b> fields do not appear in the Search.',
@@ -195,7 +198,6 @@ $mod_strings = array(
             'searchBtn' => 'Customize the module\'s <b>Search</b> layouts.<br><br>Determine what fields can be used to filter records that appear in the ListView.',
             'viewBtnQuickCreate' => 'Customize the module\'s <b>QuickCreate</b> layout.<br><br>The QuickCreate form appears in subpanels and in the Emails module.',
             'addLayoutHelp' => "To create a custom layout for a Security Group select the appropriate Security Group and the layout from which to copy from as a starting point.",
-
             'searchHelp' => 'The <b>Search</b> forms that can be customized appear here.<br><br>Search forms contain fields for filtering records.<br><br>Click an icon to select the search layout to edit.',
             'dashletHelp' => 'The <b>SuiteCRM Dashlet</b> layouts that can be customized appear here.<br><br>The SuiteCRM Dashlet will be available to add to the pages in the Home module.',
             'DashletListViewBtn' => 'The <b>SuiteCRM Dashlet ListView</b> displays records based on the SuiteCRM Dashlet search filters.',
@@ -203,8 +205,8 @@ $mod_strings = array(
             'popupHelp' => 'The <b>Popup</b> layouts that can be customized appear here.<br>',
             'PopupListViewBtn' => 'The <b>Popup ListView</b> displays records based on the Popup search views.',
             'PopupSearchViewBtn' => 'The <b>Popup Search</b> views records for the Popup listview.',
-            'BasicSearchBtn' => 'Customize the <b>Basic Search</b> form that appears in the Basic Search tab in the Search area for the module.',
-            'AdvancedSearchBtn' => 'Customize the <b>Advanced Search</b> form that appears in the Advanced Search tab in the Search area for the module.',
+            'BasicSearchBtn' => 'Customize the <b>Quick Filter</b> form that appears in the Quick Filter tab in the Search area for the module.',
+            'AdvancedSearchBtn' => 'Customize the <b>Advanced Filter</b> form that appears in the Advanced Search tab in the Search area for the module.',
             'portalHelp' => 'Manage and customize the <b>SuiteCRM Portal</b>.',
             'SPUploadCSS' => 'Upload a <b>Style Sheet</b> for the SuiteCRM Portal.',
             'SPSync' => '<b>Sync</b> customizations to the SuiteCRM Portal instance.',
@@ -212,16 +214,16 @@ $mod_strings = array(
             'portalLayoutHelp' => 'The modules within the SuiteCRM Portal appear in this area.<br><br>Select a module to edit the <b>Layouts</b>.',
             'relationshipsHelp' => 'All of the <b>Relationships</b> that exist between the module and other deployed modules appear here.<br><br>The relationship <b>Name</b> is the system-generated name for the relationship.<br><br>The <b>Primary Module</b> is the module that owns the relationships.  For example, all of the properties of the relationships for which the Accounts module is the primary module are stored in the Accounts database tables.<br><br>The <b>Type</b> is the type of relationship exists between the Primary module and the <b>Related Module</b>.<br><br>Click a column title to sort by the column.<br><br>Click a row in the relationship table to view the properties associated with the relationship.<br><br>Click <b>Add Relationship</b> to create a new relationship.<br><br>Relationships can be created between any two deployed modules.',
             'relationshipHelp' => '<b>Relationships</b> can be created between the module and another deployed module.<br><br> Relationships are visually expressed through subpanels and relate fields in the module records.<br><br>Select one of the following relationship <b>Types</b> for the module:<br><br> <b>One-to-One</b> - Both modules\' records will contain relate fields.<br><br> <b>One-to-Many</b> - The Primary Module\'s record will contain a subpanel, and the Related Module\'s record will contain a relate field.<br><br> <b>Many-to-Many</b> - Both modules\' records will display subpanels.<br><br> Select the <b>Related Module</b> for the relationship. <br><br>If the relationship type involves subpanels, select the subpanel view for the appropriate modules.<br><br> Click <b>Save</b> to create the relationship.',
-            'convertLeadHelp' => "Here you can add modules to the convert layout screen and modify the layouts of existing ones.<br/>
+            'convertLeadHelp' => 'Here you can add modules to the convert layout screen and modify the layouts of existing ones.<br/>
 		You can re-order the modules by dragging their rows in the table.<br/><br/>
-
 		<b>Module:</b> The name of the module.<br/><br/>
 		<b>Required:</b> Required modules must be created or selected before the lead can be converted.<br/><br/>
 		<b>Copy Data:</b> If checked, fields from the lead will be copied to fields with the same name in the newly created records.<br/><br/>
 		<b>Allow Selection:</b> Modules with a relate field in Contacts can be selected rather than created during the convert lead process.<br/><br/>
 		<b>Edit:</b> Modify the convert layout for this module.<br/><br/>
-		<b>Delete:</b> Remove this module from the convert layout.<br/><br/>
-		",
+		<b>Delete:</b> Remove this module from the convert layout.<br/><br/>',
+
+
             'editDropDownBtn' => 'Edit a global Dropdown',
             'addDropDownBtn' => 'Add a new global Dropdown',
         ),
@@ -320,11 +322,11 @@ $mod_strings = array(
             'layoutsHelp' => 'Select a <b>Layout to edit</b>.<br/<br/>To change the layout that contains data fields for entering data, click <b>Edit View</b>.<br/><br/>To change the layout that displays the data entered into the fields in the Edit View, click <b>Detail View</b>.<br/><br/>To change the columns which appear in the default list, click <b>List View</b>.<br/><br/>To change the Basic and Advanced search form layouts, click <b>Search</b>.',
             'subpanelHelp' => 'Select a <b>Subpanel</b> to edit.',
             'searchHelp' => 'Select a <b>Search</b> layout to edit.',
-            'labelsBtn' => 'Edit the <b>Labels</b> to display for values in this module.',
             'newPackage' => 'Click <b>New Package</b> to create a new package.',
             'mbHelp' => '<b>Welcome to Module Builder.</b><br/><br/>Use <b>Module Builder</b> to create packages containing custom modules based on standard or custom objects. <br/><br/>To begin, click <b>New Package</b> to create a new package, or select a package to edit.<br/><br/> A <b>package</b> acts as a container for custom modules, all of which are part of one project. The package can contain one or more custom modules that can be related to each other or to modules in the application. <br/><br/>Examples: You might want to create a package containing one custom module that is related to the standard Accounts module. Or, you might want to create a package containing several new modules that work together as a project and that are related to each other and to modules in the application.',
             'exportBtn' => 'Click <b>Export Customizations</b> to create a package containing customizations made in Studio for specific modules.',
         ),
+
 
 
     ),
@@ -353,9 +355,9 @@ $mod_strings = array(
     'LBL_ADD_FIELDS' => 'Add Custom Fields',
     'LBL_AVAILABLE_SUBPANELS' => 'Available Subpanels',
     'LBL_ADVANCED' => 'Advanced',
-    'LBL_ADVANCED_SEARCH' => 'Advanced Search',
+    'LBL_ADVANCED_SEARCH' => 'Advanced Filter',
     'LBL_BASIC' => 'Basic',
-    'LBL_BASIC_SEARCH' => 'Basic Search',
+    'LBL_BASIC_SEARCH' => 'Quick Filter',
     'LBL_CURRENT_LAYOUT' => 'Layout',
     'LBL_CURRENCY' => 'Currency',
     'LBL_CUSTOM' => 'Custom',
@@ -401,8 +403,8 @@ $mod_strings = array(
     'LBL_SUBPANELS' => 'Subpanels',
     'LBL_SUBPANEL' => 'Subpanel',
     'LBL_SUBPANEL_TITLE' => 'Title:',
-    'LBL_SEARCH_FORMS' => 'Search',
-    'LBL_SEARCH' => 'Search',
+    'LBL_SEARCH_FORMS' => 'Filter',
+    'LBL_FILTER' => 'Filter',
     'LBL_STAGING_AREA' => 'Staging Area (drag and drop items here)',
     'LBL_SUGAR_FIELDS_STAGE' => 'SuiteCRM Fields (click items to add to staging area)',
     'LBL_SUGAR_BIN_STAGE' => 'SuiteCRM Bin (click items to add to staging area)',
@@ -466,7 +468,7 @@ $mod_strings = array(
     'LBL_QUESTION_EDIT' => 'Select a module to edit.',
     'LBL_QUESTION_LAYOUT' => 'Select a layout to edit.',
     'LBL_QUESTION_SUBPANEL' => 'Select a subpanel to edit.',
-    'LBL_QUESTION_SEARCH' => 'Select a search layout to edit.',
+    'LBL_QUESTION_SEARCH' => 'Select a filter layout to edit.',
     'LBL_QUESTION_MODULE' => 'Select a module component to edit.',
     'LBL_QUESTION_PACKAGE' => 'Select a package to edit, or create a new package.',
     'LBL_QUESTION_EDITOR' => 'Select a tool.',
@@ -658,8 +660,8 @@ $mod_strings = array(
     'LBL_JS_VALIDATE_REL_LABEL' => 'Label - please add a label that will be displayed above the subpanel',
 
 //CONFIRM
-    'LBL_CONFIRM_FIELD_DELETE' => "Deleting this custom field will delete both the custom field and all the data related to the custom field in the database. The field will be no longer appear in any module layouts."
-        . "\\n\\nDo you wish to continue?",
+    'LBL_CONFIRM_FIELD_DELETE' => 'Deleting this custom field will delete both the custom field and all the data related to the custom field in the database. The field will be no longer appear in any module layouts. \\n\\nDo you wish to continue?',
+
     'LBL_CONFIRM_RELATIONSHIP_DELETE' => 'Are you sure you wish to delete this relationship?',
     'LBL_CONFIRM_RELATIONSHIP_DEPLOY' => 'This will make this relationship permanent. Are you sure you wish to deploy this relationship?',
     'LBL_CONFIRM_DONT_SAVE' => 'Changes have been made since you last saved, would you like to save?',
@@ -672,16 +674,16 @@ $mod_strings = array(
     'LBL_POPHELP_IMPORTABLE' => '<b>Yes</b>: The field will be included in an import operation.<br><b>No</b>: The field will not be included in an import.<br><b>Required</b>: A value for the field must be provided in any import.',
     'LBL_POPHELP_IMAGE_WIDTH' => 'Enter a number for Width, as measured in pixels.<br> The uploaded image will be scaled to this Width.',
     'LBL_POPHELP_IMAGE_HEIGHT' => 'Enter a number for the Height, as measured in pixels.<br> The uploaded image will be scaled to this Height.',
-    'LBL_POPHELP_DUPLICATE_MERGE' => '<b>Enabled</b>: The field will appear in the Merge Duplicates feature, but will not be available to use for the filter conditions in the Find Duplicates feature.<br><b>Disabled</b>: The field will not appear in the Merge Duplicates feature, and will not be available to use for the filter conditions in the Find Duplicates feature.'
-,
+    'LBL_POPHELP_DUPLICATE_MERGE' => '<b>Enabled</b>: The field will appear in the Merge Duplicates feature, but will not be available to use for the filter conditions in the Find Duplicates feature.<br><b>Disabled</b>: The field will not appear in the Merge Duplicates feature, and will not be available to use for the filter conditions in the Find Duplicates feature.',
     'LBL_POPHELP_GLOBAL_SEARCH' => 'Select to use this field when searching for records using the Global Search on this module.',
+
 //Revert Module labels
     'LBL_RESET' => 'Reset',
     'LBL_RESET_MODULE' => 'Reset Module',
     'LBL_REMOVE_CUSTOM' => 'Remove Customizations',
     'LBL_CLEAR_RELATIONSHIPS' => 'Clear Relationships',
     'LBL_RESET_LABELS' => 'Reset Labels',
-    'LBL_RESET_LAYOUTS' => 'Reset Layouts"',
+    'LBL_RESET_LAYOUTS' => 'Reset Layouts',
     'LBL_REMOVE_FIELDS' => 'Remove Custom Fields',
     'LBL_CLEAR_EXTENSIONS' => 'Clear Extensions',
     'LBL_HISTORY_TIMESTAMP' => 'TimeStamp',
@@ -722,7 +724,7 @@ $mod_strings = array(
         'image' => 'Image',
     ),
     'labelTypes' => array(
-        "" => "Frequently used labels",
+        "frequently_used" => "Frequently used labels",
         "all" => "All Labels",
     ),
 
@@ -730,10 +732,10 @@ $mod_strings = array(
 
     'LBL_ILLEGAL_FIELD_VALUE' => "Drop down key cannot contain quotes.",
     'LBL_CONFIRM_SAVE_DROPDOWN' => "You are selecting this item for removal from the dropdown list. Any dropdown fields using this list with this item as a value will no longer display the value, and the value will no longer be able to be selected from the dropdown fields. Are you sure you want to continue?",
-    'LBL_POPHELP_VALIDATE_US_PHONE' => "Select to validate this field for the entry of a 10-digit<br>" .
-        "phone number, with allowance for the country code 1, and<br>" .
-        "to apply a U.S. format to the phone number when the record<br>" .
-        "is saved. The following format will be applied: (xxx) xxx-xxxx.",
+    'LBL_POPHELP_VALIDATE_US_PHONE' => 'Select to validate this field for the entry of a 10-digit phone number,<br>with allowance for the country code 1,<br>and to apply a U.S. format to the phone number when the record is saved.<br> The following format will be applied: (xxx) xxx-xxxx.',
+
+
+
     'LBL_ALL_MODULES' => 'All Modules',
     'LBL_RELATED_FIELD_ID_NAME_LABEL' => '{0} (related {1} ID)',
 );

@@ -342,14 +342,9 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 	    	}
 
 	    	if(count($deleteContacts) > 0) {
-	    		$sql = '';
-	    		foreach($deleteContacts as $u) {
-	    		        $sql .= ",'" . $u . "'";
-	    		}
-	    		$sql = substr($sql, 1);
-	    		// We could run a delete SQL statement here, but will just mark as deleted instead
-	    		$sql = "UPDATE meetings_contacts set deleted = 1 where contact_id in ($sql) AND meeting_id = '". $focus->id . "'";
-	    		$focus->db->query($sql);
+				foreach($deleteContacts as $u) {
+					$focus->contacts->delete($focus->id, $u);
+				}
 	    	}
 	        if(!empty($_POST['lead_invitees'])) {
 	    	   $leadInvitees = explode(',', trim($_POST['lead_invitees'], ','));
@@ -371,14 +366,9 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 	    	}
 
 	    	if(count($deleteLeads) > 0) {
-	    		$sql = '';
 	    		foreach($deleteLeads as $u) {
-	    		        $sql .= ",'" . $u . "'";
+					$focus->leads->delete($focus->id, $u);
 	    		}
-	    		$sql = substr($sql, 1);
-	    		// We could run a delete SQL statement here, but will just mark as deleted instead
-	    		$sql = "UPDATE meetings_leads set deleted = 1 where lead_id in ($sql) AND meeting_id = '". $focus->id . "'";
-	    		$focus->db->query($sql);
 	    	}
 	    	////	END REMOVE
 	    	///////////////////////////////////////////////////////////////////////////

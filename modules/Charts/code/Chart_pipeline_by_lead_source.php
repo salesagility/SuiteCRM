@@ -61,6 +61,21 @@ function __construct()
 {
 }
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function Chart_pipeline_by_lead_source(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 function draw($extra_tools)
 {
 
@@ -209,8 +224,13 @@ global $timedate;
 	* All Rights Reserved..
 	* Contributor(s): ______________________________________..
 	*/
-	function gen_xml($legends=array('foo','bar'), $user_id=array('1'), $cache_file_name='a_file', $refresh=true,$current_module_strings) {
-		global $app_strings, $charset, $lang, $pieChartColors, $current_user;
+	function gen_xml($legends=array('foo','bar'), $user_id=array('1'), $cache_file_name='a_file', $refresh=true,$current_module_strings = array()) {
+		global $app_strings, $charset, $lang, $pieChartColors, $current_user, $current_language;
+
+		// set $current_module_strings to 'Charts' module strings by default
+		if (empty($current_module_strings)) {
+			$current_module_strings = return_module_language($current_language, 'Charts');
+		}
 
 		$kDelim = $current_user->getPreference('num_grp_sep');
 

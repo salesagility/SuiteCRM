@@ -51,6 +51,21 @@ class SugarWidgetSubPanelTopSelectContactsButton extends SugarWidgetSubPanelTopS
 		$this->button_properties=$button_properties;
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function SugarWidgetSubPanelTopSelectContactsButton($button_properties=array()){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($button_properties);
+    }
+
+
     public function getWidgetId($buttonSuffix = true)
     {
         return parent::getWidgetId() . '_select_button';
@@ -106,10 +121,11 @@ class SugarWidgetSubPanelTopSelectContactsButton extends SugarWidgetSubPanelTopS
 			$this->module_name = $subpanel_name;
 		}
 
-		if ($subpanel_name == 'Project'){
+		if ($subpanel_name == 'Project') {
 			$link_field_name = 'project_contacts_1';
-		}
-		else{
+		} elseif ($subpanel_name == 'AM_ProjectTemplates') {
+			$link_field_name = 'am_projecttemplates_contacts_1';
+		} else {
 			$link_field_name = $subpanel_definition->get_data_source_name(true);
 		}
 

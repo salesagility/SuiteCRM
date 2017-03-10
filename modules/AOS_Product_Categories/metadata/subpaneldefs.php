@@ -55,7 +55,7 @@ $layout_defs['AOS_Product_Categories'] = array(
             'subpanel_name' => 'default',
             'sort_order' => 'asc',
             'sort_by' => 'id',
-            'title_key' => 'AOS Products',
+            'title_key' => 'AOS_Products',
             'get_subpanel_data' => 'aos_products',
             'top_buttons' =>
             array (

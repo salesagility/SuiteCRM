@@ -57,31 +57,23 @@ class ProjectViewList extends ViewList{
  		parent::__construct();
  	}
 
- 	/*
- 	 * Override listViewProcess with addition to where clause to exclude project templates
- 	 */
-    function listViewProcess()
-    {
-        $this->processSearchForm();
-
-
-        $this->lv->searchColumns = $this->searchForm->searchColumns;
-
-        if(!$this->headers)
-            return;
-
-        if(empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false)
-        {
-            $this->lv->setup($this->seed, 'include/ListView/ListViewGeneric.tpl', $this->where, $this->params);
-            $savedSearchName = empty($_REQUEST['saved_search_select_name']) ? '' : (' - ' . $_REQUEST['saved_search_select_name']);
-            echo $this->lv->display();
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function ProjectViewList(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
         }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
     }
 
     function preDisplay(){
         $this->lv = new ProjectListViewSmarty();
     }
-
 }
 
 ?>

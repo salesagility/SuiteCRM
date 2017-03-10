@@ -77,6 +77,11 @@ $marketing = new EmailMarketing();
 if (isset($_REQUEST['record']) && !empty($_REQUEST['record'])) {
     $marketing->retrieve($_REQUEST['record']);
 }
+else {
+    if(!empty($_SESSION['campaignWizard'][$_REQUEST['campaign_id']]['defaultSelectedMarketingId'])) {
+        $marketing->retrieve($_SESSION['campaignWizard'][$_REQUEST['campaign_id']]['defaultSelectedMarketingId']);
+    }
+}
 if(!$marketing->ACLAccess('Save')){
         ACLController::displayNoAccess(true);
         sugar_cleanup(true);
@@ -224,6 +229,5 @@ else {
 }
 
 $GLOBALS['log']->debug("about to post header URL of: $header_URL");
-header($header_URL);
-
+SugarApplication::headerRedirect($header_URL);
 ?>

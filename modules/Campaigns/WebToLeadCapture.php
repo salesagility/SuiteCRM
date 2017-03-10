@@ -231,7 +231,10 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     				echo '</body></html>';
     			}
 				else{
-    				header("Location: {$redirect_url}");
+    				$header_URL = "Location: {$redirect_url}";
+
+					SugarApplication::headerRedirect($header_URL);
+
     				die();
 			    }
 			}
@@ -255,7 +258,8 @@ if (!empty($_POST['redirect'])) {
     	echo '</body></html>';
     }
     else{
-    	header("Location: {$_POST['redirect']}");
+    	$header_URL = "Location: {$_POST['redirect']}";
+		SugarApplication::headerRedirect($header_URL);
     	die();
     }
 }

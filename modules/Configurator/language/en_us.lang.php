@@ -112,9 +112,9 @@ $mod_strings = array (
 	'LBL_PROXY_USERNAME'=>'User Name',
 	'LBL_RESTORE_BUTTON_LABEL'=>'Restore',
 	'LBL_SYSTEM_SETTINGS' => 'System Settings',
-	'LBL_SKYPEOUT_ON_DESC' => 'Allows users to click on phone numbers to call using SkypeOut&reg;. The numbers must be formatted properly to make use of this feature. That is, it must be "+"  "The Country Code" "The Number", like +1 (555) 555-1234.',
-	'LBL_SKYPEOUT_ON' => 'Enable SkypeOut&reg; integration',
-	'LBL_SKYPEOUT_TITLE' => 'SkypeOut&reg;',
+	'LBL_SKYPEOUT_ON_DESC' => 'Allows users to click on phone numbers to call using the phone dialer on your mobile device, or a telephony app on your computer (SkypeOut&reg;, etc.). The numbers must be formatted properly to make use of this feature. That is, it must be "+"  "The Country Code" "The Number", like +1 (555) 555-1234.',
+	'LBL_SKYPEOUT_ON' => 'Enable click-to-call for phone numbers',
+	'LBL_SKYPEOUT_TITLE' => 'Click-To-Call',
 	'LBL_USE_REAL_NAMES'	=> 'Show Full Names',
 	'LBL_USE_REAL_NAMES_DESC'			=> 'Display users\' full names instead of their User Names in assignment fields.',
     'LBL_DISALBE_CONVERT_LEAD' => 'Disable convert lead action for converted leads',
@@ -125,6 +125,7 @@ $mod_strings = array (
     'LBL_ENABLE_INLINE_EDITING_LIST_DESC' => 'Select to enable Inline Editing for fields on the list view. If unselected Inline Editing will be disabled on list view.',
     'LBL_ENABLE_INLINE_EDITING_DETAIL' => 'Enable inline editing on detail view',
     'LBL_ENABLE_INLINE_EDITING_DETAIL_DESC' => 'Select to enable Inline Editing for fields on the detail view. If unselected Inline Editing will be disabled on detail view.',
+	'LBL_HIDE_SUBPANELS' => 'Collapsed subpanels',
     'LIST_ENTRIES_PER_LISTVIEW'=>'Listview items per page',
 	'LIST_ENTRIES_PER_SUBPANEL'=>'Subpanel items per page',
 	'LOG_MEMORY_USAGE'=>'Log memory usage',
@@ -218,13 +219,12 @@ $mod_strings = array (
 	'LBL_LOGGER_FILENAME_SUFFIX' =>'Append after filename',
 	'LBL_VCAL_PERIOD' => 'vCal Updates Time Period:',
     'LBL_IMPORT_MAX_RECORDS' => 'Import - Maximum Number of Rows:',
-    'LBL_IMPORT_MAX_RECORDS_HELP' => 'Specify how many rows are allowed within import files. If the number of rows <br>in an import file exceeds this number, the user will be alerted. If no number<br> is entered, an unlimited number of rows are allowed.',
+    'LBL_IMPORT_MAX_RECORDS_HELP' => 'Specify how many rows are allowed within import files.<br>If the number of rows in an import file exceeds this number, the user will be alerted.<br>If no number is entered, an unlimited number of rows are allowed.',
 	'vCAL_HELP' => 'Use this setting to determine the number of months in advance of the current date that Free/Busy information for calls and meetings is published.<BR>To turn Free/Busy publishing off, enter "0".  The minimum is 1 month; the maximum is 12 months.',
     'LBL_PDFMODULE_NAME' => 'PDF Settings',
     'SUGARPDF_BASIC_SETTINGS' => 'Document Properties',
     'SUGARPDF_ADVANCED_SETTINGS' => 'Advanced Settings',
     'SUGARPDF_LOGO_SETTINGS' => 'Images',
-
     'PDF_CREATOR' => 'PDF Creator',
     'PDF_CREATOR_INFO' => 'Defines the creator of the document. <br>This is typically the name of the application that generates the PDF.',
 
@@ -333,29 +333,29 @@ $mod_strings = array (
     'LBL_FONT_LIST_EMBEDDED' => 'Embedded',
     'LBL_FONT_LIST_EMBEDDED_INFO' => 'Check to embed the font into the PDF file',
     'LBL_FONT_LIST_CIDINFO' => 'CID Information',
-    'LBL_FONT_LIST_CIDINFO_INFO' => "Examples :".
-"<ul><li>".
-"Chinese Traditional :<br>".
-"<pre>\$enc=\'UniCNS-UTF16-H\';<br>".
-"\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'CNS1\',\'Supplement\'=>0);<br>".
-"include(\'include/tcpdf/fonts/uni2cid_ac15.php\');</pre>".
-"</li><li>".
-"Chinese Simplified :<br>".
-"<pre>\$enc=\'UniGB-UTF16-H\';<br>".
-"\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'GB1\',\'Supplement\'=>2);<br>".
-"include(\'include/tcpdf/fonts/uni2cid_ag15.php\');</pre>".
-"</li><li>".
-"Korean :<br>".
-"<pre>\$enc=\'UniKS-UTF16-H\';<br>".
-"\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'Korea1\',\'Supplement\'=>0);<br>".
-"include(\'include/tcpdf/fonts/uni2cid_ak12.php\');</pre>".
-"</li><li>".
-"Japanese :<br>".
-"<pre>\$enc=\'UniJIS-UTF16-H\';<br>".
-"\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'Japan1\',\'Supplement\'=>5);<br>".
-"include(\'include/tcpdf/fonts/uni2cid_aj16.php\');</pre>".
-"</li></ul>".
-"More help : www.tcpdf.org",
+    'LBL_FONT_LIST_CIDINFO_INFO' => 'Examples :
+<ul><li>.
+Chinese Traditional :<br>.
+<pre>\$enc=\'UniCNS-UTF16-H\';<br>.
+\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'CNS1\',\'Supplement\'=>0);<br>.
+include(\'include/tcpdf/fonts/uni2cid_ac15.php\');</pre>.
+</li><li>.
+Chinese Simplified :<br>.
+<pre>\$enc=\'UniGB-UTF16-H\';<br>.
+\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'GB1\',\'Supplement\'=>2);<br>.
+include(\'include/tcpdf/fonts/uni2cid_ag15.php\');</pre>.
+</li><li>.
+Korean :<br>.
+<pre>\$enc=\'UniKS-UTF16-H\';<br>.
+\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'Korea1\',\'Supplement\'=>0);<br>.
+include(\'include/tcpdf/fonts/uni2cid_ak12.php\');</pre>.
+</li><li>.
+Japanese :<br>.
+<pre>\$enc=\'UniJIS-UTF16-H\';<br>.
+\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'Japan1\',\'Supplement\'=>5);<br>.
+include(\'include/tcpdf/fonts/uni2cid_aj16.php\');</pre>.
+</li></ul>.
+More help : www.tcpdf.org',
     'LBL_FONT_LIST_FILESIZE' => 'Font Size (KB)',
     'LBL_ADD_FONT' => 'Add a font',
     'LBL_BACK' => 'Back',
@@ -374,7 +374,7 @@ $mod_strings = array (
     'LBL_ADD_FONT_BUTTON' => 'Add',
     'JS_ALERT_PDF_WRONG_EXTENSION' => 'This file do not have a good file extension.',
     'LBL_PDF_INSTRUCTIONS' => 'Instructions',
-    'PDF_INSTRUCTIONS_ADD_FONT' => <<<BSOFR
+    'PDF_INSTRUCTIONS_ADD_FONT' => '<<<BSOFR
 Fonts supported by the PDF :
 <ul>
 <li>TrueTypeUnicode (UTF-8 Unicode)</li>
@@ -390,8 +390,8 @@ If you choose to not embed your font in the PDF, the generated PDF file will be 
 Adding a PDF font to SuiteCRM requires to follow steps 1 and 2 of the TCPDF Fonts documentation available in the "DOCS" section of the <a href="http://www.tcpdf.org" target="_blank">TCPDF website</a>.
 <br><br>The pfm2afm and ttf2ufm utils are available in fonts/utils in the TCPDF package that you can download on the "DOWNLOAD" section of the <a href="http://www.tcpdf.org" target="_blank">TCPDF website</a>.
 <br><br>Load the metric file generated in step 2 and your font file below.
-BSOFR
-,
+BSOFR',
+
     'ERR_MISSING_CIDINFO' => 'The field CID Information cannot be empty.',
     'LBL_ADDFONTRESULT_TITLE' => 'Result of the add font process',
     'LBL_STATUS_FONT_SUCCESS' => 'SUCCESS : The font has been added to SuiteCRM.',
@@ -413,6 +413,11 @@ BSOFR
     'ERR_PDF_NO_UPLOAD' => 'Error during the upload of the font or metric file.',
 
 // Wizard
+	//Wizard Scenarios
+	'LBL_WIZARD_SCENARIOS' => 'Your Scenarios',
+	'LBL_WIZARD_SCENARIOS_EMPTY_LIST' => 'No scenarios have been configured',
+	'LBL_WIZARD_SCENARIOS_DESC' => 'Choose which scenarios are appropriate for your installation.  These options can be changed post-install.',
+
     'LBL_WIZARD_TITLE' => 'Admin Wizard',
     'LBL_WIZARD_WELCOME_TAB' => 'Welcome',
     'LBL_WIZARD_WELCOME_TITLE' => 'Welcome to SuiteCRM!',
@@ -438,6 +443,7 @@ To configure additional system settings, click <a href="index.php?module=Adminis
 	'LBL_WELCOME' => 'Welcome' /*for 508 compliance fix*/,
 	'LBL_LOGO' => 'Logo' /*for 508 compliance fix*/,
     'LBL_ENABLE_HISTORY_CONTACTS_EMAILS' => 'Show related contacts\' emails in History subpanel for modules',
+	
 );
 
 

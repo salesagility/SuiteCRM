@@ -98,6 +98,21 @@ class Project extends SugarBean {
 		parent::__construct();
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function Project(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 	/**
 	 * overriding the base class function to do a join with users table
 	 */
@@ -297,5 +312,144 @@ class Project extends SugarBean {
 
 		return $projectTasks;
 	}
+
+	public function getDefaultStatus()
+	{
+		$def = $this->field_defs['status'];
+		if (isset($def['default'])) {
+			return $def['default'];
+		} else {
+			$app = return_app_list_strings_language($GLOBALS['current_language']);
+			if (isset($def['options']) && isset($app[$def['options']])) {
+				$keys = array_keys($app[$def['options']]);
+				return $keys[0];
+			}
+		}
+		return '';
+	}
+
+	function save($check_notify = FALSE) {
+
+		$focus = $this; //new Project();
+		//if(!empty($this->id))
+		//	$focus->retrieve($this->id);
+
+		if( (isset($_POST['isSaveFromDetailView']) && $_POST['isSaveFromDetailView'] == 'true') ||
+			(isset($_POST['is_ajax_call']) && !empty($_POST['is_ajax_call']) && !empty($focus->id) ||
+			(isset($_POST['return_action']) && $_POST['return_action'] == 'SubPanelViewer') && !empty($focus->id))||
+			 !isset($_POST['user_invitees']) // we need to check that user_invitees exists before processing, it is ok to be empty
+		){
+			parent::save($check_notify) ; //$focus->save(true);
+			$return_id = $focus->id;
+		}else{
+
+			if(!empty($_POST['user_invitees'])) {
+			   $userInvitees = explode(',', trim($_POST['user_invitees'], ','));
+			} else {
+			   $userInvitees = array();
+			}		
+
+
+			if(!empty($_POST['contact_invitees'])) {
+			   $contactInvitees = explode(',', trim($_POST['contact_invitees'], ','));
+			} else {
+			   $contactInvitees = array();
+			}
+
+
+			$deleteUsers = array();
+			$existingUsers = array();
+
+			$deleteContacts = array();
+			$existingContacts = array();		
+
+			if(!empty($this->id)){
+
+				//$focus->retrieve($this->id);
+
+				////	REMOVE RESOURCE RELATIONSHIPS
+				// Calculate which users to flag as deleted and which to add
+				
+				// Get all users for the project
+				$focus->load_relationship('users');
+				$users = $focus->get_linked_beans('project_users_1','User');
+				foreach($users as $a) {
+					  if(!in_array($a->id, $userInvitees)) {
+						 $deleteUsers[$a->id] = $a->id;
+					  } else {
+						 $existingUsers[$a->id] = $a->id;
+					  }
+				}
+
+				if(count($deleteUsers) > 0) {
+					$sql = '';
+					foreach($deleteUsers as $u) {
+							$sql .= ",'" . $u . "'";
+					}
+					$sql = substr($sql, 1);
+					// We could run a delete SQL statement here, but will just mark as deleted instead
+					$sql = "UPDATE project_users_1_c set deleted = 1 where project_users_1users_idb in ($sql) AND project_users_1project_ida = '". $focus->id . "'";
+					$focus->db->query($sql);
+					echo $sql; 
+				}
+
+				// Get all contacts for the project
+				$focus->load_relationship('contacts');
+				$contacts = $focus->get_linked_beans('project_contacts_1','Contact');
+				foreach($contacts as $a) {
+					  if(!in_array($a->id, $contactInvitees)) {
+						 $deleteContacts[$a->id] = $a->id;
+					  }	else {
+						 $existingContacts[$a->id] = $a->id;
+					  }
+				}
+
+				if(count($deleteContacts) > 0) {
+					$sql = '';
+					foreach($deleteContacts as $u) {
+							$sql .= ",'" . $u . "'";
+					}
+					$sql = substr($sql, 1);
+					// We could run a delete SQL statement here, but will just mark as deleted instead
+					$sql = "UPDATE project_contacts_1_c set deleted = 1 where project_contacts_1contacts_idb in ($sql) AND project_contacts_1project_ida = '". $focus->id . "'";
+					$focus->db->query($sql);
+					echo $sql;
+				}
+		
+				////	END REMOVE
+				
+			}
+			
+			$return_id = parent::save($check_notify);
+			$focus->retrieve($return_id);
+
+			////	REBUILD INVITEE RELATIONSHIPS
+			
+			// Process users
+			$focus->load_relationship('users');
+			$focus->get_linked_beans('project_users_1','User');
+			foreach($userInvitees as $user_id) {
+				if(empty($user_id) || isset($existingUsers[$user_id]) || isset($deleteUsers[$user_id])) {
+					continue;
+				}
+				$focus->project_users_1->add($user_id);
+			}
+
+			// Process contacts
+			$focus->load_relationship('contacts');
+			$focus->get_linked_beans('project_contacts_1','Contact');
+			foreach($contactInvitees as $contact_id) {
+				if(empty($contact_id) || isset($existingContacts[$contact_id]) || isset($deleteContacts[$contact_id])) {
+					continue;
+				}
+				$focus->project_contacts_1->add($contact_id);
+			}
+
+			////	END REBUILD INVITEE RELATIONSHIPS
+			///////////////////////////////////////////////////////////////////////////
+		}
+	
+	}
+
 }
 ?>

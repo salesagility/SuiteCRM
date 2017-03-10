@@ -116,6 +116,21 @@ class User extends Person {
 		$this->_loadUserPreferencesFocus();
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function User(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 	protected function _loadUserPreferencesFocus()
 	{
 	    $this->_userPreferenceFocus = new UserPreference($this);
@@ -734,9 +749,10 @@ EOQ;
 	 * @param string $name Username
 	 * @param string $password MD5-encoded password
 	 * @param string $where Limiting query
+	 * @param bool $checkPasswordMD5 use md5 check for user_hash before return the user data (default is true)
 	 * @return the matching User of false if not found
 	 */
-	public static function findUserPassword($name, $password, $where = '')
+	public static function findUserPassword($name, $password, $where = '', $checkPasswordMD5 = true)
 	{
 	    global $db;
 		$name = $db->quote($name);
@@ -747,7 +763,7 @@ EOQ;
 		$result = $db->limitQuery($query,0,1,false);
 		if(!empty($result)) {
 		    $row = $db->fetchByAssoc($result);
-		    if(self::checkPasswordMD5($password, $row['user_hash'])) {
+		    if(!$checkPasswordMD5 || self::checkPasswordMD5($password, $row['user_hash'])) {
 		        return $row;
 		    }
 		}

@@ -1,8 +1,5 @@
 <?php
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /*
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -42,6 +39,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 $moduleList = array();
 // this list defines the modules shown in the top tab list of the app
 //the order of this list is the default order displayed - do not change the order unless it is on purpose
@@ -57,6 +59,7 @@ $moduleList[] = 'Accounts';
 $moduleList[] = 'Opportunities';
 
 $moduleList[] = 'Emails';
+$moduleList[] = 'EmailTemplates';
 $moduleList[] = 'Campaigns';
 $moduleList[] = 'Prospects';
 $moduleList[] = 'ProspectLists';
@@ -65,6 +68,10 @@ $moduleList[] = 'Documents';
 $moduleList[] = 'Cases';
 $moduleList[] = 'Project';
 $moduleList[] = 'Bugs';
+$moduleList[] = 'ResourceCalendar';
+$moduleList[] = 'AOBH_BusinessHours';
+
+$moduleList[] = 'Spots';
 
 // this list defines all of the module names and bean names in the app
 // to create a new module's bean class, add the bean definition here
@@ -130,6 +137,9 @@ $beanList['EmailAddresses'] = 'EmailAddress';
 $beanList['EmailText'] = 'EmailText';
 $beanList['Relationships'] = 'Relationship';
 $beanList['Employees'] = 'Employee';
+
+$beanList['Spots'] = 'Spots';
+$beanList['AOBH_BusinessHours'] = 'AOBH_BusinessHours';
 
 // this list defines all of the files that contain the SugarBean class definitions from $beanList
 // to create a new module's bean class, add the file definition here
@@ -197,22 +207,66 @@ $beanFiles['EmailText'] = 'modules/EmailText/EmailText.php';
 
 $beanFiles['Configurator'] = 'modules/Configurator/Configurator.php';
 
+$beanFiles['Spots'] = 'modules/Spots/Spots.php';
+$beanFiles['AOBH_BusinessHours'] = 'modules/AOBH_BusinessHours/AOBH_BusinessHours.php';
+
+
 // added these lists for security settings for tabs
-$modInvisList = array('Administration', 'Currencies', 'CustomFields', 'Connectors',
-    'Dropdown', 'Dynamic', 'DynamicFields', 'DynamicLayout', 'EditCustomFields',
-    'Help', 'Import', 'MySettings', 'EditCustomFields', 'FieldsMetaData',
-    'UpgradeWizard', 'Trackers', 'Connectors', 'Employees', 'Calendar',
-    'Releases', 'Sync',
-    'Users', 'Versions', 'LabelEditor', 'Roles', 'EmailMarketing', 'OptimisticLock', 'TeamMemberships', 'TeamSets', 'TeamSetModule', 'Audit', 'MailMerge', 'MergeRecords', 'EmailAddresses', 'EmailText',
-    'Schedulers', 'Schedulers_jobs', /*'Queues', 'EmailTemplates',*/
-    'CampaignTrackers', 'CampaignLog', 'EmailMan', 'Prospects', 'ProspectLists',
-    'Groups', 'InboundEmail',
-    'ACLActions', 'ACLRoles',
+$modInvisList = array(
+    'Administration',
+    'Currencies',
+    'CustomFields',
+    'Connectors',
+    'Dropdown',
+    'Dynamic',
+    'DynamicFields',
+    'DynamicLayout',
+    'EditCustomFields',
+    'Help',
+    'Import',
+    'MySettings',
+    'EditCustomFields',
+    'FieldsMetaData',
+    'UpgradeWizard',
+    'Trackers',
+    'Connectors',
+    'Employees',
+    'Calendar',
+    'Releases',
+    'Sync',
+    'Users',
+    'Versions',
+    'LabelEditor',
+    'Roles',
+    'EmailMarketing',
+    'OptimisticLock',
+    'TeamMemberships',
+    'TeamSets',
+    'TeamSetModule',
+    'Audit',
+    'MailMerge',
+    'MergeRecords',
+    'EmailAddresses',
+    'EmailText',
+    'Schedulers',
+    'Schedulers_jobs',
+    'CampaignTrackers',
+    'CampaignLog',
+    'EmailMan',
+    'Prospects',
+    'ProspectLists',
+    'Groups',
+    'InboundEmail',
+    'ACLActions',
+    'ACLRoles',
     'DocumentRevisions',
     'ProjectTask',
     'ModuleBuilder',
     'Alert',
+    'ResourceCalendar',
+    'AOBH_BusinessHours',
 );
+
 $adminOnlyList = array(
     //module => list of actions  (all says all actions are admin only)
     //'Administration'=>array('all'=>1, 'SupportPortal'=>'allow'),
@@ -267,7 +321,6 @@ $GLOBALS['moduleTabMap'] = array(
     'Currencies' => 'Administration',
     'SugarFeed' => 'Administration',
     'DocumentRevisions' => 'Documents',
-    'EmailTemplates' => 'EmailTemplates',
     'EmailMarketing' => 'Campaigns',
 );
 $beanList['EAPM'] = 'EAPM';
@@ -312,13 +365,13 @@ $moduleList[] = 'AOK_KnowledgeBase';
 
 $beanList['Reminders'] = 'Reminder';
 $beanFiles['Reminder'] = 'modules/Reminders/Reminder.php';
-$moduleList[] = 'Reminders';
 $modInvisList[] = 'Reminders';
+$modules_exempt_from_availability_check['Reminders'] = 'Reminders';
 
 $beanList['Reminders_Invitees'] = 'Reminder_Invitee';
 $beanFiles['Reminder_Invitee'] = 'modules/Reminders_Invitees/Reminder_Invitee.php';
-$moduleList[] = 'Reminders_Invitees';
 $modInvisList[] = 'Reminders_Invitees';
+$modules_exempt_from_availability_check['Reminders_Invitees'] = 'Reminder_Invitee';
 
 $beanList['FP_events'] = 'FP_events';
 $beanFiles['FP_events'] = 'modules/FP_events/FP_events.php';
@@ -458,5 +511,6 @@ if (file_exists('include/modules_override.php')) {
     include 'include/modules_override.php';
 }
 if (file_exists('custom/application/Ext/Include/modules.ext.php')) {
-    include 'custom/application/Ext/Include/modules.ext.php';
+    include('custom/application/Ext/Include/modules.ext.php');
 }
+?>

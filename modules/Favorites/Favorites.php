@@ -1,9 +1,11 @@
-<?PHP
-/*********************************************************************************
+<?php
+
+/**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -34,70 +36,118 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-/**
- * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
-require_once('modules/Favorites/Favorites_sugar.php');
-
-class Favorites extends Favorites_sugar
+class Favorites extends Basic
 {
+    public $new_schema = true;
+    public $module_dir = 'Favorites';
+    public $object_name = 'Favorites';
+    public $table_name = 'favorites';
+    public $importable = false;
+    public $tracker_visibility = false;
+    public $disable_row_level_security = true;
+    public $id;
+    public $name;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $modified_by_name;
+    public $created_by;
+    public $created_by_name;
+    public $description;
+    public $deleted;
+    public $created_by_link;
+    public $modified_user_link;
+    public $assigned_user_id;
+    public $assigned_user_name;
+    public $assigned_user_link;
+    public $parent_id;
+    public $parent_type;
 
-    public function __construct()
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function deleteFavorite($id)
     {
-        parent::__construct();
-    }
-
-    public function deleteFavorite($id){
-        if($id){
-            $favorite_record = BeanFactory::getBean('Favorites',$id);
+        if ($id) {
+            $favorite_record = BeanFactory::getBean('Favorites', $id);
             $favorite_record->deleted = 1;
             $favorite_record->save();
+
             return true;
-        }else{
+        } else {
             return false;
         }
-
     }
 
+    /**
+     * @param $module
+     * @param $record_id
+     * @return array
+     */
     public function getFavoriteID($module, $record_id)
     {
         global $db, $current_user;
-        $query = "SELECT id FROM favorites WHERE parent_id= '" . $record_id . "' AND parent_type = '" . $module . "' AND assigned_user_id = '" . $current_user->id . "' AND deleted = 0 ORDER BY date_entered desc";
+        $query = "SELECT id FROM favorites WHERE parent_id= '" . $record_id . "' AND parent_type = '" . $module . "' AND assigned_user_id = '" . $current_user->id . "' AND deleted = 0 ORDER BY date_entered DESC";
+
         return $db->getOne($query);
     }
 
+    /**
+     * @param string $id
+     * @return array
+     */
     public function getCurrentUserSidebarFavorites($id = null)
     {
         global $db, $current_user;
 
         $return_array = array();
 
-        if($id){
-            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" . $current_user->id . "' AND parent_id = '" . $id . "' AND deleted = 0 ORDER BY date_entered desc";
-        }else{
-            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" . $current_user->id . "' AND deleted = 0 ORDER BY date_entered desc";
+        if ($id) {
+            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" . $current_user->id . "' AND parent_id = '" . $id . "' AND deleted = 0 ORDER BY date_entered DESC";
+        } else {
+            $query = "SELECT parent_id, parent_type FROM favorites WHERE assigned_user_id = '" . $current_user->id . "' AND deleted = 0 ORDER BY date_entered DESC";
         }
 
         $result = $db->query($query);
 
         $i = 0;
         while ($row = $db->fetchByAssoc($result)) {
+            $bean = BeanFactory::getBean($row['parent_type'], $row['parent_id']);
+            if($bean) {
+                $return_array[$i]['item_summary'] = $bean->name;
+                $return_array[$i]['item_summary_short'] = to_html(getTrackerSubstring($bean->name));
+                $return_array[$i]['id'] = $row['parent_id'];
+                $return_array[$i]['module_name'] = $row['parent_type'];
 
-            $bean = BeanFactory::getBean($row['parent_type'],$row['parent_id']);
-            $return_array[$i]['item_summary'] = $bean->name;
-            $return_array[$i]['item_summary_short'] = to_html(getTrackerSubstring($bean->name));
-            $return_array[$i]['id'] = $row['parent_id'];
-            $return_array[$i]['module_name'] = $row['parent_type'];
-            $return_array[$i]['image'] = SugarThemeRegistry::current() ->getImage($row['parent_type'],'border="0" align="absmiddle"',null,null,'.gif',$bean->name);
+                // Change since 7.7 side bar icons can exist in images/sidebar.
+                $sidebarPath = 'themes/' . SugarThemeRegistry::current() . '/images/sidebar/modules/';
+                if (file_exists($sidebarPath)) {
+                    $return_array[$i]['image'] = SugarThemeRegistry::current()->getImage('sidebar/modules/' . $row['parent_type'], 'border="0" align="absmiddle"', null, null, '.gif', $bean->name);
+                } else {
+                    $return_array[$i]['image'] = SugarThemeRegistry::current()->getImage($row['parent_type'], 'border="0" align="absmiddle"', null, null, '.gif', $bean->name);
+                }
 
-            $i++;
+                ++$i;
+            }
+
         }
 
         return $return_array;
     }
 
+    /**
+     * @param string $interface
+     * @return bool
+     */
+    public function bean_implements($interface)
+    {
+        switch ($interface) {
+            case 'ACL':
+                return false;
+            default :
+                return false;
+        }
+    }
 }
-
-?>

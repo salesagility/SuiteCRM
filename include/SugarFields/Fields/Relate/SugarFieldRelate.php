@@ -384,7 +384,7 @@ class SugarFieldRelate extends SugarFieldBase {
 
                         $newbean->save(false);
                         $focus->$idField = $newbean->id;
-                        $settings->createdBeans[] = ImportFile::writeRowToLastImport(
+                        ImportFieldSanitize::$createdBeans[] = ImportFile::writeRowToLastImport(
                                 $focus->module_dir,$newbean->object_name,$newbean->id);
                     }
                 }

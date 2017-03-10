@@ -56,17 +56,6 @@ class Reminder_Invitee extends Basic {
     var $related_invitee_module;
     var $related_invitee_module_id;
 
-    public function __construct() {
-        parent::__construct();
-    }
-
-    public function bean_implements($interface){
-        switch($interface){
-            case 'ACL': return true;
-        }
-        return false;
-    }
-
 	/**
 	 * Save multiple reminders invitees data.
 	 *

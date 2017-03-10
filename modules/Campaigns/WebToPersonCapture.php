@@ -120,7 +120,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                     || $k === 'moduleDir' || $k === 'dup_checked') {
                     continue;
                 } else {
-                    if (array_key_exists($k, $person)) {
+                    if (array_key_exists($k, $person) || array_key_exists($k, $person->field_defs)) {
                         $person->$k = $v;
                     }
                 }
@@ -235,7 +235,10 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 echo '</form><script language="javascript" type="text/javascript">document.redirect.submit();</script>';
                 echo '</body></html>';
             } else {
-                header("Location: {$redirect_url}");
+                $header_URL = "Location: {$redirect_url}";
+
+                SugarApplication::headerRedirect($header_URL);
+
                 die();
             }
         } else {
@@ -262,7 +265,8 @@ if (!empty($_POST['redirect'])) {
         echo '</form><script language="javascript" type="text/javascript">document.redirect.submit();</script>';
         echo '</body></html>';
     } else {
-        header("Location: {$_POST['redirect']}");
+        $header_URL = "Location: {$_POST['redirect']}";
+        SugarApplication::headerRedirect($header_URL);
         die();
     }
 }

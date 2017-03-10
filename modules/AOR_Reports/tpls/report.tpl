@@ -14,14 +14,14 @@
             <img border="0" id="detailpanel_parameters_img_hide" src="{sugar_getimagepath file="basic_search.gif"}"></a>
         <a href="javascript:void(0)" class="expandLink" onclick="expandPanel('parameters');">
             <img border="0" id="detailpanel_parameters_img_show" src="{sugar_getimagepath file="advanced_search.gif"}"></a>
-        {sugar_translate label='PARAMETERS' module='AOR_Reports'}
+        {sugar_translate label='LBL_PARAMETERS' module='AOR_Reports'}
         <script>
             document.getElementById('detailpanel_parameters').className += ' expanded';
         </script>
     </h4>
     <div id="conditionLines" class="panelContainer" style="min-height: 50px;">
     </div>
-    <button id='updateParametersButton' class="panelContainer" type="button">{sugar_translate label='LBL_UPDATE_PARAMETERS' module='AOR_Reports'}</button>
+    <input id='updateParametersButton' class="panelContainer" type="button" value="{sugar_translate label='LBL_UPDATE_PARAMETERS' module='AOR_Reports'}"/>
         <script>
             {literal}
             $.each(reportParameters,function(key,val){
@@ -45,13 +45,22 @@
                         _form.append('<input type="hidden" name="parameter_type[]" value="'+fieldType+'">');
                         var fieldInput = $('#aor_conditions_value\\['+ln+'\\]').val();
 
+                        // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
+                        if($('#aor_conditions_value\\['+ln+'\\]\\[0\\]').length){
+                            var fieldValue = $('#aor_conditions_value\\['+ln+'\\]\\[0\\]').val();
+                            var fieldSign = $('#aor_conditions_value\\['+ln+'\\]\\[1\\]').val();
+                            var fieldNumber = $('#aor_conditions_value\\['+ln+'\\]\\[2\\]').val();
+                            var fieldTime = $('#aor_conditions_value\\['+ln+'\\]\\[3\\]').val();                            _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldValue+'">');
+                            _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldSign+'">');
+                            _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldNumber+'">');
+                            _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldTime+'">');
+                        }
                         // Fix for issue #1082 - change local date format to db date format
                         if($('#aor_conditions_value\\['+index+'\\]').hasClass('date_input')) { // only change to DB format if its a date
                             if ($('#aor_conditions_value\\[' + ln + '\\]').hasClass('date_input')) {
                                 fieldInput = $.datepicker.formatDate('yy-mm-dd', new Date(fieldInput));
                             }
                         }
-
                         _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldInput+'">');
                     });
                     _form.submit();
@@ -79,7 +88,7 @@
             <img border="0" id="detailpanel_report_img_hide" src="{sugar_getimagepath file="basic_search.gif"}"></a>
         <a href="javascript:void(0)" class="expandLink" onclick="expandPanel('report');">
             <img border="0" id="detailpanel_report_img_show" src="{sugar_getimagepath file="advanced_search.gif"}"></a>
-        {sugar_translate label='REPORT' module='AOR_Reports'}
+        {sugar_translate label='LBL_REPORT' module='AOR_Reports'}
         <script>
             document.getElementById('detailpanel_report').className += ' expanded';
         </script>

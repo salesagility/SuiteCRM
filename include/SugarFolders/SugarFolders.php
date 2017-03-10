@@ -101,6 +101,21 @@ class SugarFolder {
 		$this->db = DBManagerFactory::getInstance();
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function SugarFolder(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 	function deleteEmailFromAllFolder($id) {
 		$q = "delete from folders_rel where polymorphic_module = 'Emails' AND polymorphic_id = '{$id}' ";
 		$r = $this->db->query($q);

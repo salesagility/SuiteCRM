@@ -104,7 +104,7 @@ class aCaseTest extends PHPUnit_Framework_TestCase
     public function testget_list_view_data()
     {
         $aCase = new aCase();
-
+        $current_theme = SugarThemeRegistry::current();
         //test without setting attributes
         $expected = array(
                 'DELETED' => 0,
@@ -116,7 +116,7 @@ class aCaseTest extends PHPUnit_Framework_TestCase
                 'ENCODED_NAME' => null,
                 'CASE_NUMBER' => null,
                 'SET_COMPLETE' => '~'
-                                .preg_quote('<a href=\'index.php?return_module=Home&return_action=index&action=EditView&module=Cases&record=&status=Closed\'><img src="themes/SuiteR/images/close_inline.png?v=')
+                                .preg_quote('<a href=\'index.php?return_module=Home&return_action=index&action=EditView&module=Cases&record=&status=Closed\'><img src="themes/'.$current_theme.'/images/close_inline.png?v=')
                                 .'[\w-]+'
                                 .preg_quote('"    title=Close border=\'0\' alt="Close" /></a>')
                                 .'~',
@@ -145,7 +145,7 @@ class aCaseTest extends PHPUnit_Framework_TestCase
                 'STATE' => 'Open',
                 'UPDATE_TEXT' => '',
                 'ENCODED_NAME' => 'test',
-                'SET_COMPLETE' => '<a href=\'index.php?return_module=Home&return_action=index&action=EditView&module=Cases&record=&status=Closed\'><img src="themes/SuiteR/images/close_inline.png?v=fqXdFZ_r6FC1K7P_Fy3mVw"    title=Close border=\'0\' alt="Close" /></a>',
+                'SET_COMPLETE' => '<a href=\'index.php?return_module=Home&return_action=index&action=EditView&module=Cases&record=&status=Closed\'><img src="themes/'.$current_theme.'/images/close_inline.png?v=fqXdFZ_r6FC1K7P_Fy3mVw"    title=Close border=\'0\' alt="Close" /></a>',
         );
 
         $actual = $aCase->get_list_view_data();

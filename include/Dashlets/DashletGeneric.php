@@ -136,6 +136,20 @@ class DashletGeneric extends Dashlet {
     }
 
     /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function DashletGeneric($id, $options = null){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id, $options);
+    }
+
+    /**
      * Sets up the display options template
      *
      * @return string HTML that shows options
@@ -363,7 +377,7 @@ class DashletGeneric extends Dashlet {
     /**
      * Does all dashlet processing, here's your chance to modify the rows being displayed!
      */
-    function process($lvsParams = array()) {
+    function process($lvsParams = array(), $id = null) {
         $currentSearchFields = array();
         $configureView = true; // configure view or regular view
         $query = false;
@@ -436,7 +450,7 @@ class DashletGeneric extends Dashlet {
             if(!empty($whereArray)){
                 $where = '(' . implode(') AND (', $whereArray) . ')';
             }
-            $this->lvs->setup($this->seedBean, $this->displayTpl, $where , $lvsParams, 0, $this->displayRows/*, $filterFields*/);
+            $this->lvs->setup($this->seedBean, $this->displayTpl, $where , $lvsParams, 0, $this->displayRows/*, $filterFields*/, array(), 'id', $id);
             if(in_array('CREATED_BY', array_keys($displayColumns))) { // handle the created by field
                 foreach($this->lvs->data['data'] as $row => $data) {
                     $this->lvs->data['data'][$row]['CREATED_BY'] = get_assigned_user_name($data['CREATED_BY']);

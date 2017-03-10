@@ -195,7 +195,7 @@ if (empty($pages)){
 
 $sugar_smarty = new Sugar_Smarty();
 
-$activePage = $_POST['page_id'];
+$activePage = isset($_REQUEST['page_id']) && $_REQUEST['page_id'] ? $_REQUEST['page_id'] : 0;
 
 $divPages[] = $activePage;
 
@@ -241,12 +241,30 @@ foreach($pages[$activePage]['columns'] as $colNum => $column) {
                 array_push($dashletIds, $id);
 
                 $dashlets = $current_user->getPreference('dashlets', 'Home'); // Using hardcoded 'Home' because DynamicAction.php $_REQUEST['module'] value is always Home
+
+                if(!empty($_REQUEST['id']) && $_REQUEST['id'] == $id) {
+                    $sortOrder = '';
+                    $orderBy = '';
+                    foreach($_REQUEST as $k => $v){
+                        if($k == 'lvso'){
+                            $sortOrder = $v;
+                        }
+                        else if(preg_match('/Home2_.+_ORDER_BY/', $k)){
+                            $orderBy = $v;
+                        }
+                    }
+                    if(!empty($sortOrder) && !empty($orderBy)){
+                        $dashlets[$id]['sort_options'] = array('sortOrder' => $sortOrder, 'orderBy' => $orderBy);
+                        $current_user->setPreference('dashlets', $dashlets, 0, 'Home');
+                    }
+                }
+
                 $lvsParams = array();
                 if(!empty($dashlets[$id]['sort_options'])){
                     $lvsParams = $dashlets[$id]['sort_options'];
                 }
 
-                $dashlet->process($lvsParams);
+                $dashlet->process($lvsParams, $id);
                 try {
                     $display[$colNum]['dashlets'][$id]['display'] = $dashlet->display();
                     $display[$colNum]['dashlets'][$id]['displayHeader'] = $dashlet->getHeader();
@@ -270,6 +288,7 @@ $_SESSION['current_tab'] = $activePage;
 if(!empty($sugar_config['lock_homepage']) && $sugar_config['lock_homepage'] == true) $sugar_smarty->assign('lock_homepage', true);
 
 
+$sugar_smarty->assign('colNum', $numCols);
 $sugar_smarty->assign('sugarVersion', $sugar_version);
 $sugar_smarty->assign('currentLanguage', $GLOBALS['current_language']);
 $sugar_smarty->assign('serverUniqueKey', $GLOBALS['server_unique_key']);

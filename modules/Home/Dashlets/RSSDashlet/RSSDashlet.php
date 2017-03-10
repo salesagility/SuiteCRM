@@ -1,11 +1,12 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,7 +37,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
 
 require_once('include/Dashlets/Dashlet.php');
@@ -170,11 +171,14 @@ class RSSDashlet extends Dashlet
             foreach ( $rssdoc->channel as $channel ) {
                 if ( isset($channel->item ) ) {
                     foreach ( $channel->item as $item ) {
+                        $link = htmlspecialchars($item->link, ENT_QUOTES, 'UTF-8');
+                        $title = htmlspecialchars($item->title, ENT_QUOTES, 'UTF-8');
+                        $description = htmlspecialchars($item->description, ENT_QUOTES, 'UTF-8');
                         $output .= <<<EOHTML
 <tr>
 <td>
-    <h3><a href="{$item->link}" target="_child">{$item->title}</a></h3>
-    {$item->description}
+    <h3><a href="{$link}" target="_child">{$title}</a></h3>
+    {$description}
 </td>
 </tr>
 EOHTML;
@@ -188,11 +192,14 @@ EOHTML;
                 if ( empty($link) ) {
                     $link = $entry->link[0]['href'];
                 }
+                $link = htmlspecialchars($link, ENT_QUOTES, 'UTF-8');
+                $title = htmlspecialchars($entry->title, ENT_QUOTES, 'UTF-8');
+                $summary = htmlspecialchars($entry->summary, ENT_QUOTES, 'UTF-8');
                 $output .= <<<EOHTML
 <tr>
 <td>
-    <h3><a href="{$link}" target="_child">{$entry->title}</a></h3>
-    {$entry->summary}
+    <h3><a href="{$link}" target="_child">{$title}</a></h3>
+    {$summary}
 </td>
 </tr>
 EOHTML;

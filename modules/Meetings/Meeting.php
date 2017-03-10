@@ -38,7 +38,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-
 class Meeting extends SugarBean {
 	// Stored fields
 	var $id;
@@ -124,6 +123,20 @@ class Meeting extends SugarBean {
         if(!empty($GLOBALS['app_list_strings']['duration_intervals'])) {
             $this->minutes_values = $GLOBALS['app_list_strings']['duration_intervals'];
         }
+	}
+
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	public function Meeting(){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct();
 	}
 
 	/**
@@ -265,11 +278,55 @@ class Meeting extends SugarBean {
 		}
 
 		if(isset($_REQUEST['reminders_data'])) {
-			Reminder::saveRemindersDataJson('Meetings', $return_id, html_entity_decode($_REQUEST['reminders_data']));
+			$reminderData = json_encode(
+				$this->removeUnInvitedFromReminders(json_decode(html_entity_decode($_REQUEST['reminders_data']), true))
+			);
+			Reminder::saveRemindersDataJson('Meetings', $return_id, $reminderData);
 		}
 
 
 		return $return_id;
+	}
+
+	/**
+	 * @param array $reminders
+	 * @return array
+	 */
+	public function removeUnInvitedFromReminders($reminders) {
+
+		$reminderData = $reminders;
+		$uninvited = array();
+		foreach($reminders as $r => $reminder) {
+			foreach($reminder['invitees'] as $i => $invitee) {
+				switch($invitee['module']) {
+					case "Users":
+						if(in_array($invitee['module_id'], $this->users_arr) === false) {
+							// add to uninvited
+							$uninvited[] = $reminderData[$r]['invitees'][$i];
+							// remove user
+							unset($reminderData[$r]['invitees'][$i]);
+						}
+						break;
+					case "Contacts":
+						if(in_array($invitee['module_id'], $this->contacts_arr) === false) {
+							// add to uninvited
+							$uninvited[] = $reminderData[$r]['invitees'][$i];
+							// remove contact
+							unset($reminderData[$r]['invitees'][$i]);
+						}
+						break;
+					case "Leads":
+						if(in_array($invitee['module_id'], $this->leads_arr) === false) {
+							// add to uninvited
+							$uninvited[] = $reminderData[$r]['invitees'][$i];
+							// remove lead
+							unset($reminderData[$r]['invitees'][$i]);
+						}
+						break;
+				}
+			}
+		}
+		return $reminderData;
 	}
 
 	// this is for calendar
@@ -501,7 +558,14 @@ class Meeting extends SugarBean {
 		$mergeTime = $meeting_fields['DATE_START']; //$timedate->merge_date_time($meeting_fields['DATE_START'], $meeting_fields['TIME_START']);
 		$date_db = $timedate->to_db($mergeTime);
 		if($date_db	< $today	) {
-			$meeting_fields['DATE_START']= "<font class='overdueTask'>".$meeting_fields['DATE_START']."</font>";
+			if($meeting_fields['STATUS']=='Held' || $meeting_fields['STATUS']=='Not Held') 
+			{ 
+				$meeting_fields['DATE_START']= "<font>".$meeting_fields['DATE_START']."</font>";
+			} 
+			else 
+			{  
+				$meeting_fields['DATE_START']= "<font class='overdueTask'>".$meeting_fields['DATE_START']."</font>"; 
+			}
 		}else if($date_db	< $nextday) {
 			$meeting_fields['DATE_START'] = "<font class='todaysTask'>".$meeting_fields['DATE_START']."</font>";
 		} else {
@@ -837,21 +901,18 @@ class Meeting extends SugarBean {
 	/**
 	 * @see SugarBean::afterImportSave()
 	 */
-	public function afterImportSave()
-	{
-	    if ( $this->parent_type == 'Contacts' ) {
-	        $this->load_relationship('contacts');
-	        if ( !$this->contacts->relationship_exists('contacts',array('id'=>$this->parent_id)) )
-	            $this->contacts->add($this->parent_id);
-	    }
-	    elseif ( $this->parent_type == 'Leads' ) {
-	        $this->load_relationship('leads');
-	        if ( !$this->leads->relationship_exists('leads',array('id'=>$this->parent_id)) )
-	            $this->leads->add($this->parent_id);
-	    }
+    public function afterImportSave()
+    {
+        if ($this->parent_type === 'Contacts') {
+            $this->load_relationship('contacts');
+            $this->contacts->add($this->parent_id);
+        } elseif ($this->parent_type === 'Leads') {
+            $this->load_relationship('leads');
+            $this->leads->add($this->parent_id);
+        }
 
-	    parent::afterImportSave();
-	}
+        parent::afterImportSave();
+    }
 
     public function getDefaultStatus()
     {

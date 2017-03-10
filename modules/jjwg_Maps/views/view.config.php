@@ -8,6 +8,21 @@ class Jjwg_MapsViewConfig extends SugarView {
         parent::__construct();
     }
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function Jjwg_MapsViewConfig(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
     function display() {
 
         // Language Arrays
@@ -405,7 +420,7 @@ class Jjwg_MapsViewConfig extends SugarView {
             value="<?php echo (isset($GLOBALS['jjwg_config']['geocoding_api_secret'])) ?
                 htmlspecialchars($GLOBALS['jjwg_config']['geocoding_api_secret']) :
                 htmlspecialchars($GLOBALS['jjwg_config_defaults']['geocoding_api_secret']); ?>"
-            title='' tabindex='140' size="25" maxlength="32">
+            title='' tabindex='140' size="25" maxlength="255">
             &nbsp; <?php echo $GLOBALS['mod_strings']['LBL_CONFIG_DEFAULT']; ?>
                 <?php echo htmlspecialchars($GLOBALS['jjwg_config_defaults']['geocoding_api_secret']) ?>
         </td>

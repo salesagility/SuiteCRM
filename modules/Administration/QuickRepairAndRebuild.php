@@ -222,20 +222,6 @@ class RepairAndClear
 
         if($this->show_output) echo $mod_strings['LBL_REBUILD_REL_UPD_WARNING'];
 
-        // clear the database row if it exists (just to be sure)
-        $query = "DELETE FROM versions WHERE name='Rebuild Extensions'";
-        $GLOBALS['log']->info($query);
-        $GLOBALS['db']->query($query);
-
-        // insert a new database row to show the rebuild extensions is done
-        $id = create_guid();
-        $gmdate = gmdate('Y-m-d H:i:s');
-        $date_entered = db_convert("'$gmdate'", 'datetime');
-        $query = 'INSERT INTO versions (id, deleted, date_entered, date_modified, modified_user_id, created_by, name, file_version, db_version) '
-            . "VALUES ('$id', '0', $date_entered, $date_entered, '1', '1', 'Rebuild Extensions', '4.0.0', '4.0.0')";
-        $GLOBALS['log']->info($query);
-        $GLOBALS['db']->query($query);
-
         // unset the session variable so it is not picked up in DisplayWarnings.php
         if(isset($_SESSION['rebuild_extensions'])) {
             unset($_SESSION['rebuild_extensions']);

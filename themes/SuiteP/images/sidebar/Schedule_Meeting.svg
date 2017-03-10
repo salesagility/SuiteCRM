@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="32px" height="112px" viewBox="0 0 32 112" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>sb_schedule_meeting</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="sb_schedule_meeting">
+            <ellipse id="Oval-7" stroke="#F5F5F5" cx="16" cy="16" rx="15" ry="15"></ellipse>
+            <ellipse id="Oval-7" stroke="#534D64" cx="16" cy="56" rx="15" ry="15"></ellipse>
+            <ellipse id="Oval-7" stroke="#F08377" cx="16" cy="96" rx="15" ry="15"></ellipse>
+            <path d="M22.5,23 L23,23 L23,10 L22,10 L22,14 L18,14 L18,10 L14,10 L14,14 L10,14 L10,23 L22.5,23 Z M9,10 L10,10 L10,23 L9,23 L9,10 Z M11,9 L13,9 L13,13 L11,13 L11,9 Z M19,9 L21,9 L21,13 L19,13 L19,9 Z" id="Combined-Shape" fill="#F5F5F5"></path>
+            <path d="M22.5,63 L23,63 L23,50 L22,50 L22,54 L18,54 L18,50 L14,50 L14,54 L10,54 L10,63 L22.5,63 Z M9,50 L10,50 L10,63 L9,63 L9,50 Z M11,49 L13,49 L13,53 L11,53 L11,49 Z M19,49 L21,49 L21,53 L19,53 L19,49 Z" id="Combined-Shape" fill="#534D64"></path>
+            <path d="M22.5,103 L23,103 L23,90 L22,90 L22,94 L18,94 L18,90 L14,90 L14,94 L10,94 L10,103 L22.5,103 Z M9,90 L10,90 L10,103 L9,103 L9,90 Z M11,89 L13,89 L13,93 L11,93 L11,89 Z M19,89 L21,89 L21,93 L19,93 L19,89 Z" id="Combined-Shape" fill="#F08377"></path>
+        </g>
+    </g>
+</svg>

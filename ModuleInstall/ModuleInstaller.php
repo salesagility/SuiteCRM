@@ -73,6 +73,21 @@ class ModuleInstaller{
         $this->extensions = $extensions;
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function ModuleInstaller(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
    /*
     * ModuleInstaller->install includes the manifest.php from the base directory it has been given. If it has been asked to do an upgrade it checks to see if there is
     * an upgrade_manifest defined in the manifest; if not it errors. It then adds the bean into the custom/Extension/application/Ext/Include/<module>.php - sets beanList, beanFiles
@@ -830,11 +845,11 @@ class ModuleInstaller{
 				$action['from'] = str_replace('<basepath>', $this->base_dir, $action['from']);
 				$GLOBALS['log']->debug("Uninstalling DCActions ..." . $action['from'] );
 				$path = 'custom/Extension/application/Ext/DashletContainer/Containers';
-				if (sugar_is_file($path . '/'. $this->id_name . '.php', 'w'))
+				if (is_file($path . '/'. $this->id_name . '.php'))
 				{
 					rmdir_recursive( $path . '/'. $this->id_name . '.php');
 				}
-				else if (sugar_is_file($path . '/'. DISABLED_PATH . '/'. $this->id_name . '.php', 'w'))
+				else if (is_file($path . '/'. DISABLED_PATH . '/'. $this->id_name . '.php'))
 				{
 					rmdir_recursive( $path . '/'. DISABLED_PATH . '/'. $this->id_name . '.php');
 				}
@@ -968,10 +983,10 @@ class ModuleInstaller{
 						if($packs['to_module'] == 'application'){
 							$path ='custom/Extension/' . $packs['to_module']. '/Ext/Language';
 						}
-						if (sugar_is_file($path.'/'.$packs['language'].'.'. $this->id_name . '.php', 'w')) {
+						if (is_file($path.'/'.$packs['language'].'.'. $this->id_name . '.php')) {
 							rmdir_recursive( $path.'/'.$packs['language'].'.'. $this->id_name . '.php');
-						} else if (sugar_is_file($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php', 'w')) {
-							rmdir_recursive($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php', 'w');
+						} else if (is_file($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php')) {
+							rmdir_recursive($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php');
 						}
 					}
 					$this->rebuild_languages($languages, $modules);
@@ -1229,7 +1244,7 @@ class ModuleInstaller{
 		if($dir == '.' && is_dir($from)){
 			$dir = $to;
 		}
-		if(!sugar_is_dir($dir, 'instance'))
+		if(!is_dir($dir))
 			mkdir_recursive($dir, true);
 /* BEGIN - RESTORE POINT - by MR. MILK August 31, 2005 02:22:18 PM */
 		if(empty($backup_path)) {

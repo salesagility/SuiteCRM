@@ -407,6 +407,7 @@ class EditView
         if ($this->showVCRControl)
         {
             $this->th->ss->assign('PAGINATION', SugarVCR::menu($this->module, $this->offset, $this->focus->is_AuditEnabled(), ($this->view == 'EditView')));
+            $this->th->ss->assign('showVCRControl', $this->showVCRControl);
         }
 
         if (isset($_REQUEST['return_module'])) $this->returnModule = $_REQUEST['return_module'];

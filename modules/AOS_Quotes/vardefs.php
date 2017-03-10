@@ -338,6 +338,7 @@ $dictionary['AOS_Quotes'] = array(
                 'duplicate_merge_dom_value' => 0,
                 'audited' => false,
                 'reportable' => false,
+                'inline_edit' => false,
                 'function' =>
                     array(
                         'name' => 'display_lines',

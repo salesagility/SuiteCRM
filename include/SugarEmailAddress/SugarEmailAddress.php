@@ -79,6 +79,21 @@ class SugarEmailAddress extends SugarBean {
     }
 
     /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function SugarEmailAddress(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
+    /**
      * Legacy email address handling.  This is to allow support for SOAP or customizations
      * @param string $id
      * @param string $module
@@ -165,27 +180,51 @@ class SugarEmailAddress extends SugarBean {
     }
 
     /**
-     * Saves email addresses for a parent bean
+     * @deprecated
+     * @param bool $check_notify
+     * @return null
+     */
+    public function save($check_notify = false) {
+        $deprecatedMessage = 'SugarEmailAddress::save() function calls are deprecated use SugarEmailAddress::saveEmail() function instead';
+        if (isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        } else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+
+        list($id, $module, $new_addrs, $primary, $replyTo, $invalid, $optOut, $in_workflow) = func_get_args();
+        return $this->saveEmail($id, $module, $new_addrs, $primary, $replyTo, $invalid, $optOut, $in_workflow);
+    }
+
+    /**
+     * Saves email addresses for a parent bean.
+     * The base class SugarBean::save($check_notify) method is never called from SugarEmailAddresses::saveEmail(...)
+     * The method's signature has been changed to correctly represent the save method call for SugarEmailAddress.
      * @param string $id Parent bean ID
      * @param string $module Parent bean's module
-     * @param array $addresses Override of $_REQUEST vars, used to handle non-standard bean saves
+     * @param array $new_addrs Override of $_REQUEST vars, used to handle non-standard bean saves
      * @param string $primary GUID of primary address
      * @param string $replyTo GUID of reply-to address
      * @param string $invalid GUID of invalid address
+     * @param string $optOut
+     * @param bool $in_workflow
+     * @return null
      */
-    public function save($check_notify = FALSE) {
-        $args = func_get_args();
-        return call_user_func_array(array($this, '_save'), $args);
-    }
-    private function _save($id, $module, $new_addrs=array(), $primary='', $replyTo='', $invalid='', $optOut='', $in_workflow=false) {
-        if(empty($this->addresses) || $in_workflow){
-            $this->populateAddresses($id, $module, $new_addrs,$primary);
+    public function saveEmail($id, $module, $new_addrs = array(), $primary='', $replyTo='', $invalid='', $optOut='', $in_workflow = false) {
+        if(gettype($id) == "boolean") {
+            $GLOBALS['log']->fatal('SugarEmailAddress::saveEmail() Invalid arguments - Parent method SugarBean::save
+            ($checknotify) is not implemented. Please pass the correct arguments into SugarEmailAddress::saveEmail()');
         }
 
-        //find all email addresses..
-        $current_links=array();
-        // Need to correct this to handle the Employee/User split
+        if(empty($this->addresses) || $in_workflow) {
+            $this->populateAddresses($id, $module, $new_addrs, $primary);
+        }
+
+        // handle the Employee/User split
         $module = $this->getCorrectedModule($module);
+
+        // find all email addresses
+        $current_links = array();
         $q2="select *  from email_addr_bean_rel eabr WHERE eabr.bean_id = '".$this->db->quote($id)."' AND eabr.bean_module = '".$this->db->quote($module)."' and eabr.deleted=0";
         $r2 = $this->db->query($q2);
         while(($row2=$this->db->fetchByAssoc($r2)) != null ) {
@@ -253,7 +292,6 @@ class SugarEmailAddress extends SugarBean {
             $this->db->query($eabr_unlink);
         }
         $this->stateBeforeWorkflow = null;
-        return;
     }
 
     /**
@@ -394,8 +432,8 @@ class SugarEmailAddress extends SugarBean {
                    $fromRequest = true;
                    break;
                 }
-            $widget_id = $_REQUEST[$module .'_email_widget_id'];
-    }
+                $widget_id = $_REQUEST[$module .'_email_widget_id'];
+            }
 
             //Iterate over the widgets for this module, in case there are multiple email widgets for this module
             while(isset($_REQUEST[$module . $widget_id . "emailAddress" . $widgetCount]))
@@ -896,7 +934,14 @@ class SugarEmailAddress extends SugarBean {
 
         //determine if this should be a quickcreate form, or a quick create form under subpanels
         if ($this->view == "QuickCreate"){
-            $form = 'form_DC'.$this->view .'_'.$module;
+            // Fixed #1120 - fixed email validation for: Accounts -> Contacts subpanel -> Select -> Create Contact -> Save.
+            // If email is required it should highlight this field and show an error message.
+            // It didnt because the the form was named form_DCSubpanelQuickCreate_Contacts instead of expected form_SubpanelQuickCreate_Contacts
+            if($this->object_name = 'EmailAddress' && $saveModule == 'Contacts') {
+                $form = 'form_'.$this->view .'_'.$module;
+            } else {
+                $form = 'form_DC'.$this->view .'_'.$module;
+            }
             if(isset($_REQUEST['action']) && $_REQUEST['action']=='SubpanelCreates' ||  $_REQUEST['action']=='SubpanelEdits'){
                 $form = 'form_Subpanel'.$this->view .'_'.$module;
             }

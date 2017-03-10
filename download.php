@@ -72,10 +72,10 @@ else {
         }
 
         $focus = BeanFactory::newBean($module);
+        $focus->retrieve($_REQUEST['id']);
         if(!$focus->ACLAccess('view')){
             die($mod_strings['LBL_NO_ACCESS']);
         } // if
-        $focus->retrieve($_REQUEST['id']);
         // Pull up the document revision, if it's of type Document
         if ( isset($focus->object_name) && $focus->object_name == 'Document' ) {
             // It's a document, get the revision that really stores this file
@@ -170,7 +170,12 @@ else {
             $doQuery = false;
         }
 
-        $mime_type = 'application/octet-stream';
+        // Fix for issue 1506 and issue 1304 : IE11 and Microsoft Edge cannot display generic 'application/octet-stream' (which is defined as "arbitrary binary data" in RFC 2046).
+        $mime_type = mime_content_type($local_location);
+        if($mime_type == null || $mime_type == '') {
+            $mime_type = 'application/octet-stream';
+        }
+        
         if($doQuery && isset($query)) {
             $rs = $GLOBALS['db']->query($query);
             $row = $GLOBALS['db']->fetchByAssoc($rs);
