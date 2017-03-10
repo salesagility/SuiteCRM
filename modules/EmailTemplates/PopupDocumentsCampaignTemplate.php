@@ -112,7 +112,7 @@ $button .= "<input type='submit' name='button' class='button' onclick=\"window.c
 $button .= "</form>\n";
 
 
-$form = new XTemplate('modules/EmailTemplates/PopupDocumentsCampaignTemplate.html');
+$form = new \SuiteCRM\XTemplate('modules/EmailTemplates/PopupDocumentsCampaignTemplate.html');
 $form->assign('MOD', $current_mod_strings);
 $form->assign('APP', $app_strings);
 $form->assign('THEME', $theme);

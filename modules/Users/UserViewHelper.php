@@ -549,7 +549,7 @@ class UserViewHelper {
 
         $chooser->args['left_label'] =  translate('LBL_DISPLAY_TABS','Users');
         $chooser->args['right_label'] =  translate('LBL_HIDE_TABS','Users');
-        require_once('include/Smarty/plugins/function.sugar_help.php');
+        require_once('custom/include/Smarty/plugins/function.sugar_help.php');
         $chooser->args['title'] =  translate('LBL_EDIT_TABS','Users').smarty_function_sugar_help(array("text"=>translate('LBL_CHOOSE_WHICH','Users')),$ss);
 
         $this->ss->assign('TAB_CHOOSER', $chooser->display());

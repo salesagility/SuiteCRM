@@ -463,7 +463,7 @@ EOQ;
 		}
 		$_REQUEST['query'] = true;
 		if (substr_count($file, 'SearchForm') > 0) {
-			$temp_xtpl = new XTemplate($file);
+			$temp_xtpl = new \SuiteCRM\XTemplate($file);
 			if ($temp_xtpl->exists('advanced')) {
 
 				global $current_language, $beanFiles, $beanList;

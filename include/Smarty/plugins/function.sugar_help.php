@@ -31,7 +31,7 @@ r34454 - 2008-04-21 05:58:55 -0700 (Mon, 21 Apr 2008) - jmertic - Bug 21449: Add
 Added:
 - themes/default/images/help.gif
 Touched:
-- include/Smarty/plugins/function.sugar_help.php
+- custom/include/Smarty/plugins/function.sugar_help.php
 
 r33864 - 2008-04-07 19:46:34 -0700 (Mon, 07 Apr 2008) - nsingh - more help stuff and UI changes.
 

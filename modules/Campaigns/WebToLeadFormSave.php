@@ -99,7 +99,7 @@ if (stripos($html, "<html") === false) {
 }
 file_put_contents($form_file, $html);
 
-$xtpl=new XTemplate ('modules/Campaigns/WebToLeadDownloadForm.html');
+$xtpl=new \SuiteCRM\XTemplate ('modules/Campaigns/WebToLeadDownloadForm.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 $webformlink = "<b>$mod_strings[LBL_DOWNLOAD_TEXT_WEB_TO_LEAD_FORM]</b><br/>";

@@ -21,7 +21,7 @@
  */
 
 /** Zend_Search_Lucene_Storage_File */
-require_once 'Zend/Search/Lucene/Storage/File.php';
+
 
 /**
  * @category   Zend
@@ -361,7 +361,7 @@ class Zend_Search_Lucene_Storage_File_Memory extends Zend_Search_Lucene_Storage_
             if ($wordHigh == (int)0xFFFFFFFF  &&  ($wordLow & (int)0x80000000)) {
                 return $wordLow;
             } else {
-                require_once 'Zend/Search/Lucene/Exception.php';
+
                 throw new Zend_Search_Lucene_Exception('Long integers lower than -2147483648 (0x80000000) are not supported on 32-bit platforms.');
             }
 
@@ -391,7 +391,7 @@ class Zend_Search_Lucene_Storage_File_Memory extends Zend_Search_Lucene_Storage_
     public function writeLong32Bit($value)
     {
         if ($value < (int)0x80000000) {
-            require_once 'Zend/Search/Lucene/Exception.php';
+
             throw new Zend_Search_Lucene_Exception('Long integers lower than -2147483648 (0x80000000) are not supported on 32-bit platforms.');
         }
 
@@ -568,7 +568,7 @@ class Zend_Search_Lucene_Storage_File_Memory extends Zend_Search_Lucene_Storage_
         }
 
         if ($chars < 0) {
-            require_once 'Zend/Search/Lucene/Exception.php';
+
             throw new Zend_Search_Lucene_Exception('Invalid UTF-8 string');
         }
 

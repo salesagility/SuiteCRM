@@ -39,7 +39,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-require_once('include/Smarty/Smarty.class.php');
 
 if(!defined('SUGAR_SMARTY_DIR'))
 {
@@ -64,14 +63,8 @@ class Sugar_Smarty extends Smarty
 		$this->compile_dir = SUGAR_SMARTY_DIR . 'templates_c';
 		$this->config_dir = SUGAR_SMARTY_DIR . 'configs';
 		$this->cache_dir = SUGAR_SMARTY_DIR . 'cache';
+		$this->plugins_dir[] = 'include/Smarty/plugins';
 		$this->request_use_auto_globals = true; // to disable Smarty from using long arrays
-
-		if(file_exists('custom/include/Smarty/plugins'))
-        {
-			$plugins_dir[] = 'custom/include/Smarty/plugins';
-        }
-		$plugins_dir[] = 'include/Smarty/plugins';
-		$this->plugins_dir = $plugins_dir;
 
 		$this->assign("VERSION_MARK", getVersionedPath(''));
 	}
@@ -95,13 +88,14 @@ class Sugar_Smarty extends Smarty
 	 *
 	 * @param string $resource
      * @param integer $exp_time
-     */
+	 * @return bool
+	 */
     function _unlink($resource, $exp_time = null)
     {
         if(file_exists($resource)) {
             return parent::_unlink($resource, $exp_time);
         }
-
+        
         // file wasn't found, so it must be gone.
         return true;
     }

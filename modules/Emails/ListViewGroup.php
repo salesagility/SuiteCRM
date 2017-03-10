@@ -144,7 +144,7 @@ if (!isset($_REQUEST['search_form']) || $_REQUEST['search_form'] != 'false') {
 	$email_status	= get_select_options_with_id($email_status, $status_sel);
 	
 	// ASSIGNMENTS AND OUTPUT
-	$search_form = new XTemplate ('modules/Emails/SearchFormGroupInbox.html');
+	$search_form = new \SuiteCRM\XTemplate ('modules/Emails/SearchFormGroupInbox.html');
 	$search_form->assign('MOD', $mod_strings);
 	$search_form->assign('APP', $app_strings);
 	$search_form->assign('ADVANCED_SEARCH_PNG', SugarThemeRegistry::current()->getImage('advanced_search','border="0"', null,null,'.gif',$app_strings['LNK_ADVANCED_FILTER']));

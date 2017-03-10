@@ -116,7 +116,7 @@ Touched:
 - include/generic/SugarWidgets/SugarWidgetFielddatetime.php
 - include/generic/SugarWidgets/SugarWidgetFielddate.php
 - include/generic/DeleteRelationship.php
-- include/Smarty/plugins/modifier.default_date_value.php
+- custom/include/Smarty/plugins/modifier.default_date_value.php
 - include/SugarEmailAddress/SugarEmailAddress.php
 - include/database/DBManager.php
 - include/database/DBHelper.php
@@ -144,7 +144,7 @@ modules/DynamicFields/templates/FieldViewer.php
 modules/DynamicFields/templates/Fields/Forms/date.php
 modules/DynamicFields/templates/Fields/Forms/date.tpl
 Added:
-include/Smarty/plugins/modifier.default_date_value.php
+custom/include/Smarty/plugins/modifier.default_date_value.php
 
 
 */

@@ -63,7 +63,7 @@ global $sugar_version, $sugar_config;
 
 
 
-$xtpl = new XTemplate('modules/MailMerge/Step2.html');
+$xtpl = new \SuiteCRM\XTemplate('modules/MailMerge/Step2.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 $xtpl->assign('JSON_CONFIG_JAVASCRIPT', $json_config->get_static_json_server(false, true));
