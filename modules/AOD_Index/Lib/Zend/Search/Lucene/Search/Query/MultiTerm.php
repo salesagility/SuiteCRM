@@ -22,7 +22,7 @@
 
 
 /** Zend_Search_Lucene_Search_Query */
-require_once 'Zend/Search/Lucene/Search/Query.php';
+
 
 
 /**
@@ -106,7 +106,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
     public function __construct($terms = null, $signs = null)
     {
         if (is_array($terms)) {
-            require_once 'Zend/Search/Lucene.php';
+
             if (count($terms) > Zend_Search_Lucene::getTermsPerQueryLimit()) {
                 throw new Zend_Search_Lucene_Exception('Terms per query limit is reached.');
             }
@@ -163,7 +163,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
     public function rewrite(Zend_Search_Lucene_Interface $index)
     {
         if (count($this->_terms) == 0) {
-            require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
+
             return new Zend_Search_Lucene_Search_Query_Empty();
         }
 
@@ -180,11 +180,11 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
             return $this;
         } else {
             /** transform multiterm query to boolean and apply rewrite() method to subqueries. */
-            require_once 'Zend/Search/Lucene/Search/Query/Boolean.php';
+
             $query = new Zend_Search_Lucene_Search_Query_Boolean();
             $query->setBoost($this->getBoost());
 
-            require_once 'Zend/Search/Lucene/Search/Query/Term.php';
+
             foreach ($this->_terms as $termId => $term) {
                 $subquery = new Zend_Search_Lucene_Search_Query_Term($term);
 
@@ -211,7 +211,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
             if (!$index->hasTerm($term)) {
                 if ($signs === null  ||  $signs[$id] === true) {
                     // Term is required
-                    require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
+
                     return new Zend_Search_Lucene_Search_Query_Empty();
                 } else {
                     // Term is optional or prohibited
@@ -235,7 +235,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
             }
         }
         if ($allProhibited) {
-            require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
+
             return new Zend_Search_Lucene_Search_Query_Empty();
         }
 
@@ -248,7 +248,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
             // It's already checked, that it's not a prohibited term
 
             // It's one term query with one required or optional element
-            require_once 'Zend/Search/Lucene/Search/Query/Term.php';
+
             $optimizedQuery = new Zend_Search_Lucene_Search_Query_Term(reset($terms));
             $optimizedQuery->setBoost($this->getBoost());
 
@@ -256,7 +256,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
         }
 
         if (count($terms) == 0) {
-            require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
+
             return new Zend_Search_Lucene_Search_Query_Empty();
         }
 
@@ -308,7 +308,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
      */
     public function createWeight(Zend_Search_Lucene_Interface $reader)
     {
-        require_once 'Zend/Search/Lucene/Search/Weight/MultiTerm.php';
+
         $this->_weight = new Zend_Search_Lucene_Search_Weight_MultiTerm($this, $reader);
         return $this->_weight;
     }
@@ -339,7 +339,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
                         $ids,      SORT_ASC, SORT_NUMERIC,
                         $this->_terms);
 
-        require_once 'Zend/Search/Lucene/Index/DocsFilter.php';
+
         $docsFilter = new Zend_Search_Lucene_Index_DocsFilter();
         foreach ($this->_terms as $termId => $term) {
             $termDocs = $reader->termDocs($term, $docsFilter);

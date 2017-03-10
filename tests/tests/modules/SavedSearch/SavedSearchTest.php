@@ -57,13 +57,13 @@ class SavedSearchTest extends PHPUnit_Framework_TestCase
         $this->handleSaveAndRetrieveSavedSearch($savedSearch->id);
 
         //test returnSavedSearch method
-        $this->returnSavedSearch($savedSearch->id);
+//        $this->returnSavedSearch($savedSearch->id);
 
         //test returnSavedSearchContents method
         $this->returnSavedSearchContents($savedSearch->id);
 
         //test handleDelete method
-        $this->handleDelete($savedSearch->id);
+//        $this->handleDelete($savedSearch->id);
     }
 
     public function handleSaveAndRetrieveSavedSearch($id)

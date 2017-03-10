@@ -1,4 +1,5 @@
 <?php
+use SuiteCRM\SugarLogger\LoggerManager;
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -502,7 +503,7 @@ if($upgradeType == constant('DCE_INSTANCE')){
 	/////retrieve admin user
 	$configOptions = $sugar_config['dbconfig'];
 
-	$GLOBALS['log']	= LoggerManager::getLogger('SugarCRM');
+	$GLOBALS['log']	= LoggerManager::getLogger();
 	$db				= &DBManagerFactory::getInstance();
        		///////////////////////////////////////////////////////////////////////////////
 	////	MAKE SURE PATCH IS COMPATIBLE

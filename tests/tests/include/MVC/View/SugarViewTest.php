@@ -47,7 +47,7 @@ class SugarViewTest extends PHPUnit_Framework_TestCase
         //execute the method and check if it works and doesn't throws an exception
         try {
             $errors = $SugarView->displayErrors();
-            $this->assertSame(null, $errors);
+            $this->assertSame('', $errors);
         } catch (Exception $e) {
             $this->fail();
         }

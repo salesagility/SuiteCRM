@@ -1,8 +1,6 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-require_once('XTemplate/xtpl.php');
-
 require_once('modules/Administration/Administration.php');
 require_once('modules/SecurityGroups/Forms.php');
 require_once('modules/SecurityGroups/SecurityGroup.php');
@@ -36,7 +34,7 @@ $focus = new Administration();
 $focus->retrieveSettings(); //retrieve all admin settings.
 $GLOBALS['log']->info("SecuritySuite Configure Settings view");
 
-$xtpl=new XTemplate ('modules/SecurityGroups/config.html');
+$xtpl=new \SuiteCRM\XTemplate ('modules/SecurityGroups/config.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 

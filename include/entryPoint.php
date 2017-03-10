@@ -1,4 +1,5 @@
 <?php
+use SuiteCRM\SugarLogger\LoggerManager;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -110,6 +111,7 @@ require_once 'include/modules.php'; // provides $moduleList, $beanList, $beanFil
 
 require 'include/utils/autoloader.php';
 spl_autoload_register(array('SugarAutoLoader', 'autoload'));
+require_once 'vendor/autoload.php';
 require_once 'data/SugarBean.php';
 require_once 'include/utils/mvc_utils.php';
 require 'include/SugarObjects/LanguageManager.php';
@@ -119,7 +121,6 @@ require 'modules/DynamicFields/templates/Fields/TemplateText.php';
 
 require_once 'include/utils/file_utils.php';
 require_once 'include/SugarEmailAddress/SugarEmailAddress.php';
-require_once 'include/SugarLogger/LoggerManager.php';
 require_once 'modules/Trackers/BreadCrumbStack.php';
 require_once 'modules/Trackers/Tracker.php';
 require_once 'modules/Trackers/TrackerManager.php';

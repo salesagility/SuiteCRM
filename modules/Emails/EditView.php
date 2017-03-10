@@ -159,7 +159,7 @@ if($email_type == 'archived') {
     if(isset($focus->name)) $params_module_title=array($mod_strings['LBL_ARCHIVED_EMAILS_CREATE'], $focus->name);
     else $params_module_title=array($mod_strings['LBL_ARCHIVED_EMAILS_CREATE']);
 	echo getClassicModuleTitle('Emails', $params_module_title, true);
-	$xtpl=new XTemplate('modules/Emails/EditViewArchive.html');
+	$xtpl=new \SuiteCRM\XTemplate('modules/Emails/EditViewArchive.html');
 } else {
 
 	if(empty($_REQUEST['parent_module'])) {
