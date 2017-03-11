@@ -37,7 +37,7 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
- 
+
 @session_start();
 if(isset($_REQUEST['clear_session']) || !empty($_SESSION['loginAttempts'])) {
 	session_destroy();
@@ -45,7 +45,7 @@ if(isset($_REQUEST['clear_session']) || !empty($_SESSION['loginAttempts'])) {
 	echo 'session clean, page refresh...';
 	exit;
 }
- 
+
 //  recover smtp settings
 if(isset($_POST['smtp_tab_selected'])) {
     $_POST = array_merge($_POST, $_POST[$_POST['smtp_tab_selected']]);
@@ -664,7 +664,7 @@ switch($the_file) {
 
 					<p>{$mod_strings['LBL_DISABLED_HELP_1']} <a href="{$mod_strings['LBL_DISABLED_HELP_LNK']}" target="_blank">{$mod_strings['LBL_DISABLED_HELP_2']}</a>.</p>
 EOQ;
-		             //if this is an offline client installation but the conversion did not succeed,
+                    //if this is an offline client installation but the conversion did not succeed,
 		            //then try to convert again
 					if(isset($sugar_config['disc_client']) && $sugar_config['disc_client'] == true && isset($sugar_config['oc_converted']) && $sugar_config['oc_converted'] == false) {
 			          header('Location: index.php?entryPoint=oc_convert&first_time=true');
@@ -675,6 +675,10 @@ EOQ;
         break;
     case 'register.php':
     case 'complete_install.php':
+        // save current web-server user for the cron user check mechanism: 
+        require_once 'install/install_utils.php';
+        addCronAllowedUser(exec('whoami'));
+
         session_unset();
         break;
     case 'SilentInstall':

@@ -2169,3 +2169,44 @@ function enableInsideViewConnector()
     // $mapping is brought in from the mapping.php file above
     $source->saveMappingHook($mapping);
 }
+
+/**
+ * Adds a username to the allowed_cron_users array in config.php
+ * @param string $addUser the name of the user to add [usually obtained with exec('whoami');]
+ * Notes:
+ * - this is Linux only, does nothing on Windows
+ * - does not repeat the user if he is already there
+ * - creates the sub-array if previoulsy unexisting
+ * - special treatment for user 'root' to require manual intervention from an admin to allow
+ */
+
+function addCronAllowedUser(string $addUser)
+{
+    global $sugar_config;
+
+    if (is_windows() || !isset($sugar_config)|| !isset($addUser) || ($addUser == "")) {
+        return;
+    }
+    if (!array_key_exists('cron', $sugar_config)) {
+        $sugar_config['cron'] = array();
+    }
+    if (!array_key_exists('allowed_cron_users', $sugar_config['cron'])) {
+        $sugar_config['cron']['allowed_cron_users'] = array();
+    }
+    if (!in_array($addUser, $sugar_config['cron']['allowed_cron_users'])) {
+        if ($addUser == 'root') {
+            $addUser = 'root_REMOVE_THIS_NOTICE_IF_YOU_REALLY_WANT_TO_ALLOW_ROOT';
+            if (!in_array($addUser, $sugar_config['cron']['allowed_cron_users'])) {
+                $sugar_config['cron']['allowed_cron_users'][] = $addUser;
+                $GLOBALS['log']->error("You're using 'root' as the web-server user. This should be avoided for security reasons. Review allowed_cron_users configuration in config.php.");
+            }
+        } else {
+            $sugar_config['cron']['allowed_cron_users'][] = $addUser;
+            $GLOBALS['log']->info("Web server user $addUser added to allowed_cron_users in config.php.");
+
+        }
+    }
+
+    ksort($sugar_config);
+    write_array_to_file('sugar_config', $sugar_config, 'config.php');
+}
