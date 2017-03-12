@@ -120,7 +120,7 @@ class="yui-navset detailview_tabs"
 		{{assign var='columnsInRow' value=$rowData|@count}}
 		{{assign var='columnsUsed' value=0}}
 		{{foreach name=colIteration from=$rowData key=col item=colData}}
-		{{if !empty($colData.field.name)}}
+		{{if isset($colData.field.tabindex)}}
 	    {{if !empty($colData.field.hideIf)}}
 	    	{if !({{$colData.field.hideIf}}) }
 	    {{/if}}
