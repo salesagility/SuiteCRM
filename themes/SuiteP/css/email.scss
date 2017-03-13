@@ -1,6 +1,37 @@
 /**** Emails ***/
 @import 'variables';
 
+@mixin panel-email-compose-button-margin {
+  margin: 6px 6px;
+}
+
+
+@mixin panel-email-compose-button-padding {
+  padding: 4px;
+}
+
+@mixin panel-email-compose-buttons () {
+  background-color: transparent;
+  border: none;
+  border-image-width: 0;
+  border-color: transparent;
+  color: $email-panel-color;
+  @include panel-email-compose-button-margin();
+  @include panel-email-compose-button-padding();
+  outline: none;
+}
+
+@mixin panel-email-compose-custom-buttons () {
+  background-color: transparent;
+  border: none;
+  border-image-width: 0;
+  color: $email-panel-color;
+  border-color: transparent;
+  margin: 0;
+  outline: none;
+  padding: 0;
+}
+
 .email-indicator {
   text-align: center;
 }
@@ -42,4 +73,93 @@
 .email-new-record.evenListRowS1 td {
   background-color: $email-new-record-bg-even;
   font-weight: 900;
+}
+
+.panel-email-compose {
+  margin: 5px 0 0 0;
+  background-color: $email-panel-bg;
+  color: $email-panel-color;
+  line-height: 24px;
+
+  .panel-body {
+
+    :focus {
+      border: none;
+      border-image-width: 0;
+      border-color: transparent;
+      outline: none;
+      outline-width: 0;
+    }
+
+    button {
+      @include panel-email-compose-buttons();
+    }
+
+    .btn {
+      @include panel-email-compose-buttons();
+    }
+
+    .btn:hover {
+      @include panel-email-compose-buttons();
+    }
+
+    .btn:visited {
+      @include panel-email-compose-buttons();
+    }
+
+
+    .btn:link {
+      @include panel-email-compose-buttons();
+    }
+
+    .btn:active {
+      @include panel-email-compose-buttons();
+    }
+
+    .btn:focus {
+      @include panel-email-compose-buttons();
+    }
+
+    input[type=reset] {
+      @include panel-email-compose-custom-buttons();
+    }
+
+    input[type=submit] {
+      @include panel-email-compose-custom-buttons();
+    }
+
+    input[type=button] {
+      @include panel-email-compose-custom-buttons();
+    }
+
+    .glyphicon {
+      font-size: $email-panel-font-size;
+    }
+
+    .glyphicon:focus {
+      border: none;
+      border-image-width: 0;
+      border-color: transparent;
+      outline: none;
+    }
+
+    .vertical-seperator {
+      background-color: transparent;
+      border-bottom: none;
+      border-left: 1px solid $email-panel-color;
+      border-right: none;
+      border-top: none;
+      color: $email-panel-color;
+      cursor: default;
+      font-size: $email-panel-font-size;
+      @include panel-email-compose-button-margin();
+      @include panel-email-compose-button-padding();
+      outline: none;
+      height: $email-panel-font-size;
+    }
+
+    .custom-buttons {
+      display: inline-block;
+    }
+  }
 }

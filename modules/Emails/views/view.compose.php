@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -39,16 +40,37 @@
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
+    die ('Not A Valid Entry Point');
 }
 
-class EmailsController extends SugarController
-{
-    public function action_index() {
-       $this->view = 'list';
+
+class EmailsViewCompose extends ViewEdit {
+
+    public function __construct()
+    {
+        $this->type = 'compose';
     }
 
-    public function action_ComposeView() {
-        $this->view = 'compose';
+    /**
+     * @see SugarView::preDisplay()
+     */
+    public function preDisplay()
+    {
+        $metadataFile = $this->getMetaDataFile();
+        $this->ev = $this->getEditView();
+        $this->ev->ss =& $this->ss;
+        $this->ev->setup($this->module, $this->bean, $metadataFile, get_custom_file_if_exists('modules/Emails/include/ComposeView/ComposeView.tpl'));
     }
+
+    /**
+     * Get EditView object
+     * @return EditView
+     */
+    protected function getEditView()
+    {
+        $a = dirname( dirname(__FILE__) ) . '/include/ComposeView/ComposeView.php';
+        require_once 'modules/Emails/include/ComposeView/ComposeView.php';
+        return new ComposeView();
+    }
+
 }
