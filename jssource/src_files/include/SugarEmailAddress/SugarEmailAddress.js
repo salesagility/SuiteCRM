@@ -298,15 +298,34 @@
 
       // Reply to checkbox
       var replyToCheckbox = lineContainer.find('input#email-address-reply-to-flag');
-      if (replyToCheckbox.length == 1) {
-        replyToCheckbox.attr('name', this.module + _eaw.id + 'emailAddressReplyToFlag');
-        replyToCheckbox.attr('id', this.module + _eaw.id + 'emailAddressReplyToFlag' + _eaw.totalEmailAddresses);
-        replyToCheckbox.attr('value', this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
-        replyToCheckbox.attr('tabindex', tabIndexCount);
-        replyToCheckbox.attr('enabled', "true");
-        replyToCheckbox.eaw = _eaw;
-        replyToCheckbox.prop("checked", (replyToFlag == '1'));
-        _eaw.replyToFlagObject[replyToCheckbox.attr('id')] = (replyToFlag == '1');
+      replyToCheckbox.attr('name', this.module + _eaw.id + 'emailAddressReplyToFlag');
+      replyToCheckbox.attr('id', this.module + _eaw.id + 'emailAddressReplyToFlag' + _eaw.totalEmailAddresses);
+      replyToCheckbox.attr('value', this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
+      replyToCheckbox.attr('tabindex', tabIndexCount);
+      replyToCheckbox.attr('enabled', "true");
+      replyToCheckbox.attr("checked", (replyToFlag == '1'));
+
+      if (_eaw.totalEmailAddresses == 0 && replyToFlag != '1') {
+        replyToCheckbox.prop("checked", true);
+      }
+
+
+      // Prevent users from removing their primary email address
+      if (this.module == 'Users' &&  replyToCheckbox.attr("checked")) {
+        removeButton.prop('disabled', true);
+      }
+
+      // Reply to checkbox
+      // var replyToCheckbox = lineContainer.find('input#email-address-reply-to-flag');
+      // if (replyToCheckbox.length == 1) {
+        // replyToCheckbox.attr('name', this.module + _eaw.id + 'emailAddressReplyToFlag');
+        // replyToCheckbox.attr('id', this.module + _eaw.id + 'emailAddressReplyToFlag' + _eaw.totalEmailAddresses);
+        // replyToCheckbox.attr('value', this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
+        // replyToCheckbox.attr('tabindex', tabIndexCount);
+        // replyToCheckbox.attr('enabled', "true");
+        // replyToCheckbox.eaw = _eaw;
+        // replyToCheckbox.prop("checked", (replyToFlag == '1'));
+        // _eaw.replyToFlagObject[replyToCheckbox.attr('id')] = (replyToFlag == '1');
         //replyToCheckbox.click(function () {
         //  var form = document.forms[_eaw.emailView];
         //  if (!form) {
@@ -336,7 +355,7 @@
         //    this.checked = true;
         //  } // else
         //});
-      }
+      // }
 
 
       // Opt Out checkbox
