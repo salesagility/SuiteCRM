@@ -88,36 +88,56 @@ class EmailsController extends SugarController
             if(!empty($this->bean->to_addrs_names)) {
                 $this->bean->to_addrs = $this->bean->to_addrs_names;
             }
-
-            $emailAddresses = explode(',', $this->bean->to_addrs);
-            $this->bean->to_addr_arr = array();
-            foreach ($emailAddresses as $ea => $address) {
-                $this->bean->to_addrs_arr[] = array(
-                    'email' => $address,
-                    'display' => $address,
-                );
-            }
         }
 
+
+        $toEmailAddresses = preg_split('/[,;]/', $this->bean->to_addrs, null, PREG_SPLIT_NO_EMPTY);
+        $this->bean->to_addr_arr = array();
+        foreach ($toEmailAddresses as $ea => $address) {
+            $this->bean->to_addrs_arr[] = array(
+                'email' => $address,
+                'display' => $address,
+            );
+        }
+
+
         if(empty($this->bean->cc_addrs)) {
-            if(!empty($_REQUEST['bcc_addrs_names'])) {
+            if (!empty($_REQUEST['cc_addrs_names'])) {
                 $this->bean->cc_addrs_names = $_REQUEST['cc_addrs_names'];
             }
 
-            if(!empty($this->bean->bcc_addrs_names)) {
-                $this->bean->bcc_addrs = $this->bean->bcc_addrs_names;
+            if (!empty($this->bean->cc_addrs_names)) {
+                $this->bean->cc_addrs = $this->bean->cc_addrs_names;
             }
+        }
+
+        $ccEmailAddresses = preg_split('/[,;]/', $this->bean->cc_addrs, null, PREG_SPLIT_NO_EMPTY);
+        $this->bean->cc_addrs_arr = array();
+        foreach ($ccEmailAddresses as $ea => $address) {
+            $this->bean->cc_addrs_arr[] = array(
+                'email' => $address,
+                'display' => $address,
+            );
         }
 
 
         if(empty($this->bean->bcc_addrs)) {
-            if(!empty($_REQUEST['bcc_addrs_names'])) {
+            if (!empty($_REQUEST['bcc_addrs_names'])) {
                 $this->bean->bcc_addrs_names = $_REQUEST['bcc_addrs_names'];
             }
 
-            if(!empty($this->bean->bcc_addrs_names)) {
+            if (!empty($this->bean->bcc_addrs_names)) {
                 $this->bean->bcc_addrs = $this->bean->bcc_addrs_names;
             }
+        }
+
+        $bccEmailAddresses = preg_split('/[,;]/', $this->bean->bcc_addrs, null, PREG_SPLIT_NO_EMPTY);
+        $this->bean->bcc_addrs_arr = array();
+        foreach ($bccEmailAddresses as $ea => $address) {
+            $this->bean->bcc_addrs_arr[] = array(
+                'email' => $address,
+                'display' => $address,
+            );
         }
 
         if(empty($this->bean->name)) {
