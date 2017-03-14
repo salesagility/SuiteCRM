@@ -70,8 +70,8 @@ $viewdefs[$module_name]['DetailView'] = array(
 
             array(
                 'description' => array(
-                    'name' => 'description',
-                    'label' => 'LBL_DESCRIPTION'
+                    'name' => 'description_html',
+                    'label' => 'LBL_BODY'
                 ),
             ),
         )

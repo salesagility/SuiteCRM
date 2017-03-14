@@ -203,14 +203,14 @@ $dictionary['Email'] = array(
         ),
         'description_html' => array(
             'name' => 'description_html',
-            'type' => 'varchar',
+            'type' => 'html',
             'vname' => 'description_html',
             'source' => 'non-db',
             'inline_edit' => false,
         ),
         'description' => array(
             'name' => 'description',
-            'type' => 'varchar',
+            'type' => 'text',
             'vname' => 'description',
             'source' => 'non-db',
             'inline_edit' => false,

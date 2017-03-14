@@ -59,19 +59,68 @@ $viewdefs['Emails']['ComposeView'] = array(
             )
         ),
         'includes' => array(
-                array(
-                    'file' => 'modules/Emails/include/ComposeView/ComposeView.js',
-                ),
+            array(
+                'file' => 'modules/Emails/include/javascript/EmailBodyType.js',
+            ),
+            array(
+                'file' => 'modules/Emails/include/javascript/Email.js',
+            ),
+            array(
+                'file' => 'modules/Emails/include/ComposeView/ComposeView.js',
+            ),
+            array(
+                'file' => 'include/javascript/mozaik/vendor/tinymce/tinymce/tinymce.min.js'
+            )
         ),
     ),
     'panels' => array(
         'LBL_COMPOSE_MODULE_NAME' => array(
             array(
                 array(
+                    'name' => 'from_addrs_names',
+                    'label' => 'LBL_FROM',
+                    'expanded' => 'true'
+                )
+            ),
+            array(
+                array(
+                    'name' => 'to_addrs_names',
+                    'label' => 'LBL_TO',
+                    'expanded' => 'true'
+                )
+            ),
+            array(
+                array(
+                    'name' => 'cc_addrs_names',
+                    'label' => 'LBL_CC',
+                    'expanded' => 'true'
+                )
+            ),
+            array(
+                array(
+                    'name' => 'bcc_addrs_names',
+                    'label' => 'LBL_BCC',
+                    'expanded' => 'true'
+                )
+            ),
+            array(
+                array(
                     'name' => 'name',
                     'label' => 'LBL_SUBJECT'
                 ),
             ),
+            array(
+                array(
+                    'name' => 'description',
+                    'label' => 'LBL_BODY',
+                )
+            ),
+            array(
+                array(
+                    'name' => 'description_html',
+                    'label' => 'LBL_BODY',
+                )
+            )
         )
     )
 

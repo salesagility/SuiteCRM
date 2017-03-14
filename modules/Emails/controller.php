@@ -44,11 +44,111 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class EmailsController extends SugarController
 {
-    public function action_index() {
-       $this->view = 'list';
+    public function action_index()
+    {
+        $this->view = 'list';
     }
 
-    public function action_ComposeView() {
+    public function action_ComposeView()
+    {
         $this->view = 'compose';
     }
+
+    public function action_send()
+    {
+        if(empty($this->bean)) {
+            $this->bean = BeanFactory::getBean('Emails');
+        }
+
+        $old = array('&lt;','&gt;');
+        $new = array('<','>');
+
+        if($_REQUEST['from_addr'] != $_REQUEST['from_addr_name'].' &lt;'.$_REQUEST['from_addr_email'].'&gt;') {
+            if(false === strpos($_REQUEST['from_addr'], '&lt;')) { // we have an email only?
+                $this->bean->from_addr = $_REQUEST['from_addr'];
+                $this->bean->from_name = '';
+            } else { // we have a compound string
+                $newFromAddr =  str_replace($old, $new, $_REQUEST['from_addr']);
+                $this->bean->from_addr = substr($newFromAddr, (1 + strpos($newFromAddr, '<')), (strpos($newFromAddr, '>') - strpos($newFromAddr, '<')) -1 );
+                $this->bean->from_name = substr($newFromAddr, 0, (strpos($newFromAddr, '<') -1));
+            }
+        } elseif(!empty($_REQUEST['from_addr_email']) && isset($_REQUEST['from_addr_email'])) {
+            $this->bean->from_addr = $_REQUEST['from_addr_email'];
+            $this->bean->from_name = $_REQUEST['from_addr_name'];
+        } else {
+            $this->bean->from_addr = $this->bean->getSystemDefaultEmail();
+        }
+
+
+        if(empty($this->bean->to_addrs)) {
+            if(!empty($_REQUEST['to_addrs_names'])) {
+                $this->bean->to_addrs_names = $_REQUEST['to_addrs_names'];
+            }
+
+            if(!empty($this->bean->to_addrs_names)) {
+                $this->bean->to_addrs = $this->bean->to_addrs_names;
+            }
+
+            $emailAddresses = explode(',', $this->bean->to_addrs);
+            $this->bean->to_addr_arr = array();
+            foreach ($emailAddresses as $ea => $address) {
+                $this->bean->to_addrs_arr[] = array(
+                    'email' => $address,
+                    'display' => $address,
+                );
+            }
+        }
+
+        if(empty($this->bean->cc_addrs)) {
+            if(!empty($_REQUEST['bcc_addrs_names'])) {
+                $this->bean->cc_addrs_names = $_REQUEST['cc_addrs_names'];
+            }
+
+            if(!empty($this->bean->bcc_addrs_names)) {
+                $this->bean->bcc_addrs = $this->bean->bcc_addrs_names;
+            }
+        }
+
+
+        if(empty($this->bean->bcc_addrs)) {
+            if(!empty($_REQUEST['bcc_addrs_names'])) {
+                $this->bean->bcc_addrs_names = $_REQUEST['bcc_addrs_names'];
+            }
+
+            if(!empty($this->bean->bcc_addrs_names)) {
+                $this->bean->bcc_addrs = $this->bean->bcc_addrs_names;
+            }
+        }
+
+        if(empty($this->bean->name)) {
+            if(!empty($_REQUEST['name'])) {
+                $this->bean->name = $_REQUEST['name'];
+            }
+        }
+
+        if(empty($this->bean->description_html)) {
+            if(!empty($_REQUEST['description_html'])) {
+                $this->bean->description_html = $_REQUEST['description_html'];
+            }
+        }
+
+
+        if(empty($this->bean->description)) {
+            if(!empty($_REQUEST['description'])) {
+                $this->bean->description = $_REQUEST['description'];
+            }
+        }
+
+
+        if($this->bean->send()) {
+            $this->bean->status = 'sent';
+            // TODO save action
+            $this->bean->save();
+        } else {
+            $this->bean->status = 'sent_error';
+        }
+
+        $this->view = 'sendemail';
+    }
+
 }

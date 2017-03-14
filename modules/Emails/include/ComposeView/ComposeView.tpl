@@ -40,6 +40,15 @@
 *}
 {{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
+{* TODO Generate random id for compose view*}
+<form class="composer-view" id="{$TEMP_ID}" method="POST" action="index.php">
+    <input type="hidden" name="module" value="Emails">
+    <input type="hidden" name="action" value="send">
+    <input type="hidden" name="record" value="">
+    <input type="hidden" name="type" value="out">
+    <input type="hidden" name="send" value="1">
+    <input type="hidden" name="return_module" value="{$RETURN_MODULE}">
+    <input type="hidden" name="return_action" value="{$RETURN_ACTION}">
 <div id="EditView_tabs">
     {*display tabs*}
     {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
@@ -236,3 +245,10 @@
     </script>
 
 {/literal}
+
+    <script>
+      $(document).ready(function() {ldelim}
+          var view = new ComposeView({ldelim}"id":'{$TEMP_ID}'{rdelim});
+      {rdelim});
+    </script>
+</form>

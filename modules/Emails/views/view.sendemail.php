@@ -43,35 +43,36 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die ('Not A Valid Entry Point');
 }
 
-
-class EmailsViewCompose extends ViewEdit {
-
+class EmailsViewSendemail extends ViewAjax
+{
     public function __construct()
     {
-        $this->type = 'compose';
+        $this->options['show_title'] = false;
+        $this->options['show_header'] = false;
+        $this->options['show_footer'] = false;
+        $this->options['show_javascript'] = false;
+        $this->options['show_subpanels'] = false;
+        $this->options['show_search'] = false;
     }
 
-    /**
-     * @see SugarView::preDisplay()
-     */
-    public function preDisplay()
+    public function display()
     {
-        $metadataFile = $this->getMetaDataFile();
-        $this->ev = $this->getEditView();
-        $this->ev->ss =& $this->ss;
-        $this->ev->ss->assign('TEMP_ID', create_guid());
-        $this->ev->setup($this->module, $this->bean, $metadataFile, get_custom_file_if_exists('modules/Emails/include/ComposeView/ComposeView.tpl'));
-    }
+        $response_code = 500;
 
-    /**
-     * Get EditView object
-     * @return EditView
-     */
-    protected function getEditView()
-    {
-        $a = dirname( dirname(__FILE__) ) . '/include/ComposeView/ComposeView.php';
-        require_once 'modules/Emails/include/ComposeView/ComposeView.php';
-        return new ComposeView();
+        if(empty($this->bean->status)) {
+            $this->bean->status = $_REQUEST['status'];
+        }
+
+        switch ($this->bean->status) {
+            case 'sent':
+                $response_code = 201;
+                break;
+            case 'sent_error':
+                $response_code = 400;
+                break;
+        }
+        http_response_code ($response_code);
+        return "";
     }
 
 }
