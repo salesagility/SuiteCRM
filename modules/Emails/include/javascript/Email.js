@@ -8,7 +8,6 @@ var Email = function() {
 
   self.bcc = '';
   self.body = '';
-  self.bodyType = EmailBodyType.html;
   self.cc = '';
   self.from = '';
   self.subject = '';

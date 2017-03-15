@@ -40,8 +40,8 @@
 *}
 {{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
-{* TODO Generate random id for compose view*}
-<form class="composer-view" id="{$TEMP_ID}" method="POST" action="index.php">
+{* Compose view has a TEMP ID in case you want to display multi instance of the ComposeView *}
+<form class="composer-view" id="{if $TEMP_ID}{$TEMP_ID}{else}ComposeView{/if}" method="POST" action="index.php">
     <input type="hidden" name="module" value="Emails">
     <input type="hidden" name="action" value="send">
     <input type="hidden" name="record" value="">
@@ -247,8 +247,9 @@
 {/literal}
 
     <script>
+        {* Compose view has a TEMP ID in case you want to display multi instance of the ComposeView *}
       $(document).ready(function() {ldelim}
-          var view = new ComposeView({ldelim}"id":'{$TEMP_ID}'{rdelim});
+          var view = new ComposeView({ldelim}"id":'{if $TEMP_ID}{$TEMP_ID}{else}ComposeView{/if}'{rdelim});
       {rdelim});
     </script>
 </form>

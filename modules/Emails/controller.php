@@ -63,30 +63,36 @@ class EmailsController extends SugarController
         $old = array('&lt;','&gt;');
         $new = array('<','>');
 
-        if($_REQUEST['from_addr'] != $_REQUEST['from_addr_name'].' &lt;'.$_REQUEST['from_addr_email'].'&gt;') {
+        if(isset($_REQUEST['from_addr']) and $_REQUEST['from_addr'] != $_REQUEST['from_addr_name'].' &lt;'.$_REQUEST['from_addr_email'].'&gt;') {
             if(false === strpos($_REQUEST['from_addr'], '&lt;')) { // we have an email only?
                 $this->bean->from_addr = $_REQUEST['from_addr'];
                 $this->bean->from_name = '';
+                $this->bean->reply_to_addr = $this->bean->from_addr;
+                $this->bean->reply_to_name = $this->bean->from_name;
             } else { // we have a compound string
                 $newFromAddr =  str_replace($old, $new, $_REQUEST['from_addr']);
                 $this->bean->from_addr = substr($newFromAddr, (1 + strpos($newFromAddr, '<')), (strpos($newFromAddr, '>') - strpos($newFromAddr, '<')) -1 );
                 $this->bean->from_name = substr($newFromAddr, 0, (strpos($newFromAddr, '<') -1));
+                $this->bean->reply_to_addr = $this->bean->from_addr;
+                $this->bean->reply_to_name = $this->bean->from_name;
             }
         } elseif(!empty($_REQUEST['from_addr_email']) && isset($_REQUEST['from_addr_email'])) {
             $this->bean->from_addr = $_REQUEST['from_addr_email'];
             $this->bean->from_name = $_REQUEST['from_addr_name'];
         } else {
             $this->bean->from_addr = $this->bean->getSystemDefaultEmail();
+            $this->bean->reply_to_addr = $this->bean->from_addr['email'];
+            $this->bean->reply_to_name = $this->bean->from_addr['name'];
         }
 
 
         if(empty($this->bean->to_addrs)) {
             if(!empty($_REQUEST['to_addrs_names'])) {
-                $this->bean->to_addrs_names = $_REQUEST['to_addrs_names'];
+                $this->bean->to_addrs_names = htmlspecialchars_decode($_REQUEST['to_addrs_names']);
             }
 
             if(!empty($this->bean->to_addrs_names)) {
-                $this->bean->to_addrs = $this->bean->to_addrs_names;
+                $this->bean->to_addrs = htmlspecialchars_decode($this->bean->to_addrs_names);
             }
         }
 
@@ -94,49 +100,122 @@ class EmailsController extends SugarController
         $toEmailAddresses = preg_split('/[,;]/', $this->bean->to_addrs, null, PREG_SPLIT_NO_EMPTY);
         $this->bean->to_addr_arr = array();
         foreach ($toEmailAddresses as $ea => $address) {
+
+            $email = '';
+            $display = '';
+            preg_match(
+                '/([a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\ =\?\^\`\{\|\}\~\.\[\]\"\(\)\s]+)((<[a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~\.\[\]\"\(\)]+)(@)([a-zA-z0-9\-\.]+\>))$/',
+                $address,
+                $matches
+            );
+
+            // Strip out name from email address
+            // eg Angel Mcmahon <sales.vegan@example.it>
+            if (count($matches) > 3) {
+                $display = trim($matches[1]);
+                $email = $matches[2];
+            } else {
+                $email = $address;
+                $display = '';
+            }
+
+            $email = str_ireplace('<', '', $email);
+            $email = str_ireplace('>', '', $email);
+            $email = str_ireplace('&lt;', '', $email);
+            $email = str_ireplace('&rt;', '', $email);
+
+
             $this->bean->to_addrs_arr[] = array(
-                'email' => $address,
-                'display' => $address,
+                'email' => $email,
+                'display' => $display,
             );
         }
 
 
         if(empty($this->bean->cc_addrs)) {
             if (!empty($_REQUEST['cc_addrs_names'])) {
-                $this->bean->cc_addrs_names = $_REQUEST['cc_addrs_names'];
+                $this->bean->cc_addrs_names = htmlspecialchars_decode($_REQUEST['cc_addrs_names']);
             }
 
             if (!empty($this->bean->cc_addrs_names)) {
-                $this->bean->cc_addrs = $this->bean->cc_addrs_names;
+                $this->bean->cc_addrs = htmlspecialchars_decode($this->bean->cc_addrs_names);
             }
         }
 
         $ccEmailAddresses = preg_split('/[,;]/', $this->bean->cc_addrs, null, PREG_SPLIT_NO_EMPTY);
         $this->bean->cc_addrs_arr = array();
         foreach ($ccEmailAddresses as $ea => $address) {
+            $email = '';
+            $display = '';
+            preg_match(
+                '/([a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\ =\?\^\`\{\|\}\~\.\[\]\"\(\)\s]+)((<[a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~\.\[\]\"\(\)]+)(@)([a-zA-z0-9\-\.]+\>))$/',
+                $address,
+                $matches
+            );
+
+            // Strip out name from email address
+            // eg Angel Mcmahon <sales.vegan@example.it>
+            if (count($matches) > 3) {
+                $display = trim($matches[1]);
+                $email = $matches[2];
+            } else {
+                $email = $address;
+                $display = '';
+            }
+
+            $email = str_ireplace('<', '', $email);
+            $email = str_ireplace('>', '', $email);
+            $email = str_ireplace('&lt;', '', $email);
+            $email = str_ireplace('&rt;', '', $email);
+
+
             $this->bean->cc_addrs_arr[] = array(
-                'email' => $address,
-                'display' => $address,
+                'email' => $email,
+                'display' => $display,
             );
         }
 
 
         if(empty($this->bean->bcc_addrs)) {
             if (!empty($_REQUEST['bcc_addrs_names'])) {
-                $this->bean->bcc_addrs_names = $_REQUEST['bcc_addrs_names'];
+                $this->bean->bcc_addrs_names = htmlspecialchars_decode($_REQUEST['bcc_addrs_names']);
             }
 
             if (!empty($this->bean->bcc_addrs_names)) {
-                $this->bean->bcc_addrs = $this->bean->bcc_addrs_names;
+                $this->bean->bcc_addrs = htmlspecialchars_decode($this->bean->bcc_addrs_names);
             }
         }
 
         $bccEmailAddresses = preg_split('/[,;]/', $this->bean->bcc_addrs, null, PREG_SPLIT_NO_EMPTY);
         $this->bean->bcc_addrs_arr = array();
         foreach ($bccEmailAddresses as $ea => $address) {
+            $email = '';
+            $display = '';
+            preg_match(
+                '/([a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\ =\?\^\`\{\|\}\~\.\[\]\"\(\)\s]+)((<[a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~\.\[\]\"\(\)]+)(@)([a-zA-z0-9\-\.]+\>))$/',
+                $address,
+                $matches
+            );
+
+            // Strip out name from email address
+            // eg Angel Mcmahon <sales.vegan@example.it>
+            if (count($matches) > 3) {
+                $display = trim($matches[1]);
+                $email = $matches[2];
+            } else {
+                $email = $address;
+                $display = '';
+            }
+
+            $email = str_ireplace('<', '', $email);
+            $email = str_ireplace('>', '', $email);
+            $email = str_ireplace('&lt;', '', $email);
+            $email = str_ireplace('&rt;', '', $email);
+
+
             $this->bean->bcc_addrs_arr[] = array(
-                'email' => $address,
-                'display' => $address,
+                'email' => $email,
+                'display' => $display,
             );
         }
 
@@ -152,13 +231,11 @@ class EmailsController extends SugarController
             }
         }
 
-
         if(empty($this->bean->description)) {
             if(!empty($_REQUEST['description'])) {
                 $this->bean->description = $_REQUEST['description'];
             }
         }
-
 
         if($this->bean->send()) {
             $this->bean->status = 'sent';

@@ -60,6 +60,8 @@ class EmailsViewCompose extends ViewEdit {
         $this->ev = $this->getEditView();
         $this->ev->ss =& $this->ss;
         $this->ev->ss->assign('TEMP_ID', create_guid());
+        $this->ev->ss->assign('RETURN_MODULE', isset($_REQUEST['return_module']) ? $_REQUEST['return_module'] : '');
+        $this->ev->ss->assign('RETURN_ACTION', isset($_REQUEST['return_action']) ? $_REQUEST['return_action'] : '');
         $this->ev->setup($this->module, $this->bean, $metadataFile, get_custom_file_if_exists('modules/Emails/include/ComposeView/ComposeView.tpl'));
     }
 

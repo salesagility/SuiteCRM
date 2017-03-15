@@ -60,9 +60,6 @@ $viewdefs['Emails']['ComposeView'] = array(
         ),
         'includes' => array(
             array(
-                'file' => 'modules/Emails/include/javascript/EmailBodyType.js',
-            ),
-            array(
                 'file' => 'modules/Emails/include/javascript/Email.js',
             ),
             array(
@@ -77,16 +74,9 @@ $viewdefs['Emails']['ComposeView'] = array(
         'LBL_COMPOSE_MODULE_NAME' => array(
             array(
                 array(
-                    'name' => 'from_addrs_names',
-                    'label' => 'LBL_FROM',
-                    'expanded' => 'true'
-                )
-            ),
-            array(
-                array(
                     'name' => 'to_addrs_names',
                     'label' => 'LBL_TO',
-                    'expanded' => 'true'
+                    'expanded' => 'true',
                 )
             ),
             array(
@@ -106,7 +96,7 @@ $viewdefs['Emails']['ComposeView'] = array(
             array(
                 array(
                     'name' => 'name',
-                    'label' => 'LBL_SUBJECT'
+                    'label' => 'LBL_SUBJECT',
                 ),
             ),
             array(
