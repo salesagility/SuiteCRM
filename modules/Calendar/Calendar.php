@@ -72,15 +72,15 @@ class Calendar {
 	public $acts_arr = array(); // Array of activities objects	
 	public $items = array(); // Array of activities data to be displayed	
 	public $shared_ids = array(); // ids of users for shared view
-	
-	
-	public $cells_per_day; // entire 24h day count of slots 	
+
 	public $grid_start_ts; // start timestamp of calendar grid
 	
 	public $day_start_time; // working day start time in format '11:00'
 	public $day_end_time; // working day end time in format '11:00'
 	public $scroll_slot; // first slot of working day
-	public $celcount; // count of slots in a working day	
+	public $celcount; // count of slots in a working day
+
+	public $formatted_time_step; //formatted timestep for slots used with fullcalendar slotDuration param
 
     /**
      * @var bool $print Whether is print mode.
@@ -201,18 +201,23 @@ class Calendar {
 		$this->day_end_time = $current_user->getPreference('day_end_time');
 		if(is_null($this->day_end_time))
 			$this->day_end_time = SugarConfig::getInstance()->get('calendar.default_day_end',"19:00");
-			
-		if($this->view == "day"){
-			$this->time_step = SugarConfig::getInstance()->get('calendar.day_timestep',15);
-		}else if($this->view == "week" || $this->view == "shared"){
-			$this->time_step = SugarConfig::getInstance()->get('calendar.week_timestep',30);
-		}else if($this->view == "month"){
-			$this->time_step = SugarConfig::getInstance()->get('calendar.month_timestep',60);
-		}else{
-			$this->time_step = 60;
-		}
-		$this->cells_per_day = 24 * (60 / $this->time_step);		
-		$this->calculate_grid_start_ts();
+
+        if($this->view == "agendaDay" || $this->view == "basicDay" ){
+            $this->time_step = SugarConfig::getInstance()->get('calendar.day_timestep', 15);
+        }else if($this->view == "agendaWeek" || $this->view == "basicWeek"){
+            $this->time_step = SugarConfig::getInstance()->get('calendar.week_timestep', 30);
+        }else if($this->view == "month"){
+            $this->time_step = 60;
+        }else{
+            $this->time_step = 60;
+        }
+
+        //convert minutes into new format used by fullcalendar
+        $timeSeconds    = round($this->time_step * 60);
+        $timeFormat = sprintf('%02d:%02d:%02d', ($timeSeconds/3600),($timeSeconds/60%60), $timeSeconds%60);
+        $this->formatted_time_step = $timeFormat;
+
+        //this is likely handled by fullcalendar and not required any more
 		$this->calculate_day_range();		
 	}
 	

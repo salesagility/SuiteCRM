@@ -117,10 +117,11 @@ class CalendarDisplay {
 		$ss->assign('enable_repeat',$this->cal->enable_repeat);
 		$ss->assign('items_draggable',SugarConfig::getInstance()->get('calendar.items_draggable',true));
 		$ss->assign('items_resizable',SugarConfig::getInstance()->get('calendar.items_resizable',true));
-		$ss->assign('cells_per_day',$cal->cells_per_day);
 		$ss->assign('activityColors',json_encode($this->checkActivity($this->activity_colors) ) );
 		$ss->assign('dashlet',$cal->dashlet);
 		$ss->assign('grid_start_ts',intval($cal->grid_start_ts));
+
+        $ss->assign('time_slots', $cal->formatted_time_step);
 		
 		$ss->assign('year', $cal->date_time->format('Y'));
 		$ss->assign('month', $cal->date_time->format('m'));

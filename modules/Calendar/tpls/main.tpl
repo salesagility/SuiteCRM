@@ -52,11 +52,10 @@
 	global_enable_repeat = "{$enable_repeat}";
 	global_items_draggable = "{$items_draggable}";
 	global_items_resizable = "{$items_resizable}";
-	global_cells_per_day = {$cells_per_day};
 	global_dashlet = "{$dashlet}";
 	global_grid_start_ts = {$grid_start_ts};
 	global_basic_min_height = {$basic_min_height};
-	global_timeslots = 30;
+	global_timeslots = "{$time_slots}";
 	global_start_week_day = "{$start_weekday}";
     global_datetime_format = "{$datetime_user_format}";
 	global_year = "{$year}";
@@ -105,7 +104,6 @@
 		CAL.enable_repeat = "{$enable_repeat}";
 		CAL.items_draggable = "{$items_draggable}";
 		CAL.items_resizable = "{$items_resizable}";
-		CAL.cells_per_day = {$cells_per_day};
 		CAL.current_params = {literal}{}{/literal};
 		CAL.dashlet = "{$dashlet}";
 		CAL.grid_start_ts = {$grid_start_ts};
