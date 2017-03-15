@@ -80,7 +80,7 @@ class Calendar {
 	public $scroll_slot; // first slot of working day
 	public $celcount; // count of slots in a working day
 
-	public $formatted_time_step; //formatted timestep for slots used with fullcalendar slotDuration param
+	public $formatted_time_step; // Formatted timestep for slots used with fullcalendar slotDuration param
 
     /**
      * @var bool $print Whether is print mode.
@@ -212,12 +212,12 @@ class Calendar {
             $this->time_step = 60;
         }
 
-        //convert minutes into new format used by fullcalendar
+        // Convert minutes into new format used by fullcalendar
         $timeSeconds    = round($this->time_step * 60);
         $timeFormat = sprintf('%02d:%02d:%02d', ($timeSeconds/3600),($timeSeconds/60%60), $timeSeconds%60);
         $this->formatted_time_step = $timeFormat;
 
-        //this is likely handled by fullcalendar and not required any more
+        // This is likely handled by fullcalendar and may not be required any more
 		$this->calculate_day_range();		
 	}
 	
