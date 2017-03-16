@@ -72,7 +72,7 @@
      * @destructor
      */
     self.destruct = function () {
-
+      $('body').removeClass('modal-open');;
     }
 
 

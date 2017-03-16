@@ -47,7 +47,8 @@ $(document).ready(function(){
   $('[data-action=emails-compose]').click(function() {
    "use strict";
    var emailComposeView = null;
-   var composeBox = messageBox({
+   var composeBox = $('<div></div>').appendTo('#content');
+    composeBox.messageBox({
      "showHeader": true
    });
    composeBox.controls.modal.content.html(SUGAR.language.translate('', 'LBL_EMAIL_LOADING'));
