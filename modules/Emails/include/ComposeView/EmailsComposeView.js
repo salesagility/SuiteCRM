@@ -94,7 +94,11 @@
      */
     self.isToValid = function () {
       "use strict";
-      var emailAddresses = $(self).find(' [name=to_addrs_names]').val().split('/[,;]/');
+      var emailAddresses = $(self).find('[name=to_addrs_names]').val().split('/[,;]/');
+
+      if (self.isValidEmailAddresses(emailAddresses)) {
+        return true;
+      }
 
       self.setValidationMessage('to_addrs_names', 'LBL_HAS_INVALID_EMAIL_TO');
       return false;
@@ -107,7 +111,7 @@
     self.isCcValid = function () {
       "use strict";
 
-      var cc = $(self).find(' [name=cc_addrs_names]').val();
+      var cc = $(self).find('[name=cc_addrs_names]').val();
       var emailAddresses = cc.split('/[,;]/');
 
       if (self.isValidEmailAddresses(emailAddresses) || cc === '') {
