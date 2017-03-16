@@ -43,7 +43,6 @@
     "use strict";
     var self = $(this);
     var opts = $.extend({}, $.fn.EmailsComposeView.defaults, options);
-
     /**
      * @return string UUID
      */
@@ -71,12 +70,23 @@
      */
     self.isValid = function () {
       "use strict";
-      return self.isToValid() &&
+      var valid = self.isToValid() &&
         self.isCcValid() &&
         self.isBccValid() &&
         self.isSubjectValid() &&
         self.isBodyValid();
+
+      return valid;
     };
+
+
+    self.validate = function () {
+      var valid = self.isValid();
+      if(!valid) {
+        alert(self.translatedErrorMessage);
+      }
+      return valid;
+    }
 
     /**
      *
@@ -85,10 +95,6 @@
     self.isToValid = function () {
       "use strict";
       var emailAddresses = $(self).find(' [name=to_addrs_names]').val().split('/[,;]/');
-
-      if (self.isValidEmailAddresses(emailAddresses)) {
-        return true;
-      }
 
       self.setValidationMessage('to_addrs_names', 'LBL_HAS_INVALID_EMAIL_TO');
       return false;
@@ -166,8 +172,7 @@
      */
     self.setValidationMessage = function (field, label) {
       "use strict";
-      var translated_message = SUGAR.language.translate('Emails', label);
-      alert(translated_message);
+      self.translatedErrorMessage = SUGAR.language.translate('Emails', label);
     };
 
     /**
@@ -243,7 +248,7 @@
      */
     self.sendEmail = function () {
       "use strict";
-      if (self.isValid()) {
+      if (self.validate()) {
         $(self).submit();
       }
       return false;

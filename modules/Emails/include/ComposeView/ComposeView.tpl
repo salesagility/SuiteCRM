@@ -41,7 +41,7 @@
 {{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
 {* Compose view has a TEMP ID in case you want to display multi instance of the ComposeView *}
-<form class="composer-view" id="{$TEMP_ID}" method="POST" action="index.php">
+<form class="compose-view" id="{$TEMP_ID}" method="POST" action="index.php">
     <input type="hidden" name="module" value="Emails">
     <input type="hidden" name="action" value="send">
     <input type="hidden" name="record" value="">
