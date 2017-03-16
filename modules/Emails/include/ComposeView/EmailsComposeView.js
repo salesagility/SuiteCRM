@@ -82,7 +82,7 @@
 
     self.validate = function () {
       var valid = self.isValid();
-      if(!valid) {
+      if(valid === false) {
         alert(self.translatedErrorMessage);
       }
       return valid;
