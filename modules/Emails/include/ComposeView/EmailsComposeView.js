@@ -236,6 +236,11 @@
       return false;
     };
 
+
+    /**
+     *
+     * @returns {boolean}
+     */
     self.sendEmail = function () {
       "use strict";
       if (self.isValid()) {
@@ -244,30 +249,53 @@
       return false;
     }
 
+
+    /**
+     *
+     * @returns {boolean}
+     */
     self.attachFile = function () {
       "use strict";
       alert('attachFile placeholder');
       return false;
     };
 
+
+    /**
+     *
+     * @returns {boolean}
+     */
     self.attachNote = function () {
       "use strict";
       alert('attachNoteplaceholder');
       return false;
     };
 
+
+    /**
+     *
+     * @returns {boolean}
+     */
     self.attachDocument = function () {
       "use strict";
       alert('attachDocument placeholder');
       return false;
     };
 
+    /**
+     *
+     * @returns {boolean}
+     */
     self.saveDraft = function () {
       "use strict";
       alert('saveDraft placeholder');
       return false;
     };
 
+    /**
+     *
+     * @returns {boolean}
+     */
     self.disregardDraft = function () {
       "use strict";
       alert('disgardDraft placeholder');
