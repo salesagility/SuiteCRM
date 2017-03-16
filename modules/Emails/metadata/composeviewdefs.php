@@ -51,7 +51,7 @@ $viewdefs['Emails']['ComposeView'] = array(
                 array('customCode' => '<button class="btn btn-send-email" title="{$MOD.LBL_SEND_BUTTON_TITLE}"><span class="glyphicon glyphicon-send"></span></button>'),
                 array('customCode' => '<button class="vertical-seperator"></button>'),
                 array('customCode' => '<button class="btn btn-attach-file" title="{$MOD.LBL_ATTACH_FILES}"><span class="glyphicon glyphicon-paperclip"></span></button>'),
-                array('customCode' => '<button class="btn btn-attach-document" title="{$MOD.LBL_ATTACH_NOTES}"><span class="glyphicon"><img src="themes/SuiteP/images/sidebar/modules/Notes.svg"></span></button>'),
+                array('customCode' => '<button class="btn btn-attach-notes" title="{$MOD.LBL_ATTACH_NOTES}"><span class="glyphicon"><img src="themes/SuiteP/images/sidebar/modules/Notes.svg"></span></button>'),
                 array('customCode' => '<button class="btn btn-attach-document" title="{$MOD.LBL_ATTACH_DOCUMENTS}"><span class="glyphicon"><img src="themes/SuiteP/images/sidebar/modules/Documents.svg"></span></button>'),
                 array('customCode' => '<button class="vertical-seperator"></button>'),
                 array('customCode' => '<button class="btn btn-save-draft" title="{$MOD.LBL_SAVE_AS_DRAFT_BUTTON_TITLE}"><span class="glyphicon glyphicon-floppy-save"></span></button>'),

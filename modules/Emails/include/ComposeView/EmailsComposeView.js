@@ -244,6 +244,37 @@
       return false;
     }
 
+    self.attachFile = function () {
+      "use strict";
+      alerts('attachFile placeholder');
+      return false;
+    };
+
+    self.attachNote = function () {
+      "use strict";
+      alerts('attachNoteplaceholder');
+      return false;
+    };
+
+    self.attachDocument = function () {
+      "use strict";
+      alerts('attachDocument placeholder');
+      return false;
+    };
+
+    self.saveDraft = function () {
+      "use strict";
+      alerts('saveDraft placeholder');
+      return false;
+    };
+
+    self.disregardDraft = function () {
+      "use strict";
+      alerts('disgardDraft placeholder');
+      return false;
+    };
+
+
     /**
      * Constructor
      */
@@ -274,14 +305,14 @@
        */
       $('<div></div>').addClass('hidden').addClass('html_preview').appendTo("form#" + self.attr('id') + ".composer-view");
 
+      $('<input>')
+        .attr('name', 'description_html')
+        .attr('type', 'hidden')
+        .attr('id', 'description_html')
+        .appendTo($('#' + self.attr('id')));
 
       if (typeof tinymce === "undefined") {
         console.error('Missing Dependency: Cannot find tinyMCE.');
-        $('<input>')
-          .attr('name', 'description_html')
-          .attr('type', 'hidden')
-          .attr('id', 'description_html')
-          .appendTo($('#' + self.attr('id')));
 
         // copy plain to html
         $(self).find('#description_html').closest('.edit-view-row-item').addClass('hidden');
@@ -298,6 +329,13 @@
 
       // Handle toolbar button events
       $(self).find('.btn-send-email').click(self.sendEmail);
+      $(self).find('.btn-attach-file').click(self.attachFile);
+      $(self).find('.btn-attach-notes').click(self.attachNote);
+      $(self).find('.btn-attach-document').click(self.attachDocument);
+      $(self).find('.btn-save-draft').click(self.saveDraft);
+      $(self).find('.btn-disregard-draft').click(self.disregardDraft);
+
+
       $(document).trigger("ConstructEmailsComposeView", [self]);
     };
 
