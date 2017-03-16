@@ -64,8 +64,17 @@
         };
       }
 
+      $(self).on('remove', self.destruct);
+
       return self;
     }
+    /**
+     * @destructor
+     */
+    self.destruct = function () {
+
+    }
+
 
     /**
      * Call open when there is no DOM. Show dialog
@@ -148,10 +157,6 @@
       }).toString().replace(/(,)/g, '');
       return z;
     };
-
-    self.hideElement = function(element) {
-      $(element).toggleClass()
-    }
 
     self.construct(opts);
     // Return this

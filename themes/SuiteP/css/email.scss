@@ -163,3 +163,11 @@
     }
   }
 }
+
+.compose-view {
+  .panel {
+    .col-sm-12 [type].col-sm-8.edit-view-field input[type=text]{
+      width: 100%;
+    }
+  }
+}

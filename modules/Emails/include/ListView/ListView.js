@@ -39,7 +39,12 @@
 
 $(document).ready(function(){
   "use strict";
- $('[data-action=emails-compose]').click(function() {
+
+
+  // TODO remove mass update from tinymce
+
+
+  $('[data-action=emails-compose]').click(function() {
    "use strict";
    var emailComposeView = null;
    var composeBox = messageBox({
@@ -57,11 +62,10 @@ $(document).ready(function(){
      composeBox.controls.modal.content.html(data);
      emailComposeView = composeBox.controls.modal.content.find('.compose-view').EmailsComposeView();
      $(emailComposeView).on('sentEmail', function(event, composeView) {
-       composeBox.hide();
        composeBox.remove();
      });
+
      $(emailComposeView).on('disregardDraft', function(event, composeView) {
-       composeBox.hide();
        composeBox.remove();
      });
 
