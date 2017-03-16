@@ -206,8 +206,8 @@
       editor.on('change', function (e) {
         // copy html to plain
         $(self).find('.html_preview').html(editor.getContent());
-        $(self).find('[name=description_html]').val(editor.getContent());
-        $(self).find('[name=description]').val($(self).find('.html_preview').text());
+        $(self).find('input#description_html').val(editor.getContent());
+        $(self).find('textarea#description').val($(self).find('.html_preview').text());
       });
     };
 
@@ -340,21 +340,21 @@
        * Used to preview email. It also doubles as a means to get the plain text version
        * using $('#'+self.attr('id') + ' .html_preview').text();s
        */
-      $('<div></div>').addClass('hidden').addClass('html_preview').appendTo("form#" + self.attr('id') + ".composer-view");
+      $('<div></div>').addClass('hidden').addClass('html_preview').appendTo($(self));
 
       $('<input>')
         .attr('name', 'description_html')
         .attr('type', 'hidden')
         .attr('id', 'description_html')
-        .appendTo($('#' + self.attr('id')));
+        .appendTo($(self));
 
       if (typeof tinymce === "undefined") {
         console.error('Missing Dependency: Cannot find tinyMCE.');
 
         // copy plain to html
         $(self).find('#description_html').closest('.edit-view-row-item').addClass('hidden');
-        $(self).find('textarea[name=description]').on("keyup", function (e) {
-          $(self).find('[name=description_html]').val($(self).find('textarea[name=description]').val().replace('\n', '<br>'));
+        $(self).find('textarea#description_html').on("keyup", function (e) {
+          $(self).find('input#description_html').val($(self).find('textarea#description').val().replace('\n', '<br>'));
         });
       } else {
         $(self).find('[data-label="description_html"]').closest('.edit-view-row-item').addClass('hidden');
