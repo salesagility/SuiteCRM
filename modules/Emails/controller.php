@@ -42,10 +42,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+if($_REQUEST['action'] === 'ComposeView') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'ComposeView';
+}
+
+
 class EmailsController extends SugarController
 {
     public function action_index()
     {
+        global $sugar_config;
+        $sugar_config['http_referer']['actions'][] = 'ComposeView';
         $this->view = 'list';
     }
 

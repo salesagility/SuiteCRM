@@ -192,59 +192,59 @@
 {{sugar_include type='smarty' file=$footerTpl}}
 
 
-{literal}
+{if $RETURN_MODULE}
+    {literal}
 
-    <script type="text/javascript">
+        <script type="text/javascript">
 
-    var selectTab = function(tab) {
-        $('#EditView_tabs div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').hide();
-        $('#EditView_tabs div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').eq(tab).show().addClass('active').addClass('in');
-    };
+        var selectTab = function(tab) {
+            $('#EditView_tabs div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').hide();
+            $('#EditView_tabs div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').eq(tab).show().addClass('active').addClass('in');
+        };
 
-    var selectTabOnError = function(tab) {
-        selectTab(tab);
-        $('#EditView_tabs ul.nav.nav-tabs li').removeClass('active');
-        $('#EditView_tabs ul.nav.nav-tabs li a').css('color', '');
+        var selectTabOnError = function(tab) {
+            selectTab(tab);
+            $('#EditView_tabs ul.nav.nav-tabs li').removeClass('active');
+            $('#EditView_tabs ul.nav.nav-tabs li a').css('color', '');
 
-        $('#EditView_tabs ul.nav.nav-tabs li').eq(tab).find('a').first().css('color', 'red');
-        $('#EditView_tabs ul.nav.nav-tabs li').eq(tab).addClass('active');
+            $('#EditView_tabs ul.nav.nav-tabs li').eq(tab).find('a').first().css('color', 'red');
+            $('#EditView_tabs ul.nav.nav-tabs li').eq(tab).addClass('active');
 
-    };
+        };
 
-    var selectTabOnErrorInputHandle = function(inputHandle) {
-        var tab = $(inputHandle).closest('.tab-pane-NOBOOTSTRAPTOGGLER').attr('id').match(/^detailpanel_(.*)$/)[1];
-        selectTabOnError(tab);
-    };
+        var selectTabOnErrorInputHandle = function(inputHandle) {
+            var tab = $(inputHandle).closest('.tab-pane-NOBOOTSTRAPTOGGLER').attr('id').match(/^detailpanel_(.*)$/)[1];
+            selectTabOnError(tab);
+        };
 
 
-    $(function(){
-        $('#EditView_tabs ul.nav.nav-tabs li > a[data-toggle="tab"]').click(function(e){
-            if(typeof $(this).parent().find('a').first().attr('id') != 'undefined') {
-                var tab = parseInt($(this).parent().find('a').first().attr('id').match(/^tab(.)*$/)[1]);
-                selectTab(tab);
-            }
+        $(function(){
+            $('#EditView_tabs ul.nav.nav-tabs li > a[data-toggle="tab"]').click(function(e){
+                if(typeof $(this).parent().find('a').first().attr('id') != 'undefined') {
+                    var tab = parseInt($(this).parent().find('a').first().attr('id').match(/^tab(.)*$/)[1]);
+                    selectTab(tab);
+                }
+            });
+
+            $('a[data-toggle="collapse-edit"]').click(function(e){
+                if($(this).hasClass('collapsed')) {
+                  // Expand panel
+                    // Change style of .panel-header
+                    $(this).removeClass('collapsed');
+                    // Expand .panel-body
+                    $(this).parents('.panel').find('.panel-body').removeClass('in').addClass('in');
+                } else {
+                  // Collapse panel
+                    // Change style of .panel-header
+                    $(this).addClass('collapsed');
+                    // Collapse .panel-body
+                    $(this).parents('.panel').find('.panel-body').removeClass('in').removeClass('in');
+                }
+            });
         });
+        </script>
 
-        $('a[data-toggle="collapse-edit"]').click(function(e){
-            if($(this).hasClass('collapsed')) {
-              // Expand panel
-                // Change style of .panel-header
-                $(this).removeClass('collapsed');
-                // Expand .panel-body
-                $(this).parents('.panel').find('.panel-body').removeClass('in').addClass('in');
-            } else {
-              // Collapse panel
-                // Change style of .panel-header
-                $(this).addClass('collapsed');
-                // Collapse .panel-body
-                $(this).parents('.panel').find('.panel-body').removeClass('in').removeClass('in');
-            }
-        });
-    });
-
-    </script>
-
-{/literal}
+    {/literal}
 
     <script>
         {* Compose view has a TEMP ID in case you want to display multi instance of the ComposeView *}
@@ -252,4 +252,5 @@
           $('#{$TEMP_ID}').EmailsComposeView();
       {rdelim});
     </script>
+    {/if}
 </form>

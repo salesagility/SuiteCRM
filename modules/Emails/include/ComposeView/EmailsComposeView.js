@@ -38,7 +38,12 @@
  */
 
 (function ($) {
-
+  /**
+   *
+   * @param options
+   * @returns {jQuery|HTMLElement}
+   * @constructor
+   */
   $.fn.EmailsComposeView = function (options) {
     "use strict";
     var self = $(this);
@@ -213,10 +218,14 @@
 
     /**
      *
+     * @event onSendEmail
+     * @event sentEmailError
+     * @event sentEmailAlways
+     * @event sentEmail
      * @returns {boolean}
      */
     self.onSendEmail = function () {
-      $(document).trigger("SendEmail", [self]);
+       $(self).trigger("sendEmail", [self]);
 
       $.ajax({
         type: "POST",
@@ -232,14 +241,14 @@
             $(self).find('input[type="hidden"][name="return_action"]').val();
           location.href = redirect_location;
         } else {
-          $(document).trigger("SentEmail", [data, self]);
+           $(self).trigger("sentEmail", [self, data]);
         }
       }).fail(function (data) {
         "use strict";
         alert(SUGAR.language.translate($(self).find('input[type="hidden"][name="module"]').val(), 'LBL_ERROR_SENDING_EMAIL'))
-        $(document).trigger("SentEmailError", [data, self]);
+         $(self).trigger("sentEmailError", [self, data]);
       }).always(function (data) {
-        $(document).trigger("SentEmailAlways", [data, self]);
+         $(self).trigger("sentEmailAlways", [self, data]);
       });
 
       return false;
@@ -247,7 +256,7 @@
 
 
     /**
-     *
+     * @event sendEmail
      * @returns {boolean}
      */
     self.sendEmail = function () {
@@ -260,54 +269,60 @@
 
 
     /**
-     *
+     * @event attachFile
      * @returns {boolean}
      */
     self.attachFile = function () {
       "use strict";
+       $(self).trigger("attachFile", [self]);
+
       alert('attachFile placeholder');
       return false;
     };
 
 
     /**
-     *
+     * @event attachNote
      * @returns {boolean}
      */
     self.attachNote = function () {
       "use strict";
-      alert('attachNoteplaceholder');
+       $(self).trigger("attachNote", [self]);
+      alert('attachNote placeholder');
       return false;
     };
 
 
     /**
-     *
+     * @event attachDocument
      * @returns {boolean}
      */
     self.attachDocument = function () {
       "use strict";
+       $(self).trigger("attachDocument", [self]);
       alert('attachDocument placeholder');
       return false;
     };
 
     /**
-     *
+     * @event saveDraft
      * @returns {boolean}
      */
     self.saveDraft = function () {
       "use strict";
+       $(self).trigger("saveDraft", [self]);
       alert('saveDraft placeholder');
       return false;
     };
 
     /**
      *
+     * @event disregardDraft
      * @returns {boolean}
      */
     self.disregardDraft = function () {
       "use strict";
-      alert('disgardDraft placeholder');
+       $(self).trigger("disregardDraft", [self]);
       return false;
     };
 
@@ -319,12 +334,12 @@
       "use strict";
 
       if (self.length === 0) {
-        console.error('EmailsComposeView: Invalid Selector');
+        console.error('EmailsComposeView - Invalid Selector');
         return
       }
 
       if (self.attr('id').length === 0) {
-        console.warn('EmailsComposeView: expects element to have an id. EmailsComposeView has generated one.');
+        console.warn('EmailsComposeView - expects element to have an id. EmailsComposeView has generated one.');
         self.attr('id', self.generateID());
       }
 
@@ -349,7 +364,7 @@
         .appendTo($(self));
 
       if (typeof tinymce === "undefined") {
-        console.error('Missing Dependency: Cannot find tinyMCE.');
+        console.error('EmailsComposeView - Missing Dependency: Cannot find tinyMCE.');
 
         // copy plain to html
         $(self).find('#description_html').closest('.edit-view-row-item').addClass('hidden');
@@ -373,12 +388,12 @@
       $(self).find('.btn-disregard-draft').click(self.disregardDraft);
 
 
-      $(document).trigger("ConstructEmailsComposeView", [self]);
+       $(self).trigger("constructEmailsComposeView", [self]);
     };
 
     self.construct();
 
-    return self;
+    return $(self);
   };
 
   $.fn.EmailsComposeView.defaults = {

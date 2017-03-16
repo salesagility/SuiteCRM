@@ -38,9 +38,41 @@
  */
 
 $(document).ready(function(){
- $('[data-action=emails-compose]').click(function(){
-   alert('compose email placeholder');
- });
+  "use strict";
+ $('[data-action=emails-compose]').click(function() {
+   "use strict";
+   var emailComposeView = null;
+   var composeBox = messageBox({
+     "showHeader": true
+   });
+   composeBox.controls.modal.content.html(SUGAR.language.translate('', 'LBL_EMAIL_LOADING'));
+   composeBox.show();
+
+   $.ajax({
+     type: "GET",
+     cache: false,
+     url: 'index.php?module=Emails&action=ComposeView'
+   }).done(function (data) {
+     console.log('loaded email client');
+     composeBox.controls.modal.content.html(data);
+     emailComposeView = composeBox.controls.modal.content.find('.compose-view').EmailsComposeView();
+     $(emailComposeView).on('sentEmail', function(event, composeView) {
+       composeBox.hide();
+       composeBox.remove();
+     });
+     $(emailComposeView).on('disregardDraft', function(event, composeView) {
+       composeBox.hide();
+       composeBox.remove();
+     });
+
+   }).fail(function (data) {
+     composeBox.controls.modal.content.html(SUGAR.language.translate('', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
+     // TODO: Work out how to show security messages
+   });
+
+
+
+  });
 
  $('[data-action=emails-configure]').click(function(){
    alert('configure email placeholder');
