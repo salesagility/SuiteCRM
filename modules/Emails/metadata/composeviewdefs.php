@@ -60,10 +60,7 @@ $viewdefs['Emails']['ComposeView'] = array(
         ),
         'includes' => array(
             array(
-                'file' => 'modules/Emails/include/javascript/Email.js',
-            ),
-            array(
-                'file' => 'modules/Emails/include/ComposeView/ComposeView.js',
+                'file' => 'modules/Emails/include/ComposeView/EmailsComposeView.js',
             ),
             array(
                 'file' => 'include/javascript/mozaik/vendor/tinymce/tinymce/tinymce.min.js'
