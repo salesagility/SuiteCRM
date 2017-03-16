@@ -246,31 +246,31 @@
 
     self.attachFile = function () {
       "use strict";
-      alerts('attachFile placeholder');
+      alert('attachFile placeholder');
       return false;
     };
 
     self.attachNote = function () {
       "use strict";
-      alerts('attachNoteplaceholder');
+      alert('attachNoteplaceholder');
       return false;
     };
 
     self.attachDocument = function () {
       "use strict";
-      alerts('attachDocument placeholder');
+      alert('attachDocument placeholder');
       return false;
     };
 
     self.saveDraft = function () {
       "use strict";
-      alerts('saveDraft placeholder');
+      alert('saveDraft placeholder');
       return false;
     };
 
     self.disregardDraft = function () {
       "use strict";
-      alerts('disgardDraft placeholder');
+      alert('disgardDraft placeholder');
       return false;
     };
 
