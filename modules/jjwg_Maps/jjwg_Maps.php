@@ -853,6 +853,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         if (!empty($this->settings['geocoding_api_secret'])) {
             $hash = md5($address.$this->settings['geocoding_api_secret']);
             $request_url .= '&hash='.urlencode($hash);
+            $request_url .= '&key='.urlencode($this->settings['geocoding_api_secret']); // Geocoding API requires 'key='.
         }
 
         $GLOBALS['log']->info(__METHOD__.' cURL Request URL: '.$request_url);
