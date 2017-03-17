@@ -58,8 +58,8 @@ var mozaik = {
 
     getMozaikInnerHTML: function(name, innertext, style) {
         // TODO: add default colors settings to jquery plugin default settings (don't apply only the browser generated styles because it's user defined contents and it is not pre-defined values by dev!!!!)
-        bgcolor = '#FEFEFE';
-        bgoutercolor = '#778591';
+        var bgcolor = '#FEFEFE';
+        var bgoutercolor = '#778591';
 
         var bgorig = false;
         if(style) {
@@ -165,7 +165,8 @@ var plgBackground = {
                 },
                 onChange: function(rbg, hex){
                     $mozaikInner.css('background-color', '#'+hex);
-                    $mozaikInner.find('td').css('background-color', '#'+hex);
+                    $mozaikInner.find('table').css('background-color', '#'+hex);
+                    $mozaikInner.find('td').css('background-color', '');
                 },
             });
             $(elem).attr('data-initialized', '1');
