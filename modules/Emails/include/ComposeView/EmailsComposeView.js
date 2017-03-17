@@ -434,6 +434,8 @@
     "tinyMceOptions": {
       mode: "specific_textareas",
       plugins: "fullscreen",
+      menubar: false,
+      toolbar: ['fontselect | fontsizeselect | bold italic underline | styleselect'],
       formats: {
         bold: {inline: 'b'},
         italic: {inline: 'i'},

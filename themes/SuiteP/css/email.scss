@@ -176,7 +176,7 @@
   }
 }
 
-@media (max-width: $xs-breakpoint) {
+@media (max-width: $sm-breakpoint) {
   .compose-view {
     .panel {
       .col-sm-12 [type].col-sm-8.edit-view-field input[type=text]{
@@ -184,6 +184,41 @@
       }
       .col-sm-8 {
         width: 100%;
+      }
+      .panel-heading a div {
+        width: 93.66%;
+      }
+    }
+  }
+}
+
+@media (min-width: $sm-breakpoint) {
+  .compose-view {
+    .panel {
+      .col-sm-12 [type].col-sm-8.edit-view-field input[type=text]{
+        width: 100%;
+      }
+      .col-sm-8 {
+        width: 66.667%;
+      }
+      .panel-heading a div {
+        width: 93.66%;
+      }
+    }
+  }
+}
+
+@media (min-width: $md-breakpoint) {
+  .compose-view {
+    .panel {
+      .col-sm-12 [type].col-sm-8.edit-view-field input[type=text]{
+        width: 100%;
+      }
+      .col-sm-8 {
+        width: 83.333%;
+      }
+      .panel-heading a div {
+        width: 93.66%;
       }
     }
   }
