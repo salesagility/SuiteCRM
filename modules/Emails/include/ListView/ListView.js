@@ -48,10 +48,13 @@ $(document).ready(function(){
    "use strict";
    var emailComposeView = null;
    var composeBox = $('<div></div>').appendTo('#content');
-    composeBox.messageBox({
-     "showHeader": true
+   composeBox.messageBox({
+     "showHeader": false,
+     "showFooter": false,
+     "size": 'lg',
+     "backdrop": false
    });
-   composeBox.controls.modal.content.html(SUGAR.language.translate('', 'LBL_EMAIL_LOADING'));
+   composeBox.setBody(SUGAR.language.translate('', 'LBL_EMAIL_LOADING'));
    composeBox.show();
 
    $.ajax({
@@ -59,14 +62,21 @@ $(document).ready(function(){
      cache: false,
      url: 'index.php?module=Emails&action=ComposeView'
    }).done(function (data) {
-     console.log('loaded email client');
-     composeBox.controls.modal.content.html(data);
-     emailComposeView = composeBox.controls.modal.content.find('.compose-view').EmailsComposeView();
+     if(data.length === 0) {
+       console.error("Unable to display ComposeView");
+       composeBox.setBody(SUGAR.language.translate('', 'ERR_AJAX_LOAD'));
+       return;
+     }
+
+     composeBox.setBody(data);
+     emailComposeView = composeBox.controls.modal.body.find('.compose-view').EmailsComposeView();
      $(emailComposeView).on('sentEmail', function(event, composeView) {
+       composeBox.hide();
        composeBox.remove();
      });
 
      $(emailComposeView).on('disregardDraft', function(event, composeView) {
+       composeBox.hide();
        composeBox.remove();
      });
 

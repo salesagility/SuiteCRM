@@ -20,62 +20,6 @@
 
     var opts = $.extend( {}, $.fn.messageBox.defaults, options );
 
-    self.construct = function (constructOptions) {
-      if(typeof self.controls.modal.container === "undefined") {
-        self.controls.modal.container =
-          self
-            .addClass('modal fade message-box')
-            .attr('id', self.generateID())
-            .attr('role', 'dialog');
-
-        self.controls.modal.dialog =
-          $('<div></div>')
-            .addClass('modal-dialog')
-            .appendTo(self.controls.modal.container);
-
-        self.controls.modal.content =
-          $('<div></div>')
-            .addClass('modal-content')
-            .appendTo(self.controls.modal.dialog);
-
-        self.controls.modal.header =
-          $('<div></div>')
-            .addClass('modal-header')
-            .appendTo(self.controls.modal.content);
-
-        self.controls.modal.body =
-          $('<div></div>')
-            .addClass('modal-body')
-            .appendTo(self.controls.modal.content);
-
-        self.controls.modal.footer =
-          $('<div></div>')
-            .addClass('modal-footer')
-            .appendTo(self.controls.modal.content);
-        self.controls.modal.container.modal(constructOptions);
-
-        if(opts.showHeader === false) {
-          debugger;
-          self.controls.modal.header.hide();
-        };
-
-        if(opts.showFooter === false) {
-          self.controls.modal.footer.hide()
-        };
-      }
-
-      $(self).on('remove', self.destruct);
-
-      return self;
-    }
-    /**
-     * @destructor
-     */
-    self.destruct = function () {
-      $('body').removeClass('modal-open');;
-    }
-
-
     /**
      * Call open when there is no DOM. Show dialog
      */
@@ -97,44 +41,55 @@
 
     // Default behavior handle
     /**
-     * @event Show
+     * @event show
      */
     self.onShow = function () {
       "use strict";
+      $(self).trigger('show');
+      return false;
     };
 
     /**
-     * @event Shown
+     * @event shown
      */
     self.onShown = function () {
       "use strict";
+      $(self).trigger('shown');
+      return false;
     };
 
     /**
-     * @event Hide
+     * @event hide
      */
     self.onHide = function () {
       "use strict";
+      $(self).trigger('hide');
+      return false;
     };
 
     /**
-     * @event Hidden
+     * @event hidden
      */
     self.onHidden = function () {
-
+      $(self).trigger('hidden');
+      return false;
     };
 
     /**
-     * @event OK
+     * @event ok
      */
     self.onOk = function () {
-
+      $(self).trigger('ok');
+      return false;
     };
 
     /**
-     * @event CANCEL
+     * @event cancel
      */
-    self.onCancel = function () {};
+    self.onCancel = function () {
+      $(self).trigger('cancel');
+      return false;
+    };
 
     // Utilities
     /**
@@ -158,6 +113,162 @@
       return z;
     };
 
+    /**
+     *
+     * @param content htmlString|function
+     */
+    self.setTitle = function(content) {
+      self.controls.modal.container.find('.modal-title').html(content);
+    };
+
+    /**
+     * @return {jQuery}
+     */
+    self.getTitle = function() {
+      return self.controls.modal.container.find('.modal-title');
+    };
+
+    /**
+     *
+     * @param content htmlString|function
+     */
+    self.setBody = function(content) {
+      self.controls.modal.container.find('.modal-body').html(content);
+    };
+
+    /**
+     * @return {jQuery}
+     */
+    self.getBody = function() {
+      return self.controls.modal.container.find('.modal-body');
+    };
+
+    /**
+     *
+     */
+    self.showHeader = function() {
+      return self.controls.modal.container.find('.modal-header').show();
+    };
+
+    /**
+     *
+     */
+    self.hideHeader = function() {
+      return self.controls.modal.container.find('.modal-header').hide();
+    };
+
+    /**
+     *
+     */
+    self.showFooter = function() {
+      return self.controls.modal.container.find('.modal-footer').show();
+    };
+
+    /**
+     *
+     */
+    self.hideFooter = function() {
+      return self.controls.modal.container.find('.modal-footer').hide();
+    };
+
+    self.construct = function (constructOptions) {
+      if(typeof self.controls.modal.container === "undefined") {
+        if(typeof opts.onOK === "undefined") {
+          opts.onOK = self.onOk;
+        }
+
+        if(typeof opts.onCancel === "undefined") {
+          opts.onCancel = self.onCancel;
+        }
+
+        if(typeof opts.onShow === "undefined") {
+          opts.onShow = self.onShow;
+        }
+
+        if(typeof opts.onShown === "undefined") {
+          opts.onShown = self.onShown;
+        }
+
+        if(typeof opts.onHide === "undefined") {
+          opts.onShown = self.onShown;
+        }
+
+        if(typeof opts.onHidden === "undefined") {
+          opts.onHidden = self.onHidden;
+        }
+
+        self.controls.modal.container =
+          self
+            .addClass('modal fade message-box')
+            .attr('id', self.generateID())
+            .attr('role', 'dialog');
+
+        self.controls.modal.dialog =
+          $('<div></div>')
+            .addClass('modal-dialog modal-' + opts.size)
+            .attr('role', 'document')
+            .appendTo(self.controls.modal.container);
+
+        self.controls.modal.content =
+          $('<div></div>')
+            .addClass('modal-content')
+            .appendTo(self.controls.modal.dialog);
+
+        self.controls.modal.header =
+          $('<div></div>')
+            .addClass('modal-header')
+            .appendTo(self.controls.modal.content);
+
+        self.controls.modal.header.html(opts.headerContent);
+
+        self.controls.modal.body =
+          $('<div></div>')
+            .addClass('modal-body')
+            .appendTo(self.controls.modal.content);
+
+        self.controls.modal.footer =
+          $('<div></div>')
+            .addClass('modal-footer')
+            .html(opts.footerContent)
+            .appendTo(self.controls.modal.content);
+
+        self.controls.modal.footer.html(opts.footerContent);
+
+        // OK / Cancel
+        self.controls.modal.container.find('.btn-ok').click(opts.onOK);
+        self.controls.modal.container.find('.btn-cancel').click(opts.onCancel);
+
+        if(opts.showHeader === false) {
+          self.controls.modal.header.hide();
+        };
+
+        if(opts.showFooter === false) {
+          self.controls.modal.footer.hide()
+        };
+
+
+      }
+
+      $(self).on('remove', self.destruct);
+
+      return self;
+    }
+
+    /**
+     * @destructor
+     */
+    self.destruct = function () {
+      self.attr('aria-hidden', "true");
+      self.hide();
+      $('.modal-backdrop').last().remove();
+      if($('.message-box').length <= 1) {
+        $('.modal-open').removeClass('modal-open');
+      }
+
+
+      return true;
+    }
+
     self.construct(opts);
     // Return this
     return self;
@@ -165,12 +276,10 @@
 
 
   $.fn.messageBox.defaults = {
-    "showHeader": false,
-    "headerContent": '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title" id="title-cal-edit"></h4>',
-    "headerButtons": '',
-    "footerContent": '',
-    "footerButtons": '',
-    "showFooter" : false,
+    "showHeader": true,
+    "headerContent": '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title"></h4>',
+    "footerContent": '<button class="button btn-ok" type="button">'+SUGAR.language.translate('','LBL_OK')+'</button> <button class="button btn-cancel" type="button">'+SUGAR.language.translate('','LBL_CANCEL_BUTTON_LABEL')+'</button> ',
+    "showFooter" : true,
     // Message Box Specific events
     "onOK": self.onOK,
     "onCancel": self.onCancel,
@@ -183,7 +292,7 @@
     "size": 'sm',
     // Bootstrap
     "show": false,
-    "backdrop": false,
+    "backdrop": true,
     "keyboard": true
   }
 }( jQuery ));

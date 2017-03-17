@@ -48,6 +48,82 @@
     "use strict";
     var self = $(this);
     var opts = $.extend({}, $.fn.EmailsComposeView.defaults, options);
+
+    /**
+     * Constructor
+     */
+    self.construct = function () {
+      "use strict";
+
+      if (self.length === 0) {
+        console.error('EmailsComposeView - Invalid Selector');
+        return
+      }
+
+      if (self.attr('id').length === 0) {
+        console.warn('EmailsComposeView - expects element to have an id. EmailsComposeView has generated one.');
+        self.attr('id', self.generateID());
+      }
+
+      if (typeof opts.tinyMceOptions.setup === "undefined") {
+        opts.tinyMceOptions.setup = self.tinyMceSetup;
+      }
+
+      if (typeof opts.tinyMceOptions.selector === "undefined") {
+        opts.tinyMceOptions.selector = $(self).find('#description_html');
+      }
+
+      /**
+       * Used to preview email. It also doubles as a means to get the plain text version
+       * using $('#'+self.attr('id') + ' .html_preview').text();s
+       */
+      $('<div></div>').addClass('hidden').addClass('html_preview').appendTo($(self));
+
+      $('<input>')
+        .attr('name', 'description_html')
+        .attr('type', 'hidden')
+        .attr('id', 'description_html')
+        .appendTo($(self));
+
+      if (typeof tinymce === "undefined") {
+        console.error('EmailsComposeView - Missing Dependency: Cannot find tinyMCE.');
+
+        // copy plain to html
+        $(self).find('#description_html').closest('.edit-view-row-item').addClass('hidden');
+        $(self).find('textarea#description_html').on("keyup", function (e) {
+          $(self).find('input#description_html').val($(self).find('textarea#description').val().replace('\n', '<br>'));
+        });
+      } else {
+        $(self).find('[data-label="description_html"]').closest('.edit-view-row-item').addClass('hidden');
+        tinymce.init(opts.tinyMceOptions);
+      }
+
+      // Handle sent email submission
+      self.submit(self.onSendEmail);
+
+      // Handle toolbar button events
+      $(self).find('.btn-send-email').click(self.sendEmail);
+      $(self).find('.btn-attach-file').click(self.attachFile);
+      $(self).find('.btn-attach-notes').click(self.attachNote);
+      $(self).find('.btn-attach-document').click(self.attachDocument);
+      $(self).find('.btn-save-draft').click(self.saveDraft);
+      $(self).find('.btn-disregard-draft').click(self.disregardDraft);
+
+      $(self).on('remove', self.destruct);
+
+      $(self).trigger("constructEmailsComposeView", [self]);
+    };
+
+    /**
+     * @destructor
+     */
+    self.destruct = function(event) {
+      // TODO: Find a better way only display one tiny mce
+      // Remove the hanging tinyMCE div
+      $('.mce-panel').remove();
+      return true;
+    };
+
     /**
      * @return string UUID
      */
@@ -70,7 +146,7 @@
     };
 
     /**
-     * form validation
+     * confirms if form is valid
      * @returns {boolean}
      */
     self.isValid = function () {
@@ -84,17 +160,36 @@
       return valid;
     };
 
-
+    /**
+     * validates form and displays error
+     * @returns {boolean}
+     */
     self.validate = function () {
       var valid = self.isValid();
       if(valid === false) {
-        alert(self.translatedErrorMessage);
+        if(typeof messageBox !== "undefined") {
+          var mb = messageBox();
+          mb.setTitle(SUGAR.language.translate('', 'ERR_INVALID_REQUIRED_FIELDS'));
+          mb.setBody(self.translatedErrorMessage);
+
+          mb.on('ok', function() {
+            mb.remove();
+          });
+
+          mb.on('cancel', function() {
+            mb.remove();
+          });
+
+          mb.show();
+        } else {
+          alert(self.translatedErrorMessage);
+        }
       }
       return valid;
     }
 
     /**
-     *
+     * Is the To field valid
      * @returns {boolean}
      */
     self.isToValid = function () {
@@ -110,7 +205,7 @@
     };
 
     /**
-     *
+     * Is the CC field valid
      * @returns {boolean}
      */
     self.isCcValid = function () {
@@ -128,7 +223,7 @@
     };
 
     /**
-     *
+     * Is the BCC field valid
      * @returns {boolean}
      */
     self.isBccValid = function () {
@@ -145,7 +240,7 @@
     };
 
     /**
-     *
+     * Is the Subject field valid
      * @returns {boolean}
      */
     self.isSubjectValid = function () {
@@ -160,7 +255,7 @@
     };
 
     /**
-     *
+     * Is the Body field valid
      * @returns {boolean}
      */
     self.isBodyValid = function () {
@@ -185,7 +280,7 @@
     };
 
     /**
-     *
+     * Determines if a set of email addresses are valid
      * @param emailAddresses array|object eg ['a@example.com', 'b@example.com']
      * @returns {boolean}
      */
@@ -322,73 +417,8 @@
      */
     self.disregardDraft = function () {
       "use strict";
-       $(self).trigger("disregardDraft", [self]);
+      $(self).trigger("disregardDraft", [self]);
       return false;
-    };
-
-
-    /**
-     * Constructor
-     */
-    self.construct = function () {
-      "use strict";
-
-      if (self.length === 0) {
-        console.error('EmailsComposeView - Invalid Selector');
-        return
-      }
-
-      if (self.attr('id').length === 0) {
-        console.warn('EmailsComposeView - expects element to have an id. EmailsComposeView has generated one.');
-        self.attr('id', self.generateID());
-      }
-
-      if (typeof opts.tinyMceOptions.setup === "undefined") {
-        opts.tinyMceOptions.setup = self.tinyMceSetup;
-      }
-
-      if (typeof opts.tinyMceOptions.selector === "undefined") {
-        opts.tinyMceOptions.selector = $(self).find('#description_html');
-      }
-
-      /**
-       * Used to preview email. It also doubles as a means to get the plain text version
-       * using $('#'+self.attr('id') + ' .html_preview').text();s
-       */
-      $('<div></div>').addClass('hidden').addClass('html_preview').appendTo($(self));
-
-      $('<input>')
-        .attr('name', 'description_html')
-        .attr('type', 'hidden')
-        .attr('id', 'description_html')
-        .appendTo($(self));
-
-      if (typeof tinymce === "undefined") {
-        console.error('EmailsComposeView - Missing Dependency: Cannot find tinyMCE.');
-
-        // copy plain to html
-        $(self).find('#description_html').closest('.edit-view-row-item').addClass('hidden');
-        $(self).find('textarea#description_html').on("keyup", function (e) {
-          $(self).find('input#description_html').val($(self).find('textarea#description').val().replace('\n', '<br>'));
-        });
-      } else {
-        $(self).find('[data-label="description_html"]').closest('.edit-view-row-item').addClass('hidden');
-        tinymce.init(opts.tinyMceOptions);
-      }
-
-      // Handle sent email submission
-      self.submit(self.onSendEmail);
-
-      // Handle toolbar button events
-      $(self).find('.btn-send-email').click(self.sendEmail);
-      $(self).find('.btn-attach-file').click(self.attachFile);
-      $(self).find('.btn-attach-notes').click(self.attachNote);
-      $(self).find('.btn-attach-document').click(self.attachDocument);
-      $(self).find('.btn-save-draft').click(self.saveDraft);
-      $(self).find('.btn-disregard-draft').click(self.disregardDraft);
-
-
-       $(self).trigger("constructEmailsComposeView", [self]);
     };
 
     self.construct();
