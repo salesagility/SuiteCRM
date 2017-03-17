@@ -158,6 +158,9 @@ if (defined('sugarEntry')) {
 			            $displayColumns[$col] = $params;
 			    }
 			}
+
+
+
 			$this->lv->displayColumns = $displayColumns;
 			$this->type = 2;
 			$this->template = 'include/ListView/ListViewGeneric.tpl';

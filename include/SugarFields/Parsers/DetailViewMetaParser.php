@@ -198,7 +198,7 @@ if($merge && !empty($masterCopy) && file_exists($masterCopy)) {
 }
 
 $panels = $this->applyRules($moduleDir, $panels);
-return $this->createFileContents($moduleDir, $panels, $templateMeta, $filePath);
+return $this->createFileContents($moduleDir, $panels, $templateMeta);
 
 }
 

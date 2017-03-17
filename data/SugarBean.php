@@ -622,8 +622,11 @@ class SugarBean
      * Internal Function, do not override.
      */
     public static function get_union_related_list($parentbean, $order_by = "", $sort_order = '', $where = "",
-                                                  $row_offset = 0, $limit = -1, $max = -1, $show_deleted = 0, $subpanel_def)
+                                                  $row_offset = 0, $limit = -1, $max = -1, $show_deleted = 0, $subpanel_def = null)
     {
+        if (is_null($subpanel_def)) {
+            $GLOBALS['log']->fatal('subpanel_def is null');
+        }
         $secondary_queries = array();
         global $layout_edit_mode;
 
@@ -914,8 +917,12 @@ class SugarBean
      * @return array $fetched data.
      */
     public function process_union_list_query($parent_bean, $query,
-                                             $row_offset, $limit = -1, $max_per_page = -1, $where = '', $subpanel_def, $query_row_count = '', $secondary_queries = array())
+                                             $row_offset, $limit = -1, $max_per_page = -1, $where = '', $subpanel_def = null, $query_row_count = '', $secondary_queries = array())
     {
+        if (is_null($subpanel_def)) {
+            $GLOBALS['log']->fatal('subpanel_def is null');
+        }
+
         $db = DBManagerFactory::getInstance('listviews');
         /**
          * if the row_offset is set to 'end' go to the end of the list
@@ -965,7 +972,12 @@ class SugarBean
 
         if ($performSecondQuery) {
             if (!empty($limit) && $limit != -1 && $limit != -99) {
-                $result = $db->limitQuery($query, $row_offset, $limit, true, "Error retrieving $parent_bean->object_name list: ");
+                if (empty($parent_bean)) {
+                    $objectName = '[empty parent bean]';
+                } else {
+                    $objectName = $parent_bean->object_name;
+                }
+                $result = $db->limitQuery($query, $row_offset, $limit, true, "Error retrieving $objectName list: ");
             } else {
                 $result = $db->query($query, true, "Error retrieving $this->object_name list: ");
             }

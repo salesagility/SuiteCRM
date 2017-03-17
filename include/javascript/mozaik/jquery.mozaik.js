@@ -547,6 +547,16 @@ var plgBackground = {
                                     if($(el).css('width', '100%')) {
                                         $(el).css('width', 'initial');
                                     }
+
+                                    // generated style correction for save..
+                                    $(el).css('max-width', $(el).css('max-width'));
+                                    $(el).css('width', $(el).css('width'));
+                                    $(el).css('background-color', $(el).css('background-color'));
+                                    $(el).css('margin', parseInt($(el).css('margin-top')) + 'px auto '+parseInt($(el).css('margin-bottom')) + 'px auto');
+                                    $(el).css('margin-top', parseInt($(el).css('margin-top')) + 'px');
+                                    $(el).css('margin-bottom', parseInt($(el).css('margin-bottom')) + 'px');
+                                    $(el).css('margin-left', 'auto');
+                                    $(el).css('margin-right', 'auto');
                                 }
 
                                 // corrigate inline styles..

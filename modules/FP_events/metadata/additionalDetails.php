@@ -53,7 +53,7 @@ if (defined('sugarEntry')) {
 require_once "include/utils/additional_details.php";
 
 
-function additionalDetailsFP_events($fields = array(), SugarBean $bean, $params = array()) {
+function additionalDetailsFP_events($fields, SugarBean $bean, $params = array()) {
     return additional_details($fields, $bean, $params);
 }
 

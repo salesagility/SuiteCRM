@@ -2502,6 +2502,9 @@ class Email extends SugarBean {
 		$email_fields = $this->get_list_view_array();
 		$this->retrieveEmailText();
 		$email_fields['FROM_ADDR'] = $this->from_addr_name;
+		$email_fields['FROM_ADDR_NAME'] = $this->from_addr_name;
+		$email_fields['TO_ADDRS'] = $this->to_addrs;
+		$email_fields['TO_ADDRS_NAMES'] = $this->to_addrs_names;
 		$mod_strings = return_module_language($GLOBALS['current_language'], 'Emails'); // hard-coding for Home screen ListView
 
 		if($this->status != 'replied') {
@@ -2547,7 +2550,6 @@ class Email extends SugarBean {
 					$email_fields['CREATE_RELATED'] = $this->quickCreateForm();
 				break;
 			}
-
 		}
 
 		//BUG 17098 - MFH changed $this->from_addr to $this->to_addrs
