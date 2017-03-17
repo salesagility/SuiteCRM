@@ -3569,3 +3569,41 @@ ul.clickMenu > li > span.searchAppliedAlert {
   padding: 10px;
   font-size: 14px;
 }
+
+@media (max-width: $xs-breakpoint) {
+  .list #pagination td .paginationTable .pageNumbers {
+    display: none;
+  }
+
+  .parent-dropdown-handler {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  [name=listViewStartButton] {
+    display: none;
+  }
+
+  [name=listViewEndButton] {
+    display: none;
+  }
+}
+
+@media (max-width: $md-breakpoint) {
+  .selected-actions-label-text {
+    display: none;
+  }
+  .selected-actions-label .glyphicon {
+    display: inline-block;
+  }
+}
+
+@media (min-width: $md-breakpoint) {
+  .selected-actions-label .glyphicon {
+    display: none;
+  }
+
+  .selected-actions-label-text {
+    display: inline-block;
+  }
+}
