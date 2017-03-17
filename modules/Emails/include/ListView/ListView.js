@@ -78,7 +78,6 @@ $(document).ready(function(){
      $(emailComposeView).on('disregardDraft', function(event, composeView) {
        if(typeof messageBox !== "undefined") {
          var mb = messageBox({size:'lg'});
-         mb.hideHeader();
          mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_DELETE_EMAIL'));
 
          mb.on('ok', function() {
