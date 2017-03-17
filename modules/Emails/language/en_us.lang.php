@@ -47,6 +47,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 $mod_strings = array (
+    'LBL_EMAIL_INFORMATION' => 'EMAIL',
+    'LBL_EMPTY'                 => ' ',
 	'LBL_FW'					=> 'FW:',
 	'LBL_RE'					=> 'RE:',
 
@@ -117,6 +119,7 @@ $mod_strings = array (
 	'LBL_EMAILS_TASKS_REL'		=> 'Emails:Tasks',
 	'LBL_EMAILS_USERS_REL'		=> 'Emails:Users',
     'LBL_EMPTY_FOLDER'          => 'No Emails to display',
+    'LBL_SELECT_FOLDER'         => 'Select Folder',
 	'LBL_ERROR_SENDING_EMAIL'	=> 'Error Sending email',
 	'LBL_ERROR_SAVING_DRAFT'	=> 'Error Saving Draft',
 	'LBL_FROM_NAME'				=> 'From Name',
@@ -271,6 +274,7 @@ $mod_strings = array (
 	'LBL_WARN_NO_USERS'			=> 'No Users are selected',
     'LBL_WARN_NO_USERS_OR_TEAM' => 'Please select either a user or team for assignment.',
     'LBL_IMPORT_STATUS_TITLE'	=> 'Status',
+    'LBL_INDICATOR'         	=> 'Indicator',
 	'LBL_LIST_STATUS'			=> 'Status',
 	'LBL_LIST_TITLE_GROUP_INBOX'=> 'Group Inbox',
 	'LBL_LIST_TITLE_MY_DRAFTS'	=> 'My Drafts',
@@ -304,6 +308,7 @@ $mod_strings = array (
 	'LBL_EMAILTEMPLATE_MESSAGE_MULTIPLE_RECIPIENTS' => 'Using an email template containing contact variables, such as the contact name, to send emails to multiple recipients may have unexpected results. It is recommended that you use an email campaign for mass mailings.',
 	'LBL_CHECK_ATTACHMENTS'=>'Please Check Attachments!',
 	'LBL_HAS_ATTACHMENTS' => 'This email already has attachment(s). Would you like to keep the attachment(s)?',
+    'LBL_HAS_ATTACHMENT_INDICATOR' => 'Has Attachments',
 	'ERR_MISSING_REQUIRED_FIELDS' => 'Missing required field',
     'ERR_INVALID_REQUIRED_FIELDS' => 'Invalid required field',
 	'LBL_FILTER_BY_RELATED_BEAN' => 'Only show recipients related to',

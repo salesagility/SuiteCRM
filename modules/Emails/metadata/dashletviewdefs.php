@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,25 +36,44 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- *********************************************************************************/
-
-global $mod_strings;
 global $current_user;
 
-$default = 'index.php?module=Emails&action=ListView&assigned_user_id='.$current_user->id;
-
-$e = new Email();
-
-// my inbox
-if(ACLController::checkAccess('Emails', 'edit', true))$module_menu[]=Array("index.php?module=Emails&action=EditView&return_module=Emails&return_action=index", $mod_strings['LNK_NEW_SEND_EMAIL'],"Create", 'Emails');
-if(ACLController::checkAccess('Emails', 'list', true))$module_menu[]=Array("index.php?module=Emails&action=index&return_module=Emails&return_action=DetailView", $mod_strings['LNK_VIEW_MY_INBOX'],"List", 'Emails');
-
-
-?>
+$dashletData['EmailsDashlet']['searchFields'] = array(
+    'date_entered' => array('default' => ''),
+    'date_modified' => array('default' => ''),
+    'assigned_user_id' => array(
+        'type' => 'assigned_user_name',
+        'default' => $current_user->name
+    )
+);
+$dashletData['EmailsDashlet']['columns'] = array(
+    'name' => array(
+        'width' => '40',
+        'label' => 'LBL_LIST_NAME',
+        'link' => true,
+        'default' => true
+    ),
+    'date_entered' => array(
+        'width' => '15',
+        'label' => 'LBL_DATE_ENTERED',
+        'default' => true
+    ),
+    'date_modified' => array(
+        'width' => '15',
+        'label' => 'LBL_DATE_MODIFIED'
+    ),
+    'created_by' => array(
+        'width' => '8',
+        'label' => 'LBL_CREATED'
+    ),
+    'assigned_user_name' => array(
+        'width' => '8',
+        'label' => 'LBL_LIST_ASSIGNED_USER'
+    ),
+);

@@ -127,6 +127,7 @@ $app_list_strings = array(
             'Notes' => 'Note',
             'Calls' => 'Call',
             'Emails' => 'Email',
+            'EmailTemplates' => 'Email Templates',
             'Meetings' => 'Meeting',
             'Tasks' => 'Task',
             'Calendar' => 'Calendar',

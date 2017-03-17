@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,25 +36,59 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
-/*********************************************************************************
-
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- *********************************************************************************/
-
-global $mod_strings;
-global $current_user;
-
-$default = 'index.php?module=Emails&action=ListView&assigned_user_id='.$current_user->id;
-
-$e = new Email();
-
-// my inbox
-if(ACLController::checkAccess('Emails', 'edit', true))$module_menu[]=Array("index.php?module=Emails&action=EditView&return_module=Emails&return_action=index", $mod_strings['LNK_NEW_SEND_EMAIL'],"Create", 'Emails');
-if(ACLController::checkAccess('Emails', 'list', true))$module_menu[]=Array("index.php?module=Emails&action=index&return_module=Emails&return_action=DetailView", $mod_strings['LNK_VIEW_MY_INBOX'],"List", 'Emails');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
-?>
+/**
+ * @param $focus
+ * @param $field
+ * @param $value
+ * @param $view
+ * @return string
+ */
+function displayHasAttachmentField($focus, $field, $value, $view)
+{
+    global $app_strings, $app_list_strings, $mod_strings;
+    $result = '';
+    $bean = array();
+
+    if(empty($view)) {
+        return $result;
+    }
+
+    if(strtolower($field) !== 'has_attachment') {
+        return $result;
+    }
+
+    if(is_object($focus)) {
+        $focus = get_object_vars($focus);
+    } else if(is_array($focus)) {
+        $focus = array_change_key_case($focus, CASE_LOWER);
+    }
+
+    if(!empty($focus['id'])) {
+        $bean = BeanFactory::getBean('Emails', $focus['id']);
+        $bean->load_relationship('notes');
+        $attachmentIds = $bean->notes->get();
+
+        $bean->has_attachment = (count($attachmentIds) > 0);
+        if (is_object($bean)) {
+            $bean = get_object_vars($bean);
+        }
+    }
+
+    $template = new Sugar_Smarty();
+    $template->assign('APP', $app_strings);
+    $template->assign('APP_LIST_STRINGS', $app_list_strings);
+    $template->assign('MOD', $mod_strings);
+    $template->assign('bean', $bean);
+
+    $result = $template->fetch('modules/Emails/templates/displayHasAttachmentField.tpl');
+
+
+    return $result;
+}
