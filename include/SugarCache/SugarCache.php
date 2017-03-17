@@ -64,7 +64,7 @@ class SugarCache
         $lastPriority = 1000;
         $locations = array('include/SugarCache','custom/include/SugarCache');
  	    foreach ( $locations as $location ) {
-            if (sugar_is_dir($location) && $dir = opendir($location)) {
+            if (is_dir($location) && $dir = opendir($location)) {
                 while (($file = readdir($dir)) !== false) {
                     if ($file == ".."
                             || $file == "."
@@ -131,6 +131,10 @@ class SugarCache
                     break;
                 }
             }
+        }
+        // Zend OPcache
+        if ( function_exists('opcache_reset') ) {
+            opcache_reset();
         }
     }
 

@@ -62,7 +62,7 @@ class EmailAddress extends SugarEmailAddress
 	function save($id = '', $module = '', $new_addrs=array(), $primary='', $replyTo='', $invalid='', $optOut='', $in_workflow=false)
 	{
 		if ( func_num_args() > 1 ) {
-		    parent::save($id, $module, $new_addrs, $primary, $replyTo, $invalid, $optOut, $in_workflow);
+		    parent::saveEmail($id, $module, $new_addrs, $primary, $replyTo, $invalid, $optOut, $in_workflow);
 		}
 		else {
 		    SugarBean::save($id);

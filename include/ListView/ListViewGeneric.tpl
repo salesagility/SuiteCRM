@@ -42,7 +42,7 @@
 
 
 *}
-
+{include file='include/ListView/ListViewColumnsFilterDialog.tpl'}
 <script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
 
 
@@ -101,6 +101,12 @@
             {$APP.LBL_NO_DATA}
         </p>
 	{/if}
+		<p class="msg">
+			{$APP.MSG_LIST_VIEW_CHANGE_SEARCH}
+		</p>
+		{if $showFilterIcon}
+			{include file='include/ListView/ListViewSearchLink.tpl'}
+		{/if}
 	</div>
 {/if}
 {$multiSelectData}
@@ -127,8 +133,15 @@
 			{foreach from=$displayColumns key=colHeader item=params}
                 {if $colCounter == '3'}{assign var='datahide' value="phone,phonelandscape"}{/if}
                 {if $colCounter == '5'}{assign var='datahide' value="phone,phonelandscape,tablet"}{/if}
-                {if $colHeader == 'NAME' || $params.bold}<th scope='col' data-toggle="true">
-				{else}<th scope='col' data-hide="{$datahide}">{/if}
+                {if $colCounter == '0'}
+					{assign var='hiddenclass' value=""}
+				{elseif $colCounter < '5'}
+					{assign var='hiddenclass' value="hidden-xs"}
+				{elseif $colCounter >= '5'}
+					{assign var='hiddenclass' value="hidden-xs hidden-sm hidden-md"}
+                {/if}
+                {if $colHeader == 'NAME' || $params.bold}<th scope='col' data-toggle="true" class="{$hiddenclass}">
+				{else}<th scope='col' data-hide="{$datahide}" class="{$hiddenclass}">{/if}
 					<div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
 	                {if $params.sortable|default:true}
 	                    {if $params.url_sort}
@@ -195,20 +208,30 @@
 	            {capture assign=action}{if $act}{$act}{else}EditView{/if}{/capture}
 				<td width='2%' nowrap>
                     {if $pageData.rowAccess[$id].edit}
+						{if $linkModule != 'AOR_Reports'}
                         <a title='{$editLinkString}' id="edit-{$rowData.ID}"
                            href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
                                 >
                             {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
                             {sugar_getimage name="edit_inline.gif" attr='border="0" ' alt="$alt_edit"}</a>
+						{/if}
                     {/if}
 	            </td>
 
 				{/if}
 				{counter start=0 name="colCounter" print=false assign="colCounter"}
 				{foreach from=$displayColumns key=col item=params}
+
+					{if $colCounter == '0'}
+						{assign var='hiddenclass' value=""}
+					{elseif $colCounter < '5'}
+						{assign var='hiddenclass' value="hidden-xs"}
+					{elseif $colCounter >= '5'}
+						{assign var='hiddenclass' value="hidden-xs hidden-sm hidden-md"}
+					{/if}
                     {$displayColumns[type]}
 				    {strip}
-					<td {if $scope_row} scope='row' {/if} align='{$params.align|default:'left'}' valign="top" type="{$displayColumns.$col.type}" field="{$col|lower}" class="{if $inline_edit && ($displayColumns.$col.inline_edit == 1 || !isset($displayColumns.$col.inline_edit))}inlineEdit{/if}{if ($params.type == 'teamset')}nowrap{/if}{if preg_match('/PHONE/', $col)} phone{/if}">
+					<td {if $scope_row} scope='row' {/if} align='{$params.align|default:'left'}' valign="top" type="{$displayColumns.$col.type}" field="{$col|lower}" class="{$hiddenclass} {if $inline_edit && ($displayColumns.$col.inline_edit == 1 || !isset($displayColumns.$col.inline_edit))}inlineEdit{/if}{if ($params.type == 'teamset')}nowrap{/if}{if preg_match('/PHONE/', $col)} phone{/if}">
 						{if $col == 'NAME' || $params.bold}<b>{/if}
 					    {if $params.link && !$params.customCode}
 	{capture assign=linkModule}{if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$params.module|default:$pageData.bean.moduleDir}{/if}{/capture}

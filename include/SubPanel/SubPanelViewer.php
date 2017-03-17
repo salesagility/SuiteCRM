@@ -98,7 +98,7 @@ $aSubPanelObject = $spd->load_subpanel ( $subpanel ) ;
 
 
 $subpanel_object = new SubPanel($module, $record, $subpanel, $aSubPanelObject, $layout_def_key, $collection);
-$subpanel_object->setTemplateFile('include/SubPanel/SubPanelDynamic.html');
+$subpanel_object->setTemplateFile('include/SubPanel/tpls/SubPanelDynamic.tpl');
 
 echo (empty($_REQUEST['inline']))?$subpanel_object->get_buttons():'' ;  
 

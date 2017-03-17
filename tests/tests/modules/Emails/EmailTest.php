@@ -86,10 +86,6 @@ class EmailTest extends PHPUnit_Framework_TestCase
     {
         $email = new Email();
 
-        //test without a filename
-        $result = $email->email2GetMime();
-        $this->assertEquals('application/octet-stream', $result);
-
         //test with a filename
         $result = $email->email2GetMime('config.php');
         $this->assertEquals('text/x-php', $result);
@@ -112,11 +108,11 @@ class EmailTest extends PHPUnit_Framework_TestCase
 
         //test with one of required attribute set
         $email->type = 'draft';
-        $this->assertEquals(false,  $email->isDraftEmail());
+        $this->assertEquals(false,  $email->isDraftEmail(array()));
 
         //test with both of required attribute set
         $email->status = 'draft';
-        $this->assertEquals(true,  $email->isDraftEmail());
+        $this->assertEquals(true,  $email->isDraftEmail(array()));
     }
 
     public function testgetNamePlusEmailAddressesForCompose()

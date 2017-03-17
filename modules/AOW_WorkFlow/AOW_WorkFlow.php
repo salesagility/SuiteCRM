@@ -403,12 +403,17 @@ class AOW_WorkFlow extends Basic {
                     $where_set = true;
                     break;
                 case 'SecurityGroup':
-                    if(file_exists('modules/SecurityGroups/SecurityGroup.php')){
-                        //TODO check bean in group
-                        return array();
-                        break;
+                    $sgModule = $condition_module->module_dir;
+                    if (isset($data['module']) && $data['module'] !== '') {
+                        $sgModule = $data['module'];
                     }
-
+                    $sql = 'EXISTS (SELECT 1 FROM securitygroups_records WHERE record_id = ' . $field . " AND module = '" . $sgModule . "' AND securitygroup_id = '" . $condition->value . "' AND deleted=0)";
+                    if ($sgModule === 'Users') {
+                        $sql = 'EXISTS (SELECT 1 FROM securitygroups_users WHERE user_id = ' . $field . " AND securitygroup_id = '" . $condition->value . "' AND deleted=0)";
+                    }
+                    $query['where'][] = $sql;
+                    $where_set = true;
+                    break;
                 case 'Value':
                 default:
                     $value = "'".$condition->value."'";
