@@ -33,6 +33,61 @@ class AOS_ContractsController extends SugarController {
 		$this->view = 'edit';
 		$GLOBALS['view'] = $this->view;
 
+        if(isset($this->return_id)){
+           $quote = BeanFactory::getBean('AOS_Quotes', $this->return_id);
+            if($quote instanceof SugarBean && $quote->object_name == 'AOS_Quotes' && is_object($quote) && $quote->id != ''){
+              foreach($quote->field_defs as $key => $value){
+                  switch ($key) {
+                      case 'name':
+                          $this->bean->$key = $quote->$key;
+                          break;
+                      case 'assigned_user_id':
+                          $this->bean->$key = $quote->$key;
+                          break;
+                      case 'total_amount':
+                          $this->bean->total_contract_value = $quote->$key;
+                          break;
+                      case 'billing_account_id':
+                          $this->bean->contract_account_id = $quote->$key;
+                          break;
+                      case 'billing_contact_id':
+                          $this->bean->contact_id = $quote->$key;
+                          break;
+                      case 'opportunity_id':
+                          $this->bean->$key = $quote->$key;
+                          break;
+                      case 'total_amt':
+                          $this->bean->$key = $quote->$key;
+                          break;
+                      case 'subtotal_amount':
+                          $this->bean->$key = $quote->$key;
+                          break;
+                      case 'discount_amount':
+                          $this->bean->$key = $quote->$key;
+                          break;
+                      case 'tax_amount':
+                          $this->bean->$key = $quote->$key;
+                          break;
+                      case 'shipping_amount':
+                          $this->bean->$key = $quote->$key;
+                          break;
+                      case 'shipping_tax':
+                          $this->bean->$key = $quote->$key;
+                          break;
+                      case 'shipping_tax_amt':
+                          $this->bean->$key = $quote->$key;
+                          break;
+                      case 'total_amount':
+                          $this->bean->$key = $quote->$key;
+                          break;
+                      case 'currency_id':
+                          $this->bean->$key = $quote->$key;
+                          break;
+                  }
+              }
+           }
+        }
+
 		if (isset($_REQUEST['aos_quotes_id'])) {
             		$query = "SELECT * FROM aos_quotes WHERE id = '{$_REQUEST['aos_quotes_id']}'";
             		$result = $this->bean->db->query($query, true);

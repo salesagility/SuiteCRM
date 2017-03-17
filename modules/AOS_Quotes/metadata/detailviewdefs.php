@@ -46,7 +46,7 @@ array (
           ),
           8 => 
           array (
-            'customCode' => '<input type="submit" class="button" onClick="this.form.action.value=\'createContract\';" value="{$MOD.LBL_CREATE_CONTRACT}">',
+            'customCode' => '<input type="submit" class="button" onClick="this.form.action.value=\'EditView\'; this.form.return_action.value=\'DetailView\'; this.form.return_module.value=\'AOS_Quotes\'; this.form.return_id.value=\'{$fields.id.value}\'; this.form.module.value=\'AOS_Contracts\'; " value="{$MOD.LBL_CREATE_CONTRACT}">',
             'sugar_html' => 
             array (
               'type' => 'submit',
@@ -56,7 +56,7 @@ array (
                 'class' => 'button',
                 'id' => 'create_contract_button',
                 'title' => '{$MOD.LBL_CREATE_CONTRACT}',
-                'onclick' => 'this.form.action.value=\'createContract\';',
+                'onclick' => 'this.form.action.value=\'EditView\'; this.form.return_action.value=\'DetailView\'; this.form.return_module.value=\'AOS_Quotes\'; this.form.return_id.value=\'{$fields.id.value}\'; this.form.module.value=\'AOS_Contracts\';',
                 'name' => 'Create Contract',
               ),
             ),
