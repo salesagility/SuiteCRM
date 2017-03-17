@@ -171,6 +171,9 @@
       return self.controls.modal.container.find('.modal-footer').hide();
     };
 
+    self.headerContent = '<button type="button" class="close btn-cancel" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title"></h4>';
+    self.footerContent = '<button class="button btn-ok" type="button">'+SUGAR.language.translate('','LBL_OK')+'</button> <button class="button btn-cancel" type="button">'+SUGAR.language.translate('','LBL_CANCEL_BUTTON_LABEL')+'</button> ';
+
     self.construct = function (constructOptions) {
       if(typeof self.controls.modal.container === "undefined") {
         if(typeof opts.onOK === "undefined") {
@@ -196,6 +199,16 @@
         if(typeof opts.onHidden === "undefined") {
           opts.onHidden = self.onHidden;
         }
+
+
+        if(typeof opts.headerContent === "undefined") {
+          opts.headerContent = self.headerContent;
+        }
+
+        if(typeof opts.footerContent === "undefined") {
+          opts.footerContent = self.footerContent;
+        }
+
 
         self.controls.modal.container =
           self
@@ -277,8 +290,8 @@
 
   $.fn.messageBox.defaults = {
     "showHeader": true,
-    "headerContent": '<button type="button" class="close btn-cancel" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title"></h4>',
-    "footerContent": '<button class="button btn-ok" type="button">'+SUGAR.language.translate('','LBL_OK')+'</button> <button class="button btn-cancel" type="button">'+SUGAR.language.translate('','LBL_CANCEL_BUTTON_LABEL')+'</button> ',
+    "headerContent": self.headerContent,
+    "footerContent": self.footerContent,
     "showFooter" : true,
     // Message Box Specific events
     "onOK": self.onOK,
@@ -297,10 +310,11 @@
   }
 }( jQuery ));
 
+
 /**
  * Alias for $.fn.messageBox(options)
  * @param options
  */
-var messageBox = function (options) {
+messageBox = function (options) {
   return $('<div></div>').appendTo('body').messageBox(options);
-}
+};

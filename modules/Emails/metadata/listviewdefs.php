@@ -61,9 +61,6 @@ $viewdefs['Emails']['ListView'] = array(
         ),
         'includes' => array(
                 array(
-                    'file' => 'jssource/src_files/include/javascript/message-box.js',
-                ),
-                array(
                     'file' => 'modules/Emails/include/ListView/ListView.js',
                 ),
         ),
