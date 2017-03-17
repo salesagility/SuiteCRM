@@ -48,7 +48,7 @@ $dictionary['AOS_Products'] = array(
             'source' => 'non-db',
             'module' => 'AOS_Quotes',
             'bean_name' => 'AOS_Quotes',
-            'vname' => 'LBL_AOS_PRODUCTS_PURCHASES_FROM_AOS_QUOTES_TITLE',
+            'vname' => 'LBL_PRODUCTS_PURCHASES',
         ),
         'maincode' =>
             array(
@@ -301,7 +301,7 @@ $dictionary['AOS_Products'] = array(
             'link_type' => 'one',
             'module' => 'AOS_Product_Categories',
             'bean_name' => 'AOS_Product_Categories',
-            'vname' => 'LBL_AOS_PRODUCT_CATEGORIES_AOS_PRODUCTS_FROM_AOS_PRODUCT_CATEGORIES_TITLE',
+            'vname' => 'LBL_AOS_PRODUCT_CATEGORIES',
         ),
         'aos_product_category_name' => array(
             'required' => false,

@@ -23,93 +23,19 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
- 
-class aowTemplateParser{
-		function parse_template_bean($string, $key, &$focus) {
-		global $app_strings;
-			$repl_arr = array();
-			
-			foreach($focus->field_defs as $field_def) {
-                if($field_def['type'] == 'currency'){
-                    $repl_arr[$key."_".$field_def['name']] = currency_format_number($focus->$field_def['name'],$params = array('currency_symbol' => false));
-                }
-				else if($field_def['type'] == 'enum' && isset($field_def['options'])) {
-                    $repl_arr[$key."_".$field_def['name']] = translate($field_def['options'],$focus->module_dir,$focus->$field_def['name']);
-				}
-                else if($field_def['type'] == 'multienum' && isset($field_def['options'])) {
-					$repl_arr[$key."_".$field_def['name']] = implode(', ', unencodeMultienum($focus->$field_def['name']));
-				}
-                else {
-					$repl_arr[$key."_".$field_def['name']] = $focus->$field_def['name'];
-				}
-			} // end foreach()
-	
-			krsort($repl_arr);
-			reset($repl_arr);
-	
-			foreach ($repl_arr as $name=>$value) {
-				if (strpos($name,'product_discount')>0){
-					if($value != '' && $value != '0.00')
-					{
-						if($repl_arr['aos_products_quotes_discount'] == 'Percentage')
-						{
-							$sep = get_number_seperators();
-							$value=rtrim(rtrim(format_number($value), '0'),$sep[1]);//.$app_strings['LBL_PERCENTAGE_SYMBOL'];
-						}
-						else
-						{
-							$value=currency_format_number($value,$params = array('currency_symbol' => false));
-						}
-					}
-					else
-					{
-						$value='';
-					}
-				}
-				if ($name === 'aos_products_product_image'){
-				$value = '<img src="'.$value.'"width="50" height="50"/>';
-				}
-				if ($name === 'aos_products_quotes_product_qty'){
-					$sep = get_number_seperators();
-					$value=rtrim(rtrim(format_number($value), '0'),$sep[1]);
-				}
-				if ($name === 'aos_products_quotes_vat'||strpos($name,'pct')>0 || strpos($name,'percent')>0 || strpos($name,'percentage')>0){
-					$sep = get_number_seperators();
-					$value=rtrim(rtrim(format_number($value), '0'),$sep[1]).$app_strings['LBL_PERCENTAGE_SYMBOL'];
-				}
-				if (strpos($name,'date')>0 || strpos($name,'expiration')>0){
-					if($value != ''){
-					$dt = explode(' ',$value);
-					$value = $dt[0];
-					}
-				}
-				if($value != '' && is_string($value)) {
-					$string = str_replace("\$$name", $value, $string);
-				} else if(strpos($name,'address')>0) {
-					$string = str_replace("\$$name<br />", '', $string);
-					$string = str_replace("\$$name <br />", '', $string);
-					$string = str_replace("\$$name", '', $string);
-				} else {
-					$string = str_replace("\$$name", '&nbsp;', $string);
-				}
 
-				
-			}
-	
-			return $string;
-		}
-		static function parse_template($string, &$bean_arr) {
-			global $beanFiles, $beanList;
+require_once 'modules/AOS_PDF_Templates/templateParser.php';
+ 
+class aowTemplateParser extends templateParser {
+
+		static function parse_template($string, $bean_arr) {
+			global $beanList;
 
             $person = array();
 	
 			foreach($bean_arr as $bean_name => $bean_id) {
-			
-				require_once($beanFiles[$beanList[$bean_name]]);
-	
-				$focus = new $beanList[$bean_name];
-				$focus->retrieve($bean_id);
-				
+
+				$focus = BeanFactory::getBean($bean_name, $bean_id);
 				$string = aowTemplateParser::parse_template_bean($string, strtolower($beanList[$bean_name]), $focus);
 
                 if($focus instanceof Person){

@@ -75,7 +75,7 @@ array (
           0 => 
           array (
             'name' => 'mail_smtpserver',
-            'label' => 'LBL_smtp_servername',
+            'label' => 'LBL_SMTP_SERVERNAME',
           ),
           1 => 
           array (

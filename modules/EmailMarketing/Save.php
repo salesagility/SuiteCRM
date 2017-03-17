@@ -54,13 +54,14 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 global $timedate;
 global $current_user;
 if(!empty($_POST['meridiem'])){
-	$_POST['time_start'] = $timedate->merge_time_meridiem($_POST['time_start'],$timedate->get_time_format(), $_POST['meridiem']);
+	$time_start = isset($_POST['time_start']) ? $_POST['time_start'] : $_POST['wiz_step3_time_start'];
+	$_POST['time_start'] = $timedate->merge_time_meridiem($time_start,$timedate->get_time_format(), $_POST['meridiem']);
 }
 
 if(empty($_REQUEST['time_start'])) {
 	if(!empty($_REQUEST['date_start'])) {
-		$_REQUEST['date_start'] = $_REQUEST['date_start'] . ' 00:00';
-		$_POST['date_start'] = $_POST['date_start'] . ' 00:00';
+		$_REQUEST['date_start'] = $_REQUEST['date_start'];// . ' 00:00';
+		$_POST['date_start'] = $_POST['date_start'];// . ' 00:00';
 	}
 } else {
 	if(!empty($_REQUEST['date_start'])) {
@@ -114,13 +115,13 @@ foreach($marketing->additional_column_fields as $field)
 
 $marketing->campaign_id = $_REQUEST['campaign_id'];
 
-if($_REQUEST['func'] == 'wizardUpdate') {
+if(isset($_REQUEST['func']) && $_REQUEST['func'] == 'wizardUpdate') {
 	foreach ($_POST as $key => $value) {
 		if (preg_match('/^wiz_step3_(.*)$/', $key, $match)) {
 			$field = $match[1];
 			$marketing->$field = $value;
 			if($field=='time_start') {
-				$marketing->date_start .= ' ' . $value;
+				$marketing->date_start .= ' ' . $value . (isset($_REQUEST['meridiem']) ? $_REQUEST['meridiem'] : '');
 			}
 		}
 	}
@@ -160,7 +161,7 @@ if($_REQUEST['action'] != 'WizardMarketingSave' && (!isset($_REQUEST['func']) ||
     header($header_URL);
 }
 
-if($_REQUEST['func'] == 'wizardUpdate') {
+if(isset($_REQUEST['func']) && $_REQUEST['func'] == 'wizardUpdate') {
 	$resp = array();
 	$resp['error'] = false;
 	$resp['data'] = json_encode(array('id' => $marketing->id));

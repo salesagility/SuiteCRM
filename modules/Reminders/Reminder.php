@@ -236,19 +236,20 @@ class Reminder extends Basic
 
     private static function getUnsentEmailReminders()
     {
-        global $db;
+        global $timedate;
         $reminders = array();
         $reminderBeans = BeanFactory::getBean('Reminders')->get_full_list('', "reminders.email = 1 AND reminders.email_sent = 0");
         if (!empty($reminderBeans)) {
             foreach ($reminderBeans as $reminderBean) {
                 $eventBean = BeanFactory::getBean($reminderBean->related_event_module, $reminderBean->related_event_module_id);
-                $dateStart = $eventBean->date_start;
-                $time = strtotime($db->fromConvert($dateStart, 'datetime'));
-                $dateStart = date(TimeDate::DB_DATETIME_FORMAT, $time);
-                $remind_ts = $GLOBALS['timedate']->fromDb($db->fromConvert($dateStart, 'datetime'))->modify("-{$reminderBean->timer_email} seconds")->ts;
-                $now_ts = $GLOBALS['timedate']->getNow()->ts;
-                if ($now_ts >= $remind_ts) {
-                    $reminders[$reminderBean->id] = $reminderBean;
+                if($eventBean) {
+                    $remind_ts = $timedate->fromUser($eventBean->date_start)->modify("-{$reminderBean->timer_email} seconds")->ts;
+                    $now_ts = $timedate->getNow()->ts;
+                    if ($now_ts >= $remind_ts) {
+                        $reminders[$reminderBean->id] = $reminderBean;
+                    }
+                } else {
+                    $reminderBean->mark_deleted($reminderBean->id);
                 }
             }
         }

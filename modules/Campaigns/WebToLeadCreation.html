@@ -44,86 +44,22 @@
 <!-- BEGIN: main -->
 <script type="text/javascript" src="include/javascript/popup_parent_helper.js?v={VERSION_MARK}"></script>
 <script type="text/javascript" src="modules/Campaigns/WebToLead.js?v={VERSION_MARK}"></script>
-<style>
-	.yui-dt table {
-		width: 180px;
-	}
-</style>
+<script type="text/javascript" src="include/javascript/jquery/jquery-ui-min.js?v={VERSION_MARK}"></script>
 
-{JAVASCRIPT}
+<hr>
+
+<div id="formSettings" style="display:none;">
+
 <form id="WebToLeadCreation" name="WebToLeadCreation" method="POST" action="index.php">
     <input type="hidden" name="module" value="Campaigns">
 	<input type="hidden" name="record" value="{ID}">
-	<input type="hidden" name="action">
+        <input type="hidden" name="action" id="action">
 	<input type="hidden" name="return_module" value="{RETURN_MODULE}">
 	<input type="hidden" name="return_id" value="{RETURN_ID}">
 	<input type="hidden" name="return_action" value="{RETURN_ACTION}">
 
-<div id='grid_Div'>
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-	<!--
-      <H1>Web To Lead Form generation for Campaign</H1>
-      -->
-      <tr>
-  		 <td>
-		 {TITLE1}
-	       	<br>
-			<p><b>{MOD.LBL_DRAG_DROP_COLUMNS}</b></p>
-		 </td>
-	  </tr>
-	<tr>
-		<td></td>
-	</tr>
-	<tr>
-		<td>
-		<table width="555" border="0" cellspacing="0" cellpadding="0">
 
-			<tr>
-				  <td>
-					<table align="center" border="0" cellpadding="0" cellspacing="0" width='350'>
-		            <tbody><tr><td align="center">
-				    {DRAG_DROP_CHOOSER_WEB_TO_LEAD}
-		            </td></tr></tbody></table>
-			     </td>
-			</tr>
-			<tr>
-				<td colspan='3'>
-				  <div id='webformfields'></div>
-				</td>
-			</tr>
-		</table>
-
-	<table width="595" border="0" cellspacing="0" cellpadding="2">
-		<tr>
-		<td align="left"><input id="lead_add_remove_button" type='button' title="{APP.LBL_ADD_ALL_LEAD_FIELDS}"
-			class="button"
-			onclick="javascript:dragDropAllFields('{APP.LBL_ADD_ALL_LEAD_FIELDS}','{APP.LBL_REMOVE_ALL_LEAD_FIELDS}');"
-			name="button" value="{APP.LBL_ADD_ALL_LEAD_FIELDS}">
-		</td>
-		<td align="right" style="padding-bottom: 2px;"><input title="{APP.LBL_CANCEL_BUTTON_TITLE}"
-			accessKey="{APP.LBL_CANCEL_BUTTON_KEY}" class="button"
-			onclick="this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}'; this.form.record.value='{RETURN_ID}'"
-			type="submit" name="button" value="{APP.LBL_CANCEL_BUTTON_LABEL}"> <input id="lead_next_button" type='button'
-			title="{APP.LBL_NEXT_BUTTON_LABEL}" class="button"
-			onclick="javascript:askLeadQ('next','{MOD.LBL_SELECT_REQUIRED_LEAD_FIELDS}','{MOD.LBL_SELECT_LEAD_FIELDS}');" name="button"
-			value="{APP.LBL_NEXT_BUTTON_LABEL}">
-		</td>
-		</tr>
-    </table>
-	</td>
-  </tr>
-</table>
-</div>
-
-
-<div id='lead_queries_Div' style="display: none">
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-    <tr><td>
-  	    {TITLE2}
-	   </td>
-	</tr>
-</table>
-
+        <div id='lead_queries_Div'>
 <table width="100%" cellpadding="0" cellspacing="0" border="0" class="edit view">
 
 	<tr>
@@ -136,7 +72,7 @@
 			</tr>
 			<tr>
 				<td scope="row"><slot>{MOD.LBL_DESCRIPTION_LEAD_FORM}</slot></td>
-				<td ><slot><textarea tabindex='1' name='web_description' rows='2' cols='55'>{MOD.LBL_DESCRIPTION_TEXT_LEAD_FORM}</textarea></slot></td>
+                                <td ><slot><textarea tabindex='1' id="web_description" name='web_description' rows='2' cols='55'>{MOD.LBL_DESCRIPTION_TEXT_LEAD_FORM}</textarea></slot></td>
 			</tr>
 			<tr>
 				<td scope="row">{MOD.LBL_DEFINE_LEAD_SUBMIT}</td>
@@ -164,7 +100,10 @@
 					id='campaign_id' name='campaign_id' type="hidden" value="{CAMPAIGN_ID}" /> <input
 					title="{APP.LBL_SELECT_BUTTON_TITLE}" type="button" tabindex='1'
 					class="button" value='{APP.LBL_SELECT_BUTTON_LABEL}' name=btn1
-					onclick='open_popup("Campaigns", 600, 400, "", true, false,{encoded_campaigns_popup_request_data});' /></span sugar='slot'></td>
+					onclick='open_popup("Campaigns", 600, 400, "", true, false,{encoded_campaigns_popup_request_data});' /></span sugar='slot'>
+                    <div class="required validation-message webToPersonError" id="relatedCampaignError"></div>
+                </td>
+
 			</tr>
 			<tr>
 	        	 <td scope="row"><span sugar='slot45'>{APP.LBL_ASSIGNED_TO}</span sugar='slot'><span
@@ -172,11 +111,10 @@
           	  	 <td  ><span sugar='slot45b'><input class="sqsEnabled" tabindex="1" autocomplete="off" id="assigned_user_name" name='assigned_user_name' type="text" value="{ASSIGNED_USER_NAME}"><input id='assigned_user_id' name='assigned_user_id' type="hidden" value="{ASSIGNED_USER_ID}" />
 		    	 <input title="{APP.LBL_SELECT_BUTTON_TITLE}" type="button" tabindex='1' class="button" value='{APP.LBL_SELECT_BUTTON_LABEL}' name=btn1
 				  onclick='open_popup("Users", 600, 400, "", true, false, {encoded_users_popup_request_data});' /></span sugar='slot'>
+                     <div class="required validation-message webToPersonError" id="assignedToError"></div>
 				</td>
-      	    </tr>
-	<!-- BEGIN: open_source -->
-	<!-- END: open_source -->
 
+      	    </tr>
 			<tr>
 				<td scope="row"><slot>{MOD.LBL_LEAD_FOOTER}</slot></td>
 				<td ><slot><textarea tabindex='1' name='web_footer' rows='2' cols='55'></textarea></slot></td>
@@ -186,20 +124,261 @@
 		</td>
 	</tr>
 </table>
-<table  width="100%" border="0" cellspacing="0" cellpadding="2">
-	<tr>
-		<td align="right" style="padding-bottom: 2px;"><input title="{APP.LBL_BACK}"
-			class="button" onclick="askLeadQ('back')" type="button" name="button" value="{APP.LBL_BACK}"> <input
-			title="{APP.LBL_CANCEL_BUTTON_TITLE}"  class="button"
-			onclick="this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}'; this.form.record.value='{RETURN_ID}'"
-			type="submit" name="button" value="{APP.LBL_CANCEL_BUTTON_LABEL}"> <input
-			title="{APP.LBL_GENERATE_WEB_TO_LEAD_FORM}" class="button"
-			onclick="this.form.action.value='GenerateWebToLeadForm';return addGrids('WebToLeadCreation');" type="submit"
-			name="button" value="{APP.LBL_GENERATE_WEB_TO_LEAD_FORM}"></td>
-	</tr>
-</table>
 </div>
 </form>
 
+    <input type="button" name="btnBack" value="{APP.LBL_BACK}" id="btnBack" />
+    <input type="button" name="btnGenerateForm" value="{APP.LBL_GENERATE_WEB_TO_LEAD_FORM}" id="btnGenerateForm" />
+</div>
+
+
+
+
+<div id="fieldChoices" style="display:none;">
+<select id='personTypeSelect'></select>
+<div id="fieldcontainer">
+        <div class="containerTitles">
+            <div class="title">{APP.LBL_AVAILABLE_FIELDS}</div>
+            <div class="title">{APP.LBL_FIRST_FORM_COLUMN}</div>
+            <div class="title">{APP.LBL_SECOND_FORM_COLUMN}</div>
+        </div>
+        <div class="field-list field-container ui-droppable ui-sortable ui-state-highlight" id="backlog"></div>
+        <div class="field-list field-container ui-droppable ui-sortable" id="pending"></div>
+        <div class="field-list field-container ui-droppable ui-sortable" id="inProgress"></div>
+    <div style="clear:both;"></div>
+</div>
+
+<div class="optionButtonsHolder">
+    <input type="button" name="btnAddAllFields" value="Add all Fields" id="btnAddAllFields" />
+    <input type="button" name="btnResetAllFields" value="Reset all Fields" id="btnResetAllFields" />
+    <input type="button" name="btnNext" value="Next" id="btnNext" />
+</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        var beanList = {BEAN_LIST};
+        populatePersonTypeDropDown(beanList);
+
+
+        $('#btnGenerateForm').on('click',function(){
+            //Check that the related campaign and assigned to have values
+            var assignedUser = $('#assigned_user_id').val();
+            var campaignId = $('#campaign_id').val();
+            var errorFound = false;
+
+            $('.webToPersonError').text('');
+
+            if(assignedUser === '')
+            {
+                $('#assignedToError').text('{APP.LBL_ASSIGNED_TO_REQUIRED}');
+                errorFound = true;
+            }
+            if(campaignId === '')
+            {
+                $('#relatedCampaignError').text('{APP.LBL_RELATED_CAMPAIGN_REQUIRED}');
+                errorFound = true;
+            }
+
+            if(errorFound)
+            {
+                return;
+            }
+            $('#action').val('GenerateWebToLeadForm');
+            $('#WebToLeadCreation').submit();
+        });
+
+        function populatePersonTypeDropDown(beanList)
+        {
+            var list = "";
+            $.each(beanList,function(i,v){
+               list+="<option value='"+i+"'>"+ v.moduleKnownAs+"</option>";
+            });
+            $("#personTypeSelect").empty().append(list);
+        }
+
+        $('#personTypeSelect').on('change',function(){
+            //RESET THE LIST AND CHANGE TYPE
+            $('.field-list').empty();
+            populateFields(beanList,getSelectedPersonType(),"#backlog");
+        });
+
+        $('#btnResetAllFields').on('click',function(){
+            $('.field-list').empty();
+            populateFields(beanList,getSelectedPersonType(),"#backlog");
+        });
+
+        $('#btnBack').on('click',function(){
+            $('#fieldChoices').show();
+            $('#formSettings').hide();
+        });
+
+        function addItemsToForm(items,form,name)
+        {
+            $.each(items,function(i,v){
+                $('<input/>', {
+                    class: 'fieldItems',
+                    id: name+i,
+                    name: name+'[]',
+                    type: 'hidden',
+                    value: v
+                }).appendTo('#'+form);
+            });
+        }
+
+        function addItemToForm(form,name,value)
+        {
+                $('<input/>', {
+                    class: 'fieldItems',
+                    id: name,
+                    name: name,
+                    type: 'hidden',
+                    value: value
+                }).appendTo('#'+form);
+        }
+
+        function addTypeOfPersonToForm(type, form)
+        {
+            $('<input/>', {
+                id: 'typeOfPerson',
+                name: 'typeOfPerson',
+                type: 'hidden',
+                value: type
+            }).appendTo('#'+form);
+        }
+
+        $('#btnNext').on('click',function(){
+
+
+
+            var requiredItemsNotIncluded =$('#backlog div.required');
+            if(requiredItemsNotIncluded.length === 0)
+            {
+                //Remove all previously added column items to stop duplicate items (should not happen but worth ensuring)
+                $('#WebToLeadCreation .fieldItems').remove();
+
+                var colsFirst = getArrayOfItemsForForm($('#pending input.fieldKey'));
+                var colsSecond = getArrayOfItemsForForm($('#inProgress input.fieldKey'));
+
+                if(colsFirst.length > 0)
+                    addItemsToForm(colsFirst,'WebToLeadCreation','colsFirst');
+
+                if(colsSecond.length > 0)
+                    addItemsToForm(colsSecond,'WebToLeadCreation','colsSecond');
+
+
+                var index = $("#personTypeSelect option:selected").val();
+                var bean = beanList[index];
+
+                var personType = bean.name;
+                addTypeOfPersonToForm(personType, 'WebToLeadCreation');
+
+                addItemToForm('WebToLeadCreation','moduleDir',bean.moduleDir);
+                addItemToForm('WebToLeadCreation','moduleName',bean.moduleName);
+
+                $('#fieldChoices').hide();
+                $('#formSettings').show();
+
+                var personLabel = $("#personTypeSelect option:selected").text();
+
+                $('#web_header').val('{APP.LBL_TYPE_OF_PERSON_FOR_FORM}'+personLabel);
+
+                $('#web_description').val('{APP.LBL_TYPE_OF_PERSON_FOR_FORM_DESC}'+personLabel);
+
+            }
+            else
+            {
+                var requiredFields = "";
+                $.each(requiredItemsNotIncluded,function(i,v){
+                   requiredFields += '\n'+v.innerText;
+                });
+                alert("{MOD.LBL_SELECT_REQUIRED_LEAD_FIELDS}"+requiredFields);
+            }
+
+        })
+
+        $('#btnAddAllFields').on('click',function(){
+            $('#backlog div.field').appendTo($('#pending'));
+        });
+
+        function populateFields(beanList,index,destination){
+            if(beanList === undefined || index === undefined || beanList[index] === undefined )
+            {
+                alert("Sorry, no person type items found");
+                return;
+            }
+            var availableFields = "";
+
+            var fieldList = beanList[index].fields;
+
+            $.each(fieldList,function(i,v){
+                var field = ''
+                if(v[2] !== undefined)
+                    field+='<div class="field ui-sortable-handle required">';
+                else
+                    field+='<div class="field ui-sortable-handle">';
+                field+=     '<div class="field-header">';
+                field+=         '<div class="field-type">'+v[0]+'</div>';
+                field+=         '<input type="hidden" class="fieldKey" value="'+v[1]+'">';
+                field+=     '</div>';
+                field+= '</div>';
+                availableFields+=field;
+            });
+            $(destination).append(availableFields);
+            var $container = $(".field-container");
+            var $field = $('.field');
+
+            $field.draggable({
+                addClasses: false,
+                connectToSortable: ".field-container",
+            });
+
+            $container.droppable({
+                accept: ".field"
+            });
+
+
+            $(".ui-droppable").sortable({
+                placeholder: "ui-state-highlight",
+                helper: 'original',
+                beforeStop: function (event, ui) {
+                    newItem = ui.item;
+                },
+                receive: function (event, ui) {
+
+                }
+            }).disableSelection().droppable({
+                over: ".ui-droppable",
+                activeClass: 'highlight',
+                drop: function (event, ui) {
+                    $(this).addClass("ui-state-highlight");
+                }
+            });
+        }
+
+        populateFields(beanList,getSelectedPersonType(),"#backlog");
+
+        function getSelectedPersonType()
+        {
+            return parseInt($("#personTypeSelect").val());
+        }
+
+        function getArrayOfItemsForForm(items)
+        {
+            var keyValues = [];
+            if(items !== undefined && items.length > 0)
+            {
+
+                $.each(items,function(i,v){
+                    keyValues.push($(v).val());
+                });
+            }
+            return keyValues;
+        }
+
+        $('#formSettings').hide();
+        $('#fieldChoices').show();
+    });
+</script>
+<!-- http://jsfiddle.net/milesrobinson/gbhw4yj8/1/ -->
 <!-- <div id="ddgrid4" class="ygrid-mso" style="width:250px;height:200px;overflow:hidden;">-->
 <!-- END: main -->

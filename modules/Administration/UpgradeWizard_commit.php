@@ -92,18 +92,6 @@ function UWrebuild() {
 	require_once('ModuleInstall/ModuleInstaller.php');
 	$mi = new ModuleInstaller();
 	$mi->rebuild_all();
-	$query = "DELETE FROM versions WHERE name='Rebuild Extensions'";
-	$log->info($query);
-	$db->query($query);
-
-	// insert a new database row to show the rebuild extensions is done
-	$id = create_guid();
-	$gmdate = TimeDate::getInstance()->nowDb();
-	$date_entered = db_convert("'$gmdate'", 'datetime');
-	$query = 'INSERT INTO versions (id, deleted, date_entered, date_modified, modified_user_id, created_by, name, file_version, db_version) '
-		. "VALUES ('$id', '0', $date_entered, $date_entered, '1', '1', 'Rebuild Extensions', '4.0.0', '4.0.0')";
-	$log->info($query);
-	$db->query($query);
 }
 
 unset($_SESSION['rebuild_relationships']);

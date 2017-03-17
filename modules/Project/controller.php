@@ -35,14 +35,24 @@ class ProjectController extends SugarController {
 
         $project = new Project();
         $project->retrieve($_POST["pid"]);
-        //Get project tasks
+        
+		//Get project tasks
         $Task = BeanFactory::getBean('ProjectTask');
         $tasks = $Task->get_full_list("order_number", "project_task.project_id = '".$project->id."'");
-        //Get the start and end date of the project in database format
-        $query = "SELECT estimated_start_date FROM project WHERE id = '{$project->id}'";
+        
+		//Get the start and end date of the project in database format
+		$query = "SELECT min(date_start) FROM project_task WHERE project_id = '{$project->id}'";
         $start_date = $db->getOne($query);
-        $query = "SELECT estimated_end_date FROM project WHERE id = '{$project->id}'";
+        
+		$query = "SELECT max(date_finish) FROM project_task WHERE project_id = '{$project->id}'";
         $end_date = $db->getOne($query);
+		
+		$duration = $this->count_days($start_date, $end_date );
+		if( $duration < 30 ){		
+			$query = "SELECT max(date_finish) + INTERVAL " . (30 - $duration ) . " DAY FROM project_task WHERE project_id = '{$project->id}'";
+			$end_date = $db->getOne($query);
+		}
+		
 ?>
 
         <script type="text/javascript">
@@ -80,6 +90,7 @@ class ProjectController extends SugarController {
 
         $task_name = $_POST['task_name'];
         $project_id = $_POST['project_id'];
+		$override_business_hours = intval($_POST['override_business_hours']);
         $task_id = $_POST['task_id'];
         $predecessor = $_POST['predecessor'];
         $rel_type = $_POST['rel_type'];
@@ -105,16 +116,92 @@ class ProjectController extends SugarController {
 
         $duration_unit = $_POST['unit'];
 
-        //$GLOBALS['log']->fatal("Duration:".$duration );
-
         //Compensate for resulting negative number when a 0 duration is passed in above
         if($duration < 0){
             $duration = 0;
         }
 
-        $enddate = $startdate->modify('+'.$duration.' '.$duration_unit);
-        $enddate = $enddate->format('Y-m-d');
+			
+		//------ build business hours array
+		$days = array("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday");
+		$businessHours = BeanFactory::getBean("AOBH_BusinessHours");
+		$bhours = array();
+		foreach($days as $day){
+			$bh = $businessHours->getBusinessHoursForDay($day);
+			
+			if($bh){
+				$bh = $bh[0];
+				if($bh->open){
+					$open_h = $bh ? $bh->opening_hours : 9;
+					$close_h = $bh ? $bh->closing_hours : 17;							
+					//$GLOBALS['log']->fatal($open_h . '--' . $close_h );
+					
+					$start_time = DateTime::createFromFormat($dateformat, $_POST['start']);
+					$start_time = $start_time->modify('+'.$open_h.' Hours');
 
+					$end_time = DateTime::createFromFormat($dateformat, $_POST['start']);
+					$end_time = $end_time->modify('+'.$close_h.' Hours');
+
+					$hours = ($end_time->getTimestamp() - $start_time->getTimestamp())/(60*60);
+					if($hours < 0)
+						$hours = 0 - $hours ;
+
+					//$hours = $bh->diffBusinessHours($start_time, $end_time);
+					$bhours[$day] = $hours; 	
+					//$GLOBALS['log']->fatal( $hours );
+
+				}
+				else{
+					$bhours[$day] = 0;
+				}
+			}
+		}
+		//-----------------------------------
+		
+
+		//default business hours array
+		if( $override_business_hours != 1){	
+			$bhours = array ('Monday' => 8,'Tuesday' => 8,'Wednesday' => 8, 'Thursday' => 8, 'Friday' => 8, 'Saturday' => 0, 'Sunday' => 0);
+		}
+		//---------------------------
+		
+		
+		//
+		//code block to calculate end date based on user's business hours
+		//
+	
+		$enddate = $startdate;
+
+		$h = 0;		
+		$d = 0;
+		if( $duration_unit == 'Hours' ){
+
+			while($duration > $h){
+				$day = $enddate->format('l');
+				//$GLOBALS['log']->fatal( $day . '--' . $bhours[$day] );
+				$h += $bhours[$day];	
+				$enddate = $enddate->modify('+1 Days');
+			} 
+			
+			$enddate = $enddate->format('Y-m-d');
+
+		}
+		else{
+			
+			while($duration >= $d){
+				$day = $enddate->format('l');
+				//$GLOBALS['log']->fatal( $day . '--' . $bhours[$day] );
+				if($bhours[$day] != 0 ){
+					$d += 1;	
+				}
+				$enddate = $enddate->modify('+1 Days');
+			} 
+			$enddate = $enddate->modify('-1 Days');//readjust it back to remove 1 additional day added
+			$enddate = $enddate->format('Y-m-d');			
+			
+		}
+
+		//----------------------------------
 
         if($percent > 0){
 
@@ -222,7 +309,8 @@ class ProjectController extends SugarController {
         $task->actual_duration = $actual_duration;
         $task->order_number = $order_number;
         $task->save();
-    }
+
+	}
 
     function update_task($id, $name, $start, $end, $project_id, $milestone_flag, $status, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description,$actual_duration){
 
@@ -244,6 +332,7 @@ class ProjectController extends SugarController {
         $task->actual_duration = $actual_duration;
         $task->description = $description;
         $task->save();
+
     }
 
 
@@ -263,10 +352,13 @@ class ProjectController extends SugarController {
         //Get  specified dates and users
         $start = $_POST['start'];
         //$end = $_POST['end'];
-        $users = $_POST['resources'];
+		$projects = explode(',', $_POST['projects']);
+        $users = explode(',', $_POST['users']);
+		$contacts = explode(',', $_POST['contacts']);
         $month = $_POST['month'];
         $flag = $_POST['flag'];
-        $type = $_POST['type'];
+		$chart_type = $_POST['chart_type'];
+        //$type = $_POST['type'];
 
         $start = new DateTime($start);
 
@@ -287,40 +379,58 @@ class ProjectController extends SugarController {
         $start = $start->format('Y-m-d');
 
         $end = $first_day->add(new DateInterval('P66D'));
-        $end->modify('this week');
+		
+		if( $chart_type == "monthly" )
+			$end = $first_day->add(new DateInterval('P365D'));
+		else if( $chart_type == "quarterly" )
+			$end = $first_day->add(new DateInterval('P1460D'));
+
+			
+		$end->modify('this week');
         $end->add(new DateInterval('P1D'));
         $end = $end->format('Y-m-d');
 
-        //set query to get all users
-        if($users == 'all'){
+        $project_where = "";
+        $project_user_where = "";
+        $project_contact_where = "";
+		if( count($projects) > 1 || $projects[0] != '' ){
+			$project_where = " AND project_id IN( '" . implode("','", $projects) . "' )";
+			$project_user_where = " AND project_users_1project_ida IN( '" . implode("','", $projects) . "' )";
+			$project_contact_where = " AND project_contacts_1project_ida IN( '" . implode("','", $projects) . "' )";
+		}
 
-            //Get the users data from the database
-            $resource_query = "SELECT project_users_1users_idb as id, first_name, last_name, 'project_users_1_c' AS type
-                                  FROM project_users_1_c
-                                  JOIN users ON users.id = project_users_1users_idb
-                                  WHERE project_users_1_c.deleted =0
-                               UNION
-                               SELECT project_contacts_1contacts_idb AS id, first_name, last_name, 'project_contacts_1_c' AS type
-                                  FROM project_contacts_1_c
-                                  JOIN contacts ON contacts.id = project_contacts_1contacts_idb
-                                  WHERE project_contacts_1_c.deleted =0";
-        }
-        else {//get specified user
+        $user_where = "";
+		if( count($users) > 1 || $users[0] != '' ){
+			$user_where = " AND project_users_1users_idb IN( '" . implode("','", $users) . "' )";
+		}
 
-            if($type == 'project_users_1_c'){
-                $resource_query = "SELECT DISTINCT project_users_1users_idb as id, first_name, last_name, 'project_users_1_c' AS type
-                                    FROM project_users_1_c
-                                    JOIN users ON users.id = project_users_1users_idb
-                                    WHERE project_users_1_c.deleted =0 AND project_users_1users_idb ='".$users."'";
+		$contacts_where = "";
+		if( count($contacts) > 1 || $contacts[0] != '' ){
+			$contacts_where = " AND project_contacts_1contacts_idb IN( '" . implode("','", $contacts) . "' )";
+		}
+	
+		//Get the users data from the database
 
-            }
-            else if($type == 'project_contacts_1_c'){
-                $resource_query = "SELECT DISTINCT project_contacts_1contacts_idb AS id, first_name, last_name, 'project_contacts_1_c' AS type
-                                    FROM project_contacts_1_c
-                                    JOIN contacts ON contacts.id = project_contacts_1contacts_idb
-                                    WHERE project_contacts_1_c.deleted =0 AND project_contacts_1contacts_idb='".$users."'";
-            }
-        }
+		$users_resource_query = "SELECT distinct project_users_1users_idb as id, first_name, last_name, 'project_users_1_c' AS type
+							  FROM project_users_1_c
+							  JOIN users ON users.id = project_users_1users_idb
+							  WHERE project_users_1_c.deleted =0 " . $user_where . $project_user_where ;
+
+
+		$contacts_resource_query = "SELECT distinct project_contacts_1contacts_idb AS id, first_name, last_name, 'project_contacts_1_c' AS type
+							  FROM project_contacts_1_c
+							  JOIN contacts ON contacts.id = project_contacts_1contacts_idb
+							  WHERE project_contacts_1_c.deleted =0 " . $contacts_where  . $project_contact_where;
+
+
+		if( $users[0] != 'none'  && $contacts[0] != 'none' )
+			$resource_query = $users_resource_query . '  UNION ' . $contacts_resource_query;
+		elseif( $users[0] == 'none')
+			$resource_query = $contacts_resource_query;
+		elseif( $contacts[0] == 'none')				  
+			$resource_query = $users_resource_query ;
+		else
+			$resource_query = "SELECT '0' as id, ' ' as first_name, ' ' as last_name, 'project_users_1_c' AS type";
 
         $resources = $db->query($resource_query);
 
@@ -331,29 +441,36 @@ class ProjectController extends SugarController {
         while($row = $db->fetchByAssoc($resources))
         {  //get each users associated project tasks
             $Task = BeanFactory::getBean('ProjectTask');
-            $tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$row['id']."'");
+            $tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$row['id']."'" . $project_where);
             //put users tasks in an array
             $taskarr = array();
             $t = 0;
+			$skipped = 0;
             if(!is_null($tasks)){
                 foreach($tasks as $task){
-                    $taskarr[$t]['id'] = $task->id;
-                    $taskarr[$t]['name'] = $task->name;
-                    $taskarr[$t]['status'] = $task->status;
-                    $taskarr[$t]['% cpl'] = $task->percent_complete;
-                    $taskarr[$t]['start_day'] = $this->count_days($start, $task->date_start);//Works out how many days into the chart the task starts
-                    $taskarr[$t]['duration'] = $task->duration;//how many days long is the task
-                    $taskarr[$t]['end_day'] = $this->count_days($start, $task->date_finish);//Works out how many days from start of the chart the task end day is.
-                    $taskarr[$t]['start_date'] = $task->date_start;
-                    $taskarr[$t]['end_date'] = $task->date_finish;
-                    $taskarr[$t]['project_id'] = $task->project_id;//parent projects id
-                    //get the project name (don't think this is really necessary)
-                    $project = new Project();
-                    $project->retrieve($task->project_id);
-                    $taskarr[$t]['project_name'] = $project->name;//parent projects id
-                    $t ++;
+                    if( $this->count_days($start, $task->date_start) == -1 && $this->count_days($start, $task->date_finish) == -1 )
+						$skipped++;	
+					else{
+						$taskarr[$t]['id'] = $task->id;
+						$taskarr[$t]['name'] = $task->name;
+						$taskarr[$t]['status'] = $task->status;
+						$taskarr[$t]['% cpl'] = $task->percent_complete;
+						$taskarr[$t]['start_day'] = $this->count_days($start, $task->date_start);//Works out how many days into the chart the task starts
+						$taskarr[$t]['duration'] = $task->duration;//how many days long is the task
+						$taskarr[$t]['end_day'] = $this->count_days($start, $task->date_finish);//Works out how many days from start of the chart the task end day is.
+						$taskarr[$t]['start_date'] = $task->date_start;
+						$taskarr[$t]['end_date'] = $task->date_finish;
+						$taskarr[$t]['project_id'] = $task->project_id;//parent projects id
+						//get the project name (don't think this is really necessary)
+						$project = new Project();
+						$project->retrieve($task->project_id);
+						$taskarr[$t]['project_name'] = $project->name;//parent projects id
+						
+						$t ++;
+					}
                 }
             }
+
             $row['task_count'] = $t;//the number of tasks for the user
             $row['tasks'] = $taskarr;//add users tasks to main user array
             //convert user array to an array of user objects
@@ -361,7 +478,7 @@ class ProjectController extends SugarController {
         }
 
         //Generate the resource chart by passing in the start date, end date and the array of user objects
-        new chart($start, $end, $resource_list);
+        new chart($start, $end, $projects, $users, $contacts, $resource_list, $chart_type);
       /* echo '<pre>';
         print_r($resource_list);
         echo '</pre>';*/
@@ -375,19 +492,20 @@ class ProjectController extends SugarController {
         global $mod_strings;
 
         $start_date = $_REQUEST['start_date'];
+		$end_date = $_REQUEST['end_date']; 
         $resource_id = $_REQUEST['resource_id'];
         //$resource_type = $_REQUEST['type'];
 
         $Task = BeanFactory::getBean('ProjectTask');
-        $tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$resource_id."' AND project_task.date_start <= '".$start_date."' AND project_task.date_finish >= '".$start_date."'");
 
+        $tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$resource_id."' AND ( (project_task.date_start >= '".$start_date."' AND project_task.date_start <= '".$end_date."') OR ( project_task.date_finish >= '".$start_date."' AND project_task.date_finish <= '".$end_date."' ) ) AND (project_id is not null AND project_id <> '')");
         echo '<table class="qtip_table">';
         echo '<tr><th>'.$mod_strings['LBL_TOOLTIP_PROJECT_NAME'].'</th><th>'.$mod_strings['LBL_TOOLTIP_TASK_NAME'].'</th><th>'.$mod_strings['LBL_TOOLTIP_TASK_DURATION'].'</th></tr>';
-
-        foreach($tasks as $task){
-
-            echo '<tr><td><a target="_blank" href="index.php?module=Project&action=DetailView&record='.$task->project_id.'">'.$task->project_name.'</a></td><td>'.$task->name.'</td><td>'.$task->duration.' '.$task->duration_unit.'</td></tr>';
-        }
+		if(is_array($tasks)){
+			foreach($tasks as $task){
+				echo '<tr><td><a target="_blank" href="index.php?module=Project&action=DetailView&record='.$task->project_id.'">'.$task->project_name.'</a></td><td>'.$task->name.'</td><td>'.$task->duration.' '.$task->duration_unit.'</td></tr>';
+			}
+		}
         echo '</table>';
 
         die();

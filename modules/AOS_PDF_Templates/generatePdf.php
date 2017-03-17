@@ -66,19 +66,19 @@
 	$object_arr['Users'] = $module->assigned_user_id;
 	$object_arr['Currencies'] = $module->currency_id;
 
-	$search = array ('@<script[^>]*?>.*?</script>@si', 		// Strip out javascript
-					'@<[\/\!]*?[^<>]*?>@si',		// Strip out HTML tags
-					'@([\r\n])[\s]+@',			// Strip out white space
-					'@&(quot|#34);@i',			// Replace HTML entities
-					'@&(amp|#38);@i',
-					'@&(lt|#60);@i',
-					'@&(gt|#62);@i',
-					'@&(nbsp|#160);@i',
-					'@&(iexcl|#161);@i',
-					'@<address[^>]*?>@si',
-                    '@&(apos|#0*39);@',
-                    '@&#(\d+);@e'
-	);
+    $search = array ('/<script[^>]*?>.*?<\/script>/si',      // Strip out javascript
+                    '/<[\/\!]*?[^<>]*?>/si',        // Strip out HTML tags
+                    '/([\r\n])[\s]+/',          // Strip out white space
+                    '/&(quot|#34);/i',          // Replace HTML entities
+                    '/&(amp|#38);/i',
+                    '/&(lt|#60);/i',
+                    '/&(gt|#62);/i',
+                    '/&(nbsp|#160);/i',
+                    '/&(iexcl|#161);/i',
+                    '/<address[^>]*?>/si',
+                    '/&(apos|#0*39);/',
+                    '/&#(\d+);/'
+    );
 
 	$replace = array ('',
 					 '',
@@ -91,9 +91,9 @@
 					 chr(161),
                      '<br>',
                      "'",
-                     'chr(\1)'
+                     'chr(%1)'
 		);
-	
+
 	$header = preg_replace($search, $replace, $template->pdfheader);
 	$footer = preg_replace($search, $replace, $template->pdffooter);
 	$text = preg_replace($search, $replace, $template->description);
@@ -117,8 +117,6 @@
 	$footer = templateParser::parse_template($footer, $object_arr);
 	
 	$printable = str_replace("\n","<br />",$converted);
-
-
 
 	if($task == 'pdf' || $task == 'emailpdf')
 		{

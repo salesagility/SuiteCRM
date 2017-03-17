@@ -100,7 +100,13 @@ function buildEditField(){
     $(".inlineEdit").dblclick(function(e) {
         e.preventDefault();
         //depending on what view you are using will find the id,module,type of field, and field name from the view
-        if(view == "DetailView"){
+    
+		//make the gantt chart view look like the detail view
+		if(view == "view_GanttChart" )
+			view = "DetailView"; 
+
+		if(view == "DetailView" ){
+
             var field = $(this).attr( "field" );
             var type = $(this).attr( "type" );
 
@@ -110,15 +116,17 @@ function buildEditField(){
                 var module = module_sugar_grp1;
             }
 
+
             var id = $("input[name=record]").attr( "value" );
         }else{
+
             var field = $(this).attr( "field" );
             var type = $(this).attr( "type" );
             var module = $("#displayMassUpdate input[name=module]").val();
             var id = $(this).closest('tr').find('[type=checkbox]').attr( "value" );
         }
 
-        //If we find all the required variables to do inline editing.
+		//If we find all the required variables to do inline editing.
         if(field && id && module){
 
             //Do ajax call to retrieve the validation for the field.
@@ -221,7 +229,7 @@ function clickedawayclose(field,id,module, type){
             // Fix for issue #373 strip HTML tags for correct comparison
             var output_value_compare = $(output_value).text();
             if(user_value != output_value_compare) {
-                var r = confirm("You have clicked away from the field you were editing without saving it. Click ok if you're happy to lose your change, or cancel if you would like to continue editing " + message_field);
+                var r = confirm( SUGAR.language.translate('app_strings', 'LBL_CONFIRM_CANCEL_INLINE_EDITING') + message_field);
                 if(r == true) {
                     var output = setValueClose(output_value);
                     $(document).off('click');
@@ -487,7 +495,7 @@ function getValidationRules(field,module,id){
     try {
         var validation = JSON.parse(result.responseText);
     } catch(e) {
-        alert("There was an error loading the field. Your session may have timed out. Please log in again to fix this");
+        alert(SUGAR.language.translate('app_strings', 'LBL_LOADING_ERROR_INLINE_EDITING'));
         return false;
     }
 

@@ -547,8 +547,9 @@ class RenameModules
         $linkedFields = $bean->get_linked_fields();
         foreach($linkedFields as $field => $defs)
         {
-            if ($bean->load_relationship($defs['name'])){
-                $relModule = $bean->$defs['name']->getRelatedModuleName();
+            $fieldName = $defs['name'];
+            if ($bean->load_relationship($fieldName)){
+                $relModule = $bean->$fieldName->getRelatedModuleName();
                 if (in_array($relModule, $changedModules)) {
                     $defs['module'] = $relModule;
                     $arrayToRename[$field] = $defs;

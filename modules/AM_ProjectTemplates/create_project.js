@@ -52,7 +52,7 @@ function updateTips( t ) {
 
 function confirmation(id){
     $( "#dialog-confirm" ).dialog({
-        height: 250,
+        height: 400,
         width: 350,
         modal: false,
         buttons: {
@@ -83,4 +83,25 @@ function confirmation(id){
 
         }
     });
+
+
+	$('#copy_all_tasks').click(function() {
+
+		var $this = $(this);
+		if ($this.is(':checked')) {
+			 $('#tasks').hide();
+			 $('#tasks_label').hide();
+		} else {
+			$('#tasks').show();
+			$('#tasks_label').show();
+		}
+	});
+
 }
+
+
+
+
+
+ //html =  '<a id="create_link" onclick="' + $("#view_gantt").attr('onclick') + '" class="utilsLink">' + $("#view_gantt").attr('value') + '</a>&nbsp;&nbsp;' + $(".moduleTitle .utils").html();
+ //$(".moduleTitle .utils").html(html);

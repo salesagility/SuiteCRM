@@ -46,7 +46,7 @@ class EmployeesSearchForm extends SearchForm {
      * This builds an EmployeesSearchForm from a classic search form.
      */
     function __construct( SearchForm $oldSearchForm ) {
-        parent::SearchForm($oldSearchForm->seed, $oldSearchForm->module, $oldSearchForm->action);
+        parent::__construct($oldSearchForm->seed, $oldSearchForm->module, $oldSearchForm->action);
         $this->setup(
             // $searchdefs
             array($oldSearchForm->module => $oldSearchForm->searchdefs),

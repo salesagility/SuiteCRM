@@ -94,6 +94,20 @@ class SugarWidgetSubPanelTopButton extends SugarWidget
 		}
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function SugarWidgetSubPanelTopButton($module='', $title='', $access_key='', $form_value=''){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($module, $title, $access_key, $form_value);
+    }
+
     public function getWidgetId($buttonSuffix = true)
     {
     	$widgetID = parent::getWidgetId() . '_'.preg_replace('[ ]', '', mb_strtolower($this->form_value, 'UTF-8'));

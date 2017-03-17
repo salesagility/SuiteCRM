@@ -152,7 +152,8 @@ class AuthenticationController
 			// Check for running Admin Wizard
 			$config = new Administration();
 			$config->retrieveSettings();
-		    if ( is_admin($GLOBALS['current_user']) && empty($config->settings['system_adminwizard']) && $_REQUEST['action'] != 'AdminWizard' ) {
+			$postSilentInstallAdminWizardCompleted = $GLOBALS['current_user']->getPreference('postSilentInstallAdminWizardCompleted');
+		    if ( (is_admin($GLOBALS['current_user']) && empty($config->settings['system_adminwizard']) && $_REQUEST['action'] != 'AdminWizard') ||($postSilentInstallAdminWizardCompleted !== NULL && !$postSilentInstallAdminWizardCompleted) ) {
 				$GLOBALS['module'] = 'Configurator';
 				$GLOBALS['action'] = 'AdminWizard';
 				ob_clean();

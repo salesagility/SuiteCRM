@@ -136,6 +136,20 @@ class DashletGeneric extends Dashlet {
     }
 
     /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function DashletGeneric($id, $options = null){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id, $options);
+    }
+
+    /**
      * Sets up the display options template
      *
      * @return string HTML that shows options
@@ -318,8 +332,9 @@ class DashletGeneric extends Dashlet {
                         // No break here, we want to run through the default handler
                     case 'relate':
                         if (isset($widgetDef['link']) && $this->seedBean->load_relationship($widgetDef['link'])) {
-                            $widgetDef['module'] = $this->seedBean->$widgetDef['link']->focus->module_name;
-                            $widgetDef['link'] = $this->seedBean->$widgetDef['link']->getRelationshipObject()->name;
+                            $widgetLink = $widgetDef['link'];
+                            $widgetDef['module'] = $this->seedBean->$widgetLink->focus->module_name;
+                            $widgetDef['link'] = $this->seedBean->$widgetLink->getRelationshipObject()->name;
                         }
                         // No break - run through the default handler
                     default:

@@ -103,6 +103,21 @@ require_once('include/EditView/EditView2.php');
         $this->setOptions($options);
     }
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function SearchForm($seed, $module, $action = 'index', $options = array()){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($seed, $module, $action, $options);
+    }
+
+
  	function setup($searchdefs, $searchFields = array(), $tpl, $displayView = 'basic_search', $listViewDefs = array()){
 		$this->searchdefs =  $searchdefs[$this->module];
  		$this->tpl = $tpl;
@@ -799,26 +814,27 @@ require_once('include/EditView/EditView2.php');
                  }
 
                  //This if-else block handles the shortcut checkbox selections for "My Items" and "Closed Only"
-                 if(!empty($parms['my_items'])) {
-                     if( $parms['value'] == false ) {
+                 if (!empty($parms['my_items'])) {
+                     if ($parms['value'] == false) {
                          continue;
                      } else {
                          //my items is checked.
                          global $current_user;
                          $field_value = $db->quote($current_user->id);
-                         $operator = '=' ;
+                         $operator = '=';
                      }
-                 } else if(!empty($parms['closed_values']) && is_array($parms['closed_values'])) {
-                     if( $parms['value'] == false ) {
+                 } elseif (!empty($parms['closed_values']) && is_array($parms['closed_values'])) {
+                     if ($parms['value'] == false) {
                          continue;
                      } else {
                          $field_value = '';
-                         foreach($parms['closed_values'] as $closed_value)
-                         {
+                         foreach ($parms['closed_values'] as $closed_value) {
                              $field_value .= "," . $db->quoted($closed_value);
                          }
                          $field_value = substr($field_value, 1);
                      }
+                 } elseif (!empty($parms['checked_only']) && $parms['value'] == false) {
+                     continue;
                  }
 
                  $where = '';

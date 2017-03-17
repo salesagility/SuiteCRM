@@ -72,7 +72,7 @@ class RSSDashlet extends Dashlet
 
         if(isset($def['autoRefresh'])) $this->autoRefresh = $def['autoRefresh'];
 
-        parent::Dashlet($id); // call parent constructor
+        parent::__construct($id); // call parent constructor
 
         $this->isConfigurable = true; // dashlet is configurable
         $this->hasScript = false;  // dashlet has javascript attached to it

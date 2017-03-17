@@ -402,7 +402,15 @@ $dictionary['Email'] = array(
             'bean_name' => 'Prospect',
             'source' => 'non-db',
         ),
-
+        'aos_contracts' => array(
+            'name' => 'aos_contracts',
+            'vname' => 'LBL_EMAILS_CONTRACTS_REL',
+            'type' => 'link',
+            'relationship' => 'emails_aos_contracts_rel',
+            'module' => 'AOS_Contracts',
+            'bean_name' => 'AOS_Contracts',
+            'source' => 'non-db',
+        ),
 
         'tasks' => array(
             'name' => 'tasks',
@@ -522,6 +530,20 @@ $dictionary['Email'] = array(
             'join_key_rhs' => 'bean_id',
             'relationship_role_column' => 'bean_module',
             'relationship_role_column_value' => 'Leads',
+        ),
+        'emails_aos_contracts_rel' => array(
+            'lhs_module' => 'Emails',
+            'lhs_table' => 'emails',
+            'lhs_key' => 'id',
+            'rhs_module' => 'AOS_Contracts',
+            'rhs_table' => 'aos_contracts',
+            'rhs_key' => 'id',
+            'relationship_type' => 'many-to-many',
+            'join_table' => 'emails_beans',
+            'join_key_lhs' => 'email_id',
+            'join_key_rhs' => 'bean_id',
+            'relationship_role_column' => 'bean_module',
+            'relationship_role_column_value' => 'AOS_Contracts',
         ),
         // SNIP
         'emails_meetings_rel' => array(

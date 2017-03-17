@@ -154,8 +154,15 @@ else {
             $query = "SELECT filename name, file_mime_type FROM notes ";
             $query .= "WHERE notes.id = '" . $db->quote($_REQUEST['id']) ."'";
         } elseif( !isset($_REQUEST['isTempFile']) && !isset($_REQUEST['tempName'] ) && isset($_REQUEST['type']) && $file_type!='temp' && isset($image_field) ) { //make sure not email temp file.
-            $query = "SELECT " . $image_field ." FROM " . $file_type . " LEFT JOIN " . $file_type . "_cstm cstm ON cstm.id_c = " . $file_type . ".id ";
+            //$query = "SELECT " . $image_field ." FROM " . $file_type . " LEFT JOIN " . $file_type . "_cstm cstm ON cstm.id_c = " . $file_type . ".id ";
+
+            // Fix for issue #1195: because the module was created using Module Builder and it does not create any _cstm table,
+            // there is a need to check whether the field has _c extension.
+            $query = "SELECT " . $image_field ." FROM " . $file_type . " ";
+            if(substr($image_field, -2) == "_c" ) $query .= "LEFT JOIN " . $file_type . "_cstm cstm ON cstm.id_c = " . $file_type . ".id ";
             $query .= "WHERE " . $file_type . ".id= '" . $db->quote($image_id) . "'";
+
+            //$query .= "WHERE " . $file_type . ".id= '" . $db->quote($image_id) . "'";
         }elseif( !isset($_REQUEST['isTempFile']) && !isset($_REQUEST['tempName'] ) && isset($_REQUEST['type']) && $file_type!='temp' ){ //make sure not email temp file.
             $query = "SELECT filename name FROM ". $file_type ." ";
             $query .= "WHERE ". $file_type .".id= '".$db->quote($_REQUEST['id'])."'";
@@ -163,7 +170,12 @@ else {
             $doQuery = false;
         }
 
-        $mime_type = 'application/octet-stream';
+        // Fix for issue 1506 and issue 1304 : IE11 and Microsoft Edge cannot display generic 'application/octet-stream' (which is defined as "arbitrary binary data" in RFC 2046).
+        $mime_type = mime_content_type($local_location);
+        if($mime_type == null || $mime_type == '') {
+            $mime_type = 'application/octet-stream';
+        }
+        
         if($doQuery && isset($query)) {
             $rs = $GLOBALS['db']->query($query);
             $row = $GLOBALS['db']->fetchByAssoc($rs);

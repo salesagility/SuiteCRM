@@ -324,7 +324,7 @@ class AbstractRelationship
 
     /*
      * Construct a first link id field for the relationship for use in Views
-     * It is used during the save from an edit view in SugarBean->save_relationship_changes(): for each relate field, $this->$linkfieldname->add( $this->$def['id_name'] )
+     * It is used during the save from an edit view in SugarBean->save_relationship_changes(): for each relate field, $this->linkfieldname->add( $this->$def['id_name'] )
      * @param string $sourceModule      Name of the source module for this field
      * @param string $relationshipName  Name of the relationship
      */

@@ -73,6 +73,21 @@ class ModuleInstaller{
         $this->extensions = $extensions;
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function ModuleInstaller(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
    /*
     * ModuleInstaller->install includes the manifest.php from the base directory it has been given. If it has been asked to do an upgrade it checks to see if there is
     * an upgrade_manifest defined in the manifest; if not it errors. It then adds the bean into the custom/Extension/application/Ext/Include/<module>.php - sets beanList, beanFiles

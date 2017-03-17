@@ -405,8 +405,8 @@ function validate_user($user_name, $password){
 			foreach($value->field_defs as $var){
 				if(isset($var['source']) && ($var['source'] != 'db' && $var['source'] != 'custom_fields') && $var['name'] != 'email1' && $var['name'] != 'email2' && (!isset($var['type'])|| $var['type'] != 'relate'))continue;
 
-				if(isset($value->$var['name'])){
-					$val = $value->$var['name'];
+				if(isset($value->{$var['name']})){
+					$val = $value->{$var['name']};
 					$type = $var['type'];
 
 					if(strcmp($type, 'date') == 0){
@@ -474,8 +474,8 @@ function validate_user($user_name, $password){
 
 			foreach($filterFields as $field){
 				$var = $value->field_defs[$field];
-				if(isset($value->$var['name'])){
-					$val = $value->$var['name'];
+				if(isset($value->{$var['name']})){
+					$val = $value->{$var['name']};
 					$type = $var['type'];
 
 					if(strcmp($type, 'date') == 0){
@@ -781,7 +781,7 @@ function validate_user($user_name, $password){
                 if(!empty($seed->field_name_map[$value['name']]['sensitive'])) {
                     continue;
                 }
-				$seed->$value['name'] = $val;
+				$seed->{$value['name']} = $val;
 			}
 
 			if($count == $total){

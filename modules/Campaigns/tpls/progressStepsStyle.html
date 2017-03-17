@@ -1,0 +1,373 @@
+<style>
+    .progression-container {
+        margin: 0 0 8px 0;
+        padding:0;
+    }
+
+    ul.progression {
+        margin: 0;
+        padding:0;
+    }
+
+    .progression li {
+        background-color: #3C8DBC;
+        border-radius: 0px;
+        display: inline-block;
+        padding: 5px 20px 5px 20px;
+        margin-right: 16px;
+        width: auto;
+        margin-top: 4px;
+    }
+
+    .progression li:nth-child(1)::before {
+        border: none transparent;
+    }
+
+    .progression li::before, .progression li::after {
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        border-color: transparent;
+        border-left-color: #fff;
+        border-radius: 0px;
+    }
+
+
+
+    .progression li::before {
+        border-width: 16px;
+        margin-top: -7px;
+        margin-left: -20px;
+    }
+
+    .progression li::after {
+        border-left-color: #3C8DBC;
+        border-width: 13px;
+        margin-top: -5px;
+        margin-left: 20px;
+    }
+
+    .progression li.selected {
+        background-color: #204d74;
+        color: #fff;
+    }
+
+    .progression li.selected::after {
+        border-left-color: #204d74;
+    }
+
+
+    .progression li:hover {
+        background-color: #204d74;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .progression li:hover::after, .progression li.selected:hover::after {
+        border-left-color: #204d74;
+        color: #fff;
+    }
+
+
+    .progression li:last-child::after {
+        border-left-color: transparent;
+    }
+
+    .progression li div, .progression li div *{
+        color: white;
+        text-decoration: none;
+        padding-left: 8px;
+        display: inline;
+    }
+
+
+    .wizard-summary-right .test, .wizard-summary-right .schedule {
+        background-position: center center;
+        text-align: center;
+        vertical-align: bottom;
+        padding: 8px;
+    }
+
+    .wizard-step-info {
+        margin-bottom: 12px;
+    }
+
+</style>
+
+<script type="text/javascript">
+
+    var wizardMenuCenter = function() {
+        // set navbar to center of page..
+        $('.wizmenu').css('margin-left', ($('.wizmenu').parent().outerWidth() - $('.wizmenu').outerWidth()) / 2);
+    };
+
+    var wizardMenuSetToCurrentStep = function() {
+        // fill navbar to current step
+        $('.wizmenu ul li').each(function(i,e){
+            if(i==0 && $(e).find('a').length && $(e).next().find('a').length) {
+                $(e).css('background-image', 'url({$imgdir}left-full.png)');
+                $(e).next().css('background-image', 'url({$imgdir}center-full-half.png)');
+            }
+            else if(i > 0 && i < $('.wizmenu ul li').length-2 && $(e).find('a').length && $(e).next().find('a').length) {
+                $(e).css('background-image', 'url({$imgdir}center-full.png)');
+                $(e).css('background-image', 'url({$imgdir}center-full.png)');
+                $(e).next().css('background-image', 'url({$imgdir}center-full-half.png)');
+            }
+            else if(i > 0 && $(e).find('a').length && $(e).next().find('a').length) {
+                $(e).css('background-image', 'url({$imgdir}center-full.png)');
+                $(e).next().css('background-image', 'url({$imgdir}right-full.png)');
+            }
+        });
+    };
+
+    var wizardMenuCleanupAlreadyFinishedStep = function() {
+        var doAgain = false;
+        $('.wizmenu ul li').each(function(i,e){
+            if(!$(e).find('a').length) {
+                if($(e).next().find('a').length) {
+                    $(e).html('<a href="#">' + $(e).html() + '</a>');
+                    doAgain = true;
+                }
+            }
+        });
+        if(doAgain) {
+            wizardMenuCleanupAlreadyFinishedStep();
+        }
+    };
+
+    var wizardMenuCleanup = function() {
+        $('.wizmenu ul li a').each(function(i,e){
+            if(!$(e).html()) {
+                $(e).addClass('removable');
+            }
+        });
+        $('.wizmenu ul li a.removable').remove();
+
+        wizardMenuCleanupAlreadyFinishedStep();
+    }
+
+    var wizardMenuResetWidth = function() {
+        var sum = 0;
+        $('.wizmenu ul li').each(function(i,e){
+            sum += $(e).outerWidth(true);
+        });
+        if(sum >= $('.wizmenu').parent().outerWidth(true)) {
+            $('.wizmenu').addClass('tiny');
+        }
+        else {
+            if(sum + $('.wizmenu ul li').length*33 < $('.wizmenu').parent().outerWidth(true)) {
+                $('.wizmenu').removeClass('tiny');
+            }
+        }
+    };
+
+    var wizardMenuFillAll = function() {
+        $('.wizmenu ul li').each(function(i,e){
+            if(!$(e).find('a').length) {
+                $(e).prepend('<a href="#">&nbsp;</a>');
+            }
+        });
+    };
+
+    var wizardMenuSetStepLink = function(step, link, script) {
+//        if(typeof link == 'undefined') {
+//            link = '#';
+//        }
+//        if(typeof script == 'undefined') {
+//            var onClick = false;
+//        }
+//        else {
+//            var onClick = ' onclick="' + script + '"';
+//        }
+//        if($('#nav_step' + step + ' a').length == 0) {
+//            $('#nav_step' + step).html('<a href="' + link + '"' + (onClick ? onClick : '') + '>' + $('#nav_step' + step).html() + '</a>');
+//        }
+//        else {
+//            $('#nav_step' + step + ' a').attr('href', link);
+//            if(onClick) {
+//                $('#nav_step' + step + ' a').attr('onclick', script);
+//            }
+//        }
+    };
+
+    var wizardMenuGetCurrentPage = function() {
+        var campaignType = getParameterByName('campaign_type') ? getParameterByName('campaign_type') : (document.getElementById('campaign_type') ? document.getElementById('campaign_type').value : null);
+        var step1Shows = $('#step1').css('display') && $('#step1').css('display') != 'none'; // Campaign Header OR!! Email Templates
+        var step2Shows = $('#step2').css('display') && $('#step2').css('display') != 'none'; // Subscriptions / Target Lists / Budget OR!! Marketing
+        var step3Shows = $('#step3').css('display') && $('#step3').css('display') != 'none'; // Target Lists / Summary
+
+        var step;
+
+        if(campaignType == 'NewsLetter' || campaignType == 'Email' || campaignType == null) {
+            if(step1Shows) {
+                if(typeof step3Shows == 'undefined') {
+                    step = 1;
+                }
+                else {
+                    step = 3;
+                }
+            }
+            else if(step2Shows) {
+                if(typeof step3Shows == 'undefined') {
+                    step = 2;
+                }
+                else {
+                    step = 4;
+                }
+            }
+            else if(step3Shows) {
+                step = 5;
+            }
+            else {
+                console.log('unknown page - 1');
+            }
+        }
+        else if(campaignType == 'Telesales') {
+            if(step1Shows) {
+                step = 1;
+            }
+            else if(step2Shows) {
+                step = 2;
+            }
+            else if(step3Shows) {
+                if($('#step3').attr('data') == 'summary-page') {
+                    step = 4;
+                }
+                else {
+                    step = 3;
+                }
+            }
+            else {
+                console.log('unknown page - 2');
+            }
+        }
+        else {
+            console.log('unknown page - 3');
+        }
+
+        return step-1;
+    };
+
+    var getBGImageName = function(elem) {
+        var bgImage = $(elem).css('background-image').split('/');
+        bgImage = bgImage[bgImage.length-1].split('.')[0];
+        return bgImage;
+    };
+
+    var wizardMenuPutDotToCurrentPage = function() {
+        var page = wizardMenuGetCurrentPage();
+        var link = '#';
+        $('.progression li').each(function(i,e){
+            if(i==page) {
+                if(!$(e).find('.dot').length) {
+                    $(e).addClass('selected');
+                }
+            }
+            else {
+                $(e).removeClass('selected');
+            }
+        });
+    };
+
+    var wizardMenu = function() {
+        wizardMenuCleanup();
+        wizardMenuCenter();
+        wizardMenuSetToCurrentStep();
+        wizardMenuResetWidth();
+        wizardMenuPutDotToCurrentPage();
+    };
+
+    $(function(){
+
+        wizardMenu();
+
+        $(window).resize(function(){
+            wizardMenu();
+        });
+
+        setInterval(function(){
+            wizardMenu();
+        }, 300);
+    });
+
+    function saveWizardState() {
+
+    }
+
+    function gotoWizardStep($obj) {
+        var direction = 'direct';
+
+        if ($($obj).attr('data-nav-step') > $('.nav-steps.selected').attr('data-nav-step')) {
+//            direction = 'next';
+            alert(SUGAR.language.translate('Campaigns', 'LBL_STEP_UNAVAILABLE'));
+            return false;
+        } else if (($($obj).attr('data-nav-step') < $('.nav-steps.selected').attr('data-nav-step'))) {
+            direction = 'back';
+        } else {
+            return false;
+        }
+
+        if(validate_wiz($('.nav-steps.selected').attr('data-nav-step'), direction)) {
+            // passed validation
+
+            saveWizardState();
+
+            if($('.nav-steps.selected').attr('data-nav-step') == '1') {
+                $('#wiz_back_button').hide();
+            } else {
+                $('#wiz_back_button').show();
+            }
+
+            if($($obj).attr('data-nav-url') && $($obj).attr('data-nav-url') != '#') {
+                window.location = $($obj).attr('data-nav-url');
+            } else if ($('#step'+$($obj).attr('data-nav-step')).length == 0) {
+                // if steps is not loaded
+                alert(SUGAR.language.translate('Campaigns', 'LBL_STEP_UNAVAILABLE'));
+            } else {
+                $('#wiz_current_step').val( $($obj).attr('data-nav-step') );
+                navigate('direct');
+            }
+
+        }  else {
+            // failed validation
+            alert(SUGAR.language.translate('Campaigns', 'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
+            console.log("validation failed")
+            return false;
+        }
+
+        return true;
+    }
+
+    $(document).ready(function () {
+        if($('#wiz_current_step').val() == 1) {
+            $('#wiz_back_button').hide();
+        } else {
+            $('#wiz_back_button').show();
+        }
+        $('.nav-steps').unbind();
+        $('.nav-steps').click(function(event) {
+            var suc =  gotoWizardStep($(event.target).closest('li'));
+            if(!suc){
+                event.preventDefault;
+            }
+        });
+
+        var toggleEmailTemplateSaveButton = function() {
+            if( $('#template_id').val() == '') {
+                $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().addClass('hidden');
+                // hid the button-group-seperator as well
+                $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().next().addClass('hidden');
+            } else {
+                $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().removeClass('hidden');
+                // show the button-group-seperator as well
+                $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().next().removeClass('hidden');
+            }
+        };
+        $('#template_id').change(toggleEmailTemplateSaveButton);
+        toggleEmailTemplateSaveButton();
+
+    })
+
+</script>

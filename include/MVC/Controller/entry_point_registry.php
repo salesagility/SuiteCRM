@@ -55,6 +55,7 @@ $entry_point_registry = array(
     'image' => array('file' => 'modules/Campaigns/image.php', 'auth' => false),
     'campaign_trackerv2' => array('file' => 'modules/Campaigns/Tracker.php', 'auth' => false),
     'WebToLeadCapture' => array('file' => 'modules/Campaigns/WebToLeadCapture.php', 'auth' => false),
+	'WebToPersonCapture' => array('file' => 'modules/Campaigns/WebToPersonCapture.php', 'auth' => false),
     'removeme' => array('file' => 'modules/Campaigns/RemoveMe.php', 'auth' => false),
     'acceptDecline' => array('file' => 'modules/Contacts/AcceptDecline.php', 'auth' => false),
     'leadCapture' => array('file' => 'modules/Leads/Capture.php', 'auth' => false),
@@ -84,6 +85,7 @@ $entry_point_registry = array(
 	'emailMarketingData' => array('file' => 'modules/EmailMarketing/Save.php', 'auth' => true),
 	'campaignTrackerSave' => array('file' => 'modules/CampaignTrackers/Save.php', 'auth' => true),
 	'emailMarketingList' => array('file' => 'modules/EmailMarketing/List.php', 'auth' => true),
+	'setCampaignMarketingAndTemplate' => array('file' => 'modules/Campaigns/WizardCampaignSave.php', 'auth' => true),
 );
 
 ?>

@@ -30,6 +30,21 @@ class actionCreateRecord extends actionBase {
         parent::__construct($id);
     }
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function actionCreateRecord($id = ''){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id);
+    }
+
+
     function loadJS(){
 
         return array('modules/AOW_Actions/actions/actionCreateRecord.js');
@@ -132,7 +147,8 @@ class actionCreateRecord extends actionBase {
                 switch($params['value_type'][$key]) {
                     case 'Field':
                         if($params['value'][$key] == '') continue;
-                        $data = $bean->field_defs[$params['value'][$key]];
+                        $fieldName = $params['value'][$key];
+                        $data = $bean->field_defs[$fieldName];
 
                         switch($data['type'] ) {
                             case 'double':
@@ -145,15 +161,16 @@ class actionCreateRecord extends actionBase {
                             case 'short':
                             case 'tinyint':
                             case 'int':
-                                $value = format_number($bean->$params['value'][$key]);
+                                $value = format_number($bean->$fieldName);
                                 break;
                             case 'relate':
                                 if(isset($data['id_name'])) {
-                                    $value = $bean->$data['id_name'];
+                                    $idName = $data['id_name'];
+                                    $value = $bean->$idName;
                                 }
                                 break;
                             default:
-                                $value = $bean->$params['value'][$key];
+                                $value = $bean->$fieldName;
                                 break;
                         }
                         break;
@@ -192,6 +209,8 @@ class actionCreateRecord extends actionBase {
                                     $date = gmdate($dformat);
                                 } else if($params['value'][$key][0] == 'field'){
                                     $date = $record->fetched_row[$params['field'][$key]];
+                                } else if ($params['value'][$key][0] == 'today') {
+                                    $date = $params['value'][$key][0];
                                 } else {
                                     $date = $bean->fetched_row[$params['value'][$key][0]];
                                 }
@@ -318,18 +337,20 @@ class actionCreateRecord extends actionBase {
             foreach($params['rel'] as $key => $field){
                 if($field == '' || $params['rel_value'][$key] == '') continue;
 
+                $relField = $params['rel_value'][$key];
+
                 switch($params['rel_value_type'][$key]) {
                     case 'Field':
 
-                        $data = $bean->field_defs[$params['rel_value'][$key]];
+                        $data = $bean->field_defs[$relField];
 
                         if($data['type'] == 'relate' && isset($data['id_name'])) {
-                            $params['rel_value'][$key] = $data['id_name'];
+                            $relField = $data['id_name'];
                         }
-                        $rel_id = $bean->$params['rel_value'][$key];
+                        $rel_id = $bean->$relField;
                         break;
                     default:
-                        $rel_id = $params['rel_value'][$key];
+                        $rel_id = $relField;
                         break;
                 }
 

@@ -28,7 +28,11 @@ $(document).ajaxStop(function(){
     setTimeout($.unblockUI, 1000);
 });
 //Get the default sugar page loading message
-var loading = SUGAR.language.languages.app_strings['LBL_LOADING_PAGE'];
+try{
+	var loading = SUGAR.language.languages.app_strings['LBL_LOADING_PAGE'];
+}catch(err){
+	var loading = ""; 
+}
 
 $(function() {
 
@@ -101,7 +105,7 @@ $(function() {
     $("#popup_form").validate({
 
         rules: {
-            name: "required",
+            task_name: "required",
             Start: {
                 required: true
             },
@@ -116,7 +120,7 @@ $(function() {
             }
         },
         messages: {
-            name: "The task name is required",
+            task_name: "The task name is required",
             Start: "Start date is required",
             Duration: {
                 required: "The duration is required",
@@ -132,7 +136,7 @@ $(function() {
     });
 
     $('#add_button').button({
-        text: false,
+        text: true,
         icons: {
                 primary: 'ui-icon-plusthick'
             }
@@ -147,20 +151,21 @@ $(function() {
             $( "#dialog" ).dialog({
                 autoOpen: true,
                 show: {
-                    effect: "drop",
-                    duration: 500
+                    effect: "none",
+                    duration: 0
                 },
                 hide: {
-                    effect: "drop",
-                    duration: 500
+                    effect: "none",
+                    duration: 0
                 },
-                width: 350,
+                width: 700,
                 modal: false,
                 buttons: {
                     "Add": function() {
                         var Project_id = $('#project_id').val();
+						var override_business_hours = $('#override_business_hours').val();
                         //var Parent_task = $('#parent_task').val();
-                        var Task_name = $('#name').val();
+                        var Task_name = $('#task_name').val();
                         var milestone = milestone_flag;
                         var Task_pre = $('#Predecessor').val();
                         var rel_type = $('#relation_type').val();
@@ -175,7 +180,7 @@ $(function() {
 
                         if($("#popup_form").valid()){
 
-                            var dataString = '&project_id=' + Project_id + '&milestone=' + milestone + '&task_name=' +Task_name + '&predecessor=' + Task_pre + '&rel_type=' + rel_type + '&start=' + Task_Start + '&duration=' + Task_Duration + '&unit=' + Task_Duration_unit + '&resource=' + Task_Resource + '&percent=' + Task_Percent + '&note=' + Task_Notes;
+                            var dataString = '&project_id=' + Project_id + '&override_business_hours=' + override_business_hours + '&milestone=' + milestone + '&task_name=' +Task_name + '&predecessor=' + Task_pre + '&rel_type=' + rel_type + '&start=' + Task_Start + '&duration=' + Task_Duration + '&unit=' + Task_Duration_unit + '&resource=' + Task_Resource + '&percent=' + Task_Percent + '&note=' + Task_Notes;
                             //block();
                             $.ajax({
                                 type: "POST",
@@ -282,14 +287,14 @@ function remove_button(){
         $( "#delete_dialog" ).dialog({
             autoOpen: true,
             show: {
-                effect: "drop",
-                duration: 500
+                effect: "none",
+                duration: 0
             },
             hide: {
-                effect: "drop",
-                duration: 500
+                effect: "none",
+                duration: 0
             },
-            width: 350,
+            width: 700,
             modal: true,
             buttons: {
                 "Delete": function() {
@@ -417,8 +422,9 @@ function edit_task(task){
     var data = task.attr('data').split(",");
     var milestone_flag ='Task';
 
+
     $('#task_id').val(data[0]);
-    $('#name').val(task.text());
+    $('#task_name').val(task.text());
     $('#Start').val(data[3]);
     if(data[7] == '1'){
         $('#Subtask').prop('checked', false);
@@ -444,21 +450,22 @@ function edit_task(task){
     $( "#dialog" ).dialog({
         autoOpen: true,
         show: {
-            effect: "drop",
-            duration: 500
+            effect: "none",
+            duration: 0
         },
         hide: {
-            effect: "drop",
-            duration: 500
+            effect: "none",
+            duration: 0
         },
-        width: 350,
+        width: 700,
         modal: true,
         buttons: {
             "Update": function() {
                 var Project_id = $('#project_id').val();
-                var Task_id = $('#task_id').val();
+                var override_business_hours = $('#override_business_hours').val();
+				var Task_id = $('#task_id').val();
                 //var Parent_task = $('#parent_task').val();
-                var Task_name = $('#name').val();
+                var Task_name = $('#task_name').val();
 
                 if($('[name="Milestone"]:checked').val() == 'Milestone'){
                     milestone_flag = 'Milestone'
@@ -481,7 +488,7 @@ function edit_task(task){
 
                 if($("#popup_form").valid()){
 
-                    var dataString = '&project_id=' + Project_id + '&task_id=' + Task_id + '&milestone=' + milestone + '&task_name=' +Task_name + '&predecessor=' + Task_pre + '&rel_type=' + rel_type + '&start=' + Task_Start + '&duration=' + Task_Duration + '&unit=' + Task_Duration_unit + '&resource=' + Task_Resource + '&percent=' + Task_Percent + '&note=' + Task_Notes + '&actual_duration=' + Actual_duration;
+                    var dataString = '&project_id=' + Project_id + '&override_business_hours=' + override_business_hours + '&task_id=' + Task_id + '&milestone=' + milestone + '&task_name=' +Task_name + '&predecessor=' + Task_pre + '&rel_type=' + rel_type + '&start=' + Task_Start + '&duration=' + Task_Duration + '&unit=' + Task_Duration_unit + '&resource=' + Task_Resource + '&percent=' + Task_Percent + '&note=' + Task_Notes + '&actual_duration=' + Actual_duration;
                     //block();
                     $.ajax({
                         type: "POST",

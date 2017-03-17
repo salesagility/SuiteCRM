@@ -32,6 +32,21 @@ class actionSendEmail extends actionBase {
         parent::__construct($id);
     }
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function actionSendEmail($id = ''){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id);
+    }
+
+
     function loadJS(){
         return array('modules/AOW_Actions/actions/actionSendEmail.js');
     }
@@ -210,16 +225,18 @@ class actionSendEmail extends actionBase {
                         $field = $relatedFields[$emailTarget];
                         if($field['type'] == 'relate') {
                             $linkedBeans = array();
-                            $id = $bean->$field['id_name'];
+                            $idName = $field['id_name'];
+                            $id = $bean->$idName;
                             $linkedBeans[] = BeanFactory::getBean($field['module'], $id);
                         }
                         else if($field['type'] == 'link'){
+                            $relField = $field['name'];
                             if(isset($field['module']) && $field['module'] != '') {
                                 $rel_module = $field['module'];
-                            } else if($bean->load_relationship($field['name'])){
-                                $rel_module = $bean->$field['name']->getRelatedModuleName();
+                            } else if($bean->load_relationship($relField)){
+                                $rel_module = $bean->$relField->getRelatedModuleName();
                             }
-                            $linkedBeans = $bean->get_linked_beans($field['name'],$rel_module);
+                            $linkedBeans = $bean->get_linked_beans($relField,$rel_module);
                         }else{
                             $linkedBeans = $bean->get_linked_beans($field['link'],$field['module']);
                         }
@@ -274,7 +291,15 @@ class actionSendEmail extends actionBase {
 
         } else {
             $this->parse_template($bean, $emailTemp);
-            return $this->sendEmail($emails['to'], $emailTemp->subject, $emailTemp->body_html, $emailTemp->body, $bean, $emails['cc'],$emails['bcc'],$attachments);
+			if($emailTemp->text_only=='1')
+			{
+				$email_body_html = $emailTemp->body;
+			}
+			else 
+			{
+				$email_body_html = $emailTemp->body_html;
+			}
+            return $this->sendEmail($emails['to'], $emailTemp->subject, $email_body_html, $emailTemp->body, $bean, $emails['cc'],$emails['bcc'],$attachments);            
         }
         return true;
     }
@@ -289,8 +314,9 @@ class actionSendEmail extends actionBase {
         foreach($bean->field_defs as $bean_arr){
             if($bean_arr['type'] == 'relate'){
                 if(isset($bean_arr['module']) &&  $bean_arr['module'] != '' && isset($bean_arr['id_name']) &&  $bean_arr['id_name'] != '' && $bean_arr['module'] != 'EmailAddress'){
-                    if(isset($bean->field_defs[$bean_arr['id_name']]) && $bean->field_defs[$bean_arr['id_name']]['source'] != 'non-db'){
-                        if(!isset($object_arr[$bean_arr['module']])) $object_arr[$bean_arr['module']] = $bean->$bean_arr['id_name'];
+                    $idName = $bean_arr['id_name'];
+                    if(isset($bean->field_defs[$idName]) && $bean->field_defs[$idName]['source'] != 'non-db'){
+                        if(!isset($object_arr[$bean_arr['module']])) $object_arr[$bean_arr['module']] = $bean->$idName;
                     }
                 }
             }

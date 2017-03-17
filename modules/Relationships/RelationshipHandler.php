@@ -93,6 +93,21 @@ class RelationshipHandler extends Relationship {
 	//end function RelationshipHandler
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function RelationshipHandler(& $db, $base_module=""){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct( $db, $base_module);
+    }
+
+
 	function set_rel_vardef_fields($base_vardef_field, $rel1_vardef_field=""){
 
 		$this->base_vardef_field = $base_vardef_field;
@@ -262,17 +277,21 @@ function get_relationship_information(& $target_bean, $get_upstream_rel_field_na
 	//Does a downstream relationship exist
 	if($rel_array!=null){
 		if($rel_array['relationship_type']=="many-to-many"){
-			$target_bean->$rel_array['join_key_lhs'] = $this->base_bean->id;
+			$joinKeyLHS = $rel_array['join_key_lhs'];
+			$target_bean->$joinKeyLHS = $this->base_bean->id;
 			if($rel_array['relationship_role_column']!=""){
-				$target_bean->$rel_array['relationship_role_column'] = $rel_array['relationship_role_column_value'];
-			}
-		//end if many-to-many
-		}
-
+				$relRole = $rel_array['relationship_role_column'];
+				$target_bean->$relRole = $rel_array['relationship_role_column_value'];
+			}				
+		//end if many-to-many	
+		}	
+		
 		if($rel_array['relationship_type']=="one-to-many"){
-			$target_bean->$rel_array['rhs_key'] = $this->base_bean->id;
+			$RHSKey = $rel_array['rhs_key'];
+			$target_bean->$RHSKey = $this->base_bean->id;
 			if($rel_array['relationship_role_column']!=""){
-				$target_bean->$rel_array['relationship_role_column'] = $rel_array['relationship_role_column_value'];
+				$relRole = $rel_array['relationship_role_column'];
+				$target_bean->$relRole = $rel_array['relationship_role_column_value'];
 			}
 		//end if one-to-many
 		}
@@ -289,17 +308,21 @@ function get_relationship_information(& $target_bean, $get_upstream_rel_field_na
 	//Does an upstream relationship exist
 	if($rel_array!=null){
 		if($rel_array['relationship_type']=="many-to-many"){
-			$target_bean->$rel_array['join_key_rhs'] = $this->base_bean->id;
+			$joinKeyRHS = $rel_array['join_key_rhs'];
+			$target_bean->$joinKeyRHS = $this->base_bean->id;
 			if($rel_array['relationship_role_column']!=""){
-				$target_bean->$rel_array['relationship_role_column'] = $rel_array['relationship_role_column_value'];
-			}
-		//end if many-to-many
-		}
-
+				$relRole = $rel_array['relationship_role_column'];
+				$target_bean->$relRole = $rel_array['relationship_role_column_value'];
+			}				
+		//end if many-to-many	
+		}	
+		
 		if($rel_array['relationship_type']=="one-to-many"){
-			$this->$rel_array['rhs_key'] = $this->base_bean->id;
+			$RHSKey = $rel_array['rhs_key'];
+			$target_bean->$RHSKey = $this->base_bean->id;
 			if($rel_array['relationship_role_column']!=""){
-				$this->$rel_array['relationship_role_column'] = $rel_array['relationship_role_column_value'];
+				$relRole = $rel_array['relationship_role_column'];
+				$target_bean->$relRole = $rel_array['relationship_role_column_value'];
 			}
 		//end if one-to-many
 		}

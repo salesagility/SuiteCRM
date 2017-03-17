@@ -52,6 +52,7 @@ tramp
 *.ipr
 *.iws
 .idea/
+.phpstorm.meta.php
 # NetBeans
 nbproject/
 # Vim
@@ -70,3 +71,4 @@ SuiteCRM.kdev4
 
 #Ignore composer vendor folder
 vendor/
+public/

@@ -59,6 +59,20 @@ class AOW_WorkFlow extends Basic {
         }
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function AOW_WorkFlow($init=true){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($init);
+    }
+
 	function bean_implements($interface){
 		switch($interface){
 			case 'ACL': return true;
@@ -229,7 +243,9 @@ class AOW_WorkFlow extends Basic {
                 $condition = new AOW_Condition();
                 $condition->retrieve($row['id']);
                 $query = $this->build_query_where($condition,$module,$query);
-
+                if(empty($query)){
+                    return $query;
+                }
             }
             if($this->flow_run_on){
                 switch($this->flow_run_on){
@@ -543,7 +559,8 @@ class AOW_WorkFlow extends Basic {
                             $value = date('Y-m-d');
                             $field = strtotime(date('Y-m-d', $field));
                         } else {
-                            $value = $condition_bean->$params[0];
+                            $fieldName = $params[0];
+                            $value = $condition_bean->$fieldName;
                         }
 
                         if($params[1] != 'now'){

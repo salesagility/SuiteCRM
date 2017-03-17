@@ -295,7 +295,8 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
             $vardef['rname'] = 'name';
             $vardef['id_name'] = $vardef['name'].'_id';
             if((!isset($vardef['module']) || $vardef['module'] == '') && $focus->load_relationship($vardef['name'])) {
-                $vardef['module'] = $focus->$vardef['name']->getRelatedModuleName();
+                $relName = $vardef['name'];
+                $vardef['module'] = $focus->$relName->getRelatedModuleName();
             }
 
         }
@@ -412,7 +413,8 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
         $fieldlist[$fieldname]['id_name'] = $fieldlist[$fieldname]['name'].'_id';
 
         if((!isset($fieldlist[$fieldname]['module']) || $fieldlist[$fieldname]['module'] == '') && $focus->load_relationship($fieldlist[$fieldname]['name'])) {
-            $fieldlist[$fieldname]['module'] = $focus->$fieldlist[$fieldname]['name']->getRelatedModuleName();
+            $relName = $fieldlist[$fieldname]['name'];
+            $fieldlist[$fieldname]['module'] = $focus->$relName->getRelatedModuleName();
         }
     }
 
@@ -441,10 +443,11 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
             $rel_focus = new $beanList[$fieldlist[$fieldname]['module']];
             $rel_focus->retrieve($value);
             if(isset($fieldlist[$fieldname]['rname']) && $fieldlist[$fieldname]['rname'] != ''){
-                $rel_value = $rel_focus->$fieldlist[$fieldname]['rname'];
+                $relDisplayField = $fieldlist[$fieldname]['rname'];
             } else {
-                $rel_value = $rel_focus->name;
+                $relDisplayField = 'name';
             }
+            $rel_value = $rel_focus->$relDisplayField;
         }
 
         $fieldlist[$fieldlist[$fieldname]['id_name']]['value'] = $value;
@@ -718,7 +721,8 @@ function getRelatedEmailableFields($module){
                     if(isset($field['module']) && $field['module'] != '') {
                         $rel_module = $field['module'];
                     } else if($mod->load_relationship($field['name'])){
-                        $rel_module = $mod->$field['name']->getRelatedModuleName();
+                        $relField = $field['name'];
+                        $rel_module = $mod->$relField->getRelatedModuleName();
                     }
 
                     if(in_array($rel_module,$emailableModules)) {

@@ -71,7 +71,6 @@ class mvc_utilsTest extends PHPUnit_Framework_TestCase
                 'Connectors',
                 'Import_1',
                 'Import_2',
-                'Versions',
                 'vCals',
                 'CustomFields',
                 'Roles',

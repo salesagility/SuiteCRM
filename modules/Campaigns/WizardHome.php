@@ -179,8 +179,21 @@ global $currentModule;
     if((isset($_REQUEST['WizardMarketingSave']) && $_REQUEST['WizardMarketingSave']) || isWizardSummary()) {
         $campaign_id = $focus->id;
         $marketing_id = getMarketingId();
-        $header_URL = "Location: index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=" . $campaign_id . "&campaign_id=" . $campaign_id . "&jump=3&show_wizard_marketing=1&marketing_id=" . $marketing_id . "&record=" . $marketing_id . '&campaign_type=' . $focus->campaign_type;
-        header($header_URL);
+        if(!$marketing_id && $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'WizardHome') {
+            $header_URL = "Location: index.php?module=Campaigns&offset=1&return_module=Campaigns&action=DetailView&record=" . $campaign_id;
+        }
+        else {
+            $header_URL = "Location: index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=" . $campaign_id . "&campaign_id=" . $campaign_id . "&jump=3&show_wizard_marketing=1&marketing_id=" . $marketing_id . "&record=" . $marketing_id . '&campaign_type=' . $focus->campaign_type . (isset($_REQUEST['template_id']) && $_REQUEST['template_id'] ? '&template_id=' . $_REQUEST['template_id'] : '');
+        }
+
+        if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
+            $href = $matches[1];
+            SugarApplication::redirect($href);
+        }
+        else {
+            header($header_URL);
+        }
+
     }
     
 }else{
@@ -202,6 +215,7 @@ global $currentModule;
     $ss = new Sugar_Smarty();
     $ss->assign("MOD", $mod_strings);
     $ss->assign("APP", $app_strings);
+    unset($_SESSION['campaignWizard'][isset($campaign_id) ? $campaign_id : null]['defaultSelectedTemplateId']);
     $ss->display(file_exists('custom/modules/Campaigns/tpls/WizardHomeStart.tpl') ? 'custom/modules/Campaigns/tpls/WizardHomeStart.tpl' : 'modules/Campaigns/tpls/WizardHomeStart.tpl');
        
 }

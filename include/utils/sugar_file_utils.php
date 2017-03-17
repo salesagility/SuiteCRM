@@ -1,11 +1,15 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,8 +40,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
+ */
 
 /**
  * sugar_mkdir
@@ -49,49 +52,53 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * @param $pathname - String value of the directory to create
  * @param $mode - The integer value of the permissions mode to set the created directory to
- * @param $recursive - boolean value indicating whether or not to create recursive directories if needed
- * @param $context
- * @return boolean - Returns true on success false on failure
+ * @param bool $recursive - boolean value indicating whether or not to create recursive directories if needed
+ * @param string $context
+ *
+ * @return bool - Returns true on success false on failure
+ *
+ * @throws Exception
  */
-function sugar_mkdir($pathname, $mode=null, $recursive=false, $context='') {
-	$mode = get_mode('dir_mode', $mode);
+function sugar_mkdir($pathname, $mode = null, $recursive = false, $context = '')
+{
+    $mode = get_mode('dir_mode', $mode);
 
-	if ( sugar_is_dir($pathname,$mode) )
-	    return true;
+    if (sugar_is_dir($pathname, $mode)) {
+        return true;
+    }
 
-	$result = false;
-	if(empty($mode))
-		$mode = 0777;
-	if(empty($context)) {
-		$result = @mkdir($pathname, $mode, $recursive);
-	} else {
-		$result = @mkdir($pathname, $mode, $recursive, $context);
-	}
+    if (empty($mode)) {
+        $mode = 0777;
+    }
+    if (empty($context)) {
+        $result = @mkdir($pathname, $mode, $recursive);
+    } else {
+        $result = @mkdir($pathname, $mode, $recursive, $context);
+    }
 
-	if($result){
-		if(!sugar_chmod($pathname, $mode)){
-			return false;
-		}
-		if(!empty($GLOBALS['sugar_config']['default_permissions']['user'])){
-			if(!sugar_chown($pathname)){
-				return false;
-			}
-		}
-		if(!empty($GLOBALS['sugar_config']['default_permissions']['group'])){
-   			if(!sugar_chgrp($pathname)) {
-   				return false;
-   			}
-		}
-	}
-	else {
-		$errorMessage = "Cannot create directory $pathname cannot be touched";
-		if(is_null($GLOBALS['log'])) {
-			throw new Exception("Error occurred but the system doesn't have logger. Error message: \"$errorMessage\"");
-		}
-		$GLOBALS['log']->error($errorMessage);
-	}
+    if ($result) {
+        if (!sugar_chmod($pathname, $mode)) {
+            return false;
+        }
+        if (!empty($GLOBALS['sugar_config']['default_permissions']['user'])) {
+            if (!sugar_chown($pathname)) {
+                return false;
+            }
+        }
+        if (!empty($GLOBALS['sugar_config']['default_permissions']['group'])) {
+            if (!sugar_chgrp($pathname)) {
+                return false;
+            }
+        }
+    } else {
+        $errorMessage = "Cannot create directory $pathname cannot be touched";
+        if (is_null($GLOBALS['log'])) {
+            throw new Exception("Error occurred but the system doesn't have logger. Error message: \"$errorMessage\"");
+        }
+        $GLOBALS['log']->error($errorMessage);
+    }
 
-	return $result;
+    return $result;
 }
 
 /**
@@ -104,22 +111,23 @@ function sugar_mkdir($pathname, $mode=null, $recursive=false, $context='') {
  *
  * @param $filename - String value of the file to create
  * @param $mode - The integer value of the permissions mode to set the created file to
- * @param $$use_include_path - boolean value indicating whether or not to search the the included_path
+ * @param $use_include_path - boolean value indicating whether or not to search the the included_path
  * @param $context
- * @return boolean - Returns a file pointer on success, false otherwise
+ *
+ * @return resource - Returns a file pointer on success, false otherwise
  */
-function sugar_fopen($filename, $mode, $use_include_path=false, $context=null){
-	//check to see if the file exists, if not then use touch to create it.
-	if(!file_exists($filename)){
-		sugar_touch($filename);
-	}
+function sugar_fopen($filename, $mode, $use_include_path = false, $context = null)
+{
+    //check to see if the file exists, if not then use touch to create it.
+    if (!file_exists($filename)) {
+        sugar_touch($filename);
+    }
 
-	if(empty($context)) {
-
-		return fopen($filename, $mode, $use_include_path);
-	} else {
-		return fopen($filename, $mode, $use_include_path, $context);
-	}
+    if (empty($context)) {
+        return fopen($filename, $mode, $use_include_path);
+    } else {
+        return fopen($filename, $mode, $use_include_path, $context);
+    }
 }
 
 /**
@@ -134,28 +142,30 @@ function sugar_fopen($filename, $mode, $use_include_path=false, $context=null){
  * @param $data - The data to be written to the file
  * @param $flags - int as specifed by file_put_contents parameters
  * @param $context
+ *
  * @return int - Returns the number of bytes written to the file, false otherwise.
  */
-function sugar_file_put_contents($filename, $data, $flags=null, $context=null){
-	//check to see if the file exists, if not then use touch to create it.
-	if(!file_exists($filename)){
-		sugar_touch($filename);
-	}
+function sugar_file_put_contents($filename, $data, $flags = null, $context = null)
+{
+    //check to see if the file exists, if not then use touch to create it.
+    if (!file_exists($filename)) {
+        sugar_touch($filename);
+    }
 
-	if ( !is_writable($filename) ) {
-	    $GLOBALS['log']->error("File $filename cannot be written to");
-	    return false;
-	}
+    if (!is_writable($filename)) {
+        $GLOBALS['log']->error("File $filename cannot be written to");
 
-	if(empty($flags)) {
-		return file_put_contents($filename, $data);
-	} elseif(empty($context)) {
-		return file_put_contents($filename, $data, $flags);
-	} else{
-		return file_put_contents($filename, $data, $flags, $context);
-	}
+        return false;
+    }
+
+    if (empty($flags)) {
+        return file_put_contents($filename, $data);
+    } elseif (empty($context)) {
+        return file_put_contents($filename, $data, $flags);
+    } else {
+        return file_put_contents($filename, $data, $flags, $context);
+    }
 }
-
 
 /**
  * sugar_file_put_contents_atomic
@@ -165,19 +175,21 @@ function sugar_file_put_contents($filename, $data, $flags=null, $context=null){
  * @param $filename - String value of the file to create
  * @param $data - The data to be written to the file
  * @param string $mode String value of the parameter to specify the type of access you require to the file stream
- * @param boolean $use_include_path set to '1' or TRUE if you want to search for the file in the include_path too
+ * @param bool $use_include_path set to '1' or TRUE if you want to search for the file in the include_path too
  * @param context $context Context to pass into fopen operation
- * @return boolean - Returns true if $filename was created, false otherwise.
+ *
+ * @return bool - Returns true if $filename was created, false otherwise.
  */
-function sugar_file_put_contents_atomic($filename, $data, $mode='wb', $use_include_path=false, $context=null){
-
+function sugar_file_put_contents_atomic($filename, $data, $mode = 'wb', $use_include_path = false, $context = null)
+{
     $dir = dirname($filename);
     $temp = tempnam($dir, 'temp');
 
     if (!($f = @fopen($temp, $mode))) {
-        $temp =  $dir . DIRECTORY_SEPARATOR . uniqid('temp');
+        $temp = $dir . DIRECTORY_SEPARATOR . uniqid('temp');
         if (!($f = @fopen($temp, $mode))) {
             trigger_error("sugar_file_put_contents_atomic() : error writing temporary file '$temp'", E_USER_WARNING);
+
             return false;
         }
     }
@@ -185,51 +197,49 @@ function sugar_file_put_contents_atomic($filename, $data, $mode='wb', $use_inclu
     fwrite($f, $data);
     fclose($f);
 
-    if (!@rename($temp, $filename))
-    {
+    if (!@rename($temp, $filename)) {
         @unlink($filename);
-        if (!@rename($temp, $filename))
-        {
+        if (!@rename($temp, $filename)) {
             // cleaning up temp file to avoid filling up temp dir
             @unlink($temp);
             trigger_error("sugar_file_put_contents_atomic() : fatal rename failure '$temp' -> '$filename'", E_USER_WARNING);
         }
     }
 
-    if(file_exists($filename))
-    {
-       return sugar_chmod($filename, 0755);
+    if (file_exists($filename)) {
+        return sugar_chmod($filename, 0755);
     }
 
     return false;
 }
 
-
-
 /**
- * sugar_file_get_contents
+ * sugar_file_get_contents.
  *
  * @param $filename - String value of the file to create
  * @param $use_include_path - boolean value indicating whether or not to search the the included_path
  * @param $context
- * @return string|boolean - Returns a file data on success, false otherwise
+ *
+ * @return string|bool - Returns a file data on success, false otherwise
  */
-function sugar_file_get_contents($filename, $use_include_path=false, $context=null){
-	//check to see if the file exists, if not then use touch to create it.
-	if(!file_exists($filename)){
-		sugar_touch($filename);
-	}
+function sugar_file_get_contents($filename, $use_include_path = false, $context = null)
+{
+    //check to see if the file exists, if not then use touch to create it.
+    if (!file_exists($filename)) {
+        sugar_touch($filename);
+    }
 
-	if ( !is_readable($filename) ) {
-	    $GLOBALS['log']->error("File $filename cannot be read");
-	    return false;
-	}
+    if (!is_readable($filename)) {
+        $GLOBALS['log']->error("File $filename cannot be read");
 
-	if(empty($context)) {
-		return file_get_contents($filename, $use_include_path);
-	} else {
-		return file_get_contents($filename, $use_include_path, $context);
-	}
+        return false;
+    }
+
+    if (empty($context)) {
+        return file_get_contents($filename, $use_include_path);
+    } else {
+        return file_get_contents($filename, $use_include_path, $context);
+    }
 }
 
 /**
@@ -243,36 +253,35 @@ function sugar_file_get_contents($filename, $use_include_path=false, $context=nu
  * @param $filename - The name of the file being touched.
  * @param $time - The touch time. If time  is not supplied, the current system time is used.
  * @param $atime - If present, the access time of the given filename is set to the value of atime
- * @return boolean - Returns TRUE on success or FALSE on failure.
  *
+ * @return bool - Returns TRUE on success or FALSE on failure.
  */
-function sugar_touch($filename, $time=null, $atime=null) {
+function sugar_touch($filename, $time = null, $atime = null)
+{
+    if (!empty($atime) && !empty($time)) {
+        $result = @touch($filename, $time, $atime);
+    } elseif (!empty($time)) {
+        $result = @touch($filename, $time);
+    } else {
+        $result = @touch($filename);
+    }
 
-   $result = false;
+    if (!$result) {
+        $GLOBALS['log']->error("File $filename cannot be touched");
 
-   if(!empty($atime) && !empty($time)) {
-   	  $result = @touch($filename, $time, $atime);
-   } else if(!empty($time)) {
-   	  $result = @touch($filename, $time);
-   } else {
-   	  $result = @touch($filename);
-   }
+        return $result;
+    }
+    if (!empty($GLOBALS['sugar_config']['default_permissions']['file_mode'])) {
+        sugar_chmod($filename, $GLOBALS['sugar_config']['default_permissions']['file_mode']);
+    }
+    if (!empty($GLOBALS['sugar_config']['default_permissions']['user'])) {
+        sugar_chown($filename);
+    }
+    if (!empty($GLOBALS['sugar_config']['default_permissions']['group'])) {
+        sugar_chgrp($filename);
+    }
 
-   if(!$result) {
-       $GLOBALS['log']->error("File $filename cannot be touched");
-       return $result;
-   }
-	if(!empty($GLOBALS['sugar_config']['default_permissions']['file_mode'])){
-		sugar_chmod($filename, $GLOBALS['sugar_config']['default_permissions']['file_mode']);
-	}
-	if(!empty($GLOBALS['sugar_config']['default_permissions']['user'])){
-		sugar_chown($filename);
-	}
-	if(!empty($GLOBALS['sugar_config']['default_permissions']['group'])){
-		sugar_chgrp($filename);
-	}
-
-   return true;
+    return true;
 }
 
 /**
@@ -281,23 +290,27 @@ function sugar_touch($filename, $time=null, $atime=null) {
  * default_permissions configuration; otherwise, it will use the mode value.
  *
  * @param  string    filename - Path to the file
- * @param  int $mode The integer value of the permissions mode to set the created directory to
- * @return boolean   Returns TRUE on success or FALSE on failure.
+ * @param int $mode The integer value of the permissions mode to set the created directory to
+ *
+ * @return bool Returns TRUE on success or FALSE on failure.
  */
-function sugar_chmod($filename, $mode=null) {
-    if ( !is_int($mode) )
-        $mode = (int) $mode;
-	if(!is_windows()){
-		if(!isset($mode)){
-			$mode = get_mode('file_mode', $mode);
-		}
-        if(isset($mode) && $mode > 0){
-		   return @chmod($filename, $mode);
-		}else{
-	    	return false;
-		}
-	}
-	return true;
+function sugar_chmod($filename, $mode = null)
+{
+    if (!is_int($mode)) {
+        $mode = (int)$mode;
+    }
+    if (!is_windows()) {
+        if (!isset($mode)) {
+            $mode = get_mode('file_mode', $mode);
+        }
+        if (isset($mode) && $mode > 0) {
+            return @chmod($filename, $mode);
+        } else {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 /**
@@ -305,24 +318,28 @@ function sugar_chmod($filename, $mode=null) {
  * Attempts to change the owner of the file filename to the user specified in the
  * default_permissions configuration; otherwise, it will use the user value.
  *
- * @param filename - Path to the file
- * @param user - A user name or number
- * @return boolean - Returns TRUE on success or FALSE on failure.
+ * @param $filename - Path to the file
+ * @param string $user - A user name or number
+ *
+ * @return bool - Returns TRUE on success or FALSE on failure.
  */
-function sugar_chown($filename, $user='') {
-	if(!is_windows()){
-		if(strlen($user)){
-			return chown($filename, $user);
-		}else{
-			if(strlen($GLOBALS['sugar_config']['default_permissions']['user'])){
-				$user = $GLOBALS['sugar_config']['default_permissions']['user'];
-				return chown($filename, $user);
-			}else{
-				return false;
-			}
-		}
-	}
-	return true;
+function sugar_chown($filename, $user = '')
+{
+    if (!is_windows()) {
+        if (strlen($user)) {
+            return chown($filename, $user);
+        } else {
+            if (strlen($GLOBALS['sugar_config']['default_permissions']['user'])) {
+                $user = $GLOBALS['sugar_config']['default_permissions']['user'];
+
+                return chown($filename, $user);
+            } else {
+                return false;
+            }
+        }
+    }
+
+    return true;
 }
 
 /**
@@ -331,71 +348,93 @@ function sugar_chown($filename, $user='') {
  * default_permissions configuration; otherwise it will use the group value.
  *
  * @param filename - Path to the file
- * @param group - A group name or number
- * @return boolean - Returns TRUE on success or FALSE on failure.
+ * @param string $group - A group name or number
+ *
+ * @return bool - Returns TRUE on success or FALSE on failure.
  */
-function sugar_chgrp($filename, $group='') {
-	if(!is_windows()){
-		if(!empty($group)){
-			return chgrp($filename, $group);
-		}else{
-			if(!empty($GLOBALS['sugar_config']['default_permissions']['group'])){
-				$group = $GLOBALS['sugar_config']['default_permissions']['group'];
-				return chgrp($filename, $group);
-			}else{
-				return false;
-			}
-		}
-	}
-	return true;
+function sugar_chgrp($filename, $group = '')
+{
+    if (!is_windows()) {
+        if (!empty($group)) {
+            return chgrp($filename, $group);
+        } else {
+            if (!empty($GLOBALS['sugar_config']['default_permissions']['group'])) {
+                $group = $GLOBALS['sugar_config']['default_permissions']['group'];
+
+                return chgrp($filename, $group);
+            } else {
+                return false;
+            }
+        }
+    }
+
+    return true;
 }
 
 /**
- * get_mode
+ * get_mode.
  *
  * Will check to see if there is a default mode defined in the config file, otherwise return the
  * $mode given as input
  *
+ * @param string $key
  * @param int $mode - the mode being passed by the calling function. This value will be overridden by a value
- * defined in the config file.
+ *                     defined in the config file.
+ *
  * @return int - the mode either found in the config file or passed in via the input parameter
  */
-function get_mode($key = 'dir_mode', $mode=null) {
-	if ( !is_int($mode) )
-        $mode = (int) $mode;
-    if(!class_exists('SugarConfig', true)) {
-		require 'include/SugarObjects/SugarConfig.php';
-	}
-	if(!is_windows()){
-		$conf_inst=SugarConfig::getInstance();
-		$mode = $conf_inst->get('default_permissions.'.$key, $mode);
-	}
-	return $mode;
+function get_mode($key = 'dir_mode', $mode = null)
+{
+    if (!is_int($mode)) {
+        $mode = (int)$mode;
+    }
+    if (!class_exists('SugarConfig', true)) {
+        require 'include/SugarObjects/SugarConfig.php';
+    }
+    if (!is_windows()) {
+        $conf_inst = SugarConfig::getInstance();
+        $mode = $conf_inst->get('default_permissions.' . $key, $mode);
+    }
+
+    return $mode;
 }
 
-function sugar_is_dir($path, $mode='r'){
-		if(defined('TEMPLATE_URL'))return is_dir($path, $mode);
-		return is_dir($path);
+function sugar_is_dir($path, $mode = 'r')
+{
+    if (defined('TEMPLATE_URL')) {
+        return is_dir($path, $mode);
+    }
+
+    return is_dir($path);
 }
 
-function sugar_is_file($path, $mode='r'){
-		if(defined('TEMPLATE_URL'))return is_file($path, $mode);
-		return is_file($path);
+function sugar_is_file($path, $mode = 'r')
+{
+    if (defined('TEMPLATE_URL')) {
+        return is_file($path, $mode);
+    }
+
+    return is_file($path);
 }
 
 /**
- * Get filename in cache directory
+ * Get filename in cache directory.
+ *
  * @api
+ *
  * @param string $file
+ *
+ * @return string
  */
 function sugar_cached($file)
 {
     static $cdir = null;
-    if(empty($cdir) && !empty($GLOBALS['sugar_config']['cache_dir'])) {
+    if (empty($cdir) && !empty($GLOBALS['sugar_config']['cache_dir'])) {
         $cdir = rtrim($GLOBALS['sugar_config']['cache_dir'], '/\\');
     }
-    if(empty($cdir)) {
-        $cdir = "cache";
+    if (empty($cdir)) {
+        $cdir = 'cache';
     }
+
     return "$cdir/$file";
 }

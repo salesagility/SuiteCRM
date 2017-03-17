@@ -42686,7 +42686,7 @@ define("tinymce/ui/FormatControls", [
 			selectall: ['Select all', 'SelectAll'],
 			removeformat: ['Clear formatting', 'RemoveFormat'],
 			visualaid: ['Visual aids', 'mceToggleVisualAid'],
-			newdocument: ['New document', 'mceNewDocument']
+			newdocument: ['Clear all', 'mceNewDocument']
 		}, function(item, name) {
 			editor.addButton(name, {
 				tooltip: item[0],
@@ -42754,7 +42754,7 @@ define("tinymce/ui/FormatControls", [
 		});
 
 		editor.addMenuItem('newdocument', {
-			text: 'New document',
+			text: 'Clear all',
 			icon: 'newdocument',
 			cmd: 'mceNewDocument'
 		});

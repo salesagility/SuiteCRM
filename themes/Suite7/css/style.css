@@ -5661,6 +5661,12 @@ div.password {
 .wizard-summary-left .box.fail {
     background-image: url(../../../../themes/default/images/red_camp.gif);
 }
+.wizard-summary-left .box.ok.button {
+    background-image: url(../../../../themes/default/images/green_camp_clean.gif);
+}
+.wizard-summary-left .box.fail.button {
+    background-image: url(../../../../themes/default/images/red_camp_clean.gif);
+}
 .wizard-summary-left .box.small {
     width: 210px;
     float: none;

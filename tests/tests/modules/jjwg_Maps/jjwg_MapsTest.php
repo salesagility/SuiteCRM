@@ -172,7 +172,7 @@ class jjwg_MapsTest extends PHPUnit_Framework_TestCase
         //test with invalid value
         $expected = array(
                 'address' => '',
-                'status' => 'ZERO_RESULTS',
+                'status' => 'INVALID_REQUEST',
                 'lat' => null,
                 'lng' => null,
         );

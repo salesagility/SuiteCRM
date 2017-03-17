@@ -224,7 +224,6 @@ $mod_strings = array (
     'SUGARPDF_BASIC_SETTINGS' => 'Document Properties',
     'SUGARPDF_ADVANCED_SETTINGS' => 'Advanced Settings',
     'SUGARPDF_LOGO_SETTINGS' => 'Images',
-
     'PDF_CREATOR' => 'PDF Creator',
     'PDF_CREATOR_INFO' => 'Defines the creator of the document. <br>This is typically the name of the application that generates the PDF.',
 
@@ -333,29 +332,29 @@ $mod_strings = array (
     'LBL_FONT_LIST_EMBEDDED' => 'Embedded',
     'LBL_FONT_LIST_EMBEDDED_INFO' => 'Check to embed the font into the PDF file',
     'LBL_FONT_LIST_CIDINFO' => 'CID Information',
-    'LBL_FONT_LIST_CIDINFO_INFO' => "Examples :".
-"<ul><li>".
-"Chinese Traditional :<br>".
-"<pre>\$enc=\'UniCNS-UTF16-H\';<br>".
-"\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'CNS1\',\'Supplement\'=>0);<br>".
-"include(\'include/tcpdf/fonts/uni2cid_ac15.php\');</pre>".
-"</li><li>".
-"Chinese Simplified :<br>".
-"<pre>\$enc=\'UniGB-UTF16-H\';<br>".
-"\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'GB1\',\'Supplement\'=>2);<br>".
-"include(\'include/tcpdf/fonts/uni2cid_ag15.php\');</pre>".
-"</li><li>".
-"Korean :<br>".
-"<pre>\$enc=\'UniKS-UTF16-H\';<br>".
-"\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'Korea1\',\'Supplement\'=>0);<br>".
-"include(\'include/tcpdf/fonts/uni2cid_ak12.php\');</pre>".
-"</li><li>".
-"Japanese :<br>".
-"<pre>\$enc=\'UniJIS-UTF16-H\';<br>".
-"\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'Japan1\',\'Supplement\'=>5);<br>".
-"include(\'include/tcpdf/fonts/uni2cid_aj16.php\');</pre>".
-"</li></ul>".
-"More help : www.tcpdf.org",
+    'LBL_FONT_LIST_CIDINFO_INFO' => 'Examples :
+<ul><li>.
+Chinese Traditional :<br>.
+<pre>\$enc=\'UniCNS-UTF16-H\';<br>.
+\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'CNS1\',\'Supplement\'=>0);<br>.
+include(\'include/tcpdf/fonts/uni2cid_ac15.php\');</pre>.
+</li><li>.
+Chinese Simplified :<br>.
+<pre>\$enc=\'UniGB-UTF16-H\';<br>.
+\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'GB1\',\'Supplement\'=>2);<br>.
+include(\'include/tcpdf/fonts/uni2cid_ag15.php\');</pre>.
+</li><li>.
+Korean :<br>.
+<pre>\$enc=\'UniKS-UTF16-H\';<br>.
+\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'Korea1\',\'Supplement\'=>0);<br>.
+include(\'include/tcpdf/fonts/uni2cid_ak12.php\');</pre>.
+</li><li>.
+Japanese :<br>.
+<pre>\$enc=\'UniJIS-UTF16-H\';<br>.
+\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'Japan1\',\'Supplement\'=>5);<br>.
+include(\'include/tcpdf/fonts/uni2cid_aj16.php\');</pre>.
+</li></ul>.
+More help : www.tcpdf.org',
     'LBL_FONT_LIST_FILESIZE' => 'Font Size (KB)',
     'LBL_ADD_FONT' => 'Add a font',
     'LBL_BACK' => 'Back',
@@ -374,7 +373,7 @@ $mod_strings = array (
     'LBL_ADD_FONT_BUTTON' => 'Add',
     'JS_ALERT_PDF_WRONG_EXTENSION' => 'This file do not have a good file extension.',
     'LBL_PDF_INSTRUCTIONS' => 'Instructions',
-    'PDF_INSTRUCTIONS_ADD_FONT' => <<<BSOFR
+    'PDF_INSTRUCTIONS_ADD_FONT' => '<<<BSOFR
 Fonts supported by the PDF :
 <ul>
 <li>TrueTypeUnicode (UTF-8 Unicode)</li>
@@ -390,7 +389,7 @@ If you choose to not embed your font in the PDF, the generated PDF file will be 
 Adding a PDF font to SuiteCRM requires to follow steps 1 and 2 of the TCPDF Fonts documentation available in the "DOCS" section of the <a href="http://www.tcpdf.org" target="_blank">TCPDF website</a>.
 <br><br>The pfm2afm and ttf2ufm utils are available in fonts/utils in the TCPDF package that you can download on the "DOWNLOAD" section of the <a href="http://www.tcpdf.org" target="_blank">TCPDF website</a>.
 <br><br>Load the metric file generated in step 2 and your font file below.
-BSOFR
+BSOFR'
 ,
     'ERR_MISSING_CIDINFO' => 'The field CID Information cannot be empty.',
     'LBL_ADDFONTRESULT_TITLE' => 'Result of the add font process',
@@ -413,6 +412,12 @@ BSOFR
     'ERR_PDF_NO_UPLOAD' => 'Error during the upload of the font or metric file.',
 
 // Wizard
+	//Wizard Scenarios
+	'LBL_WIZARD_SCENARIOS' => 'Your Scenarios',
+	'LBL_WIZARD_SCENARIOS_EMPTY_LIST' => 'No scenarios have been configured',
+	'LBL_WIZARD_LOCALE_DESC' => 'Specify how you would like data in SuiteCRM to be displayed, based on your geographical location. The settings you provide here will be the default settings. Users will be able set their own preferences.',
+	'LBL_WIZARD_SCENARIOS_DESC' => 'Choose which scenarios are appropriate for your installation.  These options can be changed post-install.',
+
     'LBL_WIZARD_TITLE' => 'Admin Wizard',
     'LBL_WIZARD_WELCOME_TAB' => 'Welcome',
     'LBL_WIZARD_WELCOME_TITLE' => 'Welcome to SuiteCRM!',
@@ -438,6 +443,7 @@ To configure additional system settings, click <a href="index.php?module=Adminis
 	'LBL_WELCOME' => 'Welcome' /*for 508 compliance fix*/,
 	'LBL_LOGO' => 'Logo' /*for 508 compliance fix*/,
     'LBL_ENABLE_HISTORY_CONTACTS_EMAILS' => 'Show related contacts\' emails in History subpanel for modules',
+	
 );
 
 

@@ -54,13 +54,7 @@ class RemindersController extends SugarController {
                 $ret[] = $invitee;
             }
         }
-//        $personModules = array('Users', 'Contacts', 'Leads');
-//        $retInvitees = array();
-//        foreach($invitees as $invitee) {
-//            if(isset($invitee['personModule']) && $invitee['personModule'] && in_array($invitee['personModule'], $personModules) && isset($invitee['personId']) && $invitee['personId'] && isset($invitee['personName']) && $invitee['personName']) {
-//                $retInvitees[] = $invitee;
-//            }
-//        }
+
         $inviteeJson = json_encode($ret);
         echo $inviteeJson;
         die();

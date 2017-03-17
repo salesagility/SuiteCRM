@@ -1,27 +1,43 @@
 <?php
-/**
- * Advanced OpenReports, SugarCRM Reporting.
- * @package Advanced OpenReports for SugarCRM
- * @copyright SalesAgility Ltd http://www.salesagility.com
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
- *
- * @author SalesAgility <info@salesagility.com>
- */
 
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 class AOR_Report extends Basic {
 	var $new_schema = true;
 	var $module_dir = 'AOR_Reports';
@@ -53,6 +69,21 @@ class AOR_Report extends Basic {
         require_once('modules/AOW_WorkFlow/aow_utils.php');
         require_once('modules/AOR_Reports/aor_utils.php');
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function AOR_Report(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 	function bean_implements($interface){
 		switch($interface){
@@ -398,8 +429,8 @@ class AOR_Report extends Basic {
 
             if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                 $select_field = $this->db->quoteIdentifier($table_alias.'_cstm').'.'.$field->field;
-                // ? $query_array = $this->build_report_query_join($table_alias.'_cstm', $table_alias.'_cstm',$table_alias, $field_module, 'custom', $query);
-                $query_array = $this->build_report_query_join($table_alias.'_cstm', $table_alias.'_cstm', $field_module, 'custom', $query);
+                // Fix for #1251 - added a missing parameter to the function call
+                $query_array = $this->build_report_query_join($table_alias.'_cstm', $table_alias.'_cstm', $table_alias, $field_module, 'custom', $query);
             } else {
                 $select_field= $this->db->quoteIdentifier($table_alias).'.'.$field->field;
             }
@@ -471,9 +502,6 @@ class AOR_Report extends Basic {
                 }
                 $query .= ' '.$query_sort_by;
             }
-
-            $query .= ' group by ' . $field_label;
-
             $result = $this->db->query($query);
 
             while ($row = $this->db->fetchByAssoc($result)) {
@@ -497,7 +525,14 @@ class AOR_Report extends Basic {
         $_group_value = $this->db->quote($group_value);
 
         $report_sql = $this->build_report_query($_group_value, $extra);
-        $max_rows = 20;
+
+        // Fix for issue 1232 - items listed in a single report, should adhere to the same standard as ListView items.
+        if($sugar_config['list_max_entries_per_page']!='') {
+            $max_rows = $sugar_config['list_max_entries_per_page'];
+        } else {
+            $max_rows = 20;
+        }
+        
         $total_rows = 0;
         $count_sql = explode('ORDER BY', $report_sql);
         $count_query = 'SELECT count(*) c FROM ('.$count_sql[0].') as n';
@@ -524,11 +559,16 @@ class AOR_Report extends Basic {
                 $end = (($offset + $max_rows) < $total_rows) ? $offset + $max_rows : $total_rows;
                 $previous_offset = ($offset - $max_rows) < 0 ? 0 : $offset - $max_rows;
                 $next_offset = $offset + $max_rows;
-                $last_offset = $max_rows * floor($total_rows / $max_rows);
+                if(is_int($total_rows / $max_rows)){
+                    $last_offset = $max_rows * ($total_rows / $max_rows -1);
+                } else {
+                    $last_offset = $max_rows * floor($total_rows / $max_rows);
+                }
+
             }
 
             $html .= "<thead><tr class='pagination'>";
-
+            
 
             $moduleFieldByGroupValue = $this->getModuleFieldByGroupValue($beanList, $group_value);
 
@@ -711,8 +751,8 @@ class AOR_Report extends Basic {
     private function getModuleFieldByGroupValue($beanList, $group_value) {
         $moduleFieldByGroupValues = array();
 
-        $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND group_display = 1 AND deleted = 0 ORDER BY field_order ASC LIMIT 1;";
-        $result = $this->db->query($sql);
+        $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND group_display = 1 AND deleted = 0 ORDER BY field_order ASC";
+        $result = $this->db->limitQuery($sql, 0, 1);
         while ($row = $this->db->fetchByAssoc($result)) {
 
             $field = new AOR_Field();
@@ -745,6 +785,10 @@ class AOR_Report extends Basic {
 
     function getTotalHTML($fields,$totals){
         global $app_list_strings;
+
+        $currency = new Currency();
+        $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
+
         $html = '';
         $html .= "<tbody>";
         $html .= "<tr>";
@@ -766,7 +810,38 @@ class AOR_Report extends Basic {
                 continue;
             }
             if($field['total'] && isset($totals[$label])){
-                $html .= "<td>".$this->calculateTotal($field['total'],$totals[$label])."</td>";
+                $type = $field['total'];
+                $total = $this->calculateTotal($type, $totals[$label]);
+                // Customise display based on the field type
+                $moduleBean = BeanFactory::newBean($field['module']);
+                $fieldDefinition = $moduleBean->field_defs[$field['field']];
+                $fieldDefinitionType = $fieldDefinition['type'];
+                switch($fieldDefinitionType) {
+                    case "currency":
+                        // Customise based on type of function
+                        switch($type){
+                            case 'SUM':
+                                if($currency->id == -99) {
+                                    $total = $currency->symbol.format_number($total, null, null);
+                                } else {
+                                    $total = $currency->symbol.format_number($total, null, null, array('convert' => true));
+                                }
+                            case 'COUNT':
+                                break;
+                            case 'AVG':
+                                if($currency->id == -99) {
+                                    $total = $currency->symbol.format_number($total, null, null);
+                                } else {
+                                    $total = $currency->symbol.format_number($total, null, null, array('convert' => true));
+                                }
+                            default:
+                               break;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                $html .= "<td>".$total."</td>";
             }else{
                 $html .= "<td></td>";
             }
@@ -914,6 +989,11 @@ class AOR_Report extends Basic {
             foreach ($query_array['group_by'] as $group_by){
                 $query_group_by .=  ($query_group_by == '' ? 'GROUP BY ' : ', ').$group_by;
             }
+            if($query_group_by != '') {
+                foreach ($query_array['second_group_by'] as $group_by) {
+                    $query_group_by .= ', ' . $group_by;
+                }
+            }
             $query .= ' '.$query_group_by;
         }
 
@@ -953,9 +1033,8 @@ class AOR_Report extends Basic {
         if($beanList[$this->report_module]){
             $module = new $beanList[$this->report_module]();
 
-            $query['select'][] = $this->db->quoteIdentifier($module->table_name).".id AS '".$module->table_name."_id'";
-
             $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND deleted = 0 ORDER BY field_order ASC";
+
             $result = $this->db->query($sql);
             $i = 0;
             while ($row = $this->db->fetchByAssoc($result)) {
@@ -1004,8 +1083,10 @@ class AOR_Report extends Basic {
                 if($data['type'] == 'currency' && isset($field_module->field_defs['currency_id'])) {
                     if((isset($field_module->field_defs['currency_id']['source']) && $field_module->field_defs['currency_id']['source'] == 'custom_fields')) {
                         $query['select'][$table_alias.'_currency_id'] = $this->db->quoteIdentifier($table_alias.'_cstm').".currency_id AS '".$table_alias."_currency_id'";
+                        $query['second_group_by'][] = $this->db->quoteIdentifier($table_alias.'_cstm').".currency_id";
                     } else {
                         $query['select'][$table_alias.'_currency_id'] = $this->db->quoteIdentifier($table_alias).".currency_id AS '".$table_alias."_currency_id'";
+                        $query['second_group_by'][] = $this->db->quoteIdentifier($table_alias).".currency_id";
                     }
                 }
 
@@ -1016,16 +1097,21 @@ class AOR_Report extends Basic {
                     $select_field= $this->db->quoteIdentifier($table_alias).'.'.$field->field;
                 }
 
+                if ($field->group_by == 1) {
+                    if ($field->format) {
+                        $query['group_by'][] = str_replace('(%1)', '(' . $select_field . ')', preg_replace(array('/\s+/', '/Y/', '/m/', '/d/'), array(', ', 'YEAR(%1)', 'MONTH(%1)', 'DAY(%1)'), trim(preg_replace('/[^Ymd]/', ' ', $field->format))));
+                        $query['second_group_by'][] = $select_field;
+                    } else {
+                        $query['group_by'][] = $select_field;
+                    }
+                } elseif ($field->field_function != null) {
+                    $select_field = $field->field_function . '(' . $select_field . ')';
+                } else {
+                    $query['second_group_by'][] = $select_field;
+                }
+
                 if($field->sort_by != ''){
                     $query['sort_by'][] = $select_field." ".$field->sort_by;
-                }
-
-                if($field->group_by == 1){
-                    $query['group_by'][] = $field->format ? str_replace('(%1)', '(' . $select_field . ')', preg_replace(array('/\s+/', '/Y/', '/m/', '/d/'), array(', ', 'YEAR(%1)', 'MONTH(%1)', 'DAY(%1)'), trim(preg_replace('/[^Ymd]/', ' ', $field->format)))) : $select_field;
-                }
-
-                if($field->field_function != null){
-                    $select_field = $field->field_function.'('.$select_field.')';
                 }
 
                 $query['select'][] = $select_field ." AS '".$field->label."'";
@@ -1073,7 +1159,6 @@ class AOR_Report extends Basic {
                         if($rel_module != null) {
                             $query['join'][$alias] .= $this->build_report_access_query($rel_module, $name);
                         }
-                        $query['select'][] = $join['select']." AS '".$alias."_id'";
                     }
                     break;
                 default:
@@ -1234,6 +1319,12 @@ class AOR_Report extends Basic {
 
                         case 'Date':
                             $params = unserialize(base64_decode($condition->value));
+
+                            // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
+                            if($params == false) {
+                                $params = $condition->value;
+                            }
+
                             if ($params[0] == 'now') {
                                 if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
                                     $value = 'GetDate()';
@@ -1324,8 +1415,37 @@ class AOR_Report extends Basic {
                         $value = "{$value} OR {$field} IS NULL";
                     }
 
-                    if (!$where_set) $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                    if(!$where_set) {
+                        if ($condition->value_type == "Period") {
+                            if (array_key_exists($condition->value, $app_list_strings['date_time_period_list'])) {
+                                $params = $condition->value;
+                            } else {
+                                $params = base64_decode($condition->value);
+                            }
+                            $date = getPeriodEndDate($params)->format('Y-m-d H:i:s');
+                            $value = '"' . getPeriodDate($params)->format('Y-m-d H:i:s') . '"';
 
+                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND '));
+                            $tiltLogicOp = false;
+
+                            switch ($app_list_strings['aor_sql_operator_list'][$condition->operator]) {
+                                case "=":
+                                    $query['where'][] = $field . ' BETWEEN ' . $value .  ' AND ' . '"' . $date . '"';
+                                    break;
+                                case "!=":
+                                    $query['where'][] = $field . ' NOT BETWEEN ' . $value .  ' AND ' . '"' . $date . '"';
+                                    break;
+                                case ">":
+                                case "<":
+                                case ">=":
+                                case "<=":
+                                    $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                                    break;
+                            }
+                        } else {
+                            if (!$where_set) $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                        }
+                    }
                     $tiltLogicOp = false;
                 }
                 else if($condition->parenthesis) {

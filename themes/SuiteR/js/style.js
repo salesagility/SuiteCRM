@@ -290,6 +290,7 @@ var checkContents = setInterval(function(){
         });
         $('#userlinks_togglemobilesearch').click(function() {
             $('#searchmobile').toggle('slide', {direction: 'left'}, '350');
+            $('#query_string').focus();
         });
 
         clearInterval(checkContents);

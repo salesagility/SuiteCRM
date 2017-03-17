@@ -98,6 +98,21 @@ class Project extends SugarBean {
 		parent::__construct();
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function Project(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 	/**
 	 * overriding the base class function to do a join with users table
 	 */
@@ -297,5 +312,261 @@ class Project extends SugarBean {
 
 		return $projectTasks;
 	}
+
+
+	function save($check_notify = FALSE) {
+
+		global $current_user, $db;
+		
+		$focus = $this; 
+
+		//--- check if project template is same or changed.
+        $new_template_id = $focus->am_projecttemplates_project_1am_projecttemplates_ida;
+        $current_template_id = "";
+
+		$focus->load_relationship('am_projecttemplates_project_1');
+		$project_template = $focus->get_linked_beans('am_projecttemplates_project_1','AM_ProjectTemplates');
+		foreach($project_template as $ptemplate){
+			$current_template_id = $ptemplate->id;
+		}				
+		//----------------------------------------------------------------
+
+
+
+		//if(!empty($this->id))
+		//	$focus->retrieve($this->id);
+
+		if( (isset($_POST['isSaveFromDetailView']) && $_POST['isSaveFromDetailView'] == 'true') ||
+			(isset($_POST['is_ajax_call']) && !empty($_POST['is_ajax_call']) && !empty($focus->id) ||
+			(isset($_POST['return_action']) && $_POST['return_action'] == 'SubPanelViewer') && !empty($focus->id))||
+			 !isset($_POST['user_invitees']) // we need to check that user_invitees exists before processing, it is ok to be empty
+		){
+			parent::save(true) ; //$focus->save(true);
+			$return_id = $focus->id;
+		}else{
+
+			if(!empty($_POST['user_invitees'])) {
+			   $userInvitees = explode(',', trim($_POST['user_invitees'], ','));
+			} else {
+			   $userInvitees = array();
+			}		
+
+
+			if(!empty($_POST['contact_invitees'])) {
+			   $contactInvitees = explode(',', trim($_POST['contact_invitees'], ','));
+			} else {
+			   $contactInvitees = array();
+			}
+
+
+			$deleteUsers = array();
+			$existingUsers = array();
+
+			$deleteContacts = array();
+			$existingContacts = array();		
+
+			if(!empty($this->id)){
+
+				//$focus->retrieve($this->id);
+
+				////	REMOVE RESOURCE RELATIONSHIPS
+				// Calculate which users to flag as deleted and which to add
+				
+				// Get all users for the project
+				$focus->load_relationship('users');
+				$users = $focus->get_linked_beans('project_users_1','User');
+				foreach($users as $a) {
+					  if(!in_array($a->id, $userInvitees)) {
+						 $deleteUsers[$a->id] = $a->id;
+					  } else {
+						 $existingUsers[$a->id] = $a->id;
+					  }
+				}
+
+				if(count($deleteUsers) > 0) {
+					$sql = '';
+					foreach($deleteUsers as $u) {
+							$sql .= ",'" . $u . "'";
+					}
+					$sql = substr($sql, 1);
+					// We could run a delete SQL statement here, but will just mark as deleted instead
+					$sql = "UPDATE project_users_1_c set deleted = 1 where project_users_1users_idb in ($sql) AND project_users_1project_ida = '". $focus->id . "'";
+					$focus->db->query($sql);
+					echo $sql; 
+				}
+
+				// Get all contacts for the project
+				$focus->load_relationship('contacts');
+				$contacts = $focus->get_linked_beans('project_contacts_1','Contact');
+				foreach($contacts as $a) {
+					  if(!in_array($a->id, $contactInvitees)) {
+						 $deleteContacts[$a->id] = $a->id;
+					  }	else {
+						 $existingContacts[$a->id] = $a->id;
+					  }
+				}
+
+				if(count($deleteContacts) > 0) {
+					$sql = '';
+					foreach($deleteContacts as $u) {
+							$sql .= ",'" . $u . "'";
+					}
+					$sql = substr($sql, 1);
+					// We could run a delete SQL statement here, but will just mark as deleted instead
+					$sql = "UPDATE project_contacts_1_c set deleted = 1 where project_contacts_1contacts_idb in ($sql) AND project_contacts_1project_ida = '". $focus->id . "'";
+					$focus->db->query($sql);
+					echo $sql;
+				}
+		
+				////END REMOVE
+				
+			}
+			
+			$return_id = parent::save($check_notify);
+			$focus->retrieve($return_id);
+
+			////REBUILD INVITEE RELATIONSHIPS
+			
+			// Process users
+			$focus->load_relationship('users');
+			$focus->get_linked_beans('project_users_1','User');
+			foreach($userInvitees as $user_id) {
+				if(empty($user_id) || isset($existingUsers[$user_id]) || isset($deleteUsers[$user_id])) {
+					continue;
+				}
+				$focus->project_users_1->add($user_id);
+			}
+
+			// Process contacts
+			$focus->load_relationship('contacts');
+			$focus->get_linked_beans('project_contacts_1','Contact');
+			foreach($contactInvitees as $contact_id) {
+				if(empty($contact_id) || isset($existingContacts[$contact_id]) || isset($deleteContacts[$contact_id])) {
+					continue;
+				}
+				$focus->project_contacts_1->add($contact_id);
+			}
+
+			////	END REBUILD INVITEE RELATIONSHIPS
+			///////////////////////////////////////////////////////////////////////////
+		}
+
+		
+
+		///////////////////////////////
+		// Code Block to handle the template selection at project edit.
+		////////////////////////////////////////
+
+		if($current_template_id != $new_template_id){
+			
+			$project_start = $focus->estimated_start_date;			
+			//Get project start date
+			if($project_start!='')
+			{
+				$dateformat = $current_user->getPreference('datef');
+				$startdate = DateTime::createFromFormat($dateformat, $project_start);
+				$start = $startdate->format('Y-m-d');
+			}
+
+			$duration_unit = 'Days';
+
+			//Get the project template
+			$template = new AM_ProjectTemplates();
+			$template->retrieve($new_template_id);
+
+			
+			//copy all resources from template to project
+			$template->load_relationship('am_projecttemplates_users_1');
+			$template_users = $template->get_linked_beans('am_projecttemplates_users_1','User');
+
+			$template->load_relationship('am_projecttemplates_contacts_1');
+			$template_contacts = $template->get_linked_beans('am_projecttemplates_contacts_1','Contact');
+			
+
+			foreach($template_users as $user){
+				$focus->project_users_1->add($user->id);
+			}
+			
+			foreach($template_contacts as $contact){
+				$focus->project_contacts_1->add($contact->id);
+			}
+
+
+			//Get related project template tasks. Using sql query so that the results can be ordered.
+			$get_tasks_sql = "SELECT * FROM am_tasktemplates
+							WHERE id
+							IN (
+								SELECT am_tasktemplates_am_projecttemplatesam_tasktemplates_idb
+								FROM am_tasktemplates_am_projecttemplates_c
+								WHERE am_tasktemplates_am_projecttemplatesam_projecttemplates_ida = '".$new_template_id."'
+								AND deleted =0
+							)
+							AND deleted =0
+							ORDER BY am_tasktemplates.order_number ASC";
+			$tasks = $db->query($get_tasks_sql);
+
+			//Create new project tasks from the template tasks
+			$count=1;
+			while($row = $db->fetchByAssoc($tasks))
+			{
+				$project_task = new ProjectTask();
+				$project_task->name = $row['name'];
+				$project_task->status = $row['status'];
+				$project_task->priority = strtolower($row['priority']);
+				$project_task->percent_complete = $row['percent_complete'];
+				$project_task->predecessors = $row['predecessors'];
+				$project_task->milestone_flag = $row['milestone_flag'];
+				$project_task->relationship_type = $row['relationship_type'];
+				$project_task->task_number = $row['task_number'];
+				$project_task->order_number = $row['order_number'];
+				$project_task->estimated_effort = $row['estimated_effort'];
+				$project_task->utilization = $row['utilization'];
+				$project_task->assigned_user_id = $row['assigned_user_id'];
+				$project_task->description = $row['description'];
+				$project_task->duration = $row['duration'];
+				$project_task->duration_unit = $duration_unit;
+				$project_task->project_task_id = $count;
+				
+				//Flag to prevent after save logichook running when project_tasks are created (see custom/modules/ProjectTask/updateProject.php)
+				$project_task->set_project_end_date = 0;
+
+				if($count == '1'){
+					$project_task->date_start = $start;
+					$enddate = $startdate->modify('+'.$row['duration'].' '.$duration_unit);
+					$end = $enddate->format('Y-m-d');
+					$project_task->date_finish = $end;
+					$enddate_array[$count] = $end;
+					//$GLOBALS['log']->fatal("DATE:". $end);
+				}
+				else {
+					$start_date = $count - 1;
+					$startdate = DateTime::createFromFormat('Y-m-d', $enddate_array[$start_date]);
+					//$GLOBALS['log']->fatal("DATE:". $enddate_array[$start_date]);
+					$start = $startdate->format('Y-m-d');
+					$project_task->date_start = $start;
+					$enddate = $startdate->modify('+'.$row['duration'].' '.$duration_unit);
+					$end = $enddate->format('Y-m-d');
+					$project_task->date_finish = $end;
+					$enddate = $end;
+					$enddate_array[$count] = $end;
+				}
+				$project_task->save();
+				
+				//link tasks to the newly created project
+				$project_task->load_relationship('projects');
+				$project_task->projects->add($focus->id);
+				
+				//Add assinged users from each task to the project resourses subpanel
+				$focus->load_relationship('project_users_1');
+				$focus->project_users_1->add($row['assigned_user_id']);
+				$count++;
+			}
+			
+		}
+		/// End Template Selection handling
+		////////////////////////////////////////////////////////////
+	
+	}
+
 }
 ?>

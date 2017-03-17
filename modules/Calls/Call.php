@@ -45,8 +45,11 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
+require_once('include/Trait/RemoveUnInvitedFromReminders.php');
+
 
 class Call extends SugarBean {
+	use RemoveUnInvitedFromReminders;
 	var $field_name_map;
 	// Stored fields
 	var $id;
@@ -139,6 +142,20 @@ class Call extends SugarBean {
 	}
 
 	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	public function Call(){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct();
+	}
+
+	/**
 	 * Disable edit if call is recurring and source is not Sugar. It should be edited only from Outlook.
 	 * @param $view string
 	 * @param $is_owner bool
@@ -217,7 +234,10 @@ class Call extends SugarBean {
         }
 
 		if(isset($_REQUEST['reminders_data'])) {
-			Reminder::saveRemindersDataJson('Calls', $return_id, html_entity_decode($_REQUEST['reminders_data']));
+			$reminderData = json_encode(
+				$this->removeUnInvitedFromReminders(json_decode(html_entity_decode($_REQUEST['reminders_data']), true))
+			);
+			Reminder::saveRemindersDataJson('Calls', $return_id, $reminderData);
 		}
 
         return $return_id;

@@ -42,7 +42,7 @@ require_once('modules/Prospects/ProspectsListViewSmarty.php');
 class ProspectsViewList extends ViewList {
 	
 	function LeadsViewList(){
-		parent::ViewList();
+		parent::__construct();
 	}
 	
 	function preDisplay(){

@@ -31,9 +31,7 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
-global $current_user;
-$module_name = 'AOS_Invoices';
-$searchFields[$module_name] = 
+$searchFields['AOS_Invoices'] = 
 	array (
 		'name' => array( 'query_type'=>'default'),
 		'account_type'=> array('query_type'=>'default', 'options' => 'account_type_dom', 'template_var' => 'ACCOUNT_TYPE_OPTIONS'),
@@ -56,10 +54,11 @@ $searchFields[$module_name] =
         'favorites_only' => array(
             'query_type'=>'format',
             'operator' => 'subquery',
-            'subquery' => 'SELECT favorites.parent_id FROM favorites
+			'checked_only' => true,
+			'subquery' => "SELECT favorites.parent_id FROM favorites
 			                    WHERE favorites.deleted = 0
-			                        and favorites.parent_type = "'.$module_name.'"
-			                        and favorites.assigned_user_id = "' .$current_user->id . '") OR NOT ({0}',
+			                        and favorites.parent_type = 'AOS_Invoices'
+			                        and favorites.assigned_user_id = '{1}'",
             'db_field'=>array('id')),
         //Range Search Support
         'range_total_amount' => array ('query_type' => 'default', 'enable_range_search' => true),

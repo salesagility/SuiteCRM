@@ -196,8 +196,9 @@ else {
  				$add_values[substr($key,14)]=$value;
  			}
  		}
- 		$focus->load_relationship($_REQUEST['subpanel_field_name']);
- 		$focus->$_REQUEST['subpanel_field_name']->add($_REQUEST['subpanel_id'],$add_values);
+		$relName = $_REQUEST['subpanel_field_name'];
+ 		$focus->load_relationship($relName);
+ 		$focus->$relName->add($_REQUEST['subpanel_id'],$add_values);
         $focus->save();
  	}
 }

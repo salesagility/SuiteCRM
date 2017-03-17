@@ -68,6 +68,21 @@ class SugarAuthenticate{
 
         $this->userAuthenticate = new $this->userAuthenticateClass();
 	}
+
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	public function SugarAuthenticate(){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct();
+	}
+
 	/**
 	 * Authenticates a user based on the username and password
 	 * returns true if the user was authenticated false otherwise
@@ -136,30 +151,8 @@ class SugarAuthenticate{
 	 */
 	function postLoginAuthenticate(){
 
-		global $reset_theme_on_default_user, $reset_language_on_default_user, $sugar_config;
-		//THIS SECTION IS TO ENSURE VERSIONS ARE UPTODATE
-
-		require_once ('modules/Versions/CheckVersions.php');
-		$invalid_versions = get_invalid_versions();
-		if (!empty ($invalid_versions)) {
-			if (isset ($invalid_versions['Rebuild Relationships'])) {
-				unset ($invalid_versions['Rebuild Relationships']);
-
-				// flag for pickup in DisplayWarnings.php
-				$_SESSION['rebuild_relationships'] = true;
-			}
-
-			if (isset ($invalid_versions['Rebuild Extensions'])) {
-				unset ($invalid_versions['Rebuild Extensions']);
-
-				// flag for pickup in DisplayWarnings.php
-				$_SESSION['rebuild_extensions'] = true;
-			}
-
-			$_SESSION['invalid_versions'] = $invalid_versions;
-		}
-
-
+		global $reset_language_on_default_user, $sugar_config;
+		
 		//just do a little house cleaning here
 		unset($_SESSION['login_password']);
 		unset($_SESSION['login_error']);

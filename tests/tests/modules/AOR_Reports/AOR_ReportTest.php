@@ -35,13 +35,13 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         $aor_Report = new AOR_Report();
 
         //populate value for aor_fields related/child object
-        $_POST['aor_fields_field'][] = 'test_field';
+        $_POST['aor_fields_field'][] = 'last_name';
         $_POST['aor_fields_name'][] = 'test';
-        $_POST['aor_fields_module_path'][] = 'test_path';
+        $_POST['aor_fields_module_path'][] = 'contacts';
         $_POST['aor_fields_display'][] = '1';
         $_POST['aor_fields_link'][] = '1';
         $_POST['aor_fields_label'][] = 'test_label';
-        $_POST['aor_fields_field_function'][] = 'test_function';
+        $_POST['aor_fields_field_function'][] = 'count';
         $_POST['aor_fields_total'][] = 'total';
         $_POST['aor_fields_group_by'][] = '1';
         $_POST['aor_fields_group_order'][] = 'desc';
@@ -226,8 +226,7 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
 
         //test with type relationship and verify that it retunrs expected results
-        $expected = array('join' => array('accounts_contacts' => "LEFT JOIN accounts_contacts `accounts|accounts_contacts` ON `accounts`.id=`accounts|accounts_contacts`.account_id AND `accounts|accounts_contacts`.deleted=0\n\nLEFT JOIN contacts `accounts_contacts` ON `accounts_contacts`.id=`accounts|accounts_contacts`.contact_id AND `accounts_contacts`.deleted=0\n"),
-                           'select' => array('`accounts_contacts`.id AS \'accounts_contacts_id\''), );
+        $expected = array('join' => array('accounts_contacts' => "LEFT JOIN accounts_contacts `accounts|accounts_contacts` ON `accounts`.id=`accounts|accounts_contacts`.account_id AND `accounts|accounts_contacts`.deleted=0\n\nLEFT JOIN contacts `accounts_contacts` ON `accounts_contacts`.id=`accounts|accounts_contacts`.contact_id AND `accounts_contacts`.deleted=0\n"),);
         $actual = $aor_Report->build_report_query_join('contacts', 'accounts_contacts', 'accounts', new Account(), 'relationship', array());
         $this->assertSame($expected, $actual);
     }

@@ -415,6 +415,7 @@ $mod_strings = array(
     'LBL_LOGIN_SUGAR_SERVER_DESC' => '- The User Name of the person who will operate this offline client',
     'LBL_LOGIN_SUGAR_SERVER' => 'End User Name:',
     'LBL_MAILBOX_DESC' => 'Set up group mail accounts for monitoring inbound email and manage personal inbound mail account information for users',
+    'LBL_MAILBOX_OUTBOUND_DESC' => 'Configure outbound email settings',
     'LBL_MANAGE_CONTRACTEMPLATES_TITLE' => 'Contract Types',
     'LBL_MANAGE_CURRENCIES' => 'Currencies',
     'LBL_MANAGE_GROUPS_TITLE' => 'Manage Groups',
@@ -425,6 +426,7 @@ $mod_strings = array(
     'LBL_MANAGE_LICENSE' => 'Manage license properties',
     'LBL_MANAGE_LOCALE' => 'Locale',
     'LBL_MANAGE_MAILBOX' => 'Inbound Email',
+    'LBL_MANAGE_MAILBOX_OUTBOUND' => 'Outbound Email',
     'LBL_MANAGE_OFFLINE_CLIENT' => 'View Offline Clients',
     'LBL_MANAGE_OPPORTUNITIES' => 'Opportunities',
     'LBL_MANAGE_PASSWORD_TITLE' => 'Password Management',
@@ -1131,7 +1133,6 @@ $mod_strings = array(
 4) Click Schedule System Index. Make sure that crontab is set up to run cron.php. This will handle indexing as well as the fallback mechanism when the connection to the search engine is interrupted.',
     'LBL_FTS_DISABLED' => 'Full Text Search has been disabled because the system is not able to connect to the search engine.',
     'LBL_FTS_CONNECTION_INVALID' => 'The Full Text Search Settings you have entered are invalid and may slow down system performance.  Please change or clear your settings.',
-    'MSG_RECONNECT_LOTUSLIVE' => 'You are currently not connected to IBM SmartCloud. Connect to IBM SmartCloud within your Profile to be able to access IBM SmartCloud meetings and files.',
     'LBL_REPAIR_UPLOAD_FOLDER' => 'Remove missed files from upload directory',
     'LBL_REPAIR_UPLOAD_FOLDER_DESC' => 'Please note that removal can take a lot of time',
     'LBL_TOTAL_FILES' => 'Total files',
@@ -1243,6 +1244,8 @@ $mod_strings = array(
     'LBL_AOS_EDIT' => 'edit',
     'LBL_AOS_DAYS' => 'days',
     'LBL_CHANGE_SETTINGS' => 'Change settings for Advanced OpenSales',
+    'LBL_CHANGE_SETTINGS_AOD' => 'Change settings for Advanced OpenDiscovery',
+    'LBL_CHANGE_SETTINGS_AOP' => 'Change settings for Advanced OpenPortal',
 
     'LBL_MANAGE_SECURITYGROUPS_TITLE' => 'Security Suite Group Management',
     'LBL_MANAGE_SECURITYGROUPS' => 'Security Suite Group Editor',
@@ -1259,5 +1262,9 @@ $mod_strings = array(
     'LBL_SECURITYGROUPS_SUGAROUTFITTERS_TITLE' => "SugarOutfitters",
     'LBL_SECURITYGROUPS_SUGAROUTFITTERS' => "Grab the latest version of SecuritySuite and find other SuiteCRM modules, themes, and integrations along with reviews, docs, support, and community verified versions.",
 
+	'LBL_AOBH_BUSINESS_HOURS_FROM' => 'From',
+	'LBL_AOBH_BUSINESS_HOURS_TO' => 'To',
+	'LBL_AOBH_MANAGE_HOURS' => "Change business hours",
+	'LBL_AOBH_OPEN' => "Open",
 );
 

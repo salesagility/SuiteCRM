@@ -313,11 +313,63 @@
 						 'include' => 'modules/OutboundEmailAccounts/OutboundEmailAccounts.php'
 					 ),
 				 ),
+			 'email_provider_chooser' => array (
+				 'required' => false,
+				 'name' => 'email_provider_chooser',
+				 'vname' => 'LBL_CHOOSE_EMAIL_PROVIDER',
+				 'type' => 'function',
+				 'source' => 'non-db',
+				 'massupdate' => 0,
+				 'no_default' => false,
+				 'comments' => '',
+				 'help' => '',
+				 'importable' => 'true',
+				 'duplicate_merge' => 'disabled',
+				 'duplicate_merge_dom_value' => '0',
+				 'audited' => false,
+				 'inline_edit' => true,
+				 'reportable' => true,
+				 'unified_search' => false,
+				 'merge_filter' => 'disabled',
+				 'len' => '255',
+				 'size' => '20',
+				 'function' => array(
+					 'name' => 'OutboundEmailAccounts::getEmailProviderChooser',
+					 'returns' => 'html',
+					 'include' => 'modules/OutboundEmailAccounts/OutboundEmailAccounts.php'
+				 ),
+			 ),
+			 'sent_test_email_btn' => array(
+				 'required' => false,
+				 'name' => 'sent_test_email_btn',
+				 'vname' => 'LBL_SEND_TEST_EMAIL',
+				 'type' => 'function',
+				 'source' => 'non-db',
+				 'massupdate' => 0,
+				 'no_default' => false,
+				 'comments' => '',
+				 'help' => '',
+				 'importable' => 'true',
+				 'duplicate_merge' => 'disabled',
+				 'duplicate_merge_dom_value' => '0',
+				 'audited' => false,
+				 'inline_edit' => true,
+				 'reportable' => true,
+				 'unified_search' => false,
+				 'merge_filter' => 'disabled',
+				 'len' => '255',
+				 'size' => '20',
+				 'function' => array(
+					 'name' => 'OutboundEmailAccounts::getSendTestEmailBtn',
+					 'returns' => 'html',
+					 'include' => 'modules/OutboundEmailAccounts/OutboundEmailAccounts.php'
+				 ),
+			 ),
 //			 'smtp_servername' =>
 //				 array (
 //					 'required' => true,
 //					 'name' => 'smtp_servername',
-//					 'vname' => 'LBL_smtp_servername',
+//					 'vname' => 'LBL_SMTP_SERVERNAME',
 //					 'type' => 'varchar',
 //					 'massupdate' => 0,
 //					 'no_default' => false,
@@ -469,8 +521,13 @@
 //VardefManager::createVardef('OutboundEmailAccounts','OutboundEmailAccounts', array('basic','assignable'));
 
 include 'metadata/outboundEmailMetaData.php';
-$dictionary['OutboundEmailAccounts']['fields'] = array_merge($dictionary['OutboundEmailAccounts']['fields'], $dictionary['OutboundEmail']['fields']);
-$dictionary['OutboundEmailAccounts']['indices'] = array_merge($dictionary['OutboundEmailAccounts']['indices'], $dictionary['OutboundEmail']['indices']);
+
+if(isset($dictionary['OutboundEmail']['fields'])) {
+    $dictionary['OutboundEmailAccounts']['fields'] = array_merge($dictionary['OutboundEmailAccounts']['fields'], $dictionary['OutboundEmail']['fields']);
+}
+if(isset($dictionary['OutboundEmail']['indices'])) {
+    $dictionary['OutboundEmailAccounts']['indices'] = array_merge($dictionary['OutboundEmailAccounts']['indices'], $dictionary['OutboundEmail']['indices']);
+}
 
 $dictionary['OutboundEmailAccounts']['fields']['mail_smtpssl']['type'] = 'enum';
 $dictionary['OutboundEmailAccounts']['fields']['mail_smtpssl']['options'] = 'email_settings_for_ssl';

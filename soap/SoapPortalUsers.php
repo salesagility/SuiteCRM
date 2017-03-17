@@ -387,13 +387,13 @@ function portal_set_entry($session,$module_name, $name_value_list){
             break;
         }
         $values_set[$value['name']] = $value['value'];
-        $seed->$value['name'] = $value['value'];
+        $seed->{$value['name']} = $value['value'];
     }
 
     // If it was an update, we have to set the values again
     if($is_update) {
         foreach($name_value_list as $value){
-            $seed->$value['name'] = $value['value'];
+            $seed->{$value['name']} = $value['value'];
         }
     }
 

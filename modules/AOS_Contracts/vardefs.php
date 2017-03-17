@@ -400,70 +400,6 @@ $dictionary['AOS_Contracts'] = array(
                 'reportable' => true,
                 'size' => '20',
             ),
-
-        'tasks' =>
-            array(
-                'name' => 'tasks',
-                'type' => 'link',
-                'relationship' => 'aos_contracts_tasks',
-                'module' => 'Tasks',
-                'bean_name' => 'Task',
-                'source' => 'non-db',
-            ),
-        'notes' =>
-            array(
-                'name' => 'notes',
-                'type' => 'link',
-                'relationship' => 'aos_contracts_notes',
-                'module' => 'Notes',
-                'bean_name' => 'Note',
-                'source' => 'non-db',
-            ),
-        'meetings' =>
-            array(
-                'name' => 'meetings',
-                'type' => 'link',
-                'relationship' => 'aos_contracts_meetings',
-                'module' => 'Meetings',
-                'bean_name' => 'Meeting',
-                'source' => 'non-db',
-            ),
-        'calls' =>
-            array(
-                'name' => 'calls',
-                'type' => 'link',
-                'relationship' => 'aos_contracts_calls',
-                'module' => 'Calls',
-                'bean_name' => 'Call',
-                'source' => 'non-db',
-            ),
-
-        'emails' =>
-            array(
-                'name' => 'emails',
-                'type' => 'link',
-                'relationship' => 'emails_aos_contracts_rel', /* reldef in emails */
-                'module' => 'Emails',
-                'bean_name' => 'Email',
-                'source' => 'non-db',
-                'studio' => array("formula" => false),
-            ),
-        'aos_quotes_aos_contracts' =>
-            array(
-                'name' => 'aos_quotes_aos_contracts',
-                'type' => 'link',
-                'relationship' => 'aos_quotes_aos_contracts',
-                'source' => 'non-db',
-                'module' => 'AOS_Quotes',
-            ),
-        "documents" =>
-            array(
-                'name' => 'documents',
-                'type' => 'link',
-                'relationship' => 'aos_contracts_documents',
-                'source' => 'non-db',
-                'module' => 'Documents',
-            ),
         'line_items' =>
             array(
                 'required' => false,
@@ -743,6 +679,85 @@ $dictionary['AOS_Contracts'] = array(
                 ),
                 'len' => '26,6',
             ),
+        
+        'accounts' =>
+            array(
+                'name' => 'accounts',
+                'type' => 'link',
+                'relationship' => 'account_aos_contracts',
+                'module' => 'Accounts',
+                'bean_name' => 'Account',
+                'source' => 'non-db',
+            ),
+        'contacts' =>
+            array(
+                'name' => 'contacts',
+                'type' => 'link',
+                'relationship' => 'contact_aos_contracts',
+                'module' => 'Contacts',
+                'bean_name' => 'Contact',
+                'source' => 'non-db',
+            ),
+        'tasks' =>
+            array(
+                'name' => 'tasks',
+                'type' => 'link',
+                'relationship' => 'aos_contracts_tasks',
+                'module' => 'Tasks',
+                'bean_name' => 'Task',
+                'source' => 'non-db',
+            ),
+        'notes' =>
+            array(
+                'name' => 'notes',
+                'type' => 'link',
+                'relationship' => 'aos_contracts_notes',
+                'module' => 'Notes',
+                'bean_name' => 'Note',
+                'source' => 'non-db',
+            ),
+        'meetings' =>
+            array(
+                'name' => 'meetings',
+                'type' => 'link',
+                'relationship' => 'aos_contracts_meetings',
+                'module' => 'Meetings',
+                'bean_name' => 'Meeting',
+                'source' => 'non-db',
+            ),
+        'calls' =>
+            array(
+                'name' => 'calls',
+                'type' => 'link',
+                'relationship' => 'aos_contracts_calls',
+                'module' => 'Calls',
+                'bean_name' => 'Call',
+                'source' => 'non-db',
+            ),
+        'emails' =>
+            array(
+                'name' => 'emails',
+                'type' => 'link',
+                'relationship' => 'emails_aos_contracts_rel',/* reldef in emails */
+                'source' => 'non-db',
+                'vname' => 'LBL_EMAILS',
+            ),
+        'aos_quotes_aos_contracts' =>
+            array(
+                'name' => 'aos_quotes_aos_contracts',
+                'type' => 'link',
+                'relationship' => 'aos_quotes_aos_contracts',
+                'source' => 'non-db',
+                'module' => 'AOS_Quotes',
+            ),
+        "documents" =>
+            array(
+                'name' => 'documents',
+                'type' => 'link',
+                'relationship' => 'aos_contracts_documents',
+                'source' => 'non-db',
+                'module' => 'Documents',
+            ),
         "aos_products_quotes" =>
             array(
                 'name' => 'aos_products_quotes',
@@ -763,6 +778,50 @@ $dictionary['AOS_Contracts'] = array(
             ),
     ),
     'relationships' => array(
+        'aos_contracts_tasks' => array(
+            'lhs_module' => 'AOS_Contracts',
+            'lhs_table' => 'aos_contracts',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Tasks',
+            'rhs_table' => 'tasks',
+            'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many',
+            'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'AOS_Contracts'
+        ),
+        'aos_contracts_notes' => array(
+            'lhs_module' => 'AOS_Contracts',
+            'lhs_table' => 'aos_contracts',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Notes',
+            'rhs_table' => 'notes',
+            'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many',
+            'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'AOS_Contracts'
+        ),
+        'aos_contracts_meetings' => array(
+            'lhs_module' => 'AOS_Contracts',
+            'lhs_table' => 'aos_contracts',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Meetings',
+            'rhs_table' => 'meetings',
+            'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many',
+            'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'AOS_Contracts'
+        ),
+        'aos_contracts_calls' => array(
+            'lhs_module' => 'AOS_Contracts',
+            'lhs_table' => 'aos_contracts',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Calls',
+            'rhs_table' => 'calls',
+            'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many',
+            'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'AOS_Contracts'
+        ),
         'aos_contracts_aos_products_quotes' =>
             array(
                 'lhs_module' => 'AOS_Contracts',

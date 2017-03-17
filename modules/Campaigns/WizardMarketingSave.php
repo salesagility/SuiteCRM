@@ -77,6 +77,11 @@ $marketing = new EmailMarketing();
 if (isset($_REQUEST['record']) && !empty($_REQUEST['record'])) {
     $marketing->retrieve($_REQUEST['record']);
 }
+else {
+    if(!empty($_SESSION['campaignWizard'][$_REQUEST['campaign_id']]['defaultSelectedMarketingId'])) {
+        $marketing->retrieve($_SESSION['campaignWizard'][$_REQUEST['campaign_id']]['defaultSelectedMarketingId']);
+    }
+}
 if(!$marketing->ACLAccess('Save')){
         ACLController::displayNoAccess(true);
         sugar_cleanup(true);
@@ -205,6 +210,7 @@ if(isset($_REQUEST['show_wizard_summary']) && $_REQUEST['show_wizard_summary']) 
         }
         else if(isset($_REQUEST['sendMarketingEmailSchedule']) && $_REQUEST['sendMarketingEmailSchedule']) {
             $_POST['mode'] = 'send';
+            $_SESSION['msg'] = 'LBL_EMAILS_SCHEDULED';
         }
         else {
             throw new Exception('request error');
@@ -223,6 +229,13 @@ else {
 }
 
 $GLOBALS['log']->debug("about to post header URL of: $header_URL");
-header($header_URL);
+
+if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
+    $href = $matches[1];
+    SugarApplication::redirect($href);
+}
+else {
+    header($header_URL);
+}
 
 ?>

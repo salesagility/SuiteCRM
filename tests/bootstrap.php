@@ -54,4 +54,4 @@ $GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['curren
 $GLOBALS['sugar_config']['resource_management']['default_limit'] = 999999;
 
 
-define('WITHIN_TESTS', true);
+define('SUITE_PHPUNIT_RUNNER', true);
