@@ -169,5 +169,22 @@
     .col-sm-12 [type].col-sm-8.edit-view-field input[type=text]{
       width: 100%;
     }
+    .col-sm-8 {
+      width: 83.333%;
+    }
+
+  }
+}
+
+@media (max-width: $xs-breakpoint) {
+  .compose-view {
+    .panel {
+      .col-sm-12 [type].col-sm-8.edit-view-field input[type=text]{
+        width: 100%;
+      }
+      .col-sm-8 {
+        width: 100%;
+      }
+    }
   }
 }
