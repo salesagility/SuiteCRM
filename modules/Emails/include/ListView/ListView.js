@@ -52,7 +52,7 @@ $(document).ready(function(){
      "showHeader": false,
      "showFooter": false,
      "size": 'lg',
-     "backdrop": false
+
    });
    composeBox.setBody(SUGAR.language.translate('', 'LBL_EMAIL_LOADING'));
    composeBox.show();
@@ -76,8 +76,28 @@ $(document).ready(function(){
      });
 
      $(emailComposeView).on('disregardDraft', function(event, composeView) {
-       composeBox.hide();
-       composeBox.remove();
+       if(typeof messageBox !== "undefined") {
+         var mb = messageBox({size:'lg'});
+         mb.hideHeader();
+         mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_DELETE_EMAIL'));
+
+         mb.on('ok', function() {
+           mb.remove();
+           composeBox.hide();
+           composeBox.remove();
+         });
+
+         mb.on('cancel', function() {
+           mb.remove();
+         });
+
+         mb.show();
+       } else {
+         if(confirm(self.translatedErrorMessage)) {
+           composeBox.hide();
+           composeBox.remove();
+         }
+       }
      });
 
    }).fail(function (data) {

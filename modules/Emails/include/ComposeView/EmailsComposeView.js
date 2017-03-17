@@ -172,7 +172,7 @@
       var valid = self.isValid();
       if(valid === false) {
         if(typeof messageBox !== "undefined") {
-          var mb = messageBox();
+          var mb = messageBox({size:'lg'});
           mb.setTitle(SUGAR.language.translate('', 'ERR_INVALID_REQUIRED_FIELDS'));
           mb.setBody(self.translatedErrorMessage);
 

@@ -246,7 +246,7 @@
           self.controls.modal.footer.hide()
         };
 
-
+        self.modal(opts);
       }
 
       $(self).on('remove', self.destruct);
@@ -277,7 +277,7 @@
 
   $.fn.messageBox.defaults = {
     "showHeader": true,
-    "headerContent": '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title"></h4>',
+    "headerContent": '<button type="button" class="close btn-cancel" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title"></h4>',
     "footerContent": '<button class="button btn-ok" type="button">'+SUGAR.language.translate('','LBL_OK')+'</button> <button class="button btn-cancel" type="button">'+SUGAR.language.translate('','LBL_CANCEL_BUTTON_LABEL')+'</button> ',
     "showFooter" : true,
     // Message Box Specific events
@@ -292,8 +292,8 @@
     "size": 'sm',
     // Bootstrap
     "show": false,
-    "backdrop": true,
-    "keyboard": true
+    "backdrop": false,
+    "keyboard": false
   }
 }( jQuery ));
 

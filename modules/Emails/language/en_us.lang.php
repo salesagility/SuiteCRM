@@ -60,6 +60,7 @@ $mod_strings = array (
 
 
 	'LBL_CONFIRM_DELETE'		=> 'Are you sure you want to delete this folder?',
+	'LBL_CONFIRM_DELETE_EMAIL'		=> 'Are you sure you want to delete this email?',
 	'LBL_ENTER_FOLDER_NAME'		=> 'Please enter a folder name',
 
 	'LBL_ERROR_SELECT_MODULE'   => 'Please select a module for the Related to field',
