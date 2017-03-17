@@ -121,6 +121,10 @@
       // TODO: Find a better way only display one tiny mce
       // Remove the hanging tinyMCE div
       $('.mce-panel').remove();
+      var length = tinyMCE.editors.length;
+      for (var i=length; i>0; i--) {
+        tinyMCE.editors[i-1].remove();
+      };
       return true;
     };
 
