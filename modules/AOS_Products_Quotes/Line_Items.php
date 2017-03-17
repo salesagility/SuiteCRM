@@ -129,6 +129,11 @@ function display_lines($focus, $field, $value, $view){
                 $groupStart .= "<td class='tabDetailViewDL' style='text-align: left;padding:2px;' scope='row'>".$mod_strings['LBL_GROUP_NAME'].":</td>";
                 $groupStart .= "<td class='tabDetailViewDL' colspan='7' style='text-align: left;padding:2px;'>".$group_item->name."</td>";
                 $groupStart .= "</tr>";
+				$groupStart .= "<tr>";
+                $groupStart .= "<td class='tabDetailViewDL' style='text-align: left;padding:2px;' scope='row'>&nbsp;</td>";
+                $groupStart .= "<td class='tabDetailViewDL' style='text-align: left;padding:2px;' scope='row'>".$mod_strings['LBL_GROUP_DESCRIPTION'].":</td>";
+                $groupStart .= "<td class='tabDetailViewDL' colspan='7' style='text-align: left;padding:2px;'>".$group_item->description."</td>";
+                $groupStart .= "</tr>";
 
                 $groupEnd = "<tr><td colspan='9' nowrap='nowrap'><br></td></tr>";
                 $groupEnd .= "<tr>";
@@ -170,7 +175,7 @@ function display_lines($focus, $field, $value, $view){
 
                 $product .= "<tr>";
                 $product_note = wordwrap($line_item->description,40,"<br />\n");
-                $product .= "<td class='tabDetailViewDF' style='text-align: left; padding:2px;'>".++$productCount."</td>";
+                $product .= "<td class='tabDetailViewDF' style='text-align: left; padding:2px;'>".stripDecimalPointsAndTrailingZeroes(format_number($line_item->number),$sep[1])."</td>";
                 $product .= "<td class='tabDetailViewDF' style='padding:2px;'>".stripDecimalPointsAndTrailingZeroes(format_number($line_item->product_qty),$sep[1])."</td>";
 
                 $product .= "<td class='tabDetailViewDF' style='padding:2px;'><a href='index.php?module=AOS_Products&action=DetailView&record=".$line_item->product_id."' class='tabDetailViewDFLink'>".$line_item->name."</a><br />".$product_note."</td>";
@@ -203,7 +208,7 @@ function display_lines($focus, $field, $value, $view){
                 }
 
                 $service .= "<tr>";
-                $service .= "<td class='tabDetailViewDF' style='text-align: left; padding:2px;'>".++$serviceCount."</td>";
+                $service .= "<td class='tabDetailViewDF' style='text-align: left; padding:2px;'>".stripDecimalPointsAndTrailingZeroes(format_number($line_item->number),$sep[1])."</td>";
                 $service .= "<td class='tabDetailViewDF' style='padding:2px;' colspan='2'>".$line_item->name."</td>";
                 $service .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_list_price,$params)."</td>";
 

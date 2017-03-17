@@ -5,7 +5,7 @@
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -38,6 +38,7 @@ $mod_strings = array (
     'LBL_DESCRIPTION' => 'Note',
     'LBL_DELETED' => 'Deleted',
     'LBL_NAME' => 'Name',
+	'LBL_NUMBER' => 'Number',
     'LBL_CREATED_USER' => 'Created by User',
     'LBL_MODIFIED_USER' => 'Modified by User',
     'LBL_LIST_FORM_TITLE' => 'Products Quotes List',
@@ -52,6 +53,7 @@ $mod_strings = array (
     'LBL_AOS_PRODUCTS_SUBPANEL_TITLE' => 'Products_Quotes',
     'LBL_NEW_FORM_TITLE' => 'New Product_Quote',
     'LBL_PRODUCT_NAME' => 'Name',
+	'LBL_PRODUCT_NUMBER' => 'Number',
     'LBL_PRODUCT_QTY' => 'Quantity',
     'LBL_PRODUCT_COST_PRICE' => 'Cost Price',
     'LBL_PRODUCT_LIST_PRICE' => 'List Price',
@@ -69,11 +71,12 @@ $mod_strings = array (
     'LBL_AOS_PRODUCTS_QUOTES_SUBPANEL_TITLE' => 'Products Quotes',
     'LBL_FLEX_RELATE' => 'Related to',
     'LBL_PRODUCT' => 'Product',
-
     'LBL_SERVICE_MODULE_NAME' => 'Services',
+	'LBL_SERVICE_NUMBER' => 'Number',
     'LBL_LIST_NUM' => 'Number',
     'LBL_PARENT_ID' => 'Parent ID',
     'LBL_GROUP_NAME' => 'Group',
+	'LBL_GROUP_DESCRIPTION' => 'Description',
     'LBL_PRODUCT_COST_PRICE_USDOLLAR' => 'Cost Price (Default Currency)',
     'LBL_PRODUCT_LIST_PRICE_USDOLLAR' => 'List Price (Default Currency)',
     'LBL_PRODUCT_UNIT_PRICE_USDOLLAR' => 'Unit Price (Default Currency)',

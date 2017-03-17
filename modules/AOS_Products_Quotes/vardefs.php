@@ -455,6 +455,18 @@ $dictionary['AOS_Products_Quotes'] = array(
             'module' => 'AOS_Line_Item_Groups',
             'duplicate_merge' => 'disabled',
          ),
+		 'group_description' => array(
+            'name' => 'group_description',
+            'rname' => 'description',
+            'vname' => 'LBL_GROUP_DESCRIPTION',
+            'type' => 'relate',
+            'reportable' => false,
+            'source' => 'non-db',
+            'table' => 'aos_line_item_groups',
+            'id_name' => 'group_id',
+            'module' => 'AOS_Line_Item_Groups',
+            'duplicate_merge' => 'disabled',
+         ),
         'group_id' => array(
             'required' => false,
             'name' => 'group_id',

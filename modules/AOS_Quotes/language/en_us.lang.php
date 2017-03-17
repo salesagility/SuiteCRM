@@ -5,7 +5,7 @@
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -156,6 +156,7 @@ $mod_strings = array (
     'LBL_INVOICE_STATUS' => 'Invoice Status',
     'LBL_PRODUCT_QUANITY' => 'Quantity',
     'LBL_PRODUCT_NAME' => 'Product',
+	'LBL_PRODUCT_NUMBER' => 'Number',
     'LBL_PART_NUMBER' => 'Part Number',
     'LBL_PRODUCT_NOTE' => 'Note',
     'LBL_PRODUCT_DESCRIPTION' => 'Description',
@@ -168,6 +169,7 @@ $mod_strings = array (
     'LBL_VAT_AMT' => 'Tax Amount',
     'LBL_ADD_PRODUCT_LINE' => 'Add Product Line',
     'LBL_SERVICE_NAME' => 'Service',
+	'LBL_SERVICE_NUMBER' => 'Number',
     'LBL_SERVICE_LIST_PRICE' => 'List',
     'LBL_SERVICE_PRICE' => 'Sale Price',
     'LBL_SERVICE_DISCOUNT' => 'Discount',
@@ -187,6 +189,7 @@ $mod_strings = array (
     'LBL_ADD_GROUP' => 'Add Group',
     'LBL_DELETE_GROUP' => 'Delete Group',
     'LBL_GROUP_NAME' => 'Group Name',
+	'LBL_GROUP_DESCRIPTION' => 'Group Description',
     'LBL_GROUP_TOTAL' => 'Group Total',
     'LBL_SHIPPING_TAX' => 'Shipping Tax',
     'LBL_SHIPPING_TAX_AMT' => 'Shipping Tax',
