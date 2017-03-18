@@ -56,19 +56,27 @@ timer = null;
 
 function buildEditField(){
     $(".inlineEdit a").click(function (e) {
-    	
-    	if(e.which !== undefined && e.which === 2){
+
+        if(e.which !== undefined && e.which === 2){
             return;
         }
-        
+
         if(this.id != "inlineEditSaveButton") {
             var linkUrl = $(this).attr("href");
-			var linkTarget = $(this).attr("target");
-			
+            var linkTarget = $(this).attr("target");
+
             if (typeof clicks == 'undefined') {
                 clicks = 0;
             }
-            clicks++;
+
+            // Fix for Issue #3148, force it so clicks is only ever = 1 when clicked, never higher.
+            if (clicks == 0) {
+                clicks++;
+            }
+
+            if(e.ctrlKey && clicks == 1){
+                return;
+            }
 
             e.preventDefault();
             // if single click just want default action of following link, but want to wait in case user is actually trying to double click to edit field
@@ -81,10 +89,10 @@ function buildEditField(){
 
                 timer = setTimeout(function () {
                     // if reaches end of timeout without another click follow link
-					if (linkTarget)
-						window.open(linkUrl, linkTarget);
-					else
-						window.location.href = linkUrl;
+                    if (linkTarget)
+                        window.open(linkUrl, linkTarget);
+                    else
+                        window.location.href = linkUrl;
                     clicks = 0;             //after action performed, reset counter
 
                 }, 500);
@@ -97,18 +105,21 @@ function buildEditField(){
             }
         }
     });
-    $(".inlineEdit").dblclick(function(e) {
+
+
+    var onInlineEditDblClick = function(elem, e) {
+        var _this = elem;
         e.preventDefault();
-        //depending on what view you are using will find the id,module,type of field, and field name from the view
-    
+
+        // depending on what view you are using will find the id,module,type of field, and field name from the view
+
 		//make the gantt chart view look like the detail view
 		if(view == "view_GanttChart" )
 			view = "DetailView"; 
 
-		if(view == "DetailView" ){
-
-            var field = $(this).attr( "field" );
-            var type = $(this).attr( "type" );
+		if(view == "DetailView"){
+            var field = $(_this).attr( "field" );
+            var type = $(_this).attr( "type" );
 
             if(currentModule){
                 var module = currentModule;
@@ -116,14 +127,14 @@ function buildEditField(){
                 var module = module_sugar_grp1;
             }
 
-
             var id = $("input[name=record]").attr( "value" );
         }else{
 
-            var field = $(this).attr( "field" );
-            var type = $(this).attr( "type" );
+            var field = $(_this).attr( "field" );
+            var type = $(_this).attr( "type" );
+
             var module = $("#displayMassUpdate input[name=module]").val();
-            var id = $(this).closest('tr').find('[type=checkbox]').attr( "value" );
+            var id = $(_this).closest('tr').find('[type=checkbox]').attr( "value" );
         }
 
 		//If we find all the required variables to do inline editing.
@@ -136,19 +147,24 @@ function buildEditField(){
 
             //If we have the field html append it to the div we clicked.
             if(html){
-                $(this).html(validation + "<form name='EditView' id='EditView'><div id='inline_edit_field'>" + html + "</div><a id='inlineEditSaveButton'></a></form>");
+                $(_this).html(validation + "<form name='EditView' id='EditView'><div id='inline_edit_field'>" + html + "</div><a id='inlineEditSaveButton'></a></form>");
                 $("#inlineEditSaveButton").load(inlineEditSaveButtonImg);
                 //If the field is a relate field we will need to retrieve the extra js required to make the field work.
                 if(type == "relate" || type == "parent") {
                     var relate_js = getRelateFieldJS(field, module, id);
-                    $(this).append(relate_js);
-                    SUGAR.util.evalScript($(this).html());
+                    $(_this).append(relate_js);
+                    SUGAR.util.evalScript($(_this).html());
+                    // Issue 2344 and 2499 changes - Dump existing QSProcessedFieldsArray to enable multiple QS on multiple rows.
+                    var fieldToCheck = 'EditView_' + field + '_display';
+                    if(fieldToCheck in QSProcessedFieldsArray) {
+                        delete QSProcessedFieldsArray[fieldToCheck];
+                    }
                     //Needs to be called to enable quicksearch/typeahead functionality on the field.
                     enableQS(true);
                 }
 
                 //Add the active class so we know which td we are editing as they all have the inlineEdit class.
-                $(this).addClass("inlineEditActive");
+                $(_this).addClass("inlineEditActive");
 
                 //Put the cursor in the field if possible.
                 $("#" + field).focus();
@@ -159,6 +175,7 @@ function buildEditField(){
                 }
 
                 //We can only edit one field at a time currently so turn off the on dblclick event
+                $(".inlineEdit").off('click');
                 $(".inlineEdit").off('dblclick');
 
                 //Call the click away function to handle if the user has clicked off the field, if they have it will close the form.
@@ -169,8 +186,31 @@ function buildEditField(){
 
             }
         }
+    };
 
+    var touchtime = 0;
+    $('.inlineEdit').on('click', function(e) {
+        if(touchtime == 0) {
+            //set first click
+            touchtime = new Date().getTime();
+        } else {
+            //compare first click to this click and see if they occurred within double click threshold
+            if(((new Date().getTime())-touchtime) < 800) {
+                //double click occurred
+                //alert("double clicked");
+                touchtime = 0;
+                onInlineEditDblClick(this, e);
+            } else {
+                //not a double click so set as a new first click
+                touchtime = new Date().getTime();
+            }
+        }
     });
+
+    $(".inlineEdit").dblclick(function(e) {
+        onInlineEditDblClick(this, e);
+    });
+
 }
 
 /**
@@ -185,7 +225,7 @@ function validateFormAndSave(field,id,module,type){
         var valid_form = check_form("EditView");
         if(valid_form){
             handleSave(field, id, module, type)
-            $(document).off('click');
+            clickListenerActive = false;
         }else{
             return false
         };
@@ -193,14 +233,12 @@ function validateFormAndSave(field,id,module,type){
     // also want to save on enter/return being pressed
     $(document).keypress(function(e) {
 
-        if (e.which == 13) {
+        if (e.which == 13 && !e.shiftKey) {
             e.preventDefault();
             $("#inlineEditSaveButton").click();
         }
     });
 }
-
-
 
 /**
  * Checks if any of the parent elemenets of the current element have the class inlineEditActive this means they are within
@@ -210,9 +248,12 @@ function validateFormAndSave(field,id,module,type){
  * @param module - the module we are editing
  */
 
+var ie_field, ie_id, ie_module, ie_type, ie_message_field;
+var clickListenerActive = false;
+
 function clickedawayclose(field,id,module, type){
     // Fix for issue #373 get name from system field name.
-    var message_field = 'LBL_' + field.toUpperCase();
+    message_field = 'LBL_' + field.toUpperCase();
     message_field = SUGAR.language.get(module, message_field);
 
     // Fix for issue #373 remove ':'
@@ -220,19 +261,59 @@ function clickedawayclose(field,id,module, type){
     if (':'.toUpperCase() === last_charachter.toUpperCase()) {
         message_field = message_field.substring(0, message_field.length - 1);
     }
+    ie_field = field;
+    ie_id = id;
+    ie_module = module;
+    ie_type = type;
+    ie_message_field = message_field;
+    clickListenerActive = true;
+}
 
-    $(document).on('click', function (e) {
+$(document).on('click', function (e) {
+    if(clickListenerActive) {
+        var field = ie_field;
+        var id = ie_id;
+        var module = ie_module;
+        var type = ie_type;
+        var message_field = ie_message_field;
+        var alertFlag = true;
 
-        if(!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")){
-            var output_value = loadFieldHTMLValue(field,id,module);
+        if (!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")) {
+            var output_value = loadFieldHTMLValue(field, id, module);
+            var outputValueParse = $(output_value).text();
             var user_value = getInputValue(field, type);
-            // Fix for issue #373 strip HTML tags for correct comparison
-            var output_value_compare = $(output_value).text();
-            if(user_value != output_value_compare) {
-                var r = confirm( SUGAR.language.translate('app_strings', 'LBL_CONFIRM_CANCEL_INLINE_EDITING') + message_field);
-                if(r == true) {
+
+            /**
+             * A flag to fix Issue 2545, some parts of the site were comparing HTML to plain text, this flag checks
+             * against Plain Text and normal HTML to trigger the alert/confirm dialogue box.
+             */
+
+            // Return user value to empty string for comparison if undefined at this stage (empty field check fix)
+            if (typeof user_value === "undefined") {
+                user_value = '';
+            }
+
+            // QS Fields have '_display' in their field names. An additional check for the this field name pattern.
+            if (outputValueParse != user_value && output_value != user_value) {
+                var fieldName = field + '_display';
+                var replacementUserValue = $("#" + fieldName).val();
+
+                // Parsing empty text returns undefined, if the string returns anything other than undefined, replace
+                // user_value with this value.
+                if (replacementUserValue != undefined) {
+                    user_value = replacementUserValue;
+                }
+            }
+
+            if (user_value == outputValueParse || user_value == output_value) {
+                var alertFlag = false;
+            }
+
+            if (alertFlag) {
+                var r = confirm(SUGAR.language.translate('app_strings', 'LBL_CONFIRM_CANCEL_INLINE_EDITING') + ' ' + message_field);
+                if (r == true) {
                     var output = setValueClose(output_value);
-                    $(document).off('click');
+                    clickListenerActive = false;
                 } else {
                     $("#" + field).focus();
                     e.preventDefault();
@@ -240,13 +321,11 @@ function clickedawayclose(field,id,module, type){
             } else {
                 // user hasn't changed value so can close field without warning them first
                 var output = setValueClose(output_value);
-                $(document).off('click');
+                clickListenerActive = false;
             }
         }
-
-    });
-}
-
+    }
+});
 
 /**
  * Depending on what type of field we are editing the parts of the field may differ and need different jquery to pickup the values
@@ -303,7 +382,7 @@ function getInputValue(field,type){
                 break;
             case 'bool':
                 if($('#'+ field).is(':checked')){
-                   return "on";
+                    return "on";
                 }else{
                     return "off";
                 }
@@ -345,7 +424,7 @@ function handleSave(field,id,module,type){
     }
 
     if(type == "parent") {
-            parent_type = $('#parent_type').val();
+        parent_type = $('#parent_type').val();
     }
 
 
@@ -383,7 +462,7 @@ function setValueClose(value){
 
 function saveFieldHTML(field,module,id,value, parent_type) {
     $.ajaxSetup({"async": false});
-    var result = $.getJSON('index.php',
+    var result = $.post('index.php',
         {
             'module': 'Home',
             'action': 'saveHTMLField',
@@ -394,7 +473,7 @@ function saveFieldHTML(field,module,id,value, parent_type) {
             'view' : view,
             'parent_type': parent_type,
             'to_pdf': true
-        }
+        }, null, "json"
     );
     $.ajaxSetup({"async": true});
     return(result.responseText);
@@ -426,16 +505,16 @@ function loadFieldHTML(field,module,id) {
         }
     );
     $.ajaxSetup({"async": true});
-     if(result.responseText){
-         try {
-             return (JSON.parse(result.responseText));
-         } catch(e) {
-             return false;
-         }
+    if(result.responseText){
+        try {
+            return (JSON.parse(result.responseText));
+        } catch(e) {
+            return false;
+        }
 
-     }else{
-         return false;
-     }
+    }else{
+        return false;
+    }
 
 
 }
