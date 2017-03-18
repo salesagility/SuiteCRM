@@ -210,7 +210,13 @@ class AOW_WorkFlow extends Basic {
                 case 'custom':
                     $query['join'][$name] = 'LEFT JOIN '.$module->get_custom_table_name().' '.$name.' ON '.$module->table_name.'.id = '. $name.'.id_c ';
                     break;
-
+                ## START HACK FIBRECRM
+                case 'custom_relationship':
+                    $main_name = str_replace("_cstm", "", $name);
+                    $query['join'][$name] = 'LEFT JOIN '.$module->get_custom_table_name().' '.$name.' ON '.$main_name.'.id = '. $name.'.id_c ';
+                    echo $query['join'][$name];
+                    break;
+                ## END HACK FIBRECRM
                 case 'relationship':
                     if($module->load_relationship($name)){
                         $params['join_type'] = 'LEFT JOIN';
@@ -277,11 +283,17 @@ class AOW_WorkFlow extends Basic {
 
         $condition_module = $module;
         $table_alias = $condition_module->table_name;
+        ## START HACK FIBRECRM
+        $oepl_rel = '';
+        ## END HACK FIBRECRM
         if(isset($path[0]) && $path[0] != $module->module_dir){
             foreach($path as $rel){
                 $query = $this->build_flow_query_join($rel, $condition_module, 'relationship', $query);
                 $condition_module = new $beanList[getRelatedModule($condition_module->module_dir,$rel)];
                 $table_alias = $rel;
+                ## START HACK FIBRECRM
+                $oepl_rel = $rel;
+                ## END HACK FIBRECRM
             }
         }
 
@@ -295,7 +307,13 @@ class AOW_WorkFlow extends Basic {
             }
             if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                 $field = $table_alias.'_cstm.'.$condition->field;
-                $query = $this->build_flow_query_join($table_alias.'_cstm', $condition_module, 'custom', $query);
+                ## START HACK FIBRECRM
+                if(!empty($oepl_rel)){
+                    $query = $this->build_flow_query_join($table_alias.'_cstm', $condition_module, 'custom_relationship', $query);
+                }## END HACK FIBRECRM
+                else {
+                    $query = $this->build_flow_query_join($table_alias.'_cstm', $condition_module, 'custom', $query);
+                }
             } else {
                 $field = $table_alias.'.'.$condition->field;
             }
