@@ -111,12 +111,13 @@ class chart {
 		          <table id="header_table_chart" border="0" cellpadding="0" cellspacing="0" width="100%">
 
                         <tr>
+
 							<td scope="row_label" nowrap="nowrap" >
 								<label for="projects">'.$mod_strings["LBL_PROJECTS_SEARCH"].'</label>
 							</td>
                             <td scope="row_val" nowrap="nowrap" >
                                 <select id="projects" name="projects" multiple size="6" style="width: 250px" >
-                                <option value="">All Projects</option>';
+                                <option value="">'.$mod_strings["LBL_ALL_PROJECTS"].'</option>';
 
                                 //From the query above, populates the select box
                                 foreach( $project_list as $project)
@@ -138,13 +139,15 @@ class chart {
                             }
 
                           echo '</td>
+
 							<td scope="row_label" nowrap="nowrap" >
 								<label for="users">'.$mod_strings["LBL_USERS_SEARCH"].'</label>
 							</td>
                             <td scope="row_val" nowrap="nowrap" >
                                 <select id="users" name="users" multiple size="6" style="width: 250px" >
-                                <option ' . ( $sel_users[0] == ''? "selected='selected'" : "" ) . ' value="">All Users</option>
+                                <option ' . ( $sel_users[0] == ''? "selected='selected'" : "" ) . ' value="">'.$mod_strings['LBL_ALL_USERS'].'</option>
                                 <option ' . ( $sel_users[0] == 'none'? "selected='selected'" : "" ) . ' value="none">None</option>';
+
                                 //From the query above, populates the select box
                                 foreach( $user_list as $user)
                                 {
@@ -167,13 +170,15 @@ class chart {
                             }
 
                           echo '</td>
+
 							<td scope="row_label" nowrap="nowrap" >
 								<label for="contacts">'.$mod_strings["LBL_CONTACTS_SEARCH"].'</label>
 							</td>
 						  <td scope="row_val" nowrap="nowrap" >
                                 <select id="contacts" name="contacts" multiple size="6" style="width: 250px" >
-                                <option ' . ( $sel_contacts[0] == ''? "selected='selected'" : "" ) . ' value="">All Contacts</option>
+                                <option ' . ( $sel_contacts[0] == ''? "selected='selected'" : "" ) . ' value="">'.$mod_strings['LBL_ALL_CONTACTS'].'</option>
                                 <option ' . ( $sel_contacts[0] == 'none'? "selected='selected'" : "" ) . ' value="none">None</option>';
+
                                 //From the query above, populates the select box
                                 foreach( $contact_list as $contact)
                                 {
@@ -340,7 +345,6 @@ class chart {
 				$i=0;
 				for ($x=0; $x< $day_count; $x++)
 				{
-					//Get date for each day
 					$dateq = $this->get_date($start_date, $i);
 
 					$class = '';
@@ -354,7 +358,6 @@ class chart {
 					elseif($this->check_weekend($dateq) == 'weekend-today'){
 						$class = 'weekend-today';
 					}
-
 					$square = '';
 					$dup = 0;
 
@@ -558,7 +561,6 @@ class chart {
 					$dateq = $this->get_month_dates($start_date,$x);
 
 					$class = '';
-
 					$square = '';
 					$dup = 0;
 					
