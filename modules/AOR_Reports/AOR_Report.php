@@ -992,8 +992,6 @@ class AOR_Report extends Basic
             //remove last delimiter of the line
             $csv = substr($csv,0,strlen($csv)-strlen($delimiter));
         }
-        
-        ;
 
         $csv = $GLOBALS['locale']->translateCharset($csv, 'UTF-8', $GLOBALS['locale']->getExportCharset());
 
