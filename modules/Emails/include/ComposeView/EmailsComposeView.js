@@ -109,6 +109,9 @@
       $(self).find('.btn-save-draft').click(self.saveDraft);
       $(self).find('.btn-disregard-draft').click(self.disregardDraft);
 
+      var file = $('<input />')
+        .attr('name', file);
+
       $(self).on('remove', self.destruct);
 
       $(self).trigger("constructEmailsComposeView", [self]);
@@ -323,14 +326,37 @@
      * @event sentEmail
      * @returns {boolean}
      */
-    self.onSendEmail = function () {
+    self.onSendEmail = function (event) {
        $(self).trigger("sendEmail", [self]);
+
+      var fileCount = 0;
+      // Use FormData v2 to send form data via ajax
+       var formData = new FormData($(this));
+
+       $(this).find('input').each(function(i,v) {
+         if($(v).attr('type').toLowerCase() === 'file') {
+           for(var i = 0; i < v.files.length; i++) {
+             var file =  v.files[i];
+             var reader  = new FileReader();
+             reader.readAsDataURL(file);
+             formData.append($(v).attr('name'), file);
+             fileCount++
+           }
+         } else {
+           formData.append($(v).attr('name'), $(v).val());
+         }
+       });
+
+
+       // TODO: add ajax loader
 
       $.ajax({
         type: "POST",
-        data: $(this).serialize(),
+        data: formData,
         cache: false,
-        url: $(this).attr('action')
+        processData: false,  // tell jQuery not to process the data
+        contentType: false,   // tell jQuery not to set contentType
+        url: $(this).attr('action'),
       }).done(function (data) {
         "use strict";
         // If the user is view the form own its own
@@ -338,7 +364,7 @@
           var redirect_location = 'index.php?module=' + $('#' + self.attr('id') + ' input[type="hidden"][name="return_module"]').val() +
             '&action=' +
             $(self).find('input[type="hidden"][name="return_action"]').val();
-          location.href = redirect_location;
+            location.href = redirect_location;
         } else {
            $(self).trigger("sentEmail", [self, data]);
         }
@@ -349,6 +375,8 @@
       }).always(function (data) {
          $(self).trigger("sentEmailAlways", [self, data]);
       });
+
+
 
       return false;
     };
@@ -371,11 +399,95 @@
      * @event attachFile
      * @returns {boolean}
      */
-    self.attachFile = function () {
+    self.attachFile = function (event) {
       "use strict";
+      event.preventDefault();
        $(self).trigger("attachFile", [self]);
 
-      alert('attachFile placeholder');
+      // Add the file input onto the page
+       var id = self.generateID();
+
+       var fileGroupContainer = $('<div></div>')
+         .addClass('attachment-group-container')
+         .appendTo(self.find('.file-attachments'));
+
+       var fileInput = $('<input>')
+         .attr('type', 'file')
+         .attr('id', 'file_'+id)
+         .attr('name', 'email_attachment[]')
+         .attr('multiple','true')
+         .appendTo(fileGroupContainer);
+
+
+       var fileLabel = $('<label></label>')
+         .attr('for', 'file_'+id)
+         .addClass('attachment-blank')
+         .html('<span class="glyphicon glyphicon-paperclip"></span>')
+         .appendTo(fileGroupContainer);
+
+       // use the label to open file dialog
+      fileLabel.click();
+
+      // handle when the a file is selected
+      fileInput.change(function(event) {
+        console.log(this, event);
+
+        if(event.target.files.length === 0) {
+          fileGroupContainer.remove();
+          return false;
+        }
+        if(event.target.files.length > 1) {
+          $(fileLabel.addClass('label-with-multiple-files'));
+        } else {
+          $(fileLabel.removeClass('label-with-multiple-files'));
+        }
+
+        fileLabel.html('');
+        fileLabel.empty();
+
+        if(fileGroupContainer.find('.attachment-remove').length === 0) {
+          var removeAttachment = $('<a class="attachment-remove"><span class="glyphicon glyphicon-remove"></span></a>');
+          fileGroupContainer.append(removeAttachment);
+          // handle when user removes attachment
+          removeAttachment.click(function(event) {
+            fileGroupContainer.remove();
+          });
+        }
+
+        for(var i = 0; i < event.target.files.length; i++) {
+          var file =  event.target.files[i];
+          var name = file.name;
+          var size = file.size;
+          var type = file.type;
+
+          var fileContainer = $('<div class="attachment-file-container"></div>');
+          fileContainer.appendTo(fileLabel);
+          // Create icons based on file type
+          if(type.indexOf('image') !== -1) {
+            fileContainer.addClass('file-image');
+            fileContainer.append('<span class="attachment-type glyphicon glyphicon-picture"></span>');
+          } else if(type.indexOf('audio') !== -1) {
+            fileContainer.addClass('file-audio');
+            fileContainer.append('<span class="attachment-type glyphicon glyphicon-music"></span>');
+          } else if(type.indexOf('video') !== -1) {
+            fileContainer.addClass('file-video');
+            fileContainer.append('<span class="attachment-type glyphicon glyphicon-film"></span>');
+          } else if(type.indexOf('zip') !== -1) {
+            fileContainer.addClass('file-video');
+            fileContainer.append('<span class="attachment-type glyphicon glyphicon-compressed"></span>');
+          } else {
+            fileContainer.addClass('file-other');
+            fileContainer.append('<span class="attachment-type glyphicon glyphicon-file"></span>');
+          }
+          fileContainer.append('<span class="attachment-name"> '+name+' </span>');
+          fileContainer.append('<span class="attachment-size"> '+ self.humanReadableFileSize(size, true) +' </span>');
+
+          fileLabel.removeClass('attachment-blank');
+
+        }
+
+      });
+
       return false;
     };
 
@@ -425,10 +537,28 @@
       return false;
     };
 
+    self.humanReadableFileSize = function(bytes, si) {
+      var thresh = si ? 1000 : 1024;
+      if(Math.abs(bytes) < thresh) {
+        return bytes + ' B';
+      }
+      var units = si
+        ? ['kB','MB','GB','TB','PB','EB','ZB','YB']
+        : ['KiB','MiB','GiB','TiB','PiB','EiB','ZiB','YiB'];
+      var u = -1;
+      do {
+        bytes /= thresh;
+        ++u;
+      } while(Math.abs(bytes) >= thresh && u < units.length - 1);
+      return bytes.toFixed(1)+' '+units[u];
+    };
+
     self.construct();
 
     return $(self);
   };
+
+
 
   $.fn.EmailsComposeView.defaults = {
     "tinyMceOptions": {

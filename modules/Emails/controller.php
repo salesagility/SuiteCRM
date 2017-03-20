@@ -244,6 +244,8 @@ class EmailsController extends SugarController
             }
         }
 
+        $this->bean->handleAttachments();
+
         if($this->bean->send()) {
             $this->bean->status = 'sent';
             // TODO save action
