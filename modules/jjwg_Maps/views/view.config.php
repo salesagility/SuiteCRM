@@ -423,14 +423,14 @@ class Jjwg_MapsViewConfig extends SugarView {
             title='' tabindex='140' size="25" maxlength="255">
             &nbsp; <?php echo $GLOBALS['mod_strings']['LBL_CONFIG_DEFAULT']; ?>
                 <?php echo htmlspecialchars($GLOBALS['jjwg_config_defaults']['geocoding_api_secret']) ?>
-            <br/>
-            <a href='https://developers.google.com/maps/documentation/geocoding/get-api-key' target='_blank'>
-                Get a free G Maps Geocoding API key.
-            </a>
         </td>
     </tr>
     <tr>
-        <td colspan="2"><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_GEOCODING_API_SECRET_DESC']; ?></td>
+        <td><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_GEOCODING_API_SECRET_DESC']; ?></td>
+        <td><a href='https://developers.google.com/maps/documentation/geocoding/get-api-key' target='_blank'>
+            <?php echo $GLOBALS['mod_strings']['LBL_CONFIG_GEOCODING_API_SECRET_GET_A_KEY']; ?>
+            </a>
+        </td>
     </tr>
     <tr>
         <td><strong><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_GEOCODING_LIMIT_TITLE']; ?> </strong></td>
