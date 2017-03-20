@@ -851,8 +851,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         $request_url = $base_url . "&address=" . urlencode($address);
         // Add Hash Parameter as MD5 of Concatenation of Address and Secret
         if (!empty($this->settings['geocoding_api_secret'])) {
-            $hash = md5($address.$this->settings['geocoding_api_secret']);
-            $request_url .= '&hash='.urlencode($hash);
+            //$hash = md5($address.$this->settings['geocoding_api_secret']); //OLD GOOGLE MAPS V3 API
+            //$request_url .= '&hash='.urlencode($hash);    //OLD GOOGLE MAPS V3 API
             $request_url .= '&key='.urlencode($this->settings['geocoding_api_secret']); // Geocoding API requires 'key='.
         }
 
