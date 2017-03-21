@@ -31,51 +31,6 @@
     };
 
     /**
-     *  Hide dialog
-     */
-    self.hide = function () {
-      "use strict";
-      self.controls.modal.container.modal('hide');
-      return self;
-    };
-
-    // Default behavior handle
-    /**
-     * @event show
-     */
-    self.onShow = function () {
-      "use strict";
-      $(self).trigger('show');
-      return false;
-    };
-
-    /**
-     * @event shown
-     */
-    self.onShown = function () {
-      "use strict";
-      $(self).trigger('shown');
-      return false;
-    };
-
-    /**
-     * @event hide
-     */
-    self.onHide = function () {
-      "use strict";
-      $(self).trigger('hide');
-      return false;
-    };
-
-    /**
-     * @event hidden
-     */
-    self.onHidden = function () {
-      $(self).trigger('hidden');
-      return false;
-    };
-
-    /**
      * @event ok
      */
     self.onOk = function () {
@@ -305,7 +260,7 @@
     "size": 'sm',
     // Bootstrap
     "show": false,
-    "backdrop": false,
+    "backdrop": true,
     "keyboard": false
   }
 }( jQuery ));
