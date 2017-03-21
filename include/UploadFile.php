@@ -156,7 +156,7 @@ class UploadFile
      * @param string bean_id note bean ID
      * @return string path with file name
      */
-    static public function get_file_path($stored_file_name, $bean_id, $skip_rename = false)
+    public static function get_file_path($stored_file_name, $bean_id, $skip_rename = false)
     {
         global $locale;
 
@@ -169,8 +169,10 @@ class UploadFile
             self::tryRename(rawurlencode($stored_file_name), $bean_id) ||
             self::tryRename(urlencode($stored_file_name), $bean_id) ||
             self::tryRename($stored_file_name, $bean_id) ||
-            self::tryRename($locale->translateCharset($stored_file_name, 'UTF-8', $locale->getExportCharset()),
-                $bean_id);
+            self::tryRename(
+                $locale->translateCharset($stored_file_name, 'UTF-8', $locale->getExportCharset()),
+                $bean_id
+            );
         }
 
         return "upload://$bean_id";
@@ -241,18 +243,28 @@ class UploadFile
             if ($_FILES[$this->field_name]['error'] != UPLOAD_ERR_NO_FILE) {
                 if ($_FILES[$this->field_name]['error'] == UPLOAD_ERR_INI_SIZE) {
                     //log the error, the string produced will read something like:
-                    //ERROR: There was an error during upload. Error code: 1 - UPLOAD_ERR_INI_SIZE - The uploaded file exceeds the upload_max_filesize directive in php.ini. upload_maxsize is 16
-                    $errMess = string_format($GLOBALS['app_strings']['UPLOAD_ERROR_TEXT_SIZEINFO'], array(
-                        $_FILES['filename_file']['error'],
-                        self::$filesError[$_FILES['filename_file']['error']],
-                        $sugar_config['upload_maxsize']
-                    ));
+                    //ERROR: There was an error during upload. Error code: 1
+                    // - UPLOAD_ERR_INI_SIZE - The uploaded file exceeds the upload_max_filesize directive in php.ini. upload_maxsize is 16
+                    $errMess = string_format(
+                        $GLOBALS['app_strings']['UPLOAD_ERROR_TEXT_SIZEINFO'],
+                        array(
+                            $_FILES['filename_file']['error'],
+                            self::$filesError[$_FILES['filename_file']['error']],
+                            $sugar_config['upload_maxsize']
+                        )
+                    );
                     $GLOBALS['log']->fatal($errMess);
                 } else {
                     //log the error, the string produced will read something like:
-                    //ERROR: There was an error during upload. Error code: 3 - UPLOAD_ERR_PARTIAL - The uploaded file was only partially uploaded.
-                    $errMess = string_format($GLOBALS['app_strings']['UPLOAD_ERROR_TEXT'],
-                        array($_FILES['filename_file']['error'], self::$filesError[$_FILES['filename_file']['error']]));
+                    //ERROR: There was an error during upload. Error code: 3
+                    // - UPLOAD_ERR_PARTIAL - The uploaded file was only partially uploaded.
+                    $errMess = string_format(
+                        $GLOBALS['app_strings']['UPLOAD_ERROR_TEXT'],
+                        array(
+                            $_FILES['filename_file']['error'],
+                            self::$filesError[$_FILES['filename_file']['error']]
+                        )
+                    );
                     $GLOBALS['log']->fatal($errMess);
                 }
             }
@@ -305,7 +317,7 @@ class UploadFile
      * @param array $_FILES_element $_FILES element required
      * @return string MIME type
      */
-    function getMime($_FILES_element)
+    public function getMime($_FILES_element)
     {
         $filename = $_FILES_element['name'];
         $filetype = isset($_FILES_element['type']) ? $_FILES_element['type'] : null;
@@ -437,7 +449,8 @@ class UploadFile
             }
         } else {
             if (!UploadStream::move_uploaded_file($_FILES[$this->field_name]['tmp_name'], $destination)) {
-                $GLOBALS['log']->fatal("ERROR: can't move_uploaded_file to $destination. You should try making the directory writable by the webserver");
+                $GLOBALS['log']->fatal("ERROR: can't move_uploaded_file to $destination.".
+                    " You should try making the directory writable by the webserver");
 
                 return false;
             }
@@ -491,7 +504,8 @@ class UploadFile
                     $_SESSION['user_error_message'] = array();
                 }
 
-                $error_message = isset($result['errorMessage']) ? $result['errorMessage'] : $GLOBALS['app_strings']['ERR_EXTERNAL_API_SAVE_FAIL'];
+                $error_message = isset($result['errorMessage']) ? $result['errorMessage'] :
+                    $GLOBALS['app_strings']['ERR_EXTERNAL_API_SAVE_FAIL'];
                 $_SESSION['user_error_message'][] = $error_message;
 
             } else {
