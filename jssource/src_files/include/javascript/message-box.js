@@ -227,7 +227,6 @@
      */
     self.destruct = function () {
       self.attr('aria-hidden', "true");
-      self.hide();
       $('.modal-backdrop').last().remove();
       if($('.message-box').length <= 1) {
         $('.modal-open').removeClass('modal-open');
@@ -251,17 +250,12 @@
     // Message Box Specific events
     "onOK": self.onOK,
     "onCancel": self.onCancel,
-    // Alias to the Bootstrap Modal Events
-    "onShow": self.onShow,
-    "onShown": self.onShown,
-    "onHide": self.onShown,
-    "onHidden": self.onHidden,
     // Style
     "size": 'sm',
     // Bootstrap
     "show": false,
     "backdrop": true,
-    "keyboard": false
+    "keyboard": true
   }
 }( jQuery ));
 

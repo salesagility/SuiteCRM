@@ -54,6 +54,7 @@ $(document).ready(function(){
      "size": 'lg',
 
    });
+   composeBox.setTitle(' ');
    composeBox.setBody(SUGAR.language.translate('', 'LBL_EMAIL_LOADING'));
    composeBox.show();
 
@@ -104,15 +105,7 @@ $(document).ready(function(){
      });
 
 
-     composeBox.on('click.dismiss.bs.modal', function() {
-       composeBox.remove();
-     });
-
-     composeBox.on('mouseup.dismiss.bs.modal', function() {
-       composeBox.remove();
-     });
-
-     composeBox.on('keydown.dismiss.bs.modal',  function() {
+     composeBox.on('hide.bs.modal', function() {
        composeBox.remove();
      });
    }).fail(function (data) {
