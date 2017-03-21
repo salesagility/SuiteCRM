@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$spBase = $GLOBALS['sugar_config']['site_url'].'/index.php?action=Login&module=Users';
+$spBase = $GLOBALS['sugar_config']['site_url'].'/saml2login.php';//'/index.php?action=Login&module=Users';
 $settingsInfo = array (
     'sp' => array (
         'entityId' => $spBase,
