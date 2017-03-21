@@ -55,7 +55,7 @@ $(document).ready(function(){
 
    });
    composeBox.setTitle(' ');
-   composeBox.setBody(SUGAR.language.translate('', 'LBL_EMAIL_LOADING'));
+   composeBox.setBody('<div class="email-in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>');
    composeBox.show();
 
    $.ajax({

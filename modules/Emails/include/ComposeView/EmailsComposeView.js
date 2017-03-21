@@ -310,6 +310,11 @@
      * @param editor
      */
     self.tinyMceSetup = function (editor) {
+      editor.on('init', function() {
+        this.execCommand("fontName", false, "tahoma");
+        this.execCommand("fontSize", false, "12px")
+      });
+
       editor.on('change', function (e) {
         // copy html to plain
         $(self).find('.html_preview').html(editor.getContent());
@@ -333,7 +338,7 @@
       var mb = messageBox();
       mb.hideHeader();
       mb.hideFooter();
-      mb.setBody('<img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif">');
+      mb.setBody('<div class="email-in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>');
       mb.show();
 
       var fileCount = 0;
