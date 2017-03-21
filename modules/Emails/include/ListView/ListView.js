@@ -49,7 +49,7 @@ $(document).ready(function(){
    var emailComposeView = null;
    var composeBox = $('<div></div>').appendTo('#content');
    composeBox.messageBox({
-     "showHeader": false,
+     "showHeader": true,
      "showFooter": false,
      "size": 'lg',
 
@@ -99,6 +99,22 @@ $(document).ready(function(){
        }
      });
 
+     composeBox.on('cancel', function() {
+       composeBox.remove();
+     });
+
+
+     composeBox.on('click.dismiss.bs.modal', function() {
+       composeBox.remove();
+     });
+
+     composeBox.on('mouseup.dismiss.bs.modal', function() {
+       composeBox.remove();
+     });
+
+     composeBox.on('keydown.dismiss.bs.modal',  function() {
+       composeBox.remove();
+     });
    }).fail(function (data) {
      composeBox.controls.modal.content.html(SUGAR.language.translate('', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
      // TODO: Work out how to show security messages
