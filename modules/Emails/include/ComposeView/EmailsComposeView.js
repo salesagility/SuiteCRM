@@ -329,6 +329,13 @@
     self.onSendEmail = function (event) {
        $(self).trigger("sendEmail", [self]);
 
+       // Tell the user we are sending an email
+      var mb = messageBox();
+      mb.hideHeader();
+      mb.hideFooter();
+      mb.setBody('<img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif">');
+      mb.show();
+
       var fileCount = 0;
       // Use FormData v2 to send form data via ajax
        var formData = new FormData($(this));
@@ -359,6 +366,7 @@
         url: $(this).attr('action'),
       }).done(function (data) {
         "use strict";
+        mb.remove();
         // If the user is view the form own its own
         if ($(self).find('input[type="hidden"][name="return_module"]').val() !== '') {
           var redirect_location = 'index.php?module=' + $('#' + self.attr('id') + ' input[type="hidden"][name="return_module"]').val() +
@@ -370,7 +378,8 @@
         }
       }).fail(function (data) {
         "use strict";
-        alert(SUGAR.language.translate($(self).find('input[type="hidden"][name="module"]').val(), 'LBL_ERROR_SENDING_EMAIL'))
+        mb.showHeader();
+        mb.setBody(SUGAR.language.translate($(self).find('input[type="hidden"][name="module"]').val(), 'LBL_ERROR_SENDING_EMAIL'));
          $(self).trigger("sentEmailError", [self, data]);
       }).always(function (data) {
          $(self).trigger("sentEmailAlways", [self, data]);
