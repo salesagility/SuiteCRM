@@ -63,61 +63,54 @@ class UploadStream
     {
         // looks like suhosin patch doesn't block protocols, only suhosin extension (tested on FreeBSD)
         // if suhosin is not installed it is okay for us
-        if (extension_loaded('suhosin') == false)
-        {
+        if (extension_loaded('suhosin') == false) {
             return true;
         }
         $configuration = ini_get_all('suhosin', false);
 
         // suhosin simulation is okay for us
-        if ($configuration['suhosin.simulation'] == true)
-        {
+        if ($configuration['suhosin.simulation'] == true) {
             return true;
         }
 
         // checking that UploadStream::STREAM_NAME is allowed by white list
         $streams = $configuration['suhosin.executor.include.whitelist'];
-        if ($streams != '')
-        {
+        if ($streams != '') {
             $streams = explode(',', $streams);
-            foreach($streams as $stream)
-            {
+            foreach ($streams as $stream) {
                 $stream = explode('://', $stream, 2);
-                if (count($stream) == 1)
-                {
-                    if ($stream[0] == UploadStream::STREAM_NAME)
-                    {
+                if (count($stream) == 1) {
+                    if ($stream[0] == UploadStream::STREAM_NAME) {
                         return true;
                     }
-                }
-                elseif ($stream[1] == '' && $stream[0] == UploadStream::STREAM_NAME)
-                {
+                } elseif ($stream[1] == '' && $stream[0] == UploadStream::STREAM_NAME) {
                     return true;
                 }
             }
 
             $GLOBALS['log']->fatal('Stream ' . UploadStream::STREAM_NAME . ' is not listed in suhosin.executor.include.whitelist and blocked because of it');
+
             return false;
         }
 
         // checking that UploadStream::STREAM_NAME is not blocked by black list
         $streams = $configuration['suhosin.executor.include.blacklist'];
-        if ($streams != '')
-        {
+        if ($streams != '') {
             $streams = explode(',', $streams);
-            foreach($streams as $stream)
-            {
+            foreach ($streams as $stream) {
                 $stream = explode('://', $stream, 2);
-                if ($stream[0] == UploadStream::STREAM_NAME)
-                {
+                if ($stream[0] == UploadStream::STREAM_NAME) {
                     $GLOBALS['log']->fatal('Stream ' . UploadStream::STREAM_NAME . 'is listed in suhosin.executor.include.blacklist and blocked because of it');
+
                     return false;
                 }
             }
+
             return true;
         }
 
         $GLOBALS['log']->fatal('Suhosin blocks all streams, please define ' . UploadStream::STREAM_NAME . ' stream in suhosin.executor.include.whitelist');
+
         return false;
     }
 
@@ -127,15 +120,16 @@ class UploadStream
      */
     public static function getDir()
     {
-        if(empty(self::$upload_dir)) {
+        if (empty(self::$upload_dir)) {
             self::$upload_dir = rtrim($GLOBALS['sugar_config']['upload_dir'], '/\\');
-            if(empty(self::$upload_dir)) {
+            if (empty(self::$upload_dir)) {
                 self::$upload_dir = "upload";
             }
-            if(!file_exists(self::$upload_dir)) {
+            if (!file_exists(self::$upload_dir)) {
                 sugar_mkdir(self::$upload_dir, 0755, true);
             }
         }
+
         return self::$upload_dir;
     }
 
@@ -163,12 +157,13 @@ class UploadStream
      */
     public static function path($path)
     {
-    	$path = substr($path, strlen(self::STREAM_NAME)+3); // cut off upload://
-    	$path = str_replace("\\", "/", $path); // canonicalize path
-    	if($path == ".." || substr($path, 0, 3) == "../" || substr($path, -3, 3) == "/.." || strstr($path, "/../")) {
-    		return null;
-    	}
-        return self::getDir()."/".$path;
+        $path = substr($path, strlen(self::STREAM_NAME) + 3); // cut off upload://
+        $path = str_replace("\\", "/", $path); // canonicalize path
+        if ($path == ".." || substr($path, 0, 3) == "../" || substr($path, -3, 3) == "/.." || strstr($path, "/../")) {
+            return null;
+        }
+
+        return self::getDir() . "/" . $path;
     }
 
     /**
@@ -180,9 +175,10 @@ class UploadStream
     public static function ensureDir($path, $writable = true)
     {
         $path = self::path($path);
-        if(!is_dir($path)) {
-           return sugar_mkdir($path, 0755, true);
+        if (!is_dir($path)) {
+            return sugar_mkdir($path, 0755, true);
         }
+
         return true;
     }
 
@@ -191,9 +187,10 @@ class UploadStream
         closedir($this->dirp);
     }
 
-    public function dir_opendir ($path, $options )
+    public function dir_opendir($path, $options)
     {
         $this->dirp = opendir(self::path($path));
+
         return !empty($this->dirp);
     }
 
@@ -209,7 +206,7 @@ class UploadStream
 
     public function mkdir($path, $mode, $options)
     {
-        return mkdir(self::path($path), $mode, ($options&STREAM_MKDIR_RECURSIVE) != 0);
+        return mkdir(self::path($path), $mode, ($options & STREAM_MKDIR_RECURSIVE) != 0);
     }
 
     public function rename($path_from, $path_to)
@@ -222,22 +219,24 @@ class UploadStream
         return rmdir(self::path($path));
     }
 
-    public function stream_cast ($cast_as)
+    public function stream_cast($cast_as)
     {
         return $this->fp;
     }
 
-    public function stream_close ()
+    public function stream_close()
     {
         fclose($this->fp);
+
         return true;
     }
 
-    public function stream_eof ()
+    public function stream_eof()
     {
         return feof($this->fp);
     }
-   public function stream_flush ()
+
+    public function stream_flush()
     {
         return fflush($this->fp);
     }
@@ -250,17 +249,20 @@ class UploadStream
     public function stream_open($path, $mode)
     {
         $fullpath = self::path($path);
-        if(empty($fullpath)) return false;
-        if($mode == 'r') {
+        if (empty($fullpath)) {
+            return false;
+        }
+        if ($mode == 'r') {
             $this->fp = fopen($fullpath, $mode);
         } else {
             // if we will be writing, try to transparently create the directory
             $this->fp = @fopen($fullpath, $mode);
-            if(!$this->fp && !file_exists(dirname($fullpath))) {
+            if (!$this->fp && !file_exists(dirname($fullpath))) {
                 mkdir(dirname($fullpath), 0755, true);
                 $this->fp = fopen($fullpath, $mode);
             }
         }
+
         return !empty($this->fp);
     }
 
@@ -288,6 +290,7 @@ class UploadStream
     {
         return ftell($this->fp);
     }
+
     public function stream_write($data)
     {
         return fwrite($this->fp, $data);
@@ -296,6 +299,7 @@ class UploadStream
     public function unlink($path)
     {
         unlink(self::path($path));
+
         return true;
     }
 
