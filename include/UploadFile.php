@@ -51,14 +51,14 @@ require_once 'include/UploadStream.php';
  */
 class UploadFile
 {
-	var $field_name;
-	var $stored_file_name;
-	var $uploaded_file_name;
-	var $original_file_name;
-	var $temp_file_location;
-	var $use_soap = false;
-	var $file;
-	var $file_ext;
+	public $field_name;
+    public $stored_file_name;
+    public $uploaded_file_name;
+    public $original_file_name;
+    public $temp_file_location;
+    public $use_soap = false;
+    public $file;
+    public $file_ext;
     public $mime_type;
 	protected static $url = "upload/";
 
