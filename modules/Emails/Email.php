@@ -2340,7 +2340,7 @@ class Email extends SugarBean {
 			$mime_type = 'text/plain';
 			if($note->object_name == 'Note') {
 				if(!empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) { // brandy-new file upload/attachment
-					$file_location = "upload://".$note->id;
+					$file_location = "file://".$note->file->temp_file_location;
 					$filename = $note->file->original_file_name;
 					$mime_type = $note->file->mime_type;
 				} else { // attachment coming from template/forward

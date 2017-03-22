@@ -461,7 +461,7 @@ class UploadMultipleFiles
                 return false;
             }
         }
-
+        $this->temp_file_location = '';
         return true;
     }
 
