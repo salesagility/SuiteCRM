@@ -310,9 +310,9 @@
      * @param editor
      */
     self.tinyMceSetup = function (editor) {
-      editor.on('init', function() {
-        this.execCommand("fontName", false, "tahoma");
-        this.execCommand("fontSize", false, "12px")
+      editor.on('init', function(ed) {
+        this.getDoc().body.style.fontName = 'tahoma';
+        this.getDoc().body.style.fontSize = '13px';
       });
 
       editor.on('change', function (e) {
@@ -444,7 +444,6 @@
 
       // handle when the a file is selected
       fileInput.change(function(event) {
-        console.log(this, event);
 
         if(event.target.files.length === 0) {
           fileGroupContainer.remove();

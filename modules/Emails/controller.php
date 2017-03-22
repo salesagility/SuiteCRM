@@ -244,7 +244,10 @@ class EmailsController extends SugarController
             }
         }
 
-        $this->bean->handleAttachments();
+        $this->bean->status = 'draft';
+        $this->bean->save();
+
+        $this->bean->handleMultipleFileAttachments();
 
         if($this->bean->send()) {
             $this->bean->status = 'sent';
