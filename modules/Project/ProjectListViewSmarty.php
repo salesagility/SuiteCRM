@@ -10,6 +10,8 @@ class ProjectListViewSmarty extends ListViewSmarty {
     function __construct() {
 
         parent::__construct();
+		$this->lvd = new ProjectListViewData();
+
     }
 
     /**
@@ -44,7 +46,7 @@ class ProjectListViewSmarty extends ListViewSmarty {
 
         } else { // Newer v6.5+
 
-            $script = "<a href='javascript:void(0)' id='export_listview_top' ".
+            $script = "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id='export_listview_top' ".
                     "onclick=\"return sListView.send_form(true, '{$_REQUEST['module']}', " .
                     "'index.php?entryPoint=export', " .
                     "'{$app_strings['LBL_LISTVIEW_NO_SELECTED']}')\">{$app_strings['LBL_EXPORT']}</a>" .
