@@ -504,19 +504,6 @@
       return false;
     };
 
-
-    /**
-     * @event attachNote
-     * @returns {boolean}
-     */
-    self.attachNote = function () {
-      "use strict";
-       $(self).trigger("attachNote", [self]);
-      alert('attachNote placeholder');
-      return false;
-    };
-
-
     /**
      * @event attachDocument
      * @returns {boolean}
