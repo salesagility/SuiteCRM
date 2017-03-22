@@ -291,7 +291,6 @@ $vardefs = array(
         'email1' => array(
             'name' => 'email1',
             'vname' => 'LBL_EMAIL',
-            'group' => 'email1',
             'type' => 'varchar',
             'function' => array(
                 'name' => 'getEmailAddressWidget',

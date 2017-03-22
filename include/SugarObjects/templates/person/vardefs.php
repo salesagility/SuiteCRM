@@ -216,7 +216,6 @@ $vardefs = array(
                 'returns' => 'html'
             ),
             'source' => 'non-db',
-            'group' => 'email1',
             'merge_filter' => 'enabled',
             'studio' => array('editview' => true, 'editField' => true, 'searchview' => false, 'popupsearch' => false),
             // bug 46859

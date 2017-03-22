@@ -490,7 +490,6 @@ $dictionary['User'] = array(
                 'returns' => 'html'
             ),
             'source' => 'non-db',
-            'group' => 'email1',
             'merge_filter' => 'enabled',
             'required' => true,
         ),

@@ -38,8 +38,16 @@
 
 buildEditField();
 
-//Global Variables.
+// Execute save function when enter key is pressed
+$(document).keydown(function(e) {
 
+    if (e.which == 13 && !e.shiftKey) {
+        e.preventDefault();
+        $("#inlineEditSaveButton").click();
+    }
+});
+
+//Global Variables.
 var inlineEditSaveButtonImg = "themes/SuiteR/images/inline_edit_save_icon.svg";
 if($("#inline_edit_icon").length) {
     var inlineEditIcon = $("#inline_edit_icon")[0].outerHTML;
@@ -131,11 +139,20 @@ function buildEditField(){
 
         //If we find all the required variables to do inline editing.
         if(field && id && module){
-
             //Do ajax call to retrieve the validation for the field.
             var validation = getValidationRules(field,module,id);
             //Do ajax call to retrieve the html elements of the field.
             var html = loadFieldHTML(field,module,id);
+            var currentFields = parseHTMLArray(html);
+            var count = (html.match(/<input/g) || []).length;
+
+            // Append breaks if there are multiple input fields.
+            if (count > 2) {
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(html, "text/html");
+                var inputs = doc.body.innerHTML;
+                var html = html.replace(/>/g, "><br />");
+            }
 
             //If we have the field html append it to the div we clicked.
             if(html){
@@ -172,9 +189,14 @@ function buildEditField(){
 
                 //Call the click away function to handle if the user has clicked off the field, if they have it will close the form.
                 clickedawayclose(field,id,module, type);
+                var fieldsArrayCheck = Array.isArray(currentFields);
 
                 //Make sure the data is valid and save the details to the bean.
-                validateFormAndSave(field,id,module,type);
+                if (fieldsArrayCheck === false) {
+                    validateFormAndSave(field,id,module,type);
+                } else {
+                    validateFormAndSave(currentFields,id,module,type);
+                }
 
             }
         }
@@ -222,14 +244,46 @@ function validateFormAndSave(field,id,module,type){
             return false
         };
     });
-    // also want to save on enter/return being pressed
-    $(document).keypress(function(e) {
+}
 
-        if (e.which == 13 && !e.shiftKey) {
-            e.preventDefault();
-            $("#inlineEditSaveButton").click();
-        }
-    });
+/**
+ * Checks if any of the parent elemenets of the current element have the class inlineEditActive this means they are within
+ * the current element and have not clicked away from the field. Note we need to check on .cal_panel too for the calendar popup.
+ * @param parser - name of the field we are editing
+ * @param doc - the id of the record we are editing
+ * @param inputs - The input fields in the html
+ * @param currentFields - Array to be returned at the end after parsing all of the input fields.
+ * @param name -Key to be supplied to the array.
+ * @param value - Value of the current element in the array.
+ * @param containerArray - Dimension to be pushed to currentFields.
+ */
+
+function parseHTMLArray(html) {
+    var count = (html.match(/<input/g) || []).length;
+
+    // Append breaks if there are multiple input fields.
+    if (count > 2) {;
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(html, "text/html");
+        var inputs = doc.body.innerHTML;
+        var html = html.replace(/>/g,"><br />");
+        var currentFields = [];
+
+        $(inputs).each(function(){
+            var name = $(this).attr('name');
+            var value = $(this).attr('value');
+
+            if (typeof name !== "undefined") {
+                var containerArray = [];
+                containerArray['name'] = name;
+                containerArray['value'] = value;
+                currentFields.push(containerArray);
+            }
+
+        });
+    }
+
+    return currentFields;
 }
 
 /**
@@ -271,8 +325,16 @@ $(document).on('click', function (e) {
         var alertFlag = true;
 
         if (!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")) {
+            var openingValue = loadFieldHTML(field,module,id);
+            var textArray = parseHTMLArray(openingValue);
             var output_value = loadFieldHTMLValue(field, id, module);
-            var outputValueParse = $(output_value).text();
+
+            if (/<[a-z][\s\S]*>/i.test(output_value)) {
+                var outputValueParse = $(output_value).text();
+            } else {
+                var outputValueParse = output_value;
+            }
+
             var user_value = getInputValue(field, type);
 
             /**
@@ -301,10 +363,16 @@ $(document).on('click', function (e) {
                 var alertFlag = false;
             }
 
+            if (typeof textArray === 'undefined') {
+                var output_to_field = output_value;
+            } else {
+                var output_to_field = textArray;
+            }
+
             if (alertFlag) {
                 var r = confirm(SUGAR.language.translate('app_strings', 'LBL_CONFIRM_CANCEL_INLINE_EDITING') + ' ' + message_field);
                 if (r == true) {
-                    var output = setValueClose(output_value);
+                    var output = setValueClose(output_to_field);
                     clickListenerActive = false;
                 } else {
                     $("#" + field).focus();
@@ -312,7 +380,7 @@ $(document).on('click', function (e) {
                 }
             } else {
                 // user hasn't changed value so can close field without warning them first
-                var output = setValueClose(output_value);
+                var output = setValueClose(output_to_field);
                 clickListenerActive = false;
             }
         }
@@ -408,20 +476,39 @@ function getInputValue(field,type){
  * @param type - the type of the field we are editing.
  */
 
-function handleSave(field,id,module,type){
-    var value = getInputValue(field,type);
-    var parent_type = "";
-    if(typeof value === "undefined"){
-        var value = "";
+function handleSave(field,id,module,type) {
+    var detectArray = Array.isArray(field);
+
+    if (detectArray === false) {
+        var value = getInputValue(field,type);
+        var parent_type = "";
+        if(typeof value === "undefined"){
+            var value = "";
+        }
+
+        if(type == "parent") {
+            parent_type = $('#parent_type').val();
+        }
+
+        var output_value = saveFieldHTML(field,module,id,value, parent_type);
+        var output = setValueClose(output_value);
+    } else {
+        var numberOfFields = field.length;
+        for (i = 0; i<numberOfFields; i++) {
+            var fieldValue = field[i]['value'];
+            var fieldName = field[i]['name'];
+            var currentValue = getInputValue(fieldName,type);
+
+            if(type == "parent") {
+                parent_type = $('#parent_type').val();
+            }
+
+            if (fieldValue != currentValue) {
+                var output_value = saveFieldHTML(fieldName,module,id,currentValue,parent_type);
+            }
+        }
+        var output = setValueClose(field);
     }
-
-    if(type == "parent") {
-        parent_type = $('#parent_type').val();
-    }
-
-
-    var output_value = saveFieldHTML(field,module,id,value, parent_type);
-    var output = setValueClose(output_value);
 }
 
 /**
@@ -431,12 +518,39 @@ function handleSave(field,id,module,type){
  */
 
 function setValueClose(value){
+    var closeArray = Array.isArray(value);
+    if (closeArray === true) {
+        var numberOfElements = value.length;
+        var outputValue = "";
 
-    $.get('themes/SuiteR/images/inline_edit_icon.svg', function(data) {
-        $(".inlineEditActive").html("");
-        $(".inlineEditActive").html(value + '<div class="inlineEditIcon">' + inlineEditIcon + '</div>');
-        $(".inlineEditActive").removeClass("inlineEditActive");
-    });
+        for (i = 0; i<numberOfElements; i++) {
+            var currentValue = getInputValue(value[i]['name'],'varchar');
+
+            if (currentValue != value[i]['value']) {
+                displayValue = currentValue;
+            } else {
+                displayValue = value[i]['value'];
+            }
+
+            if (i < numberOfElements) {
+                outputValue += displayValue + "<br />";
+            } else {
+                outputValue += displayValue;
+            }
+        }
+
+        $.get('themes/SuiteR/images/inline_edit_icon.svg', function(data) {
+            $(".inlineEditActive").html("");
+            $(".inlineEditActive").html(outputValue + '<div class="inlineEditIcon">' + inlineEditIcon + '</div>');
+            $(".inlineEditActive").removeClass("inlineEditActive");
+        });
+    } else {
+        $.get('themes/SuiteR/images/inline_edit_icon.svg', function(data) {
+            $(".inlineEditActive").html("");
+            $(".inlineEditActive").html(value + '<div class="inlineEditIcon">' + inlineEditIcon + '</div>');
+            $(".inlineEditActive").removeClass("inlineEditActive");
+        });
+    }
 
     buildEditField();
 }
@@ -453,6 +567,7 @@ function setValueClose(value){
  */
 
 function saveFieldHTML(field,module,id,value, parent_type) {
+
     $.ajaxSetup({"async": false});
     var result = $.post('index.php',
         {
@@ -497,6 +612,7 @@ function loadFieldHTML(field,module,id) {
         }
     );
     $.ajaxSetup({"async": true});
+
     if(result.responseText){
         try {
             return (JSON.parse(result.responseText));
@@ -534,9 +650,11 @@ function loadFieldHTMLValue(field,id,module) {
             'to_pdf': true
         }
     );
-    $.ajaxSetup({"async": true});
 
-    return(result.responseText);
+    $.ajaxSetup({"async": true});
+    var response = result.responseText;
+
+    return(response);
 }
 
 /**
@@ -600,4 +718,8 @@ function getRelateFieldJS(field, module, id){
     SUGAR.util.evalScript(result.responseText);
 
     return result.responseText;
+}
+
+function escapeRegExp(string){
+    return string.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
 }
