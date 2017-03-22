@@ -359,9 +359,6 @@
          }
        });
 
-
-       // TODO: add ajax loader
-
       $.ajax({
         type: "POST",
         data: formData,
@@ -510,9 +507,119 @@
      */
     self.attachDocument = function () {
       "use strict";
-       $(self).trigger("attachDocument", [self]);
-      alert('attachDocument placeholder');
+      event.preventDefault();
+      $(self).trigger("attachDocument", [self]);
+
+      // Add the file input onto the page
+      var id = self.generateID();
+
+      var fileGroupContainer = $('<div></div>')
+        .addClass('attachment-group-container')
+        .appendTo(self.find('.document-attachments'));
+
+      var fileInput = $('<input>')
+        .attr('type', 'hidden')
+        .attr('id', 'file_'+id)
+        .attr('name', 'documentId')
+        .attr('data-file-input', 'documentId')
+        .appendTo(fileGroupContainer);
+
+
+      if($('[name=document_attachment_id]').length === 0) {
+        var fileInputID = $('<input>')
+          .attr('type', 'hidden')
+          .attr('name', 'document_attachment_id')
+          .appendTo(fileGroupContainer.closest('.attachments'));
+      } else {
+        var fileInputID  = $('[name=document_attachment_id]');
+      }
+
+      if($('[name=document_attachment_name]').length === 0) {
+        var fileInputName = $('<input>')
+          .attr('type', 'hidden')
+          .attr('name', 'document_attachment_name')
+          .appendTo(fileGroupContainer.closest('.attachments'));
+      } else {
+        var fileInputName  = $('[name=document_attachment_name]');
+      }
+      fileInputName.val('');
+
+      var fileLabel = $('<label></label>')
+        .attr('for', 'file_'+id)
+        .addClass('attachment-blank')
+        .html('<img src="themes/'+SUGAR.themes.theme_name+'/images/sidebar/modules/Documents.svg">')
+        .appendTo(fileGroupContainer);
+
+      var showSelectDocumentDialog = function(e) {
+        fileInputID.val('');
+        fileInputName.val('');
+        var popupWindow = open_popup(
+          "Documents",
+          600,
+          400,
+          "",
+          true,
+          false,
+          {
+            "call_back_function": 'set_return',
+            "form_name": "ComposeView",
+            "field_to_name_array": {
+              "id" : "document_attachment_id",
+              "name": "document_attachment_name"
+            }
+          },
+          "single",
+          false
+        );
+
+       popupWindow.onbeforeunload = function() {
+        setTimeout(function() {
+          if(fileInputID.val().length === 0) {
+            // id is empty
+            fileGroupContainer.remove();
+            self.updateDocumentIDs();
+          } else {
+            // id is full
+            if(fileGroupContainer.find('.attachment-remove').length === 0) {
+              var removeAttachment = $('<a class="attachment-remove"><span class="glyphicon glyphicon-remove"></span></a>');
+              fileGroupContainer.append(removeAttachment);
+              // handle when user removes attachment
+              removeAttachment.click(function (event) {
+                fileGroupContainer.remove();
+                self.updateDocumentIDs();
+              });
+            }
+
+            fileInput.val(fileInputID.val());
+            fileLabel.empty();
+
+            var fileContainer = $('<div class="attachment-file-container"></div>');
+            fileContainer.appendTo(fileLabel);
+            fileContainer.append('<span class="attachment-name"> '+ fileInputName.val()+' </span>');
+
+            fileLabel.removeClass('attachment-blank');
+
+            self.updateDocumentIDs();
+          }
+        },300);
+       }
+      };
+
+
+      // Mimic the file attachment behaviour
+      fileLabel.click(showSelectDocumentDialog);
+      // Call the select document dialog
+      fileLabel.click();
+
       return false;
+    };
+
+    self.updateDocumentIDs = function() {
+      self.find('.document-attachments')
+        .find('.attachment-group-container')
+        .each(function(index, value) {
+          $(value).find('[data-file-input]').attr('name', 'documentId' + index);
+        });
     };
 
     /**
