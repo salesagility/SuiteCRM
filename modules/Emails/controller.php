@@ -47,6 +47,10 @@ if($_REQUEST['action'] === 'ComposeView') {
 }
 
 
+if($_REQUEST['action'] === 'Popup') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'Popup';
+}
+
 class EmailsController extends SugarController
 {
     public function action_index()
@@ -260,4 +264,7 @@ class EmailsController extends SugarController
         $this->view = 'sendemail';
     }
 
+    public function action_Popup () {
+        $this->view = 'popup';
+    }
 }
