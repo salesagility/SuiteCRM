@@ -1,3 +1,9 @@
+/**
+ * @package MessageBox
+ * @author Daniel Samson
+ * @url https://github.com/daniel-samson/messagebox
+ * @license AGPL 3.0
+ */
 (function( $ ) {
   /**
    *
@@ -137,22 +143,6 @@
 
         if(typeof opts.onCancel === "undefined") {
           opts.onCancel = self.onCancel;
-        }
-
-        if(typeof opts.onShow === "undefined") {
-          opts.onShow = self.onShow;
-        }
-
-        if(typeof opts.onShown === "undefined") {
-          opts.onShown = self.onShown;
-        }
-
-        if(typeof opts.onHide === "undefined") {
-          opts.onShown = self.onShown;
-        }
-
-        if(typeof opts.onHidden === "undefined") {
-          opts.onHidden = self.onHidden;
         }
 
 
