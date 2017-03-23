@@ -175,7 +175,6 @@
                             {sugar_translate label='{{$label}}' module='{{$module}}'}
                         </div>
                     </a>
-
                 </div>
                 <div class="panel-body {{$collapse}}" id="detailpanel_{{$panelCount}}">
                     <div class="tab-content">
@@ -183,12 +182,11 @@
                     </div>
                 </div>
             </div>
-
             {{/if}}
             {{counter name="panelCount" print=false}}
             {{/foreach}}
         </div>
-        </div>
+    </div>
     <div class="attachments">
         <div class="file-attachments"></div>
         <div class="document-attachments"></div>

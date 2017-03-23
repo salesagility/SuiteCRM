@@ -114,6 +114,13 @@
 
       $(self).on('remove', self.destruct);
 
+      // detect empty rows
+      $(self).find('.edit-view-row-item').each(function(i,v ) {
+        if(trim($(this).html()).length == 0) {
+          $(this).addClass('empty');
+        }
+      });
+
       $(self).trigger("constructEmailsComposeView", [self]);
     };
 
@@ -595,7 +602,10 @@
 
             var fileContainer = $('<div class="attachment-file-container"></div>');
             fileContainer.appendTo(fileLabel);
-            fileContainer.append('<span class="attachment-name"> '+ fileInputName.val()+' </span>');
+            fileContainer.append(
+              '<span class="attachment-type"> <img src="themes/'+SUGAR.themes.theme_name+'/images/sidebar/modules/Documents.svg"> </span>' +
+              '<span class="attachment-name"> '+ fileInputName.val()+' </span>'
+            );
 
             fileLabel.removeClass('attachment-blank');
 
@@ -680,5 +690,4 @@
       }
     }
   }
-
 }(jQuery));
