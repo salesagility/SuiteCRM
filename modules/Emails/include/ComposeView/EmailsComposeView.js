@@ -219,7 +219,6 @@
         "use strict";
         setTimeout(function () {
           if (trim(contact_email_address.val()) === '') {
-            console.log('email address is blank');
             var mb = messageBox();
             mb.hideHeader();
             mb.setBody(SUGAR.language.translate('Emails', 'LBL_INSERT_ERROR_BLANK_EMAIL'));
@@ -235,7 +234,6 @@
               mb.remove();
             });
           } else {
-            console.log('email address is full');
             var formatted_email_address = ''
             if (trim(contact_name.val()) !== '') {
               // use name <email address> format
