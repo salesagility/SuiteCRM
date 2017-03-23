@@ -189,6 +189,10 @@
   text-align: center;
 }
 
+.emails-qtip {
+  z-index: 32000!important;
+}
+
 .file-attachments:empty {
   display: none;
 }

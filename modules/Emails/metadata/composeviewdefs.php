@@ -63,6 +63,9 @@ $viewdefs['Emails']['ComposeView'] = array(
             ),
             array(
                 'file' => 'include/javascript/mozaik/vendor/tinymce/tinymce/tinymce.min.js'
+            ),
+            array(
+                'file' => 'include/javascript/qtip/jquery.qtip.min.js'
             )
         ),
     ),

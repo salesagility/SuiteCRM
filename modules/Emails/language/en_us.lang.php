@@ -296,6 +296,12 @@ $mod_strings = array (
 	'LNK_QUICK_REPLY'			=> 'Reply',
 	'LNK_MY_ARCHIVED_LIST'		=> 'My Archives',
     'LBL_EMAILS_NO_PRIMARY_TEAM_SPECIFIED' =>'No Primary Team specified',
+    'LBL_INSERT_CONTACT_EMAIL' => 'Insert Email Address from a Contact',
+    'LBL_INSERT_ACCOUNT_EMAIL' => 'Insert Email Address from an Account',
+    'LBL_INSERT_TARGET_EMAIL' => 'Insert Email Address from a Target',
+    'LBL_INSERT_USER_EMAIL' => 'Insert Email Address from an User',
+    'LBL_INSERT_LEAD_EMAIL' => 'Insert Email Address from a Lead',
+    'LBL_INSERT_ERROR_BLANK_EMAIL' => 'Invalid email address',
 
 	// advanced search
 	'LBL_ASSIGNED_TO'			=> 'Assigned To:',
