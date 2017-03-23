@@ -167,8 +167,20 @@
     .col-sm-12 [type].col-sm-8.edit-view-field input[type=text] {
       width: 100%;
     }
+    .col-sm-12 [type].col-sm-8.edit-view-field input[type=text].sqsEnabled {
+      width: 40%;
+    }
     .col-sm-8 {
       width: 83.333%;
+    }
+
+    .edit-view-row-item.empty {
+      display: none;
+      height: 0;
+      margin: 0 0 0 0;
+      min-height: 0;
+      min-width: 0;
+      visibility: collapse;
     }
   }
 }
@@ -388,6 +400,17 @@
     }
   }
 
+}
+
+
+@media (max-width: $xs-breakpoint) {
+  .compose-view {
+    .panel {
+      .col-sm-12 [type].col-sm-8.edit-view-field input[type=text].sqsEnabled {
+        width: 100%;
+      }
+    }
+  }
 }
 
 @media (max-width: $sm-breakpoint) {

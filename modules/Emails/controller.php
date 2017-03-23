@@ -71,6 +71,13 @@ class EmailsController extends SugarController
             $this->bean = BeanFactory::getBean('Emails');
         }
 
+        foreach ($_REQUEST as $fieldname => $field) {
+            if(array_key_exists($fieldname, $this->bean->field_defs)) {
+                $this->bean->$fieldname = $field;
+            }
+        }
+
+
         $old = array('&lt;','&gt;');
         $new = array('<','>');
 
@@ -247,9 +254,6 @@ class EmailsController extends SugarController
                 $this->bean->description = $_REQUEST['description'];
             }
         }
-
-        $this->bean->status = 'draft';
-        $this->bean->save();
 
         $this->bean->handleMultipleFileAttachments();
 

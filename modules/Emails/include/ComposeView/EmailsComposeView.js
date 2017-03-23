@@ -366,6 +366,18 @@
          }
        });
 
+      $(this).find('select').each(function(i,v) {
+        formData.append($(v).attr('name'), $(v).val());
+      });
+
+      $(this).find('textarea').each(function(i,v) {
+        formData.append($(v).attr('name'), $(v).val());
+      });
+
+      $(this).find('button').each(function(i,v) {
+        formData.append($(v).attr('name'), $(v).val());
+      });
+
       $.ajax({
         type: "POST",
         data: formData,

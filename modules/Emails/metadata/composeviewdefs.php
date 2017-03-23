@@ -106,6 +106,9 @@ $viewdefs['Emails']['ComposeView'] = array(
                     'name' => 'description_html',
                     'label' => 'LBL_BODY',
                 )
+            ),
+            array(
+                'parent_name'
             )
         )
     )
