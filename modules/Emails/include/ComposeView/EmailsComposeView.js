@@ -146,8 +146,8 @@
       var length = tinyMCE.editors.length;
       for (var i = length; i > 0; i--) {
         tinyMCE.editors[i - 1].remove();
-      }
-      ;
+      };
+      $('.emails-qtip').remove();
       return true;
     };
 
