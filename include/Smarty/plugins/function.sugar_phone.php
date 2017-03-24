@@ -43,7 +43,19 @@ r28841 - 2007-10-24 20:11:24 -0700 (Wed, 24 Oct 2007) - ajay - 16807: added supp
 */
 
 
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
+if (!defined('sugarEntry') || !sugarEntry || !defined('SUGAR_ENTRY') || !SUGAR_ENTRY) {
+    die('Not A Valid Entry Point');
+}
+if (defined('sugarEntry')) {
+    $deprecatedMessage = 'sugarEntry is deprecated use SUGAR_ENTRY instead';
+    if (isset($GLOBALS['log'])) {
+        $GLOBALS['log']->deprecated($deprecatedMessage);
+    } else {
+        trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+    }
+}
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.

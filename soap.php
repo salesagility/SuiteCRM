@@ -1,5 +1,9 @@
 <?php
- if(!defined('sugarEntry'))define('sugarEntry', true);
+if (!defined('sugarEntry') || !defined('SUGAR_ENTRY')) {
+    // TODO: sugarEntry is deprecated use SUGAR_ENTRY instead
+    define('sugarEntry', true);
+    define('SUGAR_ENTRY', true);
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
