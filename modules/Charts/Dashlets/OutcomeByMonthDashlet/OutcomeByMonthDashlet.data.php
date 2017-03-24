@@ -57,5 +57,10 @@ $dashletData['OutcomeByMonthDashlet']['searchFields'] = array(
                 'vname' => 'LBL_USERS',
                 'type'  => 'user_name',
             ),
+            'pbss_sales_stages' => array(
+                'name'  => 'pbss_sales_stages',
+                'vname' => 'LBL_SALES_STAGES',
+                'type'  => 'enum',
+            ),
         );
 ?>

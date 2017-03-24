@@ -42,7 +42,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $dashletStrings['ModuleActivityDashlet'] = array('LBL_TITLE'       	=> 'Module Activity',
                                                  'LBL_DESCRIPTION' 	=> 'Horizontal Bar Chart of User record creation by Module',
-						 'LBL_MODULES'     	=> 'Modules',
+					                        	 'LBL_MODULES'     	=> 'Modules',
                                                  'LBL_REFRESH'     	=> 'Refresh Chart',
                                                  'LBL_TOTAL_ACTIVITY'	=> 'Total activity for period is',
                                                  'LBL_ACTIVITY_UNITS'	=> 'records created',

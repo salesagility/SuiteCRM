@@ -49,6 +49,7 @@ class PipelineBySalesAgentDashlet extends DashletGenericChart
     public $pbss_date_start;
     public $pbss_date_end;
     public $pbss_sales_stages = array();
+    public $modact_user_ids = array();		// Array to hold available / selected users
 
     /**
      * @see DashletGenericChart::$_seedName
@@ -145,7 +146,7 @@ class PipelineBySalesAgentDashlet extends DashletGenericChart
      * @param  $query string
      * @return array
      */
-    private function getChartData(
+    public function getChartData(
         $query
         )
     {
@@ -195,17 +196,22 @@ class PipelineBySalesAgentDashlet extends DashletGenericChart
     protected function constructQuery()
     {
         $query = "  SELECT opportunities.sales_stage,
-                        users.user_name,
+                        users.user_name,users.id,
                         opportunities.assigned_user_id,
                         count(*) AS opp_count,
                         sum(amount_usdollar/1000) AS total
-                    FROM users,opportunities  ";
+                    FROM opportunities INNER JOIN users ON opportunities.assigned_user_id=users.id ";
         $query .= " WHERE opportunities.date_closed >= ". db_convert("'".$this->pbss_date_start."'",'date').
-                        " AND opportunities.date_closed <= ".db_convert("'".$this->pbss_date_end."'",'date') .
-                        " AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
+                  " AND opportunities.date_closed <= ".db_convert("'".$this->pbss_date_end."'",'date') .
+                  " AND opportunities.deleted=0 ";
+        
+        if ( count($this->modact_user_ids) > 0 )
+            $query .= " AND opportunities.assigned_user_id IN ('" . implode("','",$this->modact_user_ids) . "')";
+      
         if ( count($this->pbss_sales_stages) > 0 )
             $query .= " AND opportunities.sales_stage IN ('" . implode("','",$this->pbss_sales_stages) . "') ";
-        $query .= " GROUP BY opportunities.sales_stage ,users.user_name,opportunities.assigned_user_id";
+        
+        $query .= " GROUP BY opportunities.sales_stage ,users.id,opportunities.assigned_user_id";
 
         return $query;
     }

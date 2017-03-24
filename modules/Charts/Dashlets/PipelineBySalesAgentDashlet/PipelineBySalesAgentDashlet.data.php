@@ -57,5 +57,10 @@ $dashletData['PipelineBySalesAgentDashlet']['searchFields'] = array(
                 'vname' => 'LBL_SALES_STAGES',
                 'type'  => 'enum',
             ),
+        'modact_user_ids' => array(
+                'name'  => 'modact_user_ids',
+                'vname' => 'LBL_USERS',
+                'type'  => 'user_name',
+            ),
         );
 ?>

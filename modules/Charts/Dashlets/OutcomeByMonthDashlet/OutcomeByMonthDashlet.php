@@ -50,7 +50,10 @@ class OutcomeByMonthDashlet extends DashletGenericChart
     public $obm_ids = array();
     public $obm_date_start;
     public $obm_date_end;
-
+    public $pbss_sales_stages = array();
+    private $selected_stages = array();
+    
+  
     /**
      * @see DashletGenericChart::$_seedName
      */
@@ -80,8 +83,23 @@ class OutcomeByMonthDashlet extends DashletGenericChart
      */
     public function displayOptions()
     {
+        
+        global $app_list_strings;
+
+          
         if (!isset($this->obm_ids) || count($this->obm_ids) == 0)
+        {
             $this->_searchFields['obm_ids']['input_name0'] = array_keys(get_user_array(false));
+        }
+        
+       if (!empty($this->pbss_sales_stages) && count($this->pbss_sales_stages) > 0)
+            foreach ($this->pbss_sales_stages as $key)
+                $selected_datax[] = $key;
+        else
+            $selected_datax = array_keys($app_list_strings['sales_stage_dom']);
+            
+        $this->_searchFields['pbss_sales_stages']['options'] = $app_list_strings['sales_stage_dom'];
+        $this->_searchFields['pbss_sales_stages']['input_name0'] = $selected_stages;
 
         return parent::displayOptions();
     }
@@ -246,6 +264,7 @@ EOD;
             "sum(amount_usdollar/1000) as total, count(*) as opp_count FROM opportunities ";
         $query .= " WHERE opportunities.date_closed >= ".db_convert("'".$this->obm_date_start."'",'date') .
             " AND opportunities.date_closed <= ".db_convert("'".$this->obm_date_end."'",'date') .
+            " AND opportunities.sales_stage IN ('" . implode("','",$this->pbss_sales_stages) . "')".
             " AND opportunities.deleted=0";
         if (count($this->obm_ids) > 0)
             $query .= " AND opportunities.assigned_user_id IN ('" . implode("','",$this->obm_ids) . "')";

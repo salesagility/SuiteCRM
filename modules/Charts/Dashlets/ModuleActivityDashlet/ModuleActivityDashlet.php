@@ -41,9 +41,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /**
 * Module Activity Dashlet:
 *
-* Rick Timmis <rtimmis@wifispark.com>
+* Rick Timmis <Rick.Timmis@Abazander.com>
 *
 * @desc	Enables reporting of records created by a selected set of users on a selected set of modules
+*       for a selected time period
 * 
 */
 
@@ -56,14 +57,46 @@ class ModuleActivityDashlet extends DashletGenericChart
 {
     public $pbss_date_start; 			// Start date to report from
     public $pbss_date_end;   			// End date to report to	
-    public $modact_module_ids = array();	// Array to hold available / selected modules
+    
+    /**
+     * Set Modules available for seletions
+     * 
+     * Rick Timmis <Rick.Timmis@Abazander.com> 
+     * 
+     * Array to hold available / selected modules, because not all modules provide appropriate results, we prepopulate the list
+     * of modules suitable for running the query. This ensures that something is displayed for the user
+     *
+     * */
+     
+    public $modact_module_ids = array(
+                "Contacts"              =>      "Contacts",
+                "Accounts"              =>      "Accounts",
+                "Opportunities"         =>      "Opportunities",
+                "Cases"                 =>      "Cases",
+                "Notes"                 =>      "Notes",
+                "Calls"                 =>      "Calls",
+                "Emails"                =>      "Emails",
+                "Meetings"              =>      "Meetings",
+                "Tasks"                 =>      "Tasks",
+                "Leads"                 =>      "Leads",
+                "Bugs"                  =>      "Bugs",
+                "Projects"              =>      "Projects",
+                "Documents"             =>      "Documents",
+                "Contracts"             =>      "Contracts",
+                "Invoices"              =>      "Invoices",
+                "Products"              =>      "Products",
+                "Quotes"                =>      "Quotes"
+    );
+
     public $modact_user_ids = array();		// Array to hold available / selected users
    
 
     /**
      * @see DashletGenericChart::$_seedName
+     * 
+     * No requirement to associate a Module here, as Mod Activity is global across SuiteCRM. This makes the dashlet use the local .data.php and .lang.php files
      */
-    protected $_seedName = 'Opportunities';
+    //protected $_seedName = '';
 
     /**
      * @see DashletGenericChart::__construct()
@@ -74,20 +107,28 @@ class ModuleActivityDashlet extends DashletGenericChart
         )
     {
         global $timedate;
-
+        
+        /**
+         * ModuleActivity is retrospective, so default to looking back 3 months
+         * 
+         * */
+         
         if(empty($options['pbss_date_start']))
-            $options['pbss_date_start'] = $timedate->nowDbDate();
+            $options['pbss_date_start'] = $timedate->asDbDate($timedate->getNow()->modify("-3 months"));
+            
 
         if(empty($options['pbss_date_end']))
-            $options['pbss_date_end'] = $timedate->asDbDate($timedate->getNow()->modify("+6 months"));
+            $options['pbss_date_end'] = $timedate->nowDbDate();
 
         if(empty($options['title']))
+        
         /** FIXME en_us.lang.php file will not load $dashletString, having burned 4 hours on the blooming thing, I opted to hardcode the labels
         *         in the interest of putting something into production and for the sake of my SANITY!!
         *         need to discover why the language strings aren't getting loaded, and fix this
         *         Rick Timmis
         */
 		//$options['title'] = translate('LBL_TITLE', 'Home');
+		
         	$options['title'] = "Module Activity";
               
 
@@ -100,8 +141,9 @@ class ModuleActivityDashlet extends DashletGenericChart
     public function displayOptions()
     {
         global $app_list_strings;
+        //global $app_strings;
         
-         if (!empty($this->modact_module_ids) && count($this->modact_module_ids) > 0)
+        if (!empty($this->modact_module_ids) && count($this->modact_module_ids) > 0)
             foreach ($this->modact_module_ids as $key)
                 $selected_datax[] = $key;
         else
@@ -138,12 +180,15 @@ class ModuleActivityDashlet extends DashletGenericChart
         $sugarChart->setData($this->getChartData($this->constructQuery()));
         $sugarChart->is_currency = false;
        
-        /** FIXME en_us.lang.php file will not load $dashletString, having burned 4 hours on the blooming thing, I opted to hardcode the labels
-        *         in the interest of putting something into production and for the sake of my SANITY!!
-        *         need to discover why the language strings aren't getting loaded, and fix this
-        *         Rick Timmis
-        */
-        
+       
+     /**
+      *
+      * FIXME: Still having to hard code these values, which ought to be loaded from vardef / language file
+      *        Rick Timmis    
+      * 
+      */ 
+
+         
         //$subtitle = translate('LBL_ACTIVITY_SCALE', 'Charts') . translate('LBL_ACTIVITY_UNITS', 'Charts');
         $subtitle = translate('Activity scale in ', 'Charts') . translate('records created ', 'Charts');
         //$pipeline_total_string = translate('LBL_TOTAL_ACTIVITY', 'Charts') . format_number($sugarChart->getTotal(), 0, 0, array('convert'=>true));
@@ -164,7 +209,7 @@ class ModuleActivityDashlet extends DashletGenericChart
      * @param  $query string
      * @return array
      */
-    private function getChartData($query)
+    public function getChartData($query)
     {
     	global $app_list_strings, $db;
 

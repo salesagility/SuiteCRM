@@ -43,6 +43,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 $dashletStrings['PipelineBySalesAgentDashlet'] = array('LBL_TITLE'       => 'Pipeline By Sales Agent',
-                                                         'LBL_DESCRIPTION' => 'Horizontal Bar Chart of Sales Stage Pipeline',
+                                                         'LBL_DESCRIPTION' => 'Horizontal Bar Chart of Sales by Stage and Agent',
                                                          'LBL_REFRESH'     => 'Refresh Chart');
 ?>
