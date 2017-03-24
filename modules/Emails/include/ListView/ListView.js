@@ -122,7 +122,6 @@ $(document).ready(function(){
  });
 
  $('[data-action=emails-check-new-email]').click(function(){
-   alert('check new email placeholder');
    location.reload();
  });
 
