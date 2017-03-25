@@ -901,21 +901,18 @@ class Meeting extends SugarBean {
 	/**
 	 * @see SugarBean::afterImportSave()
 	 */
-	public function afterImportSave()
-	{
-	    if ( $this->parent_type == 'Contacts' ) {
-	        $this->load_relationship('contacts');
-	        if ( !$this->contacts->relationship_exists('contacts',array('id'=>$this->parent_id)) )
-	            $this->contacts->add($this->parent_id);
-	    }
-	    elseif ( $this->parent_type == 'Leads' ) {
-	        $this->load_relationship('leads');
-	        if ( !$this->leads->relationship_exists('leads',array('id'=>$this->parent_id)) )
-	            $this->leads->add($this->parent_id);
-	    }
+    public function afterImportSave()
+    {
+        if ($this->parent_type === 'Contacts') {
+            $this->load_relationship('contacts');
+            $this->contacts->add($this->parent_id);
+        } elseif ($this->parent_type === 'Leads') {
+            $this->load_relationship('leads');
+            $this->leads->add($this->parent_id);
+        }
 
-	    parent::afterImportSave();
-	}
+        parent::afterImportSave();
+    }
 
     public function getDefaultStatus()
     {

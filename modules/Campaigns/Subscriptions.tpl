@@ -42,7 +42,7 @@
 <link rel="stylesheet" type="text/css" href="{sugar_getjspath file='modules/Connectors/tpls/tabs.css'}"/>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
-<tr><td colspan='100'><h2>{$title}</h2></td></tr>
+<tr><td colspan='100'><h2 class="header-2">{$title}</h2></td></tr>
 <tr><td colspan='100'>
 {$description}
 </td></tr><tr><td><br></td></tr><tr><td colspan='100'>

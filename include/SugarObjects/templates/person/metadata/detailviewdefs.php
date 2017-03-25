@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -35,104 +36,106 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
 $module_name = '<module_name>';
 $viewdefs[$module_name]['DetailView'] = array(
-'templateMeta' => array('form' => array('buttons'=>array('EDIT', 'DUPLICATE', 'DELETE', 'FIND_DUPLICATES', 
-                                                        ),
-                                       ),
-                        'maxColumns' => '2', 
-                        'widths' => array(
-                                        array('label' => '10', 'field' => '30'), 
-                                        array('label' => '10', 'field' => '30')
-                                        ),
-                        ),
-'panels' =>array (
-  
-  array (
-    
-    array (
-      'name' => 'full_name',
-	  'label' => 'LBL_NAME',
+    'templateMeta' => array(
+        'form' => array(
+            'buttons' => array(
+                'EDIT',
+                'DUPLICATE',
+                'DELETE',
+                'FIND_DUPLICATES',
+            ),
+        ),
+        'maxColumns' => '2',
+        'widths' => array(
+            array('label' => '10', 'field' => '30'),
+            array('label' => '10', 'field' => '30')
+        ),
     ),
-    
-    //'full_name',
-    array (
-      'name' => 'phone_work',
-    ),
-  ),
-  
-  array (
-    'title',
-    
-    array (
-      'name' => 'phone_mobile',
-    ),
-  ),
-  
-  array (
-	'department',
-    
-    array (
-      'name' => 'phone_home',
-      'label' => 'LBL_HOME_PHONE',
-    ),
-  ),
-  
-  array (
-	NULL,
-    array (
-      'name' => 'phone_other',
-      'label' => 'LBL_OTHER_PHONE',
-    ),
-  ),
+    'panels' => array(
 
-  array (
-	array (
-      'name' => 'date_entered',
-      'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-      'label' => 'LBL_DATE_ENTERED',
-    ),
-    array (
-      'name' => 'phone_fax',
-      'label' => 'LBL_FAX_PHONE',
-    ),
-  ),
+        array(
+            array(
+                'name' => 'full_name',
+                'label' => 'LBL_NAME',
+            ),
+            array(
+                'name' => 'phone_work',
+            ),
+        ),
 
-  array (
-     array (
-      'name' => 'date_modified',
-      'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
-      'label' => 'LBL_DATE_MODIFIED',
-    ),
-    'do_not_call',
-  ),
-  array('assigned_user_name', ''),
-  
-  array( 
-    'email1'),
+        array(
+            'title',
+            array(
+                'name' => 'phone_mobile',
+            ),
+        ),
 
-  array (
-      array (
-	      'name' => 'primary_address_street',
-	      'label'=> 'LBL_PRIMARY_ADDRESS',
-	      'type' => 'address',
-	      'displayParams'=>array('key'=>'primary'),
-      ),
-      array (
-	      'name' => 'alt_address_street',
-	      'label'=> 'LBL_ALT_ADDRESS',
-	      'type' => 'address',
-	      'displayParams'=>array('key'=>'alt'),
-      ),
-  ),
-  
-  array (
-    'description',
-  ),
+        array(
+            'department',
 
-)
- 
+            array(
+                'name' => 'phone_home',
+                'label' => 'LBL_HOME_PHONE',
+            ),
+        ),
+
+        array(
+            null,
+            array(
+                'name' => 'phone_other',
+                'label' => 'LBL_OTHER_PHONE',
+            ),
+        ),
+
+        array(
+            array(
+                'name' => 'date_entered',
+                'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+                'label' => 'LBL_DATE_ENTERED',
+            ),
+            array(
+                'name' => 'phone_fax',
+                'label' => 'LBL_FAX_PHONE',
+            ),
+        ),
+
+        array(
+            array(
+                'name' => 'date_modified',
+                'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+                'label' => 'LBL_DATE_MODIFIED',
+            ),
+            'do_not_call',
+        ),
+        array('assigned_user_name', ''),
+
+        array(
+            'email1'
+        ),
+
+        array(
+            array(
+                'name' => 'primary_address_street',
+                'label' => 'LBL_PRIMARY_ADDRESS',
+                'type' => 'address',
+                'displayParams' => array('key' => 'primary'),
+            ),
+            array(
+                'name' => 'alt_address_street',
+                'label' => 'LBL_ALT_ADDRESS',
+                'type' => 'address',
+                'displayParams' => array('key' => 'alt'),
+            ),
+        ),
+
+        array(
+            'description',
+        ),
+
+    )
+
 );
-?>

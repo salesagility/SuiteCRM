@@ -111,8 +111,8 @@ $mod_strings = array (
 	'LBL_ERROR_LOADING' => 'Error while loading',
 	'LBL_GOTO_DATE' => 'Goto Date',
 	'NOTICE_DURATION_TIME' => 'Duration time must be greater than 0',
-	'LBL_STYLE_BASIC' => 'Basic',
-	'LBL_STYLE_ADVANCED' => 'Advanced',
+	'LBL_STYLE_BASIC' => 'BASIC',
+	'LBL_STYLE_ADVANCED' => 'ADVANCED',
 
 	'LBL_INFO_TITLE' => 'Additional Details',
 	'LBL_INFO_DESC' => 'Description',

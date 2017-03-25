@@ -8,9 +8,9 @@
   "config": {
     "vendor-dir": "vendor"
   },
-  "require": {
-  },
+  "require": {},
   "require-dev": {
+    "leafo/scssphp": "dev-master",
     "phpunit/phpunit": "^3.7",
     "mikey179/vfsStream": "1.4.*"
   },

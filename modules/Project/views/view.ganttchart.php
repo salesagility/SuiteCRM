@@ -81,20 +81,20 @@ class ProjectViewGanttChart extends SugarView {
                 <p>
                     <?php echo $mod_strings['LBL_EDIT_TASK_PROPERTIES']; ?>
                 </p>
-                <form id="popup_form">
+                <form id="popup_form" class="projects-gantt-chart-popup">
                     <fieldset>
 						<table width="100%">
 							<tr><td>
 						
 							<input type="hidden" name="project_id" id="project_id" value="<?php echo $project->id; ?>">
 							<input type="hidden" name="override_business_hours" id="override_business_hours" value="<?php echo $project->override_business_hours; ?>">
-							<input type="text" style="display: none;" name="task_id" id="task_id" value="">
+							<input type="text" name="task_id" style="display: none; visibility: collapse;" id="task_id" value="">
 							<input type="radio" name="Milestone" value="Subtask" checked="checked" id="Subtask" />
 							<label id="Subtask_label" for="Subtask"><?php echo $mod_strings['LBL_SUBTASK'];?></label>
 							<input type="radio" name="Milestone" value="Milestone" id="Milestone" />
-							<label id="Milestone_label" for="Milestone"><?php echo $mod_strings['LBL_MILESTONE_FLAG'];?></label>&nbsp;<br /><br />
-							<label id="parent_task_id" for="parent_task" style="display: none;"><?php echo $mod_strings['LBL_PARENT_TASK_ID']; ?></label>
-							<input id="parent_task" class="text ui-widget-content ui-corner-all" style="display: none;" type="text" name="parent_task" value="" />
+							<label id="Milestone_label" for="Milestone"><?php echo $mod_strings['LBL_MILESTONE_FLAG'];?></label>
+							<label id="parent_task_id" for="parent_task" style="display: none; visibility: collapse;"><?php echo $mod_strings['LBL_PARENT_TASK_ID']; ?></label>
+							<input id="parent_task" class="text ui-widget-content ui-corner-all" style="display: none; visibility: collapse;" type="text" name="parent_task" value="" />
 							<label for="name"><?php echo $mod_strings['LBL_TASK_NAME']; ?></label>
 							<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
 							<label for="Predecessor"><?php echo $mod_strings['LBL_PREDECESSORS'];?></label>

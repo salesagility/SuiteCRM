@@ -191,7 +191,7 @@ class LoggerManager
  	{
  	    $locations = array('include/SugarLogger','custom/include/SugarLogger');
  	    foreach ( $locations as $location ) {
-            if (sugar_is_dir($location) && $dir = opendir($location)) {
+            if (is_dir($location) && $dir = opendir($location)) {
                 while (($file = readdir($dir)) !== false) {
                     if ($file == ".."
                             || $file == "."
