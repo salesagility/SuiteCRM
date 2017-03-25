@@ -439,6 +439,9 @@ function handleSave(field,id,module,type){
 
 function setValueClose(value){
     $.get('themes/SuiteR/images/inline_edit_icon.svg', function(data) {
+        // Fix for #3136 - replace new line characters with <br /> for html on close.
+        value = value.replace(/(?:\r\n|\r|\n)/g, '<br />');
+
         $(".inlineEditActive").html("");
         $(".inlineEditActive").html(value + '<div class="inlineEditIcon">' + inlineEditIcon + '</div>');
         $(".inlineEditActive").removeClass("inlineEditActive");
