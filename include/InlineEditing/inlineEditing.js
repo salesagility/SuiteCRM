@@ -272,7 +272,14 @@ $(document).on('click', function (e) {
 
         if (!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")) {
             var output_value = loadFieldHTMLValue(field, id, module);
-            var outputValueParse = $(output_value).text();
+
+            // Resolve issues with telephone number throwing exception.
+            if (/<[a-z][\s\S]*>/i.test(output_value)) {
+                var outputValueParse = $(output_value).text();
+            } else {
+                var outputValueParse = output_value;
+            }
+
             var user_value = getInputValue(field, type);
 
             /**
@@ -431,7 +438,6 @@ function handleSave(field,id,module,type){
  */
 
 function setValueClose(value){
-
     $.get('themes/SuiteR/images/inline_edit_icon.svg', function(data) {
         $(".inlineEditActive").html("");
         $(".inlineEditActive").html(value + '<div class="inlineEditIcon">' + inlineEditIcon + '</div>');
