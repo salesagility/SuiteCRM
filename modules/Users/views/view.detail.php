@@ -134,10 +134,6 @@ class UsersViewDetail extends ViewDetail {
         $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => '<input title="'.translate('LBL_RESET_PREFERENCES','Users').'" class="button" LANGUAGE=javascript onclick="if(confirm(\''.translate('LBL_RESET_PREFERENCES_WARNING_USER','Users').'\')) window.location=\'index.php?module=Users&action=resetPreferences&reset_preferences=true&record={$fields.id.value}\';" type="button" name="password" value="'.translate('LBL_RESET_PREFERENCES','Users').'">"');
         $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => '<input title="'.translate('LBL_RESET_HOMEPAGE','Users').'" class="button" LANGUAGE=javascript onclick="if(confirm(\''.translate('LBL_RESET_HOMEPAGE_WARNING','Users').'\')) window.location=\'index.php?module=Users&action=DetailView&reset_homepage=true&record={$fields.id.value}\';" type="button" name="password" value="'.translate('LBL_RESET_HOMEPAGE','Users').'">"');
 
-
-        $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => '<input title="'.translate('LBL_RESET_PREFERENCES','Users').'" class="button" LANGUAGE=javascript onclick="if(confirm(\''.translate('LBL_RESET_PREFERENCES_WARNING_USER','Users').'\')) window.location=\'index.php?module=Users&action=resetPreferences&reset_preferences=true&record='.$current_user->id.'\';" type="button" name="password" value="'.translate('LBL_RESET_PREFERENCES','Users').'">"');
-        $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => '<input title="'.translate('LBL_RESET_HOMEPAGE','Users').'" class="button" LANGUAGE=javascript onclick="if(confirm(\''.translate('LBL_RESET_HOMEPAGE_WARNING','Users').'\')) window.location=\'index.php?module=Users&action=DetailView&reset_homepage=true&record='.$current_user->id.'\';" type="button" name="password" value="'.translate('LBL_RESET_HOMEPAGE','Users').'">"');
-
         $show_roles = (!($this->bean->is_group=='1' || $this->bean->portal_only=='1'));
         if(is_admin($this->bean)) {
             $show_roles = false;
