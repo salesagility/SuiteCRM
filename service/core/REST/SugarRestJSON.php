@@ -88,11 +88,42 @@ class SugarRestJSON extends SugarRest{
 			$json = getJSONObj();
 			$data = $json->decode($json_data);
 			if(!is_array($data))$data = array($data);
-			$res = call_user_func_array(array( $this->implementation, $method),$data);
+			$data = $this->correctParameterArray($this->implementation, $method, $data);
+			$res = call_user_func_array(array( $this->implementation, $method), $data);
 			$GLOBALS['log']->info('End: SugarRestJSON->serve');
 			return $res;
 		} // else
 	} // fn
+
+	/**
+	* When data comes from clients other than PHP
+	* it is sometimes impossible to arrange an array
+	* and by definition JSON array is unsorted
+	* This method returns arguments in correct order
+	* for particular method
+	*
+	* @param String $className Name of the class
+	* @param String $methodName Name of the method
+	* @param array $data arguments to pass [name => value]
+	* @return array arguments arranged for chosen method
+	*/
+	private function correctParameterArray($className, $methodName, array $data) {
+		$r = new ReflectionMethod($className, $methodName);
+		$params = $r->getParameters();
+		$result = array();
+		if (empty($params)) {
+			return $data;
+		}
+		foreach ($params as $param) {
+			$name = $param->getName();
+			if (!isset($data[$name])) {
+				$result[$name] = "";
+			} else {
+				$result[$name] = $data[$name];
+			}
+		}
+		return $result;
+	}
 
 	/**
 	 * This function sends response to client containing error object
