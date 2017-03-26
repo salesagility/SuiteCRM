@@ -2452,8 +2452,6 @@ $app_strings = array(
 
     'LBL_FILTER_HEADER_TITLE' => 'Filter',
 
-    'LBL_AOP_INTERNAL' => 'Internal',
-
 );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
@@ -3784,7 +3782,7 @@ $app_list_strings['marker_image_list']['restaurant_turkish'] = 'Restaurant Turki
 $app_list_strings['marker_image_list']['right'] = 'Right';
 $app_list_strings['marker_image_list']['right_then_down'] = 'Right Then Down';
 $app_list_strings['marker_image_list']['right_then_up'] = 'Right Then Up';
-$app_list_strings['marker_image_list']['satursday'] = 'Satursday';
+$app_list_strings['marker_image_list']['saturday'] = 'Saturday';
 $app_list_strings['marker_image_list']['school'] = 'School';
 $app_list_strings['marker_image_list']['shopping_mall'] = 'Shopping Mall';
 $app_list_strings['marker_image_list']['shore'] = 'Shore';
