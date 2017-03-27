@@ -181,7 +181,7 @@ class UnifiedSearchAdvanced {
 		global $modListHeader, $beanList, $beanFiles, $current_language, $app_strings, $current_user, $mod_strings;
 		$home_mod_strings = return_module_language($current_language, 'Home');
 
-		$this->query_string = $GLOBALS['db']->quote(securexss(from_html(clean_string($this->query_string, 'UNIFIED_SEARCH'))));
+		$this->query_string = securexss(from_html(clean_string($this->query_string, 'UNIFIED_SEARCH')));
 
 		if(!empty($_REQUEST['advanced']) && $_REQUEST['advanced'] != 'false') {
 			$modules_to_search = array();
@@ -292,7 +292,7 @@ class UnifiedSearchAdvanced {
                     }
 
                     $unifiedSearchFields[ $moduleName ] [ $field ] = $def ;
-                    $unifiedSearchFields[ $moduleName ] [ $field ][ 'value' ] = $this->query_string ;
+                    $unifiedSearchFields[ $moduleName ] [ $field ][ 'value' ] = $this->query_string;
                 }
 
                 /*
@@ -310,9 +310,9 @@ class UnifiedSearchAdvanced {
                 //add inner joins back into the where clause
                 $params = array('custom_select' => "");
                 foreach($innerJoins as $field=>$def) {
-                    if (isset ($def['db_field'])) {
+                    if (isset($def['db_field'])) {
                       foreach($def['db_field'] as $dbfield)
-                          $where_clauses[] = $dbfield . " LIKE '" . $this->query_string . "%'";
+                          $where_clauses[] = $dbfield . " LIKE '" . $GLOBALS['db']->quote($this->query_string) . "%'";
                           $params['custom_select'] .= ", $dbfield";
                           $params['distinct'] = true;
                           //$filterFields[$dbfield] = $dbfield;

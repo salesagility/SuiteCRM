@@ -38,10 +38,6 @@ class AOD_IndexTest extends PHPUnit_Framework_TestCase
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
 
-        //execute the method without parameters and verify that it returns true
-         $hits = $aod_index->find();
-        $this->assertTrue(is_array($hits));
-
          //execute the method with parameters and verify that it returns true
          $hits = $aod_index->find('/');
         $this->assertTrue(is_array($hits));

@@ -38,7 +38,8 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
-
+{sugar_include include=$includes}
+{include file='include/ListView/ListViewColumnsFilterDialog.tpl'}
 <script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
 
 
@@ -68,6 +69,11 @@
 {if count($data) == 0}
 	{assign var="hideTable" value=true}
 	<div class="list view listViewEmpty">
+        {if $showFilterIcon}
+			<div class="filterContainer">
+                {include file='include/ListView/ListViewSearchLink.tpl'}
+			</div>
+        {/if}
 		{if $displayEmptyDataMesssages}
         {if strlen($query) == 0}
                 {capture assign="createLink"}<a href="?module={$pageData.bean.moduleDir}&action=EditView&return_module={$pageData.bean.moduleDir}&return_action=DetailView">{$APP.LBL_CREATE_BUTTON_LABEL}</a>{/capture}
@@ -77,19 +83,18 @@
                     {$APP.MSG_EMPTY_LIST_VIEW_NO_RESULTS|replace:"<item2>":$createLink|replace:"<item3>":$importLink}
                 </p>
         {elseif $query == "-advanced_search"}
-            <p class="msg">
-                {$APP.MSG_LIST_VIEW_NO_RESULTS_BASIC}
+            <p class="msg emptyResults">
+                {$APP.MSG_LIST_VIEW_NO_RESULTS_CHANGE_CRITERIA}
             </p>
         {else}
             <p class="msg">
                 {capture assign="quotedQuery"}"{$query}"{/capture}
                 {$APP.MSG_LIST_VIEW_NO_RESULTS|replace:"<item1>":$quotedQuery}
             </p>
-            <p class = "submsg">
+            <p class="submsg">
                 <a href="?module={$pageData.bean.moduleDir}&action=EditView&return_module={$pageData.bean.moduleDir}&return_action=DetailView">
                     {$APP.MSG_LIST_VIEW_NO_RESULTS_SUBMSG|replace:"<item1>":$quotedQuery|replace:"<item2>":$singularModule}
                 </a>
-
             </p>
         {/if}
     {else}
@@ -114,7 +119,7 @@
 			{if $prerow}
 				<th class="td_alt">&nbsp;</th>
 			{/if}
-			{if !empty($quickViewLinks)}
+			{if !(isset($options.hide_edit_link) && $options.hide_edit_link === true) && !empty($quickViewLinks)}
 				<th class='td_alt quick_view_links'>&nbsp;</th>
 			{/if}
 			{counter start=0 name="colCounter" print=false assign="colCounter"}
@@ -152,8 +157,10 @@
 									<a href='javascript:sListView.order_checks("ASC", "{$params.orderBy|default:$colHeader|lower}" , "{$pageData.bean.moduleDir}{"2_"}{$pageData.bean.objectName|upper}{"_ORDER_BY"}")' class='listViewThLinkS1'>
 								{/if}
 							{/if}
+							{if isset($params.hide_header_label) && $params.hide_header_label == true}
+							{else}
 							{sugar_translate label=$params.label module=$pageData.bean.moduleDir}
-							&nbsp;&nbsp;
+						&nbsp;&nbsp;  {/if}
 							{if $params.orderBy|default:$colHeader|lower == $pageData.ordering.orderBy}
 								{if $pageData.ordering.sortOrder == 'ASC'}
 									{capture assign="imageName"}arrow_down.{$arrowExt}{/capture}
@@ -172,7 +179,10 @@
 							</a>
 						{else}
 							{if !isset($params.noHeader) || $params.noHeader == false}
-							  {sugar_translate label=$params.label module=$pageData.bean.moduleDir}
+                                {if isset($params.hide_header_label) && $params.hide_header_label == true}
+                                {else}
+                                    {sugar_translate label=$params.label module=$pageData.bean.moduleDir}
+									&nbsp;&nbsp;  {/if}
 							{/if}
 						{/if}
 						</div>
@@ -184,6 +194,7 @@
 		</tr>
 		{include file='themes/SuiteP/include/ListView/ListViewPaginationTop.tpl'}
 	</thead>
+	<tbody>
 		{counter start=$pageData.offsets.current print=false assign="offset" name="offset"}
 		{foreach name=rowIteration from=$data key=id item=rowData}
 		    {counter name="offset" print=false}
@@ -207,16 +218,18 @@
 				{if !empty($quickViewLinks)}
 	            {capture assign=linkModule}{if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$pageData.bean.moduleDir}{/if}{/capture}
 	            {capture assign=action}{if $act}{$act}{else}EditView{/if}{/capture}
-				<td>
-                    {if $pageData.rowAccess[$id].edit}
-
-                        <a title='{$editLinkString}' id="edit-{$rowData.ID}"
-                           href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
-                                >
-                            {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
-                            {sugar_getimage name="edit_inline.gif" attr='border="0" ' alt="$alt_edit"}</a>
-                    {/if}
-	            </td>
+				{if isset($options.hide_edit_link) && $options.hide_edit_link === true}
+				{else}
+					<td>
+                        {if $pageData.rowAccess[$id].edit && !empty($quickViewLinks)}
+							<a class="edit-link" title='{$editLinkString}' id="edit-{$rowData.ID}"
+							   href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
+							>
+                                {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
+                                {sugar_getimage name="edit_inline.gif" attr='border="0" ' alt="$alt_edit"}</a>
+                        {/if}
+					</td>
+				{/if}
 
 				{/if}
 				{counter start=0 name="colCounter" print=false assign="colCounter"}
@@ -252,7 +265,7 @@
 	                       {sugar_field parentFieldArray=$rowData vardef=$params displayType=ListView field=$col}
 
 						{/if}
-						{if empty($rowData.$col) && empty($params.customCode)}&nbsp;{/if}
+						{if empty($rowData.$col) && empty($params.customCode)}{/if}
 						{if $params.link && !$params.customCode}
 							</{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN}>
 	                    {/if}
@@ -277,7 +290,10 @@
     {assign var="selectLink" value=$selectLinkBottom}
     {assign var="actionsLink" value=$actionsLinkBottom}
     {assign var="action_menu_location" value="bottom"}
+	</tbody>
+	<tfoot>
     {include file='themes/SuiteP/include/ListView/ListViewPaginationBottom.tpl'}
+	</tfoot>
 	</table></div>
 {/if}
 {if $contextMenus}

@@ -86,22 +86,29 @@ class HomeViewAdditionaldetailsretrieve extends SugarView
             
             $arr = array_change_key_case($bean->toArray(), CASE_UPPER);
         
-            $results = $adFunction($arr);
+            $results = $adFunction($arr, $bean, $_REQUEST);
+
+            $retArray = array();
             $retArray['body'] = str_replace(array("\rn", "\r", "\n"), array('','','<br />'), $results['string']);
             if(!$bean->ACLAccess('EditView')) $results['editLink'] = '';
             if(!$bean->ACLAccess('DetailView')) $results['viewLink'] = '';
-            
+
             $retArray['caption'] = "<div style='float:left'>{$app_strings['LBL_ADDITIONAL_DETAILS']}</div><div style='float: right'>";
-            if(!empty($_REQUEST['show_buttons'])){            
+            if(!empty($_REQUEST['show_buttons'])){
 		    if(!empty($results['editLink']))
 		    	$retArray['caption'] .= "<a title='".$GLOBALS['app_strings']['LBL_EDIT_BUTTON']."' href='".$results['editLink']."'><img border=0 src='".SugarThemeRegistry::current()->getImageURL('edit_inline.png',false)."'></a>";
 		    if(!empty($results['viewLink']))
 		    	$retArray['caption'] .= "<a title='".$GLOBALS['app_strings']['LBL_VIEW_BUTTON']."' href='".$results['viewLink']."'><img border=0 src='".SugarThemeRegistry::current()->getImageURL('view_inline.png',false)."' style='margin-left:2px;'></a>";
 		    	$retArray['caption'] .= "<a title='".$GLOBALS['app_strings']['LBL_ADDITIONAL_DETAILS_CLOSE_TITLE']."' href='javascript: SUGAR.util.closeStaticAdditionalDetails();'><img border=0 src='".SugarThemeRegistry::current()->getImageURL('close.png',false)."' style='margin-left:2px;'></a>";
             }
-            $retArray['caption'] .= ""; 
-            $retArray['width'] = (empty($results['width']) ? '300' : $results['width']);              
-            echo 'result = ' . $json->encode($retArray);
+            $retArray['caption'] .= "";
+            $retArray['width'] = (empty($results['width']) ? '300' : $results['width']);
+
+            if(isset($results['version'])) {
+                echo 'result = ' . $json->encode($results);
+            } else {
+                echo 'result = ' . $json->encode($retArray);
+            }
         }
     }
     

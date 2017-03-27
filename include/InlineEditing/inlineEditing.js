@@ -56,20 +56,24 @@ timer = null;
 
 function buildEditField(){
     $(".inlineEdit a").click(function (e) {
-    	
-    	if(e.which !== undefined && e.which === 2){
+
+        if(e.which !== undefined && e.which === 2){
             return;
         }
-        
+
         if(this.id != "inlineEditSaveButton") {
             var linkUrl = $(this).attr("href");
-			var linkTarget = $(this).attr("target");
-			
+            var linkTarget = $(this).attr("target");
+
             if (typeof clicks == 'undefined') {
                 clicks = 0;
             }
-            clicks++;
-            
+
+            // Fix for Issue #3148, force it so clicks is only ever = 1 when clicked, never higher.
+            if (clicks == 0) {
+                clicks++;
+            }
+
             if(e.ctrlKey && clicks == 1){
                 return;
             }
@@ -85,10 +89,10 @@ function buildEditField(){
 
                 timer = setTimeout(function () {
                     // if reaches end of timeout without another click follow link
-					if (linkTarget)
-						window.open(linkUrl, linkTarget);
-					else
-						window.location.href = linkUrl;
+                    if (linkTarget)
+                        window.open(linkUrl, linkTarget);
+                    else
+                        window.location.href = linkUrl;
                     clicks = 0;             //after action performed, reset counter
 
                 }, 500);
@@ -142,6 +146,11 @@ function buildEditField(){
                     var relate_js = getRelateFieldJS(field, module, id);
                     $(_this).append(relate_js);
                     SUGAR.util.evalScript($(_this).html());
+                    // Issue 2344 and 2499 changes - Dump existing QSProcessedFieldsArray to enable multiple QS on multiple rows.
+                    var fieldToCheck = 'EditView_' + field + '_display';
+                    if(fieldToCheck in QSProcessedFieldsArray) {
+                        delete QSProcessedFieldsArray[fieldToCheck];
+                    }
                     //Needs to be called to enable quicksearch/typeahead functionality on the field.
                     enableQS(true);
                 }
@@ -223,8 +232,6 @@ function validateFormAndSave(field,id,module,type){
     });
 }
 
-
-
 /**
  * Checks if any of the parent elemenets of the current element have the class inlineEditActive this means they are within
  * the current element and have not clicked away from the field. Note we need to check on .cal_panel too for the calendar popup.
@@ -235,6 +242,7 @@ function validateFormAndSave(field,id,module,type){
 
 var ie_field, ie_id, ie_module, ie_type, ie_message_field;
 var clickListenerActive = false;
+
 function clickedawayclose(field,id,module, type){
     // Fix for issue #373 get name from system field name.
     message_field = 'LBL_' + field.toUpperCase();
@@ -252,6 +260,7 @@ function clickedawayclose(field,id,module, type){
     ie_message_field = message_field;
     clickListenerActive = true;
 }
+
 $(document).on('click', function (e) {
     if(clickListenerActive) {
         var field = ie_field;
@@ -259,13 +268,41 @@ $(document).on('click', function (e) {
         var module = ie_module;
         var type = ie_type;
         var message_field = ie_message_field;
+        var alertFlag = true;
+
         if (!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")) {
             var output_value = loadFieldHTMLValue(field, id, module);
+            var outputValueParse = $(output_value).text();
             var user_value = getInputValue(field, type);
-            // Fix for issue #373 strip HTML tags for correct comparison
-            var output_value_compare = $(output_value).text();
-            if (user_value != output_value_compare) {
-                var r = confirm(SUGAR.language.translate('app_strings', 'LBL_CONFIRM_CANCEL_INLINE_EDITING') + message_field);
+
+            /**
+             * A flag to fix Issue 2545, some parts of the site were comparing HTML to plain text, this flag checks
+             * against Plain Text and normal HTML to trigger the alert/confirm dialogue box.
+             */
+
+            // Return user value to empty string for comparison if undefined at this stage (empty field check fix)
+            if (typeof user_value === "undefined") {
+                user_value = '';
+            }
+
+            // QS Fields have '_display' in their field names. An additional check for the this field name pattern.
+            if (outputValueParse != user_value && output_value != user_value) {
+                var fieldName = field + '_display';
+                var replacementUserValue = $("#" + fieldName).val();
+
+                // Parsing empty text returns undefined, if the string returns anything other than undefined, replace
+                // user_value with this value.
+                if (replacementUserValue != undefined) {
+                    user_value = replacementUserValue;
+                }
+            }
+
+            if (user_value == outputValueParse || user_value == output_value) {
+                var alertFlag = false;
+            }
+
+            if (alertFlag) {
+                var r = confirm(SUGAR.language.translate('app_strings', 'LBL_CONFIRM_CANCEL_INLINE_EDITING') + ' ' + message_field);
                 if (r == true) {
                     var output = setValueClose(output_value);
                     clickListenerActive = false;
@@ -337,7 +374,7 @@ function getInputValue(field,type){
                 break;
             case 'bool':
                 if($('#'+ field).is(':checked')){
-                   return "on";
+                    return "on";
                 }else{
                     return "off";
                 }
@@ -379,7 +416,7 @@ function handleSave(field,id,module,type){
     }
 
     if(type == "parent") {
-            parent_type = $('#parent_type').val();
+        parent_type = $('#parent_type').val();
     }
 
 
@@ -460,16 +497,16 @@ function loadFieldHTML(field,module,id) {
         }
     );
     $.ajaxSetup({"async": true});
-     if(result.responseText){
-         try {
-             return (JSON.parse(result.responseText));
-         } catch(e) {
-             return false;
-         }
+    if(result.responseText){
+        try {
+            return (JSON.parse(result.responseText));
+        } catch(e) {
+            return false;
+        }
 
-     }else{
-         return false;
-     }
+    }else{
+        return false;
+    }
 
 
 }

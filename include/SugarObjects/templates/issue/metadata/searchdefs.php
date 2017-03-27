@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -35,36 +36,40 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-/*
- * Created on May 29, 2007
- *
- * To change the template for this generated file go to
- * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
+
 $module_name = '<module_name>';
 $_object_name = '<_object_name>';
-  $searchdefs[$module_name] = array(
-					'templateMeta' => array(
-							'maxColumns' => '3', 
-							'maxColumnsBasic' => '4', 
-                            'widths' => array('label' => '10', 'field' => '30'),                 
-                           ),
-                    'layout' => array(  					
-						'basic_search' => array(
-						 	'name', 
-							array('name'=>'current_user_only', 'label'=>'LBL_CURRENT_USER_FILTER', 'type'=>'bool'),
-							array ('name' => 'open_only', 'label' => 'LBL_OPEN_ITEMS', 'type' => 'bool', 'default' => false, 'width' => '10%'),
-							),
-						'advanced_search' => array(
-							$_object_name. '_number', 
-							'name', 
-							'resolution',
-							'status',
-							'priority',
-							array('name' => 'assigned_user_id', 'type' => 'enum', 'label' => 'LBL_ASSIGNED_TO', 'function' => array('name' => 'get_user_array', 'params' => array(false))),
-						),
-					),
- 			   );
-?>
+$searchdefs[$module_name] = array(
+    'templateMeta' => array(
+        'maxColumns' => '3',
+        'maxColumnsBasic' => '4',
+        'widths' => array('label' => '10', 'field' => '30'),
+    ),
+    'layout' => array(
+        'basic_search' => array(
+            'name',
+            array('name' => 'current_user_only', 'label' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
+            array(
+                'name' => 'open_only',
+                'label' => 'LBL_OPEN_ITEMS',
+                'type' => 'bool',
+                'default' => false,
+                'width' => '10%'
+            ),
+        ),
+        'advanced_search' => array(
+            $_object_name . '_number',
+            'name',
+            'resolution',
+            'status',
+            'priority',
+            array(
+                'name' => 'assigned_user_id',
+                'type' => 'enum',
+                'label' => 'LBL_ASSIGNED_TO',
+                'function' => array('name' => 'get_user_array', 'params' => array(false))
+            ),
+        ),
+    ),
+);

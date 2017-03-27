@@ -749,9 +749,10 @@ EOQ;
 	 * @param string $name Username
 	 * @param string $password MD5-encoded password
 	 * @param string $where Limiting query
+	 * @param bool $checkPasswordMD5 use md5 check for user_hash before return the user data (default is true)
 	 * @return the matching User of false if not found
 	 */
-	public static function findUserPassword($name, $password, $where = '')
+	public static function findUserPassword($name, $password, $where = '', $checkPasswordMD5 = true)
 	{
 	    global $db;
 		$name = $db->quote($name);
@@ -762,7 +763,7 @@ EOQ;
 		$result = $db->limitQuery($query,0,1,false);
 		if(!empty($result)) {
 		    $row = $db->fetchByAssoc($result);
-		    if(self::checkPasswordMD5($password, $row['user_hash'])) {
+		    if(!$checkPasswordMD5 || self::checkPasswordMD5($password, $row['user_hash'])) {
 		        return $row;
 		    }
 		}

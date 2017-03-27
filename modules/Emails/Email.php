@@ -1,11 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,112 +35,113 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/SugarPHPMailer.php');
-require_once 'include/upload_file.php';
+require_once 'include/UploadFile.php';
+require_once 'include/UploadMultipleFiles.php';
 
 class Email extends SugarBean {
-	/* SugarBean schema */
-	var $id;
-	var $date_entered;
-	var $date_modified;
-	var $assigned_user_id;
-	var $assigned_user_name;
-	var $modified_user_id;
-	var $created_by;
-	var $deleted;
-	var $from_addr;
-	var $reply_to_addr;
-	var $to_addrs;
-    var $cc_addrs;
-    var $bcc_addrs;
-	var $message_id;
+    /* SugarBean schema */
+    public $id;
+    public $date_entered;
+    public $date_modified;
+    public $assigned_user_id;
+    public $assigned_user_name;
+    public $modified_user_id;
+    public $created_by;
+    public $deleted;
+    public $from_addr;
+    public $reply_to_addr;
+    public $to_addrs;
+    public $cc_addrs;
+    public $bcc_addrs;
+    public $message_id;
 
-	/* Bean Attributes */
-	var $name;
-    var $type = 'archived';
-    var $date_sent;
-	var $status;
-	var $intent;
-	var $mailbox_id;
-	var $from_name;
+    /* Bean Attributes */
+    public $name;
+    public $type = 'archived';
+    public $date_sent;
+    public $status;
+    public $intent;
+    public $mailbox_id;
+    public $from_name;
 
-	var $reply_to_status;
-	var $reply_to_name;
-	var $reply_to_email;
-	var $description;
-	var $description_html;
-	var $raw_source;
-	var $parent_id;
-	var $parent_type;
+    public $reply_to_status;
+    public $reply_to_name;
+    public $reply_to_email;
+    public $description;
+    public $description_html;
+    public $raw_source;
+    public $parent_id;
+    public $parent_type;
 
-	/* link attributes */
-	var $parent_name;
+    /* link attributes */
+    public $parent_name;
 
+    /* legacy */
+    public $date_start; // legacy
+    public $time_start; // legacy
+    public $from_addr_name;
+    public $to_addrs_arr;
+    public $cc_addrs_arr;
+    public $bcc_addrs_arr;
+    public $to_addrs_ids;
+    public $to_addrs_names;
+    public $to_addrs_emails;
+    public $cc_addrs_ids;
+    public $cc_addrs_names;
+    public $cc_addrs_emails;
+    public $bcc_addrs_ids;
+    public $bcc_addrs_names;
+    public $bcc_addrs_emails;
+    public $contact_id;
+    public $contact_name;
 
-	/* legacy */
-	var $date_start; // legacy
-	var $time_start; // legacy
-	var $from_addr_name;
-	var $to_addrs_arr;
-    var $cc_addrs_arr;
-    var $bcc_addrs_arr;
-	var $to_addrs_ids;
-	var $to_addrs_names;
-	var $to_addrs_emails;
-	var $cc_addrs_ids;
-	var $cc_addrs_names;
-	var $cc_addrs_emails;
-	var $bcc_addrs_ids;
-	var $bcc_addrs_names;
-	var $bcc_addrs_emails;
-	var $contact_id;
-	var $contact_name;
+    /* Archive Email attrs */
+    public $duration_hours;
 
-	/* Archive Email attrs */
-	var $duration_hours;
+    public $new_schema = true;
+    public $table_name = 'emails';
+    public $module_dir = 'Emails';
+    public $module_name = 'Emails';
+    public $object_name = 'Email';
+    public $db;
 
+    /* private attributes */
+    public $rolloverStyle = "<style>div#rollover {position: relative;float: left;margin: none;text-decoration: none;}div#rollover a:hover {padding: 0;text-decoration: none;}div#rollover a span {display: none;}div#rollover a:hover span {text-decoration: none;display: block;width: 250px;margin-top: 5px;margin-left: 5px;position: absolute;padding: 10px;color: #333;	border: 1px solid #ccc;	background-color: #fff;	font-size: 12px;z-index: 1000;}</style>\n";
+    public $cachePath;
+    public $cacheFile = 'robin.cache.php';
+    public $replyDelimiter = "> ";
+    public $emailDescription;
+    public $emailDescriptionHTML;
+    public $emailRawSource;
+    public $link_action;
+    public $emailAddress;
+    public $attachments = array();
 
+    /* to support Email 2.0 */
+    public $isDuplicate;
+    public $uid;
+    public $to;
+    public $flagged;
+    public $answered;
+    public $seen;
+    public $draft;
+    public $relationshipMap = array(
+        'Contacts'  => 'emails_contacts_rel',
+        'Accounts'  => 'emails_accounts_rel',
+        'Leads'     => 'emails_leads_rel',
+        'Users'     => 'emails_users_rel',
+        'Prospects' => 'emails_prospects_rel',
+    );
 
-	var $new_schema = true;
-	var $table_name = 'emails';
-	var $module_dir = 'Emails';
-    var $module_name = 'Emails';
-	var $object_name = 'Email';
-	var $db;
-
-	/* private attributes */
-	var $rolloverStyle		= "<style>div#rollover {position: relative;float: left;margin: none;text-decoration: none;}div#rollover a:hover {padding: 0;text-decoration: none;}div#rollover a span {display: none;}div#rollover a:hover span {text-decoration: none;display: block;width: 250px;margin-top: 5px;margin-left: 5px;position: absolute;padding: 10px;color: #333;	border: 1px solid #ccc;	background-color: #fff;	font-size: 12px;z-index: 1000;}</style>\n";
-	var $cachePath;
-	var $cacheFile			= 'robin.cache.php';
-	var $replyDelimiter	= "> ";
-	var $emailDescription;
-	var $emailDescriptionHTML;
-	var $emailRawSource;
-	var $link_action;
-	var $emailAddress;
-	var $attachments = array();
-
-	/* to support Email 2.0 */
-	var $isDuplicate;
-	var $uid;
-	var $to;
-	var $flagged;
-	var $answered;
-	var $seen;
-	var $draft;
-	var $relationshipMap = array(
-		'Contacts'	=> 'emails_contacts_rel',
-		'Accounts'	=> 'emails_accounts_rel',
-		'Leads'		=> 'emails_leads_rel',
-		'Users'		=> 'emails_users_rel',
-		'Prospects'	=> 'emails_prospects_rel',
-	);
-
-	/* public */
-	var $et;		// EmailUI object
+    /* public */
+    public $et;        // EmailUI object
 	// prefix to use when importing inlinge images in emails
 	public $imagePrefix;
 
@@ -153,6 +153,10 @@ class Email extends SugarBean {
     public $modifiedFieldDefs = array();
 
     public $attachment_image;
+    /**
+     * @var Link2
+     */
+    public $cases;
 
 	/**
 	 * sole constructor
@@ -1887,6 +1891,201 @@ class Email extends SugarBean {
 	}
 
 
+    /**
+     * Handles file attachments with multiple files
+     */
+    public function handleMultipleFileAttachments() {
+        global $mod_strings;
+
+        ///////////////////////////////////////////////////////////////////////////
+        ////    ATTACHMENTS FROM DRAFTS
+        if(($this->type == 'out' || $this->type == 'draft') && $this->status == 'draft' && isset($_REQUEST['record'])) {
+            $this->getNotes($_REQUEST['record']); // cn: get notes from OLD email for use in new email
+        }
+        ////    END ATTACHMENTS FROM DRAFTS
+        ///////////////////////////////////////////////////////////////////////////
+
+        ///////////////////////////////////////////////////////////////////////////
+        ////    ATTACHMENTS FROM FORWARDS
+        // Bug 8034 Jenny - Need the check for type 'draft' here to handle cases where we want to save
+        // forwarded messages as drafts.  We still need to save the original message's attachments.
+        if(($this->type == 'out' || $this->type == 'draft') &&
+            isset($_REQUEST['origType']) && $_REQUEST['origType'] == 'forward' &&
+            isset($_REQUEST['return_id']) && !empty($_REQUEST['return_id'])
+        ) {
+            $this->getNotes($_REQUEST['return_id'], true);
+        }
+
+        // cn: bug 8034 - attachments from forward/replies lost when saving in draft
+        if(isset($_REQUEST['prior_attachments']) && !empty($_REQUEST['prior_attachments']) && $this->new_with_id == true) {
+            $exIds = explode(",", $_REQUEST['prior_attachments']);
+            if(!isset($_REQUEST['template_attachment'])) {
+                $_REQUEST['template_attachment'] = array();
+            }
+            $_REQUEST['template_attachment'] = array_merge($_REQUEST['template_attachment'], $exIds);
+        }
+        ////    END ATTACHMENTS FROM FORWARDS
+        ///////////////////////////////////////////////////////////////////////////
+
+        ///////////////////////////////////////////////////////////////////////////
+        ////	ATTACHMENTS FROM TEMPLATES
+        // to preserve individual email integrity, we must dupe Notes and associated files
+        // for each outbound email - good for integrity, bad for filespace
+        if(isset($_REQUEST['template_attachment']) && !empty($_REQUEST['template_attachment'])) {
+            $removeArr = array();
+            $noteArray = array();
+
+            if(isset($_REQUEST['temp_remove_attachment']) && !empty($_REQUEST['temp_remove_attachment'])) {
+                $removeArr = $_REQUEST['temp_remove_attachment'];
+            }
+
+            foreach($_REQUEST['template_attachment'] as $noteId) {
+                if(in_array($noteId, $removeArr)) {
+                    continue;
+                }
+                $noteTemplate = new Note();
+                $noteTemplate->retrieve($noteId);
+                $noteTemplate->id = create_guid();
+                $noteTemplate->new_with_id = true; // duplicating the note with files
+                $noteTemplate->parent_id = $this->id;
+                $noteTemplate->parent_type = $this->module_dir;
+                $noteTemplate->date_entered = '';
+                $noteTemplate->save();
+
+                $noteFile = new UploadFile();
+                $noteFile->duplicate_file($noteId, $noteTemplate->id, $noteTemplate->filename);
+                $noteArray[] = $noteTemplate;
+            }
+            $this->attachments = array_merge($this->attachments, $noteArray);
+        }
+        ////	END ATTACHMENTS FROM TEMPLATES
+        ///////////////////////////////////////////////////////////////////////////
+
+        ///////////////////////////////////////////////////////////////////////////
+        ////	ADDING NEW ATTACHMENTS
+        $max_files_upload = 10;
+        // Jenny - Bug 8211 Since attachments for drafts have already been processed,
+        // we don't need to re-process them.
+        if($this->status != "draft") {
+            $notes_list = array();
+            if(!empty($this->id) && !$this->new_with_id) {
+                $note = new Note();
+                $where = "notes.parent_id='{$this->id}'";
+                $notes_list = $note->get_full_list("", $where, true);
+            }
+            $this->attachments = array_merge($this->attachments, $notes_list);
+        }
+        // cn: Bug 5995 - rudimentary error checking
+        $filesError = array(
+            0 => 'UPLOAD_ERR_OK - There is no error, the file uploaded with success.',
+            1 => 'UPLOAD_ERR_INI_SIZE - The uploaded file exceeds the upload_max_filesize directive in php.ini.',
+            2 => 'UPLOAD_ERR_FORM_SIZE - The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
+            3 => 'UPLOAD_ERR_PARTIAL - The uploaded file was only partially uploaded.',
+            4 => 'UPLOAD_ERR_NO_FILE - No file was uploaded.',
+            5 => 'UNKNOWN ERROR',
+            6 => 'UPLOAD_ERR_NO_TMP_DIR - Missing a temporary folder. Introduced in PHP 4.3.10 and PHP 5.0.3.',
+            7 => 'UPLOAD_ERR_CANT_WRITE - Failed to write file to disk. Introduced in PHP 5.1.0.',
+        );
+
+        for($i = 0; $i < $max_files_upload; $i++) {
+            // cn: Bug 5995 - rudimentary error checking
+            if (!isset($_FILES["email_attachment"]['name'][$i])) {
+                $GLOBALS['log']->debug("Email Attachment {$i} does not exist.");
+                continue;
+            }
+            if($_FILES['email_attachment']['error'][$i] != 0 && $_FILES['email_attachment']['error'][$i] != 4) {
+                $GLOBALS['log']->debug('Email Attachment could not be attach due to error: '.$filesError[$_FILES['email_attachment']['error'][$i]]);
+                continue;
+            }
+
+            $note = new Note();
+            $note->parent_id = $this->id;
+            $note->parent_type = $this->module_dir;
+            $upload_file = new UploadMultipleFiles('email_attachment', $i);
+
+            if(empty($upload_file)) {
+                continue;
+            }
+
+            if(isset($_FILES['email_attachment']['name'][$i]) && $upload_file->confirm_upload()) {
+                $note->filename = $upload_file->get_stored_file_name();
+                $note->file = $upload_file;
+                $note->name = $mod_strings['LBL_EMAIL_ATTACHMENT'].': '.$note->file->original_file_name;
+
+                $this->attachments[] = $note;
+            }
+        }
+
+        $this->saved_attachments = array();
+        foreach($this->attachments as $note) {
+            if(!empty($note->id)) {
+                array_push($this->saved_attachments, $note);
+                continue;
+            }
+            $note->parent_id = $this->id;
+            $note->parent_type = 'Emails';
+            $note->file_mime_type = $note->file->mime_type;
+            $note_id = $note->save();
+
+            $this->saved_attachments[] = $note;
+
+            $note->id = $note_id;
+            $note->file->final_move($note->id);
+        }
+        ////	END NEW ATTACHMENTS
+        ///////////////////////////////////////////////////////////////////////////
+
+        ///////////////////////////////////////////////////////////////////////////
+        ////	ATTACHMENTS FROM DOCUMENTS
+        for($i=0; $i< $max_files_upload; $i++) {
+            if(isset($_REQUEST['documentId'.$i]) && !empty($_REQUEST['documentId'.$i])) {
+                $doc = new Document();
+                $docRev = new DocumentRevision();
+                $docNote = new Note();
+                $noteFile = new UploadFile();
+
+                $doc->retrieve($_REQUEST['documentId'.$i]);
+                $docRev->retrieve($doc->document_revision_id);
+
+                $this->saved_attachments[] = $docRev;
+
+                // cn: bug 9723 - Emails with documents send GUID instead of Doc name
+                $docNote->name = $docRev->getDocumentRevisionNameForDisplay();
+                $docNote->filename = $docRev->filename;
+                $docNote->description = $doc->description;
+                $docNote->parent_id = $this->id;
+                $docNote->parent_type = 'Emails';
+                $docNote->file_mime_type = $docRev->file_mime_type;
+                $docId = $docNote = $docNote->save();
+
+                $noteFile->duplicate_file($docRev->id, $docId, $docRev->filename);
+            }
+        }
+
+        ////	END ATTACHMENTS FROM DOCUMENTS
+        ///////////////////////////////////////////////////////////////////////////
+
+        ///////////////////////////////////////////////////////////////////////////
+        ////	REMOVE ATTACHMENTS
+        if(isset($_REQUEST['remove_attachment']) && !empty($_REQUEST['remove_attachment'])) {
+            foreach($_REQUEST['remove_attachment'] as $noteId) {
+                $q = 'UPDATE notes SET deleted = 1 WHERE id = \''.$noteId.'\'';
+                $this->db->query($q);
+            }
+        }
+
+        //this will remove attachments that have been selected to be removed from drafts.
+        if(isset($_REQUEST['removeAttachment']) && !empty($_REQUEST['removeAttachment'])) {
+            $exRemoved = explode('::', $_REQUEST['removeAttachment']);
+            foreach($exRemoved as $noteId) {
+                $q = 'UPDATE notes SET deleted = 1 WHERE id = \''.$noteId.'\'';
+                $this->db->query($q);
+            }
+        }
+        ////	END REMOVE ATTACHMENTS
+        ///////////////////////////////////////////////////////////////////////////
+    }
+
 	/**
 	 * Determines if an email body (HTML or Plain) has a User signature already in the content
 	 * @param array Array of signatures
@@ -2141,7 +2340,7 @@ class Email extends SugarBean {
 			$mime_type = 'text/plain';
 			if($note->object_name == 'Note') {
 				if(!empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) { // brandy-new file upload/attachment
-					$file_location = "upload://$note->id";
+					$file_location = "file://".$note->file->temp_file_location;
 					$filename = $note->file->original_file_name;
 					$mime_type = $note->file->mime_type;
 				} else { // attachment coming from template/forward
@@ -2489,6 +2688,9 @@ class Email extends SugarBean {
 		$email_fields = $this->get_list_view_array();
 		$this->retrieveEmailText();
 		$email_fields['FROM_ADDR'] = $this->from_addr_name;
+		$email_fields['FROM_ADDR_NAME'] = $this->from_addr_name;
+		$email_fields['TO_ADDRS'] = $this->to_addrs;
+		$email_fields['TO_ADDRS_NAMES'] = $this->to_addrs_names;
 		$mod_strings = return_module_language($GLOBALS['current_language'], 'Emails'); // hard-coding for Home screen ListView
 
 		if($this->status != 'replied') {
@@ -2534,7 +2736,6 @@ class Email extends SugarBean {
 					$email_fields['CREATE_RELATED'] = $this->quickCreateForm();
 				break;
 			}
-
 		}
 
 		//BUG 17098 - MFH changed $this->from_addr to $this->to_addrs

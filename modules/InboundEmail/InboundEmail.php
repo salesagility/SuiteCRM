@@ -5559,7 +5559,6 @@ eoq;
 	 * @param string String of uids, comma delimited
 	 */
 	function deleteMessageFromCache($uids) {
-		global $sugar_config;
 		global $app_strings;
 
 		// delete message cache file and email_cache file
@@ -5571,7 +5570,7 @@ eoq;
 			if ($this->isPop3Protocol()) {
 				$q = "DELETE FROM email_cache WHERE message_id = '{$queryUID}' AND ie_id = '{$this->id}'";
 			} else {
-				$q = "DELETE FROM email_cache WHERE imap_uid = {$queryUID} AND ie_id = '{$this->id}'";
+				$q = "DELETE FROM email_cache WHERE imap_uid = '{$queryUID}' AND ie_id = '{$this->id}'";
 			}
 			$r = $this->db->query($q);
 			if ($this->isPop3Protocol()) {
@@ -5920,7 +5919,7 @@ eoq;
 		$direction = 'desc';
 		$sortSerial = $current_user->getPreference('folderSortOrder', 'Emails');
 		if(!empty($sortSerial) && !empty($_REQUEST['ieId']) && !empty($_REQUEST['mbox'])) {
-			$sortArray = unserialize($sortSerial);
+			$sortArray = sugar_unserialize($sortSerial);
 			$sort = $sortArray[$_REQUEST['ieId']][$_REQUEST['mbox']]['current']['sort'];
 			$direction = $sortArray[$_REQUEST['ieId']][$_REQUEST['mbox']]['current']['direction'];
 		}

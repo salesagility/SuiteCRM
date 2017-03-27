@@ -77,7 +77,7 @@
 	</td>
 </tr>
 </table>
-<table><tr><td valign='top' nowrap class="edit view" style="width: auto;">
+<table><tr><td valign='top' nowrap class="edit view" >
 <table  cellpadding="0" cellspacing="0" width="100%"   id='s_field_delete'>
 							<tr><td ><ul id='trash' class='listContainer'>
 <li class='nobullet' id='trashcan'><table>

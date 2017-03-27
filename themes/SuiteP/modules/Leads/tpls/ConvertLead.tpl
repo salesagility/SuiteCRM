@@ -115,7 +115,7 @@
                         group: 'or',
                         field_list: ['name', 'id'],
                         populate_list: ['{$selectFields.{{$module}}}', '{$contact_def[$selectFields.{{$module}}].id_name}'],
-                        conditions: [{ldelim}'name': 'name', 'op': 'like', 'end': '%', 'value': ''{rdelim}],
+                        conditions: [{ldelim}'name': 'name', 'op': 'like_custom', 'end': '%', 'value': ''{rdelim}],
                         required_list: ['{$contact_def[$selectFields.{{$module}}].id_name}'],
                         order: 'name',
                         limit: '10'

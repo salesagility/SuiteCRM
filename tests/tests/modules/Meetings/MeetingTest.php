@@ -318,7 +318,7 @@ class MeetingTest extends PHPUnit_Framework_TestCase
 
         //execute the method and test if it works and does not throws an exception.
         try {
-            $meeting->save_relationship_changes();
+            $meeting->save_relationship_changes(false);
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail();

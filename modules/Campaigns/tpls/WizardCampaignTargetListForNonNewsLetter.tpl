@@ -127,7 +127,7 @@
 	<div class="template-panel-container panel">
 		<div class="template-container-full">
 			<div class="row">
-				<div class="col-xs-12"><h4>{$MOD.LBL_TARGET_LISTS}</h4></div>
+				<div class="col-xs-12"><h4 class="header-4">{$MOD.LBL_TARGET_LISTS}</h4></div>
 			</div>
 			<div class="row">
 				<div class="col-xs-12"><label>{$MOD.LBL_STEP_INFO_TARGET_LIST_NON_NEWSLETTER}</label></div>

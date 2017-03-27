@@ -89,6 +89,8 @@
                 'include/javascript/jquery/jquery.sugarMenu.js'              => 'include/javascript/sugar_grp1_jquery.js',
                 'include/javascript/jquery/jquery.highLight.js'              => 'include/javascript/sugar_grp1_jquery.js',
                 'include/javascript/jquery/jquery.showLoading.js'              => 'include/javascript/sugar_grp1_jquery.js',
+                'include/javascript/jquery/jquery.ui.touch-punch.min.js'              => 'include/javascript/sugar_grp1_jquery.js',
+                'jssource/src_files/include/javascript/message-box.js'              => 'include/javascript/sugar_grp1_jquery.js',
 
             
 			),

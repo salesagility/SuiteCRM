@@ -97,7 +97,7 @@ $mod_strings = array (
 
 
 //SELECT MODULE WIZARD
-'LBL_SMW_WELCOME'=>'<h2>Welcome to Studio!</h2><br><b>Please select a module from below.',
+'LBL_SMW_WELCOME'=>'<h2>Welcome to Studio!</h2><br><b>Please select a module from below.</b>',
 
 //SELECT MODULE ACTION
 'LBL_SMA_WELCOME'=>'<h2>Edit a Module</h2>What do you want to do with that module?<br><b>Please select what action you would like to take.',
