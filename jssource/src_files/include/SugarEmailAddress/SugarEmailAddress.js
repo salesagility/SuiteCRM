@@ -315,48 +315,6 @@
         removeButton.prop('disabled', true);
       }
 
-      // Reply to checkbox
-      // var replyToCheckbox = lineContainer.find('input#email-address-reply-to-flag');
-      // if (replyToCheckbox.length == 1) {
-        // replyToCheckbox.attr('name', this.module + _eaw.id + 'emailAddressReplyToFlag');
-        // replyToCheckbox.attr('id', this.module + _eaw.id + 'emailAddressReplyToFlag' + _eaw.totalEmailAddresses);
-        // replyToCheckbox.attr('value', this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
-        // replyToCheckbox.attr('tabindex', tabIndexCount);
-        // replyToCheckbox.attr('enabled', "true");
-        // replyToCheckbox.eaw = _eaw;
-        // replyToCheckbox.prop("checked", (replyToFlag == '1'));
-        // _eaw.replyToFlagObject[replyToCheckbox.attr('id')] = (replyToFlag == '1');
-        //replyToCheckbox.click(function () {
-        //  var form = document.forms[_eaw.emailView];
-        //  if (!form) {
-        //    form = document.forms['editContactForm'];
-        //  }
-        //  var nav = new String(navigator.appVersion);
-        //
-        //  if (nav.match(/MSIE/gim)) {
-        //    for (i = 0; i < form.elements.length; i++) {
-        //      var id = new String(form.elements[i].id);
-        //      if (id.match(/emailAddressReplyToFlag/gim) && form.elements[i].type == 'radio' && id != _eaw.id) {
-        //        form.elements[i].checked = false;
-        //      }
-        //    }
-        //  }
-        //  for (i = 0; i < form.elements.length; i++) {
-        //    var id = new String(form.elements[i].id);
-        //    if (id.match(/emailAddressReplyToFlag/gim) && form.elements[i].type == 'radio' && id != _eaw.id) {
-        //      _eaw.replyToFlagObject[_eaw.id] = false;
-        //    }
-        //  } // for
-        //  if (_eaw.replyToFlagObject[this.id]) {
-        //    _eaw.replyToFlagObject[this.id] = false;
-        //    this.checked = false;
-        //  } else {
-        //    _eaw.replyToFlagObject[this.id] = true;
-        //    this.checked = true;
-        //  } // else
-        //});
-      // }
-
 
       // Opt Out checkbox
       var optOutCheckbox = lineContainer.find('input#email-address-opt-out-flag');
