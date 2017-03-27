@@ -513,9 +513,11 @@ $(function () {
       }
 
       // show the active only
-      var activeTab = $(tabActiveSelector).first().attr('id');
-      for (i = 0; i < tabFrames[activeTab].length; i++) {
-        $(tabFrames[activeTab][i]).show();
+      if($(tabActiveSelector).length) {
+        var activeTab = $(tabActiveSelector).first().attr('id');
+        for (i = 0; i < tabFrames[activeTab].length; i++) {
+          $(tabFrames[activeTab][i]).show();
+        }
       }
     }
 

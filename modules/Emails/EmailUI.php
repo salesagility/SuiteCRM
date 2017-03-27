@@ -149,7 +149,7 @@ class EmailUI
         require_once('include/QuickSearchDefaults.php');
         $qsd = QuickSearchDefaults::getQuickSearchDefaults();
         $qsd->setFormName('advancedSearchForm');
-        $quicksearchAssignedUser = "if(typeof sqs_objects == 'undefined'){public sqs_objects = new Array;}";
+        $quicksearchAssignedUser = "if(typeof sqs_objects == 'undefined'){var sqs_objects = new Array;}";
         $quicksearchAssignedUser .= "sqs_objects['advancedSearchForm_assigned_user_name']=" . json_encode($qsd->getQSUser()) . ";";
         $qsd->setFormName('Distribute');
         $quicksearchAssignedUser .= "sqs_objects['Distribute_assigned_user_name']=" . json_encode($qsd->getQSUser()) . ";";
@@ -297,7 +297,7 @@ class EmailUI
 		$out .=<<<eoq
 			<script type="text/javascript" language="javascript">
 
-				public loader = new YAHOO.util.YUILoader({
+				var loader = new YAHOO.util.YUILoader({
 				    require : [
 				    	"layout", "element", "tabview", "menu",
 				    	"cookie", "sugarwidgets"
@@ -477,7 +477,7 @@ eoq;
 		$lang .= "\n\n{$modStrings}\n";
 
         //Grab the Inboundemail language pack
-        $ieModStrings = "public ie_mod_strings = new Object();\n";
+        $ieModStrings = "var ie_mod_strings = new Object();\n";
         $ie_mod_strings = return_module_language($current_language, 'InboundEmail');
         foreach ($ie_mod_strings as $k => $v) {
             $v = str_replace("'", "\'", $v);
@@ -1553,8 +1553,8 @@ eoq;
         ///////////////////////////////////////////////////////////////////////////////
         ////	JAVASCRIPT publicS
         $jspublics = '';
-        $jspublics .= "public showRaw = '{$mod_strings['LBL_BUTTON_RAW_LABEL']}';";
-        $jspublics .= "public hideRaw = '{$mod_strings['LBL_BUTTON_RAW_LABEL_HIDE']}';";
+        $jspublics .= "var showRaw = '{$mod_strings['LBL_BUTTON_RAW_LABEL']}';";
+        $jspublics .= "var hideRaw = '{$mod_strings['LBL_BUTTON_RAW_LABEL_HIDE']}';";
         $smarty->assign("JS_publicS", $jspublics);
         ///////////////////////////////////////////////////////////////////////////////
         ////	NOTES (attachements, etc.)
