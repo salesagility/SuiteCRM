@@ -255,6 +255,8 @@ class EmailsController extends SugarController
             }
         }
 
+        $this->bean->save();
+
         $this->bean->handleMultipleFileAttachments();
 
         if($this->bean->send()) {
