@@ -352,7 +352,7 @@ $mod_strings = array (
     'LBL_TEST_SETTINGS'     => 'Test Settings',
     'LBL_EMPTY_EMAIL_BODY'  => '<p><span style="color: #888888;"><em>This Message Has No Content</em></span></p>',
     'LBL_HAS_EMPTY_EMAIL_SUBJECT' => 'Please specify the subject',
-    'LBL_HAS_EMPTY_EMAIL_BODY' => 'Please specify the your message in the body',
+    'LBL_HAS_EMPTY_EMAIL_BODY' => 'Please specify your message in the body',
     'LBL_HAS_INVALID_EMAIL_CC' => 'The address(es) in the Cc field are invalid',
     'LBL_HAS_INVALID_EMAIL_BCC' => 'The address(es) in the Bcc field are invalid',
     'LBL_HAS_INVALID_EMAIL_TO' => 'The address(es) in the To field are invalid',
