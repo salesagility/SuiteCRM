@@ -44,17 +44,9 @@
 			{include file="modules/Users/UserEmailSettingsAccountDetails.tpl"}
 		</td>
 	</tr>
-    	<tr>
-                                	<td align="right">
-                                	   <input type="button" class="button" style="margin-left:5px;" value="   {$app_strings.LBL_EMAIL_DONE_BUTTON_LABEL}   " onclick="javascript:SUGAR.email2.settings.saveOptionsGeneral({if $disableDisplayMessage}{else}true{/if});">
-                                    </td>
-                            	</tr>
-	
-
 </table>
 
 
-<form name="formEmailSettingsGeneral" id="formEmailSettingsGeneral">
 	<table cellpadding="4" cellspacing="0" border="0" width="100%" class="view">
 		<tr>
 			<th colspan="4" align="left" colspan="4" scope="row">
@@ -128,7 +120,5 @@
 		</tr>
 	</table>
 	{include file="modules/Emails/templates/emailSettingsFolders.tpl"}
-
-</form>
 
 
