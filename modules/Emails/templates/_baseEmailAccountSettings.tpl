@@ -79,7 +79,7 @@
     </form>
     <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 {*
-    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <table cellpadding="0" cellspacing="0" border="0" >
         <tr>
             <td NOWRAP style="padding-bottom: 2px;">
                 <button class="button" id="checkEmailButton" onclick="SUGAR.email2.folders.startEmailAccountCheck();"><img src="themes/default/images/icon_email_check.gif" alt=$mod_strings.LBL_CHECKEMAIL align="absmiddle" border="0"> {$app_strings.LBL_EMAIL_CHECK}</button>

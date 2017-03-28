@@ -60,7 +60,7 @@ class EmailUI
     public $folderStates = array(); // array of folderPath names and their states (1/0)
     public $smarty;
     public $addressSeparators = array(";", ",");
-    public $rolloverStyle = "<style>div#rollover {position: relative;float: left;margin: none;text-decoration: none;}div#rollover a:hover {padding: 0;}div#rollover a span {display: none;}div#rollover a:hover span {text-decoration: none;display: block;width: 250px;margin-top: 5px;margin-left: 5px;position: absolute;padding: 10px;color: #333;	border: 1px solid #ccc;	background-color: #fff;	font-size: 12px;z-index: 1000;}</style>\n";
+    public $rolloverStyle = "";
     public $groupCss = "<span class='groupInbox'>";
     public $cacheTimeouts = array(
         'messages' => 86400,    // 24 hours
@@ -1545,8 +1545,8 @@ eoq;
         if (!empty($focus->reply_to_email)) {
             $replyTo = "
 				<tr>
-		        <td class=\"tabDetailViewDL\"><slot>" . $mod_strings['LBL_REPLY_TO_NAME'] . "</slot></td>
-		        <td colspan=3 class=\"tabDetailViewDF\"><slot>" . $focus->reply_to_addr . "</slot></td>
+		        <td class=\"tabDetailViewDL\"><span>" . $mod_strings['LBL_REPLY_TO_NAME'] . "</span></td>
+		        <td colspan=3 class=\"tabDetailViewDF\"><span>" . $focus->reply_to_addr . "</span></td>
 		        </tr>";
             $smarty->assign("REPLY_TO", $replyTo);
         }

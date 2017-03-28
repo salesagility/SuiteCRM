@@ -38,7 +38,7 @@
  ********************************************************************************/
 
 *}
-<table cellpadding="4" cellspacing="0" border="0" width="100%" class="view">
+<table cellpadding="4" cellspacing="0" border="0"  class="view">
 	<tr>
 		<th colspan="4">
 			<h4>{$app_strings.LBL_EMAIL_FOLDERS_TITLE}</h4>

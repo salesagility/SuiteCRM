@@ -54,10 +54,10 @@
 				    <td style="vertical-align:bottom;"><a href="javascript:void(0);" id="prefill_gmail_defaults_link" onclick="javascript:SUGAR.email2.accounts.fillInboundGmailDefaults();">{$app_strings.LBL_EMAIL_ACCOUNTS_GMAIL_DEFAULTS}</a>&nbsp;</td>
 				</tr>
 			    <tr>
-					<td valign="top" scope="row" width="15%" NOWRAP>
+					<td valign="top" scope="row"  NOWRAP>
 						{$app_strings.LBL_EMAIL_SETTINGS_NAME}: <span class="required">{$app_strings.LBL_REQUIRED_SYMBOL}</span>
 					</td>
-					<td valign="top"  width="35%">
+					<td valign="top"  >
 						<input id='ie_name' name='ie_name' type="text" size="30">
 					</td>
 				</tr>
@@ -103,7 +103,7 @@
                             <a href="#" class="rollover">{sugar_getimage alt=$mod_strings.LBL_HELP name="helpInline" ext=".gif" other_attributes='border="0" '}<span>{$ie_mod_strings.LBL_SSL_DESC}</span></a>
                         </div>
 					</td>
-					<td valign="top"  width="15%">
+					<td valign="top"  >
 					   <div class="maybe">
 						   <input name='ssl' id='ssl' {$CERT} value='1' type='checkbox' {$SSL} onClick="SUGAR.email2.accounts.setPortDefault();">
 					   </div>
@@ -156,7 +156,7 @@
 		        </tr>
 		        <tr><td>&nbsp;</td></tr>
 			</table>
-			<table border="0" cellspacing="0" cellpadding="0" class="edit view" width="100%">
+			<table border="0" cellspacing="0" cellpadding="0" class="edit view" >
 			<tr>
 					<td colspan="2">
 					<h4>{$mod_strings.LBL_EMAIL_SETTINGS_OUTBOUND}</h4>

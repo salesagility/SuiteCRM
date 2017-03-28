@@ -507,6 +507,9 @@ $(function () {
     var tabsRefresh = function () {
       // hide all tabs..
       for (var i = 1; i <= tabFramesLength; i++) {
+        if(typeof tabFrames === "undefined") {
+          return false;
+        }
         for (var j = 0; j < tabFrames['tab' + i].length; j++) {
           $(tabFrames['tab' + i][j]).hide();
         }
@@ -555,7 +558,7 @@ $(function () {
             $(e).html('&nbsp;');
           }
         });
-        if ($(e).html().trim() == '<slot>&nbsp;</slot>') {
+        if ($(e).html().trim() == '<span>&nbsp;</span>') {
           $(e).addClass('hidden');
           $(e).addClass('hiddenOnTablet');
         }

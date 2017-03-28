@@ -11486,12 +11486,6 @@ td.inlineEditActive {
 
   .edit-view-pagination .glyphicon-chevron-right {
     margin-left: 0px; } }
-@media (max-width: 992px) {
-  #settingsDialog_c {
-    left: 1%; } }
-@media (min-width: 993px) {
-  #settingsDialog_c {
-    left: 22.5%; } }
 /* stop child elements of a hidden dialog from showing up above other elements */
 .yui-overlay-hidden * {
   display: none;
@@ -13332,6 +13326,36 @@ span.error:empty {
 #edittabs #groupTable .tdContainer h2 > span:nth-of-type(2) {
   display: inline-block;
   width: 10%; }
+
+div#rollover {
+  float: left;
+  margin: 0;
+  position: relative;
+  text-decoration: none; }
+
+div#rollover a:hover {
+  padding: 0;
+  text-decoration: none; }
+
+div#rollover a span {
+  display: none; }
+
+div#rollover a:hover span {
+  background-color: #fff;
+  display: block;
+  color: #333;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-top: 5px;
+  padding: 10px;
+  position: absolute;
+  border: 1px solid #ccc;
+  text-decoration: none;
+  width: 250px;
+  z-index: 1000; }
+
+.email table [class*=col-] {
+  display: table-cell; }
 
 /**** Campaigns ***/
 div.wizard-unique-elem td {

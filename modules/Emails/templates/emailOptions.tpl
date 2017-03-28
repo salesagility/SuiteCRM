@@ -39,62 +39,62 @@
 
 *}
 <div id="email_options">
-    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
-        <tr>
-            <th align="left" scope="row" colspan="4">
+    <div  border="0" cellspacing="1" cellpadding="0" class="edit view">
+        <div>
+            <div align="left" scope="row" colspan="4">
                 <h4>{$MOD.LBL_MAIL_OPTIONS_TITLE}</h4>
-            </th>
-        </tr>
-        <tr>
-            <td scope="row" width="17%">
+            </div>
+        </div>
+        <div>
+            <div scope="row" >
                 {$MOD.LBL_EMAIL}:  {if $REQUIRED_EMAIL_ADDRESS}<span class="required" id="mandatory_email">{$APP.LBL_REQUIRED_SYMBOL}</span> {/if}
-            </td>
-            <td width="83%">
+            </div>
+            <div >
                 {$NEW_EMAIL}
-            </td>
-        </tr>
-        <tr id="email_options_link_type" style='display:{$HIDE_FOR_GROUP_AND_PORTAL}'>
-            <td scope="row" width="17%">
+            </div>
+        </div>
+        <div id="email_options_link_type" style='display:{$HIDE_FOR_GROUP_AND_PORTAL}'>
+            <div scope="row" >
                 {$MOD.LBL_EMAIL_LINK_TYPE}:&nbsp;{sugar_help text=$MOD.LBL_EMAIL_LINK_TYPE_HELP WIDTH=450}
-            </td>
-            <td>
+            </div>
+            <div>
                 <select id="email_link_type" name="email_link_type" tabindex='410'>
                     {$EMAIL_LINK_TYPE}
                 </select>
-            </td>
-        </tr>
+            </div>
+        </div>
         {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
-            <tr id="mail_smtpserver_tr">
-                <td width="20%" scope="row"><span id="mail_smtpserver_label">{$MOD.LBL_EMAIL_PROVIDER}</span></td>
-                <td width="30%" ><slot>{$mail_smtpdisplay}<input id='mail_smtpserver' name='mail_smtpserver' type="hidden" value='{$mail_smtpserver}' /></slot></td>
-                <td>&nbsp;</td>
-                <td >&nbsp;</td>
-            </tr>
+            <div id="mail_smtpserver_tr">
+                <div  scope="row"><span id="mail_smtpserver_label">{$MOD.LBL_EMAIL_PROVIDER}</span></div>
+                <div  >{$mail_smtpdisplay}<input id='mail_smtpserver' name='mail_smtpserver' type="hidden" value='{$mail_smtpserver}' /></div>
+                <div>&nbsp;</div>
+                <div >&nbsp;</div>
+            </div>
             {if !empty($mail_smtpauth_req) }
 
-                <tr id="mail_smtpuser_tr">
-                    <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtpuser_label">{$MOD.LBL_MAIL_SMTPUSER}</span></td>
-                    <td width="30%" ><slot><input type="text" id="mail_smtpuser" name="mail_smtpuser" size="25" maxlength="64" value="{$mail_smtpuser}" tabindex='1' ></slot></td>
-                    <td>&nbsp;</td>
-                    <td >&nbsp;</td>
-                </tr>
-                <tr id="mail_smtppass_tr">
-                    <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtppass_label">{$MOD.LBL_MAIL_SMTPPASS}</span></td>
-                    <td width="30%" ><slot>
+                <div id="mail_smtpuser_tr">
+                    <div  scope="row" nowrap="nowrap"><span id="mail_smtpuser_label">{$MOD.LBL_MAIL_SMTPUSER}</span></div>
+                    <div  ><input type="text" id="mail_smtpuser" name="mail_smtpuser" size="25" maxlength="64" value="{$mail_smtpuser}" tabindex='1' ></div>
+                    <div>&nbsp;</div>
+                    <div >&nbsp;</div>
+                </div>
+                <div id="mail_smtppass_tr">
+                    <div  scope="row" nowrap="nowrap"><span id="mail_smtppass_label">{$MOD.LBL_MAIL_SMTPPASS}</span></div>
+                    <div  >
                             <input type="password" id="mail_smtppass" name="mail_smtppass" size="25" maxlength="64" value="{$mail_smtppass}" tabindex='1'>
                             <a href="javascript:void(0)" id='mail_smtppass_link' onClick="SUGAR.util.setEmailPasswordEdit('mail_smtppass')" style="display: none">{$APP.LBL_CHANGE_PASSWORD}</a>
-                        </slot></td>
-                    <td>&nbsp;</td>
-                    <td >&nbsp;</td>
-                </tr>
+                        </div>
+                    <div>&nbsp;</div>
+                    <div >&nbsp;</div>
+                </div>
             {/if}
 
-            <tr id="test_outbound_settings_tr">
-                <td width="17%" scope="row"><input type="button" class="button" value="{$APP.LBL_EMAIL_TEST_OUTBOUND_SETTINGS}" onclick="startOutBoundEmailSettingsTest();"></td>
-                <td width="33%" >&nbsp;</td>
-                <td width="17%">&nbsp;</td>
-                <td width="33%" >&nbsp;</td>
-            </tr>
+            <div id="test_outbound_settings_tr">
+                <div  scope="row"><input type="button" class="button" value="{$APP.LBL_EMAIL_TEST_OUTBOUND_SETTINGS}" onclick="startOutBoundEmailSettingsTest();"></div>
+                <div  >&nbsp;</div>
+                <div >&nbsp;</div>
+                <div  >&nbsp;</div>
+            </div>
         {/if}
-    </table>
+    </div>
 </div>
