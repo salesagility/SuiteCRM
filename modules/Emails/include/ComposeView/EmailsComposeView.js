@@ -474,7 +474,7 @@
 
     /**
      *
-     * @event onSendEmail
+     * @event sendEmail
      * @event sentEmailError
      * @event sentEmailAlways
      * @event sentEmail

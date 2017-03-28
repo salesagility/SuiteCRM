@@ -4355,16 +4355,6 @@ td.inlineEditActive {
   height: 90%;
 }
 
-#settingsDialog .yui-content {
-  overflow-y: auto;
-}
-
-#settingsDialog_c {
-  top: 120px;
-  z-index: 20000;
-}
-
-
 .edit-view-pagination .btn-pagination[disabled] {
   background-color: $disabled-btn-bg;
 }
@@ -4416,27 +4406,6 @@ td.inlineEditActive {
 
   .edit-view-pagination .glyphicon-chevron-right {
     margin-left: 0px;
-  }
-}
-
-
-@media (max-width: 992px) {
-  #settingsDialog_c {
-    left: 1%;
-  }
-
-  #settingsDialog .yui-content {
-    height: 320px;
-  }
-}
-
-@media (min-width: 993px) {
-  #settingsDialog_c {
-    left: 22.5%;
-  }
-
-  #settingsDialog .yui-content {
-    height: 384px;
   }
 }
 
