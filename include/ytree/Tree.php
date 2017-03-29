@@ -63,7 +63,7 @@ class Tree
     );
 
     public $_debug_window = false;
-    var $_debug_div_name = 'debug_tree';
+    public $_debug_div_name = 'debug_tree';
     public $_name;
     public $_nodes = array();
     public $json;
