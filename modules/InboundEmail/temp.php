@@ -2,7 +2,7 @@
 /**
  * Stub for certain interactions;
  */
-class Temp {
+class temp {
     public $name;
 }
 
