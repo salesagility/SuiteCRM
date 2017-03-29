@@ -127,6 +127,17 @@ class EmailUI
         global $current_language;
         global $server_unique_key;
 
+        /**
+         * Since version 7.9. The email settings were moved to the users profile. We need to be able to change
+         * a users settings instead of just the current user.
+         */
+        $user = $current_user;
+
+        // Check we are in a user's profile
+        if($GLOBALS['FOCUS']->module_name === 'Users' and !empty($GLOBALS['FOCUS']->id)) {
+            $user = $GLOBALS['FOCUS'];
+        }
+
         $this->preflightUserCache();
         $ie = new InboundEmail();
 
@@ -158,15 +169,15 @@ class EmailUI
 
         ///////////////////////////////////////////////////////////////////////
         ////	BASIC ASSIGNS
-        $this->smarty->assign("currentUserId", $current_user->id);
-        $this->smarty->assign("CURRENT_USER_EMAIL", $current_user->email1);
-        $this->smarty->assign("currentUserName", $current_user->name);
+        $this->smarty->assign("currentUserId", $user->id);
+        $this->smarty->assign("CURRENT_USER_EMAIL", $user->email1);
+        $this->smarty->assign("currentUserName", $user->name);
         $this->smarty->assign('yuiPath', 'modules/Emails/javascript/yui-ext/');
         $this->smarty->assign('app_strings', $app_strings);
         $this->smarty->assign('mod_strings', $mod_strings);
         $this->smarty->assign('theme', $theme);
         $this->smarty->assign('sugar_config', $sugar_config);
-        $this->smarty->assign('is_admin', $current_user->is_admin);
+        $this->smarty->assign('is_admin', $user->is_admin);
         $this->smarty->assign('sugar_version', $sugar_version);
         $this->smarty->assign('sugar_flavor', $sugar_flavor);
         $this->smarty->assign('current_language', $current_language);
@@ -183,14 +194,14 @@ class EmailUI
         ////	USER SETTINGS
         // settings: accounts
 
-        $cuDatePref = $current_user->getUserDateTimePreferences();
+        $cuDatePref = $user->getUserDateTimePreferences();
         $this->smarty->assign('dateFormat', $cuDatePref['date']);
         $this->smarty->assign('dateFormatExample',
             str_replace(array("Y", "m", "d"), array("yyyy", "mm", "dd"), $cuDatePref['date']));
         $this->smarty->assign('calFormat', $timedate->get_cal_date_format());
         $this->smarty->assign('TIME_FORMAT', $timedate->get_user_time_format());
 
-        $ieAccounts = $ie->retrieveByGroupId($current_user->id);
+        $ieAccounts = $ie->retrieveByGroupId($user->id);
         $ieAccountsOptions = "<option value=''>{$app_strings['LBL_NONE']}</option>\n";
 
         foreach ($ieAccounts as $k => $v) {
@@ -210,7 +221,7 @@ class EmailUI
 
         $charsetSelectedValue = isset($emailSettings['defaultOutboundCharset']) ? $emailSettings['defaultOutboundCharset'] : false;
         if (!$charsetSelectedValue) {
-            $charsetSelectedValue = $current_user->getPreference('default_export_charset', 'global');
+            $charsetSelectedValue = $user->getPreference('default_export_charset', 'global');
             if (!$charsetSelectedValue) {
                 $charsetSelectedValue = $locale->getPrecedentPreference('default_email_charset');
             }
@@ -236,11 +247,11 @@ class EmailUI
 
         ///////////////////////////////////////////////////////////////////////
         ////	SIGNATURES
-        $prependSignature = ($current_user->getPreference('signature_prepend')) ? 'true' : 'false';
-        $defsigID = $current_user->getPreference('signature_default');
-        $this->smarty->assign('signatures', $current_user->getSignatures(false, $defsigID));
-        $this->smarty->assign('signaturesSettings', $current_user->getSignatures(false, $defsigID, false));
-        $signatureButtons = $current_user->getSignatureButtons('SUGAR.email2.settings.createSignature',
+        $prependSignature = ($user->getPreference('signature_prepend')) ? 'true' : 'false';
+        $defsigID = $user->getPreference('signature_default');
+        $this->smarty->assign('signatures', $user->getSignatures(false, $defsigID));
+        $this->smarty->assign('signaturesSettings', $user->getSignatures(false, $defsigID, false));
+        $signatureButtons = $user->getSignatureButtons('SUGAR.email2.settings.createSignature',
             !empty($defsigID));
         if (!empty($defsigID)) {
             $signatureButtons = $signatureButtons . '<span name="delete_sig" id="delete_sig" style="visibility:inherit;"><input class="button" onclick="javascript:SUGAR.email2.settings.deleteSignature();" value="' . $app_strings['LBL_EMAIL_DELETE'] . '" type="button" tabindex="392">&nbsp;
@@ -271,7 +282,7 @@ class EmailUI
 
         // preloaded folder
         $preloadFolder = 'lazyLoadFolder = ';
-        $focusFolderSerial = $current_user->getPreference('focusFolder', 'Emails');
+        $focusFolderSerial = $user->getPreference('focusFolder', 'Emails');
         if (!empty($focusFolderSerial)) {
             $focusFolder = sugar_unserialize($focusFolderSerial);
             //$focusFolder['ieId'], $focusFolder['folder']
@@ -443,6 +454,17 @@ eoq;
     {
         global $app_list_strings, $current_user, $app_strings, $mod_strings, $current_language, $locale;
 
+        /**
+         * Since version 7.9. The email settings were moved to the users profile. We need to be able to change
+         * a users settings instead of just the current user.
+         */
+        $user = $current_user;
+
+        // Check we are in a user's profile
+        if($GLOBALS['FOCUS']->module_name === 'Users' and !empty($GLOBALS['FOCUS']->id)) {
+            $user = $GLOBALS['FOCUS'];
+        }
+
         //Link drop-downs
         $parent_types = $app_list_strings['record_type_display'];
         $disabled_parent_types = ACLController::disabledModuleList($parent_types, false, 'list');
@@ -494,8 +516,8 @@ eoq;
         $ie1 = new InboundEmail();
 
         //Signatures
-        $defsigID = $current_user->getPreference('signature_default');
-        $defaultSignature = $current_user->getDefaultSignature();
+        $defsigID = $user->getPreference('signature_default');
+        $defaultSignature = $user->getDefaultSignature();
         $sigJson = !empty($defaultSignature) ? json_encode(array($defaultSignature['id'] => from_html($defaultSignature['signature_html']))) : "new Object()";
         $this->smarty->assign('defaultSignature', $sigJson);
         $this->smarty->assign('signatureDefaultId', (isset($defaultSignature['id'])) ? $defaultSignature['id'] : "");
@@ -503,7 +525,7 @@ eoq;
         $this->smarty->assign('userPrefs', json_encode($this->getUserPrefsJS()));
 
         //Get the users default outbound id
-        $defaultOutID = $ie1->getUsersDefaultOutboundServerId($current_user);
+        $defaultOutID = $ie1->getUsersDefaultOutboundServerId($user);
         $this->smarty->assign('defaultOutID', $defaultOutID);
 
         //Character Set
@@ -769,25 +791,36 @@ eoq;
         global $current_user;
         global $locale;
 
+        /**
+         * Since version 7.9. The email settings were moved to the users profile. We need to be able to change
+         * a users settings instead of just the current user.
+         */
+        $user = $current_user;
+
+        // Check we are in a user's profile
+        if($GLOBALS['FOCUS']->module_name === 'Users' and !empty($GLOBALS['FOCUS']->id)) {
+            $user = $GLOBALS['FOCUS'];
+        }
+
         // sort order per mailbox view
-        $sortSerial = $current_user->getPreference('folderSortOrder', 'Emails');
+        $sortSerial = $user->getPreference('folderSortOrder', 'Emails');
         $sortArray = array();
         if (!empty($sortSerial)) {
             $sortArray = sugar_unserialize($sortSerial);
         }
 
         // treeview collapsed/open states
-        $folderStateSerial = $current_user->getPreference('folderOpenState', 'Emails');
+        $folderStateSerial = $user->getPreference('folderOpenState', 'Emails');
         $folderStates = array();
         if (!empty($folderStateSerial)) {
             $folderStates = sugar_unserialize($folderStateSerial);
         }
 
         // subscribed accounts
-        $showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+        $showFolders = sugar_unserialize(base64_decode($user->getPreference('showFolders', 'Emails')));
 
         // general settings
-        $emailSettings = $current_user->getPreference('emailSettings', 'Emails');
+        $emailSettings = $user->getPreference('emailSettings', 'Emails');
 
         if (empty($emailSettings)) {
             $emailSettings = array();
@@ -800,11 +833,11 @@ eoq;
         }
 
         // focus folder
-        $focusFolder = $current_user->getPreference('focusFolder', 'Emails');
+        $focusFolder = $user->getPreference('focusFolder', 'Emails');
         $focusFolder = !empty($focusFolder) ? sugar_unserialize($focusFolder) : array();
 
         // unread only flag
-        $showUnreadOnly = $current_user->getPreference('showUnreadOnly', 'Emails');
+        $showUnreadOnly = $user->getPreference('showUnreadOnly', 'Emails');
 
         $listViewSort = array(
             "sortBy" => 'date',
@@ -812,8 +845,8 @@ eoq;
         );
 
         // signature prefs
-        $signaturePrepend = $current_user->getPreference('signature_prepend') ? 'true' : 'false';
-        $signatureDefault = $current_user->getPreference('signature_default');
+        $signaturePrepend = $user->getPreference('signature_prepend') ? 'true' : 'false';
+        $signatureDefault = $user->getPreference('signature_default');
         $signatures = array(
             'signature_prepend' => $signaturePrepend,
             'signature_default' => $signatureDefault
@@ -822,8 +855,8 @@ eoq;
 
         // current_user
         $user = array(
-            'emailAddresses' => $current_user->emailAddress->getAddressesByGUID($current_user->id, 'Users'),
-            'full_name' => from_html($current_user->full_name),
+            'emailAddresses' => $user->emailAddress->getAddressesByGUID($current_user->id, 'Users'),
+            'full_name' => from_html($user->full_name),
         );
 
         $userPreferences = array();

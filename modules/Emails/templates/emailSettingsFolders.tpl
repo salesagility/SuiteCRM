@@ -45,7 +45,7 @@
 		</th>
 	</tr>
     <tr>
-		<td NOWRAP style="padding: 8px;" valign="top" scope="row">
+		<td NOWRAP valign="top" scope="row">
 			<div>
 				{$app_strings.LBL_EMAIL_SETTINGS_USER_FOLDERS}:
 				<div id="rollover">
@@ -54,7 +54,7 @@
 			</div>
 			<br/>
 			<div>
-				<select multiple size="8" STYLE="width: 140px" name="userFolders[]" id="userFolders" onchange="SUGAR.email2.folders.updateSubscriptions();"></select>
+				<select multiple size="8" name="userFolders[]" id="userFolders" onchange="SUGAR.email2.folders.updateSubscriptions();"></select>
 			</div>
 		</td>
 

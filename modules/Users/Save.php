@@ -463,11 +463,11 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
         $emailSettings['sendPlainText'] = isset($_REQUEST['sendPlainText']) ? '1' : '0';
         $emailSettings['showNumInList'] = $_REQUEST['showNumInList'];
         $emailSettings['defaultOutboundCharset'] = $_REQUEST['default_charset'];
-        $current_user->setPreference('emailSettings', $emailSettings, '', 'Emails');
+        $focus->setPreference('emailSettings', $emailSettings, '', 'Emails');
 
         // signature
-        $current_user->setPreference('signature_default', $_REQUEST['signature_id']);
-        $current_user->setPreference('signature_prepend', (isset($_REQUEST['signature_prepend'])) ? true : false);
+        $focus->setPreference('signature_default', $_REQUEST['signature_id']);
+        $focus->setPreference('signature_prepend', (isset($_REQUEST['signature_prepend'])) ? true : false);
 	}
 
 
