@@ -63,7 +63,7 @@ class templateParser
                 } else if (($field_def['type'] == 'radioenum' || $field_def['type'] == 'enum') && isset($field_def['options'])) {
                     $repl_arr[$key . "_" . $fieldName] = translate($field_def['options'], $focus->module_dir, $focus->$fieldName);
                 } else if ($field_def['type'] == 'multienum' && isset($field_def['options'])) {
-                    $mVals = unencodeMultienum($focus->$field_def['name']);
+                    $mVals = unencodeMultienum($focus->$fieldName);
                     $translatedVals = array();
                     foreach($mVals as $mVal){
                         $translatedVals[] = translate($field_def['options'], $focus->module_dir, $mVal);
