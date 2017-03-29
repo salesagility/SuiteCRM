@@ -47,7 +47,7 @@
 </table>
 
 
-	<table cellpadding="4" cellspacing="0" border="0" width="100%" class="view">
+	<table cellpadding="4" cellspacing="0" border="0" width="100%" class="edit view">
 		<tr>
 			<th colspan="4" align="left" colspan="4" scope="row">
 				<h4>{$app_strings.LBL_EMAIL_SETTINGS_TITLE_PREFERENCES}</h4>
