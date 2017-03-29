@@ -5,5 +5,3 @@
 class temp {
     public $name;
 }
-
-
