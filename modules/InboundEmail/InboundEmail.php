@@ -40,6 +40,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 require_once('include/OutboundEmail/OutboundEmail.php');
+require_once('modules/InboundEmail/Overview.php');
+require_once('modules/InboundEmail/temp.php');
 
 function this_callback($str) {
 	foreach($str as $match) {
@@ -48,12 +50,6 @@ function this_callback($str) {
 	return $ret;
 }
 
-/**
- * Stub for certain interactions;
- */
-class temp {
-	var $name;
-}
 
 class InboundEmail extends SugarBean {
 	// module specific
@@ -6484,160 +6480,3 @@ eoq;
         return $uid;
     }
 } // end class definition
-
-
-/**
- * Simple class to mirror the passed object from an imap_fetch_overview() call
- */
-class Overview {
-	var $subject;
-	var $from;
-	var $fromaddr;
-	var $to;
-	var $toaddr;
-	var $date;
-	var $message_id;
-	var $size;
-	var $uid;
-	var $msgno;
-	var $recent;
-	var $flagged;
-	var $answered;
-	var $deleted;
-	var $seen;
-	var $draft;
-	var $indices; /* = array(
-
-			array(
-				'name'			=> 'mail_date',
-				'type'			=> 'index',
-				'fields'		=> array(
-					'mbox',
-					'senddate',
-				)
-			),
-			array(
-				'name'			=> 'mail_from',
-				'type'			=> 'index',
-				'fields'		=> array(
-					'mbox',
-					'fromaddr',
-				)
-			),
-			array(
-				'name'			=> 'mail_subj',
-				'type'			=> 'index',
-				'fields'		=> array(
-					'mbox',
-					'subject',
-				)
-			),
-		);
-	*/
-	var $fieldDefs;/* = array(
-			'mbox' => array(
-				'name'		=> 'mbox',
-				'type'		=> 'varchar',
-				'len'		=> 60,
-				'required'	=> true,
-			),
-			'subject' => array(
-				'name'		=> 'subject',
-				'type'		=> 'varchar',
-				'len'		=> 100,
-				'required'	=> false,
-			),
-			'fromaddr' => array(
-				'name'		=> 'fromaddr',
-				'type'		=> 'varchar',
-				'len'		=> 100,
-				'required'	=> true,
-			),
-			'toaddr' => array(
-				'name'		=> 'toaddr',
-				'type'		=> 'varchar',
-				'len'		=> 100,
-				'required'	=> true,
-			),
-			'senddate' => array(
-				'name'		=> 'senddate',
-				'type'		=> 'datetime',
-				'required'	=> true,
-			),
-			'message_id' => array(
-				'name'		=> 'message_id',
-				'type'		=> 'varchar',
-				'len'		=> 255,
-				'required'	=> false,
-			),
-			'mailsize' => array(
-				'name'		=> 'mailsize',
-				'type'		=> 'uint',
-				'len'		=> 16,
-				'required'	=> true,
-			),
-			'uid' => array(
-				'name'		=> 'uid',
-				'type'		=> 'uint',
-				'len'		=> 32,
-				'required'	=> true,
-			),
-			'msgno' => array(
-				'name'		=> 'msgno',
-				'type'		=> 'uint',
-				'len'		=> 32,
-				'required'	=> false,
-			),
-			'recent' => array(
-				'name'		=> 'recent',
-				'type'		=> 'tinyint',
-				'len'		=> 1,
-				'required'	=> true,
-			),
-			'flagged' => array(
-				'name'		=> 'flagged',
-				'type'		=> 'tinyint',
-				'len'		=> 1,
-				'required'	=> true,
-			),
-			'answered' => array(
-				'name'		=> 'answered',
-				'type'		=> 'tinyint',
-				'len'		=> 1,
-				'required'	=> true,
-			),
-			'deleted' => array(
-				'name'		=> 'deleted',
-				'type'		=> 'tinyint',
-				'len'		=> 1,
-				'required'	=> true,
-			),
-			'seen' => array(
-				'name'		=> 'seen',
-				'type'		=> 'tinyint',
-				'len'		=> 1,
-				'required'	=> true,
-			),
-			'draft' => array(
-				'name'		=> 'draft',
-				'type'		=> 'tinyint',
-				'len'		=> 1,
-				'required'	=> true,
-			),
-		);
-	*/
-	function __construct() {
-		global $dictionary;
-
-		if(!isset($dictionary['email_cache']) || empty($dictionary['email_cache'])) {
-			if(file_exists('custom/metadata/email_cacheMetaData.php')) {
-			   include('custom/metadata/email_cacheMetaData.php');
-			} else {
-			   include('metadata/email_cacheMetaData.php');
-			}
-		}
-
-		$this->fieldDefs = $dictionary['email_cache']['fields'];
-		$this->indices = $dictionary['email_cache']['indices'];
-	}
-}
