@@ -38,45 +38,12 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$module_name = 'Emails';
-$viewdefs[$module_name]['DetailView'] = array(
-    'templateMeta' => array(
-        'form' => array(
-            'buttons' => array(
-                'EDIT',
-                'DUPLICATE',
-                'DELETE',
-                'FIND_DUPLICATES',
-            )
-        ),
-        'maxColumns' => '2',
-        'widths' => array(
-            array('label' => '10', 'field' => '30'),
-            array('label' => '10', 'field' => '30')
-        ),
-    ),
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-    'panels' => array(
+require_once 'include/MVC/View/views/view.popup.php';
 
-        'LBL_EMAIL_INFORMATION' => array(
-            array(
-                'name',
-                'date_entered' => array(
-                    'name' => 'date_entered',
-                    'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-                    'label' => 'LBL_DATE_ENTERED',
-                ),
-            ),
+class EmailsViewPopup extends ViewPopup {
 
-            array(
-                'description' => array(
-                    'name' => 'description_html',
-                    'label' => 'LBL_BODY'
-                ),
-            ),
-            array(
-                'parent_name'
-            )
-        )
-    )
-);
+}

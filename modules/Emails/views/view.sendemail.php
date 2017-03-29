@@ -1,3 +1,5 @@
+<?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,25 +39,40 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$(document).ready(function(){
- $('[data-action=emails-compose]').click(function(){
-   alert('compose email placeholder');
- });
+if (!defined('sugarEntry') || !sugarEntry) {
+    die ('Not A Valid Entry Point');
+}
 
- $('[data-action=emails-configure]').click(function(){
-   alert('configure email placeholder');
- });
+class EmailsViewSendemail extends ViewAjax
+{
+    public function __construct()
+    {
+        $this->options['show_title'] = false;
+        $this->options['show_header'] = false;
+        $this->options['show_footer'] = false;
+        $this->options['show_javascript'] = false;
+        $this->options['show_subpanels'] = false;
+        $this->options['show_search'] = false;
+    }
 
- $('[data-action=emails-check-new-email]').click(function(){
-   alert('check new email placeholder');
- });
+    public function display()
+    {
+        $response_code = 500;
 
- $('[data-action=emails-open-folder]').click(function(){
-   alert('open folder email placeholder');
- });
+        if(empty($this->bean->status)) {
+            $this->bean->status = $_REQUEST['status'];
+        }
 
- // look for new
-  $('.email-indicator .email-new').each(function(i, v){
-    $(this).closest('tr').addClass('email-new-record');
-  });
-});
+        switch ($this->bean->status) {
+            case 'sent':
+                $response_code = 201;
+                break;
+            case 'sent_error':
+                $response_code = 400;
+                break;
+        }
+        http_response_code ($response_code);
+        return "";
+    }
+
+}

@@ -60,9 +60,8 @@ $viewdefs['Emails']['ListView'] = array(
                 ),
         ),
         'includes' => array(
-            0 =>
                 array(
-                    'file' => 'modules/Emails/javascript/list.view.js',
+                    'file' => 'modules/Emails/include/ListView/ListView.js',
                 ),
         ),
         'options' => array(

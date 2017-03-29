@@ -203,14 +203,14 @@ $dictionary['Email'] = array(
         ),
         'description_html' => array(
             'name' => 'description_html',
-            'type' => 'varchar',
+            'type' => 'html',
             'vname' => 'description_html',
             'source' => 'non-db',
             'inline_edit' => false,
         ),
         'description' => array(
             'name' => 'description',
-            'type' => 'varchar',
+            'type' => 'text',
             'vname' => 'description',
             'source' => 'non-db',
             'inline_edit' => false,
@@ -340,12 +340,15 @@ $dictionary['Email'] = array(
         ),
 
         'parent_name' => array(
-            'name' => 'parent_name',
-            'type' => 'varchar',
-            'reportable' => false,
-            'source' => 'non-db',
+            'name'=> 'parent_name',
+            'parent_type'=>'record_type_display' ,
+            'type_name'=>'parent_type',
+            'id_name'=>'parent_id',
+            'vname'=>'LBL_EMAIL_RELATE',
+            'type'=>'parent',
+            'source'=>'non-db',
+            'options'=> 'record_type_display',
             'inline_edit' => false,
-
         ),
         'parent_type' => array(
             'name' => 'parent_type',

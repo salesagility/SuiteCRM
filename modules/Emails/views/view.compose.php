@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,45 +39,49 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$module_name = 'Emails';
-$viewdefs[$module_name]['DetailView'] = array(
-    'templateMeta' => array(
-        'form' => array(
-            'buttons' => array(
-                'EDIT',
-                'DUPLICATE',
-                'DELETE',
-                'FIND_DUPLICATES',
-            )
-        ),
-        'maxColumns' => '2',
-        'widths' => array(
-            array('label' => '10', 'field' => '30'),
-            array('label' => '10', 'field' => '30')
-        ),
-    ),
+if (!defined('sugarEntry') || !sugarEntry) {
+    die ('Not A Valid Entry Point');
+}
 
-    'panels' => array(
 
-        'LBL_EMAIL_INFORMATION' => array(
-            array(
-                'name',
-                'date_entered' => array(
-                    'name' => 'date_entered',
-                    'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-                    'label' => 'LBL_DATE_ENTERED',
-                ),
-            ),
+class EmailsViewCompose extends ViewEdit {
 
-            array(
-                'description' => array(
-                    'name' => 'description_html',
-                    'label' => 'LBL_BODY'
-                ),
-            ),
-            array(
-                'parent_name'
-            )
-        )
-    )
-);
+    public function __construct()
+    {
+        $this->type = 'compose';
+        if(empty($_REQUEST['return_module'])) {
+            $this->options['show_title'] = false;
+            $this->options['show_header'] = false;
+            $this->options['show_footer'] = false;
+            $this->options['show_javascript'] = false;
+            $this->options['show_subpanels'] = false;
+            $this->options['show_search'] = false;
+        }
+    }
+
+    /**
+     * @see SugarView::preDisplay()
+     */
+    public function preDisplay()
+    {
+        $metadataFile = $this->getMetaDataFile();
+        $this->ev = $this->getEditView();
+        $this->ev->ss =& $this->ss;
+        $this->ev->ss->assign('TEMP_ID', create_guid());
+        $this->ev->ss->assign('RETURN_MODULE', isset($_REQUEST['return_module']) ? $_REQUEST['return_module'] : '');
+        $this->ev->ss->assign('RETURN_ACTION', isset($_REQUEST['return_action']) ? $_REQUEST['return_action'] : '');
+        $this->ev->setup($this->module, $this->bean, $metadataFile, get_custom_file_if_exists('modules/Emails/include/ComposeView/ComposeView.tpl'));
+    }
+
+    /**
+     * Get EditView object
+     * @return EditView
+     */
+    protected function getEditView()
+    {
+        $a = dirname( dirname(__FILE__) ) . '/include/ComposeView/ComposeView.php';
+        require_once 'modules/Emails/include/ComposeView/ComposeView.php';
+        return new ComposeView();
+    }
+
+}
