@@ -34,8 +34,8 @@
   .nav-tabs > li > a:hover {
     font-size: $page-font-size;
     font-weight: 400;
-    background-color: $default-tab-bg;
-    color: $default-tab-color;
+    background-color: $default-tab-bg-hover;
+    color: $default-tab-color-hover;
     cursor: pointer;
     margin: 0 2px 0 2px;
     border-color: #eee #eee #fff;
@@ -48,8 +48,8 @@
   .nav-tabs > li.active > a:hover {
     font-size: $page-font-size;
     font-weight: 400;
-    background-color: $active-tab-bg;
-    color: $default-tab-color;
+    background-color: $active-tab-bg-hover;
+    color: $active-tab-color-hover;
     cursor: pointer;
     margin-top: 0;
     margin-bottom: 0;
@@ -154,7 +154,8 @@
 
   #tab-actions > a:hover {
     background-color: $action-tab-bg-hover;
-    color: $action-tab-color;
+    border-color: $action-tab-bg-hover;
+    color: $action-tab-color-hover;
     cursor: pointer;
   }
 
@@ -197,15 +198,15 @@
   }
 
   #tab-actions > .dropdown-menu .button:hover {
-    background-color: $action-tab-bg;
+    background-color: $action-tab-bg-hover;
   }
 
   #tab-actions > .dropdown-menu .button:focus {
-    background-color: $action-tab-bg;
+    background-color: $action-tab-bg-hover;
   }
 
   #tab-actions > .dropdown-menu .button:active {
-    background-color: $action-tab-bg;
+    background-color: $action-tab-bg-hover;
   }
 
   #tab-actions > .dropdown-menu .open > .dropdown-toggle.btn-primary {
