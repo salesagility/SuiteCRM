@@ -228,6 +228,22 @@ class CalendarDisplay {
 
 		}
 		foreach($activity as $key => $activityItem){
+			if(!empty($this->cal->activityList[ $key ])) {
+        			// this is IN the default activity list (i.e. DEFINED in CalendarDisplay.php)
+        			if(isset($GLOBALS['app_list_strings']['moduleList'][ $key ]) && !empty($GLOBALS['app_list_strings']['moduleList'][ $key ]) ){
+          				$activity[ $key ]['label'] = $GLOBALS['app_list_strings']['moduleList'][ $key ];
+        			}else{
+          				unset($activity[ $key ]);
+        			}
+      			} else {
+        			// this is NOT in the default activity list (i.e. NOT defined in CalendarDisplay.php)
+        			if( !isset($GLOBALS['sugar_config']['CalendarColors'][$key]['body']) || $GLOBALS['sugar_config']['CalendarColors'][$key]['body']==''){
+					// not defined in config_override.php, unset it
+          				unset($activity[ $key ]);
+        			} 
+				// the else is implied, if the extra color is defind in config_override.php it will NOT be unset.
+      			}
+
 			if(isset($GLOBALS['app_list_strings']['moduleList'][ $key ]) && !empty($GLOBALS['app_list_strings']['moduleList'][ $key ]) && !empty($this->cal->activityList[ $key ]) ){
 				$activity[ $key ]['label'] = $GLOBALS['app_list_strings']['moduleList'][ $key ];
 			}else{
