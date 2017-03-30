@@ -156,7 +156,18 @@ SE.accounts = {
     		                      {key:'type',label:mod_strings.LBL_LIST_TYPE + typeHoverHelp },
     		                      {key:'edit',label:mod_strings.LBL_BUTTON_EDIT,formatter:"customImage",className:'yui-cstm-cntrd-liner'},
     		                      {key:'delete',label:app_strings.LBL_EMAIL_DELETE,formatter:"customImage",className:'yui-cstm-cntrd-liner'}];
-    		var query = "index.php?module=Emails&action=EmailUIAjax&to_pdf=true&emailUIAction=rebuildShowAccount";
+
+          var user_id = '';
+
+          if($('#EditView').children('[name=module]').val() === "Users" &&
+            $('#EditView').children('[name=record]').val() !== "") {
+            user_id = "&user_id="+ $('#EditView').children('[name=record]').val();
+          }
+
+          var query = "index.php?module=Emails&action=EmailUIAjax&to_pdf=true&emailUIAction=rebuildShowAccount"+user_id;
+
+
+
     		this.ieDataSource = new YAHOO.util.DataSource(query);
 			this.ieDataSource.responseType = YAHOO.util.DataSource.TYPE_JSON;
 			this.ieDataSource.responseSchema = {
@@ -165,7 +176,6 @@ SE.accounts = {
 			};
     		this.inboundAccountsSettingsTable = new YAHOO.widget.DataTable("inboundAccountsTable", this.ieColumnDefs, this.ieDataSource);
 			this.inboundAccountsSettingsTable.subscribe("checkboxClickEvent", function(oArgs){
-
 	            var elCheckbox = oArgs.target;
 	            var oColumn = this.getColumn(elCheckbox);
 	          	if(oColumn.key == 'is_active')
@@ -2795,8 +2805,13 @@ SE.folders = {
      */
     updateSubscriptions : function() {
         SUGAR.showMessageBox(app_strings.LBL_EMAIL_REBUILDING_FOLDERS, app_strings.LBL_EMAIL_ONE_MOMENT);
-
         var active = "";
+        var user_id = '';
+
+        if($('#EditView').children('[name=module]').val() === "Users" &&
+          $('#EditView').children('[name=record]').val() !== "") {
+          user_id = "&user_id="+ $('#EditView').children('[name=record]').val();
+        }
 
         select = document.getElementById('userFolders');
 
@@ -2817,7 +2832,7 @@ SE.folders = {
             active += ("::" + group_folders[i]);
         }
 
-        AjaxObject.startRequest(callbackFolderSubscriptions, urlStandard + '&emailUIAction=updateSubscriptions&subscriptions=' + active);
+        AjaxObject.startRequest(callbackFolderSubscriptions, urlStandard + '&emailUIAction=updateSubscriptions&subscriptions=' + active + user_id);
     },
     /**
      * Updates user's group folder subscriptsion (Sugar only)

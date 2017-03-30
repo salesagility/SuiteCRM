@@ -187,6 +187,12 @@ class SugarFolder {
 			$user = $current_user;
 		}
 
+        $user = $current_user;
+
+        if(!empty($_REQUEST['user_id'])) {
+            $user = BeanFactory::getBean('Users', $_REQUEST['user_id']);
+        }
+
 		$q = "SELECT folder_id FROM folders_subscriptions WHERE assigned_user_id = '{$user->id}'";
 		$r = $this->db->query($q);
 		$ret = array();
@@ -208,6 +214,12 @@ class SugarFolder {
 			return false;
 		}
 
+		$user = $current_user;
+
+		if(!empty($_REQUEST['user_id'])) {
+            $user = BeanFactory::getBean('Users', $_REQUEST['user_id']);
+        }
+
 		$cleanSubscriptions = array();
 
 		// ensure parent folders are selected, regardless.
@@ -228,7 +240,7 @@ class SugarFolder {
 		$this->clearSubscriptions();
 
 		foreach($cleanSubscriptions as $id) {
-		    $this->insertFolderSubscription($id, $current_user->id);
+		    $this->insertFolderSubscription($id, $user->id);
 		}
 	}
 
