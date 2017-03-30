@@ -68,7 +68,11 @@ class JSON
      */
     public static function encode($string, $addSecurityEnvelope = false, $encodeSpecial = false)
     {
-        $encodedString = json_encode($string);
+        try{
+              $encodedString = json_encode($string);
+        } catch (Exception $e) {
+            $GLOBALS['log']->info("Error in JSON.encode: " . $e->getMessage());
+        }
 
         if ($encodeSpecial)
         {
