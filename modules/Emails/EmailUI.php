@@ -69,13 +69,13 @@ class EmailUI
     );
     public $userCacheDir = '';
     public $coreDynamicFolderQuery = "SELECT emails.id polymorphic_id, 'Emails' polymorphic_module FROM emails
-								   JOIN emails_text on emails.id = emails_text.email_id
+                                   JOIN emails_text on emails.id = emails_text.email_id
                                    WHERE (type = '::TYPE::' OR status = '::STATUS::') AND assigned_user_id = '::USER_ID::' AND emails.deleted = '0'";
 
     /**
      * Sole constructor
      */
-    function __construct()
+    public function __construct()
     {
         global $sugar_config;
         global $current_user;
@@ -88,14 +88,14 @@ class EmailUI
 
         $this->smarty = new Sugar_Smarty();
         $this->folder = new SugarFolder();
-        $this->userCacheDir = sugar_cached("modules/Emails/{$current_user->id}");
+        $this->userCacheDir = sugar_cached("modules/Emails/Users/{$current_user->id}");
         $this->db = DBManagerFactory::getInstance();
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function EmailUI()
+    public function EmailUI()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -106,12 +106,19 @@ class EmailUI
         self::__construct();
     }
 
-	///////////////////////////////////////////////////////////////////////////
-	////	CORE
-	/**
-	 * Renders the frame for emails
-	 */
-	function displayEmailFrame($emailAccountSettingsOnly = false, $extendedTemplateVars = null) {
+    ///////////////////////////////////////////////////////////////////////////
+    ////	CORE
+    /**
+     * @param bool $emailAccountSettingsOnly
+     * @param null $extendedTemplateVars
+     * @return string
+     *
+     *
+     * Renders the frame for emails
+     *
+     */
+    public function displayEmailFrame($emailAccountSettingsOnly = false, $extendedTemplateVars = null)
+    {
 
         require_once("include/OutboundEmail/OutboundEmail.php");
 
@@ -134,7 +141,7 @@ class EmailUI
         $user = $current_user;
 
         // Check we are in a user's profile
-        if($GLOBALS['FOCUS']->module_name === 'Users' and !empty($GLOBALS['FOCUS']->id)) {
+        if ($GLOBALS['FOCUS']->module_name === 'Users' and !empty($GLOBALS['FOCUS']->id)) {
             $user = $GLOBALS['FOCUS'];
         }
 
@@ -196,8 +203,14 @@ class EmailUI
 
         $cuDatePref = $user->getUserDateTimePreferences();
         $this->smarty->assign('dateFormat', $cuDatePref['date']);
-        $this->smarty->assign('dateFormatExample',
-            str_replace(array("Y", "m", "d"), array("yyyy", "mm", "dd"), $cuDatePref['date']));
+        $this->smarty->assign(
+            'dateFormatExample',
+            str_replace(
+                array("Y", "m", "d"),
+                array("yyyy", "mm", "dd"),
+                $cuDatePref['date']
+            )
+        );
         $this->smarty->assign('calFormat', $timedate->get_cal_date_format());
         $this->smarty->assign('TIME_FORMAT', $timedate->get_user_time_format());
 
@@ -215,8 +228,10 @@ class EmailUI
 
         $protocol = filterInboundEmailPopSelection($app_list_strings['dom_email_server_type']);
         $this->smarty->assign('PROTOCOL', get_select_options_with_id($protocol, ''));
-        $this->smarty->assign('MAIL_SSL_OPTIONS',
-            get_select_options_with_id($app_list_strings['email_settings_for_ssl'], ''));
+        $this->smarty->assign(
+            'MAIL_SSL_OPTIONS',
+            get_select_options_with_id($app_list_strings['email_settings_for_ssl'], '')
+        );
         $this->smarty->assign('ie_mod_strings', return_module_language($current_language, 'InboundEmail'));
 
         $charsetSelectedValue = isset($emailSettings['defaultOutboundCharset']) ? $emailSettings['defaultOutboundCharset'] : false;
@@ -239,8 +254,10 @@ class EmailUI
         $this->smarty->assign('emailCheckInterval', $emailCheckInterval);
         $this->smarty->assign('attachmentsSearchOptions', $app_list_strings['checkbox_dom']);
         $this->smarty->assign('sendPlainTextChecked', ($emailSettings['sendPlainText'] == 1) ? 'CHECKED' : '');
-        $this->smarty->assign('showNumInList',
-            get_select_options_with_id($app_list_strings['email_settings_num_dom'], $emailSettings['showNumInList']));
+        $this->smarty->assign(
+            'showNumInList',
+            get_select_options_with_id($app_list_strings['email_settings_num_dom'], $emailSettings['showNumInList'])
+        );
 
         ////	END USER SETTINGS
         ///////////////////////////////////////////////////////////////////////
@@ -251,14 +268,16 @@ class EmailUI
         $defsigID = $user->getPreference('signature_default');
         $this->smarty->assign('signatures', $user->getSignatures(false, $defsigID));
         $this->smarty->assign('signaturesSettings', $user->getSignatures(false, $defsigID, false));
-        $signatureButtons = $user->getSignatureButtons('SUGAR.email2.settings.createSignature',
-            !empty($defsigID));
+        $signatureButtons = $user->getSignatureButtons(
+            'SUGAR.email2.settings.createSignature',
+            !empty($defsigID)
+        );
         if (!empty($defsigID)) {
             $signatureButtons = $signatureButtons . '<span name="delete_sig" id="delete_sig" style="visibility:inherit;"><input class="button" onclick="javascript:SUGAR.email2.settings.deleteSignature();" value="' . $app_strings['LBL_EMAIL_DELETE'] . '" type="button" tabindex="392">&nbsp;
-					</span>';
+                    </span>';
         } else {
             $signatureButtons = $signatureButtons . '<span name="delete_sig" id="delete_sig" style="visibility:hidden;"><input class="button" onclick="javascript:SUGAR.email2.settings.deleteSignature();" value="' . $app_strings['LBL_EMAIL_DELETE'] . '" type="button" tabindex="392">&nbsp;
-					</span>';
+                    </span>';
         }
         $this->smarty->assign('signatureButtons', $signatureButtons);
         $this->smarty->assign('signaturePrepend', $prependSignature == 'true' ? 'CHECKED' : '');
@@ -275,8 +294,12 @@ class EmailUI
 
         ///////////////////////////////////////////////////////////////////////
         ////	FOLDERS & TreeView
-        $this->smarty->assign('groupUserOptions',
-            $ie->getGroupsWithSelectOptions(array('' => $app_strings['LBL_EMAIL_CREATE_NEW'])));
+        $this->smarty->assign(
+            'groupUserOptions',
+            $ie->getGroupsWithSelectOptions(
+                array('' => $app_strings['LBL_EMAIL_CREATE_NEW'])
+            )
+        );
 
         $tree = $this->getMailboxNodes();
 
@@ -293,44 +316,44 @@ class EmailUI
         ////	END FOLDERS
         ///////////////////////////////////////////////////////////////////////
 
-		$this->smarty->assign('disableDisplayMessage', $emailAccountSettingsOnly);
+        $this->smarty->assign('disableDisplayMessage', $emailAccountSettingsOnly);
 
-		$out = "";
+        $out = "";
 
-		if($emailAccountSettingsOnly && $extendedTemplateVars) {
-			$this->smarty->assign((array) $extendedTemplateVars);
-			$this->smarty->assign('userEmailSettings', true);
-		}
+        if ($emailAccountSettingsOnly && $extendedTemplateVars) {
+            $this->smarty->assign((array)$extendedTemplateVars);
+            $this->smarty->assign('userEmailSettings', true);
+        }
 
-		$out .= $this->smarty->fetch("modules/Emails/templates/_baseEmail" .($emailAccountSettingsOnly ? 'AccountSettings' : '').".tpl");
-		$out .= $tree->generate_header();
-		$out .= $tree->generateNodesNoInit(true, 'email2treeinit');
-		$out .=<<<eoq
-			<script type="text/javascript" language="javascript">
+        $out .= $this->smarty->fetch("modules/Emails/templates/_baseEmail" . ($emailAccountSettingsOnly ? 'AccountSettings' : '') . ".tpl");
+        $out .= $tree->generate_header();
+        $out .= $tree->generateNodesNoInit(true, 'email2treeinit');
+        $out .= <<<eoq
+            <script type="text/javascript" language="javascript">
 
-				var loader = new YAHOO.util.YUILoader({
-				    require : [
-				    	"layout", "element", "tabview", "menu",
-				    	"cookie", "sugarwidgets"
-				    ],
-				    loadOptional: true,
-				    skin: { base: 'blank', defaultSkin: '' },
-				    onSuccess: email2init,
-				    allowRollup: true,
-				    base: "include/javascript/yui/build/"
-				});
-				loader.addModule({
-				    name :"sugarwidgets",
-				    type : "js",
-				    fullpath: "include/javascript/sugarwidgets/SugarYUIWidgets.js",
-				    publicName: "YAHOO.SUGAR",
-				    requires: ["datatable", "dragdrop", "treeview", "tabview", "calendar"]
-				});
-				loader.insert();
+                var loader = new YAHOO.util.YUILoader({
+                    require : [
+                        "layout", "element", "tabview", "menu",
+                        "cookie", "sugarwidgets"
+                    ],
+                    loadOptional: true,
+                    skin: { base: 'blank', defaultSkin: '' },
+                    onSuccess: email2init,
+                    allowRollup: true,
+                    base: "include/javascript/yui/build/"
+                });
+                loader.addModule({
+                    name :"sugarwidgets",
+                    type : "js",
+                    fullpath: "include/javascript/sugarwidgets/SugarYUIWidgets.js",
+                    publicName: "YAHOO.SUGAR",
+                    requires: ["datatable", "dragdrop", "treeview", "tabview", "calendar"]
+                });
+                loader.insert();
 
-				{$preloadFolder};
+                {$preloadFolder};
 
-			</script>
+            </script>
 eoq;
 
 
@@ -343,7 +366,7 @@ eoq;
      *
      * @return JSON An object containing html markup and js script publiciables.
      */
-    function displayQuickComposeEmailFrame()
+    public function displayQuickComposeEmailFrame()
     {
         $this->preflightUserCache();
 
@@ -376,7 +399,7 @@ eoq;
 
         foreach ($QCModules as $module) {
             $seed = SugarModule::get($module)->loadBean();
-            if (($seed instanceOf SugarBean) && $seed->ACLAccess('edit')) {
+            if (($seed instanceof SugarBean) && $seed->ACLAccess('edit')) {
                 $QCAvailableModules[] = $module;
             }
         }
@@ -391,9 +414,10 @@ eoq;
      * UI.
      *
      * @param String $emailLinkUrl
+     * @param bool
      * @return JSON Object containing the composePackage and full link url
      */
-    function generateComposePackageForQuickCreateFromComposeUrl($emailLinkUrl, $lazyLoad = false)
+    public function generateComposePackageForQuickCreateFromComposeUrl($emailLinkUrl, $lazyLoad = false)
     {
         $composeData = explode("&", $emailLinkUrl);
         $a_composeData = array();
@@ -413,10 +437,11 @@ eoq;
      * @param Array $composeData Associative array read and processed by generateComposeDataPackage.
      * @param String $fullLinkUrl A link that contains all pertinant information so the user can be
      *                              directed to the full compose screen if needed
+     * @param bool
      * @param SugarBean $bean Optional - the parent object bean with data
      * @return JSON Object containg composePackage and fullLinkUrl
      */
-    function generateComposePackageForQuickCreate($composeData, $fullLinkUrl, $lazyLoad = false, $bean = null)
+    public function generateComposePackageForQuickCreate($composeData, $fullLinkUrl, $lazyLoad = false, $bean = null)
     {
         $_REQUEST['forQuickCreate'] = true;
 
@@ -450,7 +475,7 @@ eoq;
      *
      * @param String $type Drives which tinyMCE options will be included.
      */
-    function _generateComposeConfigData($type = "email_compose_light")
+    public function _generateComposeConfigData($type = "email_compose_light")
     {
         global $app_list_strings, $current_user, $app_strings, $mod_strings, $current_language, $locale;
 
@@ -461,7 +486,7 @@ eoq;
         $user = $current_user;
 
         // Check we are in a user's profile
-        if($GLOBALS['FOCUS']->module_name === 'Users' and !empty($GLOBALS['FOCUS']->id)) {
+        if ($GLOBALS['FOCUS']->module_name === 'Users' and !empty($GLOBALS['FOCUS']->id)) {
             $user = $GLOBALS['FOCUS'];
         }
 
@@ -481,22 +506,22 @@ eoq;
         $tinyConf = $tiny->getConfig($type);
 
         //Generate Language Packs
-		$lang = "var app_strings = new Object();\n";
-		foreach($app_strings as $k => $v) {
-			if(strpos($k, 'LBL_EMAIL_') !== false) {
-				$vJS = json_encode($v);
-				$lang .= "app_strings.{$k} = {$vJS};\n";
-			}
-		}
-		//Get the email mod strings but don't use the global variable as this may be overridden by
-		//other modules when the quick create is rendered.
-		$email_mod_strings = return_module_language($current_language,'Emails');
-		$modStrings = "var mod_strings = new Object();\n";
-		foreach($email_mod_strings as $k => $v) {
-			$v = str_replace("'", "\'", $v);
-			$modStrings .= "mod_strings.{$k} = '{$v}';\n";
-		}
-		$lang .= "\n\n{$modStrings}\n";
+        $lang = "var app_strings = new Object();\n";
+        foreach ($app_strings as $k => $v) {
+            if (strpos($k, 'LBL_EMAIL_') !== false) {
+                $vJS = json_encode($v);
+                $lang .= "app_strings.{$k} = {$vJS};\n";
+            }
+        }
+        //Get the email mod strings but don't use the global variable as this may be overridden by
+        //other modules when the quick create is rendered.
+        $email_mod_strings = return_module_language($current_language, 'Emails');
+        $modStrings = "var mod_strings = new Object();\n";
+        foreach ($email_mod_strings as $k => $v) {
+            $v = str_replace("'", "\'", $v);
+            $modStrings .= "mod_strings.{$k} = '{$v}';\n";
+        }
+        $lang .= "\n\n{$modStrings}\n";
 
         //Grab the Inboundemail language pack
         $ieModStrings = "var ie_mod_strings = new Object();\n";
@@ -570,7 +595,7 @@ eoq;
      * Retrieves all relationship metadata for a user's address book
      * @return array
      */
-    function getContacts()
+    public function getContacts()
     {
         global $current_user;
 
@@ -593,7 +618,7 @@ eoq;
      * Saves changes to a user's address book
      * @param array contacts
      */
-    function setContacts($contacts)
+    public function setContacts($contacts)
     {
         global $current_user;
 
@@ -611,7 +636,7 @@ eoq;
      * Removes contacts from the user's address book
      * @param array ids
      */
-    function removeContacts($ids)
+    public function removeContacts($ids)
     {
         global $current_user;
 
@@ -633,7 +658,7 @@ eoq;
      * saves editted Contact info
      * @param string $str JSON serialized object
      */
-    function saveContactEdit($str)
+    public function saveContactEdit($str)
     {
 
         $json = getJSONobj();
@@ -668,7 +693,7 @@ eoq;
      * @param string module Module in focus
      * @return array
      */
-    function getEditContact($id, $module)
+    public function getEditContact($id, $module)
     {
         global $app_strings;
 
@@ -689,8 +714,10 @@ eoq;
             $contactMeta['last_name'] = $contact->last_name;
 
             $this->smarty->assign("app_strings", $app_strings);
-            $this->smarty->assign("contact_strings",
-                return_module_language($_SESSION['authenticated_user_language'], 'Contacts'));
+            $this->smarty->assign(
+                "contact_strings",
+                return_module_language($_SESSION['authenticated_user_language'], 'Contacts')
+            );
             $this->smarty->assign("contact", $contactMeta);
 
             $ea = new SugarEmailAddress();
@@ -719,7 +746,7 @@ eoq;
      * @param object $user User in focus
      * @return array
      */
-    function getUserContacts($contacts, $user = null)
+    public function getUserContacts($contacts, $user = null)
     {
 
         global $current_user;
@@ -770,8 +797,14 @@ eoq;
         while ($a = $user->db->fetchByAssoc($r)) {
             $c = array();
 
-            $c['name'] = $locale->getLocaleFormattedName($a['first_name'], "<b>{$a['last_name']}</b>", '', $a['title'],
-                '', $user);
+            $c['name'] = $locale->getLocaleFormattedName(
+                $a['first_name'],
+                "<b>{$a['last_name']}</b>",
+                '',
+                $a['title'],
+                '',
+                $user
+            );
             $c['id'] = $a['id'];
             $c['module'] = $a['module'];
             $c['email'] = $emailAddress->getAddressesByGUID($a['id'], $a['module']);
@@ -786,7 +819,7 @@ eoq;
 
     ///////////////////////////////////////////////////////////////////////////
     ////	EMAIL 2.0 Preferences
-    function getUserPrefsJS()
+    public function getUserPrefsJS()
     {
         global $current_user;
         global $locale;
@@ -798,7 +831,7 @@ eoq;
         $user = $current_user;
 
         // Check we are in a user's profile
-        if($GLOBALS['FOCUS']->module_name === 'Users' and !empty($GLOBALS['FOCUS']->id)) {
+        if ($GLOBALS['FOCUS']->module_name === 'Users' and !empty($GLOBALS['FOCUS']->id)) {
             $user = $GLOBALS['FOCUS'];
         }
 
@@ -883,7 +916,7 @@ eoq;
      * @param string $nodeLabel New sugar folder name
      * @param string $parentLabel Parent folder name
      */
-    function saveNewFolder($nodeLabel, $parentId, $isGroup = 0)
+    public function saveNewFolder($nodeLabel, $parentId, $isGroup = 0)
     {
         global $current_user;
 
@@ -909,7 +942,7 @@ eoq;
     /**
      * Saves user sort prefernces
      */
-    function saveListViewSortOrder($ieId, $focusFolder, $sortBy, $sortDir)
+    public function saveListViewSortOrder($ieId, $focusFolder, $sortBy, $sortDir)
     {
         global $current_user;
 
@@ -929,7 +962,7 @@ eoq;
     /**
      * Stickies folder collapse/open state
      */
-    function saveFolderOpenState($focusFolder, $focusFolderOpen)
+    public function saveFolderOpenState($focusFolder, $focusFolderOpen)
     {
         global $current_user;
 
@@ -948,7 +981,7 @@ eoq;
     /**
      * saves a folder's view state
      */
-    function saveListView($ieId, $folder)
+    public function saveListView($ieId, $folder)
     {
         global $current_user;
 
@@ -962,7 +995,7 @@ eoq;
     /**
      * Generates cache folder structure
      */
-    function preflightEmailCache($cacheRoot)
+    public function preflightEmailCache($cacheRoot)
     {
         // base
         if (!file_exists($cacheRoot)) {
@@ -985,7 +1018,7 @@ eoq;
         }
     }
 
-    function deleteEmailCacheForFolders($cacheRoot)
+    public function deleteEmailCacheForFolders($cacheRoot)
     {
         $filePath = $cacheRoot . "/folders/folders.php";
         if (file_exists($filePath)) {
@@ -998,7 +1031,7 @@ eoq;
      * Identifies subscribed mailboxes and empties the trash
      * @param object $ie InboundEmail
      */
-    function emptyTrash(&$ie)
+    public function emptyTrash(&$ie)
     {
         global $current_user;
 
@@ -1019,7 +1052,7 @@ eoq;
      * @param bool $forceRefresh
      * @return object TreeView object
      */
-    function getMailboxNodes()
+    public function getMailboxNodes()
     {
         global $sugar_config;
         global $current_user;
@@ -1075,8 +1108,17 @@ eoq;
                     $nodePath = $acctNode->_properties['id'];
 
                     foreach ($mailboxes as $k => $mbox) {
-                        $acctNode->add_node($this->buildTreeNode($k, $k, $mbox, $personalAccount->id,
-                            $nodePath, false, $personalAccount));
+                        $acctNode->add_node(
+                            $this->buildTreeNode(
+                                $k,
+                                $k,
+                                $mbox,
+                                $personalAccount->id,
+                                $nodePath,
+                                false,
+                                $personalAccount
+                            )
+                        );
                     }
 
                     $rootNode->add_node($acctNode);
@@ -1115,8 +1157,17 @@ eoq;
                 $nodePath = $rootNode->_properties['id'] . "::" . $acctNode->_properties['id'];
 
                 foreach ($mailboxes as $k => $mbox) {
-                    $acctNode->add_node($this->buildTreeNode($k, $k, $mbox, $groupAccount->id,
-                        $nodePath, true, $groupAccount));
+                    $acctNode->add_node(
+                        $this->buildTreeNode(
+                            $k,
+                            $k,
+                            $mbox,
+                            $groupAccount->id,
+                            $nodePath,
+                            true,
+                            $groupAccount
+                        )
+                    );
                 }
 
                 $rootNode->add_node($acctNode);
@@ -1131,12 +1182,14 @@ eoq;
         return $tree;
     }
 
-    function getMailBoxesFromCacheValue($mailAccount)
+    public function getMailBoxesFromCacheValue($mailAccount)
     {
         $foldersCache = $this->getCacheValue($mailAccount->id, 'folders', "folders.php", 'foldersCache');
         $mailboxes = $foldersCache['mailboxes'];
-        $mailboxesArray = $mailAccount->generateFlatArrayFromMultiDimArray($mailboxes,
-            $mailAccount->retrieveDelimiter());
+        $mailboxesArray = $mailAccount->generateFlatArrayFromMultiDimArray(
+            $mailboxes,
+            $mailAccount->retrieveDelimiter()
+        );
         $mailAccount->saveMailBoxFolders($mailboxesArray);
         $this->deleteEmailCacheForFolders($cacheRoot);
 
@@ -1154,7 +1207,7 @@ eoq;
      * @param bool forceRefresh
      * @return mixed
      */
-    function buildTreeNode($key, $label, $mbox, $ieId, $nodePath, $isGroup, $ie)
+    public function buildTreeNode($key, $label, $mbox, $ieId, $nodePath, $isGroup, $ie)
     {
         global $sugar_config;
 
@@ -1216,7 +1269,7 @@ eoq;
     /**
      * Totals the unread emails
      */
-    function getUnreadCount(&$ie, $mailbox)
+    public function getUnreadCount(&$ie, $mailbox)
     {
         global $sugar_config;
         $unseen = 0;
@@ -1232,7 +1285,7 @@ eoq;
      * @param array $ret
      * @return array
      */
-    function getDraftAttachments($ret)
+    public function getDraftAttachments($ret)
     {
         global $db;
 
@@ -1252,7 +1305,7 @@ eoq;
         return $ret;
     }
 
-    function createCopyOfInboundAttachment($ie, $ret, $uid)
+    public function createCopyOfInboundAttachment($ie, $ret, $uid)
     {
         global $sugar_config;
         if ($ie->isPop3Protocol()) {
@@ -1293,7 +1346,7 @@ eoq;
 
     } // fn
 
-    function parseAttachmentInfo(&$actualAttachmentInfo, $attachmentHtmlData)
+    public function parseAttachmentInfo(&$actualAttachmentInfo, $attachmentHtmlData)
     {
         $downLoadPHP = strpos($attachmentHtmlData, "index.php?entryPoint=download&");
         while ($downLoadPHP) {
@@ -1312,7 +1365,7 @@ eoq;
      * @param bool $addToAddressBook
      * @return array
      */
-    function getQuickCreateForm($publics, $email, $addToAddressBookButton = false)
+    public function getQuickCreateForm($publics, $email, $addToAddressBookButton = false)
     {
         require_once("include/EditView/EditView2.php");
         global $app_strings;
@@ -1391,8 +1444,12 @@ eoq;
         $EditView = new EditView();
         $EditView->ss = new Sugar_Smarty();
         //MFH BUG#20283 - checks for custom quickcreate fields
-        $EditView->setup($_REQUEST['qc_module'], $focus,
-            'custom/modules/' . $focus->module_dir . '/metadata/editviewdefs.php', 'include/EditView/EditView.tpl');
+        $EditView->setup(
+            $_REQUEST['qc_module'],
+            $focus,
+            'custom/modules/' . $focus->module_dir . '/metadata/editviewdefs.php',
+            'include/EditView/EditView.tpl'
+        );
         $EditView->process();
         $EditView->render();
 
@@ -1428,8 +1485,10 @@ eoq;
             require_once('include/language/jsLanguage.php');
             jsLanguage::createModuleStringsCache($_REQUEST['qc_module'], $GLOBALS['current_language']);
         }
-        $jsLanguage = getVersionedScript("cache/jsLanguage/{$_REQUEST['qc_module']}/{$GLOBALS['current_language']}.js",
-            $GLOBALS['sugar_config']['js_lang_version']);
+        $jsLanguage = getVersionedScript(
+            "cache/jsLanguage/{$_REQUEST['qc_module']}/{$GLOBALS['current_language']}.js",
+            $GLOBALS['sugar_config']['js_lang_version']
+        );
 
 
         $EditView->view = 'EmailQCView';
@@ -1437,8 +1496,11 @@ eoq;
         $EditView->defs['templateMeta']['form']['footerTpl'] = 'include/EditView/footer.tpl';
         $meta = array();
         $meta['html'] = $jsLanguage . $EditView->display(false, true);
-        $meta['html'] = str_replace("src='" . getVersionedPath('include/SugarEmailAddress/SugarEmailAddress.js') . "'",
-            '', $meta['html']);
+        $meta['html'] = str_replace(
+            "src='" . getVersionedPath('include/SugarEmailAddress/SugarEmailAddress.js') . "'",
+            '',
+            $meta['html']
+        );
         $meta['emailAddress'] = $emailAddress;
 
         $mod_strings = return_module_language($current_language, 'Emails');
@@ -1453,7 +1515,7 @@ eoq;
      * @param bool $addToAddressBook
      * @return array
      */
-    function getImportForm($publics, $email, $formName = 'ImportEditView')
+    public function getImportForm($publics, $email, $formName = 'ImportEditView')
     {
         require_once("include/EditView/EditView2.php");
         require_once("include/TemplateHandler/TemplateHandler.php");
@@ -1509,7 +1571,7 @@ eoq;
      * This function returns the detail view for email in new 2.0 interface
      *
      */
-    function getDetailViewForEmail2($emailId)
+    public function getDetailViewForEmail2($emailId)
     {
 
         require_once('include/DetailView/DetailView.php');
@@ -1528,8 +1590,11 @@ eoq;
         if ($focus->type == 'out') {
             $title = getClassicModuleTitle('Emails', array($mod_strings['LBL_SENT_MODULE_NAME'], $focus->name), true);
         } elseif ($focus->type == 'draft') {
-            $title = getClassicModuleTitle('Emails', array($mod_strings['LBL_LIST_FORM_DRAFTS_TITLE'], $focus->name),
-                true);
+            $title = getClassicModuleTitle(
+                'Emails',
+                array($mod_strings['LBL_LIST_FORM_DRAFTS_TITLE'], $focus->name),
+                true
+            );
         } elseif ($focus->type == 'inbound') {
             $title = getClassicModuleTitle('Emails', array($mod_strings['LBL_INBOUND_TITLE'], $focus->name), true);
         }
@@ -1577,10 +1642,10 @@ eoq;
         $smarty->assign("JS_CUSTOM_VERSION", $GLOBALS['sugar_config']['js_custom_version']);
         if (!empty($focus->reply_to_email)) {
             $replyTo = "
-				<tr>
-		        <td class=\"tabDetailViewDL\"><span>" . $mod_strings['LBL_REPLY_TO_NAME'] . "</span></td>
-		        <td colspan=3 class=\"tabDetailViewDF\"><span>" . $focus->reply_to_addr . "</span></td>
-		        </tr>";
+                <tr>
+                <td class=\"tabDetailViewDL\"><span>" . $mod_strings['LBL_REPLY_TO_NAME'] . "</span></td>
+                <td colspan=3 class=\"tabDetailViewDF\"><span>" . $focus->reply_to_addr . "</span></td>
+                </tr>";
             $smarty->assign("REPLY_TO", $replyTo);
         }
         ///////////////////////////////////////////////////////////////////////////////
@@ -1633,7 +1698,7 @@ eoq;
     /**
      * Sets the "read" flag in the overview cache
      */
-    function setReadFlag($ieId, $mbox, $uid)
+    public function setReadFlag($ieId, $mbox, $uid)
     {
         $this->markEmails('read', $ieId, $mbox, $uid);
     }
@@ -1646,7 +1711,7 @@ eoq;
      * @param string $folder IMAP folder structure or SugarFolder GUID
      * @param string $uids Comma sep list of UIDs or GUIDs
      */
-    function markEmails($type, $ieId, $folder, $uids)
+    public function markEmails($type, $ieId, $folder, $uids)
     {
 
         global $app_strings;
@@ -1750,7 +1815,7 @@ eoq;
         }
     }
 
-    function doAssignment($distributeMethod, $ieid, $folder, $uids, $users)
+    public function doAssignment($distributeMethod, $ieid, $folder, $uids, $users)
     {
         global $app_strings;
         $users = explode(",", $users);
@@ -1799,11 +1864,11 @@ eoq;
      * get team id and team set id from request
      * @return  array
      */
-    function getTeams()
+    public function getTeams()
     {
     }
 
-    function doDistributionWithMethod($users, $emailIds, $distributionMethod)
+    public function doDistributionWithMethod($users, $emailIds, $distributionMethod)
     {
         // we have users and the items to distribute
         if ($distributionMethod == 'roundRobin') {
@@ -1828,7 +1893,7 @@ eoq;
      * @param    $mailIds    array of email ids to push on those users
      * @return  boolean        true on success
      */
-    function distRoundRobin($userIds, $mailIds)
+    public function distRoundRobin($userIds, $mailIds)
     {
         // check if we have a 'lastRobin'
         $lastRobin = $userIds[0];
@@ -1859,7 +1924,7 @@ eoq;
      * @param    $mailIds    array of email ids to push on those users
      * @return  boolean        true on success
      */
-    function distLeastBusy($userIds, $mailIds)
+    public function distLeastBusy($userIds, $mailIds)
     {
         foreach ($mailIds as $k => $mailId) {
             $email = new Email();
@@ -1886,7 +1951,7 @@ eoq;
      * @param    $mailIds    array of email ids to push
      * @return  boolean        true on success
      */
-    function distDirect($user, $mailIds)
+    public function distDirect($user, $mailIds)
     {
         foreach ($mailIds as $k => $mailId) {
             $email = new Email();
@@ -1900,7 +1965,7 @@ eoq;
         return true;
     }
 
-    function getAssignedEmailsCountForUsers($userIds)
+    public function getAssignedEmailsCountForUsers($userIds)
     {
         $counts = array();
         foreach ($userIds as $id) {
@@ -1911,7 +1976,7 @@ eoq;
         return $counts;
     } // fn
 
-    function getLastRobin($ie)
+    public function getLastRobin($ie)
     {
         $lastRobin = "";
         if ($this->validCacheFileExists($ie->id, 'folders', "robin.cache.php")) {
@@ -1920,7 +1985,7 @@ eoq;
         return $lastRobin;
     } // fn
 
-    function setLastRobin($ie, $lastRobin)
+    public function setLastRobin($ie, $lastRobin)
     {
         global $sugar_config;
         $cacheFolderPath = sugar_cached("modules/Emails/{$ie->id}/folders");
@@ -1934,7 +1999,7 @@ eoq;
      * returns the metadata defining a single email message for display.  Uses cache file if it exists
      * @return array
      */
-    function getSingleMessage($ie)
+    public function getSingleMessage($ie)
     {
 
         global $timedate;
@@ -1984,11 +2049,21 @@ eoq;
             }
             if ($writeToCacheFile) {
                 if ($ie->isPop3Protocol()) {
-                    $this->writeCacheFile('out', $out, $_REQUEST['ieId'], 'messages',
-                        "{$_REQUEST['mbox']}{$md5uidl}.php");
+                    $this->writeCacheFile(
+                        'out',
+                        $out,
+                        $_REQUEST['ieId'],
+                        'messages',
+                        "{$_REQUEST['mbox']}{$md5uidl}.php"
+                    );
                 } else {
-                    $this->writeCacheFile('out', $out, $_REQUEST['ieId'], 'messages',
-                        "{$_REQUEST['mbox']}{$_REQUEST['uid']}.php");
+                    $this->writeCacheFile(
+                        'out',
+                        $out,
+                        $_REQUEST['ieId'],
+                        'messages',
+                        "{$_REQUEST['mbox']}{$_REQUEST['uid']}.php"
+                    );
                 } // else
                 // restore date in the users preferred format to be send on to UI for diaply
                 $out['meta']['email']['date_start'] = $dateTimeInUserFormat;
@@ -1998,14 +2073,14 @@ eoq;
         if (!empty($out['meta']['email']['cc_addrs'])) {
             $ccs = $this->generateExpandableAddrs($out['meta']['email']['cc_addrs']);
             $out['meta']['cc'] = <<<eoq
-				<tr>
-					<td NOWRAP valign="top" class="displayEmailLabel">
-						{$app_strings['LBL_EMAIL_CC']}:
-					</td>
-					<td class="displayEmailValue">
-						{$ccs}
-					</td>
-				</tr>
+                <tr>
+                    <td NOWRAP valign="top" class="displayEmailLabel">
+                        {$app_strings['LBL_EMAIL_CC']}:
+                    </td>
+                    <td class="displayEmailValue">
+                        {$ccs}
+                    </td>
+                </tr>
 eoq;
         }
 
@@ -2032,7 +2107,7 @@ eoq;
      * @param int $folderListCacheOffset Seconds for valid cache file
      * @return string HTML render of list.
      */
-    function getListEmails($ieId, $mbox, $folderListCacheOffset, $forceRefresh = 'false')
+    public function getListEmails($ieId, $mbox, $folderListCacheOffset, $forceRefresh = 'false')
     {
         global $sugar_config;
 
@@ -2048,7 +2123,7 @@ eoq;
      * Returns the templatized compose screen.  Used by reply, forwards and draft status messages.
      * @param object email Email bean in focus
      */
-    function displayComposeEmail($email)
+    public function displayComposeEmail($email)
     {
         global $locale;
         global $current_user;
@@ -2132,7 +2207,7 @@ eoq;
      * @param string type
      * @return object email
      */
-    function handleReplyType($email, $type)
+    public function handleReplyType($email, $type)
     {
         global $mod_strings;
         $GLOBALS['log']->debug("****At Handle Reply Type: $type");
@@ -2197,7 +2272,7 @@ eoq;
      * Generates a UNION query to get one list of users, contacts, leads, and
      * prospects; used specifically for the addressBook
      */
-    function _getPeopleUnionQuery($whereArr, $person)
+    public function _getPeopleUnionQuery($whereArr, $person)
     {
         global $current_user, $app_strings;
         global $db;
@@ -2282,7 +2357,7 @@ eoq;
      * @param $condition array of conditions inclued bean id
      * @return array('query' => $q, 'countQuery' => $countq);
      */
-    function getRelatedEmail($beanType, $whereArr, $relatedBeanInfoArr = '')
+    public function getRelatedEmail($beanType, $whereArr, $relatedBeanInfoArr = '')
     {
         global $beanList, $current_user, $app_strings, $db;
         $finalQuery = '';
@@ -2343,7 +2418,7 @@ eoq;
         return array('query' => $finalQuery, 'countQuery' => $countq);
     }
 
-    function findEmailFromBeanIds($beanIds, $beanType, $whereArr)
+    public function findEmailFromBeanIds($beanIds, $beanType, $whereArr)
     {
         global $current_user;
         $q = '';
@@ -2421,7 +2496,7 @@ eoq;
      * @param bool $returnString False will return an array
      * @return mixed
      */
-    function _cleanUIDList($uids, $returnString = false)
+    public function _cleanUIDList($uids, $returnString = false)
     {
         global $app_strings;
         $GLOBALS['log']->debug("_cleanUIDList: before - [ {$uids} ]");
@@ -2520,8 +2595,8 @@ eoq;
             ),
         );
 
-        $q = "SELECT * FROM folders f WHERE f.created_by = '{$user->id}' AND f.deleted = 0 AND coalesce(" . $user->db->convert("f.folder_type",
-                "length") . ",0) > 0";
+        $q = "SELECT * FROM folders f WHERE f.created_by = '{$user->id}' AND f.deleted = 0 AND coalesce(" .
+            $user->db->convert("f.folder_type", "length") . ",0) > 0";
         $r = $user->db->query($q);
 
         while ($row = $GLOBALS['db']->fetchByAssoc($r)) {
@@ -2569,7 +2644,7 @@ eoq;
      * @param string $userId
      * @return string
      */
-    function generateDynamicFolderQuery($type, $userId)
+    public function generateDynamicFolderQuery($type, $userId)
     {
         $q = $this->coreDynamicFolderQuery;
 
@@ -2596,7 +2671,7 @@ eoq;
     /**
      * Preps the User's cache dir
      */
-    function preflightUserCache()
+    public function preflightUserCache()
     {
         $path = clean_path($this->userCacheDir);
         if (!file_exists($this->userCacheDir)) {
@@ -2610,7 +2685,7 @@ eoq;
         }
     }
 
-    function clearInboundAccountCache($ieId)
+    public function clearInboundAccountCache($ieId)
     {
         global $sugar_config;
         $cacheRoot = sugar_cached("modules/Emails/{$ieId}");
@@ -2628,18 +2703,24 @@ eoq;
      * returns an array of EmailTemplates that the user has access to for the compose email screen
      * @return array
      */
-    function getEmailTemplatesArray()
+    public function getEmailTemplatesArray()
     {
 
         global $app_strings;
 
-        if (ACLController::checkAccess('EmailTemplates', 'list', true) && ACLController::checkAccess('EmailTemplates',
-                'view', true)
+        if (ACLController::checkAccess('EmailTemplates', 'list', true) &&
+            ACLController::checkAccess('EmailTemplates', 'view', true)
         ) {
             $et = new EmailTemplate();
-            $etResult = $et->db->query($et->create_new_list_query('',
-                "(email_templates.type IS NULL OR email_templates.type='' OR email_templates.type='email')", array(),
-                array(), ''));
+            $etResult = $et->db->query(
+                $et->create_new_list_query(
+                    '',
+                    "(email_templates.type IS NULL OR email_templates.type='' OR email_templates.type='email')",
+                    array(),
+                    array(),
+                    ''
+                )
+            );
             $email_templates_arr = array('' => $app_strings['LBL_NONE']);
             while ($etA = $et->db->fetchByAssoc($etResult)) {
                 $email_templates_arr[$etA['id']] = $etA['name'];
@@ -2651,7 +2732,7 @@ eoq;
         return $email_templates_arr;
     }
 
-    function getFromAccountsArray($ie)
+    public function getFromAccountsArray($ie)
     {
         global $current_user;
         global $app_strings;
@@ -2736,7 +2817,7 @@ eoq;
      * @param unknown_type $ie
      * @return unknown
      */
-    function getFromAllAccountsArray($ie, $ret)
+    public function getFromAllAccountsArray($ie, $ret)
     {
         global $current_user;
         global $app_strings;
@@ -2861,7 +2942,7 @@ eoq;
      * @param string Name to wrap highest level items in array
      * @return string XML
      */
-    function arrayToXML($a, $paramName)
+    public function arrayToXML($a, $paramName)
     {
         if (!is_array($a)) {
             return '';
@@ -2888,7 +2969,7 @@ eoq;
     /**
      * Re-used option getter for Show Accounts multiselect pane
      */
-    function getShowAccountsOptions(&$ie)
+    public function getShowAccountsOptions(&$ie)
     {
         global $current_user;
         global $app_strings;
@@ -2959,7 +3040,7 @@ eoq;
         return $ieAccountsShowOptionsMeta;
     }
 
-    function getShowAccountsOptionsForSearch(&$ie)
+    public function getShowAccountsOptionsForSearch(&$ie)
     {
         global $current_user;
         global $app_strings;
@@ -2989,7 +3070,7 @@ eoq;
      * Formats a display message on successful async call
      * @param string $type Type of message to display
      */
-    function displaySuccessMessage($type)
+    public function displaySuccessMessage($type)
     {
         global $app_strings;
 
@@ -3016,7 +3097,7 @@ eoq;
      * @param int refreshOffset Refresh time in secs.
      * @return mixed.
      */
-    function validCacheFileExists($ieId, $type, $file, $refreshOffset = -1)
+    public function validCacheFileExists($ieId, $type, $file, $refreshOffset = -1)
     {
         global $sugar_config;
 
@@ -3040,7 +3121,7 @@ eoq;
      * @param string $key name of cache value
      * @return mixed
      */
-    function getCacheValue($ieId, $type, $file, $key)
+    public function getCacheValue($ieId, $type, $file, $key)
     {
         global $sugar_config;
 
@@ -3073,7 +3154,7 @@ eoq;
      * @param string $file The cachefile name
      * @return string
      */
-    function getCacheTimestamp($ieId, $type, $file)
+    public function getCacheTimestamp($ieId, $type, $file)
     {
         global $sugar_config;
 
@@ -3100,7 +3181,7 @@ eoq;
      * @param string $type Type of cache file: folders, messages, etc.
      * @param string $file The cachefile name
      */
-    function setCacheTimestamp($ieId, $type, $file)
+    public function setCacheTimestamp($ieId, $type, $file)
     {
         global $sugar_config;
 
@@ -3128,7 +3209,7 @@ eoq;
      * @param string $type Folder in cache
      * @param string $file Cache file name
      */
-    function writeCacheFile($key, $public, $ieId, $type, $file)
+    public function writeCacheFile($key, $public, $ieId, $type, $file)
     {
         global $sugar_config;
 
@@ -3151,7 +3232,7 @@ eoq;
      * @param string $file Full path (relative) with cache file name
      * @return bool
      */
-    function _writeCacheFile($array, $file)
+    public function _writeCacheFile($array, $file)
     {
         global $sugar_config;
 
@@ -3160,7 +3241,7 @@ eoq;
         $date = date("r");
         $the_string = <<<eoq
 <?php // created: {$date}
-	\$cacheFile = {$arrayString};
+    \$cacheFile = {$arrayString};
 ?>
 eoq;
         if ($fh = @sugar_fopen($file, "w")) {
@@ -3182,7 +3263,7 @@ eoq;
      * @param string $resultsParam The resultsList name
      * @return string
      */
-    function jsonOuput($data, $resultsParam, $count = 0, $fromCache = true, $unread = -1)
+    public function jsonOuput($data, $resultsParam, $count = 0, $fromCache = true, $unread = -1)
     {
         global $app_strings;
 
@@ -3214,7 +3295,7 @@ eoq;
      * @param string master list Item
      * @return string
      */
-    function xmlOutput($a, $paramName, $count = 0, $fromCache = true, $unread = -1)
+    public function xmlOutput($a, $paramName, $count = 0, $fromCache = true, $unread = -1)
     {
         global $app_strings;
         $count = ($count > 0) ? $count : 0;
@@ -3254,7 +3335,7 @@ eoq;
      * @param int $defaultNum
      * @return string $str
      */
-    function generateExpandableAddrs($str)
+    public function generateExpandableAddrs($str)
     {
         global $mod_strings;
         $tempStr = $str . ',';
@@ -3282,7 +3363,7 @@ eoq;
      * @param String $str email address string
      * @return String converted string
      */
-    function unifyEmailString($str)
+    public function unifyEmailString($str)
     {
         preg_match_all('/@.*;/U', $str, $matches);
         if (!empty($matches[0])) {
