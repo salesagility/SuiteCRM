@@ -2171,8 +2171,30 @@ function enableInsideViewConnector()
 }
 
 /**
+ * Gets the username of the user under which the PHP script is currently running
+ * Notes:
+ * - works on Windows and Linux, tries a variety of methods to accomodate different systems and hosting restrictions
+ * - on Windows, return full username in form DOMAIN\USER
+ * - returns empty string if failed
+*/
+
+function getRunningUser()
+{
+    // works on Windows and Linux, but might return null on systems that include exec in disabled_functions in php.ini (typical in shared hosting)
+    $runningUser = exec('whoami');
+
+    if ($runningUser == null) {  // matches null, false and ""
+        if (is_windows())
+            $runningUser = getenv('USERDOMAIN').'\\'.getenv('USERNAME');
+        else
+            $runningUser = posix_getpwuid(posix_geteuid())['name'];
+    }
+    return ($runningUser == null) ? "" : $runningUser;
+}
+
+/**
  * Adds a username to the allowed_cron_users array in config.php
- * @param string $addUser the name of the user to add [usually obtained with exec('whoami');]
+ * @param string $addUser the name of the user to add [usually obtained with getRunningUser()]
  * Notes:
  * - this is Linux only, does nothing on Windows
  * - does not repeat the user if he is already there

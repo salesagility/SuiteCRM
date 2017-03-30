@@ -675,9 +675,9 @@ EOQ;
         break;
     case 'register.php':
     case 'complete_install.php':
-        // save current web-server user for the cron user check mechanism: 
+        // save current web-server user for the cron user check mechanism:
         require_once 'install/install_utils.php';
-        addCronAllowedUser(exec('whoami'));
+        addCronAllowedUser(getRunningUser());
 
         session_unset();
         break;
