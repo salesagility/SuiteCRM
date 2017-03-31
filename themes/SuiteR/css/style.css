@@ -5135,10 +5135,6 @@ td.inlineEditActive{
 
 /* Fix to address bug with popups overflowing in the emails module*/
 
-#editAccountDialogue_c{
-    /*height:90% !important;*/
-}
-
 #editAccountDialogue{
     /*height:90% !important;*/
     overflow:auto !important;
