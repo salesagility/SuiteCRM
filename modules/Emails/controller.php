@@ -51,6 +51,11 @@ if($_REQUEST['action'] === 'Popup') {
     $GLOBALS['sugar_config']['http_referer']['actions'][] = 'Popup';
 }
 
+if($_REQUEST['action'] === 'ListInboundEmails') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'ListInboundEmails';
+}
+
+
 class EmailsController extends SugarController
 {
     public function action_index()
@@ -272,5 +277,72 @@ class EmailsController extends SugarController
 
     public function action_Popup () {
         $this->view = 'popup';
+    }
+
+    public function action_ListInboundEmails () {
+        require_once 'include/SugarFolders/SugarFolders.php';
+        global $current_user;
+
+        $user = $current_user;
+        if($_REQUEST['user_id']) {
+            $user = BeanFactory::getBean('Users', $_REQUEST['user_id']);
+        }
+
+        $showFolders = sugar_unserialize(base64_decode($user->getPreference('showFolders', 'Emails')));
+
+        $rootNode = new ExtNode('','');
+        $sf = new SugarFolder();
+        $folderOpenState = $user->getPreference('folderOpenState', 'Emails');
+        $foldersSubscribed = $sf->getUserFolders($rootNode, sugar_unserialize($folderOpenState), $user, true);
+
+        $email = new Email();
+        $ie = new InboundEmail();
+
+        foreach ($showFolders as $group_id) {
+            $ie->retrieveByGroupId($group_id);
+            $ie->mailbox = (isset($_REQUEST['mbox']) && !empty($_REQUEST['mbox'])) ? $_REQUEST['mbox'] : "INBOX";
+            $ie->checkEmail(false);
+        }
+
+
+
+//        $GLOBALS['log']->info("[EMAIL] - Start checkEmail action for user [{$user->user_name}]");
+//        if(isset($_REQUEST['ieId']) && !empty($_REQUEST['ieId'])) {
+//            $ie->retrieve($_REQUEST['ieId']);
+//            $ie->mailbox = (isset($_REQUEST['mbox']) && !empty($_REQUEST['mbox'])) ? $_REQUEST['mbox'] : "INBOX";
+//            $ie->checkEmail(false);
+//        } elseif(isset($_REQUEST['all']) && !empty($_REQUEST['all'])) {
+//            $showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+//
+//            $GLOBALS['log']->info("[EMAIL] - checkEmail found ".count($showFolders)." accounts to check for user [{$user->user_name}]");
+//
+//            if(!empty($showFolders) && is_array($showFolders)) {
+//                foreach($showFolders as $ieId) {
+//                    $ieId = trim($ieId);
+//                    if(!empty($ieId)) {
+//                        $GLOBALS['log']->info("[EMAIL] - Start checking email for GUID [{$ieId}] for user [{$user->user_name}]");
+//                        $ie->disconnectMailserver();
+//                        // If I-E not exist - skip check
+//                        if (is_null($ie->retrieve($ieId))) {
+//                            $GLOBALS['log']->info("[EMAIL] - Inbound with GUID [{$ieId}] not exist");
+//                            continue;
+//                        }
+//                        $ie->checkEmail(false);
+//                        $GLOBALS['log']->info("[EMAIL] - Done checking email for GUID [{$ieId}] for user [{$user->user_name}]");
+//                    }
+//                }
+//            } else {
+//                $GLOBALS['log']->info("EMAIL2.0: at checkEmail() async call - not subscribed accounts to check.");
+//            }
+//        }
+
+        $tree = $email->et->getMailboxNodes(true); // preserve cache files
+        $return = $tree->generateNodesRaw();
+        $out = json_encode($return);
+
+//
+//        $inboundEmails = BeanFactory::getBean('InboundEmail');
+        echo $out;
+        $this->view = 'ajax';
     }
 }
