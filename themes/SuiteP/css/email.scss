@@ -407,6 +407,11 @@
 }
 
 
+#settingsDialog #userFolders {
+  width: 100%;
+  min-height: 200px;
+}
+
 @media (max-width: $xs-breakpoint) {
   .compose-view {
     .panel {

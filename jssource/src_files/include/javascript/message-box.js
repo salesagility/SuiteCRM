@@ -72,6 +72,7 @@
      * @event ok
      */
     self.onOk = function () {
+      "use strict";
       $(self).trigger('ok');
       return false;
     };
@@ -80,6 +81,7 @@
      * @event cancel
      */
     self.onCancel = function () {
+      "use strict";
       $(self).trigger('cancel');
       return false;
     };
@@ -111,6 +113,7 @@
      * @param content htmlString|function
      */
     self.setTitle = function(content) {
+      "use strict";
       self.controls.modal.container.find('.modal-title').html(content);
     };
 
@@ -118,6 +121,7 @@
      * @return {jQuery}
      */
     self.getTitle = function() {
+      "use strict";
       return self.controls.modal.container.find('.modal-title');
     };
 
@@ -126,6 +130,7 @@
      * @param content htmlString|function
      */
     self.setBody = function(content) {
+      "use strict";
       self.controls.modal.container.find('.modal-body').html(content);
     };
 
@@ -133,6 +138,7 @@
      * @return {jQuery}
      */
     self.getBody = function() {
+      "use strict";
       return self.controls.modal.container.find('.modal-body');
     };
 
@@ -140,6 +146,7 @@
      *
      */
     self.showHeader = function() {
+      "use strict";
       return self.controls.modal.container.find('.modal-header').show();
     };
 
@@ -147,6 +154,7 @@
      *
      */
     self.hideHeader = function() {
+      "use strict";
       return self.controls.modal.container.find('.modal-header').hide();
     };
 
@@ -154,6 +162,7 @@
      *
      */
     self.showFooter = function() {
+      "use strict";
       return self.controls.modal.container.find('.modal-footer').show();
     };
 
@@ -161,6 +170,7 @@
      *
      */
     self.hideFooter = function() {
+      "use strict";
       return self.controls.modal.container.find('.modal-footer').hide();
     };
 
@@ -168,6 +178,7 @@
     self.footerContent = '<button class="button btn-ok" type="button">'+SUGAR.language.translate('','LBL_OK')+'</button> <button class="button btn-cancel" type="button">'+SUGAR.language.translate('','LBL_CANCEL_BUTTON_LABEL')+'</button> ';
 
     self.construct = function (constructOptions) {
+      "use strict";
       if(typeof self.controls.modal.container === "undefined") {
         if(typeof opts.onOK === "undefined") {
           opts.onOK = self.onOk;
@@ -248,6 +259,7 @@
      * @destructor
      */
     self.destruct = function () {
+      "use strict";
       self.attr('aria-hidden', "true");
       $('.modal-backdrop').last().remove();
       if($('.message-box').length <= 1) {
@@ -287,5 +299,6 @@
  * @param options
  */
 messageBox = function (options) {
+  "use strict";
   return $('<div></div>').appendTo('body').messageBox(options);
 };

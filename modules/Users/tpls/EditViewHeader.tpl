@@ -115,6 +115,22 @@ EditView_tabs.on('contentReady', function(e){
     if ( document.location.hash == '#tab5' ) {
         EditView_tabs.selectTab(eapmTabIndex);
     }
+
+    $(function(){
+        var emailAccountSettingsLoadingStart = false;
+        $('#tab6').click(function () {
+            if(!emailAccountSettingsLoadingStart) {
+                try {
+                    emailAccountSettingsLoadingStart = true;
+                    SE.settings.showSettingsInline();
+                } catch(e) {
+                    console.error(e);
+                    emailAccountSettingsLoadingStart = false;
+                }
+            }
+        });
+    });
+
 {/literal}
 {/if}
 
@@ -152,6 +168,7 @@ EditView_tabs.on('contentReady', function(e){
         {if $ID}
         <li><a id="tab5" href="#tab5" style='display:{$HIDE_FOR_GROUP_AND_PORTAL};'><em>{$MOD.LBL_EAPM_SUBPANEL_TITLE}</em></a></li>
         {/if}
+        <li><a id="tab6" href="#tab6" style='display:{$HIDE_FOR_GROUP_AND_PORTAL};'><em>{$MOD.LBL_USER_EMAIL_ACCOUNT_SETTINGS}</em></a></li>
     </ul>
     <div class="yui-content user-tab-content">
         <div>

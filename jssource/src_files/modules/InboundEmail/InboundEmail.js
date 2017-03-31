@@ -74,6 +74,12 @@ Rot13 = {
     }
 }
 
+var moveCenter = function(sel) {
+  var $elem = $(sel);
+  var $window = $(window);
+  $elem.css('left', (($window.width()-$elem.width()) / 2) + 'px');
+  $elem.css('top', (($window.height()-$elem.height()) / 2) + 'px');
+};
 
 function getEncryptedPassword(login, password, mailbox) {
 	var words = new Array(login, password, mailbox);
@@ -164,7 +170,7 @@ function ie_test_open_popup_with_submit(module_name, action, pageTarget, width, 
 	            this.body.style.width = w
 	    }
 	}
-	var title = SUGAR.language.get('Emails', 'LBL_TEST_SETTINGS');
+	var title = SUGAR.language.get('app_strings', 'LBL_TEST_SETTINGS');
 	if (typeof(title) == "undefined" || title == "undefined")
 	   title = SUGAR.language.get('InboundEmail', 'LBL_TEST_SETTINGS');
 	SI.testDlg.setHeader(title);
@@ -175,6 +181,9 @@ function ie_test_open_popup_with_submit(module_name, action, pageTarget, width, 
 	if (Connect.url) URL = Connect.url + "&" +  url;
     Connect.asyncRequest("POST", URL, {success:SI.testDlg._updateContent, failure:SI.testDlg.hide, scope:SI.testDlg});
     SI.testDlg.show();
+
+  // popup move to center
+  moveCenter("#testSettingsDiv_c");
 
 }
 
@@ -268,6 +277,9 @@ function getFoldersListForInboundAccount(module_name, action, pageTarget, width,
     if (Connect.url) URL = Connect.url + "&" +  url;
     Connect.asyncRequest("POST", URL, {success:SI.listDlg._updateContent, failure:SI.listDlg.hide, scope:SI.listDlg});
     SI.listDlg.show();
+  
+  // popup move to center
+  moveCenter("#selectFoldersDiv_c");
 
 } // fn
 

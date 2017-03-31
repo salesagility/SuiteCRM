@@ -4464,21 +4464,21 @@ class InboundEmail extends SugarBean {
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="detail view">
 				<tr>
 					<td valign="top" width='10%' NOWRAP scope="row">
-						<slot>
+						<span>
 							<b>{$mod_strings['LBL_CASE_MACRO']}:</b>
-						</slot>
+						</span>
 					</td>
 					<td valign="top" width='20%'>
-						<slot>
+						<span>
 							<input name="inbound_email_case_macro" type="text" value="{$macro}">
-						</slot>
+						</span>
 					</td>
 					<td valign="top" width='70%'>
-						<slot>
+						<span>
 							{$mod_strings['LBL_CASE_MACRO_DESC']}
 							<br />
 							<i>{$mod_strings['LBL_CASE_MACRO_DESC2']}</i>
-						</slot>
+						</span>
 					</td>
 				</tr>
 			</table>
@@ -4767,16 +4767,16 @@ eoq;
 			echo '
 			<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
 				<tr height="20">
-					<td scope="col" width="25%"  colspan="2"><slot>
+					<td scope="col" width="25%"  colspan="2"><span>
 						'.$mod_strings['LBL_WARN_IMAP_TITLE'].'
-					</slot></td>
+					</span></td>
 				</tr>
 				<tr>
-					<td scope="row" valign=TOP bgcolor="#fdfdfd" width="20%"><slot>
+					<td scope="row" valign=TOP bgcolor="#fdfdfd" width="20%"><span>
 						'.$mod_strings['LBL_WARN_IMAP'].'
-					<td scope="row" valign=TOP class="oddListRowS1" bgcolor="#fdfdfd" width="80%"><slot>
+					<td scope="row" valign=TOP class="oddListRowS1" bgcolor="#fdfdfd" width="80%"><span>
 						<span class=error>'.$mod_strings['LBL_WARN_NO_IMAP'].'</span>
-					</slot></td>
+					</span></td>
 				</tr>
 			</table>
 			<br>';

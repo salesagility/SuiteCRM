@@ -96,7 +96,7 @@ class UserViewHelper {
         $this->setupEmailSettings();
         $this->setupThemeTab();
         $this->setupAdvancedTab();
-
+        $this->setupEmailAccountSettings();
     }
 
     protected function assignUserTypes() {
@@ -752,9 +752,31 @@ class UserViewHelper {
             $this->ss->assign('MAIL_SMTPSSL',$mail_smtpssl);
         }
         $this->ss->assign('HIDE_IF_CAN_USE_DEFAULT_OUTBOUND',$hide_if_can_use_default );
-
+        $this->ss->assign('hideEmailOptionsOnUserProfileTab', true);
     }
 
+    protected function setupEmailAccountSettings() {
+        global $current_user;
+        /**
+         * Since version 7.9. The email settings were moved to the users profile. We need to be able to change
+         * a users settings instead of just the current user.
+         */
+        $user = $current_user;
+
+        // Check we are in a user's profile
+        if($GLOBALS['FOCUS']->module_name === 'Users' and !empty($GLOBALS['FOCUS']->id)) {
+            $user = $GLOBALS['FOCUS'];
+        }
+        $echo = '';
+        $focus = new Email();
+        $focus->email2init();
+        $focus->et->preflightUser($user);
+        $this->ss->assign('showEmailOptionsOnEmailSettingsTab', true);
+        $out = $focus->et->displayEmailFrame(true, $this->ss->get_template_vars());
+        $echo .= $out;
+        $echo .= "<script>var composePackage = null;</script>";
+        $this->ss->assign('emailAccountSettingsTabContents', $echo);
+    }
 
     /**
      * setUserType
