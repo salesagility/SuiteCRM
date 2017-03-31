@@ -38,6 +38,10 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 $mod_strings = array(
     'LBL_SALUTATION' => 'Salutation',
     'LBL_NAME' => 'Name',
