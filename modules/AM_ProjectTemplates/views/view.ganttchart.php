@@ -159,47 +159,6 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail {
 
         <!--Mark-up for the main body of the view-->
         
-			<!-- div class="moduleTitle">
-				<h2> <?php echo $project_template->name;?> </h2>
-				<div class="clear"></div><br>
-				<a class="utilsLink" href="index.php?module=AM_ProjectTemplates&action=DetailView&record=<?php echo $_REQUEST["record"];?>&return_module=AM_ProjectTemplates&return_action=view_GanttChart" id="create_link"><?php echo $mod_strings['LBL_VIEW_DETAIL'];?></a></span>
-				<span class="utils">&nbsp; 
-				
-				<div class="clear"></div>
-			</div>
-
-			<div class="yui-navset detailview_tabs yui-navset-top" id="Project_detailview_tabs">
-				< !--ul class="yui-nav"-- >
-				<div class="yui-content">    
-					<div id="tabcontent0">
-						<div id="detailpanel_1" class="detail view  detail508 expanded">
-							<table id="project_information" class="panelContainer" cellspacing="0">
-							<tbody
-							<tr>
-							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_VIEW_GANTT_DURATION'];?></td>
-							<td class="inlineEdit" width="37.5%"><?php echo $this->time_range($start_date, $end_date);?></td>
-							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_STATUS'];?></td>
-							<td class="inlineEdit" width="37.5%"><?php echo $app_list_strings['project_status_dom'][$project_template->status];?></td>
-							</tr>
-							<tr>
-							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_ASSIGNED_USER_NAME'];?></td>
-							<td class="inlineEdit" width="37.5%"><?php echo $project_template->assigned_user_name;?></td>
-							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_PRIORITY'];?></td>
-							<td class="" width="37.5%"><?php echo $project_template->priority ;?></td>
-							</tr>
-							< !--tr>
-							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_DESCRIPTION'];?></td>
-							<td class="inlineEdit" type="text" colspan="3" width="87.5%"><?php echo $project_template->description;?></td>
-							</tr-- >
-							</tbody></table>
-						</div>
-					</div>
-				</div>
-				<br>
-
-			</div -->
-
-
         <div id="wrapper" >
 
 			<?php
