@@ -57,7 +57,6 @@ $mod_strings['LBL_MODULE_TYPE'] = 'Module Type to Display:';
 $mod_strings['LBL_DISTANCE'] = 'Distance (Radius):';
 $mod_strings['LBL_UNIT_TYPE'] = 'Unit Type:';
 
-$mod_strings['LBL_MAP_ACTION'] = 'Map It';
 $mod_strings['LBL_MAP_DISPLAY'] = 'Map Display';
 $mod_strings['LBL_MAP_LEGEND'] = 'Legend:';
 $mod_strings['LBL_MAP_USERS'] = 'Users:';
