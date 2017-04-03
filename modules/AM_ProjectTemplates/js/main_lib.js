@@ -426,7 +426,7 @@ function edit_task(task){
 
     var data = task.attr('data').split(",");
     var milestone_flag ='Task';
-//console.log(task.text());
+
     $('#task_id').val(data[0]);
     $('#task_name').val(task.text());
     $('#Start').val(data[3]);
