@@ -42,9 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array (
+$mod_strings = array(
     'LBL_MODULE_NAME' => 'Target Lists',
-    'LBL_MODULE_ID'   => 'Target Lists',
+    'LBL_MODULE_ID' => 'Target Lists',
     'LBL_MODULE_TITLE' => 'Target Lists: Home',
     'LBL_SEARCH_FORM_TITLE' => 'Target Lists Search',
     'LBL_LIST_FORM_TITLE' => 'Target Lists',
@@ -75,22 +75,20 @@ $mod_strings = array (
     'LNK_NEW_PROSPECT' => 'Create Target',
     'LNK_PROSPECT_LIST' => 'Targets',
 
-    'LBL_PROSPECT_LISTS_SUBPANEL_TITLE' => 'Target Lists',
     'LBL_CONTACTS_SUBPANEL_TITLE' => 'Contacts',
     'LBL_LEADS_SUBPANEL_TITLE' => 'Leads',
-    'LBL_PROSPECTS_SUBPANEL_TITLE'=>'Targets',
+    'LBL_PROSPECTS_SUBPANEL_TITLE' => 'Targets',
     'LBL_ACCOUNTS_SUBPANEL_TITLE' => 'Accounts',
-    'LBL_COPY_PREFIX' =>'Copy of',
-    'LBL_USERS_SUBPANEL_TITLE' =>'Users',
+    'LBL_COPY_PREFIX' => 'Copy of',
+    'LBL_USERS_SUBPANEL_TITLE' => 'Users',
     'LBL_TYPE' => 'Type',
     'LBL_LIST_TYPE' => 'Type',
-    'LBL_LIST_TYPE_LIST_NAME'=>'Type',
-    'LBL_NEW_FORM_TITLE'=>'New Target List',
-    'LBL_MARKETING_NAME'=>'Marketing Name',
-    'LBL_MARKETING_MESSAGE'=>'Email Marketing Message',
-    'LBL_DOMAIN_NAME'=>'Domain Name',
-    'LBL_DOMAIN'=>'No emails to Domain',
-    'LBL_LIST_PROSPECTLIST_NAME'=>'Name',
+    'LBL_LIST_TYPE_LIST_NAME' => 'Type',
+    'LBL_NEW_FORM_TITLE' => 'New Target List',
+    'LBL_MARKETING_NAME' => 'Marketing Name',
+    'LBL_DOMAIN_NAME' => 'Domain Name',
+    'LBL_DOMAIN' => 'No emails to Domain',
+    'LBL_LIST_PROSPECTLIST_NAME' => 'Name',
     'LBL_MORE_DETAIL' => 'More Detail' /*for 508 compliance fix*/,
 );
 
