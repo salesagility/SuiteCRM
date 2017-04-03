@@ -42,13 +42,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array (
+$mod_strings = array(
     'ERR_NO_OPPS' => 'Please create some Opportunities to see Opportunity graphs.',
     'LBL_ALL_OPPORTUNITIES' => 'Total amount of all opportunities is ',
     'LBL_CHART_TYPE' => 'Chart Type:',
     'LBL_CREATED_ON' => 'Last run on ',
-	'LBL_CLOSE_DATE_START' => 'Expected Close Date - From:',
-	'LBL_CLOSE_DATE_END'   => 'Expected Close Date - To:',
+    'LBL_CLOSE_DATE_START' => 'Expected Close Date - From:',
+    'LBL_CLOSE_DATE_END' => 'Expected Close Date - To:',
     'LBL_DATE_END' => 'End Date:',
     'LBL_DATE_RANGE_TO' => 'to',
     'LBL_DATE_RANGE' => 'Date range is',
@@ -65,7 +65,7 @@ $mod_strings = array (
     'LBL_MONTH_BY_OUTCOME_DESC' => 'Shows cumulative opportunity amounts by month by outcome for selected users where the expected closed date is within the specified date range.  Outcome is based on whether the sales stage is Closed Won, Closed Lost, or any other value.',
     'LBL_NUMBER_OF_OPPS' => 'Number of Opportunities',
     'LBL_OPP_SIZE' => 'Opportunity size in',
-    'LBL_OPP_THOUSANDS'=> 'K',
+    'LBL_OPP_THOUSANDS' => 'K',
     'LBL_OPPS_IN_LEAD_SOURCE' => 'opportunities where lead source is',
     'LBL_OPPS_IN_STAGE' => ' where sales stage is',
     'LBL_OPPS_OUTCOME' => ' where outcome is',
@@ -94,22 +94,18 @@ $mod_strings = array (
     'LNK_NEW_QUOTE' => 'Create Quote',
     'LNK_NEW_TASK' => 'Create Task',
     'NTC_NO_LEGENDS' => 'None',
-    
+
     'LBL_TITLE' => 'Title: ',
     'LBL_MY_MODULES_USED_SIZE' => 'Access Count',
 
-    'LBL_CHART_ACTION' => 'Action',
-    'LBL_CHART_PIPELINE_BY_SALES_STAGE' => 'Pipeline by Sales Stage',
     'LBL_CHART_LEAD_SOURCE_BY_OUTCOME' => 'Lead Source By Outcome',
     'LBL_CHART_OUTCOME_BY_MONTH' => 'Outcome by Month',
     'LBL_CHART_PIPELINE_BY_LEAD_SOURCE' => 'Pipeline By Lead Source',
     'LBL_CHART_MY_PIPELINE_BY_SALES_STAGE' => 'My Pipeline by Sales Stage',
     'LBL_CHART_PIPELINE_BY_SALES_STAGE_FUNNEL' => 'Pipeline by Sales Stage Funnel',
-    'LBL_CHART_OPPORTUNITIES_THIS_QUARTER' => 'Opportunities this Quarter',
     'LBL_CHART_MY_MODULES_USED_30_DAYS' => 'My Modules Used (Last 30 Days)',
-    'LBL_CHART_MODULES_USED_DIRECT_REPORTS_30_DAYS' => 'Modules Used By My Direct Reports (Last 30 Days)',
-    'LBL_CHART_DCE_ACTIONS_MONTH' => 'DCE Actions By Types (Current Month)',
 );
 
 
 ?>
+
