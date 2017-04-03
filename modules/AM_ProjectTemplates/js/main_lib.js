@@ -484,19 +484,17 @@ function edit_task(task){
                 var Task_Resource = $('#Resources').val();
                 var Task_Percent = $('#Complete').val();
                 var Task_Notes = $('#Notes').val();
-                var Actual_duration = 0;//$('#Actual_duration').val();
-                //var rowCount = $('#Task_table tr').length -1;
-                //var dateStart = "Start_date_"+rowCount ;
+                var Actual_duration = 0;
 
                 get_predecessors();
 
                 if($("#popup_form").valid()){
 
-                    var dataString = '&project_id=' + Project_id + '&override_business_hours=' + override_business_hours + '&task_id=' + Task_id + '&milestone=' + milestone + '&task_name=' +Task_name + '&predecessor=' + Task_pre + '&rel_type=' + rel_type + '&start=' + Task_Start + '&duration=' + Task_Duration + '&unit=' + Task_Duration_unit + '&resource=' + Task_Resource + '&percent=' + Task_Percent + '&note=' + Task_Notes + '&actual_duration=' + Actual_duration;
-                    //block();
+                	var dataString = '&project_id=' + Project_id + '&override_business_hours=' + override_business_hours + '&task_id=' + Task_id + '&milestone=' + milestone + '&task_name=' +Task_name + '&predecessor=' + Task_pre + '&rel_type=' + rel_type + '&start=' + Task_Start + '&duration=' + Task_Duration + '&unit=' + Task_Duration_unit + '&resource=' + Task_Resource + '&percent=' + Task_Percent + '&note=' + Task_Notes + '&actual_duration=' + Actual_duration;
+                    	//block();
                 
-					var this_dialog = $(this);
-					$.ajax({
+		var this_dialog = $(this);
+		$.ajax({
                         type: "POST",
                         url: "index.php?module=AM_ProjectTemplates&action=update_GanttChart",
                         data: dataString,
