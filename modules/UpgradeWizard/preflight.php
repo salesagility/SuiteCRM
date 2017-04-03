@@ -313,7 +313,7 @@ $diffs ='';
 //php version suggestion
     $php_suggested_ver = '';
 	if(check_php_version() === 0){
-		$php_suggested_ver=$mod_strings['LBL_CURRENT_PHP_VERSION'].phpversion().$mod_strings['LBL_RECOMMENDED_PHP_VERSION_1'].constant('SUITECRM_PHP_REC_VERSION').$mod_strings['LBL_RECOMMENDED_PHP_VERSION_2'];
+		$php_suggested_ver=$mod_strings['LBL_CURRENT_PHP_VERSION'].phpversion().". ".$mod_strings['LBL_RECOMMENDED_PHP_VERSION_1'].constant('SUITECRM_PHP_REC_VERSION').$mod_strings['LBL_RECOMMENDED_PHP_VERSION_2'];
 	}
 	if(empty($mod_strings['LBL_UPGRADE_TAKES_TIME_HAVE_PATIENCE'])){
 		$mod_strings['LBL_UPGRADE_TAKES_TIME_HAVE_PATIENCE'] = 'Upgrade may take some time';
