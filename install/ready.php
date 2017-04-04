@@ -280,8 +280,9 @@ if(is_windows()) {
 //        $error = '<em>'.$mod_strings_scheduler['LBL_NO_PHP_CLI'].'</em>';
         }
     }
-    $webServerUser = exec('whoami');
-    if ($webServerUser == '') { 
+    require_once 'install/install_utils.php';
+    $webServerUser = getRunningUser();
+    if ($webServerUser == '') {
         $webServerUser = '<web_server_user>';
     }
     $cronString = '<p><b>'.$mod_strings_scheduler['LBL_CRON_INSTRUCTIONS_LINUX'].'</b><br> '.$mod_strings_scheduler['LBL_CRON_LINUX_DESC1'].'<br>

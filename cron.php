@@ -50,7 +50,8 @@ if (substr($sapi_type, 0, 3) != 'cli') {
 }
 
 if (!is_windows()) {
-    $cronUser = exec('whoami'); 
+    require_once 'install/install_utils.php';
+    $cronUser = getRunningUser();
     //global $sugar_config;
     if (array_key_exists('cron', $sugar_config) && array_key_exists('allowed_cron_users', $sugar_config['cron'])) {
         if (!in_array($cronUser, $sugar_config['cron']['allowed_cron_users'])) {

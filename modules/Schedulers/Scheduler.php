@@ -799,7 +799,8 @@ class Scheduler extends SugarBean {
 				</tr>
 			</table>';
 		} else {
-            $webServerUser = exec('whoami');
+            require_once 'install/install_utils.php';
+            $webServerUser = getRunningUser();
             if ($webServerUser == '') {
                 $webServerUser = '<web_server_user>';
             }
@@ -813,7 +814,7 @@ class Scheduler extends SugarBean {
 				</tr>
 				<tr>
 					<td scope="row" valign=TOP class="oddListRowS1" bgcolor="#fdfdfd" width="70%"><slot style="font-weight:unset;">
-						'.$mod_strings['LBL_CRON_LINUX_DESC1'].'<br> 
+						'.$mod_strings['LBL_CRON_LINUX_DESC1'].'<br>
                         <b>sudo crontab -e -u '.$webServerUser.'</b><br> '.$mod_strings['LBL_CRON_LINUX_DESC2'].'<br>
 						<b>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;
 						cd '.realpath('./').'; php -f cron.php > /dev/null 2>&1</b>
