@@ -42,9 +42,9 @@
   * This template is now displays to the sub panel
   */
 *}
-{$PAGINATION}
 <table cellpadding="0" cellspacing="0" border="0"  data-empty="{$APP.MSG_LIST_VIEW_NO_RESULTS_BASIC}" class="list view table-responsive">
     <thead>
+        {$PAGINATION}
         <tr>
             {foreach from=$HEADER_CELLS key=colHeader item=header}
                 <th data-type="html">{$header}</th>
