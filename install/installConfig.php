@@ -315,7 +315,6 @@ FORM;
 
 
 
-        // ---------- user data set (dbConfig_a.php)
 
 
 //if we are installing in custom mode, include the following html
@@ -392,7 +391,6 @@ EOQ2;
 
 
 
-        // ------ siteConfig_a.php
         $out .=<<<EOQ
         </div>
     </div>
@@ -889,7 +887,6 @@ EOQ;
 EOQ;
 
 
-        // db setup (dbConfig_a.php)
         $out2 =<<<EOQ2
             <input type='hidden' name='setup_db_drop_tables' id='setup_db_drop_tables' value=''>
         </div>
@@ -1799,7 +1796,6 @@ $db = getInstallDbInstance();
 
 
 
-//----------------- siteConfig_a.php Site Config & admin user
 
 
 if( is_file("config.php") ){
