@@ -114,7 +114,19 @@ function loadFieldLine(field){
             if(a === 'field_order'){
                 $('#'+prefix+a+ln).val(ln);
             }else if(elem.nodeName != 'INPUT' && elem.nodeName != 'SELECT'){
-                elem.innerHTML = field[a];
+                // Fix for issue #584
+                // where Targets is replaced by Prospects and Target Lists is replaced by ProspectLists
+                if(field[a] == 'Prospects') {
+                    elem.innerHTML = 'Targets';
+                } else {
+                    elem.innerHTML = field[a];
+                }
+
+                if(field[a] == 'ProspectLists') {
+                    elem.innerHTML = 'Target Lists';
+                } else {
+                    elem.innerHTML = field[a];
+                }
             }else if(elem.type == 'checkbox'){
                 elem.checked = field[a] == 1;
             } else {
