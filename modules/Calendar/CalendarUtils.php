@@ -90,7 +90,8 @@ class CalendarUtils {
 				'parent_id',
 				'parent_type',
 				'priority',
-				'date_due'
+				'date_start' ## START #DEV-224 HACK for Task Durations
+				/*'date_due'*/
 			),
 		);
 	}
@@ -103,8 +104,12 @@ class CalendarUtils {
 	static function get_time_data(SugarBean $bean, $start_field = "date_start", $end_field = "date_end"){
 					$arr = array();
 
-					if($bean->object_name == 'Task')
-						$start_field = $end_field = "date_due";
+                    ## START #DEV-224 HACK for Task Durations
+					if($bean->object_name == 'Task'){
+                        $start_field = "date_start"; $end_field = "date_due";
+                        #$start_field = $end_field = "date_due";
+                    }
+                    ## END #DEV-224 HACK for Task Durations
 					if(empty($bean->$start_field))
 						return array();
 					if(empty($bean->$end_field))
