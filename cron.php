@@ -106,5 +106,3 @@ if(session_id()) {
 }
 
 if($exit_on_cleanup) exit($jobq->runOk()?0:1);
-
-?>

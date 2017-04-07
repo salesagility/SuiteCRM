@@ -215,7 +215,7 @@ upgrade_custom_relationships();
 require_once 'modules/UpgradeWizard/uw_utils.php';
 
 // guarantee the cron user check mechanism works for people upgrading from systems installed before the check existed:
-require_once 'install/install_utils.php';
+require_once 'include/utils.php';
 addCronAllowedUser(getRunningUser());
 
 set_upgrade_progress('end', 'done');
