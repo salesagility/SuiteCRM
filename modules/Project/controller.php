@@ -134,7 +134,6 @@ class ProjectController extends SugarController {
 				if($bh->open){
 					$open_h = $bh ? $bh->opening_hours : 9;
 					$close_h = $bh ? $bh->closing_hours : 17;							
-					//$GLOBALS['log']->fatal($open_h . '--' . $close_h );
 					
 					$start_time = DateTime::createFromFormat($dateformat, $_POST['start']);
 					$start_time = $start_time->modify('+'.$open_h.' Hours');
@@ -148,7 +147,6 @@ class ProjectController extends SugarController {
 
 					//$hours = $bh->diffBusinessHours($start_time, $end_time);
 					$bhours[$day] = $hours; 	
-					//$GLOBALS['log']->fatal( $hours );
 
 				}
 				else{
@@ -178,7 +176,7 @@ class ProjectController extends SugarController {
 
 			while($duration > $h){
 				$day = $enddate->format('l');
-				//$GLOBALS['log']->fatal( $day . '--' . $bhours[$day] );
+
 				$h += $bhours[$day];	
 				$enddate = $enddate->modify('+1 Days');
 			} 
@@ -190,7 +188,7 @@ class ProjectController extends SugarController {
 			
 			while($duration >= $d){
 				$day = $enddate->format('l');
-				//$GLOBALS['log']->fatal( $day . '--' . $bhours[$day] );
+
 				if($bhours[$day] != 0 ){
 					$d += 1;	
 				}
@@ -275,13 +273,13 @@ class ProjectController extends SugarController {
     }
    //returns tasks for predecessor in the add task pop-up form
     function action_get_predecessors(){
-
+        global $mod_strings;
         $project = new Project();
         $project->retrieve($_REQUEST["project_id"]);
         //Get project tasks
         $Task = BeanFactory::getBean('ProjectTask');
         $tasks = $Task->get_full_list("order_number", "project_task.project_id = '".$project->id."'");
-        echo '<option rel="0" value="0">None</option>';
+        echo '<option rel="0" value="0">'.$mod_strings['LBL_PROJECT_PREDECESSOR_NONE'].'</option>';
         foreach ($tasks as $task) {
             echo '<option rel="'.$task->id.'" value="'.$task->project_task_id.'">'.$task->name.'</opion>';
         }
@@ -441,7 +439,7 @@ class ProjectController extends SugarController {
         while($row = $db->fetchByAssoc($resources))
         {  //get each users associated project tasks
             $Task = BeanFactory::getBean('ProjectTask');
-            $tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$row['id']."'" . $project_where);
+            $tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$row['id']."' AND (project_task.project_id is not null AND project_task.project_id <> '') " . $project_where);
             //put users tasks in an array
             $taskarr = array();
             $t = 0;
@@ -497,9 +495,10 @@ class ProjectController extends SugarController {
         //$resource_type = $_REQUEST['type'];
 
         $Task = BeanFactory::getBean('ProjectTask');
+        
+		$tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$resource_id."' AND ( ( '".$start_date."' BETWEEN project_task.date_start  AND project_task.date_finish ) OR ( '".$end_date."' BETWEEN project_task.date_start AND project_task.date_finish ) ) AND (project_id is not null AND project_id <> '')");
 
-        $tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$resource_id."' AND ( (project_task.date_start >= '".$start_date."' AND project_task.date_start <= '".$end_date."') OR ( project_task.date_finish >= '".$start_date."' AND project_task.date_finish <= '".$end_date."' ) ) AND (project_id is not null AND project_id <> '')");
-        echo '<table class="qtip_table">';
+		echo '<table class="qtip_table">';
         echo '<tr><th>'.$mod_strings['LBL_TOOLTIP_PROJECT_NAME'].'</th><th>'.$mod_strings['LBL_TOOLTIP_TASK_NAME'].'</th><th>'.$mod_strings['LBL_TOOLTIP_TASK_DURATION'].'</th></tr>';
 		if(is_array($tasks)){
 			foreach($tasks as $task){
