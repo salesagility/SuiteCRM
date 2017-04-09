@@ -675,10 +675,6 @@ EOQ;
         break;
     case 'register.php':
     case 'complete_install.php':
-        // save current web-server user for the cron user check mechanism:
-        require_once 'include/utils.php';
-        addCronAllowedUser(getRunningUser());
-
         session_unset();
         break;
     case 'SilentInstall':
