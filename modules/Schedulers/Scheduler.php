@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2017 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,6 +37,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
+
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once 'modules/SchedulersJobs/SchedulersJob.php';
 
@@ -795,6 +799,11 @@ class Scheduler extends SugarBean {
 				</tr>
 			</table>';
 		} else {
+            require_once 'install/install_utils.php';
+            $webServerUser = getRunningUser();
+            if ($webServerUser == '') {
+                $webServerUser = '<web_server_user>';
+            }
 			echo '<br>';
 			echo '
 				<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
@@ -804,8 +813,9 @@ class Scheduler extends SugarBean {
 					</slot></th>
 				</tr>
 				<tr>
-					<td scope="row" valign=TOP class="oddListRowS1" bgcolor="#fdfdfd" width="70%"><slot>
-						'.$mod_strings['LBL_CRON_LINUX_DESC'].'<br>
+					<td scope="row" valign=TOP class="oddListRowS1" bgcolor="#fdfdfd" width="70%"><slot style="font-weight:unset;">
+						'.$mod_strings['LBL_CRON_LINUX_DESC1'].'<br>
+                        <b>sudo crontab -e -u '.$webServerUser.'</b><br> '.$mod_strings['LBL_CRON_LINUX_DESC2'].'<br>
 						<b>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;
 						cd '.realpath('./').'; php -f cron.php > /dev/null 2>&1</b>
 						<br>'.$error.'
