@@ -592,7 +592,9 @@ class EditView
                 $this->th->ss->assign('scriptBlocks', $this->defs['templateMeta']['javascript']);
             }
         }
-
+        if(isset($_REQUEST['opened_tab'])){
+            $this->th->ss->assign('opened_tab', $_REQUEST['opened_tab']);
+        }
         $this->th->ss->assign('id', $this->fieldDefs['id']['value']);
         $this->th->ss->assign('offset', $this->offset + 1);
         $this->th->ss->assign('APP', $app_strings);
