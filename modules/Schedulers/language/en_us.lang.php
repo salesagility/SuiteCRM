@@ -42,7 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 $mod_strings = array(
 // OOTB Scheduler Job Names:
     'LBL_OOTB_WORKFLOW' => 'Process Workflow Tasks',
@@ -59,7 +58,6 @@ $mod_strings = array(
     'LBL_OOTB_SEND_EMAIL_REMINDERS' => 'Run Email Reminder Notifications',
     'LBL_OOTB_CLEANUP_QUEUE' => 'Clean Jobs Queue',
     'LBL_OOTB_REMOVE_DOCUMENTS_FROM_FS' => 'Removal of documents from filesystem',
-
 // List Labels
     'LBL_LIST_JOB_INTERVAL' => 'Interval:',
     'LBL_LIST_LIST_ORDER' => 'Schedulers:',
@@ -93,8 +91,6 @@ $mod_strings = array(
     'LBL_MONTH' => ' month',
     'LBL_OFTEN' => ' As often as possible.',
     'LBL_MIN_MARK' => ' minute mark',
-
-
 // crontabs
     'LBL_MINS' => 'min',
     'LBL_HOURS' => 'hrs',
@@ -145,18 +141,18 @@ $mod_strings = array(
     'NTC_LIST_ORDER' => 'Set the order this schedule will appear in the Scheduler dropdown lists',
     'LBL_CRON_INSTRUCTIONS_WINDOWS' => 'To Setup Windows Scheduler',
     'LBL_CRON_INSTRUCTIONS_LINUX' => 'To Setup Crontab',
-    'LBL_CRON_LINUX_DESC' => 'Note: In order to run SuiteCRM Schedulers, add the following line to the crontab file: ',
-    'LBL_CRON_WINDOWS_DESC' => 'Note: In order to run the SuiteCRM schedulers, create a batch file to run using Windows Scheduled Tasks. The batch file should include the following commands: ',
+    'LBL_CRON_LINUX_DESC1' => 'In order to run SuiteCRM Schedulers, edit your web server user\'s crontab file with this command: ',
+    'LBL_CRON_LINUX_DESC2' => '... and add the following line to the crontab file: ',
+    'LBL_CRON_LINUX_DESC3' => 'You should do this only after the installation is concluded.',
+    'LBL_CRON_WINDOWS_DESC' => 'In order to run the SuiteCRM schedulers, create a batch file to run using Windows Scheduled Tasks. The batch file should include the following commands: ',
     'LBL_NO_PHP_CLI' => 'If your host does not have the PHP binary available, you can use wget or curl to launch your Jobs.<br>for wget: <b>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;wget --quiet --non-verbose ' . (isset($sugar_config['site_url'])?$sugar_config['site_url']:'http://yoursite') . '/cron.php > /dev/null 2>&1</b><br>for curl: <b>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;curl --silent ' . (isset($sugar_config['site_url'])?$sugar_config['site_url']:'http://yoursite') . '/cron.php > /dev/null 2>&1',
 // Subpanels
     'LBL_JOBS_SUBPANEL_TITLE' => 'Job Log',
     'LBL_EXECUTE_TIME' => 'Execute Time',
-
 //jobstrings
     'LBL_REFRESHJOBS' => 'Refresh Jobs',
     'LBL_POLLMONITOREDINBOXES' => 'Check Inbound Mail Accounts',
     'LBL_PERFORMFULLFTSINDEX' => 'Full-text Search Index System',
-
     'LBL_RUNMASSEMAILCAMPAIGN' => 'Run Nightly Mass Email Campaigns',
     'LBL_POLLMONITOREDINBOXESFORBOUNCEDCAMPAIGNEMAILS' => 'Run Nightly Process Bounced Campaign Emails',
     'LBL_PRUNEDATABASE' => 'Prune Database on 1st of Month',
@@ -165,13 +161,11 @@ $mod_strings = array(
     'LBL_SENDEMAILREMINDERS' => 'Run Email Reminders Sending',
     'LBL_CLEANJOBQUEUE' => 'Cleanup Job Queue',
     'LBL_REMOVEDOCUMENTSFROMFS' => 'Removal of documents from filesystem',
-
     'LBL_AODOPTIMISEINDEX' => 'Optimise Advanced OpenDiscovery Index',
     'LBL_AODINDEXUNINDEXED' => 'Index unindexed documents',
     'LBL_POLLMONITOREDINBOXESAOP' => 'AOP Poll Monitored Inboxes',
     'LBL_AORRUNSCHEDULEDREPORTS' => 'Run scheduled reports',
     'LBL_PROCESSAOW_WORKFLOW' => 'Process AOW Workflow',
 );
-
 global $sugar_config;
 ?>
