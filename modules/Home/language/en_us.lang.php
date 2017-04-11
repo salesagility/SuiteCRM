@@ -36,20 +36,12 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- *
- * This file was contributed by diligent technology & business consulting GmbH <info@dtbc.eu>
- *
  */
 
-/*********************************************************************************
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+
 $mod_strings = array(
     'LBL_MODULE_NAME' => 'Home',
     'LBL_MODULES_TO_SEARCH' => 'Modules to Search',
