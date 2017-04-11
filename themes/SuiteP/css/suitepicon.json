@@ -1,0 +1,13 @@
+{
+    "module-accounts": "\\f101",
+    "module-aclroles": "\\f102",
+    "module-activities": "\\f103",
+    "module-am_tasktemplates": "\\f104",
+    "module-aok_knowledge_base_categories": "\\f105",
+    "module-aok_knowledgebase": "\\f106",
+    "module-aos_contracts-signature": "\\f107",
+    "module-aos_contracts": "\\f108",
+    "module-calendar": "\\f109",
+    "module-default": "\\f10a",
+    "module-documents": "\\f10b"
+}

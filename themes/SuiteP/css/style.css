@@ -12301,50 +12301,50 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td {
   padding-top: 5px;
   padding-bottom: 5px; }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span {
   display: block;
   float: none; }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[type="text"] {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[type="text"] {
   width: 90%; }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[name="filter_domain"] {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[name="filter_domain"] {
   width: 90%; }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[name="email_num_autoreplies_24_hours"] {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[name="email_num_autoreplies_24_hours"] {
   width: 90%; }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[type="text"][name="mailbox"]#mailbox {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[type="text"][name="mailbox"]#mailbox {
   width: 70%; }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[type="text"][name="trashFolder"]#trashFolder {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[type="text"][name="trashFolder"]#trashFolder {
   width: 70%; }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[type="text"][name="sentFolder"]#sentFolder {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[type="text"][name="sentFolder"]#sentFolder {
   width: 70%; }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[type="button"]#subscribeFolderButton.button {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[type="button"]#subscribeFolderButton.button {
   width: 18%;
   min-width: 71px; }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[type="button"]#trashFolderButton.button {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[type="button"]#trashFolderButton.button {
   width: 18%;
   min-width: 71px; }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[type="button"]#sentFolderButton.button {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[type="button"]#sentFolderButton.button {
   width: 18%;
   min-width: 71px; }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input.button {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input.button {
   color: white; }
 
 div.content div.pagecontent form#EditView div.edit.view table tbody tr td select {
   border: 3px solid #A5E8D6; }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[name="from_name"]#from_name {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[name="from_name"]#from_name {
   width: 80%; }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[name="from_addr"]#from_addr {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[name="from_addr"]#from_addr {
   width: 80%; }
 
 div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[name="reply_to_name"] {
@@ -12366,20 +12366,20 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     float: left;
     width: 28%; }
 
-  div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot {
+  div.content div.pagecontent form#EditView div.edit.view table tbody tr td span {
     display: block;
     float: left;
     line-height: 16px;
     width: 72%;
     white-space: initial; }
 
-  div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[type="text"] {
+  div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[type="text"] {
     width: 96%; }
 
-  div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[name="filter_domain"] {
+  div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[name="filter_domain"] {
     width: 96%; }
 
-  div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[name="email_num_autoreplies_24_hours"] {
+  div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[name="email_num_autoreplies_24_hours"] {
     width: 96%; }
 
   div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[name="reply_to_name"] {
@@ -12405,16 +12405,16 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     width: 100%;
     height: initial; }
 
-  div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot {
+  div.content div.pagecontent form#EditView div.edit.view table tbody tr td span {
     width: 100%; } }
 @media (max-width: 380px) {
-  div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input {
+  div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input {
     font-size: 12px;
     line-height: initial;
     height: 40px;
     min-height: 40px; }
 
-  div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot select {
+  div.content div.pagecontent form#EditView div.edit.view table tbody tr td span select {
     font-size: 12px;
     line-height: initial;
     height: 40px;
@@ -19506,6 +19506,8 @@ iframe.teamNoticeBox {
     color: #ffffff;
     margin: 6px 6px;
     padding: 4px;
+    line-height: 18px;
+    min-height: 18px;
     outline: none; }
   .panel-email-compose .panel-body .btn {
     background-color: transparent;
@@ -19515,6 +19517,8 @@ iframe.teamNoticeBox {
     color: #ffffff;
     margin: 6px 6px;
     padding: 4px;
+    line-height: 18px;
+    min-height: 18px;
     outline: none; }
   .panel-email-compose .panel-body .btn:hover {
     background-color: transparent;
@@ -19524,6 +19528,8 @@ iframe.teamNoticeBox {
     color: #ffffff;
     margin: 6px 6px;
     padding: 4px;
+    line-height: 18px;
+    min-height: 18px;
     outline: none; }
   .panel-email-compose .panel-body .btn:visited {
     background-color: transparent;
@@ -19533,6 +19539,8 @@ iframe.teamNoticeBox {
     color: #ffffff;
     margin: 6px 6px;
     padding: 4px;
+    line-height: 18px;
+    min-height: 18px;
     outline: none; }
   .panel-email-compose .panel-body .btn:link {
     background-color: transparent;
@@ -19542,6 +19550,8 @@ iframe.teamNoticeBox {
     color: #ffffff;
     margin: 6px 6px;
     padding: 4px;
+    line-height: 18px;
+    min-height: 18px;
     outline: none; }
   .panel-email-compose .panel-body .btn:active {
     background-color: transparent;
@@ -19551,6 +19561,8 @@ iframe.teamNoticeBox {
     color: #ffffff;
     margin: 6px 6px;
     padding: 4px;
+    line-height: 18px;
+    min-height: 18px;
     outline: none; }
   .panel-email-compose .panel-body .btn:focus {
     background-color: transparent;
@@ -19560,6 +19572,8 @@ iframe.teamNoticeBox {
     color: #ffffff;
     margin: 6px 6px;
     padding: 4px;
+    line-height: 18px;
+    min-height: 18px;
     outline: none; }
   .panel-email-compose .panel-body input[type=reset] {
     background-color: transparent;
@@ -19588,6 +19602,15 @@ iframe.teamNoticeBox {
     margin: 0;
     outline: none;
     padding: 0; }
+  .panel-email-compose .panel-body .btn.btn-image {
+    height: 18px;
+    font-size: 18px;
+    padding-top: 0;
+    padding-bottom: 0; }
+    .panel-email-compose .panel-body .btn.btn-image img {
+      display: inline-block;
+      width: 18px;
+      height: 18px; }
   .panel-email-compose .panel-body .glyphicon {
     font-size: 18px; }
   .panel-email-compose .panel-body .glyphicon:focus {
@@ -19782,6 +19805,10 @@ iframe.teamNoticeBox {
       bottom: 0;
       cursor: pointer; }
 
+#settingsDialog #userFolders {
+  width: 100%;
+  min-height: 200px; }
+
 @media (max-width: 750px) {
   .compose-view .panel .col-sm-12 [type].col-sm-8.edit-view-field input[type=text].sqsEnabled {
     width: 100%; } }
@@ -19804,5 +19831,49 @@ iframe.teamNoticeBox {
 @media (min-width: 1024px) {
   .modal .panel .panel-heading a div {
     width: 96.66%; } }
+.suitepicon-module-accounts:before {
+  content: "\f101"; }
+
+.suitepicon-module-aclroles:before {
+  content: "\f102"; }
+
+.suitepicon-module-activities:before {
+  content: "\f103"; }
+
+.suitepicon-module-am_tasktemplates:before {
+  content: "\f104"; }
+
+.suitepicon-module-aok_knowledge_base_categories:before {
+  content: "\f105"; }
+
+.suitepicon-module-aok_knowledgebase:before {
+  content: "\f106"; }
+
+.suitepicon-module-aos_contracts-signature:before {
+  content: "\f107"; }
+
+.suitepicon-module-aos_contracts:before {
+  content: "\f108"; }
+
+.suitepicon-module-calendar:before {
+  content: "\f109"; }
+
+.suitepicon-module-default:before {
+  content: "\f10a"; }
+
+.suitepicon-module-documents:before {
+  content: "\f10b"; }
+
+@font-face {
+  font-family: "suitepicon";
+  src: url("../../../../themes/SuiteP/css/suitepicon.eot#iefix") format("embedded-opentype"), url("../../../../themes/SuiteP/css/suitepicon.woff") format("woff"), url("../../../../themes/SuiteP/css/suitepicon.ttf") format("truetype"), url("../../../../themes/SuiteP/css/suitepicon.svg#suitepicon") format("svg"); }
+.suitepicon {
+  line-height: 1; }
+
+.suitepicon:before {
+  font-family: suitepicon !important;
+  font-style: normal;
+  font-weight: normal !important;
+  vertical-align: top; }
 
 /*# sourceMappingURL=style.css.map */
