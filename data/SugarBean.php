@@ -4080,7 +4080,7 @@ class SugarBean
                     }
 
                     if ($type == 'date') {
-                        if ($this->$field == '0000-00-00') {
+                        if ($this->$field == '0000-00-00' || empty($this->$field)) {
                             $this->$field = '';
                         } elseif (!empty($this->field_name_map[$field]['rel_field'])) {
                             $rel_field = $this->field_name_map[$field]['rel_field'];
@@ -4096,7 +4096,7 @@ class SugarBean
                             }
                         }
                     } elseif ($type == 'datetime' || $type == 'datetimecombo') {
-                        if ($this->$field == '0000-00-00 00:00:00') {
+                        if ($this->$field == '0000-00-00 00:00:00' || empty($this->$field)) {
                             $this->$field = '';
                         } else {
                             if (empty($disable_date_format)) {
@@ -4104,7 +4104,7 @@ class SugarBean
                             }
                         }
                     } elseif ($type == 'time') {
-                        if ($this->$field == '00:00:00') {
+                        if ($this->$field == '00:00:00' || empty($this->$field)) {
                             $this->$field = '';
                         } else {
                             if (empty($this->field_name_map[$field]['rel_field']) && empty($disable_date_format)) {
