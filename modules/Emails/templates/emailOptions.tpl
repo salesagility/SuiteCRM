@@ -38,7 +38,7 @@
  ********************************************************************************/
 
 *}
-<div id="email_options">
+<div id="email_options" class="user-profile">
     <div  border="0" cellspacing="1" cellpadding="0" class="edit view">
         <div>
             <div align="left" scope="row" colspan="4">
