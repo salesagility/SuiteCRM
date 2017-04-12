@@ -791,6 +791,12 @@ $app_list_strings = array(
             'Sales' => 'Sales',
         ),
 
+    'email_category_dom' => array(
+        '' => '',
+        'Archived' => 'Archived',
+        // TODO: add more categories here...
+    ),
+
     'document_subcategory_dom' => array(
             '' => '',
             'Marketing Collateral' => 'Marketing Collateral',
@@ -2453,6 +2459,8 @@ $app_strings = array(
 
     'LBL_FILTER_HEADER_TITLE' => 'Filter',
 
+    'LBL_CATEGORY' => 'Category',
+    'LBL_LIST_CATEGORY' => 'Category',
 );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
