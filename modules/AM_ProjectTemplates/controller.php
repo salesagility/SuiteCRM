@@ -183,28 +183,26 @@ class AM_ProjectTemplatesController extends SugarController {
 
 
 
-			//
-			//code block to calculate end date based on user's business hours
-			//
-			try{
-			$duration = $project_task->duration;
-			$enddate = $startdate;
+            //
+            //code block to calculate end date based on user's business hours
+            //
 
-			$d = 0;
-			
-			while($duration >= $d){
-				$day = $enddate->format('l');
+            $duration = $project_task->duration;
+            $enddate = $startdate;
 
-				if($bhours[$day] != 0 ){
-					$d += 1;	
-				}
-				$enddate = $enddate->modify('+1 Days');
-			} 
-			$enddate = $enddate->modify('-1 Days');//readjust it back to remove 1 additional day added
+            $d = 0;
 
+            while($duration >= $d){
+			$day = $enddate->format('l');
+
+			if($bhours[$day] != 0 ){
+				$d += 1;	
 			}
-			catch(Exception $e){ die(var_dump($e)); };
-			//----------------------------------
+			$enddate = $enddate->modify('+1 Days');
+            } 
+            $enddate = $enddate->modify('-1 Days');//readjust it back to remove 1 additional day added
+
+            //----------------------------------
 
 
 
