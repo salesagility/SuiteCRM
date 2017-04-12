@@ -38,7 +38,7 @@
  ********************************************************************************/
 
 *}
-<div id="dccontent" style="width:880px; height:400px; z-index:2;"></div>
+<div id="dccontent" style="width:880px; height:600px; z-index:2;"></div>
 <script type='text/javascript'>
 {literal}
 function closeEmailOverlay() {
