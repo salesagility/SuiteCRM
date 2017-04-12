@@ -534,6 +534,15 @@ $dictionary['Email'] = array(
         ),
         /* end relationship collections */
 
+        'category_id' => array(
+            'name' => 'category_id',
+            'vname' => 'LBL_CATEGORY',
+            'type' => 'enum',
+            'len' => 100,
+            'options' => 'email_category_dom',
+            'reportable' => true,
+        ),
+
     ), /* end fields() array */
     'relationships' => array(
         'emails_assigned_user' => array(
@@ -664,6 +673,11 @@ $dictionary['Email'] = array(
             'name' => 'idx_email_assigned',
             'type' => 'index',
             'fields' => array('assigned_user_id', 'type', 'status')
+        ),
+        array(
+            'name' => 'idx_email_cat',
+            'type' => 'index',
+            'fields' => array('category_id')
         ),
     ) // end indices
 );
