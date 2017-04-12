@@ -46,7 +46,7 @@
 <div class="dashletPanelMenu wizard">
 <div class="bd">
 
-		<div class="screen">
+		<div class="screen admin-panel">
 
 {$MY_FRAME}
 {foreach  from=$ADMIN_GROUP_HEADER key=j item=val1}

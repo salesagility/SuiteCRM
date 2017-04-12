@@ -55,13 +55,18 @@ $app_list_strings = array(
     'language_pack_name' => 'US English',
     'moduleList' => array(
             'Home' => 'Home',
+			'ResourceCalendar' => 'Resource Calendar',
             'Contacts' => 'Contacts',
             'Accounts' => 'Accounts',
+            'Alerts' => 'Alerts',
             'Opportunities' => 'Opportunities',
             'Cases' => 'Cases',
             'Notes' => 'Notes',
             'Calls' => 'Calls',
+            'TemplateSectionLine' => 'Template Section Line',
+            'Calls_Reschedule' => 'Calls Reschedule',
             'Emails' => 'Emails',
+            'EAPM' => 'EAPM',
             'Meetings' => 'Meetings',
             'Tasks' => 'Tasks',
             'Calendar' => 'Calendar',
@@ -106,7 +111,6 @@ $app_list_strings = array(
             'FAQ' => 'FAQ',
             'Newsletters' => 'Newsletters',
             'SugarFeed' => 'SuiteCRM Feed',
-            'KBDocuments' => 'Knowledge Base',
             'SugarFavorites' => 'SuiteCRM Favorites',
 
             'OAuthKeys' => 'OAuth Consumer Keys',
@@ -376,17 +380,6 @@ $app_list_strings = array(
             'male' => 'Male',
             'female' => 'Female',
         ),
-    //Note:  do not translate case_status_default_key
-//       it is the key for the default case_status_dom value
-    'case_status_default_key' => 'New',
-    'case_status_dom' => array(
-            'New' => 'New',
-            'Assigned' => 'Assigned',
-            'Closed' => 'Closed',
-            'Pending Input' => 'Pending Input',
-            'Rejected' => 'Rejected',
-            'Duplicate' => 'Duplicate',
-        ),
     'case_priority_default_key' => 'P2',
     'case_priority_dom' => array(
             'P1' => 'High',
@@ -448,14 +441,13 @@ $app_list_strings = array(
         'Hours' => 'Hours',
     ),
 
-    'project_priority_options' => array(
-        'High' => 'High',
-        'Medium' => 'Medium',
-        'Low' => 'Low',
+    'activity_status_type_dom' => array(''=>'--None--',
+        'active' => 'Active',
+        'inactive' => 'Inactive',
     ),
-    'project_priority_default' => 'Medium',
-    //Note:  do not translate record_type_default_key
-//       it is the key for the default record_type_module value
+
+    // Note:  do not translate record_type_default_key
+    //        it is the key for the default record_type_module value
     'record_type_default_key' => 'Accounts',
     'record_type_display' => array(
             '' => '',
@@ -744,9 +736,6 @@ $app_list_strings = array(
     'dom_email_distribution' => array('' => '--None--',
         'direct' => 'Direct Assign',
         'roundRobin' => 'Round-Robin',
-        'leastBusy' => 'Least-Busy',
-    ),
-    'dom_email_distribution_for_auto_create' => array('roundRobin' => 'Round-Robin',
         'leastBusy' => 'Least-Busy',
     ),
     'dom_email_errors' => array(1 => 'Only select one user when Direct Assigning items.',
@@ -1066,14 +1055,13 @@ $app_strings = array(
     'LBL_MOREDETAIL' => 'More Detail' /*for 508 compliance fix*/,
     'LBL_EDIT_INLINE' => 'Edit Inline' /*for 508 compliance fix*/,
     'LBL_VIEW_INLINE' => 'View' /*for 508 compliance fix*/,
-    'LBL_BASIC_SEARCH' => 'Search' /*for 508 compliance fix*/,
+    'LBL_BASIC_SEARCH' => 'Filter' /*for 508 compliance fix*/,
     'LBL_PROJECT_MINUS' => 'Remove' /*for 508 compliance fix*/,
     'LBL_PROJECT_PLUS' => 'Add' /*for 508 compliance fix*/,
     'LBL_Blank' => ' ' /*for 508 compliance fix*/,
     'LBL_ICON_COLUMN_1' => 'Column' /*for 508 compliance fix*/,
     'LBL_ICON_COLUMN_2' => '2 Columns' /*for 508 compliance fix*/,
     'LBL_ICON_COLUMN_3' => '3 Columns' /*for 508 compliance fix*/,
-    'LBL_ADVANCED_SEARCH' => 'Advanced Search' /*for 508 compliance fix*/,
     'LBL_ID_FF_ADD' => 'Add' /*for 508 compliance fix*/,
     'LBL_HIDE_SHOW' => 'Hide/Show' /*for 508 compliance fix*/,
     'LBL_DELETE_INLINE' => 'Delete' /*for 508 compliance fix*/,
@@ -1085,7 +1073,7 @@ $app_strings = array(
     'LBL_COMPANY_LOGO' => 'Company logo' /*for 508 compliance fix*/,
     'LBL_JS_CALENDAR' => 'Calendar' /*for 508 compliance fix*/,
     'LBL_ADVANCED' => 'Advanced',
-    'LBL_BASIC' => 'Basic',
+    'LBL_BASIC' => 'BASIC',
     'LBL_MODULE_FILTER' => 'Filter By',
     'LBL_CONNECTORS_POPUPS' => 'Connectors Popups',
     'LBL_CLOSEINLINE' => 'Close',
@@ -1096,11 +1084,12 @@ $app_strings = array(
     'LBL_PRINT' => 'Print',
     'LBL_HELP' => 'Help',
     'LBL_ID_FF_SELECT' => 'Select',
-    'DEFAULT' => 'Basic',
+    'DEFAULT' => 'BASIC',
     'LBL_SORT' => 'Sort',
     'LBL_OUTBOUND_EMAIL_ADD_SERVER' => 'Add Server...',
     'LBL_EMAIL_SMTP_SSL_OR_TLS' => 'Enable SMTP over SSL or TLS?',
     'LBL_NO_ACTION' => 'There is no action by that name.',
+    'LBL_NO_SHORTCUT_MENU' => 'There are no actions available.',
     'LBL_NO_DATA' => 'No Data',
     'LBL_ROUTING_ADD_RULE' => 'Add Rule',
     'LBL_ROUTING_ALL' => 'At Least',
@@ -1532,7 +1521,7 @@ $app_strings = array(
     'LBL_LINK_ALL' => 'All',
     'LBL_LINK_RECORDS' => 'Records',
     'LBL_LINK_SELECT' => 'Select',
-    'LBL_LINK_ACTIONS' => 'Actions',
+    'LBL_LINK_ACTIONS' => 'ACTIONS',
     'LBL_LINK_MORE' => 'More',
     'LBL_CLOSE_ACTIVITY_HEADER' => 'Confirm',
     'LBL_CLOSE_ACTIVITY_CONFIRM' => 'Do you want to close this #module#?',
@@ -1655,7 +1644,7 @@ $app_strings = array(
     'LBL_CONTRACT' => 'Contract',
     'LBL_CONTRACTS' => 'Contracts',
     'LBL_COUNTRY' => 'Country:',
-    'LBL_CREATE_BUTTON_LABEL' => 'Create',
+    'LBL_CREATE_BUTTON_LABEL' => 'CREATE',
     'LBL_CREATED_BY_USER' => 'Created by User',
     'LBL_CREATED_USER' => 'Created by User',
     'LBL_CREATED_ID' => 'Created By Id',
@@ -1719,6 +1708,7 @@ $app_strings = array(
     'LBL_CAMPAIGNLOG' => 'CampaignLog',
     'LBL_CAMPAIGN_CONTACT' => 'Campaigns',
     'LBL_CAMPAIGN_ID' => 'campaign_id',
+    'LBL_CAMPAIGN_NONE' => 'None',
     'LBL_SITEMAP' => 'Sitemap',
     'LBL_THEME' => 'Theme:',
     'LBL_THEME_PICKER' => 'Page Style',
@@ -1741,9 +1731,6 @@ $app_strings = array(
     'LBL_LISTVIEW_TWO_REQUIRED' => 'Please select at least 2 records to proceed.',
     'LBL_LISTVIEW_LESS_THAN_TEN_SELECT' => 'Please select less than 10 records to proceed.',
     'LBL_LISTVIEW_ALL' => 'All',
-    'LBL_LISTVIEW_NONE' => 'Deselect All',
-    'LBL_LISTVIEW_OPTION_CURRENT' => 'Select This Page',
-    'LBL_LISTVIEW_OPTION_ENTIRE' => 'Select All',
     'LBL_LISTVIEW_OPTION_SELECTED' => 'Selected Records',
     'LBL_LISTVIEW_SELECTED_OBJECTS' => 'Selected: ',
 
@@ -1789,9 +1776,9 @@ $app_strings = array(
     'LBL_OPPORTUNITY' => 'Opportunity',
     'LBL_OR' => 'OR',
     'LBL_LOWER_OR' => 'or',
-    'LBL_PANEL_OVERVIEW' => 'Overview',
-    'LBL_PANEL_ASSIGNMENT' => 'Other',
-    'LBL_PANEL_ADVANCED' => 'More Information',
+    'LBL_PANEL_OVERVIEW' => 'OVERVIEW',
+    'LBL_PANEL_ASSIGNMENT' => 'OTHER',
+    'LBL_PANEL_ADVANCED' => 'MORE INFORMATION',
     'LBL_PARENT_TYPE' => 'Parent Type',
     'LBL_PERCENTAGE_SYMBOL' => '%',
     'LBL_PHASE' => 'Range',
@@ -1840,7 +1827,9 @@ $app_strings = array(
     'LBL_SEARCH_BUTTON_KEY' => 'Q',
     'LBL_SEARCH_BUTTON_LABEL' => 'Search',
     'LBL_SEARCH_BUTTON_TITLE' => 'Search',
+    'LBL_FILTER' => 'Filter',
     'LBL_SEARCH' => 'Search',
+    'LBL_SEARCH_ALT' => '',
     'LBL_SEARCH_TIPS' => 'Press the search button or click enter to get an exact match for them.',
     'LBL_SEARCH_TIPS_2' => 'Press the search button or click enter to get an exact match for',
     'LBL_SEARCH_MORE' => 'more',
@@ -1938,6 +1927,18 @@ $app_strings = array(
 
     'LBL_SUGAR_COPYRIGHT_SUB' => '&copy; 2004-2013 <a href="http://www.sugarcrm.com" target="_blank" class="copyRightLink">SugarCRM Inc.</a> All Rights Reserved.<br />SugarCRM is a trademark of SugarCRM, Inc. All other company and product names may be trademarks of the respective companies with which they are associated.',
 
+    'LBL_SCENARIO_SALES' => 'Sales',
+    'LBL_SCENARIO_MARKETING' => 'Marketing',
+    'LBL_SCENARIO_FINANCE' => 'Finance',
+    'LBL_SCENARIO_SERVICE' => 'Service',
+    'LBL_SCENARIO_PROJECT' => 'Project Management',
+
+    'LBL_SCENARIO_SALES_DESCRIPTION'=>'This scenario facilitates the management of sales items',
+    'LBL_SCENARIO_MAKETING_DESCRIPTION'=>'This scenario facilitates the management of marketing items',
+    'LBL_SCENARIO_FINANCE_DESCRIPTION'=>'This scenario facilitates the management of finance related items',
+    'LBL_SCENARIO_SERVICE_DESCRIPTION'=>'This scenario facilitates the management of service related items',
+    'LBL_SCENARIO_PROJECT_DESCRIPTION'=>'This scenario faciliates the management of project related items',
+
     'LBL_SYNC' => 'Sync',
     'LBL_TABGROUP_ALL' => 'All',
     'LBL_TABGROUP_ACTIVITIES' => 'Activities',
@@ -1976,16 +1977,18 @@ $app_strings = array(
     'LBL_VIEW_PDF_BUTTON_TITLE' => 'Print as PDF',
 
     'LNK_ABOUT' => 'About',
-    'LNK_ADVANCED_SEARCH' => 'Advanced Search',
-    'LNK_BASIC_SEARCH' => 'Basic Search',
+    'LNK_ADVANCED_FILTER' => 'Advanced Filter',
+    'LNK_BASIC_FILTER' => 'Quick Filter',
+    'LBL_ADVANCED_SEARCH' => 'Advanced Filter',
+    'LBL_QUICK_FILTER' => 'Quick Filter',
     'LNK_SEARCH_FTS_VIEW_ALL' => 'View all results',
     'LNK_SEARCH_NONFTS_VIEW_ALL' => 'Show All',
-    'LNK_CLOSE' => 'close',
-    'LBL_MODIFY_CURRENT_SEARCH' => 'Modify current search',
+    'LNK_CLOSE' => 'Close',
+    'LBL_MODIFY_CURRENT_FILTER' => 'Modify current filter',
     'LNK_SAVED_VIEWS' => 'Layout Options',
-    'LNK_DELETE_ALL' => 'del all',
-    'LNK_DELETE' => 'delete',
-    'LNK_EDIT' => 'edit',
+    'LNK_DELETE_ALL' => 'Delete all',
+    'LNK_DELETE' => 'Delete',
+    'LNK_EDIT' => 'Edit',
     'LNK_GET_LATEST' => 'Get latest',
     'LNK_GET_LATEST_TOOLTIP' => 'Replace with latest version',
     'LNK_HELP' => 'Help',
@@ -1999,7 +2002,7 @@ $app_strings = array(
     'LNK_LOAD_SIGNED_TOOLTIP' => 'Replace with signed document',
     'LNK_PRINT' => 'Print',
     'LNK_BACKTOTOP' => 'Back to top',
-    'LNK_REMOVE' => 'remove',
+    'LNK_REMOVE' => 'Remove',
     'LNK_RESUME' => 'Resume',
     'LNK_VIEW_CHANGE_LOG' => 'View Change Log',
 
@@ -2049,7 +2052,7 @@ $app_strings = array(
     'LBL_REQUEST_PROCESSED' => 'Done',
     'LBL_AJAX_FAILURE' => 'Ajax failure',
     'LBL_MERGE_DUPLICATES' => 'Merge',
-    'LBL_SAVED_SEARCH_SHORTCUT' => 'Saved Searches',
+    'LBL_SAVED_FILTER_SHORTCUT' => 'My Filters',
     'LBL_SEARCH_POPULATE_ONLY' => 'Perform a search using the search form above',
     'LBL_DETAILVIEW' => 'Detail View',
     'LBL_LISTVIEW' => 'List View',
@@ -2076,8 +2079,10 @@ $app_strings = array(
     'MSG_JS_ALERT_MTG_REMINDER_NO_LOCATION' => 'Location isn\'t set.',
     'MSG_JS_ALERT_MTG_REMINDER_NO_START_DATE' => 'Start date isn\'t defined.',
     'MSG_LIST_VIEW_NO_RESULTS_BASIC' => 'No results found.',
+    'MSG_LIST_VIEW_NO_RESULTS_CHANGE_CRITERIA' => 'No results found... Perhaps change your search criteria and try again?',
     'MSG_LIST_VIEW_NO_RESULTS' => 'No results found for <item1>',
     'MSG_LIST_VIEW_NO_RESULTS_SUBMSG' => 'Create <item1> as a new <item2>',
+    'MSG_LIST_VIEW_CHANGE_SEARCH' => 'or change your search criteria',
     'MSG_EMPTY_LIST_VIEW_NO_RESULTS' => 'You currently have no records saved. <item2> or <item3> one now.',
     'MSG_EMPTY_LIST_VIEW_NO_RESULTS_SUBMSG' => '<item4> to learn more about the <item1> module. In order to access more information, use the user menu drop down located on the main navigation bar to access Help.',
 
@@ -2108,9 +2113,11 @@ $app_strings = array(
     'LBL_REDIRECT_URL' => 'Redirect URL',
     'LBL_RELATED_CAMPAIGN' => 'Related campaign',
     'LBL_ADD_ALL_LEAD_FIELDS' => 'Add All Fields',
+    'LBL_RESET_ALL_LEAD_FIELDS' => 'Reset all Fields',
     'LBL_REMOVE_ALL_LEAD_FIELDS' => 'Remove All Fields',
+    'LBL_NEXT_BTN' => 'Next',
     'LBL_ONLY_IMAGE_ATTACHMENT' => 'Only the following supported image type attachments can be embedded: JPG, PNG.',
-    'LBL_TRAINING' => 'Support',
+    'LBL_TRAINING' => 'Support Forum',
     'ERR_DATABASE_CONN_DROPPED' => 'Error executing a query. Possibly, your database dropped the connection. Please refresh this page, you may need to restart you web server.',
     'ERR_MSSQL_DB_CONTEXT' => 'Changed database context to',
     'ERR_MSSQL_WARNING' => 'Warning:',
@@ -2155,7 +2162,6 @@ $app_strings = array(
     'LBL_ADD_DASHLETS' => 'Add Dashlets',
     'LBL_CLOSE_DASHLETS' => 'Close',
     'LBL_OPTIONS' => 'Options',
-    'LBL_NUMBER_OF_COLUMNS' => 'Select the number of columns',
     'LBL_1_COLUMN' => '1 Column',
     'LBL_2_COLUMN' => '2 Column',
     'LBL_3_COLUMN' => '3 Column',
@@ -2403,6 +2409,8 @@ $app_strings = array(
     'LBL_DELETE_BUTTON_KEY' => 'd',
     'LBL_DELETE_BUTTON_LABEL' => 'Delete',
     'LBL_DELETE_BUTTON_TITLE' => 'Delete',
+    'LBL_BULK_ACTION_BUTTON_LABEL' => 'BULK ACTION',
+    'LBL_BULK_ACTION_BUTTON_LABEL_MOBILE' => 'ACTION',
     'LBL_SAVE_BUTTON_KEY' => 'a',
     'LBL_SAVE_BUTTON_LABEL' => 'Save',
     'LBL_SAVE_BUTTON_TITLE' => 'Save',
@@ -2432,6 +2440,17 @@ $app_strings = array(
     'ERR_A_REMINDER_IS_EMPTY_OR_INCORRECT' => 'A reminder is empty or incorrect.',
     'ERR_REMINDER_IS_NOT_SET_POPUP_OR_EMAIL' => 'Reminder is not set for either a popup or email.',
     'ERR_NO_INVITEES_FOR_REMINDER' => 'No invitees for reminder.',
+    'LBL_DELETE_REMINDER_CONFIRM' => 'Reminder doesn\'t include any invitees, do you want to remove the reminder?',
+    'LBL_DELETE_REMINDER' => 'Delete Reminder',
+    'LBL_OK' => 'Ok',
+
+    'LBL_COLUMNS_FILTER_HEADER_TITLE' => 'Choose columns',
+    'LBL_SAVE_CHANGES_BUTTON_TITLE' => 'Save changes',
+    'LBL_DISPLAYED' => 'Displayed',
+    'LBL_HIDDEN' => 'Hidden',
+    'ERR_EMPTY_COLUMNS_LIST' => 'At least, one element required',
+
+    'LBL_FILTER_HEADER_TITLE' => 'Filter',
 
 );
 
@@ -3249,6 +3268,8 @@ $app_list_strings['moduleList']['AOP_Case_Events'] = 'Case Events';
 $app_list_strings['moduleList']['AOP_Case_Updates'] = 'Case Updates';
 $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] = '========== Please reply above this line ==========';
 
+
+
 //aop
 $app_list_strings['case_state_default_key'] = 'Open';
 $app_list_strings['case_state_dom'] =
@@ -3300,15 +3321,6 @@ $app_list_strings['aor_format_options']['Ymd'] = 'Ymd';
 $app_list_strings['aor_format_options']['Y-m'] = 'Y-m';
 $app_list_strings['aor_format_options']['d/m/Y'] = 'd/m/Y';
 $app_list_strings['aor_format_options']['Y'] = 'Y';
-$app_list_strings['aor_sql_operator_list']['Equal_To'] = '=';
-$app_list_strings['aor_sql_operator_list']['Not_Equal_To'] = '!=';
-$app_list_strings['aor_sql_operator_list']['Greater_Than'] = '>';
-$app_list_strings['aor_sql_operator_list']['Less_Than'] = '<';
-$app_list_strings['aor_sql_operator_list']['Greater_Than_or_Equal_To'] = '>=';
-$app_list_strings['aor_sql_operator_list']['Less_Than_or_Equal_To'] = '<=';
-$app_list_strings['aor_sql_operator_list']['Contains'] = 'LIKE';
-$app_list_strings['aor_sql_operator_list']['Starts_With'] = 'LIKE';
-$app_list_strings['aor_sql_operator_list']['Ends_With'] = 'LIKE';
 $app_list_strings['aor_condition_operator_list']['And'] = 'And';
 $app_list_strings['aor_condition_operator_list']['OR'] = 'OR';
 $app_list_strings['aor_condition_type_list']['Value'] = 'Value';
@@ -3770,7 +3782,7 @@ $app_list_strings['marker_image_list']['restaurant_turkish'] = 'Restaurant Turki
 $app_list_strings['marker_image_list']['right'] = 'Right';
 $app_list_strings['marker_image_list']['right_then_down'] = 'Right Then Down';
 $app_list_strings['marker_image_list']['right_then_up'] = 'Right Then Up';
-$app_list_strings['marker_image_list']['satursday'] = 'Satursday';
+$app_list_strings['marker_image_list']['saturday'] = 'Saturday';
 $app_list_strings['marker_image_list']['school'] = 'School';
 $app_list_strings['marker_image_list']['shopping_mall'] = 'Shopping Mall';
 $app_list_strings['marker_image_list']['shore'] = 'Shore';
@@ -3889,7 +3901,8 @@ $app_strings['LBL_QUICK_TASK'] = 'Create Task';
 $app_strings['LBL_COLLECTION_TYPE'] = 'Type';
 
 $app_strings['LBL_ADD_TAB'] = 'Add Tab';
-$app_strings['LBL_SUITE_DASHBOARD'] = 'SuiteCRM Dashboard';
+$app_strings['LBL_EDIT_TAB'] = 'Edit Tabs';
+$app_strings['LBL_SUITE_DASHBOARD'] = 'SUITECRM DASHBOARD';
 $app_strings['LBL_ENTER_DASHBOARD_NAME'] = 'Enter Dashboard Name:';
 $app_strings['LBL_NUMBER_OF_COLUMNS'] = 'Number of Columns:';
 $app_strings['LBL_DELETE_DASHBOARD1'] = 'Are you sure you want to delete the';
@@ -3897,6 +3910,7 @@ $app_strings['LBL_DELETE_DASHBOARD2'] = 'dashboard?';
 $app_strings['LBL_ADD_DASHBOARD_PAGE'] = 'Add a Dashboard Page';
 $app_strings['LBL_DELETE_DASHBOARD_PAGE'] = 'Remove Current Dashboard Page';
 $app_strings['LBL_RENAME_DASHBOARD_PAGE'] = 'Rename Dashboard Page';
+$app_strings['LBL_SUITE_DASHBOARD_ACTIONS'] = 'ACTIONS';
 
 $app_strings['LBL_DISCOVER_SUITECRM'] = 'Discover SuiteCRM';
 
@@ -3905,3 +3919,55 @@ $app_list_strings['collection_temp_list'] = array('Tasks' => 'Tasks', 'Meetings'
 $app_list_strings['moduleList']['TemplateEditor'] = 'Template Part Editor';
 $app_strings['LBL_CONFIRM_CANCEL_INLINE_EDITING'] = "You have clicked away from the field you were editing without saving it. Click ok if you're happy to lose your change, or cancel if you would like to continue editing";
 $app_strings['LBL_LOADING_ERROR_INLINE_EDITING'] = "There was an error loading the field. Your session may have timed out. Please log in again to fix this";
+
+//SuiteSpots
+$app_list_strings['spots_areas'] = array(
+    'getSalesSpotsData' => 'Sales',
+    'getAccountsSpotsData' => 'Accounts',
+    'getLeadsSpotsData' => 'Leads',
+    'getServiceSpotsData' => 'Service',
+    'getMarketingSpotsData' => 'Marketing',
+    'getMarketingActivitySpotsData' => 'Marketing Activity',
+    'getActivitiesSpotsData' => 'Activities',
+    'getQuotesSpotsData' => 'Quotes'
+);
+
+$app_list_strings['moduleList']['Spots'] = 'Spots';
+
+$app_list_strings['moduleList']['AOBH_BusinessHours'] = 'Business Hours';
+$app_list_strings['business_hours_list']['0'] = '12am';
+$app_list_strings['business_hours_list']['1'] = '1am';
+$app_list_strings['business_hours_list']['2'] = '2am';
+$app_list_strings['business_hours_list']['3'] = '3am';
+$app_list_strings['business_hours_list']['4'] = '4am';
+$app_list_strings['business_hours_list']['5'] = '5am';
+$app_list_strings['business_hours_list']['6'] = '6am';
+$app_list_strings['business_hours_list']['7'] = '7am';
+$app_list_strings['business_hours_list']['8'] = '8am';
+$app_list_strings['business_hours_list']['9'] = '9am';
+$app_list_strings['business_hours_list']['10'] = '10am';
+$app_list_strings['business_hours_list']['11'] = '11am';
+$app_list_strings['business_hours_list']['12'] = '12pm';
+$app_list_strings['business_hours_list']['13'] = '1pm';
+$app_list_strings['business_hours_list']['14'] = '2pm';
+$app_list_strings['business_hours_list']['15'] = '3pm';
+$app_list_strings['business_hours_list']['16'] = '4pm';
+$app_list_strings['business_hours_list']['17'] = '5pm';
+$app_list_strings['business_hours_list']['18'] = '6pm';
+$app_list_strings['business_hours_list']['19'] = '7pm';
+$app_list_strings['business_hours_list']['20'] = '8pm';
+$app_list_strings['business_hours_list']['21'] = '9pm';
+$app_list_strings['business_hours_list']['22'] = '10pm';
+$app_list_strings['business_hours_list']['23'] = '11pm';
+$app_list_strings['day_list']['Monday'] = 'Monday';
+$app_list_strings['day_list']['Tuesday'] = 'Tuesday';
+$app_list_strings['day_list']['Wednesday'] = 'Wednesday';
+$app_list_strings['day_list']['Thursday'] = 'Thursday';
+$app_list_strings['day_list']['Friday'] = 'Friday';
+$app_list_strings['day_list']['Saturday'] = 'Saturday';
+$app_list_strings['day_list']['Sunday'] = 'Sunday';
+$app_list_strings['pdf_page_size_dom']['A4'] = 'A4';
+$app_list_strings['pdf_page_size_dom']['Letter'] = 'Letter';
+$app_list_strings['pdf_page_size_dom']['Legal'] = 'Legal';
+$app_list_strings['pdf_orientation_dom']['Portrait'] = 'Portrait';
+$app_list_strings['pdf_orientation_dom']['Landscape'] = 'Landscape';

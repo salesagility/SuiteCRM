@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Reserved. Contributor(s): ______________________________________..
  * *******************************************************************************/
 
-$GLOBALS['starttTime'] = microtime(true);
+$GLOBALS['startTime'] = microtime(true);
 
 set_include_path(
     dirname(__FILE__).'/..'.PATH_SEPARATOR.

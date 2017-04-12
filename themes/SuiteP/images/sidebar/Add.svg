@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="32px" height="112px" viewBox="0 0 32 112" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>sb_add</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="sb_add">
+            <ellipse id="Oval-7" stroke="#F5F5F5" cx="16" cy="16" rx="15" ry="15"></ellipse>
+            <ellipse id="Oval-7" stroke="#534D64" cx="16" cy="56" rx="15" ry="15"></ellipse>
+            <ellipse id="Oval-7" stroke="#F08377" cx="16" cy="96" rx="15" ry="15"></ellipse>
+            <polygon id="+" fill="#F08377" points="23.05 97.146 17.87 97.146 17.87 102.718 14.342 102.718 14.342 97.146 9.19 97.146 9.19 94.038 14.342 94.038 14.342 88.494 17.87 88.494 17.87 94.038 23.05 94.038"></polygon>
+            <polygon id="+" fill="#534D64" points="23.05 57.146 17.87 57.146 17.87 62.718 14.342 62.718 14.342 57.146 9.19 57.146 9.19 54.038 14.342 54.038 14.342 48.494 17.87 48.494 17.87 54.038 23.05 54.038"></polygon>
+            <polygon id="+" fill="#F5F5F5" points="23.05 17.146 17.87 17.146 17.87 22.718 14.342 22.718 14.342 17.146 9.19 17.146 9.19 14.038 14.342 14.038 14.342 8.494 17.87 8.494 17.87 14.038 23.05 14.038"></polygon>
+        </g>
+    </g>
+</svg>

@@ -78,8 +78,8 @@ $out=<<<EOQ
    <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_SYSOPTS_DB_TITLE']}</title>
    <link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
    <link rel="stylesheet" href="install/install.css" type="text/css">
-   <link rel="stylesheet" href="themes/Suite7/css/fontello.css">
-   <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
+   <link rel="stylesheet" href="themes/SuiteP/css/fontello.css">
+   <link rel="stylesheet" href="themes/SuiteP/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
    <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
    <script src="cache/include/javascript/sugar_grp1_yui.js?s={$sugar_version}&c={$js_custom_version}"></script>
 </head>

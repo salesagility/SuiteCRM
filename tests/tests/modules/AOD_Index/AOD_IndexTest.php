@@ -38,10 +38,6 @@ class AOD_IndexTest extends PHPUnit_Framework_TestCase
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
 
-        //execute the method without parameters and verify that it returns true
-         $hits = $aod_index->find();
-        $this->assertTrue(is_array($hits));
-
          //execute the method with parameters and verify that it returns true
          $hits = $aod_index->find('/');
         $this->assertTrue(is_array($hits));
@@ -166,7 +162,6 @@ class AOD_IndexTest extends PHPUnit_Framework_TestCase
                 'AOS_Product_Categories' => 'AOS_Product_Categories',
                 'AOW_WorkFlow' => 'AOW_WorkFlow',
                 'Accounts' => 'Account',
-                'Alerts' => 'Alert',
                 'Bugs' => 'Bug',
                 'Calls' => 'Call',
                 'Calls_Reschedule' => 'Calls_Reschedule',
@@ -176,7 +171,6 @@ class AOD_IndexTest extends PHPUnit_Framework_TestCase
                 'DocumentRevisions' => 'DocumentRevision',
                 'Documents' => 'Document',
                 'FP_events' => 'FP_events',
-                'Favorites' => 'Favorites',
                 'Leads' => 'Lead',
                 'Meetings' => 'Meeting',
                 'Notes' => 'Note',
@@ -186,8 +180,7 @@ class AOD_IndexTest extends PHPUnit_Framework_TestCase
                 'ProjectTask' => 'ProjectTask',
                 'ProspectLists' => 'ProspectList',
                 'Prospects' => 'Prospect',
-                'Tasks' => 'Task',
-                'TemplateSectionLine' => 'TemplateSectionLine'
+                'Tasks' => 'Task'
         );
 
         $aod_index = new AOD_Index();

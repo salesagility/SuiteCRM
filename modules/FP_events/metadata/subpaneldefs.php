@@ -54,13 +54,12 @@ $layout_defs['FP_events'] = array(
 			'module'=>'Delegates',
 
 			'top_buttons' => array(
-				array('widget_class' => 'SubPanelTopButton_c'),
 				array('widget_class' => 'SubPanelDelegatesSelectButton'),
-				//array('widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect'),
 				array('widget_class' => 'SubPanelManageDelegatesButton'),
 				array('widget_class' => 'SubPanelManageAcceptancesButton'),
-                                array('widget_class' => 'SubPanelSendInvitesButton'),
+				array('widget_class' => 'SubPanelSendInvitesButton'),
    				array('widget_class' => 'SubPanelCheck'),
+				array('widget_class' => 'SubPanelTopFilterButton'),
 			),
 
 			'collection_list' => array(
@@ -79,6 +78,20 @@ $layout_defs['FP_events'] = array(
                     'subpanel_name' => 'FP_events_subpanel_fp_events_leads_1',
                     'get_subpanel_data' => 'fp_events_leads_1',
                 ),
+			),
+			'searchdefs' => array(
+				'first_name' =>
+					array(
+						'name' => 'first_name',
+						'default' => true,
+						'width' => '10%',
+					),
+				'last_name' =>
+					array(
+						'name' => 'last_name',
+						'default' => true,
+						'width' => '10%',
+					),
 			),
 		),
 	),

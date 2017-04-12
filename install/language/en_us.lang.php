@@ -43,8 +43,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * *******************************************************************************/
 
 $mod_strings = array(
-	'LBL_BASIC_SEARCH'					=> 'Basic Search',
-	'LBL_ADVANCED_SEARCH'				=> 'Advanced Search',
+	'LBL_BASIC_SEARCH'					=> 'Quick Filter',
+	'LBL_ADVANCED_SEARCH'				=> 'Advanced Filter',
 	'LBL_BASIC_TYPE'					=> 'Basic Type',
 	'LBL_ADVANCED_TYPE'					=> 'Advanced Type',
 	'LBL_SYSOPTS_1'						=> 'Select from the following system configuration options below.',
@@ -60,7 +60,6 @@ $mod_strings = array(
 	'ERR_ADMIN_USER_NAME_BLANK'         => 'Provide the user name for the SuiteCRM admin user. ',
 	'ERR_ADMIN_PASS_BLANK'				=> 'Provide the password for the SuiteCRM admin user. ',
 
-	//'ERR_CHECKSYS_CALL_TIME'			=> 'Allow Call Time Pass Reference is Off (please enable in php.ini)',
 	'ERR_CHECKSYS'                      => 'Errors have been detected during compatibility check.  In order for your SuiteCRM Installation to function properly, please take the proper steps to address the issues listed below and either press the recheck button, or try installing again.',
 	'ERR_CHECKSYS_CALL_TIME'            => 'Allow Call Time Pass Reference is On (this should be set to Off in php.ini)',
 	'ERR_CHECKSYS_CURL'					=> 'Not found: SuiteCRM Scheduler will run with limited functionality.',
@@ -89,7 +88,6 @@ $mod_strings = array(
 	'ERR_CHECKSYS_CUSTOM_NOT_WRITABLE'  => 'The Custom Directory exists but is not writeable.  You may have to change permissions on it (chmod 766) or right click on it and uncheck the read only option, depending on your Operating System.  Please take the needed steps to make the file writeable.',
 	'ERR_CHECKSYS_FILES_NOT_WRITABLE'   => "The files or directories listed below are not writeable or are missing and cannot be created.  Depending on your Operating System, correcting this may require you to change permissions on the files or parent directory (chmod 755), or to right click on the parent directory and uncheck the 'read only' option and apply it to all subfolders.",
 	'LBL_CHECKSYS_OVERRIDE_CONFIG' => 'Config override',
-	//'ERR_CHECKSYS_SAFE_MODE'			=> 'Safe Mode is On (please disable in php.ini)',
 	'ERR_CHECKSYS_SAFE_MODE'			=> 'Safe Mode is On (you may wish to disable in php.ini)',
 	'ERR_CHECKSYS_ZLIB'					=> 'ZLib support not found: SuiteCRM reaps enormous performance benefits with zlib compression.',
 	'ERR_CHECKSYS_ZIP'					=> 'ZIP support not found: SuiteCRM needs ZIP support in order to process compressed files.',
@@ -426,14 +424,6 @@ $mod_strings = array(
 	'LBL_HIDDEN'                        => '<i>(hidden)</i>',
 	'LBL_STEP1' => 'Step 1 of 2 - Pre-Installation requirements',
 	'LBL_STEP2' => 'Step 2 of 2 - Configuration',
-//    'LBL_STEP1'                         => 'Step 1 of 8 - Pre-Installation requirements',
-//    'LBL_STEP2'                         => 'Step 2 of 8 - License Agreement',
-//    'LBL_STEP3'                         => 'Step 3 of 8 - Installation Type',
-//    'LBL_STEP4'                         => 'Step 4 of 8 - Database Selection',
-//    'LBL_STEP5'                         => 'Step 5 of 8 - Database Configuration',
-//    'LBL_STEP6'                         => 'Step 6 of 8 - Site Configuration',
-//    'LBL_STEP7'                         => 'Step 7 of 8 - Confirm Settings',
-//    'LBL_STEP8'                         => 'Step 8 of 8 - Installation Successful',
 //	'LBL_NO_THANKS'						=> 'Continue to installer',
 	'LBL_CHOOSE_LANG'					=> '<b>Choose your language</b>',
 	'LBL_STEP'							=> 'Step',
@@ -563,12 +553,12 @@ $mod_strings = array(
 	'LBL_BACKWARD_COMPATIBILITY_ON' => 'Php Backward Compatibility mode is turned on. Set zend.ze1_compatibility_mode to Off for proceeding further',
 	'LBL_STREAM' => 'PHP allows to use stream',
 
-    'advanced_password_new_account_email' => array(
-        'subject' => 'New account information',
-        'description' => 'This template is used when the System Administrator sends a new password to a user.',
-        'body' => '<div><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width="550" align=\"\&quot;\&quot;center\&quot;\&quot;\"><tbody><tr><td colspan=\"2\"><p>Here is your account username and temporary password:</p><p>Username : $contact_user_user_name </p><p>Password : $contact_user_user_hash </p><br><p>$config_site_url</p><br><p>After you log in using the above password, you may be required to reset the password to one of your own choice.</p>   </td>         </tr><tr><td colspan=\"2\"></td>         </tr> </tbody></table> </div>',
-        'txt_body' =>
-'
+	'advanced_password_new_account_email' => array(
+		'subject' => 'New account information',
+		'description' => 'This template is used when the System Administrator sends a new password to a user.',
+		'body' => '<div><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width="550" align=\"\&quot;\&quot;center\&quot;\&quot;\"><tbody><tr><td colspan=\"2\"><p>Here is your account username and temporary password:</p><p>Username : $contact_user_user_name </p><p>Password : $contact_user_user_hash </p><br><p>$config_site_url</p><br><p>After you log in using the above password, you may be required to reset the password to one of your own choice.</p>   </td>         </tr><tr><td colspan=\"2\"></td>         </tr> </tbody></table> </div>',
+		'txt_body' =>
+			'
 Here is your account username and temporary password:
 Username : $contact_user_user_name
 Password : $contact_user_user_hash
@@ -576,14 +566,14 @@ Password : $contact_user_user_hash
 $config_site_url
 
 After you log in using the above password, you may be required to reset the password to one of your own choice.',
-        'name' => 'System-generated password email',
-        ),
-    'advanced_password_forgot_password_email' => array(
-        'subject' => 'Reset your account password',
-        'description' => "This template is used to send a user a link to click to reset the user's account password.",
-        'body' => '<div><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width="550" align=\"\&quot;\&quot;center\&quot;\&quot;\"><tbody><tr><td colspan=\"2\"><p>You recently requested on $contact_user_pwd_last_changed to be able to reset your account password. </p><p>Click on the link below to reset your password:</p><p> $contact_user_link_guid </p>  </td>         </tr><tr><td colspan=\"2\"></td>         </tr> </tbody></table> </div>',
-        'txt_body' =>
-'
+		'name' => 'System-generated password email',
+	),
+	'advanced_password_forgot_password_email' => array(
+		'subject' => 'Reset your account password',
+		'description' => "This template is used to send a user a link to click to reset the user's account password.",
+		'body' => '<div><table border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width="550" align=\"\&quot;\&quot;center\&quot;\&quot;\"><tbody><tr><td colspan=\"2\"><p>You recently requested on $contact_user_pwd_last_changed to be able to reset your account password. </p><p>Click on the link below to reset your password:</p><p> $contact_user_link_guid </p>  </td>         </tr><tr><td colspan=\"2\"></td>         </tr> </tbody></table> </div>',
+		'txt_body' =>
+			'
 You recently requested on $contact_user_pwd_last_changed to be able to reset your account password.
 
 Click on the link below to reset your password:
@@ -636,10 +626,10 @@ $contact_user_link_guid',
 	'CURRENT_LOGO_HELP'=>'This logo is displayed in the left-hand corner of the footer of the SuiteCRM application.',
 
 
-
-
-
-
+	//Scenario selection of modules
+	'LBL_WIZARD_SCENARIO_TITLE' => 'Scenario Selection',
+	'LBL_WIZARD_SCENARIO_DESC' => 'This is to allow tailoring of the displayed modules based on your requirements.  Each of the modules can be enabled after install using the administration page.',
+	'LBL_WIZARD_SCENARIO_EMPTY'=> 'There are no scenarios currently set in the configuration file (config.php)',
 
 
 

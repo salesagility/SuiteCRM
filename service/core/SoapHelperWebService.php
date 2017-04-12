@@ -348,7 +348,7 @@ function validate_user($user_name, $password){
 		$actions = ACLAction::getUserActions($user->id,true);
 		foreach($actions as $key=>$value){
 			if(isset($value['module']) && $value['module']['access']['aclaccess'] < ACL_ALLOW_ENABLED){
-				if ($value['module']['access']['aclaccess'] == ACL_ALLOW_DISABLED) {
+				if (!is_admin($user) && $value['module']['access']['aclaccess'] == ACL_ALLOW_DISABLED) {
 					unset($modules[$key]);
 				} else {
 					$modules[$key] = 'read_only';

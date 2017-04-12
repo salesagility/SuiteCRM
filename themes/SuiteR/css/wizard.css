@@ -60,7 +60,7 @@ div.nav-buttons
     margin-top: 0;
 }
 
-#welcome, #personalinfo, #locale, #finish{
+#welcome, #personalinfo, #locale, #finish, #scenarios{
     border:1px solid #cccccc !important;
     margin:0 auto;
 }

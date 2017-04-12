@@ -59,7 +59,6 @@ class CasesViewEdit extends ViewEdit {
         self::__construct();
     }
 
-
     function display(){
         parent::display();
         global $sugar_config;
@@ -68,18 +67,15 @@ class CasesViewEdit extends ViewEdit {
             ?>
             <script>
                 $(document).ready(function(){
-                    $('#update_text').closest('td').html('');
-                    $('#update_text_label').closest('td').html('');
-                    $('#internal').closest('td').html('');
-                    $('#internal_label').closest('td').html('');
-                    $('#addFileButton').closest('td').html('');
-                    $('#case_update_form_label').closest('td').html('');
+                    $('#update_text').closest('.edit-view-row-item').html('');
+                    $('#update_text_label').closest('.edit-view-row-item').html('');
+                    $('#internal').closest('.edit-view-row-item').html('');
+                    $('#internal_label').closest('.edit-view-row-item').html('');
+                    $('#addFileButton').closest('.edit-view-row-item').html('');
+                    $('#case_update_form_label').closest('.edit-view-row-item').html('');
                 });
             </script>
         <?php
         }
-        $tiny = new SugarTinyMCE();
-        echo $tiny->getInstance('update_text,description', 'email_compose_light');
     }
-
 }

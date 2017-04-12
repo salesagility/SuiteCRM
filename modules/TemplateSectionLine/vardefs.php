@@ -1,10 +1,10 @@
 <?php
-/*********************************************************************************
+/**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -35,84 +35,79 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
+ */
 $dictionary['TemplateSectionLine'] = array(
-	'table'=>'templatesectionline',
-	'audited'=>true,
-    'inline_edit'=>true,
-		'duplicate_merge'=>true,
-		'fields'=>array (
-			'thumbnail' =>
-				array (
-					'required' => false,
-					'name' => 'thumbnail',
-					'vname' => 'LBL_THUMBNAIL',
-					'type' => 'varchar',
-					'massupdate' => 0,
-					'no_default' => false,
-					'comments' => '',
-					'help' => '',
-					'importable' => 'true',
-					'duplicate_merge' => 'disabled',
-					'duplicate_merge_dom_value' => '0',
-					'audited' => false,
-					'inline_edit' => true,
-					'reportable' => true,
-					'unified_search' => false,
-					'merge_filter' => 'disabled',
-					'len' => '255',
-					'size' => '20',
-				),
-  'grp' => 
-  array (
-    'required' => false,
-    'name' => 'grp',
-    'vname' => 'LBL_GRP',
-    'type' => 'varchar',
-    'massupdate' => 0,
-    'no_default' => false,
-    'comments' => '',
-    'help' => '',
-    'importable' => 'true',
-    'duplicate_merge' => 'disabled',
-    'duplicate_merge_dom_value' => '0',
+    'table' => 'templatesectionline',
     'audited' => false,
     'inline_edit' => true,
-    'reportable' => true,
+    'duplicate_merge' => true,
+    'fields' => array(
+        'thumbnail' => array(
+                'required' => false,
+                'name' => 'thumbnail',
+                'vname' => 'LBL_THUMBNAIL',
+                'type' => 'varchar',
+                'massupdate' => 0,
+                'no_default' => false,
+                'comments' => '',
+                'help' => '',
+                'importable' => 'true',
+                'duplicate_merge' => 'disabled',
+                'duplicate_merge_dom_value' => '0',
+                'audited' => false,
+                'inline_edit' => true,
+                'reportable' => true,
+                'unified_search' => false,
+                'merge_filter' => 'disabled',
+                'len' => '255',
+                'size' => '20',
+            ),
+        'grp' => array(
+                'required' => false,
+                'name' => 'grp',
+                'vname' => 'LBL_GRP',
+                'type' => 'varchar',
+                'massupdate' => 0,
+                'no_default' => false,
+                'comments' => '',
+                'help' => '',
+                'importable' => 'true',
+                'duplicate_merge' => 'disabled',
+                'duplicate_merge_dom_value' => '0',
+                'audited' => false,
+                'inline_edit' => true,
+                'reportable' => true,
+                'unified_search' => false,
+                'merge_filter' => 'disabled',
+                'len' => '255',
+                'size' => '20',
+            ),
+        'ord' => array(
+                'required' => false,
+                'name' => 'ord',
+                'vname' => 'LBL_ORD',
+                'type' => 'int',
+                'massupdate' => 0,
+                'no_default' => false,
+                'comments' => '',
+                'help' => '',
+                'importable' => 'true',
+                'duplicate_merge' => 'disabled',
+                'duplicate_merge_dom_value' => '0',
+                'audited' => false,
+                'inline_edit' => true,
+                'reportable' => true,
+                'unified_search' => false,
+                'merge_filter' => 'disabled',
+                'len' => '11',
+                'size' => '20',
+            ),
+    ),
+    'relationships' => array(),
+    'optimistic_locking' => true,
     'unified_search' => false,
-    'merge_filter' => 'disabled',
-    'len' => '255',
-    'size' => '20',
-  ),
-			'ord' =>
-				array (
-					'required' => false,
-					'name' => 'ord',
-					'vname' => 'LBL_ORD',
-					'type' => 'int',
-					'massupdate' => 0,
-					'no_default' => false,
-					'comments' => '',
-					'help' => '',
-					'importable' => 'true',
-					'duplicate_merge' => 'disabled',
-					'duplicate_merge_dom_value' => '0',
-					'audited' => false,
-					'inline_edit' => true,
-					'reportable' => true,
-					'unified_search' => false,
-					'merge_filter' => 'disabled',
-					'len' => '11',
-					'size' => '20',
-				),
-),
-	'relationships'=>array (
-),
-	'optimistic_locking'=>true,
-		'unified_search'=>true,
-	);
-if (!class_exists('VardefManager')){
-        require_once('include/SugarObjects/VardefManager.php');
+);
+if (!class_exists('VardefManager')) {
+    require_once 'include/SugarObjects/VardefManager.php';
 }
-VardefManager::createVardef('TemplateSectionLine','TemplateSectionLine', array('basic','assignable'));
+VardefManager::createVardef('TemplateSectionLine', 'TemplateSectionLine', array('basic'));

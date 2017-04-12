@@ -402,6 +402,74 @@ function get_sugar_config_defaults()
     return $sugar_config_defaults;
 }
 
+
+/**
+ * Gets the username of the user under which the PHP script is currently running
+ * Notes:
+ * - works on Windows and Linux, tries a variety of methods to accommodate different systems and hosting restrictions
+ * - on Windows, return full username in form DOMAIN\USER
+ * - returns empty string if failed
+ */
+
+function getRunningUser()
+{
+    // works on Windows and Linux, but might return null on systems that include exec in
+    // disabled_functions in php.ini (typical in shared hosting)
+    $runningUser = exec('whoami');
+
+    if ($runningUser == null) {  // matches null, false and ""
+        if (is_windows()) {
+            $runningUser = getenv('USERDOMAIN').'\\'.getenv('USERNAME');
+        }
+        else {
+            $runningUser = posix_getpwuid(posix_geteuid())['name'];
+        }
+    }
+    return ($runningUser == null) ? '' : $runningUser;
+}
+
+/**
+ * Adds a username to the allowed_cron_users array in config.php
+ * Notes:
+ * - this is Linux only, does nothing on Windows
+ * - does not repeat the user if he is already there
+ * - creates the sub-array if previously unexisting
+ * - special treatment for user 'root' to require manual intervention from an admin to allow
+ * @param string $addUser the name of the user to add [usually obtained with getRunningUser()]
+ */
+
+function addCronAllowedUser($addUser)
+{
+    global $sugar_config;
+
+    if (is_windows() || !isset($sugar_config)|| !isset($addUser) || ($addUser == '')) {
+        return;
+    }
+    if (!array_key_exists('cron', $sugar_config)) {
+        $sugar_config['cron'] = array();
+    }
+    if (!array_key_exists('allowed_cron_users', $sugar_config['cron'])) {
+        $sugar_config['cron']['allowed_cron_users'] = array();
+    }
+    if (!in_array($addUser, $sugar_config['cron']['allowed_cron_users'])) {
+        if ($addUser == 'root') {
+            $addUser = 'root_REMOVE_THIS_NOTICE_IF_YOU_REALLY_WANT_TO_ALLOW_ROOT';
+            if (!in_array($addUser, $sugar_config['cron']['allowed_cron_users'])) {
+                $sugar_config['cron']['allowed_cron_users'][] = $addUser;
+                $GLOBALS['log']->error("You're using 'root' as the web-server user. This should be avoided ".
+                    "for security reasons. Review allowed_cron_users configuration in config.php.");
+            }
+        } else {
+            $sugar_config['cron']['allowed_cron_users'][] = $addUser;
+            $GLOBALS['log']->info("Web server user $addUser added to allowed_cron_users in config.php.");
+
+        }
+    }
+
+    ksort($sugar_config);
+    write_array_to_file('sugar_config', $sugar_config, 'config.php');
+}
+
 /**
  * @deprecated use SugarView::getMenu() instead
  */
@@ -972,7 +1040,7 @@ function return_application_language($language)
     }
 
     $temp_app_strings = $app_strings;
-    $default_language = $sugar_config['default_language'];
+    $default_language = isset($sugar_config['default_language']) ? $sugar_config['default_language'] : null;
 
     $langs = array();
     if ($language != 'en_us') {
@@ -2318,6 +2386,14 @@ function getImagePath($image_name)
 
 function getWebPath($relative_path)
 {
+    $current_theme = SugarThemeRegistry::current();
+    $theme_directory = $current_theme->dirName;
+    if(strpos($relative_path, "themes".DIRECTORY_SEPARATOR.$theme_directory) === false) {
+        $test_path = SUGAR_PATH.DIRECTORY_SEPARATOR."themes".DIRECTORY_SEPARATOR.$theme_directory.DIRECTORY_SEPARATOR.$relative_path;
+        if(file_exists($test_path)) {
+            $resource_name = "themes".DIRECTORY_SEPARATOR.$theme_directory.DIRECTORY_SEPARATOR.$relative_path;
+        }
+    }
     //if it has  a :// then it isn't a relative path
     if (substr_count($relative_path, '://') > 0) {
         return $relative_path;
@@ -4279,8 +4355,16 @@ function createGroupUser($name)
 
 function _getIcon($iconFileName)
 {
-    $iconName = "icon_{$iconFileName}.gif";
-    $iconFound = SugarThemeRegistry::current()->getImageURL($iconName, false);
+    if(file_exists(SugarThemeRegistry::current()->getImagePath().DIRECTORY_SEPARATOR.'icon_'.$iconFileName.'.svg')) {
+        $iconName = "icon_{$iconFileName}.svg";
+        $iconFound = SugarThemeRegistry::current()->getImageURL($iconName, false);
+    }
+    else {
+        $iconName = "icon_{$iconFileName}.gif";
+        $iconFound = SugarThemeRegistry::current()->getImageURL($iconName, false);
+    }
+
+
 
     //First try un-ucfirst-ing the icon name
     if (empty($iconFound)) {
@@ -5299,7 +5383,7 @@ function assignConcatenatedValue(SugarBean $bean, $fieldDef, $value)
  */
 function sugar_unserialize($value)
 {
-    preg_match('/[oc]:\d+:/i', $value, $matches);
+    preg_match('/[oc]:[^:]*\d+:/i', $value, $matches);
 
     if (count($matches)) {
         return false;

@@ -83,7 +83,7 @@
 
 		<td class='edit view' rowspan='2' width='100%'>
 			<div id="wiz_message"></div>
-			<div id=wizard>
+			<div id=wizard class="wizard-unique-elem">
 				{$STEPS}
 			</div>
 		</td>

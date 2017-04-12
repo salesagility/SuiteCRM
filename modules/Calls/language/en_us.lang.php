@@ -128,7 +128,7 @@ $mod_strings = array(
     'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
     'LBL_ASSIGNED_TO_ID' => 'Assigned User',
     'NOTICE_DURATION_TIME' => 'Duration time must be greater than 0',
-    'LBL_CALL_INFORMATION' => 'Overview',
+    'LBL_CALL_INFORMATION' => 'OVERVIEW',
     'LBL_REMOVE' => 'rem',
     'LBL_ACCEPT_STATUS' => 'Accept Status',
     'LBL_ACCEPT_LINK' => 'Accept Link',
@@ -177,7 +177,9 @@ $mod_strings = array(
     'LBL_RESCHEDULE_ERROR1' => 'Please select a valid date',
     'LBL_RESCHEDULE_ERROR2' => 'Please select a reason',
     'LBL_RESCHEDULE_PANEL' => 'Reschedule',
-    'LBL_RESCHEDULE_HISTORY' => 'Call Attempt History'
+    'LBL_RESCHEDULE_HISTORY' => 'Call Attempt History',
+    'LBL_CANCEL' => 'Cancel',
+    'LBL_SAVE' => 'Save',
 
 );
 

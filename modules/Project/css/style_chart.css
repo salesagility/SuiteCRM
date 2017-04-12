@@ -195,6 +195,14 @@
 
 }
 
+.d{
+    height: 22px;
+    width:24px;
+    border-right: 1px solid #f3350c;
+    margin: 0 auto;
+    background-color: #f3350c;
+}
+
 .h{
     height: 22px;
     width:24px;

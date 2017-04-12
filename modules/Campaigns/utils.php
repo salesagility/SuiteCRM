@@ -733,7 +733,7 @@ function process_subscriptions($subscription_string_to_parse) {
             'email' => false,
         );
 
-        $msg = " <table class='detail view small' width='100%'><tr><td> ".$mod_strings['LNK_CAMPAIGN_DIGNOSTIC_LINK']."</td></tr>";
+        $msg = " <table class='diagnose_messages detail view small' width='100%'><tr><td> ".$mod_strings['LNK_CAMPAIGN_DIGNOSTIC_LINK']."</td></tr>";
 
         //Start with email components
         //monitored mailbox section

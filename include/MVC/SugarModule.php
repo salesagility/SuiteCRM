@@ -104,7 +104,7 @@ class SugarModule
                 if ( !$returnObject ) {
                     return true;
                 }
-                if ( !sugar_is_file($beanFiles[$bean]) ) {
+                if ( !is_file($beanFiles[$bean]) ) {
                     return false;
                 }
                 require_once($beanFiles[$bean]);

@@ -72,10 +72,10 @@ else {
         }
 
         $focus = BeanFactory::newBean($module);
+        $focus->retrieve($_REQUEST['id']);
         if(!$focus->ACLAccess('view')){
             die($mod_strings['LBL_NO_ACCESS']);
         } // if
-        $focus->retrieve($_REQUEST['id']);
         // Pull up the document revision, if it's of type Document
         if ( isset($focus->object_name) && $focus->object_name == 'Document' ) {
             // It's a document, get the revision that really stores this file

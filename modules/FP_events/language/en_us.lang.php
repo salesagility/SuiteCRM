@@ -72,7 +72,6 @@ $mod_strings = array(
     'LBL_START_DATE' => 'start date',
     'LBL_END_DATE' => 'End Date/Time',
     'LBL_BUDGET' => 'Budget',
-    'LBL_FP_EVENTS_FP_EXPENSES_1_FROM_FP_EXPENSES_TITLE' => 'Expenses',
     'LBL_DATE' => 'Start Date',
     'LBL_DATE_END' => 'End Date',
     'LBL_DURATION' => 'Duration',
@@ -112,7 +111,28 @@ $mod_strings = array(
     'LBL_FP_EVENTS_LEADS_1_FROM_LEADS_TITLE' => 'Leads',
     'LBL_FP_EVENTS_PROSPECTS_1_FROM_PROSPECTS_TITLE' => 'Targets',
     'LBL_FP_EVENTS_FP_EVENT_DELEGATES_1_FROM_FP_EVENT_DELEGATES_TITLE' => 'Delegates',
+	// 2 lines bellow doesnt appear in git version
 	'LBL_HOURS_ABBREV' => 'h',
 	'LBL_MINSS_ABBREV' => 'm',
+
+	// Attendance report
+	'LBL_CONTACT_NAME' => 'Name',
+	'LBL_ACCOUNT_NAME' => 'Company',
+	'LBL_SIGNATURE' => 'Signature',
+	// email templates
+	'LBL_EMAIL_ACCEPT' => 'Accept',
+	'LBL_EMAIL_DECLINE' => 'Decline',
+	// contacts/leads/targets subpanels
+	'LBL_LIST_INVITE_STATUS_EVENT' => 'Invited',
+	'LBL_LIST_ACCEPT_STATUS_EVENT' => 'Status',
+	// counts
+	'LBL_NB_ACCEPT' => 'Accepted :',
+	'LBL_NB_DECLINED' => 'Refused :',
+	'LBL_NB_ATTENDED' => 'Attended :',
+
+	'LBL_NAME_FIRST' => 'First Name',
+	'LBL_NAME_SECOND' => 'Last Name',
+     
+	'LBL_ACTIVITY_STATUS' => 'Activity Status',
 );
 //LBL_ERROR_MSG_4 Begins with a number (controller.php line 581) for example 10 emails have failed to send. 

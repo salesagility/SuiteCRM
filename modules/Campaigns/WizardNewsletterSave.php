@@ -236,15 +236,7 @@ global $mod_strings;
             //require_once('modules/Campaigns/WizardMarketing.php');
             $header_URL = "Location: index.php?return_module=Campaigns&module=Campaigns&action=".$action.$redirectToTargetList."&campaign_id=".$campaign_focus->id."&return_action=WizardNewsLetter&return_id=".$campaign_focus->id;
             $GLOBALS['log']->debug("about to post header URL of: $header_URL");
-
-            if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
-                $href = $matches[1];
-                SugarApplication::redirect($href);
-            }
-            else {
-                header($header_URL);
-            }
-
+            SugarApplication::headerRedirect($header_URL);
             break;
         case 3:
             //process subscription lists if this is a newsletter
@@ -408,15 +400,7 @@ global $mod_strings;
             //require_once('modules/Campaigns/WizardMarketing.php');
             $header_URL = "Location: index.php?return_module=Campaigns&module=Campaigns&action=".$action.$redirectToTargetList."&campaign_id=".$campaign_focus->id."&record=".$campaign_focus->id;
             $GLOBALS['log']->debug("about to post header URL of: $header_URL");
-            if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
-                $href = $matches[1];
-                SugarApplication::redirect($href);
-            }
-            else {
-                header($header_URL);
-            }
-
-
+            SugarApplication::headerRedirect($header_URL);
             break;
     }
 

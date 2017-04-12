@@ -112,9 +112,9 @@ $mod_strings = array (
 	'LBL_PROXY_USERNAME'=>'User Name',
 	'LBL_RESTORE_BUTTON_LABEL'=>'Restore',
 	'LBL_SYSTEM_SETTINGS' => 'System Settings',
-	'LBL_SKYPEOUT_ON_DESC' => 'Allows users to click on phone numbers to call using SkypeOut&reg;. The numbers must be formatted properly to make use of this feature. That is, it must be "+"  "The Country Code" "The Number", like +1 (555) 555-1234.',
-	'LBL_SKYPEOUT_ON' => 'Enable SkypeOut&reg; integration',
-	'LBL_SKYPEOUT_TITLE' => 'SkypeOut&reg;',
+	'LBL_SKYPEOUT_ON_DESC' => 'Allows users to click on phone numbers to call using the phone dialer on your mobile device, or a telephony app on your computer (SkypeOut&reg;, etc.). The numbers must be formatted properly to make use of this feature. That is, it must be "+"  "The Country Code" "The Number", like +1 (555) 555-1234.',
+	'LBL_SKYPEOUT_ON' => 'Enable click-to-call for phone numbers',
+	'LBL_SKYPEOUT_TITLE' => 'Click-To-Call',
 	'LBL_USE_REAL_NAMES'	=> 'Show Full Names',
 	'LBL_USE_REAL_NAMES_DESC'			=> 'Display users\' full names instead of their User Names in assignment fields.',
     'LBL_DISALBE_CONVERT_LEAD' => 'Disable convert lead action for converted leads',
@@ -125,6 +125,7 @@ $mod_strings = array (
     'LBL_ENABLE_INLINE_EDITING_LIST_DESC' => 'Select to enable Inline Editing for fields on the list view. If unselected Inline Editing will be disabled on list view.',
     'LBL_ENABLE_INLINE_EDITING_DETAIL' => 'Enable inline editing on detail view',
     'LBL_ENABLE_INLINE_EDITING_DETAIL_DESC' => 'Select to enable Inline Editing for fields on the detail view. If unselected Inline Editing will be disabled on detail view.',
+	'LBL_HIDE_SUBPANELS' => 'Collapsed subpanels',
     'LIST_ENTRIES_PER_LISTVIEW'=>'Listview items per page',
 	'LIST_ENTRIES_PER_SUBPANEL'=>'Subpanel items per page',
 	'LOG_MEMORY_USAGE'=>'Log memory usage',
@@ -218,13 +219,12 @@ $mod_strings = array (
 	'LBL_LOGGER_FILENAME_SUFFIX' =>'Append after filename',
 	'LBL_VCAL_PERIOD' => 'vCal Updates Time Period:',
     'LBL_IMPORT_MAX_RECORDS' => 'Import - Maximum Number of Rows:',
-    'LBL_IMPORT_MAX_RECORDS_HELP' => 'Specify how many rows are allowed within import files. If the number of rows <br>in an import file exceeds this number, the user will be alerted. If no number<br> is entered, an unlimited number of rows are allowed.',
+    'LBL_IMPORT_MAX_RECORDS_HELP' => 'Specify how many rows are allowed within import files.<br>If the number of rows in an import file exceeds this number, the user will be alerted.<br>If no number is entered, an unlimited number of rows are allowed.',
 	'vCAL_HELP' => 'Use this setting to determine the number of months in advance of the current date that Free/Busy information for calls and meetings is published.<BR>To turn Free/Busy publishing off, enter "0".  The minimum is 1 month; the maximum is 12 months.',
     'LBL_PDFMODULE_NAME' => 'PDF Settings',
     'SUGARPDF_BASIC_SETTINGS' => 'Document Properties',
     'SUGARPDF_ADVANCED_SETTINGS' => 'Advanced Settings',
     'SUGARPDF_LOGO_SETTINGS' => 'Images',
-
     'PDF_CREATOR' => 'PDF Creator',
     'PDF_CREATOR_INFO' => 'Defines the creator of the document. <br>This is typically the name of the application that generates the PDF.',
 
@@ -413,6 +413,11 @@ BSOFR',
     'ERR_PDF_NO_UPLOAD' => 'Error during the upload of the font or metric file.',
 
 // Wizard
+	//Wizard Scenarios
+	'LBL_WIZARD_SCENARIOS' => 'Your Scenarios',
+	'LBL_WIZARD_SCENARIOS_EMPTY_LIST' => 'No scenarios have been configured',
+	'LBL_WIZARD_SCENARIOS_DESC' => 'Choose which scenarios are appropriate for your installation.  These options can be changed post-install.',
+
     'LBL_WIZARD_TITLE' => 'Admin Wizard',
     'LBL_WIZARD_WELCOME_TAB' => 'Welcome',
     'LBL_WIZARD_WELCOME_TITLE' => 'Welcome to SuiteCRM!',
@@ -438,6 +443,7 @@ To configure additional system settings, click <a href="index.php?module=Adminis
 	'LBL_WELCOME' => 'Welcome' /*for 508 compliance fix*/,
 	'LBL_LOGO' => 'Logo' /*for 508 compliance fix*/,
     'LBL_ENABLE_HISTORY_CONTACTS_EMAILS' => 'Show related contacts\' emails in History subpanel for modules',
+	
 );
 
 

@@ -147,9 +147,55 @@ function disableReturnSubmission(e) {
                 onclick="SugarWizard.changeScreen('welcome',true);" id="previous_tab_welcome" />&nbsp;
             <input title="{$MOD.LBL_WIZARD_NEXT_BUTTON}"
                 class="button primary" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_NEXT_BUTTON}  "
+            {if $silentInstall}
+                onclick="SugarWizard.changeScreen('scenarios',false);" id="next_tab_scenarios" />
+            {else}
                 onclick="SugarWizard.changeScreen('locale',false);" id="next_tab_locale" />
+            {/if}
     </div>
 </div>
+
+<!-- move of scenarios from the user wizard to the admin wizard -->
+<div id="scenarios" class="screen">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td>
+                <div class="edit view">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <th width="100%" align="left" scope="row" colspan="4">
+                                <h2><slot>{$MOD.LBL_WIZARD_SCENARIOS}</slot></h2>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td align="left" scope="row" colspan="4"><i>{$MOD.LBL_WIZARD_SCENARIOS_DESC}</i></td>
+                        </tr>
+                        {if $scenarios|@count > 0}
+                            {foreach from=$scenarios item=item key=key}
+                                <tr>
+                                    <td scope="row" nowrap="nowrap"><slot>{$item.title}:</slot>&nbsp;{sugar_help text=$item.description}</td>
+                                    <td colspan="3"><slot><input type='checkbox' name='scenarios[]' value={$item.key} checked>  {$item.moduleOverview}</slot></td>
+                                </tr>
+                            {/foreach}
+                        {else}
+                            <h3>$LBL_WIZARD_SCENARIOS_EMPTY_LIST</h3>
+                        {/if}
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="nav-buttons">
+
+        <input title="{$MOD.LBL_WIZARD_BACK_BUTTON}"
+               class="button" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_BACK_BUTTON}  "
+               onclick="SugarWizard.changeScreen('system',true);" id="previous_tab_system" />&nbsp;
+        <input title="{$MOD.LBL_WIZARD_NEXT_BUTTON}"
+               class="button primary" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_NEXT_BUTTON}  "
+               onclick="SugarWizard.changeScreen('locale',false);" id="next_tab_locale" />
+    </div>
+</div>
+<!-- end of scenario block -->
 
 <div id="locale" class="screen">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -227,7 +273,11 @@ function disableReturnSubmission(e) {
     <div class="nav-buttons">
         <input title="{$MOD.LBL_WIZARD_BACK_BUTTON}"
             class="button" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_BACK_BUTTON}  "
+        {if $silentInstall}
+            onclick="SugarWizard.changeScreen('scenarios',true);" id="previous_tab_scenarios" />&nbsp;
+        {else}
             onclick="SugarWizard.changeScreen('system',true);" id="previous_tab_system" />&nbsp;
+        {/if}
         <input title="{$MOD.LBL_WIZARD_NEXT_BUTTON}"
             class="button primary" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_NEXT_BUTTON}  "
             onclick="SugarWizard.changeScreen('smtp',false); changeEmailScreenDisplay('{$mail_smtptype}'); document.getElementById('AdminWizard').mail_smtptype.value = 'gmail';" id="next_tab_smtp" />

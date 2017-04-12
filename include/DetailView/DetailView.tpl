@@ -107,6 +107,7 @@ class="yui-navset detailview_tabs"
 
     {{/if}}
 	{{* Print out the table data *}}
+	<!-- PANEL CONTAINER HERE.. -->
   <table id='{{$label}}' class="panelContainer" cellspacing='{$gridline}'>
 
 

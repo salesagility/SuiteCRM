@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,7 +36,11 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
+
+if (!defined('sugarEntry') || !sugarEntry){
+    die('Not A Valid Entry Point');
+}
 
  /*********************************************************************************
 
@@ -60,7 +64,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
   $json = getJSONobj();
 
 
-  $showFolders = unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+  $showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
  if (isset($_REQUEST['emailUIAction'])) {
   switch($_REQUEST['emailUIAction']) {
@@ -528,7 +532,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
     case "checkEmail2":
         $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: checkEmail2");
 
-        $showFolders = unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+        $showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
         $ret = array();
         $ret['numberAccounts'] = count($showFolders);
@@ -564,7 +568,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
             $ie->mailbox = (isset($_REQUEST['mbox']) && !empty($_REQUEST['mbox'])) ? $_REQUEST['mbox'] : "INBOX";
             $ie->checkEmail(false);
         } elseif(isset($_REQUEST['all']) && !empty($_REQUEST['all'])) {
-            $showFolders = unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+            $showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
             $GLOBALS['log']->info("[EMAIL] - checkEmail found ".count($showFolders)." accounts to check for user [{$current_user->user_name}]");
 
@@ -877,7 +881,7 @@ eoq;
 			$direction = 'desc';
 			$sortSerial = $current_user->getPreference('folderSortOrder', 'Emails');
 			if(!empty($sortSerial) && !empty($_REQUEST['ieId']) && !empty($_REQUEST['mbox'])) {
-				$sortArray = unserialize($sortSerial);
+				$sortArray = sugar_unserialize($sortSerial);
 				$GLOBALS['log']->debug("********** EMAIL 2.0********** ary=".print_r($sortArray,true).' id='.$_REQUEST['ieId'].'; box='.$_REQUEST['mbox']);
 				$sort = $sortArray[$_REQUEST['ieId']][$_REQUEST['mbox']]['current']['sort'];
 				$direction = $sortArray[$_REQUEST['ieId']][$_REQUEST['mbox']]['current']['direction'];
@@ -951,7 +955,7 @@ eoq;
         $rootNode = new ExtNode('','');
         $folderOpenState = $current_user->getPreference('folderOpenState', 'Emails');
         $folderOpenState = (empty($folderOpenState)) ? "" : $folderOpenState;
-        $ret = $email->et->folder->getUserFolders($rootNode, unserialize($folderOpenState), $current_user, true);
+        $ret = $email->et->folder->getUserFolders($rootNode, sugar_unserialize($folderOpenState), $current_user, true);
         $out = $json->encode($ret);
         echo $out;
         break;

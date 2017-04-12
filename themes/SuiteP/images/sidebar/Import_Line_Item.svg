@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="32px" height="112px" viewBox="0 0 32 112" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>sb_import_line_item</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="sb_import_line_item">
+            <ellipse id="Oval-7" stroke="#F5F5F5" cx="16" cy="16" rx="15" ry="15"></ellipse>
+            <ellipse id="Oval-7" stroke="#534D64" cx="16" cy="56" rx="15" ry="15"></ellipse>
+            <ellipse id="Oval-7" stroke="#F08377" cx="16" cy="96" rx="15" ry="15"></ellipse>
+            <polygon id="Triangle-21" fill="#F08377" transform="translate(18.000000, 97.000000) rotate(-90.000000) translate(-18.000000, -97.000000) " points="10 92 26 92 18 102"></polygon>
+            <path d="M9.0999999,103.1 L9.0999999,90.9000001" id="Line" stroke="#F08377" stroke-width="4" stroke-linecap="square" transform="translate(9.100000, 97.000000) rotate(-90.000000) translate(-9.100000, -97.000000) "></path>
+            <polygon id="Triangle-21" fill="#534D64" transform="translate(18.000000, 57.000000) rotate(-90.000000) translate(-18.000000, -57.000000) " points="10 52 26 52 18 62"></polygon>
+            <path d="M9.0999999,63.0999999 L9.0999999,50.9000001" id="Line" stroke="#534D64" stroke-width="4" stroke-linecap="square" transform="translate(9.100000, 57.000000) rotate(-90.000000) translate(-9.100000, -57.000000) "></path>
+            <polygon id="Triangle-21" fill="#F5F5F5" transform="translate(18.000000, 17.000000) rotate(-90.000000) translate(-18.000000, -17.000000) " points="10 12 26 12 18 22"></polygon>
+            <path d="M9.0999999,23.0999999 L9.0999999,10.9000001" id="Line" stroke="#F5F5F5" stroke-width="4" stroke-linecap="square" transform="translate(9.100000, 17.000000) rotate(-90.000000) translate(-9.100000, -17.000000) "></path>
+        </g>
+    </g>
+</svg>

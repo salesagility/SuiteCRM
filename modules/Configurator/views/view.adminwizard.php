@@ -84,7 +84,14 @@ class ViewAdminwizard extends SugarView
             $this->ss->assign('SKIP_URL','index.php?module=Users&action=Wizard&skipwelcome=1');
         else
             $this->ss->assign('SKIP_URL','index.php?module=Home&action=index');
-        
+
+        $silentInstall = $GLOBALS['current_user']->getPreference('silentInstall');
+        //If not set, show the configuration
+        if($silentInstall === NULL)
+        {
+            $silentInstall = false;
+        }
+
         // Always mark that we have got past this point
         $focus->saveSetting('system','adminwizard',1);
         $css = $themeObject->getCSS();
@@ -110,7 +117,9 @@ class ViewAdminwizard extends SugarView
         $this->ss->assign('mail_smtpauth_req', ($focus->settings['mail_smtpauth_req']) ? "checked='checked'" : '');
         $this->ss->assign('MAIL_SSL_OPTIONS', get_select_options_with_id($app_list_strings['email_settings_for_ssl'], $focus->settings['mail_smtpssl']));
         $this->ss->assign('notify_allow_default_outbound_on', (!empty($focus->settings['notify_allow_default_outbound']) && $focus->settings['notify_allow_default_outbound'] == 2) ? 'CHECKED' : '');
-        $this->ss->assign('THEME', SugarThemeRegistry::current()->__toString());            
+        $this->ss->assign('THEME', SugarThemeRegistry::current()->__toString());
+
+        $this->ss->assign('silentInstall', $silentInstall);
 
         // get javascript
         ob_start();
@@ -122,7 +131,25 @@ class ViewAdminwizard extends SugarView
 
         $this->ss->assign('langHeader', get_language_header());
         $this->ss->assign('START_PAGE', !empty($_REQUEST['page']) ? $_REQUEST['page'] : 'welcome');
+
+        //Start of scenario block
+        require_once('install/suite_install/scenarios.php');
+        if(isset($installation_scenarios))
+        {
+
+            for($i = 0; $i < count($installation_scenarios); $i++)
+            {
+                $installation_scenarios[$i]['moduleOverview']='( '.implode(', ',$installation_scenarios[$i]['modules']).')';
+            }
+
+            $this->ss->assign('scenarios', $installation_scenarios);
+        }
+        else
+        {
+            $this->ss->assign('scenarios', []);
+        }
+        //End of scenario block
                 
-            $this->ss->display('modules/Configurator/tpls/adminwizard.tpl');
+        $this->ss->display('modules/Configurator/tpls/adminwizard.tpl');
         }
 }

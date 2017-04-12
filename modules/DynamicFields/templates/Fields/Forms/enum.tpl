@@ -49,7 +49,7 @@
 	<td class='mbLBL'>{sugar_translate module="DynamicFields" label="LBL_DROP_DOWN_LIST"}:</td>
 	<td>
 	{if $hideLevel < 5 && empty($vardef.function)}
-		{html_options name="options" id="options" selected=$selected_dropdown values=$dropdowns output=$dropdowns onChange="ModuleBuilder.dropdownChanged(this.value);"}{if !$uneditable}<br><input type='button' value='{sugar_translate module="DynamicFields" label="LBL_BTN_EDIT"}' class='button' onclick="ModuleBuilder.moduleDropDown(this.form.options.value, this.form.options.value);">&nbsp;<input type='button' value='{sugar_translate module="DynamicFields" label="LBL_BTN_ADD"}' class='button' onclick="ModuleBuilder.moduleDropDown('', this.form.name.value);">{/if}
+		{html_options name="options" id="options" selected=$selected_dropdown values=$dropdowns output=$dropdowns onChange="ModuleBuilder.dropdownChanged(this.value);"}{if !$uneditable}<br><input type='button' value='{sugar_translate module="DynamicFields" label="LBL_BTN_EDIT"}' class='button' onclick="{literal}if(check_form('popup_form')) { ModuleBuilder.moduleDropDown(this.form.options.value, this.form.options.value); }{/literal}">&nbsp;<input type='button' value='{sugar_translate module="DynamicFields" label="LBL_BTN_ADD"}' class='button' onclick="{literal}if(check_form('popup_form')) { ModuleBuilder.moduleDropDown('', this.form.name.value); }{/literal}">{/if}
 	{else}
 		<input type='hidden' name='options' value='{$selected_dropdown}'>{$selected_dropdown}
 	{/if}

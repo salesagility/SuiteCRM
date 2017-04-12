@@ -1,0 +1,392 @@
+/**
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ * @Package Gantt chart
+ * @copyright Andrew Mclaughlan 2014
+ * @author Andrew Mclaughlan <andrew@mclaughlan.info>
+ */
+#wrapper {
+    width:100%;
+    padding-right:0px;
+    height:auto;
+
+}
+#header_table {
+    width: 100%;
+    border: 1px solid #DDDDDD;
+    border-bottom: 0;
+    font-size: 13px;
+    line-height: 20px;
+    border-collapse: collapse;
+    color: #484A4D;
+    font-family: Helvetica,Arial,sans-serif;
+}
+
+#header_table h2 {
+    color: #484A4D;
+}
+#header_table td {
+    border: 1px solid #DDDDDD;
+    padding: 4px;
+
+}
+#header_table .heading {
+    font-weight: bold;
+    width: 15%;
+
+}
+#header_table .header_gap {
+  border:0px;
+}
+
+#project_wrapper {
+   height: 100%;
+}
+
+#project {
+    min-height: 95px;
+    border: 0px solid #aaa;
+    width: 99.75%;
+    z-index: 0;
+}
+#widget div {
+    overflow: auto;
+}
+.splitter-bar {
+    width: 4px;
+    background: #D3D3D3 url(../images/vgrabber.gif) no-repeat center !important;
+    border: 0px solid #D3D3D3;
+    margin-left: 2px;
+    margin-right: 2px;
+    cursor:col-resize;
+
+}
+#gantt {
+    overflow: auto;
+}
+#left_pane {
+    padding-right: 4px;
+}
+#right_pane {
+    padding-left: 4px;
+}
+
+.project_table_header {
+    width: 100%;
+    border-collapse: collapse;
+    color: #484A4D;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 12px;
+    line-height: 23px;
+    white-space:nowrap;
+    text-align:center;
+}
+
+.project_table_headings {
+    font-size:12px;
+    font-weight: bold;
+    border: 1px solid #DDDDDD;
+    background-color: #F6F6F6;
+    height: 72px;
+}
+.project_table_blank {
+    background-color: #F6F6F6;
+    height:47px;
+    border: 1px solid #DDDDDD;
+}
+
+.project_table_cells {
+    background-color: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    height: 23px;
+}
+.main_table {
+    border: 1px solid #DDDDDD;
+    border-collapse: collapse;
+    background-color: #F6F6F6;
+    color: #484A4D;
+    font-family: Helvetica,Arial,sans-serif;
+    line-height: 24px;
+    font-size:12px;
+    table-layout:fixed;
+}
+.main_table th, td {
+    padding: 0px;
+    overflow: hidden;
+    width: 24px;
+}
+.month_row {
+    border-bottom: 1px solid #DDDDDD;
+}
+.months {
+    text-align:center;
+    font-size:13px;
+    font-weight: bold;
+    border-right: 1px solid #DDDDDD;
+}
+.months:last-child {
+    border-right:none;
+}
+
+.years {
+    text-align:center;
+    font-size:12px;
+    font-weight: bold;
+}
+.inner_container:last-child {
+    border-right:none;
+}
+.inner_container {
+    border-right: 1px solid #DDDDDD;
+}
+.table_inner {
+    border-left:none;
+    border-collapse: collapse;
+}
+.task_row {
+    border-top: 0px solid #DDDDDD;
+}
+
+.task_row:last-child .inner_td, .task_row:last-child .task_td, .task_row:last-child .task_td2 {
+    border-bottom: 0px solid #DDDDDD;
+}
+
+.inner_td2 {
+    text-align:center;
+    border-left: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.inner_td {
+    text-align:center;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.inner_container .inner_td {
+    border-right: 1px solid #DDDDDD;
+    font-weight: bold;
+    font-family: Helvetica,Arial,sans-serif;
+    line-height: 24px;
+    font-size:12px;
+}
+.inner_container .inner_td:last-child {
+    border-right: none;
+}
+.task_row .inner_td {
+    border-right: 1px solid #DDDDDD;
+}
+/*.task_row .table_inner tr td:first-child {
+    border-right: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+}*/
+.task_row .table_inner tr td:last-child {
+    border-right: none;
+}
+
+.cell_width{
+    width: 25px;
+    height:23px;
+}
+.side_bar1 div {
+    width:110px;
+}
+.side_bar1 {
+
+}
+.side_bar2 div {
+    width:120px;
+
+}
+.side_bar2 {
+    border-right: 1px solid #DDDDDD;
+}
+.task_bar1, .task_bar2 {
+    border-top: 1px solid #DDDDDD;
+    padding-left:5px;
+    font-weight: bold;
+}
+.day_block {
+    background-color: #ffffff;
+}
+.task_bar {
+    position: 'absolute';
+}
+.task_td {
+    width:100%;
+    border-right: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+}
+.task_td2 {
+    border-right: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+}
+.task_block {
+    width:100%;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+.task_block1 {
+
+    background-color: #ffffff;
+    overflow: hidden;
+}
+.task_block_inner {
+
+    padding-left:5px;
+    padding-right: 5px;
+    padding-top: 3px;
+}
+
+.task, .task_percent, .task1 {
+    height:17px;
+    background-color: #DDDDDD;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.25) inset;
+    line-height: 18px;
+    font-size: 11px;
+    font-weight:bold;
+    color:#778461;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+    text-overflow: ellipsis;
+    text-align: center;
+}
+.task1 {
+    height:17px;
+    background-color: #DDDDDD;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.25) inset;
+    line-height: 18px;
+    font-size: 11px;
+    font-weight:bold;
+    color:#778461;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+    text-overflow: ellipsis;
+    text-align: center;
+    overflow: hidden;
+}
+.task_percent {
+    background-color: #D8EDA3;
+    z-index: 1;
+    position: relative;
+    width:0;
+}
+
+.gantt_button {
+    font-size: 11px;
+}
+.Task_name {
+    width:60px;
+    float: left;
+    padding-left:5px;
+    overflow:hidden;
+}
+.Start_date, .End_date {
+    width: 80px!important;
+    border: 0;
+    color: #484A4D;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 12px;
+}
+.duration {
+    width: 28px;
+    border: 0;
+}
+.duration_unit, .resources, .task_predecessor  {
+    border: 0;
+}
+.percent_comp, .predecessor {
+    border: 0;
+    width:42px;
+}
+
+.percent_comp:hover, .predecessor:hover, .duration:hover {
+    background-color: #e5e5e5;
+}
+.Start_date:hover, .End_date:hover {
+   /* cursor: pointer;*/
+}
+.row_sortable {
+    cursor: move;
+    width:100%;
+}
+/*Add task dialog box*/
+#dialog fieldset{
+    padding:0;
+    border:0;
+    margin-top:15px;
+}
+#dialog label, #dialog input {
+    display:block;
+}
+#dialog  input.text {
+    margin-bottom:12px;
+    width:80%;
+    padding: .4em;
+}
+#Milestone, #Milestone_label, #Subtask, #Subtask_label {
+    display: inline!important;
+}
+#Duration, #Lag {
+    display: inline!important;
+    width: 58%!important;
+ }
+#Duration_unit, #Lag_unit {
+    display: inline;
+    padding: .3em;
+}
+#Resources {
+    width: 60%;
+    padding: .3em;
+    margin-bottom:12px;
+}
+#Predecessor {
+    width: 60%;
+    padding: .3em;
+    margin-bottom:12px;
+}
+
+#relation_type {
+    padding: .3em;
+    margin-bottom:12px;
+    width:60%;
+}
+#Notes {
+
+}
+.error {
+    border-color: red;
+}
+/*milestone diamond*/
+.milestone {
+    height:17px;
+    overflow: hidden;
+}
+
+.taskDepLine {
+    border: 1px solid #9999FF;
+    overflow: hidden;
+    position: absolute;
+    background-color: #9999FF;
+}
+
+#popup_form {
+    text-align: left;
+    position: relative;
+    z-index: 9999;
+}
+
+label {
+    font-weight: normal;
+}

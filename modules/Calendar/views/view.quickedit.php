@@ -85,11 +85,7 @@ class CalendarViewQuickEdit extends SugarView {
 		$this->ev->formName = "CalendarEditView";
 		$this->ev->setup($module,$this->bean,$source,$tpl);
 		$this->ev->defs['templateMeta']['form']['headerTpl'] = "modules/Calendar/tpls/editHeader.tpl";
-		$this->ev->defs['templateMeta']['form']['footerTpl'] = "modules/Calendar/tpls/empty.tpl";
-		$this->ev->ss->assign('remindersData', Reminder::loadRemindersData($module, $this->bean->id, $this->ev->isDuplicate));
-		$this->ev->ss->assign('remindersDataJson', Reminder::loadRemindersDataJson($module, $this->bean->id, $this->ev->isDuplicate));
-		$this->ev->ss->assign('remindersDefaultValuesDataJson', Reminder::loadRemindersDefaultValuesDataJson());
-		$this->ev->ss->assign('remindersDisabled', json_encode(false));
+		$this->ev->defs['templateMeta']['form']['footerTpl'] = "modules/Calendar/tpls/empty.tpl";						
 		$this->ev->process(false, "CalendarEditView");		
 		
 		if(!empty($this->bean->id)){

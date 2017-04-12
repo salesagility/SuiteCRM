@@ -47,8 +47,8 @@ class ProjectViewResourceList extends SugarView {
             <div style="" id="task_divs" >
                 <!--The task overlay divs are appended in here-->
             </div>
-            <input id="date_start" type="hidden" name="date_start" value="">
-            <input id="date_end" class="date_chart" type="hidden" name="date_end" value="">
+            <!--input id="date_start" type="hidden" name="date_start" value="">
+            <input id="date_end" class="date_chart" type="hidden" name="date_end" value="" -->
         </div>
         <!--Main body end-->
 <?php

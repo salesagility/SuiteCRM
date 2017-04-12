@@ -719,7 +719,7 @@ class SugarChart {
 
         // Create dir if it doesn't exist
         $dir = dirname($xmlFilename);
-        if (!sugar_is_dir($dir))
+        if (!is_dir($dir))
         {
             sugar_mkdir($dir, null, true);
         }

@@ -53,7 +53,6 @@ $mod_strings = array (
 
 	'LBL_MODULE_NAME' => 'Campaigns',
 	'LBL_MODULE_TITLE' => 'Campaigns: Home',
-	'LBL_NEWSLETTER_TITLE'=>'Campaigns: Newsletters',
 	'LBL_SEARCH_FORM_TITLE' => 'Campaign Search',
 	'LBL_LIST_FORM_TITLE' => 'Campaign List',
 	'LBL_NEWSLETTER_LIST_FORM_TITLE' => 'Newsletter List',
@@ -439,7 +438,7 @@ $mod_strings = array (
 
 	'LBL_IMPORT_PROSPECTS'=>'Import Targets',
 	'LBL_LEAD_FORM_WIZARD' => 'Lead Form Wizard',
-	'LBL_CAMPAIGN_INFORMATION' => 'Overview',
+	'LBL_CAMPAIGN_INFORMATION' => 'OVERVIEW',
 	'LBL_EDIT_BUTTON' => 'Launch Wizard',
 	'LBL_MONTH' => "Month",
 	'LBL_YEAR' 	=> "Year",
