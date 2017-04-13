@@ -53,13 +53,32 @@
       self.emailFoldersView = null;
       var foldersBox = $('<div></div>').appendTo(opts.contentSelector);
       foldersBox.messageBox({
-        "showHeader": true,
+        "showHeader": false,
         "showFooter": false,
         "size": 'lg'
       });
-      foldersBox.setTitle(' ');
-      foldersBox.setBody('<div class="email-in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>');
+      foldersBox.setBody('<div class="in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>');
       foldersBox.show();
+
+      $.ajax({
+        type: "GET",
+        cache: false,
+        url: 'index.php?module=Emails&action=GetFolders'
+      }).done(function (data) {
+        var response = JSON.parse(data);
+        response = response.response;
+
+        console.log(response);
+        self.tree = $('<div></div>');
+        self.tree.jstree({
+          'core' : {
+            'data' : response
+          }
+        });
+
+        foldersBox.setBody(self.tree);
+      });
+
     };
 
     /**
@@ -85,7 +104,7 @@
   $.fn.FoldersViewModal.defaults = {
     'buttonSelector': '[data-action=emails-show-folders-modal]',
     'contentSelector': '#content',
-    'selected': 'INBOX'
+    'defaultFolder': 'INBOX'
   }
 }(jQuery));
 

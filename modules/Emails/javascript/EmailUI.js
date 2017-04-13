@@ -2147,7 +2147,7 @@ SE.folders = {
         var folder = SE.util.findChildNode(root, "ieId", "folder");
         while(folder) {
             tree.removeNode(folder);
-            folder = SE.util.findChildNode(root, "ieId", "folder");
+            folder = .util.findChildNode(root, "ieId", "folder");
         }
         if (!root.childrenRendered) {
         	root.childrenRendered = true;

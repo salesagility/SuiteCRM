@@ -61,6 +61,9 @@ $viewdefs['Emails']['ListView'] = array(
         ),
         'includes' => array(
             array(
+              'file' => 'include/javascript/jstree/dist/jstree.js',
+            ),
+            array(
                 'file' => 'modules/Emails/include/ListView/ComposeViewModal.js',
             ),
             array(

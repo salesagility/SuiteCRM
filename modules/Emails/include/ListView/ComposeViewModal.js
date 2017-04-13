@@ -53,12 +53,11 @@
       self.emailComposeView = null;
       var composeBox = $('<div></div>').appendTo(opts.contentSelector);
       composeBox.messageBox({
-        "showHeader": true,
+        "showHeader": false,
         "showFooter": false,
         "size": 'lg',
 
       });
-      composeBox.setTitle(' ');
       composeBox.setBody('<div class="email-in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>');
       composeBox.show();
 
