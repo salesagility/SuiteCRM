@@ -40,27 +40,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-
-$dashletData['OutcomeByMonthDashlet']['searchFields'] = array(
-        'obm_date_start' => array(
-                'name'  => 'obm_date_start',
-                'vname' => 'LBL_DATE_START',
-                'type'  => 'datepicker',
-            ),
-        'obm_date_end' => array(
-                'name'  => 'obm_date_end',
-                'vname' => 'LBL_DATE_END',
-                'type'  => 'datepicker',
-            ),
-        'obm_ids' => array(
-                'name'  => 'obm_ids',
-                'vname' => 'LBL_USERS',
-                'type'  => 'user_name',
-            ),
-            'pbss_sales_stages' => array(
-                'name'  => 'pbss_sales_stages',
-                'vname' => 'LBL_SALES_STAGES',
-                'type'  => 'enum',
-            ),
-        );
+$dashletStrings['ModuleActivityDashlet'] = array('LBL_TITLE'       	=> 'Module Activity',
+                                                 'LBL_DESCRIPTION' 	=> 'Horizontal Bar Chart of User record creation by Module',
+					                        	 'LBL_MODULES'     	=> 'Modules',
+                                                 'LBL_REFRESH'     	=> 'Refresh Chart',
+                                                 'LBL_TOTAL_ACTIVITY'	=> 'Total activity for period is',
+                                                 'LBL_ACTIVITY_UNITS'	=> 'records created',
+                                                 'LBL_ACTIVITY_SCALE'	=> 'Activity scale in',
+                                                 );
 ?>

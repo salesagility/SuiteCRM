@@ -40,27 +40,26 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-
-$dashletData['OutcomeByMonthDashlet']['searchFields'] = array(
-        'obm_date_start' => array(
-                'name'  => 'obm_date_start',
+$dashletData['ModuleActivityDashlet']['searchFields'] = array(
+	'pbss_date_start' => array(
+                'name'  => 'pbss_date_start',
                 'vname' => 'LBL_DATE_START',
                 'type'  => 'datepicker',
             ),
-        'obm_date_end' => array(
-                'name'  => 'obm_date_end',
+        'pbss_date_end' => array(
+                'name'  => 'pbss_date_end',
                 'vname' => 'LBL_DATE_END',
                 'type'  => 'datepicker',
             ),
-        'obm_ids' => array(
-                'name'  => 'obm_ids',
+        'modact_user_ids' => array(
+                'name'  => 'modact_user_ids',
                 'vname' => 'LBL_USERS',
                 'type'  => 'user_name',
             ),
-            'pbss_sales_stages' => array(
-                'name'  => 'pbss_sales_stages',
-                'vname' => 'LBL_SALES_STAGES',
+        'modact_module_ids' => array(
+                'name'  => 'modact_module_ids',
+                'vname' => 'LBL_MODULES',
                 'type'  => 'enum',
             ),
-        );
+          );
 ?>

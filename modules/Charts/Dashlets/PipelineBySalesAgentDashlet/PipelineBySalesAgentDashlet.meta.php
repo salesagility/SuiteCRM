@@ -41,26 +41,11 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-$dashletData['OutcomeByMonthDashlet']['searchFields'] = array(
-        'obm_date_start' => array(
-                'name'  => 'obm_date_start',
-                'vname' => 'LBL_DATE_START',
-                'type'  => 'datepicker',
-            ),
-        'obm_date_end' => array(
-                'name'  => 'obm_date_end',
-                'vname' => 'LBL_DATE_END',
-                'type'  => 'datepicker',
-            ),
-        'obm_ids' => array(
-                'name'  => 'obm_ids',
-                'vname' => 'LBL_USERS',
-                'type'  => 'user_name',
-            ),
-            'pbss_sales_stages' => array(
-                'name'  => 'pbss_sales_stages',
-                'vname' => 'LBL_SALES_STAGES',
-                'type'  => 'enum',
-            ),
-        );
+global $app_strings, $current_language;
+
+$dashletMeta['PipelineBySalesAgentDashlet'] = array('title'       => 'LBL_TITLE',  
+                                                      'description' => 'LBL_TITLE', 
+                                                      'module'        => 'Opportunities', 
+	                                                  'icon'		  => 'icon_Charts_Horizontal_32.gif',
+                                                      'category'    => 'Charts');
 ?>
