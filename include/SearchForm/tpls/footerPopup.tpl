@@ -70,14 +70,28 @@
                     if (typeof $.qtip != 'undefined') {
                         clearInterval(qtipLoadInterval);
 
+                        var stripScripts = function(s) {
+                            var div = document.createElement('div');
+                            div.innerHTML = s;
+                            var scripts = div.getElementsByTagName('script');
+                            var i = scripts.length;
+                            while (i--) {
+                                scripts[i].parentNode.removeChild(scripts[i]);
+                            }
+                            return div.innerHTML;
+                        }
+
                         var qtipNeeded = false;
                         var qtipContent = '<table>';
                         for (var key in listViewSearchIcon.searchInfo) {
-                            qtipContent += '<tr>';
-                            qtipContent += '<td><b>' + key + '</b>&nbsp;</td>';
-                            qtipContent += '<td>' + listViewSearchIcon.searchInfo[key] + '</td>';
-                            qtipContent += '</tr>';
-                            qtipNeeded = true;
+                            listViewSearchIcon.searchInfo[key] = stripScripts(listViewSearchIcon.searchInfo[key]);
+                            if(listViewSearchIcon.searchInfo[key]) {
+                                qtipContent += '<tr>';
+                                qtipContent += '<td><b>' + key + '</b>&nbsp;</td>';
+                                qtipContent += '<td>' + listViewSearchIcon.searchInfo[key] + '</td>';
+                                qtipContent += '</tr>';
+                                qtipNeeded = true;
+                            }
                         }
                         qtipContent += '</table>';
 
