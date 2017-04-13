@@ -384,5 +384,8 @@ $mod_strings = array (
 	'LBL_EMAILS_MEETINGS_REL' => 'Emails:Meetings',
 	'LBL_DATE_CREATED' => 'Date Created',
 	'LBL_DATE_MODIFIED' => 'Date Modified',
+
+	'LBL_CATEGORY' => 'Category',
+	'LBL_LIST_CATEGORY' => 'Category',
 );
 
