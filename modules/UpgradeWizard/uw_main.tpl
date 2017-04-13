@@ -75,7 +75,6 @@
     <link rel='stylesheet' type='text/css' href="{sugar_getjspath file='include/javascript/yui/assets/container.css'}" />
         {if $step == 'commit'}
     <link rel='stylesheet' type='text/css' href="{sugar_getjspath file='include/javascript/yui/build/container/assets/container.css'}"/>
-    <link rel='stylesheet' type='text/css' href="{sugar_getjspath file='themes/default/css/yui.css'}"/>
        {/if}
     {/if}
 		{if $showBack}
@@ -181,7 +180,6 @@
     <link rel='stylesheet' type='text/css' href='include/javascript/yui/assets/container.css' />
         {if $step == 'commit'}
     <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css'/>
-    <link rel='stylesheet' type='text/css' href='themes/default/css/yui.css'/>
        {/if}
     {/if}
 		{if $showBack}
