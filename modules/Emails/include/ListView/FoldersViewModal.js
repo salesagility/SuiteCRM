@@ -37,37 +37,58 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$(document).ready(function(){
-  "use strict";
+(function ($) {
+  /**
+   *
+   * @param options
+   * @return {*|HTMLElement}
+   */
+  $.fn.FoldersViewModal =  function(options) {
+    "use strict";
+    var self = {};
+    var opts = $.extend({}, $.fn.FoldersViewModal.defaults, options);
 
+    self.handleClick = function () {
+      "use strict";
+      self.emailFoldersView = null;
+      var foldersBox = $('<div></div>').appendTo(opts.contentSelector);
+      foldersBox.messageBox({
+        "showHeader": true,
+        "showFooter": false,
+        "size": 'lg'
+      });
+      foldersBox.setTitle(' ');
+      foldersBox.setBody('<div class="email-in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>');
+      foldersBox.show();
+    };
 
- $('').click(function(){
-   alert('configure email placeholder');
- });
+    /**
+     * @constructor
+     */
+    self.construct = function () {
+      "use strict";
+      $(opts.buttonSelector).click(self.handleClick);
+    };
 
+    /**
+    * @destructor
+    */
+    self.destruct = function() {
 
+    };
 
- $('[data-action=emails-open-folder]').click(function(){
-   var mb = messageBox();
-   mb.hideHeader();
-   mb.setBody('Hello World');
-   mb.show();
+    self.construct();
 
-   mb.on('ok', function() {
-     "use strict";
-     // do somthing
-     mb.remove();
-   });
+    return $(self);
+  };
 
-   mb.on('cancel', function() {
-     "use strict";
-     // do something
-     mb.remove();
-   })
- });
+  $.fn.FoldersViewModal.defaults = {
+    'buttonSelector': '[data-action=emails-show-folders-modal]',
+    'contentSelector': '#content',
+    'selected': 'INBOX'
+  }
+}(jQuery));
 
- // look for new
-  $('.email-indicator .email-new').each(function(i, v){
-    $(this).closest('tr').addClass('email-new-record');
-  });
+$(document).ready(function() {
+  $(document).FoldersViewModal();
 });

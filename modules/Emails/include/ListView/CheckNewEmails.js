@@ -37,37 +37,47 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$(document).ready(function(){
-  "use strict";
+(function ($) {
+  /**
+   *
+   * @param options
+   * @return {*|HTMLElement}
+   */
+  $.fn.CheckNewEmails =  function(options) {
+    "use strict";
+    var self = {};
+    var opts = $.extend({}, $.fn.CheckNewEmails.defaults, options);
 
+    self.handleClick = function () {
+      "use strict";
+      window.location.reload();
+    };
 
- $('').click(function(){
-   alert('configure email placeholder');
- });
+    /**
+     * @constructor
+     */
+    self.construct = function () {
+      "use strict";
+      $(opts.buttonSelector).click(self.handleClick);
+    };
 
+    /**
+     * @destructor
+     */
+    self.destruct = function() {
 
+    };
 
- $('[data-action=emails-open-folder]').click(function(){
-   var mb = messageBox();
-   mb.hideHeader();
-   mb.setBody('Hello World');
-   mb.show();
+    self.construct();
+    return $(this);
+  };
 
-   mb.on('ok', function() {
-     "use strict";
-     // do somthing
-     mb.remove();
-   });
+  $.fn.CheckNewEmails.defaults = {
+    'buttonSelector': '[data-action=emails-check-new-email]',
+    'contentSelector': '#content'
+  }
+}(jQuery));
 
-   mb.on('cancel', function() {
-     "use strict";
-     // do something
-     mb.remove();
-   })
- });
-
- // look for new
-  $('.email-indicator .email-new').each(function(i, v){
-    $(this).closest('tr').addClass('email-new-record');
-  });
+$(document).ready(function() {
+  $(document).CheckNewEmails();
 });
