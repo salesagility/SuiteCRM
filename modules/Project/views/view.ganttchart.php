@@ -98,8 +98,8 @@ class ProjectViewGanttChart extends ViewDetail {
 							<label id="Milestone_label" for="Milestone"><?php echo $mod_strings['LBL_MILESTONE_FLAG'];?></label>
 							<label id="parent_task_id" for="parent_task" style="display: none; visibility: collapse;"><?php echo $mod_strings['LBL_PARENT_TASK_ID']; ?></label>
 							<input id="parent_task" class="text ui-widget-content ui-corner-all" style="display: none; visibility: collapse;" type="text" name="parent_task" value="" />
-							<label for="name"><?php echo $mod_strings['LBL_TASK_NAME']; ?></label>
-							<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+							<label for="task_name"><?php echo $mod_strings['LBL_TASK_NAME']; ?></label>
+							<input type="text" name="task_name" id="task_name" class="text ui-widget-content ui-corner-all" />
 
 							<label for="Predecessor"><?php echo $mod_strings['LBL_PREDECESSORS'];?></label>
 							<?php
