@@ -209,7 +209,6 @@ $mozaik = new SuiteMozaik();
 $xtpl->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_text'));
 
 
-if (true) {
     if (!isTouchScreen()) {
         require_once("include/SugarTinyMCE.php");
         $tiny = new SugarTinyMCE();
@@ -322,7 +321,7 @@ if (true) {
     }
     // done and parse
     $xtpl->parse("main.textarea");
-}
+
 
 //Add Custom Fields
 require_once('modules/DynamicFields/templates/Files/EditView.php');
