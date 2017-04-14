@@ -492,11 +492,16 @@ class ProjectController extends SugarController {
         $start_date = $_REQUEST['start_date'];
 		$end_date = $_REQUEST['end_date']; 
         $resource_id = $_REQUEST['resource_id'];
-        //$resource_type = $_REQUEST['type'];
+
+        $projects = explode(",", $_REQUEST['projects']);
+        $project_where = "";
+	if( count($projects) > 1 || $projects[0] != '' ){
+		$project_where = " AND project_id IN( '" . implode("','", $projects) . "' )";
+	}	    
 
         $Task = BeanFactory::getBean('ProjectTask');
         
-		$tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$resource_id."' AND ( ( '".$start_date."' BETWEEN project_task.date_start  AND project_task.date_finish ) OR ( '".$end_date."' BETWEEN project_task.date_start AND project_task.date_finish ) ) AND (project_id is not null AND project_id <> '')");
+		$tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$resource_id."' AND ( ( '".$start_date."' BETWEEN project_task.date_start  AND project_task.date_finish ) OR ( '".$end_date."' BETWEEN project_task.date_start AND project_task.date_finish ) ) AND (project_id is not null AND project_id <> '')"  . $project_where );
 
 		echo '<table class="qtip_table">';
         echo '<tr><th>'.$mod_strings['LBL_TOOLTIP_PROJECT_NAME'].'</th><th>'.$mod_strings['LBL_TOOLTIP_TASK_NAME'].'</th><th>'.$mod_strings['LBL_TOOLTIP_TASK_DURATION'].'</th></tr>';
