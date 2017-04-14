@@ -77,7 +77,7 @@ $filesOut = "
 $isWindows = is_windows();
 foreach($files as $file) {
 	if($isWindows) {
-		if(!is_writable_windows($file)) {
+		if(!is_writable_windows($file) && file_exists($file)) {
 			logThis('WINDOWS: File ['.$file.'] not readable - saving for display');
 			// don't warn yet - we're going to use this to check against replacement files
 			$filesNotWritable[$i] = $file;
@@ -90,7 +90,7 @@ foreach($files as $file) {
 						  "</tr>";
 		}
 	} else {
-		if(!is_writable($file)) {
+		if(!is_writable($file) && file_exists($file)) {
 			logThis('File ['.$file.'] not writable - saving for display');
 			// don't warn yet - we're going to use this to check against replacement files
 			$filesNotWritable[$i] = $file;
@@ -102,7 +102,7 @@ foreach($files as $file) {
 							"<td>{$filesNWPerms[$i]}</td>".
 							"<td>".$owner['name']."</td>".
 							"<td>".$group['name']."</td>".
-						  "</tr>";
+					  	"</tr>";
 		}
 	}
 	$i++;

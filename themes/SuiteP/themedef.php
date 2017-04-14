@@ -46,7 +46,7 @@ $themedef = array(
     'name' => 'Suite P',
     'description' => 'SuiteCRM Responsive Theme',
     'version' => array(
-        'regex_matches' => array('6\.*.*'),
+        'regex_matches' => array('.*'),
     ),
     'group_tabs' => true,
     'classic' => true,

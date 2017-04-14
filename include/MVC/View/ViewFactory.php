@@ -55,7 +55,7 @@ class ViewFactory{
 	 * @param string $type View Type
 	 * @return valid view
 	 */
-	static function loadView($type = 'default', $module, $bean = null, $view_object_map = array(), $target_module=''){
+	static function loadView($type = 'default', $module = '', $bean = null, $view_object_map = array(), $target_module=''){
 		$type = strtolower($type);
 
 		//first let's check if the module handles this view
