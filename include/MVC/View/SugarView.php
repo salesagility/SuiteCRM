@@ -710,9 +710,6 @@ class SugarView
             $ss->assign("max_tabs", $current_user->getPreference("max_tabs"));
         }
 
-        $imageURL = SugarThemeRegistry::current()->getImageURL("dashboard.png");
-        $homeImage = "<img src='$imageURL'>";
-        $ss->assign("homeImage", $homeImage);
         global $mod_strings;
         $mod_strings = $bakModStrings;
         $headerTpl = $themeObject->getTemplate('header.tpl');
