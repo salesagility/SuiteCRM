@@ -83,11 +83,23 @@
         <td class="advancedSearchTD">
         {sugar_translate label="LBL_ASSIGNED_TO"}: <br/>
         <input name="assigned_user_name" class="sqsEnabled" tabindex="2" id="assigned_user_name" size="" value="{$currentUserName}" type="text" >
-        <input name="assigned_user_id" id="assigned_user_id" value="{$currentUserId}" type="hidden">      
-        
-        <a href="javascript:void(0);">
-            <img src="{sugar_getimagepath file='select.gif'}" align="absmiddle" border="0" alt=$mod_strings.LBL_EMAIL_SELECTOR onclick='open_popup("Users", 600, 400, "", true, false, {literal}{"call_back_function":"set_return","form_name":"advancedSearchForm","field_to_name_array":{"id":"assigned_user_id","name":"assigned_user_name"}}{/literal}, "single", true);'>
-        </a>
+        <input name="assigned_user_id" id="assigned_user_id" value="{$currentUserId}" type="hidden">
+
+			<button type="button" name="btn_assigned_user_name" id="btn_assigned_user_name" tabindex="0" title="Select User" class="button firstChild" value="Select User"
+                    {literal}
+					onclick='open_popup(
+                                "Users",
+                                600,
+                                400,
+                                "",
+                                true,
+                                false,
+                                {"call_back_function":"set_return","form_name":"advancedSearchForm","field_to_name_array":{"id":"assigned_user_id","name":"assigned_user_name"}},
+                                "single",
+                                true
+                                );' >
+					{/literal}
+				<img src="{sugar_getimagepath file="id-ff-select.png"}" alt=$mod_strings.LBL_EMAIL_SELECTOR></button>
         </td>
     </tr>
       <tr class="toggleClass yui-hidden">
@@ -103,8 +115,9 @@
         <input id="data_parent_id_search" name="data_parent_id_search" type="hidden" value="">
         <br/><br/>
         <input class="sqsEnabled" id="data_parent_name_search" name="data_parent_name_search" type="text" value="">
-        <a href="javascript:void(0);"><img src="{sugar_getimagepath file='select.gif'}" align="absmiddle" border="0" alt=$mod_strings.LBL_EMAIL_SELECTOR onclick="SUGAR.email2.composeLayout.callopenpopupForEmail2('_search',{ldelim}'form_name':'advancedSearchForm'{rdelim} );">
-         </a>
+			<button type="button" name="btn_data_parent_id_search" id="btn_data_parent_id_search" tabindex="0" title="Select" class="button secondChild" value="Select"
+					onclick="SUGAR.email2.composeLayout.callopenpopupForEmail2('_search',{ldelim}'form_name':'advancedSearchForm'{rdelim} );">
+       <img src="{sugar_getimagepath file='id-ff-select.png'}" alt=$mod_strings.LBL_EMAIL_SELECTOR
         </td>
     </tr>
      <tr class="toggleClass yui-hidden">
