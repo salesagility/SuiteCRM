@@ -12,6 +12,9 @@ if (!isset($_REQUEST['campaign_id']) || empty($_REQUEST['campaign_id'])) {
 if (!isset($_REQUEST['inboundEmail']) || empty($_REQUEST['inboundEmail'])) {
     $inboundEmail = false;
 }
+if (isset($_REQUEST['use_mozaik']) && ($_REQUEST['use_mozaik']=='1')) {
+    $use_mozaik = true;
+}
 $focus = new EmailTemplate();
 
 if (isset($_REQUEST['record'])) {
@@ -206,6 +209,7 @@ if (isset($focus->body_html)) $xtpl->assign("BODY_HTML", $focus->body_html); els
 
 require_once('include/SuiteMozaik.php');
 $mozaik = new SuiteMozaik();
+$mozaik->use_rwd = $use_mozaik ;
 $xtpl->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_text'));
 
 
