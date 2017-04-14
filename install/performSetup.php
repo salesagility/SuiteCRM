@@ -637,6 +637,12 @@ if(!empty($_SESSION['default_locale_name_format'])) $sugar_config['default_local
 //$configurator->handleOverride();
 
 
+
+// save current web-server user for the cron user check mechanism:
+addCronAllowedUser(getRunningUser());
+
+
+
 installLog('saveConfig');
 $configurator->saveConfig();
 

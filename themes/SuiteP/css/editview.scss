@@ -603,6 +603,7 @@ slot {
 
 #html_div {
   white-space: normal;
+  background-color: $table-header-bg;
 }
 
 .dataField {
@@ -4352,7 +4353,7 @@ td.inlineEditActive {
 
 #editAccountDialogue {
   overflow: auto;
-  height: 90%;
+  height: auto;
 }
 
 #settingsDialog .yui-content {

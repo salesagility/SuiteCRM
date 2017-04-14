@@ -78,18 +78,19 @@ SE.accounts = {
     getReplyAddress : function() {
         var primary = '';
 
-        for(var i=0; i<SE.userPrefs.current_user.emailAddresses.length; i++) {
-            var addy = SE.userPrefs.current_user.emailAddresses[i];
+      if(!(document.getElementById('ie_from_name').value = typeof SE === 'undefined' || typeof SE.userPrefs === 'undefined' || typeof SE.userPrefs.current_user === 'undefined' || typeof SE.userPrefs.current_user.full_name === 'undefined')) {
+        for (var i = 0; i < SE.userPrefs.current_user.emailAddresses.length; i++) {
+          var addy = SE.userPrefs.current_user.emailAddresses[i];
 
-            if(addy.primary_address == "1") {
-                primary = addy.email_address;
-            }
+          if (addy.primary_address == "1") {
+            primary = addy.email_address;
+          }
 
-            if(addy.reply_to == "1") {
-                return addy.email_address;
-            }
+          if (addy.reply_to == "1") {
+            return addy.email_address;
+          }
         }
-
+      }
         return primary;
     },
 
@@ -288,8 +289,8 @@ SE.accounts = {
         	var EAD = this.inboundAccountEditDialog = new YAHOO.widget.Dialog("editAccountDialogue", {
                 modal:true,
 				visible:true,
-            	fixedcenter:true,
-            	constraintoviewport: true,
+            	//fixedcenter:true,
+            	//constraintoviewport: true,
                 width	: "600px",
                 shadow	: true
             });
@@ -685,7 +686,8 @@ SE.accounts = {
 
         document.getElementById('ie_id').value = '';
         document.getElementById('ie_name').value = '';
-        document.getElementById('ie_from_name').value = SE.userPrefs.current_user.full_name;
+      document.getElementById('ie_from_name').value = typeof SE === 'undefined' || typeof SE.userPrefs === 'undefined' || typeof SE.userPrefs.current_user === 'undefined' || typeof SE.userPrefs.current_user.full_name === 'undefined' ? '' : SE.userPrefs.current_user.full_name;
+        //document.getElementById('ie_from_name').value = SE.userPrefs.current_user.full_name;
         document.getElementById('ie_from_addr').value = this.getReplyAddress();
         document.getElementById('reply_to_addr').value = '';
         document.getElementById('server_url').value = '';
@@ -1164,8 +1166,8 @@ SE.contextMenus = {
          	SE.contextMenus.assignToDialogue = new YAHOO.widget.Dialog("assignToDiv", {
                 modal:true,
 				visible:false,
-            	fixedcenter:true,
-            	constraintoviewport: true,
+            	//fixedcenter:true,
+            	//constraintoviewport: true,
                 width	: "600px",
                 shadow	: true
             });
