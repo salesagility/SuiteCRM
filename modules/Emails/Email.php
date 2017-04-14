@@ -492,7 +492,9 @@ class Email extends SugarBean {
 			$_REQUEST['description_html'] = $_REQUEST['sendDescription'];
 			$this->description_html = $_REQUEST['description_html'];
 		} else {
-			$this->description_html = '';
+			//$this->description_html = '';
+            $_REQUEST['description_html'] = $_REQUEST['sendDescription'];
+            $this->description_html = $_REQUEST['description_html'];
 			$this->description = $_REQUEST['sendDescription'];
 		}
 		// end work-around
