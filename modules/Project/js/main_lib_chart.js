@@ -154,17 +154,23 @@ $(function() {
 
         //set tooltip title
         var title = SUGAR.language.get('Project', 'LBL_TOOLTIP_TITLE');
-        //console.log(title);
-		//get start and end date of the task to pass via ajax to the tooltip controller function
+        
+	//get start and end date of the task to pass via ajax to the tooltip controller function
         var rel = $(this).attr('rel');
         var dates = rel.split("|");
-        var dataString = 'start_date=' + dates[0] + '&end_date=' + dates[1] +'&resource_id=' + dates[2] + '&type=' + dates[3];
+		var projects = $("#projects").val();
+		if(projects != null)
+			projects = projects.join();
+		else
+			projects = '';
+        var dataString = 'start_date=' + dates[0] + '&end_date=' + dates[1] +'&resource_id=' + dates[2] + '&type=' + dates[3] + '&projects=' + projects;
         var url = 'index.php?module=Project&action=Tooltips';
 
         $(this).qtip({
             content: {
                 text: function(event, api) {
                     $.ajax({
+			type: "POST",
                         url: url,
                         data: dataString
                     }).then(function(content) {
@@ -210,6 +216,7 @@ $(function() {
         });
     });
 }
+
 
 $(document.body).on('change','#users', function(e) {
 
