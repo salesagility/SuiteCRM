@@ -465,6 +465,9 @@ class Project extends SugarBean {
 			{
 				$dateformat = $current_user->getPreference('datef');
 				$startdate = DateTime::createFromFormat($dateformat, $project_start);
+				if($startdate == false)
+					$startdate = DateTime::createFromFormat('Y-m-d', $project_start);
+				
 				$start = $startdate->format('Y-m-d');
 			}
 
