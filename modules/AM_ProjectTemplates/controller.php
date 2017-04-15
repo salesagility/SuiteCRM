@@ -192,7 +192,7 @@ class AM_ProjectTemplatesController extends SugarController {
 
             $d = 0;
 
-            while($duration >= $d){
+            while($duration > $d){
 			$day = $enddate->format('l');
 
 			if($bhours[$day] != 0 ){
