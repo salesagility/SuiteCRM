@@ -97,7 +97,7 @@
             'setup_site_sugarbeet_anonymous_stats' => true,
             'siteConfig_submitted' => false,
             'dbUSRData' => 'same',
-
+            'hide_subpanels' => true,
         );
         
 ?>
