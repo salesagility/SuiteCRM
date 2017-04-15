@@ -123,7 +123,7 @@ class Dashlet
         if($this->isConfigurable) {
             $additionalTitle = '<td nowrap width="1%" style="padding-right: 0px;"><div class="dashletToolSet"><a href="javascript:void(0)"  aria-label="'.translate('LBL_DASHLET_EDIT', 'Home').'" onclick="SUGAR.mySugar.configureDashlet(\''
                 . $this->id . '\'); return false;">'
-                . SugarThemeRegistry::current()->getImage('dashlet-header-edit','title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null,null,'.gif',translate('LBL_DASHLET_EDIT', 'Home')).'</a>'
+                . SugarThemeRegistry::current()->getImage('dashlet-header-edit','title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null,null,'.gif',translate('LBL_DASHLET_EDIT', 'Home')).'edit</a>'
                 . '';
         }
         else {
@@ -145,7 +145,7 @@ class Dashlet
             $additionalTitle .= '<a href="javascript:void(0)" aria-label="'.translate('LBL_DASHLET_REFRESH', 'Home').'" onclick="SUGAR.mySugar.retrieveDashlet(\''
                 . $this->id . '\'); return false;">'
                 . SugarThemeRegistry::current()->getImage('dashlet-header-refresh','border="0" align="absmiddle" title="' . translate('LBL_DASHLET_REFRESH', 'Home') . '"',null,null,'.gif',translate('LBL_DASHLET_REFRESH', 'Home'))
-                . '</a>';
+                . 'refresh</a>';
         }
 
         return $additionalTitle;
@@ -166,7 +166,7 @@ class Dashlet
         $additionalTitle = '<a href="javascript:void(0)" aria-label="'.translate('LBL_DASHLET_DELETE', 'Home').'" onclick="SUGAR.mySugar.deleteDashlet(\''
             . $this->id . '\'); return false;">'
             . SugarThemeRegistry::current()->getImage('dashlet-header-close','border="0" align="absmiddle" title="' . translate('LBL_DASHLET_DELETE', 'Home') . '"',null,null,'.gif',translate('LBL_DASHLET_DELETE', 'Home'))
-            . '</a></div></td></tr></table>';
+            . 'delete</a></div></td></tr></table>';
         return $additionalTitle;
     }
 
