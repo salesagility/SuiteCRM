@@ -89,8 +89,8 @@ class ProjectViewGanttChart extends ViewDetail {
 							<tr><td>
 						
 							<input type="hidden" name="project_id" id="project_id" value="<?php echo $project->id; ?>">
-							<input type="hidden" name="override_business_hours" id="override_business_hours" value="<?php echo $project->override_business_hours; ?>">
-							<input type="text" name="task_id" style="display: none; visibility: collapse;" id="task_id" value="">
+							<input type="hidden" name="consider_business_hours" id="consider_business_hours" value="<?php echo $project->override_business_hours; ?>">
+							<input type="hidden" name="task_id" style="display: none; visibility: collapse;" id="task_id" value="">
 							<input type="radio" name="Milestone" value="Subtask" checked="checked" id="Subtask" />
 							<label id="Subtask_label" for="Subtask"><?php echo $mod_strings['LBL_SUBTASK'];?></label>
 							<input type="radio" name="Milestone" value="Milestone" id="Milestone" />
