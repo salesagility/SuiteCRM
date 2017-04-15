@@ -163,7 +163,7 @@ $(function() {
                 buttons: {
                     "Add": function() {
                         var Project_id = $('#project_id').val();
-						var override_business_hours = $('#override_business_hours').val();
+			var override_business_hours = $('#consider_business_hours').val();
                         //var Parent_task = $('#parent_task').val();
                         var Task_name = $('#task_name').val();
                         var milestone = milestone_flag;
@@ -177,10 +177,11 @@ $(function() {
                         var Task_Notes = $('#Notes').val();
                         var rowCount = $('#Task_table tr').length -1;
                         var dateStart = "Start_date_"+rowCount ;
-
+			var actual_duration = $('#Actual_duration').val();
+			    
                         if($("#popup_form").valid()){
 
-                            var dataString = '&project_id=' + Project_id + '&override_business_hours=' + override_business_hours + '&milestone=' + milestone + '&task_name=' +Task_name + '&predecessor=' + Task_pre + '&rel_type=' + rel_type + '&start=' + Task_Start + '&duration=' + Task_Duration + '&unit=' + Task_Duration_unit + '&resource=' + Task_Resource + '&percent=' + Task_Percent + '&note=' + Task_Notes;
+                            var dataString = '&project_id=' + Project_id + '&override_business_hours=' + override_business_hours + '&milestone=' + milestone + '&task_name=' +Task_name + '&predecessor=' + Task_pre + '&rel_type=' + rel_type + '&start=' + Task_Start + '&duration=' + Task_Duration + '&unit=' + Task_Duration_unit + '&resource=' + Task_Resource + '&percent=' + Task_Percent + '&note=' + Task_Notes + '&actual_duration=' + actual_duration;
                             //block();
                             $.ajax({
                                 type: "POST",
