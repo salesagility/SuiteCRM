@@ -463,8 +463,8 @@ function edit_task(task){
         buttons: {
             "Update": function() {
                 var Project_id = $('#project_id').val();
-                var override_business_hours = $('#override_business_hours').val();
-				var Task_id = $('#task_id').val();
+                var override_business_hours = $('#consider_business_hours').val();
+		var Task_id = $('#task_id').val();
                 //var Parent_task = $('#parent_task').val();
                 var Task_name = $('#task_name').val();
 
