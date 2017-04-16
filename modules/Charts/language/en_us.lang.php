@@ -102,17 +102,11 @@ $mod_strings = array (
     'LBL_TITLE' => 'Title: ',
     'LBL_MY_MODULES_USED_SIZE' => 'Access Count',
 
-    'LBL_CHART_ACTION' => 'Action',
     'LBL_CHART_PIPELINE_BY_SALES_STAGE' => 'Pipeline by Sales Stage',
     'LBL_CHART_LEAD_SOURCE_BY_OUTCOME' => 'Lead Source By Outcome',
     'LBL_CHART_OUTCOME_BY_MONTH' => 'Outcome by Month',
     'LBL_CHART_PIPELINE_BY_LEAD_SOURCE' => 'Pipeline By Lead Source',
     'LBL_CHART_MY_PIPELINE_BY_SALES_STAGE' => 'My Pipeline by Sales Stage',
-    'LBL_CHART_PIPELINE_BY_SALES_STAGE_FUNNEL' => 'Pipeline by Sales Stage Funnel',
-    'LBL_CHART_OPPORTUNITIES_THIS_QUARTER' => 'Opportunities this Quarter',
-    'LBL_CHART_MY_MODULES_USED_30_DAYS' => 'My Modules Used (Last 30 Days)',
-    'LBL_CHART_MODULES_USED_DIRECT_REPORTS_30_DAYS' => 'Modules Used By My Direct Reports (Last 30 Days)',
-    'LBL_CHART_DCE_ACTIONS_MONTH' => 'DCE Actions By Types (Current Month)',
 );
 
 
