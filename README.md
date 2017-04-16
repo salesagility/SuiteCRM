@@ -1,4 +1,4 @@
-##SuiteCRM 7.8.3
+## SuiteCRM 7.8.3
 
 [![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=master)](https://travis-ci.org/salesagility/SuiteCRM)
 
@@ -11,7 +11,7 @@ This repository has been created to allow community members to collaborate and c
 
 ### Contributing to the project ###
 
-#####Important: Please read before developing code intended for inclusion in the SuiteCRM project.#####
+##### Important: Please read before developing code intended for inclusion in the SuiteCRM project. #####
 
 Please read and sign the following [contributor agreement][cont_agrmt]
 
