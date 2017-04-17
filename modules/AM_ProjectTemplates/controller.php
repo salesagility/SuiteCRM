@@ -460,7 +460,7 @@ class AM_ProjectTemplatesController extends SugarController {
         $task->task_number = $project_task_id;
         $task->predecessors = $predecessors;
         $task->relationship_type = $rel_type;
-        $task->duration = $duration + 1; //+1 to make duration appear correct in project table
+        $task->duration = $duration ; //removed + 1-  +1 to make duration appear correct in project table
         //$task->duration_unit = $duration_unit;
         $task->assigned_user_id = $resource;
         $task->percent_complete = $percent_complete;
