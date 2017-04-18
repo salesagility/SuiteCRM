@@ -208,10 +208,12 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
             // if we haven't found a user, then return 404
             if ( empty($this->user_focus->id) || $this->user_focus->id == -1)
             {
-                $this->http_status('401 Unauthorized');
                 if (!isset($query_arr['noAuth'])) {
+                    $this->http_status('401 Unauthorized');
                     header('WWW-Authenticate: Basic realm="'.($this->http_auth_realm).'"');
+                    return;
                 }
+                $this->http_status('404 Not Found');
                 return;
             }
 
