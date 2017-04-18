@@ -2866,7 +2866,7 @@ protected function checkQuery($sql, $object_name = false)
 
             foreach ($field_defs as $field => $properties) {
                 $before_value = $fetched_row[$field];
-                $after_value=$bean->$field;
+                $after_value=from_html($bean->$field);
                 if (isset($properties['type'])) {
                     $field_type=$properties['type'];
                 } else {
