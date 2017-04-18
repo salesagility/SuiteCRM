@@ -42,7 +42,7 @@
 SUGAR.email2.composeLayout.charsets = {$emailCharsets};
 SUGAR.default_inbound_accnt_id = '{$defaultOutID}';
 if(!SUGAR.email2.userPrefs) {ldelim}
-    SUGAR.email2.userPrefs = {$userPrefs};
+    var userPrefs = SUGAR.email2.userPrefs = {$userPrefs};
 {rdelim}
 SUGAR.email2.signatures = {$defaultSignature};
 {$tinyMCE}
