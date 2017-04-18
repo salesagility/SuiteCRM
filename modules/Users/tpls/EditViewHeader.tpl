@@ -94,6 +94,15 @@ var ERR_REENTER_PASSWORDS = '{$MOD.ERR_REENTER_PASSWORDS}';
 var EditView_tabs = new YAHOO.widget.TabView("EditView_tabs");
 
 {literal}
+
+// submit the password on hitting enter
+$( 'form' ).bind('keypress', function(e){
+    if ( e.keyCode == 13 ) {
+        $(this).find('#SAVE_FOOTER').click();
+    }
+});
+
+
 //Override so we do not force submit, just simulate the 'save button' click
 SUGAR.EmailAddressWidget.prototype.forceSubmit = function() { document.getElementById('Save').click();}
 
