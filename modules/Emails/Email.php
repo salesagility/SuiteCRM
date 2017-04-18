@@ -1078,24 +1078,26 @@ class Email extends SugarBean {
                  }
 			}
 
-			parent::save($check_notify);
-
-			if(!empty($this->parent_type) && !empty($this->parent_id)) {
-                if(!empty($this->fetched_row) && !empty($this->fetched_row['parent_id']) && !empty($this->fetched_row['parent_type'])) {
-                    if($this->fetched_row['parent_id'] != $this->parent_id || $this->fetched_row['parent_type'] != $this->parent_type) {
+            // croessler: has the parent-bean or its id been modified? compare via fetched-row...
+            // if so, delete the old relation and add the new one. one email can only be related to one parent, not multiple parents.
+            if (!empty($this->parent_type) && !empty($this->parent_id)) {
+                if (!empty($this->fetched_row) && !empty($this->fetched_row['parent_id']) && !empty($this->fetched_row['parent_type'])) {
+                    if ($this->fetched_row['parent_id'] != $this->parent_id || $this->fetched_row['parent_type'] != $this->parent_type) {
                         $mod = strtolower($this->fetched_row['parent_type']);
                         $rel = array_key_exists($mod, $this->field_defs) ? $mod : $mod . "_activities_emails"; //Custom modules rel name
-                        if($this->load_relationship($rel) ) {
+                        if ($this->load_relationship($rel)) {
                             $this->$rel->delete($this->id, $this->fetched_row['parent_id']);
                         }
                     }
                 }
                 $mod = strtolower($this->parent_type);
                 $rel = array_key_exists($mod, $this->field_defs) ? $mod : $mod . "_activities_emails"; //Custom modules rel name
-                if($this->load_relationship($rel) ) {
+                if ($this->load_relationship($rel)) {
                     $this->$rel->add($this->parent_id);
                 }
-			}
+            }
+
+            parent::save($check_notify);
 		}
 		$GLOBALS['log']->debug('-------------------------------> Email save() done');
 	}
