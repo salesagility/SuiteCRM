@@ -1,11 +1,11 @@
 <?php
-/**
- *
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+/*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,33 +36,40 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
+ ********************************************************************************/
 
-$module_name = 'Emails';
-$searchdefs[$module_name] = array(
-    'templateMeta' => array(
-        'maxColumns' => '3',
-        'maxColumnsBasic' => '4',
-        'widths' => array('label' => '10', 'field' => '30'),
-    ),
-    'layout' => array(
-        'basic_search' => array(
-            'name',
-            array('name' => 'current_user_only', 'label' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
-        ),
-        'advanced_search' => array(
-            'name',
-            array(
-                'name' => 'assigned_user_id',
-                'label' => 'LBL_ASSIGNED_TO',
-                'type' => 'enum',
-                'function' => array('name' => 'get_user_array', 'params' => array(false))
-            ),
-            'category_id' => array (
-                'name' => 'category_id',
-                'default' => true,
-                'width' => '10%',
-            ),
-        ),
-    ),
-);
+/*********************************************************************************
+
+ * Description:  TODO: To be written.
+ * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+ * All Rights Reserved.
+ * Contributor(s): ______________________________________..
+ ********************************************************************************/
+
+
+$focus = new Email();
+
+if(!isset($_REQUEST['record']))
+	sugar_die("A record number must be specified to delete the email.");
+$focus->retrieve($_REQUEST['record']);
+$email_type = $focus->type;
+if(!$focus->ACLAccess('Delete')){
+	ACLController::displayNoAccess(true);
+	sugar_cleanup(true);
+}
+$focus->mark_deleted($_REQUEST['record']);
+
+// make sure assigned_user_id is set - during testing this isn't always set
+if (!isset($_REQUEST['assigned_user_id'])) {
+	$_REQUEST['assigned_user_id'] = '';
+}
+
+if ($email_type == 'archived') {
+	global $current_user;
+    $loc = 'Location: index.php?module=Emails';
+} else {
+$loc = 'Location: index.php?module='.$_REQUEST['return_module'].'&action='.$_REQUEST['return_action'].'&record='.$_REQUEST['return_id'].'&type='.$_REQUEST['type'].'&assigned_user_id='.$_REQUEST['assigned_user_id'];
+}
+
+header($loc);
+?>

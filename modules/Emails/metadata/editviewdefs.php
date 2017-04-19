@@ -63,6 +63,10 @@ $viewdefs[$module_name]['EditView'] = array(
                     'label' => 'LBL_BODY'
                 ),
             ),
+
+            array (
+                'category_id',
+            ),
         )
     )
 

@@ -113,4 +113,10 @@ $listViewDefs['Emails'] = array(
         'label' => 'LBL_LIST_TO_ADDR',
         'default' => false,
     ),
+    'CATEGORY_ID' =>
+        array (
+            'width' => '10%',
+            'label' => 'LBL_LIST_CATEGORY',
+            'default' => true,
+        ),
 );

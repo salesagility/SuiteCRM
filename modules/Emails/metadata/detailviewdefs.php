@@ -76,7 +76,10 @@ $viewdefs[$module_name]['DetailView'] = array(
             ),
             array(
                 'parent_name'
-            )
+            ),
+            array (
+                'category_id',
+            ),
         )
     )
 );

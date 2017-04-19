@@ -1,11 +1,11 @@
 <?php
-/**
- *
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+/*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,33 +36,41 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
+ ********************************************************************************/
 
-$module_name = 'Emails';
-$searchdefs[$module_name] = array(
-    'templateMeta' => array(
-        'maxColumns' => '3',
-        'maxColumnsBasic' => '4',
-        'widths' => array('label' => '10', 'field' => '30'),
-    ),
-    'layout' => array(
-        'basic_search' => array(
-            'name',
-            array('name' => 'current_user_only', 'label' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
-        ),
-        'advanced_search' => array(
-            'name',
-            array(
-                'name' => 'assigned_user_id',
-                'label' => 'LBL_ASSIGNED_TO',
-                'type' => 'enum',
-                'function' => array('name' => 'get_user_array', 'params' => array(false))
-            ),
-            'category_id' => array (
-                'name' => 'category_id',
-                'default' => true,
-                'width' => '10%',
-            ),
-        ),
-    ),
-);
+
+
+global $current_user;
+
+
+$focus = new Email();
+// Get Group User IDs
+$groupUserQuery = 'SELECT name, group_id FROM inbound_email ie INNER JOIN users u ON (ie.group_id = u.id AND u.is_group = 1)';
+_pp($groupUserQuery);
+$r = $focus->db->query($groupUserQuery);
+$groupIds = '';
+while($a = $focus->db->fetchByAssoc($r)) {
+	$groupIds .= "'".$a['group_id']."', ";
+}
+$groupIds = substr($groupIds, 0, (strlen($groupIds) - 2));
+
+$query = 'SELECT emails.id AS id FROM emails';
+$query .= " WHERE emails.deleted = 0 AND emails.status = 'unread' AND emails.assigned_user_id IN ({$groupIds})";  
+//$query .= ' LIMIT 1';
+
+//_ppd($query);
+$r2 = $focus->db->query($query); 
+$count = 0;
+$a2 = $focus->db->fetchByAssoc($r2);
+
+$focus->retrieve($a2['id']);
+$focus->assigned_user_id = $current_user->id;
+$focus->save();
+
+if(!empty($a2['id'])) {
+	header('Location: index.php?module=Emails&action=ListView&type=inbound&assigned_user_id='.$current_user->id);
+} else {
+	header('Location: index.php?module=Emails&action=ListView&show_error=true&type=inbound&assigned_user_id='.$current_user->id);
+}
+
+?>

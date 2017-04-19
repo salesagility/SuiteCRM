@@ -54,6 +54,7 @@ $viewdefs[$module_name]['QuickCreate'] = array(
             array(
                 'name',
                 'assigned_user_name',
+                'category_id',
             ),
         ),
 
