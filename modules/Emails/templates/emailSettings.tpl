@@ -39,5 +39,13 @@
  */
 *}
 
-{include file="modules/Emails/templates/emailSettingsGeneral.tpl"}
-{include file="modules/Emails/templates/emailSettingsAccounts.tpl"}
+<div class="ydlg-bd">
+    <div id="tab_general" class="tab-content">
+        {include file="modules/Emails/templates/emailSettingsGeneral.tpl"}
+    </div>
+    <div id="tab_accounts" class="tab-content">
+        {include file="modules/Emails/templates/emailSettingsAccounts.tpl"}
+    </div>
+
+
+</div>
