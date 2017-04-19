@@ -1,0 +1,10 @@
+---
+applications:
+- name: crm
+  memory: 256M
+  instances: 1
+  host: crm
+  domain: apps.cloud.gov
+  path: .
+  buildpack: https://github.com/cloudfoundry/php-buildpack.git
+  timeout: 180
