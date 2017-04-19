@@ -761,8 +761,20 @@ function fixUpFormatting($module, $field, $value)
                 break;
             }
             if ( ! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/',$value) ) {
-                // This appears to be formatted in user date/time
-                $value = $timedate->to_db($value);
+                // If date string doesnt have time setup, dont change it to the previous date/future date
+                if (strpos($value, ':') === false) {
+                    global $current_user;
+                    $user_date_format = $timedate->get_date_format($current_user);
+
+                    if (DateTime::createFromFormat($user_date_format, $value) !== FALSE) {
+                        $date = DateTime::createFromFormat($user_date_format, $value);
+                        $date->setTime(00, 00, 00);
+                        $value = $date->format('Y-m-d H:i:s');
+                    }
+                } else {
+                    // This appears to be formatted in user date/time
+                    $value = $timedate->to_db($value);
+                }
             }
             break;
         case 'date':
