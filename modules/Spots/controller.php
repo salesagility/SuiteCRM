@@ -50,14 +50,15 @@ class SpotsController extends SugarController
 
     //These are the file paths for the cached results of the spot data sets
     protected $spotFilePath = 'cache/modules/Spots/';
-    protected $accountsFilName = 'accounts.json';
-    protected $servicesFileName = 'service.json';
-    protected $salesFileName = 'sales.json';
-    protected $leadsFileName = 'leads.json';
-    protected $marketingsFileName = 'marketing.json';
-    protected $marketingActivitiesFileName = 'marketingActivity.json';
-    protected $activitiesFileName = 'activities.json';
-    protected $quotesFileName = 'quotes.json';
+    protected $accountsFilName = 'accounts';
+    protected $servicesFileName = 'service';
+    protected $salesFileName = 'sales';
+    protected $leadsFileName = 'leads';
+    protected $marketingsFileName = 'marketing';
+    protected $marketingActivitiesFileName = 'marketingActivity';
+    protected $activitiesFileName = 'activities';
+    protected $quotesFileName = 'quotes';
+    protected $fileSuffix = 'json';
 
     //This is when to consider a data file as stale and replace it (should not be an issue if the scheduler is running)
     //This is the time in seconds, so an hour is 3600
@@ -124,8 +125,9 @@ class SpotsController extends SugarController
      */
     public function action_getAccountsSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->accountsFilName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->accountsFilName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -180,8 +182,9 @@ EOF;
      */
     public function action_getLeadsSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->leadsFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->leadsFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -285,8 +288,9 @@ EOF;
      */
     public function action_getSalesSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->salesFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->salesFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -417,8 +421,9 @@ EOF;
      */
     public function action_getServiceSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->servicesFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->servicesFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -530,8 +535,9 @@ EOF;
      */
     public function action_getActivitiesSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->activitiesFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->activitiesFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -670,8 +676,9 @@ EOF;
      */
     public function action_getMarketingSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->marketingsFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->marketingsFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -785,8 +792,9 @@ EOF;
      */
     public function action_getMarketingActivitySpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->marketingActivitiesFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->marketingActivitiesFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -847,8 +855,9 @@ EOF;
      */
     public function action_getQuotesSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->quotesFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->quotesFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
