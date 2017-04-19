@@ -40,7 +40,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $dictionary['CampaignTracker'] = array('table' => 'campaign_trkrs',
 	'comment' => 'Maintains the Tracker URLs used in campaign emails',
-          
+
 'fields' => array (
     'id' => array (
         'name' => 'id',
@@ -54,7 +54,7 @@ $dictionary['CampaignTracker'] = array('table' => 'campaign_trkrs',
         'name' => 'tracker_name',
         'vname' => 'LBL_TRACKER_NAME',
         'type' => 'varchar',
-        'len' => '30',
+        'len' => '255',
         'comment' => 'The name of the campaign tracker'
    ),
   	'tracker_url' => array (
