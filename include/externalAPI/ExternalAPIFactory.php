@@ -111,19 +111,21 @@ class ExternalAPIFactory
         $baseDirList = array('include/externalAPI/','custom/include/externalAPI/');
         foreach ( $baseDirList as $baseDir ) {
             $dirList = glob($baseDir.'*',GLOB_ONLYDIR);
-            foreach($dirList as $dir) {
-                if ( $dir == $baseDir.'.' || $dir == $baseDir.'..' || $dir == $baseDir.'Base' ) {
-                    continue;
-                }
+            if(is_array($dirList)){ 
+                foreach($dirList as $dir) {
+                    if ( $dir == $baseDir.'.' || $dir == $baseDir.'..' || $dir == $baseDir.'Base' ) {
+                        continue;
+                    }
 
-                $apiName = str_replace($baseDir,'',$dir);
-                if ( file_exists($dir.'/ExtAPI'.$apiName.'.php') ) {
-                    $apiFullList[$apiName]['className'] = 'ExtAPI'.$apiName;
-                    $apiFullList[$apiName]['file'] = $dir.'/'.$apiFullList[$apiName]['className'].'.php';
-                }
-                if ( file_exists($dir.'/ExtAPI'.$apiName.'_cstm.php') ) {
-                    $apiFullList[$apiName]['className'] = 'ExtAPI'.$apiName.'_cstm';
-                    $apiFullList[$apiName]['file_cstm'] = $dir.'/'.$apiFullList[$apiName]['className'].'.php';
+                    $apiName = str_replace($baseDir,'',$dir);
+                    if ( file_exists($dir.'/ExtAPI'.$apiName.'.php') ) {
+                        $apiFullList[$apiName]['className'] = 'ExtAPI'.$apiName;
+                        $apiFullList[$apiName]['file'] = $dir.'/'.$apiFullList[$apiName]['className'].'.php';
+                    }
+                    if ( file_exists($dir.'/ExtAPI'.$apiName.'_cstm.php') ) {
+                        $apiFullList[$apiName]['className'] = 'ExtAPI'.$apiName.'_cstm';
+                        $apiFullList[$apiName]['file_cstm'] = $dir.'/'.$apiFullList[$apiName]['className'].'.php';
+                    }
                 }
             }
         }
