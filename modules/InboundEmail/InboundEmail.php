@@ -3703,41 +3703,45 @@ class InboundEmail extends SugarBean
         }
     }
 
-    /**
-     * Takes the "parts" attribute of the object that imap_fetchbody() method
-     * returns, and recursively goes through looking for objects that have a
-     * disposition of "attachement" or "inline"
-     * @param int $msgNo The relative message number for the monitored mailbox
-     * @param object $parts Array of objects to examine
-     * @param string $emailId The GUID of the email saved prior to calling this method
-     * @param array $breadcrumb Default 0, build up of the parts mapping
-     * @param bool $forDisplay Default false
-     */
-    public function saveAttachments($msgNo, $parts, $emailId, $breadcrumb = '0', $forDisplay = false)
-    {
-        global $sugar_config;
-        /*
-            Primary body types for a part of a mail structure (imap_fetchstructure returned object)
-            0 => text
-            1 => multipart
-            2 => message
-            3 => application
-            4 => audio
-            5 => image
-            6 => video
-            7 => other
-        */
+	/**
+	 * Takes the "parts" attribute of the object that imap_fetchbody() method
+	 * returns, and recursively goes through looking for objects that have a
+	 * disposition of "attachement" or "inline"
+	 * @param int $msgNo The relative message number for the monitored mailbox
+	 * @param object $parts Array of objects to examine
+	 * @param string $emailId The GUID of the email saved prior to calling this method
+	 * @param array $breadcrumb Default 0, build up of the parts mapping
+	 * @param bool $forDisplay Default false
+	 */
+	function saveAttachments($msgNo, $parts, $emailId, $breadcrumb, $forDisplay) {
+		global $sugar_config;
+		/*
+			Primary body types for a part of a mail structure (imap_fetchstructure returned object)
+			0 => text
+			1 => multipart
+			2 => message
+			3 => application
+			4 => audio
+			5 => image
+			6 => video
+			7 => other
+		*/
 
-        foreach ($parts as $k => $part) {
-            $thisBc = $k + 1;
-            if ($breadcrumb != '0') {
-                $thisBc = $breadcrumb . '.' . $thisBc;
-            }
-            $attach = null;
-            // check if we need to recurse into the object
-            //if($part->type == 1 && !empty($part->parts)) {
-            if (isset($part->parts) && !empty($part->parts) && !(isset($part->subtype) && strtolower($part->subtype) == 'rfc822')) {
-                $this->saveAttachments($msgNo, $part->parts, $emailId, $thisBc, $forDisplay);
+		// set $breadcrumb = '0' as default
+		if (!$breadcrumb) {
+			$breadcrumb = '0';
+		}
+
+		foreach($parts as $k => $part) {
+			$thisBc = $k+1;
+			if($breadcrumb != '0') {
+				$thisBc = $breadcrumb.'.'.$thisBc;
+			}
+			$attach = null;
+			// check if we need to recurse into the object
+			//if($part->type == 1 && !empty($part->parts)) {
+			if(isset($part->parts) && !empty($part->parts) && !( isset($part->subtype) && strtolower($part->subtype) == 'rfc822')  ) {
+				$this->saveAttachments($msgNo, $part->parts, $emailId, $thisBc, $forDisplay);
                 continue;
             } elseif ($part->ifdisposition) {
                 // we will take either 'attachments' or 'inline'

@@ -158,6 +158,8 @@ class Email extends SugarBean {
      */
     public $cases;
 
+	public $category_id;
+
 	/**
 	 * sole constructor
 	 */
@@ -2747,6 +2749,7 @@ class Email extends SugarBean {
     	if(isset($this->type_name))
 	      	$email_fields['TYPE_NAME'] = $this->type_name;
 
+		$email_fields['CATEGORY_ID'] = empty ($this->category_id) ? "" : $app_list_strings['email_category_dom'][$this->category_id];
 		return $email_fields;
 	}
 

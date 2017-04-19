@@ -791,6 +791,12 @@ $app_list_strings = array(
             'Sales' => 'Sales',
         ),
 
+    'email_category_dom' => array(
+        '' => '',
+        'Archived' => 'Archived',
+        // TODO: add more categories here...
+    ),
+
     'document_subcategory_dom' => array(
             '' => '',
             'Marketing Collateral' => 'Marketing Collateral',
@@ -2457,8 +2463,8 @@ $app_strings = array(
 
     'LBL_FILTER_HEADER_TITLE' => 'Filter',
 
-    'LBL_AOP_INTERNAL' => 'Internal',
-
+    'LBL_CATEGORY' => 'Category',
+    'LBL_LIST_CATEGORY' => 'Category',
 );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
@@ -3789,7 +3795,7 @@ $app_list_strings['marker_image_list']['restaurant_turkish'] = 'Restaurant Turki
 $app_list_strings['marker_image_list']['right'] = 'Right';
 $app_list_strings['marker_image_list']['right_then_down'] = 'Right Then Down';
 $app_list_strings['marker_image_list']['right_then_up'] = 'Right Then Up';
-$app_list_strings['marker_image_list']['satursday'] = 'Satursday';
+$app_list_strings['marker_image_list']['saturday'] = 'Saturday';
 $app_list_strings['marker_image_list']['school'] = 'School';
 $app_list_strings['marker_image_list']['shopping_mall'] = 'Shopping Mall';
 $app_list_strings['marker_image_list']['shore'] = 'Shore';
@@ -3973,3 +3979,8 @@ $app_list_strings['day_list']['Thursday'] = 'Thursday';
 $app_list_strings['day_list']['Friday'] = 'Friday';
 $app_list_strings['day_list']['Saturday'] = 'Saturday';
 $app_list_strings['day_list']['Sunday'] = 'Sunday';
+$app_list_strings['pdf_page_size_dom']['A4'] = 'A4';
+$app_list_strings['pdf_page_size_dom']['Letter'] = 'Letter';
+$app_list_strings['pdf_page_size_dom']['Legal'] = 'Legal';
+$app_list_strings['pdf_orientation_dom']['Portrait'] = 'Portrait';
+$app_list_strings['pdf_orientation_dom']['Landscape'] = 'Landscape';

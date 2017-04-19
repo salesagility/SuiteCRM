@@ -1,11 +1,10 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * Copyright (C) 2011 - 2017 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -45,6 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array(
 // OOTB Scheduler Job Names:
@@ -148,8 +150,10 @@ $mod_strings = array(
     'NTC_LIST_ORDER' => 'Set the order this schedule will appear in the Scheduler dropdown lists',
     'LBL_CRON_INSTRUCTIONS_WINDOWS' => 'To Setup Windows Scheduler',
     'LBL_CRON_INSTRUCTIONS_LINUX' => 'To Setup Crontab',
-    'LBL_CRON_LINUX_DESC' => 'Note: In order to run SuiteCRM Schedulers, add the following line to the crontab file: ',
-    'LBL_CRON_WINDOWS_DESC' => 'Note: In order to run the SuiteCRM schedulers, create a batch file to run using Windows Scheduled Tasks. The batch file should include the following commands: ',
+    'LBL_CRON_LINUX_DESC1' => 'In order to run SuiteCRM Schedulers, edit your web server user\'s crontab file with this command: ',
+    'LBL_CRON_LINUX_DESC2' => '... and add the following line to the crontab file: ',
+    'LBL_CRON_LINUX_DESC3' => 'You should do this only after the installation is concluded.',
+    'LBL_CRON_WINDOWS_DESC' => 'In order to run the SuiteCRM schedulers, create a batch file to run using Windows Scheduled Tasks. The batch file should include the following commands: ',
     'LBL_NO_PHP_CLI' => 'If your host does not have the PHP binary available, you can use wget or curl to launch your Jobs.<br>for wget: <b>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;wget --quiet --non-verbose ' . (isset($sugar_config['site_url'])?$sugar_config['site_url']:'http://yoursite') . '/cron.php > /dev/null 2>&1</b><br>for curl: <b>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;curl --silent ' . (isset($sugar_config['site_url'])?$sugar_config['site_url']:'http://yoursite') . '/cron.php > /dev/null 2>&1',
 // Subpanels
     'LBL_JOBS_SUBPANEL_TITLE' => 'Job Log',
