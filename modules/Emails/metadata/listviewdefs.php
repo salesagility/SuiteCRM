@@ -46,7 +46,7 @@ $viewdefs['Emails']['ListView'] = array(
             'buttons' =>
                 array(
                     array(
-                        'customCode' => '<a class="btn" data-action="emails-compose" title="{$MOD.LBL_COMPOSEEMAIL}"><span class="glyphicon glyphicon-envelope"></span></a>'
+                        'customCode' => '<a class="btn" data-action="emails-show-compose-modal" title="{$MOD.LBL_COMPOSEEMAIL}"><span class="glyphicon glyphicon-envelope"></span></a>'
                     ),
                     array(
                         'customCode' => '<a class="btn" data-action="emails-configure" title="{$MOD.LBL_EMAILSETTINGS}"><span class="glyphicon glyphicon-cog"></span></a>'
@@ -55,14 +55,26 @@ $viewdefs['Emails']['ListView'] = array(
                         'customCode' => '<a class="btn" data-action="emails-check-new-email" title="{$MOD.LBL_BUTTON_CHECK_TITLE}"><span class="glyphicon glyphicon-refresh"></span></a>'
                     ),
                     array(
-                        'customCode' => '<a class="btn" data-action="emails-open-folder" title="{$MOD.LBL_SELECT_FOLDER}"><span class="glyphicon glyphicon-folder-open"></span></a>'
+                        'customCode' => '<a class="btn" data-action="emails-show-folders-modal" title="{$MOD.LBL_SELECT_FOLDER}"><span class="glyphicon glyphicon-folder-open"></span></a>'
                     ),
                 ),
         ),
         'includes' => array(
-                array(
-                    'file' => 'modules/Emails/include/ListView/ListView.js',
-                ),
+            array(
+              'file' => 'include/javascript/jstree/dist/jstree.js',
+            ),
+            array(
+                'file' => 'modules/Emails/include/ListView/ComposeViewModal.js',
+            ),
+            array(
+                'file' => 'modules/Emails/include/ListView/SettingsView.js',
+            ),
+            array(
+                'file' => 'modules/Emails/include/ListView/CheckNewEmails.js',
+            ),
+            array(
+                'file' => 'modules/Emails/include/ListView/FoldersViewModal.js',
+            )
         ),
         'options' => array(
             'hide_edit_link' => true
@@ -71,25 +83,27 @@ $viewdefs['Emails']['ListView'] = array(
 );
 
 $listViewDefs['Emails'] = array(
-    'FROM_ADDR_NAME'=> array(
+    'FROM_ADDR_NAME' => array(
         'width' => '32',
         'label' => 'LBL_LIST_FROM_ADDR',
         'default' => true,
     ),
-    'INDICATOR'=> array(
+    'INDICATOR' => array(
         'width' => '32',
         'label' => 'LBL_INDICATOR',
         'default' => true,
         'sortable' => false,
         'hide_header_label' => true,
     ),
-    'NAME' => array(
+    'SUBJECT' => array(
+        // Uses function field
         'width' => '32',
         'label' => 'LBL_LIST_SUBJECT',
         'default' => true,
-        'link' => true
+        'link' => false,
+        'customCode' => ''
     ),
-    'HAS_ATTACHMENT'=> array(
+    'HAS_ATTACHMENT' => array(
         'width' => '32',
         'label' => 'LBL_HAS_ATTACHMENT_INDICATOR',
         'default' => true,
@@ -103,12 +117,12 @@ $listViewDefs['Emails'] = array(
         'id' => 'ASSIGNED_USER_ID',
         'default' => false
     ),
-    'DATE_ENTERED'=> array(
+    'DATE_ENTERED' => array(
         'width' => '32',
         'label' => 'LBL_DATE_ENTERED',
         'default' => true,
     ),
-    'TO_ADDRS_NAMES'=> array(
+    'TO_ADDRS_NAMES' => array(
         'width' => '32',
         'label' => 'LBL_LIST_TO_ADDR',
         'default' => false,

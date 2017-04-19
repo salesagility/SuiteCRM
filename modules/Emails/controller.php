@@ -51,13 +51,22 @@ if($_REQUEST['action'] === 'Popup') {
     $GLOBALS['sugar_config']['http_referer']['actions'][] = 'Popup';
 }
 
+if($_REQUEST['action'] === 'GetFolders') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'GetFolders';
+}
+
+
+if($_REQUEST['action'] === 'CheckEmail') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'CheckEmail';
+}
+
 class EmailsController extends SugarController
 {
     public function action_index()
     {
-        global $sugar_config;
-        $sugar_config['http_referer']['actions'][] = 'ComposeView';
+        global $sugar_config, $current_user;
         $this->view = 'list';
+
     }
 
     public function action_ComposeView()
@@ -272,5 +281,31 @@ class EmailsController extends SugarController
 
     public function action_Popup () {
         $this->view = 'popup';
+    }
+
+    public function action_CheckEmail() {
+        $inboundEmail = BeanFactory::getBean('InboundEmail');
+        $inboundEmail->syncEmail();
+
+        echo json_encode(array('response' => array()));
+        $this->view('ajax');
+    }
+
+    public function action_GetFolders () {
+        require_once 'include/SugarFolders/SugarFolders.php';
+        global $current_user;
+        $email = new Email();
+        $email->email2init();
+        $ie = new InboundEmail();
+        $ie->email = $email;
+        $json = getJSONobj();
+        $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: refreshSugarFolders");
+        $rootNode = new ExtNode('','');
+        $folderOpenState = $current_user->getPreference('folderOpenState', 'Emails');
+        $folderOpenState = (empty($folderOpenState)) ? "" : $folderOpenState;
+        $ret = $email->et->folder->getUserFolders($rootNode, sugar_unserialize($folderOpenState), $current_user, true);
+        $out = json_encode(array('response' => $ret));
+        echo $out;
+        $this->view = 'ajax';
     }
 }

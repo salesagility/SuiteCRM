@@ -387,6 +387,72 @@ $dictionary['Email'] = array(
             ),
         ),
 
+        'subject' => array(
+            'name' => 'subject',
+            'vname' => 'LBL_SUBJECT',
+            'type' => 'function',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'studio' => 'visible',
+            'inline_edit' => false,
+            'function' => array(
+                'name' => 'displaySubjectField',
+                'returns' => 'html',
+                'include' => 'modules/Emails/include/displaySubjectField.php',
+                'onListView' =>  true
+            ),
+        ),
+
+        'imported' => array(
+            'name' => 'subject',
+            'type' => 'bool',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
+        ),
+        'uid' => array(
+            'name' => 'uid',
+            'type' => 'varchar',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
+        ),
+
+        'folder' => array(
+            'name' => 'folder',
+            'type' => 'varchar',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
+        ),
+
+        'folder_type' => array(
+            'name' => 'folder_type',
+            'type' => 'varchar',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
+        ),
+        'inbound_email_record' => array(
+            'name' => 'inbound_email_record',
+            'type' => 'varchar',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
+        ),
+
         'has_attachment' => array(
             'name' => 'has_attachment',
             'vname' => 'LBL_HAS_ATTACHMENT_INDICATOR',

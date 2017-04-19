@@ -41,92 +41,29 @@ $(document).ready(function(){
   "use strict";
 
 
-  // TODO remove mass update from tinymce
-
-
-  $('[data-action=emails-compose]').click(function() {
-   "use strict";
-   var emailComposeView = null;
-   var composeBox = $('<div></div>').appendTo('#content');
-   composeBox.messageBox({
-     "showHeader": true,
-     "showFooter": false,
-     "size": 'lg',
-
-   });
-   composeBox.setTitle(' ');
-   composeBox.setBody('<div class="email-in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>');
-   composeBox.show();
-
-   $.ajax({
-     type: "GET",
-     cache: false,
-     url: 'index.php?module=Emails&action=ComposeView'
-   }).done(function (data) {
-     if(data.length === 0) {
-       console.error("Unable to display ComposeView");
-       composeBox.setBody(SUGAR.language.translate('', 'ERR_AJAX_LOAD'));
-       return;
-     }
-
-     composeBox.setBody(data);
-     emailComposeView = composeBox.controls.modal.body.find('.compose-view').EmailsComposeView();
-     $(emailComposeView).on('sentEmail', function(event, composeView) {
-       composeBox.hide();
-       composeBox.remove();
-     });
-
-     $(emailComposeView).on('disregardDraft', function(event, composeView) {
-       if(typeof messageBox !== "undefined") {
-         var mb = messageBox({size:'lg'});
-         mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_DELETE_EMAIL'));
-
-         mb.on('ok', function() {
-           mb.remove();
-           composeBox.hide();
-           composeBox.remove();
-         });
-
-         mb.on('cancel', function() {
-           mb.remove();
-         });
-
-         mb.show();
-       } else {
-         if(confirm(self.translatedErrorMessage)) {
-           composeBox.hide();
-           composeBox.remove();
-         }
-       }
-     });
-
-     composeBox.on('cancel', function() {
-       composeBox.remove();
-     });
-
-
-     composeBox.on('hide.bs.modal', function() {
-       composeBox.remove();
-     });
-   }).fail(function (data) {
-     composeBox.controls.modal.content.html(SUGAR.language.translate('', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
-     // TODO: Work out how to show security messages
-   });
-
-
-
-  });
-
- $('[data-action=emails-configure]').click(function(){
+ $('').click(function(){
    alert('configure email placeholder');
  });
 
- $('[data-action=emails-check-new-email]').click(function(){
-   location.reload();
- });
+
 
  $('[data-action=emails-open-folder]').click(function(){
-   alert('open folder email placeholder');
+   var mb = messageBox();
+   mb.hideHeader();
+   mb.setBody('Hello World');
+   mb.show();
+
+   mb.on('ok', function() {
+     "use strict";
+     // do somthing
+     mb.remove();
+   });
+
+   mb.on('cancel', function() {
+     "use strict";
+     // do something
+     mb.remove();
+   })
  });
 
  // look for new

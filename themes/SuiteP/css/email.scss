@@ -17,6 +17,8 @@
   color: $email-panel-color;
   @include panel-email-compose-button-margin();
   @include panel-email-compose-button-padding();
+  line-height: 18px;
+  min-height:  18px;
   outline: none;
 }
 
@@ -128,6 +130,18 @@
 
     input[type=button] {
       @include panel-email-compose-custom-buttons();
+    }
+
+    .btn.btn-image {
+        height: 18px;
+        font-size: 18px;
+        padding-top: 0;
+        padding-bottom: 0;
+        img {
+          display: inline-block;
+          width: 18px;
+          height: 18px;
+        }
     }
 
     .glyphicon {
@@ -406,6 +420,11 @@
 
 }
 
+
+#settingsDialog #userFolders {
+  width: 100%;
+  min-height: 200px;
+}
 
 @media (max-width: $xs-breakpoint) {
   .compose-view {
