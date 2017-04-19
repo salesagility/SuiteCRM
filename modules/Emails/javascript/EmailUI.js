@@ -283,7 +283,7 @@ SE.accounts = {
      * Displays a modal diaglogue to edit outbound account settings
      */
     showEditInboundAccountDialogue : function(clear) {
-      var bodyScrollTop = document.body.scrollTop;
+
         if(!this.inboundAccountEditDialog) {
         	var EAD = this.inboundAccountEditDialog = new YAHOO.widget.Dialog("editAccountDialogue", {
                 modal:true,
@@ -299,9 +299,8 @@ SE.accounts = {
                 if (this.header && el && viewH - 50 < el.clientHeight) {
                     var body = this.header.nextElementSibling;
 					body.style.overflow = "hidden";
-                    //body.style.height = "100%";
+                    body.style.height = "100%";
                 }
-        document.body.scrollTop = bodyScrollTop;
             }, EAD);
             EAD.setHeader(mod_strings.LBL_EMAIL_ACCOUNTS_INBOUND);
 			Dom.removeClass("editAccountDialogue", "yui-hidden");
@@ -321,7 +320,6 @@ SE.accounts = {
 
         this.inboundAccountEditDialog.render();
         this.inboundAccountEditDialog.show();
-      moveCenter('#editAccountDialogue_c');
         SUGAR.util.setEmailPasswordDisplay('email_password', clear == false);
     },
 
@@ -422,11 +420,6 @@ SE.accounts = {
         //Unset readonly fields
         SUGAR.email2.accounts.toggleOutboundAccountDisabledFields(false);
         SUGAR.email2.accounts.changeEmailScreenDisplay('other');
-
-      document.getElementById('oe_from_name').value = SE.userPrefs.current_user.full_name;
-      document.getElementById('oe_from_addr').value = this.getReplyAddress();
-      document.getElementById('reply_to_addr').value = '';
-
 		this.outboundDialog.render();
         this.outboundDialog.show();
     },
@@ -692,6 +685,9 @@ SE.accounts = {
 
         document.getElementById('ie_id').value = '';
         document.getElementById('ie_name').value = '';
+        document.getElementById('ie_from_name').value = SE.userPrefs.current_user.full_name;
+        document.getElementById('ie_from_addr').value = this.getReplyAddress();
+        document.getElementById('reply_to_addr').value = '';
         document.getElementById('server_url').value = '';
         document.getElementById('email_user').value = '';
         document.getElementById('email_password').value = '';
@@ -704,23 +700,6 @@ SE.accounts = {
         SUGAR.util.setEmailPasswordDisplay('email_password', false);
     },
 
-  /**
-   * Empties all the fields in the accounts edit view
-   */
-  clearOutboundSettingsEditScreen:function() {
-
-    document.getElementById('oe_from_name').value = '';
-    document.getElementById('oe_from_addr').value = '';
-    document.getElementById('reply_to_addr').value = '';
-    document.getElementById('mail_name').value = '';
-    document.getElementById('mail_smtpserver').value = '';
-    document.getElementById('mail_smtpport').value = '';
-    document.getElementById('mail_smtpauth_req').checked = false;
-    document.getElementById('mail_smtpssl').value = '';
-    document.getElementById('mail_smtpuser').value = '';
-    document.getElementById('mail_smtppass').value = '';
-  },
-
     /**
      * Populates an account's fields in Settings->Accounts
      */
@@ -730,6 +709,9 @@ SE.accounts = {
         document.getElementById('ie_id').value = o.id;
         document.getElementById('ie_name').value = o.name;
         if (o.stored_options != null) {
+        	document.getElementById('ie_from_name').value = o.stored_options.from_name == 'undefined' ? '' : o.stored_options.from_name;
+        	document.getElementById('ie_from_addr').value = o.stored_options.from_addr == 'undefined' ? '' : o.stored_options.from_addr;
+        	document.getElementById('reply_to_addr').value = typeof(o.stored_options.reply_to_addr) == 'undefined' ? '' : o.stored_options.reply_to_addr;
         	if (o.stored_options.trashFolder != null) {
         		document.getElementById('trashFolder').value = o.stored_options.trashFolder;
         	}
@@ -761,6 +743,15 @@ SE.accounts = {
                 }
             }
         }
+ // handle SMTP selection
+        if(o.stored_options != null && typeof(o.stored_options.outbound_email) != 'undefined') {
+            var opts = document.getElementById('outbound_email').options;
+            for(i=0; i<opts.length; i++) {
+                if(opts[i].value == o.stored_options.outbound_email) {
+                    opts[i].selected = true;
+                }
+            }
+        }
     },
 
     deleteIeAccount : function(IeAccountID,IeGroupID) {
@@ -775,50 +766,15 @@ SE.accounts = {
      },
 
        // Null check for Outbound Settings.
-    checkOutboundSettings: function(validateRules) {
-      if(typeof(validateRules) == 'undefined')
-        validateRules = {};
-
+    checkOutboundSettings: function() {
         var errorMessage = '';
         var isError = false;
         if (typeof document.forms['outboundEmailForm'] != 'undefined') {
-
-          var fromAddress = Dom.get('oe_from_addr').value;
-
-          var mailName = document.getElementById('mail_name').value;
+            var mailName = document.getElementById('mail_name').value;
             var smtpServer = document.getElementById('mail_smtpserver').value;
             var smtpPort = document.getElementById('mail_smtpport').value;
 
             var mailsmtpauthreq = document.getElementById('mail_smtpauth_req');
-
-          var outboundUserName = Dom.get('mail_smtpuser').value;
-          var outboundPass = Dom.get('mail_smtppass').value;
-
-          //If the username and password were provided then ignore the error messge
-
-          var outboundCredentialsFound = false;
-
-          if(outboundUserName != "" && outboundPass != "")
-            outboundCredentialsFound = true;
-          var validateSMTPCreds = (typeof(validateRules.validateSMTPCreds) != 'undefined' && validateRules.validateSMTPCreds);
-         if ( SE.composeLayout.outboundAccountErrors != null
-               && validateSMTPCreds)
-          {
-              if(trim(outboundUserName) == "") {
-                errorMessage += app_strings.LBL_EMAIL_ACCOUNTS_SMTPUSER + "<br/>";
-              }
-              if(trim(outboundPass) == "") {
-                errorMessage += app_strings.LBL_EMAIL_ACCOUNTS_SMTPPASS + "<br/>";
-              }
-          }
-
-          if ( typeof(validateRules.validateFromAddr) != 'undefined' && validateRules.validateFromAddr)
-          {
-              if(trim(fromAddress) == "" || !isValidEmail(fromAddress) ) {
-                errorMessage += app_strings.LBL_EMAIL_ERROR_FROM_ADDRESS + "<br/>";
-              }
-          }
-
             if(trim(mailName) == '') {
                 isError = true;
                 errorMessage += app_strings.LBL_EMAIL_ACCOUNTS_NAME + "<br/>";
@@ -882,8 +838,7 @@ SE.accounts = {
 
     testOutboundSettingsDialog: function() {
         //Ensure that all settings are correct before proceeding to send test email.
-        if(!SE.accounts.checkOutboundSettings({'valiateTrash': true,'validateFromAddr': true,'validateOutbound' :true,
-            'validateSMTPCreds':true}))
+        if(!SE.accounts.checkOutboundSettings())
             return;
 
         // lazy load dialogue
@@ -907,8 +862,7 @@ SE.accounts = {
      * Saves Outbound email settings
      */
     saveOutboundSettings : function() {
-        if(SE.accounts.checkOutboundSettings({'valiateTrash': true,'validateFromAddr': true,'validateOutbound' :true,
-            'validateSMTPCreds':true})) {
+        if(SE.accounts.checkOutboundSettings()) {
             //Enable the form fields for the post.
             SUGAR.email2.accounts.toggleOutboundAccountDisabledFields(false);
             YAHOO.util.Connect.setForm(document.getElementById("outboundEmailForm"));
@@ -919,6 +873,10 @@ SE.accounts = {
     },
 
     saveIeAccount : function() {
+
+        //Before saving check if there are any error messages associated with the outbound account.
+        var outboundID = document.getElementById('outbound_email').value;
+
         if( SE.accounts.checkIeCreds({'valiateTrash': true,'validateFromAddr': true,'validateOutbound' :true,
             'validateSMTPCreds':true}) )
         {
@@ -963,15 +921,18 @@ SE.accounts = {
         var out = new String();
 
         var ie_name = Dom.get('ie_name').value;
+        var fromAddress = Dom.get('ie_from_addr').value;
         var server_url = Dom.get('server_url').value;
         var email_user = Dom.get('email_user').value;
         var email_password = Dom.get('email_password').value;
         var protocol = Dom.get('protocol').value;
         var port = Dom.get('port').value;
+        var oe = Dom.get('outbound_email');
 
         // Bug 44392: IE9 and possibly previous versions have a quirk where selectedIndex is -1 if you have nothing selected vs 0 for
         // other browsers. And if you check options[-1] it returns "unknown" instead of undefined. Also other options out of index
         // return null instead of undefined for other browsers, thus we need to check for all the possible outcomes.
+        var oe_value = (typeof(oe.options[oe.selectedIndex]) === 'undefined' || typeof(oe.options[oe.selectedIndex]) === 'unknown' || typeof(oe.options[oe.selectedIndex]) === null) ? "" : oe.options[oe.selectedIndex].value;
 
         var outboundUserName = Dom.get('inbound_mail_smtpuser').value;
         var outboundPass = Dom.get('inbound_mail_smtppass').value;
@@ -983,10 +944,35 @@ SE.accounts = {
         if(outboundUserName != "" && outboundPass != "")
             outboundCredentialsFound = true;
 
+        var validateSMTPCreds = (typeof(validateRules.validateSMTPCreds) != 'undefined' && validateRules.validateSMTPCreds);
+
+        if ( SE.composeLayout.outboundAccountErrors != null && SE.composeLayout.outboundAccountErrors[oe_value] != null
+             && validateSMTPCreds)
+        {
+            if(trim(outboundUserName) == "") {
+                errors.push(app_strings.LBL_EMAIL_ACCOUNTS_SMTPUSER);
+            }
+            if(trim(outboundPass) == "") {
+                errors.push(app_strings.LBL_EMAIL_ACCOUNTS_SMTPPASS);
+            }
+        }
+
         if(trim(ie_name) == "") {
             errors.push(app_strings.LBL_EMAIL_ERROR_NAME);
         }
 
+        if ( typeof(validateRules.validateFromAddr) != 'undefined' && validateRules.validateFromAddr)
+        {
+            if(trim(fromAddress) == "" || !isValidEmail(fromAddress) ) {
+                errors.push(app_strings.LBL_EMAIL_ERROR_FROM_ADDRESS);
+            }
+        }
+
+
+        if( (typeof(validateRules.validateOutbound) != 'undefined' && validateRules.validateOutbound) && ( trim(oe_value) == ""
+             || trim(oe_value) == "SYSTEM_ADD") ) {
+            errors.push(app_strings.LBL_EMAIL_ERROR_NO_OUTBOUND);
+        }
         if(trim(server_url) == "") {
             errors.push(app_strings.LBL_EMAIL_ERROR_SERVER);
         }
@@ -2147,7 +2133,7 @@ SE.folders = {
         var folder = SE.util.findChildNode(root, "ieId", "folder");
         while(folder) {
             tree.removeNode(folder);
-            folder = .util.findChildNode(root, "ieId", "folder");
+            folder = SE.util.findChildNode(root, "ieId", "folder");
         }
         if (!root.childrenRendered) {
         	root.childrenRendered = true;
@@ -3408,12 +3394,10 @@ SE.settings = {
         AjaxObject.target = 'frameFlex';
         AjaxObject.startRequest(callbackSettings, urlStandard + '&emailUIAction=saveSettingsGeneral');
 
-        if(displayMessage) {
-          alert(app_strings.LBL_EMAIL_SETTINGS_SAVED);
-          SE.settings.settingsDialog.hide();
-        } else {
-          alert(app_strings.LBL_EMAIL_SETTINGS_SAVED_NO_REFRESH);
-        }
+        if(displayMessage)
+            alert(app_strings.LBL_EMAIL_SETTINGS_SAVED);
+
+        SE.settings.settingsDialog.hide();
     },
 
     /**
@@ -3477,46 +3461,6 @@ SE.settings = {
         SE.accounts.lazyLoad();
       $(window).scrollLeft(0);
     },
-
-  /**
-   * Shows settings container screen
-   */
-  showSettingsInline : function() {
-    if(!SE.settings.settingsDialog) {
-      var dlg = SE.settings.settingsDialog = new YAHOO.widget.Dialog("settingsDialog", {});
-      dlg.setBody('<div id="settingsTabDiv"/>');
-      dlg.render();
-
-      var tp = SE.settings.settingsTabs = new YAHOO.widget.TabView("settingsTabDiv");
-
-      var tabContentGeneral = Dom.get("tab_general");
-      var tabContentAccounts = Dom.get("tab_accounts");
-
-
-      tp.addTab(new YAHOO.widget.Tab({
-        content :  tabContentGeneral.innerHTML+tabContentAccounts.innerHTML,
-        id : "generalAndAccountSettings",
-        active : true
-      }));
-
-      tabContentGeneral.parentNode.removeChild(tabContentGeneral);
-      tabContentAccounts.parentNode.removeChild(tabContentAccounts);
-
-      tp.appendTo(dlg.body);
-    }
-
-    SE.settings.settingsDialog.show();
-    SE.folders.lazyLoadSettings();
-    SE.accounts.lazyLoad();
-
-
-    // transform yui dialog to simple panel
-    $('#settingsTabDiv .yui-nav').remove();
-    $('#settingsDialog a.container-close').remove();
-    $('#settingsDialog_h').remove();
-    $('#settingsDialog_c').removeClass('yui-panel-container');
-    $('#settingsDialog').removeAttr('class');
-  },
 
 
     lazyLoadRules : function() {

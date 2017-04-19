@@ -1,11 +1,10 @@
 {*
-/**
- *
+/*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,19 +35,20 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
+ ********************************************************************************/
+
 *}
-<div cellpadding="4" cellspacing="0" border="0"  class="view">
-	<div>
-		<div NOWRAP>
+<table cellpadding="4" cellspacing="0" border="0" width="100%" class="view">
+	<tr>
+		<td NOWRAP>
 			{include file="modules/Emails/templates/emailSettingsAccountDetails.tpl"}
-		</div>
-	</div>
-	<div>
-		<div align="right">
-		   <input type="button" class="button" style="margin-left:5px;" value="   {$app_strings.LBL_EMAIL_DONE_BUTTON_LABEL}   " onclick="javascript:SUGAR.email2.settings.saveOptionsGeneral({if $disableDisplayMessage}{else}true{/if});">
-		</div>
-	</div>
+		</td>
+	</tr>
+    	<tr>
+                                	<td align="right">
+                                	   <input type="button" class="button" style="margin-left:5px;" value="   {$app_strings.LBL_EMAIL_DONE_BUTTON_LABEL}   " onclick="javascript:SUGAR.email2.settings.saveOptionsGeneral(true);">
+                                    </td>
+                            	</tr>
+	
 
-
-</div>
+</table>

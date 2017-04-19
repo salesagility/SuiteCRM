@@ -1,11 +1,10 @@
 {*
-/**
- *
+/*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,86 +35,82 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
+ ********************************************************************************/
+
 *}
-
-{if $showEmailOptionsOnEmailSettingsTab}
-	{include file="modules/Emails/templates/emailOptions.tpl"}
-{/if}
-
 <form name="formEmailSettingsGeneral" id="formEmailSettingsGeneral">
-<div cellpadding="4" cellspacing="0" border="0"  class="view">
-	<div>
+<table cellpadding="4" cellspacing="0" border="0" width="100%" class="view">
+	<tr>
 		<th colspan="4" align="left" colspan="4" scope="row">
 			<h4>{$app_strings.LBL_EMAIL_SETTINGS_TITLE_PREFERENCES}</h4>
 		</th>
-	</div>
-	<div>
-		<div  scope="row" >
+	</tr>
+	<tr>
+		<td  scope="row" width="20%">
 			{$app_strings.LBL_EMAIL_SETTINGS_CHECK_INTERVAL}:
-		</div>
-		<div >
+		</td>
+		<td >
 			{html_options options=$emailCheckInterval.options selected=$emailCheckInterval.selected name='emailCheckInterval' id='emailCheckInterval'}
-		</div>
-		<div scope="row" >
+		</td>
+		<td scope="row" width="20%">
 			{$app_strings.LBL_EMAIL_SIGNATURES}:
-		</div>
-		<div >
+		</td>
+		<td >
 			{$signaturesSettings} {$signatureButtons} 
         	<input type="hidden" name="signatureDefault" id="signatureDefault" value="{$signatureDefaultId}">
-		</div>
-	</div>
-	<div>
-		<div  scope="row">
+		</td>
+	</tr>
+	<tr>
+		<td  scope="row">
 			{$app_strings.LBL_EMAIL_SETTINGS_SEND_EMAIL_AS}:
-		</div>
-		<div >
+		</td>
+		<td >
 			<input class="checkbox" type="checkbox" id="sendPlainText" name="sendPlainText" value="1" {$sendPlainTextChecked} />
-		</div>
-		<div NOWRAP scope="row">
+		</td>
+		<td NOWRAP scope="row">
 		  {$mod_strings.LBL_SIGNATURE_PREPEND}:
-		</div>
-		<div NOWRAP>
+		</td>
+		<td NOWRAP>
 		<input type="checkbox" name="signature_prepend" {$signaturePrepend}>
-		</div>
-	</div>
-	<div>
-		<div NOWRAP scope="row">
+		</td>
+	</tr>
+	<tr>
+		<td NOWRAP scope="row">
         	{$app_strings.LBL_EMAIL_CHARSET}:
-        </div>
-		<div NOWRAP>
+        </td>
+		<td NOWRAP>
         	{html_options options=$charset.options selected=$charset.selected name='default_charset' id='default_charset'}
-        </div>
-		<div NOWRAP scope="row">
+        </td>
+		<td NOWRAP scope="row">
         	&nbsp;
-        </div>
-		<div NOWRAP>
+        </td>
+		<td NOWRAP>
         	&nbsp;
-        </div>
-	</div>
-</div>
-<div cellpadding="4" cellspacing="0" border="0"  class="view">
-	<div>
+        </td>
+	</tr>
+</table>
+<table cellpadding="4" cellspacing="0" border="0" width="100%" class="view">
+	<tr>
 		<th colspan="4">
 			<h4>{$app_strings.LBL_EMAIL_SETTINGS_TITLE_LAYOUT}</h4>
 		</th>
-	</div>
-	<div>
-		<div NOWRAP scope="row" >
+	</tr>
+	<tr>
+		<td NOWRAP scope="row" width="20%">
 			{$app_strings.LBL_EMAIL_SETTINGS_SHOW_NUM_IN_LIST}:
 			<div id="rollover">
                             <a href="#" class="rollover">{sugar_getimage alt=$mod_strings.LBL_HELP name="helpInline" ext=".gif" other_attributes='border="0" '}<span>{$app_strings.LBL_EMAIL_SETTINGS_REQUIRE_REFRESH}</span></a>
             </div>
-		</div>
-		<div NOWRAP >
+		</td>
+		<td NOWRAP >
 			<select name="showNumInList" id="showNumInList">
 			{$showNumInList}
 			</select>
-		</div>
-		<div NOWRAP scope="row" >&nbsp;</div>
-		<div NOWRAP >&nbsp;</div>
-	</div>
-</div>
+		</td>
+		<td NOWRAP scope="row" width="20%">&nbsp;</td>
+		<td NOWRAP >&nbsp;</td>
+	</tr>
+</table>
 
 {include file="modules/Emails/templates/emailSettingsFolders.tpl"}
 

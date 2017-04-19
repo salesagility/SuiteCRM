@@ -44,10 +44,66 @@
     <!-- include a closing div if the useTabs variable is set to true -->
     </div>
 {{/if}}
+            <div id="email_options">
+            <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+                            <tr>
+                                <th align="left" scope="row" colspan="4">
+                                    <h4>{$MOD.LBL_MAIL_OPTIONS_TITLE}</h4>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row" width="17%">
+                                {$MOD.LBL_EMAIL}:  {if $REQUIRED_EMAIL_ADDRESS}<span class="required" id="mandatory_email">{$APP.LBL_REQUIRED_SYMBOL}</span> {/if}
+                                </td>
+                                <td width="83%">
+                                    {$NEW_EMAIL}
+                                </td>
+                            </tr>
+                            <tr id="email_options_link_type" style='display:{$HIDE_FOR_GROUP_AND_PORTAL}'>
+                                <td scope="row" width="17%">
+                                    {$MOD.LBL_EMAIL_LINK_TYPE}:&nbsp;{sugar_help text=$MOD.LBL_EMAIL_LINK_TYPE_HELP WIDTH=450}
+                                </td>
+                                <td>
+                                    <select id="email_link_type" name="email_link_type" tabindex='410'>
+                                    {$EMAIL_LINK_TYPE}
+                                    </select>
+                                </td>
+                            </tr>
+                            {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
+                            <tr id="mail_smtpserver_tr">
+                                <td width="20%" scope="row"><span id="mail_smtpserver_label">{$MOD.LBL_EMAIL_PROVIDER}</span></td>
+                                <td width="30%" ><slot>{$mail_smtpdisplay}<input id='mail_smtpserver' name='mail_smtpserver' type="hidden" value='{$mail_smtpserver}' /></slot></td>
+                                <td>&nbsp;</td>
+                                <td >&nbsp;</td>
+                            </tr>
+                             {if !empty($mail_smtpauth_req) }
 
-        {if !$hideEmailOptionsOnUserProfileTab}
-            {include file="modules/Emails/templates/emailOptions.tpl"}
-        {/if}
+                            <tr id="mail_smtpuser_tr">
+                                <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtpuser_label">{$MOD.LBL_MAIL_SMTPUSER}</span></td>
+                                <td width="30%" ><slot><input type="text" id="mail_smtpuser" name="mail_smtpuser" size="25" maxlength="64" value="{$mail_smtpuser}" tabindex='1' ></slot></td>
+                                <td>&nbsp;</td>
+                                <td >&nbsp;</td>
+                            </tr>
+                            <tr id="mail_smtppass_tr">
+                                <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtppass_label">{$MOD.LBL_MAIL_SMTPPASS}</span></td>
+                                <td width="30%" ><slot>
+                                <input type="password" id="mail_smtppass" name="mail_smtppass" size="25" maxlength="64" value="{$mail_smtppass}" tabindex='1'>
+                                <a href="javascript:void(0)" id='mail_smtppass_link' onClick="SUGAR.util.setEmailPasswordEdit('mail_smtppass')" style="display: none">{$APP.LBL_CHANGE_PASSWORD}</a>
+                                </slot></td>
+                                <td>&nbsp;</td>
+                                <td >&nbsp;</td>
+                            </tr>
+                            {/if}
+
+                            <tr id="test_outbound_settings_tr">
+                                <td width="17%" scope="row"><input type="button" class="button" value="{$APP.LBL_EMAIL_TEST_OUTBOUND_SETTINGS}" onclick="startOutBoundEmailSettingsTest();"></td>
+                                <td width="33%" >&nbsp;</td>
+                                <td width="17%">&nbsp;</td>
+                                <td width="33%" >&nbsp;</td>
+                            </tr>
+                            {/if}
+                        </table>
+            </div>
 </div>
 <div class="user-tab-content">
             {if ($CHANGE_PWD) == '1'}
@@ -168,30 +224,30 @@
         <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 
                         <tr>
-                            <th width="100%" align="left" scope="row" colspan="4"><h4><span>{$MOD.LBL_USER_SETTINGS}</span></h4></th>
+                            <th width="100%" align="left" scope="row" colspan="4"><h4><slot>{$MOD.LBL_USER_SETTINGS}</slot></h4></th>
                         </tr>
                         <tr>
-                            <td scope="row"  valign="top"><span>{$MOD.LBL_EXPORT_DELIMITER}:</span>&nbsp;{sugar_help text=$MOD.LBL_EXPORT_DELIMITER_DESC }</td>
-                            <td ><span><input type="text" tabindex='12' name="export_delimiter" value="{$EXPORT_DELIMITER}" size="5"></span></td>
+                            <td scope="row"  valign="top"><slot>{$MOD.LBL_EXPORT_DELIMITER}:</slot>&nbsp;{sugar_help text=$MOD.LBL_EXPORT_DELIMITER_DESC }</td>
+                            <td ><slot><input type="text" tabindex='12' name="export_delimiter" value="{$EXPORT_DELIMITER}" size="5"></slot></td>
                             <td scope="row" width="17%">
-                            <span>{$MOD.LBL_RECEIVE_NOTIFICATIONS}:</span>&nbsp;{sugar_help text=$MOD.LBL_RECEIVE_NOTIFICATIONS_TEXT}
+                            <slot>{$MOD.LBL_RECEIVE_NOTIFICATIONS}:</slot>&nbsp;{sugar_help text=$MOD.LBL_RECEIVE_NOTIFICATIONS_TEXT}
                             </td>
                             <td width="33%">
-                            <span><input name='receive_notifications' class="checkbox" tabindex='12' type="checkbox" value="12" {$RECEIVE_NOTIFICATIONS}></span>
+                            <slot><input name='receive_notifications' class="checkbox" tabindex='12' type="checkbox" value="12" {$RECEIVE_NOTIFICATIONS}></slot>
                             </td>
                         </tr>
 
                         <tr>
-                            <td scope="row" valign="top"><span>{$MOD.LBL_EXPORT_CHARSET}:</span>&nbsp;{sugar_help text=$MOD.LBL_EXPORT_CHARSET_DESC }</td>
-                            <td ><span><select tabindex='12' name="default_export_charset">{$EXPORT_CHARSET}</select></span></td>
+                            <td scope="row" valign="top"><slot>{$MOD.LBL_EXPORT_CHARSET}:</slot>&nbsp;{sugar_help text=$MOD.LBL_EXPORT_CHARSET_DESC }</td>
+                            <td ><slot><select tabindex='12' name="default_export_charset">{$EXPORT_CHARSET}</select></slot></td>
                             <td scope="row" valign="top">
-                            <span>{$MOD.LBL_REMINDER}:</span>&nbsp;{sugar_help text=$MOD.LBL_REMINDER_TEXT }
+                            <slot>{$MOD.LBL_REMINDER}:</slot>&nbsp;{sugar_help text=$MOD.LBL_REMINDER_TEXT }
                             </td>
                             <td valign="top"  nowrap>
 								<!--
-                                <span>{include file="modules/Meetings/tpls/reminders.tpl"}</span>
+                                <slot>{include file="modules/Meetings/tpls/reminders.tpl"}</slot>
 								-->
-								<span>{include file="modules/Reminders/tpls/remindersDefaults.tpl"}</span>
+								<slot>{include file="modules/Reminders/tpls/remindersDefaults.tpl"}</slot>
                             </td>
                         </tr>
             <tr>
@@ -203,19 +259,19 @@
                 </td>
             </tr>
                         <tr>
-                            <td scope="row" valign="top"><span>{$MOD.LBL_USE_REAL_NAMES}:</span>&nbsp;{sugar_help text=$MOD.LBL_USE_REAL_NAMES_DESC }</td>
-                            <td ><span><input tabindex='12' type="checkbox" name="use_real_names" {$USE_REAL_NAMES}></span></td>
+                            <td scope="row" valign="top"><slot>{$MOD.LBL_USE_REAL_NAMES}:</slot>&nbsp;{sugar_help text=$MOD.LBL_USE_REAL_NAMES_DESC }</td>
+                            <td ><slot><input tabindex='12' type="checkbox" name="use_real_names" {$USE_REAL_NAMES}></slot></td>
                             <td scope="row" valign="top">
-                            <span>{$MOD.LBL_MAILMERGE}:</span>&nbsp;{sugar_help text=$MOD.LBL_MAILMERGE_TEXT }
+                            <slot>{$MOD.LBL_MAILMERGE}:</slot>&nbsp;{sugar_help text=$MOD.LBL_MAILMERGE_TEXT }
                             </td>
                             <td valign="top"  nowrap>
-                            <span><input tabindex='12' name='mailmerge_on' class="checkbox" type="checkbox" {$MAILMERGE_ON}></span>
+                            <slot><input tabindex='12' name='mailmerge_on' class="checkbox" type="checkbox" {$MAILMERGE_ON}></slot>
                             </td>
                         </tr>
                         <!--{if !empty($EXTERNAL_AUTH_CLASS) && !empty($IS_ADMIN)}-->
                             <tr>
                                 {capture name=SMARTY_LBL_EXTERNAL_AUTH_ONLY}&nbsp;{$MOD.LBL_EXTERNAL_AUTH_ONLY} {$EXTERNAL_AUTH_CLASS_1}{/capture}
-                                <td scope="row" nowrap><span>{$EXTERNAL_AUTH_CLASS} {$MOD.LBL_ONLY}:</span>&nbsp;{sugar_help text=$smarty.capture.SMARTY_LBL_EXTERNAL_AUTH_ONLY}</td>
+                                <td scope="row" nowrap><slot>{$EXTERNAL_AUTH_CLASS} {$MOD.LBL_ONLY}:</slot>&nbsp;{sugar_help text=$smarty.capture.SMARTY_LBL_EXTERNAL_AUTH_ONLY}</td>
                                 <td ><input type='hidden' value='0' name='external_auth_only'><input type='checkbox' value='1' name='external_auth_only' {$EXTERNAL_AUTH_ONLY_CHECKED}></td>
                                 <td ></td>
                                 <td ></td>
@@ -253,68 +309,68 @@
         <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
                         <tr>
                             <th width="100%" align="left" scope="row" colspan="4">
-                                <h4><span>{$MOD.LBL_USER_LOCALE}</span></h4></th>
+                                <h4><slot>{$MOD.LBL_USER_LOCALE}</slot></h4></th>
                         </tr>
                         <tr>
-                            <td width="17%" scope="row"><span>{$MOD.LBL_DATE_FORMAT}:</span>&nbsp;{sugar_help text=$MOD.LBL_DATE_FORMAT_TEXT }</td>
-                            <td width="33%"><span><select tabindex='14' name='dateformat'>{$DATEOPTIONS}</select></span></td>
+                            <td width="17%" scope="row"><slot>{$MOD.LBL_DATE_FORMAT}:</slot>&nbsp;{sugar_help text=$MOD.LBL_DATE_FORMAT_TEXT }</td>
+                            <td width="33%"><slot><select tabindex='14' name='dateformat'>{$DATEOPTIONS}</select></slot></td>
                             <!-- END: prompttz -->
                             <!-- BEGIN: currency -->
-                            <td width="17%" scope="row"><span>{$MOD.LBL_CURRENCY}:</span>&nbsp;{sugar_help text=$MOD.LBL_CURRENCY_TEXT }</td>
-                                <td ><span>
+                            <td width="17%" scope="row"><slot>{$MOD.LBL_CURRENCY}:</slot>&nbsp;{sugar_help text=$MOD.LBL_CURRENCY_TEXT }</td>
+                                <td ><slot>
                                     <select tabindex='14' id='currency_select' name='currency' onchange='setSymbolValue(this.options[this.selectedIndex].value);setSigDigits();'>{$CURRENCY}</select>
                                     <input type="hidden" id="symbol" value="">
-                                </span></td>
+                                </slot></td>
                             <!-- END: currency -->
                         </tr>
                         <tr>
-                            <td scope="row"><span>{$MOD.LBL_TIME_FORMAT}:</span>&nbsp;{sugar_help text=$MOD.LBL_TIME_FORMAT_TEXT }</td>
-                            <td ><span><select tabindex='14' name='timeformat'>{$TIMEOPTIONS}</select></span></td>
+                            <td scope="row"><slot>{$MOD.LBL_TIME_FORMAT}:</slot>&nbsp;{sugar_help text=$MOD.LBL_TIME_FORMAT_TEXT }</td>
+                            <td ><slot><select tabindex='14' name='timeformat'>{$TIMEOPTIONS}</select></slot></td>
                             <!-- BEGIN: currency -->
-                            <td width="17%" scope="row"><span>
+                            <td width="17%" scope="row"><slot>
                                 {$MOD.LBL_CURRENCY_SIG_DIGITS}:
-                            </span></td>
-                            <td ><span>
+                            </slot></td>
+                            <td ><slot>
                                 <select id='sigDigits' onchange='setSigDigits(this.value);' name='default_currency_significant_digits'>{$sigDigits}</select>
-                            </span></td>
+                            </slot></td>
                             <!-- END: currency -->
                         </tr>
                         <tr>
-                            <td scope="row"><span>{$MOD.LBL_TIMEZONE}:</span>&nbsp;{sugar_help text=$MOD.LBL_TIMEZONE_TEXT }</td>
-                            <td ><span><select tabindex='14' name='timezone'>{html_options options=$TIMEZONEOPTIONS selected=$TIMEZONE_CURRENT}</select></span></td>
+                            <td scope="row"><slot>{$MOD.LBL_TIMEZONE}:</slot>&nbsp;{sugar_help text=$MOD.LBL_TIMEZONE_TEXT }</td>
+                            <td ><slot><select tabindex='14' name='timezone'>{html_options options=$TIMEZONEOPTIONS selected=$TIMEZONE_CURRENT}</select></slot></td>
                             <!-- BEGIN: currency -->
-                            <td width="17%" scope="row"><span>
+                            <td width="17%" scope="row"><slot>
                                 <i>{$MOD.LBL_LOCALE_EXAMPLE_NAME_FORMAT}</i>:
-                            </span></td>
-                            <td ><span>
+                            </slot></td>
+                            <td ><slot>
                                 <input type="text" disabled id="sigDigitsExample" name="sigDigitsExample">
-                            </span></td>
+                            </slot></td>
                             <!-- END: currency -->
                         </tr>
                         <tr>
                         {if ($IS_ADMIN)}
-                            <td scope="row"><span>{$MOD.LBL_PROMPT_TIMEZONE}:</span>&nbsp;{sugar_help text=$MOD.LBL_PROMPT_TIMEZONE_TEXT }</td>
-                            <td ><span><input type="checkbox" tabindex='14'class="checkbox" name="ut" value="0" {$PROMPTTZ}></span></td>
+                            <td scope="row"><slot>{$MOD.LBL_PROMPT_TIMEZONE}:</slot>&nbsp;{sugar_help text=$MOD.LBL_PROMPT_TIMEZONE_TEXT }</td>
+                            <td ><slot><input type="checkbox" tabindex='14'class="checkbox" name="ut" value="0" {$PROMPTTZ}></slot></td>
                         {else}
-                            <td scope="row"><span></td>
-                            <td ><span></span></td>
+                            <td scope="row"><slot></td>
+                            <td ><slot></slot></td>
                         {/if}
-                            <td width="17%" scope="row"><span>{$MOD.LBL_NUMBER_GROUPING_SEP}:</span>&nbsp;{sugar_help text=$MOD.LBL_NUMBER_GROUPING_SEP_TEXT }</td>
-                            <td ><span>
+                            <td width="17%" scope="row"><slot>{$MOD.LBL_NUMBER_GROUPING_SEP}:</slot>&nbsp;{sugar_help text=$MOD.LBL_NUMBER_GROUPING_SEP_TEXT }</td>
+                            <td ><slot>
                                 <input tabindex='14' name='num_grp_sep' id='default_number_grouping_seperator'
                                     type='text' maxlength='1' size='1' value='{$NUM_GRP_SEP}'
                                     onkeydown='setSigDigits();' onkeyup='setSigDigits();'>
-                            </span></td></tr>
+                            </slot></td></tr>
                         {capture name=SMARTY_LOCALE_NAME_FORMAT_DESC}&nbsp;{$MOD.LBL_LOCALE_NAME_FORMAT_DESC}{/capture}
                         <tr>
                             <td  scope="row" valign="top">{$MOD.LBL_LOCALE_DEFAULT_NAME_FORMAT}:&nbsp;{sugar_help text=$smarty.capture.SMARTY_LOCALE_NAME_FORMAT_DESC }</td>
-                            <td  valign="top"><span><select tabindex='14' id="default_locale_name_format" name="default_locale_name_format" selected="{$default_locale_name_format}">{$NAMEOPTIONS}</select></span></td>
-                             <td width="17%" scope="row"><span>{$MOD.LBL_DECIMAL_SEP}:</span>&nbsp;{sugar_help text=$MOD.LBL_DECIMAL_SEP_TEXT }</td>
-                            <td ><span>
+                            <td  valign="top"><slot><select tabindex='14' id="default_locale_name_format" name="default_locale_name_format" selected="{$default_locale_name_format}">{$NAMEOPTIONS}</select></slot></td>
+                             <td width="17%" scope="row"><slot>{$MOD.LBL_DECIMAL_SEP}:</slot>&nbsp;{sugar_help text=$MOD.LBL_DECIMAL_SEP_TEXT }</td>
+                            <td ><slot>
                                 <input tabindex='14' name='dec_sep' id='default_decimal_seperator'
                                     type='text' maxlength='1' size='1' value='{$DEC_SEP}'
                                     onkeydown='setSigDigits();' onkeyup='setSigDigits();'>
-                            </span></td>
+                            </slot></td>
                         </tr>
                     </table>
         </div>
@@ -324,27 +380,27 @@
                 <th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_CALENDAR_OPTIONS}</h4></th>
             </tr>
                         <tr>
-                            <td width="17%" scope="row"><span>{$MOD.LBL_PUBLISH_KEY}:</span>&nbsp;{sugar_help text=$MOD.LBL_CHOOSE_A_KEY}</td>
-                            <td width="20%" ><span><input id='calendar_publish_key' name='calendar_publish_key' tabindex='17' size='25' maxlength='36' type="text" value="{$CALENDAR_PUBLISH_KEY}"></span></td>
-                            <td width="63%" ><span>&nbsp;</span></td>
+                            <td width="17%" scope="row"><slot>{$MOD.LBL_PUBLISH_KEY}:</slot>&nbsp;{sugar_help text=$MOD.LBL_CHOOSE_A_KEY}</td>
+                            <td width="20%" ><slot><input id='calendar_publish_key' name='calendar_publish_key' tabindex='17' size='25' maxlength='36' type="text" value="{$CALENDAR_PUBLISH_KEY}"></slot></td>
+                            <td width="63%" ><slot>&nbsp;</slot></td>
                         </tr>
                         <tr>
-                            <td width="15%" scope="row"><span><nobr>{$MOD.LBL_YOUR_PUBLISH_URL|strip_semicolon}:</nobr></span></td>
+                            <td width="15%" scope="row"><slot><nobr>{$MOD.LBL_YOUR_PUBLISH_URL|strip_semicolon}:</nobr></slot></td>
                             <td colspan=2><span class="calendar_publish_ok">{$CALENDAR_PUBLISH_URL}</span><span class="calendar_publish_none" style="display: none">{$MOD.LBL_NO_KEY}</span></td>
                         </tr>
                         <tr>
-                            <td width="17%" scope="row"><span>{$MOD.LBL_SEARCH_URL|strip_semicolon}:</span></td>
+                            <td width="17%" scope="row"><slot>{$MOD.LBL_SEARCH_URL|strip_semicolon}:</slot></td>
                             <td colspan=2><span class="calendar_publish_ok">{$CALENDAR_SEARCH_URL}</span><span class="calendar_publish_none" style="display: none">{$MOD.LBL_NO_KEY}</span></td>
                         </tr>
                         <tr>
-                            <td width="15%" scope="row"><span>{$MOD.LBL_ICAL_PUB_URL|strip_semicolon}: {sugar_help text=$MOD.LBL_ICAL_PUB_URL_HELP}</span></td>
+                            <td width="15%" scope="row"><slot>{$MOD.LBL_ICAL_PUB_URL|strip_semicolon}: {sugar_help text=$MOD.LBL_ICAL_PUB_URL_HELP}</slot></td>
                             <td colspan=2><span class="calendar_publish_ok">{$CALENDAR_ICAL_URL}</span><span class="calendar_publish_none" style="display: none">{$MOD.LBL_NO_KEY}</span></td>
                         </tr>
                         <tr>
-                            <td width="17%" scope="row"><span>{$MOD.LBL_FDOW}:</span>&nbsp;{sugar_help text=$MOD.LBL_FDOW_TEXT}</td>
-                            <td ><span>
+                            <td width="17%" scope="row"><slot>{$MOD.LBL_FDOW}:</slot>&nbsp;{sugar_help text=$MOD.LBL_FDOW_TEXT}</td>
+                            <td ><slot>
                                 <select tabindex='14' name='fdow'>{html_options options=$FDOWOPTIONS selected=$FDOWCURRENT}</select>
-                            </span></td>
+                            </slot></td>
                         </tr>
                     </table>
         </div>
@@ -354,12 +410,6 @@
         <div style="text-align:center; width: 100%">{sugar_image name="loading"}</div>
     </div>
     {/if}
-    <div id="email_account_settings" style='display:{$HIDE_FOR_GROUP_AND_PORTAL};'>
-        <!-- emailAccountSettingsTabContents BEGIN -->
-        {$emailAccountSettingsTabContents}
-        <!-- emailAccountSettingsTabContents END -->
-    </div>
-
 </div>
 
 <script type="text/javascript">

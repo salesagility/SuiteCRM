@@ -5136,11 +5136,11 @@ td.inlineEditActive{
 /* Fix to address bug with popups overflowing in the emails module*/
 
 #editAccountDialogue_c{
-    /*height:90% !important;*/
+    height:90% !important;
 }
 
 #editAccountDialogue{
-    /*height:90% !important;*/
+    height:90% !important;
     overflow:auto !important;
 }
 
@@ -5150,16 +5150,6 @@ td.inlineEditActive{
 
 #formEmailSettingsGeneral{
     overflow:scroll;
-}
-
-#email_account_settings #settingsDialog_c, #settingsDialog{
-    width:100% !important;
-}
-#email_account_settings #formEmailSettingsGeneral {
-    overflow: initial;
-}
-#email_account_settings #settingsDialog table.view {
-    border-bottom: none;
 }
 
 /* Fix to ensure navigation elements are not included in print process */

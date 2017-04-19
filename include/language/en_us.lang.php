@@ -1050,7 +1050,6 @@ $app_list_strings = array(
 );
 
 $app_strings = array(
-    'LBL_TEST_SETTINGS'     => 'Test Settings',
     'LBL_TOUR_NEXT' => 'Next',
     'LBL_TOUR_SKIP' => 'Skip',
     'LBL_TOUR_BACK' => 'Back',
@@ -1169,9 +1168,7 @@ $app_strings = array(
     'LBL_EMAIL_ACCOUNTS_SMTPPASS_REQD' => 'SMTP Password is required',
     'LBL_EMAIL_ACCOUNTS_TITLE' => 'Mail Account Management',
     'LBL_EMAIL_POP3_REMOVE_MESSAGE' => 'Mail Server Protocol of type POP3 will not be supported in the next release. Only IMAP will be supported.',
-    'LBL_INCOMING_EMAIL' => 'Incoming Email',
     'LBL_EMAIL_ACCOUNTS_SUBTITLE' => 'Set up Mail Accounts to view incoming emails from your email accounts.',
-    'LBL_OUTGOING_EMAIL' => 'Outgoing Email',
     'LBL_EMAIL_ACCOUNTS_OUTBOUND_SUBTITLE' => 'Provide SMTP mail server information to use for outgoing email in Mail Accounts.',
     'LBL_EMAIL_ADD' => 'Add Address',
 
@@ -1478,7 +1475,6 @@ $app_strings = array(
     'LBL_EMAIL_SETTINGS_RETRIEVING_ACCOUNT' => 'Retrieving Mail Account',
     'LBL_EMAIL_SETTINGS_RULES' => 'Rules',
     'LBL_EMAIL_SETTINGS_SAVED' => 'The settings have been saved.\n\nYou must reload the page for the new settings to take effect.',
-    'LBL_EMAIL_SETTINGS_SAVED_NO_REFRESH' => 'The settings have been saved.',
     'LBL_EMAIL_SETTINGS_SEND_EMAIL_AS' => 'Send Plain Text Emails Only',
     'LBL_EMAIL_SETTINGS_SHOW_IN_FOLDERS' => 'Active',
     'LBL_EMAIL_SETTINGS_SHOW_NUM_IN_LIST' => 'Emails per Page',

@@ -54,10 +54,10 @@
 				    <td style="vertical-align:bottom;"><a href="javascript:void(0);" id="prefill_gmail_defaults_link" onclick="javascript:SUGAR.email2.accounts.fillInboundGmailDefaults();">{$app_strings.LBL_EMAIL_ACCOUNTS_GMAIL_DEFAULTS}</a>&nbsp;</td>
 				</tr>
 			    <tr>
-					<td valign="top" scope="row"  NOWRAP>
+					<td valign="top" scope="row" width="15%" NOWRAP>
 						{$app_strings.LBL_EMAIL_SETTINGS_NAME}: <span class="required">{$app_strings.LBL_REQUIRED_SYMBOL}</span>
 					</td>
-					<td valign="top"  >
+					<td valign="top"  width="35%">
 						<input id='ie_name' name='ie_name' type="text" size="30">
 					</td>
 				</tr>
@@ -103,7 +103,7 @@
                             <a href="#" class="rollover">{sugar_getimage alt=$mod_strings.LBL_HELP name="helpInline" ext=".gif" other_attributes='border="0" '}<span>{$ie_mod_strings.LBL_SSL_DESC}</span></a>
                         </div>
 					</td>
-					<td valign="top"  >
+					<td valign="top"  width="15%">
 					   <div class="maybe">
 						   <input name='ssl' id='ssl' {$CERT} value='1' type='checkbox' {$SSL} onClick="SUGAR.email2.accounts.setPortDefault();">
 					   </div>
@@ -156,12 +156,54 @@
 		        </tr>
 		        <tr><td>&nbsp;</td></tr>
 			</table>
-			<table border="0" cellspacing="0" cellpadding="0" class="edit view" >
+			<table border="0" cellspacing="0" cellpadding="0" class="edit view" width="100%">
 			<tr>
 					<td colspan="2">
 					<h4>{$mod_strings.LBL_EMAIL_SETTINGS_OUTBOUND}</h4>
 					</td>
 				</tr>
+
+			<tr>
+				<td scope="row">
+					{$app_strings.LBL_EMAIL_SETTINGS_FROM_NAME}:
+					<span class="required">
+						{$app_strings.LBL_REQUIRED_SYMBOL}
+					</span>
+				</td>
+				<td >
+					<input type="text" id="ie_from_name" name="from_name" size="30" maxlength="64" value="">
+				</td>
+			</tr>
+
+			<tr>
+				<td scope="row">
+					{$app_strings.LBL_EMAIL_SETTINGS_FROM_ADDR}:
+					<span class="required">
+						{$app_strings.LBL_REQUIRED_SYMBOL}
+					</span>
+				</td>
+				<td >
+					<input type="text" id="ie_from_addr" name="from_addr" size="30" maxlength="64" value="">
+				</td>
+			</tr>
+
+			<tr>
+				<td scope="row">
+					{$app_strings.LBL_EMAIL_SETTINGS_REPLY_TO_ADDR}:
+				</td>
+				<td >
+					<input type="text" id="reply_to_addr" name="reply_to_addr" size="30" maxlength="64" value="">
+				</td>
+			</tr>
+			<tr>
+				<td scope="row">
+					{$mod_strings.LBL_EMAIL_SETTINGS_OUTBOUND_ACCOUNT}:
+						<span class="required">{$app_strings.LBL_REQUIRED_SYMBOL}</span>
+				</td>
+				<td >
+					<select name='outbound_email' id='outbound_email' onchange="SUGAR.email2.accounts.checkOutBoundSelection()"></select>
+				</td>
+			</tr>
 			<tr class="yui-hidden" id="inboundAccountRequiredUsername">
 				<td scope="row">
 					{$app_strings.LBL_EMAIL_ACCOUNTS_SMTPUSER}:
