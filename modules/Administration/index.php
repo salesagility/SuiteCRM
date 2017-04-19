@@ -78,6 +78,23 @@ $values_3_tab = array();
 $admin_group_header_tab = array();
 $j=0;
 
+
+// able to use same icons for different menu items when the theme doesn't contains it
+$adminImageOverrides = array(
+    'UserManagement' => 'Users',
+    'EmailCampaigns' => 'Campaigns',
+    'EmailInbound' => 'InboundEmail',
+    'EmailOutbound' => 'EmailMan',
+    'EmailQueue' => 'EmailMan',
+    'GeocodingTests' => 'CreateContacts',
+    'GeocodeAddresses' => 'CreateContacts',
+    'SecuritySuiteGroupManagement' => 'SecurityGroups',
+    'SecurityGroupsManagement' => 'SecurityGroups',
+    'AOD' => 'edit',
+    'AOP' => 'edit',
+    'BusinessHours' => 'edit',
+);
+
 foreach ($admin_group_header as $key=>$values) {
     $module_index = array_keys($values[3]);
     $addedHeaderGroups = array();
@@ -127,6 +144,16 @@ foreach ($admin_group_header as $key=>$values) {
                     '.svg',
                     translate($admin_option[1],'Administration')
                 );
+                if (!$header_image[$j][$i] && isset($adminImageOverrides[$admin_option[0]]) && $adminImageOverrides[$admin_option[0]]) {
+                   $header_image[$j][$i] = SugarThemeRegistry::current()->getImage(
+                       $adminImageOverrides[$admin_option[0]],
+                       'border="0" align="absmiddle"',
+                       null,
+                       null,
+                       '.svg',
+                       translate($admin_option[1],'Administration')
+                   );
+                }
                 $url[$j][$i] = $admin_option[3];
                 if(!empty($admin_option[5])) {
                 	$onclick[$j][$i] = $admin_option[5];
