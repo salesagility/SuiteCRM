@@ -504,10 +504,12 @@ function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
                             $button_contents[] = $_content;
                             unset($_content);
                         }
-                        else
-                        {
-                            $button_contents[] = '';
-                        }
+                        else if ( '' != $_content = $layout_manager->widgetDisplay($list_field) )
+                            {
+                                $button_contents[] = $_content;
+                                unset($_content);
+                            }
+                        
                 	} else {
                			$count++;
                			$this->xTemplate->assign('CLASS', "");
