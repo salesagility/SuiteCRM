@@ -1,3 +1,4 @@
+<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,85 +38,56 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-(function ($) {
-  /**
-   *
-   * @param options
-   * @return {*|HTMLElement}
-   */
-  $.fn.FoldersViewModal =  function(options) {
-    "use strict";
-    var self = {};
-    var opts = $.extend({}, $.fn.FoldersViewModal.defaults, options);
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-    self.handleClick = function () {
-      "use strict";
-      self.emailFoldersView = null;
-      var foldersBox = $('<div></div>').appendTo(opts.contentSelector);
-      foldersBox.messageBox({
-        "showHeader": false,
-        "showFooter": false,
-        "size": 'lg'
-      });
-      foldersBox.setBody('<div class="in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>');
-      foldersBox.show();
+/**
+ * @param $focus
+ * @param $field
+ * @param $value
+ * @param $view
+ * @return string
+ */
+function displaySubjectField($focus, $field, $value, $view)
+{
+    global $app_strings, $app_list_strings, $mod_strings;
+    $result = '';
+    $bean = $focus;
 
-      $.ajax({
-        type: "GET",
-        cache: false,
-        url: 'index.php?module=Emails&action=GetFolders'
-      }).done(function (data) {
-        var response = JSON.parse(data);
-        response = response.response;
+    if(empty($view)) {
+        return $result;
+    }
 
-        console.log(response);
-        self.tree = $('<div></div>');
-        self.tree.jstree({
-          'core' : {
-            'data' : response
-          }
-        }).on('select_node.jstree', function(e, data) {
-          "use strict";
-          if(typeof data.selected[0] !== "undefined") {
-            var mbox = data.selected[0];
-            // reload with different inbox
-            $('[name=folders_id]').val(mbox);
-            top.location = 'index.php?module=Emails&action=index&folders_id=' + mbox;
-          }
-        });
+    if(strtolower($field) !== 'subject') {
+        return $result;
+    }
 
-        foldersBox.setBody(self.tree);
-      });
+    if(is_object($focus)) {
+        $focus = get_object_vars($focus);
+    } else if(is_array($focus)) {
+        $focus = array_change_key_case($focus, CASE_LOWER);
+    }
 
-    };
+//    if(!empty($focus['id'])) {
+//        $bean = BeanFactory::getBean('Emails', $focus['id']);
+//        if (is_object($bean)) {
+//            $bean = get_object_vars($bean);
+//        }
+//    }
 
-    /**
-     * @constructor
-     */
-    self.construct = function () {
-      "use strict";
-      $(opts.buttonSelector).click(self.handleClick);
-    };
+//    if (is_object($bean)) {
+//        $bean = get_object_vars($bean);
+//    }
 
-    /**
-    * @destructor
-    */
-    self.destruct = function() {
+    $template = new Sugar_Smarty();
+    $template->assign('APP', $app_strings);
+    $template->assign('APP_LIST_STRINGS', $app_list_strings);
+    $template->assign('MOD', $mod_strings);
+    $template->assign('bean', $focus);
 
-    };
+    $result = $template->fetch('modules/Emails/templates/displaySubjectField.tpl');
 
-    self.construct();
 
-    return $(self);
-  };
-
-  $.fn.FoldersViewModal.defaults = {
-    'buttonSelector': '[data-action=emails-show-folders-modal]',
-    'contentSelector': '#content',
-    'defaultFolder': 'INBOX'
-  }
-}(jQuery));
-
-$(document).ready(function() {
-  $(document).FoldersViewModal();
-});
+    return $result;
+}

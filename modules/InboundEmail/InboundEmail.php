@@ -305,6 +305,50 @@ class InboundEmail extends SugarBean
         }
     }
 
+
+    /**
+     * @param string $mailbox
+     * @param pageSize $
+     * @return object
+     *
+     */
+    public function checkWithPagination($page = 1, $pageSize = 20)
+    {
+        $this->connectMailserver();
+
+        $mailboxInfo = imap_check($this->conn);
+        $lastSequenceNumber = $mailboxInfo->Nmsgs;
+
+        if($page === "end") {
+            $page = $lastSequenceNumber / $pageSize;
+        } else if($page <= 0) {
+            $page = 1;
+        }
+        // Get page of emails headers
+        $pageFrom = $lastSequenceNumber - ($page * $pageSize) + 1;
+        if($pageFrom <= 0) {
+            $pageFrom = 1;
+        }
+        $pageTo = $lastSequenceNumber - (($page * $pageSize) - $pageSize);
+        if($pageTo <= 0) {
+            $pageTo = 1;
+        }
+
+        $emailHeaders = imap_fetch_overview(
+            $this->conn,
+            $pageFrom . ":" . $pageTo,
+            0
+        );
+
+
+        // cache email headers
+        $this->updateOverviewCacheFile($emailHeaders);
+
+        return array(
+            "data" => json_decode(json_encode($emailHeaders), true),
+            "mailbox_info" => json_decode(json_encode($mailboxInfo), true)
+        );
+    }
     ///////////////////////////////////////////////////////////////////////////
     ////	CUSTOM LOGIC HOOKS
     /**
@@ -1376,7 +1420,7 @@ class InboundEmail extends SugarBean
         if (empty($checkTime) || $synchronize) {
             // do not process rules for the first time or sunchronize
             $shouldProcessRules = false;
-            $criteria = "ALL UNDELETED";
+            $criteria = "UNSEEN";
             $prefetch = false; // do NOT prefetch emails on a brand new account - timeouts happen.
             $GLOBALS['log']->info("INBOUNDEMAIL: new account detected - not prefetching email bodies.");
         } else {
@@ -1860,7 +1904,7 @@ class InboundEmail extends SugarBean
      * merges new info with the saved cached file
      * @param array $array Array of email Overviews
      * @param string $type 'append' or 'remove'
-     * @param string $mailbox Target mailbox if not current assigned
+     * @param string $mailbox Target mai lbox if not current assigned
      */
     public function updateOverviewCacheFile($array, $type = 'append', $mailbox = '')
     {

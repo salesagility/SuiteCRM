@@ -56,13 +56,17 @@ if($_REQUEST['action'] === 'GetFolders') {
 }
 
 
+if($_REQUEST['action'] === 'CheckEmail') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'CheckEmail';
+}
+
 class EmailsController extends SugarController
 {
     public function action_index()
     {
-        global $sugar_config;
-        $sugar_config['http_referer']['actions'][] = 'ComposeView';
+        global $sugar_config, $current_user;
         $this->view = 'list';
+
     }
 
     public function action_ComposeView()
@@ -277,6 +281,14 @@ class EmailsController extends SugarController
 
     public function action_Popup () {
         $this->view = 'popup';
+    }
+
+    public function action_CheckEmail() {
+        $inboundEmail = BeanFactory::getBean('InboundEmail');
+        $inboundEmail->syncEmail();
+
+        echo json_encode(array('response' => array()));
+        $this->view('ajax');
     }
 
     public function action_GetFolders () {

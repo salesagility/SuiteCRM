@@ -19,7 +19,7 @@
         <tr>
             <td valign="top" width='10%' NOWRAP scope="row">
                 <span>
-                    <b>{$mod_strings['LBL_CASE_MACRO']}:</b>
+                    <b>{$MOD.LBL_CASE_MACRO}:</b>
                 </span>
             </td>
             <td valign="top" width='20%'>

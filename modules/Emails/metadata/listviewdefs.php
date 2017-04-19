@@ -95,11 +95,13 @@ $listViewDefs['Emails'] = array(
         'sortable' => false,
         'hide_header_label' => true,
     ),
-    'NAME' => array(
+    'SUBJECT' => array(
+        // Uses function field
         'width' => '32',
         'label' => 'LBL_LIST_SUBJECT',
         'default' => true,
-        'link' => true
+        'link' => false,
+        'customCode' => ''
     ),
     'HAS_ATTACHMENT' => array(
         'width' => '32',
