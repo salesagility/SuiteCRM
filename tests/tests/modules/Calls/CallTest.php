@@ -1,7 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
 
-class CallTest extends PHPUnit_Framework_TestCase
+class CallTest extends SuiteCRMUnitTest
 {
     public function testCall()
     {

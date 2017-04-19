@@ -1,6 +1,8 @@
 <?PHP
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class AOS_PDF_TemplatesTest extends PHPUnit_Framework_TestCase
+
+class AOS_PDF_TemplatesTest extends SuiteCRMUnitTest
 {
     public function testAOS_PDF_Templates()
     {

@@ -1,6 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class SavedSearchTest extends PHPUnit_Framework_TestCase
+
+class SavedSearchTest extends SuiteCRMUnitTest
 {
     public function testSavedSearch()
     {

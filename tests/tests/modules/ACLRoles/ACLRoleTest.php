@@ -1,6 +1,8 @@
 <?php
 
-class ACLRoleTest extends PHPUnit_Framework_TestCase
+use SuiteCRM\Tests\SuiteCRMUnitTest;
+
+class ACLRoleTest extends SuiteCRMUnitTest
 {
     public function testACLRole()
     {

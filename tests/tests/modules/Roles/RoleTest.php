@@ -1,6 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class RoleTest extends PHPUnit_Framework_TestCase
+
+class RoleTest extends SuiteCRMUnitTest
 {
     public function testRole()
     {

@@ -1,6 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class vCalTest extends PHPUnit_Framework_TestCase
+
+class vCalTest extends SuiteCRMUnitTest
 {
     public function testvCal()
     {

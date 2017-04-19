@@ -1,6 +1,8 @@
 <?PHP
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class FP_Event_LocationsTest extends PHPUnit_Framework_TestCase
+
+class FP_Event_LocationsTest extends SuiteCRMUnitTest
 {
     public function testFP_Event_Locations()
     {

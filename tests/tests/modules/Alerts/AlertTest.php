@@ -1,7 +1,9 @@
 <?php
 
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class AlertTest extends PHPUnit_Framework_TestCase
+
+class AlertTest extends SuiteCRMUnitTest
 {
     public function testAlert()
     {

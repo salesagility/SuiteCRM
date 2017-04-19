@@ -1,6 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class AOS_Products_QuotesTest extends PHPUnit_Framework_TestCase
+
+class AOS_Products_QuotesTest extends SuiteCRMUnitTest
 {
     public function testAOS_Products_Quotes()
     {

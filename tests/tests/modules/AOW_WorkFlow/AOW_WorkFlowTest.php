@@ -1,6 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class AOW_WorkFlowTest extends PHPUnit_Framework_TestCase
+
+class AOW_WorkFlowTest extends SuiteCRMUnitTest
 {
     public function testAOW_WorkFlow()
     {

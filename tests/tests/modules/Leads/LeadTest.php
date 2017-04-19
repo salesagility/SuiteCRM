@@ -1,6 +1,9 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class LeadTest extends PHPUnit_Framework_TestCase {
+
+class LeadTest extends SuiteCRMUnitTest
+{
 
 
 	public function testLead()

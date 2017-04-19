@@ -1,6 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class GroupTest extends PHPUnit_Framework_TestCase
+
+class GroupTest extends SuiteCRMUnitTest
 {
     public function testGroup()
     {

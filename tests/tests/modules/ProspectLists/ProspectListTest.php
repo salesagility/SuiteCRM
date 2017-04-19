@@ -1,6 +1,9 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class ProspectListTest extends PHPUnit_Framework_TestCase {
+
+class ProspectListTest extends SuiteCRMUnitTest
+{
 
 
 	public function testProspectList()

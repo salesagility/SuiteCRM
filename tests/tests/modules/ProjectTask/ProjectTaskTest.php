@@ -1,6 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class ProjectTaskTest extends PHPUnit_Framework_TestCase
+
+class ProjectTaskTest extends SuiteCRMUnitTest
 {
     public function testProjectTask()
     {

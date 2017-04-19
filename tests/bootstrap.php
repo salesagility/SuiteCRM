@@ -40,6 +40,9 @@
 /* bootstrap composer's autoloader */
 require_once '../vendor/autoload.php';
 
+/* Temporary solution until we move src/SuiteCRM/Tests under /src folder */
+require_once 'src/SuiteCRM/Tests/SuiteCRMUnitTest.php';
+
 /* bootstrap sugarcrm */
 chdir('../');
 define('sugarEntry',TRUE);

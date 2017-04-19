@@ -1,8 +1,10 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
+
 
 require_once 'include/phpmailer/class.smtp.php';
 
-class EmailTest extends PHPUnit_Framework_TestCase
+class EmailTest extends SuiteCRMUnitTest
 {
     public function testEmail()
     {

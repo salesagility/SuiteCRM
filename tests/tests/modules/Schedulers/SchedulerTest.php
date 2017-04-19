@@ -1,9 +1,11 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
+
 
 require_once 'include/SugarQueue/SugarJobQueue.php';
 require_once 'install/install_utils.php';
 
-class SchedulerTest extends PHPUnit_Framework_TestCase
+class SchedulerTest extends SuiteCRMUnitTest
 {
     public function test__construct()
     {

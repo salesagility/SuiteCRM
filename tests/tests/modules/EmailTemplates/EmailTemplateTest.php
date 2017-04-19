@@ -1,6 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class EmailTemplateTest extends PHPUnit_Framework_TestCase
+
+class EmailTemplateTest extends SuiteCRMUnitTest
 {
     public function testEmailTemplate()
     {

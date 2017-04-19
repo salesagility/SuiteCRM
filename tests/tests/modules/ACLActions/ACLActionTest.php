@@ -1,7 +1,8 @@
 <?php
 
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class ACLActionTest extends PHPUnit_Framework_TestCase
+class ACLActionTest extends SuiteCRMUnitTest
 {
     public function testACLAction()
     {
@@ -77,18 +78,18 @@ class ACLActionTest extends PHPUnit_Framework_TestCase
 
     public function testhasAccess()
     {
-        $this->assertFalse(ACLAction::hasAccess()); //check with defaults 
+        $this->assertFalse(ACLAction::hasAccess()); //check with defaults
         $this->assertTrue(ACLAction::hasAccess(false, false, 90));  //access All with is owner false
-        $this->assertTrue(ACLAction::hasAccess(true, true, 90)); //access All with is owner true 
+        $this->assertTrue(ACLAction::hasAccess(true, true, 90)); //access All with is owner true
         $this->assertFalse(ACLAction::hasAccess(false, false, -98));// check access disabled
-        $this->assertFalse(ACLAction::hasAccess(true, true, 89)); //check access enabled 
+        $this->assertFalse(ACLAction::hasAccess(true, true, 89)); //check access enabled
         $this->assertTrue(ACLAction::hasAccess(true, true, 75)); //check owner access with is owner true
         $this->assertFalse(ACLAction::hasAccess(false, true, 75)); //check owner access with is owner false
     }
 
     public function testuserNeedsSecurityGroup()
     {
-        $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', '', ''));//test with empty module and action 
+        $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', '', ''));//test with empty module and action
         $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', 'Accounts', 'list')); //test with valid module and action
     }
 
@@ -154,8 +155,8 @@ class ACLActionTest extends PHPUnit_Framework_TestCase
     public function testtoArray()
     {
         $aclAction = new ACLAction();
-
-        //wihout any fields set 
+    
+        //wihout any fields set
         $expected = array('id' => null, 'aclaccess' => null);
         $actual = $aclAction->toArray();
         $this->assertSame($expected, $actual);

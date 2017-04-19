@@ -1,7 +1,8 @@
 <?php
 
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class AdministrationTest extends PHPUnit_Framework_TestCase
+class AdministrationTest extends SuiteCRMUnitTest
 {
     public function testAdministration()
     {

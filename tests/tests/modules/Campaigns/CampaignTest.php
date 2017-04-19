@@ -1,7 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
 
-class CampaignTest extends PHPUnit_Framework_TestCase
+class CampaignTest extends SuiteCRMUnitTest
 {
     public function testCampaign()
     {
