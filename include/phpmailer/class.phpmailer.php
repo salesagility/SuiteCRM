@@ -678,7 +678,6 @@ class PHPMailer
      * @param string $to To
      * @param string $subject Subject
      * @param string $body Message Body
-     * @param string $body Message Body
      * @param string $header Additional Header(s)
      * @param string $params Params
      * @access private

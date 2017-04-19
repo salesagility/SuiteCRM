@@ -74,13 +74,12 @@ $viewdefs[$module_name]['DetailView'] = array(
                     'label' => 'LBL_BODY'
                 ),
             ),
-
+            array(
+                'parent_name'
+            ),
             array (
                 'category_id',
             ),
-            array(
-                'parent_name'
-            )
         )
     )
 );
