@@ -72,6 +72,9 @@ $viewdefs['Emails']['ComposeView'] = array(
     'panels' => array(
         'LBL_COMPOSE_MODULE_NAME' => array(
             array(
+                'parent_name'
+            ),
+            array(
                 array(
                     'name' => 'to_addrs_names',
                     'label' => 'LBL_TO',
@@ -110,9 +113,6 @@ $viewdefs['Emails']['ComposeView'] = array(
                     'label' => 'LBL_BODY',
                 )
             ),
-            array(
-                'parent_name'
-            )
         )
     )
 
