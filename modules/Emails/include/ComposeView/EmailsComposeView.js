@@ -57,7 +57,7 @@
 
       if (self.length === 0) {
         console.error('EmailsComposeView - Invalid Selector');
-        return
+        return;
       }
 
       if (self.attr('id').length === 0) {
@@ -90,7 +90,7 @@
 
         // copy plain to html
         $(self).find('#description_html').closest('.edit-view-row-item').addClass('hidden');
-        $(self).find('textarea#description_html').on("keyup", function (e) {
+        $(self).find('textarea#description_html').on("keyup", function () {
           $(self).find('input#description_html').val($(self).find('textarea#description').val().replace('\n', '<br>'));
         });
       } else {
@@ -99,6 +99,7 @@
       }
 
       // Handle sent email submission
+      // todo: resolve variable: onSendEmail
       self.submit(self.onSendEmail);
 
       // Handle toolbar button events
@@ -139,14 +140,14 @@
     /**
      * @destructor
      */
-    self.destruct = function (event) {
+    self.destruct = function () {
       // TODO: Find a better way only display one tiny mce
       // Remove the hanging tinyMCE div
       $('.mce-panel').remove();
       var length = tinyMCE.editors.length;
       for (var i = length; i > 0; i--) {
         tinyMCE.editors[i - 1].remove();
-      };
+      }
       $('.emails-qtip').remove();
       return true;
     };
@@ -179,7 +180,7 @@
      */
     self.handleQTipBarClick = function () {
       var module = $('#qtip_bar_module');
-      var contact_id = $('#qtip_bar_id');
+      // if you'll need the contact_id use this line here: var contact_id = $('#qtip_bar_id');
       var contact_name = $('#qtip_bar_name');
       var contact_email_address = $('#qtip_bar_email_address');
 
@@ -234,7 +235,7 @@
               mb.remove();
             });
           } else {
-            var formatted_email_address = ''
+            var formatted_email_address = '';
             if (trim(contact_name.val()) !== '') {
               // use name <email address> format
               formatted_email_address = contact_name.val() +' <'+ contact_email_address.val() +'>';
@@ -266,7 +267,7 @@
       self.active_elementQTipBar = this;
       $(this).qtip({
         content: {
-          text: self.qtipBar,
+          text: self.qtipBar
         },
         position: {
           my: 'bottom left',
@@ -287,7 +288,7 @@
       "use strict";
       var characters = ['a', 'b', 'c', 'd', 'e', 'f', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
       var format = '0000000-0000-0000-0000-00000000000';
-      var z = Array.prototype.map.call(format, function ($obj) {
+      return Array.prototype.map.call(format, function ($obj) {
         var min = 0;
         var max = characters.length - 1;
 
@@ -298,7 +299,6 @@
 
         return $obj;
       }).toString().replace(/(,)/g, '');
-      return z;
     };
 
     /**
@@ -307,13 +307,11 @@
      */
     self.isValid = function () {
       "use strict";
-      var valid = self.isToValid() &&
+      return self.isToValid() &&
         self.isCcValid() &&
         self.isBccValid() &&
         self.isSubjectValid() &&
         self.isBodyValid();
-
-      return valid;
     };
 
     /**
@@ -442,7 +440,7 @@
      */
     self.isValidEmailAddresses = function (emailAddresses) {
       "use strict";
-      if (typeof emailAddresses === 'object' || typeof emailAddresses === 'array') {
+      if (typeof emailAddresses === 'object') {
         for (var i = 0; i < emailAddresses.length; i++) {
           emailAddresses[i] = (emailAddresses[i] !== '') && isValidEmail(emailAddresses[i]);
         }
@@ -459,12 +457,12 @@
      * @param editor
      */
     self.tinyMceSetup = function (editor) {
-      editor.on('init', function (ed) {
+      editor.on('init', function () {
         this.getDoc().body.style.fontName = 'tahoma';
         this.getDoc().body.style.fontSize = '13px';
       });
 
-      editor.on('change', function (e) {
+      editor.on('change', function () {
         // copy html to plain
         $(self).find('.html_preview').html(editor.getContent());
         $(self).find('input#description_html').val(editor.getContent());
@@ -480,7 +478,7 @@
      * @event sentEmail
      * @returns {boolean}
      */
-    self.onSendEmail = function (event) {
+    self.onSendEmail = function () {
       $(self).trigger("sendEmail", [self]);
 
       // Tell the user we are sending an email
@@ -496,7 +494,7 @@
 
       $(this).find('input').each(function (i, v) {
         if ($(v).attr('type').toLowerCase() === 'file') {
-          for (var i = 0; i < v.files.length; i++) {
+          for (i = 0; i < v.files.length; i++) {
             var file = v.files[i];
             var reader = new FileReader();
             reader.readAsDataURL(file);
@@ -526,16 +524,15 @@
         cache: false,
         processData: false,  // tell jQuery not to process the data
         contentType: false,   // tell jQuery not to set contentType
-        url: $(this).attr('action'),
+        url: $(this).attr('action')
       }).done(function (data) {
         "use strict";
         mb.remove();
         // If the user is view the form own its own
         if ($(self).find('input[type="hidden"][name="return_module"]').val() !== '') {
-          var redirect_location = 'index.php?module=' + $('#' + self.attr('id') + ' input[type="hidden"][name="return_module"]').val() +
+          location.href = 'index.php?module=' + $('#' + self.attr('id') + ' input[type="hidden"][name="return_module"]').val() +
             '&action=' +
             $(self).find('input[type="hidden"][name="return_action"]').val();
-          location.href = redirect_location;
         } else {
           $(self).trigger("sentEmail", [self, data]);
         }
@@ -563,7 +560,7 @@
         $(self).submit();
       }
       return false;
-    }
+    };
 
 
     /**
@@ -619,7 +616,7 @@
           var removeAttachment = $('<a class="attachment-remove"><span class="glyphicon glyphicon-remove"></span></a>');
           fileGroupContainer.append(removeAttachment);
           // handle when user removes attachment
-          removeAttachment.click(function (event) {
+          removeAttachment.click(function () {
             fileGroupContainer.remove();
           });
         }
@@ -684,23 +681,25 @@
         .attr('data-file-input', 'documentId')
         .appendTo(fileGroupContainer);
 
-
-      if ($('[name=document_attachment_id]').length === 0) {
-        var fileInputID = $('<input>')
+      var docAttachmentSel = $('[name=document_attachment_id]');
+      var fileInputID;
+      if (docAttachmentSel.length === 0) {
+        fileInputID = $('<input>')
           .attr('type', 'hidden')
           .attr('name', 'document_attachment_id')
           .appendTo(fileGroupContainer.closest('.attachments'));
       } else {
-        var fileInputID = $('[name=document_attachment_id]');
+        fileInputID = docAttachmentSel;
       }
 
-      if ($('[name=document_attachment_name]').length === 0) {
-        var fileInputName = $('<input>')
+      var fileInputName;
+      if (docAttachmentSel.length === 0) {
+        fileInputName = $('<input>')
           .attr('type', 'hidden')
           .attr('name', 'document_attachment_name')
           .appendTo(fileGroupContainer.closest('.attachments'));
       } else {
-        var fileInputName = $('[name=document_attachment_name]');
+        fileInputName = docAttachmentSel;
       }
       fileInputName.val('');
 
@@ -710,7 +709,7 @@
         .html('<img src="themes/' + SUGAR.themes.theme_name + '/images/sidebar/modules/Documents.svg">')
         .appendTo(fileGroupContainer);
 
-      var showSelectDocumentDialog = function (e) {
+      var showSelectDocumentDialog = function () {
         fileInputID.val('');
         fileInputName.val('');
         var popupWindow = open_popup(
@@ -744,7 +743,7 @@
                 var removeAttachment = $('<a class="attachment-remove"><span class="glyphicon glyphicon-remove"></span></a>');
                 fileGroupContainer.append(removeAttachment);
                 // handle when user removes attachment
-                removeAttachment.click(function (event) {
+                removeAttachment.click(function () {
                   fileGroupContainer.remove();
                   self.updateDocumentIDs();
                 });
