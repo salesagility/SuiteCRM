@@ -117,19 +117,15 @@ $mod_strings = array (
 	'LNK_NEW_EMAIL_TEMPLATE' => 'Create Email Template',
 	'LNK_EMAIL_TEMPLATE_LIST' => 'View Email Templates',
 	'LBL_TRACK_BUTTON_TITLE' =>'View Status',
-	'LBL_TRACK_BUTTON_KEY' =>'T',
 	'LBL_TRACK_BUTTON_LABEL' =>'View Status',
 	'LBL_QUEUE_BUTTON_TITLE'=>'Send Emails',
-	'LBL_QUEUE_BUTTON_KEY'=>'u',
 	'LBL_QUEUE_BUTTON_LABEL'=>'Send Emails',
 	'LBL_TEST_BUTTON_TITLE'=>'Send Test',
-	'LBL_TEST_BUTTON_KEY'=>'e',
 	'LBL_TEST_BUTTON_LABEL'=>'Send Test',
 	'LBL_COPY_AND_PASTE_CODE' => 'Or copy and paste the html below into an existing page',
 	'LBL_CHARSET_NOTICE' => 'NOTE: Please make sure that the page containing the web-to-lead form has the following lines in the &lt;head&gt; section:',
 
 	'LBL_TODETAIL_BUTTON_TITLE'=>'View Details',
-	'LBL_TODETAIL_BUTTON_KEY'=>'T',
 	'LBL_TODETAIL_BUTTON_LABEL'=>'View Details',
 
 	'LBL_DEFAULT'=>'All Target Lists',
@@ -147,7 +143,6 @@ $mod_strings = array (
 	'LBL_OPPORTUNITY_SUBPANEL_TITLE'=>'Opportunities',
 	'LBL_LOG_ENTRIES_CONTACT_TITLE'=>'Contacts Created',
 
-	'LBL_BACK_TO_CAMPAIGNS'=>'Back to Campaigns',
 	//error messages.
 	'ERR_NO_EMAIL_MARKETING'=>'There must be at least one active Email Marketing message associated with the campaign.',
 	'ERR_NO_TARGET_LISTS'=>'There must be at least one Target List associated with the campaign.',
@@ -157,7 +152,6 @@ $mod_strings = array (
 	'ERR_MESS_DUPLICATE_FOR_LIST'=>'Multiple Email Marketing messages are defined for this target list',
 	'ERR_FIX_MESSAGES'=>'Please correct the following errors before proceeding',
 
-	'LBL_TRACK_DELETE_BUTTON_KEY'=>'D',
 	'LBL_TRACK_ROI_BUTTON_LABEL' =>'View ROI',
 	'LBL_TRACK_DELETE_BUTTON_TITLE'=>'Delete Test Entries',
 	'LBL_TRACK_DELETE_BUTTON_LABEL'=>'Delete Test Entries',
@@ -477,7 +471,6 @@ $mod_strings = array (
 	'LBL_INSERT_VARIABLE_SUBJECT_BTN'	=> 'Insert Variable',
 	'LBL_EMAIL_VARIABLES'	=> 'Email Variables',
 	'LBL_SAVE' => 'Save',
-	'LBL_EMAIL_TEMPLATE_TITLE' => 'Email Template Details',
 	'LBL_SAVE_TEMPLATE_BTN' => 'Save',
 	'LBL_CREATE_TEMPLATE_BTN' => 'Create',
 	'LBL_EDIT_TEMPLATE_BTN' => 'Edit',
