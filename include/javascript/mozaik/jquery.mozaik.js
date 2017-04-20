@@ -249,8 +249,37 @@ var plgBackground = {
             ace: true,
             width: '600px',
             toolPlugins: [plgBackground],
-            uploadPathField: null
+            uploadPathField: null,
+            widthSetField: '#mozaik_width_set', // you can override the valuse setter input field selector in PHP also
         }, options);
+
+        // parse back saved width value
+        var widths = [];
+        var max = -1;
+        var widthAtMax = -1;
+        $(this).find('.mozaik-inner').each(function(i,e) {
+            if(typeof widths[$(e).css('width')] === 'undefined') {
+                widths[$(e).css('width')] = 0;
+            } else {
+                widths[$(e).css('width')]++;
+                if(widths[$(e).css('width')]>max) {
+                    max = widths[$(e).css('width')];
+                    widthAtMax = parseInt($(e).css('width'));
+                }
+            }
+        });
+        if(max > 0) {
+            settings.width = widthAtMax;
+        }
+
+        // initialize valueset input field
+        $(settings.widthSetField).keyup(function(){
+            mozaik.setWidth(parseInt($(this))+'px');
+        });
+        $(settings.widthSetField).mouseup(function(){
+            mozaik.setWidth(parseInt($(this))+'px');
+        });
+        $(settings.widthSetField).val(parseInt(settings.width));
 
         if(typeof settings.tinyMCE == 'undefined') {
             settings.tinyMCE = tinyMCESettings;
