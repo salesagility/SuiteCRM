@@ -42,10 +42,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+// XSS rules
+
 if ($_REQUEST['action'] === 'ComposeView') {
     $GLOBALS['sugar_config']['http_referer']['actions'][] = 'ComposeView';
 }
-
 
 if ($_REQUEST['action'] === 'Popup') {
     $GLOBALS['sugar_config']['http_referer']['actions'][] = 'Popup';
@@ -63,6 +64,10 @@ if ($_REQUEST['action'] === 'CheckEmail') {
 
 if ($_REQUEST['action'] === 'ImportAndShowDetailView') {
     $GLOBALS['sugar_config']['http_referer']['actions'][] = 'ImportAndShowDetailView';
+}
+
+if ($_REQUEST['action'] === 'GetCurrentUserID') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'GetCurrentUserID';
 }
 
 
@@ -337,4 +342,12 @@ class EmailsController extends SugarController
         // When something fail redirect user to index
         header('location:index.php?module=Emails&action=index');
     }
+
+    public function action_GetCurrentUserID()
+    {
+        global $current_user;
+        echo json_encode(array("response" => $current_user->id));
+        $this->view = 'ajax';
+    }
+
 }

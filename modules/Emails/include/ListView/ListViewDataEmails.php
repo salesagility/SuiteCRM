@@ -199,7 +199,7 @@ class ListViewDataEmails extends ListViewData
                         $dateTime = DateTime::createFromFormat(
                             'D, d M Y H:i:s O',
                             $date
-                        )k
+                        );
 
                         $timeDate = new TimeDate();
                         $emailRecord[strtoupper($field)] = $timeDate->asUser($dateTime, $current_user);

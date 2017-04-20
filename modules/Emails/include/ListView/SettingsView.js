@@ -50,7 +50,10 @@
 
     self.handleClick = function () {
       "use strict";
-      alert("Settings Placeholder");
+      $.ajax('index.php?module=Emails&action=GetCurrentUserID').done(function (data) {
+        var jsonData = JSON.parse(data);
+        location.href = 'index.php?module=Users&action=EditView&record=' + jsonData.response;
+      });
     };
 
     /**
