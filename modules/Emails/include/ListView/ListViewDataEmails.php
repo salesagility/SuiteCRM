@@ -222,6 +222,10 @@ class ListViewDataEmails extends ListViewData
                         $emailRecord[strtoupper($field)] = $emailHeader['uid'];
                         $test = false;
                         break;
+                    case 'msgno':
+                        $emailRecord[strtoupper($field)] = $emailHeader['msgno'];
+                        $test = false;
+                        break;
                     default:
                         $emailRecord[strtoupper($field)] = '';
                         break;
