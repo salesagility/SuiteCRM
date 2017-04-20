@@ -14,30 +14,37 @@ var mozaik = {
         return html;
     },
 
-    getEditorListHTML: function() {
-        var html = '<ul class="mozaik-list"></ul>';
+    getEditorListHTML: function(width) {
+        var left = false;
+        if(width != 'initial' && parseInt(width) > 0) {
+            left = true;
+        }
+        var html =
+          '<ul class="mozaik-list">'+
+          (left ? '   <li class="mozaik-width-set"><span class="handler" href="javascript:;" title="Resize" data-width="'+parseInt(width)+'"></span></li>' : '') +
+          '</ul>';
         return html;
     },
 
     getEditorListElementHTML: function(name, innertext, ace, style, toolPlugins) {
         var html =
-            '<li class="mozaik-elem" data-name="' + name + '">' +
-            '	<ul class="mozaik-tools">' +
-            '		<li class="mozaik-tool-btn mozaik-tool-handle"><a href="javascript:;" title="Move"></a></li>' +
-            '		<li class="mozaik-tool-btn mozaik-tool-remove"><a href="javascript:;" title="Delete"></a></li>' +
-            '		<li class="mozaik-tool-btn mozaik-tool-stick"><a href="javascript:;" title="Stick"></a></li>' +
-            '		<li class="mozaik-tool-btn mozaik-tool-copy"><a href="javascript:;" title="Copy"></a></li>' +
-            (ace ? '<li class="mozaik-tool-btn mozaik-tool-source"><a href="javascript:;" title="Source"></a></li>' : '') +
-            (toolPlugins ? this.getToolPluginIconListHTML(toolPlugins, name) : '') +
-            '	</ul>' + this.getMozaikInnerHTML(name, innertext, style) +
-            '</li>';
+          '<li class="mozaik-elem" data-name="' + name + '">' +
+          '	<ul class="mozaik-tools">' +
+          '		<li class="mozaik-tool-btn mozaik-tool-handle"><a href="javascript:;" title="Move"></a></li>' +
+          '		<li class="mozaik-tool-btn mozaik-tool-remove"><a href="javascript:;" title="Delete"></a></li>' +
+          '		<li class="mozaik-tool-btn mozaik-tool-stick"><a href="javascript:;" title="Stick"></a></li>' +
+          '		<li class="mozaik-tool-btn mozaik-tool-copy"><a href="javascript:;" title="Copy"></a></li>' +
+          (ace ? '<li class="mozaik-tool-btn mozaik-tool-source"><a href="javascript:;" title="Source"></a></li>' : '') +
+          (toolPlugins ? this.getToolPluginIconListHTML(toolPlugins, name) : '') +
+          '	</ul>' + this.getMozaikInnerHTML(name, innertext, style) +
+          '</li>';
         return html;
     },
 
     getToolPluginIconListHTML: function(toolPlugins, name) {
         var html = '';
         for(var i=0; i<toolPlugins.length; i++) {
-            plugin = toolPlugins[i];
+            var plugin = toolPlugins[i];
             html += '<li class="mozaik-tool-btn mozaik-tool-'+plugin.name+'" style="background-image: url('+plugin.image+');"><a href="javascript:;" onclick="'+plugin.callback+'(this, \''+name+'\');" title="'+plugin.title+'">&nbsp;</a></li>';
         }
         return html;
@@ -52,13 +59,13 @@ var mozaik = {
 
     getAceHTML: function() {
         var html =
-            '<div id="mozaik-ace">' +
-            '	<ul id="mozaik-ace-tools">' +
-            '		<li id="mozaik-ace-tool-save"><a href="javascript:;" title="Save"></a></li>' +
-            '		<li id="mozaik-ace-tool-cancel"><a href="javascript:;" title="Cancel"></a></li></li>' +
-            '	</ul>' +
-            '	<div id="mozaik-ace-editor"></div>' +
-            '</div>';
+          '<div id="mozaik-ace">' +
+          '	<ul id="mozaik-ace-tools">' +
+          '		<li id="mozaik-ace-tool-save"><a href="javascript:;" title="Save"></a></li>' +
+          '		<li id="mozaik-ace-tool-cancel"><a href="javascript:;" title="Cancel"></a></li></li>' +
+          '	</ul>' +
+          '	<div id="mozaik-ace-editor"></div>' +
+          '</div>';
         return html;
     },
 
@@ -74,6 +81,34 @@ var mozaik = {
     //    var html = '<div class="mozaik-preloader"><img alt="loading.." src="img/725.gif"></div>';
     //    return html;
     //}
+
+    refreshWidthSet: function() {
+        $('.mozaik-width-set .handler').each(function(i,e){
+            var width = parseInt($(e).attr('data-width'));
+            var left = (($(e).closest('.mozaik-width-set').width()-width) / 2) - 25;
+            $(e).css('left', left+'px');
+        });
+    },
+
+    currentWidth: false,
+
+    setWidth: function(width) {
+        if(parseInt(width) <= 0) {
+            width: 'initial';
+        }
+        if(width) {
+            mozaik.currentWidth = width;
+        }
+        if(mozaik.currentWidth) {
+            $('.mozaik-width-set .handler').each(function (i, e) {
+                $(e).attr('data-width', parseInt(mozaik.currentWidth));
+                $(e).closest('.mozaik-list').find('.mozaik-inner').css('max-width', mozaik.currentWidth);
+                $(e).closest('.mozaik-list').find('.mozaik-inner').css('width', mozaik.currentWidth);
+                $(e).closest('.mozaik-list').find('.mozaik-inner').css('margin', '0 auto');
+            });
+            mozaik.refreshWidthSet();
+        }
+    }
 
 };
 
@@ -282,7 +317,8 @@ var plgBackground = {
             $(e).html('');
 
             // add 'canvas' area
-            $(e).append(mozaik.getEditorListHTML());
+            $(e).append(mozaik.getEditorListHTML(settings.width));
+            mozaik.refreshWidthSet();
 
             var $mozaik = $(e).find('.mozaik-list').first();
 
@@ -290,7 +326,7 @@ var plgBackground = {
             if(!style && $('#mozaik-style-' + i).length==0) {
                 $.get(settings.base + settings.style, function(css){
                     if(css) {
-                        splits = css.split('}');
+                        var splits = css.split('}');
                         for(var i=0; i<splits.length-1; i++) {
                             splits[i] = "\n" + '#' + namespace + ' ' + splits[i];
                         }
@@ -326,6 +362,7 @@ var plgBackground = {
                 style = style.replace(/;\s*;/, ';');
                 var listElemHTML = mozaik.getEditorListElementHTML(name, html, settings.ace, style, toolPlugins);
                 $mozaik.append(listElemHTML);
+                mozaik.setWidth();
                 var editables = name && settings.thumbs[name].editables ? settings.thumbs[name].editables.split(',') : settings.editables.split(',');
                 $.each(editables, function(i,e){
                     var sels = '.mozaik-inner'; //, .mozaik-inner ' + e;
@@ -458,6 +495,8 @@ var plgBackground = {
 
                 $(e).find('.mozaik-thumbs').show();
                 //$(e).find('.mozaik-preloader').hide();
+
+                mozaik.refreshWidthSet();
             });
 
         });
@@ -524,7 +563,7 @@ var plgBackground = {
                         $(sel).each(function(l, el){
                             if(($(el).hasClass('mozaik-inner') || $(el).closest('.mozaik-inner').length) && !$(el).hasClass('mozaik-tools') && !$(el).closest('.mozaik-tools').length) {
 
-                                // corrigate inline font-size and line height style
+                                // correct inline font-size and line height style
                                 var fontFamily = $(el).css('font-family');
                                 var fontSize = $(el).css('font-size');
                                 var lineHeight = $(el).css('line-height');
@@ -534,7 +573,7 @@ var plgBackground = {
                                 $(el).css('line-height', lineHeight);
                                 $(el).css('color', color);
 
-                                // corrigate template section margins and paddings..
+                                // correct template section margins and paddings..
                                 var padding = $(el).css('padding-top') + ' ' + $(el).css('padding-right') + ' ' + $(el).css('padding-bottom') + ' ' + $(el).css('padding-left');
                                 var margin = $(el).css('margin-top') + ' ' + $(el).css('margin-right') + ' ' + $(el).css('margin-bottom') + ' ' + $(el).css('margin-left');
                                 $(el).css('padding', padding);
