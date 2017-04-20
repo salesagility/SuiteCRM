@@ -70,7 +70,7 @@ $mod_strings = array(
     'ERR_REPORT_LOOP' => 'The system detected a reporting loop. A user cannot report to themselves, nor can any of their managers report to them.',
     'ERR_RULES_NOT_MET' => 'The password you entered did not meet the password requirements.  Please try again.',
     'ERR_USER_NAME_EXISTS_1' => 'The user name ',
-    'ERR_USER_NAME_EXISTS_2' => ' already exists.	Duplicate user names are not allowed.	Change the user name to be unique.',
+    'ERR_USER_NAME_EXISTS_2' => ' already exists. Duplicate user names are not allowed.	Change the user name to be unique.',
     'ERR_USER_IS_LOCKED_OUT' => 'This user is locked out of the SuiteCRM application and cannot log in using his/her existing password.',
 
     'LBL_PASSWORD_SENT' => 'Password Updated',
