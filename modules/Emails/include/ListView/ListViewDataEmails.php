@@ -300,6 +300,7 @@ class ListViewDataEmails extends ListViewData
 
         // inject post values
         $_REQUEST['folder'] = $folder;
+        $_REQUEST['folder'] = $folder;
         $_REQUEST['folder_type'] = $folderType;
         $_REQUEST['inbound_email_record='] = $inboundEmailID;
 
