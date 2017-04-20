@@ -429,7 +429,7 @@ $mod_strings = array(
 	'LBL_STEP'							=> 'Step',
 	'LBL_TITLE_WELCOME'					=> 'Welcome to the SuiteCRM ',
 	'LBL_WELCOME_1'						=> 'This installer creates the SuiteCRM database tables and sets the configuration variables that you need to start. The entire process should take about ten minutes.',
-	'LBL_WELCOME_2'						=> 'For installation documentation, please visit the <a href="http://www.suitecrm.com/" target="_blank">SuiteCRM</a>.  <BR><BR> You can also find help from the SuiteCRM Community in the <a href="http://www.suitecrm.com/" target="_blank">SuiteCRM Forums</a>.',
+	'LBL_WELCOME_2'						=> 'For installation documentation, please visit the <a href="http://www.suitecrm.com/" target="_blank">SuiteCRM</a>. <BR><BR> You can also find help from the SuiteCRM Community in the <a href="http://www.suitecrm.com/" target="_blank">SuiteCRM Forums</a>.',
 	//welcome page variables
 	'LBL_TITLE_ARE_YOU_READY'            => 'Are you ready to install?',
 	'REQUIRED_SYS_COMP' => 'Required System Components',
