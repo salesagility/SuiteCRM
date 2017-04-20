@@ -75,7 +75,7 @@ class AOR_Chart extends Basic {
         $seenIds = array();
         if(isset($post[$postKey.'id'])) {
             foreach ($post[$postKey . 'id'] as $key => $id) {
-                if ($id) {
+                if ($id && $post['record']!='') {
                     $aorChart = BeanFactory::getBean('AOR_Charts', $id);
                 } else {
                     $aorChart = BeanFactory::newBean('AOR_Charts');

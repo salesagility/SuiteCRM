@@ -83,5 +83,7 @@ $mod_strings = array (
   'LBL_MARGIN_FOOTER' => 'Margin Footer',
   'LBL_EDITVIEW_PANEL1' => 'Margins',
   'LBL_DETAILVIEW_PANEL1' => 'Margins',
+  'LBL_PAGE_SIZE' => 'Page Size',
+  'LBL_ORIENTATION' => 'Orientation',
 );
 ?>
