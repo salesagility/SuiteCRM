@@ -223,7 +223,7 @@ if (true) {
     }
     ///////////////////////////////////////
     ////	MACRO VARS
-    $xtpl->assign("INSERT_VARIABLE_ONCLICK", "insert_variable(document.EditView.variable_text.value)");
+    $xtpl->assign("INSERT_VARIABLE_ONCLICK", "insert_variable(document.EditView.variable_text.value, \"email_template_editor\")");
 
     // bug 37255, included without condition
     $xtpl->parse("main.NoInbound.variable_button");
