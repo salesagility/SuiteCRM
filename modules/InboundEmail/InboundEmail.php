@@ -340,7 +340,7 @@ class InboundEmail extends SugarBean
             0
         );
 
-        // cache email headers
+//        // cache email headers
 //        $this->updateOverviewCacheFile($emailHeaders);
 
         $emailHeaders = json_decode(json_encode($emailHeaders), true);
@@ -355,12 +355,9 @@ class InboundEmail extends SugarBean
                 $emailHeaders[$i]['has_attachment'] = true;
             }else{
                 // no attachment
+                $emailHeaders[$i]['has_attachment'] = false;
             }
         }
-
-        // $test = imap_fetchstructure($this->conn, $msgNo);
-
-
 
         return array(
             "data" => $emailHeaders,
@@ -4556,30 +4553,6 @@ class InboundEmail extends SugarBean
 
         // reset inline images cache
         $this->inlineImages = array();
-
-        // handle messages deleted on server
-        if (empty($header)) {
-            if (!isset($this->email) || empty($this->email)) {
-                $this->email = new Email();
-            }
-
-            $q = "";
-            $queryUID = $this->db->quote($uid);
-            if ($this->isPop3Protocol()) {
-                $this->email->name = $app_strings['LBL_EMAIL_ERROR_MESSAGE_DELETED'];
-                $q = "DELETE FROM email_cache WHERE message_id = '{$queryUID}' AND ie_id = '{$this->id}' AND mbox = '{$this->mailbox}'";
-            } else {
-                $this->email->name = $app_strings['LBL_EMAIL_ERROR_IMAP_MESSAGE_DELETED'];
-                $q = "DELETE FROM email_cache WHERE imap_uid = '{$queryUID}' AND ie_id = '{$this->id}' AND mbox = '{$this->mailbox}'";
-            } // else
-            // delete local cache
-            $r = $this->db->query($q);
-
-            $this->email->date_sent = $timedate->nowDb();
-
-            return false;
-            //return "Message deleted from server.";
-        }
 
         ///////////////////////////////////////////////////////////////////////
         ////	DUPLICATE CHECK

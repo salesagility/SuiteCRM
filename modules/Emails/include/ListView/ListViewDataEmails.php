@@ -347,9 +347,29 @@ class ListViewDataEmails extends ListViewData
                         $emailRecord[strtoupper($field)] = $emailHeader['uid'];
                         break;
                     case 'msgno':
+                        $emailRecord[strtoupper($field)] = $emailHeader['msgno'];
                         break;
                     case 'has_attachment':
                         $emailRecord[strtoupper($field)] = $emailHeader['has_attachment'];
+                        break;
+                    case 'status':
+                        if($emailHeader['answered'] != 0) {
+                            $emailRecord[strtoupper($field)] = 'replied';
+                        } else if($emailHeader['draft'] != 0) {
+                            $emailRecord[strtoupper($field)] = 'draft';
+                        } else if($emailHeader['seen'] != 0) {
+                            $emailRecord[strtoupper($field)] = 'read';
+                        } else {
+                            $emailRecord[strtoupper($field)] = 'unread';
+                        }
+
+                        if($emailHeader['deleted'] != 0) {
+                         // TODO: Handle deleted
+                        }
+
+                        if($emailHeader['recent'] != 0) {
+                            // TODO Add recent flag to SuiteCRM
+                        }
                         break;
                     default:
                         $emailRecord[strtoupper($field)] = '';

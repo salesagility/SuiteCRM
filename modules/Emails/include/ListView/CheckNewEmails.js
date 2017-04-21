@@ -59,6 +59,10 @@
     self.construct = function () {
       "use strict";
       $(opts.buttonSelector).click(self.handleClick);
+      // look for new
+      $('.email-indicator .email-new').each(function(i, v){
+        $(this).closest('tr').addClass('email-new-record');
+      });
     };
 
     /**
