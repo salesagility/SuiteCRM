@@ -193,18 +193,16 @@ class ListViewDataEmails extends ListViewData
                     case 'name':
                         $emailRecord[strtoupper($field)] = html_entity_decode($inboundEmail->handleMimeHeaderDecode($emailHeader['subject']));
                         break;
-                    case 'id':
-                        // inject details into the url via the id
-//                        $emailRecord[strtoupper($field)] = '&folder_id='.$inboundEmailID.'&folder_name='.$folder.'&uid='.$emailHeader['uid'];
-//                        $pageData['idIndex']['&folder_id='.$inboundEmailID.'&folder_name='.$folder.'&uid='.$emailHeader['uid']][] = $h;
-
-                        break;
                     case 'date_entered':
                         $date = preg_replace('/(\ \([A-Z]+\))/', '', $emailHeader['date']);
-                        $emailRecord[strtoupper($field)] = DateTime::createFromFormat(
+
+                        $dateTime = DateTime::createFromFormat(
                             'D, d M Y H:i:s O',
                             $date
-                        )->format('Y-m-d H:i:s');
+                        );
+
+                        $timeDate = new TimeDate();
+                        $emailRecord[strtoupper($field)] = $timeDate->asUser($dateTime, $current_user);
                         break;
                     case 'is_imported':
                         $emailRecord['IS_IMPORTED'] = false;
@@ -220,7 +218,9 @@ class ListViewDataEmails extends ListViewData
                         break;
                     case 'uid':
                         $emailRecord[strtoupper($field)] = $emailHeader['uid'];
-                        $test = false;
+                        break;
+                    case 'msgno':
+                        $emailRecord[strtoupper($field)] = $emailHeader['msgno'];
                         break;
                     default:
                         $emailRecord[strtoupper($field)] = '';
@@ -297,6 +297,7 @@ class ListViewDataEmails extends ListViewData
          }
 
         // inject post values
+        $_REQUEST['folder'] = $folder;
         $_REQUEST['folder'] = $folder;
         $_REQUEST['folder_type'] = $folderType;
         $_REQUEST['inbound_email_record='] = $inboundEmailID;

@@ -414,6 +414,7 @@ $dictionary['Email'] = array(
             'duplicate_merge' => 'disabled',
             'inline_edit' => false,
         ),
+
         'uid' => array(
             'name' => 'uid',
             'type' => 'varchar',
@@ -423,6 +424,18 @@ $dictionary['Email'] = array(
             'duplicate_merge' => 'disabled',
             'inline_edit' => false,
         ),
+
+
+        'msgno' => array(
+            'name' => 'msgno',
+            'type' => 'varchar',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
+        ),
+
 
         'folder' => array(
             'name' => 'folder',

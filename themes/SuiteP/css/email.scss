@@ -197,6 +197,11 @@
       visibility: collapse;
     }
   }
+
+  .btn-send-email .send-email-label {
+    float: right;
+    padding-left: 5px;
+  }
 }
 
 .email-in-progress {
@@ -424,6 +429,14 @@
 #settingsDialog #userFolders {
   width: 100%;
   min-height: 200px;
+}
+
+.emails-list-view-toolbar-header {
+  text-align: right;
+}
+
+.btn-emails-current-folder {
+
 }
 
 @media (max-width: $xs-breakpoint) {

@@ -40,10 +40,10 @@
 *}
 <div class="email-subject">
     {if $bean}
-        {if $bean.is_imported}
-            <a href="index.php?action=DetailView&record={$bean.id}">{$bean.name}</a>
+        {if !empty($bean.id)}
+            <a href="index.php?module=Emails&action=DetailView&record={$bean.id}">{$bean.name}</a>
         {else}
-            <a href="index.php?action=ImportAndView&folder={$bean.folder}&folder={$bean.folder_type}&inbound_email_record={$bean.inbound_email_record}&uid={$bean.uid}">{$bean.name}</a>
+            <a href="index.php?module=Emails&action=ImportAndShowDetailView&folder={$bean.folder}&folder={$bean.folder_type}&inbound_email_record={$bean.inbound_email_record}&uid={$bean.uid}&msgno={$bean.msgno}">{$bean.name}</a>
         {/if}
     {/if}
 </div>
