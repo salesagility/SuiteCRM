@@ -340,13 +340,31 @@ class InboundEmail extends SugarBean
             0
         );
 
-
         // cache email headers
-        $this->updateOverviewCacheFile($emailHeaders);
+//        $this->updateOverviewCacheFile($emailHeaders);
+
+        $emailHeaders = json_decode(json_encode($emailHeaders), true);
+        // get attachment status
+        foreach ($emailHeaders as $i=> $emailHeader) {
+
+            $structure = imap_fetchstructure($this->conn,  $emailHeader['msgno']);
+
+            if(isset($structure->parts[0]->parts))
+            {
+                // has attachment
+                $emailHeaders[$i]['has_attachment'] = true;
+            }else{
+                // no attachment
+            }
+        }
+
+        // $test = imap_fetchstructure($this->conn, $msgNo);
+
+
 
         return array(
-            "data" => json_decode(json_encode($emailHeaders), true),
-            "mailbox_info" => json_decode(json_encode($mailboxInfo), true)
+            "data" => $emailHeaders,
+            "mailbox_info" => json_decode(json_encode($mailboxInfo), true),
         );
     }
     ///////////////////////////////////////////////////////////////////////////
