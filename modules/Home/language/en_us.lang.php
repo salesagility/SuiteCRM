@@ -36,20 +36,12 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- *
- * This file was contributed by diligent technology & business consulting GmbH <info@dtbc.eu>
- *
  */
 
-/*********************************************************************************
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+
 $mod_strings = array(
     'LBL_MODULE_NAME' => 'Home',
     'LBL_MODULES_TO_SEARCH' => 'Modules to Search',
@@ -63,7 +55,6 @@ $mod_strings = array(
     'LBL_PIPELINE_FORM_TITLE' => 'Pipeline By Sales Stage',
     'LBL_RGraph_PIPELINE_FORM_TITLE' => 'Pipeline By Sales Stage',
     'LBL_CAMPAIGN_ROI_FORM_TITLE' => 'Campaign ROI',
-    'LBL_MY_CLOSED_OPPORTUNITIES_GAUGE' => 'My Closed Won Opportunities Gauge',
     'LNK_NEW_CONTACT' => 'Create Contact',
     'LNK_NEW_ACCOUNT' => 'Create Account',
     'LNK_NEW_OPPORTUNITY' => 'Create Opportunity',
@@ -77,7 +68,6 @@ $mod_strings = array(
     'LNK_NEW_TASK' => 'Create Task',
     'LNK_NEW_BUG' => 'Report Bug',
     'LBL_ADD_BUSINESSCARD' => 'Enter Business Card',
-    'ERR_ONE_CHAR' => 'Please enter at least one letter or number for your search ...',
     'LBL_OPEN_TASKS' => 'My Open Tasks',
     'LBL_SEARCH_RESULTS_IN' => 'in',
     'LNK_NEW_SEND_EMAIL' => 'Compose Email',
@@ -128,7 +118,8 @@ $mod_strings = array(
         'Portal' => 'Portal',
         'Charts' => 'Charts',
         'Tools' => 'Tools',
-        'Miscellaneous' => 'Miscellaneous'),
+        'Miscellaneous' => 'Miscellaneous'
+    ),
     'LBL_MAX_DASHLETS_REACHED' => 'You have reached the maximum number of SuiteCRM Dashlets your administrator has set. Please remove a SuiteCRM Dashlet to add a new one.',
     'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet ...',
     'LBL_ADDED_DASHLET' => 'SuiteCRM Dashlet Added',
@@ -145,32 +136,15 @@ $mod_strings = array(
     'LBL_DASHLET_REFRESH' => 'Refresh SuiteCRM Dashlet',
     'LBL_DASHLET_EDIT' => 'Edit SuiteCRM Dashlet',
 
-    'LBL_TRAINING_TITLE' => 'Training',
-
-    'LBL_CREATING_NEW_PAGE' => 'Creating New Page...',
-    'LBL_NEW_PAGE_FEEDBACK' => 'You have created a new page. You can add new content with the Add SuiteCRM Dashlets option.',
-    'LBL_DELETE_PAGE_CONFIRM' => 'Are you sure you want to delete this page?',
-    'LBL_SAVING_PAGE_TITLE' => 'Saving Page Title...',
-    'LBL_RETRIEVING_PAGE' => 'Retrieving Page...',
-
     // Default out-of-box names for tabs
     'LBL_HOME_PAGE_1_NAME' => 'My SuiteCRM',
-    'LBL_HOME_PAGE_2_NAME' => 'Sales',
-    'LBL_HOME_PAGE_3_NAME' => 'Support',
     'LBL_HOME_PAGE_6_NAME' => 'Marketing',//bug 16510, separate the support and marketing page from each other
-    'LBL_HOME_PAGE_4_NAME' => 'Tracker',
     'LBL_CLOSE_SITEMAP' => 'Close',
 
     'LBL_SEARCH' => 'Search',
     'LBL_CLEAR' => 'Clear',
 
     'LBL_BASIC_CHARTS' => 'Basic Charts',
-    'LBL_REPORT_CHARTS' => 'Report Charts',
-
-    'LBL_MY_FAVORITE_REPORT_CHARTS' => 'My Favorite Reports',
-    'LBL_GLOBAL_REPORT_CHARTS' => 'Global Team Reports',
-    'LBL_MY_TEAM_REPORT_CHARTS' => 'My Team Reports',
-    'LBL_MY_SAVED_REPORT_CHARTS' => 'My Saved Reports',
 
     'LBL_DASHLET_SEARCH' => 'Find SuiteCRM Dashlet',
 
@@ -179,7 +153,6 @@ $mod_strings = array(
     'LBL_BUILD' => 'Build',
 
 
-    'LBL_VIEWLICENSE_COM' => '<P>This program is free software; you can redistribute it and/or modify it under the terms of the <a href="LICENSE.txt" target="_blank" class="body"> GNU Affero General Public License version 3</a> as published by the Free Software Foundation, including the additional permission set forth in the source code header.</P>',
     'LBL_ADD_TERM_COM' => '<P>The interactive user interfaces in modified source and object code versions of this program must display Appropriate Legal Notices, as required under Section 5 of the GNU Affero General Public License version 3. In accordance with Section 7(b) of the GNU General Public License version 3, these Appropriate Legal Notices must retain the display of the &quot;Powered by SugarCRM&quot; logo. If the display of the logo is not reasonably feasible for technical reasons, the Appropriate Legal Notices must display the words &quot;Powered by SugarCRM&quot;.</P>',
 
 
@@ -243,17 +216,17 @@ $mod_strings = array(
     'LBL_SOURCE_JQUERY_UI' => 'jQuery UI - jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery JavaScript Library.',
     'LBL_SOURCE_OVERLIB' => 'OverlibMWS - The overlibmws library uses javascript for DHTML popups that serve as informational and navigational aids for websites.',
 
-  'LBL_DASHLET_TITLE' => 'My Sites',
-  'LBL_DASHLET_OPT_TITLE' => 'Title',
-  'LBL_DASHLET_INCORRECT_URL' => 'Incorrect website location is specified',
-  'LBL_DASHLET_OPT_URL' => 'Website Location',
-  'LBL_DASHLET_OPT_HEIGHT' => 'Dashlet Height (in pixels)',
-  'LBL_DASHLET_SUGAR_NEWS' => 'SuiteCRM News',
-  'LBL_DASHLET_DISCOVER_SUGAR_PRO' => 'Discover SuiteCRM',
-	'LBL_POWERED_BY_SUGAR' => 'Powered By SugarCRM' /*for 508 compliance fix*/,
-	'LBL_MORE_DETAIL' => 'More Detail' /*for 508 compliance fix*/,
-	'LBL_BASIC_SEARCH' => 'Quick Filter' /*for 508 compliance fix*/,
-	'LBL_ADVANCED_SEARCH' => 'Advanced Filter' /*for 508 compliance fix*/,
+    'LBL_DASHLET_TITLE' => 'My Sites',
+    'LBL_DASHLET_OPT_TITLE' => 'Title',
+    'LBL_DASHLET_INCORRECT_URL' => 'Incorrect website location is specified',
+    'LBL_DASHLET_OPT_URL' => 'Website Location',
+    'LBL_DASHLET_OPT_HEIGHT' => 'Dashlet Height (in pixels)',
+    'LBL_DASHLET_SUGAR_NEWS' => 'SuiteCRM News',
+    'LBL_DASHLET_DISCOVER_SUGAR_PRO' => 'Discover SuiteCRM',
+    'LBL_POWERED_BY_SUGAR' => 'Powered By SugarCRM' /*for 508 compliance fix*/,
+    'LBL_MORE_DETAIL' => 'More Detail' /*for 508 compliance fix*/,
+    'LBL_BASIC_SEARCH' => 'Quick Filter' /*for 508 compliance fix*/,
+    'LBL_ADVANCED_SEARCH' => 'Advanced Filter' /*for 508 compliance fix*/,
     'LBL_TOUR_HOME' => 'Home Icon',
     'LBL_TOUR_HOME_DESCRIPTION' => 'Quickly get back to your Home Page dashboard in one click.',
     'LBL_TOUR_MODULES' => 'Modules',
@@ -302,9 +275,9 @@ $mod_strings = array(
     'LBL_LANGUAGE_COMMUNITY_PACKS' => 'Translation created using Crowdin',
 
     'LBL_ABOUT_SUITE_1' => 'SuiteCRM is a fork of SugarCRM. There are many articles on the web that explain the reasons why a fork of SugarCRM became necessary.',
-    'LBL_ABOUT_SUITE_2' => 'SuiteCRM is published under an open source licence - GPL3',
+    'LBL_ABOUT_SUITE_2' => 'SuiteCRM is published under an open source licence - AGPLv3',
     'LBL_ABOUT_SUITE_3' => 'SuiteCRM is completely compatible with SugarCRM 6.5.x',
-    'LBL_ABOUT_SUITE_4' => 'All SuiteCRM code managed and developed by the project will be released as open source - GPL3',
+    'LBL_ABOUT_SUITE_4' => 'All SuiteCRM code managed and developed by the project will be released as open source - AGPLv3',
     'LBL_ABOUT_SUITE_5' => 'SuiteCRM support is available in both free and paid-for options',
 
     'LBL_SUITE_PARTNERS' => 'We have loyal SuiteCRM partners who are passionate about open source. To view our full partner list, see our website.',

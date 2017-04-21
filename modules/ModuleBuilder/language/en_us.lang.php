@@ -173,7 +173,6 @@ $mod_strings = array(
             'mainHelp' => 'Welcome to the <b>Developer Tools</b> area. <br/><br/>Use the tools within this area to create and manage standard and custom modules and fields.',
             'studioBtn' => 'Use <b>Studio</b> to customize deployed modules.',
             'mbBtn' => 'Use <b>Module Builder</b> to create new modules.',
-            'sugarPortalBtn' => 'Use <b>SuiteCRM Portal Editor</b> to manage and customize the SuiteCRM Portal.',
             'dropDownEditorBtn' => 'Use <b>Dropdown Editor</b> to add and edit global dropdowns for dropdown fields.',
             'appBtn' => 'Application mode is where you can customize various properties of the program, such as how many TPS reports are displayed on the homepage',
             'backBtn' => 'Return to the previous step.',
@@ -211,7 +210,6 @@ $mod_strings = array(
             'SPUploadCSS' => 'Upload a <b>Style Sheet</b> for the SuiteCRM Portal.',
             'SPSync' => '<b>Sync</b> customizations to the SuiteCRM Portal instance.',
             'Layouts' => 'Customize the <b>Layouts</b> of the SuiteCRM Portal modules.',
-            'portalLayoutHelp' => 'The modules within the SuiteCRM Portal appear in this area.<br><br>Select a module to edit the <b>Layouts</b>.',
             'relationshipsHelp' => 'All of the <b>Relationships</b> that exist between the module and other deployed modules appear here.<br><br>The relationship <b>Name</b> is the system-generated name for the relationship.<br><br>The <b>Primary Module</b> is the module that owns the relationships.  For example, all of the properties of the relationships for which the Accounts module is the primary module are stored in the Accounts database tables.<br><br>The <b>Type</b> is the type of relationship exists between the Primary module and the <b>Related Module</b>.<br><br>Click a column title to sort by the column.<br><br>Click a row in the relationship table to view the properties associated with the relationship.<br><br>Click <b>Add Relationship</b> to create a new relationship.<br><br>Relationships can be created between any two deployed modules.',
             'relationshipHelp' => '<b>Relationships</b> can be created between the module and another deployed module.<br><br> Relationships are visually expressed through subpanels and relate fields in the module records.<br><br>Select one of the following relationship <b>Types</b> for the module:<br><br> <b>One-to-One</b> - Both modules\' records will contain relate fields.<br><br> <b>One-to-Many</b> - The Primary Module\'s record will contain a subpanel, and the Related Module\'s record will contain a relate field.<br><br> <b>Many-to-Many</b> - Both modules\' records will display subpanels.<br><br> Select the <b>Related Module</b> for the relationship. <br><br>If the relationship type involves subpanels, select the subpanel view for the appropriate modules.<br><br> Click <b>Save</b> to create the relationship.',
             'convertLeadHelp' => 'Here you can add modules to the convert layout screen and modify the layouts of existing ones.<br/>
@@ -328,16 +326,9 @@ $mod_strings = array(
         ),
 
 
-
     ),
 //HOME
     'LBL_HOME_EDIT_DROPDOWNS' => 'Dropdown Editor',
-
-//ASSISTANT
-    'LBL_AS_SHOW' => 'Show Assistant in future.',
-    'LBL_AS_IGNORE' => 'Ignore Assistant in future.',
-    'LBL_AS_SAYS' => 'Assistant Says:',
-
 
 //STUDIO2
     'LBL_MODULEBUILDER' => 'Module Builder',
@@ -346,7 +337,6 @@ $mod_strings = array(
     'LBL_EDIT_DROPDOWN' => 'Edit Dropdown',
     'LBL_DEVELOPER_TOOLS' => 'Developer Tools',
     'LBL_SUGARPORTAL' => 'SuiteCRM Portal Editor',
-    'LBL_SYNCPORTAL' => 'Sync Portal',
     'LBL_PACKAGE_LIST' => 'Package List',
     'LBL_HOME' => 'Home',
     'LBL_NONE' => '-None-',
@@ -377,7 +367,6 @@ $mod_strings = array(
     'LBL_EDIT_ROWS' => 'Edit Rows',
     'LBL_EDIT_COLUMNS' => 'Edit Columns',
     'LBL_EDIT_LABELS' => 'Edit Labels',
-    'LBL_EDIT_PORTAL' => 'Edit Portal for ',
     'LBL_EDIT_FIELDS' => 'Edit Fields',
     'LBL_EDITVIEW' => 'EditView',
     'LBL_FILLER' => '(filler)',
@@ -405,12 +394,9 @@ $mod_strings = array(
     'LBL_SUBPANEL_TITLE' => 'Title:',
     'LBL_SEARCH_FORMS' => 'Filter',
     'LBL_FILTER' => 'Filter',
-    'LBL_STAGING_AREA' => 'Staging Area (drag and drop items here)',
     'LBL_SUGAR_FIELDS_STAGE' => 'SuiteCRM Fields (click items to add to staging area)',
-    'LBL_SUGAR_BIN_STAGE' => 'SuiteCRM Bin (click items to add to staging area)',
     'LBL_TOOLBOX' => 'Toolbox',
     'LBL_VIEW_SUGAR_FIELDS' => 'View SuiteCRM Fields',
-    'LBL_VIEW_SUGAR_BIN' => 'View SuiteCRM Bin',
     'LBL_QUICKCREATE' => 'QuickCreate',
     'LBL_EDIT_DROPDOWNS' => 'Edit a Global Dropdown',
     'LBL_ADD_DROPDOWN' => 'Add a new Global Dropdown',
@@ -495,7 +481,6 @@ $mod_strings = array(
     'LBL_SECTION_PACKAGES' => 'Packages',
     'LBL_SECTION_PACKAGE' => 'Package',
     'LBL_SECTION_MODULES' => 'Modules',
-    'LBL_SECTION_PORTAL' => 'Portal',
     'LBL_SECTION_DROPDOWNS' => 'Dropdowns',
     'LBL_SECTION_PROPERTIES' => 'Properties',
     'LBL_SECTION_DROPDOWNED' => 'Edit Dropdown',
@@ -585,8 +570,6 @@ $mod_strings = array(
     'LBL_WIDTH' => 'Width',
     'LBL_PACKAGE' => 'Package:',
     'LBL_TYPE' => 'Type:',
-    'LBL_TEAM_SECURITY' => 'Team Security',
-    'LBL_ASSIGNABLE' => 'Assignable',
     'LBL_PERSON' => 'Person',
     'LBL_COMPANY' => 'Company',
     'LBL_ISSUE' => 'Issue',
@@ -612,8 +595,6 @@ $mod_strings = array(
     'LBL_MB_IMPORTABLE' => 'Importing',
 
 // VISIBILITY EDITOR
-    'LBL_VE_VISIBLE' => 'visible',
-    'LBL_VE_HIDDEN' => 'hidden',
     'LBL_PACKAGE_WAS_DELETED' => '[[package]] was deleted',
 
 //EXPORT CUSTOMS
@@ -670,12 +651,10 @@ $mod_strings = array(
 
 //POPUP HELP
     'LBL_POPHELP_FIELD_DATA_TYPE' => 'Select the appropriate data type based on the type of data that will be entered into the field.',
-    'LBL_POPHELP_SEARCHABLE' => 'Select the boost level for this field. <br />Fields with a higher boost level will be given greater weight when the search is performed. <br />When a search is performed, matching records containing fields with a greater weight will be appear higher in the search results.<br /> If you change the boost level for a field from one level to another, perform a system index to apply the change. <br/> Be sure to select to delete the existing data at the time that the system index is performed.',
     'LBL_POPHELP_IMPORTABLE' => '<b>Yes</b>: The field will be included in an import operation.<br><b>No</b>: The field will not be included in an import.<br><b>Required</b>: A value for the field must be provided in any import.',
     'LBL_POPHELP_IMAGE_WIDTH' => 'Enter a number for Width, as measured in pixels.<br> The uploaded image will be scaled to this Width.',
     'LBL_POPHELP_IMAGE_HEIGHT' => 'Enter a number for the Height, as measured in pixels.<br> The uploaded image will be scaled to this Height.',
     'LBL_POPHELP_DUPLICATE_MERGE' => '<b>Enabled</b>: The field will appear in the Merge Duplicates feature, but will not be available to use for the filter conditions in the Find Duplicates feature.<br><b>Disabled</b>: The field will not appear in the Merge Duplicates feature, and will not be available to use for the filter conditions in the Find Duplicates feature.',
-    'LBL_POPHELP_GLOBAL_SEARCH' => 'Select to use this field when searching for records using the Global Search on this module.',
 
 //Revert Module labels
     'LBL_RESET' => 'Reset',
@@ -697,8 +676,6 @@ $mod_strings = array(
 
     'LBL_SECURITYGROUP' => 'Security Group:',
     'LBL_COPY_FROM' => 'Copy From:',
-    'LBL_ADDLAYOUTDONE' => 'Layout Saved',
-    'LBL_REMOVELAYOUTDONE' => 'Layout Removed',
     'LBL_REMOVE_CONFIRM' => 'Are you really sure?',
 
     'fieldTypes' => array(
@@ -730,10 +707,7 @@ $mod_strings = array(
 
     'parent' => 'Flex Relate',
 
-    'LBL_ILLEGAL_FIELD_VALUE' => "Drop down key cannot contain quotes.",
     'LBL_CONFIRM_SAVE_DROPDOWN' => "You are selecting this item for removal from the dropdown list. Any dropdown fields using this list with this item as a value will no longer display the value, and the value will no longer be able to be selected from the dropdown fields. Are you sure you want to continue?",
-    'LBL_POPHELP_VALIDATE_US_PHONE' => 'Select to validate this field for the entry of a 10-digit phone number,<br>with allowance for the country code 1,<br>and to apply a U.S. format to the phone number when the record is saved.<br> The following format will be applied: (xxx) xxx-xxxx.',
-
 
 
     'LBL_ALL_MODULES' => 'All Modules',

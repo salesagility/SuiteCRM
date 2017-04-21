@@ -35,14 +35,11 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
-/*********************************************************************************
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -107,8 +104,6 @@ $mod_strings = array(
     'LBL_MONTHS' => 'mo',
     'LBL_DAY_OF_WEEK' => 'day',
     'LBL_CRONTAB_EXAMPLES' => 'The above uses standard crontab notation.',
-    'LBL_CRONTAB_SERVER_TIME_PRE' => 'The cron specifications run based on the server timezone (',
-    'LBL_CRONTAB_SERVER_TIME_POST' => '). Please specify the scheduler execution time accordingly.',
 // Labels
     'LBL_ALWAYS' => 'Always',
     'LBL_CATCH_UP' => 'Execute If Missed',
@@ -142,7 +137,6 @@ $mod_strings = array(
     'LNK_NEW_SCHEDULER' => 'Create Scheduler',
     'LNK_LIST_SCHEDULED' => 'Scheduled Jobs',
 // Messages
-    'SOCK_GREETING' => "\nThis is the interface for SuiteCRM Schedulers Service. \n[ Available daemon commands: start|restart|shutdown|status ]\nTo quit, type 'quit'.  To shutdown the service 'shutdown'.\n",
     'ERR_DELETE_RECORD' => 'You must specify a record number to delete the schedule.',
     'ERR_CRON_SYNTAX' => 'Invalid Cron syntax',
     'NTC_DELETE_CONFIRMATION' => 'Are you sure you want to delete this record?',
@@ -158,27 +152,8 @@ $mod_strings = array(
 // Subpanels
     'LBL_JOBS_SUBPANEL_TITLE' => 'Job Log',
     'LBL_EXECUTE_TIME' => 'Execute Time',
-
-//jobstrings
-    'LBL_REFRESHJOBS' => 'Refresh Jobs',
-    'LBL_POLLMONITOREDINBOXES' => 'Check Inbound Mail Accounts',
-    'LBL_PERFORMFULLFTSINDEX' => 'Full-text Search Index System',
-
-    'LBL_RUNMASSEMAILCAMPAIGN' => 'Run Nightly Mass Email Campaigns',
-    'LBL_POLLMONITOREDINBOXESFORBOUNCEDCAMPAIGNEMAILS' => 'Run Nightly Process Bounced Campaign Emails',
-    'LBL_PRUNEDATABASE' => 'Prune Database on 1st of Month',
-    'LBL_TRIMTRACKER' => 'Prune Tracker Tables',
-    'LBL_TRIMSUGARFEEDS' => 'Prune SuiteCRM Feed Tables',
-    'LBL_SENDEMAILREMINDERS' => 'Run Email Reminders Sending',
-    'LBL_CLEANJOBQUEUE' => 'Cleanup Job Queue',
-    'LBL_REMOVEDOCUMENTSFROMFS' => 'Removal of documents from filesystem',
-
-    'LBL_AODOPTIMISEINDEX' => 'Optimise Advanced OpenDiscovery Index',
-    'LBL_AODINDEXUNINDEXED' => 'Index unindexed documents',
-    'LBL_POLLMONITOREDINBOXESAOP' => 'AOP Poll Monitored Inboxes',
-    'LBL_AORRUNSCHEDULEDREPORTS' => 'Run scheduled reports',
-    'LBL_PROCESSAOW_WORKFLOW' => 'Process AOW Workflow',
 );
 
 global $sugar_config;
 ?>
+

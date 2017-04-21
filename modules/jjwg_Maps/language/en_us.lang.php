@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,6 +38,10 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 $mod_strings['LBL_MAP'] = 'Map';
 $mod_strings['LBL_MAPS'] = 'Maps';
 $mod_strings['LBL_MODULE_NAME'] = 'Maps';
@@ -53,7 +57,6 @@ $mod_strings['LBL_MODULE_TYPE'] = 'Module Type to Display:';
 $mod_strings['LBL_DISTANCE'] = 'Distance (Radius):';
 $mod_strings['LBL_UNIT_TYPE'] = 'Unit Type:';
 
-$mod_strings['LBL_MAP_ACTION'] = 'Map It';
 $mod_strings['LBL_MAP_DISPLAY'] = 'Map Display';
 $mod_strings['LBL_MAP_LEGEND'] = 'Legend:';
 $mod_strings['LBL_MAP_USERS'] = 'Users:';
