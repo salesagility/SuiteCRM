@@ -69,19 +69,139 @@ class ListViewDataEmails extends ListViewData
         $id = null
     ) {
         global $current_user, $sugar_config, $db;
+
+        // start og parent: list view
         require_once 'include/SearchForm/SearchForm2.php';
 
-        $importedEmails = parent::getListViewData(
-            $seed,
-            $where,
-            $offset,
-            $limit,
-            $filter_fields,
-            $params = array(),
-            $id_field,
-            $singleSelect,
-            $id
+        SugarVCR::erase($seed->module_dir);
+        $this->seed =& $seed;
+        $totalCounted = empty($GLOBALS['sugar_config']['disable_count_query']);
+        $_SESSION['MAILMERGE_MODULE_FROM_LISTVIEW'] = $seed->module_dir;
+        if(empty($_REQUEST['action']) || $_REQUEST['action'] != 'Popup'){
+            $_SESSION['MAILMERGE_MODULE'] = $seed->module_dir;
+        }
+
+        $this->setVariableName($seed->object_name, $where, $this->listviewName, $id);
+
+        $this->seed->id = '[SELECT_ID_LIST]';
+
+        // if $params tell us to override all ordering
+        if(!empty($params['overrideOrder']) && !empty($params['orderBy'])) {
+            $order = $this->getOrderBy(strtolower($params['orderBy']), (empty($params['sortOrder']) ? '' : $params['sortOrder'])); // retreive from $_REQUEST
+        }
+        else {
+            $order = $this->getOrderBy(); // retreive from $_REQUEST
+        }
+
+        // still empty? try to use settings passed in $param
+        if(empty($order['orderBy']) && !empty($params['orderBy'])) {
+            $order['orderBy'] = $params['orderBy'];
+            $order['sortOrder'] =  (empty($params['sortOrder']) ? '' : $params['sortOrder']);
+        }
+
+        //rrs - bug: 21788. Do not use Order by stmts with fields that are not in the query.
+        // Bug 22740 - Tweak this check to strip off the table name off the order by parameter.
+        // Samir Gandhi : Do not remove the report_cache.date_modified condition as the report list view is broken
+        $orderby = $order['orderBy'];
+        if (strpos($order['orderBy'],'.') && ($order['orderBy'] != "report_cache.date_modified")) {
+            $orderby = substr($order['orderBy'],strpos($order['orderBy'],'.')+1);
+        }
+        if ($orderby != 'date_entered' && !in_array($orderby, array_keys($filter_fields))) {
+            $order['orderBy'] = '';
+            $order['sortOrder'] = '';
+        }
+
+        if (empty($order['orderBy'])) {
+            $orderBy = '';
+        } else {
+            $orderBy = $order['orderBy'] . ' ' . $order['sortOrder'];
+            //wdong, Bug 25476, fix the sorting problem of Oracle.
+            if (isset($params['custom_order_by_override']['ori_code']) && $order['orderBy'] == $params['custom_order_by_override']['ori_code'])
+                $orderBy = $params['custom_order_by_override']['custom_code'] . ' ' . $order['sortOrder'];
+        }
+
+        if (empty($params['skipOrderSave'])) { // don't save preferences if told so
+            $current_user->setPreference('listviewOrder', $order, 0, $this->var_name); // save preference
+        }
+
+        // If $params tells us to override for the special last_name, first_name sorting
+        if (!empty($params['overrideLastNameOrder']) && $order['orderBy'] == 'last_name') {
+            $orderBy = 'last_name '.$order['sortOrder'].', first_name '.$order['sortOrder'];
+        }
+
+       //C.L. - Fix for 23461
+        if(empty($_REQUEST['action']) || $_REQUEST['action'] != 'Popup') {
+            $_SESSION['export_where'] = $ret_array['where'];
+        }
+
+
+        $data = array();
+        $rows = array();
+        $count = 0;
+        $idIndex = array();
+        $id_list = '';
+
+
+
+        if (!empty($id_list))
+        {
+            $id_list = '('.substr($id_list, 1).')';
+        }
+
+        SugarVCR::store($this->seed->module_dir,  $main_query);
+
+//        SugarVCR::recordIDs($this->seed->module_dir, array_keys($idIndex), $offset, $totalCount);
+        $module_names = array(
+            'Prospects' => 'Targets'
         );
+        $endOffset = (floor(($totalCount - 1) / $limit)) * $limit;
+        $pageData['ordering'] = $order;
+        $pageData['ordering']['sortOrder'] = $this->getReverseSortOrder($pageData['ordering']['sortOrder']);
+        //get url parameters as an array
+        $pageData['queries'] = $this->generateQueries($pageData['ordering']['sortOrder'], $offset, $prevOffset, $nextOffset,  $endOffset, $totalCounted);
+        //join url parameters from array to a string
+        $pageData['urls'] = $this->generateURLS($pageData['queries']);
+        $pageData['offsets'] = array( 'current'=>$offset, 'next'=>$nextOffset, 'prev'=>$prevOffset, 'end'=>$endOffset, 'total'=>$totalCount, 'totalCounted'=>$totalCounted);
+        $pageData['bean'] = array('objectName' => $seed->object_name, 'moduleDir' => $seed->module_dir, 'moduleName' => strtr($seed->module_dir, $module_names));
+        $pageData['stamp'] = $this->stamp;
+        $pageData['access'] = array('view' => $this->seed->ACLAccess('DetailView'), 'edit' => $this->seed->ACLAccess('EditView'));
+        $pageData['idIndex'] = $idIndex;
+        if(!$this->seed->ACLAccess('ListView')) {
+            $pageData['error'] = 'ACL restricted access';
+        }
+
+        $queryString = '';
+
+        if( isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "advanced_search" ||
+            isset($_REQUEST["type_basic"]) && (count($_REQUEST["type_basic"] > 1) || $_REQUEST["type_basic"][0] != "") ||
+            isset($_REQUEST["module"]) && $_REQUEST["module"] == "MergeRecords")
+        {
+            $queryString = "-advanced_search";
+        }
+        else if (isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "basic_search")
+        {
+            if($seed->module_dir == "Reports") $searchMetaData = SearchFormReports::retrieveReportsSearchDefs();
+            else $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir);
+
+            $basicSearchFields = array();
+
+            if( isset($searchMetaData['searchdefs']) && isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search']) )
+                $basicSearchFields = $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'];
+
+            foreach( $basicSearchFields as $basicSearchField)
+            {
+                $field_name = (is_array($basicSearchField) && isset($basicSearchField['name'])) ? $basicSearchField['name'] : $basicSearchField;
+                $field_name .= "_basic";
+                if( isset($_REQUEST[$field_name])  && ( !is_array($basicSearchField) || !isset($basicSearchField['type']) || $basicSearchField['type'] == 'text' || $basicSearchField['type'] == 'name') )
+                {
+                    // Ensure the encoding is UTF-8
+                    $queryString = htmlentities($_REQUEST[$field_name], null, 'UTF-8');
+                    break;
+                }
+            }
+        }
+
+        // End of parent: list view
 
         $folderType = "inbound";
 
@@ -122,7 +242,6 @@ class ListViewDataEmails extends ListViewData
         }
 
         $limitPerPage = $sugar_config['list_max_entries_per_page'];
-        $pageData = $importedEmails['pageData'];
 
         if(isset($importedEmails['queryString']) and !empty( $importedEmails['queryString'])) {
             $queryString = $importedEmails['queryString'];
@@ -158,16 +277,23 @@ class ListViewDataEmails extends ListViewData
 
         $folder = $inboundEmail->mailbox;
 
-        $cachedEmails = $inboundEmail->checkWithPagination($page, $limitPerPage);
-        $total = $cachedEmails['mailbox_info']['Nmsgs'] + count($importedEmails['data']);
+        $cachedEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order);
+        // order by DESC
+        $sortDESC = function($a, $b) {
+            if ($a['date'] == $b['date']) {
+                return 0;
+            }
 
+            return -1;
+        };
+
+        $total = $cachedEmails['mailbox_info']['Nmsgs'] + count($importedEmails['data']);
         if($page === "end") {
             $offset = $total - $limitPerPage;
         }
 
 
 
-        $data = $importedEmails['data'];
         foreach ($cachedEmails['data'] as $h => $emailHeader) {
             $emailRecord = array();
 
@@ -221,6 +347,28 @@ class ListViewDataEmails extends ListViewData
                         break;
                     case 'msgno':
                         $emailRecord[strtoupper($field)] = $emailHeader['msgno'];
+                        break;
+                    case 'has_attachment':
+                        $emailRecord[strtoupper($field)] = $emailHeader['has_attachment'];
+                        break;
+                    case 'status':
+                        if($emailHeader['answered'] != 0) {
+                            $emailRecord[strtoupper($field)] = 'replied';
+                        } else if($emailHeader['draft'] != 0) {
+                            $emailRecord[strtoupper($field)] = 'draft';
+                        } else if($emailHeader['seen'] != 0) {
+                            $emailRecord[strtoupper($field)] = 'read';
+                        } else {
+                            $emailRecord[strtoupper($field)] = 'unread';
+                        }
+
+                        if($emailHeader['deleted'] != 0) {
+                         // TODO: Handle deleted
+                        }
+
+                        if($emailHeader['recent'] != 0) {
+                            // TODO Add recent flag to SuiteCRM
+                        }
                         break;
                     default:
                         $emailRecord[strtoupper($field)] = '';
@@ -291,7 +439,7 @@ class ListViewDataEmails extends ListViewData
                 $pageData['queries'][$query]['searchFormTab'] = "advanced_search";
                 $pageData['queries'][$query]['lvso'] = "DESC";
 
-                $pageData['urls'][$query] = 'index.php?module=Emails&action=index&parentTab=Activities&searchFormTab=advanced_search&query=true&name_basic=&current_user_only_basic=0&button=Search&lvso=ASC';
+                $pageData['urls'][$query] = 'index.php?module=Emails&action=index&parentTab=Activities&searchFormTab=advanced_search&query=true&current_user_only_basic=0&button=Search&lvso=DESC';
 
             }
          }
