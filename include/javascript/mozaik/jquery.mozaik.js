@@ -260,12 +260,11 @@ var plgBackground = {
         $(this).find('.mozaik-inner').each(function(i,e) {
             if(typeof widths[$(e).css('width')] === 'undefined') {
                 widths[$(e).css('width')] = 0;
-            } else {
-                widths[$(e).css('width')]++;
-                if(widths[$(e).css('width')]>max) {
-                    max = widths[$(e).css('width')];
-                    widthAtMax = parseInt($(e).css('width'));
-                }
+            }
+            widths[$(e).css('width')]++;
+            if(widths[$(e).css('width')]>max) {
+                max = widths[$(e).css('width')];
+                widthAtMax = parseInt($(e).css('width'));
             }
         });
         if(max > 0) {
