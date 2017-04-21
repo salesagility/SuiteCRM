@@ -528,7 +528,7 @@ class SugarBean
             }
 
             if (file_exists($filename)) {
-                include($filename);
+                include_once($filename);
                 // cn: bug 7679 - dictionary entries defined as $GLOBALS['name'] not found
                 if (empty($dictionary) || !empty($GLOBALS['dictionary'][$key])) {
                     $dictionary = $GLOBALS['dictionary'];
