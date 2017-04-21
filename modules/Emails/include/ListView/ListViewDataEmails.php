@@ -242,7 +242,6 @@ class ListViewDataEmails extends ListViewData
         }
 
         $limitPerPage = $sugar_config['list_max_entries_per_page'];
-        $pageData = $importedEmails['pageData'];
 
         if(isset($importedEmails['queryString']) and !empty( $importedEmails['queryString'])) {
             $queryString = $importedEmails['queryString'];
@@ -278,7 +277,7 @@ class ListViewDataEmails extends ListViewData
 
         $folder = $inboundEmail->mailbox;
 
-        $cachedEmails = $inboundEmail->checkWithPagination($page, $limitPerPage);
+        $cachedEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order);
         // order by DESC
         $sortDESC = function($a, $b) {
             if ($a['date'] == $b['date']) {
@@ -440,7 +439,7 @@ class ListViewDataEmails extends ListViewData
                 $pageData['queries'][$query]['searchFormTab'] = "advanced_search";
                 $pageData['queries'][$query]['lvso'] = "DESC";
 
-                $pageData['urls'][$query] = 'index.php?module=Emails&action=index&parentTab=Activities&searchFormTab=advanced_search&query=true&name_basic=&current_user_only_basic=0&button=Search&lvso=ASC';
+                $pageData['urls'][$query] = 'index.php?module=Emails&action=index&parentTab=Activities&searchFormTab=advanced_search&query=true&current_user_only_basic=0&button=Search&lvso=DESC';
 
             }
          }

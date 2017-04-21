@@ -101,6 +101,8 @@ class ListViewSmartyEmails extends ListViewSmarty
                 $this->mass->handleMassUpdate();
             }
         }
+
+
         $this->seed = $seed;
 
         $filter_fields = $this->setupFilterFields($filter_fields);

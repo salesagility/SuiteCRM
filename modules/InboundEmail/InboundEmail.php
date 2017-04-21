@@ -307,38 +307,79 @@ class InboundEmail extends SugarBean
 
 
     /**
-     * @param string $mailbox
-     * @param pageSize $
-     * @return object
-     *
+     * @param int $offset
+     * @param int $pageSize
+     * @param array $order
+     * @param array $filter
+     * @return array
      */
-    public function checkWithPagination($page = 1, $pageSize = 20)
+    public function checkWithPagination($offset = 0, $pageSize = 20, $order = array(), $filter = array())
     {
+        $mailboxInfo = array('Nmsgs' => 0);
         $this->connectMailserver();
 
-        $mailboxInfo = imap_check($this->conn);
-        $lastSequenceNumber = $mailboxInfo->Nmsgs;
 
-        if($page === "end") {
-            $page = $lastSequenceNumber / $pageSize;
-        } else if($page <= 0) {
-            $page = 1;
-        }
-        // Get page of emails headers
-        $pageFrom = $lastSequenceNumber - ($page * $pageSize) + 1;
-        if($pageFrom <= 0) {
-            $pageFrom = 1;
-        }
-        $pageTo = $lastSequenceNumber - (($page * $pageSize) - $pageSize);
-        if($pageTo <= 0) {
-            $pageTo = 1;
+        // handle sorting
+        // Default: to sort the date in descending order
+        $sortCriteria = SORTDATE;
+        $sortOrder = 1;
+        if($order['sortOrder'] == 'ASC') {
+            $sortOrder = 0;
         }
 
+        if(stristr($order['orderBy'], 'date') !== false) {
+            $sortCriteria = SORTDATE;
+        } else if(stristr($order['orderBy'], 'to') !== false) {
+            $sortCriteria = SORTTO;
+        } else if(stristr($order['orderBy'], 'from') !== false) {
+            $sortCriteria = SORTFROM;
+        } else if(stristr($order['orderBy'], 'cc') !== false) {
+            $sortCriteria = SORTCC;
+        } else if(stristr($order['orderBy'], 'name') !== false) {
+            $sortCriteria = SORTSUBJECT;
+        } else if(stristr($order['orderBy'], 'subject') !== false) {
+            $sortCriteria = SORTSUBJECT;
+        }
+
+        // handle filtering
+        $filterCriteria = NULL;
+
+        // TODO: Fix filtering
+        if(!empty($_REQUEST['name_advanced'])) {
+            $filterCriteria = 'SUBJECT "'.$_REQUEST['name_advanced'].'"';
+        } else if(!empty($_REQUEST['name_basic'])) {
+            $filterCriteria = 'SUBJECT "'.$_REQUEST['name_basic'].'"';
+        }
+        // Returns an array of msgno's which are sorted and filtered
+        $emailSortedHeaders = imap_sort(
+            $this->conn,
+            $sortCriteria,
+            $sortOrder,
+            0,
+            $filterCriteria
+        );
+
+        $lastSequenceNumber = $mailboxInfo['Nmsgs'] = count($emailSortedHeaders);
+
+        // paginate
+        if($offset === "end") {
+            $offset = $lastSequenceNumber / $pageSize;
+        } else if($offset <= 0) {
+            $offset = 0;
+        }
+
+        $msgnos = array_slice($emailSortedHeaders, $offset, $pageSize);
+
+        $msgnos = implode(',', $msgnos);
+
+        // Get result
         $emailHeaders = imap_fetch_overview(
             $this->conn,
-            $pageFrom . ":" . $pageTo,
-            0
+            $msgnos
         );
+
+        // select page  or range of messages
+
 
 //        // cache email headers
 //        $this->updateOverviewCacheFile($emailHeaders);
