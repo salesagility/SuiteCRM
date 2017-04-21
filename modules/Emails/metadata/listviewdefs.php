@@ -58,7 +58,9 @@ $viewdefs['Emails']['ListView'] = array(
                         'customCode' => '<a class="btn" data-action="emails-show-folders-modal" title="{$MOD.LBL_SELECT_FOLDER}"><span class="glyphicon glyphicon-folder-open"></span></a>'
                     ),
                 ),
+            'headerTpl' => 'modules/Emails/include/ListView/ListViewHeader.tpl',
         ),
+
         'includes' => array(
             array(
               'file' => 'include/javascript/jstree/dist/jstree.js',
@@ -74,6 +76,9 @@ $viewdefs['Emails']['ListView'] = array(
             ),
             array(
                 'file' => 'modules/Emails/include/ListView/FoldersViewModal.js',
+            ),
+            array(
+                'file' => 'modules/Emails/include/ListView/ListViewHeader.js',
             )
         ),
         'options' => array(

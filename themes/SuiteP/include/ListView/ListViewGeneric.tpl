@@ -66,6 +66,10 @@
 {assign var="moduleName" value = $moduleList.$currentModule}
 {assign var="hideTable" value=false}
 
+{if $form.headerTpl}
+    {sugar_include type="smarty" file=$form.headerTpl}
+{/if}
+
 {if count($data) == 0}
 	{assign var="hideTable" value=true}
 	<div class="list view listViewEmpty">
@@ -301,7 +305,8 @@
 {$contextMenuScript}
 {literal}
 function lvg_nav(m,id,act,offset,t){
-    if(t.href.search(/#/) < 0){return;}
+  if (t.href.search(/#/) < 0) {
+  }
     else{
         if(act=='pte'){
             act='ProjectTemplatesEditView';
@@ -324,4 +329,9 @@ function lvg_nav(m,id,act,offset,t){
         return SUGAR.util.getAdditionalDetails( '{$pageData.bean.moduleDir|default:$params.module}',id, 'adspan_'+id);{literal}}{/literal}
 </script>
 <script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>
+{/if}
+
+
+{if $form.footerTpl}
+    {sugar_include type="smarty" file=$form.headerTpl}
 {/if}

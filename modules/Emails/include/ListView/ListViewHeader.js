@@ -37,50 +37,12 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-(function ($) {
-  /**
-   *
-   * @param options
-   * @return {*|HTMLElement}
-   */
-  $.fn.SettingsView =  function(options) {
-    "use strict";
-    var self = {};
-    var opts = $.extend({}, $.fn.SettingsView.defaults, options);
+$(document).ready(function () {
 
-    self.handleClick = function () {
-      "use strict";
-      $.ajax('index.php?module=Emails&action=GetCurrentUserID').done(function (data) {
-        var jsonData = JSON.parse(data);
-        location.href = 'index.php?module=Users&action=EditView&record=' + jsonData.response;
-      });
-    };
+  var query = JSON.parse($('[name=current_query_by_page]').val());
+  $('.btn-emails-current-folder').text(query.folder);
 
-    /**
-     * @constructor
-     */
-    self.construct = function () {
-      "use strict";
-      $(opts.buttonSelector).click(self.handleClick);
-    };
+  $('.btn-emails-current-folder').click(function () {
 
-    /**
-     * @destructor
-     */
-    self.destruct = function() {
-
-    };
-
-    self.construct();
-    return $(this);
-  };
-
-  $.fn.SettingsView.defaults = {
-    'buttonSelector': '[data-action=emails-configure]',
-    'contentSelector': '#content'
-  }
-}(jQuery));
-
-$(document).ready(function() {
-  $(document).SettingsView();
+  });
 });
