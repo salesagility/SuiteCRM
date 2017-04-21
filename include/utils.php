@@ -422,7 +422,8 @@ function getRunningUser()
             $runningUser = getenv('USERDOMAIN').'\\'.getenv('USERNAME');
         }
         else {
-            $runningUser = posix_getpwuid(posix_geteuid())['name'];
+            $usr = posix_getpwuid(posix_geteuid());
+            $runningUser = $usr['name'];
         }
     }
     return ($runningUser == null) ? '' : $runningUser;

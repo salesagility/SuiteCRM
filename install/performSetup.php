@@ -639,6 +639,7 @@ if(!empty($_SESSION['default_locale_name_format'])) $sugar_config['default_local
 
 
 // save current web-server user for the cron user check mechanism:
+installLog('addCronAllowedUser');
 addCronAllowedUser(getRunningUser());
 
 
