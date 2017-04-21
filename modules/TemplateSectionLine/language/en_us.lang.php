@@ -66,7 +66,6 @@ $mod_strings = array (
   'LBL_SEARCH_FORM_TITLE' => 'Search Template Part',
   'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
   'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-  'LBL_TEMPLATE_SECTIONLINE_SUBPANEL_TITLE' => 'Template Part Editor',
   'LBL_NEW_FORM_TITLE' => 'New Template Part',
   'LBL_GRP' => 'Group',
     'LBL_ORD' => 'Order',
