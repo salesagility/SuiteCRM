@@ -47,6 +47,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 $mod_strings = array (
+    'LBL_EMAIL_INFORMATION' => 'EMAIL',
+    'LBL_EMPTY'                 => ' ',
 	'LBL_FW'					=> 'FW:',
 	'LBL_RE'					=> 'RE:',
 
@@ -58,6 +60,7 @@ $mod_strings = array (
 
 
 	'LBL_CONFIRM_DELETE'		=> 'Are you sure you want to delete this folder?',
+	'LBL_CONFIRM_DELETE_EMAIL'		=> 'Are you sure you want to delete this email?',
 	'LBL_ENTER_FOLDER_NAME'		=> 'Please enter a folder name',
 
 	'LBL_ERROR_SELECT_MODULE'   => 'Please select a module for the Related to field',
@@ -78,6 +81,9 @@ $mod_strings = array (
 	'LBL_ARCHIVED_MODULE_NAME'	=> 'Create Archived Emails',
     'LBL_ARCHIVED_EMAILS_CREATE'  => 'Create',
 	'LBL_ATTACHMENTS'			=> 'Attachments:',
+	'LBL_ATTACH_FILES'			=> 'Attach Files',
+    'LBL_ATTACH_DOCUMENTS'		=> 'Attach Documents',
+	'LBL_ATTACH_NOTES'			=> 'Attach Notes',
 	'LBL_HAS_ATTACHMENT'		=> 'Has Attachment?:',
 	'LBL_BCC'					=> 'Bcc:',
 	'LBL_BODY'					=> 'Body:',
@@ -117,6 +123,7 @@ $mod_strings = array (
 	'LBL_EMAILS_TASKS_REL'		=> 'Emails:Tasks',
 	'LBL_EMAILS_USERS_REL'		=> 'Emails:Users',
     'LBL_EMPTY_FOLDER'          => 'No Emails to display',
+    'LBL_SELECT_FOLDER'         => 'Select Folder',
 	'LBL_ERROR_SENDING_EMAIL'	=> 'Error Sending email',
 	'LBL_ERROR_SAVING_DRAFT'	=> 'Error Saving Draft',
 	'LBL_FROM_NAME'				=> 'From Name',
@@ -142,6 +149,7 @@ $mod_strings = array (
     'LBL_RAW'                  => 'Raw Email',
 	'LBL_SAVE_AS_DRAFT_BUTTON_LABEL'=> 'Save Draft',
 	'LBL_SAVE_AS_DRAFT_BUTTON_TITLE'=> 'Save Draft',
+	'LBL_DISREGARD_DRAFT_BUTTON_TITLE'=> 'Disregard Draft',
 	'LBL_SEARCH_FORM_DRAFTS_TITLE'=> 'Search Drafts',
 	'LBL_SEARCH_FORM_SENT_TITLE'=> 'Search Sent Emails',
 	'LBL_SEARCH_FORM_TITLE'		=> 'Email Search',
@@ -271,6 +279,7 @@ $mod_strings = array (
 	'LBL_WARN_NO_USERS'			=> 'No Users are selected',
     'LBL_WARN_NO_USERS_OR_TEAM' => 'Please select either a user or team for assignment.',
     'LBL_IMPORT_STATUS_TITLE'	=> 'Status',
+    'LBL_INDICATOR'         	=> 'Indicator',
 	'LBL_LIST_STATUS'			=> 'Status',
 	'LBL_LIST_TITLE_GROUP_INBOX'=> 'Group Inbox',
 	'LBL_LIST_TITLE_MY_DRAFTS'	=> 'My Drafts',
@@ -287,6 +296,12 @@ $mod_strings = array (
 	'LNK_QUICK_REPLY'			=> 'Reply',
 	'LNK_MY_ARCHIVED_LIST'		=> 'My Archives',
     'LBL_EMAILS_NO_PRIMARY_TEAM_SPECIFIED' =>'No Primary Team specified',
+    'LBL_INSERT_CONTACT_EMAIL' => 'Insert Email Address from a Contact',
+    'LBL_INSERT_ACCOUNT_EMAIL' => 'Insert Email Address from an Account',
+    'LBL_INSERT_TARGET_EMAIL' => 'Insert Email Address from a Target',
+    'LBL_INSERT_USER_EMAIL' => 'Insert Email Address from an User',
+    'LBL_INSERT_LEAD_EMAIL' => 'Insert Email Address from a Lead',
+    'LBL_INSERT_ERROR_BLANK_EMAIL' => 'Invalid email address',
 
 	// advanced search
 	'LBL_ASSIGNED_TO'			=> 'Assigned To:',
@@ -304,6 +319,7 @@ $mod_strings = array (
 	'LBL_EMAILTEMPLATE_MESSAGE_MULTIPLE_RECIPIENTS' => 'Using an email template containing contact variables, such as the contact name, to send emails to multiple recipients may have unexpected results. It is recommended that you use an email campaign for mass mailings.',
 	'LBL_CHECK_ATTACHMENTS'=>'Please Check Attachments!',
 	'LBL_HAS_ATTACHMENTS' => 'This email already has attachment(s). Would you like to keep the attachment(s)?',
+    'LBL_HAS_ATTACHMENT_INDICATOR' => 'Has Attachments',
 	'ERR_MISSING_REQUIRED_FIELDS' => 'Missing required field',
     'ERR_INVALID_REQUIRED_FIELDS' => 'Invalid required field',
 	'LBL_FILTER_BY_RELATED_BEAN' => 'Only show recipients related to',
@@ -335,6 +351,11 @@ $mod_strings = array (
     'LBL_ADDRESS_BOOK_SEARCH_HELP' => 'Enter an email address, First Name, Last Name or Account Name to find recipients.',
     'LBL_TEST_SETTINGS'     => 'Test Settings',
     'LBL_EMPTY_EMAIL_BODY'  => '<p><span style="color: #888888;"><em>This Message Has No Content</em></span></p>',
+    'LBL_HAS_EMPTY_EMAIL_SUBJECT' => 'Please specify the subject',
+    'LBL_HAS_EMPTY_EMAIL_BODY' => 'Please specify your message in the body',
+    'LBL_HAS_INVALID_EMAIL_CC' => 'The address(es) in the Cc field are invalid',
+    'LBL_HAS_INVALID_EMAIL_BCC' => 'The address(es) in the Bcc field are invalid',
+    'LBL_HAS_INVALID_EMAIL_TO' => 'The address(es) in the To field are invalid',
     'LBL_TEST_EMAIL_SUBJECT' => 'Test Email from SuiteCRM',
     'LBL_NO_SUBJECT' =>'(no subject)',
     'LBL_CHECKING_ACCOUNT'	=> 'Checking Account',
@@ -384,5 +405,8 @@ $mod_strings = array (
 	'LBL_EMAILS_MEETINGS_REL' => 'Emails:Meetings',
 	'LBL_DATE_CREATED' => 'Date Created',
 	'LBL_DATE_MODIFIED' => 'Date Modified',
+
+	'LBL_CATEGORY' => 'Category',
+	'LBL_LIST_CATEGORY' => 'Category',
 );
 

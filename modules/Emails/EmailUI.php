@@ -111,7 +111,7 @@ class EmailUI {
 	/**
 	 * Renders the frame for emails
 	 */
-	function displayEmailFrame() {
+	function displayEmailFrame($baseTpl = "modules/Emails/templates/_baseEmail.tpl") {
 
 		require_once("include/OutboundEmail/OutboundEmail.php");
 
@@ -275,7 +275,7 @@ class EmailUI {
 		///////////////////////////////////////////////////////////////////////
 
 		$out = "";
-		$out .= $this->smarty->fetch("modules/Emails/templates/_baseEmail.tpl");
+		$out .= $this->smarty->fetch($baseTpl);
 		$out .= $tree->generate_header();
 		$out .= $tree->generateNodesNoInit(true, 'email2treeinit');
 		$out .=<<<eoq
@@ -445,8 +445,8 @@ eoq;
 		$lang = "var app_strings = new Object();\n";
 		foreach($app_strings as $k => $v) {
 			if(strpos($k, 'LBL_EMAIL_') !== false) {
-				$v = str_replace("'", "\'", $v);
-				$lang .= "app_strings.{$k} = '{$v}';\n";
+				$vJS = json_encode($v);
+				$lang .= "app_strings.{$k} = {$vJS};\n";
 			}
 		}
 		//Get the email mod strings but don't use the global variable as this may be overridden by

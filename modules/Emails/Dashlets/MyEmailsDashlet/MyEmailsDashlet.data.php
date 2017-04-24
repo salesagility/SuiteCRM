@@ -48,6 +48,7 @@ $dashletData['MyEmailsDashlet']['searchFields'] = array(
                                                        'name'  => array('default' => ''),
 													   //'from_addr_name' => array('default' => ''),
                                                        'assigned_user_id'   => array('default' => ''),
+    'category_id'      => array('default' => ''),
                                                        );
 $dashletData['MyEmailsDashlet']['columns'] = array(
                                                    'from_addr' => array('width'   => '15',
@@ -81,6 +82,10 @@ $dashletData['MyEmailsDashlet']['columns'] = array(
                                                                         'label'   => '',
                                                                         'sortable' => false,
                                                                         'default' => true),
-                                                                        );
+
+    'category_id' => array('width' => '8',
+        'label' => 'LBL_CATEGORY',
+        'default' => true),
+);
 
 ?>

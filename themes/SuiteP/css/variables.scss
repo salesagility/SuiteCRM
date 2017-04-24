@@ -1,7 +1,7 @@
 // Breakpoints
 $xs-breakpoint: 750px;
 $sm-breakpoint: 768px;
-$md-breakpoint: 992px;
+$md-breakpoint: 1024px;
 $lg-breakpoint: 1200px;
 
 
@@ -87,6 +87,9 @@ $navbar-quick-create-link-color: #FFFFFF;
 $navbar-quick-create-mobile-btn-bg: #A2B2BF;
 $navbar-quick-create-btn-bg: #A2B2BF;
 $navbar-quick-create-menu-bg: #829EB5;
+$navbar-quick-create-menu-color: #FFFFFF;
+$navbar-quick-create-menu-color-hover: #FFFFFF;
+$navbar-quick-create-menu-seperator: #95acc0;
 $navbar-quick-create-btn-bg-hover: $navbar-quick-create-menu-bg;
 
 $navbar-alert-count-link-color: #FFFFFF;
@@ -117,13 +120,17 @@ $side-bar-link-color-hover: #677785;
 // Tabs
 $active-tab-bg: #778591;
 $active-tab-bg-hover:#778591;
+$active-tab-color-hover:#FFFFFF;
 $default-tab-bg: #BFCAD3;
 $default-tab-bg-hover: #BFCAD3;
+$default-tab-color-hover: #FFFFFF;
 $default-tab-color: #FFFFFF;
 $action-tab-bg: #F08377;
 $action-tab-bg-hover: #F08377;
 $action-tab-seperator: #FA988D;
 $action-tab-color: #FFFFFF;
+$action-tab-color-hover: #FFFFFF;
+$tab-bg: #FFFFFF;
 $tab-height: 28px; // 32p normal 24px small
 $tab-margin-bottom: 5px;
 
@@ -243,3 +250,22 @@ $line-item-group-width: 100%;
 $workflow-action-bg: #BFCAD3;
 
 $email-template-bg: #FAFAFA;
+
+// Email
+$email-new-record-bg-odd: #ece9f5;
+$email-new-record-bg-even: #e0ddeb;
+$email-panel-bg: #b3c0c7;
+$email-panel-color: #ffffff;
+$email-panel-font-size: 18px;
+$email-panel-height: 24px;
+$email-attachment-group-bg: #B29Eb5;
+$email-attachment-container-border: #DDDDDD;
+$email-attachment-border: #DDDDDD;
+$email-attachment-remove-bg: #B29Eb5;
+$email-attachment-bg: #5D5670;
+$email-attachment-color: #edebf5;
+$email-attachment-font-size: 13px;
+$email-attachment-height: 18px;
+$email-attachment-padding: 4px;
+$email-tree-color: #5D5670;
+$email-tree-selected: #FA988D;

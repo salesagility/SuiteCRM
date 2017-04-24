@@ -158,7 +158,7 @@ HTML;
             style: 'tpls/default/styles/default.css',
             namespace: false,
             ace: false,
-            width: '{$width}',
+            width: '{$width}', // default value
             {$tinyMCESetup}
 
         };
