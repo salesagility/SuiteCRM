@@ -169,14 +169,14 @@ class AM_ProjectTemplatesController extends SugarController {
             $project_task->estimated_effort = $row['estimated_effort'];
             $project_task->utilization = $row['utilization'];
             
-			if($copy_all == 0 && !in_array( $row['id'],$copy_tasks))
-				$project_task->assigned_user_id = NULL;
+	    if($copy_all == 0 && !in_array( $row['id'],$copy_tasks))
+		$project_task->assigned_user_id = NULL;
             else
-				$project_task->assigned_user_id = $row['assigned_user_id'];
+		$project_task->assigned_user_id = $row['assigned_user_id'];
 
-			$project_task->description = $row['description'];
+	    $project_task->description = $row['description'];
             $project_task->duration = $row['duration'];
-			$project_task->duration_unit = $duration_unit;
+	    $project_task->duration_unit = $duration_unit;
             $project_task->project_task_id = $count;
             //Flag to prevent after save logichook running when project_tasks are created (see custom/modules/ProjectTask/updateProject.php)
             $project_task->set_project_end_date = 0;
@@ -210,8 +210,10 @@ class AM_ProjectTemplatesController extends SugarController {
                 $project_task->date_start = $start;
                 $end = $enddate->format('Y-m-d');
                 $project_task->date_finish = $end;
-                $enddate_array[$count] = $end;
-                $GLOBALS['log']->fatal("DATE:". $end);
+		
+		//add one day to let the next task start on next day of it's finish.
+                $enddate_array[$count] = $enddate->modify('+1 Days')->format('Y-m-d');
+                
             }
             else {
                 $start_date = $count - 1;
@@ -220,8 +222,12 @@ class AM_ProjectTemplatesController extends SugarController {
                 $project_task->date_start = $start;
                 $end = $enddate->format('Y-m-d');
                 $project_task->date_finish = $end;
+
+		$startdate = $enddate;
+		//add one day to let the next task start on next day of it's finish.
+		$enddate_array[$count] = $enddate->modify('+1 Days')->format('Y-m-d'); //$end;		    
                 $enddate = $end;
-                $enddate_array[$count] = $end;
+
             }
             $project_task->save();
             //link tasks to the newly created project
