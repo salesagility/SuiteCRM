@@ -60,6 +60,7 @@ $mod_strings = array (
 
 
 	'LBL_CONFIRM_DELETE'		=> 'Are you sure you want to delete this folder?',
+	'LBL_CONFIRM_DELETE_EMAIL'		=> 'Are you sure you want to delete this email?',
 	'LBL_ENTER_FOLDER_NAME'		=> 'Please enter a folder name',
 
 	'LBL_ERROR_SELECT_MODULE'   => 'Please select a module for the Related to field',
@@ -80,6 +81,9 @@ $mod_strings = array (
 	'LBL_ARCHIVED_MODULE_NAME'	=> 'Create Archived Emails',
     'LBL_ARCHIVED_EMAILS_CREATE'  => 'Create',
 	'LBL_ATTACHMENTS'			=> 'Attachments:',
+	'LBL_ATTACH_FILES'			=> 'Attach Files',
+    'LBL_ATTACH_DOCUMENTS'		=> 'Attach Documents',
+	'LBL_ATTACH_NOTES'			=> 'Attach Notes',
 	'LBL_HAS_ATTACHMENT'		=> 'Has Attachment?:',
 	'LBL_BCC'					=> 'Bcc:',
 	'LBL_BODY'					=> 'Body:',
@@ -145,6 +149,7 @@ $mod_strings = array (
     'LBL_RAW'                  => 'Raw Email',
 	'LBL_SAVE_AS_DRAFT_BUTTON_LABEL'=> 'Save Draft',
 	'LBL_SAVE_AS_DRAFT_BUTTON_TITLE'=> 'Save Draft',
+	'LBL_DISREGARD_DRAFT_BUTTON_TITLE'=> 'Disregard Draft',
 	'LBL_SEARCH_FORM_DRAFTS_TITLE'=> 'Search Drafts',
 	'LBL_SEARCH_FORM_SENT_TITLE'=> 'Search Sent Emails',
 	'LBL_SEARCH_FORM_TITLE'		=> 'Email Search',
@@ -291,6 +296,12 @@ $mod_strings = array (
 	'LNK_QUICK_REPLY'			=> 'Reply',
 	'LNK_MY_ARCHIVED_LIST'		=> 'My Archives',
     'LBL_EMAILS_NO_PRIMARY_TEAM_SPECIFIED' =>'No Primary Team specified',
+    'LBL_INSERT_CONTACT_EMAIL' => 'Insert Email Address from a Contact',
+    'LBL_INSERT_ACCOUNT_EMAIL' => 'Insert Email Address from an Account',
+    'LBL_INSERT_TARGET_EMAIL' => 'Insert Email Address from a Target',
+    'LBL_INSERT_USER_EMAIL' => 'Insert Email Address from an User',
+    'LBL_INSERT_LEAD_EMAIL' => 'Insert Email Address from a Lead',
+    'LBL_INSERT_ERROR_BLANK_EMAIL' => 'Invalid email address',
 
 	// advanced search
 	'LBL_ASSIGNED_TO'			=> 'Assigned To:',
@@ -340,6 +351,11 @@ $mod_strings = array (
     'LBL_ADDRESS_BOOK_SEARCH_HELP' => 'Enter an email address, First Name, Last Name or Account Name to find recipients.',
     'LBL_TEST_SETTINGS'     => 'Test Settings',
     'LBL_EMPTY_EMAIL_BODY'  => '<p><span style="color: #888888;"><em>This Message Has No Content</em></span></p>',
+    'LBL_HAS_EMPTY_EMAIL_SUBJECT' => 'Please specify the subject',
+    'LBL_HAS_EMPTY_EMAIL_BODY' => 'Please specify your message in the body',
+    'LBL_HAS_INVALID_EMAIL_CC' => 'The address(es) in the Cc field are invalid',
+    'LBL_HAS_INVALID_EMAIL_BCC' => 'The address(es) in the Bcc field are invalid',
+    'LBL_HAS_INVALID_EMAIL_TO' => 'The address(es) in the To field are invalid',
     'LBL_TEST_EMAIL_SUBJECT' => 'Test Email from SuiteCRM',
     'LBL_NO_SUBJECT' =>'(no subject)',
     'LBL_CHECKING_ACCOUNT'	=> 'Checking Account',
@@ -389,5 +405,8 @@ $mod_strings = array (
 	'LBL_EMAILS_MEETINGS_REL' => 'Emails:Meetings',
 	'LBL_DATE_CREATED' => 'Date Created',
 	'LBL_DATE_MODIFIED' => 'Date Modified',
+
+	'LBL_CATEGORY' => 'Category',
+	'LBL_LIST_CATEGORY' => 'Category',
 );
 

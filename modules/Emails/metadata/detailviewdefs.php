@@ -60,19 +60,53 @@ $viewdefs[$module_name]['DetailView'] = array(
 
         'LBL_EMAIL_INFORMATION' => array(
             array(
-                'name',
+                'from_addr_name' => array(
+                    'name' => 'from_addr_name',
+                    'label' => 'LBL_FROM',
+                ),
+            ),
+            array(
+                'to_addr_name' => array(
+                    'name' => 'to_addr_name',
+                    'label' => 'LBL_TO',
+                ),
+            ),
+            array(
+                'cc_addr_name' => array(
+                    'name' => 'to_addr_name',
+                    'label' => 'LBL_CC',
+                ),
+            ),
+            array(
+                'bcc_addr_name' => array(
+                    'name' => 'bcc_addr_name',
+                    'label' => 'LBL_BCC',
+                ),
+            ),
+            array(
+                'name' => array(
+                    'name' => 'name',
+                    'label' => 'LBL_SUBJECT',
+                ),
+            ),
+            array(
+                'description' => array(
+                    'name' => 'description_html',
+                    'label' => 'LBL_BODY'
+                ),
+            ),
+            array(
+                'parent_name'
+            ),
+            array(
                 'date_entered' => array(
                     'name' => 'date_entered',
                     'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
                     'label' => 'LBL_DATE_ENTERED',
-                ),
+                )
             ),
-
-            array(
-                'description' => array(
-                    'name' => 'description',
-                    'label' => 'LBL_DESCRIPTION'
-                ),
+            array (
+                'category_id',
             ),
         )
     )

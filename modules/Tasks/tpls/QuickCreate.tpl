@@ -89,23 +89,23 @@ CL: Bug fix for 9291 and 9427 - parent_id should be parent_type, not the module 
 <td>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-	<th align="left" scope="row" colspan="4"><h4><slot>{$MOD.LBL_NEW_FORM_TITLE}</slot></h4></th>
+	<th align="left" scope="row" colspan="4"><h4><span>{$MOD.LBL_NEW_FORM_TITLE}</span></h4></th>
 	</tr>
 	<tr>
-	<td valign="top" scope="row" rowspan="2"><slot>{$MOD.LBL_SUBJECT} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td rowspan="2"><slot><textarea name='name' cols="50" tabindex='1' rows="1">{$NAME}</textarea></slot></td>
-	<td scope="row" width="15%"><slot>{$MOD.LBL_PRIORITY} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td  nowrap width="35%"><slot><select  tabindex='2' name='priority'>{$PRIORITY_OPTIONS}</select></slot></td>
+	<td valign="top" scope="row" rowspan="2"><span>{$MOD.LBL_SUBJECT} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td rowspan="2"><span><textarea name='name' cols="50" tabindex='1' rows="1">{$NAME}</textarea></span></td>
+	<td scope="row" width="15%"><span>{$MOD.LBL_PRIORITY} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td  nowrap width="35%"><span><select  tabindex='2' name='priority'>{$PRIORITY_OPTIONS}</select></span></td>
 	</tr>
 	<tr>
-	<td scope="row" width="15%"><slot>{$MOD.LBL_STATUS} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td width="35%"><slot><select tabindex='2' name='status'>{$STATUS_OPTIONS}</select></slot></td>
+	<td scope="row" width="15%"><span>{$MOD.LBL_STATUS} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td width="35%"><span><select tabindex='2' name='status'>{$STATUS_OPTIONS}</select></span></td>
 	</tr>
 	<tr>
-	<td valign="top" scope="row" rowspan="2"><slot>{$MOD.LBL_DESCRIPTION}</slot></td>
-	<td rowspan="2"><slot><textarea name='description' tabindex='1' cols="50" rows="4">{$DESCRIPTION}</textarea></slot></td>
-	<td scope="row"><slot>{$MOD.LBL_DUE_DATE_AND_TIME}</slot></td>
-	<td  nowrap="nowrap"><slot>
+	<td valign="top" scope="row" rowspan="2"><span>{$MOD.LBL_DESCRIPTION}</span></td>
+	<td rowspan="2"><span><textarea name='description' tabindex='1' cols="50" rows="4">{$DESCRIPTION}</textarea></span></td>
+	<td scope="row"><span>{$MOD.LBL_DUE_DATE_AND_TIME}</span></td>
+	<td  nowrap="nowrap"><span>
 	<table border="0" cellpadding="0" cellspacing="0">
 		<tr>
 		<td nowrap="nowrap"><input name='date_due' id='jscal_field' onblur="parseDate(this, '{$USER_DATEFORMAT}');" tabindex='2' maxlength='10' size='11' {$READONLY} type="text" value="{$DATE_DUE}">
@@ -120,12 +120,12 @@ CL: Bug fix for 9291 and 9427 - parent_id should be parent_type, not the module 
 		<td nowrap="nowrap"><span class="dateFormat">{$USER_DATEFORMAT}</span></td>
 		<td nowrap="nowrap"><span class="dateFormat">{$TIME_FORMAT}</span></td>
 		</tr>
-	</table></slot>
+	</table></span>
 	</td>
 	</tr>
 	<tr>
-	<td scope="row"><slot>{$MOD.LBL_START_DATE_AND_TIME}</slot></td>
-	<td  nowrap="nowrap"><slot>
+	<td scope="row"><span>{$MOD.LBL_START_DATE_AND_TIME}</span></td>
+	<td  nowrap="nowrap"><span>
 		<table border="0" cellpadding="0" cellspacing="0">
 		<tr>
 		<td nowrap="nowrap"><input name='date_start' id='date_start' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');" tabindex='2' maxlength='10' size='11' {$READONLY} type="text" value="{$DATE_START}"> {sugar_getimage name="jscalendar" ext=".gif" alt=$APP.LBL_ENTER_DATE other_attributes='align="absmiddle" id="date_start_trigger" '}&nbsp;</td>
@@ -139,7 +139,7 @@ CL: Bug fix for 9291 and 9427 - parent_id should be parent_type, not the module 
 		<td nowrap="nowrap"><span class="dateFormat">{$USER_DATEFORMAT}</span></td>
 		<td nowrap="nowrap"><span class="dateFormat">{$TIME_FORMAT}</span></td>
 		</tr>
-		</table></slot>
+		</table></span>
 	</td>
 
 	</tr>

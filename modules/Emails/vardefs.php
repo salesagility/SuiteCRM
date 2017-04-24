@@ -203,14 +203,14 @@ $dictionary['Email'] = array(
         ),
         'description_html' => array(
             'name' => 'description_html',
-            'type' => 'varchar',
+            'type' => 'html',
             'vname' => 'description_html',
             'source' => 'non-db',
             'inline_edit' => false,
         ),
         'description' => array(
             'name' => 'description',
-            'type' => 'varchar',
+            'type' => 'text',
             'vname' => 'description',
             'source' => 'non-db',
             'inline_edit' => false,
@@ -340,12 +340,15 @@ $dictionary['Email'] = array(
         ),
 
         'parent_name' => array(
-            'name' => 'parent_name',
-            'type' => 'varchar',
-            'reportable' => false,
-            'source' => 'non-db',
+            'name'=> 'parent_name',
+            'parent_type'=>'record_type_display' ,
+            'type_name'=>'parent_type',
+            'id_name'=>'parent_id',
+            'vname'=>'LBL_EMAIL_RELATE',
+            'type'=>'parent',
+            'source'=>'non-db',
+            'options'=> 'record_type_display',
             'inline_edit' => false,
-
         ),
         'parent_type' => array(
             'name' => 'parent_type',
@@ -382,6 +385,85 @@ $dictionary['Email'] = array(
                 'include' => 'modules/Emails/include/displayIndicatorField.php',
                 'onListView' =>  true
             ),
+        ),
+
+        'subject' => array(
+            'name' => 'subject',
+            'vname' => 'LBL_SUBJECT',
+            'type' => 'function',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'studio' => 'visible',
+            'inline_edit' => false,
+            'function' => array(
+                'name' => 'displaySubjectField',
+                'returns' => 'html',
+                'include' => 'modules/Emails/include/displaySubjectField.php',
+                'onListView' =>  true
+            ),
+        ),
+
+        'imported' => array(
+            'name' => 'subject',
+            'type' => 'bool',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
+        ),
+
+        'uid' => array(
+            'name' => 'uid',
+            'type' => 'varchar',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
+        ),
+
+
+        'msgno' => array(
+            'name' => 'msgno',
+            'type' => 'varchar',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
+        ),
+
+
+        'folder' => array(
+            'name' => 'folder',
+            'type' => 'varchar',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
+        ),
+
+        'folder_type' => array(
+            'name' => 'folder_type',
+            'type' => 'varchar',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
+        ),
+        'inbound_email_record' => array(
+            'name' => 'inbound_email_record',
+            'type' => 'varchar',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
         ),
 
         'has_attachment' => array(
@@ -534,6 +616,15 @@ $dictionary['Email'] = array(
         ),
         /* end relationship collections */
 
+        'category_id' => array(
+            'name' => 'category_id',
+            'vname' => 'LBL_CATEGORY',
+            'type' => 'enum',
+            'len' => 100,
+            'options' => 'email_category_dom',
+            'reportable' => true,
+        ),
+
     ), /* end fields() array */
     'relationships' => array(
         'emails_assigned_user' => array(
@@ -664,6 +755,11 @@ $dictionary['Email'] = array(
             'name' => 'idx_email_assigned',
             'type' => 'index',
             'fields' => array('assigned_user_id', 'type', 'status')
+        ),
+        array(
+            'name' => 'idx_email_cat',
+            'type' => 'index',
+            'fields' => array('category_id')
         ),
     ) // end indices
 );

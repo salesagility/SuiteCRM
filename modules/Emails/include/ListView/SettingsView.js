@@ -37,25 +37,50 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$(document).ready(function(){
- $('[data-action=emails-compose]').click(function(){
-   alert('compose email placeholder');
- });
+(function ($) {
+  /**
+   *
+   * @param options
+   * @return {*|HTMLElement}
+   */
+  $.fn.SettingsView =  function(options) {
+    "use strict";
+    var self = {};
+    var opts = $.extend({}, $.fn.SettingsView.defaults, options);
 
- $('[data-action=emails-configure]').click(function(){
-   alert('configure email placeholder');
- });
+    self.handleClick = function () {
+      "use strict";
+      $.ajax('index.php?module=Emails&action=GetCurrentUserID').done(function (data) {
+        var jsonData = JSON.parse(data);
+        location.href = 'index.php?module=Users&action=EditView&record=' + jsonData.response;
+      });
+    };
 
- $('[data-action=emails-check-new-email]').click(function(){
-   alert('check new email placeholder');
- });
+    /**
+     * @constructor
+     */
+    self.construct = function () {
+      "use strict";
+      $(opts.buttonSelector).click(self.handleClick);
+    };
 
- $('[data-action=emails-open-folder]').click(function(){
-   alert('open folder email placeholder');
- });
+    /**
+     * @destructor
+     */
+    self.destruct = function() {
 
- // look for new
-  $('.email-indicator .email-new').each(function(i, v){
-    $(this).closest('tr').addClass('email-new-record');
-  });
+    };
+
+    self.construct();
+    return $(this);
+  };
+
+  $.fn.SettingsView.defaults = {
+    'buttonSelector': '[data-action=emails-configure]',
+    'contentSelector': '#content'
+  }
+}(jQuery));
+
+$(document).ready(function() {
+  $(document).SettingsView();
 });
