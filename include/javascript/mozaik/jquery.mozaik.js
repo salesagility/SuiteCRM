@@ -446,6 +446,17 @@ var plgBackground = {
                 style = style.replace(/;\s*;/, ';');
                 var listElemHTML = mozaik.getEditorListElementHTML(name, html, settings.ace, style, toolPlugins);
                 $mozaik.append(listElemHTML);
+
+                // TODO: here we should decide which width of template-part need to set width
+
+                // set content area width
+                if(mozaik.lastContentsWidth) {
+                    mozaik.setContentsWidth(mozaik.lastContentsWidth);
+                }
+
+                // set full template width
+                mozaik.setWidth();
+
                 var editables = name && settings.thumbs[name].editables ? settings.thumbs[name].editables.split(',') : settings.editables.split(',');
                 $.each(editables, function(i,e){
                     var sels = '.mozaik-inner-contents'; //, .mozaik-inner ' + e;
