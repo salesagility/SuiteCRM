@@ -363,7 +363,7 @@ class InboundEmail extends SugarBean
 
         // paginate
         if($offset === "end") {
-            $offset = $lastSequenceNumber / $pageSize;
+            $offset = $lastSequenceNumber - $pageSize;
         } else if($offset <= 0) {
             $offset = 0;
         }
@@ -378,10 +378,7 @@ class InboundEmail extends SugarBean
             $msgnos
         );
 
-        // select page  or range of messages
-
-
-//        // cache email headers
+        // TODO: cache email headers
 //        $this->updateOverviewCacheFile($emailHeaders);
 
         $emailHeaders = json_decode(json_encode($emailHeaders), true);
@@ -394,11 +391,31 @@ class InboundEmail extends SugarBean
             {
                 // has attachment
                 $emailHeaders[$i]['has_attachment'] = true;
-            }else{
+            } else{
                 // no attachment
                 $emailHeaders[$i]['has_attachment'] = false;
             }
         }
+
+
+        // fix sorting problem
+        $sortMsgNoAscending = function($a, $b) {
+            if($a->msgno === $b->msgno) {
+                return 0;
+            } else if($a->msgno >= $b->msgno) {
+                return 1;
+            } else {
+                return -1;
+            }
+        };
+
+        if ($sortOrder === 1) {
+            usort($emailHeaders, $sortMsgNoAscending);
+            $msgnos = array_reverse($emailHeaders);
+        }
+
+
+
 
         return array(
             "data" => $emailHeaders,
