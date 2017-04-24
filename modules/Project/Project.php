@@ -608,7 +608,9 @@ class Project extends SugarBean {
 					$project_task->date_start = $start;
 					$end = $enddate->format('Y-m-d');
 					$project_task->date_finish = $end;
-					$enddate_array[$count] = $end;
+
+					//add one day to let the next task start on next day of it's finish.
+					$enddate_array[$count] = $enddate->modify('+1 Days')->format('Y-m-d');
 				}
 				else {
 					$start_date = $count - 1;
@@ -617,8 +619,12 @@ class Project extends SugarBean {
 					$project_task->date_start = $start;
 					$end = $enddate->format('Y-m-d');
 					$project_task->date_finish = $end;
+					
+					$startdate = $enddate;
+					//add one day to let the next task start on next day of it's finish.
+					$enddate_array[$count] = $enddate->modify('+1 Days')->format('Y-m-d');
+					
 					$enddate = $end;
-					$enddate_array[$count] = $end;
 				}
 				
 				$project_task->save();
