@@ -408,5 +408,6 @@ $mod_strings = array (
 
 	'LBL_CATEGORY' => 'Category',
 	'LBL_LIST_CATEGORY' => 'Category',
+	'LBL_EMAIL_TEMPLATE' => 'Email Template',
 );
 
