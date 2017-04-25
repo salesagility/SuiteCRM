@@ -326,9 +326,20 @@ class ListViewDataEmails extends ListViewData
                             'D, d M Y H:i:s O',
                             $date
                         );
+                        if($dateTime  == false){  // @TODO This needs to be more generic to dealing with different formats from IMAP
+                            $dateTime = DateTime::createFromFormat(
+                                'd M Y H:i:s O',
+                                $date
+                            );
+                        }
 
-                        $timeDate = new TimeDate();
-                        $emailRecord[strtoupper($field)] = $timeDate->asUser($dateTime, $current_user);
+                        if($dateTime == false){
+                            $emailRecord[strtoupper($field)] = '';
+                        }
+                        else{
+                            $timeDate = new TimeDate();
+                            $emailRecord[strtoupper($field)] = $timeDate->asUser($dateTime, $current_user);
+                        }
                         break;
                     case 'is_imported':
                         $emailRecord['IS_IMPORTED'] = false;
