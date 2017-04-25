@@ -838,7 +838,7 @@
     }
   }
 
-  $.fn.EmailsComposeView.myAwesomePrototypeCallback = function(args) {
+  $.fn.EmailsComposeView.onTemplateSelect = function(args) {
     console.log('my !!AWESOME!! before advice', args);
 
     var confirmed = function(args) {
