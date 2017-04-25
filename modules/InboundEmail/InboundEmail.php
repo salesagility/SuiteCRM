@@ -322,6 +322,7 @@ class InboundEmail extends SugarBean
         // handle sorting
         // Default: to sort the date in descending order
         $sortCriteria = SORTDATE;
+        $sortCRM = 'udate';
         $sortOrder = 1;
         if($order['sortOrder'] == 'ASC') {
             $sortOrder = 0;
@@ -329,16 +330,21 @@ class InboundEmail extends SugarBean
 
         if(stristr($order['orderBy'], 'date') !== false) {
             $sortCriteria = SORTDATE;
+            $sortCRM = 'udate';
         } else if(stristr($order['orderBy'], 'to') !== false) {
             $sortCriteria = SORTTO;
+            $sortCRM = 'to';
         } else if(stristr($order['orderBy'], 'from') !== false) {
             $sortCriteria = SORTFROM;
+            $sortCRM = 'from';
         } else if(stristr($order['orderBy'], 'cc') !== false) {
             $sortCriteria = SORTCC;
         } else if(stristr($order['orderBy'], 'name') !== false) {
             $sortCriteria = SORTSUBJECT;
+            $sortCRM = 'subject';
         } else if(stristr($order['orderBy'], 'subject') !== false) {
             $sortCriteria = SORTSUBJECT;
+            $sortCRM = 'subject';
         }
 
         // handle filtering
@@ -398,23 +404,16 @@ class InboundEmail extends SugarBean
         }
 
 
-        // fix sorting problem
-        $sortMsgNoAscending = function($a, $b) {
-            if($a->msgno === $b->msgno) {
+        usort($emailHeaders, function($a, $b) use($sortCRM){  // defaults to DESC order
+            if($a[$sortCRM] === $b[$sortCRM]) {
                 return 0;
-            } else if($a->msgno >= $b->msgno) {
+            } else if($a[$sortCRM] < $b[$sortCRM]) {
                 return 1;
             } else {
                 return -1;
             }
-        };
-
-        if ($sortOrder === 1) {
-            usort($emailHeaders, $sortMsgNoAscending);
-            $msgnos = array_reverse($emailHeaders);
-        }
-
-
+        });
+        if(!$sortOrder) array_reverse($emailHeaders); // Make it ASC order
 
 
         return array(
