@@ -839,10 +839,8 @@
   }
 
   $.fn.EmailsComposeView.onTemplateSelect = function(args) {
-    console.log('my !!AWESOME!! before advice', args);
 
     var confirmed = function(args) {
-      //$.fn.EmailsComposeView.myPublicPopupCloseEventHandler(args);
       $.post('index.php?entryPoint=emailTemplateData', {
         emailTemplateId: args.name_to_value_array.emails__email_templates_idb
       }, function(resp){
@@ -859,14 +857,12 @@
 
     mb.on('ok', function() {
       "use strict";
-      // do somthing
       confirmed(args);
       mb.remove();
     });
 
     mb.on('cancel', function() {
       "use strict";
-      // do something
       mb.remove();
     });
   };
