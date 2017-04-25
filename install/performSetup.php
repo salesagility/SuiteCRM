@@ -469,6 +469,7 @@ FP;
     $enabled_tabs[] = 'AOW_WorkFlow';
     $enabled_tabs[] = 'AOK_KnowledgeBase';
     $enabled_tabs[] = 'AOK_Knowledge_Base_Categories';
+    $enabled_tabs[] = 'EmailTemplates';
 
 //Beginning of the scenario implementations
 //We need to load the tabs so that we can remove those which are scenario based and un-selected
@@ -639,6 +640,7 @@ if(!empty($_SESSION['default_locale_name_format'])) $sugar_config['default_local
 
 
 // save current web-server user for the cron user check mechanism:
+installLog('addCronAllowedUser');
 addCronAllowedUser(getRunningUser());
 
 

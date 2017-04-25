@@ -74,6 +74,8 @@ function displayIndicatorField($focus, $field, $value, $view)
         if (is_object($bean)) {
             $bean = get_object_vars($bean);
         }
+    } else{
+        $bean = $focus;
     }
 
     $template = new Sugar_Smarty();

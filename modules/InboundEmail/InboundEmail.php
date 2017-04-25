@@ -307,46 +307,118 @@ class InboundEmail extends SugarBean
 
 
     /**
-     * @param string $mailbox
-     * @param pageSize $
-     * @return object
-     *
+     * @param int $offset
+     * @param int $pageSize
+     * @param array $order
+     * @param array $filter
+     * @return array
      */
-    public function checkWithPagination($page = 1, $pageSize = 20)
+    public function checkWithPagination($offset = 0, $pageSize = 20, $order = array(), $filter = array())
     {
+        $mailboxInfo = array('Nmsgs' => 0);
         $this->connectMailserver();
 
-        $mailboxInfo = imap_check($this->conn);
-        $lastSequenceNumber = $mailboxInfo->Nmsgs;
 
-        if($page === "end") {
-            $page = $lastSequenceNumber / $pageSize;
-        } else if($page <= 0) {
-            $page = 1;
-        }
-        // Get page of emails headers
-        $pageFrom = $lastSequenceNumber - ($page * $pageSize) + 1;
-        if($pageFrom <= 0) {
-            $pageFrom = 1;
-        }
-        $pageTo = $lastSequenceNumber - (($page * $pageSize) - $pageSize);
-        if($pageTo <= 0) {
-            $pageTo = 1;
+        // handle sorting
+        // Default: to sort the date in descending order
+        $sortCriteria = SORTDATE;
+        $sortCRM = 'udate';
+        $sortOrder = 1;
+        if($order['sortOrder'] == 'ASC') {
+            $sortOrder = 0;
         }
 
-        $emailHeaders = imap_fetch_overview(
+        if(stristr($order['orderBy'], 'date') !== false) {
+            $sortCriteria = SORTDATE;
+            $sortCRM = 'udate';
+        } else if(stristr($order['orderBy'], 'to') !== false) {
+            $sortCriteria = SORTTO;
+            $sortCRM = 'to';
+        } else if(stristr($order['orderBy'], 'from') !== false) {
+            $sortCriteria = SORTFROM;
+            $sortCRM = 'from';
+        } else if(stristr($order['orderBy'], 'cc') !== false) {
+            $sortCriteria = SORTCC;
+        } else if(stristr($order['orderBy'], 'name') !== false) {
+            $sortCriteria = SORTSUBJECT;
+            $sortCRM = 'subject';
+        } else if(stristr($order['orderBy'], 'subject') !== false) {
+            $sortCriteria = SORTSUBJECT;
+            $sortCRM = 'subject';
+        }
+
+        // handle filtering
+        $filterCriteria = NULL;
+
+        // TODO: Fix filtering
+        if(!empty($_REQUEST['name_advanced'])) {
+            $filterCriteria = 'SUBJECT "'.$_REQUEST['name_advanced'].'"';
+        } else if(!empty($_REQUEST['name_basic'])) {
+            $filterCriteria = 'SUBJECT "'.$_REQUEST['name_basic'].'"';
+        }
+        // Returns an array of msgno's which are sorted and filtered
+        $emailSortedHeaders = imap_sort(
             $this->conn,
-            $pageFrom . ":" . $pageTo,
-            0
+            $sortCriteria,
+            $sortOrder,
+            0,
+            $filterCriteria
         );
 
+        $lastSequenceNumber = $mailboxInfo['Nmsgs'] = count($emailSortedHeaders);
 
-        // cache email headers
-        $this->updateOverviewCacheFile($emailHeaders);
+        // paginate
+        if($offset === "end") {
+            $offset = $lastSequenceNumber - $pageSize;
+        } else if($offset <= 0) {
+            $offset = 0;
+        }
+
+        $msgnos = array_slice($emailSortedHeaders, $offset, $pageSize);
+
+        $msgnos = implode(',', $msgnos);
+
+        // Get result
+        $emailHeaders = imap_fetch_overview(
+            $this->conn,
+            $msgnos
+        );
+
+        // TODO: cache email headers
+//        $this->updateOverviewCacheFile($emailHeaders);
+
+        $emailHeaders = json_decode(json_encode($emailHeaders), true);
+        // get attachment status
+        foreach ($emailHeaders as $i=> $emailHeader) {
+
+            $structure = imap_fetchstructure($this->conn,  $emailHeader['msgno']);
+
+            if(isset($structure->parts[0]->parts))
+            {
+                // has attachment
+                $emailHeaders[$i]['has_attachment'] = true;
+            } else{
+                // no attachment
+                $emailHeaders[$i]['has_attachment'] = false;
+            }
+        }
+
+
+        usort($emailHeaders, function($a, $b) use($sortCRM){  // defaults to DESC order
+            if($a[$sortCRM] === $b[$sortCRM]) {
+                return 0;
+            } else if($a[$sortCRM] < $b[$sortCRM]) {
+                return 1;
+            } else {
+                return -1;
+            }
+        });
+        if(!$sortOrder) array_reverse($emailHeaders); // Make it ASC order
+
 
         return array(
-            "data" => json_decode(json_encode($emailHeaders), true),
-            "mailbox_info" => json_decode(json_encode($mailboxInfo), true)
+            "data" => $emailHeaders,
+            "mailbox_info" => json_decode(json_encode($mailboxInfo), true),
         );
     }
     ///////////////////////////////////////////////////////////////////////////
@@ -4538,30 +4610,6 @@ class InboundEmail extends SugarBean
 
         // reset inline images cache
         $this->inlineImages = array();
-
-        // handle messages deleted on server
-        if (empty($header)) {
-            if (!isset($this->email) || empty($this->email)) {
-                $this->email = new Email();
-            }
-
-            $q = "";
-            $queryUID = $this->db->quote($uid);
-            if ($this->isPop3Protocol()) {
-                $this->email->name = $app_strings['LBL_EMAIL_ERROR_MESSAGE_DELETED'];
-                $q = "DELETE FROM email_cache WHERE message_id = '{$queryUID}' AND ie_id = '{$this->id}' AND mbox = '{$this->mailbox}'";
-            } else {
-                $this->email->name = $app_strings['LBL_EMAIL_ERROR_IMAP_MESSAGE_DELETED'];
-                $q = "DELETE FROM email_cache WHERE imap_uid = '{$queryUID}' AND ie_id = '{$this->id}' AND mbox = '{$this->mailbox}'";
-            } // else
-            // delete local cache
-            $r = $this->db->query($q);
-
-            $this->email->date_sent = $timedate->nowDb();
-
-            return false;
-            //return "Message deleted from server.";
-        }
 
         ///////////////////////////////////////////////////////////////////////
         ////	DUPLICATE CHECK

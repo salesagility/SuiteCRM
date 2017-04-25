@@ -2038,7 +2038,7 @@ function validate_manifest($manifest) {
     global $sugar_flavor;
 	global $mod_strings;
 
-	include_once('suitecrm_version.php');
+	include('suitecrm_version.php');
 
     if(!isset($manifest['type'])) {
         return $mod_strings['ERROR_MANIFEST_TYPE'];
