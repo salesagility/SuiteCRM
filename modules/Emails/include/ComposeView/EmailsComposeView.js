@@ -37,25 +37,6 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-var myAwesomeCallback = function(args) {
-  console.log('my !!AWESOME!! before advice', args);
-
-  var confirmed = function(args) {
-    //$.fn.EmailsComposeView.myPublicPopupCloseEventHandler(args);
-    $.post('index.php?entryPoint=emailTemplateData', {
-      emailTemplateId: args.name_to_value_array.emails__email_templates_idb
-    }, function(resp){
-      var r = JSON.parse(resp);
-      tinyMCE.get('description').setContent($('<textarea />').html(r.data.body_html).text());
-    });
-    set_return(args);
-  };
-
-  if(confirm('LBL_BODY_WILL_OVERRIDE_ARE_YOU_SURE')) {
-    confirmed(args);
-  }
-};
-
 (function ($) {
   /**
    *
@@ -856,4 +837,38 @@ var myAwesomeCallback = function(args) {
       }
     }
   }
+
+  $.fn.EmailsComposeView.myAwesomePrototypeCallback = function(args) {
+    console.log('my !!AWESOME!! before advice', args);
+
+    var confirmed = function(args) {
+      //$.fn.EmailsComposeView.myPublicPopupCloseEventHandler(args);
+      $.post('index.php?entryPoint=emailTemplateData', {
+        emailTemplateId: args.name_to_value_array.emails__email_templates_idb
+      }, function(resp){
+        var r = JSON.parse(resp);
+        tinyMCE.get('description').setContent($('<textarea />').html(r.data.body_html).text());
+      });
+      set_return(args);
+    };
+
+    var mb = messageBox();
+    mb.setTitle(SUGAR.language.translate('Emails', 'LBL_CONFIRM_TITLE'));
+    mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_BODY'));
+    mb.show();
+
+    mb.on('ok', function() {
+      "use strict";
+      // do somthing
+      confirmed(args);
+      mb.remove();
+    });
+
+    mb.on('cancel', function() {
+      "use strict";
+      // do something
+      mb.remove();
+    });
+  };
+
 }(jQuery));
