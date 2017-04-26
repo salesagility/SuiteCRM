@@ -303,7 +303,9 @@ function showSubPanel(child_field,url,force_load,layout_def_key)
 		var returnstuff = http_fetch_sync(url+ '&inline=' + inline + '&ajaxSubpanel=true');
 		request_id++;
 		got_data(returnstuff, inline);
-		$('#whole_subpanel_'+child_field+' .table-responsive').footable();
+		if (SUGAR.themes.theme_name=="SuiteP"){
+			$('#whole_subpanel_'+child_field+' .table-responsive').footable();
+		}
 	}
 	else
 	{
