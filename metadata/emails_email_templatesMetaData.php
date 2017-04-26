@@ -42,12 +42,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
   die('Not A Valid Entry Point');
 }
 
-$dictionary["emails__email_templates"] = array (
+$dictionary["emails_email_templates"] = array (
   'true_relationship_type' => 'one-to-one',
   'from_studio' => true,
   'relationships' => 
   array (
-    'emails__email_templates' =>
+    'emails_email_templates' =>
     array (
       'lhs_module' => 'Emails',
       'lhs_table' => 'emails',
@@ -56,12 +56,12 @@ $dictionary["emails__email_templates"] = array (
       'rhs_table' => 'email_templates',
       'rhs_key' => 'id',
       'relationship_type' => 'many-to-many',
-      'join_table' => 'emails__email_templates',
-      'join_key_lhs' => 'emails__email_templates_ida',
-      'join_key_rhs' => 'emails__email_templates_idb',
+      'join_table' => 'emails_email_templates',
+      'join_key_lhs' => 'emails_email_templates_ida',
+      'join_key_rhs' => 'emails_email_templates_idb',
     ),
   ),
-  'table' => 'emails__email_templates',
+  'table' => 'emails_email_templates',
   'fields' => 
   array (
     0 => 
@@ -85,13 +85,13 @@ $dictionary["emails__email_templates"] = array (
     ),
     3 => 
     array (
-      'name' => 'emails__email_templates_ida',
+      'name' => 'emails_email_templates_ida',
       'type' => 'varchar',
       'len' => 36,
     ),
     4 => 
     array (
-      'name' => 'emails__email_templates_idb',
+      'name' => 'emails_email_templates_idb',
       'type' => 'varchar',
       'len' => 36,
     ),
@@ -100,7 +100,7 @@ $dictionary["emails__email_templates"] = array (
   array (
     0 => 
     array (
-      'name' => 'emails__email_templatesspk',
+      'name' => 'emails_email_templatesspk',
       'type' => 'primary',
       'fields' => 
       array (
@@ -109,20 +109,20 @@ $dictionary["emails__email_templates"] = array (
     ),
     1 => 
     array (
-      'name' => 'emails__email_templates_ida1',
+      'name' => 'emails_email_templates_ida1',
       'type' => 'index',
       'fields' => 
       array (
-        0 => 'emails__email_templates_ida',
+        0 => 'emails_email_templates_ida',
       ),
     ),
     2 => 
     array (
-      'name' => 'emails__email_templates_idb2',
+      'name' => 'emails_email_templates_idb2',
       'type' => 'index',
       'fields' => 
       array (
-        0 => 'emails__email_templates_idb',
+        0 => 'emails_email_templates_idb',
       ),
     ),
   ),
