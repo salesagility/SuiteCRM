@@ -36,9 +36,5 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-// Init button
-$(document).ready(function() {
-  // TODO remove mass update from tinymce
-  $(document).EmailsComposeViewModal();
-});
+(function($){$.fn.EmailsComposeViewModal=function(options){"use strict";var self={};var opts=$.extend({},$.fn.EmailsComposeViewModal.defaults,options);self.handleClick=function(){"use strict";self.emailComposeView=null;var composeBox=$('<div></div>').appendTo(opts.contentSelector);composeBox.messageBox({"showHeader":false,"showFooter":false,"size":'lg',});composeBox.setBody('<div class="email-in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>');composeBox.show();$.ajax({type:"GET",cache:false,url:'index.php?module=Emails&action=ComposeView'}).done(function(data){if(data.length===0){console.error("Unable to display ComposeView");composeBox.setBody(SUGAR.language.translate('','ERR_AJAX_LOAD'));return;}
+composeBox.setBody(data);self.emailComposeView=composeBox.controls.modal.body.find('.compose-view').EmailsComposeView();$(self.emailComposeView).on('sentEmail',function(event,composeView){composeBox.hide();composeBox.remove();});$(self.emailComposeView).on('disregardDraft',function(event,composeView){if(typeof messageBox!=="undefined"){var mb=messageBox({size:'lg'});mb.setBody(SUGAR.language.translate('Emails','LBL_CONFIRM_DELETE_EMAIL'));mb.on('ok',function(){mb.remove();composeBox.hide();composeBox.remove();});mb.on('cancel',function(){mb.remove();});mb.show();}else{if(confirm(self.translatedErrorMessage)){composeBox.hide();composeBox.remove();}}});composeBox.on('cancel',function(){composeBox.remove();});composeBox.on('hide.bs.modal',function(){composeBox.remove();});}).fail(function(data){composeBox.controls.modal.content.html(SUGAR.language.translate('','LBL_EMAIL_ERROR_GENERAL_TITLE'));});};self.construct=function(){"use strict";$(opts.buttonSelector).click(self.handleClick)};self.destruct=function(){};self.construct();return $(this);};$.fn.EmailsComposeViewModal.defaults={'selected':'INBOX','buttonSelector':'[data-action=emails-show-compose-modal]','contentSelector':'#content'}}(jQuery));
