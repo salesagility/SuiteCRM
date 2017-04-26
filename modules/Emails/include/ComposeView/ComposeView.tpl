@@ -38,21 +38,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
-{literal}
-    <style>
-        /* TODO: add these into scss files (somehow... if you can) */
-        @media (min-width: 1024px) {
-            .compose-view .panel .col-sm-8 {
-                width: calc(100% - 300px);
-            }
-        }
-        @media (min-width: 1600px) {
-            .col-sm-6 .col-sm-8.edit-view-field input.sqsEnabled {
-                width: calc(100% - 230px);
-            }
-        }
-    </style>
-{/literal}
+
 {{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
 {* Compose view has a TEMP ID in case you want to display multi instance of the ComposeView *}
