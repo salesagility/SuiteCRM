@@ -2541,10 +2541,10 @@ class InboundEmail extends SugarBean
             $ieId = $this->save();
 
             // Folders
-            $foldersFound = $this->db->query('SELECT id FROM folders WHERE folders.id LIKE "'.$ieID.'"');
-            $foldersFoundRow = $this->db->fetchRow($foldersFound);
+            $foldersFound = $this->db->query('SELECT folders.id FROM folders WHERE folders.id LIKE "'.$this->id.'"');
+            $row = $this->db->fetchByAssoc($foldersFound);
             $sf = new SugarFolder();
-            if(empty($foldersFoundRow) and  $foldersFoundRow !== false) {
+            if(empty($row)) {
                 // Create Folders
                 $params = array(
                     // Inbox
