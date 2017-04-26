@@ -68,7 +68,7 @@ class ListViewDataEmails extends ListViewData
         $singleSelect = true,
         $id = null
     ) {
-        global $current_user, $sugar_config, $db;
+        global $current_user, $sugar_config, $db, $mod_strings;
 
         // start og parent: list view
         require_once 'include/SearchForm/SearchForm2.php';
@@ -204,7 +204,7 @@ class ListViewDataEmails extends ListViewData
         // End of parent: list view
 
         $folderType = "inbound";
-
+        $inboundEmailID = '';
         if (isset($_REQUEST['folders_id']) and !empty($_REQUEST['folders_id'])) {
             $foldersId = $_REQUEST['folders_id'];
             $result = $db->query('SELECT * FROM folders WHERE id="'.$foldersId.'"');
@@ -220,22 +220,27 @@ class ListViewDataEmails extends ListViewData
                 $folderType =  $row['folder_type'];
             }
 
-            $inboundEmailIDs = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
-            $inboundEmailID = '';
-            foreach ($inboundEmailIDs as $f) {
-                if(!empty($f)) {
-                    $inboundEmailID = $f;
-                    break;
+            if(empty($inboundEmailID)) {
+                $inboundEmailIDs = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+
+                foreach ($inboundEmailIDs as $f) {
+                    if(!empty($f)) {
+                        $inboundEmailID = $f;
+                        break;
+                    }
                 }
             }
+
         } else {
 
-            $inboundEmailIDs = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
-            $inboundEmailID = '';
-            foreach ($inboundEmailIDs as $f) {
-                if(!empty($f)) {
-                    $inboundEmailID = $f;
-                    break;
+            if(empty($inboundEmailID)) {
+                $inboundEmailIDs = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+
+                foreach ($inboundEmailIDs as $f) {
+                    if(!empty($f)) {
+                        $inboundEmailID = $f;
+                        break;
+                    }
                 }
             }
 
@@ -259,208 +264,214 @@ class ListViewDataEmails extends ListViewData
         }
 
         $inboundEmail = BeanFactory::getBean('InboundEmail', $inboundEmailID);
-        $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
+        if($inboundEmail !== false) {
+            $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
 
-        switch ($folderType) {
-            case "sent":
-                $inboundEmail->mailbox = $storedOptions['sentFolder'];
-                break;
-            case "draft":
-                $inboundEmail->mailbox = $storedOptions['sentFolder'];
-                break;
-            case "trash":
-                $inboundEmail->mailbox = $storedOptions['trashFolder'];
-                break;
-            default:
-            break;
-        }
-
-        $folder = $inboundEmail->mailbox;
-
-        $cachedEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order);
-        // order by DESC
-        $sortDESC = function($a, $b) {
-            if ($a['date'] == $b['date']) {
-                return 0;
+            switch ($folderType) {
+                case "sent":
+                    $inboundEmail->mailbox = $storedOptions['sentFolder'];
+                    break;
+                case "draft":
+                    $inboundEmail->mailbox = $storedOptions['sentFolder'];
+                    break;
+                case "trash":
+                    $inboundEmail->mailbox = $storedOptions['trashFolder'];
+                    break;
+                default:
+                    break;
             }
 
-            return -1;
-        };
+            $folder = $inboundEmail->mailbox;
 
-        $total = $cachedEmails['mailbox_info']['Nmsgs'] + count($importedEmails['data']);
-        if($page === "end") {
-            $offset = $total - $limitPerPage;
-        }
+            $cachedEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order);
+            // order by DESC
+            $sortDESC = function($a, $b) {
+                if ($a['date'] == $b['date']) {
+                    return 0;
+                }
 
+                return -1;
+            };
 
-
-        foreach ($cachedEmails['data'] as $h => $emailHeader) {
-            $emailRecord = array();
-
-            if($folderType === 'draft' and $emailHeader['draft'] === 0)
-            {
-                continue;
+            $total = $cachedEmails['mailbox_info']['Nmsgs'] + count($importedEmails['data']);
+            if($page === "end") {
+                $offset = $total - $limitPerPage;
             }
 
-            foreach ($seed->column_fields as $c => $field) {
-                switch ($field) {
-                    case 'from_addr_name':
-                        $emailRecord[strtoupper($field)] = $emailHeader['from'];
-                        break;
-                    case 'to_addrs_names':
-                        $emailRecord[strtoupper($field)] = $emailHeader['to'];
-                        break;
-                    case 'has_attachments':
-                        $emailRecord[strtoupper($field)] = false;
-                        break;
-                    case 'flagged':
-                        $emailRecord[strtoupper($field)] = $emailHeader['flagged'];
-                        break;
-                    case 'name':
-                        $emailRecord[strtoupper($field)] = html_entity_decode($inboundEmail->handleMimeHeaderDecode($emailHeader['subject']));
-                        break;
-                    case 'date_entered':
-                        $date = preg_replace('/(\ \([A-Z]+\))/', '', $emailHeader['date']);
 
-                        $dateTime = DateTime::createFromFormat(
-                            'D, d M Y H:i:s O',
-                            $date
-                        );
-                        if($dateTime  == false){  // @TODO This needs to be more generic to dealing with different formats from IMAP
+
+            foreach ($cachedEmails['data'] as $h => $emailHeader) {
+                $emailRecord = array();
+
+                if($folderType === 'draft' and $emailHeader['draft'] === 0)
+                {
+                    continue;
+                }
+
+                foreach ($seed->column_fields as $c => $field) {
+                    switch ($field) {
+                        case 'from_addr_name':
+                            $emailRecord[strtoupper($field)] = $emailHeader['from'];
+                            break;
+                        case 'to_addrs_names':
+                            $emailRecord[strtoupper($field)] = $emailHeader['to'];
+                            break;
+                        case 'has_attachments':
+                            $emailRecord[strtoupper($field)] = false;
+                            break;
+                        case 'flagged':
+                            $emailRecord[strtoupper($field)] = $emailHeader['flagged'];
+                            break;
+                        case 'name':
+                            $emailRecord[strtoupper($field)] = html_entity_decode($inboundEmail->handleMimeHeaderDecode($emailHeader['subject']));
+                            break;
+                        case 'date_entered':
+                            $date = preg_replace('/(\ \([A-Z]+\))/', '', $emailHeader['date']);
+
                             $dateTime = DateTime::createFromFormat(
-                                'd M Y H:i:s O',
+                                'D, d M Y H:i:s O',
                                 $date
                             );
-                        }
+                            if($dateTime  == false){  // @TODO This needs to be more generic to dealing with different formats from IMAP
+                                $dateTime = DateTime::createFromFormat(
+                                    'd M Y H:i:s O',
+                                    $date
+                                );
+                            }
 
-                        if($dateTime == false){
+                            if($dateTime == false){
+                                $emailRecord[strtoupper($field)] = '';
+                            }
+                            else{
+                                $timeDate = new TimeDate();
+                                $emailRecord[strtoupper($field)] = $timeDate->asUser($dateTime, $current_user);
+                            }
+                            break;
+                        case 'is_imported':
+                            $emailRecord['IS_IMPORTED'] = false;
+                            break;
+                        case 'folder':
+                            $emailRecord['FOLDER'] = $folder;
+                            break;
+                        case 'folder_type':
+                            $emailRecord['FOLDER_TYPE'] = $folderType;
+                            break;
+                        case 'inbound_email_record':
+                            $emailRecord['INBOUND_EMAIL_RECORD'] = $inboundEmailID;
+                            break;
+                        case 'uid':
+                            $emailRecord[strtoupper($field)] = $emailHeader['uid'];
+                            break;
+                        case 'msgno':
+                            $emailRecord[strtoupper($field)] = $emailHeader['msgno'];
+                            break;
+                        case 'has_attachment':
+                            $emailRecord[strtoupper($field)] = $emailHeader['has_attachment'];
+                            break;
+                        case 'status':
+                            if($emailHeader['answered'] != 0) {
+                                $emailRecord[strtoupper($field)] = 'replied';
+                            } else if($emailHeader['draft'] != 0) {
+                                $emailRecord[strtoupper($field)] = 'draft';
+                            } else if($emailHeader['seen'] != 0) {
+                                $emailRecord[strtoupper($field)] = 'read';
+                            } else {
+                                $emailRecord[strtoupper($field)] = 'unread';
+                            }
+
+                            if($emailHeader['deleted'] != 0) {
+                                // TODO: Handle deleted
+                            }
+
+                            if($emailHeader['recent'] != 0) {
+                                // TODO Add recent flag to SuiteCRM
+                            }
+                            break;
+                        default:
                             $emailRecord[strtoupper($field)] = '';
-                        }
-                        else{
-                            $timeDate = new TimeDate();
-                            $emailRecord[strtoupper($field)] = $timeDate->asUser($dateTime, $current_user);
-                        }
-                        break;
-                    case 'is_imported':
-                        $emailRecord['IS_IMPORTED'] = false;
-                        break;
-                    case 'folder':
-                        $emailRecord['FOLDER'] = $folder;
-                        break;
-                    case 'folder_type':
-                        $emailRecord['FOLDER_TYPE'] = $folderType;
-                        break;
-                    case 'inbound_email_record':
-                        $emailRecord['INBOUND_EMAIL_RECORD'] = $inboundEmailID;
-                        break;
-                    case 'uid':
-                        $emailRecord[strtoupper($field)] = $emailHeader['uid'];
-                        break;
-                    case 'msgno':
-                        $emailRecord[strtoupper($field)] = $emailHeader['msgno'];
-                        break;
-                    case 'has_attachment':
-                        $emailRecord[strtoupper($field)] = $emailHeader['has_attachment'];
-                        break;
-                    case 'status':
-                        if($emailHeader['answered'] != 0) {
-                            $emailRecord[strtoupper($field)] = 'replied';
-                        } else if($emailHeader['draft'] != 0) {
-                            $emailRecord[strtoupper($field)] = 'draft';
-                        } else if($emailHeader['seen'] != 0) {
-                            $emailRecord[strtoupper($field)] = 'read';
-                        } else {
-                            $emailRecord[strtoupper($field)] = 'unread';
-                        }
-
-                        if($emailHeader['deleted'] != 0) {
-                         // TODO: Handle deleted
-                        }
-
-                        if($emailHeader['recent'] != 0) {
-                            // TODO Add recent flag to SuiteCRM
-                        }
-                        break;
-                    default:
-                        $emailRecord[strtoupper($field)] = '';
-                        break;
+                            break;
+                    }
                 }
+
+                $data[] = $emailRecord;
+                $pageData['rowAccess'][$h] = array('edit' => true, view => true);
+                $pageData['additionalDetails'][$h] = '';
+                $pageData['tag'][$h]['MAIN'] = 'a';
             }
 
-            $data[] = $emailRecord;
-            $pageData['rowAccess'][$h] = array('edit' => true, view => true);
-            $pageData['additionalDetails'][$h] = '';
-            $pageData['tag'][$h]['MAIN'] = 'a';
-        }
+            $this->setVariableName($seed->object_name, $where, $this->listviewName, $id);
 
-        $this->setVariableName($seed->object_name, $where, $this->listviewName, $id);
+            $this->seed->id = '[SELECT_ID_LIST]';
 
-        $this->seed->id = '[SELECT_ID_LIST]';
-
-        $nextOffset = -1;
-        $prevOffset = -1;
-        $endOffset = 0;
-
-
-
-        if ($total > $limitPerPage) {
-            $nextOffset = $offset + $limitPerPage;
-        }
-
-        if($nextOffset >= $total) {
-            $nextOffset = $total;
-        }
-
-        if ($page > 0) {
-            $prevOffset = $offset - $limitPerPage;
-            if ($prevOffset < 0) {
-                $prevOffset = 0;
-            }
-        }
-
-        if($total < $limitPerPage) {
-            $prevOffset = -1;
             $nextOffset = -1;
-        }
+            $prevOffset = -1;
+            $endOffset = 0;
 
-        if ($total > 0) {
-            $endOffset = $total / $limitPerPage;
-        }
 
-        $pageData['offsets']['current'] = $offset;
-        $pageData['offsets']['total'] = $total;
-        $pageData['offsets']['next'] = $nextOffset;
-        $pageData['offsets']['prev'] = $prevOffset;
-        $pageData['offsets']['end'] = ceil($endOffset);
 
-        $queries = array('baseUrl', 'endPage', 'nextPage', 'orderBy');
-
-        foreach ($queries as $query) {
-
-            if($total < $limitPerPage || $nextOffset >= $total) {
-                if(isset($pageData['queries'][$query])) {
-                    unset($pageData['queries'][$query]);
-                }
-            } else {
-                $pageData['queries'][$query]['module'] = "Emails";
-                $pageData['queries'][$query]['action'] = "index";
-                $pageData['queries'][$query]['parentTab'] = "Activities";
-                $pageData['queries'][$query]['ajax_load'] = "0";
-                $pageData['queries'][$query]['loadLanguageJS'] = "1";
-                $pageData['queries'][$query]['searchFormTab'] = "advanced_search";
-                $pageData['queries'][$query]['lvso'] = "DESC";
-
-                $pageData['urls'][$query] = 'index.php?module=Emails&action=index&parentTab=Activities&searchFormTab=advanced_search&query=true&current_user_only_basic=0&button=Search&lvso=DESC';
-
+            if ($total > $limitPerPage) {
+                $nextOffset = $offset + $limitPerPage;
             }
-         }
 
-        // inject post values
-        $_REQUEST['folder'] = $folder;
-        $_REQUEST['folder'] = $folder;
-        $_REQUEST['folder_type'] = $folderType;
-        $_REQUEST['inbound_email_record='] = $inboundEmailID;
+            if($nextOffset >= $total) {
+                $nextOffset = $total;
+            }
 
-        return array('data' => $data, 'pageData' => $pageData, 'query' => $queryString);
+            if ($page > 0) {
+                $prevOffset = $offset - $limitPerPage;
+                if ($prevOffset < 0) {
+                    $prevOffset = 0;
+                }
+            }
+
+            if($total < $limitPerPage) {
+                $prevOffset = -1;
+                $nextOffset = -1;
+            }
+
+            if ($total > 0) {
+                $endOffset = $total / $limitPerPage;
+            }
+
+            $pageData['offsets']['current'] = $offset;
+            $pageData['offsets']['total'] = $total;
+            $pageData['offsets']['next'] = $nextOffset;
+            $pageData['offsets']['prev'] = $prevOffset;
+            $pageData['offsets']['end'] = ceil($endOffset);
+
+            $queries = array('baseUrl', 'endPage', 'nextPage', 'orderBy');
+
+            foreach ($queries as $query) {
+
+                if($total < $limitPerPage || $nextOffset >= $total) {
+                    if(isset($pageData['queries'][$query])) {
+                        unset($pageData['queries'][$query]);
+                    }
+                } else {
+                    $pageData['queries'][$query]['module'] = "Emails";
+                    $pageData['queries'][$query]['action'] = "index";
+                    $pageData['queries'][$query]['parentTab'] = "Activities";
+                    $pageData['queries'][$query]['ajax_load'] = "0";
+                    $pageData['queries'][$query]['loadLanguageJS'] = "1";
+                    $pageData['queries'][$query]['searchFormTab'] = "advanced_search";
+                    $pageData['queries'][$query]['lvso'] = "DESC";
+
+                    $pageData['urls'][$query] = 'index.php?module=Emails&action=index&parentTab=Activities&searchFormTab=advanced_search&query=true&current_user_only_basic=0&button=Search&lvso=DESC';
+
+                }
+            }
+
+            // inject post values
+            $_REQUEST['folder'] = $folder;
+            $_REQUEST['folder'] = $folder;
+            $_REQUEST['folder_type'] = $folderType;
+            $_REQUEST['inbound_email_record='] = $inboundEmailID;
+
+            return array('data' => $data, 'pageData' => $pageData, 'query' => $queryString);
+        } else {
+
+            return array('data' => $data, 'pageData' => $pageData, 'query' => $queryString, 'message' => $mod_strings['WARNING_SETTINGS_NOT_CONF']);
+        }
+
     }
 }

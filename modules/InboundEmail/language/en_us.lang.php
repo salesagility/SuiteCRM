@@ -199,5 +199,18 @@ $mod_strings = array(
     'LBL_WARNING_CHANGING_AUTO_IMPORT' => 'Warning: You are modifying your automatic import setting which may result in loss of data.',
     'LBL_WARNING_CHANGING_AUTO_IMPORT_WITH_CREATE_CASE' => 'Warning: Auto import must be enabled when automatically creating cases.',
 	'LBL_EDIT_LAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
+    'LBL_LIST_TITLE_MY_DRAFTS'	=> 'Drafts',
+    'LBL_LIST_TITLE_MY_INBOX'	=> 'Inbox',
+    'LBL_LIST_TITLE_MY_SENT'	=> 'Sent Email',
+    'LBL_LIST_TITLE_MY_ARCHIVES'=> 'Archived Emails',
+    'LNK_CHECK_MY_INBOX'		=> 'Check My Mail',
+    'LNK_DATE_SENT'				=> 'Date Sent',
+    'LNK_GROUP_INBOX'			=> 'Group Inbox',
+    'LNK_MY_DRAFTS'				=> 'Drafts',
+    'LNK_MY_INBOX'				=> 'Email',
+    'LNK_VIEW_MY_INBOX'			=> 'View Email',
+    'LNK_QUICK_REPLY'			=> 'Reply',
+    'LNK_MY_ARCHIVED_LIST'		=> 'My Archives',
+    'LNK_SENT_EMAIL_LIST'		=> 'Sent Emails',
 );
 ?>
