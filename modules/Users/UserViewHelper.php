@@ -705,6 +705,12 @@ class UserViewHelper {
             $this->ss->assign('EMAIL_LINK_TYPE', $app_list_strings['dom_email_link_type'][$raw_email_link_type]);
         }
 
+        $rawEditorType = $this->bean->getEditorType();
+        if ( $this->viewType == 'EditView' ) {
+            $this->ss->assign('EDITOR_TYPE', get_select_options_with_id($app_list_strings['dom_editor_type'], $rawEditorType));
+        } else {
+            $this->ss->assign('EDITOR_TYPE', $app_list_strings['dom_editor_type'][$rawEditorType]);
+        }
         /////	END EMAIL OPTIONS
         ///////////////////////////////////////////////////////////////////////////////
 
