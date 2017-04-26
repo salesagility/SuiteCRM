@@ -3408,11 +3408,10 @@ SE.settings = {
         if(!SE.settings.settingsDialog) {
     		var dlg = SE.settings.settingsDialog = new YAHOO.widget.Dialog("settingsDialog", {
             	modal:true,
-            	visible:false,
-            	fixedcenter:true,
-            	draggable: false,
-            	width:"800px",
-				constraintoviewport: true
+            	visible: false,
+            	fixedcenter:false,
+            	draggable: true,
+				constraintoviewport: false
             });
 			dlg.showEvent.subscribe( function (){
 				var el = this.element;

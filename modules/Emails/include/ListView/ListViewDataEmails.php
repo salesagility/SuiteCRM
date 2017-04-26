@@ -220,30 +220,6 @@ class ListViewDataEmails extends ListViewData
                 $folderType =  $row['folder_type'];
             }
 
-            if(empty($inboundEmailID)) {
-                $inboundEmailIDs = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
-
-                foreach ($inboundEmailIDs as $f) {
-                    if(!empty($f)) {
-                        $inboundEmailID = $f;
-                        break;
-                    }
-                }
-            }
-
-        } else {
-
-            if(empty($inboundEmailID)) {
-                $inboundEmailIDs = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
-
-                foreach ($inboundEmailIDs as $f) {
-                    if(!empty($f)) {
-                        $inboundEmailID = $f;
-                        break;
-                    }
-                }
-            }
-
         }
 
         $limitPerPage = $sugar_config['list_max_entries_per_page'];
@@ -263,7 +239,20 @@ class ListViewDataEmails extends ListViewData
             }
         }
 
-        $inboundEmail = BeanFactory::getBean('InboundEmail', $inboundEmailID);
+        if(empty($inboundEmailID)) {
+            $inboundEmailIDs = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+
+            foreach ($inboundEmailIDs as $f) {
+                $inboundEmail = BeanFactory::getBean('InboundEmail', $f);
+                if(!empty($inboundEmail)) {
+                    break;
+                }
+            }
+        } else {
+            $inboundEmail = BeanFactory::getBean('InboundEmail', $inboundEmailID);
+        }
+
+
         if($inboundEmail !== false) {
             $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
 
