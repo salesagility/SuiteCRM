@@ -321,7 +321,8 @@ class ListViewDataEmails extends ListViewData
                                 'D, d M Y H:i:s O',
                                 $date
                             );
-                            if($dateTime  == false){  // @TODO This needs to be more generic to dealing with different formats from IMAP
+                            if($dateTime  == false) {
+                                // TODO: TASK: UNDEFINED - This needs to be more generic to dealing with different formats from IMAP
                                 $dateTime = DateTime::createFromFormat(
                                     'd M Y H:i:s O',
                                     $date
@@ -369,11 +370,11 @@ class ListViewDataEmails extends ListViewData
                             }
 
                             if($emailHeader['deleted'] != 0) {
-                                // TODO: Handle deleted
+                                // TODO: TASK: UNDEFINED - Handle deleted
                             }
 
                             if($emailHeader['recent'] != 0) {
-                                // TODO Add recent flag to SuiteCRM
+                                // TODO: TASK: UNDEFINED - Add recent flag to SuiteCRM
                             }
                             break;
                         default:
