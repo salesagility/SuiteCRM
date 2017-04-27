@@ -996,12 +996,29 @@ eoq;
         break;
 
     case "setFolderViewSelection": // flows into next case statement
+        global $db;
         $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: setFolderViewSelection");
         $viewFolders = $_REQUEST['ieIdShow'];
+        $userSubscriptions = $email->et->folder->getSubscriptions($focus);
         $current_user->setPreference('showFolders', base64_encode(serialize($viewFolders)), '', 'Emails');
         $tree = $email->et->getMailboxNodes(false);
         $return = $tree->generateNodesRaw();
         $out = $json->encode($return);
+
+//        $email->et->folder->clearSubscriptions();
+        $sub = array();
+        foreach($viewFolders as $f) {
+            $query = 'SELECT * FROM folders WHERE folders.id LIKE "'. $f
+                .'" OR folders.parent_folder LIKE "'. $f .'"';
+            $result = $db->query($query);
+            while(($row = $db->fetchByAssoc($result)))
+            {
+                $sub[] = $row['id'];
+            }
+        }
+
+        $email->et->folder->setSubscriptions($sub);
+
         echo $out;
         break;
 

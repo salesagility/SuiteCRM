@@ -2408,6 +2408,36 @@ class InboundEmail extends SugarBean
         return $team_set_id;
     } // fn
 
+
+    /**
+     * Parses the core dynamic folder query
+     * @param string $type 'inbound', 'draft', etc.
+     * @param string $userId
+     * @return string
+     */
+    function generateDynamicFolderQuery($type, $userId) {
+        $q = $this->coreDynamicFolderQuery;
+
+        $status = $type;
+
+        if($type == "sent") {
+            $type = "out";
+        }
+
+        $replacee = array("::TYPE::", "::STATUS::", "::USER_ID::");
+        $replacer = array($type, $status, $userId);
+
+        $ret = str_replace($replacee, $replacer, $q);
+
+        if($type == 'inbound') {
+            $ret .= " AND status NOT IN ('sent', 'archived', 'draft') AND type NOT IN ('out', 'archived', 'draft')";
+        } else {
+            $ret .= " AND status NOT IN ('archived') AND type NOT IN ('archived')";
+        }
+
+        return $ret;
+    }
+
     /**
      * Saves Personal Inbox settings for Users
      * @param string userId ID of user to assign all emails for this account
@@ -2417,6 +2447,7 @@ class InboundEmail extends SugarBean
      */
     public function savePersonalEmailAccount($userId = '', $userName = '', $forceSave = true)
     {
+        global  $mod_strings;
         $groupId = $userId;
         $accountExists = false;
         if (isset($_REQUEST['ie_id']) && !empty($_REQUEST['ie_id'])) {
@@ -2509,6 +2540,113 @@ class InboundEmail extends SugarBean
 
             $ieId = $this->save();
 
+            // Folders
+            $foldersFound = $this->db->query('SELECT folders.id FROM folders WHERE folders.id LIKE "'.$this->id.'"');
+            $row = $this->db->fetchByAssoc($foldersFound);
+            $sf = new SugarFolder();
+            if(empty($row)) {
+                // Create Folders
+                $params = array(
+                    // Inbox
+                    "inbound" => array(
+                        'name' => $this->mailbox . ' ('.$this->name.')',
+                        'folder_type' => "inbound",
+                        'has_child' => 1,
+                        'dynamic_query' => $this->generateDynamicFolderQuery("inbound", $focusUser->id),
+                        'is_dynamic' => 1,
+                        'created_by' => $focusUser->id,
+                        'modified_by' => $focusUser->id,
+                    ),
+                    // My Drafts
+                    "draft" => array(
+                        'name' => $mod_strings['LNK_MY_DRAFTS'] . ' ('.$stored_options['sentFolder'].')',
+                        'folder_type' => "draft",
+                        'has_child' => 0,
+                        'dynamic_query' => $this->generateDynamicFolderQuery("draft", $focusUser->id),
+                        'is_dynamic' => 1,
+                        'created_by' => $focusUser->id,
+                        'modified_by' => $focusUser->id,
+                    ),
+                    // Sent Emails
+                    "sent" => array(
+                        'name' => $mod_strings['LNK_SENT_EMAIL_LIST'] . ' ('.$stored_options['sentFolder'].')',
+                        'folder_type' => "sent",
+                        'has_child' => 0,
+                        'dynamic_query' => $this->generateDynamicFolderQuery("sent", $focusUser->id),
+                        'is_dynamic' => 1,
+                        'created_by' => $focusUser->id,
+                        'modified_by' => $focusUser->id,
+                    ),
+                    // Archived Emails
+                    "archived" => array(
+                        'name' => $mod_strings['LBL_LIST_TITLE_MY_ARCHIVES'],
+                        'folder_type' => "archived",
+                        'has_child' => 0,
+                        'dynamic_query' => '',
+                        'is_dynamic' => 1,
+                        'created_by' => $focusUser->id,
+                        'modified_by' => $focusUser->id,
+                    ),
+                );
+
+
+                require_once("include/SugarFolders/SugarFolders.php");
+
+                $parent_id = '';
+
+
+                foreach ($params as $type => $type_params) {
+                    if ($type == "inbound") {
+
+                        $folder = new SugarFolder();
+                        foreach ($params[$type] as $key => $val) {
+                            $folder->$key = $val;
+                        }
+
+                        $folder->new_with_id = false;
+                        $folder->id = $this->id;
+                        $folder->save();
+
+                        $parent_id = $folder->id;
+                    } else {
+                        $params[$type]['parent_folder'] = $parent_id;
+
+                        $folder = new SugarFolder();
+                        foreach ($params[$type] as $key => $val) {
+                            $folder->$key = $val;
+                        }
+
+                        $folder->save();
+                    }
+                }
+            } else {
+                // Update folders
+                $foldersFound = $this->db->query('SELECT * FROM folders WHERE folders.id LIKE "'.$this->id.'" OR '.
+                    'folders.parent_folder LIKE "'.$this->id.'"');
+                while($row = $this->db->fetchRow($foldersFound)) {
+                    $name = '';
+                    switch ($row['folder_type'])
+                    {
+                        case 'inbound':
+                            $name = $this->mailbox . ' ('.$this->name.')';
+                            break;
+                        case 'draft':
+                            $name = $mod_strings['LNK_MY_DRAFTS'] . ' ('.$stored_options['sentFolder'].')';
+                            break;
+                        case 'sent':
+                            $name = $mod_strings['LNK_SENT_EMAIL_LIST'] . ' ('.$stored_options['sentFolder'].')';
+                            break;
+                        case 'archived':
+                            $name = $mod_strings['LBL_LIST_TITLE_MY_ARCHIVES'];
+                            break;
+                    }
+
+                    $folder = new SugarFolder();
+                    $folder->retrieve($row['id']);
+                    $folder->name = $name;
+                    $folder->save();
+                }
+            }
             //If this is the first personal account the user has setup mark it as default for them.
             $currentIECount = $this->getUserPersonalAccountCount($focusUser);
             if ($currentIECount == 1) {
@@ -5947,6 +6085,12 @@ class InboundEmail extends SugarBean
     public function hardDelete($id)
     {
         $q = "DELETE FROM inbound_email WHERE id = '{$id}'";
+        $r = $this->db->query($q, true);
+
+        $q = "DELETE FROM folders WHERE id = '{$id}'";
+        $r = $this->db->query($q, true);
+
+        $q = "DELETE FROM folders WHERE parent_id = '{$id}'";
         $r = $this->db->query($q, true);
     }
 

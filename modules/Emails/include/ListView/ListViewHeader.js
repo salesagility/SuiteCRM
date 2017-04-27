@@ -40,7 +40,11 @@
 $(document).ready(function () {
 
   var query = JSON.parse($('[name=current_query_by_page]').val());
-  $('.btn-emails-current-folder').text(query.folder);
+  if(typeof query.folder === 'undefined' ||  query.folder === '') {
+    $('.btn-emails-current-folder').remove();
+  } else {
+    $('.btn-emails-current-folder').text(query.folder);
+  }
 
   $('.btn-emails-current-folder').click(function () {
 

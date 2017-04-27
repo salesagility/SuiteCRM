@@ -68,7 +68,7 @@ class SugarFolder
     public $folder_type;
 
     public $db;
-    public $new_with_id = false;
+    public $new_with_id = true;
 
     // core queries
     public $core;
@@ -206,11 +206,15 @@ class SugarFolder
      * Sets a user's preferences for subscribe folders (Sugar only)
      * @param array subs Array of IDs for subscribed folders
      */
-    public function setSubscriptions($subs)
+    public function setSubscriptions($subs, $user = null)
     {
         global $current_user;
 
-        if (empty($current_user->id)) {
+        if(empty($user)) {
+            $focusUser = $current_user;
+        }
+
+        if (empty($focusUser->id)) {
             $GLOBALS['log']->fatal("*** FOLDERS: tried to update folder subscriptions for a user with no ID");
 
             return false;
@@ -236,7 +240,7 @@ class SugarFolder
         $this->clearSubscriptions();
 
         foreach ($cleanSubscriptions as $id) {
-            $this->insertFolderSubscription($id, $current_user->id);
+            $this->insertFolderSubscription($id, $focusUser->id);
         }
     }
 
@@ -980,12 +984,13 @@ class SugarFolder
 
         $this->dynamic_query = $this->db->quote($this->dynamic_query);
 
-        if ((empty($this->id) && $this->new_with_id == false) || (!empty($this->id) && $this->new_with_id == true)) {
 
-            if (empty($this->id)) {
+        if ((!empty($this->id) && $this->new_with_id == false) || (empty($this->id) && $this->new_with_id == true)) {
+            if (empty($this->id) and $this->new_with_id == true) {
                 $guid = create_guid();
                 $this->id = $guid;
             }
+
 
             $q = "INSERT INTO folders(id, name, folder_type, parent_folder, has_child,".
                 " is_group, is_dynamic, dynamic_query, assign_to_id, " .
@@ -1120,6 +1125,7 @@ class SugarFolder
             }
 
             return true;
+            $new_with_id  = false;
         }
 
         return false;

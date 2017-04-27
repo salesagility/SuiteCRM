@@ -2039,19 +2039,7 @@ SE.folders = {
      */
     startEmailAccountCheck : function() {
         // don't do two checks at the same time
-       if(!AjaxObject.requestInProgress()) {
-            SUGAR.showMessageBox(app_strings.LBL_EMAIL_ONE_MOMENT, app_strings.LBL_EMAIL_CHECKING_NEW, 'progress');
-            SE.accounts.ieIds = SE.folders.getIeIds();
-            if (SE.accounts.ieIds.length > 0) {
-            	AjaxObject.startRequest(AjaxObject.accounts.callbackCheckMailProgress, urlStandard +
-                                '&emailUIAction=checkEmailProgress&ieId=' + SE.accounts.ieIds[0] + "&currentCount=0");
-            } else {
-               SUGAR.hideMessageBox();
-            }
-        } else {
-            // wait 5 secs before trying again.
-            SE.folders.checkingMail = setTimeout("SE.folders.startEmailAccountCheck();", 5000);
-        }
+      console.warn("deprecated call startEmailAccountCheck");
     },
 
     /**
@@ -2621,8 +2609,6 @@ SE.folders = {
         else {
             SE.listView.populateListFrame(node, node.data.ieId, false);
         }
-       //eval(node.data.click);
-       //debugger;
     },
 
     /**
@@ -3019,7 +3005,6 @@ SE.listView = {
      * exception handler for data load failures
      */
     loadException : function(dataModel, ex, response) {
-        //debugger;
     },
 
     /**
@@ -3409,11 +3394,10 @@ SE.settings = {
         if(!SE.settings.settingsDialog) {
     		var dlg = SE.settings.settingsDialog = new YAHOO.widget.Dialog("settingsDialog", {
             	modal:true,
-            	visible:false,
-            	fixedcenter:true,
-            	draggable: false,
-            	width:"800px",
-				constraintoviewport: true
+            	visible: false,
+            	fixedcenter:false,
+            	draggable: true,
+				constraintoviewport: false
             });
 			dlg.showEvent.subscribe( function (){
 				var el = this.element;
