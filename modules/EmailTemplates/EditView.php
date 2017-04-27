@@ -218,6 +218,7 @@ $xtpl->assign('BODY_EDITOR', SuiteEditorConnector::getHtml(array(
     'elementId' => 'email_template_editor',
     'width' => $templateWidth,
 )));
+$xtpl->assign('width_style', 'style="display:'.($current_user->getEditorType() != 'mozaik' ? 'none' : 'table-row').';"');
 
 // ---------------------------------
 // ---------------------------------
