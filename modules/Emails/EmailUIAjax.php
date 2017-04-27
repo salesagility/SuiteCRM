@@ -995,14 +995,15 @@ eoq;
         }
         break;
 
-    case "setFolderViewSelection": // flows into next case statement
+    case "setFolderViewSelection":
+        // flows into next case statement
         global $db;
         global $current_user;
 
         if(isset($_REQUEST['record'])) {
             $focus = BeanFactory::getBean('Users', $_REQUEST['record']);
-            }
         }
+
         $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: setFolderViewSelection");
         $viewFolders = $_REQUEST['ieIdShow'];
         $userSubscriptions = $email->et->folder->getSubscriptions($focus);
