@@ -72,6 +72,17 @@ $viewdefs['Emails']['ComposeView'] = array(
     'panels' => array(
         'LBL_COMPOSE_MODULE_NAME' => array(
             array(
+                array (
+                    'name' => 'emails_email_templates_name',
+                    'label' => 'LBL_EMAIL_TEMPLATE',
+                    'displayParams' => array (
+                        'call_back_function' => '$.fn.EmailsComposeView.onTemplateSelect',
+                    ),
+
+                ),
+                'parent_name'
+            ),
+            array(
                 array(
                     'name' => 'to_addrs_names',
                     'label' => 'LBL_TO',
@@ -110,9 +121,6 @@ $viewdefs['Emails']['ComposeView'] = array(
                     'label' => 'LBL_BODY',
                 )
             ),
-            array(
-                'parent_name'
-            )
         )
     )
 
