@@ -1,0 +1,30 @@
+.popup {
+  .nav-tabs {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .nav-tabs > li, .nav-tabs > li:hover {
+    margin-bottom: 0;
+
+
+     a {
+       border: hidden;
+     }
+
+    a:hover {
+      border: hidden;
+    }
+
+    a:active {
+      border: hidden;
+    }
+
+    a:focus {
+      border: hidden;
+    }
+  }
+
+  .list tr th:last-child {
+    border-top-right-radius: 4px;
+  }
+}
