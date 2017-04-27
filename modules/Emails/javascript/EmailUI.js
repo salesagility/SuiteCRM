@@ -891,7 +891,7 @@ SE.accounts = {
 
             AjaxObject._reset();
             AjaxObject.target = 'frameFlex';
-            AjaxObject.startRequest(callbackAccount, urlStandard + '&emailUIAction=saveIeAccount&XDEBUG_SESSION_START=13537');
+            AjaxObject.startRequest(callbackAccount, urlStandard + '&emailUIAction=saveIeAccount');
         }
     },
 
@@ -2039,20 +2039,6 @@ SE.folders = {
      */
     startEmailAccountCheck : function() {
         // don't do two checks at the same time
-       // if(!AjaxObject.requestInProgress()) {
-       //      SUGAR.showMessageBox(app_strings.LBL_EMAIL_ONE_MOMENT, app_strings.LBL_EMAIL_CHECKING_NEW, 'progress');
-       //      SE.accounts.ieIds = SE.folders.getIeIds();
-       //      if (SE.accounts.ieIds.length > 0) {
-       //      	AjaxObject.startRequest(AjaxObject.accounts.callbackCheckMailProgress, urlStandard +
-       //                          '&emailUIAction=checkEmailProgress&ieId=' + SE.accounts.ieIds[0] + "&currentCount=0");
-       //      } else {
-       //         SUGAR.hideMessageBox();
-       //      }
-       //  } else {
-       //      // wait 5 secs before trying again.
-       //      // SE.folders.checkingMail = setTimeout("SE.folders.startEmailAccountCheck();", 5000);
-       //  }
-
       console.warn("deprecated call startEmailAccountCheck");
     },
 
