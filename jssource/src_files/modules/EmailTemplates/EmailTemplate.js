@@ -308,7 +308,7 @@ function EmailTemplateController(action) {
 		$.post('index.php?entryPoint=emailTemplateData&func=wizardUpdate&rand='+Math.random(), {
 			'func': func,
 			'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
-			'body_html': $('#email_template_editor').getMozaikValue(),
+			'body_html': SuiteEditor.getValue(), //$('#email_template_editor').getMozaikValue(),
 			'name': $('#template_name').val(),
 			'subject': $('#template_subject').val(),
 		}, function(resp){
@@ -363,7 +363,7 @@ function EmailTemplateController(action) {
 		$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(), {
 			'func': func,
 			'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
-			'body_html': $('#email_template_editor').getMozaikValue(),
+			'body_html': SuiteEditor.getValue(),  // $('#email_template_editor').getMozaikValue(),
 			'name': $('#template_name').val(),
 			'subject': $('#template_subject').val(),
 		}, function(resp){
