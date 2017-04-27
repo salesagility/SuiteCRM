@@ -76,9 +76,7 @@ class SuiteEditorSettingsForDirectHTML extends SuiteEditorSettings
      * @param null $settings (optional)
      */
     public function __construct($settings = null) {
-        if($settings) {
-            $this->extend($settings);
-        }
+        parent::__construct($settings);
     }
 
 }

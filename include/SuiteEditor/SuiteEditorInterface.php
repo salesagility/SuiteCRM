@@ -53,7 +53,7 @@ interface SuiteEditorInterface
      * use this method after the constructor to tell
      * the settings that apply on editor connector
      *
-     * @param null $settings (optional) preferred an associative array or object
+     * @param SuiteEditorSettings $settings (optional) preferred an associative array or object
      */
     public function setup(SuiteEditorSettings $settings = null);
 

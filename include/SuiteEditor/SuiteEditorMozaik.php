@@ -49,7 +49,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SuiteEditorMozaik implements SuiteEditorInterface
 {
+    /**
+     * @var SuiteEditorSettings $settings
+     */
     protected $settings;
+
+    /**
+     * @var SuiteMozaik $mozaik
+     */
     protected $mozaik;
 
     /**

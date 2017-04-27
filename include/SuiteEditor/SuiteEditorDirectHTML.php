@@ -61,7 +61,7 @@ class SuiteEditorDirectHTML implements SuiteEditorInterface
      */
     public function setup(SuiteEditorSettings $settings = null) {
         $this->settings = new SuiteEditorSettingsForDirectHTML();
-        $this->settings->extend($settings);
+        $this->settings->extend((array) $settings);
     }
 
     /**

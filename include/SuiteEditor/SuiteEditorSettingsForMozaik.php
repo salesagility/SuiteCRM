@@ -52,8 +52,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class SuiteEditorSettingsForMozaik extends SuiteEditorSettingsForDirectHTML
 {
 
+    /**
+     * @var int
+     */
     public $width = 600;
+
+    /**
+     * @var string
+     */
     public $group = '';
+
+    /**
+     * @var string
+     */
     public $tinyMCESetup = 'tinyMCE: {}';
 
 }

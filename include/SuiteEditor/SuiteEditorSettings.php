@@ -49,25 +49,57 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 abstract class SuiteEditorSettings
 {
+    /**
+     * @var string
+     */
+    public $contents;
+
+    /**
+     * Target textarea element ID
+     *
+     * @var string
+     */
+    public $textareaId;
+
+    /**
+     * @var string
+     */
+    public $elementId;
+
+    /**
+     * @var int
+     */
+    public $width;
+
+    /**
+     * @var string
+     */
+    public $group;
+
+    /**
+     * JSON setting for TinyMCE initializer script
+     *
+     * @var string
+     */
+    public $tinyMCESetup;
 
     /**
      * SuiteEditorSettings constructor.
      *
-     * @param $settings assoc array or object
+     * @param $settings array or object
      */
-    public function __construct($settings) {
-        foreach($this as $key => $value) {
-            $this->$key = $value;
+    public function __construct($settings = null) {
+        if($settings) {
+            $this->extend($settings);
         }
     }
 
     /**
      * extends the settings
      *
-     * @param $settings assoc array or object
+     * @param $settings array or object
      */
-    public function extend($settings)
-    {
+    public function extend($settings) {
         foreach ($settings as $key => $value) {
             $this->$key = $value;
         }
