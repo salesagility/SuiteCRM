@@ -205,6 +205,7 @@ class SugarFolder
     /**
      * Sets a user's preferences for subscribe folders (Sugar only)
      * @param array subs Array of IDs for subscribed folders
+     * @param User - Specify which user to set the subscriptions
      */
     public function setSubscriptions($subs, $user = null)
     {
@@ -1124,8 +1125,8 @@ class SugarFolder
                 $this->$k = $v;
             }
 
-            return true;
             $new_with_id  = false;
+            return true;
         }
 
         return false;
