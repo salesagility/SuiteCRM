@@ -114,5 +114,7 @@ $mod_strings = array (
     'LBL_ERR_OAUTH_FACEBOOK_2' => 'login to Facebook again',
   'LBL_ERR_NO_RESPONSE' => 'An error occurred when trying to connect to this account.',
   'LBL_ERR_TWITTER' => 'Twitter returned an error, and the feed cannot be displayed.',
-  'LBL_ERR_POPUPS_DISABLED' => 'Please enable browser popup windows or add an exception for website "{0}" to the exceptions list in order to connect.'
+  'LBL_ERR_POPUPS_DISABLED' => 'Please enable browser popup windows or add an exception for website "{0}" to the exceptions list in order to connect.',
+
+  'LBL_API_OAUTHSECRET' => 'API OAuth Secret',
 );

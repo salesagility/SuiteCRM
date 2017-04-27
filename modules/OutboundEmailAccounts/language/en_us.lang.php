@@ -100,4 +100,8 @@ $mod_strings = array (
     'LBL_EXCHANGE_SMTPUSER'					=> 'Exchange Username:',
     'LBL_EXCHANGE_SMTPPORT'					=> 'Exchange Server Port:',
     'LBL_EXCHANGE_SMTPSERVER'				=> 'Exchange Server:',
+
+    'LBL_TYPE' => 'Type',
+    'LBL_MAIL_SENDTYPE' => 'Mail Send Type',
+    'LBL_MAIL_SMTPSSL' => 'Mail SMTP/SSL',
 );

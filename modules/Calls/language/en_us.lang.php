@@ -181,6 +181,8 @@ $mod_strings = array(
     'LBL_CANCEL' => 'Cancel',
     'LBL_SAVE' => 'Save',
 
+    'LBL_CALLS_RESCHEDULE' => 'Calls Reschedule',
+
 );
 
 

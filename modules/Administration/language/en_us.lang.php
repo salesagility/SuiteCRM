@@ -1279,5 +1279,8 @@ $mod_strings = array(
 	'LBL_BUSINESS_HOURS_TO' => 'To',
 	'LBL_BUSINESS_HOURS_OPEN' => "Open",
 
+	'LBL_LIST_SYMBOL' => "List Symbol",
+	'LBL_LIST_RATE' => "List Rate",
+
 );
 
