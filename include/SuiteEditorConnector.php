@@ -116,13 +116,13 @@ class SuiteEditorSettingsForDirectHTML extends SuiteEditorSettings
     public $contents = '';
 
     /**
-     * Original textarea ID
+     * target element, original textarea ID
      * @var string
      */
     public $textareaId = 'text';
 
     /**
-     * Editor ID
+     * Editor element ID
      * @var string
      */
     public $elementId = 'editor';
@@ -142,10 +142,9 @@ class SuiteEditorSettingsForDirectHTML extends SuiteEditorSettings
 
 }
 
-class SuiteEditorSettingsForTinyMCE extends SuiteEditorSettings
+class SuiteEditorSettingsForTinyMCE extends SuiteEditorSettingsForDirectHTML
 {
-    public $elementId = 'editor';
-    public $tinyMCESetup = 'tinyMCE: {}';
+
 }
 
 /**
@@ -158,7 +157,6 @@ class SuiteEditorSettingsForTinyMCE extends SuiteEditorSettings
 class SuiteEditorSettingsForMozaik extends SuiteEditorSettingsForDirectHTML
 {
 
-    public $elementId = 'editor';
     public $width = 600;
     public $group = '';
     public $tinyMCESetup = 'tinyMCE: {}';
@@ -175,26 +173,15 @@ class SuiteEditorSettingsForMozaik extends SuiteEditorSettingsForDirectHTML
 class SuiteEditorDirectHTML implements SuiteEditorInterface
 {
     protected $settings;
-    protected $editor;
 
     /**
      * see at SuiteEditorInterface
      *
-     * @param null $settings
+     * @param SuiteEditorSettings $settings
      */
     public function setup(SuiteEditorSettings $settings = null) {
         $this->settings = new SuiteEditorSettingsForDirectHTML();
         $this->settings->extend($settings);
-        // todo: use a smarty template to generate html of the textarea instead of a simple string concatenation because that is... better???
-        $this->editor = "<script>
-            SuiteEditor.getValue = function() {
-                return $('#{$this->settings->elementId}').val();
-            }
-            $(window).mouseup(function(){
-                $('#{$this->settings->textareaId}').val($('#{$this->settings->elementId}').val());
-            });
-</script>
-<textarea id=\"{$this->settings->elementId}\" name=\"{$this->settings->elementId}\">{$this->settings->contents}</textarea>";
     }
 
     /**
@@ -203,7 +190,16 @@ class SuiteEditorDirectHTML implements SuiteEditorInterface
      * @return mixed
      */
     public function getHtml() {
-        return $this->editor;
+        // todo: use a smarty template to generate html of the textarea instead of a simple string concatenation because that is... better???
+        return "<script>
+                    SuiteEditor.getValue = function() {
+                        return $('#{$this->settings->elementId}').val();
+                    }
+                    $(window).mouseup(function(){
+                        $('#{$this->settings->textareaId}').val(SuiteEditor.getValue());
+                    });
+                </script>
+                <textarea id=\"{$this->settings->elementId}\" name=\"{$this->settings->elementId}\">{$this->settings->contents}</textarea>";
     }
 
 }
@@ -215,13 +211,15 @@ class SuiteEditorDirectHTML implements SuiteEditorInterface
  */
 class SuiteEditorTinyMCE implements SuiteEditorInterface
 {
+    protected $settings;
+
     /**
      * see at SuiteEditorInterface
      *
-     * @param null $settings
+     * @param SuiteEditorSettings $settings
      */
     public function setup(SuiteEditorSettings $settings = null) {
-
+        $this->settings = $settings;
     }
 
     /**
@@ -230,7 +228,17 @@ class SuiteEditorTinyMCE implements SuiteEditorInterface
      * @return mixed
      */
     public function getHtml() {
-
+        return "<script src='include/javascript/mozaik/vendor/tinymce/tinymce/tinymce.min.js'></script>" .
+        "<script>tinymce.init({ selector:'#{$this->settings->elementId}' });</script>".
+        "<script>
+            SuiteEditor.getValue = function() {
+                return tinyMCE.get('{$this->settings->elementId}').getContent();
+            }
+            $(window).mouseup(function(){
+                $('#{$this->settings->textareaId}').val(SuiteEditor.getValue());
+            });
+            </script>".
+        "<textarea id=\"{$this->settings->elementId}\" name=\"{$this->settings->elementId}\">{$this->settings->contents}</textarea>";
     }
 
 }
@@ -248,7 +256,7 @@ class SuiteEditorMozaik implements SuiteEditorInterface
     /**
      * see at SuiteEditorInterface
      *
-     * @param null $settings
+     * @param SuiteEditorSettings $settings
      */
     public function setup(SuiteEditorSettings $settings = null) {
         $this->settings = new SuiteEditorSettingsForMozaik($settings);
