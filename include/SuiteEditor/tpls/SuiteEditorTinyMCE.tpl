@@ -41,8 +41,10 @@
 
 <script src='include/javascript/mozaik/vendor/tinymce/tinymce/tinymce.min.js'></script>
 <script>
+
     /**
      * TinyMCE value getter function
+     *
      * @returns string - tinymce value
      */
     SuiteEditor.getValue = function() {ldelim}
@@ -51,6 +53,7 @@
 
     /**
      * TinyMCE value setter function
+     *
      * @param htmlCode
      */
     SuiteEditor.apply = function(htmlCode) {ldelim}
@@ -60,9 +63,44 @@
         tinyMCE.EditorManager.get('{$elementId}').setContent(htmlCode);
     {rdelim};
 
-    $(window).mouseup(function(){ldelim}
-        $('#{$textareaId}').val(SuiteEditor.getValue());
+    /**
+     * Mozaik value insert function
+     *
+     * @param text
+     * @param elemId
+     */
+    SuiteEditor.insert = function(text, elemId) {ldelim}
+        if(elemId != '{$elementId}') {ldelim}
+            throw 'incorrect editor element id';
+        {rdelim}
+
+        tinyMCE.activeEditor.execCommand('mceInsertRawHTML', false, text);
+
+    {rdelim};
+
+    /*
+    SuiteEditor.clickHandlers = [];
+    SuiteEditor.addClickHandler = function(handler) {ldelim}
+        SuiteEditor.clickHandlers.push(handler);
+    {rdelim};
+
+    $('#{$elementId}').click(function(e){ldelim}
+        $.each(SuiteEditor.clickHandlers, function(i,h){ldelim}
+            h(e);
+        {rdelim});
+    {rdelim});
+    */
+
+    $(function(){ldelim}
+
+        {if $clickHandler}
+        $('#{$elementId}').click({$clickHandler});
+        {/if}
+
+        $(window).mouseup(function(){ldelim}
+            $('#{$textareaId}').val(SuiteEditor.getValue());
+        {rdelim});
     {rdelim});
 </script>
-<script>tinymce.init({ldelim} selector:'#{$elementId}' {rdelim});</script>
+<script>tinymce.init($.extend({$tinyMCESetup}, {ldelim} selector:'#{$elementId}' {rdelim}));</script>
 <div id="{$elementId}" name="{$elementId}" title="">{$contents}</div>

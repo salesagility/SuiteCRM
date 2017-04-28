@@ -81,7 +81,14 @@ abstract class SuiteEditorSettings
      *
      * @var string
      */
-    public $tinyMCESetup;
+    public $tinyMCESetup = '{}';
+
+    /**
+     * Javascript for body click handling
+     *
+     * @var string
+     */
+    public $clickHandler;
 
     /**
      * SuiteEditorSettings constructor.

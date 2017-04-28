@@ -42,6 +42,7 @@
 <script>
     /**
      * Mozaik value getter function
+     *
      * @returns string - Mozaik value
      */
     SuiteEditor.getValue = function() {ldelim}
@@ -50,12 +51,30 @@
 
     /**
      * Mozaik value setter function
+     *
      * @param htmlCode
      */
     SuiteEditor.apply = function(htmlCode) {ldelim}
         $('#{$elementId}').html(htmlCode ? htmlCode : '');
         $('#{$elementId}').mozaik(window.mozaikSettings.{$elementId});
     {rdelim};
+
+    /**
+     * Mozaik valie insert function
+     *
+     * @param text
+     * @param elemId
+     */
+    SuiteEditor.insert = function(text, elemId) {ldelim}
+        if(elemId != '{$elementId}') {ldelim}
+            throw 'incorrect editor element id';
+        {rdelim}
+        if($('#'+elemId+' .mozaik-list .mozaik-elem').length > 0) {ldelim}
+            // similar as the original insert_variable_html(text);
+            tinyMCE.activeEditor.execCommand('mceInsertRawHTML', false, text);
+        {rdelim}
+    {rdelim};
+
 </script>
 
 {$mozaik}

@@ -616,13 +616,16 @@ $ss->assign('BODY_EDITOR', SuiteEditorConnector::getHtml(array(
     'textareaId' => 'body_text',
     'elementId' => 'email_template_editor',
     'width' => $templateWidth,
-    'tinyMCESetup' => "tinyMCE: {
-    setup: function(editor) {
-        editor.on('focus', function(e){
-            onClickTemplateBody();
-        });
-    }
-}")));
+    'clickHandler' => "function(e){
+        onClickTemplateBody();
+    }",
+    'tinyMCESetup' => "{
+        setup: function(editor) {
+            editor.on('focus', function(e){
+                onClickTemplateBody();
+            });
+        }
+    }")));
 $ss->assign('hide_width_set', $current_user->getEditorType() != 'mozaik');
 
 // ---------------------------------

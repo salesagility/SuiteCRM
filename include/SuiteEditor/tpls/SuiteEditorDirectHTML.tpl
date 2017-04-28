@@ -43,6 +43,7 @@
 
     /**
      * Direct HTML Editor value getter function
+     *
      * @returns string - Direct HTML Editor value
      */
     SuiteEditor.getValue = function() {ldelim}
@@ -51,6 +52,7 @@
 
     /**
      * Direct HTML Editor value setter function
+     *
      * @param htmlCode
      */
     SuiteEditor.apply = function(htmlCode) {ldelim}
@@ -61,8 +63,49 @@
         $('#{$elementId}').val(htmlCode);
     {rdelim};
 
-    $(window).mouseup(function() {ldelim}
-        $('#{$textareaId}').val(SuiteEditor.getValue());
+    /**
+     * Direct HTML Editor value insert function
+     *
+     * @param text
+     * @param elemId
+     */
+    SuiteEditor.insert = function(text, elemId) {ldelim}
+        if(elemId != '{$elementId}') {ldelim}
+            throw 'incorrect editor element id';
+        {rdelim}
+
+        function insertAtCursor(myField, myValue) {ldelim}
+            //IE support
+            if (document.selection) {ldelim}
+                myField.focus();
+                sel = document.selection.createRange();
+                sel.text = myValue;
+            {rdelim}
+            //MOZILLA and others
+            else if (myField.selectionStart || myField.selectionStart == '0') {ldelim}
+                var startPos = myField.selectionStart;
+                var endPos = myField.selectionEnd;
+                myField.value = myField.value.substring(0, startPos)
+                        + myValue
+                        + myField.value.substring(endPos, myField.value.length);
+            {rdelim} else {ldelim}
+                myField.value += myValue;
+            {rdelim}
+        {rdelim}
+
+        insertAtCursor(document.getElementById(elemId), text);
+
+     {rdelim};
+
+    $(function(){ldelim}
+
+        {if $clickHandler}
+            $('#{$elementId}').click({$clickHandler});
+        {/if}
+
+        $(window).mouseup(function() {ldelim}
+            $('#{$textareaId}').val(SuiteEditor.getValue());
+        {rdelim});
     {rdelim});
 </script>
 

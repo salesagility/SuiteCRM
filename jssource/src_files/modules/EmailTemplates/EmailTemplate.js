@@ -174,8 +174,8 @@ function insert_variable_html_link(text, url) {
  * If so, the it will call the text insert function, if not, then it
  * will call the html (tinyMCE eidtor) insert function
  */
-function insert_variable(text, mozaikId) {
-	if(mozaikId == 'template_subject') {
+function insert_variable(text, elemId) {
+	if(elemId == 'template_subject') {
 		// insert into the subject instead of the body
 		//$('#template_subject').val($('#template_subject').val()+$('select[name=variable_name]').val());
 
@@ -187,19 +187,18 @@ function insert_variable(text, mozaikId) {
     return;
 	}
 
-	if(!mozaikId) {
-		mozaikId = 'mozaik';
+	if(!elemId) {
+		throw 'not element for insert variable';
 	}
-	if($('#'+mozaikId+' .mozaik-list .mozaik-elem').length > 0) {
-		//if text only flag is checked, then insert into text field
-		if (document.getElementById('toggle_textonly') && document.getElementById('toggle_textonly').checked == true) {
-			//use text version insert
-			insert_variable_text(document.getElementById('body_text_plain'), text);
-		} else {
-			//use html version insert
-			insert_variable_html(text);
-		}
-	}
+
+  //if text only flag is checked, then insert into text field
+  if (document.getElementById('toggle_textonly') && document.getElementById('toggle_textonly').checked == true) {
+    //use text version insert
+    insert_variable_text(document.getElementById('body_text_plain'), text);
+  } else {
+    //use html version insert
+    SuiteEditor.insert(text, elemId);
+  }
 }
 
 

@@ -20,6 +20,12 @@
          * connector function for set value in suite editors
          */
         SuiteEditor.apply = function(html) { SuiteEditor.interfaceError(); };
+
+        /**
+         * connector function for insert a text value
+         * at the current cursor position into suite editors
+         */
+        SuiteEditor.insert = function(text, elemId) { SuiteEditor.interfaceError(); };
     }
 </script>
 {/literal}

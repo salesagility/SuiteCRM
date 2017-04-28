@@ -65,6 +65,6 @@ class SuiteEditorSettingsForMozaik extends SuiteEditorSettingsForDirectHTML
     /**
      * @var string
      */
-    public $tinyMCESetup = 'tinyMCE: {}';
+    public $tinyMCESetup = '{}';
 
 }
