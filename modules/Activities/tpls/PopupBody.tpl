@@ -69,7 +69,7 @@
 
                     <!-- BEGIN: row -->
                     <tr>
-                        <td>{$activity_module_png}</td>
+                        <td>{$activity.image}</td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
@@ -114,7 +114,7 @@
 
                     <!-- BEGIN: row -->
                     <tr>
-                        <td>{$activity_module_png}</td>
+                        <td>{$activity.image}</td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
@@ -160,7 +160,7 @@
 
                     <!-- BEGIN: row -->
                     <tr>
-                        <td>{$activity_module_png}</td>
+                        <td>{$activity.image}</td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
@@ -206,7 +206,7 @@
 
                     <!-- BEGIN: row -->
                     <tr>
-                        <td>{$activity_module_png}</td>
+                        <td>{$activity.image}</td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
@@ -252,7 +252,7 @@
 
                     <!-- BEGIN: row -->
                     <tr>
-                        <td>{$activity_module_png}</td>
+                        <td>{$activity.image}</td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
