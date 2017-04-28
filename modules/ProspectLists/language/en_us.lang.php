@@ -98,7 +98,6 @@ $mod_strings = array (
   'LBL_MORE_DETAIL' => 'More Detail' /*for 508 compliance fix*/,
 
   'LBL_EMAIL_MARKETING'=>'Email Marketing',
-  'LBL_EMAIL_MARKETING'=>'Email Marketing',
 
 );
 
