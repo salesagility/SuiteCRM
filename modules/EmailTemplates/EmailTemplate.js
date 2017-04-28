@@ -58,7 +58,8 @@ else if(myField.selectionStart||myField.selectionStart=='0'){var startPos=myFiel
 +myField.value.substring(endPos,myField.value.length);}else{myField.value+=myValue;}}
 function insert_variable_html(text){tinyMCE.activeEditor.execCommand('mceInsertRawHTML',false,text);}
 function insert_variable_html_link(text,url){var thelink="<a href='"+url+"' > "+text+" </a>";insert_variable_html(thelink);}
-function insert_variable(text,elemId){if(elemId=='template_subject'){var value=$('#template_subject').val();var caret=parseInt($('#template_subject').attr('data-caret-position'));var before=value.substring(0,caret);var after=value.substring(caret);$('#template_subject').val(before+$('select[name=variable_name]').val()+after);return;}
+function insert_variable(text,elemId,forceIntoSubject){if(typeof forceIntoSubject==='undefined'){forceIntoSubject=false;}
+if(elemId=='template_subject'||forceIntoSubject){var $subject=$('#'+elemId);var value=$subject.val();var caret=parseInt($subject.attr('data-caret-position'));var before=value.substring(0,caret);var after=value.substring(caret);$subject.val(before+$('select[name=variable_name]').val()+after);return;}
 if(!elemId){throw'not element for insert variable';}
 if(document.getElementById('toggle_textonly')&&document.getElementById('toggle_textonly').checked==true){insert_variable_text(document.getElementById('body_text_plain'),text);}else{SuiteEditor.insert(text,elemId);}}
 var doGetCaretPosition=function(oField){var iCaretPos=0;if(document.selection){oField.focus();var oSel=document.selection.createRange();oSel.moveStart('character',-oField.value.length);iCaretPos=oSel.text.length;}

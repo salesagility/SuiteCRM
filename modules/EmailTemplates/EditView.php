@@ -218,7 +218,16 @@ $xtpl->assign('BODY_EDITOR', SuiteEditorConnector::getHtml(array(
     'textareaId' => 'body_text',
     'elementId' => 'email_template_editor',
     'width' => $templateWidth,
-)));
+    'clickHandler' => "function(e){
+        onClickTemplateBody();
+    }",
+    'tinyMCESetup' => "{
+        setup: function(editor) {
+            editor.on('focus', function(e){
+                onClickTemplateBody();
+            });
+        }
+    }")));
 $xtpl->assign('width_style', 'style="display:'.($current_user->getEditorType() != 'mozaik' ? 'none' : 'table-row').';"');
 
 // ---------------------------------

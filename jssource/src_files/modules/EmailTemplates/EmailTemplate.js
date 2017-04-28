@@ -174,16 +174,19 @@ function insert_variable_html_link(text, url) {
  * If so, the it will call the text insert function, if not, then it
  * will call the html (tinyMCE eidtor) insert function
  */
-function insert_variable(text, elemId) {
-	if(elemId == 'template_subject') {
+function insert_variable(text, elemId, forceIntoSubject) {
+	if(typeof forceIntoSubject === 'undefined') {
+		forceIntoSubject = false;
+	}
+	if(elemId == 'template_subject' || forceIntoSubject) {
 		// insert into the subject instead of the body
-		//$('#template_subject').val($('#template_subject').val()+$('select[name=variable_name]').val());
+		var $subject = $('#'+elemId);
 
-    var value = $('#template_subject').val();
-    var caret = parseInt($('#template_subject').attr('data-caret-position'));
+    var value = $subject.val();
+    var caret = parseInt($subject.attr('data-caret-position'));
     var before = value.substring(0, caret);
     var after = value.substring(caret);
-    $('#template_subject').val(before + $('select[name=variable_name]').val() + after);
+		$subject.val(before + $('select[name=variable_name]').val() + after);
     return;
 	}
 
