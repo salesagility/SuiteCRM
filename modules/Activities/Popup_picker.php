@@ -89,12 +89,8 @@ class Popup_Picker
         global $focus;
         global $mod_strings;
         global $app_strings;
-        global $app_list_strings;
-        global $odd_bg;
-        global $even_bg;
         global $timedate;
 
-        $summary_list = array();
         $meeting_list = array();
         $calls_list = array();
         $emails_list = array();
@@ -157,6 +153,7 @@ class Popup_Picker
                         'description' => $this->formatDescription($meeting->description),
                         'date_type' => $app_strings['DATA_TYPE_START'],
                         'sort_value' => $timedate->fromDb($meeting->fetched_row['date_start'])->ts,
+                        'image' => SugarThemeRegistry::current()->getImageURL('Meetings.gif')
                     );
 
             } else {
@@ -206,6 +203,7 @@ class Popup_Picker
                         'description' => $this->formatDescription($call->description),
                         'date_type' => $app_strings['DATA_TYPE_START'],
                         'sort_value' => $timedate->fromDb($call->fetched_row['date_start'])->ts,
+                        'image' => SugarThemeRegistry::current()->getImageURL('Calls.gif')
                     );
 
             } else {
@@ -259,6 +257,7 @@ class Popup_Picker
                     'description' => $this->getEmailDetails($email),
                     'date_type' => $app_strings['DATA_TYPE_SENT'],
                     'sort_value' => $ts,
+                    'image' => SugarThemeRegistry::current()->getImageURL('Emails.gif')
                 );
 
         } //end Emails
@@ -299,6 +298,7 @@ class Popup_Picker
                         'description' => $this->getEmailDetails($email),
                         'date_type' => $app_strings['DATA_TYPE_SENT'],
                         'sort_value' => strtotime($email->fetched_row['date_sent'] . ' GMT'),
+                        'image' => SugarThemeRegistry::current()->getImageURL('Emails.gif')
                 );
             }
         } //end Unlinked Emails
@@ -322,6 +322,7 @@ class Popup_Picker
                         'description' => $this->formatDescription($note->description),
                         'date_type' => $app_strings['DATA_TYPE_MODIFIED'],
                         'sort_value' => strtotime($note->fetched_row['date_modified'] . ' GMT'),
+                        'image' => SugarThemeRegistry::current()->getImageURL('Notes.gif')
                 );
                 if (!empty($note->filename)) {
                     $count = count($notes_list);
