@@ -40,18 +40,21 @@
 <!DOCTYPE HTML>
 <html {$langHeader}>
 <head>
-    <td align='right' class='test'>
-    <A href='javascript:print();' class='utilsLink'>Print </A>
-    </td>
+    <div style="text-align: right">
+            <img src='themes/{$theme}/images/print.gif'>
+            <a href='javascript:print();' class='utilsLink'>Print </a>
+    </div>
 
     {$ieCompatMode}
     <meta http-equiv="Content-Type" content="text/html; charset="{$charset}">
+
     <link href="themes/{$theme}/css/normalize.css" rel="stylesheet">
     <link href="themes/{$theme}/css/bootstrap.min.css" rel="stylesheet">
     <link href="themes/{$theme}/css/fonts.css" rel="stylesheet">
     <link href="themes/{$theme}/css/grid.css" rel="stylesheet">
     <link href="themes/{$theme}/css/footable.core.css" rel="stylesheet">
     <link href="themes/{$theme}/css/style.css" rel="stylesheet">
+
     <script type="text/javascript" src="cache/include/javascript/sugar_grp1_jquery.js"></script>
     <script type="text/javascript" src="cache/include/javascript/sugar_grp1_yui.js"></script>
     <script type="text/javascript" src="cache/include/javascript/sugar_grp1.js"></script>
