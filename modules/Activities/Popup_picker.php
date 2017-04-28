@@ -137,24 +137,24 @@ class Popup_Picker
                 }
             }
             if ($meeting->status !== 'Planned') {
-                    $meeting_list[] = array(
-                        'name' => $meeting->name,
-                        'id' => $meeting->id,
-                        'type' => 'Meeting',
-                        'direction' => '',
-                        'module' => 'Meetings',
-                        'status' => $meeting->status,
-                        'parent_id' => $meeting->parent_id,
-                        'parent_type' => $meeting->parent_type,
-                        'parent_name' => $meeting->parent_name,
-                        'contact_id' => $meeting->contact_id,
-                        'contact_name' => $meeting->contact_name,
-                        'date_modified' => $meeting->date_start,
-                        'description' => $this->formatDescription($meeting->description),
-                        'date_type' => $app_strings['DATA_TYPE_START'],
-                        'sort_value' => $timedate->fromDb($meeting->fetched_row['date_start'])->ts,
-                        'image' => SugarThemeRegistry::current()->getImageURL('Meetings.gif')
-                    );
+                $meeting_list[] = array(
+                    'name' => $meeting->name,
+                    'id' => $meeting->id,
+                    'type' => 'Meeting',
+                    'direction' => '',
+                    'module' => 'Meetings',
+                    'status' => $meeting->status,
+                    'parent_id' => $meeting->parent_id,
+                    'parent_type' => $meeting->parent_type,
+                    'parent_name' => $meeting->parent_name,
+                    'contact_id' => $meeting->contact_id,
+                    'contact_name' => $meeting->contact_name,
+                    'date_modified' => $meeting->date_start,
+                    'description' => $this->formatDescription($meeting->description),
+                    'date_type' => $app_strings['DATA_TYPE_START'],
+                    'sort_value' => $timedate->fromDb($meeting->fetched_row['date_start'])->ts,
+                    'image' => SugarThemeRegistry::current()->getImageURL('Meetings.gif')
+                );
 
             } else {
                 $open_activity_list[] = array(
@@ -187,24 +187,24 @@ class Popup_Picker
             }
 
             if ($call->status !== 'Planned') {
-                    $calls_list[] = array(
-                        'name' => $call->name,
-                        'id' => $call->id,
-                        'type' => 'Call',
-                        'direction' => $call->direction,
-                        'module' => 'Calls',
-                        'status' => $call->status,
-                        'parent_id' => $call->parent_id,
-                        'parent_type' => $call->parent_type,
-                        'parent_name' => $call->parent_name,
-                        'contact_id' => $call->contact_id,
-                        'contact_name' => $call->contact_name,
-                        'date_modified' => $call->date_start,
-                        'description' => $this->formatDescription($call->description),
-                        'date_type' => $app_strings['DATA_TYPE_START'],
-                        'sort_value' => $timedate->fromDb($call->fetched_row['date_start'])->ts,
-                        'image' => SugarThemeRegistry::current()->getImageURL('Calls.gif')
-                    );
+                $calls_list[] = array(
+                    'name' => $call->name,
+                    'id' => $call->id,
+                    'type' => 'Call',
+                    'direction' => $call->direction,
+                    'module' => 'Calls',
+                    'status' => $call->status,
+                    'parent_id' => $call->parent_id,
+                    'parent_type' => $call->parent_type,
+                    'parent_name' => $call->parent_name,
+                    'contact_id' => $call->contact_id,
+                    'contact_name' => $call->contact_name,
+                    'date_modified' => $call->date_start,
+                    'description' => $this->formatDescription($call->description),
+                    'date_type' => $app_strings['DATA_TYPE_START'],
+                    'sort_value' => $timedate->fromDb($call->fetched_row['date_start'])->ts,
+                    'image' => SugarThemeRegistry::current()->getImageURL('Calls.gif')
+                );
 
             } else {
                 $open_activity_list[] = array(
@@ -241,24 +241,24 @@ class Popup_Picker
                 $ts = $timedate->fromDb($email->fetched_row['date_sent'])->ts;
             }
 
-                $emails_list[] = array(
-                    'name' => $email->name,
-                    'id' => $email->id,
-                    'type' => 'Email',
-                    'direction' => '',
-                    'module' => 'Emails',
-                    'status' => '',
-                    'parent_id' => $email->parent_id,
-                    'parent_type' => $email->parent_type,
-                    'parent_name' => $email->parent_name,
-                    'contact_id' => $email->contact_id,
-                    'contact_name' => $email->contact_name,
-                    'date_modified' => $email->date_start . ' ' . $email->time_start,
-                    'description' => $this->getEmailDetails($email),
-                    'date_type' => $app_strings['DATA_TYPE_SENT'],
-                    'sort_value' => $ts,
-                    'image' => SugarThemeRegistry::current()->getImageURL('Emails.gif')
-                );
+            $emails_list[] = array(
+                'name' => $email->name,
+                'id' => $email->id,
+                'type' => 'Email',
+                'direction' => '',
+                'module' => 'Emails',
+                'status' => '',
+                'parent_id' => $email->parent_id,
+                'parent_type' => $email->parent_type,
+                'parent_name' => $email->parent_name,
+                'contact_id' => $email->contact_id,
+                'contact_name' => $email->contact_name,
+                'date_modified' => $email->date_start . ' ' . $email->time_start,
+                'description' => $this->getEmailDetails($email),
+                'date_type' => $app_strings['DATA_TYPE_SENT'],
+                'sort_value' => $ts,
+                'image' => SugarThemeRegistry::current()->getImageURL('Emails.gif')
+            );
 
         } //end Emails
 
@@ -282,23 +282,23 @@ class Popup_Picker
             foreach ($focus_unlinked_emails_list as $email) {
                 $email->retrieve($email->id);
 
-                    $emails_list[] = array(
-                        'name' => $email->name,
-                        'id' => $email->id,
-                        'type' => 'Email',
-                        'direction' => '',
-                        'module' => 'Emails',
-                        'status' => '',
-                        'parent_id' => $email->parent_id,
-                        'parent_type' => $email->parent_type,
-                        'parent_name' => $email->parent_name,
-                        'contact_id' => $email->contact_id,
-                        'contact_name' => $email->contact_name,
-                        'date_modified' => $email->date_start . ' ' . $email->time_start,
-                        'description' => $this->getEmailDetails($email),
-                        'date_type' => $app_strings['DATA_TYPE_SENT'],
-                        'sort_value' => strtotime($email->fetched_row['date_sent'] . ' GMT'),
-                        'image' => SugarThemeRegistry::current()->getImageURL('Emails.gif')
+                $emails_list[] = array(
+                    'name' => $email->name,
+                    'id' => $email->id,
+                    'type' => 'Email',
+                    'direction' => '',
+                    'module' => 'Emails',
+                    'status' => '',
+                    'parent_id' => $email->parent_id,
+                    'parent_type' => $email->parent_type,
+                    'parent_name' => $email->parent_name,
+                    'contact_id' => $email->contact_id,
+                    'contact_name' => $email->contact_name,
+                    'date_modified' => $email->date_start . ' ' . $email->time_start,
+                    'description' => $this->getEmailDetails($email),
+                    'date_type' => $app_strings['DATA_TYPE_SENT'],
+                    'sort_value' => strtotime($email->fetched_row['date_sent'] . ' GMT'),
+                    'image' => SugarThemeRegistry::current()->getImageURL('Emails.gif')
                 );
             }
         } //end Unlinked Emails
@@ -306,23 +306,23 @@ class Popup_Picker
         foreach ($focus_notes_list as $note) {
             if ($note->ACLAccess('view')) {
 
-                    $notes_list[] = array(
-                        'name' => $note->name,
-                        'id' => $note->id,
-                        'type' => 'Note',
-                        'direction' => '',
-                        'module' => 'Notes',
-                        'status' => '',
-                        'parent_id' => $note->parent_id,
-                        'parent_type' => $note->parent_type,
-                        'parent_name' => $note->parent_name,
-                        'contact_id' => $note->contact_id,
-                        'contact_name' => $note->contact_name,
-                        'date_modified' => $note->date_modified,
-                        'description' => $this->formatDescription($note->description),
-                        'date_type' => $app_strings['DATA_TYPE_MODIFIED'],
-                        'sort_value' => strtotime($note->fetched_row['date_modified'] . ' GMT'),
-                        'image' => SugarThemeRegistry::current()->getImageURL('Notes.gif')
+                $notes_list[] = array(
+                    'name' => $note->name,
+                    'id' => $note->id,
+                    'type' => 'Note',
+                    'direction' => '',
+                    'module' => 'Notes',
+                    'status' => '',
+                    'parent_id' => $note->parent_id,
+                    'parent_type' => $note->parent_type,
+                    'parent_name' => $note->parent_name,
+                    'contact_id' => $note->contact_id,
+                    'contact_name' => $note->contact_name,
+                    'date_modified' => $note->date_modified,
+                    'description' => $this->formatDescription($note->description),
+                    'date_type' => $app_strings['DATA_TYPE_MODIFIED'],
+                    'sort_value' => strtotime($note->fetched_row['date_modified'] . ' GMT'),
+                    'image' => SugarThemeRegistry::current()->getImageURL('Notes.gif')
                 );
                 if (!empty($note->filename)) {
                     $count = count($notes_list);
@@ -354,6 +354,13 @@ class Popup_Picker
         $template->assign('ieCompatMode', $ieCompatMode);
         $charset = isset($app_strings['LBL_CHARSET']) ? $app_strings['LBL_CHARSET'] : $sugar_config['default_charset'];
         $template->assign('charset', $charset);
+
+        $title = getClassicModuleTitle($focus->module_dir,
+            array(translate('LBL_MODULE_NAME', $focus->module_dir), $focus->name),
+            false
+        );
+
+        $template->assign('title', $title);
 
 
         return $template->fetch('modules/Activities/tpls/PopupBody.tpl');
