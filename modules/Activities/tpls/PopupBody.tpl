@@ -61,7 +61,6 @@
                     <th>{$mod.LBL_LIST_STATUS}</th>
                     <th>{$mod.LBL_LIST_CONTACT}</th>
                     <th>{$mod.LBL_LIST_DATE}</th>
-                    <th> <A href='javascript:print();' class='utilsLink'>Print</th>
                 </tr>
                 </thead>
 
@@ -69,7 +68,7 @@
                 {foreach from=$summaryList key=k item=activity}
 
                     <!-- BEGIN: row -->
-                        <td>{$activity.image}</td>
+                        <td><img src={$activity.image}></td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
@@ -107,7 +106,6 @@
                     <th>{$mod.LBL_LIST_STATUS}</th>
                     <th>{$mod.LBL_LIST_CONTACT}</th>
                     <th>{$mod.LBL_LIST_DATE}</th>
-                    <th> <A href='javascript:print();' class='utilsLink'>Print</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -115,7 +113,7 @@
 
                     <!-- BEGIN: row -->
                     <tr>
-                        <td>{$activity.image}</td>
+                        <td><img src={$activity.image}></td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
@@ -154,7 +152,6 @@
                     <th>{$mod.LBL_LIST_STATUS}</th>
                     <th>{$mod.LBL_LIST_CONTACT}</th>
                     <th>{$mod.LBL_LIST_DATE}</th>
-                    <th> <A href='javascript:print();' class='utilsLink'>Print</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -162,7 +159,7 @@
 
                     <!-- BEGIN: row -->
                     <tr>
-                        <td>{$activity.image}</td>
+                        <td><img src={$activity.image}></td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
@@ -201,7 +198,6 @@
                     <th>{$mod.LBL_LIST_STATUS}</th>
                     <th>{$mod.LBL_LIST_CONTACT}</th>
                     <th>{$mod.LBL_LIST_DATE}</th>
-                    <th> <A href='javascript:print();' class='utilsLink'>Print</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -209,7 +205,7 @@
 
                     <!-- BEGIN: row -->
                     <tr>
-                        <td>{$activity.image}</td>
+                        <td><img src={$activity.image}></td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
@@ -248,7 +244,6 @@
                     <th>{$mod.LBL_LIST_STATUS}</th>
                     <th>{$mod.LBL_LIST_CONTACT}</th>
                     <th>{$mod.LBL_LIST_DATE}</th>
-                    <th> <A href='javascript:print();' class='utilsLink'>Print</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -256,7 +251,7 @@
 
                     <!-- BEGIN: row -->
                     <tr>
-                        <td>{$activity.image}</td>
+                        <td><img src={$activity.image}></td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
