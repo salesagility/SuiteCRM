@@ -58,10 +58,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
 
-    <div>
-        {$title}
-    </div>
-
     <div style="text-align: right">
         <img src='themes/{$theme}/images/print.gif'>
         <a href='javascript:print();' class='utilsLink'>Print </a>
@@ -69,3 +65,16 @@
 
 </head>
 <body class="popup">
+<table width="100%" cellpadding="0" cellspacing="0">
+    <tbody>
+    <tr>
+        <td>
+            <div class="moduleTitle">
+                <div>
+                    {$title}
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
