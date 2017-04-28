@@ -57,10 +57,11 @@
                 <thead>
                 <tr class="footable-header">
                     <th><img src="include/images/blank.gif" width="1" height="1" alt=""></th>
-                    <th>{$mod.LBL_LIST_SUBJECT}</th>
+                    <th>{$mod.LBL_LIST_SUBJECT}
                     <th>{$mod.LBL_LIST_STATUS}</th>
                     <th>{$mod.LBL_LIST_CONTACT}</th>
                     <th>{$mod.LBL_LIST_DATE}</th>
+                    <th> <A href='javascript:print();' class='utilsLink'>Print</th>
                 </tr>
                 </thead>
 
@@ -68,12 +69,11 @@
                 {foreach from=$summaryList key=k item=activity}
 
                     <!-- BEGIN: row -->
-                    <tr>
                         <td>{$activity.image}</td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
-                        <td>{$activity.date_type}</td>
+                        <td>{$activity.date_type} {$activity.date_modified}</td>
                     </tr>
                     <!--  BEGIN: description -->
                     <tr>
@@ -107,6 +107,7 @@
                     <th>{$mod.LBL_LIST_STATUS}</th>
                     <th>{$mod.LBL_LIST_CONTACT}</th>
                     <th>{$mod.LBL_LIST_DATE}</th>
+                    <th> <A href='javascript:print();' class='utilsLink'>Print</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -118,7 +119,7 @@
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
-                        <td>{$activity.date_type}</td>
+                        <td>{$activity.date_type} {$activity.date_modified}</td>
                     </tr>
                     <!--  BEGIN: description -->
                     <tr>
@@ -153,6 +154,7 @@
                     <th>{$mod.LBL_LIST_STATUS}</th>
                     <th>{$mod.LBL_LIST_CONTACT}</th>
                     <th>{$mod.LBL_LIST_DATE}</th>
+                    <th> <A href='javascript:print();' class='utilsLink'>Print</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -164,7 +166,7 @@
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
-                        <td>{$activity.date_type}</td>
+                        <td>{$activity.date_type} {$activity.date_modified}</td>
                     </tr>
                     <!--  BEGIN: description -->
                     <tr>
@@ -199,6 +201,7 @@
                     <th>{$mod.LBL_LIST_STATUS}</th>
                     <th>{$mod.LBL_LIST_CONTACT}</th>
                     <th>{$mod.LBL_LIST_DATE}</th>
+                    <th> <A href='javascript:print();' class='utilsLink'>Print</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -210,7 +213,7 @@
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
-                        <td>{$activity.date_type}</td>
+                        <td>{$activity.date_type} {$activity.date_modified}</td>
                     </tr>
                     <!--  BEGIN: description -->
                     <tr>
@@ -245,6 +248,7 @@
                     <th>{$mod.LBL_LIST_STATUS}</th>
                     <th>{$mod.LBL_LIST_CONTACT}</th>
                     <th>{$mod.LBL_LIST_DATE}</th>
+                    <th> <A href='javascript:print();' class='utilsLink'>Print</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -256,7 +260,7 @@
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
-                        <td>{$activity.date_type}</td>
+                        <td>{$activity.date_type} {$activity.date_modified}</td>
                     </tr>
                     <!--  BEGIN: description -->
                     <tr>
