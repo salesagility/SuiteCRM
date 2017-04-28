@@ -153,7 +153,7 @@ class Popup_Picker
                     'description' => $this->formatDescription($meeting->description),
                     'date_type' => $app_strings['DATA_TYPE_START'],
                     'sort_value' => $timedate->fromDb($meeting->fetched_row['date_start'])->ts,
-                    'image' => SugarThemeRegistry::current()->getImageURL('Meetings.gif')
+                    'image' => SugarThemeRegistry::current()->getImageURL('Meetings.svg')
                 );
 
             } else {
@@ -203,7 +203,7 @@ class Popup_Picker
                     'description' => $this->formatDescription($call->description),
                     'date_type' => $app_strings['DATA_TYPE_START'],
                     'sort_value' => $timedate->fromDb($call->fetched_row['date_start'])->ts,
-                    'image' => SugarThemeRegistry::current()->getImageURL('Calls.gif')
+                    'image' => SugarThemeRegistry::current()->getImageURL('Calls.svg')
                 );
 
             } else {
@@ -257,7 +257,7 @@ class Popup_Picker
                 'description' => $this->getEmailDetails($email),
                 'date_type' => $app_strings['DATA_TYPE_SENT'],
                 'sort_value' => $ts,
-                'image' => SugarThemeRegistry::current()->getImageURL('Emails.gif')
+                'image' => SugarThemeRegistry::current()->getImageURL('Emails.svg')
             );
 
         } //end Emails
@@ -298,7 +298,7 @@ class Popup_Picker
                     'description' => $this->getEmailDetails($email),
                     'date_type' => $app_strings['DATA_TYPE_SENT'],
                     'sort_value' => strtotime($email->fetched_row['date_sent'] . ' GMT'),
-                    'image' => SugarThemeRegistry::current()->getImageURL('Emails.gif')
+                    'image' => SugarThemeRegistry::current()->getImageURL('Emails.svg')
                 );
             }
         } //end Unlinked Emails
@@ -322,7 +322,7 @@ class Popup_Picker
                     'description' => $this->formatDescription($note->description),
                     'date_type' => $app_strings['DATA_TYPE_MODIFIED'],
                     'sort_value' => strtotime($note->fetched_row['date_modified'] . ' GMT'),
-                    'image' => SugarThemeRegistry::current()->getImageURL('Notes.gif')
+                    'image' => SugarThemeRegistry::current()->getImageURL('Notes.svg')
                 );
                 if (!empty($note->filename)) {
                     $count = count($notes_list);
@@ -333,6 +333,7 @@ class Popup_Picker
             }
 
         } // end Notes
+
 
         $summary_list = array_merge_recursive($meeting_list, $calls_list, $emails_list, $notes_list);
 
