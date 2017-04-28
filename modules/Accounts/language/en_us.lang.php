@@ -191,5 +191,9 @@ $mod_strings = array (
     // SNIP
     'LBL_CONTACT_HISTORY_SUBPANEL_TITLE' => 'Related Contacts\' Emails',
 	'LBL_PRODUCTS_SERVICES_PURCHASED_SUBPANEL_TITLE' => 'Products and Services Purchased',
+
+	'LBL_AOS_CONTRACTS' => 'Contracts',
+	'LBL_AOS_INVOICES' => 'Invoices',
+	'LBL_AOS_QUOTES' => 'Quotes',
 );
 ?>

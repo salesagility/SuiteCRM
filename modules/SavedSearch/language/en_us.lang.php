@@ -66,6 +66,8 @@ $mod_strings = array (
     'LBL_DESCENDING' => 'Descending',
     'LBL_MODIFY_CURRENT_FILTER'=> 'Modify current filter',
 
+    'LBL_CREATED_BY'=> 'Created By',
+
 );
 
 
