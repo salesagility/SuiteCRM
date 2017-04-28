@@ -40,6 +40,10 @@
 <!DOCTYPE HTML>
 <html {$langHeader}>
 <head>
+    <td align='right' class='test'>
+    <A href='javascript:print();' class='utilsLink'>Print </A>
+    </td>
+
     {$ieCompatMode}
     <meta http-equiv="Content-Type" content="text/html; charset="{$charset}">
     <link href="themes/{$theme}/css/normalize.css" rel="stylesheet">
