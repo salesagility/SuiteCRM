@@ -70,8 +70,11 @@
      * @param elemId
      */
     SuiteEditor.insert = function(text, elemId) {ldelim}
+        if(typeof elemId === 'undefined') {ldelim}
+            elemId = '{$elementId}';
+        {rdelim}
         if(elemId != '{$elementId}') {ldelim}
-            throw 'incorrect editor element id';
+            throw 'incorrect editor element id (TinyMCE id: '+elemId+')';
         {rdelim}
 
         tinyMCE.activeEditor.execCommand('mceInsertRawHTML', false, text);

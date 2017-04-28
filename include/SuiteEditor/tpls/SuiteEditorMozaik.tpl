@@ -66,8 +66,11 @@
      * @param elemId
      */
     SuiteEditor.insert = function(text, elemId) {ldelim}
+        if(typeof elemId === 'undefined') {ldelim}
+            elemId = '{$elementId}';
+        {rdelim}
         if(elemId != '{$elementId}') {ldelim}
-            throw 'incorrect editor element id';
+            throw 'incorrect editor element id (Mozaik id: '+elemId+')';
         {rdelim}
         if($('#'+elemId+' .mozaik-list .mozaik-elem').length > 0) {ldelim}
             // similar as the original insert_variable_html(text);

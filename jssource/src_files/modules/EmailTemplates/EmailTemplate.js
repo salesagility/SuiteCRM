@@ -155,7 +155,9 @@ function insert_variable_text(myField, myValue) {
  */
 function insert_variable_html(text) {
 
-	tinyMCE.activeEditor.execCommand('mceInsertRawHTML', false, text);
+	SuiteEditor.insert(text);
+
+	//tinyMCE.activeEditor.execCommand('mceInsertRawHTML', false, text);
 
 	//var inst = tinyMCE.getInstanceById("body_text");
 	//if (inst)

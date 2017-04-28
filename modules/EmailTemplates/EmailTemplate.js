@@ -56,7 +56,7 @@ function insert_variable_text(myField,myValue){if(document.selection){myField.fo
 else if(myField.selectionStart||myField.selectionStart=='0'){var startPos=myField.selectionStart;var endPos=myField.selectionEnd;myField.value=myField.value.substring(0,startPos)
 +myValue
 +myField.value.substring(endPos,myField.value.length);}else{myField.value+=myValue;}}
-function insert_variable_html(text){tinyMCE.activeEditor.execCommand('mceInsertRawHTML',false,text);}
+function insert_variable_html(text){SuiteEditor.insert(text);}
 function insert_variable_html_link(text,url){var thelink="<a href='"+url+"' > "+text+" </a>";insert_variable_html(thelink);}
 function insert_variable(text,elemId,forceIntoSubject){if(typeof forceIntoSubject==='undefined'){forceIntoSubject=false;}
 if(elemId=='template_subject'||forceIntoSubject){var $subject=$('#'+elemId);var value=$subject.val();var caret=parseInt($subject.attr('data-caret-position'));var before=value.substring(0,caret);var after=value.substring(caret);$subject.val(before+$('select[name=variable_name]').val()+after);return;}
