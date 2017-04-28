@@ -37,17 +37,32 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  *}
 
-<!-- [TinyMCE Editor] -->
+<!-- [TinyMCE Editor implementation] -->
 
 <script src='include/javascript/mozaik/vendor/tinymce/tinymce/tinymce.min.js'></script>
-<script>tinymce.init({ldelim} selector:'#{$elementId}' {rdelim});</script>
 <script>
+    /**
+     * TinyMCE value getter function
+     * @returns string - tinymce value
+     */
     SuiteEditor.getValue = function() {ldelim}
-        return tinyMCE.get('{$elementId}').getContent();
+        return tinymce.get('{$elementId}').getContent();
     {rdelim};
+
+    /**
+     * TinyMCE value setter function
+     * @param htmlCode
+     */
+    SuiteEditor.apply = function(htmlCode) {ldelim}
+        if(typeof htmlCode === 'undefined') {ldelim}
+            htmlCode = '';
+        {rdelim}
+        tinyMCE.EditorManager.get('{$elementId}').setContent(htmlCode);
+    {rdelim};
+
     $(window).mouseup(function(){ldelim}
         $('#{$textareaId}').val(SuiteEditor.getValue());
     {rdelim});
 </script>
-
-<textarea id="{$elementId}" name="{$elementId}" title="">{$contents}</textarea>
+<script>tinymce.init({ldelim} selector:'#{$elementId}' {rdelim});</script>
+<div id="{$elementId}" name="{$elementId}" title="">{$contents}</div>

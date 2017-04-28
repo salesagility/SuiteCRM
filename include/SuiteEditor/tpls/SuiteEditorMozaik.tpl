@@ -37,7 +37,25 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  *}
 
-<!-- [Mozaik Editor] -->
+<!-- [Mozaik Editor implementation] -->
 
-<script>SuiteEditor.getValue = function() {ldelim} return $('#{$elementId}').getMozaikValue(); {rdelim};</script>
+<script>
+    /**
+     * Mozaik value getter function
+     * @returns string - Mozaik value
+     */
+    SuiteEditor.getValue = function() {ldelim}
+        return $('#{$elementId}').getMozaikValue();
+    {rdelim};
+
+    /**
+     * Mozaik value setter function
+     * @param htmlCode
+     */
+    SuiteEditor.apply = function(htmlCode) {ldelim}
+        $('#{$elementId}').html(htmlCode ? htmlCode : '');
+        $('#{$elementId}').mozaik(window.mozaikSettings.{$elementId});
+    {rdelim};
+</script>
+
 {$mozaik}

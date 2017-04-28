@@ -37,12 +37,30 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  *}
 
-<!-- [Direct HTML Editor] -->
+<!-- [Direct HTML Editor implementation] -->
 
 <script>
+
+    /**
+     * Direct HTML Editor value getter function
+     * @returns string - Direct HTML Editor value
+     */
     SuiteEditor.getValue = function() {ldelim}
         return $('#{$elementId}').val();
-    {rdelim}
+    {rdelim};
+
+    /**
+     * Direct HTML Editor value setter function
+     * @param htmlCode
+     */
+    SuiteEditor.apply = function(htmlCode) {ldelim}
+        if(typeof htmlCode === 'undefined') {ldelim}
+            htmlCode = '';
+            {rdelim}
+
+        $('#{$elementId}').val(htmlCode);
+    {rdelim};
+
     $(window).mouseup(function() {ldelim}
         $('#{$textareaId}').val(SuiteEditor.getValue());
     {rdelim});

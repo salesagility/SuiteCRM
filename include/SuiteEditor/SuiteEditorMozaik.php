@@ -65,7 +65,7 @@ class SuiteEditorMozaik implements SuiteEditorInterface
      * @param SuiteEditorSettings $settings
      */
     public function setup(SuiteEditorSettings $settings = null) {
-        $this->settings = new SuiteEditorSettingsForMozaik($settings);
+        $this->settings = $settings;
         require_once('include/SuiteMozaik.php');
         $this->mozaik = new SuiteMozaik();
     }
