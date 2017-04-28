@@ -341,7 +341,7 @@ $dictionary['AOS_Invoices'] = array(
         'discount_amount_usdollar' =>
             array(
                 'name' => 'discount_amount_usdollar',
-                'vname' => 'LBL_DISCOUNT__AMOUNT_USDOLLAR',
+                'vname' => 'LBL_DISCOUNT_AMOUNT_USDOLLAR',
                 'type' => 'currency',
                 'group' => 'discount_amount',
                 'disable_num_format' => true,
