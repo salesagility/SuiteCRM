@@ -59,10 +59,6 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
 
     <div>
-
-    </div>
-
-    <div>
         {$title}
     </div>
 
