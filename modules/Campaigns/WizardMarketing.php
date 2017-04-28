@@ -588,21 +588,6 @@ $ss->assign('link_to_choose_template', 'index.php?return_module=Campaigns&module
 $ss->assign('link_to_sender_details', 'index.php?return_module=Campaigns&module=Campaigns&action=WizardMarketing&campaign_id=' . $campaign_focus->id . '&jump=2');
 
 
-/*
-require_once('include/SuiteMozaik.php');
-$mozaik = new SuiteMozaik();
-$templateWidth = 600;
-$ss->assign('template_width', $templateWidth);
-$ss->assign('BODY_EDITOR', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_html', 'email_template_editor', $templateWidth, '', "tinyMCE: {
-    setup: function(editor) {
-        editor.on('focus', function(e){
-            onClickTemplateBody();
-        });
-    }
-}"));
-*/
-
-
 // ---------------------------------
 // ------------ EDITOR -------------
 // ---------------------------------

@@ -514,7 +514,7 @@ $dictionary['User'] = array(
             'duplicate_merge' => 'disabled',
             'required' => true,
         ),
-            /* Virtual email fields so they will display on the main user page */
+        /* Virtual email fields so they will display on the main user page */
         'email_link_type' => array(
             'name' => 'email_link_type',
             'vname' => 'LBL_EMAIL_LINK_TYPE',
@@ -526,7 +526,6 @@ $dictionary['User'] = array(
             'studio' => false,
         ),
 
-        /* Virtual email fields so they will display on the main user page */
         'editor_type' => array(
             'name' => 'editor_type',
             'vname' => 'LBL_EDITOR_TYPE',

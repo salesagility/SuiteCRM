@@ -157,14 +157,6 @@ function insert_variable_html(text) {
 
 	SuiteEditor.insert(text);
 
-	//tinyMCE.activeEditor.execCommand('mceInsertRawHTML', false, text);
-
-	//var inst = tinyMCE.getInstanceById("body_text");
-	//if (inst)
-	//               inst.getWin().focus();
-	////var html = inst.getContent(true);
-	////inst.setContent(html + text);
-	//inst.execCommand('mceInsertRawHTML', false, text);
 }
 
 function insert_variable_html_link(text, url) {
@@ -312,7 +304,7 @@ function EmailTemplateController(action) {
 		$.post('index.php?entryPoint=emailTemplateData&func=wizardUpdate&rand='+Math.random(), {
 			'func': func,
 			'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
-			'body_html': SuiteEditor.getValue(), //$('#email_template_editor').getMozaikValue(),
+			'body_html': SuiteEditor.getValue(),
 			'name': $('#template_name').val(),
 			'subject': $('#template_subject').val(),
 		}, function(resp){
@@ -367,7 +359,7 @@ function EmailTemplateController(action) {
 		$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(), {
 			'func': func,
 			'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
-			'body_html': SuiteEditor.getValue(),  // $('#email_template_editor').getMozaikValue(),
+			'body_html': SuiteEditor.getValue(),
 			'name': $('#template_name').val(),
 			'subject': $('#template_subject').val(),
 		}, function(resp){

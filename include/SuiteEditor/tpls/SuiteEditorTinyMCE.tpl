@@ -81,19 +81,6 @@
 
     {rdelim};
 
-    /*
-    SuiteEditor.clickHandlers = [];
-    SuiteEditor.addClickHandler = function(handler) {ldelim}
-        SuiteEditor.clickHandlers.push(handler);
-    {rdelim};
-
-    $('#{$elementId}').click(function(e){ldelim}
-        $.each(SuiteEditor.clickHandlers, function(i,h){ldelim}
-            h(e);
-        {rdelim});
-    {rdelim});
-    */
-
     $(function(){ldelim}
 
         {if $clickHandler}
