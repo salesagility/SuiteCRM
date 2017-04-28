@@ -1,10 +1,12 @@
 <?php
-/*********************************************************************************
+
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -35,39 +37,25 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-require_once('include/TemplateHandler/TemplateHandler.php');
-require_once('include/EditView/EditView2.php');
-
-/**
- * DetailView - display single record
- * New implementation
- * @api
  */
-class DetailView2 extends EditView
-{
-    public $view = 'DetailView';
-    public $defs;
-    /**
-     * DetailView constructor
-     * This is the DetailView constructor responsible for processing the new
-     * Meta-Data framework
-     *
-     * @param $module String value of module this detail view is for
-     * @param $focus An empty sugarbean object of module
-     * @param $id The record id to retrieve and populate data for
-     * @param $metadataFile String value of file location to use in overriding default metadata file
-     * @param tpl String value of file location to use in overriding default Smarty template
-     */
 
-    function setup(
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+require_once('include/DetailView/DetailView2.php');
+
+class NonImportedDetailView extends DetailView2
+{
+
+    public function setup(
         $module,
         $focus  = null,
         $metadataFile = null,
         $tpl = 'include/DetailView/DetailView.tpl',
         $createFocus = true
-        )
+    )
     {
         global $sugar_config;
 
@@ -83,38 +71,49 @@ class DetailView2 extends EditView
         $this->module = $module;
         $this->metadataFile = $metadataFile;
         if(isset($GLOBALS['sugar_config']['disable_vcr'])) {
-           $this->showVCRControl = !$GLOBALS['sugar_config']['disable_vcr'];
+            $this->showVCRControl = !$GLOBALS['sugar_config']['disable_vcr'];
         }
         if(!empty($this->metadataFile) && file_exists($this->metadataFile)){
             require($this->metadataFile);
         } else {
-        	//If file doesn't exist we create a best guess
-        	if(!file_exists("modules/$this->module/metadata/detailviewdefs.php") &&
-        	    file_exists("modules/$this->module/DetailView.html")) {
+            //If file doesn't exist we create a best guess
+            if(!file_exists("modules/$this->module/metadata/nonimporteddetailviewdefs.php") &&
+                file_exists("modules/$this->module/DetailView.html")) {
                 global $dictionary;
-        	    $htmlFile = "modules/" . $this->module . "/DetailView.html";
-        	    $parser = new DetailViewMetaParser();
-        	    if(!file_exists('modules/'.$this->module.'/metadata')) {
-        	       sugar_mkdir('modules/'.$this->module.'/metadata');
-        	    }
-        	   	$fp = sugar_fopen('modules/'.$this->module.'/metadata/detailviewdefs.php', 'w');
-        	    fwrite($fp, $parser->parse($htmlFile, $dictionary[$focus->object_name]['fields'], $this->module));
-        	    fclose($fp);
-        	}
+                $htmlFile = "modules/" . $this->module . "/DetailView.html";
+                $parser = new DetailViewMetaParser();
+                if(!file_exists('modules/'.$this->module.'/metadata')) {
+                    sugar_mkdir('modules/'.$this->module.'/metadata');
+                }
+                $fp = sugar_fopen('modules/'.$this->module.'/metadata/nonimporteddetailviewdefs.php', 'w');
+                fwrite($fp, $parser->parse($htmlFile, $dictionary[$focus->object_name]['fields'], $this->module));
+                fclose($fp);
+            }
 
-        	//Flag an error... we couldn't create the best guess meta-data file
-        	if(!file_exists("modules/$this->module/metadata/detailviewdefs.php")) {
-        	   global $app_strings;
-        	   $error = str_replace("[file]", "modules/$this->module/metadata/detailviewdefs.php", $app_strings['ERR_CANNOT_CREATE_METADATA_FILE']);
-        	   $GLOBALS['log']->fatal($error);
-        	   echo $error;
-        	   die();
-        	}
-            require("modules/$this->module/metadata/detailviewdefs.php");
+            //Flag an error... we couldn't create the best guess meta-data file
+            if(!file_exists("modules/$this->module/metadata/nonimporteddetailviewdefs.php")) {
+                global $app_strings;
+                $error = str_replace("[file]", "modules/$this->module/metadata/nonimporteddetailviewdefs.php", $app_strings['ERR_CANNOT_CREATE_METADATA_FILE']);
+                $GLOBALS['log']->fatal($error);
+                echo $error;
+                die();
+            }
+            require("modules/$this->module/metadata/nonimporteddetailviewdefs.php");
         }
 
         $this->defs = $viewdefs[$this->module][$this->view];
     }
 
+    public function populateBean()
+    {
+        if (!empty($_REQUEST['uid']) && !empty($_REQUEST['inbound_email_record'])&& !empty($_REQUEST['msgno'])) {
+            global $beanList;
+
+            $inboundEmail = BeanFactory::getBean('InboundEmail', $_REQUEST['inbound_email_record']);
+            $email = $inboundEmail->returnNonImportedEmail($_REQUEST['msgno'], $_REQUEST['uid']);
+            $this->focus = $email;
+        } else {
+            $GLOBALS['log']->debug("Unable to populate bean, no record parameter found");
+        }
+    }
 }
-?>

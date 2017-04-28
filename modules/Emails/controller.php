@@ -70,6 +70,11 @@ if ($_REQUEST['action'] === 'GetCurrentUserID') {
     $GLOBALS['sugar_config']['http_referer']['actions'][] = 'GetCurrentUserID';
 }
 
+if ($_REQUEST['action'] === 'DisplayDetailView') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'DisplayDetailView';
+}
+
+
 
 class EmailsController extends SugarController
 {
@@ -324,23 +329,35 @@ class EmailsController extends SugarController
         $this->view = 'ajax';
     }
 
+
+    public function action_DisplayDetailView()
+    {
+        $emails = BeanFactory::getBean("Emails");
+        $result = $emails->get_full_list("", "uid = {$_REQUEST['uid']}");
+        if(empty($result))
+        {
+            $this->view = 'detailnonimported';
+        } else {
+            header('location:index.php?module=Emails&action=DetailView&record='. $result[0]->id);
+        }
+    }
+
     public function action_ImportAndShowDetailView()
     {
         global $current_user;
         if(isset($_REQUEST['inbound_email_record']) and !empty($_REQUEST['inbound_email_record'])) {
             $inboundEmail = BeanFactory::getBean('InboundEmail', $_REQUEST['inbound_email_record']);
-//            $inboundEmail->mailbox  = $_REQUEST['folder'];
             $inboundEmail->connectMailserver();
+            // TODO: TASK: UNDEFINED - Use $inboundEmail->returnImportedEmail for import action
             $importedEmailId = $inboundEmail->returnImportedEmail($_REQUEST['msgno'], $_REQUEST['uid']);
             if($importedEmailId !== false) {
                 header('location:index.php?module=Emails&action=DetailView&record='. $importedEmailId);
             }
-
-            return;
+        } else {
+            // When something fail redirect user to index
+            header('location:index.php?module=Emails&action=index');
         }
 
-        // When something fail redirect user to index
-        header('location:index.php?module=Emails&action=index');
     }
 
     public function action_GetCurrentUserID()

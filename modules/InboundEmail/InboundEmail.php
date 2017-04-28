@@ -4164,7 +4164,7 @@ class InboundEmail extends SugarBean
      */
     public function getMessageId($header)
     {
-        $message_id = md5(print_r($header, true));
+        $message_id = md5( );
 
         return $message_id;
     }
@@ -4762,6 +4762,8 @@ class InboundEmail extends SugarBean
             $email = new Email();
             $email->isDuplicate = ($dupeCheckResult) ? false : true;
             $email->mailbox_id = $this->id;
+            $email->uid =  $uid;
+            $email->msgno = $msgNo;
             $message = array();
             $email->id = create_guid();
             $email->new_with_id = true; //forcing a GUID here to prevent double saves.
@@ -4872,6 +4874,8 @@ class InboundEmail extends SugarBean
                 $clean_email
             ); // runs through handleTranserEncoding() already
             $this->imagePrefix = $oldPrefix;
+
+
 
             // empty() check for body content
             if (empty($email->description)) {
@@ -4999,6 +5003,98 @@ class InboundEmail extends SugarBean
 
         return true;
     }
+
+    public function returnNonImportedEmail($msgNo, $uid)
+    {
+        global $timedate;
+        global $app_strings;
+        global $app_list_strings;
+        global $sugar_config;
+        global $current_user;
+
+        if (empty($header)) {
+            $email = new Email();
+
+
+            $this->connectMailserver();
+            $header = imap_headerinfo($this->conn, $uid, FT_UID);
+            $fullHeader = imap_fetchheader($this->conn, $uid, FT_UID);
+            $structure = imap_fetchstructure($this->conn, $msgNo); // map of email
+            $email->name = $this->handleMimeHeaderDecode($header->subject);
+            $email->type = 'inbound';
+            if (!empty($unixHeaderDate)) {
+                $email->date_sent = $timedate->asUser($unixHeaderDate);
+                list($email->date_start, $email->time_start) = $timedate->split_date_time($email->date_sent);
+
+            } else {
+                $email->date_start = $email->time_start = $email->date_sent = "";
+            }
+
+
+
+            $email->status = 'unread'; // this is used in Contacts' Emails SubPanel
+            if (!empty($header->toaddress)) {
+                $email->to_name = $this->handleMimeHeaderDecode($header->toaddress);
+                $email->to_addrs_names = $email->to_name;
+            }
+
+            if (!empty($header->to)) {
+                $email->to_addrs = $this->convertImapToSugarEmailAddress($header->to);
+            }
+
+            $email->from_name = $this->handleMimeHeaderDecode($header->fromaddress);
+            $email->from_addr_name = $email->from_name;
+            $email->from_addr = $this->convertImapToSugarEmailAddress($header->from);
+            if (!empty($header->cc)) {
+                $email->cc_addrs = $this->convertImapToSugarEmailAddress($header->cc);
+            }
+
+            if (!empty($header->ccaddress)) {
+                $email->cc_addrs_names = $this->handleMimeHeaderDecode($header->ccaddress);
+            } // if
+
+            $email->reply_to_name = $this->handleMimeHeaderDecode($header->reply_toaddress);
+            $email->reply_to_email = $this->convertImapToSugarEmailAddress($header->reply_to);
+            if (!empty($email->reply_to_email)) {
+                $email->reply_to_addr = $email->reply_to_name;
+            }
+            $email->intent = $this->mailbox_type;
+
+            $email->message_id = $this->compoundMessageId; // filled by importDupeCheck();
+
+            $oldPrefix = $this->imagePrefix;
+
+            // handle multi-part email bodies
+            $email->description_html = $this->getMessageText(
+                $msgNo,
+                'HTML',
+                $structure,
+                $fullHeader,
+                true
+            ); // runs through handleTranserEncoding() already
+
+            $email->description = $this->getMessageText(
+                $msgNo,
+                'PLAIN',
+                $structure,
+                $fullHeader,
+                true
+            ); // runs through handleTranserEncoding() already
+
+            $this->imagePrefix = $oldPrefix;
+
+            $email->msgno = $msgNo;
+            $email->uid = $uid;
+            $email->inbound_email_record = $this->id;
+
+            return $email;
+        } else {
+            return false;
+        }
+
+
+    }
+
 
     /**
      * figures out if a plain text email body has UUEncoded attachments

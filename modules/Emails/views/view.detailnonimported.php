@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -39,44 +40,41 @@
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
+    die ('Not A Valid Entry Point');
 }
 
-/**
- * @param $focus
- * @param $field
- * @param $value
- * @param $view
- * @return string
- */
-function displaySubjectField($focus, $field, $value, $view)
+
+require_once('modules/Emails/include/NonImportedDetailView/NonImportedDetailView.php');
+
+class EmailsViewDetailnonimported extends ViewDetail
 {
-    global $app_strings, $app_list_strings, $mod_strings;
-    $result = '';
-    $bean = $focus;
-
-    if(empty($view)) {
-        return $result;
+    /**
+     * EmailsViewDetailnonimported constructor.
+     * @inheritdoc
+     */
+    public function __construct()
+    {
+        $this->type = 'NonImportedDetail';
+        parent::__construct();
     }
 
-    if(strtolower($field) !== 'subject') {
-        return $result;
+    /**
+     * @see SugarView::preDisplay()
+     */
+    public function preDisplay()
+    {
+        $metadataFile = $this->getMetaDataFile();
+        $this->dv = new NonImportedDetailView();
+        $this->dv->populateBean();
+        $this->dv->ss =& $this->ss;
+        $this->dv->setup($this->module, $this->dv->focus, $metadataFile,
+            get_custom_file_if_exists('include/DetailView/DetailView.tpl'));
     }
 
-    if(is_object($focus)) {
-        $focus = get_object_vars($focus);
-    } else if(is_array($focus)) {
-        $focus = array_change_key_case($focus, CASE_LOWER);
+    public function display()
+    {
+        $this->dv->process();
+        echo $this->dv->display();
     }
 
-    $template = new Sugar_Smarty();
-    $template->assign('APP', $app_strings);
-    $template->assign('APP_LIST_STRINGS', $app_list_strings);
-    $template->assign('MOD', $mod_strings);
-    $template->assign('bean', $focus);
-
-    $result = $template->fetch('modules/Emails/templates/displaySubjectField.tpl');
-
-
-    return $result;
 }

@@ -347,7 +347,7 @@ class ListViewDataEmails extends ListViewData
                             $emailRecord['FOLDER_TYPE'] = $folderType;
                             break;
                         case 'inbound_email_record':
-                            $emailRecord['INBOUND_EMAIL_RECORD'] = $inboundEmailID;
+                            $emailRecord['INBOUND_EMAIL_RECORD'] = $inboundEmail->id;
                             break;
                         case 'uid':
                             $emailRecord[strtoupper($field)] = $emailHeader['uid'];
