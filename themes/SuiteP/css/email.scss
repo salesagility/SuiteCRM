@@ -49,7 +49,9 @@
   width: 24px;
 }
 
-.email-indicator .email-new {
+.email-indicator .email-new {}
+
+.email-indicator .email-imported {
   background-color: $info-btn-bg;
   color: $default-btn-color;
   border-radius: 4px;

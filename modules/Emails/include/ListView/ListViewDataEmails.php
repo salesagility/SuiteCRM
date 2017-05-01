@@ -70,6 +70,9 @@ class ListViewDataEmails extends ListViewData
     ) {
         global $current_user, $sugar_config, $db, $mod_strings;
 
+
+        // We need to use the parent code so that we get the data structures
+        // which are required to view a list view.
         // start og parent: list view
         require_once 'include/SearchForm/SearchForm2.php';
 
@@ -338,7 +341,14 @@ class ListViewDataEmails extends ListViewData
                             }
                             break;
                         case 'is_imported':
-                            $emailRecord['IS_IMPORTED'] = false;
+                            $uid = $emailHeader['uid'];
+                            $importedEmailBeans = BeanFactory::getBean('Emails');
+                            $is_imported = $importedEmailBeans->get_full_list('','emails.uid LIKE "'.$uid.'"');
+                            if(count($is_imported) > 0) {
+                                $emailRecord['IS_IMPORTED'] = true;
+                            } else {
+                                $emailRecord['IS_IMPORTED'] = false;
+                            }
                             break;
                         case 'folder':
                             $emailRecord['FOLDER'] = $folder;
@@ -371,6 +381,7 @@ class ListViewDataEmails extends ListViewData
 
                             if($emailHeader['deleted'] != 0) {
                                 // TODO: TASK: UNDEFINED - Handle deleted
+
                             }
 
                             if($emailHeader['recent'] != 0) {
@@ -430,6 +441,11 @@ class ListViewDataEmails extends ListViewData
             $pageData['offsets']['end'] = ceil($endOffset);
 
             $queries = array('baseUrl', 'endPage', 'nextPage', 'orderBy');
+
+            if((int)$pageData['offsets']['current'] >= $limitPerPage){
+                $queries[] = 'prevPage';
+                $queries[] = 'startPage';
+            }
 
             foreach ($queries as $query) {
 
