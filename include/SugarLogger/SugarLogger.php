@@ -168,6 +168,24 @@ class SugarLogger implements LoggerTemplate
     }
 
     /**
+     * for log() function, it shows a backtrace information in log when
+     * the 'show_log_trace' config variable is set and true
+     * @return string a readable trace string
+     */
+    private function getTraceString() {
+        $ret = '';
+        $trace = debug_backtrace();
+        foreach ($trace as $call) {
+            $ret .= "\nCall from: {$call['file']} at {$call['line']} at {$call['class']}{$call['type']}{$call['function']}()";
+        }
+        $ret .= "\n";
+        return $ret;
+    }
+
+    /**
+     * Show log
+     * and show a backtrace information in log when
+     * the 'show_log_trace' config variable is set and true
      * see LoggerTemplate::log()
      */
 	public function log(
@@ -175,6 +193,14 @@ class SugarLogger implements LoggerTemplate
 	    $message
 	    )
 	{
+        global $sugar_config;
+        if(isset($sugar_config['show_log_trace']) && $sugar_config['show_log_trace']) {
+            $trace = $this->getTraceString();
+            foreach ($message as &$msg) {
+                $msg .= ("\n" . $trace);
+            }
+        }
+
         if (!$this->initialized) {
             return;
         }
