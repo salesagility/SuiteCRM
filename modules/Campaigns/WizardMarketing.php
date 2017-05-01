@@ -596,21 +596,7 @@ $ss->assign('link_to_sender_details', 'index.php?return_module=Campaigns&module=
 require_once 'include/SuiteEditor/SuiteEditorConnector.php';
 $templateWidth = 600;
 $ss->assign('template_width', $templateWidth);
-$ss->assign('BODY_EDITOR', SuiteEditorConnector::getHtml(array(
-    'contents' => isset($focus->body_html) ? html_entity_decode($focus->body_html) : '',
-    'textareaId' => 'body_text',
-    'elementId' => 'email_template_editor',
-    'width' => $templateWidth,
-    'clickHandler' => "function(e){
-        onClickTemplateBody();
-    }",
-    'tinyMCESetup' => "{
-        setup: function(editor) {
-            editor.on('focus', function(e){
-                onClickTemplateBody();
-            });
-        }
-    }")));
+$ss->assign('BODY_EDITOR', SuiteEditorConnector::getHtml(SuiteEditorConnector::getSuiteSettings(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', $templateWidth)));
 $ss->assign('hide_width_set', $current_user->getEditorType() != 'mozaik');
 
 // ---------------------------------

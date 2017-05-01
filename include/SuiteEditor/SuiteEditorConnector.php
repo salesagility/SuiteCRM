@@ -61,6 +61,24 @@ include_once 'include/SuiteEditor/SuiteEditorConnector.php';
 class SuiteEditorConnector
 {
 
+    public static function getSuiteSettings($html, $width) {
+        return array(
+            'contents' => $html,
+            'textareaId' => 'body_text',
+            'elementId' => 'email_template_editor',
+            'width' => $width,
+            'clickHandler' => "function(e){
+                onClickTemplateBody();
+            }",
+            'tinyMCESetup' => "{
+                setup: function(editor) {
+                    editor.on('focus', function(e){
+                        onClickTemplateBody();
+                    });
+                }
+            }");
+    }
+
     /**
      * return an output HTML of user selected editor for templates
      * based on current user preferences

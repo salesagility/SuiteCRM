@@ -213,21 +213,7 @@ if (isset($focus->body_html)) $xtpl->assign("BODY_HTML", $focus->body_html); els
 require_once 'include/SuiteEditor/SuiteEditorConnector.php';
 $templateWidth = 600;
 $xtpl->assign('template_width', $templateWidth);
-$xtpl->assign('BODY_EDITOR', SuiteEditorConnector::getHtml(array(
-    'contents' => isset($focus->body_html) ? html_entity_decode($focus->body_html) : '',
-    'textareaId' => 'body_text',
-    'elementId' => 'email_template_editor',
-    'width' => $templateWidth,
-    'clickHandler' => "function(e){
-        onClickTemplateBody();
-    }",
-    'tinyMCESetup' => "{
-        setup: function(editor) {
-            editor.on('focus', function(e){
-                onClickTemplateBody();
-            });
-        }
-    }")));
+$xtpl->assign('BODY_EDITOR', SuiteEditorConnector::getHtml(SuiteEditorConnector::getSuiteSettings(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', $templateWidth)));
 $xtpl->assign('width_style', 'style="display:'.($current_user->getEditorType() != 'mozaik' ? 'none' : 'table-row').';"');
 
 // ---------------------------------
