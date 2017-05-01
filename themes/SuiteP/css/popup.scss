@@ -42,7 +42,7 @@
     font-size: 26px;
     font-weight: 300;
     color: $main-font-color;
-    margin: 0 0 $detail-view-module-title-space 0;
+    margin: 0 0 0 0;
     float: left;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -55,5 +55,9 @@
   .icon{
     width: 30px;
     height: 30px;
+  }
+  .content {
+    padding: $page-content-spacing 3% 40px 3%;
+    width: 100%;
   }
 }
