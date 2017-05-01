@@ -6,10 +6,9 @@
   .nav-tabs > li, .nav-tabs > li:hover {
     margin-bottom: 0;
 
-
-     a {
-       border: hidden;
-     }
+    a {
+      border: hidden;
+    }
 
     a:hover {
       border: hidden;
@@ -27,9 +26,16 @@
   .list tr th:last-child {
     border-top-right-radius: 4px;
   }
-  .glyph-print{
+  .glyph-print {
     font-size: 20px;
     color: #778591;
+    font-weight: normal;
+    text-align: right;
+  }
+  .print{
+      font-weight: normal;
+      padding: 0 30px 0 0;
+      text-decoration: underline;
   }
   .moduleTitle h2 {
     display: block;
@@ -40,6 +46,6 @@
     float: left;
     letter-spacing: 2px;
     text-transform: uppercase;
-    padding: 0px 0px 0px 30px;
+    padding: 0 0 0 30px;
   }
 }

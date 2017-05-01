@@ -68,7 +68,7 @@
         <td>
             <div style="text-align: right">
                 <span class="glyphicon glyphicon-print glyph-print"></span>
-                <a href='javascript:print();' class='utilsLink'>Print </a>
+                <a href='javascript:print();' class='print'>Print </a>
             </div>
 
             <div class="title">
