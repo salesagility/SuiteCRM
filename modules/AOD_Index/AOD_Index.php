@@ -274,6 +274,11 @@ class AOD_Index extends AOD_Index_sugar {
         if(empty($GLOBALS['dictionary'][$beanName]['unified_search'])){
             return false;
         }
+        require_once ("modules/Home/UnifiedSearchAdvanced.php");
+        $moduleList = UnifiedSearchAdvanced::getUnifiedSearchModulesDisplay();
+        if(!isset($moduleList[ $module ]) || $moduleList[ $module ]['visible'] == false ){
+            return false;
+        }
         return true;
     }
 

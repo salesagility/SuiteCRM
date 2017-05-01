@@ -1,0 +1,27 @@
+<?php
+// created: 2016-09-02 15:20:30
+$mod_strings = array (
+  'LNK_NEW_EMAIL' => 'Send EmailAAA',
+  'LNK_EMAIL_LIST' => 'EmailsAAA',
+  'LBL_LIST_FORM_TITLE' => 'EmailAAA List',
+  'LBL_SEARCH_FORM_TITLE' => 'EmailAAA Search',
+  'LBL_EMAILS_ACCOUNTS_REL' => 'Emails:AccountsAAA',
+  'LBL_EMAILS_BUGS_REL' => 'Emails:BugsAAA',
+  'LBL_EMAILS_CASES_REL' => 'Emails:CasesAAA',
+  'LBL_EMAILS_CONTACTS_REL' => 'Emails:ContactsAAA',
+  'LBL_EMAILS_LEADS_REL' => 'Emails:LeadsyzxAAA',
+  'LBL_EMAILS_OPPORTUNITIES_REL' => 'Emails:OpportunitiesAAA',
+  'LBL_EMAILS_PROJECT_REL' => 'Emails:ProjectAAA',
+  'LBL_EMAILS_TASKS_REL' => 'Emails:TasksAAA',
+  'LBL_EMAILS_NOTES_REL' => 'Emails:NotesAAA',
+  'LBL_EMAILS_MEETINGS_REL' => 'Emails:MeetingsAAA',
+  'LBL_NOTES_SUBPANEL_TITLE' => 'Attachments',
+  'LBL_ACCOUNTS_SUBPANEL_TITLE' => 'AccountsAAA',
+  'LBL_CONTACTS_SUBPANEL_TITLE' => 'ContactsAAA',
+  'LBL_OPPORTUNITY_SUBPANEL_TITLE' => 'OpportunitiesAAA',
+  'LBL_LEADS_SUBPANEL_TITLE' => 'LeadsyzxAAA',
+  'LBL_CASES_SUBPANEL_TITLE' => 'CasesAAA',
+  'LBL_BUGS_SUBPANEL_TITLE' => 'BugsAAA',
+  'LBL_PROJECT_SUBPANEL_TITLE' => 'ProjectsAAA',
+  'LBL_MY_EMAILS' => 'My EmailsAAA',
+);
