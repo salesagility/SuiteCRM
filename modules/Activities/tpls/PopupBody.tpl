@@ -57,8 +57,8 @@
             <table class="list view table-responsive subpanel-table">
                 <thead>
                 <tr class="footable-header">
-                    <th><img src="include/images/blank.gif" width="1" height="1" alt=""></th>
-                    <th>{$mod.LBL_LIST_SUBJECT}
+                    <th><img src="include/images/blank.gif"</th>
+                    <th>{$mod.LBL_LIST_SUBJECT}</th>
                     <th>{$mod.LBL_LIST_STATUS}</th>
                     <th>{$mod.LBL_LIST_CONTACT}</th>
                     <th>{$mod.LBL_LIST_DATE}</th>
@@ -102,7 +102,7 @@
             <table class="list view table-responsive subpanel-table">
                 <thead>
                 <tr class="footable-header">
-                    <th><img src="include/images/blank.gif" width="1" height="1" alt=""></th>
+                    <th><img src="include/images/blank.gif"</th>
                     <th>{$mod.LBL_LIST_SUBJECT}</th>
                     <th>{$mod.LBL_LIST_STATUS}</th>
                     <th>{$mod.LBL_LIST_CONTACT}</th>
@@ -148,7 +148,7 @@
             <table class="list view table-responsive subpanel-table">
                 <thead>
                 <tr class="footable-header">
-                    <th><img src="include/images/blank.gif" width="1" height="1" alt=""></th>
+                    <th><img src="include/images/blank.gif"</th>
                     <th>{$mod.LBL_LIST_SUBJECT}</th>
                     <th>{$mod.LBL_LIST_STATUS}</th>
                     <th>{$mod.LBL_LIST_CONTACT}</th>
@@ -194,7 +194,7 @@
             <table class="list view table-responsive subpanel-table">
                 <thead>
                 <tr class="footable-header">
-                    <th><img src="include/images/blank.gif" width="1" height="1" alt=""></th>
+                    <th><img src="include/images/blank.gif"</th>
                     <th>{$mod.LBL_LIST_SUBJECT}</th>
                     <th>{$mod.LBL_LIST_STATUS}</th>
                     <th>{$mod.LBL_LIST_CONTACT}</th>
@@ -240,7 +240,7 @@
             <table class="list view table-responsive subpanel-table">
                 <thead>
                 <tr class="footable-header">
-                    <th><img src="include/images/blank.gif" width="1" height="1" alt=""></th>
+                    <th><img src="include/images/blank.gif"</th>
                     <th>{$mod.LBL_LIST_SUBJECT}</th>
                     <th>{$mod.LBL_LIST_STATUS}</th>
                     <th>{$mod.LBL_LIST_CONTACT}</th>
