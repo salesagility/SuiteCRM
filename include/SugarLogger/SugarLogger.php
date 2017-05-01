@@ -176,7 +176,12 @@ class SugarLogger implements LoggerTemplate
         $ret = '';
         $trace = debug_backtrace();
         foreach ($trace as $call) {
-            $ret .= "\nCall from: {$call['file']} at {$call['line']} at {$call['class']}{$call['type']}{$call['function']}()";
+            $file = isset($call['file']) ? $call['file'] : '???';
+            $line = isset($call['line']) ? $call['line'] : '???';
+            $class = isset($call['class']) ? $call['class'] : '';
+            $type = isset($call['type']) ? $call['type'] : '';
+            $function = isset($call['function']) ? $call['function'] : '???';
+            $ret .= "\nCall in {$file} at #{$line} from {$class}{$type}{$function}(...)";
         }
         $ret .= "\n";
         return $ret;
@@ -194,12 +199,6 @@ class SugarLogger implements LoggerTemplate
 	    )
 	{
         global $sugar_config;
-        if(isset($sugar_config['show_log_trace']) && $sugar_config['show_log_trace']) {
-            $trace = $this->getTraceString();
-            foreach ($message as &$msg) {
-                $msg .= ("\n" . $trace);
-            }
-        }
 
         if (!$this->initialized) {
             return;
@@ -217,6 +216,12 @@ class SugarLogger implements LoggerTemplate
 	    // change to a human-readable array output if it's any other array
 	    if ( is_array($message) )
 		    $message = print_r($message,true);
+
+
+        if(isset($sugar_config['show_log_trace']) && $sugar_config['show_log_trace']) {
+            $trace = $this->getTraceString();
+            $message .= ("\n" . $trace);
+        }
 
 		//write out to the file including the time in the dateFormat the process id , the user id , and the log level as well as the message
 		fwrite($this->fp,
