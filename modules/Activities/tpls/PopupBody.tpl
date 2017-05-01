@@ -69,12 +69,11 @@
                 {foreach from=$summaryList key=k item=activity}
 
                     <!-- BEGIN: row -->
-                        <td><img src={$activity.image}></td>
-                        <td>{$activity.name} {$activity.attachment}</td>
-                        <td>{$activity.type} {$activity.status}</td>
-                        <td>{$activity.contact_name}</td>
-                        <td>{$activity.date_type} {$activity.date_modified}</td>
-
+                    <td><img src={$activity.image}></td>
+                    <td>{$activity.name} {$activity.attachment}</td>
+                    <td>{$activity.type} {$activity.status}</td>
+                    <td>{$activity.contact_name}</td>
+                    <td>{$activity.date_type} {$activity.date_modified}</td>
                     <!--  BEGIN: description -->
                     <tr>
                         <td></td>
