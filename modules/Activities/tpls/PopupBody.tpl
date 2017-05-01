@@ -58,7 +58,7 @@
                 <thead>
                 <tr class="footable-header">
                     <th>
-                            <img class ="blank-space" src="include/images/blank.gif">
+                        <img class="blank-space" src="include/images/blank.gif">
                     </th>
                     <th>{$mod.LBL_LIST_SUBJECT}</th>
                     <th>{$mod.LBL_LIST_STATUS}</th>
@@ -71,7 +71,7 @@
                 {foreach from=$summaryList key=k item=activity}
 
                     <!-- BEGIN: row -->
-                    <td><img src={$activity.image}></td>
+                    <td><img class="icon" src={$activity.image}></td>
                     <td>{$activity.name} {$activity.attachment}</td>
                     <td>{$activity.type} {$activity.status}</td>
                     <td>{$activity.contact_name}</td>
@@ -104,7 +104,7 @@
                 <thead>
                 <tr class="footable-header">
                     <th>
-                            <img class ="blank-space" src="include/images/blank.gif">
+                        <img class="blank-space" src="include/images/blank.gif">
                     </th>
                     <th>{$mod.LBL_LIST_SUBJECT}</th>
                     <th>{$mod.LBL_LIST_STATUS}</th>
@@ -117,7 +117,7 @@
 
                     <!-- BEGIN: row -->
                     <tr>
-                        <td><img src={$activity.image}></td>
+                        <td><img class="icon" src={$activity.image}></td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
@@ -152,7 +152,7 @@
                 <thead>
                 <tr class="footable-header">
                     <th>
-                            <img class ="blank-space" src="include/images/blank.gif">
+                        <img class="blank-space" src="include/images/blank.gif">
                     </th>
                     <th>{$mod.LBL_LIST_SUBJECT}</th>
                     <th>{$mod.LBL_LIST_STATUS}</th>
@@ -165,7 +165,7 @@
 
                     <!-- BEGIN: row -->
                     <tr>
-                        <td><img src={$activity.image}></td>
+                        <td><img class="icon" src={$activity.image}></td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
@@ -200,7 +200,7 @@
                 <thead>
                 <tr class="footable-header">
                     <th>
-                            <img class ="blank-space" src="include/images/blank.gif">
+                        <img class="blank-space" src="include/images/blank.gif">
                     </th>
                     <th>{$mod.LBL_LIST_SUBJECT}</th>
                     <th>{$mod.LBL_LIST_STATUS}</th>
@@ -213,7 +213,7 @@
 
                     <!-- BEGIN: row -->
                     <tr>
-                        <td><img src={$activity.image}></td>
+                        <td><img class="icon" src={$activity.image}></td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
@@ -248,7 +248,7 @@
                 <thead>
                 <tr class="footable-header">
                     <th>
-                            <img class ="blank-space" src="include/images/blank.gif">
+                        <img class="blank-space" src="include/images/blank.gif">
                     </th>
                     <th>{$mod.LBL_LIST_SUBJECT}</th>
                     <th>{$mod.LBL_LIST_STATUS}</th>
@@ -261,7 +261,7 @@
 
                     <!-- BEGIN: row -->
                     <tr>
-                        <td><img src={$activity.image}></td>
+                        <td><img class="icon" src={$activity.image}></td>
                         <td>{$activity.name} {$activity.attachment}</td>
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
