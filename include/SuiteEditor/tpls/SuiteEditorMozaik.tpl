@@ -60,7 +60,7 @@
     {rdelim};
 
     /**
-     * Mozaik valie insert function
+     * Mozaik value insert function
      *
      * @param text
      * @param elemId
