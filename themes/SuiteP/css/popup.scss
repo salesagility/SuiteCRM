@@ -29,7 +29,17 @@
   }
   .glyph-print{
     font-size: 20px;
-    color: #778591
+    color: #778591;
   }
-
+  .moduleTitle h2 {
+    display: block;
+    font-size: 26px;
+    font-weight: 300;
+    color: $main-font-color;
+    margin: 0 0 $detail-view-module-title-space 0;
+    float: left;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0px 0px 0px 30px;
+  }
 }

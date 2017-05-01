@@ -71,7 +71,7 @@
                 <a href='javascript:print();' class='utilsLink'>Print </a>
             </div>
 
-            <div class="moduleTitle">
+            <div class="title">
                 <div>
                     {$title}
                 </div>
