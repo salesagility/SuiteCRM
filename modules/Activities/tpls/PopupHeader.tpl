@@ -66,17 +66,15 @@
     <tbody>
     <tr>
         <td>
-            <div style="text-align: right">
-                <span class="glyphicon glyphicon-print glyph-print"></span>
-                <a href='javascript:print();' class='print'>Print </a>
-            </div>
-
             <div class="title">
-                <div>
-                    {$title}
+                <h2>{$title}</h2>
+                <div class="clear">
                 </div>
             </div>
-
+        </td>
+        <td align="right" class="title">
+            <span class="glyphicon glyphicon-print glyph-print"></span>
+            <a href='javascript:print();' class='print'>Print </a>
         </td>
     </tr>
     </tbody>
