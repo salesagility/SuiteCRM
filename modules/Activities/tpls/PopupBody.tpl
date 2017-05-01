@@ -74,7 +74,7 @@
                         <td>{$activity.type} {$activity.status}</td>
                         <td>{$activity.contact_name}</td>
                         <td>{$activity.date_type} {$activity.date_modified}</td>
-                    </tr>
+
                     <!--  BEGIN: description -->
                     <tr>
                         <td></td>
@@ -260,11 +260,9 @@
                     </tr>
                     <!--  BEGIN: description -->
                     <tr>
-                        <td></td>
                         <td>
                             <table>
                                 <tr>
-                                    <td></td>
                                     <td>{$activity.description}
                                     </td>
                                 </tr>
