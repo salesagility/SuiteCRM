@@ -38,6 +38,13 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit {
         if ($handle = opendir('modules/AOS_PDF_Templates/samples')) {
             $sample_options_array[] = ' ';
             while (false !== ($file = readdir($handle))) {
+
+            	//OPENSYMBOLMOD simo - too confident to not exclude directories...think about .svn for example
+                if ( !is_file($file) ) {
+                    continue;
+                }
+                //OPENSYMBOLMOD simo
+
                 if($value = ltrim(rtrim($file,'.php'),'smpl_')){
                     require_once('modules/AOS_PDF_Templates/samples/'.$file);
                     $file = rtrim($file,'.php');
