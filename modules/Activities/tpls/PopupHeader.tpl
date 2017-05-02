@@ -74,7 +74,7 @@
         </td>
         <td align="right" class="title">
             <span class="glyphicon glyphicon-print glyph-print"></span>
-            <a href='javascript:print();' class='print'>Print </a>
+            <a href='javascript:print();' class='print'>{$mod.LBL_PRINT} </a>
         </td>
     </tr>
     </tbody>

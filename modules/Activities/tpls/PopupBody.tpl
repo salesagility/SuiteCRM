@@ -42,14 +42,14 @@
 
 <div class="content">
     <ul class="nav nav-tabs">
-        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Overview</a>
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">{$mod.LBL_OVERVIEW}</a>
         </li>
         <li role="presentation"><a href="#meetings" aria-controls="meetings" role="tab"
-                                   data-toggle="tab">Meetings</a></li>
-        <li role="presentation"><a href="#calls" aria-controls="calls" role="tab" data-toggle="tab">Calls</a></li>
-        <li role="presentation"><a href="#emails" aria-controls="emails" role="tab" data-toggle="tab">Emails</a>
+                                   data-toggle="tab">{$mod.LBL_MEETINGS}</a></li>
+        <li role="presentation"><a href="#calls" aria-controls="calls" role="tab" data-toggle="tab">{$mod.LBL_CALLS}</a></li>
+        <li role="presentation"><a href="#emails" aria-controls="emails" role="tab" data-toggle="tab">{$mod.LBL_EMAILS}</a>
         </li>
-        <li role="presentation"><a href="#notes" aria-controls="notes" role="tab" data-toggle="tab">Notes</a></li>
+        <li role="presentation"><a href="#notes" aria-controls="notes" role="tab" data-toggle="tab">{$mod.LBL_NOTES}</a></li>
     </ul>
 
     <div class="tab-content">
