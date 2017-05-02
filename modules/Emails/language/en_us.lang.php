@@ -58,6 +58,7 @@ $mod_strings = array (
 	'LBL_SIGNATURE_PREPEND'				=> 'Signature above reply',
     'LBL_EMAIL_DEFAULT_DESCRIPTION' 	=> 'Here is the quote you requested (You can change this text)',
     'LBL_IMPORT' => 'Import',
+    'LBL_IMPORTING' => 'Importing',
 
 	'LBL_CONFIRM_DELETE'		=> 'Are you sure you want to delete this folder?',
 	'LBL_CONFIRM_DELETE_EMAIL'		=> 'Are you sure you want to delete this email?',

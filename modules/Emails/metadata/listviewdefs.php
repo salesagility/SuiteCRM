@@ -87,6 +87,7 @@ $viewdefs['Emails']['ListView'] = array(
             ),
             array(
                 'file' => 'modules/Emails/include/ListView/ListViewHeader.js',
+                'file' => 'modules/Emails/include/ListView/ImportEmailAction.js',
             )
         ),
         'options' => array(

@@ -74,6 +74,10 @@ if ($_REQUEST['action'] === 'DisplayDetailView') {
     $GLOBALS['sugar_config']['http_referer']['actions'][] = 'DisplayDetailView';
 }
 
+if ($_REQUEST['action'] === 'ImportFromListView') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'ImportFromListView';
+}
+
 
 
 class EmailsController extends SugarController
@@ -348,7 +352,6 @@ class EmailsController extends SugarController
         if(isset($_REQUEST['inbound_email_record']) and !empty($_REQUEST['inbound_email_record'])) {
             $inboundEmail = BeanFactory::getBean('InboundEmail', $_REQUEST['inbound_email_record']);
             $inboundEmail->connectMailserver();
-            // TODO: TASK: UNDEFINED - Use $inboundEmail->returnImportedEmail for import action
             $importedEmailId = $inboundEmail->returnImportedEmail($_REQUEST['msgno'], $_REQUEST['uid']);
             if($importedEmailId !== false) {
                 header('location:index.php?module=Emails&action=DetailView&record='. $importedEmailId);
@@ -364,6 +367,34 @@ class EmailsController extends SugarController
     {
         global $current_user;
         echo json_encode(array("response" => $current_user->id));
+        $this->view = 'ajax';
+    }
+
+    public function action_ImportFromListView () {
+        $response = false;
+
+        if(isset($_REQUEST['inbound_email_record']) and !empty($_REQUEST['inbound_email_record'])) {
+            $inboundEmail = BeanFactory::getBean('InboundEmail', $_REQUEST['inbound_email_record']);
+            if(isset($_REQUEST['folder']) and !empty($_REQUEST['folder'])) {
+                $inboundEmail->mailbox = $_REQUEST['folder'];
+            }
+            $inboundEmail->connectMailserver();
+
+            if(isset($_REQUEST['all']) and $_REQUEST['all'] == true) {
+                // import all in folder
+                $inboundEmail->importAllFromFolder();
+                $response = true;
+            } else {
+                foreach ($_REQUEST['uid'] as $uid) {
+                    $result = $inboundEmail->returnImportedEmail($_REQUEST['msgno'], $uid);
+                    $response = true;
+                }
+            }
+
+        } else {
+            $GLOBALS['log']->fatal('EmailsController::action_ImportFromListView() missing inbound_email_record');
+        }
+        echo json_encode(array('response' => $response));
         $this->view = 'ajax';
     }
 

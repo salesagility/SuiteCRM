@@ -4743,6 +4743,10 @@ class InboundEmail extends SugarBean
         // UNCOMMENT THIS IF YOU HAVE THIS PROBLEM!  See notes on Bug # 45477
         // $this->markEmails($uid, "read");
 
+        if(empty($msgNo) and !empty($uid)) {
+            $msgNo = imap_msgno ($this->conn, (int)$uid);
+        }
+
         $header = imap_headerinfo($this->conn, $msgNo);
         $fullHeader = imap_fetchheader($this->conn, $msgNo); // raw headers
 
@@ -5095,6 +5099,23 @@ class InboundEmail extends SugarBean
 
     }
 
+
+    public function importAllFromFolder()
+    {
+
+        $emailSortedHeaders = imap_sort(
+            $this->conn,
+            SORTDATE,
+            0,
+            SE_UID
+        );
+
+
+        foreach($emailSortedHeaders as $uid){
+            $result = $this->returnImportedEmail(null, $uid);
+            $test = false;
+        }
+    }
 
     /**
      * figures out if a plain text email body has UUEncoded attachments

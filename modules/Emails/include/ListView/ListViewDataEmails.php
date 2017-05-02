@@ -153,7 +153,7 @@ class ListViewDataEmails extends ListViewData
 
         SugarVCR::store($this->seed->module_dir,  $main_query);
 
-//        SugarVCR::recordIDs($this->seed->module_dir, array_keys($idIndex), $offset, $totalCount);
+
         $module_names = array(
             'Prospects' => 'Targets'
         );
@@ -177,7 +177,7 @@ class ListViewDataEmails extends ListViewData
 
         if( isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "advanced_search" ||
             isset($_REQUEST["type_basic"]) && (count($_REQUEST["type_basic"] > 1) || $_REQUEST["type_basic"][0] != "") ||
-            isset($_REQUEST["module"]) && $_REQUEST["module"] == "MergeRecords")
+                isset($_REQUEST["module"]) && $_REQUEST["module"] == "MergeRecords")
         {
             $queryString = "-advanced_search";
         }
@@ -291,7 +291,7 @@ class ListViewDataEmails extends ListViewData
             }
 
 
-
+            $_REQUEST['uids'] = array();
             foreach ($cachedEmails['data'] as $h => $emailHeader) {
                 $emailRecord = array();
 
@@ -361,6 +361,7 @@ class ListViewDataEmails extends ListViewData
                             break;
                         case 'uid':
                             $emailRecord[strtoupper($field)] = $emailHeader['uid'];
+                            $_REQUEST['email_uids'][] = $emailHeader['uid'];
                             break;
                         case 'msgno':
                             $emailRecord[strtoupper($field)] = $emailHeader['msgno'];
@@ -471,7 +472,7 @@ class ListViewDataEmails extends ListViewData
             $_REQUEST['folder'] = $folder;
             $_REQUEST['folder'] = $folder;
             $_REQUEST['folder_type'] = $folderType;
-            $_REQUEST['inbound_email_record='] = $inboundEmailID;
+            $_REQUEST['inbound_email_record'] = $inboundEmailID;
 
             return array('data' => $data, 'pageData' => $pageData, 'query' => $queryString);
         } else {
