@@ -48,6 +48,10 @@
     text-transform: uppercase;
     padding: 0 0 0 30px;
   }
+  .h1, .h2, .h3, h1, h2, h3{
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
   .blank-space{
     width: 1px;
     height: 1px;
@@ -57,7 +61,7 @@
     height: 30px;
   }
   .content {
-    padding: $page-content-spacing 3% 40px 3%;
+    padding: 0 3% 0 3%;
     width: 100%;
   }
 }
