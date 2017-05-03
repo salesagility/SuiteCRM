@@ -43,10 +43,9 @@ $viewdefs[$module_name]['DetailView'] = array(
     'templateMeta' => array(
         'form' => array(
             'buttons' => array(
-                'EDIT',
-                'DUPLICATE',
-                'DELETE',
-                'FIND_DUPLICATES',
+                array(
+                    'customCode' => '<input type=button onclick="window.location.href=\'index.php?module=Emails&action=ImportAndShowDetailView&folder=INBOX.TestInbox&folder=inbound&inbound_email_record={$bean->inbound_email_record}&uid={$bean->uid}&msgno={$bean->msgno}\';" value="{$MOD.LBL_IMPORT}">'
+                )
             )
         ),
         'maxColumns' => '2',
@@ -96,18 +95,11 @@ $viewdefs[$module_name]['DetailView'] = array(
                 ),
             ),
             array(
-                'parent_name'
-            ),
-            array(
-                'date_entered' => array(
-                    'name' => 'date_entered',
-                    'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+                'date_start' => array(
+                    'name' => 'date_start',
                     'label' => 'LBL_DATE_ENTERED',
                 )
-            ),
-            array (
-                'category_id',
-            ),
+            )
         )
     )
 );

@@ -69,17 +69,6 @@ function displaySubjectField($focus, $field, $value, $view)
         $focus = array_change_key_case($focus, CASE_LOWER);
     }
 
-//    if(!empty($focus['id'])) {
-//        $bean = BeanFactory::getBean('Emails', $focus['id']);
-//        if (is_object($bean)) {
-//            $bean = get_object_vars($bean);
-//        }
-//    }
-
-//    if (is_object($bean)) {
-//        $bean = get_object_vars($bean);
-//    }
-
     $template = new Sugar_Smarty();
     $template->assign('APP', $app_strings);
     $template->assign('APP_LIST_STRINGS', $app_list_strings);

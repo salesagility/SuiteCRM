@@ -37,84 +37,89 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+
 (function ($) {
   /**
    *
    * @param options
    * @return {*|HTMLElement}
    */
-  $.fn.FoldersViewModal =  function(options) {
+  $.fn.ImportEmailAction =  function(options) {
     "use strict";
-    var self = {};
-    var opts = $.extend({}, $.fn.FoldersViewModal.defaults, options);
+    var self = this;
+    var opts = $.extend({}, $.fn.ImportEmailAction.defaults, options);
 
-    self.handleClick = function () {
-      "use strict";
-      self.emailFoldersView = null;
-      var foldersBox = $('<div></div>').appendTo(opts.contentSelector);
-      foldersBox.messageBox({
-        "showHeader": false,
-        "showFooter": false,
-        "size": 'lg'
+    if(typeof messageBox === "undefined") {
+      console.error('ImportEmailAction - Missing Dependency: Cannot find messageBox.');
+      return $(self);
+    }
+
+    self.handleClick = function (e) {
+
+      var mb = messageBox({backdrop: false});
+      mb.setTitle(SUGAR.language.translate('Emails', 'LBL_IMPORTING'));
+      mb.setBody('<div class="in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>');
+      mb.hideFooter();
+      mb.show();
+      mb.on('cancel', function() {
+        "use strict";
+        mb.remove();
       });
-      foldersBox.setBody('<div class="in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>');
-      foldersBox.show();
 
-      $.ajax({
-        type: "GET",
-        cache: false,
-        url: 'index.php?module=Emails&action=GetFolders'
-      }).done(function (data) {
-        var response = JSON.parse(data);
-        response = response.response;
 
-        self.tree = $('<div></div>');
-        self.tree.jstree({
-          'core' : {
-            'data' : response
-          }
-        }).on('select_node.jstree', function(e, data) {
-          "use strict";
-          if(typeof data.selected[0] !== "undefined") {
-            var mbox = data.selected[0];
-            // reload with different inbox
-            $('[name=folders_id]').val(mbox);
-            top.location = 'index.php?module=Emails&action=index&folders_id=' + mbox;
-          }
+      var query = JSON.parse($('[name=current_query_by_page]').val());
+      var url = 'index.php?module=Emails&action=ImportFromListView';
+
+     var postOpts = {
+        "inbound_email_record": query.inbound_email_record,
+        "folders_id": query.folders_id,
+        "folder": query.folder,
+        "uid[]": []
+      };
+
+      if(document.MassUpdate.select_entire_list &&
+        document.MassUpdate.select_entire_list.value == 1) {
+        // Import all emails from mail box
+        postOpts.all = true;
+      } else {
+        postOpts.all = false;
+        // import only selected emails from inbox
+        $('.listview-checkbox').each(function(i,v) {
+          if($(v).is(':checked')) {
+            postOpts['uid[]'].push(query.email_uids[i])
+          };
         });
+      }
 
-        foldersBox.setBody(self.tree);
+      $.post( url, postOpts).done(function (data) {
+        var jsonData = JSON.parse(data);
+        mb.hide();
+        if(jsonData.response === true) {
+          window.location.reload();
+        } else {
+          console.error('Error importing emails. Please check the logs for details.')
+        }
+      }).error(function (data) {
+        mb.hide();
+        alert(data);
       });
-
     };
 
-    /**
-     * @constructor
-     */
-    self.construct = function () {
-      "use strict";
+    self.construct = function() {
       $(opts.buttonSelector).click(self.handleClick);
     };
 
-    /**
-    * @destructor
-    */
-    self.destruct = function() {
-
-    };
-
     self.construct();
-
     return $(self);
   };
 
-  $.fn.FoldersViewModal.defaults = {
-    'buttonSelector': '[data-action=emails-show-folders-modal]',
+  $.fn.ImportEmailAction.defaults = {
+    'buttonSelector': '[data-action=emails-import-multiple]',
     'contentSelector': '#content',
     'defaultFolder': 'INBOX'
   }
 }(jQuery));
 
 $(document).ready(function() {
-  $(document).FoldersViewModal();
+  $(document).ImportEmailAction();
 });

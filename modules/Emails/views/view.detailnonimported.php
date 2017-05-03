@@ -1,3 +1,5 @@
+<?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,84 +39,42 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-(function ($) {
-  /**
-   *
-   * @param options
-   * @return {*|HTMLElement}
-   */
-  $.fn.FoldersViewModal =  function(options) {
-    "use strict";
-    var self = {};
-    var opts = $.extend({}, $.fn.FoldersViewModal.defaults, options);
+if (!defined('sugarEntry') || !sugarEntry) {
+    die ('Not A Valid Entry Point');
+}
 
-    self.handleClick = function () {
-      "use strict";
-      self.emailFoldersView = null;
-      var foldersBox = $('<div></div>').appendTo(opts.contentSelector);
-      foldersBox.messageBox({
-        "showHeader": false,
-        "showFooter": false,
-        "size": 'lg'
-      });
-      foldersBox.setBody('<div class="in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>');
-      foldersBox.show();
 
-      $.ajax({
-        type: "GET",
-        cache: false,
-        url: 'index.php?module=Emails&action=GetFolders'
-      }).done(function (data) {
-        var response = JSON.parse(data);
-        response = response.response;
+require_once('modules/Emails/include/NonImportedDetailView/NonImportedDetailView.php');
 
-        self.tree = $('<div></div>');
-        self.tree.jstree({
-          'core' : {
-            'data' : response
-          }
-        }).on('select_node.jstree', function(e, data) {
-          "use strict";
-          if(typeof data.selected[0] !== "undefined") {
-            var mbox = data.selected[0];
-            // reload with different inbox
-            $('[name=folders_id]').val(mbox);
-            top.location = 'index.php?module=Emails&action=index&folders_id=' + mbox;
-          }
-        });
-
-        foldersBox.setBody(self.tree);
-      });
-
-    };
-
+class EmailsViewDetailnonimported extends ViewDetail
+{
     /**
-     * @constructor
+     * EmailsViewDetailnonimported constructor.
+     * @inheritdoc
      */
-    self.construct = function () {
-      "use strict";
-      $(opts.buttonSelector).click(self.handleClick);
-    };
+    public function __construct()
+    {
+        $this->type = 'NonImportedDetail';
+        parent::__construct();
+    }
 
     /**
-    * @destructor
-    */
-    self.destruct = function() {
+     * @see SugarView::preDisplay()
+     */
+    public function preDisplay()
+    {
+        $metadataFile = $this->getMetaDataFile();
+        $this->dv = new NonImportedDetailView();
+        $this->dv->populateBean();
+        $this->dv->ss =& $this->ss;
+        $this->dv->setup($this->module, $this->dv->focus, $metadataFile,
+            get_custom_file_if_exists('include/DetailView/DetailView.tpl'));
+    }
 
-    };
+    public function display()
+    {
+        $this->dv->process();
+        echo $this->dv->display();
+    }
 
-    self.construct();
-
-    return $(self);
-  };
-
-  $.fn.FoldersViewModal.defaults = {
-    'buttonSelector': '[data-action=emails-show-folders-modal]',
-    'contentSelector': '#content',
-    'defaultFolder': 'INBOX'
-  }
-}(jQuery));
-
-$(document).ready(function() {
-  $(document).FoldersViewModal();
-});
+}
