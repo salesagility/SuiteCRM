@@ -22,7 +22,21 @@
       border: hidden;
     }
   }
-
+  .list tr th:first-child {
+    width: 2%;
+  }
+  .list tr th:first-child + th{
+    width: 28%;
+  }
+  .list tr th:first-child + th + th{
+    width: 10%;
+  }
+  .list tr th:first-child + th + th + th{
+    width: 20%;
+  }
+  .list tr th:first-child + th + th + th + th{
+    width: 10%;
+  }
   .list tr th:last-child {
     border-top-right-radius: 4px;
   }
