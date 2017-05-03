@@ -224,8 +224,8 @@ var AjaxObject = {
 				resp = YAHOO.lang.JSON.parse(o.responseText);
 				SUGAR.email2.accounts.refreshInboundAccountTable();
 				SUGAR.email2.accounts.refreshOuboundAccountTable();
-				SUGAR.email2.folders.startEmailCheckOneAccount(resp.id, true);
 				SUGAR.email2.accounts.inboundAccountEditDialog.hide();
+              	SUGAR.hideMessageBox();
 			}
 		} else {
 		     SUGAR.hideMessageBox();

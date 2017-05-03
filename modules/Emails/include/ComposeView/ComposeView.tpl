@@ -38,6 +38,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
+
 {{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
 {* Compose view has a TEMP ID in case you want to display multi instance of the ComposeView *}

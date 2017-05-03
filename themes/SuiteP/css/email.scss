@@ -37,25 +37,32 @@
   text-align: center;
 }
 
+.email-indicator > span,
+.email-indicator > div {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+  height: 24px;
+  width: 24px;
+  line-height: 24px;
+}
+
 .email-indicator .email-flagged {
   background-color: $danger-btn-bg;
   border-radius: 28px;
   color: $default-btn-color;
-  display: inline-block;
   font-size: 18px;
-  font-weight: bold;
-  height: 24px;
-  line-height: 24px;
-  width: 24px;
 }
 
 .email-indicator .email-new {
+  height: 0;
+  width: 0;
+}
+
+.email-indicator .email-imported {
   background-color: $info-btn-bg;
   color: $default-btn-color;
   border-radius: 4px;
-  font-size: 10px;
-  font-weight: 900;
-  line-height: 20px;
 }
 
 .email-new-record.oddListRowS1:hover td {
@@ -185,7 +192,7 @@
       width: 40%;
     }
     .col-sm-8 {
-      width: 83.333%;
+      width: 83.33%;
     }
 
     .edit-view-row-item.empty {
@@ -470,7 +477,7 @@
         width: 100%;
       }
       .col-sm-8 {
-        width: 83.333%;
+        width: 83.33%;
       }
     }
   }
@@ -482,5 +489,16 @@
         }
       }
     }
+  }
+}
+
+@media (min-width: 1024px) {
+  .compose-view .panel .col-sm-8 {
+    width: calc(100% - 300px);
+  }
+}
+@media (min-width: 1600px) {
+  .col-sm-6 .col-sm-8.edit-view-field input.sqsEnabled {
+    width: calc(100% - 230px);
   }
 }

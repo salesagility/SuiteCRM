@@ -68,7 +68,6 @@
         var response = JSON.parse(data);
         response = response.response;
 
-        console.log(response);
         self.tree = $('<div></div>');
         self.tree.jstree({
           'core' : {

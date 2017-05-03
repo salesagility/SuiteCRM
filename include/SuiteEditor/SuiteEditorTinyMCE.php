@@ -1,10 +1,11 @@
-<!--
-/*********************************************************************************
+<?php
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -35,40 +36,42 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
--->
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-<!-- BEGIN: history -->
-<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
-    <tr height="20">
-    <th width="2%"><img src="include/images/blank.gif" width="1" height="1" alt=""></th>
-    <th width="28%">{MOD.LBL_LIST_SUBJECT}</th>
-    <th width="10%">{MOD.LBL_LIST_STATUS}</th>
-    <th width="20%">{MOD.LBL_LIST_CONTACT}</th>
-    <th width="10%" nowrap="nowrap">{MOD.LBL_LIST_DATE}</th>
+/**
+ * Class SuiteEditorTinyMCE
+ *
+ * use TinyMCE editor as SuiteEditor
+ */
+class SuiteEditorTinyMCE implements SuiteEditorInterface
+{
+    /**
+     * @var SuiteEditorSettings $settings
+     */
+    protected $settings;
 
-    </tr>
+    /**
+     * see more at SuiteEditorInterface
+     *
+     * @param SuiteEditorSettings $settings
+     */
+    public function setup(SuiteEditorSettings $settings = null) {
+        $this->settings = $settings;
+    }
 
-<!-- BEGIN: row -->
-<tr height="20" class="{ROW_COLOR}S1">
-        <td nowrap="nowrap" valign="top">{ACTIVITY_MODULE_PNG}</td>
-        <td nowrap="nowrap" valign="top">{ACTIVITY.NAME}  {ACTIVITY.ATTACHMENT}</td>
-        <td nowrap="nowrap" valign="top">{ACTIVITY.TYPE} {ACTIVITY.STATUS}</td>
-        <td valign="top">{ACTIVITY.CONTACT_NAME}</td>
-        <td nowrap="nowrap" valign="top">{ACTIVITY.DATE_TYPE}<img src="include/images/blank.gif" width="3" height="1" alt="">{ACTIVITY.DATE}</td>
+    /**
+     * see more at SuiteEditorInterface
+     *
+     * @return mixed
+     */
+    public function getHtml() {
+        $smarty = new Sugar_Smarty();
+        $smarty->assign((array)$this->settings);
+        return $smarty->fetch('include/SuiteEditor/tpls/SuiteEditorTinyMCE.tpl');
+    }
 
-</tr>
-<!--  BEGIN: description -->
-<tr class="{ROW_COLOR}S1">
-    <td colspan="1" valign="top"></td>
-    <td colspan="4" valign="top">
-        <table><tr class="{ROW_COLOR}S1"><td valign="top"><img src="include/images/blank.gif" width="3" height="1" alt=""></td><td valign="top">{ACTIVITY.DESCRIPTION}
-        </td></tr></table>
-    </td>
-</tr>
-<!--  END: description -->
-
-<!-- END: row -->
-</table>
-<!-- END: history -->
+}

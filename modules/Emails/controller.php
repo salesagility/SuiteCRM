@@ -70,6 +70,15 @@ if ($_REQUEST['action'] === 'GetCurrentUserID') {
     $GLOBALS['sugar_config']['http_referer']['actions'][] = 'GetCurrentUserID';
 }
 
+if ($_REQUEST['action'] === 'DisplayDetailView') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'DisplayDetailView';
+}
+
+if ($_REQUEST['action'] === 'ImportFromListView') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'ImportFromListView';
+}
+
+
 
 class EmailsController extends SugarController
 {
@@ -101,7 +110,7 @@ class EmailsController extends SugarController
         $old = array('&lt;', '&gt;');
         $new = array('<', '>');
 
-        if (isset($_REQUEST['from_addr']) and $_REQUEST['from_addr'] != $_REQUEST['from_addr_name'] . ' &lt;' . $_REQUEST['from_addr_email'] . '&gt;') {
+        if (isset($_REQUEST['from_addr']) && $_REQUEST['from_addr'] != $_REQUEST['from_addr_name'] . ' &lt;' . $_REQUEST['from_addr_email'] . '&gt;') {
             if (false === strpos($_REQUEST['from_addr'], '&lt;')) { // we have an email only?
                 $this->bean->from_addr = $_REQUEST['from_addr'];
                 $this->bean->from_name = '';
@@ -324,29 +333,70 @@ class EmailsController extends SugarController
         $this->view = 'ajax';
     }
 
+
+    public function action_DisplayDetailView()
+    {
+        global $db;
+        $emails = BeanFactory::getBean("Emails");
+        $result = $emails->get_full_list("", "uid = '{$db->quote($_REQUEST['uid'])}'");
+        if(empty($result))
+        {
+            $this->view = 'detailnonimported';
+        } else {
+            header('location:index.php?module=Emails&action=DetailView&record='. $result[0]->id);
+        }
+    }
+
     public function action_ImportAndShowDetailView()
     {
-        global $current_user;
-        if(isset($_REQUEST['inbound_email_record']) and !empty($_REQUEST['inbound_email_record'])) {
-            $inboundEmail = BeanFactory::getBean('InboundEmail', $_REQUEST['inbound_email_record']);
-//            $inboundEmail->mailbox  = $_REQUEST['folder'];
+        global $current_user, $db;
+        if(isset($_REQUEST['inbound_email_record']) && !empty($_REQUEST['inbound_email_record'])) {
+            $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($_REQUEST['inbound_email_record']));
             $inboundEmail->connectMailserver();
             $importedEmailId = $inboundEmail->returnImportedEmail($_REQUEST['msgno'], $_REQUEST['uid']);
             if($importedEmailId !== false) {
                 header('location:index.php?module=Emails&action=DetailView&record='. $importedEmailId);
             }
-
-            return;
+        } else {
+            // When something fail redirect user to index
+            header('location:index.php?module=Emails&action=index');
         }
 
-        // When something fail redirect user to index
-        header('location:index.php?module=Emails&action=index');
     }
 
     public function action_GetCurrentUserID()
     {
         global $current_user;
         echo json_encode(array("response" => $current_user->id));
+        $this->view = 'ajax';
+    }
+
+    public function action_ImportFromListView () {
+        global $db;
+        $response = false;
+
+        if(isset($_REQUEST['inbound_email_record']) && !empty($_REQUEST['inbound_email_record'])) {
+            $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($_REQUEST['inbound_email_record']));
+            if(isset($_REQUEST['folder']) && !empty($_REQUEST['folder'])) {
+                $inboundEmail->mailbox = $_REQUEST['folder'];
+            }
+            $inboundEmail->connectMailserver();
+
+            if(isset($_REQUEST['all']) && $_REQUEST['all'] === 'true') {
+                // import all in folder
+                $inboundEmail->importAllFromFolder();
+                $response = true;
+            } else {
+                foreach ($_REQUEST['uid'] as $uid) {
+                    $result = $inboundEmail->returnImportedEmail($_REQUEST['msgno'], $uid);
+                    $response = true;
+                }
+            }
+
+        } else {
+            $GLOBALS['log']->fatal('EmailsController::action_ImportFromListView() missing inbound_email_record');
+        }
+        echo json_encode(array('response' => $response));
         $this->view = 'ajax';
     }
 

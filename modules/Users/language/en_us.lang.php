@@ -937,7 +937,7 @@ $mod_strings = array(
 
     'LBL_CATEGORY' => 'Category',
     'LBL_LIST_CATEGORY' => 'Category',
-
+    'LBL_EDITOR_TYPE' => 'Editor',
 
 ); // END STRINGS DEFS
 

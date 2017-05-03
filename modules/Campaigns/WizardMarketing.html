@@ -339,7 +339,7 @@
 				'func': func,
 				'campaignId': $('input[name="campaign_id"]').val(),
 				'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
-				'body_html': $('#email_template_editor').getMozaikValue(),
+				'body_html': SuiteEditor.getValue(),
 				'name': $('#template_name').val(),
 				'subject': $('#template_subject').val(),
 //				'attachmentsAdd': getAttachmentsForAdd(),
@@ -767,19 +767,23 @@
 							</div>
 						</div>
 
+						{if !$hide_width_set}
 						<div class="panel-toolbar">
 							<div class="template-container">
 								<h2 class="header-2">{$MOD.LBL_WIDTH}</h2>
 								<input type="number" class="form-control input-sm" id="mozaik_width_set" onkeyup="mozaik.setWidth(parseInt(this.value)+'px');" onmouseup="mozaik.setWidth(parseInt(this.value)+'px'); "value="{$template_width}" >
 							</div>
 						</div>
+						{/if}
 
 						<div class="panel-toolbar">
 
 							<div class="template-container-full">
+								{if !$hide_width_set}
 								<label>{$MOD.LBL_CLICK_TO_ADD}</label>
 								<br>
-								{$BODY_MOZAIK}
+								{/if}
+								{$BODY_EDITOR}
 							</div>
 							<!--
                             <iframe id="html_frame" src="" style="width:100%; height:500px"></iframe>

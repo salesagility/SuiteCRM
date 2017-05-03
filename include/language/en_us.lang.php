@@ -755,6 +755,12 @@ $app_list_strings = array(
     'dom_email_link_type' => array('sugar' => 'SuiteCRM Email Client',
         'mailto' => 'External Email Client', ),
 
+    'dom_editor_type' => array(
+        'none' => 'Direct HTML',
+        'tinymce' => 'Tiny MCE',
+        'mozaik' => 'Mozaik',
+    ),
+
     'dom_email_editor_option' => array('' => 'Default Email Format',
         'html' => 'HTML Email',
         'plain' => 'Plain Text Email', ),
@@ -1474,7 +1480,7 @@ $app_strings = array(
     'LBL_EMAIL_SETTINGS_REQUIRE_REFRESH' => 'Select the number of emails per page in the Inbox. This setting might require a page refresh in order to take effect.',
     'LBL_EMAIL_SETTINGS_RETRIEVING_ACCOUNT' => 'Retrieving Mail Account',
     'LBL_EMAIL_SETTINGS_RULES' => 'Rules',
-    'LBL_EMAIL_SETTINGS_SAVED' => 'The settings have been saved.\n\nYou must reload the page for the new settings to take effect.',
+    'LBL_EMAIL_SETTINGS_SAVED' => 'The settings have been saved.',
     'LBL_EMAIL_SETTINGS_SEND_EMAIL_AS' => 'Send Plain Text Emails Only',
     'LBL_EMAIL_SETTINGS_SHOW_IN_FOLDERS' => 'Active',
     'LBL_EMAIL_SETTINGS_SHOW_NUM_IN_LIST' => 'Emails per Page',
