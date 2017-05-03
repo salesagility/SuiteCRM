@@ -133,7 +133,7 @@
 
     self.construct();
 
-    return $(this);
+    return $(self);
   };
 
   $.fn.EmailsComposeViewModal.defaults = {
