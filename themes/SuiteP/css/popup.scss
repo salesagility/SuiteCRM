@@ -75,6 +75,15 @@
   .h3 {
     @include popupHeading();
   }
+  h1{
+    @include popupHeading();
+  }
+  h2{
+    @include popupHeading();
+  }
+  h3{
+    @include popupHeading();
+  }
   .blank-space {
     width: 1px;
     height: 1px;
