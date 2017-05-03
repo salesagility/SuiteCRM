@@ -335,3 +335,10 @@ function lvg_nav(m,id,act,offset,t){
 {if $form.footerTpl}
     {sugar_include type="smarty" file=$form.headerTpl}
 {/if}
+
+<script>
+  $(document).ready(function() {ldelim}
+    "use strict";
+    $(document).EmailsComposeViewModal();
+      {rdelim});
+</script>
