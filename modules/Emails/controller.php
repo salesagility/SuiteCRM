@@ -380,7 +380,7 @@ class EmailsController extends SugarController
             }
             $inboundEmail->connectMailserver();
 
-            if(isset($_REQUEST['all']) and $_REQUEST['all'] == true) {
+            if(isset($_REQUEST['all']) and $_REQUEST['all'] === 'true') {
                 // import all in folder
                 $inboundEmail->importAllFromFolder();
                 $response = true;

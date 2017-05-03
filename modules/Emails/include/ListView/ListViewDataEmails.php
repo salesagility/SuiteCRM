@@ -246,6 +246,10 @@ class ListViewDataEmails extends ListViewData
             $inboundEmailIDs = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
             foreach ($inboundEmailIDs as $f) {
+                if(!empty($f)) {
+                    $inboundEmailID = $f;
+                }
+
                 $inboundEmail = BeanFactory::getBean('InboundEmail', $f);
                 if(!empty($inboundEmail)) {
                     break;
