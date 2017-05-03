@@ -192,7 +192,7 @@
       width: 40%;
     }
     .col-sm-8 {
-      width: 83.333%;
+      width: 83.33%;
     }
 
     .edit-view-row-item.empty {
@@ -477,7 +477,7 @@
         width: 100%;
       }
       .col-sm-8 {
-        width: 83.333%;
+        width: 83.33%;
       }
     }
   }
@@ -489,5 +489,16 @@
         }
       }
     }
+  }
+}
+
+@media (min-width: 1024px) {
+  .compose-view .panel .col-sm-8 {
+    width: calc(100% - 300px);
+  }
+}
+@media (min-width: 1600px) {
+  .col-sm-6 .col-sm-8.edit-view-field input.sqsEnabled {
+    width: calc(100% - 230px);
   }
 }

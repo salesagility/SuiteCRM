@@ -53,7 +53,7 @@
                             </tr>
                             <tr>
                                 <td scope="row" width="17%">
-                                {$MOD.LBL_EMAIL}:  {if $REQUIRED_EMAIL_ADDRESS}<span class="required" id="mandatory_email">{$APP.LBL_REQUIRED_SYMBOL}</span> {/if}
+                                {$MOD.LBL_EMAIL}  {if $REQUIRED_EMAIL_ADDRESS}<span class="required" id="mandatory_email">{$APP.LBL_REQUIRED_SYMBOL}</span> {/if}
                                 </td>
                                 <td width="83%">
                                     {$NEW_EMAIL}
@@ -69,6 +69,15 @@
                                     </select>
                                 </td>
                             </tr>
+
+                <tr>
+                    <td scope="row" width="17%">{$MOD.LBL_EDITOR_TYPE}</td>
+                    <td width="83%">
+                        <select id="editor_type" name="editor_type" tabindex='410'>
+                            {$EDITOR_TYPE}
+                        </select>
+                    </td>
+                </tr>
                             {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
                             <tr id="mail_smtpserver_tr">
                                 <td width="20%" scope="row"><span id="mail_smtpserver_label">{$MOD.LBL_EMAIL_PROVIDER}</span></td>

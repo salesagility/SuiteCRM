@@ -409,5 +409,9 @@ $mod_strings = array (
 
 	'LBL_CATEGORY' => 'Category',
 	'LBL_LIST_CATEGORY' => 'Category',
+	'LBL_EMAIL_TEMPLATE' => 'Email Template',
+
+	'LBL_CONFIRM_TITLE' => 'Apply an Email Template',
+	'LBL_CONFIRM_BODY' => 'This operation will override the email Body field, do you want to continue?',
 );
 

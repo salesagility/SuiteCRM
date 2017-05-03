@@ -451,8 +451,8 @@ var onEmailTemplateChange = function(elem, namePrefixCopyOf, templateIdDefault, 
                 //document.getElementById("html_frame").contentWindow.document.close();
 
                 var htmlCode = $('<textarea />').html(results.data.body_html).text();
-                $('#email_template_editor').html(htmlCode);
-                $('#email_template_editor').mozaik(window.mozaikSettings.email_template_editor);
+
+                SuiteEditor.apply(htmlCode);
 
                 $('#template_id').val(results.data.id);
                 $('input[name="update_exists_template"]').prop('checked', true);

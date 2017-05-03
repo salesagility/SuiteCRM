@@ -755,6 +755,12 @@ $app_list_strings = array(
     'dom_email_link_type' => array('sugar' => 'SuiteCRM Email Client',
         'mailto' => 'External Email Client', ),
 
+    'dom_editor_type' => array(
+        'none' => 'Direct HTML',
+        'tinymce' => 'Tiny MCE',
+        'mozaik' => 'Mozaik',
+    ),
+
     'dom_email_editor_option' => array('' => 'Default Email Format',
         'html' => 'HTML Email',
         'plain' => 'Plain Text Email', ),

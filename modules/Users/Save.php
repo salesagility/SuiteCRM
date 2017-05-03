@@ -356,7 +356,8 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 		///////////////////////////////////////////////////////////////////////////
 
 
-		 if(isset($_POST['email_link_type'])) $focus->setPreference('email_link_type', $_REQUEST['email_link_type']);
+		if(isset($_POST['email_link_type'])) $focus->setPreference('email_link_type', $_REQUEST['email_link_type']);
+		if(isset($_POST['editor_type'])) $focus->setPreference('editor_type', $_REQUEST['editor_type']);
 		if(isset($_REQUEST['email_show_counts'])) {
 			$focus->setPreference('email_show_counts', $_REQUEST['email_show_counts'], 0, 'global');
 		} else {
