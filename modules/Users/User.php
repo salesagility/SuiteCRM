@@ -1854,4 +1854,13 @@ EOQ;
             return false;
         }
     }
+
+	public function getEditorType() {
+		$editorType = $this->getPreference('editor_type');
+		if(!$editorType) {
+			$editorType = 'mozaik';
+			$this->setPreference('editor_type', $editorType);
+		}
+		return $editorType;
+	}
 }
