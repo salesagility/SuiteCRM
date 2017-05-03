@@ -25,16 +25,16 @@
   .list tr th:first-child {
     width: 2%;
   }
-  .list tr th:first-child + th{
+  .list tr th:nth-child(2) {
     width: 28%;
   }
-  .list tr th:first-child + th + th{
+  .list tr th:nth-child(3) {
     width: 10%;
   }
-  .list tr th:first-child + th + th + th{
+  .list tr th:nth-child(4) {
     width: 20%;
   }
-  .list tr th:first-child + th + th + th + th{
+  list tr th:nth-child(5) {
     width: 10%;
   }
   .list tr th:last-child {
@@ -46,10 +46,10 @@
     font-weight: normal;
     text-align: right;
   }
-  .print{
-      font-weight: normal;
-      padding: 0 30px 0 0;
-      text-decoration: underline;
+  .print {
+    font-weight: normal;
+    padding: 0 30px 0 0;
+    text-decoration: underline;
   }
   .moduleTitle h2 {
     display: block;
@@ -62,15 +62,24 @@
     text-transform: uppercase;
     padding: 0 0 0 30px;
   }
-  .h1, .h2, .h3, h1, h2, h3{
+  @mixin popupHeading() {
     margin-top: 10px;
     margin-bottom: 10px;
   }
-  .blank-space{
+  .h1 {
+    @include popupHeading();
+  }
+  .h2 {
+    @include popupHeading();
+  }
+  .h3 {
+    @include popupHeading();
+  }
+  .blank-space {
     width: 1px;
     height: 1px;
   }
-  .icon{
+  .icon {
     width: 30px;
     height: 30px;
   }
