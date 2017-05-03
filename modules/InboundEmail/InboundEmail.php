@@ -4166,7 +4166,7 @@ class InboundEmail extends SugarBean
     {
         $message_id = md5(print_r($header, true));
 
-        return $message_id;
+        return $message_id;#
     }
 
     /**
@@ -5008,6 +5008,12 @@ class InboundEmail extends SugarBean
         return true;
     }
 
+    /**
+     * Used to view non imported emails
+     * @param $msgNo - imap mesgno
+     * @param $uid - imap uid
+     * @return bool|Email - false on error | a non imported email
+     */
     public function returnNonImportedEmail($msgNo, $uid)
     {
         global $timedate;
@@ -5099,10 +5105,12 @@ class InboundEmail extends SugarBean
 
     }
 
-
+    /**
+     * Imports every email in the mailbox
+     * depending on what the $this->mailbox is set to
+     */
     public function importAllFromFolder()
     {
-
         $emailSortedHeaders = imap_sort(
             $this->conn,
             SORTDATE,
@@ -5112,8 +5120,7 @@ class InboundEmail extends SugarBean
 
 
         foreach($emailSortedHeaders as $uid){
-            $result = $this->returnImportedEmail(null, $uid);
-            $test = false;
+            $this->returnImportedEmail(null, $uid);
         }
     }
 
