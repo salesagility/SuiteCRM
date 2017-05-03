@@ -4164,7 +4164,7 @@ class InboundEmail extends SugarBean
      */
     public function getMessageId($header)
     {
-        $message_id = md5( );
+        $message_id = md5(print_r($header, true));
 
         return $message_id;
     }
