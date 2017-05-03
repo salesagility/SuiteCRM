@@ -243,18 +243,8 @@ class ListViewDataEmails extends ListViewData
         }
 
         if(empty($inboundEmailID)) {
-            $inboundEmailIDs = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
-
-            foreach ($inboundEmailIDs as $f) {
-                if(!empty($f)) {
-                    $inboundEmailID = $f;
-                }
-
-                $inboundEmail = BeanFactory::getBean('InboundEmail', $f);
-                if(!empty($inboundEmail)) {
-                    break;
-                }
-            }
+            $inboundEmailID = $current_user->getPreference('defaultIEAccount', 'Emails');
+            $inboundEmail = BeanFactory::getBean('InboundEmail', $inboundEmailID);
         } else {
             $inboundEmail = BeanFactory::getBean('InboundEmail', $inboundEmailID);
         }

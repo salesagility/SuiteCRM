@@ -66,20 +66,20 @@ $viewdefs[$module_name]['DetailView'] = array(
                 ),
             ),
             array(
-                'to_addr_name' => array(
-                    'name' => 'to_addr_name',
+                'to_addrs_names' => array(
+                    'name' => 'to_addrs_names',
                     'label' => 'LBL_TO',
                 ),
             ),
             array(
-                'cc_addr_name' => array(
-                    'name' => 'to_addr_name',
+                'cc_addrs_names' => array(
+                    'name' => 'cc_addrs_names',
                     'label' => 'LBL_CC',
                 ),
             ),
             array(
-                'bcc_addr_name' => array(
-                    'name' => 'bcc_addr_name',
+                'bcc_addrs_names' => array(
+                    'name' => 'bcc_addrs_names',
                     'label' => 'LBL_BCC',
                 ),
             ),
