@@ -110,7 +110,7 @@ class EmailsController extends SugarController
         $old = array('&lt;', '&gt;');
         $new = array('<', '>');
 
-        if (isset($_REQUEST['from_addr']) and $_REQUEST['from_addr'] != $_REQUEST['from_addr_name'] . ' &lt;' . $_REQUEST['from_addr_email'] . '&gt;') {
+        if (isset($_REQUEST['from_addr']) && $_REQUEST['from_addr'] != $_REQUEST['from_addr_name'] . ' &lt;' . $_REQUEST['from_addr_email'] . '&gt;') {
             if (false === strpos($_REQUEST['from_addr'], '&lt;')) { // we have an email only?
                 $this->bean->from_addr = $_REQUEST['from_addr'];
                 $this->bean->from_name = '';
@@ -349,7 +349,7 @@ class EmailsController extends SugarController
     public function action_ImportAndShowDetailView()
     {
         global $current_user;
-        if(isset($_REQUEST['inbound_email_record']) and !empty($_REQUEST['inbound_email_record'])) {
+        if(isset($_REQUEST['inbound_email_record']) && !empty($_REQUEST['inbound_email_record'])) {
             $inboundEmail = BeanFactory::getBean('InboundEmail', $_REQUEST['inbound_email_record']);
             $inboundEmail->connectMailserver();
             $importedEmailId = $inboundEmail->returnImportedEmail($_REQUEST['msgno'], $_REQUEST['uid']);
@@ -373,14 +373,14 @@ class EmailsController extends SugarController
     public function action_ImportFromListView () {
         $response = false;
 
-        if(isset($_REQUEST['inbound_email_record']) and !empty($_REQUEST['inbound_email_record'])) {
+        if(isset($_REQUEST['inbound_email_record']) && !empty($_REQUEST['inbound_email_record'])) {
             $inboundEmail = BeanFactory::getBean('InboundEmail', $_REQUEST['inbound_email_record']);
-            if(isset($_REQUEST['folder']) and !empty($_REQUEST['folder'])) {
+            if(isset($_REQUEST['folder']) && !empty($_REQUEST['folder'])) {
                 $inboundEmail->mailbox = $_REQUEST['folder'];
             }
             $inboundEmail->connectMailserver();
 
-            if(isset($_REQUEST['all']) and $_REQUEST['all'] === 'true') {
+            if(isset($_REQUEST['all']) && $_REQUEST['all'] === 'true') {
                 // import all in folder
                 $inboundEmail->importAllFromFolder();
                 $response = true;
