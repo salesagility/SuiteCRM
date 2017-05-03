@@ -405,20 +405,9 @@ $dictionary['Email'] = array(
             ),
         ),
 
-        'imported' => array(
-            'name' => 'subject',
-            'type' => 'bool',
-            'source' => 'non-db',
-            'massupdate' => 0,
-            'importable' => 'false',
-            'duplicate_merge' => 'disabled',
-            'inline_edit' => false,
-        ),
-
         'uid' => array(
             'name' => 'uid',
             'type' => 'varchar',
-            'source' => 'non-db',
             'massupdate' => 0,
             'importable' => 'false',
             'duplicate_merge' => 'disabled',
@@ -465,6 +454,17 @@ $dictionary['Email'] = array(
             'duplicate_merge' => 'disabled',
             'inline_edit' => false,
         ),
+
+        'is_imported' => array(
+            'name' => 'is_imported',
+            'type' => 'varchar',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
+        ),
+
 
         'has_attachment' => array(
             'name' => 'has_attachment',

@@ -58,6 +58,14 @@ $viewdefs['Emails']['ListView'] = array(
                         'customCode' => '<a class="btn" data-action="emails-show-folders-modal" title="{$MOD.LBL_SELECT_FOLDER}"><span class="glyphicon glyphicon-folder-open"></span></a>'
                     ),
                 ),
+            'actions' => array(
+                array(
+                    'customCode' => '<a href="javascript:void(0)" class="parent-dropdown-handler" id="delete_listview_top" onclick="return false;"><label class="selected-actions-label hidden-mobile">{$APP.LBL_BULK_ACTION_BUTTON_LABEL_MOBILE}</label><label class="selected-actions-label hidden-desktop">{$APP.LBL_BULK_ACTION_BUTTON_LABEL}</label></a>',
+                ),
+                array(
+                    'customCode' => '<a data-action="emails-import-multiple" title="{$MOD.LBL_IMPORT}">{$MOD.LBL_IMPORT}</a>'
+                ),
+            ),
             'headerTpl' => 'modules/Emails/include/ListView/ListViewHeader.tpl',
         ),
 
@@ -79,7 +87,10 @@ $viewdefs['Emails']['ListView'] = array(
             ),
             array(
                 'file' => 'modules/Emails/include/ListView/ListViewHeader.js',
-            )
+            ),
+            array(
+                'file' => 'modules/Emails/include/ListView/ImportEmailAction.js',
+            ),
         ),
         'options' => array(
             'hide_edit_link' => true

@@ -37,25 +37,32 @@
   text-align: center;
 }
 
+.email-indicator > span,
+.email-indicator > div {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+  height: 24px;
+  width: 24px;
+  line-height: 24px;
+}
+
 .email-indicator .email-flagged {
   background-color: $danger-btn-bg;
   border-radius: 28px;
   color: $default-btn-color;
-  display: inline-block;
   font-size: 18px;
-  font-weight: bold;
-  height: 24px;
-  line-height: 24px;
-  width: 24px;
 }
 
 .email-indicator .email-new {
+  height: 0;
+  width: 0;
+}
+
+.email-indicator .email-imported {
   background-color: $info-btn-bg;
   color: $default-btn-color;
   border-radius: 4px;
-  font-size: 10px;
-  font-weight: 900;
-  line-height: 20px;
 }
 
 .email-new-record.oddListRowS1:hover td {

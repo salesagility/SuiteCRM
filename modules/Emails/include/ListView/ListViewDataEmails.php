@@ -70,6 +70,9 @@ class ListViewDataEmails extends ListViewData
     ) {
         global $current_user, $sugar_config, $db, $mod_strings;
 
+
+        // We need to use the parent code so that we get the data structures
+        // which are required to view a list view.
         // start og parent: list view
         require_once 'include/SearchForm/SearchForm2.php';
 
@@ -150,7 +153,7 @@ class ListViewDataEmails extends ListViewData
 
         SugarVCR::store($this->seed->module_dir,  $main_query);
 
-//        SugarVCR::recordIDs($this->seed->module_dir, array_keys($idIndex), $offset, $totalCount);
+
         $module_names = array(
             'Prospects' => 'Targets'
         );
@@ -174,7 +177,7 @@ class ListViewDataEmails extends ListViewData
 
         if( isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "advanced_search" ||
             isset($_REQUEST["type_basic"]) && (count($_REQUEST["type_basic"] > 1) || $_REQUEST["type_basic"][0] != "") ||
-            isset($_REQUEST["module"]) && $_REQUEST["module"] == "MergeRecords")
+                isset($_REQUEST["module"]) && $_REQUEST["module"] == "MergeRecords")
         {
             $queryString = "-advanced_search";
         }
@@ -205,7 +208,7 @@ class ListViewDataEmails extends ListViewData
 
         $folderType = "inbound";
         $inboundEmailID = '';
-        if (isset($_REQUEST['folders_id']) and !empty($_REQUEST['folders_id'])) {
+        if (isset($_REQUEST['folders_id']) && !empty($_REQUEST['folders_id'])) {
             $foldersId = $_REQUEST['folders_id'];
             $result = $db->query('SELECT * FROM folders WHERE id="'.$foldersId.'"');
             $row = $db->fetchByAssoc($result);
@@ -224,7 +227,7 @@ class ListViewDataEmails extends ListViewData
 
         $limitPerPage = $sugar_config['list_max_entries_per_page'];
 
-        if(isset($importedEmails['queryString']) and !empty( $importedEmails['queryString'])) {
+        if(isset($importedEmails['queryString']) && !empty( $importedEmails['queryString'])) {
             $queryString = $importedEmails['queryString'];
         } else {
             $queryString = 'basic_search';
@@ -243,6 +246,10 @@ class ListViewDataEmails extends ListViewData
             $inboundEmailIDs = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
             foreach ($inboundEmailIDs as $f) {
+                if(!empty($f)) {
+                    $inboundEmailID = $f;
+                }
+
                 $inboundEmail = BeanFactory::getBean('InboundEmail', $f);
                 if(!empty($inboundEmail)) {
                     break;
@@ -288,11 +295,11 @@ class ListViewDataEmails extends ListViewData
             }
 
 
-
+            $_REQUEST['uids'] = array();
             foreach ($cachedEmails['data'] as $h => $emailHeader) {
                 $emailRecord = array();
 
-                if($folderType === 'draft' and $emailHeader['draft'] === 0)
+                if($folderType === 'draft' && $emailHeader['draft'] === 0)
                 {
                     continue;
                 }
@@ -338,7 +345,14 @@ class ListViewDataEmails extends ListViewData
                             }
                             break;
                         case 'is_imported':
-                            $emailRecord['IS_IMPORTED'] = false;
+                            $uid = $emailHeader['uid'];
+                            $importedEmailBeans = BeanFactory::getBean('Emails');
+                            $is_imported = $importedEmailBeans->get_full_list('','emails.uid LIKE "'.$uid.'"');
+                            if(count($is_imported) > 0) {
+                                $emailRecord['IS_IMPORTED'] = true;
+                            } else {
+                                $emailRecord['IS_IMPORTED'] = false;
+                            }
                             break;
                         case 'folder':
                             $emailRecord['FOLDER'] = $folder;
@@ -347,10 +361,11 @@ class ListViewDataEmails extends ListViewData
                             $emailRecord['FOLDER_TYPE'] = $folderType;
                             break;
                         case 'inbound_email_record':
-                            $emailRecord['INBOUND_EMAIL_RECORD'] = $inboundEmailID;
+                            $emailRecord['INBOUND_EMAIL_RECORD'] = $inboundEmail->id;
                             break;
                         case 'uid':
                             $emailRecord[strtoupper($field)] = $emailHeader['uid'];
+                            $_REQUEST['email_uids'][] = $emailHeader['uid'];
                             break;
                         case 'msgno':
                             $emailRecord[strtoupper($field)] = $emailHeader['msgno'];
@@ -371,6 +386,7 @@ class ListViewDataEmails extends ListViewData
 
                             if($emailHeader['deleted'] != 0) {
                                 // TODO: TASK: UNDEFINED - Handle deleted
+
                             }
 
                             if($emailHeader['recent'] != 0) {
@@ -431,6 +447,11 @@ class ListViewDataEmails extends ListViewData
 
             $queries = array('baseUrl', 'endPage', 'nextPage', 'orderBy');
 
+            if((int)$pageData['offsets']['current'] >= $limitPerPage){
+                $queries[] = 'prevPage';
+                $queries[] = 'startPage';
+            }
+
             foreach ($queries as $query) {
 
                 if($total < $limitPerPage || $nextOffset >= $total) {
@@ -455,7 +476,7 @@ class ListViewDataEmails extends ListViewData
             $_REQUEST['folder'] = $folder;
             $_REQUEST['folder'] = $folder;
             $_REQUEST['folder_type'] = $folderType;
-            $_REQUEST['inbound_email_record='] = $inboundEmailID;
+            $_REQUEST['inbound_email_record'] = $inboundEmailID;
 
             return array('data' => $data, 'pageData' => $pageData, 'query' => $queryString);
         } else {
