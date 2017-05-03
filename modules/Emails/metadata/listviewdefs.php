@@ -87,8 +87,10 @@ $viewdefs['Emails']['ListView'] = array(
             ),
             array(
                 'file' => 'modules/Emails/include/ListView/ListViewHeader.js',
+            ),
+            array(
                 'file' => 'modules/Emails/include/ListView/ImportEmailAction.js',
-            )
+            ),
         ),
         'options' => array(
             'hide_edit_link' => true
