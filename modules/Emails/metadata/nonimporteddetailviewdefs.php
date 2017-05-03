@@ -72,7 +72,7 @@ $viewdefs[$module_name]['DetailView'] = array(
             ),
             array(
                 'cc_addrs_names' => array(
-                    'name' => 'to_addrs_names',
+                    'name' => 'cc_addrs_names',
                     'label' => 'LBL_CC',
                 ),
             ),
