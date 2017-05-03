@@ -68,7 +68,7 @@
 
 
       var query = JSON.parse($('[name=current_query_by_page]').val());
-      var url = 'index.php?module=Emails&action=ImportFromListView&XDEBUG_SESSION_START=13537';
+      var url = 'index.php?module=Emails&action=ImportFromListView';
 
      var postOpts = {
         "inbound_email_record": query.inbound_email_record,
