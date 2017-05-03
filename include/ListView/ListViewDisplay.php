@@ -403,11 +403,12 @@ class ListViewDisplay {
 		else
 			$client = $defaultPref;
 
-		if($client == 'sugar')
-			$script = "<a href='javascript:void(0)' " .
-                    "class=\"parent-dropdown-action-handler\" id=\"composeemail_listview_". $loc ."\"".
-					'onclick="return sListView.send_form_for_emails(true, \''."Emails".'\', \'index.php?module=Emails&action=Compose&ListView=true\',\''.$app_strings['LBL_LISTVIEW_NO_SELECTED'].'\', \''.$this->seed->module_dir.'\', \''.$totalCount.'\', \''.$app_strings['LBL_LISTVIEW_LESS_THAN_TEN_SELECT'].'\')">' .
-					$app_strings['LBL_EMAIL_COMPOSE'] . '</a>';
+        if($client == 'sugar')
+            $script = "<a href='javascript:void(0)' " .
+                "class=\"parent-dropdown-action-handler\" id=\"composeemail_listview_". $loc ."\"".
+                'data-action="emails-show-compose-modal"'.
+                '>' .
+                $app_strings['LBL_EMAIL_COMPOSE'] . '</a>';
 		else
 			$script = "<a href='javascript:void(0)' " .
                     "class=\"parent-dropdown-action-handler\" id=\"composeemail_listview_". $loc ."\"".
