@@ -336,8 +336,9 @@ class EmailsController extends SugarController
 
     public function action_DisplayDetailView()
     {
+        global $db;
         $emails = BeanFactory::getBean("Emails");
-        $result = $emails->get_full_list("", "uid = {$_REQUEST['uid']}");
+        $result = $emails->get_full_list("", "uid = '{$db->quote($_REQUEST['uid'])}'");
         if(empty($result))
         {
             $this->view = 'detailnonimported';
@@ -348,9 +349,9 @@ class EmailsController extends SugarController
 
     public function action_ImportAndShowDetailView()
     {
-        global $current_user;
+        global $current_user, $db;
         if(isset($_REQUEST['inbound_email_record']) && !empty($_REQUEST['inbound_email_record'])) {
-            $inboundEmail = BeanFactory::getBean('InboundEmail', $_REQUEST['inbound_email_record']);
+            $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($_REQUEST['inbound_email_record']));
             $inboundEmail->connectMailserver();
             $importedEmailId = $inboundEmail->returnImportedEmail($_REQUEST['msgno'], $_REQUEST['uid']);
             if($importedEmailId !== false) {
@@ -371,10 +372,11 @@ class EmailsController extends SugarController
     }
 
     public function action_ImportFromListView () {
+        global $db;
         $response = false;
 
         if(isset($_REQUEST['inbound_email_record']) && !empty($_REQUEST['inbound_email_record'])) {
-            $inboundEmail = BeanFactory::getBean('InboundEmail', $_REQUEST['inbound_email_record']);
+            $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($_REQUEST['inbound_email_record']));
             if(isset($_REQUEST['folder']) && !empty($_REQUEST['folder'])) {
                 $inboundEmail->mailbox = $_REQUEST['folder'];
             }
