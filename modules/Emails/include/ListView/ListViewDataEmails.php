@@ -208,7 +208,7 @@ class ListViewDataEmails extends ListViewData
 
         $folderType = "inbound";
         $inboundEmailID = '';
-        if (isset($_REQUEST['folders_id']) and !empty($_REQUEST['folders_id'])) {
+        if (isset($_REQUEST['folders_id']) && !empty($_REQUEST['folders_id'])) {
             $foldersId = $_REQUEST['folders_id'];
             $result = $db->query('SELECT * FROM folders WHERE id="'.$foldersId.'"');
             $row = $db->fetchByAssoc($result);
@@ -227,7 +227,7 @@ class ListViewDataEmails extends ListViewData
 
         $limitPerPage = $sugar_config['list_max_entries_per_page'];
 
-        if(isset($importedEmails['queryString']) and !empty( $importedEmails['queryString'])) {
+        if(isset($importedEmails['queryString']) && !empty( $importedEmails['queryString'])) {
             $queryString = $importedEmails['queryString'];
         } else {
             $queryString = 'basic_search';
@@ -299,7 +299,7 @@ class ListViewDataEmails extends ListViewData
             foreach ($cachedEmails['data'] as $h => $emailHeader) {
                 $emailRecord = array();
 
-                if($folderType === 'draft' and $emailHeader['draft'] === 0)
+                if($folderType === 'draft' && $emailHeader['draft'] === 0)
                 {
                     continue;
                 }
