@@ -253,7 +253,7 @@ class Popup_Picker
                 'parent_name' => $email->parent_name,
                 'contact_id' => $email->contact_id,
                 'contact_name' => $email->contact_name,
-                'date_modified' => $email->date_start . ' ' . $email->time_start,
+                'date_modified' => $email->date_entered,
                 'description' => $this->getEmailDetails($email),
                 'date_type' => $app_strings['DATA_TYPE_SENT'],
                 'sort_value' => $ts,

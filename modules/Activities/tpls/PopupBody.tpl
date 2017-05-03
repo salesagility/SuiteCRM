@@ -269,9 +269,11 @@
                     </tr>
                     <!--  BEGIN: description -->
                     <tr>
+                    <td></td>
                         <td>
                             <table>
                                 <tr>
+                                    <td></td>
                                     <td>{$activity.description}
                                     </td>
                                 </tr>
