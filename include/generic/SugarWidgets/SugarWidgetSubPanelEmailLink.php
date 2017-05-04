@@ -108,10 +108,8 @@ class SugarWidgetSubPanelEmailLink extends SugarWidgetField {
                     $composeData['to_email_addrs'] = $layout_def['fields']['EMAIL1'];
                 }
                 require_once('modules/Emails/EmailUI.php');
-                $eUi = new EmailUI();
-                $j_quickComposeOptions = $eUi->generateComposePackageForQuickCreate($composeData, http_build_query($composeData), true);
-
-                $link = "<a href='javascript:void(0);' onclick='SUGAR.quickCompose.init($j_quickComposeOptions);'>";
+                $emailUi = new EmailUI();
+                $link = $emailUi->populateComposeViewFields();
 			} else {
 				$link = '<a href="mailto:' . $value .'" >';
 			}

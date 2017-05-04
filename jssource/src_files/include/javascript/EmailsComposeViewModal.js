@@ -36,104 +36,149 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 (function ($) {
-  /**
-   * Responsible for displaying a the email compose view from the module views
-   * @param options
-   * @return {*|HTMLElement}
-   */
-  $.fn.EmailsComposeViewModal =  function(options) {
+  $.fn.EmailsComposeViewModal = function (options) {
     "use strict";
     var self = {};
     var opts = $.extend({}, $.fn.EmailsComposeViewModal.defaults, options);
 
-    self.handleClick = function () {
+    self.handleClick = function (e) {
       "use strict";
+      var self = this;
       self.emailComposeView = null;
+      var opts = $.extend({}, $.fn.EmailsComposeViewModal.defaults);
       var composeBox = $('<div></div>').appendTo(opts.contentSelector);
-      composeBox.messageBox({
-        "showHeader": false,
-        "showFooter": false,
-        "size": 'lg',
-      });
-      composeBox.setBody('<div class="email-in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>');
+      composeBox.messageBox({"showHeader": false, "showFooter": false, "size": 'lg',});
+      composeBox.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
       composeBox.show();
-
-      $.ajax({
-        type: "GET",
-        cache: false,
-        url: 'index.php?module=Emails&action=ComposeView'
-      }).done(function (data) {
-        if(data.length === 0) {
+      $.ajax({type: "GET", cache: false, url: 'index.php?module=Emails&action=ComposeView'}).done(function (data) {
+        if (data.length === 0) {
           console.error("Unable to display ComposeView");
           composeBox.setBody(SUGAR.language.translate('', 'ERR_AJAX_LOAD'));
           return;
         }
-
         composeBox.setBody(data);
         self.emailComposeView = composeBox.controls.modal.body.find('.compose-view').EmailsComposeView();
-        $(self.emailComposeView).on('sentEmail', function(event, composeView) {
+        $(self.emailComposeView).on('sentEmail', function (event, composeView) {
           composeBox.hide();
           composeBox.remove();
         });
-
-        $(self.emailComposeView).on('disregardDraft', function(event, composeView) {
-          if(typeof messageBox !== "undefined") {
-            var mb = messageBox({size:'lg'});
+        $(self.emailComposeView).on('disregardDraft', function (event, composeView) {
+          if (typeof messageBox !== "undefined") {
+            var mb = messageBox({size: 'lg'});
             mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_DELETE_EMAIL'));
-
-            mb.on('ok', function() {
+            mb.on('ok', function () {
               mb.remove();
               composeBox.hide();
               composeBox.remove();
             });
-
-            mb.on('cancel', function() {
+            mb.on('cancel', function () {
               mb.remove();
             });
-
             mb.show();
           } else {
-            if(confirm(self.translatedErrorMessage)) {
+            if (confirm(self.translatedErrorMessage)) {
               composeBox.hide();
               composeBox.remove();
             }
           }
         });
 
-        composeBox.on('cancel', function() {
+
+        composeBox.on('cancel', function () {
           composeBox.remove();
         });
-
-
-        composeBox.on('hide.bs.modal', function() {
+        composeBox.on('hide.bs.modal', function () {
           composeBox.remove();
         });
       }).fail(function (data) {
         composeBox.controls.modal.content.html(SUGAR.language.translate('', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
-        // TODO: Work out how to show security messages
       });
+      return $(this);
     };
 
-    /**
-     * @constructor
-     */
     self.construct = function () {
       "use strict";
       $(opts.buttonSelector).click(self.handleClick)
     };
-
-    /**
-     * @destructor
-     */
-    self.destruct = function() {
-
+    self.destruct = function () {
     };
-
     self.construct();
-
     return $(self);
+  };
+
+  $.fn.openComposeViewModal = function (source) {
+    "use strict";
+
+    var self = this;
+    self.emailComposeView = null;
+    var opts = $.extend({}, $.fn.EmailsComposeViewModal.defaults);
+    var composeBox = $('<div></div>').appendTo(opts.contentSelector);
+    composeBox.messageBox({"showHeader": false, "showFooter": false, "size": 'lg',});
+    composeBox.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
+    composeBox.show();
+    $.ajax({type: "GET", cache: false, url: 'index.php?module=Emails&action=ComposeView'}).done(function (data) {
+      if (data.length === 0) {
+        console.error("Unable to display ComposeView");
+        composeBox.setBody(SUGAR.language.translate('', 'ERR_AJAX_LOAD'));
+        return;
+      }
+      composeBox.setBody(data);
+      self.emailComposeView = composeBox.controls.modal.body.find('.compose-view').EmailsComposeView();
+
+      // Populate fields
+      if($(source).attr('data-record-id') !== '') {
+        var populateModule = $(source).attr('data-module');
+        var populateModuleRecord = $(source).attr('data-record-id');
+        var populateModuleName = $(source).attr('data-module-name');
+        var populateEmailAddress = $(source).attr('data-email-address');
+
+        if(populateModuleName !== '') {
+          populateEmailAddress = populateModuleName + ' <' + populateEmailAddress + '>';
+        }
+
+        $(self.emailComposeView).find('#to_addrs_names').val(populateEmailAddress);
+        $(self.emailComposeView).find('#parent_type').val(populateModule);
+        $(self.emailComposeView).find('#parent_name').val(populateModuleName);
+        $(self.emailComposeView).find('#parent_id').val(populateModuleRecord);
+
+      }
+      $(self.emailComposeView).on('sentEmail', function (event, composeView) {
+        composeBox.hide();
+        composeBox.remove();
+      });
+      $(self.emailComposeView).on('disregardDraft', function (event, composeView) {
+        if (typeof messageBox !== "undefined") {
+          var mb = messageBox({size: 'lg'});
+          mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_DELETE_EMAIL'));
+          mb.on('ok', function () {
+            mb.remove();
+            composeBox.hide();
+            composeBox.remove();
+          });
+          mb.on('cancel', function () {
+            mb.remove();
+          });
+          mb.show();
+        } else {
+          if (confirm(self.translatedErrorMessage)) {
+            composeBox.hide();
+            composeBox.remove();
+          }
+        }
+      });
+
+
+      composeBox.on('cancel', function () {
+        composeBox.remove();
+      });
+      composeBox.on('hide.bs.modal', function () {
+        composeBox.remove();
+      });
+    }).fail(function (data) {
+      composeBox.controls.modal.content.html(SUGAR.language.translate('', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
+    });
+    return $(this);
   };
 
   $.fn.EmailsComposeViewModal.defaults = {
