@@ -398,22 +398,23 @@ class ListViewDisplay {
 
 		$userPref = $GLOBALS['current_user']->getPreference('email_link_type');
 		$defaultPref = $GLOBALS['sugar_config']['email_default_client'];
-		if($userPref != '')
-			$client = $userPref;
-		else
-			$client = $defaultPref;
+		if($userPref != '') {
+            $client = $userPref;
+        } else {
+            $client = $defaultPref;
+        }
 
-        if($client == 'sugar')
+        if($client == 'sugar') {
+		    require_once 'modules/Emails/EmailUI.php';
+		    $emailUI =  new EmailUI();
+            $script = $emailUI->populateComposeViewFields(). $app_strings['LBL_EMAIL_COMPOSE'];
+        } else {
             $script = "<a href='javascript:void(0)' " .
                 "class=\"parent-dropdown-action-handler\" id=\"composeemail_listview_". $loc ."\"".
-                'data-action="emails-show-compose-modal"'.
-                '>' .
+                "onclick=\"return sListView.use_external_mail_client('{$app_strings['LBL_LISTVIEW_NO_SELECTED']}', '{$_REQUEST['module']}');\">" .
                 $app_strings['LBL_EMAIL_COMPOSE'] . '</a>';
-		else
-			$script = "<a href='javascript:void(0)' " .
-                    "class=\"parent-dropdown-action-handler\" id=\"composeemail_listview_". $loc ."\"".
-					"onclick=\"return sListView.use_external_mail_client('{$app_strings['LBL_LISTVIEW_NO_SELECTED']}', '{$_REQUEST['module']}');\">" .
-					$app_strings['LBL_EMAIL_COMPOSE'] . '</a>';
+        }
+
 
         return $script;
 	} // fn
