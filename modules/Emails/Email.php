@@ -2284,7 +2284,7 @@ class Email extends SugarBean {
 	 *
 	 * @param SugarPHPMailer $mailer
 	 *
-	 * @todo (ref: SCRM-20) later we will need it because any possible user error message(s) but nothing to handle errors in view from controller->bean or in this case from the mailer
+	 * @todo (ref: SCRM-20) currently the mailer contains the user-errors but pass the errors to controllers and views more correct way
 	 */
 	protected function setLastMailer(SugarPHPMailer $mailer) {
 		self::$lastMailer = $mailer;
