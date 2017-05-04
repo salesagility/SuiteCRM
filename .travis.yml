@@ -84,3 +84,5 @@ branches:
     - hotfix
     - develop
     - /feature.*/
+    - /patch-*/
+    
