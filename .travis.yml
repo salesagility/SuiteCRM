@@ -70,7 +70,7 @@ script:
   - cat ../suitecrm.log
   - if [[ "$skip" != "yes" && "$TRAVIS_PHP_VERSION" == 7.0 ]]; then phpunit --coverage-text --coverage-clover build/logs/clover.xml; else if [[ "$skip" != "yes" ]]; then phpunit; fi; fi
   - if [[ "$skip" == "yes" ]]; then echo "Skipping matrix entry for pull requests"; fi
-  - if [[ "$PHP_CS" == "yes" ]]; then php php-cs-fixer --no-interaction --dry-run --diff -v fix; fi;
+  - if [[ "$PHP_CS" == "yes" ]]; then php vendor/bin/php-cs-fixer --no-interaction --dry-run --diff -v fix; fi;
   - if [[ "$PHP_CS" == "yes" ]]; then mv ./.php_cs.cache $HOME/.app/cache/.php_cs.cache; fi;
 
 after_success: |
