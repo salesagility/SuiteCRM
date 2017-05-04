@@ -67,7 +67,7 @@ class EmailsViewSendemail extends ViewAjax
         $lastMailer = Email::getLastMailer();
         if($lastMailer && $userErrorMessages = $lastMailer->getUserErrorMessages()) {
             $response = array (
-                'status' => !empty($this->bean->status) ? $this->bean->status : 'sent_error',
+                'status' => 'user_error',
                 'messages' => $userErrorMessages,
             );
         } else {
@@ -80,6 +80,7 @@ class EmailsViewSendemail extends ViewAjax
         if($err = json_last_error()) {
             throw new Exception("trying to send an incorrect JSON response ($err)");
         }
+        die();
     }
 
 }

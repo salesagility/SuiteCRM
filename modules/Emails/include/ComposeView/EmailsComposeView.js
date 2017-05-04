@@ -518,20 +518,17 @@
         formData.append($(v).attr('name'), $(v).val());
       });
 
-      $.ajax({
-        type: "POST",
-        data: formData,
-        cache: false,
-        processData: false,  // tell jQuery not to process the data
-        contentType: false,   // tell jQuery not to set contentType
-        url: $(this).attr('action')
-      }).done(function (data) {
-        "use strict";
-        // todo: (ref: SCRM-20) here we have to outsourcing the error handling to doing it in similar way anywhere
+      var ajaxEmailSendingResponse = function(data) {
+        // todo: (ref: SCRM-20) here we have to outsourcing the error handling to doing it in similar common way anywhere
         if(data) {
           try {
-            data = JSON && JSON.parse(data) || $.parseJSON(data);
+            var response = data;
+            if(typeof data === 'object' && typeof data.responseText !== 'undefined') {
+              response = data.responseText;
+            }
+            data = JSON && JSON.parse(response) || $.parseJSON(response);
           } catch(e) {
+            console.error(data);
             throw "incorrect response format: "+e;
           }
           // here you can handle the data.status which can be
@@ -558,16 +555,87 @@
             throw "a response contains an empty message";
           }
           mb.setBody(all);
+
+          // the original behavior was the user redirected to the list view
+          // after the email sent so if there is a success message we will
+          // redirect the user to the list view but only after
+          // a success email sent and after then the message box closed
+          if(data.status != 'user_error') {
+            var redirectUserToListView = function () {
+              // If the user is view the form own its own
+              if ($(self).find('input[type="hidden"][name="return_module"]').val() !== '') {
+                var redirect_location = 'index.php?module=' + $('#' + self.attr('id') + ' input[type="hidden"][name="return_module"]').val() +
+                  '&action=' +
+                  $(self).find('input[type="hidden"][name="return_action"]').val();
+                location.href = redirect_location;
+              } else {
+                $(self).trigger("sentEmail", [self, data]);
+              }
+            };
+
+            mb.on('ok', function () {
+              "use strict";
+              mb.remove();
+              redirectUserToListView();
+            });
+
+            mb.on('cancel', function () {
+              "use strict";
+              // do something
+              mb.remove();
+              redirectUserToListView();
+            });
+
+            mb.on('close', function () {
+              "use strict";
+              // do something
+              mb.remove();
+              redirectUserToListView();
+            });
+
+            mb.on('click.dismiss.bs.modal', function () {
+              "use strict";
+              mb.remove();
+              redirectUserToListView();
+            });
+
+            mb.on('mouseup.dismiss.bs.modal', function () {
+              "use strict";
+              mb.remove();
+              redirectUserToListView();
+            });
+
+            mb.on('keydown.dismiss.bs.modal', function () {
+              "use strict";
+              mb.remove();
+              redirectUserToListView();
+            });
+          }
+
         } else {
           throw "empty response data";
-        };
+        }
+      };
+
+      $.ajax({
+        type: "POST",
+        data: formData,
+        cache: false,
+        processData: false,  // tell jQuery not to process the data
+        contentType: false,   // tell jQuery not to set contentType
+        url: $(this).attr('action')
+      }).done(function (data) {
+        "use strict";
+        ajaxEmailSendingResponse(data);
       }).fail(function (data) {
-
-        // here always handle only the http problems,
-        // not anything else (for e.g email sending issues or CRM settings problems..)
-
-        console.error(data);
-        throw "an ajax XMLHttpRequest request failed";
+        if(data) {
+          ajaxEmailSendingResponse(data);
+        } else {
+          // here always handle only the http problems,
+          // not anything else (for e.g email sending issues or CRM settings problems..)
+          console.error(data);
+          throw "an ajax XMLHttpRequest request failed";
+        }
       });
 
 
