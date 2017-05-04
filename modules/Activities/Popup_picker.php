@@ -140,7 +140,7 @@ class Popup_Picker
                 $meeting_list[] = array(
                     'name' => $meeting->name,
                     'id' => $meeting->id,
-                    'type' => 'Meeting',
+                    'type' => $mod_strings['LBL_MEETING_TYPE'],
                     'direction' => '',
                     'module' => 'Meetings',
                     'status' => $meeting->status,
@@ -151,7 +151,7 @@ class Popup_Picker
                     'contact_name' => $meeting->contact_name,
                     'date_modified' => $meeting->date_start,
                     'description' => $this->formatDescription($meeting->description),
-                    'date_type' => $app_strings['DATA_TYPE_START'],
+                    'date_type' => $mod_strings['LBL_DATA_TYPE_START'],
                     'sort_value' => $timedate->fromDb($meeting->fetched_row['date_start'])->ts,
                     'image' => SugarThemeRegistry::current()->getImageURL('Meetings.svg')
                 );
@@ -160,7 +160,7 @@ class Popup_Picker
                 $open_activity_list[] = array(
                     'name' => $meeting->name,
                     'id' => $meeting->id,
-                    'type' => 'Meeting',
+                    'type' => $mod_strings['LBL_MEETING_TYPE'],
                     'direction' => '',
                     'module' => 'Meetings',
                     'status' => $meeting->status,
@@ -171,7 +171,7 @@ class Popup_Picker
                     'contact_name' => $meeting->contact_name,
                     'date_due' => $meeting->date_start,
                     'description' => $this->formatDescription($meeting->description),
-                    'date_type' => $app_strings['DATA_TYPE_START']
+                    'date_type' => $mod_strings['LBL_DATA_TYPE_START']
                 );
             }
         } // end Meetings
@@ -190,7 +190,7 @@ class Popup_Picker
                 $calls_list[] = array(
                     'name' => $call->name,
                     'id' => $call->id,
-                    'type' => 'Call',
+                    'type' => $mod_strings['LBL_CALL_TYPE'],
                     'direction' => $call->direction,
                     'module' => 'Calls',
                     'status' => $call->status,
@@ -201,7 +201,7 @@ class Popup_Picker
                     'contact_name' => $call->contact_name,
                     'date_modified' => $call->date_start,
                     'description' => $this->formatDescription($call->description),
-                    'date_type' => $app_strings['DATA_TYPE_START'],
+                    'date_type' => $mod_strings['LBL_DATA_TYPE_START'],
                     'sort_value' => $timedate->fromDb($call->fetched_row['date_start'])->ts,
                     'image' => SugarThemeRegistry::current()->getImageURL('Calls.svg')
                 );
@@ -211,7 +211,7 @@ class Popup_Picker
                     'name' => $call->name,
                     'id' => $call->id,
                     'direction' => $call->direction,
-                    'type' => 'Call',
+                    'type' => $mod_strings['LBL_CALL_TYPE'],
                     'module' => 'Calls',
                     'status' => $call->status,
                     'parent_id' => $call->parent_id,
@@ -221,7 +221,7 @@ class Popup_Picker
                     'contact_name' => $call->contact_name,
                     'date_due' => $call->date_start,
                     'description' => $this->formatDescription($call->description),
-                    'date_type' => $app_strings['DATA_TYPE_START']
+                    'date_type' => $mod_strings['LBL_DATA_TYPE_START']
                 );
             }
         } // end Calls
@@ -244,7 +244,7 @@ class Popup_Picker
             $emails_list[] = array(
                 'name' => $email->name,
                 'id' => $email->id,
-                'type' => 'Email',
+                'type' => $mod_strings['LBL_EMAIL_TYPE'],
                 'direction' => '',
                 'module' => 'Emails',
                 'status' => '',
@@ -255,7 +255,7 @@ class Popup_Picker
                 'contact_name' => $email->contact_name,
                 'date_modified' => $email->date_entered,
                 'description' => $this->getEmailDetails($email),
-                'date_type' => $app_strings['DATA_TYPE_SENT'],
+                'date_type' => $mod_strings['LBL_DATA_TYPE_SENT'],
                 'sort_value' => $ts,
                 'image' => SugarThemeRegistry::current()->getImageURL('Emails.svg')
             );
@@ -285,7 +285,7 @@ class Popup_Picker
                 $emails_list[] = array(
                     'name' => $email->name,
                     'id' => $email->id,
-                    'type' => 'Email',
+                    'type' => $mod_strings['LBL_EMAIL_TYPE'],
                     'direction' => '',
                     'module' => 'Emails',
                     'status' => '',
@@ -296,7 +296,7 @@ class Popup_Picker
                     'contact_name' => $email->contact_name,
                     'date_modified' => $email->date_start . ' ' . $email->time_start,
                     'description' => $this->getEmailDetails($email),
-                    'date_type' => $app_strings['DATA_TYPE_SENT'],
+                    'date_type' => $mod_strings['LBL_DATA_TYPE_SENT'],
                     'sort_value' => strtotime($email->fetched_row['date_sent'] . ' GMT'),
                     'image' => SugarThemeRegistry::current()->getImageURL('Emails.svg')
                 );
@@ -309,7 +309,7 @@ class Popup_Picker
                 $notes_list[] = array(
                     'name' => $note->name,
                     'id' => $note->id,
-                    'type' => 'Note',
+                    'type' => $mod_strings['LBL_NOTE_TYPE'],
                     'direction' => '',
                     'module' => 'Notes',
                     'status' => '',
@@ -320,7 +320,7 @@ class Popup_Picker
                     'contact_name' => $note->contact_name,
                     'date_modified' => $note->date_modified,
                     'description' => $this->formatDescription($note->description),
-                    'date_type' => $app_strings['DATA_TYPE_MODIFIED'],
+                    'date_type' => $mod_strings['LBL_DATA_TYPE_MODIFIED'],
                     'sort_value' => strtotime($note->fetched_row['date_modified'] . ' GMT'),
                     'image' => SugarThemeRegistry::current()->getImageURL('Notes.svg')
                 );
