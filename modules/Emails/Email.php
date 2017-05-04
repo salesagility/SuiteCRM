@@ -2280,7 +2280,7 @@ class Email extends SugarBean {
 	protected static $lastMailer = null;
 
 	/**
-	 * Store mailer in super globals
+	 * Store mailer
 	 *
 	 * @param SugarPHPMailer $mailer
 	 *

@@ -649,7 +649,7 @@ class SugarEmailAddress extends SugarBean {
         // a double check for parameter type,
         // may from the email client we get
         // an array instead of the expected string
-        // todo: why is the addr is an array sometimes?
+        // todo: (ref: SCRM-20) why is the addr is an array sometimes?
 
         if(is_array($addr)) {
             $addr = isset($addr['email']) ? $addr['email'] : null;

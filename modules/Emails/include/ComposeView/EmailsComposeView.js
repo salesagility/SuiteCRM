@@ -527,7 +527,7 @@
         url: $(this).attr('action')
       }).done(function (data) {
         "use strict";
-        // todo: here we have to outsourcing the error handling to doing it in similar way anywhere
+        // todo: (ref: SCRM-20) here we have to outsourcing the error handling to doing it in similar way anywhere
         if(data) {
           try {
             data = JSON && JSON.parse(data) || $.parseJSON(data);
