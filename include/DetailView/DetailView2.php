@@ -87,7 +87,7 @@ class DetailView2 extends EditView
         }
         if(!empty($this->metadataFile) && file_exists($this->metadataFile)){
             require($this->metadataFile);
-        }else {
+        } else {
         	//If file doesn't exist we create a best guess
         	if(!file_exists("modules/$this->module/metadata/detailviewdefs.php") &&
         	    file_exists("modules/$this->module/DetailView.html")) {

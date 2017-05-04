@@ -1069,6 +1069,11 @@ class Email extends SugarBean {
 			$this->saveEmailText();
 			$this->saveEmailAddresses();
 
+
+			if(empty($this->assigned_user_id)) {
+                $this->assigned_user_id = $current_user->id;
+            }
+
 			$GLOBALS['log']->debug('-------------------------------> Email called save()');
 
 			// handle legacy concatenation of date and time fields

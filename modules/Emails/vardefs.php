@@ -405,20 +405,9 @@ $dictionary['Email'] = array(
             ),
         ),
 
-        'imported' => array(
-            'name' => 'subject',
-            'type' => 'bool',
-            'source' => 'non-db',
-            'massupdate' => 0,
-            'importable' => 'false',
-            'duplicate_merge' => 'disabled',
-            'inline_edit' => false,
-        ),
-
         'uid' => array(
             'name' => 'uid',
             'type' => 'varchar',
-            'source' => 'non-db',
             'massupdate' => 0,
             'importable' => 'false',
             'duplicate_merge' => 'disabled',
@@ -465,6 +454,17 @@ $dictionary['Email'] = array(
             'duplicate_merge' => 'disabled',
             'inline_edit' => false,
         ),
+
+        'is_imported' => array(
+            'name' => 'is_imported',
+            'type' => 'varchar',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
+        ),
+
 
         'has_attachment' => array(
             'name' => 'has_attachment',
@@ -625,6 +625,37 @@ $dictionary['Email'] = array(
             'reportable' => true,
         ),
 
+        "emails_email_templates" => array (
+            'name' => 'emails_email_templates',
+            'type' => 'link',
+            'relationship' => 'emails_email_templates',
+            'source' => 'non-db',
+            'module' => 'EmailTemplates',
+            'bean_name' => 'EmailTemplate',
+            'vname' => 'LBL_EMAIL_TEMPLATE',
+            'id_name' => 'emails_email_templates_idb',
+        ),
+        "emails_email_templates_name" => array (
+            'name' => 'emails_email_templates_name',
+            'type' => 'relate',
+            'source' => 'non-db',
+            'vname' => 'LBL_EMAIL_TEMPLATE',
+            'save' => true,
+            'id_name' => 'emails_email_templates_idb',
+            'link' => 'emails_email_templates',
+            'table' => 'email_templates',
+            'module' => 'EmailTemplates',
+            'rname' => 'name',
+        ),
+        "emails_email_templates_idb" => array (
+            'name' => 'emails_email_templates_idb',
+            'type' => 'link',
+            'relationship' => 'emails_email_templates',
+            'source' => 'non-db',
+            'reportable' => false,
+            'side' => 'left',
+            'vname' => 'LBL_EMAIL_TEMPLATE',
+        ),
     ), /* end fields() array */
     'relationships' => array(
         'emails_assigned_user' => array(

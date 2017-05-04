@@ -86,7 +86,7 @@ class SugarFieldText extends SugarFieldBase {
     function setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass=true) {
        parent::setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass);
         $editor = "";
-        if($vardef['editor'] == "html"){
+        if(isset($vardef['editor']) && $vardef['editor'] == "html"){
             if(!isset($displayParams['htmlescape'])) {
                 $displayParams['htmlescape'] = false;
             }

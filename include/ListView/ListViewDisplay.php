@@ -281,43 +281,60 @@ class ListViewDisplay {
 	 */
 	protected function buildActionsLink($id = 'actions_link', $location = 'top')
 	{
-	    global $app_strings;
+	    global $app_strings, $mod_strings;
 		$closeText = SugarThemeRegistry::current()->getImage('close_inline', 'border=0', null, null, ".gif", $app_strings['LBL_CLOSEINLINE']);
 		$moreDetailImage = SugarThemeRegistry::current()->getImageURL('MoreDetail.png');
 		$menuItems = array();
 
-		// delete
-		if ( ACLController::checkAccess($this->seed->module_dir,'delete',true) && $this->delete ) {
-			$menuItems[] = $this->show_action_dropdown_as_delete ? $this->buildDeleteLink($location) : $this->buildBulkActionButton($location);
-		}
 
-		// compose email
-        if ( $this->email )
-			$menuItems[] = $this->buildComposeEmailLink($this->data['pageData']['offsets']['total'], $location);
-		// mass update
-		$mass = $this->getMassUpdate();
-		$mass->setSugarBean($this->seed);
-		if ( ( ACLController::checkAccess($this->seed->module_dir,'edit',true) && ACLController::checkAccess($this->seed->module_dir,'massupdate',true) ) && $this->showMassupdateFields && $mass->doMassUpdateFieldsExistForFocus() )
-            $menuItems[] = $this->buildMassUpdateLink($location);
-		// merge
-		if ( $this->mailMerge )
-		    $menuItems[] = $this->buildMergeLink(null, $location);
-		if ( $this->mergeduplicates )
-		    $menuItems[] = $this->buildMergeDuplicatesLink($location);
-		// add to target list
-		if ( $this->targetList && ACLController::checkAccess('ProspectLists','edit',true) )
-		    $menuItems[] = $this->buildTargetList($location);
-		// export
-		if ( ACLController::checkAccess($this->seed->module_dir,'export',true) && $this->export )
-			$menuItems[] = $this->buildExportLink($location);
+        if(isset($this->templateMeta['form']['actions'])) {
+            // override bulk actions
+            foreach ($this->templateMeta['form']['actions'] as $action) {
+                if(isset($action['customCode'])) {
 
-		foreach ( $this->actionsMenuExtraItems as $item )
-		    $menuItems[] = $item;
+                    $template = new Sugar_Smarty();
+                    $template->assign('APP', $app_strings);
+                    $template->assign('MOD', $mod_strings);
+                    $template->assign('id', $id);
+                    $template->assign('location', $location);
+                    $template->assign('customCode', $action['customCode']);
 
-		if(!$this->show_action_dropdown_as_delete) {
-			$menuItems[] = $this->buildDeleteLink($location);
-		}
+                    $menuItems[] =  $template->fetch("include/ListView/ListViewEval.tpl");
+                }
+            }
+        } else {
+            // delete
+            if ( ACLController::checkAccess($this->seed->module_dir,'delete',true) && $this->delete ) {
+                $menuItems[] = $this->show_action_dropdown_as_delete ? $this->buildDeleteLink($location) : $this->buildBulkActionButton($location);
+            }
 
+            // compose email
+            if ( $this->email )
+                $menuItems[] = $this->buildComposeEmailLink($this->data['pageData']['offsets']['total'], $location);
+            // mass update
+            $mass = $this->getMassUpdate();
+            $mass->setSugarBean($this->seed);
+            if ( ( ACLController::checkAccess($this->seed->module_dir,'edit',true) && ACLController::checkAccess($this->seed->module_dir,'massupdate',true) ) && $this->showMassupdateFields && $mass->doMassUpdateFieldsExistForFocus() )
+                $menuItems[] = $this->buildMassUpdateLink($location);
+            // merge
+            if ( $this->mailMerge )
+                $menuItems[] = $this->buildMergeLink(null, $location);
+            if ( $this->mergeduplicates )
+                $menuItems[] = $this->buildMergeDuplicatesLink($location);
+            // add to target list
+            if ( $this->targetList && ACLController::checkAccess('ProspectLists','edit',true) )
+                $menuItems[] = $this->buildTargetList($location);
+            // export
+            if ( ACLController::checkAccess($this->seed->module_dir,'export',true) && $this->export )
+                $menuItems[] = $this->buildExportLink($location);
+
+            foreach ( $this->actionsMenuExtraItems as $item )
+                $menuItems[] = $item;
+
+            if(!$this->show_action_dropdown_as_delete) {
+                $menuItems[] = $this->buildDeleteLink($location);
+            }
+        }
         $link = array(
             'class' => 'clickMenu selectActions fancymenu',
             'id' => 'selectActions',
@@ -326,8 +343,7 @@ class ListViewDisplay {
             'flat' => false,
         );
         return $link;
-
-}
+    }
 	/**
 	 * Builds the export link
 	 *
