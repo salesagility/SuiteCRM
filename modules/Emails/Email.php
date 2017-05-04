@@ -1973,7 +1973,7 @@ class Email extends SugarBean {
             if(!empty($this->id) && !$this->new_with_id) {
                 $note = new Note();
                 $where = "notes.parent_id='{$this->id}'";
-                $notes_list = $note->get_full_list("", $where, true);
+                $notes_list = (array)$note->get_full_list("", $where, true);
             }
             $this->attachments = array_merge($this->attachments, $notes_list);
         }
@@ -2268,6 +2268,33 @@ class Email extends SugarBean {
 	}
 
 	/**
+	 * last used instance of SugarPHPMailer for email sending
+	 *
+	 * @var SugarPHPMailer
+	 */
+	protected static $lastMailer = null;
+
+	/**
+	 * Store mailer in super globals
+	 *
+	 * @param SugarPHPMailer $mailer
+	 *
+	 * @todo (ref: SCRM-20) later we will need it because any possible user error message(s) but nothing to handle errors in view from controller->bean or in this case from the mailer
+	 */
+	protected function setLastMailer(SugarPHPMailer $mailer) {
+		self::$lastMailer = $mailer;
+	}
+
+	/**
+	 * return the last used instance of SugarPHPMailer for email sending
+	 *
+	 * @return SugarPHPMailer
+	 */
+	public static function getLastMailer() {
+		return isset(self::$lastMailer) ? self::$lastMailer : null;
+	}
+
+	/**
 	 * Sends Email
 	 * @return bool True on success
 	 */
@@ -2394,7 +2421,27 @@ class Email extends SugarBean {
 		////	END I18N TRANSLATION
 		///////////////////////////////////////////////////////////////////////
 
+		// some reason the new email client sometimes handling
+		// the sender as an array but the PHPMail sending will failed
+		// because it should be a string, so we have to convert it
+		// before sending
+		$mailSenderArray = false;
+		if(is_array($mail->Sender)) {
+			$mailSenderArray = $mail->Sender;
+			if(isset($mailSenderArray['email']) && $mailSenderArray['email']) {
+				$mail->Sender = $mailSenderArray['email'];
+			} else {
+				if(isset($mailSenderArray['name']) && $mailSenderArray['name']) {
+					$mail->Sender = $mailSenderArray['name'];
+				} else {
+					throw new Exception("incorrect mail sender: " . print_r($mail->Sender, true));
+				}
+			}
+		}
 		if($mail->Send()) {
+			if($mailSenderArray !== false) {
+				$mail->Sender = $mailSenderArray;
+			}
 			///////////////////////////////////////////////////////////////////
 			////	INBOUND EMAIL HANDLING
 			// mark replied
@@ -2409,7 +2456,16 @@ class Email extends SugarBean {
 			///////////////////////////////////////////////////////////////////
   			return true;
 		}
+		if($mailSenderArray !== false) {
+			$mail->Sender = $mailSenderArray;
+		}
 	    $GLOBALS['log']->debug($app_strings['LBL_EMAIL_ERROR_PREPEND'].$mail->ErrorInfo);
+
+		// store mail because it's may caused some user error
+		// message what we want to show on screen so
+		// then we have to remember this mail object
+		$this->setLastMailer($mail);
+
 		return false;
 	}
 

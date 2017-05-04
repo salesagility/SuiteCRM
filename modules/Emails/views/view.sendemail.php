@@ -57,22 +57,29 @@ class EmailsViewSendemail extends ViewAjax
 
     public function display()
     {
-        $response_code = 500;
+        global $mod_strings;
 
-        if(empty($this->bean->status)) {
-            $this->bean->status = $_REQUEST['status'];
-        }
+        // handle the user errors separately
+        // from any other errors (for e.g the http header error codes)
+        // and explain to the user if did something wrong in the CRM settings
+        // (instead of generating a fake Internal Server Error for e.g)
 
-        switch ($this->bean->status) {
-            case 'sent':
-                $response_code = 201;
-                break;
-            case 'sent_error':
-                $response_code = 400;
-                break;
+        $lastMailer = Email::getLastMailer();
+        if($lastMailer && $userErrorMessages = $lastMailer->getUserErrorMessages()) {
+            $response = array (
+                'status' => !empty($this->bean->status) ? $this->bean->status : 'sent_error',
+                'messages' => $userErrorMessages,
+            );
+        } else {
+            $response = array (
+                'status' => !empty($this->bean->status) ? $this->bean->status : 'sent',
+                'messages' => $mod_strings['LBL_MESSAGE_SENT'],
+            );
         }
-        http_response_code ($response_code);
-        return "";
+        echo json_encode($response);
+        if($err = json_last_error()) {
+            throw new Exception("trying to send an incorrect JSON response ($err)");
+        }
     }
 
 }

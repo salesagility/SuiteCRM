@@ -64,6 +64,31 @@ class SugarPHPMailer extends PHPMailer
     public $opensslOpened = true;
 
     /**
+     * Store all messages what we want to show to user
+     *
+     * @var array
+     */
+    public $userErrorMessages = array();
+
+    /**
+     * Add a message to user error messages
+     *
+     * @param $err String
+     */
+    public function addUserErrorMessage($err) {
+        $this->userErrorMessages[] = $err;
+    }
+
+    /**
+     * Return all grabbed user errors
+     *
+     * @return array user error messages
+     */
+    public function getUserErrorMessages() {
+        return $this->userErrorMessages;
+    }
+
+    /**
      * Sole constructor
      */
     public function __construct()
@@ -351,6 +376,7 @@ eoq;
         parent::setError($msg);
     }
 
+
     /**
      * @param array $options
      *
@@ -363,12 +389,14 @@ eoq;
         if (!$connection) {
             global $app_strings;
             if (isset($this->oe) && $this->oe->type === 'system') {
-                $this->setError($app_strings['LBL_EMAIL_INVALID_SYSTEM_OUTBOUND']);
+                $err = $app_strings['LBL_EMAIL_INVALID_SYSTEM_OUTBOUND'];
             } else {
-                $this->setError($app_strings['LBL_EMAIL_INVALID_PERSONAL_OUTBOUND']);
+                $err = $app_strings['LBL_EMAIL_INVALID_PERSONAL_OUTBOUND'];
             } // else
-        }
 
+            $this->addUserErrorMessage($err);
+            $this->setError($err);
+        }
         return $connection;
     } // fn
 
@@ -377,6 +405,7 @@ eoq;
      *
      * @return bool
      * @throws \phpmailerException
+     * @throws Exception
      */
     public function PreSend()
     {
@@ -386,7 +415,38 @@ eoq;
             $this->Body = ' ';
         }
 
-        return parent::preSend();
+        // some reason the new email client sometimes handling
+        // the sender as an array but the PHPMail sending will failed
+        // because it should be a string, so we have to convert it
+        // before sending
+
+        foreach (array('From', 'Sender', 'ConfirmReadingTo') as $address_kind) {
+            if(is_array($this->$address_kind)) {
+                $storeAddressKindArrays[$address_kind] = $this->$address_kind;
+
+                $thisAddressKind = $this->$address_kind;
+
+                if(isset($thisAddressKind['email'])) {
+                    $this->$address_kind = $thisAddressKind['email'];
+                } else {
+                    if(isset($this->$address_kind['name'])) {
+                        $this->$address_kind = $thisAddressKind['name'];
+                    } else {
+                        throw new Exception('trying to pass an incorrect address kind to php mailer');
+                    }
+                }
+
+            }
+            $this->$address_kind = trim($this->$address_kind);
+        }
+
+        $ret = parent::preSend();
+
+        foreach ($storeAddressKindArrays as $key => $address_kind) {
+            $this->$key = $address_kind;
+        }
+
+        return $ret;
     }
 
     /**

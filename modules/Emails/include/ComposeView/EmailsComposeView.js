@@ -529,23 +529,47 @@
         url: $(this).attr('action'),
       }).done(function (data) {
         "use strict";
-        mb.remove();
-        // If the user is view the form own its own
-        if ($(self).find('input[type="hidden"][name="return_module"]').val() !== '') {
-          var redirect_location = 'index.php?module=' + $('#' + self.attr('id') + ' input[type="hidden"][name="return_module"]').val() +
-            '&action=' +
-            $(self).find('input[type="hidden"][name="return_action"]').val();
-          location.href = redirect_location;
+        // todo: here we have to outsourcing the error handling to doing it in similar way anywhere
+        if(data) {
+          try {
+            data = JSON && JSON.parse(data) || $.parseJSON(data);
+          } catch(e) {
+            throw "incorrect response format: "+e;
+          }
+          // here you can handle the data.status which can be
+          // 'sent' or 'sent_error' etc.. (from EmailsViewSendemail::display())
+          // and use the mb.showHeader(); here if necessary
+          var all = "";
+          if(!data.messages) {
+            throw "a response doesn't contains any message";
+          }
+          var msgType = typeof data.messages;
+          switch (msgType) {
+            case 'string':
+              all = data.messages;
+              break;
+            case 'object':
+              for(var key in data.messages) {
+                all += data.messages[key]+'<br>';
+              }
+              break;
+            default:
+              throw "an illegal message type in response: "+msgType;
+          }
+          if(!all) {
+            throw "a response contains an empty message";
+          }
+          mb.setBody(all);
         } else {
-          $(self).trigger("sentEmail", [self, data]);
-        }
+          throw "empty response data";
+        };
       }).fail(function (data) {
-        "use strict";
-        mb.showHeader();
-        mb.setBody(SUGAR.language.translate($(self).find('input[type="hidden"][name="module"]').val(), 'LBL_ERROR_SENDING_EMAIL'));
-        $(self).trigger("sentEmailError", [self, data]);
-      }).always(function (data) {
-        $(self).trigger("sentEmailAlways", [self, data]);
+
+        // here always handle only the http problems,
+        // not anything else (for e.g email sending issues or CRM settings problems..)
+        
+        console.error(data);
+        throw "an ajax XMLHttpRequest request failed";
       });
 
 

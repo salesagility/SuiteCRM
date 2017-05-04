@@ -645,6 +645,16 @@ class SugarEmailAddress extends SugarBean {
      * @return string clean email address
      */
     function _cleanAddress($addr) {
+
+        // a double check for parameter type,
+        // may from the email client we get
+        // an array instead of the expected string
+        // todo: why is the addr is an array sometimes?
+
+        if(is_array($addr)) {
+            $addr = isset($addr['email']) ? $addr['email'] : null;
+        }
+
         $addr = trim(from_html($addr));
 
         if(strpos($addr, "<") !== false && strpos($addr, ">") !== false) {
