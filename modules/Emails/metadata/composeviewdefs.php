@@ -79,8 +79,6 @@ $viewdefs['Emails']['ComposeView'] = array(
                         'call_back_function' => '$.fn.EmailsComposeView.onTemplateSelect',
                     ),
                 ),
-            ),
-            array(
                 array(
                     'name' =>  'parent_name',
                     'label' => 'LBL_EMAIL_RELATE',
