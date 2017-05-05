@@ -59,7 +59,7 @@ before_install:
   - if [[ "$skip" != "yes" && "$TRAVIS_PHP_VERSION" != 7.0 && "$TRAVIS_PHP_VERSION" != hhvm ]]; then phpenv config-rm xdebug.ini; fi;
 
 install:
-  - if [[ "$PHP_CS" == "yes" ]]; then curl http://get.sensiolabs.org/php-cs-fixer.phar -o php-cs-fixer; fi;
+  - if [[ "$PHP_CS" == "yes" ]]; then curl http://get.sensiolabs.org/php-cs-fixer.phar -o php-cs-fixer; chmod +x php-cs-fixer; fi;
   - if [[ "$skip" != "yes" ]]; then composer update --prefer-dist --no-interaction $COMPOSER_FLAGS; fi
   - if [[ "$skip" != "yes" && "$TRAVIS_PHP_VERSION" == 7.0 ]]; then composer require --dev satooshi/php-coveralls:~0.6; fi
 
