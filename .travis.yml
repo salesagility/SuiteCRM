@@ -57,6 +57,7 @@ before_install:
   #- if [[ "$skip" != "yes" && "$SYMFONY_VERSION" != "" ]]; then composer require "symfony/symfony:${SYMFONY_VERSION}" --no-update; fi;
   #- if [[ "$skip" != "yes" && "$TWIG_VERSION" != "" ]]; then composer require "twig/twig:${TWIG_VERSION}" --no-update; fi;
   - if [[ "$skip" != "yes" && "$TRAVIS_PHP_VERSION" != 7.0 && "$TRAVIS_PHP_VERSION" != hhvm ]]; then phpenv config-rm xdebug.ini; fi;
+  - composer require --dev phpunit/phpunit phpunit/phpunit-mock-objects phpunit/php-code-coverage
   - if [[ "$PHP_CS" == "yes" ]]; then composer require --dev friendsofphp/php-cs-fixer:dev-master; fi;
   
 install:
