@@ -188,9 +188,7 @@
     .col-sm-12 [type].col-sm-8.edit-view-field input[type=text] {
       width: 100%;
     }
-    .col-sm-12 [type].col-sm-8.edit-view-field input[type=text].sqsEnabled {
-      width: 40%;
-    }
+
     .col-sm-8 {
       width: 83.33%;
     }
@@ -446,15 +444,6 @@
 
 }
 
-@media (max-width: $xs-breakpoint) {
-  .compose-view {
-    .panel {
-      .col-sm-12 [type].col-sm-8.edit-view-field input[type=text].sqsEnabled {
-        width: 100%;
-      }
-    }
-  }
-}
 
 @media (max-width: $sm-breakpoint) {
   .compose-view {
@@ -492,13 +481,33 @@
   }
 }
 
-@media (min-width: 1024px) {
-  .compose-view .panel .col-sm-8 {
-    width: calc(100% - 300px);
+
+@media (min-width: $sm-breakpoint) {
+  .modal {
+    .compose-view {
+      // dual column
+      .col-sm-6 {
+        [field="emails_email_templates_name"] input[type=text].sqsEnabled {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+
+  .compose-view {
+    // Single column
+    .col-sm-12 {
+      [type].col-sm-8.edit-view-field input[type=text].sqsEnabled {
+        width: calc(100% - 96px);
+      }
+    }
+    // dual column
+    .col-sm-6 {
+      [type].col-sm-8.edit-view-field input[type=text].sqsEnabled {
+        width: calc(100%);
+      }
+    }
   }
 }
-@media (min-width: 1600px) {
-  .col-sm-6 .col-sm-8.edit-view-field input.sqsEnabled {
-    width: calc(100% - 230px);
-  }
-}
+
+
