@@ -25,23 +25,23 @@ env:
 
 matrix:
   fast_finish: true
-  include:
-    - php: 5.3
-      env: COMPOSER_FLAGS="--prefer-lowest"
-    - php: 5.6
-      env: SYMFONY_VERSION=2.3.*
-    - php: 5.6
-      env: SYMFONY_VERSION=2.7.*
-    - php: 5.6
-      env: SYMFONY_VERSION=2.8.*
-    - php: 5.6
-      env: TWIG_VERSION="2.0.x-dev"
-    - php: 5.6
-      env: PHP_CS="yes"
-    - php: 7.0
-      env: PHP_CS="yes"
-    - php: 7.1
-      env: PHP_CS="yes"
+  #include:
+  #  - php: 5.3
+  #    env: COMPOSER_FLAGS="--prefer-lowest"
+  #  - php: 5.6
+  #    env: SYMFONY_VERSION=2.3.*
+  #  - php: 5.6
+  #    env: SYMFONY_VERSION=2.7.*
+  #  - php: 5.6
+  #    env: SYMFONY_VERSION=2.8.*
+  #  - php: 5.6
+  #    env: TWIG_VERSION="2.0.x-dev"
+  #  - php: 5.6
+  #    env: PHP_CS="yes"
+  #  - php: 7.0
+  #    env: PHP_CS="yes"
+  #  - php: 7.1
+  #    env: PHP_CS="yes"
       
   allow_failures:
     - php: hhvm
