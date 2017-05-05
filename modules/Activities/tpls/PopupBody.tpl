@@ -127,8 +127,8 @@
                     </tr>
                     <!--  BEGIN: description -->
                     <tr>
-                        <td colspan="1" valign="top"></td>
-                        <td colspan="4" valign="top">
+                        <td colspan="1"></td>
+                        <td colspan="4">
                             <table>
                                 <tr>
                                     <td>{$activity.description}</td>
@@ -173,8 +173,8 @@
                     </tr>
                     <!--  BEGIN: description -->
                     <tr>
-                        <td colspan="1" valign="top"></td>
-                        <td colspan="4" valign="top">
+                        <td colspan="1"></td>
+                        <td colspan="4">
                             <table>
                                 <tr>
                                     <td>{$activity.description}</td>
@@ -219,8 +219,8 @@
                     </tr>
                     <!--  BEGIN: description -->
                     <tr>
-                        <td colspan="1" valign="top"></td>
-                        <td colspan="4" valign="top">
+                        <td colspan="1"></td>
+                        <td colspan="4">
                             <table>
                                 <tr>
                                     <td>{$activity.description}</td>
@@ -265,8 +265,8 @@
                     </tr>
                     <!--  BEGIN: description -->
                     <tr>
-                        <td colspan="1" valign="top"></td>
-                        <td colspan="4" valign="top">
+                        <td colspan="1"></td>
+                        <td colspan="4">
                             <table>
                                 <tr>
                                     <td>{$activity.description}</td>
