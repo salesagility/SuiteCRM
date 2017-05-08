@@ -79,11 +79,6 @@ if ($_REQUEST['action'] === 'ImportFromListView') {
 }
 
 
-
-if ($_REQUEST['action'] === 'GetComposeViewFields') {
-    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'GetComposeViewFields';
-}
-
 class EmailsController extends SugarController
 {
     public function action_index()
