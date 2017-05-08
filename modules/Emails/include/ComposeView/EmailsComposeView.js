@@ -519,7 +519,7 @@
       });
 
       var ajaxEmailSendingResponse = function(data) {
-        // todo: (ref: SCRM-20) here we have to outsourcing the error handling to doing it in similar common way anywhere
+        // TODO: task: ref - SCRM-20) here we have to outsourcing the error handling to doing it in similar common way anywhere
         if(data) {
           try {
             var response = data;
@@ -634,7 +634,7 @@
           // here always handle only the http problems,
           // not anything else (for e.g email sending issues or CRM settings problems..)
           console.error(data);
-          throw "an ajax XMLHttpRequest request failed";
+          throw "An AJAX XMLHttpRequest failed";
         }
       });
 
