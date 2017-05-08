@@ -29,15 +29,13 @@
     width: 28%;
   }
   .list tr th:nth-child(3) {
-    width: 10%;
-  }
-  .list tr th:nth-child(4) {
     width: 20%;
   }
-  list tr th:nth-child(5) {
-    width: 10%;
+  .list tr th:nth-child(4) {
+    width: 25%;
   }
   .list tr th:last-child {
+    width: 25%;
     border-top-right-radius: 4px;
   }
   .glyph-print {
