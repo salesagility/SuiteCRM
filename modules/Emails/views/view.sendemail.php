@@ -78,7 +78,7 @@ class EmailsViewSendemail extends ViewAjax
         }
         echo json_encode($response);
         if($err = json_last_error()) {
-            throw new Exception("trying to send an incorrect JSON response ($err)");
+            throw new Exception("Trying to send an incorrect JSON response ($err)");
         }
         die();
     }
