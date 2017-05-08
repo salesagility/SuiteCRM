@@ -21,7 +21,7 @@ The Contributor Agreement only needs to be signed once for all pull requests and
 
 Once signed and confirmed, any pull requests will be considered for inclusion in the SuiteCRM project.
 
-### Helpful links for the community###
+### Helpful links for the community ###
 
 The following links offer various ways to view, contribute and collaborate to the SuiteCRM project:
 
