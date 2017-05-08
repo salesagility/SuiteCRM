@@ -92,12 +92,12 @@ class SugarFolder
         $this->db = DBManagerFactory::getInstance();
 
         $this->core = "SELECT f.id, f.name, f.has_child, f.is_group, f.is_dynamic, f.dynamic_query," .
-        " f.folder_type, f.created_by, i.deleted FROM folders f left join inbound_email i on f.id = i.groupfolder_id ";
+        " f.folder_type, f.created_by, f.deleted FROM folders f ";
         $this->coreSubscribed = "SELECT f.id, f.name, f.has_child, f.is_group, f.is_dynamic,".
-        " f.dynamic_query, f.folder_type, f.created_by, i.deleted FROM folders f LEFT JOIN folders_subscriptions".
-        " fs ON f.id = fs.folder_id LEFT JOIN inbound_email i on  i.groupfolder_id = f.id ";
-        $this->coreWhere = "WHERE f.deleted = 0 ";
-        $this->coreWhereSubscribed = "WHERE f.deleted = 0 AND fs.assigned_user_id = ";
+        " f.dynamic_query, f.folder_type, f.created_by, f.deleted FROM folders f LEFT JOIN folders_subscriptions".
+        " fs ON f.id = fs.folder_id LEFT JOIN inbound_email i on  i.id = f.id ";
+        $this->coreWhere = "WHERE f.deleted != 1 ";
+        $this->coreWhereSubscribed = "WHERE f.deleted != 1 AND i.deleted != 1 AND fs.assigned_user_id = ";
         $this->coreOrderBy = " ORDER BY f.is_dynamic, f.is_group, f.name ASC ";
         $this->hrSortLocal = array(
             'flagged' => 'type',
@@ -561,17 +561,17 @@ class SugarFolder
 
         $found = array();
         while ($a = $this->db->fetchByAssoc($r)) {
-            if ((($a['folder_type'] == $myEmailTypeString) ||
-                    ($a['folder_type'] == $myDraftsTypeString) ||
-                    ($a['folder_type'] == $mySentEmailTypeString)) &&
-                ($a['created_by'] != $current_user->id)
-            ) {
+            if($a['folder_type'] == $myEmailTypeString) {
+                if (!isset($found[$a['id']])) {
+                    $found[$a['id']] = true;
 
-                continue;
-            } // if
-            if (!isset($found[$a['id']])) {
-                $found[$a['id']] = true;
-                $return[] = $a;
+                    $children = $this->db->query('SELECT * FROM folders WHERE parent_folder = "'. $a['id'] . '"');
+                    while ($b = $this->db->fetchByAssoc($children)) {
+                        $a['children'][] = $b;
+                    }
+
+                    $return[] = $a;
+                }
             }
         }
 
