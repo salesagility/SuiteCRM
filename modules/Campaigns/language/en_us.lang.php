@@ -537,6 +537,10 @@ $mod_strings = array (
 	'LBL_OPTION_COPY_TEMPLATE' => 'Copy an existing template',
 	'LBL_SUMMARY' => 'Summary',
 	'LBL_CAMPAIGN_CHECKLIST' => 'Campaign Checklist',
+
+	'LBL_EMAIL_MARKETING' => 'Email Marketing',
+	'LBL_QUEUE_ITEMS' => 'Queue Items',
+	'LBL_PROSPECT_LISTS' => 'Prospect Lists',
 );
 
 

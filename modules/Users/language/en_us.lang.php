@@ -939,6 +939,11 @@ $mod_strings = array(
     'LBL_LIST_CATEGORY' => 'Category',
     'LBL_EDITOR_TYPE' => 'Editor',
 
+
+    'LBL_CONTACTS_SYNC' => 'Contacts Sync',
+    'LBL_PROJECT_USERS_1_FROM_PROJECT_TITLE' => 'Project Users from Project Title',
+    'LBL_ROLES' => 'Roles',
+    'LBL_SECURITYGROUPS' => 'Security Groups',
 ); // END STRINGS DEFS
 
 ?>

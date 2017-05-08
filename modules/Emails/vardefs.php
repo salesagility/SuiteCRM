@@ -352,6 +352,7 @@ $dictionary['Email'] = array(
         ),
         'parent_type' => array(
             'name' => 'parent_type',
+            'vname' => 'LBL_PARENT_TYPE',
             'type' => 'varchar',
             'reportable' => false,
             'len' => 100,
@@ -361,6 +362,7 @@ $dictionary['Email'] = array(
         ),
         'parent_id' => array(
             'name' => 'parent_id',
+            'vname' => 'LBL_PARENT_ID',
             'type' => 'id',
             'len' => '36',
             'reportable' => false,
