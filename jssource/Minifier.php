@@ -121,6 +121,12 @@ class Minifier
      */
     static public function minify($js, $options = array())
     {
+        global $sugar_config;
+
+        if(isset($sugar_config['developerMode']) && $sugar_config['developerMode'] === true) {
+            return $js;
+        }
+
         try{
             ob_start();
             $currentOptions = array_merge(self::$defaultOptions, $options);
