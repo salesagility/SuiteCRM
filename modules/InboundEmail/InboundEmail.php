@@ -391,9 +391,6 @@ class InboundEmail extends SugarBean
             $msgnos
         );
 
-        // TODO: cache email headers
-//        $this->updateOverviewCacheFile($emailHeaders);
-
         $emailHeaders = json_decode(json_encode($emailHeaders), true);
         // get attachment status
         foreach ($emailHeaders as $i=> $emailHeader) {
