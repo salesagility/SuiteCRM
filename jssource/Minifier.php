@@ -123,7 +123,7 @@ class Minifier
     {
         global $sugar_config;
 
-        if(isset($sugar_config['developerMode']) && $sugar_config['developerMode'] === true) {
+        if(isset($sugar_config['developer_mode_disable_minifier']) && $sugar_config['developer_mode_disable_minifier'] === true) {
             return $js;
         }
 
