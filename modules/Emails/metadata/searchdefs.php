@@ -51,8 +51,31 @@ $searchdefs[$module_name] = array(
             array('name' => 'current_user_only', 'label' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
         ),
         'advanced_search' => array(
-            'name',
-            array(
+            'from_addr_name' => array(
+                'name' => 'from_addr_name',
+                'label' => 'LBL_FROM',
+            ),
+            'to_addrs_names' => array(
+                'name' => 'to_addrs_names',
+                'label' => 'LBL_TO',
+            ),
+            'cc_addrs_names' => array(
+                'name' => 'cc_addrs_names',
+                'label' => 'LBL_CC',
+            ),
+            'bcc_addrs_names' => array(
+                'name' => 'bcc_addrs_names',
+                'label' => 'LBL_BCC',
+            ),
+            'name' => array(
+                'name' => 'name',
+                'label' => 'LBL_SUBJECT',
+            ),
+            'description' => array(
+                'name' => 'description',
+                'label' => 'LBL_BODY'
+            ),
+            'assigned_user_id' => array(
                 'name' => 'assigned_user_id',
                 'label' => 'LBL_ASSIGNED_TO',
                 'type' => 'enum',

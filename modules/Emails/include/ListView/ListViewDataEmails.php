@@ -46,6 +46,15 @@ require_once('include/ListView/ListViewData.php');
 
 class ListViewDataEmails extends ListViewData
 {
+    protected static $mapServerFields = array(
+        // bean field => IMAP field
+        'from_addr_name' => 'FROM',
+        'to_addrs_names' => 'TO',
+        'cc_addrs_names' => 'CC',
+        'bcc_addrs_names' => 'BCC',
+        'name' => 'SUBJECT',
+        'description' => 'BODY',
+    );
     /**
      * Constructor
      */
@@ -188,7 +197,26 @@ class ListViewDataEmails extends ListViewData
 
             $folder = $inboundEmail->mailbox;
 
-            $cachedEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order);
+            // Process filter
+            $filter = array();
+            foreach ($_REQUEST as $r => $request) {
+
+                if(empty($request)) {
+                    continue;
+                }
+
+                if((stristr($r, 'advanced') !== false) || (stristr($r, 'basic') !== false)) {
+                    $f = str_ireplace('_advanced', '', $r);
+                    $f = str_ireplace('_basic', '', $f);
+                    if(isset(self::$mapServerFields[$f]))
+                    {
+                        $filter[ self::$mapServerFields[$f] ] = $request;
+                    }
+                }
+            }
+
+            // Get emails from IMAP server
+            $cachedEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter);
             // order by DESC
             $sortDESC = function ($a, $b) {
                 if ($a['date'] == $b['date']) {
