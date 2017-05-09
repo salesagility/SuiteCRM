@@ -216,7 +216,7 @@ class ListViewDataEmails extends ListViewData
             }
 
             // Get emails from IMAP server
-            $cachedEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter);
+            $emailServerEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter);
             // order by DESC
             $sortDESC = function ($a, $b) {
                 if ($a['date'] == $b['date']) {
@@ -226,14 +226,14 @@ class ListViewDataEmails extends ListViewData
                 return -1;
             };
 
-            $total = $cachedEmails['mailbox_info']['Nmsgs'] + count($importedEmails['data']);
+            $total = $emailServerEmails['mailbox_info']['Nmsgs'] + count($importedEmails['data']);
             if ($page === "end") {
                 $offset = $total - $limitPerPage;
             }
 
 
             $_REQUEST['uids'] = array();
-            foreach ($cachedEmails['data'] as $h => $emailHeader) {
+            foreach ($emailServerEmails['data'] as $h => $emailHeader) {
                 $emailRecord = array();
 
                 if ($folderType === 'draft' && $emailHeader['draft'] === 0) {
@@ -343,6 +343,9 @@ class ListViewDataEmails extends ListViewData
                 $pageData['additionalDetails'][$h] = '';
                 $pageData['tag'][$h]['MAIN'] = 'a';
             }
+
+
+            // Filter imported emails based on the UID of the results from the IMAP server
 
             $this->setVariableName($seed->object_name, $where, $this->listviewName, $id);
 
