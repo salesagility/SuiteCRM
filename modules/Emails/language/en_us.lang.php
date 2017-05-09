@@ -416,5 +416,6 @@ $mod_strings = array (
 
 	'LBL_MAILBOX_ID' => 'Mailbox ID',
 	'LBL_PARENT_ID' => 'Parent ID',
+    'LBL_ERROR_NO_FOLDERS' => 'Error: There are no folders available. Please check your email settings.',
 );
 

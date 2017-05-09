@@ -45,6 +45,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/ytree/Tree.php');
 require_once('include/ytree/ExtNode.php');
 
+
+class EmptySugarFolderException extends Exception { }
+
 /**
  * Polymorphic buckets - place any item in a folder
  */
@@ -561,11 +564,11 @@ class SugarFolder
 
         $found = array();
         while ($a = $this->db->fetchByAssoc($r)) {
-            if($a['folder_type'] == $myEmailTypeString) {
+            if ($a['folder_type'] == $myEmailTypeString) {
                 if (!isset($found[$a['id']])) {
                     $found[$a['id']] = true;
 
-                    $children = $this->db->query('SELECT * FROM folders WHERE parent_folder = "'. $a['id'] . '"');
+                    $children = $this->db->query('SELECT * FROM folders WHERE parent_folder = "' . $a['id'] . '"');
                     while ($b = $this->db->fetchByAssoc($children)) {
                         $a['children'][] = $b;
                     }
@@ -575,6 +578,12 @@ class SugarFolder
             }
         }
 
+        if(empty($found)) {
+            throw new SugarFolderEmptyException(
+                'SugarFolder::retrieveFoldersForProcessing() Cannot Retrieve Folders - ".
+                "Please user that the user has a inbound email account'.__FILE__.':'.__LINE_
+            );
+        }
         return $return;
     }
 
