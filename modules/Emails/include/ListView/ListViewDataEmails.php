@@ -54,7 +54,9 @@ class ListViewDataEmails extends ListViewData
         parent::__construct();
     }
 
-    public function getListViewCachedData() {}
+    public function getListViewCachedData()
+    {
+    }
 
 
     public function getListViewData(
@@ -70,164 +72,81 @@ class ListViewDataEmails extends ListViewData
     ) {
         global $current_user, $sugar_config, $db, $mod_strings;
 
-
-        // We need to use the parent code so that we get the data structures
-        // which are required to view a list view.
-        // start og parent: list view
+        $data = array();
+        $pageData = array();
+        $queryString = '';
+        // Create the data structure which are required to view a list view.
+        // start parent::getListViewData
         require_once 'include/SearchForm/SearchForm2.php';
-
-        SugarVCR::erase($seed->module_dir);
         $this->seed =& $seed;
-        $totalCounted = empty($GLOBALS['sugar_config']['disable_count_query']);
-        $_SESSION['MAILMERGE_MODULE_FROM_LISTVIEW'] = $seed->module_dir;
-        if(empty($_REQUEST['action']) || $_REQUEST['action'] != 'Popup'){
-            $_SESSION['MAILMERGE_MODULE'] = $seed->module_dir;
-        }
-
         $this->setVariableName($seed->object_name, $where, $this->listviewName, $id);
-
         $this->seed->id = '[SELECT_ID_LIST]';
 
-        // if $params tell us to override all ordering
-        if(!empty($params['overrideOrder']) && !empty($params['orderBy'])) {
-            $order = $this->getOrderBy(strtolower($params['orderBy']), (empty($params['sortOrder']) ? '' : $params['sortOrder'])); // retreive from $_REQUEST
-        }
-        else {
-            $order = $this->getOrderBy(); // retreive from $_REQUEST
+        if (!empty($params['overrideOrder']) && !empty($params['orderBy'])) {
+            $order = $this->getOrderBy(
+                strtolower($params['orderBy']),
+                (empty($params['sortOrder']) ? '' : $params['sortOrder'])
+            );
+        } else {
+            $order = $this->getOrderBy();
         }
 
         // still empty? try to use settings passed in $param
-        if(empty($order['orderBy']) && !empty($params['orderBy'])) {
+        if (empty($order['orderBy']) && !empty($params['orderBy'])) {
             $order['orderBy'] = $params['orderBy'];
-            $order['sortOrder'] =  (empty($params['sortOrder']) ? '' : $params['sortOrder']);
+            $order['sortOrder'] = (empty($params['sortOrder']) ? '' : $params['sortOrder']);
         }
 
-        //rrs - bug: 21788. Do not use Order by stmts with fields that are not in the query.
-        // Bug 22740 - Tweak this check to strip off the table name off the order by parameter.
-        // Samir Gandhi : Do not remove the report_cache.date_modified condition as the report list view is broken
         $orderby = $order['orderBy'];
-        if (strpos($order['orderBy'],'.') && ($order['orderBy'] != "report_cache.date_modified")) {
-            $orderby = substr($order['orderBy'],strpos($order['orderBy'],'.')+1);
-        }
-        if ($orderby != 'date_entered' && !in_array($orderby, array_keys($filter_fields))) {
-            $order['orderBy'] = '';
-            $order['sortOrder'] = '';
+        if (strpos($order['orderBy'], '.') && ($order['orderBy'] != "report_cache.date_modified")) {
+            $orderby = substr($order['orderBy'], strpos($order['orderBy'], '.') + 1);
         }
 
-        if (empty($order['orderBy'])) {
-            $orderBy = '';
-        } else {
-            $orderBy = $order['orderBy'] . ' ' . $order['sortOrder'];
-            //wdong, Bug 25476, fix the sorting problem of Oracle.
-            if (isset($params['custom_order_by_override']['ori_code']) && $order['orderBy'] == $params['custom_order_by_override']['ori_code'])
-                $orderBy = $params['custom_order_by_override']['custom_code'] . ' ' . $order['sortOrder'];
+        if (!is_array($params)) {
+            $params = array();
         }
 
-        if (empty($params['skipOrderSave'])) { // don't save preferences if told so
-            $current_user->setPreference('listviewOrder', $order, 0, $this->var_name); // save preference
+        if (!isset($params['custom_select'])) {
+            $params['custom_select'] = '';
         }
 
-        // If $params tells us to override for the special last_name, first_name sorting
-        if (!empty($params['overrideLastNameOrder']) && $order['orderBy'] == 'last_name') {
-            $orderBy = 'last_name '.$order['sortOrder'].', first_name '.$order['sortOrder'];
+        if (!isset($params['custom_from'])) {
+            $params['custom_from'] = '';
         }
 
-       //C.L. - Fix for 23461
-        if(empty($_REQUEST['action']) || $_REQUEST['action'] != 'Popup') {
-            $_SESSION['export_where'] = $ret_array['where'];
+        if (!isset($params['custom_where'])) {
+            $params['custom_where'] = '';
         }
 
-
-        $data = array();
-        $rows = array();
-        $count = 0;
-        $idIndex = array();
-        $id_list = '';
-
-
-
-        if (!empty($id_list))
-        {
-            $id_list = '('.substr($id_list, 1).')';
+        if (!isset($params['custom_order_by'])) {
+            $params['custom_order_by'] = '';
         }
+        // End of parent::getListViewData data structure
 
-        SugarVCR::store($this->seed->module_dir,  $main_query);
 
-
-        $module_names = array(
-            'Prospects' => 'Targets'
-        );
-        $endOffset = (floor(($totalCount - 1) / $limit)) * $limit;
-        $pageData['ordering'] = $order;
-        $pageData['ordering']['sortOrder'] = $this->getReverseSortOrder($pageData['ordering']['sortOrder']);
-        //get url parameters as an array
-        $pageData['queries'] = $this->generateQueries($pageData['ordering']['sortOrder'], $offset, $prevOffset, $nextOffset,  $endOffset, $totalCounted);
-        //join url parameters from array to a string
-        $pageData['urls'] = $this->generateURLS($pageData['queries']);
-        $pageData['offsets'] = array( 'current'=>$offset, 'next'=>$nextOffset, 'prev'=>$prevOffset, 'end'=>$endOffset, 'total'=>$totalCount, 'totalCounted'=>$totalCounted);
-        $pageData['bean'] = array('objectName' => $seed->object_name, 'moduleDir' => $seed->module_dir, 'moduleName' => strtr($seed->module_dir, $module_names));
-        $pageData['stamp'] = $this->stamp;
-        $pageData['access'] = array('view' => $this->seed->ACLAccess('DetailView'), 'edit' => $this->seed->ACLAccess('EditView'));
-        $pageData['idIndex'] = $idIndex;
-        if(!$this->seed->ACLAccess('ListView')) {
-            $pageData['error'] = 'ACL restricted access';
-        }
-
-        $queryString = '';
-
-        if( isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "advanced_search" ||
-            isset($_REQUEST["type_basic"]) && (count($_REQUEST["type_basic"] > 1) || $_REQUEST["type_basic"][0] != "") ||
-                isset($_REQUEST["module"]) && $_REQUEST["module"] == "MergeRecords")
-        {
-            $queryString = "-advanced_search";
-        }
-        else if (isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "basic_search")
-        {
-            if($seed->module_dir == "Reports") $searchMetaData = SearchFormReports::retrieveReportsSearchDefs();
-            else $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir);
-
-            $basicSearchFields = array();
-
-            if( isset($searchMetaData['searchdefs']) && isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search']) )
-                $basicSearchFields = $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'];
-
-            foreach( $basicSearchFields as $basicSearchField)
-            {
-                $field_name = (is_array($basicSearchField) && isset($basicSearchField['name'])) ? $basicSearchField['name'] : $basicSearchField;
-                $field_name .= "_basic";
-                if( isset($_REQUEST[$field_name])  && ( !is_array($basicSearchField) || !isset($basicSearchField['type']) || $basicSearchField['type'] == 'text' || $basicSearchField['type'] == 'name') )
-                {
-                    // Ensure the encoding is UTF-8
-                    $queryString = htmlentities($_REQUEST[$field_name], null, 'UTF-8');
-                    break;
-                }
-            }
-        }
-
-        // End of parent: list view
-
+        // Workout the id for the folder or user the default
         $folderType = "inbound";
         $inboundEmailID = '';
         if (isset($_REQUEST['folders_id']) && !empty($_REQUEST['folders_id'])) {
             $foldersId = $_REQUEST['folders_id'];
-            $result = $db->query('SELECT * FROM folders WHERE id="'.$foldersId.'"');
+            $result = $db->query('SELECT * FROM folders WHERE id="' . $foldersId . '"');
             $row = $db->fetchByAssoc($result);
             // get the root of the tree
             // is the the id of the root node is the same as the inbound email id
-            if(empty($row['parent_folder'])) {
+            if (empty($row['parent_folder'])) {
                 // root node (inbound)
                 $inboundEmailID = $row['id'];
             } else {
                 // child node
                 $inboundEmailID = $row['parent_folder'];
-                $folderType =  $row['folder_type'];
+                $folderType = $row['folder_type'];
             }
 
         }
 
         $limitPerPage = $sugar_config['list_max_entries_per_page'];
 
-        if(isset($importedEmails['queryString']) && !empty( $importedEmails['queryString'])) {
+        if (isset($importedEmails['queryString']) && !empty($importedEmails['queryString'])) {
             $queryString = $importedEmails['queryString'];
         } else {
             $queryString = 'basic_search';
@@ -235,14 +154,14 @@ class ListViewDataEmails extends ListViewData
 
         $page = 0;
         $offset = 0;
-        if(isset($_REQUEST['Emails2_EMAIL_offset'])) {
-            if($_REQUEST['Emails2_EMAIL_offset'] !== "end") {
+        if (isset($_REQUEST['Emails2_EMAIL_offset'])) {
+            if ($_REQUEST['Emails2_EMAIL_offset'] !== "end") {
                 $offset = $_REQUEST['Emails2_EMAIL_offset'];
                 $page = $offset / $limitPerPage;
             }
         }
 
-        if(empty($inboundEmailID)) {
+        if (empty($inboundEmailID)) {
             $inboundEmailID = $current_user->getPreference('defaultIEAccount', 'Emails');
             $inboundEmail = BeanFactory::getBean('InboundEmail', $inboundEmailID);
         } else {
@@ -250,7 +169,7 @@ class ListViewDataEmails extends ListViewData
         }
 
 
-        if($inboundEmail !== false) {
+        if ($inboundEmail !== false) {
             $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
 
             switch ($folderType) {
@@ -271,7 +190,7 @@ class ListViewDataEmails extends ListViewData
 
             $cachedEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order);
             // order by DESC
-            $sortDESC = function($a, $b) {
+            $sortDESC = function ($a, $b) {
                 if ($a['date'] == $b['date']) {
                     return 0;
                 }
@@ -280,7 +199,7 @@ class ListViewDataEmails extends ListViewData
             };
 
             $total = $cachedEmails['mailbox_info']['Nmsgs'] + count($importedEmails['data']);
-            if($page === "end") {
+            if ($page === "end") {
                 $offset = $total - $limitPerPage;
             }
 
@@ -289,8 +208,7 @@ class ListViewDataEmails extends ListViewData
             foreach ($cachedEmails['data'] as $h => $emailHeader) {
                 $emailRecord = array();
 
-                if($folderType === 'draft' && $emailHeader['draft'] === 0)
-                {
+                if ($folderType === 'draft' && $emailHeader['draft'] === 0) {
                     continue;
                 }
 
@@ -318,7 +236,7 @@ class ListViewDataEmails extends ListViewData
                                 'D, d M Y H:i:s O',
                                 $date
                             );
-                            if($dateTime  == false) {
+                            if ($dateTime == false) {
                                 // TODO: TASK: UNDEFINED - This needs to be more generic to dealing with different formats from IMAP
                                 $dateTime = DateTime::createFromFormat(
                                     'd M Y H:i:s O',
@@ -326,10 +244,9 @@ class ListViewDataEmails extends ListViewData
                                 );
                             }
 
-                            if($dateTime == false){
+                            if ($dateTime == false) {
                                 $emailRecord[strtoupper($field)] = '';
-                            }
-                            else{
+                            } else {
                                 $timeDate = new TimeDate();
                                 $emailRecord[strtoupper($field)] = $timeDate->asUser($dateTime, $current_user);
                             }
@@ -337,8 +254,8 @@ class ListViewDataEmails extends ListViewData
                         case 'is_imported':
                             $uid = $emailHeader['uid'];
                             $importedEmailBeans = BeanFactory::getBean('Emails');
-                            $is_imported = $importedEmailBeans->get_full_list('','emails.uid LIKE "'.$uid.'"');
-                            if(count($is_imported) > 0) {
+                            $is_imported = $importedEmailBeans->get_full_list('', 'emails.uid LIKE "' . $uid . '"');
+                            if (count($is_imported) > 0) {
                                 $emailRecord['IS_IMPORTED'] = true;
                             } else {
                                 $emailRecord['IS_IMPORTED'] = false;
@@ -364,22 +281,26 @@ class ListViewDataEmails extends ListViewData
                             $emailRecord[strtoupper($field)] = $emailHeader['has_attachment'];
                             break;
                         case 'status':
-                            if($emailHeader['answered'] != 0) {
+                            if ($emailHeader['answered'] != 0) {
                                 $emailRecord[strtoupper($field)] = 'replied';
-                            } else if($emailHeader['draft'] != 0) {
-                                $emailRecord[strtoupper($field)] = 'draft';
-                            } else if($emailHeader['seen'] != 0) {
-                                $emailRecord[strtoupper($field)] = 'read';
                             } else {
-                                $emailRecord[strtoupper($field)] = 'unread';
+                                if ($emailHeader['draft'] != 0) {
+                                    $emailRecord[strtoupper($field)] = 'draft';
+                                } else {
+                                    if ($emailHeader['seen'] != 0) {
+                                        $emailRecord[strtoupper($field)] = 'read';
+                                    } else {
+                                        $emailRecord[strtoupper($field)] = 'unread';
+                                    }
+                                }
                             }
 
-                            if($emailHeader['deleted'] != 0) {
+                            if ($emailHeader['deleted'] != 0) {
                                 // TODO: TASK: UNDEFINED - Handle deleted
 
                             }
 
-                            if($emailHeader['recent'] != 0) {
+                            if ($emailHeader['recent'] != 0) {
                                 // TODO: TASK: UNDEFINED - Add recent flag to SuiteCRM
                             }
                             break;
@@ -404,12 +325,11 @@ class ListViewDataEmails extends ListViewData
             $endOffset = 0;
 
 
-
             if ($total > $limitPerPage) {
                 $nextOffset = $offset + $limitPerPage;
             }
 
-            if($nextOffset >= $total) {
+            if ($nextOffset >= $total) {
                 $nextOffset = $total;
             }
 
@@ -420,7 +340,7 @@ class ListViewDataEmails extends ListViewData
                 }
             }
 
-            if($total < $limitPerPage) {
+            if ($total < $limitPerPage) {
                 $prevOffset = -1;
                 $nextOffset = -1;
             }
@@ -437,15 +357,15 @@ class ListViewDataEmails extends ListViewData
 
             $queries = array('baseUrl', 'endPage', 'nextPage', 'orderBy');
 
-            if((int)$pageData['offsets']['current'] >= $limitPerPage){
+            if ((int)$pageData['offsets']['current'] >= $limitPerPage) {
                 $queries[] = 'prevPage';
                 $queries[] = 'startPage';
             }
 
             foreach ($queries as $query) {
 
-                if($total < $limitPerPage || $nextOffset >= $total) {
-                    if(isset($pageData['queries'][$query])) {
+                if ($total < $limitPerPage || $nextOffset >= $total) {
+                    if (isset($pageData['queries'][$query])) {
                         unset($pageData['queries'][$query]);
                     }
                 } else {
@@ -468,10 +388,101 @@ class ListViewDataEmails extends ListViewData
             $_REQUEST['folder_type'] = $folderType;
             $_REQUEST['inbound_email_record'] = $inboundEmailID;
 
+
+            // TODO: TASK: UNDEFINED - HANDLE in second filter after IMAP
+            $endOffset = floor(($total - 1) / $limit) * $limit;
+            $pageData['queries'] = $this->generateQueries(
+                $pageData['ordering']['sortOrder'],
+                $offset,
+                $prevOffset,
+                $nextOffset,
+                $endOffset,
+                $total
+            );
+            $pageData['offsets'] = array(
+                'current' => $offset,
+                'next' => $nextOffset,
+                'prev' => $prevOffset,
+                'end' => $endOffset,
+                'total' => $total,
+                'totalCounted' => $total
+            );
+
+            $pageData['ordering'] = $order;
+            $pageData['ordering']['sortOrder'] = $this->getReverseSortOrder($pageData['ordering']['sortOrder']);
+            //get url parameters as an array
+            //join url parameters from array to a string
+            $pageData['urls'] = $this->generateURLS($pageData['queries']);
+            $module_names = array(
+                'Prospects' => 'Targets'
+            );
+            $pageData['bean'] = array(
+                'objectName' => $seed->object_name,
+                'moduleDir' => $seed->module_dir,
+                'moduleName' => strtr($seed->module_dir, $module_names)
+            );
+            $pageData['stamp'] = $this->stamp;
+            $pageData['access'] = array(
+                'view' => $this->seed->ACLAccess('DetailView'),
+                'edit' => $this->seed->ACLAccess('EditView')
+            );
+            if (!$this->seed->ACLAccess('ListView')) {
+                $pageData['error'] = 'ACL restricted access';
+            }
+
+
+            if (
+                (isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "advanced_search") ||
+                (
+                    isset($_REQUEST["type_basic"]) && count($_REQUEST["type_basic"] > 1) ||
+                    $_REQUEST["type_basic"][0] != ""
+                ) ||
+                (isset($_REQUEST["module"]) && $_REQUEST["module"] == "MergeRecords")
+            ) {
+                $queryString = "-advanced_search";
+            } else {
+                if (isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "basic_search") {
+                    $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir);
+
+                    $basicSearchFields = array();
+
+                    if (
+                        isset($searchMetaData['searchdefs']) &&
+                        isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'])
+                    ) {
+                        $basicSearchFields = $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'];
+                    }
+
+                    foreach ($basicSearchFields as $basicSearchField) {
+                        $field_name = (is_array($basicSearchField) && isset($basicSearchField['name']))
+                            ? $basicSearchField['name'] : $basicSearchField;
+                        $field_name .= "_basic";
+                        if (
+                            isset($_REQUEST[$field_name]) &&
+                            (
+                                !is_array($basicSearchField) ||
+                                !isset($basicSearchField['type']) ||
+                                $basicSearchField['type'] == 'text' ||
+                                $basicSearchField['type'] == 'name'
+                            )
+                        ) {
+                            // Ensure the encoding is UTF-8
+                            $queryString = htmlentities($_REQUEST[$field_name], null, 'UTF-8');
+                            break;
+                        }
+                    }
+                }
+            }
+
             return array('data' => $data, 'pageData' => $pageData, 'query' => $queryString);
         } else {
 
-            return array('data' => $data, 'pageData' => $pageData, 'query' => $queryString, 'message' => $mod_strings['WARNING_SETTINGS_NOT_CONF']);
+            return array(
+                'data' => $data,
+                'pageData' => $pageData,
+                'query' => $queryString,
+                'message' => $mod_strings['WARNING_SETTINGS_NOT_CONF']
+            );
         }
 
     }
