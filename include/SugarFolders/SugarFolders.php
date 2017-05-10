@@ -46,7 +46,7 @@ require_once('include/ytree/Tree.php');
 require_once('include/ytree/ExtNode.php');
 
 
-class EmptySugarFolderException extends Exception { }
+class SugarFolderEmptyException extends Exception { }
 
 /**
  * Polymorphic buckets - place any item in a folder
