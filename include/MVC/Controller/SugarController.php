@@ -329,7 +329,7 @@ class SugarController{
       */
     protected function handleException(Exception $e)
     {
-        $GLOBALS['log']->fatal('Exception in Controller: ' . $e->getMessage());
+        $GLOBALS['log']->fatal(__FILE__.':'.__LINE__.' Exception in Controller: ' . $e->getMessage());
 		$GLOBALS['log']->fatal("backtrace:\n" . $e->getTraceAsString());
         $logicHook = new LogicHook();
 
