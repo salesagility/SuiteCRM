@@ -580,8 +580,8 @@ class SugarFolder
 
         if(empty($found)) {
             throw new SugarFolderEmptyException(
-                'SugarFolder::retrieveFoldersForProcessing() Cannot Retrieve Folders - ".
-                "Please user that the user has a inbound email account'.__FILE__.':'.__LINE_
+                ' SugarFolder::retrieveFoldersForProcessing() Cannot Retrieve Folders - '.
+                'Please check the users inbound email settings.'
             );
         }
         return $return;
@@ -638,36 +638,41 @@ class SugarFolder
             'origName' => ""
         );
 
-        $folders = $this->retrieveFoldersForProcessing($focusUser, false);
-        $subscriptions = $this->getSubscriptions($focusUser);
+        try {
+            $folders = $this->retrieveFoldersForProcessing($focusUser, false);
+            $subscriptions = $this->getSubscriptions($focusUser);
 
-        foreach ($folders as $a) {
-            $a['selected'] = (in_array($a['id'], $subscriptions)) ? true : false;
-            $a['origName'] = $a['name'];
-            if (isset($a['dynamic_query'])) {
-                unset($a['dynamic_query']);
-            }
-            if ($a['is_group'] == 1) {
-                $grp[] = $a;
-            } else {
-                $user[] = $a;
-            }
+            foreach ($folders as $a) {
+                $a['selected'] = (in_array($a['id'], $subscriptions)) ? true : false;
+                $a['origName'] = $a['name'];
+                if (isset($a['dynamic_query'])) {
+                    unset($a['dynamic_query']);
+                }
+                if ($a['is_group'] == 1) {
+                    $grp[] = $a;
+                } else {
+                    $user[] = $a;
+                }
 
-            if ($a['has_child'] == 1) {
-                $qGetChildren = $this->core . $this->coreWhere . "AND parent_folder = '{$a['id']}'";
-                $rGetChildren = $this->db->query($qGetChildren);
+                if ($a['has_child'] == 1) {
+                    $qGetChildren = $this->core . $this->coreWhere . "AND parent_folder = '{$a['id']}'";
+                    $rGetChildren = $this->db->query($qGetChildren);
 
-                while ($aGetChildren = $this->db->fetchByAssoc($rGetChildren)) {
-                    if ($a['is_group']) {
-                        $this->_depth = 1;
-                        $grp = $this->getFoldersChildForSettings($aGetChildren, $grp, $subscriptions);
-                    } else {
-                        $this->_depth = 1;
-                        $user = $this->getFoldersChildForSettings($aGetChildren, $user, $subscriptions);
+                    while ($aGetChildren = $this->db->fetchByAssoc($rGetChildren)) {
+                        if ($a['is_group']) {
+                            $this->_depth = 1;
+                            $grp = $this->getFoldersChildForSettings($aGetChildren, $grp, $subscriptions);
+                        } else {
+                            $this->_depth = 1;
+                            $user = $this->getFoldersChildForSettings($aGetChildren, $user, $subscriptions);
+                        }
                     }
                 }
             }
+        } catch (SugarFolderEmptyException $e) {
+            // And empty sugar folder exception is ok in this case.
         }
+
 
         $ret = array(
             'userFolders' => $user,
