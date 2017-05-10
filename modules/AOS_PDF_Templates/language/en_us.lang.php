@@ -35,6 +35,7 @@ $mod_strings = array (
   'LBL_MODIFIED_NAME' => 'Modified By Name',
   'LBL_CREATED' => 'Created By',
   'LBL_CREATED_ID' => 'Created By Id',
+    'LBL_PDF_COMMENT' => 'Full PDF text',
   'LBL_DESCRIPTION' => 'Body',
   'LBL_HEADER' => 'Header',
   'LBL_FOOTER' => 'Footer',
