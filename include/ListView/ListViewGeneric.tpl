@@ -1,11 +1,11 @@
 {*
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,14 +34,11 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
+
 {include file='include/ListView/ListViewColumnsFilterDialog.tpl'}
 <script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
 
@@ -81,8 +78,8 @@
                     {$APP.MSG_EMPTY_LIST_VIEW_NO_RESULTS|replace:"<item2>":$createLink|replace:"<item3>":$importLink}
                 </p>
         {elseif $query == "-advanced_search"}
-            <p class="msg">
-                {$APP.MSG_LIST_VIEW_NO_RESULTS_BASIC}
+            <p class="msg emptyResults">
+                {$APP.MSG_LIST_VIEW_NO_RESULTS_CHANGE_CRITERIA}
             </p>
         {else}
             <p class="msg">
@@ -93,7 +90,6 @@
                 <a href="?module={$pageData.bean.moduleDir}&action=EditView&return_module={$pageData.bean.moduleDir}&return_action=DetailView">
                     {$APP.MSG_LIST_VIEW_NO_RESULTS_SUBMSG|replace:"<item1>":$quotedQuery|replace:"<item2>":$singularModule}
                 </a>
-
             </p>
         {/if}
     {else}
@@ -101,9 +97,6 @@
             {$APP.LBL_NO_DATA}
         </p>
 	{/if}
-		<p class="msg">
-			{$APP.MSG_LIST_VIEW_CHANGE_SEARCH}
-		</p>
 		{if $showFilterIcon}
 			{include file='include/ListView/ListViewSearchLink.tpl'}
 		{/if}
