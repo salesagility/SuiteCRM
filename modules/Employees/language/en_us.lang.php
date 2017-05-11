@@ -157,6 +157,9 @@ $mod_strings = array (
   'LBL_DATE_MODIFIED' => 'Date Modified',
   'LBL_DATE_ENTERED' => 'Date Entered',
   'LBL_DELETED' => 'Deleted',
+
+	'LBL_BUTTON_SELECT' => 'Select',
+    'LBL_BUTTON_CLEAR' => 'Clear',
 );
 
 
