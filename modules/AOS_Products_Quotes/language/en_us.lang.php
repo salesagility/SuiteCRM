@@ -82,5 +82,11 @@ $mod_strings = array (
     'LBL_PRODUCT_DISCOUNT_AMOUNT_USDOLLAR' => 'Discount Amount (Default Currency)',
     'LBL_VAT_AMT_USDOLLAR' => 'Tax Amount (Default Currency)',
     'LBL_PRODUCTS_SERVICES' => 'Product / Service',
+    'LBL_PRODUCT_ID' => 'Product ID',
+
+    'LBL_AOS_CONTRACTS' => 'Contracts',
+    'LBL_AOS_INVOICES' => 'Invoices',
+    'LBL_AOS_PRODUCTS' => 'Products',
+    'LBL_AOS_QUOTES' => 'Quotes',
 );
 ?>

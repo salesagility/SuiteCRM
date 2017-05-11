@@ -2297,8 +2297,8 @@ $app_strings = array(
     'LBL_DURATION_HOUR' => 'hour',
     'LBL_DURATION_MINUTE' => 'minute',
     'LBL_DURATION_DAYS' => 'days',
-    'LBL_DURATION_HOURS' => 'hours',
-    'LBL_DURATION_MINUTES' => 'minutes',
+    'LBL_DURATION_HOURS' => 'Duration Hours',
+    'LBL_DURATION_MINUTES' => 'Duration Minutes',
 
     //Calendar widget labels
     'LBL_CHOOSE_MONTH' => 'Choose Month',
@@ -3585,6 +3585,8 @@ $app_list_strings['moduleList']['jjwg_Maps'] = 'Maps';
 $app_list_strings['moduleList']['jjwg_Markers'] = 'Map Markers';
 $app_list_strings['moduleList']['jjwg_Areas'] = 'Map Areas';
 $app_list_strings['moduleList']['jjwg_Address_Cache'] = 'Map Address Cache';
+
+$app_list_strings['moduleList']['jjwp_Partners'] = 'JJWP Partners';
 
 $app_list_strings['map_unit_type_list']['mi'] = 'Miles';
 $app_list_strings['map_unit_type_list']['km'] = 'Kilometers';

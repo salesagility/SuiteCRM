@@ -148,6 +148,7 @@ $dictionary['ProspectList'] = array(
         'prospects' =>
             array(
                 'name' => 'prospects',
+                'vname' => 'LBL_PROSPECTS',
                 'type' => 'link',
                 'relationship' => 'prospect_list_prospects',
                 'source' => 'non-db',
@@ -155,6 +156,7 @@ $dictionary['ProspectList'] = array(
         'contacts' =>
             array(
                 'name' => 'contacts',
+                'vname' => 'LBL_CONTACTS',
                 'type' => 'link',
                 'relationship' => 'prospect_list_contacts',
                 'source' => 'non-db',
@@ -162,6 +164,7 @@ $dictionary['ProspectList'] = array(
         'leads' =>
             array(
                 'name' => 'leads',
+                'vname' => 'LBL_LEADS',
                 'type' => 'link',
                 'relationship' => 'prospect_list_leads',
                 'source' => 'non-db',
@@ -169,12 +172,14 @@ $dictionary['ProspectList'] = array(
         'accounts' =>
             array(
                 'name' => 'accounts',
+                'vname' => 'LBL_ACCOUNTS',
                 'type' => 'link',
                 'relationship' => 'prospect_list_accounts',
                 'source' => 'non-db',
             ),
         'campaigns' => array(
             'name' => 'campaigns',
+            'vname' => 'LBL_CAMPAIGNS',
             'type' => 'link',
             'relationship' => 'prospect_list_campaigns',
             'source' => 'non-db',
@@ -182,12 +187,14 @@ $dictionary['ProspectList'] = array(
         'users' =>
             array(
                 'name' => 'users',
+                'vname' => 'LBL_USERS',
                 'type' => 'link',
                 'relationship' => 'prospect_list_users',
                 'source' => 'non-db',
             ),
         'email_marketing' => array(
             'name' => 'email_marketing',
+            'vname' => 'LBL_EMAIL_MARKETING',
             'type' => 'link',
             'relationship' => 'email_marketing_prospect_lists',
             'source' => 'non-db',
