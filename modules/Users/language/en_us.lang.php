@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -109,8 +108,6 @@ $mod_strings = array(
     'LBL_ANY_ADDRESS' => 'Any Address:',
     'LBL_ANY_EMAIL' => 'Any Email',
     'LBL_ANY_PHONE' => 'Any Phone',
-    'LBL_BUTTON_CREATE' => 'Create',
-    'LBL_BUTTON_EDIT' => 'Edit',
     'LBL_CALENDAR_OPTIONS' => 'Calendar Options',
     'LBL_CHANGE_PASSWORD' => 'Change Generated Password',
     'LBL_CHANGE_SYSTEM_PASSWORD' => 'Please provide a new password.',
@@ -141,7 +138,6 @@ $mod_strings = array(
     'LBL_DATE_FORMAT' => 'Date Format',
     'LBL_DEFAULT_SUBPANEL_TITLE' => 'Users',
     'LBL_DEPARTMENT' => 'Department',
-    'LBL_DESCRIPTION' => 'Description',
     'LBL_DISPLAY_TABS' => 'Display Modules',
     'LBL_DOWNLOADS' => 'Downloads',
     'LBL_DST_INSTRUCTIONS' => '(+DST) indicates the observance of Daylight Savings Time',
@@ -241,7 +237,6 @@ $mod_strings = array(
     'LBL_MAIL_FROMNAME' => 'Reply-to name',
     'LBL_MAIL_OPTIONS_TITLE' => 'Email Settings',
     'LBL_MAIL_SENDTYPE' => 'Mail transfer agent',
-    'LBL_MAIL_SMTPAUTH_REQ' => 'Use SMTP Authentication?',
     'LBL_MAIL_SMTPPORT' => 'SMTP Port',
     'LBL_MAILMERGE_TEXT' => 'Enable Mail Merge (Mail Merge must also be enabled by the system administrator in Configure Settings)',
     'LBL_MAILMERGE' => 'Mail Merge',
@@ -489,21 +484,6 @@ $mod_strings = array(
     'LBL_PDF_FONT_SIZE_DATA_TEXT' => '',
     'LBL_LAST_ADMIN_NOTICE' => 'You have selected yourself. You cannot change the User Type or Status of yourself.',
     'LBL_MAIL_SMTPSERVER' => 'SMTP Mail Server',
-    'LBL_SMTP_SERVER_HELP' => 'This SMTP Mail Server can be used for outgoing mail. Provide a username and password for your email account in order to use the mail server.',
-    'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administator has not yet configured the default outbound account.  Unable to send test email.',
-    'LBL_MAIL_SMTPPASS' => 'SMTP Password:',
-    'LBL_MAIL_SMTPUSER' => 'SMTP Username:',
-    'LBL_MAIL_SMTPTYPE' => 'SMTP Server Type:',
-    'LBL_MAIL_SMTP_SETTINGS' => 'SMTP Server Specification',
-    'LBL_CHOOSE_EMAIL_PROVIDER' => 'Choose your Email provider:',
-    'LBL_YAHOOMAIL_SMTPPASS' => 'Yahoo! Mail Password:',
-    'LBL_YAHOOMAIL_SMTPUSER' => 'Yahoo! Mail ID:',
-    'LBL_GMAIL_SMTPPASS' => 'Gmail Password:',
-    'LBL_GMAIL_SMTPUSER' => 'Gmail Email Address:',
-    'LBL_EXCHANGE_SMTPPASS' => 'Exchange Password:',
-    'LBL_EXCHANGE_SMTPUSER' => 'Exchange Username:',
-    'LBL_EXCHANGE_SMTPPORT' => 'Exchange Server Port:',
-    'LBL_EXCHANGE_SMTPSERVER' => 'Exchange Server:',
     'LBL_OK' => 'OK',
     'LBL_CANCEL' => 'Cancel',
     'LBL_DELETE_USER' => 'Delete User',
@@ -559,7 +539,6 @@ $mod_strings = array(
     'LBL_EAPM_SUBPANEL_TITLE' => 'External Accounts',
 
     'LBL_EDITLAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
-    'LBL_HELP' => 'Help' /*for 508 compliance fix*/,
     'LBL_CHECKMARK' => 'Checkmark' /*for 508 compliance fix*/,
     'LBL_THEMEPREVIEW' => 'Preview' /*for 508 compliance fix*/,
 
@@ -578,7 +557,6 @@ $mod_strings = array(
     'LBL_IS_GROUP' => 'Is Group',
     'LBL_EXPORT_CREATED_BY' => 'Created By ID',
 
-    'LBL_DATE_MODIFIED' => 'Date Modified',
     'LBL_DATE_ENTERED' => 'Date Entered',
     'LBL_DELETED' => 'Deleted',
     'LBL_HIDEOPTIONS' => 'Hide Options',
@@ -683,7 +661,6 @@ $mod_strings = array(
     'LBL_INVITEE'				=> 'Recipients',
     'LBL_LEADS_SUBPANEL_TITLE'	=> 'Leads',
     'LBL_MESSAGE_SENT'			=> 'Message Sent',
-    'LBL_MODIFIED_BY'			=> 'Modified By',
     'LBL_MODULE_NAME_NEW'		=> 'Archive Email',
     'LBL_MY_EMAILS'            => 'My Emails',
     'LBL_NONE'                  => 'None',
@@ -823,7 +800,6 @@ $mod_strings = array(
     'LBL_WARN_NO_USERS_OR_TEAM' => 'Please select either a user or team for assignment.',
     'LBL_IMPORT_STATUS_TITLE'	=> 'Status',
     'LBL_INDICATOR'         	=> 'Indicator',
-    'LBL_LIST_STATUS'			=> 'Status',
     'LBL_LIST_TITLE_GROUP_INBOX'=> 'Group Inbox',
     'LBL_LIST_TITLE_MY_DRAFTS'	=> 'My Drafts',
     'LBL_LIST_TITLE_MY_INBOX'	=> 'My Inbox',
@@ -885,7 +861,6 @@ $mod_strings = array(
     'LBL_SEARCH_FOR' => 'Search For',
     'LBL_EMAIL_INBOUND_TYPE_HELP' => '<b>Personal</b>: Email account accessible by you. Only you can manage and import emails from this account.<br><b>Group</b>: Email account accessible by members of specified teams. Team members can manage and import emails from this account.<br><b>Group - auto-import</b>: Email account accessible by members of specified teams. Emails are automatically imported as records.',
     'LBL_ADDRESS_BOOK_SEARCH_HELP' => 'Enter an email address, First Name, Last Name or Account Name to find recipients.',
-    'LBL_TEST_SETTINGS'     => 'Test Settings',
     'LBL_EMPTY_EMAIL_BODY'  => '<p><span style="color: #888888;"><em>This Message Has No Content</em></span></p>',
     'LBL_TEST_EMAIL_SUBJECT' => 'Test Email from SuiteCRM',
     'LBL_NO_SUBJECT' =>'(no subject)',
