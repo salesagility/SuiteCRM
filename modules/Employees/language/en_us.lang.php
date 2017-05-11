@@ -158,8 +158,17 @@ $mod_strings = array (
   'LBL_DATE_ENTERED' => 'Date Entered',
   'LBL_DELETED' => 'Deleted',
 
+
 	'LBL_BUTTON_SELECT' => 'Select',
-    'LBL_BUTTON_CLEAR' => 'Clear',
+  'LBL_BUTTON_CLEAR' => 'Clear',
+  
+  'LBL_CONTACTS_SYNC' => 'Contact Sync',
+  'LBL_OAUTH_TOKENS' => 'OAuth Tokens',
+  'LBL_PROJECT_USERS_1_FROM_PROJECT_TITLE' => 'Project Users from Project Title',
+  'LBL_PROJECT_CONTACTS_1_FROM_CONTACTS_TITLE' => 'Project Contacts from Contacts Title',
+  'LBL_ROLES' => 'Roles',
+  'LBL_SECURITYGROUPS' => 'Security Groups',
+  'LBL_PROSPECT_LIST' => 'Prospect List',
 );
 
 

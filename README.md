@@ -1,6 +1,6 @@
-##SuiteCRM 7.8.2
+##SuiteCRM 7.8.3
 
-[![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=master)](https://travis-ci.org/salesagility/SuiteCRM)
+[![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=hotfix)](https://travis-ci.org/salesagility/SuiteCRM)
 
 
 ### What's in this repository ###

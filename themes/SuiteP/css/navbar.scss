@@ -948,7 +948,7 @@
 }
 
 .quickcreatetop .dropdown-menu {
-  background-color: #829EB5;
+  background-color: $navbar-quick-create-menu-bg;
   border-radius: 3px;
   border-top-right-radius: 0;
   text-decoration: none;
@@ -966,11 +966,11 @@
 .quickcreatetop .dropdown-menu li a {
   display: block;
   font-size: 14px;
-  background-color: #829EB5;
+  background-color: $navbar-quick-create-menu-bg;
   background-image: none;
   padding: 12px 15px 12px 15px;
   margin: 0;
-  border-bottom: 1px solid #95ACC0;
+  border-bottom: 1px solid $navbar-quick-create-menu-seperator;
   border-radius: 0;
   letter-spacing: 0;
   text-align: left;
@@ -983,7 +983,7 @@
 }
 
 .quickcreatetop .dropdown-menu li a:hover {
-  color: $navbar-menu-link-color;
+  color: $navbar-quick-create-menu-color-hover;
 }
 
 .quickcreatetop .dropdown-menu {
@@ -992,6 +992,8 @@
 
 .quickcreatetop .dropdown-menu li a {
   opacity: 1;
+  color: $navbar-quick-create-menu-color;
+
 }
 
 .quickcreatetop .dropdown-menu li a:hover {

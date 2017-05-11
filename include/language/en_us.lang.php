@@ -2297,8 +2297,8 @@ $app_strings = array(
     'LBL_DURATION_HOUR' => 'hour',
     'LBL_DURATION_MINUTE' => 'minute',
     'LBL_DURATION_DAYS' => 'days',
-    'LBL_DURATION_HOURS' => 'hours',
-    'LBL_DURATION_MINUTES' => 'minutes',
+    'LBL_DURATION_HOURS' => 'Duration Hours',
+    'LBL_DURATION_MINUTES' => 'Duration Minutes',
 
     //Calendar widget labels
     'LBL_CHOOSE_MONTH' => 'Choose Month',
@@ -3586,6 +3586,8 @@ $app_list_strings['moduleList']['jjwg_Markers'] = 'Map Markers';
 $app_list_strings['moduleList']['jjwg_Areas'] = 'Map Areas';
 $app_list_strings['moduleList']['jjwg_Address_Cache'] = 'Map Address Cache';
 
+$app_list_strings['moduleList']['jjwp_Partners'] = 'JJWP Partners';
+
 $app_list_strings['map_unit_type_list']['mi'] = 'Miles';
 $app_list_strings['map_unit_type_list']['km'] = 'Kilometers';
 
@@ -3966,3 +3968,8 @@ $app_list_strings['day_list']['Thursday'] = 'Thursday';
 $app_list_strings['day_list']['Friday'] = 'Friday';
 $app_list_strings['day_list']['Saturday'] = 'Saturday';
 $app_list_strings['day_list']['Sunday'] = 'Sunday';
+$app_list_strings['pdf_page_size_dom']['A4'] = 'A4';
+$app_list_strings['pdf_page_size_dom']['Letter'] = 'Letter';
+$app_list_strings['pdf_page_size_dom']['Legal'] = 'Legal';
+$app_list_strings['pdf_orientation_dom']['Portrait'] = 'Portrait';
+$app_list_strings['pdf_orientation_dom']['Landscape'] = 'Landscape';
