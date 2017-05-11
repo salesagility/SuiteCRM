@@ -228,5 +228,7 @@ if (file_exists('custom/themes/' . SugarThemeRegistry::current() . '/login.tpl')
 } elseif (file_exists('modules/Users/login.tpl')) {
     echo $sugar_smarty->display('modules/Users/login.tpl');
 } else {
+    echo "<span class='error'>" . $mod_strings['LBL_MISSING_TEMPLATE'] . "</span>";
     $GLOBALS['log']->fatal('login.tpl not found');
+    throw new Exception('login.tpl not found');
 }
