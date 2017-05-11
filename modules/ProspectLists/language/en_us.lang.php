@@ -65,7 +65,6 @@ $mod_strings = array (
   'LBL_DATE_MODIFIED' => 'Date Modified',
   'LBL_MODIFIED' => 'Modified by',
   'LBL_CREATED' => 'Created by',
-  'LBL_TEAM' => 'Team',
   'LBL_ASSIGNED_TO' => 'Assigned to',
   'LBL_DESCRIPTION' => 'Description',
   'LNK_NEW_CAMPAIGN' => 'Create Campaign',
@@ -79,7 +78,6 @@ $mod_strings = array (
   'LNK_NEW_PROSPECT' => 'Create Target',
   'LNK_PROSPECT_LIST' => 'Targets',
 
-  'LBL_PROSPECT_LISTS_SUBPANEL_TITLE' => 'Target Lists',
   'LBL_CONTACTS_SUBPANEL_TITLE' => 'Contacts',
   'LBL_LEADS_SUBPANEL_TITLE' => 'Leads',
   'LBL_PROSPECTS_SUBPANEL_TITLE'=>'Targets',
@@ -91,11 +89,9 @@ $mod_strings = array (
   'LBL_LIST_TYPE_LIST_NAME'=>'Type',
   'LBL_NEW_FORM_TITLE'=>'New Target List',
   'LBL_MARKETING_NAME'=>'Marketing Name',
-  'LBL_MARKETING_MESSAGE'=>'Email Marketing Message',
   'LBL_DOMAIN_NAME'=>'Domain Name',
   'LBL_DOMAIN'=>'No emails to Domain',
   'LBL_LIST_PROSPECTLIST_NAME'=>'Name',
-  'LBL_MORE_DETAIL' => 'More Detail' /*for 508 compliance fix*/,
 
   'LBL_EMAIL_MARKETING'=>'Email Marketing',
 
