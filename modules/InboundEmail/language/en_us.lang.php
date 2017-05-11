@@ -193,11 +193,16 @@ $mod_strings = array(
     'LBL_ALLOW_OUTBOUND_GROUP_USAGE_DESC' => 'When this option is selected, the From Name and From Email Address associated with this group mail account will appear as an option for the From field when composing emails for users that have access to the group mail account.',
     'LBL_STATUS_ACTIVE'     => 'Active',
     'LBL_STATUS_INACTIVE'   => 'Inactive',
-    'LBL_IS_PERSONAL' => 'personal',
+    'LBL_IS_PERSONAL' => 'Personal',
     'LBL_IS_GROUP' => 'group',
     'LBL_ENABLE_AUTO_IMPORT' => 'Import Emails Automatically',
     'LBL_WARNING_CHANGING_AUTO_IMPORT' => 'Warning: You are modifying your automatic import setting which may result in loss of data.',
     'LBL_WARNING_CHANGING_AUTO_IMPORT_WITH_CREATE_CASE' => 'Warning: Auto import must be enabled when automatically creating cases.',
 	'LBL_EDIT_LAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
+
+	'LBL_MODIFIED_BY' => 'Modified By',
+	'LBL_SERVICE' => 'Service',
+	'LBL_STORED_OPTIONS' => 'Stored Options',
+	'LBL_GROUP_ID' => 'Group ID',
 );
 ?>
