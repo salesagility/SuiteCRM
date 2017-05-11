@@ -1,0 +1,7 @@
+.current-selected-module {
+  background-color: #5880BA;
+}
+/* optional: reimplement the link underline to support the visibility */
+.current-selected-module-link {
+  text-decoration: underline !important;
+}

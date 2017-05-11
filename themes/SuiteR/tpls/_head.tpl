@@ -73,4 +73,7 @@
     <link rel="stylesheet" type="text/css" href="themes/SuiteR/css/colourSelector.php">
     <script type="text/javascript" src='{sugar_getjspath file="themes/SuiteR/js/jscolor.js"}'></script>
     <script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
+    <!-- include navigation highlighting -->
+    <link rel="stylesheet" type="text/css" href="themes/SuiteR/css/navhighlight.css">
+    <script type="text/javascript" src="themes/SuiteR/js/navhighlight.js"></script>
 </head>
