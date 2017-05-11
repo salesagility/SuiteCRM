@@ -220,6 +220,8 @@ if (file_exists('custom/themes/'.SugarThemeRegistry::current().'/login.tpl')) {
     echo $sugar_smarty->display('custom/modules/Users/login.tpl');
 } elseif (file_exists('themes/'.SugarThemeRegistry::current().'/login.tpl')) {
     echo $sugar_smarty->display('themes/'.SugarThemeRegistry::current().'/login.tpl');
-} else {
+} elseif (file_exists('modules/Users/login.tpl')) {
     echo $sugar_smarty->display('modules/Users/login.tpl');
+} else {
+	    $GLOBALS['log']->fatal('login.tpl not found');
 }
