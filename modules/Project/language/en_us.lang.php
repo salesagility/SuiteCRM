@@ -210,5 +210,9 @@ $mod_strings = array(
 	'LBL_RESOURCE_CHART_QUARTER' => 'Quarter',
  	'LBL_ALL_RESOURCES' => 'All Resources',
 
+ 	'LBL_PROJECT_CONTACTS_1_FROM_CONTACTS_TITLE' => 'Project Contacts from Contacts Title',
+ 	'LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_PROJECT_TITLE' => 'Project Templates: Project from Project Title',
+ 	'LBL_AOS_QUOTES_PROJECT' => 'Quotes: Project',
+
 );
 ?>

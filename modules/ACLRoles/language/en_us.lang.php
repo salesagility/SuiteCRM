@@ -56,5 +56,7 @@ $mod_strings = array (
 'LBL_ACTION_ADMIN'=>'Access Type',
 'LBL_ALL'=>'All',
 'LBL_DUPLICATE_OF'=>'Duplicate Of ',
+
+'LBL_SECURITYGROUPS' => 'Security Groups',
 )
 ?>
