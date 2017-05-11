@@ -681,7 +681,6 @@ $mod_strings = array(
     'LBL_SEND'					=> 'SEND',
     'LBL_SENT_MODULE_NAME'		=> 'Sent Emails',
     'LBL_SHOW_ALT_TEXT'			=> 'Show Plain Text',
-    'LBL_SIGNATURE'				=> 'Signature',
     'LBL_SUBJECT'				=> 'Subject:',
     'LBL_TEXT_BODY'				=> 'Text Body',
     'LBL_TIME'					=> 'Time Sent:',
