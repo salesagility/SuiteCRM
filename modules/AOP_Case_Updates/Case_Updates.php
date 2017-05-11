@@ -107,8 +107,8 @@ function caseUpdates(record){
 
 
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.setRequestHeader("Content-length", params.length);
-    xmlhttp.setRequestHeader("Connection", "close");
+    //xmlhttp.setRequestHeader("Content-length", params.length);
+    //xmlhttp.setRequestHeader("Connection", "close");
 
     //When button is clicked
     xmlhttp.onreadystatechange = function() {
