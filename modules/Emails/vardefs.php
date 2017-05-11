@@ -125,6 +125,24 @@ $dictionary['Email'] = array(
             'comment' => 'Record deletion indicator',
             'inline_edit' => false,
         ),
+        'orphaned' => array(
+            'name' => 'orphaned',
+            'vname' => 'LBL_ORPHANED',
+            'type' => 'bool',
+            'required' => false,
+            'reportable' => false,
+            'comment' => 'Emails which exists in the SuiteCRM but have been deleted from the email server',
+            'inline_edit' => false,
+        ),
+        'last_synced' => array(
+            'name' => 'last_synced',
+            'vname' => 'LBL_LAST_SYNCED',
+            'type' => 'datetime',
+            'comment' => 'The last date and time the email was synced with the server',
+            'inline_edit' => false,
+            'required' => false,
+            'reportable' => false,
+        ),
         /**
          * DEPRECATED FOR 5.0
          * 'from_addr' => array (
