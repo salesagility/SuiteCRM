@@ -214,12 +214,12 @@ if ( !empty($logindisplay) )
 		</script>";
 	}
 
-if (file_exists('themes/'.SugarThemeRegistry::current().'/tpls/login.tpl')) {
-    echo $sugar_smarty->display('themes/'.SugarThemeRegistry::current().'/tpls/login.tpl');
+if (file_exists('custom/themes/'.SugarThemeRegistry::current().'/login.tpl')) {
+    echo $sugar_smarty->display('custom/themes/'.SugarThemeRegistry::current().'/login.tpl');
 } elseif (file_exists('custom/modules/Users/login.tpl')) {
     echo $sugar_smarty->display('custom/modules/Users/login.tpl');
-} elseif (file_exists('themes/'.SugarThemeRegistry::current().'/tpls/login.tpl')) {
-    echo $sugar_smarty->display('themes/'.SugarThemeRegistry::current().'/tpls/login.tpl');
+} elseif (file_exists('themes/'.SugarThemeRegistry::current().'/login.tpl')) {
+    echo $sugar_smarty->display('themes/'.SugarThemeRegistry::current().'/login.tpl');
 } else {
     echo $sugar_smarty->display('modules/Users/login.tpl');
 }
