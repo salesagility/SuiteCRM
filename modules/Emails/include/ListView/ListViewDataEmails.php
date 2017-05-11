@@ -53,8 +53,17 @@ class ListViewDataEmails extends ListViewData
         'cc_addrs_names' => 'CC',
         'bcc_addrs_names' => 'BCC',
         'name' => 'SUBJECT',
+        'subject' => 'SUBJECT',
         'description' => 'BODY',
     );
+
+    protected static $mapIgnoreFields = array(
+        'date_entered',
+        'indicator',
+        'flagged',
+        'has_attachment',
+    );
+
     /**
      * Constructor
      */
@@ -79,60 +88,14 @@ class ListViewDataEmails extends ListViewData
         $singleSelect = true,
         $id = null
     ) {
-        global $current_user, $sugar_config, $db, $mod_strings;
+        global $current_user;
+        global $sugar_config;
+        global $db;
+        global $mod_strings;
 
         $data = array();
         $pageData = array();
         $queryString = '';
-        // Create the data structure which are required to view a list view.
-        // start parent::getListViewData
-        require_once 'include/SearchForm/SearchForm2.php';
-        $this->seed =& $seed;
-        $this->setVariableName($seed->object_name, $where, $this->listviewName, $id);
-        $this->seed->id = '[SELECT_ID_LIST]';
-
-        if (!empty($params['overrideOrder']) && !empty($params['orderBy'])) {
-            $order = $this->getOrderBy(
-                strtolower($params['orderBy']),
-                (empty($params['sortOrder']) ? '' : $params['sortOrder'])
-            );
-        } else {
-            $order = $this->getOrderBy();
-        }
-
-        // still empty? try to use settings passed in $param
-        if (empty($order['orderBy']) && !empty($params['orderBy'])) {
-            $order['orderBy'] = $params['orderBy'];
-            $order['sortOrder'] = (empty($params['sortOrder']) ? '' : $params['sortOrder']);
-        }
-
-        $orderby = $order['orderBy'];
-        if (strpos($order['orderBy'], '.') && ($order['orderBy'] != "report_cache.date_modified")) {
-            $orderby = substr($order['orderBy'], strpos($order['orderBy'], '.') + 1);
-        }
-
-        if (!is_array($params)) {
-            $params = array();
-        }
-
-        if (!isset($params['custom_select'])) {
-            $params['custom_select'] = '';
-        }
-
-        if (!isset($params['custom_from'])) {
-            $params['custom_from'] = '';
-        }
-
-        if (!isset($params['custom_where'])) {
-            $params['custom_where'] = '';
-        }
-
-        if (!isset($params['custom_order_by'])) {
-            $params['custom_order_by'] = '';
-        }
-        // End of parent::getListViewData data structure
-
-
         // Workout the id for the folder or user the default
         $folderType = "inbound";
         $inboundEmailID = '';
@@ -159,15 +122,6 @@ class ListViewDataEmails extends ListViewData
             $queryString = $importedEmails['queryString'];
         } else {
             $queryString = 'basic_search';
-        }
-
-        $page = 0;
-        $offset = 0;
-        if (isset($_REQUEST['Emails2_EMAIL_offset'])) {
-            if ($_REQUEST['Emails2_EMAIL_offset'] !== "end") {
-                $offset = $_REQUEST['Emails2_EMAIL_offset'];
-                $page = $offset / $limitPerPage;
-            }
         }
 
         if (empty($inboundEmailID)) {
@@ -197,315 +151,489 @@ class ListViewDataEmails extends ListViewData
 
             $folder = $inboundEmail->mailbox;
 
-            // Process filter
-            $filter = array();
-            foreach ($_REQUEST as $r => $request) {
 
-                if(empty($request)) {
-                    continue;
-                }
-
-                if((stristr($r, 'advanced') !== false) || (stristr($r, 'basic') !== false)) {
-                    $f = str_ireplace('_advanced', '', $r);
-                    $f = str_ireplace('_basic', '', $f);
-                    if(isset(self::$mapServerFields[$f]))
-                    {
-                        $filter[ self::$mapServerFields[$f] ] = $request;
-                    }
-                }
-            }
-
-            // Get emails from IMAP server
-            $emailServerEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter);
-            // order by DESC
-            $sortDESC = function ($a, $b) {
-                if ($a['date'] == $b['date']) {
-                    return 0;
-                }
-
-                return -1;
-            };
-
-            $total = $emailServerEmails['mailbox_info']['Nmsgs'] + count($importedEmails['data']);
-            if ($page === "end") {
-                $offset = $total - $limitPerPage;
-            }
-
-
-            $_REQUEST['uids'] = array();
-            foreach ($emailServerEmails['data'] as $h => $emailHeader) {
-                $emailRecord = array();
-
-                if ($folderType === 'draft' && $emailHeader['draft'] === 0) {
-                    continue;
-                }
-
-                foreach ($seed->column_fields as $c => $field) {
-                    switch ($field) {
-                        case 'from_addr_name':
-                            $emailRecord[strtoupper($field)] = $emailHeader['from'];
-                            break;
-                        case 'to_addrs_names':
-                            $emailRecord[strtoupper($field)] = $emailHeader['to'];
-                            break;
-                        case 'has_attachments':
-                            $emailRecord[strtoupper($field)] = false;
-                            break;
-                        case 'flagged':
-                            $emailRecord[strtoupper($field)] = $emailHeader['flagged'];
-                            break;
-                        case 'name':
-                            $emailRecord[strtoupper($field)] = html_entity_decode($inboundEmail->handleMimeHeaderDecode($emailHeader['subject']));
-                            break;
-                        case 'date_entered':
-                            $date = preg_replace('/(\ \([A-Z]+\))/', '', $emailHeader['date']);
-
-                            $dateTime = DateTime::createFromFormat(
-                                'D, d M Y H:i:s O',
-                                $date
-                            );
-                            if ($dateTime == false) {
-                                // TODO: TASK: UNDEFINED - This needs to be more generic to dealing with different formats from IMAP
-                                $dateTime = DateTime::createFromFormat(
-                                    'd M Y H:i:s O',
-                                    $date
-                                );
-                            }
-
-                            if ($dateTime == false) {
-                                $emailRecord[strtoupper($field)] = '';
-                            } else {
-                                $timeDate = new TimeDate();
-                                $emailRecord[strtoupper($field)] = $timeDate->asUser($dateTime, $current_user);
-                            }
-                            break;
-                        case 'is_imported':
-                            $uid = $emailHeader['uid'];
-                            $importedEmailBeans = BeanFactory::getBean('Emails');
-                            $is_imported = $importedEmailBeans->get_full_list('', 'emails.uid LIKE "' . $uid . '"');
-                            if (count($is_imported) > 0) {
-                                $emailRecord['IS_IMPORTED'] = true;
-                            } else {
-                                $emailRecord['IS_IMPORTED'] = false;
-                            }
-                            break;
-                        case 'folder':
-                            $emailRecord['FOLDER'] = $folder;
-                            break;
-                        case 'folder_type':
-                            $emailRecord['FOLDER_TYPE'] = $folderType;
-                            break;
-                        case 'inbound_email_record':
-                            $emailRecord['INBOUND_EMAIL_RECORD'] = $inboundEmail->id;
-                            break;
-                        case 'uid':
-                            $emailRecord[strtoupper($field)] = $emailHeader['uid'];
-                            $_REQUEST['email_uids'][] = $emailHeader['uid'];
-                            break;
-                        case 'msgno':
-                            $emailRecord[strtoupper($field)] = $emailHeader['msgno'];
-                            break;
-                        case 'has_attachment':
-                            $emailRecord[strtoupper($field)] = $emailHeader['has_attachment'];
-                            break;
-                        case 'status':
-                            if ($emailHeader['answered'] != 0) {
-                                $emailRecord[strtoupper($field)] = 'replied';
-                            } else {
-                                if ($emailHeader['draft'] != 0) {
-                                    $emailRecord[strtoupper($field)] = 'draft';
-                                } else {
-                                    if ($emailHeader['seen'] != 0) {
-                                        $emailRecord[strtoupper($field)] = 'read';
-                                    } else {
-                                        $emailRecord[strtoupper($field)] = 'unread';
-                                    }
-                                }
-                            }
-
-                            if ($emailHeader['deleted'] != 0) {
-                                // TODO: TASK: UNDEFINED - Handle deleted
-
-                            }
-
-                            if ($emailHeader['recent'] != 0) {
-                                // TODO: TASK: UNDEFINED - Add recent flag to SuiteCRM
-                            }
-                            break;
-                        default:
-                            $emailRecord[strtoupper($field)] = '';
-                            break;
-                    }
-                }
-
-                $data[] = $emailRecord;
-                $pageData['rowAccess'][$h] = array('edit' => true, view => true);
-                $pageData['additionalDetails'][$h] = '';
-                $pageData['tag'][$h]['MAIN'] = 'a';
-            }
-
-
-            // Filter imported emails based on the UID of the results from the IMAP server
-
-            $this->setVariableName($seed->object_name, $where, $this->listviewName, $id);
-
-            $this->seed->id = '[SELECT_ID_LIST]';
-
-            $nextOffset = -1;
-            $prevOffset = -1;
-            $endOffset = 0;
-
-
-            if ($total > $limitPerPage) {
-                $nextOffset = $offset + $limitPerPage;
-            }
-
-            if ($nextOffset >= $total) {
-                $nextOffset = $total;
-            }
-
-            if ($page > 0) {
-                $prevOffset = $offset - $limitPerPage;
-                if ($prevOffset < 0) {
-                    $prevOffset = 0;
-                }
-            }
-
-            if ($total < $limitPerPage) {
-                $prevOffset = -1;
-                $nextOffset = -1;
-            }
-
-            if ($total > 0) {
-                $endOffset = $total / $limitPerPage;
-            }
-
-            $pageData['offsets']['current'] = $offset;
-            $pageData['offsets']['total'] = $total;
-            $pageData['offsets']['next'] = $nextOffset;
-            $pageData['offsets']['prev'] = $prevOffset;
-            $pageData['offsets']['end'] = ceil($endOffset);
-
-            $queries = array('baseUrl', 'endPage', 'nextPage', 'orderBy');
-
-            if ((int)$pageData['offsets']['current'] >= $limitPerPage) {
-                $queries[] = 'prevPage';
-                $queries[] = 'startPage';
-            }
-
-            foreach ($queries as $query) {
-
-                if ($total < $limitPerPage || $nextOffset >= $total) {
-                    if (isset($pageData['queries'][$query])) {
-                        unset($pageData['queries'][$query]);
-                    }
-                } else {
-                    $pageData['queries'][$query]['module'] = "Emails";
-                    $pageData['queries'][$query]['action'] = "index";
-                    $pageData['queries'][$query]['parentTab'] = "Activities";
-                    $pageData['queries'][$query]['ajax_load'] = "0";
-                    $pageData['queries'][$query]['loadLanguageJS'] = "1";
-                    $pageData['queries'][$query]['searchFormTab'] = "advanced_search";
-                    $pageData['queries'][$query]['lvso'] = "DESC";
-
-                    $pageData['urls'][$query] = 'index.php?module=Emails&action=index&parentTab=Activities&searchFormTab=advanced_search&query=true&current_user_only_basic=0&button=Search&lvso=DESC';
-
-                }
-            }
-
-            // inject post values
-            $_REQUEST['folder'] = $folder;
-            $_REQUEST['folder'] = $folder;
-            $_REQUEST['folder_type'] = $folderType;
-            $_REQUEST['inbound_email_record'] = $inboundEmailID;
-
-
-            // TODO: TASK: UNDEFINED - HANDLE in second filter after IMAP
-            $endOffset = floor(($total - 1) / $limit) * $limit;
-            $pageData['queries'] = $this->generateQueries(
-                $pageData['ordering']['sortOrder'],
-                $offset,
-                $prevOffset,
-                $nextOffset,
-                $endOffset,
-                $total
-            );
-            $pageData['offsets'] = array(
-                'current' => $offset,
-                'next' => $nextOffset,
-                'prev' => $prevOffset,
-                'end' => $endOffset,
-                'total' => $total,
-                'totalCounted' => $total
-            );
-
-            $pageData['ordering'] = $order;
-            $pageData['ordering']['sortOrder'] = $this->getReverseSortOrder($pageData['ordering']['sortOrder']);
-            //get url parameters as an array
-            //join url parameters from array to a string
-            $pageData['urls'] = $this->generateURLS($pageData['queries']);
-            $module_names = array(
-                'Prospects' => 'Targets'
-            );
-            $pageData['bean'] = array(
-                'objectName' => $seed->object_name,
-                'moduleDir' => $seed->module_dir,
-                'moduleName' => strtr($seed->module_dir, $module_names)
-            );
-            $pageData['stamp'] = $this->stamp;
-            $pageData['access'] = array(
-                'view' => $this->seed->ACLAccess('DetailView'),
-                'edit' => $this->seed->ACLAccess('EditView')
-            );
-            if (!$this->seed->ACLAccess('ListView')) {
-                $pageData['error'] = 'ACL restricted access';
-            }
-
-
-            if (
-                (isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "advanced_search") ||
-                (
-                    isset($_REQUEST["type_basic"]) && count($_REQUEST["type_basic"] > 1) ||
-                    $_REQUEST["type_basic"][0] != ""
-                ) ||
-                (isset($_REQUEST["module"]) && $_REQUEST["module"] == "MergeRecords")
-            ) {
-                $queryString = "-advanced_search";
+            if (empty($where)) {
+                // use the filters from the email server
             } else {
-                if (isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "basic_search") {
-                    $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir);
 
-                    $basicSearchFields = array();
+            }
 
-                    if (
-                        isset($searchMetaData['searchdefs']) &&
-                        isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'])
-                    ) {
-                        $basicSearchFields = $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'];
+
+            // Create a list of fields to filter and decide based on the field which type of filter to carry out
+            $emailServerFilter = array();
+            // $searchType = "imap"; it searches the imap headers and then searches the crm to see which messages are imported.
+            // $searchType = "crm"; it uses the usual crm search and handles the indicator and attachment fields.
+            $searchType = "imap";
+
+            if (!empty($where)) {
+                foreach ($filter_fields as $filteredField => $filteredFieldValue) {
+
+                    // Ignore blank fields
+                    if (empty($filteredField)) {
+                        continue;
                     }
 
-                    foreach ($basicSearchFields as $basicSearchField) {
-                        $field_name = (is_array($basicSearchField) && isset($basicSearchField['name']))
-                            ? $basicSearchField['name'] : $basicSearchField;
-                        $field_name .= "_basic";
-                        if (
-                            isset($_REQUEST[$field_name]) &&
-                            (
-                                !is_array($basicSearchField) ||
-                                !isset($basicSearchField['type']) ||
-                                $basicSearchField['type'] == 'text' ||
-                                $basicSearchField['type'] == 'name'
-                            )
-                        ) {
-                            // Ensure the encoding is UTF-8
-                            $queryString = htmlentities($_REQUEST[$field_name], null, 'UTF-8');
-                            break;
+                    if (!isset($_REQUEST[$filteredField.'_advanced']) && !isset($_REQUEST[$filteredField.'_basic'])) {
+                        continue;
+                    }
+
+                    if (empty($_REQUEST[$filteredField.'_advanced']) && empty($_REQUEST[$filteredField.'_basic'])) {
+                        continue;
+                    }
+
+                    // strip out the suffix to the the field names
+                    if ((stristr($filteredField, 'advanced') !== false) || (stristr($filteredField, 'basic') !== false)) {
+                        $f = str_ireplace('_advanced', '', $filteredField);
+                        $f = str_ireplace('_basic', '', $f);
+                        if (isset(self::$mapServerFields[$f])) {
+                            $filter[self::$mapServerFields[$f]] = $filteredFieldValue;
+                        }
+
+                        if(array_key_exists($filteredField, $f)) {
+                            continue;
+                        }
+
+                        // if field name is not an imap field
+                        if (!array_key_exists($f, self::$mapServerFields)) {
+                            $searchType = 'crm';
+                        }
+                    } else {
+                        // use the field names
+                        if(in_array($filteredField, self::$mapIgnoreFields)) {
+                            continue;
+                        }
+
+                        // if field name is not an imap field
+                        if (!array_key_exists($filteredField, self::$mapServerFields)) {
+                            $searchType = 'crm';
+                        } else {
+                            if (!empty($_REQUEST[$filteredField.'_advanced'])) {
+                                $filter[self::$mapServerFields[$filteredField]] = $_REQUEST[$filteredField.'_advanced'];
+                            } else if (!empty($_REQUEST[$filteredField.'_basic'])) {
+                                $filter[self::$mapServerFields[$filteredField]] = $_REQUEST[$filteredField.'_basic'];
+                            } else {
+                                $f = str_ireplace('_advanced', '', $filteredField);
+                                $f = str_ireplace('_basic', '', $f);
+                                $filter[self::$mapServerFields[$filteredField]] = $f;
+                            }
                         }
                     }
                 }
             }
 
-            return array('data' => $data, 'pageData' => $pageData, 'query' => $queryString);
+            // carry out the filter type
+            switch ($searchType) {
+                case 'crm':
+                    return parent::getListViewData(
+                        $seed,
+                        $where,
+                        $offset,
+                        $limit,
+                        $filter_fields,
+                        $params,
+                        $id_field,
+                        $singleSelect,
+                        $id
+                    );
+                    break;
+                case 'imap':
+                    // Create the data structure which are required to view a list view.
+                    require_once 'include/SearchForm/SearchForm2.php';
+                    $this->seed =& $seed;
+                    $this->setVariableName($seed->object_name, $where, $this->listviewName, $id);
+                    $this->seed->id = '[SELECT_ID_LIST]';
+
+                    if (!empty($params['overrideOrder']) && !empty($params['orderBy'])) {
+                        $order = $this->getOrderBy(
+                            strtolower($params['orderBy']),
+                            (empty($params['sortOrder']) ? '' : $params['sortOrder'])
+                        );
+                    } else {
+                        $order = $this->getOrderBy();
+                    }
+
+                    // still empty? try to use settings passed in $param
+                    if (empty($order['orderBy']) && !empty($params['orderBy'])) {
+                        $order['orderBy'] = $params['orderBy'];
+                        $order['sortOrder'] = (empty($params['sortOrder']) ? '' : $params['sortOrder']);
+                    }
+
+                    $orderby = $order['orderBy'];
+                    if (strpos($order['orderBy'], '.') && ($order['orderBy'] != "report_cache.date_modified")) {
+                        $orderby = substr($order['orderBy'], strpos($order['orderBy'], '.') + 1);
+                    }
+
+                    if (!is_array($params)) {
+                        $params = array();
+                    }
+
+                    if (!isset($params['custom_select'])) {
+                        $params['custom_select'] = '';
+                    }
+
+                    if (!isset($params['custom_from'])) {
+                        $params['custom_from'] = '';
+                    }
+
+                    if (!isset($params['custom_where'])) {
+                        $params['custom_where'] = '';
+                    }
+
+                    if (!isset($params['custom_order_by'])) {
+                        $params['custom_order_by'] = '';
+                    }
+
+                    $page = 0;
+                    $offset = 0;
+                    if (isset($_REQUEST['Emails2_EMAIL_offset'])) {
+                        if ($_REQUEST['Emails2_EMAIL_offset'] !== "end") {
+                            $offset = $_REQUEST['Emails2_EMAIL_offset'];
+                            $page = $offset / $limitPerPage;
+                        }
+                    }
+
+                    // Get emails from email server
+                    $emailServerEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter);
+                    // order by DESC
+                    $sortDESC = function ($a, $b) {
+                        if ($a['date'] == $b['date']) {
+                            return 0;
+                        }
+
+                        return -1;
+                    };
+
+                    $total = $emailServerEmails['mailbox_info']['Nmsgs'] + count($importedEmails['data']);
+                    if ($page === "end") {
+                        $offset = $total - $limitPerPage;
+                    }
+
+
+                    /// Populate the data and its fields from the email server
+                    $_REQUEST['uids'] = array();
+                    foreach ($emailServerEmails['data'] as $h => $emailHeader) {
+                        $emailRecord = array();
+
+                        if ($folderType === 'draft' && $emailHeader['draft'] === 0) {
+                            continue;
+                        }
+
+                        foreach ($seed->column_fields as $c => $field) {
+                            switch ($field) {
+                                case 'from_addr_name':
+                                    $emailRecord[strtoupper($field)] = $emailHeader['from'];
+                                    break;
+                                case 'to_addrs_names':
+                                    $emailRecord[strtoupper($field)] = $emailHeader['to'];
+                                    break;
+                                case 'has_attachments':
+                                    $emailRecord[strtoupper($field)] = false;
+                                    break;
+                                case 'flagged':
+                                    $emailRecord[strtoupper($field)] = $emailHeader['flagged'];
+                                    break;
+                                case 'name':
+                                    $emailRecord[strtoupper($field)] = html_entity_decode($inboundEmail->handleMimeHeaderDecode($emailHeader['subject']));
+                                    break;
+                                case 'date_entered':
+                                    $date = preg_replace('/(\ \([A-Z]+\))/', '', $emailHeader['date']);
+
+                                    $dateTime = DateTime::createFromFormat(
+                                        'D, d M Y H:i:s O',
+                                        $date
+                                    );
+                                    if ($dateTime == false) {
+                                        // TODO: TASK: UNDEFINED - This needs to be more generic to dealing with different formats from IMAP
+                                        $dateTime = DateTime::createFromFormat(
+                                            'd M Y H:i:s O',
+                                            $date
+                                        );
+                                    }
+
+                                    if ($dateTime == false) {
+                                        $emailRecord[strtoupper($field)] = '';
+                                    } else {
+                                        $timeDate = new TimeDate();
+                                        $emailRecord[strtoupper($field)] = $timeDate->asUser($dateTime, $current_user);
+                                    }
+                                    break;
+                                case 'is_imported':
+                                    $uid = $emailHeader['uid'];
+                                    $importedEmailBeans = BeanFactory::getBean('Emails');
+                                    $is_imported = $importedEmailBeans->get_full_list('',
+                                        'emails.uid LIKE "' . $uid . '"');
+                                    if (count($is_imported) > 0) {
+                                        $emailRecord['IS_IMPORTED'] = true;
+                                    } else {
+                                        $emailRecord['IS_IMPORTED'] = false;
+                                    }
+                                    break;
+                                case 'folder':
+                                    $emailRecord['FOLDER'] = $folder;
+                                    break;
+                                case 'folder_type':
+                                    $emailRecord['FOLDER_TYPE'] = $folderType;
+                                    break;
+                                case 'inbound_email_record':
+                                    $emailRecord['INBOUND_EMAIL_RECORD'] = $inboundEmail->id;
+                                    break;
+                                case 'uid':
+                                    $emailRecord[strtoupper($field)] = $emailHeader['uid'];
+                                    $_REQUEST['email_uids'][] = $emailHeader['uid'];
+                                    break;
+                                case 'msgno':
+                                    $emailRecord[strtoupper($field)] = $emailHeader['msgno'];
+                                    break;
+                                case 'has_attachment':
+                                    $emailRecord[strtoupper($field)] = $emailHeader['has_attachment'];
+                                    break;
+                                case 'status':
+                                    if ($emailHeader['answered'] != 0) {
+                                        $emailRecord[strtoupper($field)] = 'replied';
+                                    } else {
+                                        if ($emailHeader['draft'] != 0) {
+                                            $emailRecord[strtoupper($field)] = 'draft';
+                                        } else {
+                                            if ($emailHeader['seen'] != 0) {
+                                                $emailRecord[strtoupper($field)] = 'read';
+                                            } else {
+                                                $emailRecord[strtoupper($field)] = 'unread';
+                                            }
+                                        }
+                                    }
+
+                                    if ($emailHeader['deleted'] != 0) {
+                                        // TODO: TASK: UNDEFINED - Handle deleted
+
+                                    }
+
+                                    if ($emailHeader['recent'] != 0) {
+                                        // TODO: TASK: UNDEFINED - Add recent flag to SuiteCRM
+                                    }
+                                    break;
+                                default:
+                                    $emailRecord[strtoupper($field)] = '';
+                                    break;
+                            }
+                        }
+
+                        $data[] = $emailRecord;
+                        $pageData['rowAccess'][$h] = array('edit' => true, view => true);
+                        $pageData['additionalDetails'][$h] = '';
+                        $pageData['tag'][$h]['MAIN'] = 'a';
+                    }
+
+
+                    // Filter imported emails based on the UID of the results from the IMAP server
+                    $crmWhere = $where . ' AND mailbox_id LIKE ' . '"' . $inboundEmail->id . '"';
+
+
+                    if (!array_key_exists('uid')) {
+                        $filter_fields['uid'] = true;
+                    }
+                    // Populates CRM fields
+                    $crmQueryArray = $seed->create_new_list_query(
+                        'id',
+                        $crmWhere,
+                        $filter_fields,
+                        $params,
+                        0,
+                        '',
+                        true,
+                        $seed,
+                        $singleSelect);
+
+
+                    if (!is_array($params)) {
+                        $params = array();
+                    }
+                    if (!isset($params['custom_select'])) {
+                        $params['custom_select'] = '';
+                    }
+                    if (!isset($params['custom_from'])) {
+                        $params['custom_from'] = '';
+                    }
+                    if (!isset($params['custom_where'])) {
+                        $params['custom_where'] = '';
+                    }
+                    if (!isset($params['custom_order_by'])) {
+                        $params['custom_order_by'] = '';
+                    }
+                    $crmEmailsQuery = $crmQueryArray['select'] .
+                        $params['custom_select'] .
+                        $crmQueryArray['from'] .
+                        $params['custom_from'] .
+                        $crmQueryArray['inner_join'] .
+                        $crmQueryArray['where'] .
+                        $params['custom_where'] .
+                        $crmQueryArray['order_by'] .
+                        $params['custom_order_by'];
+
+
+                    $crmEmails = $this->db->query($crmEmailsQuery);
+
+                    $this->setVariableName($seed->object_name, $crmWhere, $this->listviewName, $id);
+
+                    $this->seed->id = '[SELECT_ID_LIST]';
+
+                    $nextOffset = -1;
+                    $prevOffset = -1;
+                    $endOffset = 0;
+
+
+                    if ($total > $limitPerPage) {
+                        $nextOffset = $offset + $limitPerPage;
+                    }
+
+                    if ($nextOffset >= $total) {
+                        $nextOffset = $total;
+                    }
+
+                    if ($page > 0) {
+                        $prevOffset = $offset - $limitPerPage;
+                        if ($prevOffset < 0) {
+                            $prevOffset = 0;
+                        }
+                    }
+
+                    if ($total < $limitPerPage) {
+                        $prevOffset = -1;
+                        $nextOffset = -1;
+                    }
+
+                    if ($total > 0) {
+                        $endOffset = $total / $limitPerPage;
+                    }
+
+                    $pageData['offsets']['current'] = $offset;
+                    $pageData['offsets']['total'] = $total;
+                    $pageData['offsets']['next'] = $nextOffset;
+                    $pageData['offsets']['prev'] = $prevOffset;
+                    $pageData['offsets']['end'] = ceil($endOffset);
+
+                    $queries = array('baseUrl', 'endPage', 'nextPage', 'orderBy');
+
+                    if ((int)$pageData['offsets']['current'] >= $limitPerPage) {
+                        $queries[] = 'prevPage';
+                        $queries[] = 'startPage';
+                    }
+
+                    foreach ($queries as $query) {
+
+                        if ($total < $limitPerPage || $nextOffset >= $total) {
+                            if (isset($pageData['queries'][$query])) {
+                                unset($pageData['queries'][$query]);
+                            }
+                        } else {
+                            $pageData['queries'][$query]['module'] = "Emails";
+                            $pageData['queries'][$query]['action'] = "index";
+                            $pageData['queries'][$query]['parentTab'] = "Activities";
+                            $pageData['queries'][$query]['ajax_load'] = "0";
+                            $pageData['queries'][$query]['loadLanguageJS'] = "1";
+                            $pageData['queries'][$query]['searchFormTab'] = "advanced_search";
+                            $pageData['queries'][$query]['lvso'] = "DESC";
+
+                            $pageData['urls'][$query] = 'index.php?module=Emails&action=index&parentTab=Activities&searchFormTab=advanced_search&query=true&current_user_only_basic=0&button=Search&lvso=DESC';
+
+                        }
+                    }
+
+                    // inject post values
+                    $_REQUEST['folder'] = $folder;
+                    $_REQUEST['folder'] = $folder;
+                    $_REQUEST['folder_type'] = $folderType;
+                    $_REQUEST['inbound_email_record'] = $inboundEmailID;
+
+
+                    // TODO: TASK: UNDEFINED - HANDLE in second filter after IMAP
+                    $endOffset = floor(($total - 1) / $limit) * $limit;
+                    $pageData['queries'] = $this->generateQueries(
+                        $pageData['ordering']['sortOrder'],
+                        $offset,
+                        $prevOffset,
+                        $nextOffset,
+                        $endOffset,
+                        $total
+                    );
+                    $pageData['offsets'] = array(
+                        'current' => $offset,
+                        'next' => $nextOffset,
+                        'prev' => $prevOffset,
+                        'end' => $endOffset,
+                        'total' => $total,
+                        'totalCounted' => $total
+                    );
+
+                    $pageData['ordering'] = $order;
+                    $pageData['ordering']['sortOrder'] = $this->getReverseSortOrder($pageData['ordering']['sortOrder']);
+                    //get url parameters as an array
+                    //join url parameters from array to a string
+                    $pageData['urls'] = $this->generateURLS($pageData['queries']);
+                    $module_names = array(
+                        'Prospects' => 'Targets'
+                    );
+                    $pageData['bean'] = array(
+                        'objectName' => $seed->object_name,
+                        'moduleDir' => $seed->module_dir,
+                        'moduleName' => strtr($seed->module_dir, $module_names)
+                    );
+                    $pageData['stamp'] = $this->stamp;
+                    $pageData['access'] = array(
+                        'view' => $this->seed->ACLAccess('DetailView'),
+                        'edit' => $this->seed->ACLAccess('EditView')
+                    );
+                    if (!$this->seed->ACLAccess('ListView')) {
+                        $pageData['error'] = 'ACL restricted access';
+                    }
+
+
+                    if (
+                        (isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "advanced_search") ||
+                        (
+                            isset($_REQUEST["type_basic"]) && count($_REQUEST["type_basic"] > 1) ||
+                            $_REQUEST["type_basic"][0] != ""
+                        ) ||
+                        (isset($_REQUEST["module"]) && $_REQUEST["module"] == "MergeRecords")
+                    ) {
+                        $queryString = "-advanced_search";
+                    } else {
+                        if (isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "basic_search") {
+                            $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir);
+
+                            $basicSearchFields = array();
+
+                            if (
+                                isset($searchMetaData['searchdefs']) &&
+                                isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'])
+                            ) {
+                                $basicSearchFields = $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'];
+                            }
+
+                            foreach ($basicSearchFields as $basicSearchField) {
+                                $field_name = (is_array($basicSearchField) && isset($basicSearchField['name']))
+                                    ? $basicSearchField['name'] : $basicSearchField;
+                                $field_name .= "_basic";
+                                if (
+                                    isset($_REQUEST[$field_name]) &&
+                                    (
+                                        !is_array($basicSearchField) ||
+                                        !isset($basicSearchField['type']) ||
+                                        $basicSearchField['type'] == 'text' ||
+                                        $basicSearchField['type'] == 'name'
+                                    )
+                                ) {
+                                    // Ensure the encoding is UTF-8
+                                    $queryString = htmlentities($_REQUEST[$field_name], null, 'UTF-8');
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    return array('data' => $data, 'pageData' => $pageData, 'query' => $queryString);
+            }
+
+
         } else {
 
             return array(

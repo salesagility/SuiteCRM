@@ -357,6 +357,7 @@ class InboundEmail extends SugarBean
                 continue;
             }
 
+            // Convert to a blank string as NULL will break the IMAP request
             if($filterCriteria == NULL) {
                 $filterCriteria = '';
             }

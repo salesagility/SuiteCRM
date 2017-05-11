@@ -59,14 +59,6 @@ $searchdefs[$module_name] = array(
                 'name' => 'to_addrs_names',
                 'label' => 'LBL_TO',
             ),
-            'cc_addrs_names' => array(
-                'name' => 'cc_addrs_names',
-                'label' => 'LBL_CC',
-            ),
-            'bcc_addrs_names' => array(
-                'name' => 'bcc_addrs_names',
-                'label' => 'LBL_BCC',
-            ),
             'name' => array(
                 'name' => 'name',
                 'label' => 'LBL_SUBJECT',
@@ -83,6 +75,11 @@ $searchdefs[$module_name] = array(
             ),
             'category_id' => array (
                 'name' => 'category_id',
+                'default' => true,
+                'width' => '10%',
+            ),
+            'parent_name' => array (
+                'name' => 'parent_name',
                 'default' => true,
                 'width' => '10%',
             ),
