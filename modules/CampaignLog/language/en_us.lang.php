@@ -62,7 +62,7 @@ $mod_strings = array (
 	'LBL_LIST_RECIPIENT_NAME'=>'Recipient Name',
 	'LBL_ARCHIVED'=>'Archived',
 	'LBL_HITS'=>'Hits',
-	
+
 	'LBL_CAMPAIGN_NAME' => 'Name:',
   	'LBL_CAMPAIGN' => 'Campaign:',
   	'LBL_NAME' => 'Name: ',
@@ -92,14 +92,11 @@ $mod_strings = array (
     'LBL_CREATED_OPPORTUNITY' => 'Created Opportunity',
     'LBL_TARGETED_USER' => 'Targeted User',
     'LBL_SENT_EMAIL' => 'Sent Email',
-  	'LBL_LIST_FORM_TITLE'=> 'Targeted Campaigns',	
+  	'LBL_LIST_FORM_TITLE'=> 'Targeted Campaigns',
   	'LBL_LIST_ACTIVITY_DATE'=>'Activity Date',
-  	'LBL_LIST_CAMPAIGN_OBJECTIVE'=>'Campaign Objective',
   	'LBL_RELATED'=>'Related',
-  	'LBL_CLICKED_URL_KEY'=>'Clicked URL Key',
-  	'LBL_URL_CLICKED'=>'URL Clicked',
   	'LBL_MORE_INFO'=>'More Information',
-    
+
     'LBL_CAMPAIGNS' => 'Campaigns',
 	'LBL_LIST_MARKETING_NAME' => 'Marketing Id',
 
