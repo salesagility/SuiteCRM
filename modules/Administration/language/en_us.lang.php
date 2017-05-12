@@ -864,8 +864,6 @@ $mod_strings = array(
     //language changed
     'LBL_CURRENT_LANGUAGE_CHANGE' => 'Your current language is changed to ',
     'LBL_DEFAULT_LANGUAGE_CHANGE' => 'System\'s default language is changed to ',
-    'ACLActions' => 'ACLAction',
-    'ACLFields' => 'ACLField',
     'ACLRoles' => 'ACLRole',
     'Administration' => 'Administration',
     'Audit' => 'Audit',
@@ -891,10 +889,6 @@ $mod_strings = array(
     'Import_2' => 'UsersLastImport',
     'InboundEmail' => 'InboundEmail',
 
-    'KBContents' => 'KBContent',
-    'KBDocumentKBTags' => 'KBDocumentKBTag',
-    'KBDocumentRevisions' => 'KBDocumentRevision',
-    'KBTags' => 'KBTag',
     'Manufacturers' => 'Manufacturer',
     'ProductBundleNotes' => 'ProductBundleNote',
     'ProductBundles' => 'ProductBundle',
@@ -903,16 +897,13 @@ $mod_strings = array(
     'Relationships' => 'Relationship',
     'Releases' => 'Release',
     'ReportMaker' => 'Advanced Reports',
-    'Reports_1' => 'SavedReport',
     'Roles' => 'Role',
     'Schedulers' => 'Scheduler',
     'SchedulersJobs' => 'SchedulersJob',
     'Shippers' => 'Shipper',
     'TaxRates' => 'TaxRate',
-    'TeamHierarchies' => 'TeamHierarchy',
     'TeamMemberships' => 'TeamMembership',
     'TeamNotices' => 'TeamNotice',
-    'TeamSetModules' => 'TeamSetModule',
     'TeamSets' => 'TeamSet',
     'TimePeriods' => 'TimePeriod',
     'TrackerPerfs' => 'TrackerPerf',
@@ -939,7 +930,6 @@ $mod_strings = array(
     'LBL_GLOBAL_SEARCH_SETTINGS_TITLE' => 'Select the module(s) that users will be able to search against using the Global Search.',
     'LBL_SELECT_MODULES' => 'Advanced',
     'LBL_SELECT_MODULES_TITLE' => 'Drag and drop to select modules and to change the display order. Perform a search to apply the changes.',
-    'LBL_SELECT_FTS_MODULES_TITLE' => 'Drag and drop to select modules to be used in the Global Search. Click Save to apply the changes.',
     'LBL_EAPM_SETTINGS' => 'External Accounts',
     'LBL_EAPM_SETTINGS_DESC' => 'Select external applications for which users can provide their account information in order to access from within SuiteCRM.',
     'LBL_LANGUAGE_PACKS' => 'Language Packs' /*for 508 compliance fix*/,
@@ -953,12 +943,6 @@ $mod_strings = array(
     // OAuth
     'LBL_OAUTH_TITLE' => "OAuth Keys",
     'LBL_OAUTH' => "OAuth key management",
-
-    // SNIP / Sugar Ease / Email Archiving
-    'LBL_SNIP_TITLE' => 'Email Archiving',
-    'LBL_SNIP_DESC' => 'Configure offline archiving (Email Archiving)',
-    'LBL_CONFIGURE_SNIP' => 'Email Archiving',
-    'LBL_CONFIGURE_SNIP_DESC' => 'Enable/disable the SuiteCRM Email Archiving Service',
 
     //Sprites Support
     'LBL_SPRITES_NOT_SUPPORTED' => 'Error: Unable to create sprites because the imagecreatetruecolor function cannot be loaded',
@@ -1073,9 +1057,6 @@ $mod_strings = array(
 
     'LBL_AOP_BUSINESS_HOURS_SETTINGS' => 'Business Hours',
     'LBL_AOP_BUSINESS_HOURS_DESC' => 'Change the business hours',
-    'LBL_AOP_OPENING_DAYS' => 'Opening Days',
-    'LBL_AOP_OPENING_HOURS' => 'Opening Hours',
-    'LBL_AOP_CLOSING_HOURS' => 'Closing Hours',
     'LBL_SUPPORT_FROM_ADDRESS' => 'Support Email From Address',
     'LBL_SUPPORT_FROM_NAME' => 'Support Email From Name',
     'LBL_CREATE_EMAIL_TEMPLATE' => 'Create',
@@ -1113,18 +1094,8 @@ $mod_strings = array(
 
     'LBL_MANAGE_SECURITYGROUPS_TITLE' => 'Security Suite Group Management',
     'LBL_MANAGE_SECURITYGROUPS' => 'Security Suite Group Editor',
-    'LBL_SECURITYGROUPS' => 'Security Suite',
     'LBL_CONFIG_SECURITYGROUPS_TITLE' => 'Security Suite Settings',
     'LBL_CONFIG_SECURITYGROUPS' => 'Configure Security Suite settings such as group inheritance, additive security, etc',
-    'LBL_SECURITYGROUPS_UPGRADE_INFO_TITLE' => "Upgrade and General Info",
-    'LBL_SECURITYGROUPS_INFO_TITLE' => "Security Suite Info",
-    'LBL_SECURITYGROUPS_INFO' => "General information",
-    'LBL_SECURITYGROUPS_DASHLETPUSH_TITLE' => "Push Message Dashlet",
-    'LBL_SECURITYGROUPS_DASHLETPUSH' => "Push the Message Dashlet to the Home page for all users. This process may take some time to complete depending on the number of users",
-    'LBL_SECURITYGROUPS_HOOKUP_TITLE' => "Hookup Module",
-    'LBL_SECURITYGROUPS_HOOKUP' => "Hookup Security Suite to work with your custom modules",
-    'LBL_SECURITYGROUPS_SUGAROUTFITTERS_TITLE' => "SugarOutfitters",
-    'LBL_SECURITYGROUPS_SUGAROUTFITTERS' => "Grab the latest version of SecuritySuite and find other SuiteCRM modules, themes, and integrations along with reviews, docs, support, and community verified versions.",
 
     'LBL_BUSINESS_HOURS' => 'Business hours',
     'LBL_BUSINESS_HOURS_DESC' => "Manage Business Hours",
