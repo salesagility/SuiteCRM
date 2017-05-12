@@ -71,7 +71,6 @@ $mod_strings = array(
             'create' => 'Provide a <b>Name</b> for the module. The <b>Label</b> that you provide will appear in the navigation tab. <br/><br/>Choose to display a navigation tab for the module by checking the <b>Navigation Tab</b> checkbox.<br/><br/>Then choose the type of module you would like to create. <br/><br/>Select a template type. Each template contains a specific set of fields, as well as pre-defined layouts, to use as a basis for your module. <br/><br/>Click <b>Save</b> to create the module.',
             'modify' => 'You can change the module properties or customize the <b>Fields</b>, <b>Relationships</b> and <b>Layouts</b> related to the module.',
             'importable' => 'Checking the <b>Importable</b> checkbox will enable importing for this module.<br><br>A link to the Import Wizard will appear in the Shortcuts panel in the module.  The Import Wizard facilitates importing of data from external sources into the custom module.',
-            'team_security' => 'Checking the <b>Team Security</b> checkbox will enable team security for this module.  <br/><br/>If team security is enabled, the Team selection field will appear within the records in the module ',
             'reportable' => 'Checking this box will allow this module to have reports run against it.',
             'assignable' => 'Checking this box will allow a record in this module to be assigned to a selected user.',
             'has_tab' => 'Checking <b>Navigation Tab</b> will provide a navigation tab for the module.',
@@ -333,12 +332,6 @@ $mod_strings = array(
 //HOME
     'LBL_HOME_EDIT_DROPDOWNS' => 'Dropdown Editor',
 
-//ASSISTANT
-    'LBL_AS_SHOW' => 'Show Assistant in future.',
-    'LBL_AS_IGNORE' => 'Ignore Assistant in future.',
-    'LBL_AS_SAYS' => 'Assistant Says:',
-
-
 //STUDIO2
     'LBL_MODULEBUILDER' => 'Module Builder',
     'LBL_STUDIO' => 'Studio',
@@ -346,7 +339,6 @@ $mod_strings = array(
     'LBL_EDIT_DROPDOWN' => 'Edit Dropdown',
     'LBL_DEVELOPER_TOOLS' => 'Developer Tools',
     'LBL_SUGARPORTAL' => 'SuiteCRM Portal Editor',
-    'LBL_SYNCPORTAL' => 'Sync Portal',
     'LBL_PACKAGE_LIST' => 'Package List',
     'LBL_HOME' => 'Home',
     'LBL_NONE' => '-None-',
@@ -377,7 +369,6 @@ $mod_strings = array(
     'LBL_EDIT_ROWS' => 'Edit Rows',
     'LBL_EDIT_COLUMNS' => 'Edit Columns',
     'LBL_EDIT_LABELS' => 'Edit Labels',
-    'LBL_EDIT_PORTAL' => 'Edit Portal for ',
     'LBL_EDIT_FIELDS' => 'Edit Fields',
     'LBL_EDITVIEW' => 'EditView',
     'LBL_FILLER' => '(filler)',
@@ -405,12 +396,7 @@ $mod_strings = array(
     'LBL_SUBPANEL_TITLE' => 'Title:',
     'LBL_SEARCH_FORMS' => 'Filter',
     'LBL_FILTER' => 'Filter',
-    'LBL_STAGING_AREA' => 'Staging Area (drag and drop items here)',
-    'LBL_SUGAR_FIELDS_STAGE' => 'SuiteCRM Fields (click items to add to staging area)',
-    'LBL_SUGAR_BIN_STAGE' => 'SuiteCRM Bin (click items to add to staging area)',
     'LBL_TOOLBOX' => 'Toolbox',
-    'LBL_VIEW_SUGAR_FIELDS' => 'View SuiteCRM Fields',
-    'LBL_VIEW_SUGAR_BIN' => 'View SuiteCRM Bin',
     'LBL_QUICKCREATE' => 'QuickCreate',
     'LBL_EDIT_DROPDOWNS' => 'Edit a Global Dropdown',
     'LBL_ADD_DROPDOWN' => 'Add a new Global Dropdown',
@@ -495,7 +481,6 @@ $mod_strings = array(
     'LBL_SECTION_PACKAGES' => 'Packages',
     'LBL_SECTION_PACKAGE' => 'Package',
     'LBL_SECTION_MODULES' => 'Modules',
-    'LBL_SECTION_PORTAL' => 'Portal',
     'LBL_SECTION_DROPDOWNS' => 'Dropdowns',
     'LBL_SECTION_PROPERTIES' => 'Properties',
     'LBL_SECTION_DROPDOWNED' => 'Edit Dropdown',
@@ -585,8 +570,6 @@ $mod_strings = array(
     'LBL_WIDTH' => 'Width',
     'LBL_PACKAGE' => 'Package:',
     'LBL_TYPE' => 'Type:',
-    'LBL_TEAM_SECURITY' => 'Team Security',
-    'LBL_ASSIGNABLE' => 'Assignable',
     'LBL_PERSON' => 'Person',
     'LBL_COMPANY' => 'Company',
     'LBL_ISSUE' => 'Issue',
@@ -663,19 +646,12 @@ $mod_strings = array(
     'LBL_CONFIRM_FIELD_DELETE' => 'Deleting this custom field will delete both the custom field and all the data related to the custom field in the database. The field will be no longer appear in any module layouts. \\n\\nDo you wish to continue?',
 
     'LBL_CONFIRM_RELATIONSHIP_DELETE' => 'Are you sure you wish to delete this relationship?',
-    'LBL_CONFIRM_RELATIONSHIP_DEPLOY' => 'This will make this relationship permanent. Are you sure you wish to deploy this relationship?',
     'LBL_CONFIRM_DONT_SAVE' => 'Changes have been made since you last saved, would you like to save?',
     'LBL_CONFIRM_DONT_SAVE_TITLE' => 'Save Changes?',
     'LBL_CONFIRM_LOWER_LENGTH' => 'Data may be truncated and this cannot be undone, are you sure you wish to continue?',
 
 //POPUP HELP
     'LBL_POPHELP_FIELD_DATA_TYPE' => 'Select the appropriate data type based on the type of data that will be entered into the field.',
-    'LBL_POPHELP_SEARCHABLE' => 'Select the boost level for this field. <br />Fields with a higher boost level will be given greater weight when the search is performed. <br />When a search is performed, matching records containing fields with a greater weight will be appear higher in the search results.<br /> If you change the boost level for a field from one level to another, perform a system index to apply the change. <br/> Be sure to select to delete the existing data at the time that the system index is performed.',
-    'LBL_POPHELP_IMPORTABLE' => '<b>Yes</b>: The field will be included in an import operation.<br><b>No</b>: The field will not be included in an import.<br><b>Required</b>: A value for the field must be provided in any import.',
-    'LBL_POPHELP_IMAGE_WIDTH' => 'Enter a number for Width, as measured in pixels.<br> The uploaded image will be scaled to this Width.',
-    'LBL_POPHELP_IMAGE_HEIGHT' => 'Enter a number for the Height, as measured in pixels.<br> The uploaded image will be scaled to this Height.',
-    'LBL_POPHELP_DUPLICATE_MERGE' => '<b>Enabled</b>: The field will appear in the Merge Duplicates feature, but will not be available to use for the filter conditions in the Find Duplicates feature.<br><b>Disabled</b>: The field will not appear in the Merge Duplicates feature, and will not be available to use for the filter conditions in the Find Duplicates feature.',
-    'LBL_POPHELP_GLOBAL_SEARCH' => 'Select to use this field when searching for records using the Global Search on this module.',
 
 //Revert Module labels
     'LBL_RESET' => 'Reset',
@@ -690,16 +666,11 @@ $mod_strings = array(
     'LBL_HISTORY_TITLE' => ' history',
 
 
-    'LBL_ADD_LAYOUT' => 'Add Layout',
-    'LBL_ADD_LAYOUTS' => 'Add Layout',
     'LBL_QUESTION_ADD_LAYOUT' => 'Select a Group Layout to Add.',
     'LBL_REMOVE_LAYOUT' => 'Remove Group Layout',
 
     'LBL_SECURITYGROUP' => 'Security Group:',
     'LBL_COPY_FROM' => 'Copy From:',
-    'LBL_ADDLAYOUTDONE' => 'Layout Saved',
-    'LBL_REMOVELAYOUTDONE' => 'Layout Removed',
-    'LBL_REMOVE_CONFIRM' => 'Are you really sure?',
 
     'fieldTypes' => array(
         'varchar' => 'TextField',
@@ -730,11 +701,7 @@ $mod_strings = array(
 
     'parent' => 'Flex Relate',
 
-    'LBL_ILLEGAL_FIELD_VALUE' => "Drop down key cannot contain quotes.",
     'LBL_CONFIRM_SAVE_DROPDOWN' => "You are selecting this item for removal from the dropdown list. Any dropdown fields using this list with this item as a value will no longer display the value, and the value will no longer be able to be selected from the dropdown fields. Are you sure you want to continue?",
-    'LBL_POPHELP_VALIDATE_US_PHONE' => 'Select to validate this field for the entry of a 10-digit phone number,<br>with allowance for the country code 1,<br>and to apply a U.S. format to the phone number when the record is saved.<br> The following format will be applied: (xxx) xxx-xxxx.',
-
-
 
     'LBL_ALL_MODULES' => 'All Modules',
     'LBL_RELATED_FIELD_ID_NAME_LABEL' => '{0} (related {1} ID)',
