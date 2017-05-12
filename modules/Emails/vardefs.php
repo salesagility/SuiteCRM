@@ -176,14 +176,13 @@ $dictionary['Email'] = array(
          * 'comment' => 'Email address(es) of person(s) to receive a blind carbon copy of the email',
          * ),
          */
-
         'from_addr_name' => array(
             'name' => 'from_addr_name',
             'type' => 'varchar',
-            'vname' => 'from_addr_name',
             'source' => 'non-db',
             'inline_edit' => false,
         ),
+
         'reply_to_addr' => array(
             'name' => 'reply_to_addr',
             'type' => 'varchar',
@@ -191,6 +190,7 @@ $dictionary['Email'] = array(
             'source' => 'non-db',
             'inline_edit' => false,
         ),
+
         'to_addrs_names' => array(
             'name' => 'to_addrs_names',
             'type' => 'varchar',

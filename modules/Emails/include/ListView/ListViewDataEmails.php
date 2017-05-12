@@ -46,6 +46,11 @@ require_once('include/ListView/ListViewData.php');
 
 class ListViewDataEmails extends ListViewData
 {
+    /**
+     * @var array
+     * when searching the imap filter map the crm fields
+     * to the imap fields.
+     */
     protected static $mapServerFields = array(
         // bean field => IMAP field
         'from_addr_name' => 'FROM',
@@ -57,12 +62,42 @@ class ListViewDataEmails extends ListViewData
         'description' => 'BODY',
     );
 
+    /**
+     * @var array
+     * never select these fields during crm filter
+     */
     protected static $mapIgnoreFields = array(
         'date_entered',
         'indicator',
         'flagged',
         'has_attachment',
     );
+
+    /**
+     * @var array
+     * always include these fields during crm filter
+     */
+    protected static $alwaysIncludeSearchFields = array(
+        'flagged',
+        'name',
+        'subject',
+        'has_attachment',
+    );
+
+    /**
+     * @var array
+     * during crm filter map these fields so that the correct
+     * SQL query is created
+     */
+    protected static $mapEmailFieldsToEmailTextFields = array(
+        // emails field => email_text field
+        'from_addr_name' => 'emails_text.from_addr',
+        'to_addrs_names' => 'emails_text.to_addrs',
+        'cc_addrs_names' => 'emails_text.cc_addrs',
+        'bcc_addrs_names' => 'emails_text.bcc_addrs',
+        'description' => 'emails_text.description',
+    );
+
 
     /**
      * Constructor
@@ -225,15 +260,45 @@ class ListViewDataEmails extends ListViewData
             switch ($searchType) {
                 case 'crm':
 
-                    // Fix name in filter
-                    if(!array_key_exists('name', $filter_fields)) {
-                        $filter_fields['name'] = true;
+                    // Fix fields in filter fields
+                    foreach (self::$mapEmailFieldsToEmailTextFields as $EmailSearchField => $EmailTextSearchField) {
+                        if(array_key_exists($EmailSearchField, self::$alwaysIncludeSearchFields)) {
+                            $filter_fields[$EmailSearchField] = true;
+                        } else if(
+                            array_key_exists($EmailSearchField . '_advanced', $_REQUEST) &&
+                            empty($_REQUEST[$EmailSearchField . '_advanced'])
+                        ) {
+                            $pos = array_search($EmailSearchField, $filter_fields);
+                            unset($filter_fields[$pos]);
+                            continue;
+                        } else if(
+                            array_key_exists($EmailSearchField . '_basic', $_REQUEST) &&
+                            empty($_REQUEST[$EmailSearchField . '_basic'])
+                        ) {
+                            $pos = array_search($EmailSearchField, $filter_fields);
+                            unset($filter_fields[$pos]);
+                            continue;
+                        }
+
+                        if(!array_key_exists($EmailSearchField, $filter_fields)) {
+                            $filter_fields[$EmailTextSearchField] = true;
+                        } else {
+                            $pos = array_search($EmailSearchField, $filter_fields);
+                            if($pos !== false) {
+                                unset($filter_fields[$pos]);
+                                $filter_fields[$EmailTextSearchField] = true;
+                            }
+                        }
+
+                        // since the where is hard coded at this point we need to map the fields in the where
+                        // clause of the SQL
+                        $where = str_replace($EmailSearchField, $EmailTextSearchField, $where );
                     }
 
-                    // fix flagged in filter
-                    if(!array_key_exists('flagged', $filter_fields)) {
-                        $filter_fields['flagged'] = true;
-                    }
+
+
+
+
 
                     // Filter imported emails based on the UID of the results from the IMAP server
                     $crmWhere = $where . ' AND mailbox_id LIKE ' .'"' . $inboundEmail->id . '"';
@@ -253,6 +318,10 @@ class ListViewDataEmails extends ListViewData
                     if (!empty($this->seed->listview_inner_join)) {
                         $crmQueryArray['inner_join'] = ' ' . implode(' ', $this->seed->listview_inner_join) . ' ';
                     }
+
+                    // force join with email_text
+                    $crmQueryArray['from'] .= ' LEFT JOIN emails_text ON emails_text.email_id = emails.id ';
+
 
                     if (!is_array($params)) {
                         $params = array();
