@@ -41,15 +41,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $mod_strings = array (
 
-	'LBL_SHAREDWEEK' => 'Shared Week',
-	'LBL_SHAREDMONTH' => 'Shared Month',
-
-
 	'LBL_MODULE_NAME' => 'Calendar',
 	'LBL_MODULE_TITLE' => 'Calendar',
 	'LNK_NEW_CALL' => 'Schedule Call',
 	'LNK_NEW_MEETING' => 'Schedule Meeting',
-	'LNK_NEW_APPOINTMENT' => 'Create Appointment',
 	'LNK_NEW_TASK' => 'Create Task',
 	'LNK_CALL_LIST' => 'Calls',
 	'LNK_MEETING_LIST' => 'Meetings',
@@ -114,21 +109,11 @@ $mod_strings = array (
 	'LBL_STYLE_BASIC' => 'BASIC',
 	'LBL_STYLE_ADVANCED' => 'ADVANCED',
 
-	'LBL_INFO_TITLE' => 'Additional Details',
-	'LBL_INFO_DESC' => 'Description',
-	'LBL_INFO_START_DT' => 'Start Date',
-	'LBL_INFO_DUE_DT' => 'Due Date & Time',
-	'LBL_INFO_DURATION' => 'Duration',
-	'LBL_INFO_NAME' => 'Subject',
-	'LBL_INFO_RELATED_TO' => 'Related to',
-
 	'LBL_NO_USER' => 'No match for field: Assigned to',
 	'LBL_SUBJECT' => 'Subject',
 	'LBL_DURATION' => 'Duration',
 	'LBL_STATUS' => 'Status',
 	'LBL_PRIORITY' => 'Priority',
-	'LBL_DATE_TIME' => 'Date and Time',
-
 
 	'LBL_SETTINGS_TITLE' => 'Settings',
 	'LBL_SETTINGS_DISPLAY_TIMESLOTS' => 'Display time slots in Day and Week views:',
