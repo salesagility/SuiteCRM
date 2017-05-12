@@ -74,7 +74,6 @@ $mod_strings = array (
   'LBL_SEARCH_BUTTON' => 'Search',
   'LBL_SEARCH_QUERY_PLACEHOLDER' => 'Enter search...',
   'LBL_INDEX_STATS' => 'Index stats',
-  'LBL_SEARCH_LABEL' => "Term",
   'LBL_OPTIMISE_NOW' => "Optimise now",
   'LBL_TOTAL_RECORDS' => 'Total records',
   'LBL_INDEXED_RECORDS' => 'Indexed records',
