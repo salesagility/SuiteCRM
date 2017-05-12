@@ -44,10 +44,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 $mod_strings = array (
 	'LBL_MODULE_NAME' => 'Project Tasks',
 	'LBL_MODULE_TITLE' => 'Project Task: Home',
-	'LBL_SEARCH_FORM_TITLE' => 'Project Task Search',
-	'LBL_LIST_FORM_TITLE'=> 'Project Task List',
-    'LBL_EDIT_TASK_IN_GRID_TITLE'=> 'Edit Task In Grid',    
-	
+
 	'LBL_ID' => 'Id:',
     'LBL_PROJECT_TASK_ID' => 'Project Task Id:',
     'LBL_PROJECT_ID' => 'Project Id:',
@@ -56,7 +53,6 @@ $mod_strings = array (
 	'LBL_ASSIGNED_USER_ID' => 'Assigned To:',
 	'LBL_MODIFIED_USER_ID' => 'Modified User Id:',
 	'LBL_CREATED_BY' => 'Created By:',
-	'LBL_TEAM_ID' => 'Team:',
 	'LBL_NAME' => 'Name:',
 	'LBL_STATUS' => 'Status:',
 	'LBL_DATE_DUE' => 'Due Date:',
@@ -95,8 +91,6 @@ $mod_strings = array (
     'LBL_LIST_ACTUAL_DURATION' => 'Actual Duration',
 	'LBL_LIST_ASSIGNED_USER_ID' => 'Assigned To',
 	'LBL_LIST_DATE_DUE' => 'Date Due',
-	'LBL_LIST_DATE_START' => 'Start Date',
-    'LBL_LIST_DATE_FINISH' => 'Finish Date',    
 	'LBL_LIST_PRIORITY' => 'Priority',
 	'LBL_LIST_CLOSE' => 'Close',
 	'LBL_PROJECT_NAME' => 'Project Name',
@@ -105,8 +99,8 @@ $mod_strings = array (
 	'LNK_PROJECT_LIST'	=> 'Project List',
 	'LNK_NEW_PROJECT_TASK'	=> 'Create Project Task',
 	'LNK_PROJECT_TASK_LIST'	=> 'Project Tasks',
-	
-	'LBL_LIST_MY_PROJECT_TASKS' => 'My Project Tasks',
+
+	'LBL_LIST_Y_PROJECT_TASKS' => 'My Project Tasks',
 	'LBL_DEFAULT_SUBPANEL_TITLE' => 'Project Tasks',
 	'LBL_NEW_FORM_TITLE' => 'New Project Task',
 
@@ -114,14 +108,12 @@ $mod_strings = array (
 	'LBL_HISTORY_TITLE'=>'History',
 	'LBL_ACTIVITIES_SUBPANEL_TITLE'=>'Activities',
 	'LBL_HISTORY_SUBPANEL_TITLE'=>'History', 
-	'DATE_JS_ERROR' => 'Please enter a date corresponding to the time entered',
 
     'LBL_ASSIGNED_USER_NAME' => 'Assigned To',
     'LBL_PARENT_NAME' => 'Project Name',
-    'LBL_LIST_PROJECT_NAME' => 'Projects',
 	'LBL_EDITLAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
     'LBL_PANEL_TIMELINE' => 'Timeline',
-	
+
 	'LBL_SUBTASK' => 'Sub-Task',
 	'LBL_LAG' => 'Lag',
 	'LBL_DAYS' => 'Days',
