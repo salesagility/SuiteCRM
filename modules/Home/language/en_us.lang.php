@@ -216,7 +216,7 @@ $mod_strings = array(
     'LBL_LANGUAGE_COMMUNITY_ABOUT' => 'Collaborative translation by the SuiteCRM Community',
     'LBL_LANGUAGE_COMMUNITY_PACKS' => 'Translation created using Crowdin',
 
-    'LBL_ABOUT_SUITE_2' => 'SuiteCRM is published under an open source licence - GPL3',
+    'LBL_ABOUT_SUITE_2' => 'SuiteCRM is published under an open source licence - AGPLv3',
     'LBL_ABOUT_SUITE_4' => 'All SuiteCRM code managed and developed by the project will be released as open source - GPL3',
     'LBL_ABOUT_SUITE_5' => 'SuiteCRM support is available in both free and paid-for options',
 
