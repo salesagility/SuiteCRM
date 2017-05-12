@@ -358,7 +358,6 @@ More help : www.tcpdf.org',
 
     'LBL_ADDFONT_TITLE' => 'Add a PDF Font',
     'LBL_PDF_PATCH' => 'Patch',
-    'LBL_PDF_PATCH_INFO' => 'Custom modification of the encoding. Write a PHP array.<br>Example :<br>ISO-8859-1 does not contain the euro symbol. To add it at position 164, write "array(164=>\\\'Euro\\\')".',
     'LBL_PDF_ENCODING_TABLE' => 'Encoding Table',
     'LBL_PDF_ENCODING_TABLE_INFO' => 'Name of the encoding table.<br>This option is ignored for TrueType Unicode, OpenType Unicode and symbolic fonts.<br>The encoding defines the association between a code (from 0 to 255) and a character contained in the font.<br>The first 128 are fixed and correspond to ASCII.',
     'LBL_PDF_FONT_FILE' => 'Font File',
@@ -367,43 +366,13 @@ More help : www.tcpdf.org',
     'LBL_PDF_METRIC_FILE_INFO' => '.afm or .ufm file',
     'LBL_ADD_FONT_BUTTON' => 'Add',
     'JS_ALERT_PDF_WRONG_EXTENSION' => 'This file do not have a good file extension.',
-    'LBL_PDF_INSTRUCTIONS' => 'Instructions',
-    'PDF_INSTRUCTIONS_ADD_FONT' => '<<<BSOFR
-Fonts supported by the PDF :
-<ul>
-<li>TrueTypeUnicode (UTF-8 Unicode)</li>
-<li>OpenTypeUnicode</li>
-<li>TrueType</li>
-<li>OpenType</li>
-<li>Type1</li>
-<li>CID-0</li>
-</ul>
-<br>
-If you choose to not embed your font in the PDF, the generated PDF file will be lighter but a substitution will be use if the font is not available in the system of your reader.
-<br><br>
-Adding a PDF font to SuiteCRM requires to follow steps 1 and 2 of the TCPDF Fonts documentation available in the "DOCS" section of the <a href="http://www.tcpdf.org" target="_blank">TCPDF website</a>.
-<br><br>The pfm2afm and ttf2ufm utils are available in fonts/utils in the TCPDF package that you can download on the "DOWNLOAD" section of the <a href="http://www.tcpdf.org" target="_blank">TCPDF website</a>.
-<br><br>Load the metric file generated in step 2 and your font file below.
-BSOFR',
 
     'ERR_MISSING_CIDINFO' => 'The field CID Information cannot be empty.',
     'LBL_ADDFONTRESULT_TITLE' => 'Result of the add font process',
     'LBL_STATUS_FONT_SUCCESS' => 'SUCCESS : The font has been added to SuiteCRM.',
     'LBL_STATUS_FONT_ERROR' => 'ERROR : The font has not been added. Look at the log below.',
-    'LBL_FONT_MOVE_DEFFILE' => 'Font definition file move to : ',
-    'LBL_FONT_MOVE_FILE' => 'Font file move to : ',
 
 // Font manager
-    'ERR_LOADFONTFILE' => 'ERROR: LoadFontFile error!',
-    'ERR_FONT_EMPTYFILE' => 'ERROR: Empty filename!',
-    'ERR_FONT_UNKNOW_TYPE' => 'ERROR: Unknow font type:',
-    'ERR_DELETE_CORE_FILE' => 'ERROR: It is not possible to delete a core font.',
-    'ERR_NO_FONT_PATH' => 'ERROR: No font path available!',
-    'ERR_NO_CUSTOM_FONT_PATH' => 'ERROR: No custom font path available!',
-    'ERR_FONT_NOT_WRITABLE' => 'is not writable.',
-    'ERR_FONT_FILE_DO_NOT_EXIST' => 'doesn\'t exist or is not a directory.',
-    'ERR_FONT_MAKEFONT' => 'ERROR: MakeFont error',
-    'ERR_FONT_ALREADY_EXIST' => 'ERROR : This font already exist. Rollback...',
     'ERR_PDF_NO_UPLOAD' => 'Error during the upload of the font or metric file.',
 
 // Wizard
