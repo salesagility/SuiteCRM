@@ -78,7 +78,6 @@ $mod_strings = array(
     'LBL_TIME' => 'Start Time:',
     'LBL_HOURS_ABBREV' => 'h',
     'LBL_MINSS_ABBREV' => 'm',
-    'LBL_COLON' => ':',
     'LNK_NEW_CALL' => 'Log Call',
     'LNK_NEW_MEETING' => 'Schedule Meeting',
     'LNK_CALL_LIST' => 'View Calls',
@@ -101,7 +100,6 @@ $mod_strings = array(
     'LBL_EMAIL_REMINDER' => 'Email Reminder',
     'LBL_EMAIL_REMINDER_TIME' => 'Email Reminder Time',
     'LBL_SEND_BUTTON_TITLE' => 'Save & Send Invites',
-    'LBL_SEND_BUTTON_KEY' => 'I',
     'LBL_SEND_BUTTON_LABEL' => 'Save & Send Invites',
     'LBL_DATE_END' => 'End Date',
     'LBL_TIME_END' => 'Time End',
@@ -132,14 +130,6 @@ $mod_strings = array(
     'LBL_REMOVE' => 'rem',
     'LBL_ACCEPT_STATUS' => 'Accept Status',
     'LBL_ACCEPT_LINK' => 'Accept Link',
-    //For export labels
-    'LBL_PARENT_ID' => 'Parent ID',
-    'LBL_EXPORT_MODIFIED_USER_ID' => 'Modified By ID',
-    'LBL_EXPORT_CREATED_BY' => 'Created By ID',
-    'LBL_EXPORT_ASSIGNED_USER_ID' => 'Assigned User ID',
-    'LBL_EXPORT_DATE_START' => 'Start Date and Time',
-    'LBL_EXPORT_PARENT_TYPE' => 'Related To Module',
-    'LBL_EXPORT_REMINDER_TIME' => 'Reminder Time (in minutes)',
 
     // create invitee functionallity
     'LBL_CREATE_INVITEE' => 'Create an invitee',
