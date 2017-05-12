@@ -96,6 +96,9 @@ class ListViewDataEmails extends ListViewData
         'cc_addrs_names' => 'emails_text.cc_addrs',
         'bcc_addrs_names' => 'emails_text.bcc_addrs',
         'description' => 'emails_text.description',
+        'name' => 'name',
+        'subject' => 'name',
+        'has_attachment' => 'has_attachment',
     );
 
 
@@ -262,8 +265,9 @@ class ListViewDataEmails extends ListViewData
 
                     // Fix fields in filter fields
                     foreach (self::$mapEmailFieldsToEmailTextFields as $EmailSearchField => $EmailTextSearchField) {
-                        if(array_key_exists($EmailSearchField, self::$alwaysIncludeSearchFields)) {
+                        if(array_search($EmailSearchField, self::$alwaysIncludeSearchFields) !== false) {
                             $filter_fields[$EmailSearchField] = true;
+                            continue;
                         } else if(
                             array_key_exists($EmailSearchField . '_advanced', $_REQUEST) &&
                             empty($_REQUEST[$EmailSearchField . '_advanced'])
