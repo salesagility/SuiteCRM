@@ -56,7 +56,6 @@ $mod_strings = array(
     'users' => 'Users',
 
     //Administration related labels
-    'LBL_ENABLE' => 'Enabled',
     'LBL_MODULE_NAME' => 'Trackers',
 );
 ?>
