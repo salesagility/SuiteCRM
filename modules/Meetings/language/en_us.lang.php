@@ -47,8 +47,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 $mod_strings = array (
-	'ERR_DELETE_RECORD' => 'A record number must be specified to delete the meeting.',
-
 	'LBL_ACCEPT_THIS'=>'Accept?',
 	'LBL_ADD_BUTTON'=> 'Add',
 	'LBL_ADD_INVITEE' => 'Add Invitees',
@@ -112,7 +110,6 @@ $mod_strings = array (
 	'LBL_SCHEDULING_FORM_TITLE' => 'Scheduling',
 	'LBL_SEARCH_BUTTON'=> 'Search',
 	'LBL_SEARCH_FORM_TITLE' => 'Meeting Search',
-	'LBL_SEND_BUTTON_KEY'=>'I',
 	'LBL_SEND_BUTTON_LABEL'=>'Save & Send Invites',
 	'LBL_SEND_BUTTON_TITLE'=>'Save & Send Invites',
 	'LBL_STATUS' => 'Status:',
@@ -126,7 +123,6 @@ $mod_strings = array (
 	'LBL_SUBJECT' => 'Subject:',
 	'LBL_TIME' => 'Start Time:',
 	'LBL_USERS_SUBPANEL_TITLE' => 'Users',
-	'LBL_ACTIVITIES_REPORTS' => 'Activities Report',
     'LBL_PARENT_TYPE' => 'Parent Type',
     'LBL_PARENT_ID' => 'Parent ID',
 	'LNK_MEETING_LIST'=>'View Meetings',
@@ -145,30 +141,12 @@ $mod_strings = array (
     'LBL_ACCEPT_STATUS' => 'Accept Status',
     'LBL_ACCEPT_LINK' => 'Accept Link',
     // You are not invited to the meeting messages
-    'LBL_EXTNOT_HEADER' => 'Error: Not Invited',
     'LBL_EXTNOT_MAIN' => 'You are not able to join this meeting because you are not an Invitee.',
     'LBL_EXTNOT_RECORD_LINK' => 'View Meeting',
-    'LBL_EXTNOT_GO_BACK' => 'Go back to the previous record',
 
     //cannot start messages
     'LBL_EXTNOSTART_HEADER' => 'Error: Cannot Start Meeting',
     'LBL_EXTNOSTART_MAIN' => 'You cannot start this meeting because you are not an Administrator or the owner of the meeting.',
-
-  //For export labels
-    'LBL_EXPORT_JOIN_URL' => 'Join Url',
-    'LBL_EXPORT_HOST_URL' => 'Host Url',
-    'LBL_EXPORT_DISPLAYED_URL' => 'Displayed Url',
-    'LBL_EXPORT_ASSIGNED_USER_ID' => 'Assigned User ID',
-    'LBL_EXPORT_EXTERNAL_ID' => 'External ID',
-    'LBL_EXPORT_ASSIGNED_USER_NAME' => 'Assigned User Name',
-    'LBL_EXPORT_MODIFIED_USER_ID' => 'Modified By ID',
-    'LBL_EXPORT_CREATED_BY' => 'Created By ID',
-
-    'LBL_EXPORT_DATE_START' => 'Start Date and Time',
-    'LBL_EXPORT_DATE_END' => 'End Date and Time',
-    'LBL_EXPORT_PARENT_TYPE' => 'Related Type',
-    'LBL_EXPORT_PARENT_ID' => 'Parent ID',
-    'LBL_EXPORT_REMINDER_TIME' =>'Reminder Time (in minutes)',
 
     // create invitee functionallity
     'LBL_CREATE_INVITEE' => 'Create an invitee',
@@ -178,7 +156,7 @@ $mod_strings = array (
     'LBL_CANCEL_CREATE_INVITEE' => 'Cancel',
     'LBL_EMPTY_SEARCH_RESULT' => 'Sorry, no results were found. Please create an invitee below.',
     'LBL_NO_ACCESS' => 'You have no access to create $module',
-    
+
     'LBL_REPEAT_TYPE' => 'Repeat Type',
     'LBL_REPEAT_INTERVAL' => 'Repeat Interval',
     'LBL_REPEAT_DOW' => 'Repeat Dow',
@@ -186,7 +164,7 @@ $mod_strings = array (
     'LBL_REPEAT_COUNT' => 'Repeat Count',
     'LBL_REPEAT_PARENT_ID' => 'Repeat Parent ID',
     'LBL_RECURRING_SOURCE' => 'Recurring Source',
-    
+
     'LBL_SYNCED_RECURRING_MSG' => 'This meeting originated in another system and was synced to SuiteCRM. To make changes, go to the original meeting within the other system. Changes made in the other system can be synced to this record.',
     'LBL_RELATED_TO' => 'Related to:',
 
