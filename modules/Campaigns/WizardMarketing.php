@@ -521,7 +521,7 @@ else {
     $steps[$mod_strings['LBL_NAVIGATION_MENU_SUMMARY']] = $summaryURLForProgressBar;
 }
 
-include_once('DotListWizardMenu.php');
+include_once('modules/Campaigns/DotListWizardMenu.php');
 $dotListWizardMenu = new DotListWizardMenu($mod_strings, $steps, true);
 //    array(
 //        $mod_strings['LBL_NAVIGATION_MENU_GEN1'] => $camp_url.'1',

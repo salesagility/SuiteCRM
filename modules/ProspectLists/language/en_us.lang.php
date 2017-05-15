@@ -95,7 +95,10 @@ $mod_strings = array (
   'LBL_DOMAIN_NAME'=>'Domain Name',
   'LBL_DOMAIN'=>'No emails to Domain',
   'LBL_LIST_PROSPECTLIST_NAME'=>'Name',
-	'LBL_MORE_DETAIL' => 'More Detail' /*for 508 compliance fix*/,
+  'LBL_MORE_DETAIL' => 'More Detail' /*for 508 compliance fix*/,
+
+  'LBL_EMAIL_MARKETING'=>'Email Marketing',
+
 );
 
 

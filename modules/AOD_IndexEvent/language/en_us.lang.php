@@ -71,4 +71,6 @@ $mod_strings = array (
   'LBL_ERROR' => 'Error',
   'LBL_SUCCESS' => 'Success',
   'LBL_RECORD_MODULE' => 'Success',
+
+  'LBL_RECORD_ID' => 'Record ID',
 );
