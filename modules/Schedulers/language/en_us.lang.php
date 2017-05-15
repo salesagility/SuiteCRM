@@ -139,16 +139,12 @@ $mod_strings = array(
     'LNK_NEW_SCHEDULER' => 'Create Scheduler',
     'LNK_LIST_SCHEDULED' => 'Scheduled Jobs',
 // Messages
-    'ERR_DELETE_RECORD' => 'You must specify a record number to delete the schedule.',
     'ERR_CRON_SYNTAX' => 'Invalid Cron syntax',
-    'NTC_DELETE_CONFIRMATION' => 'Are you sure you want to delete this record?',
-    'NTC_STATUS' => 'Set status to Inactive to remove this schedule from the Scheduler dropdown lists',
     'NTC_LIST_ORDER' => 'Set the order this schedule will appear in the Scheduler dropdown lists',
     'LBL_CRON_INSTRUCTIONS_WINDOWS' => 'To Setup Windows Scheduler',
     'LBL_CRON_INSTRUCTIONS_LINUX' => 'To Setup Crontab',
     'LBL_CRON_LINUX_DESC1' => 'In order to run SuiteCRM Schedulers, edit your web server user\'s crontab file with this command: ',
     'LBL_CRON_LINUX_DESC2' => '... and add the following line to the crontab file: ',
-    'LBL_CRON_LINUX_DESC3' => 'You should do this only after the installation is concluded.',
     'LBL_CRON_WINDOWS_DESC' => 'In order to run the SuiteCRM schedulers, create a batch file to run using Windows Scheduled Tasks. The batch file should include the following commands: ',
 // Subpanels
     'LBL_JOBS_SUBPANEL_TITLE' => 'Job Log',
