@@ -1548,7 +1548,8 @@ class AOR_Report extends Basic
                     }
 
                     if ($condition->value_type == 'Value' && !$condition->value && $condition->operator == 'Equal_To') {
-                        $value = "{$value} OR {$field} IS NULL";
+                        $value = "{$value} OR {$field} IS NULL)";
+                        $field = "(".$field;
                     }
 
                     if (!$where_set) {
