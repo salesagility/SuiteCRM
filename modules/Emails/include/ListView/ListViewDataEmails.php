@@ -112,6 +112,9 @@ class ListViewDataEmails extends ListViewData
         parent::__construct();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getListViewData(
         $seed,
         $where,
@@ -186,12 +189,6 @@ class ListViewDataEmails extends ListViewData
 
             $folder = $inboundEmail->mailbox;
 
-
-            if (empty($where)) {
-                // use the filters from the email server
-            } else {
-
-            }
 
 
             // Create a list of fields to filter and decide based on the field which type of filter to carry out
@@ -386,34 +383,8 @@ class ListViewDataEmails extends ListViewData
                         $order['sortOrder'] =  (empty($params['sortOrder']) ? '' : $params['sortOrder']);
                     }
 
-                    //rrs - bug: 21788. Do not use Order by stmts with fields that are not in the query.
-                    // Bug 22740 - Tweak this check to strip off the table name off the order by parameter.
-                    // Samir Gandhi : Do not remove the report_cache.date_modified condition as the report list view is broken
-                    $orderby = $order['orderBy'];
-                    if (strpos($order['orderBy'],'.') && ($order['orderBy'] != "report_cache.date_modified")) {
-                        $orderby = substr($order['orderBy'],strpos($order['orderBy'],'.')+1);
-                    }
-                    if ($orderby != 'date_entered' && !in_array($orderby, array_keys($filter_fields))) {
-                        $order['orderBy'] = '';
-                        $order['sortOrder'] = '';
-                    }
-
-                    if (empty($order['orderBy'])) {
-                        $orderBy = '';
-                    } else {
-                        $orderBy = $order['orderBy'] . ' ' . $order['sortOrder'];
-                        //wdong, Bug 25476, fix the sorting problem of Oracle.
-                        if (isset($params['custom_order_by_override']['ori_code']) && $order['orderBy'] == $params['custom_order_by_override']['ori_code'])
-                            $orderBy = $params['custom_order_by_override']['custom_code'] . ' ' . $order['sortOrder'];
-                    }
-
                     if (empty($params['skipOrderSave'])) { // don't save preferences if told so
                         $current_user->setPreference('listviewOrder', $order, 0, $this->var_name); // save preference
-                    }
-
-                    // If $params tells us to override for the special last_name, first_name sorting
-                    if (!empty($params['overrideLastNameOrder']) && $order['orderBy'] == 'last_name') {
-                        $orderBy = 'last_name '.$order['sortOrder'].', first_name '.$order['sortOrder'];
                     }
 
                     $data = array();
@@ -509,7 +480,7 @@ class ListViewDataEmails extends ListViewData
                             }else{
                                 $pageData['tag'][$dataIndex] = $pageData['tag'][$idIndex[$row[$id_field]][0]];
                             }
-                            $data[$dataIndex] = $temp->get_list_view_data($filter_fields);
+                            $data[$dataIndex] = $temp->get_list_view_data();
                             $detailViewAccess = $temp->ACLAccess('DetailView');
                             $editViewAccess = $temp->ACLAccess('EditView');
                             $pageData['rowAccess'][$dataIndex] = array('view' => $detailViewAccess, 'edit' => $editViewAccess);
@@ -551,7 +522,7 @@ class ListViewDataEmails extends ListViewData
                     $totalCount = $count + $offset;
 
                     if( $count >= $limit && $totalCounted){
-                        $totalCount  = $this->getTotalCount($main_query);
+                        $totalCount  = $this->getTotalCount($crmEmailsQuery);
                     }
                     SugarVCR::recordIDs($this->seed->module_dir, array_keys($idIndex), $offset, $totalCount);
                     $module_names = array(
@@ -645,14 +616,6 @@ class ListViewDataEmails extends ListViewData
 
                     // Get emails from email server
                     $emailServerEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter);
-                    // order by DESC
-                    $sortDESC = function ($a, $b) {
-                        if ($a['date'] == $b['date']) {
-                            return 0;
-                        }
-
-                        return -1;
-                    };
 
                     $total = $emailServerEmails['mailbox_info']['Nmsgs'] + count($importedEmails['data']);
                     if ($page === "end") {
@@ -752,15 +715,6 @@ class ListViewDataEmails extends ListViewData
                                             }
                                         }
                                     }
-
-                                    if ($emailHeader['deleted'] != 0) {
-                                        // TODO: TASK: UNDEFINED - Handle deleted
-
-                                    }
-
-                                    if ($emailHeader['recent'] != 0) {
-                                        // TODO: TASK: UNDEFINED - Add recent flag to SuiteCRM
-                                    }
                                     break;
                                 default:
                                     $emailRecord[strtoupper($field)] = '';
@@ -769,7 +723,7 @@ class ListViewDataEmails extends ListViewData
                         }
 
                         $data[] = $emailRecord;
-                        $pageData['rowAccess'][$h] = array('edit' => true, view => true);
+                        $pageData['rowAccess'][$h] = array('edit' => true, 'view' => true);
                         $pageData['additionalDetails'][$h] = '';
                         $pageData['tag'][$h]['MAIN'] = 'a';
                     }
@@ -778,10 +732,6 @@ class ListViewDataEmails extends ListViewData
                     // Filter imported emails based on the UID of the results from the IMAP server
                     $crmWhere = $where . ' AND mailbox_id LIKE ' . '"' . $inboundEmail->id . '"';
 
-
-                    if (!array_key_exists('uid')) {
-                        $filter_fields['uid'] = true;
-                    }
                     // Populates CRM fields
                     $crmQueryArray = $seed->create_new_list_query(
                         'id',
@@ -814,18 +764,6 @@ class ListViewDataEmails extends ListViewData
                     if (!isset($params['custom_order_by'])) {
                         $params['custom_order_by'] = '';
                     }
-                    $crmEmailsQuery = $crmQueryArray['select'] .
-                        $params['custom_select'] .
-                        $crmQueryArray['from'] .
-                        $params['custom_from'] .
-                        $crmQueryArray['inner_join'] .
-                        $crmQueryArray['where'] .
-                        $params['custom_where'] .
-                        $crmQueryArray['order_by'] .
-                        $params['custom_order_by'];
-
-
-                    $crmEmails = $this->db->query($crmEmailsQuery);
 
                     $this->setVariableName($seed->object_name, $crmWhere, $this->listviewName, $id);
 
@@ -893,8 +831,8 @@ class ListViewDataEmails extends ListViewData
                         }
                     }
 
+                    // TODO: UNDEFINED: refactor current_query_by_page in the list view
                     // inject post values
-                    $_REQUEST['folder'] = $folder;
                     $_REQUEST['folder'] = $folder;
                     $_REQUEST['folder_type'] = $folderType;
                     $_REQUEST['inbound_email_record'] = $inboundEmailID;
