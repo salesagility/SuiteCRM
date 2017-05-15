@@ -69,12 +69,12 @@ class OutcomeByMonthDashlet extends DashletGenericChart
     {
         global $timedate;
 
-        if(empty($options['obm_date_start']))
+        if(empty($options['obm_date_start'])){
             $options['obm_date_start'] = $timedate->nowDbDate();
-
-        if(empty($options['obm_date_end']))
+        }
+        if(empty($options['obm_date_end'])){
             $options['obm_date_end'] = $timedate->asDbDate($timedate->getNow()->modify("+6 months"));
-
+        }
         parent::__construct($id,$options);
     }
 
@@ -87,17 +87,18 @@ class OutcomeByMonthDashlet extends DashletGenericChart
         global $app_list_strings;
 
           
-        if (!isset($this->obm_ids) || count($this->obm_ids) == 0)
-        {
+        if (!isset($this->obm_ids) || count($this->obm_ids) == 0) {
             $this->_searchFields['obm_ids']['input_name0'] = array_keys(get_user_array(false));
         }
         
-       if (!empty($this->pbss_sales_stages) && count($this->pbss_sales_stages) > 0)
-            foreach ($this->pbss_sales_stages as $key)
+       if (!empty($this->pbss_sales_stages) && count($this->pbss_sales_stages) > 0){
+            foreach ($this->pbss_sales_stages as $key){
                 $selected_datax[] = $key;
-        else
+            }
+       }    
+        else{
             $selected_datax = array_keys($app_list_strings['sales_stage_dom']);
-            
+        }    
         $this->_searchFields['pbss_sales_stages']['options'] = $app_list_strings['sales_stage_dom'];
         $this->_searchFields['pbss_sales_stages']['input_name0'] = $selected_stages;
 
@@ -266,8 +267,9 @@ EOD;
             " AND opportunities.date_closed <= ".db_convert("'".$this->obm_date_end."'",'date') .
             " AND opportunities.sales_stage IN ('" . implode("','",$this->pbss_sales_stages) . "')".
             " AND opportunities.deleted=0";
-        if (count($this->obm_ids) > 0)
+        if (count($this->obm_ids) > 0){
             $query .= " AND opportunities.assigned_user_id IN ('" . implode("','",$this->obm_ids) . "')";
+        }
         $query .= " GROUP BY sales_stage,".
             db_convert('opportunities.date_closed','date_format',array("'%Y-%m'"),array("'YYYY-MM'")) .
             " ORDER BY m";
@@ -294,9 +296,9 @@ EOD;
                 $chart['labels'][] = $key;
                 $chart['data'][] = array();
             }
-            if(!in_array($stage,$chart['key']))
+            if(!in_array($stage,$chart['key'])){
                 $chart['key'][] = $stage;
-
+            }
             $formattedFloat = (float)number_format((float)$i["total"], 2, '.', '');
             $chart['data'][count($chart['data'])-1][] = $formattedFloat;
             $chart['tooltips'][]="<div><input type='hidden' class='stage' value='$stage_dom_option'><input type='hidden' class='date' value='$key'></div>".$stage.'('.$currency_symbol.$formattedFloat.$thousands_symbol.') '.$key;
