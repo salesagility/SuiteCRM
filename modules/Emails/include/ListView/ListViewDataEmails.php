@@ -112,11 +112,6 @@ class ListViewDataEmails extends ListViewData
         parent::__construct();
     }
 
-    public function getListViewCachedData()
-    {
-    }
-
-
     public function getListViewData(
         $seed,
         $where,
