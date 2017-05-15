@@ -145,6 +145,7 @@ $mod_strings = array(
     'LBL_CRON_INSTRUCTIONS_LINUX' => 'To Setup Crontab',
     'LBL_CRON_LINUX_DESC1' => 'In order to run SuiteCRM Schedulers, edit your web server user\'s crontab file with this command: ',
     'LBL_CRON_LINUX_DESC2' => '... and add the following line to the crontab file: ',
+    'LBL_CRON_LINUX_DESC3' => 'You should do this only after the installation is concluded.',
     'LBL_CRON_WINDOWS_DESC' => 'In order to run the SuiteCRM schedulers, create a batch file to run using Windows Scheduled Tasks. The batch file should include the following commands: ',
 // Subpanels
     'LBL_JOBS_SUBPANEL_TITLE' => 'Job Log',
