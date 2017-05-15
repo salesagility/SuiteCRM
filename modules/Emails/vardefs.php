@@ -212,6 +212,14 @@ $dictionary['Email'] = array(
             'source' => 'non-db',
             'inline_edit' => false,
         ),
+        'imap_keywords' => array(
+            'name' => 'imap_keywords',
+            'type' => 'varchar',
+            'vname' => 'LBL_IMAP_KEYWORDS',
+            'source' => 'non-db',
+            'inline_edit' => false,
+        ),
+
         'raw_source' => array(
             'name' => 'raw_source',
             'type' => 'varchar',

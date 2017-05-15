@@ -51,6 +51,10 @@ $searchdefs[$module_name] = array(
             array('name' => 'current_user_only', 'label' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
         ),
         'advanced_search' => array(
+           'imap_keywords' => array(
+                'name' => 'imap_keywords',
+                'label' => 'LBL_IMAP_KEYWORDS',
+            ),
             'from_addr_name' => array(
                 'name' => 'from_addr_name',
                 'label' => 'LBL_FROM',

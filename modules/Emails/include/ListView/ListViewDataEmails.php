@@ -60,6 +60,7 @@ class ListViewDataEmails extends ListViewData
         'name' => 'SUBJECT',
         'subject' => 'SUBJECT',
         'description' => 'BODY',
+        'imap_keywords' => 'KEYWORD'
     );
 
     /**
@@ -71,6 +72,7 @@ class ListViewDataEmails extends ListViewData
         'indicator',
         'flagged',
         'has_attachment',
+        'imap_keywords'
     );
 
     /**
