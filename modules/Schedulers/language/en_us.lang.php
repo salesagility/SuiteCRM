@@ -60,7 +60,6 @@ $mod_strings = array(
     'LBL_OOTB_SUGARFEEDS' => 'Prune SuiteCRM Feed Tables',
     'LBL_OOTB_LUCENE_INDEX' => 'Perform Lucene Index',
     'LBL_OOTB_OPTIMISE_INDEX' => 'Optimise AOD Index',
-    'LBL_UPDATE_TRACKER_SESSIONS' => 'Update tracker_sessions Table',
     'LBL_OOTB_SEND_EMAIL_REMINDERS' => 'Run Email Reminder Notifications',
     'LBL_OOTB_CLEANUP_QUEUE' => 'Clean Jobs Queue',
     'LBL_OOTB_REMOVE_DOCUMENTS_FROM_FS' => 'Removal of documents from filesystem',
@@ -140,7 +139,6 @@ $mod_strings = array(
     'LNK_NEW_SCHEDULER' => 'Create Scheduler',
     'LNK_LIST_SCHEDULED' => 'Scheduled Jobs',
 // Messages
-    'SOCK_GREETING' => "\nThis is the interface for SuiteCRM Schedulers Service. \n[ Available daemon commands: start|restart|shutdown|status ]\nTo quit, type 'quit'. To shutdown the service 'shutdown'.\n",
     'ERR_DELETE_RECORD' => 'You must specify a record number to delete the schedule.',
     'ERR_CRON_SYNTAX' => 'Invalid Cron syntax',
     'NTC_DELETE_CONFIRMATION' => 'Are you sure you want to delete this record?',
@@ -152,7 +150,6 @@ $mod_strings = array(
     'LBL_CRON_LINUX_DESC2' => '... and add the following line to the crontab file: ',
     'LBL_CRON_LINUX_DESC3' => 'You should do this only after the installation is concluded.',
     'LBL_CRON_WINDOWS_DESC' => 'In order to run the SuiteCRM schedulers, create a batch file to run using Windows Scheduled Tasks. The batch file should include the following commands: ',
-    'LBL_NO_PHP_CLI' => 'If your host does not have the PHP binary available, you can use wget or curl to launch your Jobs.<br>for wget: <b>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;wget --quiet --non-verbose ' . (isset($sugar_config['site_url'])?$sugar_config['site_url']:'http://yoursite') . '/cron.php > /dev/null 2>&1</b><br>for curl: <b>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;curl --silent ' . (isset($sugar_config['site_url'])?$sugar_config['site_url']:'http://yoursite') . '/cron.php > /dev/null 2>&1',
 // Subpanels
     'LBL_JOBS_SUBPANEL_TITLE' => 'Job Log',
     'LBL_EXECUTE_TIME' => 'Execute Time',
