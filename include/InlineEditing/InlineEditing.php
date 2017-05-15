@@ -315,7 +315,7 @@ function saveField($field, $id, $module, $value)
             $save_field = $bean->field_defs[$field]['id_name'];
             $bean->$save_field = $value;
             if ($bean->field_defs[$field]['type'] == 'parent') {
-                $bean->parent_type = $_REQUEST['parent_type'];
+                $bean->parent_type = $_REQUEST['parent_module'];
                 $bean->fill_in_additional_parent_fields(); // get up to date parent info as need it to display name
             }
         }else if ($bean->field_defs[$field]['type'] == "currency"){

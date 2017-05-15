@@ -472,7 +472,7 @@ function saveFieldHTML(field,module,id,value, parent_type) {
             'id': id,
             'value': value,
             'view' : view,
-            'parent_type': parent_type,
+            'parent_module': parent_type,
             'to_pdf': true
         }, null, "json"
     );
