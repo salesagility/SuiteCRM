@@ -118,7 +118,7 @@ $dictionary['Task'] = array('table' => 'tasks',
         'parent_type' =>
             array(
                 'name' => 'parent_type',
-                'vname' => 'LBL_PARENT_NAME',
+                'vname' => 'LBL_PARENT_TYPE',
                 'type' => 'parent_type',
                 'dbType' => 'varchar',
                 'group' => 'parent_name',
