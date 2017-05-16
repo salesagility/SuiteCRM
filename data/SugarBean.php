@@ -4330,7 +4330,7 @@ class SugarBean
         //find all definitions of type link.
         if (!empty($fieldDefs)) {
             foreach ($fieldDefs as $name => $properties) {
-                if (array_search('relate', $properties) === 'type') {
+                if (array_search('relate', $properties, true) === 'type') {
                     $related_fields[$name] = $properties;
                 }
             }
