@@ -56,7 +56,7 @@
 			{$app_strings.LBL_EMAIL_SIGNATURES}:
 		</td>
 		<td >
-			{$signaturesSettings} {$signatureButtons} 
+			{$signaturesSettings} {$signatureButtons}
         	<input type="hidden" name="signatureDefault" id="signatureDefault" value="{$signatureDefaultId}">
 		</td>
 	</tr>

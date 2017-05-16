@@ -44,7 +44,7 @@
 .remoteFolderGroup, a.remoteFolderGroup,
 .remoteFolderGroupUnseen, a.remoteFolderGroupUnseen,
 .sugarFolder, a.sugarFolder,
-.sugarFolderUnseen, a.sugarFolderUnseen, 
+.sugarFolderUnseen, a.sugarFolderUnseen,
 .sugarFolderGroup, a.sugarFolderGroup,
 .sugarFolderGroupUnseen, a.sugarFolderGroupUnseen,
 .sugarFolderDynamic, a.sugarFolderDynamic,
@@ -81,10 +81,10 @@
 }
 
 .composeRightTabs span[name="teamset_div"] input {
-	max-width: 95px;	
+	max-width: 95px;
 }
 .composeRightTabs input, .composeRightTabs select {
-    max-width: 190px;   
+    max-width: 190px;
 }
 /**************
  Hack for Sugar's pop-over menus
@@ -92,7 +92,7 @@
 .menu{
     z-index:100;
 }
-   
+
 .subDmenu{
     z-index:100;
 }
@@ -101,7 +101,7 @@
  Contacts styles
 **************/
 .rowStylenone {
-    display: none;	
+    display: none;
 }
 
 /**************
@@ -233,11 +233,11 @@
 }
 
 .sqsFloater, #smartInputFloaterContent {
-    z-index: 11000; 
+    z-index: 11000;
 }
 
 .input-error {
-    border: 1px solid #f00  
+    border: 1px solid #f00
 }
 
 .maybe {
@@ -246,16 +246,16 @@
 }
 
 table.list {
-    margin: 0px;    
+    margin: 0px;
 }
 
 .view, table.view {
     margin-top:0px;
 	margin-bottom:0px;
 }
-  
+
 .yui-nav img {
-    float: left;	
+    float: left;
 }
 
 li.yuimenuitem-disabled {
@@ -267,16 +267,16 @@ li.yuimenuitem-disabled {
 }
 
 #lefttabs .yui-nav .selected a em {
-    padding-top: 1px;	
+    padding-top: 1px;
 }
 #lefttabs .yui-content {
-    border: none;  
+    border: none;
    	overflow: auto;
-    
+
 }
 
 #lefttabs .yui-dt-empty {
-    display:none;	
+    display:none;
 }
 
 /* .yui-dt table tr th {
@@ -294,11 +294,11 @@ div #rollover {
 }
 
 #settingsDialog .bd, #settingsDialog .yui-content, #contactsDialogue .bd{
-    padding: 0px;   
+    padding: 0px;
 }
 
 #settingsDialog .edit tr th {
-	
+
 }
 
 
@@ -306,36 +306,36 @@ div #rollover {
     width:100%;
     height:100%;
 }
-#_blank { 
+#_blank {
     padding-top: 7px;
 }
 #_blank, #listBottom {
-    overflow: hidden; 
+    overflow: hidden;
 }
 #importDiv {
-    padding:10px 0 !important; 
+    padding:10px 0 !important;
 }
 
 #listRight {
     margin-left: 2px;
-    margin-right: 5px;  
+    margin-right: 5px;
 }
 
 #searchTable {
     padding: 0px;
-    margin: 0px;	
+    margin: 0px;
 }
 
 #peopleTableSearchRow td {
-    padding: 3px !important;	
+    padding: 3px !important;
 }
 
 #peopleTableSearchRow td {
-    padding: 3px !important;    
+    padding: 3px !important;
 }
 
 #listViewDiv .yui-layout-unit .yui-layout-hd {
-    display: none;	
+    display: none;
 }
 #mbfooter img {
     position: relative;
@@ -351,7 +351,7 @@ div #rollover {
 }
 
 td.yui-dt-col-bean_id {
-    text-align: center;	
+    text-align: center;
 }
 
 .yuimenuitem-disabled .yuimenuitemlabel-disabled, .yuimenuitem-disabled a.yuimenuitemlabel-disabled, .yuimenuitem-disabled a.yuimenuitemlabel-disabled:hover {
@@ -359,48 +359,48 @@ td.yui-dt-col-bean_id {
 }
 
 #listViewDiv .pagination {
-    margin-bottom: 10px;	
+    margin-bottom: 10px;
 }
 
 
 .paginator-start {
     width: 27px;
     height: 20px;
-    background: transparent url('../../index.php?entryPoint=getImage&imageName=start_off.gif') no-repeat;	
+    background: transparent url('../../index.php?entryPoint=getImage&imageName=start_off.gif') no-repeat;
 }
 
 .pagination a .paginator-start {
-	background: transparent url('../../index.php?entryPoint=getImage&imageName=start.gif') no-repeat;  
+	background: transparent url('../../index.php?entryPoint=getImage&imageName=start.gif') no-repeat;
 }
 
 .paginator-previous {
     width: 24px;
     height: 24px;
-    background: transparent url('../../index.php?entryPoint=getImage&imageName=previous_off.gif') no-repeat;   
+    background: transparent url('../../index.php?entryPoint=getImage&imageName=previous_off.gif') no-repeat;
 }
 
 .pagination a .paginator-previous {
-    background: transparent url('../../index.php?entryPoint=getImage&imageName=previous.gif') no-repeat;  
+    background: transparent url('../../index.php?entryPoint=getImage&imageName=previous.gif') no-repeat;
 }
 
 .paginator-next {
     width: 24px;
     height: 24px;
-    background: transparent url('../../index.php?entryPoint=getImage&imageName=next_off.gif') no-repeat;   
+    background: transparent url('../../index.php?entryPoint=getImage&imageName=next_off.gif') no-repeat;
 }
 
 .pagination a .paginator-next {
-    background: transparent url('../../index.php?entryPoint=getImage&imageName=next.gif') no-repeat;  
+    background: transparent url('../../index.php?entryPoint=getImage&imageName=next.gif') no-repeat;
 }
 
 .paginator-end {
     width: 27px;
     height: 20px;
-    background: transparent url('../../index.php?entryPoint=getImage&imageName=end_off.gif') no-repeat;   
+    background: transparent url('../../index.php?entryPoint=getImage&imageName=end_off.gif') no-repeat;
 }
 
 .pagination a .paginator-end {
-    background: transparent url('../../index.php?entryPoint=getImage&imageName=end.gif') no-repeat;  
+    background: transparent url('../../index.php?entryPoint=getImage&imageName=end.gif') no-repeat;
 }
 
 .pagination .yui-pg-first, .pagination .yui-pg-previous, .pagination  .yui-pg-next, .yui-pg-last, .pagination .yui-pg-current, .pagination  .yui-pg-pages, .pagination .yui-pg-page {
@@ -409,6 +409,8 @@ td.yui-dt-col-bean_id {
 
 #settingsDialog .yui-content {
     border: none;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 #settingsDialog table.view {
@@ -442,7 +444,7 @@ button img {
 }
 
 .addressbookSearch input {
-	width: 90px;	
+	width: 90px;
 }
 
 .yui-layout th {
@@ -499,3 +501,18 @@ text-align: center !important;
     padding: 3px;
     white-space: nowrap;
 }
+
+#formEmailSettingsGeneral tr td:first-child {
+}
+#formEmailSettingsGeneral tr td:nth-child(2) {
+    padding-bottom: 2px;
+}
+#formEmailSettingsGeneral tr td:nth-child(3) {
+    text-align: right;
+}
+#formEmailSettingsGeneral tr td:last-child {
+    padding-left: 15px;
+    padding-bottom: 5px;
+    padding-top:5px;
+}
+
