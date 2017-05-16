@@ -102,4 +102,11 @@ class SyncInboundEmailAccountsPage extends SyncInboundEmailAccountsSubActionHand
         $this->tpl->display('modules/Administration/templates/SyncInboundEmailAccounts.tpl');
     }
 
+    /**
+     * @param string $output
+     */
+    protected function showOutput($output) {
+        echo $output;
+    }
+
 }

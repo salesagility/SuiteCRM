@@ -73,24 +73,46 @@ class SyncInboundEmailAccountsSubActionHandler
      */
     public function __construct(SyncInboundEmailAccountsPage $sync) {
 
+        global $mod_strings;
+
         $this->sync = $sync;
 
-        $subAction = $this->getRequestedSubAction();
+        try {
 
-        switch ($subAction) {
+            $subAction = $this->getRequestedSubAction();
 
-            case 'index' :
-                $this->action_Index();
-                break;
+            switch ($subAction) {
 
-            case 'sync' :
-                $this->action_Sync();
-                break;
+                case 'index' :
+                    $this->action_Index();
+                    break;
 
-            default:
-                throw new SyncInboundEmailAccountsNoMethodException(
-                    "trying to call an unsupported method: " . $subAction);
+                case 'sync' :
+                    $this->action_Sync();
+                    break;
 
+                default:
+                    throw new SyncInboundEmailAccountsNoMethodException(
+                        "trying to call an unsupported method: " . $subAction);
+
+            }
+        } catch (SyncInboundEmailAccountsException $e) {
+            $code = $e->getCode();
+            switch($code) {
+
+                case SyncInboundEmailAccountsException::PROCESS_OUTPUT_CLEANUP_ERROR:
+                    $this->sync->showOutput($mod_strings['LBL_PROCESS_OUTPUT_CLEANUP_ERROR']);
+                    break;
+
+                case SyncInboundEmailAccountsException::PROCESS_OUTPUT_WRITE_ERROR:
+                    $this->sync->showOutput($mod_strings['LBL_PROCESS_OUTPUT_WRITE_ERROR']);
+                    break;
+
+                default:
+                    throw new SyncInboundEmailAccountsException("Unknown error in sync process, see previous exception",
+                        SyncInboundEmailAccountsException::UNKNOWN_ERROR, $e);
+
+            }
         }
 
     }
@@ -199,7 +221,7 @@ class SyncInboundEmailAccountsSubActionHandler
 
         $this->cleanup();
 
-        echo $output;
+        $this->sync->showOutput($output);
         die();
     }
 
@@ -233,7 +255,8 @@ class SyncInboundEmailAccountsSubActionHandler
     protected function cleanup() {
         if(file_exists(self::PROCESS_OUTPUT_FILE)) {
             if(!unlink(self::PROCESS_OUTPUT_FILE)) {
-                throw new SyncInboundEmailAccountsException("Unable to cleanup output file. Please check permission..");
+                throw new SyncInboundEmailAccountsException("Unable to cleanup output file. Please check permission..",
+                    SyncInboundEmailAccountsException::PROCESS_OUTPUT_CLEANUP_ERROR);
             }
         }
     }
@@ -245,7 +268,8 @@ class SyncInboundEmailAccountsSubActionHandler
     protected function output($msg) {
         $msg = "{$msg}<br>";
         if(false === file_put_contents(self::PROCESS_OUTPUT_FILE, $msg, FILE_APPEND)) {
-            throw new SyncInboundEmailAccountsException("Unable to write output file. Please check permission..");
+            throw new SyncInboundEmailAccountsException("Unable to write output file. Please check permission..",
+                SyncInboundEmailAccountsException::PROCESS_OUTPUT_WRITE_ERROR);
         }
     }
 
