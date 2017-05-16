@@ -11,7 +11,7 @@ class SyncInboundEmailAccountsSubActionHandler
     const PROCESS_OUTPUT_FILE = "modules/Administration/SyncInboundEmailAccounts/sync_output.html";
 
     /**
-     * @var SyncInboundEmailAccounts
+     * @var SyncInboundEmailAccountsPage
      */
     protected $sync;
 
@@ -21,7 +21,7 @@ class SyncInboundEmailAccountsSubActionHandler
      *
      * Handle sub-action for Sync Inbound Email Accounts
      *
-     * @param SyncInboundEmailAccounts $sync
+     * @param SyncInboundEmailAccountsPage $sync
      * @throws SyncInboundEmailAccountsInvalidMethodTypeException
      * @throws SyncInboundEmailAccountsNoMethodException
      */
@@ -78,7 +78,6 @@ class SyncInboundEmailAccountsSubActionHandler
     /**
      * Default 'index' action, shows the main form
      *
-     * @throws SyncInboundEmailAccountsNoAccountException
      */
     protected function action_Index() {
 
@@ -97,21 +96,23 @@ class SyncInboundEmailAccountsSubActionHandler
      * @return array
      * @throws SyncInboundEmailAccountsEmptyException
      */
-    private function getInboundEmailRows() {
+    protected function getInboundEmailRows() {
 
         $ret = $this->select("SELECT * FROM inbound_email WHERE status='Active' AND deleted = 0;");
 
         return $ret;
     }
 
+    /**
+     * @throws SyncInboundEmailAccountsInvalidSubActionArgumentsException
+     */
     protected function action_Sync() {
 
         global $mod_strings;
 
         $this->cleanup();
 
-        // todo: translate
-        $this->output("Sync Inbound Email Account. This may take several minutes. Going away from this page will not cancel the process, so feel free to move on or wait for confirmation...");
+        $this->output($mod_strings['LBL_SYNC_MESSAGE']);
 
         $ieList = $this->sync->getRequestedInboundEmailAccounts();
 
@@ -160,20 +161,20 @@ class SyncInboundEmailAccountsSubActionHandler
         die();
     }
 
-    private function cleanup() {
+    protected function cleanup() {
         // todo: handle error
         if(file_exists(self::PROCESS_OUTPUT_FILE)) {
             unlink(self::PROCESS_OUTPUT_FILE);
         }
     }
 
-    private function output($msg) {
+    protected function output($msg) {
         $msg = "{$msg}<br>";
         // todo: handle error
         file_put_contents(self::PROCESS_OUTPUT_FILE, $msg, FILE_APPEND);
     }
 
-    private function getIMAPUID($emailMD5, $IMAPHeaders) {
+    protected function getIMAPUID($emailMD5, $IMAPHeaders) {
         foreach($IMAPHeaders as $header) {
             if($header->message_id_md5 == $emailMD5) {
                 return $header->imap_uid;
@@ -190,15 +191,14 @@ class SyncInboundEmailAccountsSubActionHandler
         return $emailIds;
     }
 
-    private function isValidGUID($guid) {
+    protected function isValidGUID($guid) {
 
         $valid = is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/', $guid);
 
         return $valid;
     }
 
-    // TODO: this function already there somewhere...!!!
-    private function select($query) {
+    protected function select($query) {
 
         // run sql select, grab results into an array and pass back in return
         $ret = array();
@@ -262,7 +262,7 @@ class SyncInboundEmailAccountsSubActionHandler
 
     }
 
-    private function getCompoundMessageIdMD5($header, InboundEmail $ie, $uid, $msgNo = null) {
+    protected function getCompoundMessageIdMD5($header, InboundEmail $ie, $uid, $msgNo = null) {
 
         if(empty($msgNo) and !empty($uid)) {
             $msgNo = imap_msgno ($ie->conn, (int)$uid);

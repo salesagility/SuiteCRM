@@ -33,7 +33,7 @@ class SyncInboundEmailAccountsPage extends SyncInboundEmailAccountsSubActionHand
      * in php included file by action, use get_defined_vars()
      * The class handle a sub-action called method, use $_REQUEST['method']
      *
-     * @param $includeData array
+     * @param array $includeData
      */
     public function __construct($includeData) {
 

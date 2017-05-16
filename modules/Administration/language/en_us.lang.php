@@ -1285,6 +1285,7 @@ $mod_strings = array(
 	'LBL_LIST_SYMBOL' => "List Symbol",
 	'LBL_LIST_RATE' => "List Rate",
 
+    'LBL_SYNC_MESSAGE' => "Sync Inbound Email Account. This may take several minutes. Going away from this page will not cancel the process, so feel free to move on or wait for confirmation...",
     'LBL_SYNC_PROCESSING' => "Processing '%s' Inbound Email Account...",
     'LBL_SYNC_ERROR_CONN' => "Connection failed",
     'LBL_SYNC_UPDATED' => "%d record updated",
