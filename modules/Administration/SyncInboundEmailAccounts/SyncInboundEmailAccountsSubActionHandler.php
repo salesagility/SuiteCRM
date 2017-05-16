@@ -83,13 +83,26 @@ class SyncInboundEmailAccountsSubActionHandler
     protected function action_Index() {
 
         // fetch data to view
-        $ieList = $this->sync->getInboundEmailRows();
+        $ieList = $this->getInboundEmailRows();
 
         // show sync-form
         $this->sync->showForm($ieList);
 
     }
 
+    /**
+     * Return all results for non-deleted active inbound email account
+     * in an inbound email account id indexed array
+     *
+     * @return array
+     * @throws SyncInboundEmailAccountsEmptyException
+     */
+    private function getInboundEmailRows() {
+
+        $ret = $this->select("SELECT * FROM inbound_email WHERE status='Active' AND deleted = 0;");
+
+        return $ret;
+    }
 
     protected function action_Sync() {
 
@@ -177,11 +190,11 @@ class SyncInboundEmailAccountsSubActionHandler
         return $emailIds;
     }
 
-    private function validateGUID($guid) {
+    private function isValidGUID($guid) {
 
-        $ok = preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/', $guid);
+        $valid = is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/', $guid);
 
-        return $ok;
+        return $valid;
     }
 
     // TODO: this function already there somewhere...!!!
@@ -192,6 +205,9 @@ class SyncInboundEmailAccountsSubActionHandler
         $r = $this->sync->db->query($query);
         while($e = $this->sync->db->fetchByAssoc($r)) {
             $ret[$e['id']] = $e;
+        }
+        if(empty($ret)) {
+            throw new SyncInboundEmailAccountsEmptyException("No imported related Email to Inbound Email Accounts");
         }
 
         return $ret;
@@ -304,7 +320,7 @@ class SyncInboundEmailAccountsSubActionHandler
 
         if(!$ieSel) {
             // if there is not any selected, just fill out with all inbound email
-            $ieSel = array_key($this->sync->getInboundEmailRows());
+            $ieSel = array_key($this->getInboundEmailRows());
         }
 
         return $ieSel;
