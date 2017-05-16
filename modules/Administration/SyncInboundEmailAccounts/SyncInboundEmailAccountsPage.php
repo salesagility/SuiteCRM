@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * Class SyncInboundEmailAccounts
+ * Class SyncInboundEmailAccountsPage
  *
  * Handle the page of 'Sync Inbound Email Accounts' menu item in Admin page / Repair section
  * - handle the current sub/ajax actions
@@ -69,7 +69,7 @@ class SyncInboundEmailAccountsPage extends SyncInboundEmailAccountsSubActionHand
     protected $tpl;
 
     /**
-     * SyncInboundEmailAccounts constructor.
+     * SyncInboundEmailAccountsPage constructor.
      *
      * The $includeData parameter should contains all variable
      * in php included file by action, use get_defined_vars()

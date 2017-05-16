@@ -51,6 +51,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class SyncInboundEmailAccountsSubActionHandler
 {
 
+    /**
+     * @const string
+     */
     const PROCESS_OUTPUT_FILE = "modules/Administration/SyncInboundEmailAccounts/sync_output.html";
 
     /**
@@ -147,6 +150,7 @@ class SyncInboundEmailAccountsSubActionHandler
     }
 
     /**
+     * @throws SyncInboundEmailAccountsException
      * @throws SyncInboundEmailAccountsInvalidSubActionArgumentsException
      */
     protected function action_Sync() {
@@ -206,6 +210,9 @@ class SyncInboundEmailAccountsSubActionHandler
         die();
     }
 
+    /**
+     * @throws SyncInboundEmailAccountsException
+     */
     protected function handleIMAPErrors() {
 
         global $mod_strings;
@@ -227,6 +234,9 @@ class SyncInboundEmailAccountsSubActionHandler
         }
     }
 
+    /**
+     * @throws SyncInboundEmailAccountsException
+     */
     protected function cleanup() {
         if(file_exists(self::PROCESS_OUTPUT_FILE)) {
             if(!unlink(self::PROCESS_OUTPUT_FILE)) {
@@ -235,6 +245,10 @@ class SyncInboundEmailAccountsSubActionHandler
         }
     }
 
+    /**
+     * @param $msg
+     * @throws SyncInboundEmailAccountsException
+     */
     protected function output($msg) {
         $msg = "{$msg}<br>";
         if(false === file_put_contents(self::PROCESS_OUTPUT_FILE, $msg, FILE_APPEND)) {
@@ -242,6 +256,11 @@ class SyncInboundEmailAccountsSubActionHandler
         }
     }
 
+    /**
+     * @param $emailMD5
+     * @param $IMAPHeaders
+     * @return null|int
+     */
     protected function getIMAPUID($emailMD5, $IMAPHeaders) {
         foreach($IMAPHeaders as $header) {
             if($header->message_id_md5 == $emailMD5) {
@@ -251,6 +270,11 @@ class SyncInboundEmailAccountsSubActionHandler
         return null;
     }
 
+    /**
+     * @param $ieId
+     * @return array
+     * @throws SyncInboundEmailAccountsEmptyException
+     */
     protected function getEmailIdsOfInboundEmail($ieId) {
         $this->validateGUID($ieId);
         $query = "SELECT id FROM emails WHERE mailbox_id = '{$ieId}' AND deleted = 0;";
@@ -259,6 +283,10 @@ class SyncInboundEmailAccountsSubActionHandler
         return $emailIds;
     }
 
+    /**
+     * @param $guid
+     * @return bool
+     */
     protected function isValidGUID($guid) {
 
         $valid = is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/', $guid);
@@ -266,6 +294,11 @@ class SyncInboundEmailAccountsSubActionHandler
         return $valid;
     }
 
+    /**
+     * @param $query
+     * @return array
+     * @throws SyncInboundEmailAccountsEmptyException
+     */
     protected function select($query) {
 
         // run sql select, grab results into an array and pass back in return
@@ -281,6 +314,14 @@ class SyncInboundEmailAccountsSubActionHandler
         return $ret;
     }
 
+    /**
+     * @param InboundEmail $ie
+     * @param bool $test
+     * @param bool $force
+     * @param null $useSsl
+     * @return mixed
+     * @throws SyncInboundEmailAccountsIMapConnectionException
+     */
     protected function getEmailHeadersOfIMAPServer(InboundEmail $ie, $test = false, $force = false, $useSsl = null) {
 
         // ---------- CONNECT TO IMAP ------------
@@ -328,6 +369,13 @@ class SyncInboundEmailAccountsSubActionHandler
 
     }
 
+    /**
+     * @param $header
+     * @param InboundEmail $ie
+     * @param $uid
+     * @param null $msgNo
+     * @return string
+     */
     protected function getCompoundMessageIdMD5($header, InboundEmail $ie, $uid, $msgNo = null) {
 
         if(empty($msgNo) and !empty($uid)) {
@@ -355,6 +403,11 @@ class SyncInboundEmailAccountsSubActionHandler
         return $compoundMessageId;
     }
 
+    /**
+     * @param Email $e
+     * @param $IMAPheaders
+     * @return bool
+     */
     protected function isOrphanedEmail(Email $e, $IMAPheaders) {
         foreach($IMAPheaders as $header) {
             if($header->message_id_md5 == $e->message_id) {
@@ -369,9 +422,8 @@ class SyncInboundEmailAccountsSubActionHandler
      * This function only for main form handling,
      * calling by sync action to get selected inbound email accounts
      *
-     * @return array
+     * @return mixed
      * @throws SyncInboundEmailAccountsInvalidSubActionArgumentsException
-     * @throws SyncInboundEmailAccountsNoAccountException
      */
     protected function getRequestedInboundEmailAccounts() {
 
