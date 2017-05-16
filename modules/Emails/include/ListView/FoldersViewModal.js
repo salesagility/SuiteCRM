@@ -66,6 +66,14 @@
         url: 'index.php?module=Emails&action=GetFolders'
       }).done(function (data) {
         var response = JSON.parse(data);
+
+        if(typeof response.errors !== "undefined") {
+          $(response.errors).each(function(i,v) {
+            foldersBox.setBody('<div class="error">' + v + '</div>');
+          });
+          return false;
+        }
+
         response = response.response;
 
         self.tree = $('<div></div>');

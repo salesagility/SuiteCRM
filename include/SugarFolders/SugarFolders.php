@@ -45,6 +45,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/ytree/Tree.php');
 require_once('include/ytree/ExtNode.php');
 
+
+class SugarFolderEmptyException extends Exception { }
+
 /**
  * Polymorphic buckets - place any item in a folder
  */
@@ -92,12 +95,12 @@ class SugarFolder
         $this->db = DBManagerFactory::getInstance();
 
         $this->core = "SELECT f.id, f.name, f.has_child, f.is_group, f.is_dynamic, f.dynamic_query," .
-        " f.folder_type, f.created_by, i.deleted FROM folders f left join inbound_email i on f.id = i.groupfolder_id ";
+        " f.folder_type, f.created_by, f.deleted FROM folders f ";
         $this->coreSubscribed = "SELECT f.id, f.name, f.has_child, f.is_group, f.is_dynamic,".
-        " f.dynamic_query, f.folder_type, f.created_by, i.deleted FROM folders f LEFT JOIN folders_subscriptions".
-        " fs ON f.id = fs.folder_id LEFT JOIN inbound_email i on  i.groupfolder_id = f.id ";
-        $this->coreWhere = "WHERE f.deleted = 0 ";
-        $this->coreWhereSubscribed = "WHERE f.deleted = 0 AND fs.assigned_user_id = ";
+        " f.dynamic_query, f.folder_type, f.created_by, f.deleted FROM folders f LEFT JOIN folders_subscriptions".
+        " fs ON f.id = fs.folder_id LEFT JOIN inbound_email i on  i.id = f.id ";
+        $this->coreWhere = "WHERE f.deleted != 1 ";
+        $this->coreWhereSubscribed = "WHERE f.deleted != 1 AND i.deleted != 1 AND fs.assigned_user_id = ";
         $this->coreOrderBy = " ORDER BY f.is_dynamic, f.is_group, f.name ASC ";
         $this->hrSortLocal = array(
             'flagged' => 'type',
@@ -561,20 +564,26 @@ class SugarFolder
 
         $found = array();
         while ($a = $this->db->fetchByAssoc($r)) {
-            if ((($a['folder_type'] == $myEmailTypeString) ||
-                    ($a['folder_type'] == $myDraftsTypeString) ||
-                    ($a['folder_type'] == $mySentEmailTypeString)) &&
-                ($a['created_by'] != $current_user->id)
-            ) {
+            if ($a['folder_type'] == $myEmailTypeString) {
+                if (!isset($found[$a['id']])) {
+                    $found[$a['id']] = true;
 
-                continue;
-            } // if
-            if (!isset($found[$a['id']])) {
-                $found[$a['id']] = true;
-                $return[] = $a;
+                    $children = $this->db->query('SELECT * FROM folders WHERE parent_folder = "' . $a['id'] . '"');
+                    while ($b = $this->db->fetchByAssoc($children)) {
+                        $a['children'][] = $b;
+                    }
+
+                    $return[] = $a;
+                }
             }
         }
 
+        if(empty($found)) {
+            throw new SugarFolderEmptyException(
+                ' SugarFolder::retrieveFoldersForProcessing() Cannot Retrieve Folders - '.
+                'Please check the users inbound email settings.'
+            );
+        }
         return $return;
     }
 
@@ -629,36 +638,41 @@ class SugarFolder
             'origName' => ""
         );
 
-        $folders = $this->retrieveFoldersForProcessing($focusUser, false);
-        $subscriptions = $this->getSubscriptions($focusUser);
+        try {
+            $folders = $this->retrieveFoldersForProcessing($focusUser, false);
+            $subscriptions = $this->getSubscriptions($focusUser);
 
-        foreach ($folders as $a) {
-            $a['selected'] = (in_array($a['id'], $subscriptions)) ? true : false;
-            $a['origName'] = $a['name'];
-            if (isset($a['dynamic_query'])) {
-                unset($a['dynamic_query']);
-            }
-            if ($a['is_group'] == 1) {
-                $grp[] = $a;
-            } else {
-                $user[] = $a;
-            }
+            foreach ($folders as $a) {
+                $a['selected'] = (in_array($a['id'], $subscriptions)) ? true : false;
+                $a['origName'] = $a['name'];
+                if (isset($a['dynamic_query'])) {
+                    unset($a['dynamic_query']);
+                }
+                if ($a['is_group'] == 1) {
+                    $grp[] = $a;
+                } else {
+                    $user[] = $a;
+                }
 
-            if ($a['has_child'] == 1) {
-                $qGetChildren = $this->core . $this->coreWhere . "AND parent_folder = '{$a['id']}'";
-                $rGetChildren = $this->db->query($qGetChildren);
+                if ($a['has_child'] == 1) {
+                    $qGetChildren = $this->core . $this->coreWhere . "AND parent_folder = '{$a['id']}'";
+                    $rGetChildren = $this->db->query($qGetChildren);
 
-                while ($aGetChildren = $this->db->fetchByAssoc($rGetChildren)) {
-                    if ($a['is_group']) {
-                        $this->_depth = 1;
-                        $grp = $this->getFoldersChildForSettings($aGetChildren, $grp, $subscriptions);
-                    } else {
-                        $this->_depth = 1;
-                        $user = $this->getFoldersChildForSettings($aGetChildren, $user, $subscriptions);
+                    while ($aGetChildren = $this->db->fetchByAssoc($rGetChildren)) {
+                        if ($a['is_group']) {
+                            $this->_depth = 1;
+                            $grp = $this->getFoldersChildForSettings($aGetChildren, $grp, $subscriptions);
+                        } else {
+                            $this->_depth = 1;
+                            $user = $this->getFoldersChildForSettings($aGetChildren, $user, $subscriptions);
+                        }
                     }
                 }
             }
+        } catch (SugarFolderEmptyException $e) {
+            // And empty sugar folder exception is ok in this case.
         }
+
 
         $ret = array(
             'userFolders' => $user,
