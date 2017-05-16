@@ -57,6 +57,8 @@ class EmailsViewSendemail extends ViewAjax
 
     public function display()
     {
+        global $app_strings;
+        $response = array();
         $response_code = 500;
 
         if(empty($this->bean->status)) {
@@ -66,13 +68,32 @@ class EmailsViewSendemail extends ViewAjax
         switch ($this->bean->status) {
             case 'sent':
                 $response_code = 201;
+                $response['data'] = array(
+                    'type' => get_class($this->bean),
+                    'id' => $this->bean->id,
+                    'attributes' => array(),
+                    'relationships' => array(),
+                );
                 break;
             case 'sent_error':
                 $response_code = 400;
+                $response['errors'] = array(
+                    'type' => get_class($this->bean),
+                    'id' => $this->bean->id,
+                    'title' => $app_strings['LBL_EMAIL_ERROR_SENDING_EMAIL']
+                );
+                break;
+            default:
+                $response['errors'] = array(
+                    'type' => get_class($this->bean),
+                    'id' => $this->bean->id,
+                    'title' => $app_strings['ERR_BAD_RESPONSE_FROM_SERVER']
+                );
                 break;
         }
+
         http_response_code ($response_code);
-        return "";
+        return json_encode($response);
     }
 
 }
