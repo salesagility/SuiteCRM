@@ -163,15 +163,6 @@ class SyncInboundEmailAccountsSubActionHandler
 
         $ieList = $this->sync->getRequestedInboundEmailAccounts();
 
-        /**
-         * @var InboundEmail
-         */
-        $ie = BeanFactory::getBean('InboundEmail');
-
-        /**
-         * @var Email
-         */
-        $e = BeanFactory::getBean('Email');
 
         foreach ($ieList as $ieId) {
             $ie = BeanFactory::getBean('InboundEmail', $ieId);
@@ -183,7 +174,7 @@ class SyncInboundEmailAccountsSubActionHandler
 
                 $updated = 0;
                 foreach ($emailIds as $emailId => $emailData) {
-                    if ($e = BeanFactory::getBean('Email', $emailId)) {
+                    if ($e = BeanFactory::getBean('Emails', $emailId)) {
                         $e->orphaned = $this->isOrphanedEmail($e, $ie, $IMAPHeaders);
                         $e->uid = $this->getIMAPUID($e->message_id, $IMAPHeaders);
                         $e->save();
