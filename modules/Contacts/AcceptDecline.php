@@ -88,6 +88,35 @@ if($result == null) {
 
 $focus->set_accept_status($current_entity,$_REQUEST['accept_status']);
 
+$responseUrl = trim($sugar_config['aop']['meeting_response_url']);
+
+if (!empty($responseUrl)) {
+        $status = $_REQUEST['accept_status'];
+        $description = $result->description;
+        $name = $result->name;
+        $location = $result->location;
+	$datetime = new DateTime($result->date_start.' UTC');
+        $datetime->setTimezone(new DateTimeZone(date('T')));
+        $start = $datetime->format('l m/d/Y - g:i A T');
+
+        $append = "meeting_accept_status=".urlencode($status);
+        $append .= "&meeting_name=".urlencode($name);
+        $append .= "&meeting_description=".urlencode($description);
+        $append .= "&meeting_location=".urlencode($location);
+        $append .= "&meeting_start=".urlencode($start);
+
+
+        if (strpos($responseUrl, '?') === false) {
+                $responseUrl .= '?';
+	} else {
+                $responseUrl .= '&';
+	}
+
+        $responseUrl .= $append;
+
+        header('Location: '.$responseUrl);
+}
+
 print $app_strings['LBL_STATUS_UPDATED']."<BR><BR>";
 print $app_strings['LBL_STATUS']. " ". $app_list_strings['dom_meeting_accept_status'][$_REQUEST['accept_status']];
 print "<BR><BR>";
