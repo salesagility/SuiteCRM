@@ -3569,6 +3569,8 @@ $app_list_strings['duration_unit_dom']['Days'] = 'Days';
 $app_list_strings['duration_unit_dom']['Hours'] = 'Hours';
 $app_strings['LBL_GANTT_BUTTON_LABEL'] = 'View Gantt';
 $app_strings['LBL_GANTT_BUTTON_TITLE'] = 'View Gantt';
+$app_strings['LBL_DETAIL_BUTTON_LABEL'] = 'View Detail';
+$app_strings['LBL_DETAIL_BUTTON_TITLE'] = 'View Detail';
 $app_strings['LBL_CREATE_PROJECT'] = 'Create Project';
 
 //gmaps
