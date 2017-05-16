@@ -196,11 +196,16 @@ class SyncInboundEmailAccountsSubActionHandler
 
                 $updated = 0;
                 foreach ($emailIds as $emailId => $emailData) {
-                    if ($e = BeanFactory::getBean('Emails', $emailId)) {
+                    $e = BeanFactory::getBean('Emails', $emailId);
+                    if ($e !== false) {
                         $e->orphaned = $this->isOrphanedEmail($e, $ie, $IMAPHeaders);
-                        $e->uid = $this->getIMAPUID($e->message_id, $IMAPHeaders);
-                        $e->save();
-                        $updated++;
+                        if($e->uid = $this->getIMAPUID($e->message_id, $IMAPHeaders)) {
+                            if ($e->save()) {
+                                $updated++;
+                            }
+                            // todo: scrm-539 handle if bean save failed
+                        }
+                        // todo: scrm-539 handle if there is no uid
                     }
                 }
             } catch (SyncInboundEmailAccountsIMapConnectionException $e) {
@@ -367,13 +372,15 @@ class SyncInboundEmailAccountsSubActionHandler
 
         $imap_uids = imap_sort($ie->conn, SORTDATE, 0, SE_UID);
         foreach($imap_uids as $imap_uid) {
-            $headers[$imap_uid] = imap_header($ie->conn, $imap_uid);
+            $msgNo = imap_msgno ($ie->conn, (int)$imap_uid);
+            $headers[$imap_uid] = imap_header($ie->conn, $msgNo);
             $headers[$imap_uid]->imap_uid = $imap_uid;
+            $headers[$imap_uid]->imap_msgid_int = (int)$msgNo;
         }
 
 
         foreach($headers as &$header) {
-            $header->message_id_md5 = $this->getCompoundMessageIdMD5($header, $ie, $imap_uid);
+            $header->message_id_md5 = $this->getCompoundMessageIdMD5($ie, $header->imap_uid);
         }
 
 
@@ -393,29 +400,44 @@ class SyncInboundEmailAccountsSubActionHandler
      * @param null $msgNo
      * @return string
      */
-    protected function getCompoundMessageIdMD5($header, InboundEmail $ie, $uid, $msgNo = null) {
+    protected function getCompoundMessageIdMD5(InboundEmail $ie, $uid, $msgNo = null) {
 
         if(empty($msgNo) and !empty($uid)) {
             $msgNo = imap_msgno ($ie->conn, (int)$uid);
         }
 
-        $textHeader = imap_fetchheader($ie->conn, $msgNo);
-
-        // generate "delivered-to" seed for email duplicate check
-        $deliveredTo = $ie->id; // cn: bug 12236 - cc's failing dupe check
-        $exHeader = explode("\n", $textHeader);
-
-        foreach ($exHeader as $headerLine) {
-            if (strpos(strtolower($headerLine), 'delivered-to:') !== false) {
-                $deliveredTo = substr($headerLine, strpos($headerLine, " "), strlen($headerLine));
-                //$GLOBALS['log']->debug('********* InboundEmail found [ ' . $deliveredTo . ' ] as the destination address for email [ ' . $message_id . ' ]');
-            } elseif (strpos(strtolower($headerLine), 'x-real-to:') !== false) {
-                $deliveredTo = substr($headerLine, strpos($headerLine, " "), strlen($headerLine));
-                //$GLOBALS['log']->debug('********* InboundEmail found [ ' . $deliveredTo . ' ] for non-standards compliant email x-header [ ' . $message_id . ' ]');
-            }
+        $header = imap_headerinfo($ie->conn, $msgNo);
+        $fullHeader = imap_fetchheader($ie->conn, $msgNo);
+        $message_id = $header->message_id;
+        $deliveredTo = $ie->id;
+        $matches = array();
+        preg_match('/(delivered-to:|x-real-to:){1}\s*(\S+)\s*\n{1}/im', $fullHeader, $matches);
+        if (count($matches)) {
+            $deliveredTo = $matches[2];
+        }
+        if (empty($message_id) || !isset($message_id)) {
+            $GLOBALS['log']->debug('*********** NO MESSAGE_ID.');
+            $message_id = $ie->getMessageId($header);
         }
 
-        $compoundMessageId = md5(trim($ie->getMessageId($header)) . trim($deliveredTo));
+        // generate compound messageId
+        $compoundMessageId = trim($message_id) . trim($deliveredTo);
+        // if the length > 255 then md5 it so that the data will be of smaller length
+        //if (strlen($compoundMessageId) > 255) {
+            $compoundMessageId = md5($compoundMessageId);
+        //} // if
+
+        if (empty($compoundMessageId)) {
+            return null; //throw new Exception('????');
+        } // if
+        //$counter++;
+        $potentials = clean_xss($compoundMessageId, false);
+
+        if (is_array($potentials) && !empty($potentials)) {
+            foreach ($potentials as $bad) {
+                $compoundMessageId = str_replace($bad, "", $compoundMessageId);
+            }
+        }
 
         return $compoundMessageId;
     }
