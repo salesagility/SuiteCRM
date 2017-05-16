@@ -58,6 +58,15 @@
             }
 
             this.submit();
+
+            $('form[name="sync-form"]').hide();
+
+            setInterval(function(){
+                $.get('modules/Administration/SyncInboundEmailAccounts/sync_output.html', function(resp){
+                    $('#sync-results').html(resp);
+                });
+            }, 1000);
+
         });
 
     });
@@ -86,3 +95,4 @@
     <input class="sync-btn" type="submit" value="{$app_strings.LBL_SYNC}">
 
 </form>
+<div id="sync-results"></div>

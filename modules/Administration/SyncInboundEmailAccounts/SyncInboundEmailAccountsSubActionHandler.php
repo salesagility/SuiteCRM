@@ -8,6 +8,8 @@
 class SyncInboundEmailAccountsSubActionHandler
 {
 
+    const PROCESS_OUTPUT_FILE = "modules/Administration/SyncInboundEmailAccounts/sync_output.html";
+
     /**
      * @var SyncInboundEmailAccounts
      */
@@ -91,6 +93,10 @@ class SyncInboundEmailAccountsSubActionHandler
 
     protected function action_Sync() {
 
+        $this->cleanup();
+
+        // todo: translate
+        $this->output("Sync Inbound Email Account. This may take several minutes. Going away from this page will not cancel the process, so feel free to move on or wait for confirmation...");
 
         $ieList = $this->sync->getRequestedInboundEmailAccounts();
 
@@ -104,52 +110,64 @@ class SyncInboundEmailAccountsSubActionHandler
          */
         $e = BeanFactory::getBean('Email');
 
-
-        foreach($ieList as $ieId) {
+        foreach ($ieList as $ieId) {
             $ie = BeanFactory::getBean('InboundEmail', $ieId);
-            echo "{$ie->name}...<br>";
+            $this->output("Processing '{$ie->name}' Inbound Email Account...");
             try {
                 $IMAPHeaders = $this->getEmailHeadersOfIMAPServer($ie);
 
                 $emailIds = $this->getEmailIdsOfInboundEmail($ieId);
 
                 $updated = 0;
-                foreach($emailIds as $emailId => $emailData) {
-                    if($e = BeanFactory::getBean('Email', $emailId)) {
+                foreach ($emailIds as $emailId => $emailData) {
+                    if ($e = BeanFactory::getBean('Email', $emailId)) {
                         $e->orphaned = $this->isOrphanedEmail($e, $ie, $IMAPHeaders);
+                        $e->uid = $this->getIMAPUID($e->message_id, $IMAPHeaders);
                         $e->save();
                         $updated++;
                     }
                 }
             } catch (SyncInboundEmailAccountsIMapConnectionException $e) {
-                echo "error: " . $e->getMessage();
+                $this->output("error: " . $e->getMessage());
             }
-            echo " {$updated} record updated<br>";
+
+            $this->output("{$updated} record updated");
 
         }
-        echo "finished<br>";
-/*
-//        foreach($ieList as $ieId) {
-//            $ie->retrieve($ieId);
-//            // TODO: !@# show the currently syncing email name correctly via Smarty template
-//            $imap = new SyncInboundEmailAccountsIMapConnection();
-//            $imap->connect($ie);
-//            $headers = $imap->getEmailHeaders($ie);
-//            $imap->close();
-//
-//            $emails = BeanFactory::getBean('Email')->get_full_list("emails.last_sync", "emails.");
-//
-//            foreach($headers as $header) {
-//                $mailbox_id = $this->getMailboxIdFromHeader($header);
-//                $e->retrieve_by_string_fields(array('mailbox_id' => $mailbox_id));
-//                $e->uid = $header->getUid();
-//                $e->orphaned = $header->isOrphaned();
-//                $e->save();
-//            }
-//
-//
-//        }
-*/
+        $this->output("Done Processing Inbound Email Accounts");
+
+
+        $output = file_get_contents(self::PROCESS_OUTPUT_FILE);
+
+        $this->cleanup();
+
+
+        echo $output;
+
+
+        die();
+    }
+
+    private function cleanup() {
+        // todo: handle error
+        if(file_exists(self::PROCESS_OUTPUT_FILE)) {
+            unlink(self::PROCESS_OUTPUT_FILE);
+        }
+    }
+
+    private function output($msg) {
+        $msg = "{$msg}<br>";
+        // todo: handle error
+        file_put_contents(self::PROCESS_OUTPUT_FILE, $msg, FILE_APPEND);
+    }
+
+    private function getIMAPUID($emailMD5, $IMAPHeaders) {
+        foreach($IMAPHeaders as $header) {
+            if($header->message_id_md5 == $emailMD5) {
+                return $header->imap_uid;
+            }
+        }
+        return null;
     }
 
     protected function getEmailIdsOfInboundEmail($ieId) {
@@ -160,18 +178,23 @@ class SyncInboundEmailAccountsSubActionHandler
         return $emailIds;
     }
 
-    private function validateGUID($id) {
-        // todo: regex validation for bean id
+    private function validateGUID($guid) {
+
+        $ok = preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/', $guid);
+
+        return $ok;
     }
 
     // TODO: this function already there somewhere...!!!
     private function select($query) {
-        // todo: run sql select, grab results into an array and pass back in return
+
+        // run sql select, grab results into an array and pass back in return
         $ret = array();
         $r = $this->sync->db->query($query);
         while($e = $this->sync->db->fetchByAssoc($r)) {
             $ret[$e['id']] = $e;
         }
+
         return $ret;
     }
 
@@ -206,11 +229,12 @@ class SyncInboundEmailAccountsSubActionHandler
         $imap_uids = imap_sort($ie->conn, SORTDATE, 0, SE_UID);
         foreach($imap_uids as $imap_uid) {
             $headers[$imap_uid] = imap_header($ie->conn, $imap_uid);
+            $headers[$imap_uid]->imap_uid = $imap_uid;
         }
 
 
         foreach($headers as &$header) {
-            $header->message_id_md5 = $this->getCompoundMessageIdMD5($header, $ie);
+            $header->message_id_md5 = $this->getCompoundMessageIdMD5($header, $ie, $imap_uid);
         }
 
 
@@ -223,8 +247,30 @@ class SyncInboundEmailAccountsSubActionHandler
 
     }
 
-    private function getCompoundMessageIdMD5($header, InboundEmail $ie) {
-        $compoundMessageId = md5(trim($ie->getMessageId($header)) . trim($ie->id));
+    private function getCompoundMessageIdMD5($header, InboundEmail $ie, $uid, $msgNo = null) {
+
+        if(empty($msgNo) and !empty($uid)) {
+            $msgNo = imap_msgno ($ie->conn, (int)$uid);
+        }
+
+        $textHeader = imap_fetchheader($ie->conn, $msgNo);
+
+        // generate "delivered-to" seed for email duplicate check
+        $deliveredTo = $ie->id; // cn: bug 12236 - cc's failing dupe check
+        $exHeader = explode("\n", $textHeader);
+
+        foreach ($exHeader as $headerLine) {
+            if (strpos(strtolower($headerLine), 'delivered-to:') !== false) {
+                $deliveredTo = substr($headerLine, strpos($headerLine, " "), strlen($headerLine));
+                //$GLOBALS['log']->debug('********* InboundEmail found [ ' . $deliveredTo . ' ] as the destination address for email [ ' . $message_id . ' ]');
+            } elseif (strpos(strtolower($headerLine), 'x-real-to:') !== false) {
+                $deliveredTo = substr($headerLine, strpos($headerLine, " "), strlen($headerLine));
+                //$GLOBALS['log']->debug('********* InboundEmail found [ ' . $deliveredTo . ' ] for non-standards compliant email x-header [ ' . $message_id . ' ]');
+            }
+        }
+
+        $compoundMessageId = md5(trim($ie->getMessageId($header)) . trim($deliveredTo));
+
         return $compoundMessageId;
     }
 
