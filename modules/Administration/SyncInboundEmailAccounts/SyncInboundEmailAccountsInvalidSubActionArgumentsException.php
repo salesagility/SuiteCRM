@@ -42,17 +42,57 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+/**
+ * Class SyncInboundEmailAccountsInvalidSubActionArgumentsException
+ *
+ * Handle the action calls with incorrect argument(s)
+ *
+ * It is a simple exception with an additional message which
+ * contains the incorrectly called action-method name
+ *
+ */
+class SyncInboundEmailAccountsInvalidSubActionArgumentsException extends Exception
+{
 
-// include the the dependencies and related or used beans at least once to let IDE to see it
-include_once 'modules/InboundEmail/InboundEmail.php';
-include_once 'modules/Emails/Email.php';
-include_once 'modules/Administration/SyncInboundEmailAccounts/SyncInboundEmailAccountsEmptyException.php';
-include_once 'modules/Administration/SyncInboundEmailAccounts/SyncInboundEmailAccountsNoMethodException.php';
-include_once 'modules/Administration/SyncInboundEmailAccounts/SyncInboundEmailAccountsInvalidMethodTypeException.php';
-include_once 'modules/Administration/SyncInboundEmailAccounts/SyncInboundEmailAccountsInvalidSubActionArgumentsException.php';
-include_once 'modules/Administration/SyncInboundEmailAccounts/SyncInboundEmailAccountsIMapConnectionException.php';
-include_once 'modules/Administration/SyncInboundEmailAccounts/SyncInboundEmailAccountsException.php';
-include_once 'modules/Administration/SyncInboundEmailAccounts/SyncInboundEmailAccountsSubActionHandler.php';
-include_once 'modules/Administration/SyncInboundEmailAccounts/SyncInboundEmailAccountsPage.php';
+    /**
+     * steps for get the caller method in the backtrace
+     *
+     * @var int
+     */
+    protected $callerMethodDistance = 2;
 
-new SyncInboundEmailAccountsPage(get_defined_vars());
+    /**
+     * SyncInboundEmailAccountsInvalidSubActionArgumentsException constructor.
+     *
+     * @param string $message
+     * @param int $code
+     * @param Exception|null $previous
+     */
+    public function __construct($message = "", $code = 0, \Exception $previous = null) {
+        parent::__construct(
+            ($message ? $message . " - " : "") .
+            "An action called with wrong parameters, incorrectly called action was: " .
+            $this->getCallerMethod(), $code, $previous
+        );
+
+    }
+
+    /**
+     * Return the caller function/method name
+     * call this function without argument
+     * if you override this method may you have to change
+     * the $this->callerMethodBackStep default value or
+     * override it with step parameter
+     *
+     * @param int $step
+     * @return mixed
+     */
+    protected function getCallerMethod($step = 2) {
+
+        $trace = debug_backtrace();
+        $function = $trace[$step ? $step : $this->callerMethodBackStep]['function'];
+
+        return $function;
+    }
+
+}
