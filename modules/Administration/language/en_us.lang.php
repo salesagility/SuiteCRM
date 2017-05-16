@@ -1290,5 +1290,7 @@ $mod_strings = array(
     'LBL_SYNC_ERROR_CONN' => "Connection failed",
     'LBL_SYNC_UPDATED' => "%d record updated",
     'LBL_SYNC_DONE' => "Done Processing Inbound Email Accounts",
+    'LBL_SYNC_ERROR_FOUND' => "IMAP errors detected",
+    'LBL_SYNC_ALERT_FOUND' => "IMAP alerts detected",
 );
 

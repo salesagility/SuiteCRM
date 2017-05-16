@@ -47,6 +47,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 include_once('modules/InboundEmail/InboundEmail.php');
 include_once('modules/Emails/Email.php');
 
+class SyncInboundEmailAccountsException extends Exception {}
+
 class SyncInboundEmailAccountsEmptyException extends Exception {}
 
 class SyncInboundEmailAccountsNoMethodException extends Exception {}

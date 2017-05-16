@@ -153,6 +153,8 @@ class SyncInboundEmailAccountsSubActionHandler
         }
         $this->output($mod_strings['LBL_SYNC_DONE']);
 
+        $this->handleIMAPErrors();
+
         $output = file_get_contents(self::PROCESS_OUTPUT_FILE);
 
         $this->cleanup();
@@ -161,17 +163,40 @@ class SyncInboundEmailAccountsSubActionHandler
         die();
     }
 
+    protected function handleIMAPErrors() {
+
+        global $mod_strings;
+
+        $errs = imap_errors();
+        if($errs) {
+            foreach ($errs as $err) {
+                $GLOBALS['log']->error("IMAP error detected: " . $err);
+            }
+            $this->output($mod_strings['LBL_SYNC_ERROR_FOUND']);
+        }
+
+        $warns = imap_alerts();
+        if($warns) {
+            foreach ($warns as $warn) {
+                $GLOBALS['log']->warn("IMAP error detected: " . $warn);
+            }
+            $this->output($mod_strings['LBL_SYNC_ALERT_FOUND']);
+        }
+    }
+
     protected function cleanup() {
-        // todo: handle error
         if(file_exists(self::PROCESS_OUTPUT_FILE)) {
-            unlink(self::PROCESS_OUTPUT_FILE);
+            if(!unlink(self::PROCESS_OUTPUT_FILE)) {
+                throw new SyncInboundEmailAccountsException("Unable to cleanup output file. Please check permission..");
+            }
         }
     }
 
     protected function output($msg) {
         $msg = "{$msg}<br>";
-        // todo: handle error
-        file_put_contents(self::PROCESS_OUTPUT_FILE, $msg, FILE_APPEND);
+        if(false === file_put_contents(self::PROCESS_OUTPUT_FILE, $msg, FILE_APPEND)) {
+            throw new SyncInboundEmailAccountsException("Unable to write output file. Please check permission..");
+        }
     }
 
     protected function getIMAPUID($emailMD5, $IMAPHeaders) {
@@ -227,7 +252,7 @@ class SyncInboundEmailAccountsSubActionHandler
 
         // connect to mail server view old method
 
-        // TODO: check first, may we have to restore the folder name to INBOX
+        // TODO: SCRM-539 check first, may we have to restore the folder name to INBOX
 
         $results = $ie->connectMailserver($test, $force);
 
@@ -238,8 +263,6 @@ class SyncInboundEmailAccountsSubActionHandler
         }
 
         // ------------- READ IMAP EMAIL-HEADERS AND CALCULATE MD5 BASED MESSAGE_IDs ----------------
-
-        // todo: error handle
 
         $imap_uids = imap_sort($ie->conn, SORTDATE, 0, SE_UID);
         foreach($imap_uids as $imap_uid) {
@@ -254,7 +277,7 @@ class SyncInboundEmailAccountsSubActionHandler
 
 
         // ------------ IMAP CLOSE -------------
-        // todo: error handle
+
         imap_close($ie->conn);
 
 
