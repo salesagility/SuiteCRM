@@ -1292,5 +1292,6 @@ $mod_strings = array(
     'LBL_SYNC_DONE' => "Done Processing Inbound Email Accounts",
     'LBL_SYNC_ERROR_FOUND' => "IMAP errors detected",
     'LBL_SYNC_ALERT_FOUND' => "IMAP alerts detected",
+    'LBL_SYNC_NO_EMAIL' => 'No imported related Email to Inbound Email Accounts',
 );
 

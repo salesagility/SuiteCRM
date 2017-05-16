@@ -193,6 +193,8 @@ class SyncInboundEmailAccountsSubActionHandler
             } catch (SyncInboundEmailAccountsIMapConnectionException $e) {
                 $GLOBALS['log']->warn($e->getMessage());
                 $this->output($mod_strings['LBL_SYNC_ERROR_CONN']);
+            } catch (SyncInboundEmailAccountsEmptyException $e) {
+                $this->output($mod_strings['LBL_SYNC_NO_EMAIL']);
             }
 
             $this->output(sprintf($mod_strings['LBL_SYNC_UPDATED'], $updated));
@@ -276,7 +278,7 @@ class SyncInboundEmailAccountsSubActionHandler
      * @throws SyncInboundEmailAccountsEmptyException
      */
     protected function getEmailIdsOfInboundEmail($ieId) {
-        $this->validateGUID($ieId);
+        $this->isValidGUID($ieId);
         $query = "SELECT id FROM emails WHERE mailbox_id = '{$ieId}' AND deleted = 0;";
         $emailIds = $this->select($query);
 
