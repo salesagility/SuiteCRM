@@ -3383,4 +3383,208 @@ eoq;
             unset($this->modifiedFieldDefs[$field]);
             }
     	}
+
+    /**
+     * Uses the $_REQUEST to populate the fields of an Email SugarBean.
+     *
+     * @param Email $bean
+     * @return bool|Email|SugarBean
+     */
+    public function populateBeanFromRequest(Email $bean) {
+        if (empty($bean)) {
+            $bean = BeanFactory::getBean('Emails');
+        }
+
+        if(isset($_REQUEST['id'])) {
+            $bean = $bean->retrieve($_REQUEST['id']);
+        }
+
+
+        foreach ($_REQUEST as $fieldName => $field) {
+            if (array_key_exists($fieldName, $bean->field_defs)) {
+                $bean->$fieldName = $field;
+            }
+        }
+
+
+        $old = array('&lt;', '&gt;');
+        $new = array('<', '>');
+
+        if (isset($_REQUEST['from_addr']) && $_REQUEST['from_addr'] != $_REQUEST['from_addr_name'] . ' &lt;' . $_REQUEST['from_addr_email'] . '&gt;') {
+            if (false === strpos($_REQUEST['from_addr'], '&lt;')) { // we have an email only?
+                $bean->from_addr = $_REQUEST['from_addr'];
+                $bean->from_name = '';
+                $bean->reply_to_addr = $bean->from_addr;
+                $bean->reply_to_name = $bean->from_name;
+            } else { // we have a compound string
+                $newFromAddr = str_replace($old, $new, $_REQUEST['from_addr']);
+                $bean->from_addr = substr($newFromAddr, (1 + strpos($newFromAddr, '<')),
+                    (strpos($newFromAddr, '>') - strpos($newFromAddr, '<')) - 1);
+                $bean->from_name = substr($newFromAddr, 0, (strpos($newFromAddr, '<') - 1));
+                $bean->reply_to_addr = $bean->from_addr;
+                $bean->reply_to_name = $bean->from_name;
+            }
+        } elseif (!empty($_REQUEST['from_addr_email']) && isset($_REQUEST['from_addr_email'])) {
+            $bean->from_addr = $_REQUEST['from_addr_email'];
+            $bean->from_name = $_REQUEST['from_addr_name'];
+        } else {
+            $bean->from_addr = $bean->getSystemDefaultEmail();
+            $bean->reply_to_addr = $bean->from_addr['email'];
+            $bean->reply_to_name = $bean->from_addr['name'];
+        }
+
+
+        if (empty($bean->to_addrs)) {
+            if (!empty($_REQUEST['to_addrs_names'])) {
+                $bean->to_addrs_names = htmlspecialchars_decode($_REQUEST['to_addrs_names']);
+            }
+
+            if (!empty($bean->to_addrs_names)) {
+                $bean->to_addrs = htmlspecialchars_decode($bean->to_addrs_names);
+            }
+        }
+
+
+        $toEmailAddresses = preg_split('/[,;]/', $bean->to_addrs, null, PREG_SPLIT_NO_EMPTY);
+        $bean->to_addr_arr = array();
+        foreach ($toEmailAddresses as $ea => $address) {
+
+            $email = '';
+            $display = '';
+            preg_match(
+                '/([a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\ =\?\^\`\{\|\}\~\.\[\]\"\(\)\s]+)((<[a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~\.\[\]\"\(\)]+)(@)([a-zA-z0-9\-\.]+\>))$/',
+                $address,
+                $matches
+            );
+
+            // Strip out name from email address
+            // eg Angel Mcmahon <sales.vegan@example.it>
+            if (count($matches) > 3) {
+                $display = trim($matches[1]);
+                $email = $matches[2];
+            } else {
+                $email = $address;
+                $display = '';
+            }
+
+            $email = str_ireplace('<', '', $email);
+            $email = str_ireplace('>', '', $email);
+            $email = str_ireplace('&lt;', '', $email);
+            $email = str_ireplace('&rt;', '', $email);
+
+
+            $bean->to_addrs_arr[] = array(
+                'email' => $email,
+                'display' => $display,
+            );
+        }
+
+
+        if (empty($bean->cc_addrs)) {
+            if (!empty($_REQUEST['cc_addrs_names'])) {
+                $bean->cc_addrs_names = htmlspecialchars_decode($_REQUEST['cc_addrs_names']);
+            }
+
+            if (!empty($bean->cc_addrs_names)) {
+                $bean->cc_addrs = htmlspecialchars_decode($bean->cc_addrs_names);
+            }
+        }
+
+        $ccEmailAddresses = preg_split('/[,;]/', $bean->cc_addrs, null, PREG_SPLIT_NO_EMPTY);
+        $bean->cc_addrs_arr = array();
+        foreach ($ccEmailAddresses as $ea => $address) {
+            $email = '';
+            $display = '';
+            preg_match(
+                '/([a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\ =\?\^\`\{\|\}\~\.\[\]\"\(\)\s]+)((<[a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~\.\[\]\"\(\)]+)(@)([a-zA-z0-9\-\.]+\>))$/',
+                $address,
+                $matches
+            );
+
+            // Strip out name from email address
+            // eg Angel Mcmahon <sales.vegan@example.it>
+            if (count($matches) > 3) {
+                $display = trim($matches[1]);
+                $email = $matches[2];
+            } else {
+                $email = $address;
+                $display = '';
+            }
+
+            $email = str_ireplace('<', '', $email);
+            $email = str_ireplace('>', '', $email);
+            $email = str_ireplace('&lt;', '', $email);
+            $email = str_ireplace('&rt;', '', $email);
+
+
+            $bean->cc_addrs_arr[] = array(
+                'email' => $email,
+                'display' => $display,
+            );
+        }
+
+
+        if (empty($bean->bcc_addrs)) {
+            if (!empty($_REQUEST['bcc_addrs_names'])) {
+                $bean->bcc_addrs_names = htmlspecialchars_decode($_REQUEST['bcc_addrs_names']);
+            }
+
+            if (!empty($bean->bcc_addrs_names)) {
+                $bean->bcc_addrs = htmlspecialchars_decode($bean->bcc_addrs_names);
+            }
+        }
+
+        $bccEmailAddresses = preg_split('/[,;]/', $bean->bcc_addrs, null, PREG_SPLIT_NO_EMPTY);
+        $bean->bcc_addrs_arr = array();
+        foreach ($bccEmailAddresses as $ea => $address) {
+            $email = '';
+            $display = '';
+            preg_match(
+                '/([a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\ =\?\^\`\{\|\}\~\.\[\]\"\(\)\s]+)((<[a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~\.\[\]\"\(\)]+)(@)([a-zA-z0-9\-\.]+\>))$/',
+                $address,
+                $matches
+            );
+
+            // Strip out name from email address
+            // eg Angel Mcmahon <sales.vegan@example.it>
+            if (count($matches) > 3) {
+                $display = trim($matches[1]);
+                $email = $matches[2];
+            } else {
+                $email = $address;
+                $display = '';
+            }
+
+            $email = str_ireplace('<', '', $email);
+            $email = str_ireplace('>', '', $email);
+            $email = str_ireplace('&lt;', '', $email);
+            $email = str_ireplace('&rt;', '', $email);
+
+
+            $bean->bcc_addrs_arr[] = array(
+                'email' => $email,
+                'display' => $display,
+            );
+        }
+
+        if (empty($bean->name)) {
+            if (!empty($_REQUEST['name'])) {
+                $bean->name = $_REQUEST['name'];
+            }
+        }
+
+        if (empty($bean->description_html)) {
+            if (!empty($_REQUEST['description_html'])) {
+                $bean->description_html = $_REQUEST['description_html'];
+            }
+        }
+
+        if (empty($bean->description)) {
+            if (!empty($_REQUEST['description'])) {
+                $bean->description = $_REQUEST['description'];
+            }
+        }
+
+        return $bean;
+    }
 } // end class def
