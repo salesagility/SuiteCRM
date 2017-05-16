@@ -1285,5 +1285,9 @@ $mod_strings = array(
 	'LBL_LIST_SYMBOL' => "List Symbol",
 	'LBL_LIST_RATE' => "List Rate",
 
+    'LBL_SYNC_PROCESSING' => "Processing '%s' Inbound Email Account...",
+    'LBL_SYNC_ERROR_CONN' => "Connection failed",
+    'LBL_SYNC_UPDATED' => "%d record updated",
+    'LBL_SYNC_DONE' => "Done Processing Inbound Email Accounts",
 );
 

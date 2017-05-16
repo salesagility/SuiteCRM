@@ -93,6 +93,8 @@ class SyncInboundEmailAccountsSubActionHandler
 
     protected function action_Sync() {
 
+        global $mod_strings;
+
         $this->cleanup();
 
         // todo: translate
@@ -112,7 +114,7 @@ class SyncInboundEmailAccountsSubActionHandler
 
         foreach ($ieList as $ieId) {
             $ie = BeanFactory::getBean('InboundEmail', $ieId);
-            $this->output("Processing '{$ie->name}' Inbound Email Account...");
+            $this->output(sprintf($mod_strings['LBL_SYNC_PROCESSING'], $ie->name));
             try {
                 $IMAPHeaders = $this->getEmailHeadersOfIMAPServer($ie);
 
@@ -128,23 +130,20 @@ class SyncInboundEmailAccountsSubActionHandler
                     }
                 }
             } catch (SyncInboundEmailAccountsIMapConnectionException $e) {
-                $this->output("error: " . $e->getMessage());
+                $GLOBALS['log']->warn($e->getMessage());
+                $this->output($mod_strings['LBL_SYNC_ERROR_CONN']);
             }
 
-            $this->output("{$updated} record updated");
+            $this->output(sprintf($mod_strings['LBL_SYNC_UPDATED'], $updated));
 
         }
-        $this->output("Done Processing Inbound Email Accounts");
-
+        $this->output($mod_strings['LBL_SYNC_DONE']);
 
         $output = file_get_contents(self::PROCESS_OUTPUT_FILE);
 
         $this->cleanup();
 
-
         echo $output;
-
-
         die();
     }
 
