@@ -219,7 +219,7 @@ if (isset($admin->settings['captcha_on']) && $admin->settings['captcha_on'] == '
 		</script>";
 }
 
-if (file_exists('customm/themes/' . SugarThemeRegistry::current() . '/login.tpl')) {
+if (file_exists('custom/themes/' . SugarThemeRegistry::current() . '/login.tpl')) {
     echo $sugar_smarty->display('custom/themes/' . SugarThemeRegistry::current() . '/login.tpl');
 } elseif (file_exists('custom/modules/Users/login.tpl')) {
     echo $sugar_smarty->display('custom/modules/Users/login.tpl');
