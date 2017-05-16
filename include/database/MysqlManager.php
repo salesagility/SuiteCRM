@@ -174,6 +174,7 @@ class MysqlManager extends DBManager
 			return $this->queryArray($sql, $dieOnError, $msg, $suppress);
 		}
 
+        $sql = trim(str_replace(array("\r", "\n"), " ", $sql));
 		parent::countQuery($sql);
 		$GLOBALS['log']->info('Query:' . $sql);
 		$this->checkConnection();
