@@ -80,7 +80,7 @@ class EmailsViewSendemail extends ViewAjax
                 $response['errors'] = array(
                     'type' => get_class($this->bean),
                     'id' => $this->bean->id,
-                    'title' => $app_strings['LBL_EMAIL_ERROR_SENDING_EMAIL']
+                    'title' => $app_strings['LBL_EMAIL_ERROR_SENDING']
                 );
                 break;
             default:
