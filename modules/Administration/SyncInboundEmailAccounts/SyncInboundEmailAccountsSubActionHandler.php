@@ -310,7 +310,7 @@ class SyncInboundEmailAccountsSubActionHandler
             $ret[$e['id']] = $e;
         }
         if(empty($ret)) {
-            throw new SyncInboundEmailAccountsEmptyException("No imported related Email to Inbound Email Accounts");
+            throw new SyncInboundEmailAccountsEmptyException("No imported related Email to Inbound Email Account");
         }
 
         return $ret;
