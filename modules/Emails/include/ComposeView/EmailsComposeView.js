@@ -62,7 +62,7 @@
 
       if (self.attr('id').length === 0) {
         console.warn('EmailsComposeView - expects element to have an id. EmailsComposeView has generated one.');
-        self.attr('id', self.generateID());
+        self.attr('id', 'ComposeView');
       }
 
       if (typeof opts.tinyMceOptions.setup === "undefined") {
@@ -839,7 +839,7 @@
   }
 
   $.fn.EmailsComposeView.onTemplateSelect = function(args) {
-
+    "use strict";
     var confirmed = function(args) {
       $.post('index.php?entryPoint=emailTemplateData', {
         emailTemplateId: args.name_to_value_array.emails_email_templates_idb
