@@ -534,7 +534,7 @@ class Project extends SugarBean {
 			
 
 			//default business hours array
-			if( $override_business_hours != 1){	
+			if( $override_business_hours != 1 || empty($bhours)){
 				$bhours = array ('Monday' => 8,'Tuesday' => 8,'Wednesday' => 8, 'Thursday' => 8, 'Friday' => 8, 'Saturday' => 0, 'Sunday' => 0);
 			}
 			//---------------------------			
