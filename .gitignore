@@ -89,3 +89,4 @@ themes/SuiteP/css/*.css
 !themes/SuiteP/css/fonts.css
 !themes/SuiteP/css/footable.core.css
 !themes/SuiteP/css/style.css
+tests/_output/*

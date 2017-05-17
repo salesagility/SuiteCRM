@@ -12,7 +12,6 @@
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",
-    "phpunit/phpunit": "^3.7",
     "mikey179/vfsStream": "1.4.*",
     "codeception/codeception": "^2.2"
   },
