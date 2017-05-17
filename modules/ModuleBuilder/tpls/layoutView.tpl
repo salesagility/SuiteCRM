@@ -78,7 +78,7 @@
         <div class='le_field' id='{$idCount}'>
             {if ! $fromModuleBuilder && ($col.name != '(filler)')}
                 {capture assign="otherAttributes"}class="le_edit" style="float:right; cursor:pointer;" onclick="editFieldProperties('{$idCount}', '{$col.label}');"{/capture}
-                <img src="themes/SuiteP/images/edit_inline.svg" {$otherAttributes}/>
+                {sugar_getimage name="edit_inline" ext=".gif" other_attributes=$otherAttributes}
             {/if}
             {if isset($col.type) && ($col.type == 'address')}
                 {$icon_address}
@@ -143,7 +143,7 @@
         </div>
         {if $panelid ne 'default'}
             {capture assign="otherAttributes"}class="le_edit" style="float:left; cursor:pointer;" onclick="editPanelProperties('{$idCount}');"{/capture}
-            <img src="themes/SuiteP/images/edit_inline.svg" {$otherAttributes}/>
+            {sugar_getimage name="edit_inline" ext=".gif" other_attributes=$otherAttributes}
         {/if}
         <span id="le_paneltype_{$idCount}" style="float:left;">
         &nbsp;&nbsp;{sugar_translate label="LBL_TABDEF_TYPE" module="ModuleBuilder"}&nbsp;{sugar_help text=$mod.LBL_TABDEF_TYPE_OPTION_HELP}:
@@ -175,7 +175,7 @@
                 <div class='le_field' id='{$idCount}'>
                     {if ! $fromModuleBuilder && ($col.name != '(filler)')}
                         {capture assign="otherAttributes"}class="le_edit" style="float:right; cursor:pointer;" onclick="editFieldProperties('{$idCount}', '{$col.label}');"{/capture}
-                        <img src="themes/SuiteP/images/edit_inline.svg" {$otherAttributes}/>
+                        {sugar_getimage name="edit_inline" ext=".gif" other_attributes=$otherAttributes}
                     {/if}
 
                     {if isset($col.type) && ($col.type == 'address')}
