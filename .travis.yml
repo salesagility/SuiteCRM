@@ -11,11 +11,9 @@ matrix:
 before_script:
   - composer self-update
   - composer install --no-interaction
-  - \[ -f "config_si.php" \] || cp tests/travis_config_si.php config_si.php
-  - php tests/testinstall.php
+  
 script:
-  - cd tests
-  - ../vendor/bin/phpunit
+  - codecept run 
   - cat ../suitecrm.log
 services:
   - mysql
