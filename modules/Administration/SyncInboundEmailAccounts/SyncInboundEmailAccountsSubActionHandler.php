@@ -61,6 +61,10 @@ class SyncInboundEmailAccountsSubActionHandler
      */
     protected $sync;
 
+    /**
+     * @var DBManager
+     */
+    protected $db;
 
     /**
      * SyncInboundEmailAccountsSubActionHandler constructor.
@@ -68,7 +72,7 @@ class SyncInboundEmailAccountsSubActionHandler
      * Handle sub-action for Sync Inbound Email Accounts
      *
      * @param SyncInboundEmailAccountsPage $sync
-     * @throws SyncInboundEmailAccountsInvalidMethodTypeException
+     * @throws SyncInboundEmailAccountsException
      * @throws SyncInboundEmailAccountsNoMethodException
      */
     public function __construct(SyncInboundEmailAccountsPage $sync) {
@@ -78,6 +82,8 @@ class SyncInboundEmailAccountsSubActionHandler
         $this->sync = $sync;
 
         try {
+
+            $this->db = DBManagerFactory::getInstance();
 
             $subAction = $this->getRequestedSubAction();
 
@@ -172,6 +178,24 @@ class SyncInboundEmailAccountsSubActionHandler
     }
 
     /**
+     * @param string $emailId
+     * @return bool|SugarBean
+     */
+    protected function getEmailBean($emailId) {
+        $email = BeanFactory::getBean('Emails', $emailId);
+        return $email;
+    }
+
+    /**
+     * @param string $ieId
+     * @return bool|SugarBean
+     */
+    protected function getInboundEmailBean($ieId) {
+        $ie = BeanFactory::getBean('InboundEmail', $ieId);
+        return $ie;
+    }
+
+    /**
      * @throws SyncInboundEmailAccountsException
      * @throws SyncInboundEmailAccountsInvalidSubActionArgumentsException
      */
@@ -183,39 +207,48 @@ class SyncInboundEmailAccountsSubActionHandler
 
         $this->output($mod_strings['LBL_SYNC_MESSAGE']);
 
-        $ieList = $this->sync->getRequestedInboundEmailAccounts();
+        $ieList = $this->getRequestedInboundEmailAccounts();
 
 
         foreach ($ieList as $ieId) {
-            $ie = BeanFactory::getBean('InboundEmail', $ieId);
-            $this->output(sprintf($mod_strings['LBL_SYNC_PROCESSING'], $ie->name));
-            try {
-                $IMAPHeaders = $this->getEmailHeadersOfIMAPServer($ie);
 
-                $emailIds = $this->getEmailIdsOfInboundEmail($ieId);
+            // TODO: scrm-539 - BeanFactory::getBean() return value is SugarBean|bool but never can be (bool)true, it may cause confusion in future
+            if($ie = $this->getInboundEmailBean($ieId)) {
+                $this->output(sprintf($mod_strings['LBL_SYNC_PROCESSING'], $ie->name));
+                try {
 
-                $updated = 0;
-                foreach ($emailIds as $emailId => $emailData) {
-                    $e = BeanFactory::getBean('Emails', $emailId);
-                    if ($e !== false) {
-                        $e->orphaned = $this->isOrphanedEmail($e, $ie, $IMAPHeaders);
-                        if($e->uid = $this->getIMAPUID($e->message_id, $IMAPHeaders)) {
-                            if ($e->save()) {
-                                $updated++;
+                    $IMAPHeaders = $this->getEmailHeadersOfIMAPServer($ie);
+
+                    $emailIds = $this->getEmailIdsOfInboundEmail($ieId);
+
+                    $updated = 0;
+                    foreach ($emailIds as $emailId => $emailData) {
+                        $e = $this->getEmailBean($emailId);
+                        if ($e !== false) {
+                            $e->orphaned = $this->isOrphanedEmail($e, $ie, $IMAPHeaders);
+                            if ($e->uid = $this->getIMAPUID($e->message_id, $IMAPHeaders)) {
+                                if ($e->save()) {
+                                    $updated++;
+                                }
+                                // todo: scrm-539 handle if bean save failed
                             }
-                            // todo: scrm-539 handle if bean save failed
+                            // todo: scrm-539 handle if there is no uid
                         }
-                        // todo: scrm-539 handle if there is no uid
                     }
-                }
-            } catch (SyncInboundEmailAccountsIMapConnectionException $e) {
-                $GLOBALS['log']->warn($e->getMessage());
-                $this->output($mod_strings['LBL_SYNC_ERROR_CONN']);
-            } catch (SyncInboundEmailAccountsEmptyException $e) {
-                $this->output($mod_strings['LBL_SYNC_NO_EMAIL']);
-            }
 
-            $this->output(sprintf($mod_strings['LBL_SYNC_UPDATED'], $updated));
+                    $this->output(sprintf($mod_strings['LBL_SYNC_UPDATED'], $updated));
+
+                } catch (SyncInboundEmailAccountsIMapConnectionException $e) {
+                    $GLOBALS['log']->warn($e->getMessage());
+                    $this->output($mod_strings['LBL_SYNC_ERROR_CONN']);
+                } catch (SyncInboundEmailAccountsEmptyException $e) {
+                    $this->output($mod_strings['LBL_SYNC_NO_EMAIL']);
+                }
+
+            } else {
+                $this->output($mod_strings['LBL_IE_NOT_FOUND']);
+                $GLOBALS['log']->debug("Inbound Email Account record not found, please check the record still exists and non-deleted: " . $ieId);
+            }
 
         }
         $this->output($mod_strings['LBL_SYNC_DONE']);
@@ -311,7 +344,7 @@ class SyncInboundEmailAccountsSubActionHandler
      */
     protected function isValidGUID($guid) {
 
-        $valid = is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/', $guid);
+        $valid = is_string($guid) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/', $guid);
 
         return $valid;
     }
@@ -325,8 +358,8 @@ class SyncInboundEmailAccountsSubActionHandler
 
         // run sql select, grab results into an array and pass back in return
         $ret = array();
-        $r = $this->sync->db->query($query);
-        while($e = $this->sync->db->fetchByAssoc($r)) {
+        $r = $this->db->query($query);
+        while($e = $this->db->fetchByAssoc($r)) {
             $ret[$e['id']] = $e;
         }
         if(empty($ret)) {
@@ -371,6 +404,7 @@ class SyncInboundEmailAccountsSubActionHandler
         // ------------- READ IMAP EMAIL-HEADERS AND CALCULATE MD5 BASED MESSAGE_IDs ----------------
 
         $imap_uids = imap_sort($ie->conn, SORTDATE, 0, SE_UID);
+        $headers = array();
         foreach($imap_uids as $imap_uid) {
             $msgNo = imap_msgno ($ie->conn, (int)$imap_uid);
             $headers[$imap_uid] = imap_header($ie->conn, $msgNo);
@@ -477,7 +511,7 @@ class SyncInboundEmailAccountsSubActionHandler
 
         if(!$ieSel) {
             // if there is not any selected, just fill out with all inbound email
-            $ieSel = array_key($this->getInboundEmailRows());
+            $ieSel = array_keys($this->getInboundEmailRows());
         }
 
         return $ieSel;

@@ -50,18 +50,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * - sync email-UID and orphaned field in email module
  *
  */
-class SyncInboundEmailAccountsPage extends SyncInboundEmailAccountsSubActionHandler
+class SyncInboundEmailAccountsPage
 {
 
     /**
      * @var array
      */
     protected $includeData;
-
-    /**
-     * @var DBManager
-     */
-    protected $db;
 
     /**
      * @var Sugar_Smarty
@@ -82,7 +77,6 @@ class SyncInboundEmailAccountsPage extends SyncInboundEmailAccountsSubActionHand
         // create object state
 
         $this->includeData = $includeData;
-        $this->db = DBManagerFactory::getInstance();
         $this->tpl = new Sugar_Smarty();
         $this->tpl->assign('app_strings', $this->includeData['app_strings']);
 
@@ -97,7 +91,7 @@ class SyncInboundEmailAccountsPage extends SyncInboundEmailAccountsSubActionHand
      *
      * @param $ieList
      */
-    protected function showForm($ieList) {
+    public function showForm($ieList) {
         $this->tpl->assign('ieList', $ieList);
         $this->tpl->display('modules/Administration/templates/SyncInboundEmailAccounts.tpl');
     }
@@ -105,7 +99,7 @@ class SyncInboundEmailAccountsPage extends SyncInboundEmailAccountsSubActionHand
     /**
      * @param string $output
      */
-    protected function showOutput($output) {
+    public function showOutput($output) {
         echo $output;
     }
 

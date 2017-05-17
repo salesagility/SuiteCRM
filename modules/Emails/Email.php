@@ -126,7 +126,14 @@ class Email extends SugarBean {
 
     /* to support Email 2.0 */
     public $isDuplicate;
+
+	/**
+	 * IMap UID
+	 *
+	 * @var uid
+	 */
     public $uid;
+
     public $to;
     public $flagged;
     public $answered;
@@ -159,6 +166,14 @@ class Email extends SugarBean {
     public $cases;
 
 	public $category_id;
+
+	/**
+	 * orphaned on IMap
+	 *
+	 * @var bool
+	 */
+	public $orphaned;
+
 
 	/**
 	 * sole constructor
