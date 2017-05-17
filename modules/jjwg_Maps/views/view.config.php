@@ -53,23 +53,6 @@ class Jjwg_MapsViewConfig extends SugarView {
 
         $unit_types = $GLOBALS['app_list_strings']['map_unit_type_list'];
         ?>
-<!---->
-<!--        <p style="margin: 15px 0px 15px 0px; font-size: 1.7em;"><strong>Please consider donating to this project!</strong></p>-->
-<!---->
-<!--        <p style="margin: 15px 0px 15px 0px; font-size: 1.25em; width: 790px;">-->
-<!--            If you've found this project helpful, please donate!<br />-->
-<!--            Donations from users like you will help keep this project alive.-->
-<!--        </p>-->
-<!---->
-<!--        <div style="margin: 15px 0px 15px 0px;">-->
-<!--            <span style="font-size: 1.7em;"><strong>$5, $20, $100 or even $500 &nbsp;</strong></span>-->
-<!--            <form style="display:inline;" action="https://www.paypal.com/cgi-bin/webscr" method="post">-->
-<!--                <input type="hidden" name="cmd" value="_s-xclick">-->
-<!--                <input type="hidden" name="hosted_button_id" value="FZENX6PLHKX2L">-->
-<!--                <input style="border:0;" type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">-->
-<!--                <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">-->
-<!--            </form>-->
-<!--        </div>-->
 
         <p>&nbsp;</p>
 
