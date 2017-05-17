@@ -89,7 +89,8 @@ class SubPanel
 
 		if($record_id!='fab4' && $result == null)
 		{
-			sugar_die($app_strings['ERROR_NO_RECORD']);
+			print('<h1 class="error">' . $app_strings['ERROR_NO_RECORD'] . '</h1>');
+	        return;
 		}
 
 		if (empty($subpanelDef)) {

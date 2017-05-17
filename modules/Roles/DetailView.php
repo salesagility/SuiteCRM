@@ -67,7 +67,8 @@ $offset=0;
 if (isset($_REQUEST['offset']) or isset($_REQUEST['record'])) {
 	$result = $detailView->processSugarBean("ROLE", $focus, $offset);
 	if($result == null) {
-	    sugar_die($app_strings['ERROR_NO_RECORD']);
+	    print('<h1 class="error">' . $app_strings['ERROR_NO_RECORD'] . '</h1>');
+		return;
 	}
 	$focus=$result;
 } else {

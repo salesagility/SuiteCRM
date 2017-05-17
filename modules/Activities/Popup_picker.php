@@ -97,49 +97,43 @@ class Popup_Picker
 
         $history_list = array();
 
-        if (!empty($_REQUEST['record'])) {
-            $result = $focus->retrieve($_REQUEST['record']);
-            if ($result == null) {
-                sugar_die($app_strings['ERROR_NO_RECORD']);
-            }
-        }
+		if(!empty($_REQUEST['record'])) {
+   			$result = $focus->retrieve($_REQUEST['record']);
+    		if($result == null)
+    		{
+    			print('<h1 class="error">' . $app_strings['ERROR_NO_RECORD'] . '</h1>');
+				return;
+    		}
+		}
 
-        $activitiesRels = array(
-            'tasks' => 'Task',
-            'meetings' => 'Meeting',
-            'calls' => 'Call',
-            'emails' => 'Email',
-            'notes' => 'Note'
-        );
-        //Setup the arrays to store the linked records.
-        foreach ($activitiesRels as $relMod => $beanName) {
-            $varname = 'focus_' . $relMod . '_list';
-            $$varname = array();
-        }
-        foreach ($focus->get_linked_fields() as $field => $def) {
-            if ($focus->load_relationship($field)) {
+		$activitiesRels = array('tasks' => 'Task', 'meetings' => 'Meeting', 'calls' => 'Call', 'emails' => 'Email', 'notes' => 'Note');
+		//Setup the arrays to store the linked records.
+		foreach($activitiesRels as $relMod => $beanName) {
+	    	$varname = "focus_" . $relMod . "_list";
+	        $$varname = array();
+	    }
+		foreach($focus->get_linked_fields() as $field => $def) {
+			if ($focus->load_relationship($field)) {
+				$relTable = $focus->$field->getRelatedTableName();
+	        	if (in_array($relTable, array_keys($activitiesRels)))
+        		{
+        			$varname = "focus_" . $relTable . "_list";
+        			$$varname = sugarArrayMerge($$varname, $focus->get_linked_beans($field,$activitiesRels[$relTable]));
+        		}
 
-                $relTable = BeanFactory::getBean($focus->$field->getRelatedModuleName())->table_name;
-                if (array_key_exists($relTable, $activitiesRels)) {
-                    $varname = 'focus_' . $relTable . '_list';
-                    $$varname =
-                        sugarArrayMerge($$varname, $focus->get_linked_beans($field, $activitiesRels[$relTable]));
-                }
+			}
+		}
 
-            }
-        }
+		foreach ($focus_tasks_list as $task) {
+			$sort_date_time='';
+			if (empty($task->date_due) || $task->date_due == '0000-00-00') {
+				$date_due = '';
+			}
+			else {
+				$date_due = $task->date_due;
+			}
 
-        foreach ($focus_tasks_list as $task) {
-            if (empty($task->date_due) || $task->date_due == '0000-00-00') {
-                $date_due = '';
-            } else {
-                $date_due = $task->date_due;
-            }
-
-            if ($task->status !== 'Not Started' &&
-                $task->status !== 'In Progress' &&
-                $task->status !== 'Pending Input'
-            ) {
+			if ($task->status != "Not Started" && $task->status != "In Progress" && $task->status != "Pending Input") {
                 $ts = '';
                 if (!empty($task->fetched_row['date_due'])) {
                     //tasks can have an empty date due field

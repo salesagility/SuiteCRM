@@ -77,7 +77,8 @@ class ViewQuick extends ViewDetail{
  		 $this->dv->th->ss->assign('hideHeader', true);
  		 if(empty($this->bean->id)){
 			global $app_strings;
-			sugar_die($app_strings['ERROR_NO_RECORD']);
+			print('<h1 class="error">' . $app_strings['ERROR_NO_RECORD'] . '</h1>');
+	        return;
 		}
 		$this->dv->process();
 		ob_clean();

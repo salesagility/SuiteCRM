@@ -66,7 +66,8 @@ $campaign_focus = new Campaign();
 if (isset($_REQUEST['campaign_id']) && !empty($_REQUEST['campaign_id'])) {
     $campaign_focus->retrieve($_REQUEST['campaign_id']);
 }else{
-    sugar_die($app_strings['ERROR_NO_RECORD']);
+    print('<h1 class="error">' . $app_strings['ERROR_NO_RECORD'] . '</h1>');
+	return;
 }
 
 global $theme;
