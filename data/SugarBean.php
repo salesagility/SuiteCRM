@@ -207,6 +207,7 @@ class SugarBean
     public $custom_fields;
     public $column_fields = array();
     public $list_fields = array();
+    public $required_fields = array();
     public $additional_column_fields = array();
     public $relationship_fields = array();
     public $current_notify_user;
