@@ -37,7 +37,9 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
- 
+
+require_once 'include/utils.php';
+
 @session_start();
 if(isset($_REQUEST['clear_session']) || !empty($_SESSION['loginAttempts'])) {
 	session_destroy();
@@ -51,11 +53,23 @@ if(isset($_POST['smtp_tab_selected'])) {
     $_POST = array_merge($_POST, $_POST[$_POST['smtp_tab_selected']]);
 }
 
-//session_destroy();
-if (version_compare(phpversion(),'5.2.0') < 0) {
-	$msg = 'Minimum PHP version required is 5.2.0.  You are using PHP version  '. phpversion();
+/**
+ * Check php version
+ *
+ * If less than minimum we refuse to install.
+ */
+if (check_php_version() === -1) {
+	$msg = 'The recommended PHP version to install SuiteCRM is ';
+	$msg .= constant('SUITECRM_PHP_REC_VERSION').'<br />';
+	$msg .= 'Although the minimum PHP version required is ';
+	$msg .= constant('SUITECRM_PHP_MIN_VERSION').', ';
+	$msg .= 'is not recommended due to the large number of fixed bugs, including security fixes, ';
+	$msg .= 'released in the more modern versions.<br />';
+ 	$msg .= 'You are using PHP version '.constant('PHP_VERSION').', which is EOL: <a href="http://php.net/eol.php">http://php.net/eol.php</a>.<br />';
+	$msg .= 'Please consider upgrading your PHP version. Instructions on <a href="http://php.net/migration70">http://php.net/migration70</a>. ';
     die($msg);
 }
+
 $session_id = session_id();
 if(empty($session_id)){
 	@session_start();
@@ -66,7 +80,6 @@ $GLOBALS['sql_queries'] = 0;
 require_once('include/SugarLogger/LoggerManager.php');
 require_once('sugar_version.php');
 require_once('suitecrm_version.php');
-require_once('include/utils.php');
 require_once('install/install_utils.php');
 require_once('install/install_defaults.php');
 require_once('include/TimeDate.php');
@@ -332,14 +345,19 @@ print_debug_comment();
 $next_clicked = false;
 $next_step = 0;
 
+$workflow = array() ;
+// If less then recommended PHP version, insert old_php.pho into workflow.
+if (check_php_version() === 0) {
+	$workflow[] = 'old_php.php';
+}
 // use a simple array to map out the steps of the installer page flow
-$workflow = array(  'welcome.php',
-                    'ready.php',
+$workflow[] = 'welcome.php';
+$workflow[] = 'ready.php';
 
                     // TODO-g: remove these files..
                     //'license.php',
                     //'installType.php',
-);
+//);
 $workflow[] = 'installConfig.php';
 //$workflow[] =  'systemOptions.php';
 //$workflow[] = 'dbConfig_a.php';
@@ -499,8 +517,13 @@ $validation_errors = array();
 // process the data posted
 if($next_clicked) {
 	// store the submitted data because the 'Next' button was clicked
-    switch($workflow[trim($_REQUEST['current_step'])]) {
-        case 'welcome.php':
+	switch($workflow[trim($_REQUEST['current_step'])]) {
+	case 'old_php.php':
+		$_SESSION['language'] = $_REQUEST['language'];
+		$_SESSION['setup_old_php'] = get_boolean_from_request('setup_old_php');
+		break;
+
+	case 'welcome.php':
         	$_SESSION['language'] = $_REQUEST['language'];
    			$_SESSION['setup_site_admin_user_name'] = 'admin';
 //        break;
@@ -627,6 +650,7 @@ else{
 }
 
 switch($the_file) {
+case 'old_php.php':
     case 'welcome.php':
     case 'license.php':
 			//
