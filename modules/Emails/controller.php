@@ -104,7 +104,7 @@ class EmailsController extends SugarController
         $this->view = 'detaildraft';
     }
 
-    public function action_EditDraftView()
+    public function action_ComposeView()
     {
         $this->view = 'compose';
     }
