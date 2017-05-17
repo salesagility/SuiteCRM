@@ -86,6 +86,9 @@ if ($_REQUEST['action'] === 'SaveDraft') {
     $GLOBALS['sugar_config']['http_referer']['actions'][] = 'SaveDraft';
 }
 
+if ($_REQUEST['action'] === 'DetailDraftView') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'DetailDraftView';
+}
 
 class EmailsController extends SugarController
 {
@@ -96,7 +99,12 @@ class EmailsController extends SugarController
 
     }
 
-    public function action_ComposeView()
+    public function action_DetailDraftView()
+    {
+        $this->view = 'detaildraft';
+    }
+
+    public function action_EditDraftView()
     {
         $this->view = 'compose';
     }
@@ -123,6 +131,7 @@ class EmailsController extends SugarController
     public function action_SaveDraft()
     {
         $this->bean = $this->bean->populateBeanFromRequest($this->bean);
+        $this->bean->mailbox_id = $_REQUEST['inbound_email_id'];
         $this->bean->status = 'draft';
         $this->bean->save();
         $this->bean->handleMultipleFileAttachments();

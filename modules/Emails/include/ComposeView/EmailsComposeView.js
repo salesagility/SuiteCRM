@@ -930,7 +930,84 @@
      */
     self.disregardDraft = function () {
       "use strict";
-      $(self).trigger("disregardDraft", [self]);
+
+      // TODO: TASK: SCRM-X -  Update labels
+      var mb = messageBox();
+      mb.setTitle(SUGAR.language.translate('Emails', 'LBL_CONFIRM_TITLE'));
+      mb.setBody(SUGAR.language.translate('Emails', 'LBL_EMAIL_DRAFT_CONFIRM_DISCARD'));
+      mb.show();
+
+      mb.on('ok', function() {
+        "use strict";
+
+        mb.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
+
+        // Use FormData v2 to send form data via ajax
+        var formData = new FormData($(this));
+
+        $(this).find('input').each(function (i, v) {
+          if ($(v).attr('type').toLowerCase() === 'file') {
+            for (i = 0; i < v.files.length; i++) {
+              var file = v.files[i];
+              var reader = new FileReader();
+              reader.readAsDataURL(file);
+              formData.append($(v).attr('name'), file);
+              fileCount++;
+            }
+          } else {
+            if ($(v).attr('name') == 'action') {
+              formData.append($(v).attr('name'), 'Delete');
+            } else if ($(v).attr('name') == 'send') {
+              formData.append($(v).attr('name'), 0);
+            } else {
+              formData.append($(v).attr('name'), $(v).val());
+            }
+          }
+        });
+
+        $(this).find('select').each(function (i, v) {
+          formData.append($(v).attr('name'), $(v).val());
+        });
+
+        $(this).find('textarea').each(function (i, v) {
+          formData.append($(v).attr('name'), $(v).val());
+        });
+
+        $(this).find('button').each(function (i, v) {
+          formData.append($(v).attr('name'), $(v).val());
+        });
+
+        $.ajax({
+          type: "POST",
+          data: formData,
+          cache: false,
+          processData: false,  // tell jQuery not to process the data
+          contentType: false,   // tell jQuery not to set contentType
+          url: 'index.php?module=Emails'
+        }).done(function(response) {
+          $(self).trigger("discardDraftDone", [self, response]);
+        }).error(function(response) {
+          mb.setBody(SUGAR.language.translate('','LBL_ERROR_SAVING_DRAFT'));
+          $(self).trigger("discardDraftBody", [self, response]);
+        }).always(function (response) {
+          $(self).trigger("discardDraftAlways", [self, response]);
+          mb.remove();
+          if ($(self).find('input[type="hidden"][name="return_module"]').val() !== '') {
+            location.href = 'index.php?module=' + $('#' + self.attr('id') + ' input[type="hidden"][name="return_module"]').val() +
+              '&action=' +
+              $(self).find('input[type="hidden"][name="return_action"]').val();
+          } else {
+            // The user is viewing in the modal view
+            location.reload();
+          }
+        });
+      });
+      mb.on('cancel', function() {
+        "use strict";
+        // do something
+        mb.remove();
+      });
+
       return false;
     };
 

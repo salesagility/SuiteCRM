@@ -1431,6 +1431,7 @@ $app_strings = array(
     'LBL_EMAIL_SAVE_AND_REPLY' => 'Save & Reply',
     'LBL_EMAIL_SAVE_DRAFT' => 'Save Draft',
     'LBL_EMAIL_DRAFT_SAVED' => 'Draft has been saved',
+    'LBL_EMAIL_DRAFT_CONFIRM_DISCARD' => 'Please select OK confirm that you wish to discard the email.',
 
     'LBL_EMAIL_SEARCHING' => 'Conducting Search',
     'LBL_EMAIL_SEARCH' => SugarThemeRegistry::current()->getImage('Search', 'align=absmiddle border=0', null, null, '.gif', ''),

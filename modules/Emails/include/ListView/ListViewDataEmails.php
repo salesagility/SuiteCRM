@@ -80,10 +80,12 @@ class ListViewDataEmails extends ListViewData
      * always include these fields during crm filter
      */
     protected static $alwaysIncludeSearchFields = array(
+        'id',
         'flagged',
         'name',
         'subject',
         'has_attachment',
+        'status',
     );
 
     /**
@@ -93,6 +95,7 @@ class ListViewDataEmails extends ListViewData
      */
     protected static $mapEmailFieldsToEmailTextFields = array(
         // emails field => email_text field
+        'id' => 'emails.id',
         'from_addr_name' => 'emails_text.from_addr',
         'to_addrs_names' => 'emails_text.to_addrs',
         'cc_addrs_names' => 'emails_text.cc_addrs',
@@ -101,6 +104,7 @@ class ListViewDataEmails extends ListViewData
         'name' => 'name',
         'subject' => 'name',
         'has_attachment' => 'has_attachment',
+        'status' => 'emails.status',
     );
 
 
@@ -176,14 +180,24 @@ class ListViewDataEmails extends ListViewData
             switch ($folderType) {
                 case "sent":
                     $inboundEmail->mailbox = $storedOptions['sentFolder'];
+                    $searchType = "imap";
                     break;
                 case "draft":
                     $inboundEmail->mailbox = $storedOptions['sentFolder'];
+                    if(!array_key_exists('status', $filter_fields)) {
+                        if(!empty($where)) {
+                            $where .= ' AND ';
+                        }
+                        $where .= ' emails.status LIKE "draft" ';
+                    }
+                    $searchType = "crm";
                     break;
                 case "trash":
                     $inboundEmail->mailbox = $storedOptions['trashFolder'];
+                    $searchType = "imap";
                     break;
                 default:
+                    $searchType = "imap";
                     break;
             }
 
@@ -193,9 +207,9 @@ class ListViewDataEmails extends ListViewData
 
             // Create a list of fields to filter and decide based on the field which type of filter to carry out
             $emailServerFilter = array();
+            $filter = array();
             // $searchType = "imap"; it searches the imap headers and then searches the crm to see which messages are imported.
             // $searchType = "crm"; it uses the usual crm search and handles the indicator and attachment fields.
-            $searchType = "imap";
 
             if (!empty($where)) {
                 foreach ($filter_fields as $filteredField => $filteredFieldValue) {
@@ -299,7 +313,12 @@ class ListViewDataEmails extends ListViewData
 
 
                     // Filter imported emails based on the UID of the results from the IMAP server
-                    $crmWhere = $where . ' AND mailbox_id LIKE ' .'"' . $inboundEmail->id . '"';
+                    if(!empty($where)) {
+                        $where .= ' AND ';
+                    }
+                    $crmWhere = $where . 'mailbox_id LIKE ' .'"' . $inboundEmail->id . '"';
+
+
                     // Populates CRM fields
                     $crmQueryArray = $seed->create_new_list_query(
                         'id',
