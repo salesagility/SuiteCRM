@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,11 +34,11 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
+
 <form id="ieAccount" name="ieAccount">
 				<input type="hidden" id="ie_id" name="ie_id">
 				<input type="hidden" id="ie_status" name="ie_status" value="Active">
@@ -74,7 +75,7 @@
 					<td valign="top" scope="row">
 						{$ie_mod_strings.LBL_PASSWORD}: <span class="required">{$app_strings.LBL_REQUIRED_SYMBOL}</span>&nbsp;
 					</td>
-					<td valign="top" >
+					<td valign="top" class="view input-button">
 						<input id='email_password' name='email_password' size='30' maxlength='100' type="password" onclick="SUGAR.email2.accounts.ieAccountError(SUGAR.email2.accounts.normalStyle);">
 						<a href="javascript:void(0)" id='email_password_link' onClick="SUGAR.util.setEmailPasswordEdit('email_password')" style="display: none">{$app_strings.LBL_CHANGE_PASSWORD}</a>
 					</td>
@@ -145,7 +146,7 @@
                     </td>
                 </tr>
 			    <tr>
-					<td NOWRAP colspan="2" style="padding-bottom: 15px">
+					<td colspan="2" class="button-padding">
 				<input title="{$ie_mod_strings.LBL_TEST_BUTTON_TITLE}"
 							type='button'
 							class="button"

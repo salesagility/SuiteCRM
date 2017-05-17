@@ -40,7 +40,7 @@
 *}
 
 <form name="formEmailSettingsGeneral" id="formEmailSettingsGeneral">
-<table cellpadding="4" class="view">
+<table cellpadding="4" class="view emailSettings">
 	<tr>
 		<th colspan="4" colspan="4" scope="row">
 			<h4>{$app_strings.LBL_EMAIL_SETTINGS_TITLE_PREFERENCES}</h4>

@@ -237,7 +237,7 @@
 }
 
 .input-error {
-    border: 1px solid #f00
+    border: 1px solid #f00;
 }
 
 .maybe {
@@ -252,10 +252,6 @@ table.list {
 .view, table.view {
     margin-top:0px;
 	margin-bottom:0px;
-}
-
-.yui-nav img {
-    float: left;
 }
 
 li.yuimenuitem-disabled {
@@ -296,11 +292,6 @@ div #rollover {
 #settingsDialog .bd, #settingsDialog .yui-content, #contactsDialogue .bd{
     padding: 0px;
 }
-
-#settingsDialog .edit tr th {
-
-}
-
 
 #_blank, #listBottom, #displayEmailFramePreview {
     width:100%;
@@ -502,18 +493,41 @@ text-align: center !important;
     white-space: nowrap;
 }
 
-#formEmailSettingsGeneral tr td:first-child {
-    padding-right: 15px;
+.row-title {
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
-#formEmailSettingsGeneral tr td:nth-child(2) {
+
+.div-title {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.edit h4 {
+    font-size: 1.2em;
+    padding-left: 8px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.button-padding {
+    padding-left: 8px;
+}
+
+.input-button {
+    padding-top: 12px;
+}
+.emailSettings tr td:first-child {
+    padding-right: 10px;
+}
+.emailSettings tr td:nth-child(2) {
     padding-bottom: 2px;
 }
-#formEmailSettingsGeneral tr td:nth-child(3) {
+.emailSettings tr td:nth-child(3) {
+    padding-right: 15px;
     text-align: right;
 }
-#formEmailSettingsGeneral tr td:last-child {
-    padding-left: 15px;
+.emailSettings tr td:last-child {
     padding-bottom: 5px;
     padding-top:5px;
 }
-
