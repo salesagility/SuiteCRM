@@ -297,8 +297,10 @@ class ListViewDisplay {
 		// mass update
 		$mass = $this->getMassUpdate();
 		$mass->setSugarBean($this->seed);
-		if ( ( ACLController::checkAccess($this->seed->module_dir,'edit',true) && ACLController::checkAccess($this->seed->module_dir,'massupdate',true) ) && $this->showMassupdateFields && $mass->doMassUpdateFieldsExistForFocus() )
-            $menuItems[] = $this->buildMassUpdateLink($location);
+		if ( ( ACLController::checkAccess($this->seed->module_dir,'edit',true) && ACLController::checkAccess($this->seed->module_dir,'massupdate',true) ) && $this->showMassupdateFields && $mass->doMassUpdateFieldsExistForFocus() ) {
+			$menuItems[] = $this->buildBulkActionButton($location);
+			$menuItems[] = $this->buildMassUpdateLink($location);
+		}
 		// merge
 		if ( $this->mailMerge )
 		    $menuItems[] = $this->buildMergeLink(null, $location);
