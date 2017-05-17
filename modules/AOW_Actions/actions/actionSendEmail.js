@@ -207,5 +207,9 @@ function targetTypeChanged(ln){
         hideElem("aow_actions_param_email"+ln);
         hideElem("aow_actions_param_email_target"+ln);
         hideElem("aow_actions_email_user_span"+ln);
+    }else if(elem.value === 'Record Field'){
+        hideElem("aow_actions_param_email"+ln);
+        showElem("aow_actions_param_email_target"+ln);
+        hideElem("aow_actions_email_user_span"+ln);
     }
 }

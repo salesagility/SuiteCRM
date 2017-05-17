@@ -3547,6 +3547,7 @@ $app_list_strings['aow_email_type_list']['Record Email'] = 'Record Email';
 $app_list_strings['aow_email_type_list']['Related Field'] = 'Related Field';
 $app_list_strings['aow_email_type_list']['Specify User'] = 'User';
 $app_list_strings['aow_email_type_list']['Users'] = 'Users';
+$app_list_strings['aow_email_type_list']['Record Field'] = 'Field';
 $app_list_strings['aow_email_to_list']['to'] = 'To';
 $app_list_strings['aow_email_to_list']['cc'] = 'Cc';
 $app_list_strings['aow_email_to_list']['bcc'] = 'Bcc';

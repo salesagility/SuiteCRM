@@ -114,6 +114,9 @@ class actionSendEmail extends actionBase {
                 case 'Related Field':
                     $email = $params['email_target'];
                     break;
+                case 'Record Field':
+                    $email = $params['email_target'];
+                    break;
             }
             $html .= "load_emailline('".$line."','to','".$params['email_target_type']."','".$email."');";
         }
@@ -256,6 +259,12 @@ class actionSendEmail extends actionBase {
                     case 'Record Email':
                         $recordEmail = $bean->emailAddress->getPrimaryAddress($bean);
                         if($recordEmail == '' && isset($bean->email1)) $recordEmail = $bean->email1;
+                        if(trim($recordEmail) != '')
+                            $emails[$params['email_to_type'][$key]][] = $recordEmail;
+                        break;
+                    case 'Record Field':
+                        $emailTarget = $params['email'][$key];
+                        $recordEmail = $bean->$emailTarget;
                         if(trim($recordEmail) != '')
                             $emails[$params['email_to_type'][$key]][] = $recordEmail;
                         break;
