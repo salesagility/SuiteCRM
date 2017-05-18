@@ -901,11 +901,11 @@
           mb.showFooter();
           $(self).trigger("saveEmailSuccess", [self, response]);
 
-          if ($(self).closest('[name=ComposeView]').find('[name=id]').length === 0) {
+          if ($(self).find('[name=id]').length === 0) {
             var id = $('<input>').attr('type', 'hidden').attr('name', 'id').val(response.data.id);
             id.appendTo($(self).closest('[name=ComposeView]'));
           } else {
-            var id = $(self).closest('[name=ComposeView]').find('[name=id]');
+            var id = $(self).find('[name=id]');
             $(id).val(response.data.id);
           }
         }
@@ -921,7 +921,7 @@
       });
 
       return false;
-    }
+    };
     /**
      *
      * @event disregardDraft
