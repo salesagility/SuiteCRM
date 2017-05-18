@@ -52,7 +52,7 @@ class DetailView2 extends EditView
      */
     public $view = 'DetailView';
     /**
-     * @var
+     * @var array $defs
      */
     public $defs;
     /**
