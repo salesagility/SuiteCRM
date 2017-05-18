@@ -542,7 +542,6 @@
         url: $(this).attr('action')
       }).done(function (response) {
         "use strict";
-        debugger;
         response = JSON.parse(response);
         if(typeof response.errors !== "undefined") {
           mb.showHeader();
