@@ -3449,9 +3449,6 @@ eoq;
         $toEmailAddresses = preg_split('/[,;]/', $bean->to_addrs, null, PREG_SPLIT_NO_EMPTY);
         $bean->to_addr_arr = array();
         foreach ($toEmailAddresses as $ea => $address) {
-
-            $email = '';
-            $display = '';
             preg_match(
                 '/([a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\ =\?\^\`\{\|\}\~\.\[\]\"\(\)\s]+)((<[a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~\.\[\]\"\(\)]+)(@)([a-zA-z0-9\-\.]+\>))$/',
                 $address,
