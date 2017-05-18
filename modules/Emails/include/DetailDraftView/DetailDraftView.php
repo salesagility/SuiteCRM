@@ -55,7 +55,7 @@ class DetailDraftView extends DetailView2
         $metadataFile = null,
         $tpl = 'include/DetailView/DetailView.tpl',
         $createFocus = true,
-        $metadataFileName = 'editviewdefs'
+        $metadataFileName = 'detaildraft'
     )
     {
         parent::setup($module, $focus, $metadataFile, $tpl, $createFocus, $metadataFileName);
