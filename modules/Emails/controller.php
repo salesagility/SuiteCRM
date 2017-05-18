@@ -78,6 +78,11 @@ if ($_REQUEST['action'] === 'ImportFromListView') {
     $GLOBALS['sugar_config']['http_referer']['actions'][] = 'ImportFromListView';
 }
 
+if ($_REQUEST['action'] === 'GetFromField') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'GetFromField';
+}
+
+
 
 class EmailsController extends SugarController
 {
@@ -336,6 +341,17 @@ class EmailsController extends SugarController
         }
 
         echo $out;
+        $this->view = 'ajax';
+    }
+
+    public function action_GetFromField() {
+        global $current_user;
+        global $app_strings;
+
+        $response = array();
+
+        echo json_encode($response);
+
         $this->view = 'ajax';
     }
 
