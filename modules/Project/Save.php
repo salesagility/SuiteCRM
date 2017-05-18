@@ -133,4 +133,3 @@ else{
 	$_REQUEST['return_url'] = "index.php?module=Project&action=view_GanttChart&project_id=" . $return_id;
     handleRedirect($return_id,'Project');
 }
-?>
