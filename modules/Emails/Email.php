@@ -3388,9 +3388,10 @@ eoq;
      * Uses the $_REQUEST to populate the fields of an Email SugarBean.
      *
      * @param Email $bean
+     * @param array $request TODO: implement PSR 7 interface and refactor
      * @return bool|Email|SugarBean
      */
-    public function populateBeanFromRequest(Email $bean) {
+    public function populateBeanFromRequest(Email $bean, $request) {
         if (empty($bean)) {
             $bean = BeanFactory::getBean('Emails');
         }
@@ -3410,23 +3411,23 @@ eoq;
         $old = array('&lt;', '&gt;');
         $new = array('<', '>');
 
-        if (isset($_REQUEST['from_addr']) && $_REQUEST['from_addr'] != $_REQUEST['from_addr_name'] . ' &lt;' . $_REQUEST['from_addr_email'] . '&gt;') {
-            if (false === strpos($_REQUEST['from_addr'], '&lt;')) { // we have an email only?
-                $bean->from_addr = $_REQUEST['from_addr'];
+        if (isset($request['from_addr']) && $request['from_addr'] != $request['from_addr_name'] . ' &lt;' . $request['from_addr_email'] . '&gt;') {
+            if (false === strpos($request['from_addr'], '&lt;')) { // we have an email only?
+                $bean->from_addr = $request['from_addr'];
                 $bean->from_name = '';
                 $bean->reply_to_addr = $bean->from_addr;
                 $bean->reply_to_name = $bean->from_name;
             } else { // we have a compound string
-                $newFromAddr = str_replace($old, $new, $_REQUEST['from_addr']);
+                $newFromAddr = str_replace($old, $new, $request['from_addr']);
                 $bean->from_addr = substr($newFromAddr, (1 + strpos($newFromAddr, '<')),
                     (strpos($newFromAddr, '>') - strpos($newFromAddr, '<')) - 1);
                 $bean->from_name = substr($newFromAddr, 0, (strpos($newFromAddr, '<') - 1));
                 $bean->reply_to_addr = $bean->from_addr;
                 $bean->reply_to_name = $bean->from_name;
             }
-        } elseif (!empty($_REQUEST['from_addr_email']) && isset($_REQUEST['from_addr_email'])) {
-            $bean->from_addr = $_REQUEST['from_addr_email'];
-            $bean->from_name = $_REQUEST['from_addr_name'];
+        } elseif (!empty($request['from_addr_email']) && isset($request['from_addr_email'])) {
+            $bean->from_addr = $request['from_addr_email'];
+            $bean->from_name = $request['from_addr_name'];
         } else {
             $bean->from_addr = $bean->getSystemDefaultEmail();
             $bean->reply_to_addr = $bean->from_addr['email'];
@@ -3435,8 +3436,8 @@ eoq;
 
 
         if (empty($bean->to_addrs)) {
-            if (!empty($_REQUEST['to_addrs_names'])) {
-                $bean->to_addrs_names = htmlspecialchars_decode($_REQUEST['to_addrs_names']);
+            if (!empty($request['to_addrs_names'])) {
+                $bean->to_addrs_names = htmlspecialchars_decode($request['to_addrs_names']);
             }
 
             if (!empty($bean->to_addrs_names)) {
@@ -3481,8 +3482,8 @@ eoq;
 
 
         if (empty($bean->cc_addrs)) {
-            if (!empty($_REQUEST['cc_addrs_names'])) {
-                $bean->cc_addrs_names = htmlspecialchars_decode($_REQUEST['cc_addrs_names']);
+            if (!empty($request['cc_addrs_names'])) {
+                $bean->cc_addrs_names = htmlspecialchars_decode($request['cc_addrs_names']);
             }
 
             if (!empty($bean->cc_addrs_names)) {
@@ -3525,8 +3526,8 @@ eoq;
 
 
         if (empty($bean->bcc_addrs)) {
-            if (!empty($_REQUEST['bcc_addrs_names'])) {
-                $bean->bcc_addrs_names = htmlspecialchars_decode($_REQUEST['bcc_addrs_names']);
+            if (!empty($request['bcc_addrs_names'])) {
+                $bean->bcc_addrs_names = htmlspecialchars_decode($request['bcc_addrs_names']);
             }
 
             if (!empty($bean->bcc_addrs_names)) {
@@ -3568,20 +3569,20 @@ eoq;
         }
 
         if (empty($bean->name)) {
-            if (!empty($_REQUEST['name'])) {
-                $bean->name = $_REQUEST['name'];
+            if (!empty($request['name'])) {
+                $bean->name = $request['name'];
             }
         }
 
         if (empty($bean->description_html)) {
-            if (!empty($_REQUEST['description_html'])) {
-                $bean->description_html = $_REQUEST['description_html'];
+            if (!empty($request['description_html'])) {
+                $bean->description_html = $request['description_html'];
             }
         }
 
         if (empty($bean->description)) {
-            if (!empty($_REQUEST['description'])) {
-                $bean->description = $_REQUEST['description'];
+            if (!empty($request['description'])) {
+                $bean->description = $request['description'];
             }
         }
 
