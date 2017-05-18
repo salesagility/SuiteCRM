@@ -38,6 +38,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM". 
  */
 
+if(!defined('sugarEntry')) {
+    define('sugarEntry', true);
+}
+
 require_once 'include/utils.php';
 
 @session_start();
