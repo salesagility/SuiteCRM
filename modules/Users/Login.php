@@ -46,124 +46,129 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $authController->authController->pre_login();
 
 global $current_language, $mod_strings, $app_strings;
-if(isset($_REQUEST['login_language'])){
+if (isset($_REQUEST['login_language'])) {
     $lang = $_REQUEST['login_language'];
     $_REQUEST['ck_login_language_20'] = $lang;
-	$current_language = $lang;
+    $current_language = $lang;
     $_SESSION['authenticated_user_language'] = $lang;
     $mod_strings = return_module_language($lang, "Users");
     $app_strings = return_application_language($lang);
 }
 $sugar_smarty = new Sugar_Smarty();
-echo '<link rel="stylesheet" type="text/css" media="all" href="'.getJSPath('modules/Users/login.css').'">';
-echo '<script type="text/javascript" src="'.getJSPath('modules/Users/login.js').'"></script>';
+echo '<link rel="stylesheet" type="text/css" media="all" href="' . getJSPath('modules/Users/login.css') . '">';
+echo '<script type="text/javascript" src="' . getJSPath('modules/Users/login.js') . '"></script>';
 global $app_language, $sugar_config;
 //we don't want the parent module's string file, but rather the string file specifc to this subpanel
 global $current_language;
 
 // Get the login page image
-if ( is_file('custom/include/images/sugar_md.png') ) {
+if (is_file('custom/include/images/sugar_md.png')) {
     $login_image = '<IMG src="custom/include/images/sugar_md.png" alt="Sugar" width="340" height="25">';
-}
-else {
+} else {
     $login_image = '<IMG src="include/images/sugar_md_open.png" alt="Sugar" width="340" height="25" style="margin: 5px 0;">';
 }
 
 $login_image_url = SugarThemeRegistry::current()->getImageURL('company_logo.png');
-$login_image = '<IMG src="'.$login_image_url.'" alt="SuiteCRM" style="margin: 5px 0;">';
+$login_image = '<IMG src="' . $login_image_url . '" alt="SuiteCRM" style="margin: 5px 0;">';
 
 
-$sugar_smarty->assign('LOGIN_IMAGE',$login_image);
+$sugar_smarty->assign('LOGIN_IMAGE', $login_image);
 
 // See if any messages were passed along to display to the user.
-if(isset($_COOKIE['loginErrorMessage'])) {
-    if ( !isset($_REQUEST['loginErrorMessage']) ) {
+if (isset($_COOKIE['loginErrorMessage'])) {
+    if (!isset($_REQUEST['loginErrorMessage'])) {
         $_REQUEST['loginErrorMessage'] = $_COOKIE['loginErrorMessage'];
     }
-    SugarApplication::setCookie('loginErrorMessage', '', time()-42000, '/');
+    SugarApplication::setCookie('loginErrorMessage', '', time() - 42000, '/');
 }
-if(isset($_REQUEST['loginErrorMessage'])) {
+if (isset($_REQUEST['loginErrorMessage'])) {
     if (isset($mod_strings[$_REQUEST['loginErrorMessage']])) {
         $sugar_smarty->assign("LOGIN_ERROR_MESSAGE", $mod_strings[$_REQUEST['loginErrorMessage']]);
-    } else if (isset($app_strings[$_REQUEST['loginErrorMessage']])) {
+    } else {
+        if (isset($app_strings[$_REQUEST['loginErrorMessage']])) {
 
-        $sugar_smarty->assign("LOGIN_ERROR_MESSAGE",  $app_strings[$_REQUEST['loginErrorMessage']]);
+            $sugar_smarty->assign("LOGIN_ERROR_MESSAGE", $app_strings[$_REQUEST['loginErrorMessage']]);
+        }
     }
 }
 
 $lvars = $GLOBALS['app']->getLoginVars();
 $sugar_smarty->assign("LOGIN_VARS", $lvars);
-foreach($lvars as $k => $v) {
+foreach ($lvars as $k => $v) {
     $sugar_smarty->assign(strtoupper($k), $v);
 }
 
 // Retrieve username from the session if possible.
-if(isset($_SESSION["login_user_name"])) {
-	if (isset($_REQUEST['default_user_name']))
-		$login_user_name = $_REQUEST['default_user_name'];
-	else
-		$login_user_name = $_SESSION['login_user_name'];
+if (isset($_SESSION["login_user_name"])) {
+    if (isset($_REQUEST['default_user_name'])) {
+        $login_user_name = $_REQUEST['default_user_name'];
+    } else {
+        $login_user_name = $_SESSION['login_user_name'];
+    }
 } else {
-	if(isset($_REQUEST['default_user_name'])) {
-		$login_user_name = $_REQUEST['default_user_name'];
-	} elseif(isset($_REQUEST['ck_login_id_20'])) {
-		$login_user_name = get_user_name($_REQUEST['ck_login_id_20']);
-	} else {
-		$login_user_name = $sugar_config['default_user_name'];
-	}
-	$_SESSION['login_user_name'] = $login_user_name;
+    if (isset($_REQUEST['default_user_name'])) {
+        $login_user_name = $_REQUEST['default_user_name'];
+    } elseif (isset($_REQUEST['ck_login_id_20'])) {
+        $login_user_name = get_user_name($_REQUEST['ck_login_id_20']);
+    } else {
+        $login_user_name = $sugar_config['default_user_name'];
+    }
+    $_SESSION['login_user_name'] = $login_user_name;
 }
 $sugar_smarty->assign('LOGIN_USER_NAME', $login_user_name);
 
 $mod_strings['VLD_ERROR'] = $GLOBALS['app_strings']["\x4c\x4f\x47\x49\x4e\x5f\x4c\x4f\x47\x4f\x5f\x45\x52\x52\x4f\x52"];
 
 // Retrieve password from the session if possible.
-if(isset($_SESSION["login_password"])) {
-	$login_password = $_SESSION['login_password'];
+if (isset($_SESSION["login_password"])) {
+    $login_password = $_SESSION['login_password'];
 } else {
-	$login_password = $sugar_config['default_password'];
-	$_SESSION['login_password'] = $login_password;
+    $login_password = $sugar_config['default_password'];
+    $_SESSION['login_password'] = $login_password;
 }
 $sugar_smarty->assign('LOGIN_PASSWORD', $login_password);
 
-if(isset($_SESSION["login_error"])) {
-	$sugar_smarty->assign('LOGIN_ERROR', $_SESSION['login_error']);
+if (isset($_SESSION["login_error"])) {
+    $sugar_smarty->assign('LOGIN_ERROR', $_SESSION['login_error']);
 }
-if(isset($_SESSION["waiting_error"])) {
+if (isset($_SESSION["waiting_error"])) {
     $sugar_smarty->assign('WAITING_ERROR', $_SESSION['waiting_error']);
 }
 
 if (isset($_REQUEST['ck_login_language_20'])) {
-	$display_language = $_REQUEST['ck_login_language_20'];
+    $display_language = $_REQUEST['ck_login_language_20'];
 } else {
-	$display_language = $sugar_config['default_language'];
+    $display_language = $sugar_config['default_language'];
 }
 
-if (empty($GLOBALS['sugar_config']['passwordsetting']['forgotpasswordON']))
-	$sugar_smarty->assign('DISPLAY_FORGOT_PASSWORD_FEATURE','none');
+if (empty($GLOBALS['sugar_config']['passwordsetting']['forgotpasswordON'])) {
+    $sugar_smarty->assign('DISPLAY_FORGOT_PASSWORD_FEATURE', 'none');
+}
 
 $the_languages = get_languages();
-if ( count($the_languages) > 1 )
+if (count($the_languages) > 1) {
     $sugar_smarty->assign('SELECT_LANGUAGE', get_select_options_with_id($the_languages, $display_language));
+}
 $the_themes = SugarThemeRegistry::availableThemes();
-if ( !empty($logindisplay) )
-	$sugar_smarty->assign('LOGIN_DISPLAY', $logindisplay);;
+if (!empty($logindisplay)) {
+    $sugar_smarty->assign('LOGIN_DISPLAY', $logindisplay);
+};
 
 // RECAPTCHA
 
-	$admin = new Administration();
-	$admin->retrieveSettings('captcha');
-	$captcha_privatekey = "";
-	$captcha_publickey="";
-	$captcha_js = "";
-	$Captcha='';
+$admin = new Administration();
+$admin->retrieveSettings('captcha');
+$captcha_privatekey = "";
+$captcha_publickey = "";
+$captcha_js = "";
+$Captcha = '';
 
-	// if the admin set the captcha stuff, assign javascript and div
-	if(isset($admin->settings['captcha_on'])&& $admin->settings['captcha_on']=='1' && !empty($admin->settings['captcha_private_key']) && !empty($admin->settings['captcha_public_key'])){
+// if the admin set the captcha stuff, assign javascript and div
+if (isset($admin->settings['captcha_on']) && $admin->settings['captcha_on'] == '1' && !empty($admin->settings['captcha_private_key']) && !empty($admin->settings['captcha_public_key'])) {
 
-			$captcha_privatekey = $admin->settings['captcha_private_key'];
-			$captcha_publickey = $admin->settings['captcha_public_key'];
-			$captcha_js .="<script type='text/javascript' src='" . getJSPath('cache/include/javascript/sugar_grp1_yui.js') . "'></script><script type='text/javascript' src='" . getJSPath('cache/include/javascript/sugar_grp_yui2.js') . "'></script>
+    $captcha_privatekey = $admin->settings['captcha_private_key'];
+    $captcha_publickey = $admin->settings['captcha_public_key'];
+    $captcha_js .= "<script type='text/javascript' src='" . getJSPath('cache/include/javascript/sugar_grp1_yui.js') . "'></script><script type='text/javascript' src='" . getJSPath('cache/include/javascript/sugar_grp_yui2.js') . "'></script>
 			<script type='text/javascript' src='http://www.google.com/recaptcha/api/js/recaptcha_ajax.js'></script>
 			<script>
 			function initCaptcha(){
@@ -190,8 +195,8 @@ if ( !empty($logindisplay) )
 					var url = '&to_pdf=1&module=Home&action=index&entryPoint=Changenewpassword&recaptcha_challenge_field='+Recaptcha.get_challenge()+'&recaptcha_response_field='+ Recaptcha.get_response();
 					YAHOO.util.Connect.asyncRequest('POST','index.php',callback2,url);
 			}</script>";
-		$Captcha.="<tr>
-			<td scope='row' width='20%'>".$mod_strings['LBL_RECAPTCHA_INSTRUCTION'].":</td>
+    $Captcha .= "<tr>
+			<td scope='row' width='20%'>" . $mod_strings['LBL_RECAPTCHA_INSTRUCTION'] . ":</td>
 		    <td width='70%'><input type='text' size='26' id='recaptcha_response_field' value=''></td>
 
 		</tr>
@@ -200,19 +205,19 @@ if ( !empty($logindisplay) )
 		 	<td colspan='2'><div style='margin-left:2px'class='x-sqs-list' id='recaptcha_image'></div></td>
 		</tr>
 		<tr>
-			<td colspan='2' align='right'><a href='javascript:Recaptcha.reload()'>".$mod_strings['LBL_RECAPTCHA_NEW_CAPTCHA']."</a>&nbsp;&nbsp;
-			 		<a class='recaptcha_only_if_image' href='javascript:Recaptcha.switch_type(\"audio\")'>".$mod_strings['LBL_RECAPTCHA_SOUND']."</a>
-			 		<a class='recaptcha_only_if_audio' href='javascript:Recaptcha.switch_type(\"image\")'> ".$mod_strings['LBL_RECAPTCHA_IMAGE']."</a>
+			<td colspan='2' align='right'><a href='javascript:Recaptcha.reload()'>" . $mod_strings['LBL_RECAPTCHA_NEW_CAPTCHA'] . "</a>&nbsp;&nbsp;
+			 		<a class='recaptcha_only_if_image' href='javascript:Recaptcha.switch_type(\"audio\")'>" . $mod_strings['LBL_RECAPTCHA_SOUND'] . "</a>
+			 		<a class='recaptcha_only_if_audio' href='javascript:Recaptcha.switch_type(\"image\")'> " . $mod_strings['LBL_RECAPTCHA_IMAGE'] . "</a>
 		 	</td>
 		</tr>";
-		$sugar_smarty->assign('CAPTCHA', $Captcha);
-		echo $captcha_js;
+    $sugar_smarty->assign('CAPTCHA', $Captcha);
+    echo $captcha_js;
 
-	}else{
-		echo "<script>
+} else {
+    echo "<script>
 		function validateAndSubmit(){generatepwd();}
 		</script>";
-	}
+}
 
 if (file_exists('custom/themes/' . SugarThemeRegistry::current() . '/login.tpl')) {
     echo $sugar_smarty->display('custom/themes/' . SugarThemeRegistry::current() . '/login.tpl');
