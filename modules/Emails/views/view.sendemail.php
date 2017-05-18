@@ -45,6 +45,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class EmailsViewSendemail extends ViewAjax
 {
+    /**
+     * @var Email $bean
+     */
+    public $bean;
+
+    /**
+     * EmailsViewSendemail constructor.
+     */
     public function __construct()
     {
         $this->options['show_title'] = false;
@@ -55,6 +63,9 @@ class EmailsViewSendemail extends ViewAjax
         $this->options['show_search'] = false;
     }
 
+    /**
+     * @return string
+     */
     public function display()
     {
         global $app_strings;

@@ -46,6 +46,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class EmailsViewCompose extends ViewEdit {
 
+    /**
+     * @var Email $bean
+     */
+    public $bean;
+
+    /**
+     * EmailsViewCompose constructor.
+     */
     public function __construct()
     {
         $this->type = 'compose';
