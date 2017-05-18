@@ -4459,32 +4459,6 @@ function code2utf($num)
     return '';
 }
 
-function str_split_php4($string, $length = 1)
-{
-    $string_length = strlen($string);
-    $return = array();
-    $cursor = 0;
-    if ($length > $string_length) {
-        // use the string_length as the string is shorter than the length
-        $length = $string_length;
-    }
-    for ($cursor = 0; $cursor < $string_length; $cursor = $cursor + $length) {
-        $return[] = substr($string, $cursor, $length);
-    }
-
-    return $return;
-}
-
-/*
- * WONTFIX: Not updating this.. This should be removed !!!
- */
-if (version_compare(phpversion(), '5.0.0', '<')) {
-    function str_split($string, $length = 1)
-    {
-        return str_split_php4($string, $length);
-    }
-}
-
 /*
  * @deprecated use DBManagerFactory::isFreeTDS
  */
