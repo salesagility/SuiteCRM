@@ -45,6 +45,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class EmailsViewDetail extends ViewDetail
 {
+    /**
+     * @var Email $bean
+     */
+    public $bean;
+
+    /**
+     * display view
+     */
     public function display()
     {
         switch ($this->bean->status) {

@@ -52,32 +52,139 @@ require_once('include/EditView/SugarVCR.php');
  */
 class EditView
 {
+    /**
+     * @var TemplateHandler $th
+     */
     public $th;
+
+    /**
+     * @var string path to Smarty Template
+     */
     public $tpl;
+
+    /**
+     * @var Note $notes
+     */
     public $notes;
+
+    /**
+     * @var string $id UUID
+     */
     public $id;
+
+    /**
+     * @var string $metadataFile path to metadatafile
+     */
     public $metadataFile;
+
+    /**
+     * @var string path to header Smarty Template
+     */
     public $headerTpl;
+
+    /**
+     * @var string path to footer to header Smarty Template
+     */
     public $footerTpl;
+
+    /**
+     * @var string action name eg 'index', 'EditView'
+     */
     public $returnAction;
+
+    /**
+     * @var string $returnModule module name
+     */
     public $returnModule;
+
+    /**
+     * @var string $returnId UUID
+     */
     public $returnId;
+
+    /**
+     * @var boolean $isDuplicate
+     */
     public $isDuplicate;
+
+    /**
+     * @var SugarBean $focus
+     */
     public $focus;
+
+    /**
+     * @var string $module name of module
+     */
     public $module;
+
+    /**
+     * @var array $fieldDefs
+     */
     public $fieldDefs;
+
+    /**
+     * @var
+     */
     public $sectionPanels;
+
+    /**
+     * @var string $view ;
+     */
     public $view = 'EditView';
+
+    /**
+     * @var bool $formatFields
+     */
     public $formatFields = true;
+
+    /**
+     * @var bool $showDetailData
+     */
     public $showDetailData = true;
+
+    /**
+     * @var bool $showVCRControl
+     */
     public $showVCRControl = true;
+
+    /**
+     * @var bool $showSectionPanelsTitles
+     */
     public $showSectionPanelsTitles = true;
+
+    /**
+     * @var string $quickSearchCode
+     */
     public $quickSearchCode;
+
+    /**
+     * @var Sugar_Smarty $ss
+     */
     public $ss;
+
+    /**
+     * @var integer $offset
+     */
     public $offset = 0;
+
+    /**
+     * @var bool $populateBean
+     */
     public $populateBean = true;
+
+    /**
+     * @var string $moduleTitleKey
+     */
     public $moduleTitleKey;
+
+    /**
+     * @var SugarView|null $viewObject
+     */
     public $viewObject = null;
+
+    /**
+     * @var string $formName
+     */
     public $formName = '';
 
     /**
@@ -91,6 +198,7 @@ class EditView
      * @param $metadataFile String value of file location to use in overriding default metadata file
      * @param tpl String value of file location to use in overriding default Smarty template
      * @param createFocus bool value to tell whether to create a new bean if we do not have one with an id, this is used from ConvertLead
+     * @param $metadataFileName specifies the name of the metadata file eg 'editviewdefs'
      *
      */
     public function setup(
@@ -98,7 +206,8 @@ class EditView
         $focus = null,
         $metadataFile = null,
         $tpl = 'include/EditView/EditView.tpl',
-        $createFocus = true
+        $createFocus = true,
+        $metadataFileName = 'editviewdefs'
     ) {
         $this->th = $this->getTemplateHandler();
         $this->th->ss =& $this->ss;
@@ -125,7 +234,7 @@ class EditView
             include($this->metadataFile);
         } else {
             //If file doesn't exist we create a best guess
-            if (!file_exists("modules/$this->module/metadata/editviewdefs.php")
+            if (!file_exists("modules/$this->module/metadata/$metadataFileName.php")
                 && file_exists("modules/$this->module/EditView.html")
             ) {
                 require_once('include/SugarFields/Parsers/EditViewMetaParser.php');
@@ -138,23 +247,23 @@ class EditView
                     sugar_mkdir('modules/' . $this->module . '/metadata');
                 }
 
-                $fp = sugar_fopen('modules/' . $this->module . '/metadata/editviewdefs.php', 'w');
+                $fp = sugar_fopen('modules/' . $this->module . '/metadata/' . $metadataFileName . '.php', 'w');
                 fwrite($fp, $parser->parse($htmlFile, $dictionary[$focus->object_name]['fields'], $this->module));
                 fclose($fp);
             }
 
             //Flag an error... we couldn't create the best guess meta-data file
-            if (!file_exists("modules/$this->module/metadata/editviewdefs.php")) {
+            if (!file_exists("modules/$this->module/metadata/$metadataFileName.php")) {
                 global $app_strings;
 
-                $error = str_replace("[file]", "modules/$this->module/metadata/editviewdefs.php",
+                $error = str_replace("[file]", "modules/$this->module/metadata/$metadataFileName.php",
                     $app_strings['ERR_CANNOT_CREATE_METADATA_FILE']);
                 $GLOBALS['log']->fatal($error);
                 echo $error;
                 die();
             }
 
-            require("modules/$this->module/metadata/editviewdefs.php");
+            require("modules/$this->module/metadata/$metadataFileName.php");
         }
 
         $this->defs = $viewdefs[$this->module][$this->view];
@@ -907,7 +1016,7 @@ EOQ;
      * Get template handler object
      * @return TemplateHandler
      */
-    protected function getTemplateHandler()
+    public function getTemplateHandler()
     {
         return new TemplateHandler();
     }

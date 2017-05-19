@@ -487,6 +487,15 @@
       mb.hideFooter();
       mb.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
       mb.show();
+      mb.on('ok', function() {
+        "use strict";
+        mb.remove();
+      });
+
+      mb.on('cancel', function() {
+        "use strict";
+        mb.remove();
+      });
 
       var fileCount = 0;
       // Use FormData v2 to send form data via ajax
@@ -502,7 +511,13 @@
             fileCount++
           }
         } else {
-          formData.append($(v).attr('name'), $(v).val());
+          if($(v).attr('name') == 'action') {
+            formData.append($(v).attr('name'), 'send');
+          } else if($(v).attr('name') == 'send') {
+            formData.append($(v).attr('name'), 1);
+          } else {
+            formData.append($(v).attr('name'), $(v).val());
+          }
         }
       });
 
@@ -525,21 +540,33 @@
         processData: false,  // tell jQuery not to process the data
         contentType: false,   // tell jQuery not to set contentType
         url: $(this).attr('action')
-      }).done(function (data) {
+      }).done(function (response) {
         "use strict";
-        mb.remove();
-        // If the user is view the form own its own
-        if ($(self).find('input[type="hidden"][name="return_module"]').val() !== '') {
-          location.href = 'index.php?module=' + $('#' + self.attr('id') + ' input[type="hidden"][name="return_module"]').val() +
-            '&action=' +
-            $(self).find('input[type="hidden"][name="return_action"]').val();
+        response = JSON.parse(response);
+        if(typeof response.errors !== "undefined") {
+          mb.showHeader();
+          mb.setBody(response.errors.title);
+          mb.showFooter();
+          $(self).trigger("sentEmailError", [self, response]);
         } else {
-          $(self).trigger("sentEmail", [self, data]);
+          mb.showHeader();
+          mb.setBody(response.data.title);
+          mb.showFooter();
+
+          // If the user is viewing the form in the standard view
+          if ($(self).find('input[type="hidden"][name="return_module"]').val() !== '') {
+            location.href = 'index.php?module=' + $('#' + self.attr('id') + ' input[type="hidden"][name="return_module"]').val() +
+              '&action=' +
+              $(self).find('input[type="hidden"][name="return_action"]').val();
+          } else {
+            // The user is viewing in the modal view
+            $(self).trigger("sentEmail", [self, data]);
+          }
         }
-      }).fail(function (data) {
+      }).fail(function (response) {
         "use strict";
         mb.showHeader();
-        mb.setBody(SUGAR.language.translate($(self).find('input[type="hidden"][name="module"]').val(), 'LBL_ERROR_SENDING_EMAIL'));
+        mb.setBody(response.errors.title);
         $(self).trigger("sentEmailError", [self, data]);
       }).always(function (data) {
         $(self).trigger("sentEmailAlways", [self, data]);
@@ -554,8 +581,10 @@
      * @event sendEmail
      * @returns {boolean}
      */
-    self.sendEmail = function () {
+    self.sendEmail = function (e) {
       "use strict";
+      e.preventDefault();
+      $(this).find('[name=action]').val('send');
       if (self.validate()) {
         $(self).submit();
       }
@@ -784,13 +813,115 @@
      * @event saveDraft
      * @returns {boolean}
      */
-    self.saveDraft = function () {
+    self.saveDraft = function (e) {
       "use strict";
-      $(self).trigger("saveDraft", [self]);
-      alert('saveDraft placeholder');
+      e.preventDefault();
+      $(this).closest('[name=action]').val('SaveDraft');
+
+      if (self.validate()) {
+        self.onSavingDraft();
+      }
       return false;
     };
 
+    self.onSavingDraft = function () {
+      "use strict";
+      $(self).trigger("saveDraft", [self]);
+      // Tell the user we are sending an email
+      var mb = messageBox();
+      mb.hideHeader();
+      mb.hideFooter();
+      mb.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
+      mb.show();
+
+      mb.on('ok', function() {
+        "use strict";
+        mb.remove();
+      });
+
+      mb.on('cancel', function() {
+        "use strict";
+        mb.remove();
+      });
+
+      var fileCount = 0;
+      // Use FormData v2 to send form data via ajax
+      var formData = new FormData($(this));
+
+      $(this).find('input').each(function (i, v) {
+        if ($(v).attr('type').toLowerCase() === 'file') {
+          for (i = 0; i < v.files.length; i++) {
+            var file = v.files[i];
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            formData.append($(v).attr('name'), file);
+            fileCount++;
+          }
+        } else {
+          if($(v).attr('name') == 'action') {
+            formData.append($(v).attr('name'), 'SaveDraft');
+          } else if($(v).attr('name') == 'send') {
+            formData.append($(v).attr('name'), 0);
+          } else {
+            formData.append($(v).attr('name'), $(v).val());
+          }
+        }
+      });
+
+      $(this).find('select').each(function (i, v) {
+        formData.append($(v).attr('name'), $(v).val());
+      });
+
+      $(this).find('textarea').each(function (i, v) {
+        formData.append($(v).attr('name'), $(v).val());
+      });
+
+      $(this).find('button').each(function (i, v) {
+        formData.append($(v).attr('name'), $(v).val());
+      });
+
+      $.ajax({
+        type: "POST",
+        data: formData,
+        cache: false,
+        processData: false,  // tell jQuery not to process the data
+        contentType: false,   // tell jQuery not to set contentType
+        url: 'index.php?module=Emails'
+      }).done(function (response) {
+        "use strict";
+        response = JSON.parse(response);
+        if(typeof response.errors !== "undefined") {
+          mb.showHeader();
+          mb.setBody(response.errors.title);
+          mb.showFooter();
+          $(self).trigger("saveEmailError", [self, response]);
+        } else {
+          mb.showHeader();
+          mb.setBody(response.data.title);
+          mb.showFooter();
+          $(self).trigger("saveEmailSuccess", [self, response]);
+
+          if ($(self).find('[name=id]').length === 0) {
+            var id = $('<input>').attr('type', 'hidden').attr('name', 'id').val(response.data.id);
+            id.appendTo($(self).closest('[name=ComposeView]'));
+          } else {
+            var id = $(self).find('[name=id]');
+            $(id).val(response.data.id);
+          }
+        }
+
+      }).fail(function (response) {
+        "use strict";
+        response = JSON.parse(response);
+        mb.setBody(response.errors.title);
+        $(self).trigger("saveEmailError", [self, response]);
+      }).always(function (response) {
+        response = JSON.parse(response);
+        $(self).trigger("saveEmailAlways", [self, response]);
+      });
+
+      return false;
+    };
     /**
      *
      * @event disregardDraft
@@ -798,7 +929,84 @@
      */
     self.disregardDraft = function () {
       "use strict";
-      $(self).trigger("disregardDraft", [self]);
+
+      // TODO: TASK: SCRM-X -  Update labels
+      var mb = messageBox();
+      mb.setTitle(SUGAR.language.translate('Emails', 'LBL_CONFIRM_TITLE'));
+      mb.setBody(SUGAR.language.translate('Emails', 'LBL_EMAIL_DRAFT_CONFIRM_DISCARD'));
+      mb.show();
+
+      mb.on('ok', function() {
+        "use strict";
+
+        mb.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
+
+        // Use FormData v2 to send form data via ajax
+        var formData = new FormData($(this));
+
+        $(this).find('input').each(function (i, v) {
+          if ($(v).attr('type').toLowerCase() === 'file') {
+            for (i = 0; i < v.files.length; i++) {
+              var file = v.files[i];
+              var reader = new FileReader();
+              reader.readAsDataURL(file);
+              formData.append($(v).attr('name'), file);
+              fileCount++;
+            }
+          } else {
+            if ($(v).attr('name') == 'action') {
+              formData.append($(v).attr('name'), 'Delete');
+            } else if ($(v).attr('name') == 'send') {
+              formData.append($(v).attr('name'), 0);
+            } else {
+              formData.append($(v).attr('name'), $(v).val());
+            }
+          }
+        });
+
+        $(this).find('select').each(function (i, v) {
+          formData.append($(v).attr('name'), $(v).val());
+        });
+
+        $(this).find('textarea').each(function (i, v) {
+          formData.append($(v).attr('name'), $(v).val());
+        });
+
+        $(this).find('button').each(function (i, v) {
+          formData.append($(v).attr('name'), $(v).val());
+        });
+
+        $.ajax({
+          type: "POST",
+          data: formData,
+          cache: false,
+          processData: false,  // tell jQuery not to process the data
+          contentType: false,   // tell jQuery not to set contentType
+          url: 'index.php?module=Emails'
+        }).done(function(response) {
+          $(self).trigger("discardDraftDone", [self, response]);
+        }).error(function(response) {
+          mb.setBody(SUGAR.language.translate('','LBL_ERROR_SAVING_DRAFT'));
+          $(self).trigger("discardDraftBody", [self, response]);
+        }).always(function (response) {
+          $(self).trigger("discardDraftAlways", [self, response]);
+          mb.remove();
+          if ($(self).find('input[type="hidden"][name="return_module"]').val() !== '') {
+            location.href = 'index.php?module=' + $('#' + self.attr('id') + ' input[type="hidden"][name="return_module"]').val() +
+              '&action=' +
+              $(self).find('input[type="hidden"][name="return_action"]').val();
+          } else {
+            // The user is viewing in the modal view
+            location.reload();
+          }
+        });
+      });
+      mb.on('cancel', function() {
+        "use strict";
+        // do something
+        mb.remove();
+      });
+
       return false;
     };
 
