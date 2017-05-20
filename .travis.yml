@@ -18,7 +18,7 @@ before_script:
   - mysql -u root -e "GRANT ALL PRIVILEGES ON automated_tests.* TO 'automated_tests'@'localhost';"
   - composer install
 script:
-  - ./vendor/bin/codecept run
+  - ./vendor/bin/codecept run -f unit
   - cat ../suitecrm.log
 services:
   - mysql
