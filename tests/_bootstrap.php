@@ -2,7 +2,7 @@
 // This is global bootstrap for autoloading
 // get silent config
 $file_config = file_get_contents(__DIR__.'/travis_config_si.php');
-$write_config = file_put_contents(__DIR__.'/../config_si.php');
+$write_config = file_put_contents(__DIR__.'/../config_si.php', $file_config);
 
 if($write_config === false) {
     throw new Exception('Unable to copy silent config file');
@@ -57,4 +57,4 @@ $GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['curren
 $GLOBALS['sugar_config']['resource_management']['default_limit'] = 999999;
 
 
-define('SUITE_PHPUNIT_RUNNER', true)
+define('SUITE_PHPUNIT_RUNNER', true);
