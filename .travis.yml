@@ -19,7 +19,8 @@ before_script:
   - composer install
 script:
   - ./vendor/bin/codecept run -f unit
-  - cat ../suitecrm.log
+  - cat sugarcrm.log
+  - cat suitecrm.log
 services:
   - mysql
 branches:
