@@ -11,7 +11,7 @@ matrix:
 before_script:
   - composer self-update
   - composer install --no-interaction
-  
+  - mysql -e 'CREATE DATABASE suitecrm_automated_tests;
 script:
   - codecept run 
   - cat ../suitecrm.log
