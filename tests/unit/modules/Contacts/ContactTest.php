@@ -1,6 +1,13 @@
 <?php
 
-class ContactTest extends PHPUnit_Framework_TestCase {
+class ContactTest extends PHPUnit_Framework_TestCase
+{
+    protected function setUp()
+    {
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
 
 	public function testContact() {
 
@@ -105,14 +112,102 @@ class ContactTest extends PHPUnit_Framework_TestCase {
 		$contact = new Contact();
 
 		//test with empty string params
-		$expected = "SELECT\n                                contacts.*,\n                                email_addresses.email_address email_address,\n                                '' email_addresses_non_primary, accounts.name as account_name,\n                                users.user_name as assigned_user_name ,contacts_cstm.jjwg_maps_lng_c,contacts_cstm.jjwg_maps_lat_c,contacts_cstm.jjwg_maps_geocode_status_c,contacts_cstm.jjwg_maps_address_c FROM contacts LEFT JOIN users\n	                                ON contacts.assigned_user_id=users.id LEFT JOIN accounts_contacts\n	                                ON ( contacts.id=accounts_contacts.contact_id and (accounts_contacts.deleted is null or accounts_contacts.deleted = 0))\n	                                LEFT JOIN accounts\n	                                ON accounts_contacts.account_id=accounts.id  LEFT JOIN  email_addr_bean_rel on contacts.id = email_addr_bean_rel.bean_id and email_addr_bean_rel.bean_module='Contacts' and email_addr_bean_rel.deleted=0 and email_addr_bean_rel.primary_address=1  LEFT JOIN email_addresses on email_addresses.id = email_addr_bean_rel.email_address_id  LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c where ( accounts.deleted IS NULL OR accounts.deleted=0 )\n                      AND contacts.deleted=0 ";
+		$expected = " SELECT contacts.*,
+       email_addresses.email_address email_address,
+       ''                            email_addresses_non_primary,
+       accounts.NAME                 AS account_name,
+       users.user_name               AS assigned_user_name,
+       contacts_cstm.jjwg_maps_address_c,
+       contacts_cstm.jjwg_maps_geocode_status_c,
+       contacts_cstm.jjwg_maps_lat_c,
+       contacts_cstm.jjwg_maps_lng_c
+FROM   contacts
+       LEFT JOIN users
+              ON contacts.assigned_user_id = users.id
+       LEFT JOIN accounts_contacts
+              ON ( contacts.id = accounts_contacts.contact_id
+                   AND ( accounts_contacts.deleted IS NULL
+                          OR accounts_contacts.deleted = 0 ) )
+       LEFT JOIN accounts
+              ON accounts_contacts.account_id = accounts.id
+       LEFT JOIN email_addr_bean_rel
+              ON contacts.id = email_addr_bean_rel.bean_id
+                 AND email_addr_bean_rel.bean_module = 'Contacts'
+                 AND email_addr_bean_rel.deleted = 0
+                 AND email_addr_bean_rel.primary_address = 1
+       LEFT JOIN email_addresses
+              ON email_addresses.id = email_addr_bean_rel.email_address_id
+       LEFT JOIN contacts_cstm
+              ON contacts.id = contacts_cstm.id_c
+WHERE  ( accounts.deleted IS NULL
+          OR accounts.deleted = 0 )
+       AND contacts.deleted = 0  ";
+        $expected = trim($expected);
+        $expected = str_replace(' ','', $expected);
+        $expected = str_replace("\n",'', $expected);
+        $expected = str_replace("\r",'', $expected);
+        $expected = str_replace("\t",'', $expected);
+        $expected = strtolower($expected);
+
 		$actual = $contact->create_export_query('','');
+        $actual = trim($actual);
+        $actual = str_replace(' ','', $actual);
+        $actual = str_replace("\n",'', $actual);
+        $actual = str_replace("\r",'', $actual);
+        $actual = str_replace("\t",'', $actual);
+        $actual = strtolower($actual);
+
 		$this->assertSame($expected,$actual);
 
 
 		//test with valid string params
-		$expected = "SELECT\n                                contacts.*,\n                                email_addresses.email_address email_address,\n                                '' email_addresses_non_primary, accounts.name as account_name,\n                                users.user_name as assigned_user_name ,contacts_cstm.jjwg_maps_lng_c,contacts_cstm.jjwg_maps_lat_c,contacts_cstm.jjwg_maps_geocode_status_c,contacts_cstm.jjwg_maps_address_c FROM contacts LEFT JOIN users\n	                                ON contacts.assigned_user_id=users.id LEFT JOIN accounts_contacts\n	                                ON ( contacts.id=accounts_contacts.contact_id and (accounts_contacts.deleted is null or accounts_contacts.deleted = 0))\n	                                LEFT JOIN accounts\n	                                ON accounts_contacts.account_id=accounts.id  LEFT JOIN  email_addr_bean_rel on contacts.id = email_addr_bean_rel.bean_id and email_addr_bean_rel.bean_module='Contacts' and email_addr_bean_rel.deleted=0 and email_addr_bean_rel.primary_address=1  LEFT JOIN email_addresses on email_addresses.id = email_addr_bean_rel.email_address_id  LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c where (contacts.name=\"\") AND ( accounts.deleted IS NULL OR accounts.deleted=0 )\n                      AND contacts.deleted=0 ";
+		$expected = " SELECT contacts.*,
+       email_addresses.email_address email_address,
+       ''                            email_addresses_non_primary,
+       accounts.name                 AS account_name,
+       users.user_name               AS assigned_user_name,
+       contacts_cstm.jjwg_maps_address_c,
+       contacts_cstm.jjwg_maps_geocode_status_c,
+       contacts_cstm.jjwg_maps_lat_c,
+       contacts_cstm.jjwg_maps_lng_c
+FROM   contacts
+       left join users
+              ON contacts.assigned_user_id = users.id
+       left join accounts_contacts
+              ON ( contacts.id = accounts_contacts.contact_id
+                   AND ( accounts_contacts.deleted IS NULL
+                          OR accounts_contacts.deleted = 0 ) )
+       left join accounts
+              ON accounts_contacts.account_id = accounts.id
+       left join email_addr_bean_rel
+              ON contacts.id = email_addr_bean_rel.bean_id
+                 AND email_addr_bean_rel.bean_module = 'Contacts'
+                 AND email_addr_bean_rel.deleted = 0
+                 AND email_addr_bean_rel.primary_address = 1
+       left join email_addresses
+              ON email_addresses.id = email_addr_bean_rel.email_address_id
+       left join contacts_cstm
+              ON contacts.id = contacts_cstm.id_c
+WHERE  ( contacts.name =\"\" )
+       AND (accounts . deleted IS null
+    OR accounts . deleted = 0 )
+       AND contacts . deleted = 0  ";
+        $expected = trim($expected);
+        $expected = str_replace(' ','', $expected);
+        $expected = str_replace("\n",'', $expected);
+        $expected = str_replace("\r",'', $expected);
+        $expected = str_replace("\t",'', $expected);
+        $expected = strtolower($expected);
+
 		$actual = $contact->create_export_query('contacts.id','contacts.name=""');
+
+        $actual = trim($actual);
+        $actual = str_replace(' ','', $actual);
+        $actual = str_replace("\n",'', $actual);
+        $actual = str_replace("\r",'', $actual);
+        $actual = str_replace("\t",'', $actual);
+        $actual = strtolower($actual);
+
 		$this->assertSame($expected,$actual);
 
 	}
