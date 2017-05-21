@@ -113,7 +113,10 @@ class AccountTest extends PHPUnit_Framework_TestCase
 
         //execute the method and verify that it retunrs expected results
         $actual = $Account->get_list_view_data();
-        $this->assertSame($expected, $actual);
+
+        foreach($expected as $key => $value) {
+            $this->assertSame($expected[$key], $actual[$key]);
+        }
     }
 
     public function testbuild_generic_where_clause()
