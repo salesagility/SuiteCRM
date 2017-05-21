@@ -18,6 +18,7 @@ before_script:
   - mysql -u root -e "GRANT ALL PRIVILEGES ON automated_tests.* TO 'automated_tests'@'localhost';"
   - composer install
 script:
+  - php tests/install.php
   - ./vendor/bin/codecept run -f unit
   - cat sugarcrm.log
   - cat suitecrm.log
