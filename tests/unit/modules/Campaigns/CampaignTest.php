@@ -3,6 +3,13 @@
 
 class CampaignTest extends PHPUnit_Framework_TestCase
 {
+    protected function setUp()
+    {
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function testCampaign()
     {
 
@@ -239,13 +246,148 @@ class CampaignTest extends PHPUnit_Framework_TestCase
         $campaign = new Campaign();
 
         //without parameters
-        $expected = "SELECT emailman.* ,\n					campaigns.name as campaign_name,\n					email_marketing.name as message_name,\n					(CASE related_type\n						WHEN 'Contacts' THEN LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,''),'&nbsp;',IFNULL(contacts.last_name,''))))\n						WHEN 'Leads' THEN LTRIM(RTRIM(CONCAT(IFNULL(leads.first_name,''),'&nbsp;',IFNULL(leads.last_name,''))))\n						WHEN 'Accounts' THEN accounts.name\n						WHEN 'Users' THEN LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),'&nbsp;',IFNULL(users.last_name,''))))\n						WHEN 'Prospects' THEN LTRIM(RTRIM(CONCAT(IFNULL(prospects.first_name,''),'&nbsp;',IFNULL(prospects.last_name,''))))\n					END) recipient_name FROM emailman\n		            LEFT JOIN users ON users.id = emailman.related_id and emailman.related_type ='Users'\n					LEFT JOIN contacts ON contacts.id = emailman.related_id and emailman.related_type ='Contacts'\n					LEFT JOIN leads ON leads.id = emailman.related_id and emailman.related_type ='Leads'\n					LEFT JOIN accounts ON accounts.id = emailman.related_id and emailman.related_type ='Accounts'\n					LEFT JOIN prospects ON prospects.id = emailman.related_id and emailman.related_type ='Prospects'\n					LEFT JOIN prospect_lists ON prospect_lists.id = emailman.list_id\n                    LEFT JOIN email_addr_bean_rel ON email_addr_bean_rel.bean_id = emailman.related_id and emailman.related_type = email_addr_bean_rel.bean_module and email_addr_bean_rel.primary_address = 1 and email_addr_bean_rel.deleted=0\n					LEFT JOIN campaigns ON campaigns.id = emailman.campaign_id\n					LEFT JOIN email_marketing ON email_marketing.id = emailman.marketing_id WHERE  emailman.campaign_id = '' AND emailman.deleted=0 AND  emailman.deleted=0";
+        $expected = " SELECT emailman.*,
+       campaigns.NAME       AS campaign_name,
+       email_marketing.NAME AS message_name,
+       ( CASE related_type
+           WHEN 'Contacts' THEN
+         Ltrim(Rtrim(
+               Concat(Ifnull(contacts.first_name, ''), ' ',
+               Ifnull(contacts.last_name, ''))))
+           WHEN 'Leads' THEN
+       Ltrim(Rtrim(
+       Concat(Ifnull(leads.first_name, ''), ' ',
+       Ifnull(leads.last_name, ''))))
+       WHEN 'Accounts' THEN accounts.NAME
+       WHEN 'Users' THEN
+       Ltrim(Rtrim(
+       Concat(Ifnull(users.first_name, ''), ' ',
+       Ifnull(users.last_name, ''))))
+       WHEN 'Prospects' THEN Ltrim(
+                               Rtrim(
+       Concat(Ifnull(prospects.first_name, ''), ' ',
+                   Ifnull(prospects.last_name, ''))))
+       END )                recipient_name
+FROM   emailman
+       LEFT JOIN users
+              ON users.id = emailman.related_id
+                 AND emailman.related_type = 'Users'
+       LEFT JOIN contacts
+              ON contacts.id = emailman.related_id
+                 AND emailman.related_type = 'Contacts'
+       LEFT JOIN leads
+              ON leads.id = emailman.related_id
+                 AND emailman.related_type = 'Leads'
+       LEFT JOIN accounts
+              ON accounts.id = emailman.related_id
+                 AND emailman.related_type = 'Accounts'
+       LEFT JOIN prospects
+              ON prospects.id = emailman.related_id
+                 AND emailman.related_type = 'Prospects'
+       LEFT JOIN prospect_lists
+              ON prospect_lists.id = emailman.list_id
+       LEFT JOIN email_addr_bean_rel
+              ON email_addr_bean_rel.bean_id = emailman.related_id
+                 AND emailman.related_type = email_addr_bean_rel.bean_module
+                 AND email_addr_bean_rel.primary_address = 1
+                 AND email_addr_bean_rel.deleted = 0
+       LEFT JOIN campaigns
+              ON campaigns.id = emailman.campaign_id
+       LEFT JOIN email_marketing
+              ON email_marketing.id = emailman.marketing_id
+WHERE  emailman.campaign_id = ''
+       AND emailman.deleted = 0
+       AND emailman.deleted = 0  ";
+        $expected = trim($expected);
+        $expected = str_replace(' ','', $expected);
+        $expected = str_replace("\n",'', $expected);
+        $expected = str_replace("\t",'', $expected);
+        $expected = str_replace("\t",'', $expected);
+        $expected = strtolower($expected);
+
         $actual = $campaign->get_queue_items();
+        $actual = trim($actual);
+        $actual = str_replace(' ','', $actual);
+        $actual = str_replace("\n",'', $actual);
+        $actual = str_replace("\t",'', $actual);
+        $actual = str_replace("\t",'', $actual);
+        $actual = strtolower($actual);
+
         $this->assertSame($expected, $actual);
 
-        //with parameters		
-        $expected = "SELECT emailman.* ,\n					campaigns.name as campaign_name,\n					email_marketing.name as message_name,\n					(CASE related_type\n						WHEN 'Contacts' THEN LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,''),'&nbsp;',IFNULL(contacts.last_name,''))))\n						WHEN 'Leads' THEN LTRIM(RTRIM(CONCAT(IFNULL(leads.first_name,''),'&nbsp;',IFNULL(leads.last_name,''))))\n						WHEN 'Accounts' THEN accounts.name\n						WHEN 'Users' THEN LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),'&nbsp;',IFNULL(users.last_name,''))))\n						WHEN 'Prospects' THEN LTRIM(RTRIM(CONCAT(IFNULL(prospects.first_name,''),'&nbsp;',IFNULL(prospects.last_name,''))))\n					END) recipient_name FROM emailman\n		            LEFT JOIN users ON users.id = emailman.related_id and emailman.related_type ='Users'\n					LEFT JOIN contacts ON contacts.id = emailman.related_id and emailman.related_type ='Contacts'\n					LEFT JOIN leads ON leads.id = emailman.related_id and emailman.related_type ='Leads'\n					LEFT JOIN accounts ON accounts.id = emailman.related_id and emailman.related_type ='Accounts'\n					LEFT JOIN prospects ON prospects.id = emailman.related_id and emailman.related_type ='Prospects'\n					LEFT JOIN prospect_lists ON prospect_lists.id = emailman.list_id\n                    LEFT JOIN email_addr_bean_rel ON email_addr_bean_rel.bean_id = emailman.related_id and emailman.related_type = email_addr_bean_rel.bean_module and email_addr_bean_rel.primary_address = 1 and email_addr_bean_rel.deleted=0\n					LEFT JOIN campaigns ON campaigns.id = emailman.campaign_id\n					LEFT JOIN email_marketing ON email_marketing.id = emailman.marketing_id INNER JOIN (select min(id) as id from emailman  em GROUP BY users.id  ) secondary\n			           on emailman.id = secondary.id	WHERE  emailman.campaign_id = '' AND emailman.deleted=0 AND marketing_id ='1'  AND  emailman.deleted=0";
+        //with parameters
+        $expected = "SELECT emailman.*,
+       campaigns.NAME       AS campaign_name,
+       email_marketing.NAME AS message_name,
+       ( CASE related_type
+           WHEN 'Contacts' THEN
+         Ltrim(Rtrim(
+               Concat(Ifnull(contacts.first_name, ''), ' ',
+               Ifnull(contacts.last_name, ''))))
+           WHEN 'Leads' THEN
+       Ltrim(Rtrim(
+       Concat(Ifnull(leads.first_name, ''), ' ',
+       Ifnull(leads.last_name, ''))))
+       WHEN 'Accounts' THEN accounts.NAME
+       WHEN 'Users' THEN
+       Ltrim(Rtrim(
+       Concat(Ifnull(users.first_name, ''), ' ',
+       Ifnull(users.last_name, ''))))
+       WHEN 'Prospects' THEN Ltrim(
+                               Rtrim(
+       Concat(Ifnull(prospects.first_name, ''), ' ',
+                   Ifnull(prospects.last_name, ''))))
+       END )                recipient_name
+FROM   emailman
+       LEFT JOIN users
+              ON users.id = emailman.related_id
+                 AND emailman.related_type = 'Users'
+       LEFT JOIN contacts
+              ON contacts.id = emailman.related_id
+                 AND emailman.related_type = 'Contacts'
+       LEFT JOIN leads
+              ON leads.id = emailman.related_id
+                 AND emailman.related_type = 'Leads'
+       LEFT JOIN accounts
+              ON accounts.id = emailman.related_id
+                 AND emailman.related_type = 'Accounts'
+       LEFT JOIN prospects
+              ON prospects.id = emailman.related_id
+                 AND emailman.related_type = 'Prospects'
+       LEFT JOIN prospect_lists
+              ON prospect_lists.id = emailman.list_id
+       LEFT JOIN email_addr_bean_rel
+              ON email_addr_bean_rel.bean_id = emailman.related_id
+                 AND emailman.related_type = email_addr_bean_rel.bean_module
+                 AND email_addr_bean_rel.primary_address = 1
+                 AND email_addr_bean_rel.deleted = 0
+       LEFT JOIN campaigns
+              ON campaigns.id = emailman.campaign_id
+       LEFT JOIN email_marketing
+              ON email_marketing.id = emailman.marketing_id
+       INNER JOIN (SELECT Min(id) AS id
+                   FROM   emailman em
+                   GROUP  BY users.id) secondary
+               ON emailman.id = secondary.id
+WHERE  emailman.campaign_id = ''
+       AND emailman.deleted = 0
+       AND marketing_id = '1'
+       AND emailman.deleted = 0  ";
+
+        $expected = trim($expected);
+        $expected = str_replace(' ','', $expected);
+        $expected = str_replace("\n",'', $expected);
+        $expected = str_replace("\r",'', $expected);
+        $expected = str_replace("\t",'', $expected);
+        $expected = strtolower($expected);
+
         $actual = $campaign->get_queue_items(array('EMAIL_MARKETING_ID_VALUE' => 1, 'group_by' => 'users.id'));
+        $actual = trim($actual);
+        $actual = str_replace(' ','', $actual);
+        $actual = str_replace("\n",'', $actual);
+        $actual = str_replace("\r",'', $actual);
+        $actual = str_replace("\t",'', $actual);
+        $actual = strtolower($actual);
         $this->assertSame($expected, $actual);
     }
 
