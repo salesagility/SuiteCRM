@@ -71,8 +71,8 @@ class db_utilsTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
 
         $string = "'test'&trial<\">";
-        $expected = '&#039;test&#039;&trial&lt;&quot;&gt;';
-        $actual = to_html($string);
+        $expected = '&#039;test&#039;&amp;trial&lt;&quot;&gt;';
+        $actual = to_html($string, true);
         $this->assertSame($expected, $actual);
     }
 
