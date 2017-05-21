@@ -45,6 +45,8 @@ class security_utilsTest extends PHPUnit_Framework_TestCase
                 'AOW_WorkFlow' => 'AOW_WorkFlow',
                 'AOK_KnowledgeBase' => 'AOK_KnowledgeBase',
                 'AOK_Knowledge_Base_Categories' => 'AOK_Knowledge_Base_Categories',
+                'EmailTemplates' => 'EmailTemplates'
+
         );
 
         $actual = query_module_access_list($user);

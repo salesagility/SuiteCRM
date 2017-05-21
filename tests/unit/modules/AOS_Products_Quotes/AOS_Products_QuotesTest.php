@@ -2,6 +2,13 @@
 
 class AOS_Products_QuotesTest extends PHPUnit_Framework_TestCase
 {
+    protected function setUp()
+    {
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function testAOS_Products_Quotes()
     {
 

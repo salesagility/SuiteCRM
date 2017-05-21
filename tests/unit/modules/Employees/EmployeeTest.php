@@ -1,7 +1,13 @@
 <?php
 
-class EmployeeTest extends PHPUnit_Framework_TestCase {
-
+class EmployeeTest extends PHPUnit_Framework_TestCase
+{
+    protected function setUp()
+    {
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
 
 	public function testEmployee() {
 
@@ -100,7 +106,7 @@ class EmployeeTest extends PHPUnit_Framework_TestCase {
 					  'SHOW_ON_EMPLOYEES' => '1',
 					  'ENCODED_NAME' => ' ',
 					  'EMAIL1' => '',
-					  'EMAIL1_LINK' => '<a href=\'javascript:void(0);\' onclick=\'SUGAR.quickCompose.init({"fullComposeUrl":"contact_id=\\u0026parent_type=Employees\\u0026parent_id=\\u0026parent_name=+\\u0026to_addrs_ids=\\u0026to_addrs_names=\\u0026to_addrs_emails=\\u0026to_email_addrs=+%26nbsp%3B%26lt%3B%26gt%3B\\u0026return_module=Employees\\u0026return_action=ListView\\u0026return_id=","composePackage":{"contact_id":"","parent_type":"Employees","parent_id":"","parent_name":" ","to_addrs_ids":"","to_addrs_names":"","to_addrs_emails":"","to_email_addrs":"  \\u003C\\u003E","return_module":"Employees","return_action":"ListView","return_id":""}});\' class=\'\'>',
+					  'EMAIL1_LINK' => '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="Employees" data-record-id="" data-module-name=" "  data-email-address="">',
 					  'MESSENGER_TYPE' => '',
 					  'REPORTS_TO_NAME' => NULL,
 					);

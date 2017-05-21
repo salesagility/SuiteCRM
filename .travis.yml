@@ -19,6 +19,7 @@ before_script:
   - composer install
 script:
   - php tests/install.php
+  - ./vendor/bin/pscss -f compressed themes/SuiteP/css/style.scss >  themes/SuiteP/css/style.css
   - ./vendor/bin/codecept run -f unit
   - cat sugarcrm.log
   - cat suitecrm.log

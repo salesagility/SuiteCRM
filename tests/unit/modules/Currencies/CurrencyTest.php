@@ -2,6 +2,13 @@
 
 class CurrencyTest extends PHPUnit_Framework_TestCase
 {
+    protected function setUp()
+    {
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function testCurrency()
     {
         //execute the contructor and check for the Object type and  attributes
@@ -116,8 +123,8 @@ class CurrencyTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('', $currency->getPdfCurrencySymbol());
 
         //test with required attributes set
-        $currency->symbol = '€';
-        $this->assertEquals('€', $currency->getPdfCurrencySymbol());
+        $currency->symbol = 'ï¿½';
+        $this->assertEquals('ï¿½', $currency->getPdfCurrencySymbol());
     }
 
     public function testget_list_view_data()
