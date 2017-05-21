@@ -2,6 +2,13 @@
 
 class SugarViewTest extends PHPUnit_Framework_TestCase
 {
+    protected function setUp()
+    {
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function testinit()
     {
         error_reporting(E_ERROR | E_WARNING | E_PARSE);
@@ -47,7 +54,7 @@ class SugarViewTest extends PHPUnit_Framework_TestCase
         //execute the method and check if it works and doesn't throws an exception
         try {
             $errors = $SugarView->displayErrors();
-            $this->assertSame(null, $errors);
+            $this->assertEmpty($errors, print_r($SugarView, true));
         } catch (Exception $e) {
             $this->fail();
         }
