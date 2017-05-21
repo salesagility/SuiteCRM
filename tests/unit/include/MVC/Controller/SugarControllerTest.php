@@ -3,6 +3,13 @@
 
 class SugarControllerTest  extends PHPUnit_Framework_TestCase
 {
+    protected function setUp()
+    {
+        global $current_user;
+        $current_user = new User();
+        get_sugar_config_defaults();
+    }
+
     public function testsetup()
     {
         $SugarController = new SugarController();
@@ -79,6 +86,7 @@ class SugarControllerTest  extends PHPUnit_Framework_TestCase
     {
         $SugarController = new SugarController();
         $SugarController->setModule('Users');
+        $SugarController->record = "1";
         $SugarController->loadBean();
 
         //execute the method and check if it either works or throws an mysql exception.
@@ -96,6 +104,7 @@ class SugarControllerTest  extends PHPUnit_Framework_TestCase
     {
         $SugarController = new SugarController();
         $SugarController->setModule('Users');
+        $SugarController->record = "1";
         $SugarController->loadBean();
 
         //execute the method and check if it either works or throws an mysql exception.
