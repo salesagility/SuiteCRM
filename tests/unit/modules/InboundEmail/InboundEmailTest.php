@@ -3,6 +3,13 @@
 
 class InboundEmailTest extends PHPUnit_Framework_TestCase
 {
+    protected function setUp()
+    {
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function testthis_callback()
     {
 
@@ -1913,10 +1920,20 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
         $inboundEmail = new InboundEmail();
 
-        $expected = "			<form action=\"index.php\" method=\"post\" name=\"Macro\" id=\"form\">\n						<input type=\"hidden\" name=\"module\" value=\"InboundEmail\">\n						<input type=\"hidden\" name=\"action\" value=\"ListView\">\n						<input type=\"hidden\" name=\"save\" value=\"true\">\n\n			<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n				<tr>\n					<td>\n						<input 	title=\"Save\"\n								accessKey=\"a\"\n								class=\"button\"\n								onclick=\"this.form.return_module.value='InboundEmail'; this.form.return_action.value='ListView';\"\n								type=\"submit\" name=\"Edit\" value=\"  Save  \">\n					</td>\n				</tr>\n			</table>\n\n			<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"detail view\">\n				<tr>\n					<td valign=\"top\" width='10%' NOWRAP scope=\"row\">\n						<span>\n							<b>:</b>\n						</span>\n					</td>\n					<td valign=\"top\" width='20%'>\n						<span>\n							<input name=\"inbound_email_case_macro\" type=\"text\" value=\"[CASE:%1]\">\n						</span>\n					</td>\n					<td valign=\"top\" width='70%'>\n						<span>\n							\n							<br />\n							<i></i>\n						</span>\n					</td>\n				</tr>\n			</table>\n			</form>";
+        $expected = "<form action=\"index.php\" method=\"post\" name=\"Macro\" id=\"form\"><input type=\"hidden\" name=\"module\" value=\"InboundEmail\"><input type=\"hidden\" name=\"action\" value=\"ListView\"><input type=\"hidden\" name=\"save\" value=\"true\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td><input title=\"Save\"accessKey=\"a\"class=\"button\"onclick=\"this.form.return_module.value='InboundEmail'; this.form.return_action.value='ListView';\"type=\"submit\" name=\"Edit\" value=\" Save \"></td></tr></table><table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"detail view\"><tr><td valign=\"top\" width='10%' NOWRAP scope=\"row\"><span><b>:</b></span></td><td valign=\"top\" width='20%'><span><input name=\"inbound_email_case_macro\" type=\"text\" value=\"[CASE:%1]\"></span></td><td valign=\"top\" width='70%'><span><br/><i></i></span></td></tr></table></form>";
         $result = $inboundEmail->getSystemSettingsForm();
+        $expected = trim($expected);
+        $expected = str_replace(' ','', $expected);
+        $expected = str_replace("\n",'', $expected);
+        $expected = str_replace("\r",'', $expected);
+        $expected = str_replace("\t",'', $expected);
 
-        $this->assertSame($expected, $result);
+        $actual = trim($result);
+        $actual = str_replace(' ','', $actual);
+        $actual = str_replace("\n",'', $actual);
+        $actual = str_replace("\r",'', $actual);
+        $actual = str_replace("\t",'', $actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testgetCaseIdFromCaseNumber()

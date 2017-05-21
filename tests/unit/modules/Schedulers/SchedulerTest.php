@@ -5,6 +5,13 @@ require_once 'install/install_utils.php';
 
 class SchedulerTest extends PHPUnit_Framework_TestCase
 {
+    protected function setUp()
+    {
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function test__construct()
     {
 

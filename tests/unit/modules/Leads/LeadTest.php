@@ -1,7 +1,13 @@
 <?php
 
-class LeadTest extends PHPUnit_Framework_TestCase {
-
+class LeadTest extends PHPUnit_Framework_TestCase
+{
+    protected function setUp()
+    {
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
 
 	public function testLead()
 	{
@@ -198,7 +204,7 @@ class LeadTest extends PHPUnit_Framework_TestCase {
 					  'CONVERTED' => '0',
 					  'ENCODED_NAME' => ' ',
 					  'EMAIL1' => '',
-					  'EMAIL1_LINK' => '<a href=\'javascript:void(0);\' onclick=\'SUGAR.quickCompose.init({"fullComposeUrl":"contact_id=\\u0026parent_type=Leads\\u0026parent_id=\\u0026parent_name=+\\u0026to_addrs_ids=\\u0026to_addrs_names=\\u0026to_addrs_emails=\\u0026to_email_addrs=+%26nbsp%3B%26lt%3B%26gt%3B\\u0026return_module=Leads\\u0026return_action=ListView\\u0026return_id=","composePackage":{"contact_id":"","parent_type":"Leads","parent_id":"","parent_name":" ","to_addrs_ids":"","to_addrs_names":"","to_addrs_emails":"","to_email_addrs":"  \\u003C\\u003E","return_module":"Leads","return_action":"ListView","return_id":""}});\' class=\'\'>',
+					  'EMAIL1_LINK' => '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="Leads" data-record-id="" data-module-name=" "  data-email-address="">',
 					  'ACC_NAME_FROM_ACCOUNTS' => NULL,
 					);
 

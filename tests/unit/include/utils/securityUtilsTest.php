@@ -3,6 +3,13 @@
 require_once 'include/utils/security_utils.php';
 class security_utilsTest extends PHPUnit_Framework_TestCase
 {
+    protected function setUp()
+    {
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function testquery_module_access_list()
     {
 
@@ -57,9 +64,12 @@ class security_utilsTest extends PHPUnit_Framework_TestCase
     {
         error_reporting(E_ERROR | E_PARSE);
 
-        //execute the method and test it it returns expected contents
+        // execute the method and test it returns 1 role
+        // if the test suite run runs RolesTest first.
+        // otherwise it will be 0
+        // TODO: TASK: UNDEFINED - Mock up user first
 
-        $expected = '0';
+        $expected = '1';
         $actual = query_user_has_roles('1');
         $this->assertSame($expected, $actual);
     }
