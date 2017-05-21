@@ -294,7 +294,7 @@ class file_utilsTest extends PHPUnit_Framework_TestCase
                 'data/Relationships/One2MRelationship.php' => '588ad87910bd9d885fe27da77ad13e30',
                 'data/Relationships/One2OneBeanRelationship.php' => '765b8785d5ca576a8530db99bdf4d411',
                 'data/Relationships/One2OneRelationship.php' => '0385f7577687a402d9603ef26984257e',
-                'data/Relationships/RelationshipFactory.php' => '50112936176b9ae891d0cfddde89ca28',
+                'data/Relationships/RelationshipFactory.php' => '3bf18f0ff637fb3700d3ac0b75a0fb1b',
                 'data/Relationships/SugarRelationship.php' => '87e9151907a03823b1045402d46f022c',
         );
 
