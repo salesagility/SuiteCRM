@@ -69,7 +69,7 @@ class security_utilsTest extends PHPUnit_Framework_TestCase
         // otherwise it will be 0
         // TODO: TASK: UNDEFINED - Mock up user first
 
-        $expected = '1';
+        $expected = '0';
         $actual = query_user_has_roles('1');
         $this->assertSame($expected, $actual);
     }
