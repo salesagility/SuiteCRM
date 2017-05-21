@@ -2,6 +2,13 @@
 
 class ViewDetailTest extends PHPUnit_Framework_TestCase
 {
+    protected function setUp()
+    {
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function testViewDetail()
     {
         //execute the contructor and check for the Object type and type attribute
