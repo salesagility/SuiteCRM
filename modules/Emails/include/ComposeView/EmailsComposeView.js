@@ -73,6 +73,37 @@
         opts.tinyMceOptions.selector = $(self).find('#description_html');
       }
 
+      if($(self).find('#from_addr_name').length !== 0) {
+        var selectFrom = $('<select></select>')
+          .attr('name', 'from_addr');
+        var from_addr = $(self).find('#from_addr_name');
+        from_addr.replaceWith(selectFrom);
+
+        $.ajax({
+          "url": 'index.php?module=Emails&action=getFromFields'
+        }).done(function (response) {
+          var json = JSON.parse(response);
+
+          if(typeof json.data !== "undefined") {
+            $(json.data).each( function(i, v) {
+              var selectOption = $('<option></option>');
+              selectOption.attr('value', v.attributes.from);
+              selectOption.html(v.attributes.from);
+              selectOption.appendTo(selectFrom);
+            });
+          }
+
+          if(typeof json.errors !== "undefined") {
+            $.each(json.errors, function(i, v) {
+
+            });
+          }
+
+        }).error(function (response) {
+          console.error(response);
+        });
+      }
+
       /**
        * Used to preview email. It also doubles as a means to get the plain text version
        * using $('#'+self.attr('id') + ' .html_preview').text();s

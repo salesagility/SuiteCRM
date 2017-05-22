@@ -78,10 +78,8 @@ if ($_REQUEST['action'] === 'ImportFromListView') {
     $GLOBALS['sugar_config']['http_referer']['actions'][] = 'ImportFromListView';
 }
 
-
-
-if ($_REQUEST['action'] === 'GetComposeViewFields') {
-    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'GetComposeViewFields';
+if ($_REQUEST['action'] === 'GetFromFields') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'GetFromFields';
 }
 
 class EmailsController extends SugarController
@@ -307,6 +305,32 @@ class EmailsController extends SugarController
     public function action_Popup()
     {
         $this->view = 'popup';
+    }
+
+    public function action_GetFromFields()
+    {
+        global $current_user;
+        $email = new Email();
+        $email->email2init();
+        $ie = new InboundEmail();
+        $ie->email = $email;
+        $emailUI = new EmailUI();
+        $accounts =$ieAccountsFull = $ie->retrieveAllByGroupIdWithGroupAccounts($current_user->id);
+        $data = array();
+        foreach ($accounts as $inboundEmailId => $inboundEmail) {
+            $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
+            $data[] = array(
+                'type' => $inboundEmail->module_name,
+                'id' => $inboundEmail->id,
+                'attributes' => array(
+                    'from' => $storedOptions['from_addr']
+                )
+            );
+        }
+
+
+        echo json_encode(array('data' => $data));
+        $this->view = 'ajax';
     }
 
     public function action_CheckEmail()
