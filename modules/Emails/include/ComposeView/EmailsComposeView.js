@@ -80,15 +80,21 @@
         var from_addr = $(self).find('#from_addr_name');
         from_addr.replaceWith(selectFrom);
 
+        $(selectFrom).change(function (e) {
+          console.log(e);
+          console.log(this);
+          $(self).find('[name=inbound_email_id]').val($(this).find('option:selected').attr('inboundId'));
+        });
+
         $.ajax({
           "url": 'index.php?module=Emails&action=getFromFields'
         }).done(function (response) {
           var json = JSON.parse(response);
-          debugger;
           if(typeof json.data !== "undefined") {
             $(json.data).each( function(i, v) {
               var selectOption = $('<option></option>');
               selectOption.attr('value', v.attributes.from);
+              selectOption.attr('inboundId', v.id);
               selectOption.html(v.attributes.from);
               selectOption.appendTo(selectFrom);
             });
