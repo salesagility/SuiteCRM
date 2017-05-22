@@ -54,6 +54,7 @@ $mod_strings = array (
 
 	'LBL_BUTTON_CREATE'					=> 'Create',
 	'LBL_BUTTON_EDIT'					=> 'Edit',
+    'LBL_BUTTON_EDIT_EDIT_DRAFT'	    => 'Edit Draft',
 	'LBL_QS_DISABLED'                   => '(QuickSearch is not availible for this module. Please use the select button.)',
 	'LBL_SIGNATURE_PREPEND'				=> 'Signature above reply',
     'LBL_EMAIL_DEFAULT_DESCRIPTION' 	=> 'Here is the quote you requested (You can change this text)',

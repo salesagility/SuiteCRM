@@ -49,6 +49,10 @@ require_once('modules/Emails/include/NonImportedDetailView/NonImportedDetailView
 class EmailsViewDetailnonimported extends ViewDetail
 {
     /**
+     * @var Email $bean
+     */
+    public $bean;
+    /**
      * EmailsViewDetailnonimported constructor.
      * @inheritdoc
      */
@@ -71,6 +75,9 @@ class EmailsViewDetailnonimported extends ViewDetail
             get_custom_file_if_exists('include/DetailView/DetailView.tpl'));
     }
 
+    /**
+     * Display View
+     */
     public function display()
     {
         $this->dv->process();

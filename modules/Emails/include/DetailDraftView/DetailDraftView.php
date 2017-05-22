@@ -39,24 +39,34 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+
 if (!defined('sugarEntry') || !sugarEntry) {
-    die ('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
 
-require_once 'modules/Emails/include/ListView/ListViewSmartyEmails.php';
+require_once('include/DetailView/DetailView2.php');
 
-class EmailsViewList extends ViewList
+class DetailDraftView extends DetailView2
 {
-    /**
-     * @var Email
-     */
-    public $seed;
 
-    /**
-     * setup display
-     */
-    public function preDisplay()
+    public function setup(
+        $module,
+        $focus  = null,
+        $metadataFile = null,
+        $tpl = 'include/DetailView/DetailView.tpl',
+        $createFocus = true,
+        $metadataFileName = 'detaildraft'
+    )
     {
-        $this->lv = new ListViewSmartyEmails();
+        parent::setup($module, $focus, $metadataFile, $tpl, $createFocus, $metadataFileName);
+    }
+
+    public function populateBean()
+    {
+        if (!empty($_REQUEST['record'])) {
+            $this->focus = BeanFactory::getBean('Emails')->retrieve($_REQUEST['record']);
+        } else {
+            $GLOBALS['log']->debug("Unable to populate bean, no record parameter found");
+        }
     }
 }

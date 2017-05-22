@@ -50,6 +50,7 @@
     <input type="hidden" name="send" value="1">
     <input type="hidden" name="return_module" value="{$RETURN_MODULE}">
     <input type="hidden" name="return_action" value="{$RETURN_ACTION}">
+    <input type="hidden" name="inbound_email_id" value="{$INBOUND_ID}">
 <div id="EditView_tabs">
     {*display tabs*}
     {{counter name="tabCount" start=-1 print=false assign="tabCount"}}

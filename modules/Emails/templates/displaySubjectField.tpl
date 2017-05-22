@@ -40,7 +40,9 @@
 *}
 <div class="email-subject">
     {if $bean}
-        {if !empty($bean.id)}
+        {if !empty($bean.id) and $bean.status == $APP_LIST_STRINGS.dom_email_status.draft}
+            <a href="index.php?module=Emails&action=DetailDraftView&record={$bean.id}">{$bean.name}</a>
+        {elseif !empty($bean.id) and $bean.status != $APP_LIST_STRINGS.dom_email_status.draft}
             <a href="index.php?module=Emails&action=DetailView&record={$bean.id}">{$bean.name}</a>
         {else}
             <a href="index.php?module=Emails&action=DisplayDetailView&folder={$bean.folder}&folder={$bean.folder_type}&inbound_email_record={$bean.inbound_email_record}&uid={$bean.uid}&msgno={$bean.msgno}">{$bean.name}</a>

@@ -46,6 +46,7 @@ $viewdefs['Emails']['ComposeView'] = array(
             array('label' => '10', 'field' => '30')
         ),
         'form' => array(
+            'headerTpl' => 'modules/Emails/include/ComposeView/ComposeViewBlank.tpl',
             'footerTpl' => 'modules/Emails/include/ComposeView/ComposeViewToolbar.tpl',
             'buttons' => array(
                 array('customCode' => '<button class="btn btn-send-email" title="{$MOD.LBL_SEND_BUTTON_TITLE}"><span class="glyphicon glyphicon-send"></span></button>'),

@@ -38,7 +38,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
+require_once ('include/EditView/EditView2.php');
 class ComposeView extends EditView
 {
     /**
@@ -52,74 +52,14 @@ class ComposeView extends EditView
     /**
      * @inheritdoc
      */
-    function setup($module, $focus = null, $metadataFile = null, $tpl = 'modules/Emails/include/ComposeView/ComposeView.tpl', $createFocus = true)
-    {
-        $this->th = $this->getTemplateHandler();
-        $this->th->ss =& $this->ss;
-        $this->tpl = $tpl;
-        $this->module = $module;
-        $this->focus = $focus;
-
-        //this logic checks if the focus has an id and if it does not then it will create a new instance of the focus bean
-        //but in convert lead we do not want to create a new instance and do not want to populate id.
-        if ($createFocus)
-        {
-            $this->createFocus();
-        }
-
-        if (empty($GLOBALS['sugar_config']['showDetailData']))
-        {
-            $this->showDetailData = false;
-        }
-        $this->metadataFile = $metadataFile;
-
-        if (isset($GLOBALS['sugar_config']['disable_vcr']))
-        {
-           $this->showVCRControl = !$GLOBALS['sugar_config']['disable_vcr'];
-        }
-
-        if (!empty($this->metadataFile) && file_exists($this->metadataFile))
-        {
-            include($this->metadataFile);
-        }
-        else
-        {
-            //If file doesn't exist we create a best guess
-            if (!file_exists("modules/$this->module/metadata/composeviewdefs.php")
-                && file_exists("modules/$this->module/EditView.html"))
-            {
-                require_once('include/SugarFields/Parsers/EditViewMetaParser.php');
-
-                global $dictionary;
-
-                $htmlFile = "modules/" . $this->module . "/EditView.html";
-                $parser = new EditViewMetaParser();
-                if (!file_exists('modules/'.$this->module.'/metadata'))
-                {
-                   sugar_mkdir('modules/'.$this->module.'/metadata');
-                }
-
-                $fp = sugar_fopen('modules/'.$this->module.'/metadata/composeviewdefs.php', 'w');
-                fwrite($fp, $parser->parse($htmlFile, $dictionary[$focus->object_name]['fields'], $this->module));
-                fclose($fp);
-            }
-
-            //Flag an error... we couldn't create the best guess meta-data file
-            if (!file_exists("modules/$this->module/metadata/composeviewdefs.php"))
-            {
-                global $app_strings;
-
-                $error = str_replace("[file]", "modules/$this->module/metadata/composeviewdefs.php", $app_strings['ERR_CANNOT_CREATE_METADATA_FILE']);
-                $GLOBALS['log']->fatal($error);
-                echo $error;
-                die();
-            }
-
-            require("modules/$this->module/metadata/composeviewdefs.php");
-        }
-
-        $this->defs = $viewdefs[$this->module][$this->view];
-        $this->isDuplicate = isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true' && $this->focus->aclAccess('edit');
+    public function setup($module,
+        $focus = null,
+        $metadataFile = null,
+        $tpl = 'modules/Emails/include/ComposeView/ComposeView.tpl',
+        $createFocus = true,
+        $metadataFileName = 'composeviewdefs'
+    ) {
+        parent::setup($module, $focus, $metadataFile, $tpl, $createFocus, $metadataFileName);
     }
 }
 

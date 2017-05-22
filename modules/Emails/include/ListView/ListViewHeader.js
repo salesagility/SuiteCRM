@@ -42,6 +42,8 @@ $(document).ready(function () {
   var query = JSON.parse($('[name=current_query_by_page]').val());
   if(typeof query.folder === 'undefined' ||  query.folder === '') {
     $('.btn-emails-current-folder').remove();
+  } else if(query.folder === null) {
+    $('.btn-emails-current-folder').html('<span class="glyphicon glyphicon-alert"></span>');
   } else {
     $('.btn-emails-current-folder').text(query.folder);
   }
