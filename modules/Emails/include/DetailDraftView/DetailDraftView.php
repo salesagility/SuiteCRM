@@ -48,6 +48,10 @@ require_once('include/DetailView/DetailView2.php');
 
 class DetailDraftView extends DetailView2
 {
+    /**
+     * @var Email $focus
+     */
+    public $focus;
 
     public function setup(
         $module,
@@ -65,6 +69,9 @@ class DetailDraftView extends DetailView2
     {
         if (!empty($_REQUEST['record'])) {
             $this->focus = BeanFactory::getBean('Emails')->retrieve($_REQUEST['record']);
+            if(empty($this->focus->from_addr_name)) {
+                $this->focus->from_addr_name = $this->focus->from_addr;
+            }
         } else {
             $GLOBALS['log']->debug("Unable to populate bean, no record parameter found");
         }
