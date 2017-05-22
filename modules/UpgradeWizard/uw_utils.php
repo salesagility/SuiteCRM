@@ -758,6 +758,9 @@ function upgradeUWFiles($file) {
     if(file_exists("$from_dir/include/utils/autoloader.php")) {
         $allFiles[] = "$from_dir/include/utils/autoloader.php";
     }
+	if(file_exists("$from_dir/include/UploadFile.php")) {
+		$allFiles[] = "$from_dir/include/UploadFile.php";
+	}
 
     upgradeUWFilesCopy($allFiles, $from_dir);
 }
