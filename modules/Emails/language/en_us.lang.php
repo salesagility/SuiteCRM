@@ -416,5 +416,9 @@ $mod_strings = array (
 
 	'LBL_MAILBOX_ID' => 'Mailbox ID',
 	'LBL_PARENT_ID' => 'Parent ID',
+    'LBL_LAST_SYNCED' => 'Last Synchronised',
+    'LBL_ORPHANED' => 'Orphaned',
+    'LBL_IMAP_KEYWORDS' => 'IMAP Keywords',
+    'LBL_ERROR_NO_FOLDERS' => 'Error: There are no folders available. Please check your email settings.'
 );
 

@@ -350,11 +350,19 @@ class InboundEmail extends SugarBean
         // handle filtering
         $filterCriteria = NULL;
 
-        // TODO: Fix filtering
-        if(!empty($_REQUEST['name_advanced'])) {
-            $filterCriteria = 'SUBJECT "'.$_REQUEST['name_advanced'].'"';
-        } else if(!empty($_REQUEST['name_basic'])) {
-            $filterCriteria = 'SUBJECT "'.$_REQUEST['name_basic'].'"';
+
+        foreach($filter as $filterField => $filterFieldValue) {
+            if(empty($filterFieldValue))
+            {
+                continue;
+            }
+
+            // Convert to a blank string as NULL will break the IMAP request
+            if($filterCriteria == NULL) {
+                $filterCriteria = '';
+            }
+
+            $filterCriteria .= ' ' . $filterField . ' "' . $filterFieldValue . '" ';
         }
         // Returns an array of msgno's which are sorted and filtered
         $emailSortedHeaders = imap_sort(
@@ -383,9 +391,6 @@ class InboundEmail extends SugarBean
             $this->conn,
             $msgnos
         );
-
-        // TODO: cache email headers
-//        $this->updateOverviewCacheFile($emailHeaders);
 
         $emailHeaders = json_decode(json_encode($emailHeaders), true);
         // get attachment status

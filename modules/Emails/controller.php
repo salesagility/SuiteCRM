@@ -82,6 +82,8 @@ if ($_REQUEST['action'] === 'GetFromFields') {
     $GLOBALS['sugar_config']['http_referer']['actions'][] = 'GetFromFields';
 }
 
+
+
 class EmailsController extends SugarController
 {
     public function action_index()
@@ -345,7 +347,7 @@ class EmailsController extends SugarController
     public function action_GetFolders()
     {
         require_once 'include/SugarFolders/SugarFolders.php';
-        global $current_user;
+        global $current_user, $mod_strings;
         $email = new Email();
         $email->email2init();
         $ie = new InboundEmail();
@@ -355,9 +357,27 @@ class EmailsController extends SugarController
         $rootNode = new ExtNode('', '');
         $folderOpenState = $current_user->getPreference('folderOpenState', 'Emails');
         $folderOpenState = (empty($folderOpenState)) ? "" : $folderOpenState;
-        $ret = $email->et->folder->getUserFolders($rootNode, sugar_unserialize($folderOpenState), $current_user, true);
-        $out = json_encode(array('response' => $ret));
+
+        try {
+            $ret = $email->et->folder->getUserFolders($rootNode, sugar_unserialize($folderOpenState), $current_user, true);
+            $out = json_encode(array('response' => $ret));
+        } catch(SugarFolderEmptyException $e) {
+            $GLOBALS['log']->fatal($e->getMessage());
+            $out = json_encode(array('errors' => array($mod_strings['LBL_ERROR_NO_FOLDERS'])));
+        }
+
         echo $out;
+        $this->view = 'ajax';
+    }
+
+    public function action_GetFromField() {
+        global $current_user;
+        global $app_strings;
+
+        $response = array();
+
+        echo json_encode($response);
+
         $this->view = 'ajax';
     }
 
