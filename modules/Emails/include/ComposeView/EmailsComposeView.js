@@ -75,7 +75,8 @@
 
       if($(self).find('#from_addr_name').length !== 0) {
         var selectFrom = $('<select></select>')
-          .attr('name', 'from_addr');
+          .attr('name', 'from_addr')
+          .attr('id', 'from_addr_name');
         var from_addr = $(self).find('#from_addr_name');
         from_addr.replaceWith(selectFrom);
 
@@ -83,7 +84,7 @@
           "url": 'index.php?module=Emails&action=getFromFields'
         }).done(function (response) {
           var json = JSON.parse(response);
-
+          debugger;
           if(typeof json.data !== "undefined") {
             $(json.data).each( function(i, v) {
               var selectOption = $('<option></option>');
@@ -131,28 +132,6 @@
 
       // Handle sent email submission
       self.submit(self.onSendEmail);
-
-      // setup from
-      var selectFrom = $('<select name="from_addr_name" id="from_addr_name"></select>');
-      var selectFromDefaultContents = $('<option value="not-configured"></option>');
-      selectFromDefaultContents.html('...');
-      selectFromDefaultContents.appendTo(selectFrom);
-      var selectFromDefaultErrorContents = $('<option value="not-configured"></option>');
-      selectFromDefaultErrorContents.html(SUGAR.language.translate('Emails','WARNING_SETTINGS_NOT_CONF'));
-
-      $(self)
-        .find('[name="from_addr_name"]')
-        .replaceWith(selectFrom);
-
-      $.ajax(
-
-      ).done(function (response) {
-
-      }).error(function(response) {
-
-      }).always(function (response) {
-
-      });
 
       // Handle toolbar (default) button events
       $(self).find('.btn-send-email').click(self.sendEmail);

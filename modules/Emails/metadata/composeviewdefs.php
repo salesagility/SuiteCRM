@@ -86,16 +86,9 @@ $viewdefs['Emails']['ComposeView'] = array(
                 )
             ),
             array(
-                'from_addr_name' => array(
-                    'name' => 'from_addr_name',
-                    'label' => 'LBL_LIST_FROM_ADDR',
-                )
-            ),
-            array(
                 array(
                     'name' => 'from_addr_name',
-                    'label' => 'LBL_FROM',
-                    'expanded' => 'true',
+                    'label' => 'LBL_LIST_FROM_ADDR',
                 )
             ),
             array(
