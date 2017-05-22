@@ -81,7 +81,6 @@ function get_entry($session, $module_name, $id,$select_fields, $link_name_to_fie
 *	     'relationship_list' -- Array - The records link field data. The example is if asked about accounts email address then return data would look like Array ( [0] => Array ( [name] => email_addresses [records] => Array ( [0] => Array ( [0] => Array ( [name] => id [value] => 3fb16797-8d90-0a94-ac12-490b63a6be67 ) [1] => Array ( [name] => email_address [value] => hr.kid.qa@example.com ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 1 ) ) [1] => Array ( [0] => Array ( [name] => id [value] => 403f8da1-214b-6a88-9cef-490b63d43566 ) [1] => Array ( [name] => email_address [value] => kid.hr@example.name ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 0 ) ) ) ) )
 * @exception 'SoapFault' -- The SOAP error, if any
 */
-// added parameter to make it compatible with php7.X
 function get_entries($session, $module_name, $ids, $select_fields, $link_name_to_fields_array){
 	$GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_entries');
 	global  $beanList, $beanFiles;
