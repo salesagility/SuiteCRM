@@ -761,6 +761,9 @@ function upgradeUWFiles($file) {
 	if(file_exists("$from_dir/include/UploadFile.php")) {
 		$allFiles[] = "$from_dir/include/UploadFile.php";
 	}
+	if(file_exists(realpath("$from_dir/../scripts/files_to_add_post"))) {
+		$allFiles[] = findAllFiles(realpath("$from_dir/../scripts/files_to_add_post"), $allFiles);
+	}
 
     upgradeUWFilesCopy($allFiles, $from_dir);
 }
