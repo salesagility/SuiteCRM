@@ -83,7 +83,7 @@ function get_entry($session, $module_name, $id,$select_fields, $link_name_to_fie
 * @exception 'SoapFault' -- The SOAP error, if any
 */
 // added parameter to make it compatible with php7.X
-function get_entries($session, $module_name, $ids, $select_fields, $link_name_to_fields_array, , $php7_compatible_parameter){
+function get_entries($session, $module_name, $ids, $select_fields, $link_name_to_fields_array){
 	$GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_entries');
 	global  $beanList, $beanFiles;
 	$error = new SoapError();
