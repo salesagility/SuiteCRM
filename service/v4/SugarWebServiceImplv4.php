@@ -209,9 +209,9 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1 {
 	 * @exception 'SoapFault' -- The SOAP error, if any
 	 */
 	// added parameter to make it compatible with php7.X
-	public function get_entries($session, $module_name, $ids, $select_fields, $link_name_to_fields_array, $php7_compatibilty_parameter)
+	public function get_entries($session, $module_name, $ids, $select_fields, $link_name_to_fields_array, $track_view=FALSE)
 	{
-	    $result = parent::get_entries($session, $module_name, $ids, $select_fields, $link_name_to_fields_array);
+	    $result = parent::get_entries($session, $module_name, $ids, $select_fields, $link_name_to_fields_array, $track_view);
 		$relationshipList = $result['relationship_list'];
 		$returnRelationshipList = array();
 		foreach($relationshipList as $rel){
