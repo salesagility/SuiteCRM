@@ -126,7 +126,14 @@ class Email extends SugarBean {
 
     /* to support Email 2.0 */
     public $isDuplicate;
+
+	/**
+	 * IMap UID
+	 *
+	 * @var uid
+	 */
     public $uid;
+
     public $to;
     public $flagged;
     public $answered;
@@ -159,6 +166,14 @@ class Email extends SugarBean {
     public $cases;
 
 	public $category_id;
+
+	/**
+	 * orphaned on IMap
+	 *
+	 * @var bool
+	 */
+	public $orphaned;
+
 
 	/**
 	 * sole constructor
@@ -1050,6 +1065,8 @@ class Email extends SugarBean {
 	function save($check_notify = false) {
         global $current_user;
 
+		$id = false;
+
 		if($this->isDuplicate) {
 			$GLOBALS['log']->debug("EMAIL - tried to save a duplicate Email record");
 		} else {
@@ -1086,7 +1103,7 @@ class Email extends SugarBean {
                  }
 			}
 
-			parent::save($check_notify);
+			$id = parent::save($check_notify);
 
 			if(!empty($this->parent_type) && !empty($this->parent_id)) {
                 if(!empty($this->fetched_row) && !empty($this->fetched_row['parent_id']) && !empty($this->fetched_row['parent_type'])) {
@@ -1106,6 +1123,8 @@ class Email extends SugarBean {
 			}
 		}
 		$GLOBALS['log']->debug('-------------------------------> Email save() done');
+
+		return $id;
 	}
 
 	/**

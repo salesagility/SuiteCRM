@@ -349,14 +349,23 @@ class SugarController{
 
 	}
 
+	protected function showException(Exception $e) {
+		$GLOBALS['log']->fatal('Exception in Controller: ' . $e->getMessage());
+		$GLOBALS['log']->fatal("backtrace:\n" . $e->getTraceAsString());
+		if($prev = $e->getPrevious()) {
+			$GLOBALS['log']->fatal("Previous:\n");
+			$this->showException($prev);
+		}
+	}
+
     /**
       * Handle exception
       * @param Exception $e
       */
     protected function handleException(Exception $e)
     {
-        $GLOBALS['log']->fatal(__FILE__.':'.__LINE__.' Exception in Controller: ' . $e->getMessage());
-		$GLOBALS['log']->fatal("backtrace:\n" . $e->getTraceAsString());
+		$GLOBALS['log']->fatal("Exception handling in ".__FILE__.':'.__LINE__);
+        $this->showException($e);
         $logicHook = new LogicHook();
 
         if (isset($this->bean))
