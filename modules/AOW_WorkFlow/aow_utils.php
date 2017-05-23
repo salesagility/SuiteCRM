@@ -503,6 +503,10 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
         return($sfh->displaySmarty($parentfieldlist, $fieldlist[$fieldname], 'ListView', $displayParams));
     }
 
+    if($fieldlist[$fieldname]['type'] == 'bool'){
+        return $value;
+    }
+
     $ss->assign("QS_JS", $quicksearch_js);
     $ss->assign("fields",$fieldlist);
     $ss->assign("form_name",$view);
