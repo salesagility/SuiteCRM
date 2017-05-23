@@ -102,10 +102,10 @@ class ListViewSmarty extends ListViewDisplay
         try {
           foreach($this->displayColumns as $name => $params) {
             // error_log("CHECKING COLUMNS of $name ->".print_r($params,1));
-            if(strpos($params['width'],"%"))
-              $widthInPercent=true;
-            else
+            if(is_numeric($params['width']))
               $widthInPixels=true;
+            else
+              $widthInPercent=true;
           }
           // error_log("FINISHED CHECKING COLUMNS, RESULT PIX ->".$widthInPixels."<- PER ->".$widthInPercent."<-");
           // debug, trigger the error
