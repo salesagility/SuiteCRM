@@ -318,7 +318,7 @@ class EditView
             $obj = new $bean();
             $this->focus = $obj->retrieve($request['record']);
         } else {
-            $GLOBALS['log']->debug("Unable to populate bean, no record parameter found");
+            $GLOBALS['log']->debug("Unable to populate bean, no record and no module parameter found");
         }
     }
 
