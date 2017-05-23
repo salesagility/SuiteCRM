@@ -39,72 +39,59 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+
 if (!defined('sugarEntry') || !sugarEntry) {
-    die ('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
 
+require_once('include/DetailView/DetailView2.php');
 
-class EmailsViewCompose extends ViewEdit {
+class EmailsDetailView extends DetailView2
+{
+    /**
+     * @var Email $focus
+     */
+    public $focus;
 
     /**
-     * @var Email $bean
+     * @param String $module
+     * @param null $focus
+     * @param null $metadataFile
+     * @param string $tpl
+     * @param bool $createFocus
+     * @param string $metadataFileName
      */
-    public $bean;
-
-    /**
-     * EmailsViewCompose constructor.
-     */
-    public function __construct()
+    public function setup(
+        $module,
+        $focus  = null,
+        $metadataFile = null,
+        $tpl = 'include/DetailView/DetailView.tpl',
+        $createFocus = true,
+        $metadataFileName = 'detail'
+    )
     {
-        $this->type = 'compose';
-        if(empty($_REQUEST['return_module'])) {
-            $this->options['show_title'] = false;
-            $this->options['show_header'] = false;
-            $this->options['show_footer'] = false;
-            $this->options['show_javascript'] = false;
-            $this->options['show_subpanels'] = false;
-            $this->options['show_search'] = false;
+        parent::setup($module, $focus, $metadataFile, $tpl, $createFocus, $metadataFileName);
+    }
+
+    /**
+     * @inheritdoc
+     * @see DetailView2::populateBean()
+     */
+    public function populateBean($request = array())
+    {
+        parent::populateBean($request);
+        $this->populateFields();
+    }
+
+    /**
+     * Handles fields special fields like from
+     * @return void
+     */
+    public function populateFields()
+    {
+        if(empty($this->focus->from_addr_name)) {
+            $this->focus->from_addr_name = $this->focus->from_addr;
         }
     }
-
-    /**
-     * @see SugarView::preDisplay()
-     */
-    public function preDisplay()
-    {
-        global $current_user;
-
-        $metadataFile = $this->getMetaDataFile();
-        $this->ev = $this->getEditView();
-        $this->ev->ss =& $this->ss;
-
-        if(!isset($this->bean->mailbox_id) || empty($this->bean->mailbox_id)) {
-            $inboundEmailID = $current_user->getPreference('defaultIEAccount', 'Emails');
-            $this->ev->ss->assign('INBOUND_ID', $inboundEmailID);
-        } else {
-            $this->ev->ss->assign('INBOUND_ID', $this->bean->mailbox_id);
-        }
-
-        $this->ev->ss->assign('TEMP_ID', create_guid());
-        $this->ev->ss->assign('RETURN_MODULE', isset($_REQUEST['return_module']) ? $_REQUEST['return_module'] : '');
-        $this->ev->ss->assign('RETURN_ACTION', isset($_REQUEST['return_action']) ? $_REQUEST['return_action'] : '');
-        $this->ev->setup(
-            $this->module,
-            $this->bean,
-            $metadataFile,
-            get_custom_file_if_exists('modules/Emails/include/ComposeView/ComposeView.tpl')
-        );
-    }
-
-    /**
-     * Get EditView object
-     * @return EditView
-     */
-    public function getEditView()
-    {
-        $a = dirname( dirname(__FILE__) ) . '/include/ComposeView/ComposeView.php';
-        require_once 'modules/Emails/include/ComposeView/ComposeView.php';
-        return new ComposeView();
-    }
-
 }
+

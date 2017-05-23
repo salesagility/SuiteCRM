@@ -51,7 +51,7 @@ $viewdefs[$module_name]['DetailView'] = array(
         ),
         'includes' => array(
             array(
-                'file' => 'modules/Emails/include/DetailDraftView/edit-draft.js',
+                'file' => 'modules/Emails/include/DetailView/edit-draft.js',
             ),
         ),
         'maxColumns' => '2',

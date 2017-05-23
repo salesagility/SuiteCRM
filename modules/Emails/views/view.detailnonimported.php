@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 
-require_once('modules/Emails/include/NonImportedDetailView/NonImportedDetailView.php');
+require_once('modules/Emails/include/DetailView/EmailsNonImportedDetailView.php');
 
 class EmailsViewDetailnonimported extends ViewDetail
 {
@@ -68,11 +68,15 @@ class EmailsViewDetailnonimported extends ViewDetail
     public function preDisplay()
     {
         $metadataFile = $this->getMetaDataFile();
-        $this->dv = new NonImportedDetailView();
-        $this->dv->populateBean();
+        $this->dv = new EmailsNonImportedDetailView();
+        $this->dv->populateBean($_REQUEST);
         $this->dv->ss =& $this->ss;
-        $this->dv->setup($this->module, $this->dv->focus, $metadataFile,
-            get_custom_file_if_exists('include/DetailView/DetailView.tpl'));
+        $this->dv->setup(
+            $this->module,
+            $this->dv->focus,
+            $metadataFile,
+            get_custom_file_if_exists('include/DetailView/DetailView.tpl')
+        );
     }
 
     /**
@@ -83,5 +87,4 @@ class EmailsViewDetailnonimported extends ViewDetail
         $this->dv->process();
         echo $this->dv->display();
     }
-
 }
