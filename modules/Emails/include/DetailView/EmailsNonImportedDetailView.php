@@ -44,9 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/DetailView/DetailView2.php');
+require_once('modules/Emails/include/DetailView/EmailsDetailView.php');
 
-class NonImportedDetailView extends DetailView2
+class EmailsNonImportedDetailView extends EmailsDetailView
 {
 
     public function setup(
@@ -61,16 +61,19 @@ class NonImportedDetailView extends DetailView2
         parent::setup($module, $focus, $metadataFile, $tpl, $createFocus, $metadataFileName);
     }
 
-    public function populateBean()
+    /**
+     * @inheritdoc
+     * @see DetailView2::populateBean()
+     */
+    public function populateBean($request = array())
     {
-        if (!empty($_REQUEST['uid']) && !empty($_REQUEST['inbound_email_record'])&& !empty($_REQUEST['msgno'])) {
-            global $beanList;
-
-            $inboundEmail = BeanFactory::getBean('InboundEmail', $_REQUEST['inbound_email_record']);
-            $email = $inboundEmail->returnNonImportedEmail($_REQUEST['msgno'], $_REQUEST['uid']);
+        if (!empty($request['uid']) && !empty($request['inbound_email_record'])&& !empty($request['msgno'])) {
+            $inboundEmail = BeanFactory::getBean('InboundEmail', $request['inbound_email_record']);
+            $email = $inboundEmail->returnNonImportedEmail($_REQUEST['msgno'], $request['uid']);
             $this->focus = $email;
+            $this->populateFields();
         } else {
-            $GLOBALS['log']->debug("Unable to populate bean, no record parameter found");
+            $GLOBALS['log']->debug("Unable to populate bean, no inbound_email_record and msgno parameter found");
         }
     }
 }

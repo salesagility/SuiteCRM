@@ -73,39 +73,60 @@
         opts.tinyMceOptions.selector = $(self).find('#description_html');
       }
 
-      if($(self).find('#from_addr_name').length !== 0) {
+      if ($(self).find('#from_addr_name').length !== 0) {
         var selectFrom = $('<select></select>')
           .attr('name', 'from_addr')
           .attr('id', 'from_addr_name');
         var from_addr = $(self).find('#from_addr_name');
         from_addr.replaceWith(selectFrom);
 
-        $(selectFrom).change(function (e) {
-          console.log(e);
-          console.log(this);
-          $(self).find('[name=inbound_email_id]').val($(this).find('option:selected').attr('inboundId'));
-        });
 
         $.ajax({
           "url": 'index.php?module=Emails&action=getFromFields'
         }).done(function (response) {
           var json = JSON.parse(response);
-          if(typeof json.data !== "undefined") {
-            $(json.data).each( function(i, v) {
+          if (typeof json.data !== "undefined") {
+            $(json.data).each(function (i, v) {
               var selectOption = $('<option></option>');
               selectOption.attr('value', v.attributes.from);
               selectOption.attr('inboundId', v.id);
               selectOption.html(v.attributes.from);
               selectOption.appendTo(selectFrom);
             });
+
+            var selectedInboundEmail = $(self).find('[name=inbound_email_id]').val();
+
+            $(selectFrom).val(
+              $(selectFrom).find('[inboundid=' + selectedInboundEmail + ']').val()
+            );
+
+            $(selectFrom).change(function (e) {
+              console.log(e);
+              console.log(this);
+              $(self).find('[name=inbound_email_id]').val($(this).find('option:selected').attr('inboundId'));
+            });
+
           }
 
-          if(typeof json.errors !== "undefined") {
-            $.each(json.errors, function(i, v) {
+          if (typeof json.errors !== "undefined") {
+            var message = '';
+            $.each(json.errors, function (i, v) {
+              message = message + v.title;
+            });
+            var mb = messageBox();
+            mb.setBody('message');
+            mb.show();
 
+            mb.on('ok', function() {
+              "use strict";
+              mb.remove();
+            });
+
+            mb.on('cancel', function() {
+              "use strict";
+              mb.remove();
             });
           }
-
         }).error(function (response) {
           console.error(response);
         });
@@ -167,7 +188,7 @@
       $(self).find('#to_addrs_names').focus(self.showQTipBar);
       $(self).find('#cc_addrs_names').focus(self.showQTipBar);
       $(self).find('#bcc_addrs_names').focus(self.showQTipBar);
-      $(self).on('sendEmail', function() {
+      $(self).on('sendEmail', function () {
         $('.emails-qtip').remove();
       });
 
@@ -184,7 +205,8 @@
       var length = tinyMCE.editors.length;
       for (var i = length; i > 0; i--) {
         tinyMCE.editors[i - 1].remove();
-      };
+      }
+      ;
       $('.emails-qtip').remove();
       return true;
     };
@@ -262,12 +284,12 @@
             mb.setBody(SUGAR.language.translate('Emails', 'LBL_INSERT_ERROR_BLANK_EMAIL'));
             mb.show();
 
-            mb.on('ok', function() {
+            mb.on('ok', function () {
               "use strict";
               mb.remove();
             });
 
-            mb.on('cancel', function() {
+            mb.on('cancel', function () {
               "use strict";
               mb.remove();
             });
@@ -275,13 +297,13 @@
             var formatted_email_address = ''
             if (trim(contact_name.val()) !== '') {
               // use name <email address> format
-              formatted_email_address = contact_name.val() +' <'+ contact_email_address.val() +'>';
+              formatted_email_address = contact_name.val() + ' <' + contact_email_address.val() + '>';
             } else {
               // use email address
               formatted_email_address = contact_email_address.val();
             }
 
-            if(trim($(self.active_elementQTipBar).val()) === '') {
+            if (trim($(self.active_elementQTipBar).val()) === '') {
               $(self.active_elementQTipBar).val(formatted_email_address);
             } else {
               $(self.active_elementQTipBar).val(
@@ -312,7 +334,7 @@
         },
         show: {solo: true},
         hide: {event: false},
-        style: { classes:  'emails-qtip'  }
+        style: {classes: 'emails-qtip'}
       });
       $(this).qtip("show");
       $('.btn-qtip-bar').unbind('click').click(self.handleQTipBarClick);
@@ -527,12 +549,12 @@
       mb.hideFooter();
       mb.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
       mb.show();
-      mb.on('ok', function() {
+      mb.on('ok', function () {
         "use strict";
         mb.remove();
       });
 
-      mb.on('cancel', function() {
+      mb.on('cancel', function () {
         "use strict";
         mb.remove();
       });
@@ -551,9 +573,9 @@
             fileCount++
           }
         } else {
-          if($(v).attr('name') == 'action') {
+          if ($(v).attr('name') == 'action') {
             formData.append($(v).attr('name'), 'send');
-          } else if($(v).attr('name') == 'send') {
+          } else if ($(v).attr('name') == 'send') {
             formData.append($(v).attr('name'), 1);
           } else {
             formData.append($(v).attr('name'), $(v).val());
@@ -583,7 +605,7 @@
       }).done(function (response) {
         "use strict";
         response = JSON.parse(response);
-        if(typeof response.errors !== "undefined") {
+        if (typeof response.errors !== "undefined") {
           mb.showHeader();
           mb.setBody(response.errors.title);
           mb.showFooter();
@@ -799,14 +821,14 @@
         );
 
         popupWindow.onbeforeunload = function () {
-          setTimeout(function() {
-            if(fileInputID.val().length === 0) {
+          setTimeout(function () {
+            if (fileInputID.val().length === 0) {
               // id is empty
               fileGroupContainer.remove();
               self.updateDocumentIDs();
             } else {
               // id is full
-              if(fileGroupContainer.find('.attachment-remove').length === 0) {
+              if (fileGroupContainer.find('.attachment-remove').length === 0) {
                 var removeAttachment = $('<a class="attachment-remove"><span class="glyphicon glyphicon-remove"></span></a>');
                 fileGroupContainer.append(removeAttachment);
                 // handle when user removes attachment
@@ -821,13 +843,13 @@
 
               var fileContainer = $('<div class="attachment-file-container"></div>');
               fileContainer.appendTo(fileLabel);
-              fileContainer.append('<span class="attachment-name"> '+ fileInputName.val()+' </span>');
+              fileContainer.append('<span class="attachment-name"> ' + fileInputName.val() + ' </span>');
 
               fileLabel.removeClass('attachment-blank');
 
               self.updateDocumentIDs();
             }
-          },300);
+          }, 300);
         }
       };
 
@@ -872,12 +894,12 @@
       mb.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
       mb.show();
 
-      mb.on('ok', function() {
+      mb.on('ok', function () {
         "use strict";
         mb.remove();
       });
 
-      mb.on('cancel', function() {
+      mb.on('cancel', function () {
         "use strict";
         mb.remove();
       });
@@ -896,9 +918,9 @@
             fileCount++;
           }
         } else {
-          if($(v).attr('name') == 'action') {
+          if ($(v).attr('name') == 'action') {
             formData.append($(v).attr('name'), 'SaveDraft');
-          } else if($(v).attr('name') == 'send') {
+          } else if ($(v).attr('name') == 'send') {
             formData.append($(v).attr('name'), 0);
           } else {
             formData.append($(v).attr('name'), $(v).val());
@@ -928,7 +950,7 @@
       }).done(function (response) {
         "use strict";
         response = JSON.parse(response);
-        if(typeof response.errors !== "undefined") {
+        if (typeof response.errors !== "undefined") {
           mb.showHeader();
           mb.setBody(response.errors.title);
           mb.showFooter();
@@ -974,7 +996,7 @@
       mb.setBody(SUGAR.language.translate('Emails', 'LBL_EMAIL_DRAFT_CONFIRM_DISCARD'));
       mb.show();
 
-      mb.on('ok', function() {
+      mb.on('ok', function () {
         "use strict";
 
         mb.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
@@ -1021,10 +1043,10 @@
           processData: false,  // tell jQuery not to process the data
           contentType: false,   // tell jQuery not to set contentType
           url: 'index.php?module=Emails'
-        }).done(function(response) {
+        }).done(function (response) {
           $(self).trigger("discardDraftDone", [self, response]);
-        }).error(function(response) {
-          mb.setBody(SUGAR.language.translate('','LBL_ERROR_SAVING_DRAFT'));
+        }).error(function (response) {
+          mb.setBody(SUGAR.language.translate('', 'LBL_ERROR_SAVING_DRAFT'));
           $(self).trigger("discardDraftBody", [self, response]);
         }).always(function (response) {
           $(self).trigger("discardDraftAlways", [self, response]);
@@ -1039,7 +1061,7 @@
           }
         });
       });
-      mb.on('cancel', function() {
+      mb.on('cancel', function () {
         "use strict";
         // do something
         mb.remove();

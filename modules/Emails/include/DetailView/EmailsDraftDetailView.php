@@ -44,9 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once('include/DetailView/DetailView2.php');
+require_once('modules/Emails/include/DetailView/EmailsDetailView.php');
 
-class DetailDraftView extends DetailView2
+class EmailsDraftDetailView extends EmailsDetailView
 {
     /**
      * @var Email $focus
@@ -63,17 +63,5 @@ class DetailDraftView extends DetailView2
     )
     {
         parent::setup($module, $focus, $metadataFile, $tpl, $createFocus, $metadataFileName);
-    }
-
-    public function populateBean()
-    {
-        if (!empty($_REQUEST['record'])) {
-            $this->focus = BeanFactory::getBean('Emails')->retrieve($_REQUEST['record']);
-            if(empty($this->focus->from_addr_name)) {
-                $this->focus->from_addr_name = $this->focus->from_addr;
-            }
-        } else {
-            $GLOBALS['log']->debug("Unable to populate bean, no record parameter found");
-        }
     }
 }

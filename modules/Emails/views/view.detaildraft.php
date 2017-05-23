@@ -43,11 +43,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die ('Not A Valid Entry Point');
 }
 
-require_once 'modules/Emails/include/DetailDraftView/DetailDraftView.php';
+require_once 'modules/Emails/include/DetailView/EmailsDraftDetailView.php';
 require_once 'include/MVC/View/views/view.detail.php';
 
 class EmailsViewDetaildraft extends ViewDetail
 {
+    /**
+     * @var Email $focus
+     */
+    public $focus;
     /**
      * EmailsViewDetaildraft constructor.
      * @inheritdoc
@@ -65,11 +69,14 @@ class EmailsViewDetaildraft extends ViewDetail
     public function preDisplay()
     {
         $metadataFile = parent::getMetaDataFile();
-        $this->dv = new DetailDraftView();
-        $this->dv->populateBean();
+        $this->dv = new EmailsDraftDetailView();
+        $this->dv->populateBean($_REQUEST);
         $this->dv->ss =& $this->ss;
-        $this->dv->setup($this->module, $this->dv->focus, $metadataFile,
-            get_custom_file_if_exists('include/DetailView/DetailView.tpl'));
+        $this->dv->setup(
+            $this->module,
+            $this->dv->focus,
+            $metadataFile,
+            get_custom_file_if_exists('include/DetailView/DetailView.tpl')
+        );
     }
-
 }
