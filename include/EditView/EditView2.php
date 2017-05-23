@@ -295,14 +295,28 @@ class EditView
         }
     }
 
-    public function populateBean()
+    /**
+     * @param array $request
+     * @return void
+     */
+    public function populateBean($request = array())
     {
-        if (!empty($_REQUEST['record']) && $this->populateBean) {
+        if(empty($request) && isset($_REQUEST) && !empty($_REQUEST)) {
+            $request = $_REQUEST;
+        }
+
+        if (
+            isset($request['record']) &&
+            !empty($request['record']) &&
+            isset($request['module']) &&
+            !empty($request['module']) &&
+            $this->populateBean
+        ) {
             global $beanList;
 
-            $bean = $beanList[$this->module];
+            $bean = $beanList[ $request['module'] ];
             $obj = new $bean();
-            $this->focus = $obj->retrieve($_REQUEST['record']);
+            $this->focus = $obj->retrieve($request['record']);
         } else {
             $GLOBALS['log']->debug("Unable to populate bean, no record parameter found");
         }

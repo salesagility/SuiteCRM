@@ -124,5 +124,16 @@ class DetailView2 extends EditView
         $this->defs = $viewdefs[$this->module][$this->view];
     }
 
+    /**
+     * @param array $request
+     * @return void
+     * @return void
+     * @see EditView::populateBean()
+     */
+    public function populateBean($request = array())
+    {
+        parent::populateBean($request);
+    }
+
 }
 ?>
