@@ -82,7 +82,6 @@ if ($_REQUEST['action'] === 'GetFromFields') {
     $GLOBALS['sugar_config']['http_referer']['actions'][] = 'GetFromFields';
 }
 
-
 if ($_REQUEST['action'] === 'GetComposeViewFields') {
     $GLOBALS['sugar_config']['http_referer']['actions'][] = 'GetComposeViewFields';
 }
@@ -97,11 +96,14 @@ if ($_REQUEST['action'] === 'DetailDraftView') {
 
 class EmailsController extends SugarController
 {
+    /**
+     * @var Email $bean;
+     */
+    public $bean;
+
     public function action_index()
     {
-        global $sugar_config, $current_user;
         $this->view = 'list';
-
     }
 
     public function action_DetailDraftView()
@@ -155,7 +157,6 @@ class EmailsController extends SugarController
         $email->email2init();
         $ie = new InboundEmail();
         $ie->email = $email;
-        $emailUI = new EmailUI();
         $accounts =$ieAccountsFull = $ie->retrieveAllByGroupIdWithGroupAccounts($current_user->id);
         $data = array();
         foreach ($accounts as $inboundEmailId => $inboundEmail) {
@@ -180,7 +181,7 @@ class EmailsController extends SugarController
         $inboundEmail->syncEmail();
 
         echo json_encode(array('response' => array()));
-        $this->view('ajax');
+        $this->view = 'ajax';
     }
 
     public function action_GetFolders()
@@ -191,11 +192,10 @@ class EmailsController extends SugarController
         $email->email2init();
         $ie = new InboundEmail();
         $ie->email = $email;
-        $json = getJSONobj();
-        $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: refreshSugarFolders");
+        $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: refreshSugarFolders');
         $rootNode = new ExtNode('', '');
         $folderOpenState = $current_user->getPreference('folderOpenState', 'Emails');
-        $folderOpenState = (empty($folderOpenState)) ? "" : $folderOpenState;
+        $folderOpenState = (empty($folderOpenState)) ? '' : $folderOpenState;
 
         try {
             $ret = $email->et->folder->getUserFolders($rootNode, sugar_unserialize($folderOpenState), $current_user, true);
@@ -209,23 +209,12 @@ class EmailsController extends SugarController
         $this->view = 'ajax';
     }
 
-    public function action_GetFromField() {
-        global $current_user;
-        global $app_strings;
-
-        $response = array();
-
-        echo json_encode($response);
-
-        $this->view = 'ajax';
-    }
-
 
     public function action_DisplayDetailView()
     {
         global $db;
         $emails = BeanFactory::getBean("Emails");
-        $result = $emails->get_full_list("", "uid = '{$db->quote($_REQUEST['uid'])}'");
+        $result = $emails->get_full_list('', "uid = '{$db->quote($_REQUEST['uid'])}'");
         if(empty($result))
         {
             $this->view = 'detailnonimported';
@@ -236,7 +225,7 @@ class EmailsController extends SugarController
 
     public function action_ImportAndShowDetailView()
     {
-        global $current_user, $db;
+        global $db;
         if(isset($_REQUEST['inbound_email_record']) && !empty($_REQUEST['inbound_email_record'])) {
             $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($_REQUEST['inbound_email_record']));
             $inboundEmail->connectMailserver();
