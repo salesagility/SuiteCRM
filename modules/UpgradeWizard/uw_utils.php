@@ -758,8 +758,12 @@ function upgradeUWFiles($file) {
     if(file_exists("$from_dir/include/utils/autoloader.php")) {
         $allFiles[] = "$from_dir/include/utils/autoloader.php";
     }
+
 	if(file_exists("$from_dir/include/UploadFile.php")) {
 		$allFiles[] = "$from_dir/include/UploadFile.php";
+	}
+	if(file_exists("$from_dir/include/SugarTheme/SugarTheme.php")) {
+		$allFiles[] = "$from_dir/include/SugarTheme/SugarTheme.php";
 	}
 
 	// add extra files to post upgrade process
@@ -769,6 +773,7 @@ function upgradeUWFiles($file) {
 			foreach($filesToAddPost as $file) {
 				if(file_exists("$from_dir/$file")) {
 					$allFiles[] = "$from_dir/$file";
+					$GLOBALS['log']->info("File added to post upgrade: $from_dir/$file");
 				} else {
 					$GLOBALS['log']->error("File not found for post upgrade: $from_dir/$file");
 				}
