@@ -170,12 +170,6 @@ class actionCreateRecord extends actionBase {
                             case 'int':
                                 $value = format_number($bean->$fieldName);
                                 break;
-                            case 'relate':
-                                if(isset($data['id_name'])) {
-                                    $idName = $data['id_name'];
-                                    $value = $bean->$idName;
-                                }
-                                break;
                             default:
                                 $value = $bean->$fieldName;
                                 break;
