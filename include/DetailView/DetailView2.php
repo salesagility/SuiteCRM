@@ -55,20 +55,20 @@ class DetailView2 extends EditView
      * @var array $defs
      */
     public $defs;
+
     /**
      * DetailView constructor
      * This is the DetailView constructor responsible for processing the new
      * Meta-Data framework
      *
-     * @param $module String value of module this detail view is for
-     * @param $focus An empty sugarbean object of module
-     * @param $id The record id to retrieve and populate data for
-     * @param $metadataFile String value of file location to use in overriding default metadata file
-     * @param tpl String value of file location to use in overriding default Smarty template
-     * * @param $metadataFileName specifies the name of the metadata file eg 'detailviewdefs'
+     * @param string $module String value of module this detail view is for
+     * @param SugarBean|null $focus An empty sugarbean object of module
+     * @param string|null $metadataFile String value of file location to use in overriding default metadata file
+     * @param string $tpl tpl String value of file location to use in overriding default Smarty template
+     * @param bool $createFocus
+     * @param string $metadataFileName specifies the name of the metadata file eg 'detailviewdefs'
      */
-
-    function setup(
+    public function setup(
         $module,
         $focus  = null,
         $metadataFile = null,
@@ -126,7 +126,6 @@ class DetailView2 extends EditView
 
     /**
      * @param array $request
-     * @return void
      * @return void
      * @see EditView::populateBean()
      */
