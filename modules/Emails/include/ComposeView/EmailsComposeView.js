@@ -985,8 +985,6 @@
             );
 
             $(selectFrom).change(function (e) {
-              console.log(e);
-              console.log(this);
               $(self).find('[name=inbound_email_id]').val($(this).find('option:selected').attr('inboundId'));
             });
 
