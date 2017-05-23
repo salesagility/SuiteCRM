@@ -95,21 +95,56 @@ class ListViewSmarty extends ListViewDisplay
         $this->tpl = $file;
         $this->data = $data;
 
-        $totalWidth = 0;
-        foreach($this->displayColumns as $name => $params) {
-            $totalWidth += $params['width'];
+	// the problem here a different themes/templates using PIXEL or PERCENT as width
+	// this checks which one is used and decides what to do. In case PIXELS are used
+	// some adjustments are required
+        $widthInPixels=$widthInPercent=false;
+        try {
+          foreach($this->displayColumns as $name => $params) {
+            // error_log("CHECKING COLUMNS of $name ->".print_r($params,1));
+            if(strpos($params['width'],"%"))
+              $widthInPercent=true;
+            else
+              $widthInPixels=true;
+          }
+          // error_log("FINISHED CHECKING COLUMNS, RESULT PIX ->".$widthInPixels."<- PER ->".$widthInPercent."<-");
+          // debug, trigger the error
+          // $widthInPixels=$widthInPercent=true;
+          if($widthInPixels==$widthInPercent) {
+            // spit the dummy.
+            // error_log("================================= spitting dummy");
+            throw new Exception("In file ".__FILE__." you cannot have width of columns defined as pixels AND precent at the same time, it needs to be either pixel or percent!");
+          }
+        } catch (Exception $e) {
+          // tell user/developer
+          error_log("ERROR Caught Exception: ".$e->getMessage()."\n");
+          // we cannot do this now, as we cannot have pixels AND percent
+          $widthInPixels=false;
         }
-        $adjustment = $totalWidth / 100;
 
         $contextMenuObjectsTypes = array();
-        foreach($this->displayColumns as $name => $params) {
+        if($widthInPixels==true) {
+          $totalWidth = 0;
+          foreach($this->displayColumns as $name => $params) {
+            $totalWidth += $params['width'];
+          }
+          $adjustment = $totalWidth / 100;
+          foreach($this->displayColumns as $name => $params) {
             $this->displayColumns[$name]['width'] = floor($this->displayColumns[$name]['width'] / $adjustment);
             // figure out which contextMenu objectsTypes are required
             if(!empty($params['contextMenu']['objectType']))
-                $contextMenuObjectsTypes[$params['contextMenu']['objectType']] = true;
+              $contextMenuObjectsTypes[$params['contextMenu']['objectType']] = true;
+          }
         }
-
-        //Check if inline editing is enabled for list view.
+        else {
+          foreach($this->displayColumns as $name => $params) {
+            // figure out which contextMenu objectsTypes are required
+            if(!empty($params['contextMenu']['objectType']))
+              $contextMenuObjectsTypes[$params['contextMenu']['objectType']] = true;
+          }
+        }
+	    
+	//Check if inline editing is enabled for list view.
         if(!isset($sugar_config['enable_line_editing_list']) || $sugar_config['enable_line_editing_list']){
             $this->ss->assign('inline_edit', true);
         }
