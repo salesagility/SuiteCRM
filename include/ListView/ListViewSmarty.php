@@ -126,6 +126,7 @@ class ListViewSmarty extends ListViewDisplay
         if($widthInPixels==true) {
           $totalWidth = 0;
           foreach($this->displayColumns as $name => $params) {
+            error_log("Error specifying width as PIXELS, should be percent for $name in module $htmlVar ->".$params['width']."<-");
             $totalWidth += $params['width'];
           }
           $adjustment = $totalWidth / 100;
