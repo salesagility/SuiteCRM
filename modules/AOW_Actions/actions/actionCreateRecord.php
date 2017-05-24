@@ -177,6 +177,7 @@ class actionCreateRecord extends actionBase {
 				}else{
 				    $value = $bean->$fieldName;
 				}
+				break;
                             default:
                                 $value = $bean->$fieldName;
                                 break;
