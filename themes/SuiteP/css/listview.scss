@@ -3288,10 +3288,6 @@ div#content div#pagecontent form#MassUpdate table.list.view tbody tr td {
   color: $list-view-action-button-disabled-bg; /* ??? #C9D2DA; */
 }
 
-.bootstrap-checkbox-hidden {
-  display: none;
-}
-
 #actionLinkTop li.sugar_action_button ul.subnav.ddopen > li:last-child a {
   border-bottom: none;
 }
@@ -3313,10 +3309,6 @@ li.sugar_action_button.hover.opened {
   height: 40px;
   top: 13px;
   margin-top: -13px;
-}
-
-ul.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button label.glyphicon.bootstrap-checkbox {
-  margin-left: 4px;
 }
 
 ul.clickMenu.selectmenu.SugarActionMenu.searchLink.listViewLinkButton {
