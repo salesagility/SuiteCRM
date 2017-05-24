@@ -1,3 +1,5 @@
+<?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,37 +39,29 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$(document).ready(function(){
-  "use strict";
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
- $('').click(function(){
-   alert('configure email placeholder');
- });
+require_once('modules/Emails/include/DetailView/EmailsDetailView.php');
 
+class EmailsDraftDetailView extends EmailsDetailView
+{
+    /**
+     * @var Email $focus
+     */
+    public $focus;
 
-
- $('[data-action=emails-open-folder]').click(function(){
-   var mb = messageBox();
-   mb.hideHeader();
-   mb.setBody('Hello World');
-   mb.show();
-
-   mb.on('ok', function() {
-     "use strict";
-     // do somthing
-     mb.remove();
-   });
-
-   mb.on('cancel', function() {
-     "use strict";
-     // do something
-     mb.remove();
-   })
- });
-
- // look for new
-  $('.email-indicator .email-new').each(function(i, v){
-    $(this).closest('tr').addClass('email-new-record');
-  });
-});
+    public function setup(
+        $module,
+        $focus  = null,
+        $metadataFile = null,
+        $tpl = 'include/DetailView/DetailView.tpl',
+        $createFocus = true,
+        $metadataFileName = 'detaildraft'
+    )
+    {
+        parent::setup($module, $focus, $metadataFile, $tpl, $createFocus, $metadataFileName);
+    }
+}

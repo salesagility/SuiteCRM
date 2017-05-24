@@ -1,5 +1,4 @@
-<?php
-
+{*
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -17,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,28 +34,65 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+*}
+{literal}
+<script>
+    $(function(){
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die ('Not A Valid Entry Point');
-}
+        /**
+         * Event handler for submit button
+         * - prevent form submit
+         * - fill ie multi-select if empty
+         * - submit the form
+         */
+        $('form[name="sync-form"]').submit(function (e) {
+            e.preventDefault();
 
-require_once 'modules/Emails/include/ListView/ListViewSmartyEmails.php';
+            // select all inbound email if no one is selected
 
-class EmailsViewList extends ViewList
-{
-    /**
-     * @var Email
-     */
-    public $seed;
+            if (null === $('select[name="ie-sel[]"]').val()) {
+                $('select[name="ie-sel[]"] option').prop('selected', true);
+            }
 
-    /**
-     * setup display
-     */
-    public function preDisplay()
-    {
-        $this->lv = new ListViewSmartyEmails();
-    }
-}
+            this.submit();
+
+            $('form[name="sync-form"]').hide();
+
+            setInterval(function(){
+                $.get('modules/Administration/SyncInboundEmailAccounts/sync_output.html', function(resp){
+                    $('#sync-results').html(resp);
+                });
+            }, 1000);
+
+        });
+
+    });
+
+</script>
+{/literal}
+
+{$app_strings.LBL_SYNC_IE_EMAILS}
+
+<form name="sync-form" method="POST" action="">
+
+    <input type="hidden" name="method" value="sync">
+
+    {$app_strings.LBL_EMAIL_SETTINGS_NAME}
+
+    <br>
+
+    <select name="ie-sel[]" class="ie-sel" multiple="multiple" title="{$app_strings.LBL_EMAIL_SETTINGS_NAME}">
+        {foreach from=$ieList item=ie}
+            <option value="{$ie.id}">{$ie.name}</option>
+        {/foreach}
+    </select>
+
+    <br>
+
+    <input class="sync-btn" type="submit" value="{$app_strings.LBL_SYNC}">
+
+</form>
+<div id="sync-results"></div>

@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -17,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,28 +34,73 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-    die ('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
 
-require_once 'modules/Emails/include/ListView/ListViewSmartyEmails.php';
-
-class EmailsViewList extends ViewList
+/**
+ * Class SyncInboundEmailAccountsPage
+ *
+ * Handle the page of 'Sync Inbound Email Accounts' menu item in Admin page / Repair section
+ * - handle the current sub/ajax actions
+ * - sync email-UID and orphaned field in email module
+ *
+ */
+class SyncInboundEmailAccountsPage
 {
-    /**
-     * @var Email
-     */
-    public $seed;
 
     /**
-     * setup display
+     * @var array
      */
-    public function preDisplay()
-    {
-        $this->lv = new ListViewSmartyEmails();
+    protected $includeData;
+
+    /**
+     * @var Sugar_Smarty
+     */
+    protected $tpl;
+
+    /**
+     * SyncInboundEmailAccountsPage constructor.
+     *
+     * The $includeData parameter should contains all variable
+     * in php included file by action, use get_defined_vars()
+     * The class handle a sub-action called method, use $_REQUEST['method']
+     *
+     * @param array $includeData
+     */
+    public function __construct($includeData) {
+
+        // create object state
+
+        $this->includeData = $includeData;
+        $this->tpl = new Sugar_Smarty();
+        $this->tpl->assign('app_strings', $this->includeData['app_strings']);
+
+        // handle the sub-action
+
+        new SyncInboundEmailAccountsSubActionHandler($this);
+
     }
+
+    /**
+     * Show basic UI for Sync Inbound Email Accounts
+     *
+     * @param $ieList
+     */
+    public function showForm($ieList) {
+        $this->tpl->assign('ieList', $ieList);
+        $this->tpl->display('modules/Administration/templates/SyncInboundEmailAccounts.tpl');
+    }
+
+    /**
+     * @param string $output
+     */
+    public function showOutput($output) {
+        echo $output;
+    }
+
 }

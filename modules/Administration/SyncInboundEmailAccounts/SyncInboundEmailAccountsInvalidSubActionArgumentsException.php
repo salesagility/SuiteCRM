@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -17,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,28 +34,65 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-    die ('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
 
-require_once 'modules/Emails/include/ListView/ListViewSmartyEmails.php';
-
-class EmailsViewList extends ViewList
+/**
+ * Class SyncInboundEmailAccountsInvalidSubActionArgumentsException
+ *
+ * Handle the action calls with incorrect argument(s)
+ *
+ * It is a simple exception with an additional message which
+ * contains the incorrectly called action-method name
+ *
+ */
+class SyncInboundEmailAccountsInvalidSubActionArgumentsException extends Exception
 {
-    /**
-     * @var Email
-     */
-    public $seed;
 
     /**
-     * setup display
+     * steps for get the caller method in the backtrace
+     *
+     * @var int
      */
-    public function preDisplay()
-    {
-        $this->lv = new ListViewSmartyEmails();
+    protected $callerMethodDistance = 2;
+
+    /**
+     * SyncInboundEmailAccountsInvalidSubActionArgumentsException constructor.
+     *
+     * @param string $message
+     * @param int $code
+     * @param Exception|null $previous
+     */
+    public function __construct($message = "", $code = 0, \Exception $previous = null) {
+        parent::__construct(
+            ($message ? $message . " - " : "") .
+            "An action called with wrong parameters, incorrectly called action was: " .
+            $this->getCallerMethod(), $code, $previous
+        );
+
     }
+
+    /**
+     * Return the caller function/method name
+     * call this function without argument
+     * if you override this method may you have to change
+     * the $this->callerMethodBackStep default value or
+     * override it with step parameter
+     *
+     * @param int $step
+     * @return mixed
+     */
+    protected function getCallerMethod($step = 2) {
+
+        $trace = debug_backtrace();
+        $function = $trace[$step ? $step : $this->callerMethodDistance]['function'];
+
+        return $function;
+    }
+
 }

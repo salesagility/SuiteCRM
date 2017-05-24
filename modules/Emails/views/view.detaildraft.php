@@ -43,20 +43,40 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die ('Not A Valid Entry Point');
 }
 
-require_once 'modules/Emails/include/ListView/ListViewSmartyEmails.php';
+require_once 'modules/Emails/include/DetailView/EmailsDraftDetailView.php';
+require_once 'include/MVC/View/views/view.detail.php';
 
-class EmailsViewList extends ViewList
+class EmailsViewDetaildraft extends ViewDetail
 {
     /**
-     * @var Email
+     * @var Email $focus
      */
-    public $seed;
+    public $focus;
+    /**
+     * EmailsViewDetaildraft constructor.
+     * @inheritdoc
+     */
+    public function __construct()
+    {
+        $this->type = 'DetailDraft';
+        $this->options['show_subpanels'] = true;
+        parent::__construct();
+    }
 
     /**
-     * setup display
+     * @see SugarView::preDisplay()
      */
     public function preDisplay()
     {
-        $this->lv = new ListViewSmartyEmails();
+        $metadataFile = parent::getMetaDataFile();
+        $this->dv = new EmailsDraftDetailView();
+        $this->dv->populateBean($_REQUEST);
+        $this->dv->ss =& $this->ss;
+        $this->dv->setup(
+            $this->module,
+            $this->dv->focus,
+            $metadataFile,
+            get_custom_file_if_exists('include/DetailView/DetailView.tpl')
+        );
     }
 }

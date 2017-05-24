@@ -45,19 +45,26 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class EmailsViewSendemail extends ViewAjax
 {
+    /**
+     * @var Email $bean
+     */
+    public $bean;
+
+    /**
+     * EmailsViewSendemail constructor.
+     */
     public function __construct()
     {
-        $this->options['show_title'] = false;
-        $this->options['show_header'] = false;
-        $this->options['show_footer'] = false;
-        $this->options['show_javascript'] = false;
-        $this->options['show_subpanels'] = false;
-        $this->options['show_search'] = false;
+        parent::__construct();
     }
 
+    /**
+     * @return string
+     */
     public function display()
     {
-        $response_code = 500;
+        global $app_strings;
+        $response = array();
 
         if(empty($this->bean->status)) {
             $this->bean->status = $_REQUEST['status'];
@@ -65,14 +72,31 @@ class EmailsViewSendemail extends ViewAjax
 
         switch ($this->bean->status) {
             case 'sent':
-                $response_code = 201;
+                $response['data'] = array(
+                    'type' => get_class($this->bean),
+                    'id' => $this->bean->id,
+                    'title' => $app_strings['LBL_EMAIL_SENT_SUCCESS'],
+                    'attributes' => array(),
+                    'relationships' => array(),
+                );
                 break;
             case 'sent_error':
-                $response_code = 400;
+                $response['errors'] = array(
+                    'type' => get_class($this->bean),
+                    'id' => $this->bean->id,
+                    'title' => $app_strings['LBL_EMAIL_ERROR_SENDING']
+                );
+                break;
+            default:
+                $response['errors'] = array(
+                    'type' => get_class($this->bean),
+                    'id' => $this->bean->id,
+                    'title' => $app_strings['ERR_BAD_RESPONSE_FROM_SERVER']
+                );
                 break;
         }
-        http_response_code ($response_code);
-        return "";
+
+        echo json_encode($response);
     }
 
 }

@@ -39,24 +39,59 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+
 if (!defined('sugarEntry') || !sugarEntry) {
-    die ('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
 
-require_once 'modules/Emails/include/ListView/ListViewSmartyEmails.php';
+require_once('include/DetailView/DetailView2.php');
 
-class EmailsViewList extends ViewList
+class EmailsDetailView extends DetailView2
 {
     /**
-     * @var Email
+     * @var Email $focus
      */
-    public $seed;
+    public $focus;
 
     /**
-     * setup display
+     * @param String $module
+     * @param null $focus
+     * @param null $metadataFile
+     * @param string $tpl
+     * @param bool $createFocus
+     * @param string $metadataFileName
      */
-    public function preDisplay()
+    public function setup(
+        $module,
+        $focus  = null,
+        $metadataFile = null,
+        $tpl = 'include/DetailView/DetailView.tpl',
+        $createFocus = true,
+        $metadataFileName = 'detail'
+    )
     {
-        $this->lv = new ListViewSmartyEmails();
+        parent::setup($module, $focus, $metadataFile, $tpl, $createFocus, $metadataFileName);
+    }
+
+    /**
+     * @inheritdoc
+     * @see DetailView2::populateBean()
+     */
+    public function populateBean($request = array())
+    {
+        parent::populateBean($request);
+        $this->populateFields();
+    }
+
+    /**
+     * Handles fields special fields like from
+     * @return void
+     */
+    public function populateFields()
+    {
+        if(empty($this->focus->from_addr_name)) {
+            $this->focus->from_addr_name = $this->focus->from_addr;
+        }
     }
 }
+

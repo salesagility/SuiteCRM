@@ -39,24 +39,41 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+
 if (!defined('sugarEntry') || !sugarEntry) {
-    die ('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
 
-require_once 'modules/Emails/include/ListView/ListViewSmartyEmails.php';
+require_once('modules/Emails/include/DetailView/EmailsDetailView.php');
 
-class EmailsViewList extends ViewList
+class EmailsNonImportedDetailView extends EmailsDetailView
 {
-    /**
-     * @var Email
-     */
-    public $seed;
+
+    public function setup(
+        $module,
+        $focus  = null,
+        $metadataFile = null,
+        $tpl = 'include/DetailView/DetailView.tpl',
+        $createFocus = true,
+        $metadataFileName = 'nonimporteddetailviewdefs'
+    )
+    {
+        parent::setup($module, $focus, $metadataFile, $tpl, $createFocus, $metadataFileName);
+    }
 
     /**
-     * setup display
+     * @inheritdoc
+     * @see DetailView2::populateBean()
      */
-    public function preDisplay()
+    public function populateBean($request = array())
     {
-        $this->lv = new ListViewSmartyEmails();
+        if (!empty($request['uid']) && !empty($request['inbound_email_record'])&& !empty($request['msgno'])) {
+            $inboundEmail = BeanFactory::getBean('InboundEmail', $request['inbound_email_record']);
+            $email = $inboundEmail->returnNonImportedEmail($_REQUEST['msgno'], $request['uid']);
+            $this->focus = $email;
+            $this->populateFields();
+        } else {
+            $GLOBALS['log']->debug("Unable to populate bean, no inbound_email_record and msgno parameter found");
+        }
     }
 }
