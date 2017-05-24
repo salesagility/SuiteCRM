@@ -564,11 +564,11 @@ table.view {
   font-size: 14px;
   font-weight: 700;
   color: $main-font-color;
-  padding: 0 0 0 8px;
-  line-height: 48px;
+  padding: 8px 0 0 8px;
+  line-height: 26px;
   text-align: left;
   vertical-align: baseline;
-  white-space: nowrap;
+  white-space: initial;
 }
 
 #lineItems {
@@ -3579,7 +3579,7 @@ select#sales_stage_advanced {
   }
 
   .col-sm-12 .col-sm-8.edit-view-field textarea#description {
-    width: 100%;
+    width: 120%;
   }
 
   .col-sm-12 .col-sm-8.edit-view-field textarea {
@@ -3682,7 +3682,7 @@ select#sales_stage_advanced {
   }
 
   .col-sm-12 .col-sm-8.edit-view-field textarea#description {
-    width: 100%;
+    width: 120%;
   }
 
   .col-sm-12 .col-sm-8.edit-view-field textarea {
@@ -3744,6 +3744,12 @@ select#sales_stage_advanced {
 
   .col-xs-12 [field=first_name].edit-view-field input[type="text"]#first_name {
     width: 29%;
+  }
+
+  .col-xs-12.col-sm-6.edit-view-row-item .col-xs-12 [field=first_name].edit-view-field input[type="text"]#first_name {
+    width: calc(100% - 115px);
+    float: right;
+    margin-right: 10%;
   }
 
   .col-sm-6 [field=first_name].edit-view-field select {
@@ -5697,5 +5703,13 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     width: 100%;
     height: initial;
   }
+}
+
+form[name="EditView"] .checkbox-label {
+  float: left;
+}
+
+form[name="EditView"] .checkbox-container {
+  width: auto;
 }
 
