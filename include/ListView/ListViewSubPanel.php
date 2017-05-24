@@ -261,7 +261,7 @@
             reset($data);
 
             //GETTING OFFSET
-            $offset = empty($this->getOffset($html_varName)) ? 0:$this->getOffset($html_varName);
+            $offset = empty($this->getOffset($html_varName)) ? 0 : $this->getOffset($html_varName);
             //$totaltime = 0;
             $processed_ids = array();
 
@@ -539,7 +539,7 @@
             global $currentModule;
             global $app_strings;
 
-            if( !isset($current_offset) || empty($current_offset) )                                                                    
+            if(!isset($current_offset) || empty($current_offset))                                                                    
   		$current_offset=0;
 	    $start_record = $current_offset + 1;
 
