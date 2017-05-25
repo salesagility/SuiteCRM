@@ -82,13 +82,14 @@ class DetailView2 extends EditView
 
         $this->th = new TemplateHandler();
         $this->th->ss = $this->ss;
+        $viewdefs = array();
 
         //Check if inline editing is enabled for detail view.
         if(!isset($sugar_config['enable_line_editing_detail']) || $sugar_config['enable_line_editing_detail']){
             $this->ss->assign('inline_edit', true);
         }
         $this->focus = $focus;
-        $this->tpl = $tpl;
+        $this->tpl = get_custom_file_if_exists($tpl);
         $this->module = $module;
         $this->metadataFile = $metadataFile;
         if(isset($GLOBALS['sugar_config']['disable_vcr'])) {

@@ -49,6 +49,11 @@ require_once('modules/Emails/include/DetailView/EmailsDetailView.php');
 class EmailsNonImportedDetailView extends EmailsDetailView
 {
 
+    /**
+     * @var string $formName
+     */
+    public $formName = 'EmailsNonImportedDetailView';
+
     public function setup(
         $module,
         $focus  = null,
