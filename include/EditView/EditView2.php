@@ -188,6 +188,11 @@ class EditView
     public $formName = '';
 
     /**
+     * @var array $defs view definitions
+     */
+    public $defs;
+
+    /**
      * EditView constructor
      * This is the EditView constructor responsible for processing the new
      * Meta-Data framework
@@ -211,10 +216,10 @@ class EditView
     ) {
         $this->th = $this->getTemplateHandler();
         $this->th->ss =& $this->ss;
-        $this->tpl = $tpl;
+        $this->tpl = get_custom_file_if_exists($tpl);
         $this->module = $module;
         $this->focus = $focus;
-
+        $viewdefs = array();
         //this logic checks if the focus has an id and if it does not then it will create a new instance of the focus bean
         //but in convert lead we do not want to create a new instance and do not want to populate id.
         if ($createFocus) {
@@ -671,9 +676,9 @@ class EditView
      * display
      * This method makes the Smarty variable assignments and then displays the
      * generated view.
-     * @param $showTitle boolean value indicating whether or not to show a title on the resulting page
-     * @param $ajaxSave boolean value indicating whether or not the operation is an Ajax save request
-     * @return HTML display for view as String
+     * @param bool $showTitle boolean value indicating whether or not to show a title on the resulting page
+     * @param bool $ajaxSave boolean value indicating whether or not the operation is an Ajax save request
+     * @return string display for view as HTML
      */
     public function display($showTitle = true, $ajaxSave = false)
     {
@@ -827,7 +832,13 @@ class EditView
 
         //Use the output filter to trim the whitespace
         $this->th->ss->load_filter('output', 'trimwhitespace');
-        $str .= $this->th->displayTemplate($this->module, $form_name, $this->tpl, $ajaxSave, $this->defs);
+        $str .= $this->th->displayTemplate(
+            $this->module,
+            $form_name,
+            $this->tpl,
+            $ajaxSave,
+            $this->defs
+        );
 
         /* BEGIN - SECURITY GROUPS */
         //if popup select add panel if user is a member of multiple groups to metadataFile
