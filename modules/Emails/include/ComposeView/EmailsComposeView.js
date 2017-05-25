@@ -932,7 +932,6 @@
       return bytes.toFixed(1) + ' ' + units[u];
     };
 
-
     /**
      * Constructor
      */
@@ -1095,6 +1094,35 @@
     self.construct();
 
     return $(self);
+  };
+
+  $.fn.EmailsComposeView.onTemplateSelect = function(args) {
+
+    var confirmed = function(args) {
+      $.post('index.php?entryPoint=emailTemplateData', {
+        emailTemplateId: args.name_to_value_array.emails_email_templates_idb
+      }, function(resp){
+        var r = JSON.parse(resp);
+        tinyMCE.get('description').setContent($('<textarea />').html(r.data.body_html).text());
+      });
+      set_return(args);
+    };
+
+    var mb = messageBox();
+    mb.setTitle(SUGAR.language.translate('Emails', 'LBL_CONFIRM_TITLE'));
+    mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_BODY'));
+    mb.show();
+
+    mb.on('ok', function() {
+      "use strict";
+      confirmed(args);
+      mb.remove();
+    });
+
+    mb.on('cancel', function() {
+      "use strict";
+      mb.remove();
+    });
   };
 
 
