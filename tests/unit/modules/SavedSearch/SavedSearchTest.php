@@ -65,18 +65,18 @@ class SavedSearchTest extends PHPUnit_Framework_TestCase
         // Where is the main method?
         // Why is this combined?
         // TODO: TASK: UNDEFINED - build the tests for the following methods.
-
-        //test handleSave method
-        $this->handleSaveAndRetrieveSavedSearch($savedSearch->id);
-
-        //test returnSavedSearch method
-        $this->returnSavedSearch($savedSearch->id);
-
-        //test returnSavedSearchContents method
-        $this->returnSavedSearchContents($savedSearch->id);
-
-        //test handleDelete method
-        $this->handleDelete($savedSearch->id);
+        $this->markTestIncomplete('');
+//        //test handleSave method
+//        $this->handleSaveAndRetrieveSavedSearch($savedSearch->id);
+//
+//        //test returnSavedSearch method
+//        $this->returnSavedSearch($savedSearch->id);
+//
+//        //test returnSavedSearchContents method
+//        $this->returnSavedSearchContents($savedSearch->id);
+//
+//        //test handleDelete method
+//        $this->handleDelete($savedSearch->id);
     }
 
     public function handleSaveAndRetrieveSavedSearch($id)
