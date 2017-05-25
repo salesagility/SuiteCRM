@@ -74,8 +74,7 @@ class EmailsViewDetailnonimported extends ViewDetail
         $this->dv->setup(
             $this->module,
             $this->dv->focus,
-            $metadataFile,
-            get_custom_file_if_exists('include/DetailView/DetailView.tpl')
+            $metadataFile
         );
     }
 

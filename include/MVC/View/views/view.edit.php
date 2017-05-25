@@ -104,8 +104,7 @@ class ViewEdit extends SugarView
         $metadataFile = $this->getMetaDataFile();
         $this->ev = $this->getEditView();
         $this->ev->ss =& $this->ss;
-        $this->ev->setup($this->module, $this->bean, $metadataFile,
-            get_custom_file_if_exists('include/EditView/EditView.tpl'));
+        $this->ev->setup($this->module, $this->bean, $metadataFile);
     }
 
     /**
@@ -119,7 +118,6 @@ class ViewEdit extends SugarView
 
     /**
      * Get a new EditView object
-     * @deprecated 7.9
      * @return EditView
      */
     public function getEditView()

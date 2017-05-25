@@ -53,6 +53,11 @@ class EmailsDraftDetailView extends EmailsDetailView
      */
     public $focus;
 
+    /**
+     * @var string $formName
+     */
+    public $formName = 'DraftDetailView';
+
     public function setup(
         $module,
         $focus  = null,
@@ -62,6 +67,6 @@ class EmailsDraftDetailView extends EmailsDetailView
         $metadataFileName = 'detaildraft'
     )
     {
-        parent::setup($module, $focus, $metadataFile, $tpl, $createFocus, $metadataFileName);
+        parent::setup($module, $focus, $metadataFile, get_custom_file_if_exists($tpl), $createFocus, $metadataFileName);
     }
 }

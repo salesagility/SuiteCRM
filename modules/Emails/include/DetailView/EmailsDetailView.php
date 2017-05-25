@@ -54,6 +54,11 @@ class EmailsDetailView extends DetailView2
     public $focus;
 
     /**
+     * @var string $formName
+     */
+    public $formName = 'EmailsDetailView';
+
+    /**
      * @param String $module
      * @param null $focus
      * @param null $metadataFile
@@ -92,6 +97,16 @@ class EmailsDetailView extends DetailView2
         if(empty($this->focus->from_addr_name)) {
             $this->focus->from_addr_name = $this->focus->from_addr;
         }
+    }
+
+    /**
+     * @param bool $showTitle boolean value indicating whether or not to show a title on the resulting page
+     * @param bool $ajaxSave boolean value indicating whether or not the operation is an Ajax save request
+     * @return string display for view as HTML
+     */
+    public function display($showTitle = true, $ajaxSave = false)
+    {
+        return parent::display($showTitle, $ajaxSave);
     }
 }
 

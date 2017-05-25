@@ -49,6 +49,11 @@ require_once('modules/Emails/include/DetailView/EmailsDetailView.php');
 class EmailsNonImportedDetailView extends EmailsDetailView
 {
 
+    /**
+     * @var string $formName
+     */
+    public $formName = 'EmailsNonImportedDetailView';
+
     public function setup(
         $module,
         $focus  = null,
@@ -58,7 +63,7 @@ class EmailsNonImportedDetailView extends EmailsDetailView
         $metadataFileName = 'nonimporteddetailviewdefs'
     )
     {
-        parent::setup($module, $focus, $metadataFile, $tpl, $createFocus, $metadataFileName);
+        parent::setup($module, $focus, $metadataFile, get_custom_file_if_exists($tpl), $createFocus, $metadataFileName);
     }
 
     /**
