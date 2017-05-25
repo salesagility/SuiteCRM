@@ -369,7 +369,7 @@ class InboundEmail extends SugarBean
             $this->conn,
             $sortCriteria,
             $sortOrder,
-            0,
+            FT_UID,
             $filterCriteria
         );
 
@@ -382,21 +382,22 @@ class InboundEmail extends SugarBean
             $offset = 0;
         }
 
-        $msgnos = array_slice($emailSortedHeaders, $offset, $pageSize);
+        $uids = array_slice($emailSortedHeaders, $offset, $pageSize);
 
-        $msgnos = implode(',', $msgnos);
+        $uids = implode(',', $uids);
 
         // Get result
         $emailHeaders = imap_fetch_overview(
             $this->conn,
-            $msgnos
+            $uids,
+            FT_UID
         );
 
         $emailHeaders = json_decode(json_encode($emailHeaders), true);
         // get attachment status
         foreach ($emailHeaders as $i=> $emailHeader) {
 
-            $structure = imap_fetchstructure($this->conn,  $emailHeader['msgno']);
+            $structure = imap_fetchstructure($this->conn,  $emailHeader['msgno'], FT_UID);
 
             if(isset($structure->parts[0]->parts))
             {
@@ -3541,6 +3542,16 @@ class InboundEmail extends SugarBean
         return $this->handleCharsetTranslation($msgPartTmp, $charset);
     }
 
+    public function getMessageTextFromSingleMimePartWithUid($uid, $section, $structure)
+    {
+        $msgPartTmp = imap_fetchbody($this->conn, $uid, $section, FT_UID);
+        $enc = $this->getEncodingFromBreadCrumb($section, $structure->parts);
+        $charset = $this->getCharsetFromBreadCrumb($section, $structure->parts);
+        $msgPartTmp = $this->handleTranserEncoding($msgPartTmp, $enc);
+
+        return $this->handleCharsetTranslation($msgPartTmp, $charset);
+    }
+
     /**
      * Givin an existing breadcrumb add a cooresponding offset
      *
@@ -3579,7 +3590,102 @@ class InboundEmail extends SugarBean
      * @param string $type the type of text processed, either 'PLAIN' or 'HTML'
      * @return string UTF-8 encoded version of the requested message text
      */
-    public function getMessageText($msgNo, $type, $structure, $fullHeader, $clean_email = true, $bcOffset = "")
+    public function getMessageTextWithUid($uid, $type, $structure, $fullHeader, $clean_email = true, $bcOffset = "")
+    {
+        global $sugar_config;
+
+        $msgPart = '';
+        $bc = $this->buildBreadCrumbs($structure->parts, $type);
+        //Add an offset if specified
+        if (!empty($bcOffset)) {
+            $bc = $this->addBreadCrumbOffset($bc, $bcOffset);
+        }
+
+        if (!empty($bc)) { // multi-part
+            // HUGE difference between PLAIN and HTML
+            if ($type == 'PLAIN') {
+                $msgPart = $this->getMessageTextFromSingleMimePart($uid, $bc, $structure);
+            } else {
+                // get part of structure that will
+                $msgPartRaw = '';
+                $bcArray = $this->buildBreadCrumbsHTML($structure->parts, $bcOffset);
+                // construct inline HTML/Rich msg
+                foreach ($bcArray as $bcArryKey => $bcArr) {
+                    foreach ($bcArr as $type => $bcTrail) {
+                        if ($type == 'html') {
+                            $msgPartRaw .= $this->getMessageTextFromSingleMimePartWithUid($uid, $bcTrail, $structure);
+                        } else {
+                            // deal with inline image
+                            $part = $this->getPartByPath($bcTrail, $structure->parts);
+                            if (empty($part) || empty($part->id)) {
+                                continue;
+                            }
+                            $partid = substr($part->id, 1, -1); // strip <> around
+                            if (isset($this->inlineImages[$partid])) {
+                                $imageName = $this->inlineImages[$partid];
+                                $newImagePath = "class=\"image\" src=\"{$this->imagePrefix}{$imageName}\"";
+                                $preImagePath = "src=\"cid:$partid\"";
+                                $msgPartRaw = str_replace($preImagePath, $newImagePath, $msgPartRaw);
+                            }
+                        }
+                    }
+                }
+                $msgPart = $msgPartRaw;
+            }
+        } else { // either PLAIN message type (flowed) or b0rk3d RFC
+            // make sure we're working on valid data here.
+            if ($structure->subtype != $type) {
+                return '';
+            }
+
+            $decodedHeader = $this->decodeHeader($fullHeader);
+
+            // now get actual body contents
+            $text = imap_body($this->conn, $uid, FT_UID);
+
+            $upperCaseKeyDecodeHeader = array();
+            if (is_array($decodedHeader)) {
+                $upperCaseKeyDecodeHeader = array_change_key_case($decodedHeader, CASE_UPPER);
+            } // if
+            if (isset($upperCaseKeyDecodeHeader[strtoupper('Content-Transfer-Encoding')])) {
+                $flip = array_flip($this->transferEncoding);
+                $text = $this->handleTranserEncoding(
+                    $text,
+                    $flip[strtoupper($upperCaseKeyDecodeHeader[strtoupper('Content-Transfer-Encoding')])]
+                );
+            }
+
+            if (is_array($upperCaseKeyDecodeHeader['CONTENT-TYPE']) && isset($upperCaseKeyDecodeHeader['CONTENT-TYPE']['charset']) && !empty($upperCaseKeyDecodeHeader['CONTENT-TYPE']['charset'])) {
+                // we have an explicit content type, use it
+                $msgPart = $this->handleCharsetTranslation($text, $upperCaseKeyDecodeHeader['CONTENT-TYPE']['charset']);
+            } else {
+                // make a best guess as to what our content type is
+                $msgPart = $this->convertToUtf8($text);
+            }
+        } // end else clause
+
+        $msgPart = $this->customGetMessageText($msgPart);
+        /* cn: bug 9176 - htmlEntitites hide XSS attacks. */
+        if ($type == 'PLAIN') {
+            return SugarCleaner::cleanHtml(to_html($msgPart), false);
+        }
+        // Bug 50241: can't process <?xml:namespace .../> properly. Strip <?xml ...> tag first.
+        $msgPart = preg_replace("/<\?xml[^>]*>/", "", $msgPart);
+
+        return SugarCleaner::cleanHtml($msgPart, false);
+    }
+
+
+    /**
+     * @param $uid
+     * @param $type
+     * @param $structure
+     * @param $fullHeader
+     * @param bool $clean_email
+     * @param string $bcOffset
+     * @return string
+     */
+    public function getMessageText($uid, $type, $structure, $fullHeader, $clean_email = true, $bcOffset = "")
     {
         global $sugar_config;
 
@@ -5032,10 +5138,11 @@ class InboundEmail extends SugarBean
 
 
             $this->connectMailserver();
-            $header = imap_headerinfo($this->conn, $uid, FT_UID);
+            $header = imap_fetch_overview($this->conn, $uid, FT_UID);
             $fullHeader = imap_fetchheader($this->conn, $uid, FT_UID);
-            $structure = imap_fetchstructure($this->conn, $msgNo); // map of email
-            $email->name = $this->handleMimeHeaderDecode($header->subject);
+            $headerByMsgNo = imap_headerinfo($this->conn, $msgNo);
+            $structure = imap_fetchstructure($this->conn, $uid, FT_UID); // map of email
+            $email->name = $this->handleMimeHeaderDecode($header[0]->subject);
             $email->type = 'inbound';
             if (!empty($unixHeaderDate)) {
                 $email->date_sent = $timedate->asUser($unixHeaderDate);
@@ -5048,28 +5155,26 @@ class InboundEmail extends SugarBean
 
 
             $email->status = 'unread'; // this is used in Contacts' Emails SubPanel
-            if (!empty($header->toaddress)) {
-                $email->to_name = $this->handleMimeHeaderDecode($header->toaddress);
+            if (!empty($header[0]->to)) {
+                $email->to_name = $this->handleMimeHeaderDecode($header[0]->to);
                 $email->to_addrs_names = $email->to_name;
+                $email->to_addrs = $this->convertImapToSugarEmailAddress($header[0]->to);
             }
 
-            if (!empty($header->to)) {
-                $email->to_addrs = $this->convertImapToSugarEmailAddress($header->to);
+            if (!empty($header[0]->from)) {
+                $email->to_addrs = $this->convertImapToSugarEmailAddress($header[0]->to);
             }
-
-            $email->from_name = $this->handleMimeHeaderDecode($header->fromaddress);
+            $email->from_name = $this->handleMimeHeaderDecode($header[0]->from);
             $email->from_addr_name = $email->from_name;
-            $email->from_addr = $this->convertImapToSugarEmailAddress($header->from);
-            if (!empty($header->cc)) {
-                $email->cc_addrs = $this->convertImapToSugarEmailAddress($header->cc);
-            }
+            $email->from_addr = $this->convertImapToSugarEmailAddress($email->from_name);
 
-            if (!empty($header->ccaddress)) {
-                $email->cc_addrs_names = $this->handleMimeHeaderDecode($header->ccaddress);
+            if (!empty($headerByMsgNo->ccaddress)) {
+                $email->cc_addrs = $this->convertImapToSugarEmailAddress($headerByMsgNo->ccaddress);
+                $email->cc_addrs_names = $this->handleMimeHeaderDecode($headerByMsgNo->ccaddress);
             } // if
 
-            $email->reply_to_name = $this->handleMimeHeaderDecode($header->reply_toaddress);
-            $email->reply_to_email = $this->convertImapToSugarEmailAddress($header->reply_to);
+            $email->reply_to_name = $this->handleMimeHeaderDecode($header[0]->reply_toaddress);
+            $email->reply_to_email = $this->convertImapToSugarEmailAddress($header[0]->reply_to);
             if (!empty($email->reply_to_email)) {
                 $email->reply_to_addr = $email->reply_to_name;
             }
@@ -5080,16 +5185,16 @@ class InboundEmail extends SugarBean
             $oldPrefix = $this->imagePrefix;
 
             // handle multi-part email bodies
-            $email->description_html = $this->getMessageText(
-                $msgNo,
+            $email->description_html = $this->getMessageTextWithUid(
+                $uid,
                 'HTML',
                 $structure,
                 $fullHeader,
                 true
             ); // runs through handleTranserEncoding() already
 
-            $email->description = $this->getMessageText(
-                $msgNo,
+            $email->description = $this->getMessageTextWithUid(
+                $uid,
                 'PLAIN',
                 $structure,
                 $fullHeader,
