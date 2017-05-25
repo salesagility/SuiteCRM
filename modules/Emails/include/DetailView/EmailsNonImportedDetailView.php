@@ -63,7 +63,7 @@ class EmailsNonImportedDetailView extends EmailsDetailView
         $metadataFileName = 'nonimporteddetailviewdefs'
     )
     {
-        parent::setup($module, $focus, $metadataFile, get_custom_file_if_exists($tpl), $createFocus, $metadataFileName);
+        parent::setup($module, $focus, $metadataFile, $tpl, $createFocus, $metadataFileName);
     }
 
     /**
