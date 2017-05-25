@@ -226,7 +226,6 @@ class Gantt {
 		$interval = new DateInterval('P1D'); // 1 month interval
         $period = new DatePeriod($begin, $interval, $end);
         $aResult = array();
-        $lang = $GLOBALS['current_language'];
         
         foreach ( $period as $dt )
         {
