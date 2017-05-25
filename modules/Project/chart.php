@@ -275,7 +275,7 @@ class chart {
 				foreach($months as $days){
 
 					foreach($days as $day => $d){
-						echo '<td class="inner_td"><div class="cell_width">'.$d[0].'</div></td>';//First letter of the days name shown
+						echo '<td class="inner_td"><div class="cell_width">'.$d.'</div></td>';//First letter of the days name shown
 					}
 				}
 			}
@@ -544,7 +544,9 @@ class chart {
         foreach ( $period as $dt )
         {
 			$count++;
-            $aResult[$dt->format('Y')][ceil($dt->format('m')/3)][$count] = $dt->format('M');
+            $aResult[$dt->format('Y')]
+            	[ceil($dt->format('m')/3)]
+            		[$count] = mb_substr($GLOBALS['app_list_strings']['dom_cal_month_short'][$dt->format('n')],0, 3);
         }
 
         return array($aResult, $count);
@@ -565,7 +567,9 @@ class chart {
         foreach ( $period as $dt )
         {
 			$count++;
-            $aResult[$dt->format('Y')][$dt->format('M')][] = $dt->format('W');
+            $aResult[$dt->format('Y')]
+            	[$GLOBALS['app_list_strings']['dom_cal_month_short'][$dt->format('n')]]
+            		[] = $dt->format('W');
         }
 		
         return array($aResult, $count);
@@ -583,8 +587,10 @@ class chart {
         $aResult = array();
 
         foreach ( $period as $dt )
-        {
-            $aResult[$dt->format('Y')][$dt->format('M')][$dt->format('j')] = $dt->format('D');
+        {        	
+            $aResult[$dt->format('Y')]
+            	[mb_substr($GLOBALS['app_list_strings']['dom_cal_month_short'][$dt->format('n')],0, 3)]
+            		[$dt->format('j')] = mb_substr($GLOBALS['app_list_strings']['dom_cal_day_short'][$dt->format('w')+1],0, 1);
         }
 
         return $aResult;

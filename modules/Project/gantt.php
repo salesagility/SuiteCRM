@@ -30,6 +30,8 @@ class Gantt {
         $this->start_date = $start_date;
         $this->end_date = $end_date;
         $this->tasks = $tasks;
+        
+        
         //draw the grid
         $this->draw($this->start_date, $this->end_date, $this->tasks);
     }
@@ -224,10 +226,13 @@ class Gantt {
 		$interval = new DateInterval('P1D'); // 1 month interval
         $period = new DatePeriod($begin, $interval, $end);
         $aResult = array();
-
+        $lang = $GLOBALS['current_language'];
+        
         foreach ( $period as $dt )
         {
-            $aResult[$dt->format('Y')][strftime("%B", $dt->getTimestamp())][$dt->format('j')] = strftime("%a", $dt->getTimestamp());
+        	$aResult[$dt->format('Y')]
+        		[$GLOBALS['app_list_strings']['dom_cal_month_short'][$dt->format('n')]]
+        		[$dt->format('j')] = $GLOBALS['app_list_strings']['dom_cal_day_short'][$dt->format('w')+1];
         }
 
         return $aResult;
