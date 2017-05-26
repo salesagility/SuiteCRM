@@ -126,9 +126,8 @@ class MysqliManager extends MysqlManager
         }
 
 		static $queryMD5 = array();
-        $sql = trim(str_replace(array("\r", "\n"), " ", $sql));
 		parent::countQuery($sql);
-		$GLOBALS['log']->info('Query:' . $sql);
+		$GLOBALS['log']->info('Query:' . $this->removeLineBreaks($sql));
 		$this->checkConnection();
 		$this->query_time = microtime(true);
 		$this->lastsql = $sql;
