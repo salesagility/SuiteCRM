@@ -99,10 +99,10 @@ $mod_strings = array (
 
   // Various strings used throughout the external account modules
   'LBL_MEET_NOW_BUTTON' => 'Meet Now',
-  'LBL_VIEW_LOTUS_LIVE_MEETINGS' => 'View Upcoming IBM SmartCloud&trade; Meetings',
-  'LBL_TITLE_LOTUS_LIVE_MEETINGS' => 'Upcoming IBM SmartCloud&trade; Meetings',
-  'LBL_VIEW_LOTUS_LIVE_DOCUMENTS' => 'View IBM SmartCloud&trade; Files',
-  'LBL_TITLE_LOTUS_LIVE_DOCUMENTS' => 'IBM SmartCloud&trade; Files',
+  'LBL_VIEW_LOTUS_LIVE_MEETINGS' => 'View Upcoming IBM Connections&trade; Meetings Cloud',
+  'LBL_TITLE_LOTUS_LIVE_MEETINGS' => 'Upcoming IBM Connections&trade; Meetings Cloud',
+  'LBL_VIEW_LOTUS_LIVE_DOCUMENTS' => 'View IBM Connections Files on Cloud',
+  'LBL_TITLE_LOTUS_LIVE_DOCUMENTS' => 'IBM Connections Files on Cloud',
   'LBL_REAUTHENTICATE_LABEL' => 'Reauthenticate',
   'LBL_REAUTHENTICATE_KEY' => 'a',
   'LBL_APPLICATION_FOUND_NOTICE' => 'An account for this application already exists. We have reinstated the existing account.',
