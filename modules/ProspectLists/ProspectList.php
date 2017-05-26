@@ -210,10 +210,10 @@ class ProspectList extends SugarBean {
 				require_once($beanFiles[$module_name]);
 				$relatedBean = BeanFactory::getBean($membername);
 				// if the field belongs to this module, then query it in the cstm table
-				if ($membername == $val['custom_module'] && $relatedBean->field_defs[$val['name']]['source'] != 'non-db')
+				if ($membername === $val['custom_module'] && $relatedBean->field_defs[$val['name']]['source'] !== 'non-db')
 				{
 					$memberarr['has_custom_fields'] = true;
-					if($val['type']=='relate') {
+					if($val['type'] === 'relate') {
 						// show related value in report..
 						$memberarr['fields'][$fieldname] = "'{{$val['type']} from=\"{$val['custom_module']}.{$val['name']}\" to=\"{$val['ext2']}.{$val['ext3']}\"}' AS " . $fieldname;
 					}
