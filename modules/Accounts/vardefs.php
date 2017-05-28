@@ -359,6 +359,7 @@ $dictionary['Account'] = array(
         ),
         'aos_quotes' => array(
             'name' => 'aos_quotes',
+            'vname' => 'LBL_AOS_QUOTES',
             'type' => 'link',
             'relationship' => 'account_aos_quotes',
             'module' => 'AOS_Quotes',
@@ -367,6 +368,7 @@ $dictionary['Account'] = array(
         ),
         'aos_invoices' => array(
             'name' => 'aos_invoices',
+            'vname' => 'LBL_AOS_INVOICES',
             'type' => 'link',
             'relationship' => 'account_aos_invoices',
             'module' => 'AOS_Invoices',
@@ -375,6 +377,7 @@ $dictionary['Account'] = array(
         ),
         'aos_contracts' => array(
             'name' => 'aos_contracts',
+            'vname' => 'LBL_AOS_CONTRACTS',
             'type' => 'link',
             'relationship' => 'account_aos_contracts',
             'module' => 'AOS_Contracts',

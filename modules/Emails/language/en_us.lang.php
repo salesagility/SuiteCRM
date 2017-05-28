@@ -145,7 +145,7 @@ $mod_strings = array (
 	'LBL_SEARCH_FORM_DRAFTS_TITLE'=> 'Search Drafts',
 	'LBL_SEARCH_FORM_SENT_TITLE'=> 'Search Sent Emails',
 	'LBL_SEARCH_FORM_TITLE'		=> 'Email Search',
-	'LBL_SEND_ANYWAYS'			=> 'This email has no subject.  Send/save anyway?',
+	'LBL_SEND_ANYWAYS'			=> 'This email has no subject. Send/save anyway?',
 	'LBL_SEND_BUTTON_LABEL'		=> 'Send',
 	'LBL_SEND_BUTTON_TITLE'		=> 'Send',
 	'LBL_SEND'					=> 'SEND',
@@ -198,8 +198,8 @@ $mod_strings = array (
 
 	'NTC_REMOVE_INVITEE'		=> 'Are you sure you want to remove this recipient from the email?',
 	'WARNING_SETTINGS_NOT_CONF'	=> 'Warning: Your email settings are not configured to send email.',
-	'WARNING_NO_UPLOAD_DIR'		=> 'Attachments may fail: No value for "upload_tmp_dir" was detected.  Please correct this in your php.ini file.',
-	'WARNING_UPLOAD_DIR_NOT_WRITABLE'	=> 'Attachments may fail: An incorrect or unusable value for "upload_tmp_dir" was detected.  Please correct this in your php.ini file.',
+	'WARNING_NO_UPLOAD_DIR'		=> 'Attachments may fail: No value for "upload_tmp_dir" was detected. Please correct this in your php.ini file.',
+	'WARNING_UPLOAD_DIR_NOT_WRITABLE'	=> 'Attachments may fail: An incorrect or unusable value for "upload_tmp_dir" was detected. Please correct this in your php.ini file.',
 
     // for All emails
     'LBL_BUTTON_RAW_TITLE'   => 'Show Raw Message',
@@ -250,7 +250,7 @@ $mod_strings = array (
 	'LBL_MASS_DELETE_ERROR'		=> 'No checked items were passed for deletion.',
 	'LBL_NEW'					=> 'New',
 	'LBL_NEXT_EMAIL'			=> 'Next Free Item',
-	'LBL_NO_GRAB_DESC'			=> 'There were no items available.  Try again in a moment.',
+	'LBL_NO_GRAB_DESC'			=> 'There were no items available. Try again in a moment.',
 	'LBL_QUICK_REPLY'			=> 'Reply',
 	'LBL_REPLIED'				=> 'Replied',
 	'LBL_TAKE_ONE_TITLE'		=> 'Reps',
@@ -339,11 +339,11 @@ $mod_strings = array (
     'LBL_NO_SUBJECT' =>'(no subject)',
     'LBL_CHECKING_ACCOUNT'	=> 'Checking Account',
     'LBL_OF'	=> 'of',
-    'LBL_TEST_EMAIL_BODY' => 'This email was sent in order to test the outgoing mail server information provided in the SuiteCRM application.  A successful receipt of this email indicates that the outgoing mail server information provided is valid.',
+    'LBL_TEST_EMAIL_BODY' => 'This email was sent in order to test the outgoing mail server information provided in the SuiteCRM application. A successful receipt of this email indicates that the outgoing mail server information provided is valid.',
 
     // for outbound email dialog
 	'LBL_SMTP_SERVER_HELP' => 'This SMTP Mail Server can be used for outgoing mail. Provide a username and password for your email account in order to use the mail server.',
-    'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administator has not yet configured the default outbound account.  Unable to send test email.',
+    'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administator has not yet configured the default outbound account. Unable to send test email.',
     'LBL_MAIL_SMTPAUTH_REQ'				=> 'Use SMTP Authentication?',
 	'LBL_MAIL_SMTPPASS'					=> 'SMTP Password:',
 	'LBL_MAIL_SMTPPORT'					=> 'SMTP Port:',
@@ -384,5 +384,8 @@ $mod_strings = array (
 	'LBL_EMAILS_MEETINGS_REL' => 'Emails:Meetings',
 	'LBL_DATE_CREATED' => 'Date Created',
 	'LBL_DATE_MODIFIED' => 'Date Modified',
+
+	'LBL_MAILBOX_ID' => 'Mailbox ID',
+	'LBL_PARENT_ID' => 'Parent ID',
 );
 

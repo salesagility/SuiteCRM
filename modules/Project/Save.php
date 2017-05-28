@@ -130,7 +130,7 @@ if ($sugarbean->is_template){
 }
 else{
 	//customize default retrun view to make it to redirect to GanttChart view
-	$_REQUEST['return_url'] = "index.php?module=Project&action=view_GanttChart&project_id=" . $return_id;
+	$_REQUEST['return_url'] = "index.php?module=Project&action=view_GanttChart&record=" . $return_id;
     handleRedirect($return_id,'Project');
 }
 ?>
