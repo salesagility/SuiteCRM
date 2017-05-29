@@ -24,12 +24,6 @@ if (!defined('sugarEntry')) {
 // this will fix warning in modules/Users/Save.php:295 during installation
     $_POST['email_reminder_checked'] = false;
     try {
-        /*
-        * Do some cleanup so we can relaunch installer over and over again (we can get rid of this)
-        */
-        if (is_file(__DIR__ . "/../config.php")) {
-            unlink(__DIR__ . "/../config.php");
-        }
         ob_start();
         require_once __DIR__ . '/../install.php';
         ob_end_clean();
