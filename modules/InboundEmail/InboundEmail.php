@@ -169,7 +169,7 @@ class InboundEmail extends SugarBean
     public $imagePrefix;
 
     /**
-     * Sole constructor
+     * Email constructor
      */
     public function __construct()
     {
@@ -5121,17 +5121,13 @@ class InboundEmail extends SugarBean
 
     /**
      * Used to view non imported emails
-     * @param $msgNo - imap mesgno
-     * @param $uid - imap uid
-     * @return bool|Email - false on error | a non imported email
+     * @param string $msgNo - imap mesgno
+     * @param string $uid - imap uid
+     * @return Email|boolean - false on error | a non imported email
      */
     public function returnNonImportedEmail($msgNo, $uid)
     {
-        global $timedate;
-        global $app_strings;
-        global $app_list_strings;
-        global $sugar_config;
-        global $current_user;
+        global $timedate, $current_user;
 
         if (empty($header)) {
             $email = new Email();
@@ -5144,15 +5140,37 @@ class InboundEmail extends SugarBean
             $structure = imap_fetchstructure($this->conn, $uid, FT_UID); // map of email
             $email->name = $this->handleMimeHeaderDecode($header[0]->subject);
             $email->type = 'inbound';
-            if (!empty($unixHeaderDate)) {
-                $email->date_sent = $timedate->asUser($unixHeaderDate);
-                list($email->date_start, $email->time_start) = $timedate->split_date_time($email->date_sent);
 
-            } else {
-                $email->date_start = $email->time_start = $email->date_sent = "";
+
+            if(empty($email->date_entered)) {
+
+                // find if string has (UTC) in timezone
+                $pattern = '/([(])([A-Z])+([)])/i';
+                $timezoneTextFound = preg_match($pattern,  $header[0]->date);
+
+                $dateTimeFormat = 'D, d M Y H:i:s O *';
+                if($timezoneTextFound === false || $timezoneTextFound === 0) {
+                    $dateTimeFormat = 'D, d M Y H:i:s O';
+                }
+
+                $dateTime = DateTime::createFromFormat(
+                    $dateTimeFormat,
+                    $header[0]->date
+                );
+
+                if(!empty($dateTime)) {
+                    $email->date_entered = $timedate->asUser($dateTime, $current_user);
+                    $email->date_modified = $timedate->asUser($dateTime, $current_user);
+                    $email->date_start = $timedate->asUserDate($dateTime);
+                    $email->time_start = $timedate->asUserTime($dateTime);
+
+                    $systemUser =  BeanFactory::getBean('Users', 1);
+                    $email->created_by = $systemUser->id;
+                    $email->created_by_name = $systemUser->name;
+                    $email->modified_user_id = $systemUser->id;
+                    $email->modified_by_name = $systemUser->name;
+                }
             }
-
-
 
             $email->status = 'unread'; // this is used in Contacts' Emails SubPanel
             if (!empty($header[0]->to)) {
