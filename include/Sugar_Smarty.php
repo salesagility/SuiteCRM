@@ -138,31 +138,32 @@ class Sugar_Smarty extends Smarty
 
 
     /**
+     * Log smarty error out to default log location
      * @param string $error_msg
-     * @param int $error_type
+     * @param integer $error_type
      */
     public function trigger_error($error_msg, $error_type = E_USER_WARNING)
     {
-        global $log;
+        parent::trigger_error($error_msg, $error_type);
+
         $msg = htmlentities($error_msg);
-        trigger_error("Smarty error: $msg", $error_type);
 
         switch ($error_type)
         {
             case E_USER_ERROR:
-                $log->error('Smarty error: ' . $msg);
+                $GLOBALS['log']->error('Smarty: ' . $msg);
                 break;
             case E_USER_WARNING:
-                $log->warn('Smarty error: ' . $msg);
+                $GLOBALS['log']->warn('Smarty: ' . $msg);
                 break;
             case E_USER_NOTICE:
-                $log->error('Smarty error: ' . $msg);
+                $GLOBALS['log']->error('Smarty: ' . $msg);
                 break;
             case E_USER_DEPRECATED:
-                $log->debug('Smarty error: ' . $msg);
+                $GLOBALS['log']->debug('Smarty: ' . $msg);
                 break;
             default:
-                $log->fatal('Smarty error: ' . $msg);
+                $GLOBALS['log']->fatal('Smarty: ' . $msg);
                 break;
         }
     }
