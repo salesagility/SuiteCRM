@@ -142,9 +142,8 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
     function getLayout ()
     {
     	$viewdefs = array () ;
-    	$fielddefs = $this->_fielddefs;
-    	$fielddefs [ $this->FILLER [ 'name' ] ] = $this->FILLER ;
-    	$fielddefs [ MBConstants::$EMPTY [ 'name' ] ] = MBConstants::$EMPTY ;
+	$this->_fielddefs [ $this->FILLER [ 'name' ] ] = $this->FILLER ;
+	$this->_fielddefs [ MBConstants::$EMPTY [ 'name' ] ] = MBConstants::$EMPTY ;
     	
 		foreach ( $this->_viewdefs [ 'panels' ] as $panelID => $panel )
         {
