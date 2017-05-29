@@ -170,6 +170,7 @@ $mod_strings = array(
     'LBL_EMPLOYEE_STATUS' => 'Employee Status',
     'LBL_EMPLOYEE_INFORMATION' => 'Employee Information',
     'LBL_ERROR' => 'Error',
+    'LBL_MISSING_TEMPLATE' => 'login.tpl not found',
     'LBL_EXPORT_CHARSET' => 'Import/Export Character Set',
     'LBL_EXPORT_CHARSET_DESC' => 'Choose the character set used in your locale. This property will be used for data imports, .csv exports and for vCard generation.',
     'LBL_EXPORT_DELIMITER' => 'Export Delimiter',
