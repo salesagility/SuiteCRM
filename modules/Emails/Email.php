@@ -42,7 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require_once('include/SugarPHPMailer.php');
-require_once 'include/upload_file.php';
+require_once 'include/UploadFile.php';
+require_once 'include/UploadMultipleFiles.php';
 
 class Email extends SugarBean {
     /* SugarBean schema */
@@ -112,7 +113,7 @@ class Email extends SugarBean {
     public $db;
 
     /* private attributes */
-    public $rolloverStyle = "<style>div#rollover {position: relative;float: left;margin: none;text-decoration: none;}div#rollover a:hover {padding: 0;text-decoration: none;}div#rollover a span {display: none;}div#rollover a:hover span {text-decoration: none;display: block;width: 250px;margin-top: 5px;margin-left: 5px;position: absolute;padding: 10px;color: #333;	border: 1px solid #ccc;	background-color: #fff;	font-size: 12px;z-index: 1000;}</style>\n";
+    public $rolloverStyle = "";
     public $cachePath;
     public $cacheFile = 'robin.cache.php';
     public $replyDelimiter = "> ";
@@ -125,7 +126,14 @@ class Email extends SugarBean {
 
     /* to support Email 2.0 */
     public $isDuplicate;
+
+	/**
+	 * IMap UID
+	 *
+	 * @var uid
+	 */
     public $uid;
+
     public $to;
     public $flagged;
     public $answered;
@@ -156,6 +164,16 @@ class Email extends SugarBean {
      * @var Link2
      */
     public $cases;
+
+	public $category_id;
+
+	/**
+	 * orphaned on IMap
+	 *
+	 * @var bool
+	 */
+	public $orphaned;
+
 
 	/**
 	 * sole constructor
@@ -1047,6 +1065,8 @@ class Email extends SugarBean {
 	function save($check_notify = false) {
         global $current_user;
 
+		$id = false;
+
 		if($this->isDuplicate) {
 			$GLOBALS['log']->debug("EMAIL - tried to save a duplicate Email record");
 		} else {
@@ -1066,6 +1086,11 @@ class Email extends SugarBean {
 			$this->saveEmailText();
 			$this->saveEmailAddresses();
 
+
+			if(empty($this->assigned_user_id)) {
+                $this->assigned_user_id = $current_user->id;
+            }
+
 			$GLOBALS['log']->debug('-------------------------------> Email called save()');
 
 			// handle legacy concatenation of date and time fields
@@ -1078,7 +1103,7 @@ class Email extends SugarBean {
                  }
 			}
 
-			parent::save($check_notify);
+			$id = parent::save($check_notify);
 
 			if(!empty($this->parent_type) && !empty($this->parent_id)) {
                 if(!empty($this->fetched_row) && !empty($this->fetched_row['parent_id']) && !empty($this->fetched_row['parent_type'])) {
@@ -1098,6 +1123,8 @@ class Email extends SugarBean {
 			}
 		}
 		$GLOBALS['log']->debug('-------------------------------> Email save() done');
+
+		return $id;
 	}
 
 	/**
@@ -1890,6 +1917,201 @@ class Email extends SugarBean {
 	}
 
 
+    /**
+     * Handles file attachments with multiple files
+     */
+    public function handleMultipleFileAttachments() {
+        global $mod_strings;
+
+        ///////////////////////////////////////////////////////////////////////////
+        ////    ATTACHMENTS FROM DRAFTS
+        if(($this->type == 'out' || $this->type == 'draft') && $this->status == 'draft' && isset($_REQUEST['record'])) {
+            $this->getNotes($_REQUEST['record']); // cn: get notes from OLD email for use in new email
+        }
+        ////    END ATTACHMENTS FROM DRAFTS
+        ///////////////////////////////////////////////////////////////////////////
+
+        ///////////////////////////////////////////////////////////////////////////
+        ////    ATTACHMENTS FROM FORWARDS
+        // Bug 8034 Jenny - Need the check for type 'draft' here to handle cases where we want to save
+        // forwarded messages as drafts.  We still need to save the original message's attachments.
+        if(($this->type == 'out' || $this->type == 'draft') &&
+            isset($_REQUEST['origType']) && $_REQUEST['origType'] == 'forward' &&
+            isset($_REQUEST['return_id']) && !empty($_REQUEST['return_id'])
+        ) {
+            $this->getNotes($_REQUEST['return_id'], true);
+        }
+
+        // cn: bug 8034 - attachments from forward/replies lost when saving in draft
+        if(isset($_REQUEST['prior_attachments']) && !empty($_REQUEST['prior_attachments']) && $this->new_with_id == true) {
+            $exIds = explode(",", $_REQUEST['prior_attachments']);
+            if(!isset($_REQUEST['template_attachment'])) {
+                $_REQUEST['template_attachment'] = array();
+            }
+            $_REQUEST['template_attachment'] = array_merge($_REQUEST['template_attachment'], $exIds);
+        }
+        ////    END ATTACHMENTS FROM FORWARDS
+        ///////////////////////////////////////////////////////////////////////////
+
+        ///////////////////////////////////////////////////////////////////////////
+        ////	ATTACHMENTS FROM TEMPLATES
+        // to preserve individual email integrity, we must dupe Notes and associated files
+        // for each outbound email - good for integrity, bad for filespace
+        if(isset($_REQUEST['template_attachment']) && !empty($_REQUEST['template_attachment'])) {
+            $removeArr = array();
+            $noteArray = array();
+
+            if(isset($_REQUEST['temp_remove_attachment']) && !empty($_REQUEST['temp_remove_attachment'])) {
+                $removeArr = $_REQUEST['temp_remove_attachment'];
+            }
+
+            foreach($_REQUEST['template_attachment'] as $noteId) {
+                if(in_array($noteId, $removeArr)) {
+                    continue;
+                }
+                $noteTemplate = new Note();
+                $noteTemplate->retrieve($noteId);
+                $noteTemplate->id = create_guid();
+                $noteTemplate->new_with_id = true; // duplicating the note with files
+                $noteTemplate->parent_id = $this->id;
+                $noteTemplate->parent_type = $this->module_dir;
+                $noteTemplate->date_entered = '';
+                $noteTemplate->save();
+
+                $noteFile = new UploadFile();
+                $noteFile->duplicate_file($noteId, $noteTemplate->id, $noteTemplate->filename);
+                $noteArray[] = $noteTemplate;
+            }
+            $this->attachments = array_merge($this->attachments, $noteArray);
+        }
+        ////	END ATTACHMENTS FROM TEMPLATES
+        ///////////////////////////////////////////////////////////////////////////
+
+        ///////////////////////////////////////////////////////////////////////////
+        ////	ADDING NEW ATTACHMENTS
+        $max_files_upload = 10;
+        // Jenny - Bug 8211 Since attachments for drafts have already been processed,
+        // we don't need to re-process them.
+        if($this->status != "draft") {
+            $notes_list = array();
+            if(!empty($this->id) && !$this->new_with_id) {
+                $note = new Note();
+                $where = "notes.parent_id='{$this->id}'";
+                $notes_list = $note->get_full_list("", $where, true);
+            }
+            $this->attachments = array_merge($this->attachments, $notes_list);
+        }
+        // cn: Bug 5995 - rudimentary error checking
+        $filesError = array(
+            0 => 'UPLOAD_ERR_OK - There is no error, the file uploaded with success.',
+            1 => 'UPLOAD_ERR_INI_SIZE - The uploaded file exceeds the upload_max_filesize directive in php.ini.',
+            2 => 'UPLOAD_ERR_FORM_SIZE - The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
+            3 => 'UPLOAD_ERR_PARTIAL - The uploaded file was only partially uploaded.',
+            4 => 'UPLOAD_ERR_NO_FILE - No file was uploaded.',
+            5 => 'UNKNOWN ERROR',
+            6 => 'UPLOAD_ERR_NO_TMP_DIR - Missing a temporary folder. Introduced in PHP 4.3.10 and PHP 5.0.3.',
+            7 => 'UPLOAD_ERR_CANT_WRITE - Failed to write file to disk. Introduced in PHP 5.1.0.',
+        );
+
+        for($i = 0; $i < $max_files_upload; $i++) {
+            // cn: Bug 5995 - rudimentary error checking
+            if (!isset($_FILES["email_attachment"]['name'][$i])) {
+                $GLOBALS['log']->debug("Email Attachment {$i} does not exist.");
+                continue;
+            }
+            if($_FILES['email_attachment']['error'][$i] != 0 && $_FILES['email_attachment']['error'][$i] != 4) {
+                $GLOBALS['log']->debug('Email Attachment could not be attach due to error: '.$filesError[$_FILES['email_attachment']['error'][$i]]);
+                continue;
+            }
+
+            $note = new Note();
+            $note->parent_id = $this->id;
+            $note->parent_type = $this->module_dir;
+            $upload_file = new UploadMultipleFiles('email_attachment', $i);
+
+            if(empty($upload_file)) {
+                continue;
+            }
+
+            if(isset($_FILES['email_attachment']['name'][$i]) && $upload_file->confirm_upload()) {
+                $note->filename = $upload_file->get_stored_file_name();
+                $note->file = $upload_file;
+                $note->name = $mod_strings['LBL_EMAIL_ATTACHMENT'].': '.$note->file->original_file_name;
+
+                $this->attachments[] = $note;
+            }
+        }
+
+        $this->saved_attachments = array();
+        foreach($this->attachments as $note) {
+            if(!empty($note->id)) {
+                array_push($this->saved_attachments, $note);
+                continue;
+            }
+            $note->parent_id = $this->id;
+            $note->parent_type = 'Emails';
+            $note->file_mime_type = $note->file->mime_type;
+            $note_id = $note->save();
+
+            $this->saved_attachments[] = $note;
+
+            $note->id = $note_id;
+            $note->file->final_move($note->id);
+        }
+        ////	END NEW ATTACHMENTS
+        ///////////////////////////////////////////////////////////////////////////
+
+        ///////////////////////////////////////////////////////////////////////////
+        ////	ATTACHMENTS FROM DOCUMENTS
+        for($i=0; $i< $max_files_upload; $i++) {
+            if(isset($_REQUEST['documentId'.$i]) && !empty($_REQUEST['documentId'.$i])) {
+                $doc = new Document();
+                $docRev = new DocumentRevision();
+                $docNote = new Note();
+                $noteFile = new UploadFile();
+
+                $doc->retrieve($_REQUEST['documentId'.$i]);
+                $docRev->retrieve($doc->document_revision_id);
+
+                $this->saved_attachments[] = $docRev;
+
+                // cn: bug 9723 - Emails with documents send GUID instead of Doc name
+                $docNote->name = $docRev->getDocumentRevisionNameForDisplay();
+                $docNote->filename = $docRev->filename;
+                $docNote->description = $doc->description;
+                $docNote->parent_id = $this->id;
+                $docNote->parent_type = 'Emails';
+                $docNote->file_mime_type = $docRev->file_mime_type;
+                $docId = $docNote = $docNote->save();
+
+                $noteFile->duplicate_file($docRev->id, $docId, $docRev->filename);
+            }
+        }
+
+        ////	END ATTACHMENTS FROM DOCUMENTS
+        ///////////////////////////////////////////////////////////////////////////
+
+        ///////////////////////////////////////////////////////////////////////////
+        ////	REMOVE ATTACHMENTS
+        if(isset($_REQUEST['remove_attachment']) && !empty($_REQUEST['remove_attachment'])) {
+            foreach($_REQUEST['remove_attachment'] as $noteId) {
+                $q = 'UPDATE notes SET deleted = 1 WHERE id = \''.$noteId.'\'';
+                $this->db->query($q);
+            }
+        }
+
+        //this will remove attachments that have been selected to be removed from drafts.
+        if(isset($_REQUEST['removeAttachment']) && !empty($_REQUEST['removeAttachment'])) {
+            $exRemoved = explode('::', $_REQUEST['removeAttachment']);
+            foreach($exRemoved as $noteId) {
+                $q = 'UPDATE notes SET deleted = 1 WHERE id = \''.$noteId.'\'';
+                $this->db->query($q);
+            }
+        }
+        ////	END REMOVE ATTACHMENTS
+        ///////////////////////////////////////////////////////////////////////////
+    }
+
 	/**
 	 * Determines if an email body (HTML or Plain) has a User signature already in the content
 	 * @param array Array of signatures
@@ -2144,7 +2366,7 @@ class Email extends SugarBean {
 			$mime_type = 'text/plain';
 			if($note->object_name == 'Note') {
 				if(!empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) { // brandy-new file upload/attachment
-					$file_location = "upload://$note->id";
+					$file_location = "file://".$note->file->temp_file_location;
 					$filename = $note->file->original_file_name;
 					$mime_type = $note->file->mime_type;
 				} else { // attachment coming from template/forward
@@ -2492,6 +2714,9 @@ class Email extends SugarBean {
 		$email_fields = $this->get_list_view_array();
 		$this->retrieveEmailText();
 		$email_fields['FROM_ADDR'] = $this->from_addr_name;
+		$email_fields['FROM_ADDR_NAME'] = $this->from_addr_name;
+		$email_fields['TO_ADDRS'] = $this->to_addrs;
+		$email_fields['TO_ADDRS_NAMES'] = $this->to_addrs_names;
 		$mod_strings = return_module_language($GLOBALS['current_language'], 'Emails'); // hard-coding for Home screen ListView
 
 		if($this->status != 'replied') {
@@ -2537,7 +2762,6 @@ class Email extends SugarBean {
 					$email_fields['CREATE_RELATED'] = $this->quickCreateForm();
 				break;
 			}
-
 		}
 
 		//BUG 17098 - MFH changed $this->from_addr to $this->to_addrs
@@ -2549,6 +2773,7 @@ class Email extends SugarBean {
     	if(isset($this->type_name))
 	      	$email_fields['TYPE_NAME'] = $this->type_name;
 
+		$email_fields['CATEGORY_ID'] = empty ($this->category_id) ? "" : $app_list_strings['email_category_dom'][$this->category_id];
 		return $email_fields;
 	}
 
@@ -3177,4 +3402,206 @@ eoq;
             unset($this->modifiedFieldDefs[$field]);
             }
     	}
+
+    /**
+     * Uses the $_REQUEST to populate the fields of an Email SugarBean.
+     *
+     * @param Email $bean
+     * @param array $request TODO: implement PSR 7 interface and refactor
+     * @return bool|Email|SugarBean
+     */
+    public function populateBeanFromRequest(Email $bean, $request) {
+        if (empty($bean)) {
+            $bean = BeanFactory::getBean('Emails');
+        }
+
+        if(isset($_REQUEST['id'])) {
+            $bean = $bean->retrieve($_REQUEST['id']);
+        }
+
+
+        foreach ($_REQUEST as $fieldName => $field) {
+            if (array_key_exists($fieldName, $bean->field_defs)) {
+                $bean->$fieldName = $field;
+            }
+        }
+
+
+        $old = array('&lt;', '&gt;');
+        $new = array('<', '>');
+
+        if (isset($request['from_addr']) && $request['from_addr'] != $request['from_addr_name'] . ' &lt;' . $request['from_addr_email'] . '&gt;') {
+            if (false === strpos($request['from_addr'], '&lt;')) { // we have an email only?
+                $bean->from_addr = $request['from_addr'];
+                $bean->from_name = '';
+                $bean->reply_to_addr = $bean->from_addr;
+                $bean->reply_to_name = $bean->from_name;
+            } else { // we have a compound string
+                $newFromAddr = str_replace($old, $new, $request['from_addr']);
+                $bean->from_addr = substr($newFromAddr, (1 + strpos($newFromAddr, '<')),
+                    (strpos($newFromAddr, '>') - strpos($newFromAddr, '<')) - 1);
+                $bean->from_name = substr($newFromAddr, 0, (strpos($newFromAddr, '<') - 1));
+                $bean->reply_to_addr = $bean->from_addr;
+                $bean->reply_to_name = $bean->from_name;
+            }
+        } elseif (!empty($request['from_addr_email']) && isset($request['from_addr_email'])) {
+            $bean->from_addr = $request['from_addr_email'];
+            $bean->from_name = $request['from_addr_name'];
+        } else {
+            $bean->from_addr = $bean->getSystemDefaultEmail();
+            $bean->reply_to_addr = $bean->from_addr['email'];
+            $bean->reply_to_name = $bean->from_addr['name'];
+        }
+
+
+        if (empty($bean->to_addrs)) {
+            if (!empty($request['to_addrs_names'])) {
+                $bean->to_addrs_names = htmlspecialchars_decode($request['to_addrs_names']);
+            }
+
+            if (!empty($bean->to_addrs_names)) {
+                $bean->to_addrs = htmlspecialchars_decode($bean->to_addrs_names);
+            }
+        }
+
+
+        $toEmailAddresses = preg_split('/[,;]/', $bean->to_addrs, null, PREG_SPLIT_NO_EMPTY);
+        $bean->to_addr_arr = array();
+        foreach ($toEmailAddresses as $ea => $address) {
+            preg_match(
+                '/([a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\ =\?\^\`\{\|\}\~\.\[\]\"\(\)\s]+)((<[a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~\.\[\]\"\(\)]+)(@)([a-zA-z0-9\-\.]+\>))$/',
+                $address,
+                $matches
+            );
+
+            // Strip out name from email address
+            // eg Angel Mcmahon <sales.vegan@example.it>
+            if (count($matches) > 3) {
+                $display = trim($matches[1]);
+                $email = $matches[2];
+            } else {
+                $email = $address;
+                $display = '';
+            }
+
+            $email = str_ireplace('<', '', $email);
+            $email = str_ireplace('>', '', $email);
+            $email = str_ireplace('&lt;', '', $email);
+            $email = str_ireplace('&rt;', '', $email);
+
+
+            $bean->to_addrs_arr[] = array(
+                'email' => $email,
+                'display' => $display,
+            );
+        }
+
+
+        if (empty($bean->cc_addrs)) {
+            if (!empty($request['cc_addrs_names'])) {
+                $bean->cc_addrs_names = htmlspecialchars_decode($request['cc_addrs_names']);
+            }
+
+            if (!empty($bean->cc_addrs_names)) {
+                $bean->cc_addrs = htmlspecialchars_decode($bean->cc_addrs_names);
+            }
+        }
+
+        $ccEmailAddresses = preg_split('/[,;]/', $bean->cc_addrs, null, PREG_SPLIT_NO_EMPTY);
+        $bean->cc_addrs_arr = array();
+        foreach ($ccEmailAddresses as $ea => $address) {
+            $email = '';
+            $display = '';
+            preg_match(
+                '/([a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\ =\?\^\`\{\|\}\~\.\[\]\"\(\)\s]+)((<[a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~\.\[\]\"\(\)]+)(@)([a-zA-z0-9\-\.]+\>))$/',
+                $address,
+                $matches
+            );
+
+            // Strip out name from email address
+            // eg Angel Mcmahon <sales.vegan@example.it>
+            if (count($matches) > 3) {
+                $display = trim($matches[1]);
+                $email = $matches[2];
+            } else {
+                $email = $address;
+                $display = '';
+            }
+
+            $email = str_ireplace('<', '', $email);
+            $email = str_ireplace('>', '', $email);
+            $email = str_ireplace('&lt;', '', $email);
+            $email = str_ireplace('&rt;', '', $email);
+
+
+            $bean->cc_addrs_arr[] = array(
+                'email' => $email,
+                'display' => $display,
+            );
+        }
+
+
+        if (empty($bean->bcc_addrs)) {
+            if (!empty($request['bcc_addrs_names'])) {
+                $bean->bcc_addrs_names = htmlspecialchars_decode($request['bcc_addrs_names']);
+            }
+
+            if (!empty($bean->bcc_addrs_names)) {
+                $bean->bcc_addrs = htmlspecialchars_decode($bean->bcc_addrs_names);
+            }
+        }
+
+        $bccEmailAddresses = preg_split('/[,;]/', $bean->bcc_addrs, null, PREG_SPLIT_NO_EMPTY);
+        $bean->bcc_addrs_arr = array();
+        foreach ($bccEmailAddresses as $ea => $address) {
+            $email = '';
+            $display = '';
+            preg_match(
+                '/([a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\ =\?\^\`\{\|\}\~\.\[\]\"\(\)\s]+)((<[a-zA-z0-9\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~\.\[\]\"\(\)]+)(@)([a-zA-z0-9\-\.]+\>))$/',
+                $address,
+                $matches
+            );
+
+            // Strip out name from email address
+            // eg Angel Mcmahon <sales.vegan@example.it>
+            if (count($matches) > 3) {
+                $display = trim($matches[1]);
+                $email = $matches[2];
+            } else {
+                $email = $address;
+                $display = '';
+            }
+
+            $email = str_ireplace('<', '', $email);
+            $email = str_ireplace('>', '', $email);
+            $email = str_ireplace('&lt;', '', $email);
+            $email = str_ireplace('&rt;', '', $email);
+
+
+            $bean->bcc_addrs_arr[] = array(
+                'email' => $email,
+                'display' => $display,
+            );
+        }
+
+        if (empty($bean->name)) {
+            if (!empty($request['name'])) {
+                $bean->name = $request['name'];
+            }
+        }
+
+        if (empty($bean->description_html)) {
+            if (!empty($request['description_html'])) {
+                $bean->description_html = $request['description_html'];
+            }
+        }
+
+        if (empty($bean->description)) {
+            if (!empty($request['description'])) {
+                $bean->description = $request['description'];
+            }
+        }
+
+        return $bean;
+    }
 } // end class def

@@ -146,12 +146,12 @@
 	</tr>
 {/if}
 	<tr>
-		<td width="25%" rowspan="2" {if !isset($includeContainerCSS) || $includeContainerCSS}class="tabDetailViewDL"{else}scope="row"{/if}><slot>
+		<td width="25%" rowspan="2" {if !isset($includeContainerCSS) || $includeContainerCSS}class="tabDetailViewDL"{else}scope="row"{/if}><span>
 			{$CHECKLIST}
-		</slot></td>
-		<td width="75%" {if !isset($includeContainerCSS) || $includeContainerCSS}class="tabDetailViewDF"{/if}><slot>
+		</span></td>
+		<td width="75%" {if !isset($includeContainerCSS) || $includeContainerCSS}class="tabDetailViewDF"{/if}><span>
 			{$UW_MAIN}&nbsp;
-		</slot></td>
+		</span></td>
 	</tr>
 {if $step == "upload"}
 	<tr>

@@ -47,18 +47,18 @@
 {PAGINATION}
 <!-- END: list_nav_row -->
 	<tr height="20">
-		<th scope="col"  scope="col"  width="40%"  nowrap><slot>{MOD.LBL_LIST_OPPORTUNITY_NAME}</slot></th>
-		<th scope="col"  width="25%"  nowrap><slot>{MOD.LBL_LIST_ACCOUNT_NAME}</slot></th>
-		<th scope="col"  width="15%"  nowrap><slot>{MOD.LBL_LIST_AMOUNT}</slot></th>
-		<th scope="col"  width="20%"  nowrap><slot>{MOD.LBL_LIST_DATE_CLOSED}</slot></th>
+		<th scope="col"  scope="col"  width="40%"  nowrap><span>{MOD.LBL_LIST_OPPORTUNITY_NAME}</span></th>
+		<th scope="col"  width="25%"  nowrap><span>{MOD.LBL_LIST_ACCOUNT_NAME}</span></th>
+		<th scope="col"  width="15%"  nowrap><span>{MOD.LBL_LIST_AMOUNT}</span></th>
+		<th scope="col"  width="20%"  nowrap><span>{MOD.LBL_LIST_DATE_CLOSED}</span></th>
 	  </tr>
 
 <!-- BEGIN: row -->
 <tr height="20"  class="{ROW_COLOR}S1">
-    			<td scope='row' valign=TOP><slot><{TAG.MAIN} href="{URL_PREFIX}index.php?action=DetailView&module=Opportunities&record={OPPORTUNITY.ID}"  >{OPPORTUNITY.NAME}</{TAG.MAIN}></slot></td>
-    			<td valign=TOP ><slot><{TAG.ACCOUNT} href="{URL_PREFIX}index.php?action=DetailView&module=Accounts&record={OPPORTUNITY.ACCOUNT_ID}"   >{OPPORTUNITY.ACCOUNT_NAME}</{TAG.ACCOUNT}></slot></td>
-    			<td valign=TOP><slot>{APP.LBL_CURRENCY_SYM}{OPPORTUNITY.AMOUNT}</slot></td>
-    			<td valign=TOP><slot>{OPPORTUNITY.DATE_CLOSED}</slot></td>
+    			<td scope='row' valign=TOP><span><{TAG.MAIN} href="{URL_PREFIX}index.php?action=DetailView&module=Opportunities&record={OPPORTUNITY.ID}"  >{OPPORTUNITY.NAME}</{TAG.MAIN}></span></td>
+    			<td valign=TOP ><span><{TAG.ACCOUNT} href="{URL_PREFIX}index.php?action=DetailView&module=Accounts&record={OPPORTUNITY.ACCOUNT_ID}"   >{OPPORTUNITY.ACCOUNT_NAME}</{TAG.ACCOUNT}></span></td>
+    			<td valign=TOP><span>{APP.LBL_CURRENCY_SYM}{OPPORTUNITY.AMOUNT}</span></td>
+    			<td valign=TOP><span>{OPPORTUNITY.DATE_CLOSED}</span></td>
 </tr>
 
 <!-- END: row -->

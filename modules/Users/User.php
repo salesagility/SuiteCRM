@@ -1233,45 +1233,17 @@ EOQ;
 		}
 
 		if($client == 'sugar') {
-			$email = '';
-			$to_addrs_ids = '';
-			$to_addrs_names = '';
-			$to_addrs_emails = '';
-
-			$fullName = !empty($focus->name) ? $focus->name : '';
-
-			if(empty($ret_module)) $ret_module = $focus->module_dir;
-			if(empty($ret_id)) $ret_id = $focus->id;
-			if($focus->object_name == 'Contact') {
-				$contact_id = $focus->id;
-				$to_addrs_ids = $focus->id;
-				// Bug #48555 Not User Name Format of User's locale.
-				$focus->_create_proper_name_field();
-			    $fullName = $focus->name;
-			    $to_addrs_names = $fullName;
-				$to_addrs_emails = $focus->email1;
-			}
-
-			$emailLinkUrl = 'contact_id='.$contact_id.
-				'&parent_type='.$focus->module_dir.
-				'&parent_id='.$focus->id.
-				'&parent_name='.urlencode($fullName).
-				'&to_addrs_ids='.$to_addrs_ids.
-				'&to_addrs_names='.urlencode($to_addrs_names).
-				'&to_addrs_emails='.urlencode($to_addrs_emails).
-				'&to_email_addrs='.urlencode($fullName . '&nbsp;&lt;' . $emailAddress . '&gt;').
-				'&return_module='.$ret_module.
-				'&return_action='.$ret_action.
-				'&return_id='.$ret_id;
-
-    		//Generate the compose package for the quick create options.
-    		//$json = getJSONobj();
-    		//$composeOptionsLink = $json->encode( array('composeOptionsLink' => $emailLinkUrl,'id' => $focus->id) );
 			require_once('modules/Emails/EmailUI.php');
-            $eUi = new EmailUI();
-            $j_quickComposeOptions = $eUi->generateComposePackageForQuickCreateFromComposeUrl($emailLinkUrl, true);
+            $emailUI = new EmailUI();
+            for($i = 0; $i < count($focus->emailAddress->addresses); $i++) {
+                $emailField = 'email'. (string)($i + 1);
+                if($focus->emailAddress->addresses[$i]['email_address'] === $emailAddress) {
+                    $focus->$emailField = $emailAddress;
+                    $emailLink = $emailUI->populateComposeViewFields($focus, $emailField);
+                    break;
+                }
+            }
 
-    		$emailLink = "<a href='javascript:void(0);' onclick='SUGAR.quickCompose.init($j_quickComposeOptions);' class='$class'>";
 
 		} else {
 			// straight mailto:
@@ -1294,8 +1266,11 @@ EOQ;
 	 * @param class
 	 */
 	function getEmailLink($attribute, &$focus, $contact_id='', $ret_module='', $ret_action='DetailView', $ret_id='', $class='') {
+        require_once('modules/Emails/EmailUI.php');
 	    $emailLink = '';
 		global $sugar_config;
+
+
 
 		if(!isset($sugar_config['email_default_client'])) {
 			$this->setDefaultsInConfig();
@@ -1310,47 +1285,8 @@ EOQ;
 		}
 
 		if($client == 'sugar') {
-			$email = '';
-			$to_addrs_ids = '';
-			$to_addrs_names = '';
-			$to_addrs_emails = '';
-
-            $fullName = !empty($focus->name) ? $focus->name : '';
-
-			if(!empty($focus->$attribute)) {
-				$email = $focus->$attribute;
-			}
-
-
-			if(empty($ret_module)) $ret_module = $focus->module_dir;
-			if(empty($ret_id)) $ret_id = $focus->id;
-			if($focus->object_name == 'Contact') {
-				// Bug #48555 Not User Name Format of User's locale.
-				$focus->_create_proper_name_field();
-			    $fullName = $focus->name;
-			    $contact_id = $focus->id;
-				$to_addrs_ids = $focus->id;
-				$to_addrs_names = $fullName;
-				$to_addrs_emails = $focus->email1;
-			}
-
-			$emailLinkUrl = 'contact_id='.$contact_id.
-				'&parent_type='.$focus->module_dir.
-				'&parent_id='.$focus->id.
-				'&parent_name='.urlencode($fullName).
-				'&to_addrs_ids='.$to_addrs_ids.
-				'&to_addrs_names='.urlencode($to_addrs_names).
-				'&to_addrs_emails='.urlencode($to_addrs_emails).
-				'&to_email_addrs='.urlencode($fullName . '&nbsp;&lt;' . $email . '&gt;').
-				'&return_module='.$ret_module.
-				'&return_action='.$ret_action.
-				'&return_id='.$ret_id;
-
-			//Generate the compose package for the quick create options.
-    		require_once('modules/Emails/EmailUI.php');
-            $eUi = new EmailUI();
-            $j_quickComposeOptions = $eUi->generateComposePackageForQuickCreateFromComposeUrl($emailLinkUrl, true);
-    		$emailLink = "<a href='javascript:void(0);' onclick='SUGAR.quickCompose.init($j_quickComposeOptions);' class='$class'>";
+            $emailUI = new EmailUI();
+            $emailLink = $emailUI->populateComposeViewFields($focus);
 
 		} else {
 			// straight mailto:
@@ -1854,4 +1790,13 @@ EOQ;
             return false;
         }
     }
+
+	public function getEditorType() {
+		$editorType = $this->getPreference('editor_type');
+		if(!$editorType) {
+			$editorType = 'mozaik';
+			$this->setPreference('editor_type', $editorType);
+		}
+		return $editorType;
+	}
 }

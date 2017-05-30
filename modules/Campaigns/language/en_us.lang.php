@@ -185,6 +185,7 @@ $mod_strings = array (
 	'LBL_TEMPLATE' => 'Email Template: ',
 	'LBL_TEMPLATE_FIELD' => 'Email Template: ',
 	'LBL_SUBJECT' => 'Subject: ',
+	'LBL_WIDTH' => 'Width Default:',
 	'LBL_CREATE_EMAIL_TEMPLATE'=> 'Create',
 	'LBL_MESSAGE_FOR' => 'Send This Message To:',
 	'LBL_FINISH' => 'Finish',

@@ -124,6 +124,7 @@ $app_list_strings = array(
             'Notes' => 'Note',
             'Calls' => 'Call',
             'Emails' => 'Email',
+            'EmailTemplates' => 'Email Template',
             'Meetings' => 'Meeting',
             'Tasks' => 'Task',
             'Calendar' => 'Calendar',
@@ -746,6 +747,12 @@ $app_list_strings = array(
     'dom_email_link_type' => array('sugar' => 'SuiteCRM Email Client',
         'mailto' => 'External Email Client', ),
 
+    'dom_editor_type' => array(
+        'none' => 'Direct HTML',
+        'tinymce' => 'Tiny MCE',
+        'mozaik' => 'Mozaik',
+    ),
+
     'dom_email_editor_option' => array('' => 'Default Email Format',
         'html' => 'HTML Email',
         'plain' => 'Plain Text Email', ),
@@ -781,6 +788,12 @@ $app_list_strings = array(
             'Knowledege Base' => 'Knowledge Base',
             'Sales' => 'Sales',
         ),
+
+    'email_category_dom' => array(
+        '' => '',
+        'Archived' => 'Archived',
+        // TODO: add more categories here...
+    ),
 
     'document_subcategory_dom' => array(
             '' => '',
@@ -1156,6 +1169,9 @@ $app_strings = array(
     'LBL_EMAIL_CONFIRM_DELETE' => 'Remove these entries from your Address Book?',
     'LBL_EMAIL_CONFIRM_DELETE_SIGNATURE' => 'Are you sure you want to delete this signature?',
 
+    'LBL_EMAIL_SENT_SUCCESS' => 'Email sent',
+
+    'LBL_EMAIL_CREATE_NEW' => '--Create On Save--',
     'LBL_EMAIL_MULT_GROUP_FOLDER_ACCOUNTS' => 'Multiple',
     'LBL_EMAIL_MULT_GROUP_FOLDER_ACCOUNTS_EMPTY' => 'Empty',
     'LBL_EMAIL_DATE_SENT_BY_SENDER' => 'Date Sent by Sender',
@@ -1214,6 +1230,8 @@ $app_strings = array(
     'LBL_EMAIL_ERROR_TRASH_FOLDER' => 'Trash Folder is required.',
     'LBL_EMAIL_ERROR_VIEW_RAW_SOURCE' => 'This information is not available',
     'LBL_EMAIL_ERROR_NO_OUTBOUND' => 'No outgoing mail server specified.',
+    'LBL_EMAIL_ERROR_SENDING' => 'Error Sending Email. Please contact your administrator for assistance.',
+    'LBL_EMAIL_ERROR_SAVING' => 'Error Saving Email. Please contact your administrator for assistance.',
     'LBL_EMAIL_FOLDERS' => SugarThemeRegistry::current()->getImage('icon_email_folder', 'align=absmiddle border=0', null, null, '.gif', '').'Folders',
     'LBL_EMAIL_FOLDERS_SHORT' => SugarThemeRegistry::current()->getImage('icon_email_folder', 'align=absmiddle border=0', null, null, '.gif', ''),
     'LBL_EMAIL_FOLDERS_ACTIONS' => 'Move To',
@@ -1340,6 +1358,8 @@ $app_strings = array(
     'LBL_EMAIL_SAVE' => 'Save',
     'LBL_EMAIL_SAVE_AND_REPLY' => 'Save & Reply',
     'LBL_EMAIL_SAVE_DRAFT' => 'Save Draft',
+    'LBL_EMAIL_DRAFT_SAVED' => 'Draft has been saved',
+    'LBL_EMAIL_DRAFT_CONFIRM_DISCARD' => 'Please select OK confirm that you wish to discard the email.',
 
     'LBL_EMAIL_SEARCHING' => 'Conducting Search',
     'LBL_EMAIL_SEARCH' => SugarThemeRegistry::current()->getImage('Search', 'align=absmiddle border=0', null, null, '.gif', ''),
@@ -1393,7 +1413,7 @@ $app_strings = array(
     'LBL_EMAIL_SETTINGS_REQUIRE_REFRESH' => 'Select the number of emails per page in the Inbox. This setting might require a page refresh in order to take effect.',
     'LBL_EMAIL_SETTINGS_RETRIEVING_ACCOUNT' => 'Retrieving Mail Account',
     'LBL_EMAIL_SETTINGS_RULES' => 'Rules',
-    'LBL_EMAIL_SETTINGS_SAVED' => 'The settings have been saved.\n\nYou must reload the page for the new settings to take effect.',
+    'LBL_EMAIL_SETTINGS_SAVED' => 'The settings have been saved.',
     'LBL_EMAIL_SETTINGS_SEND_EMAIL_AS' => 'Send Plain Text Emails Only',
     'LBL_EMAIL_SETTINGS_SHOW_IN_FOLDERS' => 'Active',
     'LBL_EMAIL_SETTINGS_SHOW_NUM_IN_LIST' => 'Emails per Page',
@@ -2299,6 +2319,8 @@ $app_strings = array(
 
     'LBL_FILTER_HEADER_TITLE' => 'Filter',
 
+    'LBL_CATEGORY' => 'Category',
+    'LBL_LIST_CATEGORY' => 'Category',
 );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
@@ -3399,6 +3421,8 @@ $app_list_strings['duration_unit_dom']['Days'] = 'Days';
 $app_list_strings['duration_unit_dom']['Hours'] = 'Hours';
 $app_strings['LBL_GANTT_BUTTON_LABEL'] = 'View Gantt';
 $app_strings['LBL_GANTT_BUTTON_TITLE'] = 'View Gantt';
+$app_strings['LBL_DETAIL_BUTTON_LABEL'] = 'View Detail';
+$app_strings['LBL_DETAIL_BUTTON_TITLE'] = 'View Detail';
 $app_strings['LBL_CREATE_PROJECT'] = 'Create Project';
 
 //gmaps
