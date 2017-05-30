@@ -4828,12 +4828,12 @@ class InboundEmail extends SugarBean
 
 
     /**
-     * Imports A Single Emai
+     * Imports A Single Email
      * @param $msgNo
      * @param $uid
      * @param bool $forDisplay
      * @param bool $clean_email
-     * @return
+     * @return boolean
      */
     public function returnImportedEmail($msgNo, $uid, $forDisplay = false, $clean_email = true)
     {
@@ -5124,6 +5124,7 @@ class InboundEmail extends SugarBean
      * @param string $msgNo - imap mesgno
      * @param string $uid - imap uid
      * @return Email|boolean - false on error | a non imported email
+     * @throws Exception
      */
     public function returnNonImportedEmail($msgNo, $uid)
     {
@@ -5134,6 +5135,8 @@ class InboundEmail extends SugarBean
 
 
             $this->connectMailserver();
+
+
             $header = imap_fetch_overview($this->conn, $uid, FT_UID);
             $fullHeader = imap_fetchheader($this->conn, $uid, FT_UID);
             $headerByMsgNo = imap_headerinfo($this->conn, $msgNo);
@@ -5145,7 +5148,7 @@ class InboundEmail extends SugarBean
             if(empty($email->date_entered)) {
 
                 // find if string has (UTC) in timezone
-                $pattern = '/([(])([A-Z])+([)])/i';
+                $pattern = '/([\w-+\/]+)/i';
                 $timezoneTextFound = preg_match($pattern,  $header[0]->date);
 
                 $dateTimeFormat = 'D, d M Y H:i:s O *';
@@ -5169,6 +5172,11 @@ class InboundEmail extends SugarBean
                     $email->created_by_name = $systemUser->name;
                     $email->modified_user_id = $systemUser->id;
                     $email->modified_by_name = $systemUser->name;
+                } else {
+                    throw new Exception(
+                        'DateTime::createFromFormat ('.$dateTimeFormat.','.$header[0]->date.'): '.
+                        'expected DateTime but it returned FALSE or empty.'
+                    );
                 }
             }
 
@@ -5229,8 +5237,6 @@ class InboundEmail extends SugarBean
         } else {
             return false;
         }
-
-
     }
 
     /**
