@@ -28,10 +28,8 @@ class OldFeatureTest extends PHPUnit_Framework_TestCase
     /**
      * test old feature
      */
-    public function test_old_function()
+    public function test_old_function_valid_cases()
     {
-        //
-        // good cases
         $expected = array(
             'ID' => '1',
             'NAME' => 'Daniel',
@@ -57,9 +55,10 @@ class OldFeatureTest extends PHPUnit_Framework_TestCase
         );
         $this->assertSame($expected, $actual);
         SugarErrorHandler::clearErrors();
+    }
 
-        //
-        // bad cases
+    public function test_old_function_invalid_cases()
+    {
         self::$class->old_function(1);
         $this->assertTrue(
             SugarErrorHandler::hasThrownError(new SugarInvalidTypeException()),
@@ -67,16 +66,12 @@ class OldFeatureTest extends PHPUnit_Framework_TestCase
         );
         SugarErrorHandler::clearErrors();
 
-        //
-        // empty cases
         self::$class->old_function(null);
         $this->assertTrue(
             SugarErrorHandler::hasThrownError(new SugarEmptyValueException()),
             SugarErrorHandler::getStackTraceMessage()
         );
         SugarErrorHandler::clearErrors();
-
     }
-
     // test other methods
 }
