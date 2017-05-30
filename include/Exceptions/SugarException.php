@@ -26,4 +26,9 @@ class SugarException extends Exception
         $this->userMessage = $app_strings['ERR_AJAX_LOAD'];
         parent::__construct($this->message, $code, $previous);
     }
+
+    protected function getUserMessage()
+    {
+        return $this->userMessage;
+    }
 }
