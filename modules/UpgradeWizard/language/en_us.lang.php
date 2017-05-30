@@ -260,6 +260,12 @@ $mod_strings = array(
 	//adding the string used in tracker. copying from homepage
 	'LBL_CURRENT_PHP_VERSION' => '(Your current php version is ',
 	'LBL_RECOMMENDED_PHP_VERSION' => '. Recommended php version is 5.2.2 or above)',
+
+	'LBL_HOME_PAGE_4_NAME' => 'Tracker',
+	'LBL_CURRENT_PHP_VERSION' => 'Your current php version is: ',
+	'LBL_RECOMMENDED_PHP_VERSION_1' => 'The recommended php version is ',
+	'LBL_RECOMMENDED_PHP_VERSION_2' => ' or above.',
+  
 	'LBL_MODULE_NAME' => 'UpgradeWizard',
 	'LBL_UPLOAD_SUCCESS' => 'Upgrade package successfully uploaded. Click Next to perform a final check.',
 	'LBL_UW_TITLE_LAYOUTS' => 'Confirm Layouts',
