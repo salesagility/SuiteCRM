@@ -28,7 +28,7 @@ class OldFeatureTest extends PHPUnit_Framework_TestCase
     /**
      * test old feature
      */
-    public function test_old_feature()
+    public function test_old_function()
     {
         //
         // good cases
