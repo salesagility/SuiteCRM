@@ -125,6 +125,24 @@ $dictionary['Email'] = array(
             'comment' => 'Record deletion indicator',
             'inline_edit' => false,
         ),
+        'orphaned' => array(
+            'name' => 'orphaned',
+            'vname' => 'LBL_ORPHANED',
+            'type' => 'bool',
+            'required' => false,
+            'reportable' => false,
+            'comment' => 'Emails which exists in the SuiteCRM but have been deleted from the email server',
+            'inline_edit' => false,
+        ),
+        'last_synced' => array(
+            'name' => 'last_synced',
+            'vname' => 'LBL_LAST_SYNCED',
+            'type' => 'datetime',
+            'comment' => 'The last date and time the email was synced with the server',
+            'inline_edit' => false,
+            'required' => false,
+            'reportable' => false,
+        ),
         /**
          * DEPRECATED FOR 5.0
          * 'from_addr' => array (
@@ -158,14 +176,13 @@ $dictionary['Email'] = array(
          * 'comment' => 'Email address(es) of person(s) to receive a blind carbon copy of the email',
          * ),
          */
-
         'from_addr_name' => array(
             'name' => 'from_addr_name',
             'type' => 'varchar',
-            'vname' => 'from_addr_name',
             'source' => 'non-db',
             'inline_edit' => false,
         ),
+
         'reply_to_addr' => array(
             'name' => 'reply_to_addr',
             'type' => 'varchar',
@@ -173,6 +190,7 @@ $dictionary['Email'] = array(
             'source' => 'non-db',
             'inline_edit' => false,
         ),
+
         'to_addrs_names' => array(
             'name' => 'to_addrs_names',
             'type' => 'varchar',
@@ -194,6 +212,14 @@ $dictionary['Email'] = array(
             'source' => 'non-db',
             'inline_edit' => false,
         ),
+        'imap_keywords' => array(
+            'name' => 'imap_keywords',
+            'type' => 'varchar',
+            'vname' => 'LBL_IMAP_KEYWORDS',
+            'source' => 'non-db',
+            'inline_edit' => false,
+        ),
+
         'raw_source' => array(
             'name' => 'raw_source',
             'type' => 'varchar',

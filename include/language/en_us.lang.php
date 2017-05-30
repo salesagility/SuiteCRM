@@ -271,7 +271,7 @@ $app_list_strings = array(
             'Qualification' => 'Qualification',
             'Needs Analysis' => 'Needs Analysis',
             'Value Proposition' => 'Value Proposition',
-            'Id. Decision Makers' => 'Id. Decision Makers',
+            'Id. Decision Makers' => 'Identifying Decision Makers',
             'Perception Analysis' => 'Perception Analysis',
             'Proposal/Price Quote' => 'Proposal/Price Quote',
             'Negotiation/Review' => 'Negotiation/Review',
@@ -1201,7 +1201,7 @@ $app_strings = array(
     'LBL_EMAIL_REPORTS_TITLE' => 'Reports',
     'LBL_EMAIL_ADDRESS_BOOK_TITLE_ICON' => SugarThemeRegistry::current()->getImage('icon_email_addressbook', '', null, null, '.gif', 'Address Book').' Address Book',
     'LBL_EMAIL_ADDRESS_BOOK_TITLE_ICON_SHORT' => SugarThemeRegistry::current()->getImage('icon_email_addressbook', 'align=absmiddle border=0', 14, 14, '.gif', ''),
-    'LBL_EMAIL_REMOVE_SMTP_WARNING' => 'Warning! The outbound account you are trying to delete is associated to an existing inbound account.  Are you sure you want to continue?',
+    'LBL_EMAIL_REMOVE_SMTP_WARNING' => 'Warning! The outbound account you are trying to delete is associated to an existing inbound account. Are you sure you want to continue?',
     'LBL_EMAIL_ADDRESSES' => 'Email',
     'LBL_EMAIL_ADDRESS_PRIMARY' => 'Email Address',
     'LBL_EMAIL_ADDRESSES_TITLE' => 'Email Addresses',
@@ -1229,8 +1229,8 @@ $app_strings = array(
     'LBL_EMAIL_COMPOSE' => 'Email',
     'LBL_EMAIL_COMPOSE_ERR_NO_RECIPIENTS' => 'Please enter recipient(s) for this email.',
     'LBL_EMAIL_COMPOSE_LINK_TO' => 'Associate with',
-    'LBL_EMAIL_COMPOSE_NO_BODY' => 'The body of this email is empty.  Send anyway?',
-    'LBL_EMAIL_COMPOSE_NO_SUBJECT' => 'This email has no subject.  Send anyway?',
+    'LBL_EMAIL_COMPOSE_NO_BODY' => 'The body of this email is empty. Send anyway?',
+    'LBL_EMAIL_COMPOSE_NO_SUBJECT' => 'This email has no subject. Send anyway?',
     'LBL_EMAIL_COMPOSE_NO_SUBJECT_LITERAL' => '(no subject)',
     'LBL_EMAIL_COMPOSE_READ' => 'Read & Compose Email',
     'LBL_EMAIL_COMPOSE_SEND_FROM' => 'Send From Mail Account',
@@ -1240,6 +1240,8 @@ $app_strings = array(
     'LBL_EMAIL_CONFIRM_CLOSE' => 'Discard this email?',
     'LBL_EMAIL_CONFIRM_DELETE' => 'Remove these entries from your Address Book?',
     'LBL_EMAIL_CONFIRM_DELETE_SIGNATURE' => 'Are you sure you want to delete this signature?',
+
+    'LBL_EMAIL_SENT_SUCCESS' => 'Email sent',
 
     'LBL_EMAIL_CREATE_NEW' => '--Create On Save--',
     'LBL_EMAIL_MULT_GROUP_FOLDER_ACCOUNTS' => 'Multiple',
@@ -1271,7 +1273,7 @@ $app_strings = array(
 
     'LBL_EMAIL_ERROR_ADD_GROUP_FOLDER' => 'Folder name must be unique and not empty. Please try again.',
     'LBL_EMAIL_ERROR_DELETE_GROUP_FOLDER' => 'Cannot delete a folder. Either the folder or its children has emails or a mail box associated to it.',
-    'LBL_EMAIL_ERROR_CANNOT_FIND_NODE' => 'Cannot determine the intended folder from context.  Try again.',
+    'LBL_EMAIL_ERROR_CANNOT_FIND_NODE' => 'Cannot determine the intended folder from context. Try again.',
     'LBL_EMAIL_ERROR_CHECK_IE_SETTINGS' => 'Please check your settings.',
     'LBL_EMAIL_ERROR_CONTACT_NAME' => 'Please make sure you enter a last name.',
     'LBL_EMAIL_ERROR_DESC' => 'Errors were detected: ',
@@ -1286,7 +1288,7 @@ $app_strings = array(
     'LBL_EMAIL_ERROR_MOVE' => 'Moving email between servers and/or mail accounts is not supported at this time.',
     'LBL_EMAIL_ERROR_MOVE_TITLE' => 'Move Error',
     'LBL_EMAIL_ERROR_NAME' => 'A name is required.',
-    'LBL_EMAIL_ERROR_FROM_ADDRESS' => 'From Address is required.  Please enter a valid email address.',
+    'LBL_EMAIL_ERROR_FROM_ADDRESS' => 'From Address is required. Please enter a valid email address.',
     'LBL_EMAIL_ERROR_NO_FILE' => 'Please provide a file.',
     'LBL_EMAIL_ERROR_NO_IMAP_FOLDER_RENAME' => 'IMAP folder renaming is not supported at this time.',
     'LBL_EMAIL_ERROR_SERVER' => 'A mail server address is required.',
@@ -1300,6 +1302,8 @@ $app_strings = array(
     'LBL_EMAIL_ERROR_TRASH_FOLDER' => 'Trash Folder is required.',
     'LBL_EMAIL_ERROR_VIEW_RAW_SOURCE' => 'This information is not available',
     'LBL_EMAIL_ERROR_NO_OUTBOUND' => 'No outgoing mail server specified.',
+    'LBL_EMAIL_ERROR_SENDING' => 'Error Sending Email. Please contact your administrator for assistance.',
+    'LBL_EMAIL_ERROR_SAVING' => 'Error Saving Email. Please contact your administrator for assistance.',
     'LBL_EMAIL_FOLDERS' => SugarThemeRegistry::current()->getImage('icon_email_folder', 'align=absmiddle border=0', null, null, '.gif', '').'Folders',
     'LBL_EMAIL_FOLDERS_SHORT' => SugarThemeRegistry::current()->getImage('icon_email_folder', 'align=absmiddle border=0', null, null, '.gif', ''),
     'LBL_EMAIL_FOLDERS_ACTIONS' => 'Move To',
@@ -1426,6 +1430,8 @@ $app_strings = array(
     'LBL_EMAIL_SAVE' => 'Save',
     'LBL_EMAIL_SAVE_AND_REPLY' => 'Save & Reply',
     'LBL_EMAIL_SAVE_DRAFT' => 'Save Draft',
+    'LBL_EMAIL_DRAFT_SAVED' => 'Draft has been saved',
+    'LBL_EMAIL_DRAFT_CONFIRM_DISCARD' => 'Please select OK confirm that you wish to discard the email.',
 
     'LBL_EMAIL_SEARCHING' => 'Conducting Search',
     'LBL_EMAIL_SEARCH' => SugarThemeRegistry::current()->getImage('Search', 'align=absmiddle border=0', null, null, '.gif', ''),
@@ -1490,7 +1496,7 @@ $app_strings = array(
     'LBL_EMAIL_SETTINGS_TOGGLE_ADV' => 'Show Advanced',
     'LBL_EMAIL_SETTINGS_USER_FOLDERS' => 'Available User Folders',
     'LBL_EMAIL_ERROR_PREPEND' => 'Error:',
-    'LBL_EMAIL_INVALID_PERSONAL_OUTBOUND' => 'The outbound mail server selected for the mail account you are using is invalid.  Check the settings or select a different mail server for the mail account.',
+    'LBL_EMAIL_INVALID_PERSONAL_OUTBOUND' => 'The outbound mail server selected for the mail account you are using is invalid. Check the settings or select a different mail server for the mail account.',
     'LBL_EMAIL_INVALID_SYSTEM_OUTBOUND' => 'An outgoing mail server is not configured to send emails. Please configure an outgoing mail server or select an outgoing mail server for the mail account that you are using in Settings >> Mail Account.',
     'LBL_EMAIL_SHOW_READ' => 'Show All',
     'LBL_EMAIL_SHOW_UNREAD_ONLY' => 'Show Unread Only',
@@ -1569,18 +1575,18 @@ $app_strings = array(
     'ERR_NO_SUCH_FILE' => 'File does not exist on system',
     'ERR_NO_SINGLE_QUOTE' => 'Cannot use the single quotation mark for ',
     'ERR_NOTHING_SELECTED' => 'Please make a selection before proceeding.',
-    'ERR_OPPORTUNITY_NAME_DUPE' => 'An opportunity with the name %s already exists.  Please enter another name below.',
-    'ERR_OPPORTUNITY_NAME_MISSING' => 'An opportunity name was not entered.  Please enter an opportunity name below.',
-    'ERR_POTENTIAL_SEGFAULT' => 'A potential Apache segmentation fault was detected.  Please notify your system administrator to confirm this problem and have her/him report it to SuiteCRM.',
+    'ERR_OPPORTUNITY_NAME_DUPE' => 'An opportunity with the name %s already exists. Please enter another name below.',
+    'ERR_OPPORTUNITY_NAME_MISSING' => 'An opportunity name was not entered. Please enter an opportunity name below.',
+    'ERR_POTENTIAL_SEGFAULT' => 'A potential Apache segmentation fault was detected. Please notify your system administrator to confirm this problem and have her/him report it to SuiteCRM.',
     'ERR_SELF_REPORTING' => 'User cannot report to him or herself.',
-    'ERR_SINGLE_QUOTE' => 'Using the single quote is not supported for this field.  Please change the value.',
+    'ERR_SINGLE_QUOTE' => 'Using the single quote is not supported for this field. Please change the value.',
     'ERR_SQS_NO_MATCH_FIELD' => 'No match for field: ',
     'ERR_SQS_NO_MATCH' => 'No Match',
     'ERR_ADDRESS_KEY_NOT_SPECIFIED' => 'Please specify \'key\' index in displayParams attribute for the Meta-Data definition',
     'ERR_EXISTING_PORTAL_USERNAME' => 'Error: The Portal Name is already assigned to another contact.',
     'ERR_COMPATIBLE_PRECISION_VALUE' => 'Field value is not compatible with precision value',
     'ERR_EXTERNAL_API_SAVE_FAIL' => 'An error occurred when trying to save to the external account.',
-    'ERR_EXTERNAL_API_UPLOAD_FAIL' => 'An error occurred while uploading.  Please ensure the file you are uploading is not empty.',
+    'ERR_EXTERNAL_API_UPLOAD_FAIL' => 'An error occurred while uploading. Please ensure the file you are uploading is not empty.',
     'ERR_NO_DB' => 'Could not connect to the database. Please refer to suitecrm.log for details.',
     'ERR_DB_FAIL' => 'Database failure. Please refer to suitecrm.log for details.',
     'ERR_EXTERNAL_API_403' => 'Permission Denied. File type is not supported.',
@@ -1676,7 +1682,7 @@ $app_strings = array(
     'LBL_DONE_BUTTON_KEY' => 'X',
     'LBL_DONE_BUTTON_LABEL' => 'Done',
     'LBL_DONE_BUTTON_TITLE' => 'Done',
-    'LBL_DST_NEEDS_FIXIN' => 'The application requires a Daylight Saving Time fix to be applied.  Please go to the <a href="index.php?module=Administration&action=DstFix">Repair</a> link in the Admin console and apply the Daylight Saving Time fix.',
+    'LBL_DST_NEEDS_FIXIN' => 'The application requires a Daylight Saving Time fix to be applied. Please go to the <a href="index.php?module=Administration&action=DstFix">Repair</a> link in the Admin console and apply the Daylight Saving Time fix.',
     'LBL_EDIT_AS_NEW_BUTTON_LABEL' => 'Edit As New',
     'LBL_EDIT_AS_NEW_BUTTON_TITLE' => 'Edit As New',
     'LBL_FAVORITES' => 'Favorites',
@@ -1934,7 +1940,7 @@ $app_strings = array(
 
     /* The following version of LBL_SUGAR_COPYRIGHT is intended for Sugar Open Source only. */
 
-    'LBL_SUGAR_COPYRIGHT' => '&copy; 2004-2013 SugarCRM Inc. The Program is provided AS IS, without warranty.  Licensed under <a href="LICENSE.txt" target="_blank" class="copyRightLink">AGPLv3</a>.<br />SugarCRM is a trademark of SugarCRM, Inc. All other company and product names may be trademarks of the respective companies with which they are associated.',
+    'LBL_SUGAR_COPYRIGHT' => '&copy; 2004-2013 SugarCRM Inc. The Program is provided AS IS, without warranty. Licensed under <a href="LICENSE.txt" target="_blank" class="copyRightLink">AGPLv3</a>.<br />SugarCRM is a trademark of SugarCRM, Inc. All other company and product names may be trademarks of the respective companies with which they are associated.',
 
     // The following version of LBL_SUGAR_COPYRIGHT is for Professional and Enterprise editions.
 
@@ -2039,7 +2045,7 @@ $app_strings = array(
     'LOGIN_LOGO_ERROR' => 'Please replace the SuiteCRM logos.',
     'WARN_ONLY_ADMINS' => 'Only admins may log in.',
     'WARN_UNSAVED_CHANGES' => 'You are about to leave this record without saving any changes you may have made to the record. Are you sure you want to navigate away from this record?',
-    'ERROR_NO_RECORD' => 'Error retrieving record.  This record may be deleted or you may not be authorized to view it.',
+    'ERROR_NO_RECORD' => 'Error retrieving record. This record may be deleted or you may not be authorized to view it.',
     'WARN_BROWSER_VERSION_WARNING' => '<b>Warning:</b> Your browser version is no longer supported or you are using an unsupported browser.<p></p>The following browser versions are recommended:<p></p><ul><li>Internet Explorer 10 (compatibility view not supported)<li>Firefox 32.0<li>Safari 5.1<li>Chrome 37</ul>',
     'WARN_BROWSER_IE_COMPATIBILITY_MODE_WARNING' => '<b>Warning:</b> Your browser is in IE compatibility view which is not supported.',
     'ERROR_TYPE_NOT_VALID' => 'Error. This type is not valid.',
@@ -2137,7 +2143,7 @@ $app_strings = array(
 
     //Meta-Data framework
     'ERR_MISSING_VARDEF_NAME' => 'Warning: field [[field]] does not have a mapped entry in [moduleDir] vardefs.php file',
-    'ERR_CANNOT_CREATE_METADATA_FILE' => 'Error: File [[file]] is missing.  Unable to create because no corresponding HTML file was found.',
+    'ERR_CANNOT_CREATE_METADATA_FILE' => 'Error: File [[file]] is missing. Unable to create because no corresponding HTML file was found.',
     'ERR_CANNOT_FIND_MODULE' => 'Error: Module [module] does not exist.',
     'LBL_ALT_ADDRESS' => 'Other Address:',
     'ERR_SMARTY_UNEQUAL_RELATED_FIELD_PARAMETERS' => 'Error: There are an unequal number of arguments for the \'key\' and \'copy\' elements in the displayParams array.',
@@ -2200,7 +2206,7 @@ $app_strings = array(
     'LBL_COPY_ADDRESS_FROM_LEFT' => 'Copy address from left:',
     'LBL_SAVE_AND_CONTINUE' => 'Save and Continue',
 
-    'LBL_SEARCH_HELP_TEXT' => '<p><br /><strong>Multiselect controls</strong></p><ul><li>Click on the values to select an attribute.</li><li>Ctrl-click&nbsp;to&nbsp;select multiple. Mac users use CMD-click.</li><li>To select all values between two attributes,&nbsp; click first value&nbsp;and then shift-click last value.</li></ul><p><strong>Advanced Search & Layout Options</strong><br><br>Using the <b>Saved Search & Layout</b> option, you can save a set of search parameters and/or a custom List View layout in order to quickly obtain the desired search results in the future. You can save an unlimited number of custom searches and layouts. All saved searches appear by name in the Saved Searches list, with the last loaded saved search appearing at the top of the list.<br><br>To customize the List View layout, use the Hide Columns and Display Columns boxes to select which fields to display in the search results. For example, you can view or hide details such as the record name, and assigned user, and assigned team in the search results. To add a column to List View, select the field from the Hide Columns list and use the left arrow to move it to the Display Columns list. To remove a column from List View, select it from the Display Columns list and use the right arrow to move it to the Hide Columns list.<br><br>If you save layout settings, you will be able to load them at any time to view the search results in the custom layout.<br><br>To save and update a search and/or layout:<ol><li>Enter a name for the search results in the <b>Save this search as</b> field and click <b>Save</b>.The name now displays in the Saved Searches list adjacent to the <b>Clear</b> button.</li><li>To view a saved search, select it from the Saved Searches list. The search results are displayed in the List View.</li><li>To update the properties of a saved search, select the saved search from the list, enter the new search criteria and/or layout options in the Advanced Search area, and click <b>Update</b> next to <b>Modify Current Search</b>.</li><li>To delete a saved search, select it in the Saved Searches list, click <b>Delete</b> next to <b>Modify Current Search</b>, and then click <b>OK</b> to confirm the deletion.</li></ol><p><strong>Tips</strong><br><br>By using the % as a wildcard operator you can make your search more broad.  For example instead of just searching for results that equal "Apples" you could change your search to "Apples%" which would match all results that start with the word Apples but could contain other characters as well.</p>',
+    'LBL_SEARCH_HELP_TEXT' => '<p><br /><strong>Multiselect controls</strong></p><ul><li>Click on the values to select an attribute.</li><li>Ctrl-click&nbsp;to&nbsp;select multiple. Mac users use CMD-click.</li><li>To select all values between two attributes,&nbsp; click first value&nbsp;and then shift-click last value.</li></ul><p><strong>Advanced Search & Layout Options</strong><br><br>Using the <b>Saved Search & Layout</b> option, you can save a set of search parameters and/or a custom List View layout in order to quickly obtain the desired search results in the future. You can save an unlimited number of custom searches and layouts. All saved searches appear by name in the Saved Searches list, with the last loaded saved search appearing at the top of the list.<br><br>To customize the List View layout, use the Hide Columns and Display Columns boxes to select which fields to display in the search results. For example, you can view or hide details such as the record name, and assigned user, and assigned team in the search results. To add a column to List View, select the field from the Hide Columns list and use the left arrow to move it to the Display Columns list. To remove a column from List View, select it from the Display Columns list and use the right arrow to move it to the Hide Columns list.<br><br>If you save layout settings, you will be able to load them at any time to view the search results in the custom layout.<br><br>To save and update a search and/or layout:<ol><li>Enter a name for the search results in the <b>Save this search as</b> field and click <b>Save</b>.The name now displays in the Saved Searches list adjacent to the <b>Clear</b> button.</li><li>To view a saved search, select it from the Saved Searches list. The search results are displayed in the List View.</li><li>To update the properties of a saved search, select the saved search from the list, enter the new search criteria and/or layout options in the Advanced Search area, and click <b>Update</b> next to <b>Modify Current Search</b>.</li><li>To delete a saved search, select it in the Saved Searches list, click <b>Delete</b> next to <b>Modify Current Search</b>, and then click <b>OK</b> to confirm the deletion.</li></ol><p><strong>Tips</strong><br><br>By using the % as a wildcard operator you can make your search more broad. For example instead of just searching for results that equal "Apples" you could change your search to "Apples%" which would match all results that start with the word Apples but could contain other characters as well.</p>',
 
     //resource management
     'ERR_QUERY_LIMIT' => 'Error: Query limit of $limit reached for $module module.',
@@ -2261,7 +2267,7 @@ $app_strings = array(
     //Connector
     'ERR_CONNECTOR_FILL_BEANS_SIZE_MISMATCH' => 'Error: The Array count of the bean parameter does not match the Array count of the results.',
     'ERR_MISSING_MAPPING_ENTRY_FORM_MODULE' => 'Error: Missing mapping entry for module.',
-    'ERROR_UNABLE_TO_RETRIEVE_DATA' => 'Error: Unable to retrieve data for {0} Connector.  The service may currently be inaccessible or the configuration settings may be invalid.  Connector error message: ({1}).',
+    'ERROR_UNABLE_TO_RETRIEVE_DATA' => 'Error: Unable to retrieve data for {0} Connector. The service may currently be inaccessible or the configuration settings may be invalid. Connector error message: ({1}).',
     'LBL_MERGE_CONNECTORS' => 'Get Data',
     'LBL_MERGE_CONNECTORS_BUTTON_KEY' => '[D]',
     'LBL_REMOVE_MODULE_ENTRY' => 'Are you sure you want to disable connector integration for this module?',
@@ -2322,8 +2328,8 @@ $app_strings = array(
     'LBL_INVALID_USA_PHONE_FORMAT' => 'Please enter a numeric U.S. phone number, including area code.',
 
     //File write error label
-    'ERR_FILE_WRITE' => 'Error: Could not write file {0}.  Please check system and web server permissions.',
-    'ERR_FILE_NOT_FOUND' => 'Error: Could not load file {0}.  Please check system and web server permissions.',
+    'ERR_FILE_WRITE' => 'Error: Could not write file {0}. Please check system and web server permissions.',
+    'ERR_FILE_NOT_FOUND' => 'Error: Could not load file {0}. Please check system and web server permissions.',
 
     'LBL_AND' => 'And',
     'LBL_BEFORE' => 'Before',
@@ -2395,7 +2401,7 @@ $app_strings = array(
     'LBL_ALT_MOVE_COLUMN_DOWN' => 'Move selected entry down in the displayed list order',
     'LBL_ALT_INFO' => 'Information',
     'MSG_DUPLICATE' => 'The {0} record you are about to create might be a duplicate of an {0} record that already exists. {1} records containing similar names are listed below.<br>Click Create {1} to continue creating this new {0}, or select an existing {0} listed below.',
-    'MSG_SHOW_DUPLICATES' => 'The {0} record you are about to create might be a duplicate of a {0} record that already exists. {1} records containing similar names are listed below.  Click Save to continue creating this new {0}, or click Cancel to return to the module without creating the {0}.',
+    'MSG_SHOW_DUPLICATES' => 'The {0} record you are about to create might be a duplicate of a {0} record that already exists. {1} records containing similar names are listed below. Click Save to continue creating this new {0}, or click Cancel to return to the module without creating the {0}.',
     'LBL_EMAIL_TITLE' => 'email address',
     'LBL_EMAIL_OPT_TITLE' => 'opted out email address',
     'LBL_EMAIL_INV_TITLE' => 'invalid email address',
@@ -3584,6 +3590,8 @@ $app_list_strings['duration_unit_dom']['Days'] = 'Days';
 $app_list_strings['duration_unit_dom']['Hours'] = 'Hours';
 $app_strings['LBL_GANTT_BUTTON_LABEL'] = 'View Gantt';
 $app_strings['LBL_GANTT_BUTTON_TITLE'] = 'View Gantt';
+$app_strings['LBL_DETAIL_BUTTON_LABEL'] = 'View Detail';
+$app_strings['LBL_DETAIL_BUTTON_TITLE'] = 'View Detail';
 $app_strings['LBL_CREATE_PROJECT'] = 'Create Project';
 
 //gmaps

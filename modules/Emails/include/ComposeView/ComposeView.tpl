@@ -42,7 +42,7 @@
 {{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
 {* Compose view has a TEMP ID in case you want to display multi instance of the ComposeView *}
-<form class="compose-view" id="{$TEMP_ID}" name="ComposeView" method="POST" action="index.php?module=Emails&action=send">
+<form class="compose-view" id="ComposeView" name="ComposeView" method="POST" action="index.php?module=Emails&action=send">
     <input type="hidden" name="module" value="Emails">
     <input type="hidden" name="action" value="send">
     <input type="hidden" name="record" value="">
@@ -50,6 +50,7 @@
     <input type="hidden" name="send" value="1">
     <input type="hidden" name="return_module" value="{$RETURN_MODULE}">
     <input type="hidden" name="return_action" value="{$RETURN_ACTION}">
+    <input type="hidden" name="inbound_email_id" value="{$INBOUND_ID}">
 <div id="EditView_tabs">
     {*display tabs*}
     {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
@@ -251,7 +252,7 @@
     <script>
         {* Compose view has a TEMP ID in case you want to display multi instance of the ComposeView *}
       $(document).ready(function() {ldelim}
-          $('#{$TEMP_ID}').EmailsComposeView();
+          $('#ComposeView').EmailsComposeView();
       {rdelim});
     </script>
     {/if}

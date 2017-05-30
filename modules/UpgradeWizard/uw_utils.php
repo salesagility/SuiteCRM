@@ -759,6 +759,28 @@ function upgradeUWFiles($file) {
         $allFiles[] = "$from_dir/include/utils/autoloader.php";
     }
 
+	if(file_exists("$from_dir/include/UploadFile.php")) {
+		$allFiles[] = "$from_dir/include/UploadFile.php";
+	}
+	if(file_exists("$from_dir/include/SugarTheme/SugarTheme.php")) {
+		$allFiles[] = "$from_dir/include/SugarTheme/SugarTheme.php";
+	}
+
+	// add extra files to post upgrade process
+	if(file_exists(realpath("$from_dir/../scripts/files_to_add_post.php"))) {
+		include(realpath("$from_dir/../scripts/files_to_add_post.php"));
+		if(isset($filesToAddPost) && is_array($filesToAddPost) && $filesToAddPost) {
+			foreach($filesToAddPost as $file) {
+				if(file_exists("$from_dir/$file")) {
+					$allFiles[] = "$from_dir/$file";
+					$GLOBALS['log']->info("File added to post upgrade: $from_dir/$file");
+				} else {
+					$GLOBALS['log']->error("File not found for post upgrade: $from_dir/$file");
+				}
+			}
+		}
+	}
+
     upgradeUWFilesCopy($allFiles, $from_dir);
 }
 

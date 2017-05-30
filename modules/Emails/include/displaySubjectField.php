@@ -69,6 +69,7 @@ function displaySubjectField($focus, $field, $value, $view)
         $focus = array_change_key_case($focus, CASE_LOWER);
     }
 
+
     $template = new Sugar_Smarty();
     $template->assign('APP', $app_strings);
     $template->assign('APP_LIST_STRINGS', $app_list_strings);

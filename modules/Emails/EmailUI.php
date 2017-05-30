@@ -2616,7 +2616,7 @@ eoq;
     /**
      * This function will return all the accounts this user has access to based on the
      * match of the emailId passed in as a parameter
-     *
+     * @deprecate 7.9
      * @param unknown_type $ie
      * @return unknown
      */
