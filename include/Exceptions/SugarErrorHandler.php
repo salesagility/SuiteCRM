@@ -1,6 +1,6 @@
 <?php
 
-require_once 'include/Exceptions/SugarEmptyException.php';
+require_once 'include/Exceptions/SugarEmptyValueException.php';
 require_once 'include/Exceptions/SugarErrorHandler.php';
 require_once 'include/Exceptions/SugarException.php';
 require_once 'include/Exceptions/SugarInvalidTypeException.php';

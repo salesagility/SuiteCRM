@@ -2,7 +2,7 @@
 
 // this is just because i don't want to change bootstrap.php
 require_once 'include/ExceptionallyOldFeature/OldFeature.php';
-require_once 'include/Exceptions/SugarEmptyException.php';
+require_once 'include/Exceptions/SugarEmptyValueException.php';
 require_once 'include/Exceptions/SugarErrorHandler.php';
 require_once 'include/Exceptions/SugarException.php';
 require_once 'include/Exceptions/SugarInvalidTypeException.php';
@@ -68,7 +68,7 @@ class OldFeatureTest extends PHPUnit_Framework_TestCase
         // empty cases
         self::$class->old_function(null);
         $this->assertTrue(
-            SugarErrorHandler::hasThrownError(new SugarEmptyException()),
+            SugarErrorHandler::hasThrownError(new SugarEmptyValueException()),
             SugarErrorHandler::getStackTraceMessage()
         );
     }

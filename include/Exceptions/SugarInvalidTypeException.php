@@ -1,10 +1,13 @@
 <?php
 
-require_once 'include/Exceptions/SugarEmptyException.php';
+require_once 'include/Exceptions/SugarEmptyValueException.php';
 require_once 'include/Exceptions/SugarErrorHandler.php';
 require_once 'include/Exceptions/SugarException.php';
 require_once 'include/Exceptions/SugarInvalidTypeException.php';
 
+/**
+ * Class SugarInvalidTypeException
+ */
 class SugarInvalidTypeException extends SugarException
 {
     /**
@@ -20,10 +23,16 @@ class SugarInvalidTypeException extends SugarException
      */
     protected $userMessage;
 
+    /**
+     * SugarInvalidTypeException constructor.
+     * @param string $message
+     * @param int $code
+     * @param Throwable|null $previous
+     */
     public function __construct($message = "", $code = 0, Throwable $previous = null)
     {
         global $app_strings;
         $this->userMessage = $app_strings['ERR_AJAX_LOAD'];
-        parent::__construct($this->message, $code, $previous);
+        parent::__construct($this->message .': '. $message, $code, $previous);
     }
 }

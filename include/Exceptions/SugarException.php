@@ -1,16 +1,19 @@
 <?php
 
-require_once 'include/Exceptions/SugarEmptyException.php';
+require_once 'include/Exceptions/SugarEmptyValueException.php';
 require_once 'include/Exceptions/SugarErrorHandler.php';
 require_once 'include/Exceptions/SugarException.php';
 require_once 'include/Exceptions/SugarInvalidTypeException.php';
 
+/**
+ * Class SugarException
+ */
 class SugarException extends Exception
 {
     /**
      * @var string $message
      */
-    protected $message = 'Unhandled Exception';
+    protected $message = 'Sugar Exception';
 
     /**
      * @var int $code
@@ -32,7 +35,7 @@ class SugarException extends Exception
     {
         global $app_strings;
         $this->userMessage = $app_strings['ERR_AJAX_LOAD'];
-        parent::__construct($this->message, $code, $previous);
+        parent::__construct($this->message .': '. $message, $code, $previous);
     }
 
     /**

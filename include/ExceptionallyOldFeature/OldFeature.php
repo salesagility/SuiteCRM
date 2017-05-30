@@ -1,6 +1,6 @@
 <?php
 
-require_once 'include/Exceptions/SugarEmptyException.php';
+require_once 'include/Exceptions/SugarEmptyValueException.php';
 require_once 'include/Exceptions/SugarErrorHandler.php';
 require_once 'include/Exceptions/SugarException.php';
 require_once 'include/Exceptions/SugarInvalidTypeException.php';
@@ -25,7 +25,7 @@ class OldFeature
             // bad error message
             $GLOBALS['log']->fatal('cannot find old feature...');
             // added when after I created tests
-            SugarErrorHandler::throwError(new SugarEmptyException());
+            SugarErrorHandler::throwError(new SugarEmptyValueException());
         }
 
         // 100 lines of spaghetti code
@@ -34,7 +34,7 @@ class OldFeature
             // Even worse error message
             $GLOBALS['log']->fatal('Unknown $a');
             // added when after I created tests
-            SugarErrorHandler::throwError(new SugarInvalidTypeException());
+            SugarErrorHandler::throwError(new SugarInvalidTypeException(gettype($a). ' expected: boolean'));
         } else {
             if ($a === true) {
                 $arr['ID'] = '1';
