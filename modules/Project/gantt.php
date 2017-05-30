@@ -39,10 +39,11 @@
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-	die('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
 
-class Gantt {
+class Gantt
+{
 
     private $start_date;
     private $end_date;
@@ -59,14 +60,15 @@ class Gantt {
         $this->draw($this->start_date, $this->end_date, $this->tasks);
     }
 
-    public function draw($start_date, $end_date, $tasks){
+    public function draw($start_date, $end_date, $tasks)
+    {
 
-		$day_count = $this->count_days($start_date, $end_date);
-		$diff_interval = 30 - $day_count;
-		if( $diff_interval <= 0 )
-			$time_span = $this->year_month($start_date, $end_date);
-		else
-			$time_span = $this->year_month($start_date, $end_date, $diff_interval);
+        $day_count = $this->count_days($start_date, $end_date);
+        $diff_interval = 30 - $day_count;
+        if ($diff_interval <= 0)
+            $time_span = $this->year_month($start_date, $end_date);
+        else
+            $time_span = $this->year_month($start_date, $end_date, $diff_interval);
 
        // $project_length = $this->time_range($start_date, $end_date);
 
@@ -76,9 +78,10 @@ class Gantt {
         //Generate main table and the first row containing the months
         echo '<table class="main_table"><tr class="month_row">';
 
-        foreach($time_span as $months) {
-
-            foreach($months as $month => $days){
+        foreach ($time_span as $months)
+        {
+            foreach ($months as $month => $days)
+            {
                 echo '<td class="months">'.$month.'</td>';
             }
         }
@@ -87,20 +90,23 @@ class Gantt {
         echo '</tr><tr class="day_row">';
 
         $month_count = 0;//start month count
-        foreach($time_span as $months) {
+        foreach ($time_span as $months)
+        {
             $m=0;
-            foreach($months as $days){
-
+            foreach ($months as $days)
+            {
                 echo '<td class="inner_container">';
                 //Generate a table containing the days in each month
                 echo '<table class="table_inner"><tr>';
 
-                foreach($days as $day => $d){
+                foreach ($days as $day => $d)
+                {
                     echo '<td class="inner_td"><div class="cell_width">'.$day.'</div></td>';//day number shown
                 }
                 echo '</tr><tr>';
 
-                foreach($days as $d){
+                foreach ($days as $d)
+                {
                     echo '<td class="inner_td"><div class="cell_width">'.$this->substr_unicode($d,0,1).'</div></td>';//First letter of the days name shown
                 }
                 echo '</tr></table></td>';//end table containing the days in each month
@@ -111,9 +117,9 @@ class Gantt {
         }
         //for each task generate a row of empty days
         $i=1;
-        if(!is_null($tasks)){
-            foreach($tasks as $task){
-
+        if (!is_null($tasks)) {
+            foreach ($tasks as $task)
+            {
                 echo '</tr><tr class="task_row">';
                 echo '<td colspan="'.$month_count.'"><table id="task'.$i.'" class="table_inner"><tr>';
 
@@ -246,13 +252,18 @@ class Gantt {
         $end = new DateTime( $end_date);
         $end->add(new DateInterval('P'. $diff_interval .'D')); //Add 1 day to include the end date as a day
         
-		$interval = new DateInterval('P1D'); // 1 month interval
+        $interval = new DateInterval('P1D'); // 1 month interval
         $period = new DatePeriod($begin, $interval, $end);
         $aResult = array();
         
         foreach ( $period as $dt )
         {
-        	$aResult[$dt->format('Y')][$GLOBALS['app_list_strings']['dom_cal_month_short'][$dt->format('n')]][$dt->format('j')] = $GLOBALS['app_list_strings']['dom_cal_day_short'][$dt->format('w')+1];
+            $y = $dt->format('Y');
+            $m = $GLOBALS['app_list_strings']['dom_cal_month_short'][$dt->format('n')];
+            $j = $dt->format('j');
+            $d = $GLOBALS['app_list_strings']['dom_cal_day_short'][$dt->format('w')+1];
+
+            $aResult[$y][$m][$j] = $d;
         }
 
         return $aResult;
