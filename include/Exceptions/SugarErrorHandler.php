@@ -25,7 +25,7 @@ class SugarErrorHandler
         self::$errors[] = $type;
 
         $errorMessage = 'PHP ' . $type->getMessage() . ' in ' . $type->getFile() . ':' . $type->getLine() . PHP_EOL;
-        if($sugar_config['show_log_trace'] === true) {
+        if(isset($sugar_config['show_log_trace']) && $sugar_config['show_log_trace'] === true) {
             $errorMessage .= 'PHP Stack trace:' . PHP_EOL . $type->getTraceAsString() . PHP_EOL;
         }
 
