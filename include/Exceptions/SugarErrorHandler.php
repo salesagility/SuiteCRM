@@ -8,6 +8,12 @@ require_once 'include/Exceptions/SugarInvalidTypeException.php';
 /**
  * Class SugarErrorHandler
  * Soft Exception handler
+ *
+ * Since old does not handle exceptions. We cannot throw exceptions in old code.
+ * However we still need a stack trace or at least where the exceptions are being thrown.
+ *
+ * So SugarErrorHandler allows us to check for errors without breaking legacy code. For new code / features
+ * we should use exceptions.
  */
 class SugarErrorHandler
 {
