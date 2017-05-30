@@ -30,19 +30,32 @@ class OldFeatureTest extends PHPUnit_Framework_TestCase
      */
     public function test_old_feature()
     {
+        //
         // good cases
-        self::$class->old_function(true);
+        $expected = array(
+            'ID' => '1',
+            'NAME' => 'Daniel',
+            'DELETED' => '1'
+        );
+        $actual = self::$class->old_function(true);
+        $this->assertFalse(
+            SugarErrorHandler::hasErrors(),
+            SugarErrorHandler::getStackTraceMessage()
+        );
+        $this->assertSame($expected, $actual);
+
+        $expected = array(
+            'ID' => '',
+            'NAME' => '',
+            'DELETED' => ''
+        );
+        $actual = self::$class->old_function(false);
         $this->assertFalse(
             SugarErrorHandler::hasErrors(),
             SugarErrorHandler::getStackTraceMessage()
         );
 
-        self::$class->old_function(false);
-        $this->assertFalse(
-            SugarErrorHandler::hasErrors(),
-            SugarErrorHandler::getStackTraceMessage()
-        );
-
+        //
         // bad cases
         self::$class->old_function(1);
         $this->assertTrue(
@@ -50,6 +63,7 @@ class OldFeatureTest extends PHPUnit_Framework_TestCase
             SugarErrorHandler::getStackTraceMessage()
         );
 
+        //
         // empty cases
         self::$class->old_function(null);
         $this->assertTrue(
