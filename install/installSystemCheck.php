@@ -112,18 +112,14 @@ if(strpos($server_software,'Microsoft-IIS') !== false)
 }
 
 // PHP VERSION
-$php_version = constant('PHP_VERSION');
-$check_php_version_result = check_php_version($php_version);
-
-if($check_php_version_result == -1) {
-        installLog($mod_strings['ERR_CHECKSYS_PHP_INVALID_VER'].'  '.$php_version);
-        $phpVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} {$php_version} )</span></b>";
-        $error_found = true;
-        $error_txt .= '
+if (check_php_version() === -1) {
+	installLog($mod_strings['ERR_CHECKSYS_PHP_INVALID_VER'].'  '.constant('PHP_VERSION'));
+	$phpVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} ".constant('PHP_VERSION')." )</span></b>";
+	$error_found = true;
+	$error_txt .= '
             <p><b>'.$mod_strings['LBL_CHECKSYS_PHPVER'].'</b></p>
             <p><span class="error">'.$phpVersion.'</span></p>
         ';
-
 }
 
 //Php Backward compatibility checks
