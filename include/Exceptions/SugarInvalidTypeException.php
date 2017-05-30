@@ -10,7 +10,7 @@ class SugarInvalidTypeException extends SugarException
     /**
      * @var string $message
      */
-    protected $message = 'Empty type';
+    protected $message = 'Invalid type';
     /**
      * @var int $code
      */
