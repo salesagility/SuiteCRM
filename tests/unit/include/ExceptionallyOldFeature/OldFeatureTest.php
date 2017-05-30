@@ -43,6 +43,7 @@ class OldFeatureTest extends PHPUnit_Framework_TestCase
             SugarErrorHandler::getStackTraceMessage()
         );
         $this->assertSame($expected, $actual);
+        SugarErrorHandler::clearErrors();
 
         $expected = array(
             'ID' => '',
@@ -55,6 +56,7 @@ class OldFeatureTest extends PHPUnit_Framework_TestCase
             SugarErrorHandler::getStackTraceMessage()
         );
         $this->assertSame($expected, $actual);
+        SugarErrorHandler::clearErrors();
 
         //
         // bad cases
@@ -63,6 +65,7 @@ class OldFeatureTest extends PHPUnit_Framework_TestCase
             SugarErrorHandler::hasThrownError(new SugarInvalidTypeException()),
             SugarErrorHandler::getStackTraceMessage()
         );
+        SugarErrorHandler::clearErrors();
 
         //
         // empty cases
@@ -71,6 +74,8 @@ class OldFeatureTest extends PHPUnit_Framework_TestCase
             SugarErrorHandler::hasThrownError(new SugarEmptyValueException()),
             SugarErrorHandler::getStackTraceMessage()
         );
+        SugarErrorHandler::clearErrors();
+
     }
 
     // test other methods

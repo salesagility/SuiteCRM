@@ -72,7 +72,7 @@ class SugarErrorHandler
     /**
      * Clears errors
      */
-    protected static function clearErrors()
+    public static function clearErrors()
     {
         self::$errors = array();
     }
