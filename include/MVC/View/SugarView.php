@@ -1355,13 +1355,13 @@ EOHTML;
             $module_menu[] = array(
                 "index.php?module=$module&action=EditView&return_module=$module&return_action=DetailView",
                 $GLOBALS['mod_strings']['LNK_NEW_RECORD'],
-                "{$GLOBALS['app_strings']['LBL_CREATE_BUTTON_LABEL']}$module",
+                "Create",
                 $module
             );
             $module_menu[] = array(
                 "index.php?module=$module&action=index",
                 $GLOBALS['mod_strings']['LNK_LIST'],
-                $module,
+                "View",
                 $module
             );
             if (($this->bean instanceof SugarBean) && !empty($this->bean->importable)) {
