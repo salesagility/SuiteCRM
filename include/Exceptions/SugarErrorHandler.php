@@ -70,10 +70,10 @@ class SugarErrorHandler
     }
 
     /**
-     * @param $arr = array
+     * Clears errors
      */
-    protected static function traceToString($arr)
+    protected static function clearErrors()
     {
-
+        self::$errors = array();
     }
 }
