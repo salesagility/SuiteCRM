@@ -54,6 +54,7 @@ class OldFeatureTest extends PHPUnit_Framework_TestCase
             SugarErrorHandler::hasErrors(),
             SugarErrorHandler::getStackTraceMessage()
         );
+        $this->assertSame($expected, $actual);
 
         //
         // bad cases
