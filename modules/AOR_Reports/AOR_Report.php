@@ -1567,10 +1567,10 @@ class AOR_Report extends Basic
 
                             switch ($aor_sql_operator_list[$condition->operator]) {
                                 case "=":
-                                    $query['where'][] = $field . ' BETWEEN ' . $value . ' AND ' . "'" . $date . "'";
+                                    $query['where'][] = $field . " BETWEEN " . $value . " AND " . "'" . $date . "'";
                                     break;
                                 case "!=":
-                                    $query['where'][] = $field . ' NOT BETWEEN ' . $value . ' AND ' . "'" . $date . "'";
+                                    $query['where'][] = $field . " NOT BETWEEN " . $value . " AND " . "'" . $date . "'";
                                     break;
                                 case ">":
                                 case "<":
