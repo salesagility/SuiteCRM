@@ -10,3 +10,85 @@ modules:
         - PhpBrowser:
             url: http://localhost/
         - \Helper\Acceptance
+#    - WebDriver
+#  config:
+#    WebDriver:
+#      host: 'hub-cloud.browserstack.com'
+#      port: 80
+#       browser: chrome
+#      url: 'http://<path-to-suitecrm>'
+#      capabilities:
+#        'browserstack.user': '<user name>'
+#        'browserstack.key' : '<access_token>'
+#
+#env:
+#  parallel_0:
+#      modules:
+#        config:
+#          WebDriver:
+#            browser: 'chrome'
+#
+#    parallel_1:
+#      modules:
+#        config:
+#          WebDriver:
+#            browser: 'firefox'
+#
+#    parallel_2:
+#      modules:
+#        config:
+#          WebDriver:
+#            'os': 'OS X',
+#            'os_version': 'Lion',
+#            'browser': 'Safari',
+#            'browser_version': '6.0',
+#            'resolution': '1024x768'
+#
+#   parallel_3:
+#      modules:
+#        config:
+#          WebDriver:
+#            'os': 'OS X',
+#            'os_version': 'Lion',
+#            'browser': 'Safari',
+#            'browser_version': '6.0',
+#            'resolution': '1280x1024'
+#   parallel_4:
+#      modules:
+#        config:
+#          WebDriver:
+#             'browserName': 'iPhone',
+#              'platform': 'MAC',
+#              'device': 'iPhone 5'
+#   parallel_5:
+#      modules:
+#        config:
+#          WebDriver:
+#             'browserName': 'iPhone',
+#              'platform': 'MAC',
+#              'device': 'iPhone 6'
+#   parallel_6:
+#      modules:
+#        config:
+#          WebDriver:
+#              'browserName': 'android',
+#              'platform': 'ANDROID',
+#              'device': 'Samsung Galaxy S5'
+#    parallel_7:
+#      modules:
+#        config:
+#          WebDriver:
+#            'os': 'Windows',
+#                    'os_version': '7',
+#                    'browser': 'IE',
+#                    'browser_version': '11.0',
+#                    'resolution': '800x600'
+#    parallel_8:
+#      modules:
+#        config:
+#          WebDriver:
+#            'os': 'Windows',
+#                    'os_version': '10',
+#                    'browser': 'Edge',
+#                    'browser_version': '14.0',
+#                    'resolution': '1024x768'
