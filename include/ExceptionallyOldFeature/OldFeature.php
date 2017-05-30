@@ -24,7 +24,7 @@ class OldFeature
         if (is_null($a)) {
             // bad error message
             $GLOBALS['log']->fatal('cannot find old feature...');
-            // for testing
+            // added when after I created tests
             SugarErrorHandler::throwError(new SugarEmptyException());
         }
 
@@ -33,6 +33,7 @@ class OldFeature
         if (gettype($a) !== 'boolean') {
             // Even worse error message
             $GLOBALS['log']->fatal('Unknown $a');
+            // added when after I created tests
             SugarErrorHandler::throwError(new SugarInvalidTypeException());
         } else {
             if ($a === true) {
