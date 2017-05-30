@@ -21,12 +21,15 @@ class SugarErrorHandler
      */
     public static function throwError($type)
     {
+        global $sugar_config;
         self::$errors[] = $type;
 
-        $GLOBALS['log']->fatal(
-            'PHP ' . $type->getMessage() . ' in ' . $type->getFile() . ':' . $type->getLine() . PHP_EOL .
-            'PHP Stack trace:' . PHP_EOL . $type->getTraceAsString() . PHP_EOL
-        );
+        $errorMessage = 'PHP ' . $type->getMessage() . ' in ' . $type->getFile() . ':' . $type->getLine() . PHP_EOL;
+        if($sugar_config['show_log_trace'] === true) {
+            $errorMessage .= 'PHP Stack trace:' . PHP_EOL . $type->getTraceAsString() . PHP_EOL;
+        }
+
+        $GLOBALS['log']->fatal($errorMessage);
     }
 
     /**
