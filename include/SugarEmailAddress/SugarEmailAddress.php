@@ -996,7 +996,11 @@ class SugarEmailAddress extends SugarBean {
             $key = ($addressItem['invalid_email'] == 1) ? 'invalid' : $key;
             $key = ($addressItem['opt_out'] == 1) && ($addressItem['invalid_email'] == 1) ? 'opt_out_invalid' : $key;
 
-            $assign[] = array('key' => $key, 'address' => $current_user->getEmailLink2($addressItem['email_address'], $focus).$addressItem['email_address']."</a>");
+	    list($emailUser, $emailDomain) = explode('@', $addressItem['email_address']);
+            $altImg = urlencode("https://logo.clearbit.com/$emailDomain");
+
+            $assign[] = array('key' => $key, 'address' => $current_user->getEmailLink2($addressItem['email_address'], $focus).$addressItem['email_address']."</a>", 'hash' => md5(strtolower(trim($addressItem['email_address']))), 'alt_img' => $altImg);
+
         }
 
 
