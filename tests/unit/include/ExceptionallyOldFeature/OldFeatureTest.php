@@ -66,6 +66,28 @@ class OldFeatureTest extends PHPUnit_Framework_TestCase
         );
         SugarErrorHandler::clearErrors();
 
+        self::$class->old_function('true');
+        $this->assertTrue(
+            SugarErrorHandler::hasThrownError(new SugarInvalidTypeException()),
+            SugarErrorHandler::getStackTraceMessage()
+        );
+        SugarErrorHandler::clearErrors();
+
+
+        self::$class->old_function('false');
+        $this->assertTrue(
+            SugarErrorHandler::hasThrownError(new SugarInvalidTypeException()),
+            SugarErrorHandler::getStackTraceMessage()
+        );
+        SugarErrorHandler::clearErrors();
+
+        self::$class->old_function(self::class);
+        $this->assertTrue(
+            SugarErrorHandler::hasThrownError(new SugarInvalidTypeException()),
+            SugarErrorHandler::getStackTraceMessage()
+        );
+        SugarErrorHandler::clearErrors();
+
         self::$class->old_function(null);
         $this->assertTrue(
             SugarErrorHandler::hasThrownError(new SugarEmptyValueException()),
