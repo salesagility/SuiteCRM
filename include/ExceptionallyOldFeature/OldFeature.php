@@ -25,7 +25,7 @@ class OldFeature
             // bad error message
             $GLOBALS['log']->fatal('cannot find old feature...');
             // added when after I created tests
-            SugarErrorHandler::throwError(new SugarEmptyValueException('$a'));
+            SugarErrorHandler::throwError(new SugarEmptyValueException('$a is null'));
         }
 
         // 100 lines of spaghetti code
