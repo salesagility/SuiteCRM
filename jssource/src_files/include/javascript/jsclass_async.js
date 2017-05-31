@@ -100,7 +100,7 @@ SugarVCalClient.prototype.load = function (user_id, request_id) {
       // parse vCal and put it in the registry using the user_id as a key:
       GLOBAL_REGISTRY.freebusy[user_id] = SugarVCalClient.prototype.parseResults(result.responseText, false, global_request_registry[request_id][0].timeslots[0].date_obj);
       // parse for current user adjusted vCal
-      GLOBAL_REGISTRY.freebusy_adjusted[user_id] = SugarVCalClient.prototype.parseResults(result.responseText, true, global_request_registry[request_id][0].timeslots[0].date_obj);
+      GLOBAL_REGISTRY.freebusy_adjusted[user_id] = SugarVCalClient.prototype.parseResults(result.responseText, true);
       // now call the display() on the widget registered at request_id:
       global_request_registry[request_id][0].display();
     },
@@ -116,13 +116,7 @@ SugarVCalClient.prototype.parseResults = function (textResult, adjusted, meeting
   var matchXFREEBUSYID = /X\-FREEBUSY\-ID.*?\:([\w]+)\-([\w]+)\-([\w]+)\-([\w]+)\-([\w]+)/g;
   var matchFREEBUSY = /FREEBUSY.*?\:([\w]+)\/([\w]+)/g;
   var matchFREEBUSYTYPE = /X\-FREEBUSY\-TYPE.*?\:([\w]+)/g;
-  //var resultFREEBUSYID = matchXFREEBUSYID.exec(textResult);
-  //var resultFREEBUSY = matchFREEBUSY.exec(textResult);
-  //var resultFREEBUSYTYPETEST = matchFREEBUSYTYPE.exec(textResult);
 
-
-  //  datetime = new SugarDateTime();
-  //var result;
   var timehash = new Object();
   var dst_id;
   var dst_start;
