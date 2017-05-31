@@ -877,7 +877,7 @@ span.yui-carousel-first-button-disabled {
 .yui-overlay,.yui-panel-container {
     visibility: hidden;
     position: absolute;
-    z-index: 2;
+    z-index: 10000000000;
 }
 
 .yui-panel-container form {
