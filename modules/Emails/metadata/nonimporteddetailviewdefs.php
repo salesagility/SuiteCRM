@@ -95,8 +95,8 @@ $viewdefs[$module_name]['DetailView'] = array(
                 ),
             ),
             array(
-                'date_start' => array(
-                    'name' => 'date_start',
+                'date_entered' => array(
+                    'name' => 'date_entered',
                     'label' => 'LBL_DATE_ENTERED',
                 )
             )

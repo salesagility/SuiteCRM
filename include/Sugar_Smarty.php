@@ -135,4 +135,34 @@ class Sugar_Smarty extends Smarty
 		///
 		return parent::fetch($resource_name, $cache_id, $compile_id, $display);
 	}
+
+
+    /**
+     * Log smarty error out to default log location
+     * @param string $error_msg
+     * @param integer $error_type
+     */
+    public function trigger_error($error_msg, $error_type = E_USER_WARNING)
+    {
+        parent::trigger_error($error_msg, $error_type);
+
+        switch ($error_type)
+        {
+            case E_USER_ERROR:
+                $GLOBALS['log']->error('Smarty: ' . $error_msg);
+                break;
+            case E_USER_WARNING:
+                $GLOBALS['log']->warn('Smarty: ' . $error_msg);
+                break;
+            case E_USER_NOTICE:
+                $GLOBALS['log']->error('Smarty: ' . $error_msg);
+                break;
+            case E_USER_DEPRECATED:
+                $GLOBALS['log']->debug('Smarty: ' . $error_msg);
+                break;
+            default:
+                $GLOBALS['log']->fatal('Smarty: ' . $error_type . ' ' . $error_msg);
+                break;
+        }
+    }
 }
