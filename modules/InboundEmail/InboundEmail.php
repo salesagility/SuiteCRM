@@ -4974,15 +4974,15 @@ class InboundEmail extends SugarBean
                 $this->imagePrefix = "cid:";
             }
             // handle multi-part email bodies
-            $email->description_html = $this->getMessageText(
-                $msgNo,
+            $email->description_html = $this->getMessageTextWithUid(
+                $uid,
                 'HTML',
                 $structure,
                 $fullHeader,
                 $clean_email
             ); // runs through handleTranserEncoding() already
-            $email->description = $this->getMessageText(
-                $msgNo,
+            $email->description = $this->getMessageTextWithUid(
+                $uid,
                 'PLAIN',
                 $structure,
                 $fullHeader,
