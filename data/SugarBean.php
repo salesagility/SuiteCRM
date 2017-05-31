@@ -2381,7 +2381,9 @@ class SugarBean
                             $GLOBALS['log']->debug("save_relationship_changes(): From field_defs - add a relationship record returned " . var_export($success, true));
                         }
                     } else {
-                        $GLOBALS['log']->fatal("Failed to load relationship {$linkField} while saving {$this->module_dir}");
+                        if (isset($this->field_defs[$linkField]['source']) && $this->field_defs[$linkField]['source'] !== 'non-db') {
+                            $GLOBALS['log']->fatal("Failed to load relationship {$linkField} while saving {$this->module_dir}");
+                        }
                     }
                 }
             }

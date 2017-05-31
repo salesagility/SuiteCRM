@@ -120,7 +120,7 @@ class Link2
         // Fix to restore functionality from Link.php that needs to be rewritten but for now this will do.
         $this->relationship_fields = (!empty($this->def['rel_fields'])) ? $this->def['rel_fields'] : array();
 
-        if (!$this->loadedSuccesfully()) {
+        if (!$this->loadedSuccesfully() && (!isset($this->def['source']) || $this->def['source'] !== 'non-db')) {
             $GLOBALS['log']->fatal("{$this->name} for {$this->def['relationship']} failed to load\n");
         }
         //Following behavior is tied to a property(ignore_role) value in the vardef. It alters the values of 2 properties, ignore_role_filter and add_distinct.
