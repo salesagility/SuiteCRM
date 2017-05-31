@@ -42,7 +42,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require_once('include/SugarPHPMailer.php');
-require_once 'include/UploadFile.php';
+if(!file_exists('include/UploadFile.php')) {
+	require_once 'include/upload_file.php';
+} else {
+	require_once 'include/UploadFile.php';
+}
 require_once 'include/UploadMultipleFiles.php';
 
 class Email extends SugarBean {
