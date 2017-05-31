@@ -47,6 +47,9 @@ $viewdefs[$module_name]['DetailView'] = array(
                     'customCode' =>  '<button class="button btn-edit-drafts" title="">{$MOD.LBL_BUTTON_EDIT_EDIT_DRAFT}</button>'
                 ),
                 'DELETE',
+                array(
+                    'customCode' =>  '<button class="button btn-edit-drafts" title="">{$MOD.LBL_SEND_BUTTON_LABEL}</button>'
+                ),
             )
         ),
         'includes' => array(

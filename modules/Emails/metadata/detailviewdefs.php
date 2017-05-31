@@ -47,6 +47,15 @@ $viewdefs[$module_name]['DetailView'] = array(
                 'DUPLICATE',
                 'DELETE',
                 'FIND_DUPLICATES',
+                array(
+                    'customCode' => '<input type=button onclick="window.location.href=\'index.php?module=Emails&action=ReplyTo&folder=INBOX.TestInbox&folder=inbound&inbound_email_record={$bean->inbound_email_record}&uid={$bean->uid}&msgno={$bean->msgno}&record={$bean->id}\';" value="{$MOD.LBL_BUTTON_REPLY_TITLE}">'
+                ),
+                array(
+                    'customCode' => '<input type=button onclick="window.location.href=\'index.php?module=Emails&action=ReplyToAll&folder=INBOX.TestInbox&folder=inbound&inbound_email_record={$bean->inbound_email_record}&uid={$bean->uid}&msgno={$bean->msgno}&record={$bean->id}\';" value="{$MOD.LBL_BUTTON_REPLY_ALL}">'
+                ),
+                array(
+                    'customCode' => '<input type=button onclick="window.location.href=\'index.php?module=Emails&action=Forward&folder=INBOX.TestInbox&folder=inbound&inbound_email_record={$bean->inbound_email_record}&uid={$bean->uid}&msgno={$bean->msgno}&record={$bean->id}\';" value="{$MOD.LBL_BUTTON_FORWARD}">'
+                ),
             )
         ),
         'maxColumns' => '2',
