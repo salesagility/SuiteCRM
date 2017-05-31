@@ -603,6 +603,7 @@ slot {
 
 #html_div {
   white-space: normal;
+  background-color: $table-header-bg;
 }
 
 .dataField {
@@ -4352,18 +4353,8 @@ td.inlineEditActive {
 
 #editAccountDialogue {
   overflow: auto;
-  height: 90%;
+  height: auto;
 }
-
-#settingsDialog .yui-content {
-  overflow-y: auto;
-}
-
-#settingsDialog_c {
-  top: 120px;
-  z-index: 20000;
-}
-
 
 .edit-view-pagination .btn-pagination[disabled] {
   background-color: $disabled-btn-bg;
@@ -4416,27 +4407,6 @@ td.inlineEditActive {
 
   .edit-view-pagination .glyphicon-chevron-right {
     margin-left: 0px;
-  }
-}
-
-
-@media (max-width: 992px) {
-  #settingsDialog_c {
-    left: 1%;
-  }
-
-  #settingsDialog .yui-content {
-    height: 320px;
-  }
-}
-
-@media (min-width: 993px) {
-  #settingsDialog_c {
-    left: 22.5%;
-  }
-
-  #settingsDialog .yui-content {
-    height: 384px;
   }
 }
 
@@ -5511,51 +5481,51 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td {
   padding-bottom: 5px;
 }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span {
   display: block;
   float: none;
 }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[type="text"] {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[type="text"] {
   width: 90%;
 }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[name="filter_domain"] {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[name="filter_domain"] {
   width: 90%;
 }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[name="email_num_autoreplies_24_hours"] {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[name="email_num_autoreplies_24_hours"] {
   width: 90%;
 }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[type="text"][name="mailbox"]#mailbox {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[type="text"][name="mailbox"]#mailbox {
   width: 70%;
 }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[type="text"][name="trashFolder"]#trashFolder {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[type="text"][name="trashFolder"]#trashFolder {
   width: 70%;
 }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[type="text"][name="sentFolder"]#sentFolder {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[type="text"][name="sentFolder"]#sentFolder {
   width: 70%;
 }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[type="button"]#subscribeFolderButton.button {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[type="button"]#subscribeFolderButton.button {
   width: 18%;
   min-width: 71px;
 }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[type="button"]#trashFolderButton.button {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[type="button"]#trashFolderButton.button {
   width: 18%;
   min-width: 71px;
 }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[type="button"]#sentFolderButton.button {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[type="button"]#sentFolderButton.button {
   width: 18%;
   min-width: 71px;
 }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input.button {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input.button {
   color: white;
 }
 
@@ -5563,11 +5533,11 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td select
   border: 3px solid #A5E8D6;
 }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[name="from_name"]#from_name {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[name="from_name"]#from_name {
   width: 80%;
 }
 
-div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[name="from_addr"]#from_addr {
+div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[name="from_addr"]#from_addr {
   width: 80%;
 }
 
@@ -5595,7 +5565,7 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     width: 28%;
   }
 
-  div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot {
+  div.content div.pagecontent form#EditView div.edit.view table tbody tr td span {
     display: block;
     float: left;
     line-height: 16px;
@@ -5603,15 +5573,15 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     white-space: initial;
   }
 
-  div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[type="text"] {
+  div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[type="text"] {
     width: 96%;
   }
 
-  div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[name="filter_domain"] {
+  div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[name="filter_domain"] {
     width: 96%;
   }
 
-  div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input[name="email_num_autoreplies_24_hours"] {
+  div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input[name="email_num_autoreplies_24_hours"] {
     width: 96%;
   }
 
@@ -5646,20 +5616,20 @@ div.content div.pagecontent form#EditView div.edit.view table tbody tr td input[
     height: initial;
   }
 
-  div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot {
+  div.content div.pagecontent form#EditView div.edit.view table tbody tr td span {
     width: 100%;
   }
 }
 
 @media (max-width: 380px) {
-  div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot input {
+  div.content div.pagecontent form#EditView div.edit.view table tbody tr td span input {
     font-size: 12px;
     line-height: initial;
     height: 40px;
     min-height: 40px;
   }
 
-  div.content div.pagecontent form#EditView div.edit.view table tbody tr td slot select {
+  div.content div.pagecontent form#EditView div.edit.view table tbody tr td span select {
     font-size: 12px;
     line-height: initial;
     height: 40px;

@@ -292,7 +292,7 @@ class SavedSearch extends SugarBean
         SugarApplication::headerRedirect("Location: index.php?action=index&module={$_REQUEST['search_module']}&advanced={$_REQUEST['advanced']}&query=true&clear_query=true");
     }
 
-    function handleSave($prefix, $redirect = true, $useRequired = false, $id = null, $searchModuleBean)
+    function handleSave($prefix, $redirect = true, $useRequired = false, $id = null, $searchModuleBean = null)
     {
 
         global $current_user, $timedate;

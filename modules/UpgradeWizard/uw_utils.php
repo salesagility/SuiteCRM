@@ -759,6 +759,28 @@ function upgradeUWFiles($file) {
         $allFiles[] = "$from_dir/include/utils/autoloader.php";
     }
 
+	if(file_exists("$from_dir/include/UploadFile.php")) {
+		$allFiles[] = "$from_dir/include/UploadFile.php";
+	}
+	if(file_exists("$from_dir/include/SugarTheme/SugarTheme.php")) {
+		$allFiles[] = "$from_dir/include/SugarTheme/SugarTheme.php";
+	}
+
+	// add extra files to post upgrade process
+	if(file_exists(realpath("$from_dir/../scripts/files_to_add_post.php"))) {
+		include(realpath("$from_dir/../scripts/files_to_add_post.php"));
+		if(isset($filesToAddPost) && is_array($filesToAddPost) && $filesToAddPost) {
+			foreach($filesToAddPost as $file) {
+				if(file_exists("$from_dir/$file")) {
+					$allFiles[] = "$from_dir/$file";
+					$GLOBALS['log']->info("File added to post upgrade: $from_dir/$file");
+				} else {
+					$GLOBALS['log']->error("File not found for post upgrade: $from_dir/$file");
+				}
+			}
+		}
+	}
+
     upgradeUWFilesCopy($allFiles, $from_dir);
 }
 
@@ -1026,21 +1048,20 @@ function checkSystemCompliance() {
 	$ret['error_found'] = false;
 
 	// PHP version
-	$php_version = constant('PHP_VERSION');
-	$check_php_version_result = check_php_version($php_version);
-
-	switch($check_php_version_result) {
-		case -1:
-			$ret['phpVersion'] = "<b><span class=stop>{$installer_mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} {$php_version} )</span></b>";
-			$ret['error_found'] = true;
-			break;
-		case 0:
-			$ret['phpVersion'] = "<b><span class=go>{$installer_mod_strings['ERR_CHECKSYS_PHP_UNSUPPORTED']} {$php_version} )</span></b>";
-			break;
-		case 1:
-			$ret['phpVersion'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_PHP_OK']} {$php_version} )</span></b>";
-			break;
+	if (check_php_version() === -1) {
+		$ret['phpVersion'] = "<b><span class=stop>{$installer_mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} ".constant('PHP_VERSION')." )</span></b>";
+		$ret['error_found'] = true;
 	}
+
+	if (check_php_version() === 0) {
+		$ret['phpVersion'] = "<b><span class=stop>{$installer_mod_strings['LBL_CURRENT_PHP_VERSION']} ".constant('PHP_VERSION').". ";
+		$ret['phpVersion'] .= $mod_strings['LBL_RECOMMENDED_PHP_VERSION_1'].constant('SUITECRM_PHP_REC_VERSION').$mod_strings['LBL_RECOMMENDED_PHP_VERSION_2'].'</span></b>';
+		$ret['error_found'] = true;
+	}
+
+	if (check_php_version() === 1) {
+		$ret['phpVersion'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_PHP_OK']} ".constant('PHP_VERSION')." )</span></b>";
+	};
 
 	// database and connect
     $canInstall = $db->canInstall();
@@ -2038,7 +2059,7 @@ function validate_manifest($manifest) {
     global $sugar_flavor;
 	global $mod_strings;
 
-	include_once('suitecrm_version.php');
+	include('suitecrm_version.php');
 
     if(!isset($manifest['type'])) {
         return $mod_strings['ERROR_MANIFEST_TYPE'];

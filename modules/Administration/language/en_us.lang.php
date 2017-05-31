@@ -685,6 +685,9 @@ $mod_strings = array(
     'LBL_REPAIR_IE_FAILURE' => 'The following Inbound Email accounts must be repaired manually - please re-enter login name and password for each:',
     'LBL_REPAIR_IE_SUCCESS' => 'All Inbound Email accounts repaired successfully!',
     'LBL_REPAIR_IE' => 'Repair Inbound Email Accounts',
+    'LBL_SYNC_IE_EMAILS' => 'Sync Inbound Email Accounts',
+    'LBL_SYNC_IE_EMAILS_DESC' => 'Sync Inbound Email Accounts and Emails',
+    'LBL_SYNC' => 'Sync',
     'LBL_REPAIR_INDEX' => 'Repair Indexes',
     'LBL_REPAIR_INDEX_DROPPING' => '<BR>Dropping constraints/indexes.',
     'LBL_REPAIR_INDEX_EXECUTING' => '<BR> Executing ',
@@ -1282,5 +1285,16 @@ $mod_strings = array(
 	'LBL_LIST_SYMBOL' => "List Symbol",
 	'LBL_LIST_RATE' => "List Rate",
 
+    'LBL_SYNC_MESSAGE' => "Sync Inbound Email Account. This may take several minutes. Going away from this page will not cancel the process, so feel free to move on or wait for confirmation...",
+    'LBL_SYNC_PROCESSING' => "Processing '%s' Inbound Email Account...",
+    'LBL_SYNC_ERROR_CONN' => "Connection failed",
+    'LBL_SYNC_UPDATED' => "%d record updated",
+    'LBL_SYNC_DONE' => "Done Processing Inbound Email Accounts",
+    'LBL_SYNC_ERROR_FOUND' => "IMAP errors detected",
+    'LBL_SYNC_ALERT_FOUND' => "IMAP alerts detected",
+    'LBL_SYNC_NO_EMAIL' => "No imported related Email to Inbound Email Account",
+    'LBL_PROCESS_OUTPUT_CLEANUP_ERROR' => "Unable to cleanup output file. Please check permission..",
+    'LBL_PROCESS_OUTPUT_WRITE_ERROR' => "Unable to write output file. Please check permission..",
+    'LBL_IE_NOT_FOUND' => "Error: invalid Inbound Email Account",
 );
 
