@@ -174,10 +174,14 @@
           at: 'top left'
         },
         show: {solo: true},
-        hide: {event: false},
+        hide: {event: 'unfocus'},
         style: {classes: 'emails-qtip'}
       });
       $(this).qtip("show");
+      console.log('test');
+      $(this).unbind('unfocus').blur(function() {
+        $(this).qtip("hide");
+      });
       $('.btn-qtip-bar').unbind('click').click(self.handleQTipBarClick);
     };
 
