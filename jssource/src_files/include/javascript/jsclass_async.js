@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,12 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
 
 
 //////////////////////////////////////////////////////////////////
@@ -100,7 +97,7 @@ SugarVCalClient.prototype.load = function (user_id, request_id) {
       // parse vCal and put it in the registry using the user_id as a key:
       GLOBAL_REGISTRY.freebusy[user_id] = SugarVCalClient.prototype.parseResults(result.responseText, false, global_request_registry[request_id][0].timeslots[0].date_obj);
       // parse for current user adjusted vCal
-      GLOBAL_REGISTRY.freebusy_adjusted[user_id] = SugarVCalClient.prototype.parseResults(result.responseText, true, global_request_registry[request_id][0].timeslots[0].date_obj);
+      GLOBAL_REGISTRY.freebusy_adjusted[user_id] = SugarVCalClient.prototype.parseResults(result.responseText, true);
       // now call the display() on the widget registered at request_id:
       global_request_registry[request_id][0].display();
     },
@@ -116,13 +113,7 @@ SugarVCalClient.prototype.parseResults = function (textResult, adjusted, meeting
   var matchXFREEBUSYID = /X\-FREEBUSY\-ID.*?\:([\w]+)\-([\w]+)\-([\w]+)\-([\w]+)\-([\w]+)/g;
   var matchFREEBUSY = /FREEBUSY.*?\:([\w]+)\/([\w]+)/g;
   var matchFREEBUSYTYPE = /X\-FREEBUSY\-TYPE.*?\:([\w]+)/g;
-  //var resultFREEBUSYID = matchXFREEBUSYID.exec(textResult);
-  //var resultFREEBUSY = matchFREEBUSY.exec(textResult);
-  //var resultFREEBUSYTYPETEST = matchFREEBUSYTYPE.exec(textResult);
 
-
-  //  datetime = new SugarDateTime();
-  //var result;
   var timehash = new Object();
   var dst_id;
   var dst_start;
