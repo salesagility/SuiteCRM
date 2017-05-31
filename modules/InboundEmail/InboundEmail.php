@@ -5148,7 +5148,7 @@ class InboundEmail extends SugarBean
             if(empty($email->date_entered)) {
 
                 // find if string has (UTC) in timezone
-                $pattern = '/([\w-+\/]+)/i';
+                $pattern = "/\([\w-+\/]+\)/i";
                 $timezoneTextFound = preg_match($pattern,  $header[0]->date);
 
                 $dateTimeFormat = 'D, d M Y H:i:s O *';
