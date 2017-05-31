@@ -41,6 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+include_once('modules/Emails/EmailException.php');
 require_once('include/SugarPHPMailer.php');
 require_once 'include/UploadFile.php';
 require_once 'include/UploadMultipleFiles.php';
@@ -3429,6 +3430,68 @@ eoq;
 
         $old = array('&lt;', '&gt;');
         $new = array('<', '>');
+
+
+		// Validation first: we have to check that there is
+		// 'from' email and/or name in the request and
+		// if is not, then use the default one
+
+		// Let's pretend that everything is ok..
+
+		$useDefaultFromAddressName = false;
+		$useDefaultFromAddressEmail = false;
+
+		// is from address in the request?
+
+		if(!isset($request['from_addr_name']) || !$request['from_addr_name']) {
+			$useDefaultFromAddressName = true;
+		}
+
+		// is from name in the request?
+
+		if(!isset($request['from_addr_email']) || !$request['from_addr_email']) {
+			$useDefaultFromAddressEmail = true;
+		}
+
+		// so, do we have to use any default data?
+
+		if($useDefaultFromAddressName || $useDefaultFromAddressEmail) {
+
+			// get the default data
+			// (curently the system default will be used)
+
+			$defaultEmail = $bean->getSystemDefaultEmail();
+
+			// do we have to use the default from address?
+
+			if($useDefaultFromAddressEmail) {
+
+				// just make sure are there any default 'from' address set? (validation)
+
+				if(!isset($defaultEmail['email']) || !$defaultEmail['email']) {
+					throw new EmailException("No system default 'from' email address", NO_DEFAULT_FROM_ADDR);
+				}
+
+				// use the default one
+
+				$request['from_addr_email'] = $defaultEmail['email'];
+			}
+
+			// do we have to use the default name?
+
+			if($useDefaultFromAddressName) {
+
+				// just make sure are there any default 'from' address set? (validation)
+
+				if(!isset($defaultEmail['name']) || !$defaultEmail['name']) {
+					throw new EmailException("No system default 'from' name", NO_DEFAULT_FROM_NAME);
+				}
+
+				// use the default one
+
+				$request['from_addr_name'] = $defaultEmail['name'];
+			}
+		}
 
         if (isset($request['from_addr']) && $request['from_addr'] != $request['from_addr_name'] . ' &lt;' . $request['from_addr_email'] . '&gt;') {
             if (false === strpos($request['from_addr'], '&lt;')) { // we have an email only?
