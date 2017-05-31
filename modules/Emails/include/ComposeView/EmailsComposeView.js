@@ -173,7 +173,7 @@
           my: 'bottom left',
           at: 'top left'
         },
-        show: {solo: true},
+        show: {solo: true, event: 'focus'},
         hide: {event: 'unfocus'},
         style: {classes: 'emails-qtip'}
       });
