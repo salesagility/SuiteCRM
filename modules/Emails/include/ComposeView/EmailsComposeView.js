@@ -173,12 +173,11 @@
           my: 'bottom left',
           at: 'top left'
         },
-        show: {solo: true, event: 'focus'},
+        show: {solo: true, ready: true, event: false},
         hide: {event: 'unfocus'},
         style: {classes: 'emails-qtip'}
       });
       $(this).qtip("show");
-      console.log('test');
       $(this).unbind('unfocus').blur(function() {
         $(this).qtip("hide");
       });
