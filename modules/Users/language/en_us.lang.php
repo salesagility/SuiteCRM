@@ -886,22 +886,7 @@ $mod_strings = array(
     'LBL_TEST_EMAIL_BODY' => 'This email was sent in order to test the outgoing mail server information provided in the SuiteCRM application.  A successful receipt of this email indicates that the outgoing mail server information provided is valid.',
 
     // for outbound email dialog
-    'LBL_SMTP_SERVER_HELP' => 'This SMTP Mail Server can be used for outgoing mail. Provide a username and password for your email account in order to use the mail server.',
-    'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administator has not yet configured the default outbound account.  Unable to send test email.',
     'LBL_MAIL_SMTPAUTH_REQ'				=> 'Use SMTP Authentication?',
-    'LBL_MAIL_SMTPPASS'					=> 'SMTP Password:',
-    'LBL_MAIL_SMTPUSER'					=> 'SMTP Username:',
-    'LBL_MAIL_SMTPTYPE'                => 'SMTP Server Type:',
-    'LBL_MAIL_SMTP_SETTINGS'           => 'SMTP Server Specification',
-    'LBL_CHOOSE_EMAIL_PROVIDER'        => 'Choose your Email provider:',
-    'LBL_YAHOOMAIL_SMTPPASS'					=> 'Yahoo! Mail Password:',
-    'LBL_YAHOOMAIL_SMTPUSER'					=> 'Yahoo! Mail ID:',
-    'LBL_GMAIL_SMTPPASS'					=> 'Gmail Password:',
-    'LBL_GMAIL_SMTPUSER'					=> 'Gmail Email Address:',
-    'LBL_EXCHANGE_SMTPPASS'					=> 'Exchange Password:',
-    'LBL_EXCHANGE_SMTPUSER'					=> 'Exchange Username:',
-    'LBL_EXCHANGE_SMTPPORT'					=> 'Exchange Server Port:',
-    'LBL_EXCHANGE_SMTPSERVER'				=> 'Exchange Server:',
 
     'LBL_EDIT_LAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
     'LBL_ATTACHMENT' => 'Attachment' /*for 508 compliance fix*/,
