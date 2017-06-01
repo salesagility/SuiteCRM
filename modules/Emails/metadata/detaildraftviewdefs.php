@@ -47,6 +47,9 @@ $viewdefs[$module_name]['DetailView'] = array(
                     'customCode' =>  '<button class="button btn-edit-drafts" title="">{$MOD.LBL_BUTTON_EDIT_EDIT_DRAFT}</button>'
                 ),
                 'DELETE',
+                array(
+                    'customCode' =>  '<button class="button btn-edit-drafts" title="">{$MOD.LBL_SEND_BUTTON_LABEL}</button>'
+                ),
             )
         ),
         'includes' => array(
@@ -106,7 +109,6 @@ $viewdefs[$module_name]['DetailView'] = array(
             array(
                 'date_entered' => array(
                     'name' => 'date_entered',
-                    'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
                     'label' => 'LBL_DATE_ENTERED',
                 )
             ),
