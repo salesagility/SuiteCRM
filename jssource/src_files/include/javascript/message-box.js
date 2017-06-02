@@ -176,7 +176,7 @@
 
     self.headerContent = '<button type="button" class="close btn-cancel" aria-label="Close"><span aria-hidden="true">×</span></button><h4 class="modal-title"></h4>';
     self.footerContent = '<button class="button btn-ok" type="button">'+SUGAR.language.translate('','LBL_OK')+'</button> <button class="button btn-cancel" type="button">'+SUGAR.language.translate('','LBL_CANCEL_BUTTON_LABEL')+'</button> ';
-
+    
     self.construct = function (constructOptions) {
       "use strict";
       if(typeof self.controls.modal.container === "undefined") {
@@ -236,6 +236,8 @@
         self.controls.modal.footer.html(opts.footerContent);
 
         // OK / Cancel
+        self.controls.modal.buttons.ok  = self.controls.modal.container.find('.btn-ok');
+        self.controls.modal.buttons.cancel  = self.controls.modal.container.find('.btn-cancel');
         self.controls.modal.container.find('.btn-ok').click(opts.onOK);
         self.controls.modal.container.find('.btn-cancel').click(opts.onCancel);
 

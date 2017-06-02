@@ -44,7 +44,7 @@ $viewdefs[$module_name]['DetailView'] = array(
         'form' => array(
             'buttons' => array(
                 array(
-                    'customCode' => '<input type=button data-action="emails-import-single" data-import-single="window.location.href=\'index.php?module=Emails&action=ImportAndShowDetailView&folder=INBOXTestInbox&folder=inbound&inbound_email_record={$bean->inbound_email_record}&uid={$bean->uid}&msgno={$bean->msgno}\';" value="{$MOD.LBL_IMPORT}">'
+                    'customCode' => '<input type=button data-action="emails-import-single" data-inbound-email-record="{$bean->inbound_email_record}" data-email-uid="{$bean->uid}" data-email-msgno="{$bean->msgno}" value="{$MOD.LBL_IMPORT}">'
                 ),
                 array(
                     'customCode' => '<input type=button onclick="window.location.href=\'index.php?module=Emails&action=ReplyTo&folder=INBOX.TestInbox&folder=inbound&inbound_email_record={$bean->inbound_email_record}&uid={$bean->uid}&msgno={$bean->msgno}&record={$bean->id}\';" value="{$MOD.LBL_BUTTON_REPLY_TITLE}">'
