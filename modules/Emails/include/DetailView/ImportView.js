@@ -76,16 +76,17 @@
      * Constructor
      */
     self.construct = function () {
-      self.messageBox = messageBox({'size': 'lg'});
-      self.messageBox.on('ok', self.messageBoxOkHandler);
-      self.messageBox.on('cancel', self.messageBoxCancelHandler);
-
-      self.messageBox.setTitle(SUGAR.language.translate('', 'LBL_EMAIL_IMPORT_EMAIL'));
-      self.messageBox.hideHeader();
-      self.messageBox.hideFooter();
-      self.messageBox.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
 
       $(opts.callerSelector).on('click', function() {
+
+        self.messageBox = messageBox({'size': 'lg'});
+        self.messageBox.on('ok', self.messageBoxOkHandler);
+        self.messageBox.on('cancel', self.messageBoxCancelHandler);
+
+        self.messageBox.setTitle(SUGAR.language.translate('', 'LBL_EMAIL_IMPORT_EMAIL'));
+        self.messageBox.hideHeader();
+        self.messageBox.hideFooter();
+        self.messageBox.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
         self.messageBox.show();
         // TODO get view
         $.ajax({type: "GET", cache: false, url: 'index.php?module=Emails&action=ImportView'}).done(function (data) {
