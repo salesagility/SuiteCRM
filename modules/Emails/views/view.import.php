@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,31 +39,58 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-$module_name = 'Emails';
-$viewdefs[$module_name]['EditView'] = array(
-    'templateMeta' => array(
-        'maxColumns' => '2',
-        'widths' => array(
-            array('label' => '10', 'field' => '30'),
-            array('label' => '10', 'field' => '30')
-        ),
-    ),
-    'panels' => array(
+if (!defined('sugarEntry') || !sugarEntry) {
+    die ('Not A Valid Entry Point');
+}
 
-        'LBL_EMAIL_INFORMATION' => array(
-            array(
-                'assigned_user_name' => array(
-                    'name' => 'assigned_user_name',
-                    'label' => 'LBL_ASSIGNED_TO',
-                )
-            ),
-            array(
-                'parent_name'
-            ),
-            array (
-                'category_id',
-            ),
-        )
-    )
 
-);
+class EmailsViewImport extends ViewEdit {
+
+    /**
+     * @var Email $bean
+     */
+    public $bean;
+
+    /**
+     * EmailsViewCompose constructor.
+     */
+    public function __construct()
+    {
+        $this->options['show_title'] = false;
+        $this->options['show_header'] = false;
+        $this->options['show_footer'] = false;
+        $this->options['show_javascript'] = false;
+        $this->options['show_subpanels'] = false;
+        $this->options['show_search'] = false;
+        $this->type = 'ImportView';
+    }
+
+    /**
+     * @see SugarView::preDisplay()
+     */
+    public function preDisplay()
+    {
+        global $current_user;
+
+        $metadataFile = $this->getMetaDataFile();
+        $this->ev = $this->getEditView();
+        $this->ev->ss =& $this->ss;
+
+        if(!isset($this->bean->mailbox_id) || empty($this->bean->mailbox_id)) {
+            $inboundEmailID = $current_user->getPreference('defaultIEAccount', 'Emails');
+            $this->ev->ss->assign('INBOUND_ID', $inboundEmailID);
+        } else {
+            $this->ev->ss->assign('INBOUND_ID', $this->bean->mailbox_id);
+        }
+
+        $this->ev->ss->assign('TEMP_ID', create_guid());
+        $this->ev->ss->assign('RETURN_MODULE', isset($_REQUEST['return_module']) ? $_REQUEST['return_module'] : '');
+        $this->ev->ss->assign('RETURN_ACTION', isset($_REQUEST['return_action']) ? $_REQUEST['return_action'] : '');
+        $this->ev->setup(
+            $this->module,
+            $this->bean,
+            'modules/Emails/metadata/importviewdefs.php',
+            'modules/Emails/include/ImportView/ImportView.tpl'
+        );
+    }
+}
