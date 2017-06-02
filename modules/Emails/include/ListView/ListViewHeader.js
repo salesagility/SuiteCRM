@@ -66,7 +66,7 @@ var handleSelectedEmailsListViewItems = function(actionUrl, successCallback, err
   });
 
 
-  var query = JSON.parse($('[name=current_query_by_page]').val());
+  var query = JSON.parse($('[name=MassUpdate] [name=current_query_by_page]').val());
   var url = 'index.php?module=Emails&action=' + actionUrl;
 
   var postOpts = {
