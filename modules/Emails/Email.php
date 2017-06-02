@@ -45,7 +45,7 @@ require_once('include/SugarPHPMailer.php');
 require_once 'include/UploadFile.php';
 require_once 'include/UploadMultipleFiles.php';
 
-class Email extends SugarBean
+class Email extends Basic
 {
     /**
      * @var string $from_addr
