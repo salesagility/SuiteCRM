@@ -94,6 +94,10 @@ if ($_REQUEST['action'] === 'DetailDraftView') {
     $GLOBALS['sugar_config']['http_referer']['actions'][] = 'DetailDraftView';
 }
 
+if ($_REQUEST['action'] === 'MarkEmails') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'MarkEmails';
+}
+
 class EmailsController extends SugarController
 {
     /**
@@ -275,4 +279,76 @@ class EmailsController extends SugarController
         echo json_encode(array('response' => $response));
         $this->view = 'ajax';
     }
+
+    public function action_MarkEmails () {
+        $request = $_REQUEST;
+
+        // validate the request
+
+        if(!isset($request['inbound_email_record']) || !$request['inbound_email_record']) {
+            throw new SugarControllerException('No Inbound Email record in request');
+        }
+
+        if(!isset($request['folder']) || !$request['folder']) {
+            throw new SugarControllerException('No Inbound Email folder in request');
+        }
+
+
+        // connect to requested inbound email server
+        // and select the folder
+
+        $ie = $this->getInboundEmail($request['inbound_email_record']);
+        $ie->mailbox = $request['folder'];
+        $ie->connectMailserver();
+
+        // get requested UIDs and flag type
+
+        $UIDs = $this->getRequestedUIDs($request);
+        $type = $this->getRequestedFlagType($request);
+
+        // mark emails
+
+        $ie->markEmails($UIDs, $type);
+
+        echo json_encode(array('response' => true));
+        die();
+    }
+
+    private function getRequestedUIDs($request) {
+        $ret = $this->getRequestedArgument($request, 'uid');
+        if(is_array($ret)) {
+            $ret = implode(',', $ret);
+        }
+        return $ret;
+    }
+
+    private function getRequestedFlagType($request) {
+        $ret = $this->getRequestedArgument($request, 'type');
+        return $ret;
+    }
+
+    private function getRequestedArgument($request, $key) {
+        if(!isset($request[$key])) {
+            $GLOBALS['log']->error("Requested key is not set: ");
+            return null;
+        }
+        return $request[$key];
+    }
+
+    /**
+     * return an Inbound Email by requested record
+     *
+     * @param $record
+     * @return InboundEmail
+     * @throws SugarControllerException
+     */
+    private function getInboundEmail($record) {
+        $db = DBManagerFactory::getInstance();
+        $ie = BeanFactory::getBean('InboundEmail', $db->quote($record));
+        if(!$ie) {
+            throw new SugarControllerException("BeanFactory can't resolve an InboundEmail record: $record");
+        }
+        return $ie;
+    }
+
 }

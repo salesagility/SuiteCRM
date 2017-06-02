@@ -37,52 +37,57 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 (function ($) {
   /**
    *
    * @param options
    * @return {*|HTMLElement}
    */
-  $.fn.ImportEmailAction =  function(options) {
+  $.fn.MarkEmails =  function(options) {
     "use strict";
-    var self = this;
-    var opts = $.extend({}, $.fn.ImportEmailAction.defaults, options);
+    var self = {};
+    var opts = $.extend({}, $.fn.MarkEmails.defaults, options);
 
-    if(typeof messageBox === "undefined") {
-      console.error('ImportEmailAction - Missing Dependency: Cannot find messageBox.');
-      return $(self);
-    }
-
-    self.handleClick = function (e) {
+    self.handleClick = function () {
+      "use strict";
 
       handleSelectedEmailsListViewItems(
-        'ImportFromListView',
+        'MarkEmails&type=' + $(this).attr('data-for'),
         function() {
           window.location.reload();
         },
         false,
-        SUGAR.language.translate('Emails', 'LBL_IMPORTING'),
-        'Error importing emails.'
+        SUGAR.language.translate('Emails', 'LBL_MARKING'),
+        'Error marking emails.'
       );
 
     };
 
-    self.construct = function() {
+    /**
+     * @constructor
+     */
+    self.construct = function () {
+      "use strict";
       $(opts.buttonSelector).click(self.handleClick);
     };
 
+    /**
+     * @destructor
+     */
+    self.destruct = function() {
+
+    };
+
     self.construct();
-    return $(self);
+    return $(this);
   };
 
-  $.fn.ImportEmailAction.defaults = {
-    'buttonSelector': '[data-action=emails-import-multiple]',
-    'contentSelector': '#content',
-    'defaultFolder': 'INBOX'
+  $.fn.MarkEmails.defaults = {
+    'buttonSelector': '[data-action=emails-mark]',
+    'contentSelector': '#content'
   }
 }(jQuery));
 
 $(document).ready(function() {
-  $(document).ImportEmailAction();
+  $(document).MarkEmails();
 });

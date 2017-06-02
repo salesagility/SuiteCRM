@@ -185,5 +185,5 @@
     'selected': 'INBOX',
     'buttonSelector': '[data-action=emails-show-compose-modal]',
     'contentSelector': '#content'
-  }
+  };
 }(jQuery));

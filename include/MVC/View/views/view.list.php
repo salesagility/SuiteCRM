@@ -128,7 +128,7 @@ class ViewList extends SugarView
         $metadataFile = $this->getMetaDataFile();
 
         if (!file_exists($metadataFile))
-            sugar_die($GLOBALS['app_strings']['LBL_NO_ACTION']);
+            sugar_die(sprintf($GLOBALS['app_strings']['LBL_NO_ACTION'], $this->do_action));
 
         require($metadataFile);
 
