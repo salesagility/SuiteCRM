@@ -54,28 +54,53 @@
       return $(self);
     }
 
-    self.handleClick = function (e) {
-
-      var mb = messageBox({backdrop: false});
-      mb.setTitle(SUGAR.language.translate('Emails', 'LBL_IMPORTING'));
-      mb.setBody('<div class="in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>');
-      mb.hideFooter();
-      mb.show();
-      mb.on('cancel', function() {
-        "use strict";
-        mb.remove();
-      });
+    /**
+     *
+     * @param {MouseEvent} e
+     * @param {$.fn.ImportView}caller
+     */
+    self.handleClick = function (e, caller) {
 
 
       var query = JSON.parse($('[name=current_query_by_page]').val());
       var url = 'index.php?module=Emails&action=ImportFromListView';
 
-     var postOpts = {
+      var postOpts = {
         "inbound_email_record": query.inbound_email_record,
         "folders_id": query.folders_id,
         "folder": query.folder,
-        "uid[]": []
       };
+
+
+      var action = 'index.php?module=Emails&action=ImportFromListView';
+      var view = caller[0].messageBox.controls.modal.content.find('[name="EditView"]');
+      caller[0].messageBox.hideFooter();
+      $('<div class="in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>')
+        .prependTo(view.parent());
+      caller[0].messageBox.setTitle(SUGAR.language.translate('', 'LBL_EMAIL_IMPORTING_EMAIL'));
+      view.hide();
+
+      view.attr('action', action);
+
+      $.each(view.find('input[name]'), function (i, v) {
+        var name = 'SET_AFTER_IMPORT_'+$(v).attr('name');
+        $(v).attr('name', name);
+      });
+
+      $.each(view.find('select[name]'), function (i, v) {
+        var name = 'SET_AFTER_IMPORT_'+$(v).attr('name');
+        $(v).attr('name', name);
+      });
+
+      $.each(view.find('textarea[name]'), function (i, v) {
+        var name = 'SET_AFTER_IMPORT_'+$(v).attr('name');
+        $(v).attr('name', name);
+      });
+
+      $('<input type="hidden" name="inbound_email_record">').val(postOpts.inbound_email_record).appendTo(view);
+      $('<input type="hidden" name="folders_id">').val(postOpts.folders_id).appendTo(view);
+      $('<input type="hidden" name="folder">').val(postOpts.folder).appendTo(view);
+      $('<input type="hidden" name="all">').val(postOpts.all).appendTo(view);
 
       if(document.MassUpdate.select_entire_list &&
         document.MassUpdate.select_entire_list.value == 1) {
@@ -86,27 +111,20 @@
         // import only selected emails from inbox
         $('.listview-checkbox').each(function(i,v) {
           if($(v).is(':checked')) {
-            postOpts['uid[]'].push(query.email_uids[i])
-          };
+            $('<input type="hidden" name="uid[]">').val(query.email_uids[i]).appendTo(view);
+          }
         });
       }
 
-      $.post( url, postOpts).done(function (data) {
-        var jsonData = JSON.parse(data);
-        mb.hide();
-        if(jsonData.response === true) {
-          window.location.reload();
-        } else {
-          console.error('Error importing emails. Please check the logs for details.')
-        }
-      }).error(function (data) {
-        mb.hide();
-        alert(data);
-      });
+      view.submit();
+
     };
 
     self.construct = function() {
-      $(opts.buttonSelector).click(self.handleClick);
+      $(document).ImportView({
+        'callerSelector': opts.buttonSelector,
+        'messageBoxOkHandler': self.handleClick
+      });
     };
 
     self.construct();
@@ -117,7 +135,7 @@
     'buttonSelector': '[data-action=emails-import-multiple]',
     'contentSelector': '#content',
     'defaultFolder': 'INBOX'
-  }
+  };
 }(jQuery));
 
 $(document).ready(function() {

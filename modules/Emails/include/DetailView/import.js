@@ -40,7 +40,6 @@
 $(document).ready(function() {
   "use strict";
   $(document).ImportView({
-    'mode': 'single',
     'callerSelector': '[data-action="emails-import-single"]'
   });
 });
