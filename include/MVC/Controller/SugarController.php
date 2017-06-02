@@ -292,7 +292,7 @@ class SugarController
         if ($this->hasFunction($this->getActionMethodName())) {
             $GLOBALS['sugar_config']['http_referer']['actions'][] = $action;
         } else {
-            $GLOBALS['log']->debug("Unable to find SugarController:: $action");
+            $GLOBALS['log']->debug("Unable to find SugarController::$action");
         }
     }
 
