@@ -165,7 +165,8 @@ $mod_strings = array (
   'LBL_ROLES' => 'Roles',
   'LBL_SECURITYGROUPS' => 'Security Groups',
   'LBL_PROSPECT_LIST' => 'Prospect List',
-);
 
+    'LBL_BUTTON_SELECT' => 'Select',
+    'LBL_BUTTON_CLEAR' => 'Clear',);
 
 ?>
