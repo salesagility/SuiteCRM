@@ -63,11 +63,13 @@ class AOR_Report extends Basic
     var $assigned_user_name;
     var $assigned_user_link;
     var $report_module;
+    public static $hours;
 
     function __construct()
     {
         parent::__construct();
         $this->load_report_beans();
+        $this->hours = "";
         require_once('modules/AOW_WorkFlow/aow_utils.php');
         require_once('modules/AOR_Reports/aor_utils.php');
     }
@@ -1529,6 +1531,55 @@ class AOR_Report extends Basic
                             $value = '"' . $current_user->id . '"';
                             break;
                         case 'Value':
+                            $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $condition->value, new DateTimeZone("UTC"));
+                            //Can also get passed just a date, so check if a date and not datetime is passed
+                            if($dateTime === FALSE) {
+                                $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $condition->value . " 00:00:00");
+                            }
+
+                            //If its a datetime field, then modify the query to meet difference in UTC
+                            if ($dateTime !== FALSE) {
+                                global $timedate;
+
+                                if($this->hours == "")
+                                {
+                                    $newDate = clone $dateTime;
+                                    //Get users timezone
+                                    $newDate = $timedate->tzUser($newDate);
+                                    ////Get difference between users timezone and db timezone
+                                    $this->hours = $this->getHourDifference($dateTime->format('Y-m-d H:i:s'), $newDate->format('Y-m-d H:i:s'));
+
+                                }
+                                //Modify query to ad on the specified amount of hours to the db time
+                                if($this->hours != "" && $this->hours != 0)
+                                {
+                                    if($sugar_config['dbconfig']['db_type'] == 'mssql'){
+                                        $field = "CAST(DATEADD(hour, " . $this->hours . ", " . $field . ") AS DATE)";
+                                        $value = "CAST('" . $condition->value . "' AS DATE)";
+                                    }
+                                    else {
+                                        $field = "DATE(DATE_ADD(" . $field . ", INTERVAL " . $this->hours . " HOUR))";
+                                        $value = "DATE('" . $condition->value . "')";
+                                    }
+                                }
+                                //Don't need to do dateadd if the time is the same
+                                else {
+                                    if($sugar_config['dbconfig']['db_type'] == 'mssql'){
+                                        $field = "CAST(" . $field . " AS DATE)";
+                                        $value = "CAST('" . $condition->value . "' AS DATE)";
+                                    }
+                                    else {
+                                        $field = "DATE(" . $field . ")";
+                                        $value = "DATE('" . $condition->value . "')";
+                                    }
+                                }
+
+
+                            }
+                            else{
+                                $value = "'" . $this->db->quote($condition->value) . "'";
+                            }
+                            break;
                         default:
                             $value = "'" . $this->db->quote($condition->value) . "'";
                             break;
@@ -1616,6 +1667,22 @@ class AOR_Report extends Basic
         }
 
         return $query;
+    }
+
+    /**
+     * Gets difference between two date strings in hours
+     * @param $date1
+     * @param $date2
+     * @return float
+     */
+    function getHourDifference($date1, $date2)
+    {
+        $time1 = strtotime($date1);
+        $time2 = strtotime($date2);
+        $diff = $time2-$time1;
+        $hours = $diff / (60 * 60);
+        return $hours;
+
     }
 
 }
