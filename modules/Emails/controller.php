@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+include_once 'include/Exceptions/SugarControllerException.php';
+
 // XSS rules
 
 if ($_REQUEST['action'] === 'ComposeView') {
@@ -94,28 +96,79 @@ if ($_REQUEST['action'] === 'DetailDraftView') {
     $GLOBALS['sugar_config']['http_referer']['actions'][] = 'DetailDraftView';
 }
 
+if ($_REQUEST['action'] === 'ReplyTo') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'ReplyTo';
+}
+
+
+if ($_REQUEST['action'] === 'ReplyToAll') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'ReplyToAll';
+}
+
+
+if ($_REQUEST['action'] === 'Forward') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'Forward';
+}
+
+
+if ($_REQUEST['action'] === 'MarkEmails') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'MarkEmails';
+}
+
 class EmailsController extends SugarController
 {
     /**
-     * @var Email $bean;
+     * @var Email $bean ;
      */
     public $bean;
 
+    /**
+     * @see EmailsController::composeBean()
+     */
+    const COMPOSE_BEAN_MODE_UNDEFINED = 0;
+
+    /**
+     * @see EmailsController::composeBean()
+     */
+    const COMPOSE_BEAN_MODE_REPLY_TO = 1;
+
+    /**
+     * @see EmailsController::composeBean()
+     */
+    const COMPOSE_BEAN_MODE_REPLY_TO_ALL = 2;
+
+    /**
+     * @see EmailsController::composeBean()
+     */
+    const COMPOSE_BEAN_MODE_FORWARD = 3;
+
+    /**
+     * @see EmailsViewList
+     */
     public function action_index()
     {
         $this->view = 'list';
     }
 
+    /**
+     * @see EmailsViewDetaildraft
+     */
     public function action_DetailDraftView()
     {
         $this->view = 'detaildraft';
     }
 
+    /**
+     * @see EmailsViewCompose
+     */
     public function action_ComposeView()
     {
         $this->view = 'compose';
     }
 
+    /**
+     * @see EmailsViewSendemail
+     */
     public function action_send()
     {
         $this->bean = $this->bean->populateBeanFromRequest($this->bean, $_REQUEST);
@@ -134,7 +187,9 @@ class EmailsController extends SugarController
     }
 
 
-
+    /**
+     * @see EmailsViewCompose
+     */
     public function action_SaveDraft()
     {
         $this->bean = $this->bean->populateBeanFromRequest($this->bean, $_REQUEST);
@@ -145,11 +200,18 @@ class EmailsController extends SugarController
         $this->view = 'savedraftemail';
     }
 
+    /**
+     * @see EmailsViewPopup
+     */
     public function action_Popup()
     {
         $this->view = 'popup';
     }
 
+    /**
+     * Gets the values of the "from" field
+     *
+     */
     public function action_GetFromFields()
     {
         global $current_user;
@@ -157,7 +219,7 @@ class EmailsController extends SugarController
         $email->email2init();
         $ie = new InboundEmail();
         $ie->email = $email;
-        $accounts =$ieAccountsFull = $ie->retrieveAllByGroupIdWithGroupAccounts($current_user->id);
+        $accounts = $ieAccountsFull = $ie->retrieveAllByGroupIdWithGroupAccounts($current_user->id);
         $data = array();
         foreach ($accounts as $inboundEmailId => $inboundEmail) {
             $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
@@ -177,13 +239,16 @@ class EmailsController extends SugarController
 
     public function action_CheckEmail()
     {
-        $inboundEmail = BeanFactory::getBean('InboundEmail');
+        $inboundEmail = new InboundEmail();
         $inboundEmail->syncEmail();
 
         echo json_encode(array('response' => array()));
         $this->view = 'ajax';
     }
 
+    /**
+     * Used to list folders in the list view
+     */
     public function action_GetFolders()
     {
         require_once 'include/SugarFolders/SugarFolders.php';
@@ -195,12 +260,13 @@ class EmailsController extends SugarController
         $GLOBALS['log']->debug('********** EMAIL 2.0 - Asynchronous - at: refreshSugarFolders');
         $rootNode = new ExtNode('', '');
         $folderOpenState = $current_user->getPreference('folderOpenState', 'Emails');
-        $folderOpenState = (empty($folderOpenState)) ? '' : $folderOpenState;
+        $folderOpenState = empty($folderOpenState) ? '' : $folderOpenState;
 
         try {
-            $ret = $email->et->folder->getUserFolders($rootNode, sugar_unserialize($folderOpenState), $current_user, true);
+            $ret = $email->et->folder->getUserFolders($rootNode, sugar_unserialize($folderOpenState), $current_user,
+                true);
             $out = json_encode(array('response' => $ret));
-        } catch(SugarFolderEmptyException $e) {
+        } catch (SugarFolderEmptyException $e) {
             $GLOBALS['log']->fatal($e->getMessage());
             $out = json_encode(array('errors' => array($mod_strings['LBL_ERROR_NO_FOLDERS'])));
         }
@@ -210,28 +276,33 @@ class EmailsController extends SugarController
     }
 
 
+    /**
+     * @see EmailsViewDetailnonimported
+     */
     public function action_DisplayDetailView()
     {
         global $db;
         $emails = BeanFactory::getBean("Emails");
         $result = $emails->get_full_list('', "uid = '{$db->quote($_REQUEST['uid'])}'");
-        if(empty($result))
-        {
+        if (empty($result)) {
             $this->view = 'detailnonimported';
         } else {
-            header('location:index.php?module=Emails&action=DetailView&record='. $result[0]->id);
+            header('location:index.php?module=Emails&action=DetailView&record=' . $result[0]->id);
         }
     }
 
+    /**
+     * @see EmailsViewDetailnonimported
+     */
     public function action_ImportAndShowDetailView()
     {
         global $db;
-        if(isset($_REQUEST['inbound_email_record']) && !empty($_REQUEST['inbound_email_record'])) {
+        if (isset($_REQUEST['inbound_email_record']) && !empty($_REQUEST['inbound_email_record'])) {
             $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($_REQUEST['inbound_email_record']));
             $inboundEmail->connectMailserver();
             $importedEmailId = $inboundEmail->returnImportedEmail($_REQUEST['msgno'], $_REQUEST['uid']);
-            if($importedEmailId !== false) {
-                header('location:index.php?module=Emails&action=DetailView&record='. $importedEmailId);
+            if ($importedEmailId !== false) {
+                header('location:index.php?module=Emails&action=DetailView&record=' . $importedEmailId);
             }
         } else {
             // When something fail redirect user to index
@@ -247,18 +318,19 @@ class EmailsController extends SugarController
         $this->view = 'ajax';
     }
 
-    public function action_ImportFromListView () {
+    public function action_ImportFromListView()
+    {
         global $db;
         $response = false;
 
-        if(isset($_REQUEST['inbound_email_record']) && !empty($_REQUEST['inbound_email_record'])) {
+        if (isset($_REQUEST['inbound_email_record']) && !empty($_REQUEST['inbound_email_record'])) {
             $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($_REQUEST['inbound_email_record']));
-            if(isset($_REQUEST['folder']) && !empty($_REQUEST['folder'])) {
+            if (isset($_REQUEST['folder']) && !empty($_REQUEST['folder'])) {
                 $inboundEmail->mailbox = $_REQUEST['folder'];
             }
             $inboundEmail->connectMailserver();
 
-            if(isset($_REQUEST['all']) && $_REQUEST['all'] === 'true') {
+            if (isset($_REQUEST['all']) && $_REQUEST['all'] === 'true') {
                 // import all in folder
                 $inboundEmail->importAllFromFolder();
                 $response = true;
@@ -275,4 +347,193 @@ class EmailsController extends SugarController
         echo json_encode(array('response' => $response));
         $this->view = 'ajax';
     }
+
+    public function action_ReplyTo()
+    {
+        $this->composeBean($_REQUEST, self::COMPOSE_BEAN_MODE_REPLY_TO);
+        $this->view = 'compose';
+    }
+
+    public function action_ReplyToAll()
+    {
+        $this->composeBean($_REQUEST, self::COMPOSE_BEAN_MODE_REPLY_TO_ALL);
+        $this->view = 'compose';
+    }
+
+    public function action_Forward()
+    {
+        $this->composeBean($_REQUEST, self::COMPOSE_BEAN_MODE_FORWARD);
+        $this->view = 'compose';
+    }
+
+    public function action_SendDraft()
+    {
+        $this->view = 'ajax';
+        echo json_encode(array());
+    }
+
+
+    /**
+     * @param array $request
+     * @param int $mode
+     * @throws InvalidArgumentException
+     * @see EmailsController::COMPOSE_BEAN_MODE_UNDEFINED
+     * @see EmailsController::COMPOSE_BEAN_MODE_REPLY_TO
+     * @see EmailsController::COMPOSE_BEAN_MODE_REPLY_TO_ALL
+     * @see EmailsController::COMPOSE_BEAN_MODE_FORWARD
+     */
+    public function composeBean($request, $mode = self::COMPOSE_BEAN_MODE_UNDEFINED)
+    {
+
+        if ($mode === self::COMPOSE_BEAN_MODE_UNDEFINED) {
+            throw new InvalidArgumentException('$mode argument is EMAILS_COMPOSE_UNDEFINED');
+        }
+
+        global $db;
+        global $mod_strings;
+
+        if(isset($request['record']) && !empty($request['record'])) {
+            $this->bean->retrieve($request['record']);
+
+        } else {
+            $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($request['inbound_email_record']));
+            $inboundEmail->connectMailserver();
+            $importedEmailId = $inboundEmail->returnImportedEmail($request['msgno'], $request['uid']);
+            $this->bean->retrieve($importedEmailId);
+        }
+
+        $_REQUEST['return_module'] = 'Emails';
+        $_REQUEST['return_Action'] = 'index';
+
+        if ($mode === self::COMPOSE_BEAN_MODE_REPLY_TO || $mode === self::COMPOSE_BEAN_MODE_REPLY_TO_ALL) {
+            // Move email addresses from the "from" field to the "to" field
+            $this->bean->to_addrs = $this->bean->from_addr;
+            $this->bean->to_addrs_names = $this->bean->from_addr_name;
+        } else {
+            if ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {
+                $this->bean->to_addrs = '';
+                $this->bean->to_addrs_names = '';
+            }
+        }
+
+        if ($mode !== self::COMPOSE_BEAN_MODE_REPLY_TO_ALL) {
+            $this->bean->cc_addrs_arr = array();
+            $this->bean->cc_addrs_names = '';
+            $this->bean->cc_addrs = '';
+            $this->bean->cc_addrs_ids = '';
+            $this->bean->cc_addrs_emails = '';
+        }
+
+        if ($mode === self::COMPOSE_BEAN_MODE_REPLY_TO || $mode === self::COMPOSE_BEAN_MODE_REPLY_TO_ALL) {
+            // Add Re to subject
+            $this->bean->name = $mod_strings['LBL_RE'] . $this->bean->name;
+        } else {
+            if ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {
+                // Add FW to subject
+                $this->bean->name = $mod_strings['LBL_FW'] . $this->bean->name;
+            } else {
+                $this->bean->name = $mod_strings['LBL_NO_SUBJECT'] . $this->bean->name;
+            }
+        }
+
+        // Move body into original message
+        if (!empty($this->bean->description_html)) {
+            $this->bean->description = '<br>' . $mod_strings['LBL_ORIGINAL_MESSAGE_SEPERATOR'] . '<br>' .
+                $this->bean->description_html;
+        } else {
+            if (!empty($this->bean->description)) {
+                $this->bean->description = PHP_EOL . $mod_strings['LBL_ORIGINAL_MESSAGE_SEPERATOR'] . PHP_EOL .
+                    $this->bean->description;
+            }
+        }
+
+    }
+
+    /**
+     * @throws SugarControllerException
+     */
+    public function action_MarkEmails () {
+        $request = $_REQUEST;
+
+        // validate the request
+
+        if(!isset($request['inbound_email_record']) || !$request['inbound_email_record']) {
+            throw new SugarControllerException('No Inbound Email record in request');
+        }
+
+        if(!isset($request['folder']) || !$request['folder']) {
+            throw new SugarControllerException('No Inbound Email folder in request');
+        }
+
+
+        // connect to requested inbound email server
+        // and select the folder
+
+        $ie = $this->getInboundEmail($request['inbound_email_record']);
+        $ie->mailbox = $request['folder'];
+        $ie->connectMailserver();
+
+        // get requested UIDs and flag type
+
+        $UIDs = $this->getRequestedUIDs($request);
+        $type = $this->getRequestedFlagType($request);
+
+        // mark emails
+
+        $ie->markEmails($UIDs, $type);
+
+        echo json_encode(array('response' => true));
+        $this->view = 'ajax';
+    }
+
+    /**
+     * @param $request
+     * @return null|string
+     */
+    private function getRequestedUIDs($request) {
+        $ret = $this->getRequestedArgument($request, 'uid');
+        if(is_array($ret)) {
+            $ret = implode(',', $ret);
+        }
+        return $ret;
+    }
+
+    /**
+     * @param array $request
+     * @return null|mixed
+     */
+    private function getRequestedFlagType($request) {
+        $ret = $this->getRequestedArgument($request, 'type');
+        return $ret;
+    }
+
+    /**
+     * @param array $request
+     * @param string $key
+     * @return null|mixed
+     */
+    private function getRequestedArgument($request, $key) {
+        if(!isset($request[$key])) {
+            $GLOBALS['log']->error("Requested key is not set: ");
+            return null;
+        }
+        return $request[$key];
+    }
+
+    /**
+     * return an Inbound Email by requested record
+     *
+     * @param string $record
+     * @return InboundEmail
+     * @throws SugarControllerException
+     */
+    private function getInboundEmail($record) {
+        $db = DBManagerFactory::getInstance();
+        $ie = BeanFactory::getBean('InboundEmail', $db->quote($record));
+        if(!$ie) {
+            throw new SugarControllerException("BeanFactory can't resolve an InboundEmail record: $record");
+        }
+        return $ie;
+    }
+
 }

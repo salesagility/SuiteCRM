@@ -173,11 +173,22 @@
           my: 'bottom left',
           at: 'top left'
         },
-        show: {solo: true},
+        show: {solo: true, ready: true, event: false},
         hide: {event: false},
         style: {classes: 'emails-qtip'}
       });
       $(this).qtip("show");
+      $(this).unbind('unfocus').blur(function(e) {
+        var isButton = $(e.relatedTarget).hasClass('btn-qtip-bar');
+        var isQtipContent =  $(e.relatedTarget).hasClass('qtip-content');
+        var isQtip =  $(e.relatedTarget).hasClass('qtip-tip');
+
+        if(isButton || isQtipContent || isQtip) {
+          return false;
+        }
+
+        $(this).qtip("hide");
+      });
       $('.btn-qtip-bar').unbind('click').click(self.handleQTipBarClick);
     };
 

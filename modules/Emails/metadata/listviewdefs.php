@@ -65,6 +65,18 @@ $viewdefs['Emails']['ListView'] = array(
                 array(
                     'customCode' => '<a data-action="emails-import-multiple" title="{$MOD.LBL_IMPORT}">{$MOD.LBL_IMPORT}</a>'
                 ),
+                array(
+                    'customCode' => '<a data-action="emails-mark" data-for="unread" title="{$MOD.LBL_MARK_UNREAD}">{$MOD.LBL_MARK_UNREAD}</a>',
+                ),
+                array(
+                    'customCode' => '<a data-action="emails-mark" data-for="read" title="{$MOD.LBL_MARK_READ}">{$MOD.LBL_MARK_READ}</a>',
+                ),
+                array(
+                    'customCode' => '<a data-action="emails-mark" data-for="flagged" title="{$MOD.LBL_MARK_FLAGGED}">{$MOD.LBL_MARK_FLAGGED}</a>',
+                ),
+                array(
+                    'customCode' => '<a data-action="emails-mark" data-for="unflagged" title="{$MOD.LBL_MARK_UNFLAGGED}">{$MOD.LBL_MARK_UNFLAGGED}</a>',
+                ),
             ),
             'headerTpl' => 'modules/Emails/include/ListView/ListViewHeader.tpl',
         ),
@@ -90,6 +102,9 @@ $viewdefs['Emails']['ListView'] = array(
             ),
             array(
                 'file' => 'modules/Emails/include/ListView/ImportEmailAction.js',
+            ),
+            array(
+                'file' => 'modules/Emails/include/ListView/MarkEmails.js',
             ),
         ),
         'options' => array(

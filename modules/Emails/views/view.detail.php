@@ -60,6 +60,7 @@ class EmailsViewDetail extends ViewDetail
         $metadataFile = $this->getMetaDataFile();
         $this->dv = new EmailsDetailView();
         $this->dv->ss =&  $this->ss;
+        $this->dv->populateBean($_REQUEST);
         $this->dv->setup(
             $this->module,
             $this->bean,

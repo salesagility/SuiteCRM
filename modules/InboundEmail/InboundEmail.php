@@ -169,7 +169,7 @@ class InboundEmail extends SugarBean
     public $imagePrefix;
 
     /**
-     * Sole constructor
+     * Email constructor
      */
     public function __construct()
     {
@@ -2074,11 +2074,42 @@ class InboundEmail extends SugarBean
     /**
      * Sets flags on emails.  Assumes that connection is live, correct folder is
      * set.
-     * @param string $uids Sequence of UIDs, comma separated
+     * @param string|array $uids Sequence of UIDs, comma separated string or array
      * @param string $type Flag to mark
+     * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
      */
     public function markEmails($uids, $type)
     {
+
+        // repair uids value (confert to string)
+
+        if(is_array($uids)) {
+            $uids = implode(',', $uids);
+        }
+
+
+        // validate for comma separated and numeric UIDs
+
+        $splits = explode(',', $uids);
+        if(!$splits) {
+            $GLOBALS['log']->fatal("No IMAP uids");
+            return false;
+        }
+        foreach($splits as $uid) {
+            if(!is_numeric($uid)) {
+                $GLOBALS['log']->fatal("Incorrect UID format");
+                return false;
+            }
+        }
+
+
+        // validate for IMAP flag type
+
+        if(!$type) {
+            $GLOBALS['log']->fatal("IMAP flag type doesn't set");
+            return false;
+        }
+
         switch ($type) {
             case 'unread':
                 $result = imap_clearflag_full($this->conn, $uids, '\\SEEN', ST_UID);
@@ -2095,7 +2126,19 @@ class InboundEmail extends SugarBean
             case 'answered':
                 $result = imap_setflag_full($this->conn, $uids, '\\Answered', ST_UID);
                 break;
+            default:
+
+                // Logging of incorrect (unknown) IMap flag type
+
+                $GLOBALS['log']->fatal("Unknown IMap flag type: $type");
+                return false;
         }
+
+        if(!$result) {
+            $GLOBALS['log']->fatal("Some emails doesn't marked as $type");
+        }
+
+        return $result;
     }
     ////	END EMAIL 2.0 SPECIFIC
     ///////////////////////////////////////////////////////////////////////////
@@ -4828,12 +4871,12 @@ class InboundEmail extends SugarBean
 
 
     /**
-     * Imports A Single Emai
+     * Imports A Single Email
      * @param $msgNo
      * @param $uid
      * @param bool $forDisplay
      * @param bool $clean_email
-     * @return
+     * @return boolean
      */
     public function returnImportedEmail($msgNo, $uid, $forDisplay = false, $clean_email = true)
     {
@@ -4974,15 +5017,15 @@ class InboundEmail extends SugarBean
                 $this->imagePrefix = "cid:";
             }
             // handle multi-part email bodies
-            $email->description_html = $this->getMessageText(
-                $msgNo,
+            $email->description_html = $this->getMessageTextWithUid(
+                $uid,
                 'HTML',
                 $structure,
                 $fullHeader,
                 $clean_email
             ); // runs through handleTranserEncoding() already
-            $email->description = $this->getMessageText(
-                $msgNo,
+            $email->description = $this->getMessageTextWithUid(
+                $uid,
                 'PLAIN',
                 $structure,
                 $fullHeader,
@@ -5121,38 +5164,64 @@ class InboundEmail extends SugarBean
 
     /**
      * Used to view non imported emails
-     * @param $msgNo - imap mesgno
-     * @param $uid - imap uid
-     * @return bool|Email - false on error | a non imported email
+     * @param string $msgNo - imap mesgno
+     * @param string $uid - imap uid
+     * @return Email|boolean - false on error | a non imported email
+     * @throws Exception
      */
     public function returnNonImportedEmail($msgNo, $uid)
     {
-        global $timedate;
-        global $app_strings;
-        global $app_list_strings;
-        global $sugar_config;
-        global $current_user;
+        global $timedate, $current_user;
 
         if (empty($header)) {
             $email = new Email();
 
 
             $this->connectMailserver();
+
+
             $header = imap_fetch_overview($this->conn, $uid, FT_UID);
             $fullHeader = imap_fetchheader($this->conn, $uid, FT_UID);
             $headerByMsgNo = imap_headerinfo($this->conn, $msgNo);
             $structure = imap_fetchstructure($this->conn, $uid, FT_UID); // map of email
             $email->name = $this->handleMimeHeaderDecode($header[0]->subject);
             $email->type = 'inbound';
-            if (!empty($unixHeaderDate)) {
-                $email->date_sent = $timedate->asUser($unixHeaderDate);
-                list($email->date_start, $email->time_start) = $timedate->split_date_time($email->date_sent);
 
-            } else {
-                $email->date_start = $email->time_start = $email->date_sent = "";
+
+            if(empty($email->date_entered)) {
+
+                // find if string has (UTC) in timezone
+                $pattern = "/\([\w-+\/]+\)/i";
+                $timezoneTextFound = preg_match($pattern,  $header[0]->date);
+
+                $dateTimeFormat = 'D, d M Y H:i:s O *';
+                if($timezoneTextFound === false || $timezoneTextFound === 0) {
+                    $dateTimeFormat = 'D, d M Y H:i:s O';
+                }
+
+                $dateTime = DateTime::createFromFormat(
+                    $dateTimeFormat,
+                    $header[0]->date
+                );
+
+                if(!empty($dateTime)) {
+                    $email->date_entered = $timedate->asUser($dateTime, $current_user);
+                    $email->date_modified = $timedate->asUser($dateTime, $current_user);
+                    $email->date_start = $timedate->asUserDate($dateTime);
+                    $email->time_start = $timedate->asUserTime($dateTime);
+
+                    $systemUser =  BeanFactory::getBean('Users', 1);
+                    $email->created_by = $systemUser->id;
+                    $email->created_by_name = $systemUser->name;
+                    $email->modified_user_id = $systemUser->id;
+                    $email->modified_by_name = $systemUser->name;
+                } else {
+                    throw new Exception(
+                        'DateTime::createFromFormat ('.$dateTimeFormat.','.$header[0]->date.'): '.
+                        'expected DateTime but it returned FALSE or empty.'
+                    );
+                }
             }
-
-
 
             $email->status = 'unread'; // this is used in Contacts' Emails SubPanel
             if (!empty($header[0]->to)) {
@@ -5211,8 +5280,6 @@ class InboundEmail extends SugarBean
         } else {
             return false;
         }
-
-
     }
 
     /**

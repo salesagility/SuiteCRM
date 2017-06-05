@@ -203,6 +203,10 @@ class SyncInboundEmailAccountsSubActionHandler
 
         global $mod_strings;
 
+        // make sure there is no time limit
+        // so we will having enough time to sync everything
+        set_time_limit(0);
+
         $this->cleanup();
 
         $this->output($mod_strings['LBL_SYNC_MESSAGE']);
