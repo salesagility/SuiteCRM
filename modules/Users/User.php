@@ -760,6 +760,7 @@ EOQ;
 		if(!empty($where)) {
 		    $query .= " AND $where";
 		}
+		$query .= " AND deleted=0";
 		$result = $db->limitQuery($query,0,1,false);
 		if(!empty($result)) {
 		    $row = $db->fetchByAssoc($result);
