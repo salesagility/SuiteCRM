@@ -56,7 +56,8 @@
 
     self.handleClick = function (e) {
 
-      handleSelectedEmailsListViewItems(
+      SUGAR.Emails.handleSelectedListViewItems(
+        'Emails',
         'ImportFromListView',
         function() {
           window.location.reload();

@@ -37,15 +37,26 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if(!SUGAR.Emails) {
+  SUGAR.Emails = {};
+}
+
 /**
- * @todo take this function to a common email listview object
+ * @param {string} moduleName
  * @param {string} actionUrl
  * @param {function} successCallback
- * @param {function} errorCallback
- * @param {string} loadingTitle
- * @param {string} errorMessage
+ * @param {function} errorCallback (optional)
+ * @param {string} loadingTitle (optional)
+ * @param {string} errorMessage (optional)
  */
-var handleSelectedEmailsListViewItems = function(actionUrl, successCallback, errorCallback, loadingTitle, errorMessage) {
+SUGAR.Emails.handleSelectedListViewItems =  function(
+  moduleName,
+  actionUrl,
+  successCallback,
+  errorCallback,
+  loadingTitle,
+  errorMessage
+) {
 
   if(typeof loadingTitle === 'undefined') {
     loadingTitle = SUGAR.language.translate('Emails', 'LBL_LOADING');
@@ -67,7 +78,7 @@ var handleSelectedEmailsListViewItems = function(actionUrl, successCallback, err
 
 
   var query = JSON.parse($('[name=MassUpdate] [name=current_query_by_page]').val());
-  var url = 'index.php?module=Emails&action=' + actionUrl;
+  var url = 'index.php?module=' + moduleName + '&action=' + actionUrl;
 
   var postOpts = {
     "inbound_email_record": query.inbound_email_record,

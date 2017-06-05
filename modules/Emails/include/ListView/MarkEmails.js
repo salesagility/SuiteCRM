@@ -51,7 +51,8 @@
     self.handleClick = function () {
       "use strict";
 
-      handleSelectedEmailsListViewItems(
+      SUGAR.Emails.handleSelectedListViewItems(
+        'Emails',
         'MarkEmails&type=' + $(this).attr('data-for'),
         function() {
           window.location.reload();
