@@ -712,7 +712,6 @@ class ListViewDataEmails extends ListViewData
                                     break;
                                 case 'uid':
                                     $emailRecord[strtoupper($field)] = $emailHeader['uid'];
-                                    $_REQUEST['email_uids'][] = $emailHeader['uid'];
                                     break;
                                 case 'msgno':
                                     $emailRecord[strtoupper($field)] = $emailHeader['msgno'];
@@ -940,6 +939,11 @@ class ListViewDataEmails extends ListViewData
                                 }
                             }
                         }
+                    }
+
+                    $_REQUEST['email_uids'] = array();
+                    foreach ($data as $row) {
+                        $_REQUEST['email_uids'][] = $row['UID'];
                     }
 
                     return array('data' => $data, 'pageData' => $pageData, 'query' => $queryString);

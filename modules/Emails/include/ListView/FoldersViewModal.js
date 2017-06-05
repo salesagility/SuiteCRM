@@ -45,7 +45,7 @@
    */
   $.fn.FoldersViewModal =  function(options) {
     "use strict";
-    var self = {};
+    var self = this;
     var opts = $.extend({}, $.fn.FoldersViewModal.defaults, options);
 
     self.handleClick = function () {
