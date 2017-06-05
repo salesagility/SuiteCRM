@@ -119,5 +119,6 @@ $mod_strings = array (
 	'LBL_ID_FF_CLEAR' => 'Clear' /*for 508 compliance fix*/,
     'LBL_TYPE' => 'Type',
     'LBL_EDIT_BUTTON_TITLE_MOZAIK' => 'RWD Edit',
+	'LBL_WIDTH' => 'Width default',
 );
 ?>
