@@ -246,7 +246,7 @@ function commitCopyNewFiles($unzip_dir, $zip_from_dir, $path='') {
 
 //On cancel put back the copied files from 500 to 451 state
 function copyFilesOnCancel($step){
-//place hoder for cancel action
+//place holder for cancel action
 
 }
 
@@ -1056,7 +1056,7 @@ function checkSystemCompliance() {
 	if (check_php_version() === 0) {
 		$ret['phpVersion'] = "<b><span class=stop>{$installer_mod_strings['LBL_CURRENT_PHP_VERSION']} ".constant('PHP_VERSION').". ";
 		$ret['phpVersion'] .= $mod_strings['LBL_RECOMMENDED_PHP_VERSION_1'].constant('SUITECRM_PHP_REC_VERSION').$mod_strings['LBL_RECOMMENDED_PHP_VERSION_2'].'</span></b>';
-		$ret['error_found'] = true;
+		$ret['warn_found'] = true;
 	}
 
 	if (check_php_version() === 1) {
