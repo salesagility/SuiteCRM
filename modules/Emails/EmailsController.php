@@ -363,7 +363,7 @@ class EmailsController extends SugarController
     {
 
         if ($mode === self::COMPOSE_BEAN_MODE_UNDEFINED) {
-            throw new InvalidArgumentException('$mode argument is EMAILS_COMPOSE_UNDEFINED');
+            throw new InvalidArgumentException('EmailController::composeBean $mode argument is COMPOSE_BEAN_MODE_UNDEFINED');
         }
 
         global $db;
