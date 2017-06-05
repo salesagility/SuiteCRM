@@ -80,7 +80,6 @@ $viewdefs['Emails']['ListView'] = array(
             ),
             'headerTpl' => 'modules/Emails/include/ListView/ListViewHeader.tpl',
         ),
-
         'includes' => array(
             array(
               'file' => 'include/javascript/jstree/dist/jstree.js',
@@ -99,6 +98,9 @@ $viewdefs['Emails']['ListView'] = array(
             ),
             array(
                 'file' => 'modules/Emails/include/ListView/ListViewHeader.js',
+            ),
+            array(
+                'file' => 'modules/Emails/include/DetailView/ImportView.js',
             ),
             array(
                 'file' => 'modules/Emails/include/ListView/ImportEmailAction.js',

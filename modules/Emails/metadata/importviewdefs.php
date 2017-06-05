@@ -46,12 +46,24 @@ $viewdefs[$module_name]['EditView'] = array(
             array('label' => '10', 'field' => '30'),
             array('label' => '10', 'field' => '30')
         ),
+        'form' => array(
+            'headerTpl' => 'modules/Emails/include/ComposeView/ComposeViewBlank.tpl',
+            'footerTpl' => 'modules/Emails/include/ComposeView/ComposeViewBlank.tpl',
+            'buttons' => array(),
+            'includes' => array(
+                array(
+                    'file' => 'modules/Emails/include/DetailView/ImportView.js'
+                ),
+                array(
+                    'file' => 'modules/Emails/include/DetailView/import.js'
+                )
+            ),
+        ),
     ),
     'panels' => array(
-
         'LBL_EMAIL_INFORMATION' => array(
             array(
-                'assigned_user_name' => array(
+                'parent_name' => array(
                     'name' => 'assigned_user_name',
                     'label' => 'LBL_ASSIGNED_TO',
                 )
@@ -59,9 +71,7 @@ $viewdefs[$module_name]['EditView'] = array(
             array(
                 'parent_name'
             ),
-            array (
-                'category_id',
-            ),
+
         )
     )
 
