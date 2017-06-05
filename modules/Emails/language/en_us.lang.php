@@ -423,6 +423,7 @@ $mod_strings = array (
     'LBL_ORPHANED' => 'Orphaned',
     'LBL_IMAP_KEYWORDS' => 'IMAP Keywords',
     'LBL_ERROR_NO_FOLDERS' => 'Error: There are no folders available. Please check your email settings.',
+    'LBL_ORIGINAL_MESSAGE_SEPERATOR' => '---'
 
 	'LBL_MARK_UNREAD' => 'Mark As Unread',
 	'LBL_MARK_READ' => 'Mark As Read',
