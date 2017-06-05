@@ -102,7 +102,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
         if (isset($field['source']) && $field['source'] == 'custom_fields')
         {
             $type = !empty($field['custom_type']) ? $field['custom_type'] : $field['type'];
-            $sf = $sfh->getSugarField($type);
+            $sf = $sfh::getSugarField($type);
             if ($sf != null)
             {
                 $sf->save($focus, $_POST, $fieldName, $field, '');
@@ -153,7 +153,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
         {
             $field = $focus->field_defs[$fieldName];
             $type = !empty($field['custom_type']) ? $field['custom_type'] : $field['type'];
-            $sf = $sfh->getSugarField($type);
+            $sf = $sfh::getSugarField($type);
             if ($sf != null)
             {
                 $sf->save($focus, $_POST, $fieldName, $field, '');
@@ -167,7 +167,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
         {
             $field = $focus->field_defs[$fieldName];
             $type = !empty($field['custom_type']) ? $field['custom_type'] : $field['type'];
-            $sf = $sfh->getSugarField($type);
+            $sf = $sfh::getSugarField($type);
             if ($sf != null)
             {
                 $sf->save($focus, $_POST, $fieldName, $field, '');

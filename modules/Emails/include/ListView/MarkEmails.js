@@ -43,14 +43,25 @@
    * @param options
    * @return {*|HTMLElement}
    */
-  $.fn.CheckNewEmails =  function(options) {
+  $.fn.MarkEmails =  function(options) {
     "use strict";
     var self = this;
-    var opts = $.extend({}, $.fn.CheckNewEmails.defaults, options);
+    var opts = $.extend({}, $.fn.MarkEmails.defaults, options);
 
     self.handleClick = function () {
       "use strict";
-      window.location.reload();
+
+      SUGAR.Emails.handleSelectedListViewItems(
+        'Emails',
+        'MarkEmails&type=' + $(this).attr('data-for'),
+        function() {
+          window.location.reload();
+        },
+        false,
+        SUGAR.language.translate('Emails', 'LBL_MARKING'),
+        'Error marking emails.'
+      );
+
     };
 
     /**
@@ -59,10 +70,6 @@
     self.construct = function () {
       "use strict";
       $(opts.buttonSelector).click(self.handleClick);
-      // look for new
-      $('.email-indicator .email-new').each(function(i, v){
-        $(this).closest('tr').addClass('email-new-record');
-      });
     };
 
     /**
@@ -76,12 +83,12 @@
     return $(self);
   };
 
-  $.fn.CheckNewEmails.defaults = {
-    'buttonSelector': '[data-action=emails-check-new-email]',
+  $.fn.MarkEmails.defaults = {
+    'buttonSelector': '[data-action=emails-mark]',
     'contentSelector': '#content'
   }
 }(jQuery));
 
 $(document).ready(function() {
-  $(document).CheckNewEmails();
+  $(document).MarkEmails();
 });
