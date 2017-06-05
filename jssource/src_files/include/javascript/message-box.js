@@ -236,8 +236,9 @@
         self.controls.modal.footer.html(opts.footerContent);
 
         // OK / Cancel
-        self.controls.modal.buttons.ok  = self.controls.modal.container.find('.btn-ok');
-        self.controls.modal.buttons.cancel  = self.controls.modal.container.find('.btn-cancel');
+        self.controls.modal.buttons = {};
+        self.controls.modal.buttons.ok  = $(self.controls.modal.container).find('.btn-ok');
+        self.controls.modal.buttons.cancel  = $(self.controls.modal.container).find('.btn-cancel');
         self.controls.modal.container.find('.btn-ok').click(opts.onOK);
         self.controls.modal.container.find('.btn-cancel').click(opts.onCancel);
 
@@ -246,7 +247,7 @@
         };
 
         if(opts.showFooter === false) {
-          self.controls.modal.footer.hide()
+          self.controls.modal.footer.hide();
         };
 
         self.modal(opts);
