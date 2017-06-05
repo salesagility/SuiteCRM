@@ -781,7 +781,69 @@ function upgradeUWFiles($file) {
 		}
 	}
 
-    upgradeUWFilesCopy($allFiles, $from_dir);
+	// check custom changes and alert the user before upgrade
+
+	if($filesInCustom = checkCustomOverrides($from_dir)) {
+		global $mod_strings;
+		$alertMessage = $mod_strings["LBL_UPGRD_CSTM_CHK"]; //
+		echo "<div class=\"error\">$alertMessage<br><ul>";
+		foreach($filesInCustom as $fileInCustom) {
+			echo "<li>$fileInCustom => custom/$fileInCustom</li>";
+		}
+		echo "</ul></div>";
+	}
+
+	upgradeUWFilesCopy($allFiles, $from_dir);
+}
+
+/**
+ * find files in custom folder if it also in upgrade pack
+ *
+ * @param $fromDir uploaded temp directory
+ * @return array filelist (or empty array if there is no any)
+ */
+function checkCustomOverrides($fromDir) {
+
+	$ret = array();
+
+	logThis(' -------------- Check Custom Overrides ------------- ');
+
+	$path = realpath($fromDir);
+	logThis("Upload temp directory: $fromDir");
+
+	// read all upgrade files
+
+	$objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST);
+
+	foreach($objects as $name => $object){
+
+		// check only files (folder doesn't matter)
+
+		if(!is_dir($name)) {
+
+			// get the original file name
+
+			$orig = str_replace("$fromDir/", '', $name);
+
+			// original file exists?
+
+			if (file_exists($orig)) {
+
+				// custom for this file exists?
+
+				if(file_exists("custom/$orig")) {
+
+					// grab the customized files
+
+					logThis("A file in upgrade pack found in custom folder: $orig");
+					$ret[] = $orig;
+				}
+			}
+		}
+
+	}
+
+	return $ret;
 }
 
 /**
@@ -2329,7 +2391,7 @@ function resetUwSession() {
  * runs rebuild scripts
  */
 function UWrebuild() {
-	
+
 	$GLOBALS['log']->deprecated('UWrebuild is deprecated');
 }
 
@@ -4071,7 +4133,7 @@ function upgrade_connectors() {
  * This function removes linkedin config from custom/modules/Connectors/metadata/display_config.php, linkedin connector is removed in 6.5.16
  *
  */
-function remove_linkedin_config() 
+function remove_linkedin_config()
 {
     $display_file = 'custom/modules/Connectors/metadata/display_config.php';
 
