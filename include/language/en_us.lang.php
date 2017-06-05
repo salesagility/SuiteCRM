@@ -1101,7 +1101,7 @@ $app_strings = array(
     'LBL_SORT' => 'Sort',
     'LBL_OUTBOUND_EMAIL_ADD_SERVER' => 'Add Server...',
     'LBL_EMAIL_SMTP_SSL_OR_TLS' => 'Enable SMTP over SSL or TLS?',
-    'LBL_NO_ACTION' => 'There is no action by that name.',
+    'LBL_NO_ACTION' => 'There is no action by that name: %s',
     'LBL_NO_SHORTCUT_MENU' => 'There are no actions available.',
     'LBL_NO_DATA' => 'No Data',
     'LBL_ROUTING_ADD_RULE' => 'Add Rule',
@@ -3496,7 +3496,7 @@ $app_list_strings['contract_status_list']['Not Started'] = 'Not Started';
 $app_list_strings['contract_status_list']['In Progress'] = 'In Progress';
 $app_list_strings['contract_status_list']['Signed'] = 'Signed';
 $app_list_strings['contract_type_list']['Type'] = 'Type';
-$app_strings['LBL_GENERATE_LETTER'] = 'Generate Letter';
+$app_strings['LBL_PRINT_AS_PDF'] = 'Print as PDF';
 $app_strings['LBL_SELECT_TEMPLATE'] = 'Please Select a Template';
 $app_strings['LBL_NO_TEMPLATE'] = 'ERROR\nNo templates found.\nPlease go to the PDF templates module and create one';
 

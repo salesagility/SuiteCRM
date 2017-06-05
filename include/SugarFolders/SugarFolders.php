@@ -324,10 +324,10 @@ class SugarFolder
         global $current_user;
         $q = "SELECT emails.id , emails.name, emails.date_sent, emails.status, emails.type, emails.flagged, ".
             "emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs, 'Emails'".
-            " polymorphic_module FROM emails JOIN emails_text on emails.id = emails_text.email_id".
+            " polymorphic_module FROM emails JOIN emails_text on emails.id = emails_text.email_id ".
             "WHERE emails.deleted=0 AND emails.type NOT IN ('out', 'draft')"."
             AND emails.status NOT IN ('sent', 'draft') AND emails.id IN (".
-            "SELECT eear.email_id FROM emails_email_addr_rel eear".
+            "SELECT eear.email_id FROM emails_email_addr_rel eear " .
             "JOIN email_addr_bean_rel eabr ON eabr.email_address_id=eear.email_address_id AND".
             " eabr.bean_id = '{$current_user->id}' AND eabr.bean_module = 'Users' WHERE eear.deleted=0)";
 
