@@ -56,7 +56,7 @@ $dictionary['folders'] = array(
 		array(
 			'name'			=> 'name',
 			'type'			=> 'varchar',
-			'len'			=> 25,
+			'len'			=> 255,
 			'required'		=> true,
 		),
 		array(

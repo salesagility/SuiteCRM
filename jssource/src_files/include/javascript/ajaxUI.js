@@ -111,7 +111,6 @@ SUGAR.ajaxUI = {
                 SUGAR.ajaxUI.errorPanel = new YAHOO.widget.Panel("ajaxUIErrorPanel", {
                     modal: false,
                     visible: true,
-                    constraintoviewport: true,
                     width	: "800px",
                     height : "600px",
                     close: true

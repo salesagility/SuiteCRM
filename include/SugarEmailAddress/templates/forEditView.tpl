@@ -76,7 +76,7 @@ var emailAddressWidgetLoaded = false;
 		<div class="col-xs-12 template email-address-line-container hidden">
 			<div class="col-xs-12 col-sm-6  email-address-input-container {if $module == "Users"} email-address-users-profile{/if}">
 				<div class="input-group email-address-input-group">
-					<input type="email" id="email-address-input" value="" class="form-control" placeholder="email@example.com" title="{$app_strings.LBL_EMAIL_TITLE}">
+					<input type="email" id="email-address-input" class="form-control" placeholder="email@example.com" title="{$app_strings.LBL_EMAIL_TITLE}">
 					<input type="hidden" id="record-id">
 					<input type="hidden" id="verified-flag" class="verified-flag" value="true"/>
 					<input type="hidden" id="verified-email-value" class="verified-email-value" value=""/>
@@ -125,29 +125,20 @@ var emailAddressWidgetLoaded = false;
 <input type="hidden" name="useEmailWidget" value="true">
 <script type="text/javascript" language="javascript">
 SUGAR_callsInProgress++;
-function init{$module}Email{$index}(){ldelim}
-	if(emailAddressWidgetLoaded || SUGAR.EmailAddressWidget){ldelim}
-		{*var table = YAHOO.util.Dom.get("{$module}emailAddressesTable{$index}");*}
-	    var eaw = SUGAR.EmailAddressWidget.instances.{$module}{$index} = new SUGAR.EmailAddressWidget("{$module}");
-		eaw.emailView = '{$emailView}';
-	    eaw.emailIsRequired = "{$required}";
-	    eaw.tabIndex = '{$tabindex}';
-	    var addDefaultAddress = '{$addDefaultAddress}';
-	    var prefillEmailAddress = '{$prefillEmailAddresses}';
-	    var prefillData = {$prefillData};
-	    if(prefillEmailAddress == 'true') {ldelim}
-	        eaw.prefillEmailAddresses('{$module}emailAddressesTable{$index}', prefillData);
-		{rdelim} else if(addDefaultAddress == 'true') {ldelim}
-	        eaw.addEmailAddress('{$module}emailAddressesTable{$index}', '',true);
-		{rdelim}
-		if('{$module}_email_widget_id') {ldelim}
-		   document.getElementById('{$module}_email_widget_id').value = eaw.count;
-		{rdelim}
-		SUGAR_callsInProgress--;
-	{rdelim}else{ldelim}
-		setTimeout("init{$module}Email{$index}();", 500);
-	{rdelim}
+var eaw = SUGAR.EmailAddressWidget.instances.{$module}{$index} = new SUGAR.EmailAddressWidget("{$module}");
+eaw.emailView = '{$emailView}';
+eaw.emailIsRequired = "{$required}";
+eaw.tabIndex = '{$tabindex}';
+var addDefaultAddress = '{$addDefaultAddress}';
+var prefillEmailAddress = '{$prefillEmailAddresses}';
+var prefillData = {$prefillData};
+if(prefillEmailAddress == 'true') {ldelim}
+	eaw.prefillEmailAddresses('{$module}emailAddressesTable{$index}', prefillData);
+{rdelim} else if(addDefaultAddress == 'true') {ldelim}
+	eaw.addEmailAddress('{$module}emailAddressesTable{$index}', '',true);
 {rdelim}
-
-YAHOO.util.Event.onDOMReady(init{$module}Email{$index});
+if('{$module}_email_widget_id') {ldelim}
+   document.getElementById('{$module}_email_widget_id').value = eaw.count;
+{rdelim}
+SUGAR_callsInProgress--;
 </script>
