@@ -713,11 +713,6 @@ $dictionary['Email'] = array(
     ), // end relationships
     'indices' => array(
         array(
-            'name' => 'emailspk',
-            'type' => 'primary',
-            'fields' => array('id'),
-        ),
-        array(
             'name' => 'idx_email_name',
             'type' => 'index',
             'fields' => array('name')
@@ -749,6 +744,7 @@ VardefManager::createVardef(
     'Emails',
     'Email',
     array(
+        'default',
         'basic',
         'assignable',
         'security_groups',
