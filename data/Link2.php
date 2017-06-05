@@ -121,7 +121,11 @@ class Link2
         $this->relationship_fields = (!empty($this->def['rel_fields'])) ? $this->def['rel_fields'] : array();
 
         if (!$this->loadedSuccesfully()) {
-            $GLOBALS['log']->fatal("{$this->name} for {$this->def['relationship']} failed to load\n");
+            $logFunction = 'fatal';
+            if (!isset($this->def['source']) || $this->def['source'] !== 'non-db') {
+                $logFunction = 'warn';
+            }
+            $GLOBALS['log']->$logFunction("{$this->name} for {$this->def['relationship']} failed to load\n");
         }
         //Following behavior is tied to a property(ignore_role) value in the vardef. It alters the values of 2 properties, ignore_role_filter and add_distinct.
         //the property values can be altered again before any requests are made.

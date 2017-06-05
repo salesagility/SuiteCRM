@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -17,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,53 +34,20 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-    die ('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
 
-require_once 'modules/Emails/include/DetailView/EmailsDetailView.php';
-
-class EmailsViewDetail extends ViewDetail
+/**
+ * Class EmailException
+ */
+class EmailException extends Exception
 {
-    /**
-     * @var Email $bean
-     */
-    public $bean;
-
-    /**
-     * @see SugarView::preDisplay()
-     */
-    public function preDisplay()
-    {
-        $metadataFile = $this->getMetaDataFile();
-        $this->dv = new EmailsDetailView();
-        $this->dv->ss =&  $this->ss;
-        $this->dv->populateBean($_REQUEST);
-        $this->dv->setup(
-            $this->module,
-            $this->bean,
-            $metadataFile
-        );
-    }
-
-    /**
-     * display view
-     */
-    public function display()
-    {
-        switch ($this->bean->status) {
-            case 'unread':
-                $this->bean->status = 'read';
-                $this->bean->save();
-                break;
-            default:
-                break;
-        }
-        parent::display();
-    }
+    const NO_DEFAULT_FROM_ADDR = 10;
+    const NO_DEFAULT_FROM_EMAIL = 20;
 
 }

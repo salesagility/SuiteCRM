@@ -137,7 +137,7 @@ if (!empty($cfg->config['aop']['distribution_user_id'])) {
 
 $sugar_smarty->assign('distribution_user_name', $distributionUserName);
 
-$emailTemplateList = get_bean_select_array(true, 'EmailTemplate', 'name');
+$emailTemplateList = get_bean_select_array(true, 'EmailTemplate', 'name', '', 'name');
 
 $userEmailTemplateDropdown =
     get_select_options_with_id($emailTemplateList, $cfg->config['aop']['user_email_template_id']);

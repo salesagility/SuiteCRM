@@ -56,61 +56,6 @@ if(isset($GLOBALS['current_language']) && ($GLOBALS['current_language'] != null)
 }
 $mod_strings = return_module_language($curr_lang, 'UpgradeWizard',true);
 
-function check_php($sys_php_version = '')
-{
-    $min_considered_php_version = '5.2.2';
-
-    $supported_php_versions = array (
-    '5.2.2', '5.2.3', '5.2.4', '5.2.5', '5.2.6', '5.2.8', '5.3.0'
-    );
-    //Find out what Database the system is using.
-    global $sugar_config;
-    $dbType = '';
-    if (isset ($sugar_config['dbconfig']) && isset ($sugar_config['dbconfig']['db_type'])) {
-        $dbType = $sugar_config['dbconfig']['db_type'];
-    }
-
-    // invalid versions above the $min_considered_php_version,
-    // should be mutually exclusive with $supported_php_versions
-
-    // SugarCRM prohibits install on PHP 5.2.x on all platforms
-    $invalid_php_versions = array('5.2.7');
-
-    // default unsupported
-    $retval = 0;
-
-    // versions below $min_considered_php_version are invalid
-    if(1 == version_compare($sys_php_version, $min_considered_php_version, '<')) {
-        $retval = -1;
-    }
-
-    // supported version check overrides default unsupported
-    foreach($supported_php_versions as $ver) {
-        if(1 == version_compare($sys_php_version, $ver, 'eq') || strpos($sys_php_version,$ver) !== false) {
-            $retval = 1;
-            break;
-        }
-    }
-
-    // invalid version check overrides default unsupported
-    foreach($invalid_php_versions as $ver) {
-        if(1 == version_compare($sys_php_version, $ver, 'eq') || strpos($sys_php_version,$ver) !== false) {
-            $retval = -1;
-            break;
-        }
-    }
-
-    //allow a redhat distro to install, regardless of version.  We are assuming the redhat naming convention is followed
-    //and the php version contains 'rh' characters
-    if(strpos($sys_php_version, 'rh') !== false) {
-        $retval = 1;
-    }
-
-    return $retval;
-}
-
-
-
 $curr_lang = 'en_us';
 if(isset($GLOBALS['current_language']) && ($GLOBALS['current_language'] != null)){
 	$curr_lang = $GLOBALS['current_language'];
@@ -129,10 +74,8 @@ if (version_compare(phpversion(),'5.2.0') >=0) {
 
 	$errors = preflightCheck();
 
-	$php_version = constant('PHP_VERSION');
-    if(check_php($php_version) == -1)
-    {
-        $phpVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} {$php_version} </span></b>";
+	if (check_php_version() === -1) {
+        $phpVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} ".constant('PHP_VERSION')." </span></b>";
         $error_txt = '<span class="error">'.$phpVersion.'</span>';
         if(count($errors) == 0)
         $errors[] = '';
@@ -369,8 +312,8 @@ $diffs ='';
 ///////////////////////////////////////////////////////////////////////////////
 //php version suggestion
     $php_suggested_ver = '';
-	if(version_compare(phpversion(),'5.2.2') < 0){
-		$php_suggested_ver=$mod_strings['LBL_CURRENT_PHP_VERSION'].phpversion().$mod_strings['LBL_RECOMMENDED_PHP_VERSION'];
+	if(check_php_version() === 0){
+		$php_suggested_ver=$mod_strings['LBL_CURRENT_PHP_VERSION'].phpversion().". ".$mod_strings['LBL_RECOMMENDED_PHP_VERSION_1'].constant('SUITECRM_PHP_REC_VERSION').$mod_strings['LBL_RECOMMENDED_PHP_VERSION_2'];
 	}
 	if(empty($mod_strings['LBL_UPGRADE_TAKES_TIME_HAVE_PATIENCE'])){
 		$mod_strings['LBL_UPGRADE_TAKES_TIME_HAVE_PATIENCE'] = 'Upgrade may take some time';
