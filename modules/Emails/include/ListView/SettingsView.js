@@ -45,7 +45,7 @@
    */
   $.fn.SettingsView =  function(options) {
     "use strict";
-    var self = {};
+    var self = this;
     var opts = $.extend({}, $.fn.SettingsView.defaults, options);
 
     self.handleClick = function () {
@@ -72,7 +72,7 @@
     };
 
     self.construct();
-    return $(this);
+    return $(self);
   };
 
   $.fn.SettingsView.defaults = {

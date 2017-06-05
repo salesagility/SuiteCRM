@@ -503,7 +503,7 @@ class SugarController{
 	 * If there is no action found then display an error to the user.
 	 */
 	protected function no_action(){
-		sugar_die($GLOBALS['app_strings']['LBL_NO_ACTION']);
+		sugar_die(sprintf($GLOBALS['app_strings']['LBL_NO_ACTION'], $this->do_action));
 	}
 
 	/**

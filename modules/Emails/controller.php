@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+include_once 'include/Exceptions/SugarControllerException.php';
+
 // XSS rules
 
 if ($_REQUEST['action'] === 'ComposeView') {
@@ -108,6 +110,10 @@ if ($_REQUEST['action'] === 'Forward') {
     $GLOBALS['sugar_config']['http_referer']['actions'][] = 'Forward';
 }
 
+
+if ($_REQUEST['action'] === 'MarkEmails') {
+    $GLOBALS['sugar_config']['http_referer']['actions'][] = 'MarkEmails';
+}
 
 class EmailsController extends SugarController
 {
@@ -442,4 +448,92 @@ class EmailsController extends SugarController
         }
 
     }
+
+    /**
+     * @throws SugarControllerException
+     */
+    public function action_MarkEmails () {
+        $request = $_REQUEST;
+
+        // validate the request
+
+        if(!isset($request['inbound_email_record']) || !$request['inbound_email_record']) {
+            throw new SugarControllerException('No Inbound Email record in request');
+        }
+
+        if(!isset($request['folder']) || !$request['folder']) {
+            throw new SugarControllerException('No Inbound Email folder in request');
+        }
+
+
+        // connect to requested inbound email server
+        // and select the folder
+
+        $ie = $this->getInboundEmail($request['inbound_email_record']);
+        $ie->mailbox = $request['folder'];
+        $ie->connectMailserver();
+
+        // get requested UIDs and flag type
+
+        $UIDs = $this->getRequestedUIDs($request);
+        $type = $this->getRequestedFlagType($request);
+
+        // mark emails
+
+        $ie->markEmails($UIDs, $type);
+
+        echo json_encode(array('response' => true));
+        $this->view = 'ajax';
+    }
+
+    /**
+     * @param $request
+     * @return null|string
+     */
+    private function getRequestedUIDs($request) {
+        $ret = $this->getRequestedArgument($request, 'uid');
+        if(is_array($ret)) {
+            $ret = implode(',', $ret);
+        }
+        return $ret;
+    }
+
+    /**
+     * @param array $request
+     * @return null|mixed
+     */
+    private function getRequestedFlagType($request) {
+        $ret = $this->getRequestedArgument($request, 'type');
+        return $ret;
+    }
+
+    /**
+     * @param array $request
+     * @param string $key
+     * @return null|mixed
+     */
+    private function getRequestedArgument($request, $key) {
+        if(!isset($request[$key])) {
+            $GLOBALS['log']->error("Requested key is not set: ");
+            return null;
+        }
+        return $request[$key];
+    }
+
+    /**
+     * return an Inbound Email by requested record
+     *
+     * @param string $record
+     * @return InboundEmail
+     * @throws SugarControllerException
+     */
+    private function getInboundEmail($record) {
+        $db = DBManagerFactory::getInstance();
+        $ie = BeanFactory::getBean('InboundEmail', $db->quote($record));
+        if(!$ie) {
+            throw new SugarControllerException("BeanFactory can't resolve an InboundEmail record: $record");
+        }
+        return $ie;
+    }
+
 }

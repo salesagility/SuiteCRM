@@ -56,53 +56,17 @@
 
     self.handleClick = function (e) {
 
-      var mb = messageBox({backdrop: false});
-      mb.setTitle(SUGAR.language.translate('Emails', 'LBL_IMPORTING'));
-      mb.setBody('<div class="in-progress"><img src="themes/'+SUGAR.themes.theme_name+'/images/loading.gif"></div>');
-      mb.hideFooter();
-      mb.show();
-      mb.on('cancel', function() {
-        "use strict";
-        mb.remove();
-      });
-
-
-      var query = JSON.parse($('[name=current_query_by_page]').val());
-      var url = 'index.php?module=Emails&action=ImportFromListView';
-
-     var postOpts = {
-        "inbound_email_record": query.inbound_email_record,
-        "folders_id": query.folders_id,
-        "folder": query.folder,
-        "uid[]": []
-      };
-
-      if(document.MassUpdate.select_entire_list &&
-        document.MassUpdate.select_entire_list.value == 1) {
-        // Import all emails from mail box
-        postOpts.all = true;
-      } else {
-        postOpts.all = false;
-        // import only selected emails from inbox
-        $('.listview-checkbox').each(function(i,v) {
-          if($(v).is(':checked')) {
-            postOpts['uid[]'].push(query.email_uids[i])
-          };
-        });
-      }
-
-      $.post( url, postOpts).done(function (data) {
-        var jsonData = JSON.parse(data);
-        mb.hide();
-        if(jsonData.response === true) {
+      SUGAR.Emails.handleSelectedListViewItems(
+        'Emails',
+        'ImportFromListView',
+        function() {
           window.location.reload();
-        } else {
-          console.error('Error importing emails. Please check the logs for details.')
-        }
-      }).error(function (data) {
-        mb.hide();
-        alert(data);
-      });
+        },
+        false,
+        SUGAR.language.translate('Emails', 'LBL_IMPORTING'),
+        'Error importing emails.'
+      );
+
     };
 
     self.construct = function() {
