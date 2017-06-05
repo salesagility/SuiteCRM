@@ -45,7 +45,7 @@
    */
   $.fn.MarkEmails =  function(options) {
     "use strict";
-    var self = {};
+    var self = this;
     var opts = $.extend({}, $.fn.MarkEmails.defaults, options);
 
     self.handleClick = function () {
@@ -79,7 +79,7 @@
     };
 
     self.construct();
-    return $(this);
+    return $(self);
   };
 
   $.fn.MarkEmails.defaults = {

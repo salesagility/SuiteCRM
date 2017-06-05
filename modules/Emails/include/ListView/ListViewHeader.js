@@ -48,7 +48,7 @@
 var handleSelectedEmailsListViewItems = function(actionUrl, successCallback, errorCallback, loadingTitle, errorMessage) {
 
   if(typeof loadingTitle === 'undefined') {
-    SUGAR.language.translate('Emails', 'LBL_LOADING');
+    loadingTitle = SUGAR.language.translate('Emails', 'LBL_LOADING');
   }
 
   if(typeof errorMessage === 'undefined') {
@@ -111,14 +111,14 @@ var handleSelectedEmailsListViewItems = function(actionUrl, successCallback, err
 $(document).ready(function () {
 
   var query = JSON.parse($('[name=current_query_by_page]').val());
-  var $btnEmailsCurrentFolder = $('.btn-emails-current-folder');
+  var jQueryBtnEmailsCurrentFolder = $('.btn-emails-current-folder');
 
   if(typeof query.folder === 'undefined' ||  query.folder === '') {
-    $btnEmailsCurrentFolder.remove();
+    jQueryBtnEmailsCurrentFolder.remove();
   } else if(query.folder === null) {
-    $btnEmailsCurrentFolder.html('<span class="glyphicon glyphicon-alert"></span>');
+    jQueryBtnEmailsCurrentFolder.html('<span class="glyphicon glyphicon-alert"></span>');
   } else {
-    $btnEmailsCurrentFolder.text(query.folder);
+    jQueryBtnEmailsCurrentFolder.text(query.folder);
   }
 
 });

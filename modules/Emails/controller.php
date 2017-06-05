@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+include_once 'include/Exceptions/SugarControllerException.php';
+
 // XSS rules
 
 if ($_REQUEST['action'] === 'ComposeView') {
@@ -497,7 +499,7 @@ class EmailsController extends SugarController
     }
 
     /**
-     * @param $request
+     * @param array $request
      * @return null|mixed
      */
     private function getRequestedFlagType($request) {
@@ -506,8 +508,8 @@ class EmailsController extends SugarController
     }
 
     /**
-     * @param $request
-     * @param $key
+     * @param array $request
+     * @param string $key
      * @return null|mixed
      */
     private function getRequestedArgument($request, $key) {
@@ -521,7 +523,7 @@ class EmailsController extends SugarController
     /**
      * return an Inbound Email by requested record
      *
-     * @param $record
+     * @param string $record
      * @return InboundEmail
      * @throws SugarControllerException
      */
