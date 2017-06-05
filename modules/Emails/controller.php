@@ -483,7 +483,7 @@ class EmailsController extends SugarController
         $ie->markEmails($UIDs, $type);
 
         echo json_encode(array('response' => true));
-        die();
+        $this->view = 'ajax';
     }
 
     /**
