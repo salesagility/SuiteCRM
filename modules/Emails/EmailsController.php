@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+include_once 'include/Exceptions/SugarControllerException.php';
+
 class EmailsController extends SugarController
 {
     /**
@@ -427,7 +429,55 @@ class EmailsController extends SugarController
     }
 
     /**
-     * @param string $importedEmailId
+     * @throws SugarControllerException
+     */
+    public function action_MarkEmails () {
+        $request = $_REQUEST;
+
+        // validate the request
+
+        if(!isset($request['inbound_email_record']) || !$request['inbound_email_record']) {
+            throw new SugarControllerException('No Inbound Email record in request');
+        }
+
+        if(!isset($request['folder']) || !$request['folder']) {
+            throw new SugarControllerException('No Inbound Email folder in request');
+        }
+
+
+        // connect to requested inbound email server
+        // and select the folder
+
+        $ie = $this->getInboundEmail($request['inbound_email_record']);
+        $ie->mailbox = $request['folder'];
+        $ie->connectMailserver();
+
+        // get requested UIDs and flag type
+
+        $UIDs = $this->getRequestedUIDs($request);
+        $type = $this->getRequestedFlagType($request);
+
+        // mark emails
+
+        $ie->markEmails($UIDs, $type);
+
+        echo json_encode(array('response' => true));
+        $this->view = 'ajax';
+    }
+
+    /**
+     * @param $request
+     * @return null|string
+     */
+    private function getRequestedUIDs($request) {
+        $ret = $this->getRequestedArgument($request, 'uid');
+        if(is_array($ret)) {
+            $ret = implode(',', $ret);
+        }
+        return $ret;
+    }
+
+    /**
      * @param array $request
      * @return bool|Email
      * @see Email::id
