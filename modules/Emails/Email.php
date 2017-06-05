@@ -2697,7 +2697,8 @@ class Email extends SugarBean
             }
         }
 
-        $mail = $this->setMailer($mail);
+        $ieId = $this->mailbox_id;
+        $mail = $this->setMailer($mail, '', $ieId);
 
         // FROM ADDRESS
         if (!empty($this->from_addr)) {
