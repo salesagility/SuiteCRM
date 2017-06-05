@@ -544,6 +544,23 @@ protected function checkQuery($sql, $object_name = false)
 		if (empty($values))
 			return $execute?true:''; // no columns set
 
+		if($this instanceof MysqliManager && version_compare($this->database->server_info, '5.7', '>=')) {
+			foreach ($values as $key => $value) {
+				switch ($field_defs[$key]['type']) {
+					case 'date':
+						if ($value == "'0000-00-00'") {
+							$values[$key] = "NULL";
+						}
+						break;
+					case 'datetime':
+						if ($value == "'0000-00-00 00:00:00'") {
+							$values[$key] = "NULL";
+						}
+						break;
+				}
+			}
+		}
+
 		// get the entire sql
 		$query = "INSERT INTO $table (".implode(",", array_keys($values)).")
 					VALUES (".implode(",", $values).")";
