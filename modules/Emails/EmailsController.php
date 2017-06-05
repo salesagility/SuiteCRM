@@ -262,7 +262,7 @@ class EmailsController extends SugarController
         global $db;
         if (isset($_REQUEST['inbound_email_record']) && !empty($_REQUEST['inbound_email_record'])) {
             $inboundEmail = new InboundEmail();
-            $inboundEmail->retrieve( $db->quote($_REQUEST['inbound_email_record']), true, true);
+            $inboundEmail->retrieve($db->quote($_REQUEST['inbound_email_record']), true, true);
             $inboundEmail->connectMailserver();
             $importedEmailId = $inboundEmail->returnImportedEmail($_REQUEST['msgno'], $_REQUEST['uid']);
 
@@ -371,7 +371,7 @@ class EmailsController extends SugarController
         global $db;
         global $mod_strings;
 
-        if(isset($request['record']) && !empty($request['record'])) {
+        if (isset($request['record']) && !empty($request['record'])) {
             $this->bean->retrieve($request['record']);
 
         } else {
@@ -431,16 +431,17 @@ class EmailsController extends SugarController
     /**
      * @throws SugarControllerException
      */
-    public function action_MarkEmails () {
+    public function action_MarkEmails()
+    {
         $request = $_REQUEST;
 
         // validate the request
 
-        if(!isset($request['inbound_email_record']) || !$request['inbound_email_record']) {
+        if (!isset($request['inbound_email_record']) || !$request['inbound_email_record']) {
             throw new SugarControllerException('No Inbound Email record in request');
         }
 
-        if(!isset($request['folder']) || !$request['folder']) {
+        if (!isset($request['folder']) || !$request['folder']) {
             throw new SugarControllerException('No Inbound Email folder in request');
         }
 
@@ -469,12 +470,59 @@ class EmailsController extends SugarController
      * @param $request
      * @return null|string
      */
-    private function getRequestedUIDs($request) {
+    private function getRequestedUIDs($request)
+    {
         $ret = $this->getRequestedArgument($request, 'uid');
-        if(is_array($ret)) {
+        if (is_array($ret)) {
             $ret = implode(',', $ret);
         }
+
         return $ret;
+    }
+
+    /**
+     * @param array $request
+     * @return null|mixed
+     */
+    private function getRequestedFlagType($request)
+    {
+        $ret = $this->getRequestedArgument($request, 'type');
+
+        return $ret;
+    }
+
+    /**
+     * @param array $request
+     * @param string $key
+     * @return null|mixed
+     */
+    private function getRequestedArgument($request, $key)
+    {
+        if (!isset($request[$key])) {
+            $GLOBALS['log']->error("Requested key is not set: ");
+
+            return null;
+        }
+
+        return $request[$key];
+    }
+
+    /**
+     * return an Inbound Email by requested record
+     *
+     * @param string $record
+     * @return InboundEmail
+     * @throws SugarControllerException
+     */
+    private function getInboundEmail($record)
+    {
+        $db = DBManagerFactory::getInstance();
+        $ie = BeanFactory::getBean('InboundEmail', $db->quote($record));
+        if (!$ie) {
+            throw new SugarControllerException("BeanFactory can't resolve an InboundEmail record: $record");
+        }
+
+        return $ie;
     }
 
     /**
@@ -488,9 +536,9 @@ class EmailsController extends SugarController
     {
         $emails = BeanFactory::getBean("Emails", $importedEmailId);
         foreach ($request as $requestKey => $requestValue) {
-            if(strpos($requestKey, 'SET_AFTER_IMPORT_') !== false) {
+            if (strpos($requestKey, 'SET_AFTER_IMPORT_') !== false) {
                 $field = str_replace('SET_AFTER_IMPORT_', '', $requestKey);
-                if(in_array($field, self::$doNotImportFields)) {
+                if (in_array($field, self::$doNotImportFields)) {
                     continue;
                 }
 

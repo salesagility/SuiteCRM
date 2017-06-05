@@ -62,7 +62,7 @@
     self.handleClick = function (e, caller) {
 
 
-      var query = JSON.parse($('[name=current_query_by_page]').val());
+      var query = JSON.parse($('[name=MassUpdate] [name=current_query_by_page]').val());
       var url = 'index.php?module=Emails&action=ImportFromListView';
 
       var postOpts = {
