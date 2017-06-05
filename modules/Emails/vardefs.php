@@ -749,7 +749,6 @@ VardefManager::createVardef(
     'Emails',
     'Email',
     array(
-        'default',
         'basic',
         'assignable',
         'security_groups',
