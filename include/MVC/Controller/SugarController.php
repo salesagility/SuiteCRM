@@ -45,57 +45,82 @@ require_once('include/MVC/View/SugarView.php');
  */
 class SugarController{
 	/**
+	 * @var array $action_remap
 	 * remap actions in here
 	 * e.g. make all detail views go to edit views
 	 * $action_remap = array('detailview'=>'editview');
 	 */
 	protected $action_remap = array('index'=>'listview');
+
 	/**
+	 * @var string $module
 	 * The name of the current module.
 	 */
 	public $module = 'Home';
+
 	/**
+	 * @var string|null
 	 * The name of the target module.
 	 */
 	public $target_module = null;
+
 	/**
+	 * @var string $action
 	 * The name of the current action.
 	 */
 	public $action = 'index';
+
 	/**
+	 * @var string $record
 	 * The id of the current record.
 	 */
 	public $record = '';
+
 	/**
+	 * @var string|null $return_module
 	 * The name of the return module.
 	 */
 	public $return_module = null;
+
 	/**
+	 * @var string|null $return_action
 	 * The name of the return action.
 	 */
 	public $return_action = null;
+
 	/**
+	 * @var string|null $return_id uuid
 	 * The id of the return record.
 	 */
 	public $return_id = null;
+
 	/**
+	 * @var string $do_action
 	 * If the action was remapped it will be set to do_action and then we will just
 	 * use do_action for the actual action to perform.
 	 */
 	protected $do_action = 'index';
+
 	/**
-	 * If a bean is present that set it.
+	 * @var SugarBean|null $bean
+	 * If a bean is present that set it.*
 	 */
 	public $bean = null;
+
 	/**
+	 * @var string $redirect_url
 	 * url to redirect to
 	 */
 	public $redirect_url = '';
+
 	/**
+	 * @var string $view
 	 * any subcontroller can modify this to change the view
 	 */
 	public $view = 'classic';
+
 	/**
+	 * @var array $view_object_map
 	 * this array will hold the mappings between a key and an object for use within the view.
 	 */
 	public $view_object_map = array();
@@ -109,6 +134,7 @@ class SugarController{
 					   'post_action'
 					   );
 	/**
+	 * @var array $process_tasks
 	 * List of options to run through within the process() method.
 	 * This list is meant to easily allow additions for new functionality as well as
 	 * the ability to add a controller's own handling.
@@ -323,13 +349,23 @@ class SugarController{
 
 	}
 
+	protected function showException(Exception $e) {
+		$GLOBALS['log']->fatal('Exception in Controller: ' . $e->getMessage());
+		$GLOBALS['log']->fatal("backtrace:\n" . $e->getTraceAsString());
+		if($prev = $e->getPrevious()) {
+			$GLOBALS['log']->fatal("Previous:\n");
+			$this->showException($prev);
+		}
+	}
+
     /**
       * Handle exception
       * @param Exception $e
       */
     protected function handleException(Exception $e)
     {
-        $GLOBALS['log']->fatal('Exception in Controller: ' . $e->getMessage());
+		$GLOBALS['log']->fatal("Exception handling in ".__FILE__.':'.__LINE__);
+        $this->showException($e);
         $logicHook = new LogicHook();
 
         if (isset($this->bean))
