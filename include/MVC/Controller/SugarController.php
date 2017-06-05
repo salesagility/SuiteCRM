@@ -566,7 +566,7 @@ class SugarController{
         $sfh = new SugarFieldHandler();
 		foreach($this->bean->field_defs as $field => $properties) {
 			$type = !empty($properties['custom_type']) ? $properties['custom_type'] : $properties['type'];
-		    $sf = $sfh->getSugarField(ucfirst($type), true);
+		    $sf = $sfh::getSugarField(ucfirst($type), true);
 			if(isset($_POST[$field])) {
 				if(is_array($_POST[$field]) && !empty($properties['isMultiSelect'])) {
 					if(empty($_POST[$field][0])) {
