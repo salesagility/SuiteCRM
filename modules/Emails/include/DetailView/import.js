@@ -37,51 +37,9 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-(function ($) {
-  /**
-   *
-   * @param options
-   * @return {*|HTMLElement}
-   */
-  $.fn.CheckNewEmails =  function(options) {
-    "use strict";
-    var self = this;
-    var opts = $.extend({}, $.fn.CheckNewEmails.defaults, options);
-
-    self.handleClick = function () {
-      "use strict";
-      window.location.reload();
-    };
-
-    /**
-     * @constructor
-     */
-    self.construct = function () {
-      "use strict";
-      $(opts.buttonSelector).click(self.handleClick);
-      // look for new
-      $('.email-indicator .email-new').each(function(i, v){
-        $(this).closest('tr').addClass('email-new-record');
-      });
-    };
-
-    /**
-     * @destructor
-     */
-    self.destruct = function() {
-
-    };
-
-    self.construct();
-    return $(self);
-  };
-
-  $.fn.CheckNewEmails.defaults = {
-    'buttonSelector': '[data-action=emails-check-new-email]',
-    'contentSelector': '#content'
-  }
-}(jQuery));
-
 $(document).ready(function() {
-  $(document).CheckNewEmails();
+  "use strict";
+  $(document).ImportView({
+    'callerSelector': '[data-action="emails-import-single"]'
+  });
 });

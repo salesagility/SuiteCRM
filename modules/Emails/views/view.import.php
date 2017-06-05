@@ -1,3 +1,5 @@
+<?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,51 +39,58 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-(function ($) {
-  /**
-   *
-   * @param options
-   * @return {*|HTMLElement}
-   */
-  $.fn.CheckNewEmails =  function(options) {
-    "use strict";
-    var self = this;
-    var opts = $.extend({}, $.fn.CheckNewEmails.defaults, options);
+if (!defined('sugarEntry') || !sugarEntry) {
+    die ('Not A Valid Entry Point');
+}
 
-    self.handleClick = function () {
-      "use strict";
-      window.location.reload();
-    };
+
+class EmailsViewImport extends ViewEdit {
 
     /**
-     * @constructor
+     * @var Email $bean
      */
-    self.construct = function () {
-      "use strict";
-      $(opts.buttonSelector).click(self.handleClick);
-      // look for new
-      $('.email-indicator .email-new').each(function(i, v){
-        $(this).closest('tr').addClass('email-new-record');
-      });
-    };
+    public $bean;
 
     /**
-     * @destructor
+     * EmailsViewCompose constructor.
      */
-    self.destruct = function() {
+    public function __construct()
+    {
+        $this->options['show_title'] = false;
+        $this->options['show_header'] = false;
+        $this->options['show_footer'] = false;
+        $this->options['show_javascript'] = false;
+        $this->options['show_subpanels'] = false;
+        $this->options['show_search'] = false;
+        $this->type = 'ImportView';
+    }
 
-    };
+    /**
+     * @see SugarView::preDisplay()
+     */
+    public function preDisplay()
+    {
+        global $current_user;
 
-    self.construct();
-    return $(self);
-  };
+        $metadataFile = $this->getMetaDataFile();
+        $this->ev = $this->getEditView();
+        $this->ev->ss =& $this->ss;
 
-  $.fn.CheckNewEmails.defaults = {
-    'buttonSelector': '[data-action=emails-check-new-email]',
-    'contentSelector': '#content'
-  }
-}(jQuery));
+        if(!isset($this->bean->mailbox_id) || empty($this->bean->mailbox_id)) {
+            $inboundEmailID = $current_user->getPreference('defaultIEAccount', 'Emails');
+            $this->ev->ss->assign('INBOUND_ID', $inboundEmailID);
+        } else {
+            $this->ev->ss->assign('INBOUND_ID', $this->bean->mailbox_id);
+        }
 
-$(document).ready(function() {
-  $(document).CheckNewEmails();
-});
+        $this->ev->ss->assign('TEMP_ID', create_guid());
+        $this->ev->ss->assign('RETURN_MODULE', isset($_REQUEST['return_module']) ? $_REQUEST['return_module'] : '');
+        $this->ev->ss->assign('RETURN_ACTION', isset($_REQUEST['return_action']) ? $_REQUEST['return_action'] : '');
+        $this->ev->setup(
+            $this->module,
+            $this->bean,
+            'modules/Emails/metadata/importviewdefs.php',
+            'modules/Emails/include/ImportView/ImportView.tpl'
+        );
+    }
+}

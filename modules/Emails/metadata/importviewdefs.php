@@ -1,3 +1,4 @@
+<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,51 +38,41 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-(function ($) {
-  /**
-   *
-   * @param options
-   * @return {*|HTMLElement}
-   */
-  $.fn.CheckNewEmails =  function(options) {
-    "use strict";
-    var self = this;
-    var opts = $.extend({}, $.fn.CheckNewEmails.defaults, options);
+$module_name = 'Emails';
+$viewdefs[$module_name]['EditView'] = array(
+    'templateMeta' => array(
+        'maxColumns' => '2',
+        'widths' => array(
+            array('label' => '10', 'field' => '30'),
+            array('label' => '10', 'field' => '30')
+        ),
+        'form' => array(
+            'headerTpl' => 'modules/Emails/include/ComposeView/ComposeViewBlank.tpl',
+            'footerTpl' => 'modules/Emails/include/ComposeView/ComposeViewBlank.tpl',
+            'buttons' => array(),
+            'includes' => array(
+                array(
+                    'file' => 'modules/Emails/include/DetailView/ImportView.js'
+                ),
+                array(
+                    'file' => 'modules/Emails/include/DetailView/import.js'
+                )
+            ),
+        ),
+    ),
+    'panels' => array(
+        'LBL_EMAIL_INFORMATION' => array(
+            array(
+                'parent_name' => array(
+                    'name' => 'assigned_user_name',
+                    'label' => 'LBL_ASSIGNED_TO',
+                )
+            ),
+            array(
+                'parent_name'
+            ),
 
-    self.handleClick = function () {
-      "use strict";
-      window.location.reload();
-    };
+        )
+    )
 
-    /**
-     * @constructor
-     */
-    self.construct = function () {
-      "use strict";
-      $(opts.buttonSelector).click(self.handleClick);
-      // look for new
-      $('.email-indicator .email-new').each(function(i, v){
-        $(this).closest('tr').addClass('email-new-record');
-      });
-    };
-
-    /**
-     * @destructor
-     */
-    self.destruct = function() {
-
-    };
-
-    self.construct();
-    return $(self);
-  };
-
-  $.fn.CheckNewEmails.defaults = {
-    'buttonSelector': '[data-action=emails-check-new-email]',
-    'contentSelector': '#content'
-  }
-}(jQuery));
-
-$(document).ready(function() {
-  $(document).CheckNewEmails();
-});
+);

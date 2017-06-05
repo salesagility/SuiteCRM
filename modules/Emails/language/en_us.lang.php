@@ -60,6 +60,8 @@ $mod_strings = array (
     'LBL_EMAIL_DEFAULT_DESCRIPTION' 	=> 'Here is the quote you requested (You can change this text)',
     'LBL_IMPORT' => 'Import',
     'LBL_IMPORTING' => 'Importing',
+	'LBL_LOADING' => 'Loading',
+	'LBL_MARKING' => 'Marking',
 
 	'LBL_CONFIRM_DELETE'		=> 'Are you sure you want to delete this folder?',
 	'LBL_CONFIRM_DELETE_EMAIL'		=> 'Are you sure you want to delete this email?',
@@ -421,6 +423,11 @@ $mod_strings = array (
     'LBL_ORPHANED' => 'Orphaned',
     'LBL_IMAP_KEYWORDS' => 'IMAP Keywords',
     'LBL_ERROR_NO_FOLDERS' => 'Error: There are no folders available. Please check your email settings.',
-    'LBL_ORIGINAL_MESSAGE_SEPERATOR' => '---'
+    'LBL_ORIGINAL_MESSAGE_SEPERATOR' => '---',
+
+	'LBL_MARK_UNREAD' => 'Mark As Unread',
+	'LBL_MARK_READ' => 'Mark As Read',
+	'LBL_MARK_FLAGGED' => 'Mark As Flagged',
+	'LBL_MARK_UNFLAGGED' => 'Mark As Unflagged',
 );
 
