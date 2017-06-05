@@ -447,6 +447,9 @@ class EmailsController extends SugarController
 
     }
 
+    /**
+     * @throws SugarControllerException
+     */
     public function action_MarkEmails () {
         $request = $_REQUEST;
 
@@ -481,6 +484,10 @@ class EmailsController extends SugarController
         die();
     }
 
+    /**
+     * @param $request
+     * @return null|string
+     */
     private function getRequestedUIDs($request) {
         $ret = $this->getRequestedArgument($request, 'uid');
         if(is_array($ret)) {
@@ -489,11 +496,20 @@ class EmailsController extends SugarController
         return $ret;
     }
 
+    /**
+     * @param $request
+     * @return null|mixed
+     */
     private function getRequestedFlagType($request) {
         $ret = $this->getRequestedArgument($request, 'type');
         return $ret;
     }
 
+    /**
+     * @param $request
+     * @param $key
+     * @return null|mixed
+     */
     private function getRequestedArgument($request, $key) {
         if(!isset($request[$key])) {
             $GLOBALS['log']->error("Requested key is not set: ");
