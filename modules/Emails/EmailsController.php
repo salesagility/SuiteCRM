@@ -126,6 +126,8 @@ class EmailsController extends SugarController
      */
     public function action_ComposeView()
     {
+        global $current_user;
+        $this->composeSignature($this->bean, $current_user);
         $this->view = 'compose';
     }
 
@@ -329,19 +331,25 @@ class EmailsController extends SugarController
 
     public function action_ReplyTo()
     {
+        global $current_user;
         $this->composeBean($_REQUEST, self::COMPOSE_BEAN_MODE_REPLY_TO);
+        $this->composeSignature($this->bean, $current_user);
         $this->view = 'compose';
     }
 
     public function action_ReplyToAll()
     {
+        global $current_user;
         $this->composeBean($_REQUEST, self::COMPOSE_BEAN_MODE_REPLY_TO_ALL);
+        $this->composeSignature($this->bean, $current_user);
         $this->view = 'compose';
     }
 
     public function action_Forward()
     {
+        global $current_user;
         $this->composeBean($_REQUEST, self::COMPOSE_BEAN_MODE_FORWARD);
+        $this->composeSignature($this->bean, $current_user);
         $this->view = 'compose';
     }
 
@@ -351,6 +359,48 @@ class EmailsController extends SugarController
         echo json_encode(array());
     }
 
+
+    /**
+     * @throws SugarControllerException
+     */
+    public function action_MarkEmails()
+    {
+        $this->markEmails($_REQUEST);
+        echo json_encode(array('response' => true));
+        $this->view = 'ajax';
+    }
+
+    /**
+     * @param $request
+     * @throws SugarControllerException
+     */
+    public function markEmails($request)
+    {
+        // validate the request
+
+        if (!isset($request['inbound_email_record']) || !$request['inbound_email_record']) {
+            throw new SugarControllerException('No Inbound Email record in request');
+        }
+
+        if (!isset($request['folder']) || !$request['folder']) {
+            throw new SugarControllerException('No Inbound Email folder in request');
+        }
+
+        // connect to requested inbound email server
+        // and select the folder
+
+        $ie = $this->getInboundEmail($request['inbound_email_record']);
+        $ie->mailbox = $request['folder'];
+        $ie->connectMailserver();
+
+        // get requested UIDs and flag type
+
+        $UIDs = $this->getRequestedUIDs($request);
+        $type = $this->getRequestedFlagType($request);
+
+        // mark emails
+        $ie->markEmails($UIDs, $type);
+    }
 
     /**
      * @param array $request
@@ -429,42 +479,36 @@ class EmailsController extends SugarController
     }
 
     /**
+     * Prepends body with $user's default signature
+     * @param Email $email
+     * @param User $user
+     * @return bool|Email
      * @throws SugarControllerException
      */
-    public function action_MarkEmails()
+    public function composeSignature(Email $email, User $user)
     {
-        $request = $_REQUEST;
-
-        // validate the request
-
-        if (!isset($request['inbound_email_record']) || !$request['inbound_email_record']) {
-            throw new SugarControllerException('No Inbound Email record in request');
+        if(empty($user->id) || $user->new_with_id === true) {
+            throw new \SugarControllerException(
+                'EmailsController::composeSignature() requires an existing User and not a new User object. '.
+                'This is typically the $current_user global'
+            );
         }
 
-        if (!isset($request['folder']) || !$request['folder']) {
-            throw new SugarControllerException('No Inbound Email folder in request');
+        $defaultEmailSignatureId = $user->getPreference('signature_default');
+        if(gettype($defaultEmailSignatureId) === 'string') {
+            $emailSignatures = $user->getSignature($defaultEmailSignatureId);
+            $email->description = PHP_EOL .  $emailSignatures['signature'] . $email->description;
+            $email->description_html =  '<p></p>' .  $emailSignatures['signature_html'] . $email->description_html;
+            return $email;
+        } else {
+            $GLOBALS['log']->warn(
+                'EmailsController::composeSignature() was unable to get the default signature id for user: '.
+                $user->name
+            );
+            return false;
         }
-
-
-        // connect to requested inbound email server
-        // and select the folder
-
-        $ie = $this->getInboundEmail($request['inbound_email_record']);
-        $ie->mailbox = $request['folder'];
-        $ie->connectMailserver();
-
-        // get requested UIDs and flag type
-
-        $UIDs = $this->getRequestedUIDs($request);
-        $type = $this->getRequestedFlagType($request);
-
-        // mark emails
-
-        $ie->markEmails($UIDs, $type);
-
-        echo json_encode(array('response' => true));
-        $this->view = 'ajax';
     }
+
 
     /**
      * @param $request
