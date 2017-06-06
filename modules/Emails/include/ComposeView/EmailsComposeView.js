@@ -1110,11 +1110,12 @@
   $.fn.EmailsComposeView.onTemplateSelect = function(args) {
 
     var confirmed = function(args) {
+      var self = $('[name="'+args.form_name+'"]');
       $.post('index.php?entryPoint=emailTemplateData', {
         emailTemplateId: args.name_to_value_array.emails_email_templates_idb
       }, function(resp){
         var r = JSON.parse(resp);
-        $(self).find('[name=name]').val(r.data.subject);
+        $(self).find('[name="name"]').val(r.data.subject);
         tinyMCE.get('description').setContent($('<textarea />').html(r.data.body_html).text());
       });
       set_return(args);
