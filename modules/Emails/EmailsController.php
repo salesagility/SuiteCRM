@@ -371,7 +371,7 @@ class EmailsController extends SugarController
     }
 
     /**
-     * @param $request
+     * @param array $request
      * @throws SugarControllerException
      */
     public function markEmails($request)
@@ -498,7 +498,7 @@ class EmailsController extends SugarController
         if(gettype($defaultEmailSignatureId) === 'string') {
             $emailSignatures = $user->getSignature($defaultEmailSignatureId);
             $email->description = PHP_EOL .  $emailSignatures['signature'] . $email->description;
-            $email->description_html =  '<p></p>' .  $emailSignatures['signature_html'] . $email->description_html;
+            $email->description_html = html_entity_decode($emailSignatures['signature_html']) . $email->description_html;
             return $email;
         } else {
             $GLOBALS['log']->warn(

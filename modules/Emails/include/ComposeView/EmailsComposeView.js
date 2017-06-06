@@ -368,9 +368,13 @@
      * @param editor
      */
     self.tinyMceSetup = function (editor) {
+      var html = $(self).find('#description_html').html();
       editor.on('init', function () {
         this.getDoc().body.style.fontName = 'tahoma';
         this.getDoc().body.style.fontSize = '13px';
+        if(html !== null) {
+          editor.setContent(html);
+        }
       });
 
       editor.on('change', function () {
