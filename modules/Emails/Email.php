@@ -3917,6 +3917,10 @@ eoq;
             }
         }
 
+        if (isset($_REQUEST['inbound_email_id'])) {
+            $bean->mailbox_id = $_REQUEST['inbound_email_id'];
+        }
+
 
         $old = array('&lt;', '&gt;');
         $new = array('<', '>');

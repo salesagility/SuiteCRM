@@ -135,7 +135,6 @@ class EmailsController extends SugarController
     public function action_send()
     {
         $this->bean = $this->bean->populateBeanFromRequest($this->bean, $_REQUEST);
-        $this->bean->mailbox_id = $_REQUEST['inbound_email_id'];
         $this->bean->save();
 
         $this->bean->handleMultipleFileAttachments();
@@ -157,7 +156,6 @@ class EmailsController extends SugarController
     public function action_SaveDraft()
     {
         $this->bean = $this->bean->populateBeanFromRequest($this->bean, $_REQUEST);
-        $this->bean->mailbox_id = $_REQUEST['inbound_email_id'];
         $this->bean->status = 'draft';
         $this->bean->save();
         $this->bean->handleMultipleFileAttachments();
