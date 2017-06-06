@@ -1114,6 +1114,7 @@
         emailTemplateId: args.name_to_value_array.emails_email_templates_idb
       }, function(resp){
         var r = JSON.parse(resp);
+        $('input[name="name"]').val(r.data.subject);
         tinyMCE.get('description').setContent($('<textarea />').html(r.data.body_html).text());
       });
       set_return(args);
