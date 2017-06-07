@@ -415,7 +415,7 @@ $mod_strings = array (
 	'LBL_EMAIL_TEMPLATE' => 'Email Template',
 
 	'LBL_CONFIRM_TITLE' => 'Apply an Email Template',
-	'LBL_CONFIRM_BODY' => 'This operation will override the email Body field, do you want to continue?',
+	'LBL_CONFIRM_BODY' => 'This operation will override the email Body and Subject fields, do you want to continue?',
 
 	'LBL_MAILBOX_ID' => 'Mailbox ID',
 	'LBL_PARENT_ID' => 'Parent ID',
