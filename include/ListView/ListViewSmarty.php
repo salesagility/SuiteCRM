@@ -141,14 +141,19 @@ class ListViewSmarty extends ListViewDisplay
         $this->ss->assign('recordsLinkString',$app_strings['LBL_LINK_RECORDS']);
         $this->ss->assign('selectLinkString',$app_strings['LBL_LINK_SELECT']);
 
-        // Bug 24677 - Correct the page total amount on the last page of listviews
-        $pageTotal = $this->data['pageData']['offsets']['next']-$this->data['pageData']['offsets']['current'];
-        if ( $this->data['pageData']['offsets']['next'] < 0 ) {
-            $pageTotal = $this->data['pageData']['offsets']['total'] - $this->data['pageData']['offsets']['current'];
-        }
+        if(!isset($this->data['pageData']['offsets'])) {
+            $GLOBALS['log']->fatal('Incorrect pageData: offset is not set');
+        } else {
+            // Bug 24677 - Correct the page total amount on the last page of listviews
+            $pageTotal = $this->data['pageData']['offsets']['next'] - $this->data['pageData']['offsets']['current'];
+            if ($this->data['pageData']['offsets']['next'] < 0) {
+                $pageTotal = $this->data['pageData']['offsets']['total'] - $this->data['pageData']['offsets']['current'];
+            }
 
-        if($this->select)$this->ss->assign('selectLinkTop', $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal));
-        if($this->select)$this->ss->assign('selectLinkBottom', $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal, "bottom"));
+            if($this->select)$this->ss->assign('selectLinkTop', $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal));
+            if($this->select)$this->ss->assign('selectLinkBottom', $this->buildSelectLink('select_link', $this->data['pageData']['offsets']['total'], $pageTotal, "bottom"));
+
+        }
 
         if($this->show_action_dropdown)
         {
@@ -175,7 +180,13 @@ class ListViewSmarty extends ListViewDisplay
             && ACLController::checkAccess('ProspectLists','edit',true)) {
             $this->ss->assign( 'targetLink', $this->buildTargetList() ) ;
         }
-        $this->processArrows($data['pageData']['ordering']);
+
+        if(!isset($data['pageData']['ordering'])) {
+            $GLOBALS['log']->fatal("Incorrect pageData: ordering is not set");
+        } else {
+            $this->processArrows($data['pageData']['ordering']);
+        }
+
         $this->ss->assign('prerow', $this->multiSelect);
         $this->ss->assign('clearAll', $app_strings['LBL_CLEARALL']);
         $this->ss->assign('rowColor', array('oddListRow', 'evenListRow'));
@@ -235,7 +246,13 @@ class ListViewSmarty extends ListViewDisplay
         $this->ss->assign('query', $this->data['query']);
         $this->ss->assign('sugar_info', array("sugar_version" => $sugar_version,
             "sugar_flavor" => $sugar_flavor));
-        $this->data['pageData']['offsets']['lastOffsetOnPage'] = $this->data['pageData']['offsets']['current'] + count($this->data['data']);
+
+        if(!isset($this->data['pageData']['offsets'])) {
+            $GLOBALS['log']->fatal("Incorrect pageData: trying to display but offset is not set");
+        } else {
+            $this->data['pageData']['offsets']['lastOffsetOnPage'] = $this->data['pageData']['offsets']['current'] + count($this->data['data']);
+        }
+
         $this->ss->assign('pageData', $this->data['pageData']);
 
         $navStrings = array('next' => $app_strings['LNK_LIST_NEXT'],
