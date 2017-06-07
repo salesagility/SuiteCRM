@@ -6,9 +6,9 @@
 	var tinymce = {
 		majorVersion : '3',
 
-		minorVersion : '5.10',
+		minorVersion : '5.11',
 
-		releaseDate : '2013-10-24',
+		releaseDate : '2014-05-08',
 
 		_init : function() {
 			var t = this, d = document, na = navigator, ua = na.userAgent, i, nl, n, base, p, v;
@@ -2211,6 +2211,29 @@ tinymce.util.Quirks = function(editor) {
 		});
 	}
 
+	function fixControlSelection() {
+		editor.onInit.add(function() {
+			var selectedRng;
+
+			editor.getBody().addEventListener('mscontrolselect', function(e) {
+				setTimeout(function() {
+					if (editor.selection.getNode() != e.target) {
+						selectedRng = editor.selection.getRng();
+						selection.fakeRng = editor.dom.createRng();
+						selection.fakeRng.setStartBefore(e.target);
+						selection.fakeRng.setEndAfter(e.target);
+					}
+				}, 0);
+			}, false);
+
+			editor.getDoc().addEventListener('selectionchange', function(e) {
+				if (selectedRng && !tinymce.dom.RangeUtils.compareRanges(editor.selection.getRng(), selectedRng)) {
+					selection.fakeRng = selectedRng = null;
+				}
+			}, false);
+		});
+	}
+
 	// All browsers
 	disableBackspaceIntoATable();
 	removeBlockQuoteOnBackSpace();
@@ -2247,6 +2270,7 @@ tinymce.util.Quirks = function(editor) {
 	// IE 11+
 	if (tinymce.isIE11) {
 		bodyHeight();
+		fixControlSelection();
 	}
 
 	// Gecko
@@ -8760,6 +8784,11 @@ tinymce.dom.TreeWalker = function(start_node, root_node) {
 
 		getRng : function(w3c) {
 			var self = this, selection, rng, elm, doc = self.win.document;
+
+			// Workaround for IE 11 not being able to select images properly see #6613 see quirk fix
+			if (self.fakeRng) {
+				return self.fakeRng;
+			}
 
 			// Found tridentSel object then we need to use that one
 			if (w3c && self.tridentSel) {
