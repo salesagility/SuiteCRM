@@ -176,8 +176,10 @@ $checks = array(
 	//commenting mbstring overload.
 	//'mbstring.func_overload'	=> $mod_strings['LBL_UW_COMPLIANCE_MBSTRING_FUNC_OVERLOAD'],
 );
-if($result['error_found'] == true) {
-	$stop = true;
+if($result['error_found'] == true || $result['warn_found']) {
+	if($result['error_found']) {
+		$stop = true;
+	}
 	$phpIniLocation = get_cfg_var("cfg_file_path");
 
 	$sysCompliance  = "<a href='javascript:void(0); toggleNwFiles(\"sysComp\");'>{$mod_strings['LBL_UW_SHOW_COMPLIANCE']}</a>";
