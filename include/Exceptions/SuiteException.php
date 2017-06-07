@@ -43,28 +43,32 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once __DIR__ . '/SuiteException.php';
 require_once __DIR__ . '/exceptions.php';
 
+
 /**
- * Class SugarInvalidTypeException
+ * Class SuiteException
  */
-class SugarInvalidTypeException extends SugarException
+class SuiteException extends Exception
 {
     /**
      * @var string $message
      */
-    protected $message = 'Invalid type';
+    protected $message = 'Sugar Exception';
+
     /**
      * @var int $code
      */
-    protected $code = 2;
+    protected $code = 0;
+
     /**
      * @var string $userMessage
      */
     protected $userMessage;
 
     /**
-     * SugarInvalidTypeException constructor.
+     * SuiteException constructor.
      * @param string $message
      * @param int $code
      * @param Throwable|null $previous
@@ -74,5 +78,13 @@ class SugarInvalidTypeException extends SugarException
         global $app_strings;
         $this->userMessage = $app_strings['ERR_AJAX_LOAD'];
         parent::__construct($this->message .': '. $message, $code, $previous);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getUserMessage()
+    {
+        return $this->userMessage;
     }
 }

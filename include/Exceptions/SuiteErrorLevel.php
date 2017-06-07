@@ -42,9 +42,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once __DIR__ . '/SuiteException.php';
 require_once __DIR__ . '/exceptions.php';
 
-class SugarErrorLevel
+class SuiteErrorLevel
 {
     const debug      = 100;
     const info       = 70;

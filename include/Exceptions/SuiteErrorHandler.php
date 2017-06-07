@@ -42,23 +42,24 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once __DIR__ . '/SuiteException.php';
 require_once __DIR__ . '/exceptions.php';
 
 /**
- * Class SugarErrorHandler
+ * Class SuiteErrorHandler
  * Soft Exception handler
  *
  * Since old code does not handle exceptions, We cannot throw exceptions  without potentially
  * breaking old customisations.
  *
- * SugarErrorHandler allows us to check for exceptions without breaking legacy code.  SugarErrorHandler can give us
+ * SuiteErrorHandler allows us to check for exceptions without breaking legacy code.  SuiteErrorHandler can give us
  * a stack trace or at least where the in the code base should throw exceptions.
  *
  * Typical usage:
- * SugarErrorHandler::throwError(new SugarException('Custom message');
+ * SuiteErrorHandler::throwError(new SuiteException('Custom message');
  *
  */
-class SugarErrorHandler
+class SuiteErrorHandler
 {
     /**
      * @var array $errors
@@ -68,12 +69,12 @@ class SugarErrorHandler
     /**
      * Throws and logs the error.
      *
-     * @param SugarException $exception The error presented as a exception
+     * @param SuiteException $exception The error presented as a exception
      * @param int $sugarErrorLevel determines the log level reported in the log file(s)
      * @param boolean $throwException offers a means for new code to throw exception and keep the same log convention
      * @throws Exception
      */
-    public static function throwError($exception, $sugarErrorLevel = SugarErrorLevel::fatal, $throwException = false)
+    public static function throwError($exception, $sugarErrorLevel = SuiteErrorLevel::fatal, $throwException = false)
     {
         global $sugar_config;
         self::$errors[] = $exception;
@@ -83,7 +84,7 @@ class SugarErrorHandler
             $errorMessage .= 'PHP Stack trace:' . PHP_EOL . $exception->getTraceAsString() . PHP_EOL;
         }
 
-        $logFunction = SugarErrorLevel::toString($sugarErrorLevel);
+        $logFunction = SuiteErrorLevel::toString($sugarErrorLevel);
         $GLOBALS['log']->{$logFunction}($errorMessage);
 
         if ($throwException === true) {
@@ -92,7 +93,7 @@ class SugarErrorHandler
     }
 
     /**
-     * @param SugarException $type
+     * @param SuiteException $type
      * @return bool
      */
     public static function hasThrownError($type)

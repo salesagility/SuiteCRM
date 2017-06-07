@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -42,30 +43,29 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once __DIR__ . '/SuiteException.php';
 require_once __DIR__ . '/exceptions.php';
 
 /**
- * Class SugarEmptyValueException
+ * Class SuiteInvalidTypeException
  */
-class SugarEmptyValueException extends SugarException
+class SuiteInvalidTypeException extends SuiteException
 {
     /**
      * @var string $message
      */
-    protected $message = 'Empty value';
-
+    protected $message = 'Invalid type';
     /**
      * @var int $code
      */
-    protected $code = 1;
-
+    protected $code = 2;
     /**
      * @var string $userMessage
      */
     protected $userMessage;
 
     /**
-     * SugarEmptyValueException constructor.
+     * SuiteInvalidTypeException constructor.
      * @param string $message
      * @param int $code
      * @param Throwable|null $previous
