@@ -72,7 +72,7 @@ class Folder extends SugarBean
      * private, use Folder::getType() instead
      * @var string folder type
      */
-    private $type;
+    protected $type;
 
     /**
      * Folder constructor.
@@ -237,7 +237,7 @@ class ListViewDataEmails extends ListViewData
      * @return InboundEmail
      * @throws SuiteException
      */
-    private function getInboundEmail($currentUser, $folder) {
+    protected function getInboundEmail(User $currentUser, Folder $folder) {
 
         $inboundEmailID = $currentUser->getPreference('defaultIEAccount', 'Emails');
         if (!empty($folder->getId())) {
@@ -267,7 +267,7 @@ class ListViewDataEmails extends ListViewData
      * @param InboundEmail $inboundEmail
      * @return string
      */
-    private function getSearchType($folder, $inboundEmail) {
+    protected function getSearchType(Folder $folder, InboundEmail $inboundEmail) {
 
         switch ($folder->getType()) {
 
@@ -306,7 +306,7 @@ class ListViewDataEmails extends ListViewData
      * @param string $searchType
      * @return array
      */
-    private function getFilter($filterFields, $where, $request, &$searchType) {
+    protected function getFilter($filterFields, $where, $request, &$searchType) {
         // Create a list of fields to filter and decide based on the field which type of filter to carry out
 
         $filter = array();
@@ -378,11 +378,11 @@ class ListViewDataEmails extends ListViewData
      * Fix fields in filter fields and repair sql $where
      *
      * @param array $filterFields
-     * @param $request $_REQUEST
-     * @param $where
+     * @param array $request $_REQUEST
+     * @param string $where
      * @return array
      */
-    private function fixFieldsInFilter($filterFields, $request, &$where) {
+    public function fixFieldsInFilter($filterFields, $request, &$where) {
         // Fix fields in filter fields
         foreach (self::$mapEmailFieldsToEmailTextFields as $EmailSearchField => $EmailTextSearchField) {
             if(array_search($EmailSearchField, self::$alwaysIncludeSearchFields) !== false) {
@@ -429,11 +429,11 @@ class ListViewDataEmails extends ListViewData
      * @param string $crmWhere
      * @param array $filterFields
      * @param array $params
-     * @param ??? $seed
+     * @param Email $seed
      * @param bool $singleSelect
      * @return array
      */
-    private function getCrmQueryArray($crmWhere, $filterFields, $params, $seed, $singleSelect) {
+    public function getCrmQueryArray($crmWhere, $filterFields, $params, Email $seed, $singleSelect) {
 
         $crmQueryArray = $seed->create_new_list_query(
             'id',
@@ -466,7 +466,7 @@ class ListViewDataEmails extends ListViewData
      * @param array $params
      * @return string
      */
-    private function getCrmEmailsQuery($crmQueryArray, &$params) {
+    public function getCrmEmailsQuery($crmQueryArray, &$params) {
 
         if (!is_array($params)) {
             $params = array();
@@ -511,7 +511,7 @@ class ListViewDataEmails extends ListViewData
      * @param array $emailHeader
      * @return string
      */
-    private function getEmailHeaderStatus($emailHeader)
+    protected function getEmailHeaderStatus($emailHeader)
     {
         if (isset($emailHeader['answered']) && $emailHeader['answered'] != 0) {
             $ret = 'replied';
@@ -531,7 +531,16 @@ class ListViewDataEmails extends ListViewData
     }
 
 
-    private function getEmailRecordFieldValue($field, $emailHeader, $inboundEmail, $currentUser, $folder, $folderObj) {
+    /**
+     * @param string $field
+     * @param array $emailHeader
+     * @param InboundEmail $inboundEmail
+     * @param User $currentUser
+     * @param string $folder
+     * @param Folder $folderObj
+     * @return bool|string
+     */
+    protected function getEmailRecordFieldValue($field, $emailHeader, InboundEmail $inboundEmail, User $currentUser, $folder, Folder $folderObj) {
 
         switch ($field) {
             case 'from_addr_name':
@@ -612,7 +621,16 @@ class ListViewDataEmails extends ListViewData
     }
 
 
-    private function getEmailRecord($folderObj, $emailHeader, $seed, $inboundEmail, $current_user, $folder) {
+    /**
+     * @param Folder $folderObj
+     * @param array $emailHeader
+     * @param Email $seed
+     * @param InboundEmail $inboundEmail
+     * @param User $currentUser
+     * @param string $folder
+     * @return array|bool
+     */
+    public function getEmailRecord(Folder $folderObj, $emailHeader, Email $seed, InboundEmail $inboundEmail, User $currentUser, $folder) {
         $emailRecord = array();
 
         if ($folderObj->getType() === 'draft' && $emailHeader['draft'] === 0) {
@@ -621,14 +639,18 @@ class ListViewDataEmails extends ListViewData
 
         foreach ($seed->column_fields as $c => $field) {
 
-            $emailRecord[strtoupper($field)] = $this->getEmailRecordFieldValue($field, $emailHeader, $inboundEmail, $current_user, $folder, $folderObj);
+            $emailRecord[strtoupper($field)] = $this->getEmailRecordFieldValue($field, $emailHeader, $inboundEmail, $currentUser, $folder, $folderObj);
 
         }
 
         return $emailRecord;
     }
 
-    private function isRequestedSearchAdvanced($request) {
+    /**
+     * @param array $request $_REQUEST
+     * @return bool
+     */
+    public function isRequestedSearchAdvanced($request) {
         return
             (isset($request["searchFormTab"]) && $request["searchFormTab"] == "advanced_search") ||
             (
@@ -638,8 +660,27 @@ class ListViewDataEmails extends ListViewData
             (isset($request["module"]) && $request["module"] == "MergeRecords");
     }
 
-    private function isRequestedSearchBasic($request) {
+    /**
+     * @param array $request $_REQUEST
+     * @return bool
+     */
+    public function isRequestedSearchBasic($request) {
         return isset($request["searchFormTab"]) && $request["searchFormTab"] == "basic_search";
+    }
+
+
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function getEmailUIds($data) {
+        $emailUIds = array();
+        foreach ($data as $row) {
+            $emailUIds[] = $row['UID'];
+        }
+
+        return $emailUIds;
     }
 
     /**
@@ -679,7 +720,6 @@ class ListViewDataEmails extends ListViewData
 
             $inboundEmail = $this->getInboundEmail($current_user, $folderObj);
 
-            $limitPerPage = isset($sugar_config['list_max_entries_per_page']) && (int)$sugar_config['list_max_entries_per_page'] ? $sugar_config['list_max_entries_per_page'] : 10;
 
             $searchType = $this->getSearchType($folderObj, $inboundEmail);
 
@@ -703,521 +743,34 @@ class ListViewDataEmails extends ListViewData
             switch ($searchType) {
                 case 'crm':
 
-                    // Fix fields in filter fields
-
-                    $filter_fields = $this->fixFieldsInFilter($filter_fields, $request, $where);
-
-
-                    // Filter imported emails based on the UID of the results from the IMap server
-
-                    if(!empty($where)) {
-                        $where .= ' AND ';
-                    }
-                    $crmWhere = $where . 'mailbox_id LIKE ' .'"' . $inboundEmail->id . '"';
-
-
-                    // Populates CRM fields
-
-                    $crmQueryArray = $this->getCrmQueryArray($crmWhere, $filter_fields, $params, $seed, $singleSelect);
-
-
-                    // get crm emails query
-
-                    $crmEmailsQuery = $this->getCrmEmailsQuery($crmQueryArray, $params);
-
-
-
-                    $crmEmails = $this->db->query($crmEmailsQuery);
 
                     $limit = $sugar_config['list_max_entries_per_page'];
 
-                    $this->setVariableName($seed->object_name, $crmWhere, $this->listviewName, $id);
+                    $search = new ListViewDataEmailsSearchOnCrm($this);
+                    $ret = $search->search($filter_fields, $request, $where, $inboundEmail, $params, $seed, $singleSelect, $id, $limit, $current_user, $id_field, $offset);
 
-                    SugarVCR::erase($seed->module_dir);
-                    $this->seed =& $seed;
-                    $totalCounted = empty($GLOBALS['sugar_config']['disable_count_query']);
-                    $_SESSION['MAILMERGE_MODULE_FROM_LISTVIEW'] = $seed->module_dir;
-                    if(empty($request['action']) || $request['action'] != 'Popup'){
-                        $_SESSION['MAILMERGE_MODULE'] = $seed->module_dir;
-                    }
 
-                    $this->setVariableName($seed->object_name, $where, $this->listviewName, $id);
-
-                    $this->seed->id = '[SELECT_ID_LIST]';
-
-                    // if $params tell us to override all ordering
-                    if(!empty($params['overrideOrder']) && !empty($params['orderBy'])) {
-                        $order = $this->getOrderBy(strtolower($params['orderBy']), (empty($params['sortOrder']) ? '' : $params['sortOrder'])); // retreive from $_REQUEST
-                    }
-                    else {
-                        $order = $this->getOrderBy(); // retreive from $_REQUEST
-                    }
-
-                    // still empty? try to use settings passed in $param
-                    if(empty($order['orderBy']) && !empty($params['orderBy'])) {
-                        $order['orderBy'] = $params['orderBy'];
-                        $order['sortOrder'] =  (empty($params['sortOrder']) ? '' : $params['sortOrder']);
-                    }
-
-                    if (empty($params['skipOrderSave'])) { // don't save preferences if told so
-                        $current_user->setPreference('listviewOrder', $order, 0, $this->var_name); // save preference
-                    }
-
-                    $data = array();
-
-                    $temp = clone $seed;
-
-                    $rows = array();
-                    $count = 0;
-                    $idIndex = array();
-                    $id_list = '';
-
-                    while(($row = $this->db->fetchByAssoc($crmEmails)) != null)
-                    {
-                        if($count < $limit)
-                        {
-                            $id_list .= ',\''.$row[$id_field].'\'';
-                            $idIndex[$row[$id_field]][] = count($rows);
-                            $rows[] = $seed->convertRow($row);
-                        }
-                        $count++;
-                    }
-
-                    if (!empty($id_list))
-                    {
-                        $id_list = '('.substr($id_list, 1).')';
-                    }
-
-                    SugarVCR::store($this->seed->module_dir,  $crmEmailsQuery);
-                    if($count != 0) {
-                        //NOW HANDLE SECONDARY QUERIES
-                        if(!empty($ret_array['secondary_select'])) {
-                            $secondary_query = $ret_array['secondary_select'] . $ret_array['secondary_from'] . ' WHERE '.$this->seed->table_name.'.id IN ' .$id_list;
-                            if(isset($ret_array['order_by']))
-                            {
-                                $secondary_query .= ' ' . $ret_array['order_by'];
-                            }
-
-                            $secondary_result = $this->db->query($secondary_query);
-
-                            $ref_id_count = array();
-                            while($row = $this->db->fetchByAssoc($secondary_result)) {
-
-                                $ref_id_count[$row['ref_id']][] = true;
-                                foreach($row as $name=>$value) {
-                                    //add it to every row with the given id
-                                    foreach($idIndex[$row['ref_id']] as $index){
-                                        $rows[$index][$name]=$value;
-                                    }
-                                }
-                            }
-
-                            $rows_keys = array_keys($rows);
-                            foreach($rows_keys as $key)
-                            {
-                                $rows[$key]['secondary_select_count'] = count($ref_id_count[$rows[$key]['ref_id']]);
-                            }
-                        }
-
-                        // retrieve parent names
-                        if(!empty($filter_fields['parent_name']) && !empty($filter_fields['parent_id']) && !empty($filter_fields['parent_type'])) {
-                            foreach($idIndex as $id => $rowIndex) {
-                                if(!isset($post_retrieve[$rows[$rowIndex[0]]['parent_type']])) {
-                                    $post_retrieve[$rows[$rowIndex[0]]['parent_type']] = array();
-                                }
-                                if(!empty($rows[$rowIndex[0]]['parent_id'])) $post_retrieve[$rows[$rowIndex[0]]['parent_type']][] = array('child_id' => $id , 'parent_id'=> $rows[$rowIndex[0]]['parent_id'], 'parent_type' => $rows[$rowIndex[0]]['parent_type'], 'type' => 'parent');
-                            }
-                            if(isset($post_retrieve)) {
-                                $parent_fields = $seed->retrieve_parent_fields($post_retrieve);
-                                foreach($parent_fields as $child_id => $parent_data) {
-                                    //add it to every row with the given id
-                                    foreach($idIndex[$child_id] as $index){
-                                        $rows[$index]['parent_name']= $parent_data['parent_name'];
-                                    }
-                                }
-                            }
-                        }
-
-                        $pageData = array();
-
-                        reset($rows);
-                        while($row = current($rows)){
-
-                            $temp = clone $seed;
-                            $dataIndex = count($data);
-
-                            $temp->setupCustomFields($temp->module_dir);
-                            $temp->loadFromRow($row);
-                            if (empty($this->seed->assigned_user_id) && !empty($temp->assigned_user_id)) {
-                                $this->seed->assigned_user_id = $temp->assigned_user_id;
-                            }
-                            if($idIndex[$row[$id_field]][0] == $dataIndex){
-                                $pageData['tag'][$dataIndex] = $temp->listviewACLHelper();
-                            }else{
-                                $pageData['tag'][$dataIndex] = $pageData['tag'][$idIndex[$row[$id_field]][0]];
-                            }
-                            $data[$dataIndex] = $temp->get_list_view_data();
-                            $detailViewAccess = $temp->ACLAccess('DetailView');
-                            $editViewAccess = $temp->ACLAccess('EditView');
-                            $pageData['rowAccess'][$dataIndex] = array('view' => $detailViewAccess, 'edit' => $editViewAccess);
-                            $additionalDetailsAllow = $this->additionalDetails && $detailViewAccess && (file_exists(
-                                        'modules/' . $temp->module_dir . '/metadata/additionalDetails.php'
-                                    ) || file_exists('custom/modules/' . $temp->module_dir . '/metadata/additionalDetails.php'));
-                            $additionalDetailsEdit = $editViewAccess;
-                            if($additionalDetailsAllow) {
-                                if($this->additionalDetailsAjax) {
-                                    $ar = $this->getAdditionalDetailsAjax($data[$dataIndex]['ID']);
-                                }
-                                else {
-                                    $additionalDetailsFile = 'modules/' . $this->seed->module_dir . '/metadata/additionalDetails.php';
-                                    if(file_exists('custom/modules/' . $this->seed->module_dir . '/metadata/additionalDetails.php')){
-                                        $additionalDetailsFile = 'custom/modules/' . $this->seed->module_dir . '/metadata/additionalDetails.php';
-                                    }
-                                    require_once($additionalDetailsFile);
-                                    $ar = $this->getAdditionalDetails($data[$dataIndex],
-                                        (empty($this->additionalDetailsFunction) ? 'additionalDetails' : $this->additionalDetailsFunction) . $this->seed->object_name,
-                                        $additionalDetailsEdit);
-                                }
-                                $pageData['additionalDetails'][$dataIndex] = $ar['string'];
-                                $pageData['additionalDetails']['fieldToAddTo'] = $ar['fieldToAddTo'];
-                            }
-                            next($rows);
-                        }
-                    }
-                    $nextOffset = -1;
-                    $prevOffset = -1;
-                    $endOffset = -1;
-                    if($count > $limit) {
-                        $nextOffset = $offset + $limit;
-                    }
-
-                    if($offset > 0) {
-                        $prevOffset = $offset - $limit;
-                        if($prevOffset < 0)$prevOffset = 0;
-                    }
-                    $totalCount = $count + $offset;
-
-                    if( $count >= $limit && $totalCounted){
-                        $totalCount  = $this->getTotalCount($crmEmailsQuery);
-                    }
-                    SugarVCR::recordIDs($this->seed->module_dir, array_keys($idIndex), $offset, $totalCount);
-                    $module_names = array(
-                        'Prospects' => 'Targets'
-                    );
-                    $endOffset = (floor(($totalCount - 1) / $limit)) * $limit;
-                    $pageData['ordering'] = $order;
-                    $pageData['ordering']['sortOrder'] = $this->getReverseSortOrder($pageData['ordering']['sortOrder']);
-                    //get url parameters as an array
-                    $pageData['queries'] = $this->generateQueries($pageData['ordering']['sortOrder'], $offset, $prevOffset, $nextOffset,  $endOffset, $totalCounted);
-                    //join url parameters from array to a string
-                    $pageData['urls'] = $this->generateURLS($pageData['queries']);
-                    $pageData['offsets'] = array( 'current'=>$offset, 'next'=>$nextOffset, 'prev'=>$prevOffset, 'end'=>$endOffset, 'total'=>$totalCount, 'totalCounted'=>$totalCounted);
-                    $pageData['bean'] = array('objectName' => $seed->object_name, 'moduleDir' => $seed->module_dir, 'moduleName' => strtr($seed->module_dir, $module_names));
-                    $pageData['stamp'] = $this->stamp;
-                    $pageData['access'] = array('view' => $this->seed->ACLAccess('DetailView'), 'edit' => $this->seed->ACLAccess('EditView'));
-                    $pageData['idIndex'] = $idIndex;
-                    if(!$this->seed->ACLAccess('ListView')) {
-                        $pageData['error'] = 'ACL restricted access';
-                    }
-
-                    $queryString = '';
-
-                    if( isset($request["searchFormTab"]) && $request["searchFormTab"] == "advanced_search" ||
-                        isset($request["type_basic"]) && (count($request["type_basic"] > 1) || $request["type_basic"][0] != "") ||
-                        isset($request["module"]) && $request["module"] == "MergeRecords")
-                    {
-                        $queryString = "-advanced_search";
-                    }
-                    else if (isset($request["searchFormTab"]) && $request["searchFormTab"] == "basic_search")
-                    {
-                        // TODO: figure out what was the SearchFormReports???
-                        if($seed->module_dir == "Reports") $searchMetaData = SearchFormReports::retrieveReportsSearchDefs();
-                        else $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir); // TODO: figure out which SearchForm is it?
-
-                        $basicSearchFields = array();
-
-                        if( isset($searchMetaData['searchdefs']) && isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search']) )
-                            $basicSearchFields = $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'];
-
-                        foreach( $basicSearchFields as $basicSearchField)
-                        {
-                            $field_name = (is_array($basicSearchField) && isset($basicSearchField['name'])) ? $basicSearchField['name'] : $basicSearchField;
-                            $field_name .= "_basic";
-                            if( isset($request[$field_name])  && ( !is_array($basicSearchField) || !isset($basicSearchField['type']) || $basicSearchField['type'] == 'text' || $basicSearchField['type'] == 'name') )
-                            {
-                                // Ensure the encoding is UTF-8
-                                $queryString = htmlentities($request[$field_name], null, 'UTF-8');
-                                break;
-                            }
-                        }
-                    }
-
-                    $ret =  array('data'=>$data , 'pageData'=>$pageData, 'query' => $queryString);
 
                     break;
                 case 'imap':
-                    // Create the data structure which are required to view a list view.
-                    require_once 'include/SearchForm/SearchForm2.php';
-                    $this->seed =& $seed;
-                    $this->setVariableName($seed->object_name, $where, $this->listviewName, $id);
-                    $this->seed->id = '[SELECT_ID_LIST]';
-
-                    if (!empty($params['overrideOrder']) && !empty($params['orderBy'])) {
-                        $order = $this->getOrderBy(
-                            strtolower($params['orderBy']),
-                            (empty($params['sortOrder']) ? '' : $params['sortOrder'])
-                        );
-                    } else {
-                        $order = $this->getOrderBy();
-                    }
-
-                    // still empty? try to use settings passed in $param
-                    if (empty($order['orderBy']) && !empty($params['orderBy'])) {
-                        $order['orderBy'] = $params['orderBy'];
-                        $order['sortOrder'] = (empty($params['sortOrder']) ? '' : $params['sortOrder']);
-                    }
-
-                    // TODO: figure out why was it for?
-                    $orderby = $order['orderBy'];
-                    if (strpos($order['orderBy'], '.') && ($order['orderBy'] != "report_cache.date_modified")) {
-                        $orderby = substr($order['orderBy'], strpos($order['orderBy'], '.') + 1);
-                    }
 
 
-                    $page = 0;
-                    $offset = 0;
-                    if (isset($request['Emails2_EMAIL_offset'])) {
-                        if ($request['Emails2_EMAIL_offset'] !== "end") {
-                            $offset = $request['Emails2_EMAIL_offset'];
-                            $page = $offset / $limitPerPage;
-                        }
-                    }
-
-                    // Get emails from email server
-                    $emailServerEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter);
-
-                    $total = $emailServerEmails['mailbox_info']['Nmsgs'] + count($importedEmails['data']);
-                    if ($page === "end") {
-                        $offset = $total - $limitPerPage;
-                    }
+                    $limitPerPage = isset($sugar_config['list_max_entries_per_page']) && (int)$sugar_config['list_max_entries_per_page'] ? $sugar_config['list_max_entries_per_page'] : 10;
 
 
-                    /// Populate the data and its fields from the email server
-                    $request['uids'] = array();
+                    $search = new ListViewDataEmailsSearchOnIMap($this);
+                    $ret = $search->search($seed, $where, $id, $inboundEmail, $filter, $folderObj, $current_user, $folder, $limit, $limitPerPage);
 
-                    foreach ($emailServerEmails['data'] as $h => $emailHeader) {
-
-
-                        $emailRecord = $this->getEmailRecord($folderObj, $emailHeader, $seed, $inboundEmail, $current_user, $folder);
-                        if($emailRecord === false) {
-                            continue;
-                        }
-
-                        $data[] = $emailRecord;
-                        $pageData['rowAccess'][$h] = array('edit' => true, 'view' => true);
-                        $pageData['additionalDetails'][$h] = '';
-                        $pageData['tag'][$h]['MAIN'] = 'a';
-                    }
+                    break;
 
 
-                    // Filter imported emails based on the UID of the results from the IMap server
-                    $crmWhere = $where . ' AND mailbox_id LIKE ' . '"' . $inboundEmail->id . '"';
+                default:
 
-                    // TODO: figure out why was it for?
-                    // Populates CRM fields
-                    $crmQueryArray = $seed->create_new_list_query(
-                        'id',
-                        $crmWhere,
-                        $filter_fields,
-                        $params,
-                        0,
-                        '',
-                        true,
-                        $seed,
-                        $singleSelect);
+                    // handle default case
 
-                    $ret_array['inner_join'] = '';
-                    if (!empty($this->seed->listview_inner_join)) {
-                        $ret_array['inner_join'] = ' ' . implode(' ', $this->seed->listview_inner_join) . ' ';
-                    }
+                    $GLOBALS['log']->fatal("Unknown or undefined search type" . ($searchType ? " ($searchType)" : ''));
 
-                    if (!is_array($params)) {
-                        $params = array();
-                    }
-                    if (!isset($params['custom_select'])) {
-                        $params['custom_select'] = '';
-                    }
-                    if (!isset($params['custom_from'])) {
-                        $params['custom_from'] = '';
-                    }
-                    if (!isset($params['custom_where'])) {
-                        $params['custom_where'] = '';
-                    }
-                    if (!isset($params['custom_order_by'])) {
-                        $params['custom_order_by'] = '';
-                    }
-
-                    $this->setVariableName($seed->object_name, $crmWhere, $this->listviewName, $id);
-
-                    $this->seed->id = '[SELECT_ID_LIST]';
-
-                    $nextOffset = -1;
-                    $prevOffset = -1;
-                    $endOffset = 0;
-
-
-                    if ($total > $limitPerPage) {
-                        $nextOffset = $offset + $limitPerPage;
-                    }
-
-                    if ($nextOffset >= $total) {
-                        $nextOffset = $total;
-                    }
-
-                    if ($page > 0) {
-                        $prevOffset = $offset - $limitPerPage;
-                        if ($prevOffset < 0) {
-                            $prevOffset = 0;
-                        }
-                    }
-
-                    if ($total < $limitPerPage) {
-                        $prevOffset = -1;
-                        $nextOffset = -1;
-                    }
-
-                    if ($total > 0) {
-                        $endOffset = $total / $limitPerPage;
-                    }
-
-                    $pageData['offsets']['current'] = $offset;
-                    $pageData['offsets']['total'] = $total;
-                    $pageData['offsets']['next'] = $nextOffset;
-                    $pageData['offsets']['prev'] = $prevOffset;
-                    $pageData['offsets']['end'] = ceil($endOffset);
-
-                    $queries = array('baseUrl', 'endPage', 'nextPage', 'orderBy');
-
-                    if ((int)$pageData['offsets']['current'] >= $limitPerPage) {
-                        $queries[] = 'prevPage';
-                        $queries[] = 'startPage';
-                    }
-
-                    foreach ($queries as $query) {
-
-                        if ($total < $limitPerPage || $nextOffset >= $total) {
-                            if (isset($pageData['queries'][$query])) {
-                                unset($pageData['queries'][$query]);
-                            }
-                        } else {
-                            $pageData['queries'][$query]['module'] = "Emails";
-                            $pageData['queries'][$query]['action'] = "index";
-                            $pageData['queries'][$query]['parentTab'] = "Activities";
-                            $pageData['queries'][$query]['ajax_load'] = "0";
-                            $pageData['queries'][$query]['loadLanguageJS'] = "1";
-                            $pageData['queries'][$query]['searchFormTab'] = "advanced_search";
-                            $pageData['queries'][$query]['lvso'] = "DESC";
-
-                            $pageData['urls'][$query] = 'index.php?module=Emails&action=index&parentTab=Activities&searchFormTab=advanced_search&query=true&current_user_only_basic=0&button=Search&lvso=DESC';
-
-                        }
-                    }
-
-                    // TODO: UNDEFINED: refactor current_query_by_page in the list view
-                    // inject post values
-                    $request['folder'] = $folder;
-                    $request['folder_type'] = $folderObj->getType();
-                    $request['inbound_email_record'] = $inboundEmail->id;
-
-
-                    // TODO: TASK: UNDEFINED - HANDLE in second filter after IMap
-                    $endOffset = floor(($total - 1) / $limit) * $limit;
-                    $pageData['queries'] = $this->generateQueries(
-                        $pageData['ordering']['sortOrder'],
-                        $offset,
-                        $prevOffset,
-                        $nextOffset,
-                        $endOffset,
-                        $total
-                    );
-                    $pageData['offsets'] = array(
-                        'current' => $offset,
-                        'next' => $nextOffset,
-                        'prev' => $prevOffset,
-                        'end' => $endOffset,
-                        'total' => $total,
-                        'totalCounted' => $total
-                    );
-
-                    $pageData['ordering'] = $order;
-                    $pageData['ordering']['sortOrder'] = $this->getReverseSortOrder($pageData['ordering']['sortOrder']);
-                    //get url parameters as an array
-                    //join url parameters from array to a string
-                    $pageData['urls'] = $this->generateURLS($pageData['queries']);
-                    $module_names = array(
-                        'Prospects' => 'Targets'
-                    );
-                    $pageData['bean'] = array(
-                        'objectName' => $seed->object_name,
-                        'moduleDir' => $seed->module_dir,
-                        'moduleName' => strtr($seed->module_dir, $module_names)
-                    );
-                    $pageData['stamp'] = $this->stamp;
-                    $pageData['access'] = array(
-                        'view' => $this->seed->ACLAccess('DetailView'),
-                        'edit' => $this->seed->ACLAccess('EditView')
-                    );
-                    if (!$this->seed->ACLAccess('ListView')) {
-                        $pageData['error'] = 'ACL restricted access';
-                    }
-
-
-                    if ( $this->isRequestedSearchAdvanced($request) ) {
-                        $queryString = "-advanced_search";
-                    } else {
-                        if ( $this->isRequestedSearchBasic($request) ) {
-
-                            // SearchForm is a (SearchForm2)
-                            $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir);
-
-                            $basicSearchFields = array();
-
-                            if (
-                                isset($searchMetaData['searchdefs']) &&
-                                isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'])
-                            ) {
-                                $basicSearchFields = $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'];
-                            }
-
-                            foreach ($basicSearchFields as $basicSearchField) {
-                                $field_name = (is_array($basicSearchField) && isset($basicSearchField['name']))
-                                    ? $basicSearchField['name'] : $basicSearchField;
-                                $field_name .= "_basic";
-                                if (
-                                    isset($request[$field_name]) &&
-                                    (
-                                        !is_array($basicSearchField) ||
-                                        !isset($basicSearchField['type']) ||
-                                        $basicSearchField['type'] == 'text' ||
-                                        $basicSearchField['type'] == 'name'
-                                    )
-                                ) {
-                                    // Ensure the encoding is UTF-8
-                                    $queryString = htmlentities($request[$field_name], null, 'UTF-8');
-                                    break;
-                                }
-                            }
-                        } else {
-                            $GLOBALS['log']->fatal("Unknown requested search type");
-                        }
-                    }
-
-                    $request['email_uids'] = array();
-                    foreach ($data as $row) {
-                        $request['email_uids'][] = $row['UID'];
-                    }
-
-                    $ret = array('data' => $data, 'pageData' => $pageData, 'query' => $queryString);
+                    break;
             }
 
 
@@ -1233,4 +786,588 @@ class ListViewDataEmails extends ListViewData
 
         return $ret;
     }
+
+    /**
+     * generates queries for use by the display layer
+     *
+     * @param int $sortOrder
+     * @param int $offset
+     * @param int $prevOffset
+     * @param int $nextOffset
+     * @param int $endOffset
+     * @param int $totalCounted
+     * @return array of queries orderBy and baseURL are always returned the others are only returned  according to values passed in.
+     */
+    public function callGenerateQueries($sortOrder, $offset, $prevOffset, $nextOffset, $endOffset, $totalCounted) {
+        return $this->generateQueries($sortOrder, $offset, $prevOffset, $nextOffset, $endOffset, $totalCounted);
+    }
+
+    /**
+     * generates urls as a string for use by the display layer
+     *
+     * @param array $queries
+     * @return array of urls orderBy and baseURL are always returned the others are only returned  according to values passed in.
+     */
+    public function callGenerateURLS($queries) {
+        return $this->generateURLS($queries);
+    }
+
+}
+
+abstract class ListViewDataEmailsSearchAbstract {
+
+    /**
+     * @var ListViewDataEmails
+     */
+    protected $lvde;
+
+    public function __construct(ListViewDataEmails $listViewDataEmails) {
+        $this->lvde = $listViewDataEmails;
+    }
+
+}
+
+class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
+
+    /**
+     * @param array $filterFields
+     * @param array $request $_REQUEST
+     * @param string $where
+     * @param InboundEmail $inboundEmail
+     * @param array $params
+     * @param Email $seed
+     * @param bool $singleSelect
+     * @param ??? $id
+     * @param int $limit
+     * @param User $currentUser
+     * @param string $idField
+     * @param int $offset
+     * @return array
+     */
+    public function search($filterFields, $request, $where, InboundEmail $inboundEmail, $params, Email $seed, $singleSelect, $id, $limit, User $currentUser, $idField, $offset) {
+        // Fix fields in filter fields
+
+        $filterFields = $this->lvde->fixFieldsInFilter($filterFields, $request, $where);
+
+
+        // Filter imported emails based on the UID of the results from the IMap server
+
+        if(!empty($where)) {
+            $where .= ' AND ';
+        }
+        $crmWhere = $where . 'mailbox_id LIKE ' .'"' . $inboundEmail->id . '"';
+
+
+        // Populates CRM fields
+
+        $crmQueryArray = $this->lvde->getCrmQueryArray($crmWhere, $filterFields, $params, $seed, $singleSelect);
+
+
+        // get crm emails query
+
+        $crmEmailsQuery = $this->lvde->getCrmEmailsQuery($crmQueryArray, $params);
+
+
+
+        $crmEmails = $this->lvde->db->query($crmEmailsQuery);
+
+        $this->lvde->setVariableName($seed->object_name, $crmWhere, $this->lvde->listviewName, $id);
+
+        SugarVCR::erase($seed->module_dir);
+        $this->lvde->seed =& $seed;
+        $totalCounted = empty($GLOBALS['sugar_config']['disable_count_query']);
+        $_SESSION['MAILMERGE_MODULE_FROM_LISTVIEW'] = $seed->module_dir;
+        if(empty($request['action']) || $request['action'] != 'Popup'){
+            $_SESSION['MAILMERGE_MODULE'] = $seed->module_dir;
+        }
+
+        $this->lvde->setVariableName($seed->object_name, $where, $this->lvde->listviewName, $id);
+
+        $this->lvde->seed->id = '[SELECT_ID_LIST]';
+
+        // if $params tell us to override all ordering
+        if(!empty($params['overrideOrder']) && !empty($params['orderBy'])) {
+            $order = $this->lvde->getOrderBy(strtolower($params['orderBy']), (empty($params['sortOrder']) ? '' : $params['sortOrder'])); // retreive from $_REQUEST
+        }
+        else {
+            $order = $this->lvde->getOrderBy(); // retreive from $_REQUEST
+        }
+
+        // still empty? try to use settings passed in $param
+        if(empty($order['orderBy']) && !empty($params['orderBy'])) {
+            $order['orderBy'] = $params['orderBy'];
+            $order['sortOrder'] =  (empty($params['sortOrder']) ? '' : $params['sortOrder']);
+        }
+
+        if (empty($params['skipOrderSave'])) { // don't save preferences if told so
+            $currentUser->setPreference('listviewOrder', $order, 0, $this->lvde->var_name); // save preference
+        }
+
+        $data = array();
+
+        $temp = clone $seed;
+
+        $rows = array();
+        $count = 0;
+        $idIndex = array();
+        $id_list = '';
+
+        while(($row = $this->lvde->db->fetchByAssoc($crmEmails)) != null)
+        {
+            if($count < $limit)
+            {
+                $id_list .= ',\''.$row[$idField].'\'';
+                $idIndex[$row[$idField]][] = count($rows);
+                $rows[] = $seed->convertRow($row);
+            }
+            $count++;
+        }
+
+        if (!empty($id_list))
+        {
+            $id_list = '('.substr($id_list, 1).')';
+        }
+
+        SugarVCR::store($this->lvde->seed->module_dir,  $crmEmailsQuery);
+        if($count != 0) {
+            //NOW HANDLE SECONDARY QUERIES
+            if(!empty($ret_array['secondary_select'])) {
+                $secondary_query = $ret_array['secondary_select'] . $ret_array['secondary_from'] . ' WHERE '.$this->lvde->seed->table_name.'.id IN ' .$id_list;
+                if(isset($ret_array['order_by']))
+                {
+                    $secondary_query .= ' ' . $ret_array['order_by'];
+                }
+
+                $secondary_result = $this->lvde->db->query($secondary_query);
+
+                $ref_id_count = array();
+                while($row = $this->lvde->db->fetchByAssoc($secondary_result)) {
+
+                    $ref_id_count[$row['ref_id']][] = true;
+                    foreach($row as $name=>$value) {
+                        //add it to every row with the given id
+                        foreach($idIndex[$row['ref_id']] as $index){
+                            $rows[$index][$name]=$value;
+                        }
+                    }
+                }
+
+                $rows_keys = array_keys($rows);
+                foreach($rows_keys as $key)
+                {
+                    $rows[$key]['secondary_select_count'] = count($ref_id_count[$rows[$key]['ref_id']]);
+                }
+            }
+
+            // retrieve parent names
+            if(!empty($filter_fields['parent_name']) && !empty($filter_fields['parent_id']) && !empty($filter_fields['parent_type'])) {
+                foreach($idIndex as $id => $rowIndex) {
+                    if(!isset($post_retrieve[$rows[$rowIndex[0]]['parent_type']])) {
+                        $post_retrieve[$rows[$rowIndex[0]]['parent_type']] = array();
+                    }
+                    if(!empty($rows[$rowIndex[0]]['parent_id'])) $post_retrieve[$rows[$rowIndex[0]]['parent_type']][] = array('child_id' => $id , 'parent_id'=> $rows[$rowIndex[0]]['parent_id'], 'parent_type' => $rows[$rowIndex[0]]['parent_type'], 'type' => 'parent');
+                }
+                if(isset($post_retrieve)) {
+                    $parent_fields = $seed->retrieve_parent_fields($post_retrieve);
+                    foreach($parent_fields as $child_id => $parent_data) {
+                        //add it to every row with the given id
+                        foreach($idIndex[$child_id] as $index){
+                            $rows[$index]['parent_name']= $parent_data['parent_name'];
+                        }
+                    }
+                }
+            }
+
+            $pageData = array();
+
+            reset($rows);
+            while($row = current($rows)){
+
+                $temp = clone $seed;
+                $dataIndex = count($data);
+
+                $temp->setupCustomFields($temp->module_dir);
+                $temp->loadFromRow($row);
+                if (empty($this->lvde->seed->assigned_user_id) && !empty($temp->assigned_user_id)) {
+                    $this->lvde->seed->assigned_user_id = $temp->assigned_user_id;
+                }
+                if($idIndex[$row[$idField]][0] == $dataIndex){
+                    $pageData['tag'][$dataIndex] = $temp->listviewACLHelper();
+                }else{
+                    $pageData['tag'][$dataIndex] = $pageData['tag'][$idIndex[$row[$idField]][0]];
+                }
+                $data[$dataIndex] = $temp->get_list_view_data();
+                $detailViewAccess = $temp->ACLAccess('DetailView');
+                $editViewAccess = $temp->ACLAccess('EditView');
+                $pageData['rowAccess'][$dataIndex] = array('view' => $detailViewAccess, 'edit' => $editViewAccess);
+                $additionalDetailsAllow = $this->lvde->additionalDetails && $detailViewAccess && (file_exists(
+                            'modules/' . $temp->module_dir . '/metadata/additionalDetails.php'
+                        ) || file_exists('custom/modules/' . $temp->module_dir . '/metadata/additionalDetails.php'));
+                $additionalDetailsEdit = $editViewAccess;
+                if($additionalDetailsAllow) {
+                    if($this->lvde->additionalDetailsAjax) {
+                        $ar = $this->lvde->getAdditionalDetailsAjax($data[$dataIndex]['ID']);
+                    }
+                    else {
+                        $additionalDetailsFile = 'modules/' . $this->lvde->seed->module_dir . '/metadata/additionalDetails.php';
+                        if(file_exists('custom/modules/' . $this->lvde->seed->module_dir . '/metadata/additionalDetails.php')){
+                            $additionalDetailsFile = 'custom/modules/' . $this->lvde->seed->module_dir . '/metadata/additionalDetails.php';
+                        }
+                        require_once($additionalDetailsFile);
+                        $ar = $this->lvde->getAdditionalDetails($data[$dataIndex],
+                            (empty($this->lvde->additionalDetailsFunction) ? 'additionalDetails' : $this->lvde->additionalDetailsFunction) . $this->lvde->seed->object_name,
+                            $additionalDetailsEdit);
+                    }
+                    $pageData['additionalDetails'][$dataIndex] = $ar['string'];
+                    $pageData['additionalDetails']['fieldToAddTo'] = $ar['fieldToAddTo'];
+                }
+                next($rows);
+            }
+        }
+        $nextOffset = -1;
+        $prevOffset = -1;
+        $endOffset = -1;
+        if($count > $limit) {
+            $nextOffset = $offset + $limit;
+        }
+
+        if($offset > 0) {
+            $prevOffset = $offset - $limit;
+            if($prevOffset < 0)$prevOffset = 0;
+        }
+        $totalCount = $count + $offset;
+
+        if( $count >= $limit && $totalCounted){
+            $totalCount  = $this->lvde->getTotalCount($crmEmailsQuery);
+        }
+        SugarVCR::recordIDs($this->lvde->seed->module_dir, array_keys($idIndex), $offset, $totalCount);
+        $module_names = array(
+            'Prospects' => 'Targets'
+        );
+        $endOffset = (floor(($totalCount - 1) / $limit)) * $limit;
+        $pageData['ordering'] = $order;
+        $pageData['ordering']['sortOrder'] = $this->lvde->getReverseSortOrder($pageData['ordering']['sortOrder']);
+        //get url parameters as an array
+        $pageData['queries'] = $this->lvde->callGenerateQueries($pageData['ordering']['sortOrder'], $offset, $prevOffset, $nextOffset,  $endOffset, $totalCounted);
+        //join url parameters from array to a string
+        $pageData['urls'] = $this->lvde->callGenerateURLS($pageData['queries']);
+        $pageData['offsets'] = array( 'current'=>$offset, 'next'=>$nextOffset, 'prev'=>$prevOffset, 'end'=>$endOffset, 'total'=>$totalCount, 'totalCounted'=>$totalCounted);
+        $pageData['bean'] = array('objectName' => $seed->object_name, 'moduleDir' => $seed->module_dir, 'moduleName' => strtr($seed->module_dir, $module_names));
+        $pageData['stamp'] = $this->lvde->stamp;
+        $pageData['access'] = array('view' => $this->lvde->seed->ACLAccess('DetailView'), 'edit' => $this->lvde->seed->ACLAccess('EditView'));
+        $pageData['idIndex'] = $idIndex;
+        if(!$this->lvde->seed->ACLAccess('ListView')) {
+            $pageData['error'] = 'ACL restricted access';
+        }
+
+        $queryString = '';
+
+        if( isset($request["searchFormTab"]) && $request["searchFormTab"] == "advanced_search" ||
+            isset($request["type_basic"]) && (count($request["type_basic"] > 1) || $request["type_basic"][0] != "") ||
+            isset($request["module"]) && $request["module"] == "MergeRecords")
+        {
+            $queryString = "-advanced_search";
+        }
+        else if (isset($request["searchFormTab"]) && $request["searchFormTab"] == "basic_search")
+        {
+            // TODO: figure out what was the SearchFormReports???
+            if($seed->module_dir == "Reports") $searchMetaData = SearchFormReports::retrieveReportsSearchDefs();
+            else $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir); // TODO: figure out which SearchForm is it?
+
+            $basicSearchFields = array();
+
+            if( isset($searchMetaData['searchdefs']) && isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search']) )
+                $basicSearchFields = $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'];
+
+            foreach( $basicSearchFields as $basicSearchField)
+            {
+                $field_name = (is_array($basicSearchField) && isset($basicSearchField['name'])) ? $basicSearchField['name'] : $basicSearchField;
+                $field_name .= "_basic";
+                if( isset($request[$field_name])  && ( !is_array($basicSearchField) || !isset($basicSearchField['type']) || $basicSearchField['type'] == 'text' || $basicSearchField['type'] == 'name') )
+                {
+                    // Ensure the encoding is UTF-8
+                    $queryString = htmlentities($request[$field_name], null, 'UTF-8');
+                    break;
+                }
+            }
+        }
+
+        $ret =  array('data'=>$data , 'pageData'=>$pageData, 'query' => $queryString);
+
+        return $ret;
+    }
+
+}
+
+class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
+
+
+
+    /**
+     * @param Email $seed
+     * @param string $where
+     * @param string $id
+     * @param InboundEmail $inboundEmail
+     * @param array $filter
+     * @param Folder $folderObj
+     * @param User $currentUser
+     * @param string $folder
+     * @param int $limit
+     * @param ??? $limitPerPage
+     * @return array
+     */
+    public function search(Email $seed, $where, $id, InboundEmail $inboundEmail, $filter, Folder $folderObj, User $currentUser, $folder, $limit, $limitPerPage) {
+
+
+        // Create the data structure which are required to view a list view.
+        require_once 'include/SearchForm/SearchForm2.php';
+        $this->lvde->seed =& $seed;
+        $this->lvde->setVariableName($seed->object_name, $where, $this->lvde->listviewName, $id);
+        $this->lvde->seed->id = '[SELECT_ID_LIST]';
+
+        if (!empty($params['overrideOrder']) && !empty($params['orderBy'])) {
+            $order = $this->lvde->getOrderBy(
+                strtolower($params['orderBy']),
+                (empty($params['sortOrder']) ? '' : $params['sortOrder'])
+            );
+        } else {
+            $order = $this->lvde->getOrderBy();
+        }
+
+        // still empty? try to use settings passed in $param
+        if (empty($order['orderBy']) && !empty($params['orderBy'])) {
+            $order['orderBy'] = $params['orderBy'];
+            $order['sortOrder'] = (empty($params['sortOrder']) ? '' : $params['sortOrder']);
+        }
+
+        // TODO: figure out why was it for?
+        $orderby = $order['orderBy'];
+        if (strpos($order['orderBy'], '.') && ($order['orderBy'] != "report_cache.date_modified")) {
+            $orderby = substr($order['orderBy'], strpos($order['orderBy'], '.') + 1);
+        }
+
+
+        $page = 0;
+        $offset = 0;
+        if (isset($request['Emails2_EMAIL_offset'])) {
+            if ($request['Emails2_EMAIL_offset'] !== "end") {
+                $offset = $request['Emails2_EMAIL_offset'];
+                $page = $offset / $limitPerPage;
+            }
+        }
+
+        // Get emails from email server
+        $emailServerEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter);
+
+        $total = $emailServerEmails['mailbox_info']['Nmsgs']; // + count($importedEmails['data']);
+        if ($page === "end") {
+            $offset = $total - $limitPerPage;
+        }
+
+
+        /// Populate the data and its fields from the email server
+        $request['uids'] = array();
+
+        foreach ($emailServerEmails['data'] as $h => $emailHeader) {
+
+
+            $emailRecord = $this->lvde->getEmailRecord($folderObj, $emailHeader, $seed, $inboundEmail, $currentUser, $folder);
+            if($emailRecord === false) {
+                continue;
+            }
+
+            $data[] = $emailRecord;
+            $pageData['rowAccess'][$h] = array('edit' => true, 'view' => true);
+            $pageData['additionalDetails'][$h] = '';
+            $pageData['tag'][$h]['MAIN'] = 'a';
+        }
+
+
+        // Filter imported emails based on the UID of the results from the IMap server
+        $crmWhere = $where . ' AND mailbox_id LIKE ' . '"' . $inboundEmail->id . '"';
+
+        $ret_array['inner_join'] = '';
+        if (!empty($this->lvde->seed->listview_inner_join)) {
+            $ret_array['inner_join'] = ' ' . implode(' ', $this->lvde->seed->listview_inner_join) . ' ';
+        }
+
+        if (!is_array($params)) {
+            $params = array();
+        }
+        if (!isset($params['custom_select'])) {
+            $params['custom_select'] = '';
+        }
+        if (!isset($params['custom_from'])) {
+            $params['custom_from'] = '';
+        }
+        if (!isset($params['custom_where'])) {
+            $params['custom_where'] = '';
+        }
+        if (!isset($params['custom_order_by'])) {
+            $params['custom_order_by'] = '';
+        }
+
+        $this->lvde->setVariableName($seed->object_name, $crmWhere, $this->lvde->listviewName, $id);
+
+        $this->lvde->seed->id = '[SELECT_ID_LIST]';
+
+        $nextOffset = -1;
+        $prevOffset = -1;
+        $endOffset = 0;
+
+
+        if ($total > $limitPerPage) {
+            $nextOffset = $offset + $limitPerPage;
+        }
+
+        if ($nextOffset >= $total) {
+            $nextOffset = $total;
+        }
+
+        if ($page > 0) {
+            $prevOffset = $offset - $limitPerPage;
+            if ($prevOffset < 0) {
+                $prevOffset = 0;
+            }
+        }
+
+        if ($total < $limitPerPage) {
+            $prevOffset = -1;
+            $nextOffset = -1;
+        }
+
+        if ($total > 0) {
+            $endOffset = $total / $limitPerPage;
+        }
+
+        $pageData['offsets']['current'] = $offset;
+        $pageData['offsets']['total'] = $total;
+        $pageData['offsets']['next'] = $nextOffset;
+        $pageData['offsets']['prev'] = $prevOffset;
+        $pageData['offsets']['end'] = ceil($endOffset);
+
+        $queries = array('baseUrl', 'endPage', 'nextPage', 'orderBy');
+
+        if ((int)$pageData['offsets']['current'] >= $limitPerPage) {
+            $queries[] = 'prevPage';
+            $queries[] = 'startPage';
+        }
+
+        foreach ($queries as $query) {
+
+            if ($total < $limitPerPage || $nextOffset >= $total) {
+                if (isset($pageData['queries'][$query])) {
+                    unset($pageData['queries'][$query]);
+                }
+            } else {
+                $pageData['queries'][$query]['module'] = "Emails";
+                $pageData['queries'][$query]['action'] = "index";
+                $pageData['queries'][$query]['parentTab'] = "Activities";
+                $pageData['queries'][$query]['ajax_load'] = "0";
+                $pageData['queries'][$query]['loadLanguageJS'] = "1";
+                $pageData['queries'][$query]['searchFormTab'] = "advanced_search";
+                $pageData['queries'][$query]['lvso'] = "DESC";
+
+                $pageData['urls'][$query] = 'index.php?module=Emails&action=index&parentTab=Activities&searchFormTab=advanced_search&query=true&current_user_only_basic=0&button=Search&lvso=DESC';
+
+            }
+        }
+
+        // TODO: UNDEFINED: refactor current_query_by_page in the list view
+        // inject post values
+        $request['folder'] = $folder;
+        $request['folder_type'] = $folderObj->getType();
+        $request['inbound_email_record'] = $inboundEmail->id;
+
+
+        // TODO: TASK: UNDEFINED - HANDLE in second filter after IMap
+        $endOffset = floor(($total - 1) / $limit) * $limit;
+        $pageData['queries'] = $this->lvde->callGenerateQueries(
+            $pageData['ordering']['sortOrder'],
+            $offset,
+            $prevOffset,
+            $nextOffset,
+            $endOffset,
+            $total
+        );
+        $pageData['offsets'] = array(
+            'current' => $offset,
+            'next' => $nextOffset,
+            'prev' => $prevOffset,
+            'end' => $endOffset,
+            'total' => $total,
+            'totalCounted' => $total
+        );
+
+        $pageData['ordering'] = $order;
+        $pageData['ordering']['sortOrder'] = $this->lvde->getReverseSortOrder($pageData['ordering']['sortOrder']);
+        //get url parameters as an array
+        //join url parameters from array to a string
+        $pageData['urls'] = $this->lvde->callGenerateURLS($pageData['queries']);
+        $module_names = array(
+            'Prospects' => 'Targets'
+        );
+        $pageData['bean'] = array(
+            'objectName' => $seed->object_name,
+            'moduleDir' => $seed->module_dir,
+            'moduleName' => strtr($seed->module_dir, $module_names)
+        );
+        $pageData['stamp'] = $this->lvde->stamp;
+        $pageData['access'] = array(
+            'view' => $this->lvde->seed->ACLAccess('DetailView'),
+            'edit' => $this->lvde->seed->ACLAccess('EditView')
+        );
+        if (!$this->lvde->seed->ACLAccess('ListView')) {
+            $pageData['error'] = 'ACL restricted access';
+        }
+
+
+        if ( $this->lvde->isRequestedSearchAdvanced($request) ) {
+            $queryString = "-advanced_search";
+        } else {
+            if ( $this->lvde->isRequestedSearchBasic($request) ) {
+
+                // SearchForm is a (SearchForm2)
+                $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir);
+
+                $basicSearchFields = array();
+
+                if (
+                    isset($searchMetaData['searchdefs']) &&
+                    isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'])
+                ) {
+                    $basicSearchFields = $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'];
+                }
+
+                foreach ($basicSearchFields as $basicSearchField) {
+                    $field_name = (is_array($basicSearchField) && isset($basicSearchField['name']))
+                        ? $basicSearchField['name'] : $basicSearchField;
+                    $field_name .= "_basic";
+                    if (
+                        isset($request[$field_name]) &&
+                        (
+                            !is_array($basicSearchField) ||
+                            !isset($basicSearchField['type']) ||
+                            $basicSearchField['type'] == 'text' ||
+                            $basicSearchField['type'] == 'name'
+                        )
+                    ) {
+                        // Ensure the encoding is UTF-8
+                        $queryString = htmlentities($request[$field_name], null, 'UTF-8');
+                        break;
+                    }
+                }
+            } else {
+                $GLOBALS['log']->warn("Unknown requested search type");
+            }
+        }
+
+        $request['email_uids'] = $this->lvde->getEmailUIds($data);
+
+
+        $ret = array('data' => $data, 'pageData' => $pageData, 'query' => $queryString);
+
+        return $ret;
+    }
+
 }
