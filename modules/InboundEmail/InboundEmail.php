@@ -5270,6 +5270,11 @@ class InboundEmail extends SugarBean
                 true
             ); // runs through handleTranserEncoding() already
 
+            if(empty($email->description_html)) {
+                $email->description_html = $email->description;
+                $email->description_html = nl2br($email->description_html);
+            }
+
             $this->imagePrefix = $oldPrefix;
 
             $email->msgno = $msgNo;
@@ -5288,6 +5293,7 @@ class InboundEmail extends SugarBean
      */
     public function importAllFromFolder()
     {
+        $response = array();
         $emailSortedHeaders = imap_sort(
             $this->conn,
             SORTDATE,
@@ -5297,8 +5303,9 @@ class InboundEmail extends SugarBean
 
 
         foreach($emailSortedHeaders as $uid){
-            $this->returnImportedEmail(null, $uid);
+            $response[] = $this->returnImportedEmail(null, $uid);
         }
+        return $response;
     }
 
     /**
