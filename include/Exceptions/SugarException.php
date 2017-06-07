@@ -1,9 +1,7 @@
 <?php
 
-require_once 'include/Exceptions/SugarEmptyValueException.php';
-require_once 'include/Exceptions/SugarErrorHandler.php';
-require_once 'include/Exceptions/SugarException.php';
-require_once 'include/Exceptions/SugarInvalidTypeException.php';
+require_once __DIR__ . '/exceptions.php';
+
 
 /**
  * Class SugarException

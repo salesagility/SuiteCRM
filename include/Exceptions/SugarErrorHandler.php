@@ -1,9 +1,6 @@
 <?php
 
-require_once 'include/Exceptions/SugarEmptyValueException.php';
-require_once 'include/Exceptions/SugarErrorHandler.php';
-require_once 'include/Exceptions/SugarException.php';
-require_once 'include/Exceptions/SugarInvalidTypeException.php';
+require_once __DIR__ . '/exceptions.php';
 
 /**
  * Class SugarErrorHandler
@@ -15,7 +12,9 @@ require_once 'include/Exceptions/SugarInvalidTypeException.php';
  * SugarErrorHandler allows us to check for exceptions without breaking legacy code.  SugarErrorHandler can give us
  * a stack trace or at least where the in the code base should throw exceptions.
  *
- * Only use SugarErrorHandler for old or legacy code.
+ * Typical usage:
+ * SugarErrorHandler::throwError(new SugarException('Custom message');
+ *
  */
 class SugarErrorHandler
 {
@@ -25,19 +24,29 @@ class SugarErrorHandler
     protected static $errors = array();
 
     /**
-     * @param SugarException $type
+     * Throws and logs the error.
+     *
+     * @param SugarException $exception The error presented as a exception
+     * @param int $sugarErrorLevel determines the log level reported in the log file(s)
+     * @param boolean $throwException offers a means for new code to throw exception and keep the same log convention
+     * @throws Exception
      */
-    public static function throwError($type)
+    public static function throwError($exception, $sugarErrorLevel = SugarErrorLevel::fatal, $throwException = false)
     {
         global $sugar_config;
-        self::$errors[] = $type;
+        self::$errors[] = $exception;
 
-        $errorMessage = 'PHP ' . $type->getMessage() . ' in ' . $type->getFile() . ':' . $type->getLine() . PHP_EOL;
+        $errorMessage = 'PHP ' . $exception->getMessage() . ' in ' . $exception->getFile() . ':' . $exception->getLine() . PHP_EOL;
         if(isset($sugar_config['show_log_trace']) && $sugar_config['show_log_trace'] === true) {
-            $errorMessage .= 'PHP Stack trace:' . PHP_EOL . $type->getTraceAsString() . PHP_EOL;
+            $errorMessage .= 'PHP Stack trace:' . PHP_EOL . $exception->getTraceAsString() . PHP_EOL;
         }
 
-        $GLOBALS['log']->fatal($errorMessage);
+        $logFunction = SugarErrorLevel::toString($sugarErrorLevel);
+        $GLOBALS['log']->{$logFunction}($errorMessage);
+
+        if ($throwException === true) {
+            throw $exception;
+        }
     }
 
     /**
@@ -81,7 +90,7 @@ class SugarErrorHandler
     }
 
     /**
-     * Clears errors
+     * Clears errors (used for testing)
      */
     public static function clearErrors()
     {
