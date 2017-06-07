@@ -46,7 +46,7 @@ require_once('include/SugarPHPMailer.php');
 require_once 'include/UploadFile.php';
 require_once 'include/UploadMultipleFiles.php';
 
-class Email extends SugarBean
+class Email extends Basic
 {
     /**
      * @var string $from_addr
@@ -1385,6 +1385,10 @@ class Email extends SugarBean
             $this->bcc_addrs_names = $this->cleanEmails($this->bcc_addrs_names);
             $this->reply_to_addr = $this->cleanEmails($this->reply_to_addr);
             $this->description = SugarCleaner::cleanHtml($this->description);
+            if(empty($this->description_html)) {
+                $this->description_html = $this->description;
+                $this->description_html = nl2br($this->description_html);
+            }
             $this->description_html = SugarCleaner::cleanHtml($this->description_html, true);
             $this->raw_source = SugarCleaner::cleanHtml($this->raw_source, true);
             $this->saveEmailText();
@@ -1562,53 +1566,53 @@ class Email extends SugarBean
             }
         }
 
-        return join(", ", $res);
+        return implode(", ", $res);
     }
 
     protected function saveEmailText()
     {
-        $text = SugarModule::get("EmailText")->loadBean();
+        $emailText = SugarModule::get("EmailText")->loadBean();
         foreach ($this->email_to_text as $textfield => $mailfield) {
-            $text->$textfield = $this->$mailfield;
+            $emailText->{$textfield} = $this->{$mailfield};
         }
-        $text->email_id = $this->id;
+        $emailText->email_id = $this->id;
         if (!$this->new_with_id) {
-            $this->db->update($text);
+            $this->db->update($emailText);
         } else {
-            $this->db->insert($text);
+            $this->db->insert($emailText);
         }
     }
 
     ///////////////////////////////////////////////////////////////////////////
     ////	RETRIEVERS
-    function retrieve($id = -1, $encoded = true, $deleted = true)
+    public function retrieve($id = -1, $encoded = true, $deleted = true)
     {
         // cn: bug 11915, return SugarBean's retrieve() call bean instead of $this
-        $ret = parent::retrieve($id, $encoded, $deleted);
+        $email = parent::retrieve($id, $encoded, $deleted);
 
-        if ($ret) {
-            $ret->retrieveEmailText();
+        if ($email) {
+            $email->retrieveEmailText();
             //$ret->raw_source = SugarCleaner::cleanHtml($ret->raw_source);
-            $ret->description = to_html($ret->description);
-            //$ret->description_html = SugarCleaner::cleanHtml($ret->description_html);
-            $ret->retrieveEmailAddresses();
-
-            $ret->date_start = '';
-            $ret->time_start = '';
-            $dateSent = explode(' ', $ret->date_sent);
-            if (!empty($dateSent)) {
-                $ret->date_start = $dateSent[0];
-                if (isset($dateSent[1])) {
-                    $ret->time_start = $dateSent[1];
-                }
+            $email->description = $email->description;
+            if(empty($email->description_html)) {
+                $email->description_html = $email->description;
+                $email->description_html = nl2br($email->description_html);
             }
-            // for Email 2.0
-            foreach ($ret as $k => $v) {
-                $this->$k = $v;
+            //$ret->description_html = SugarCleaner::cleanHtml($ret->description_html);
+            $email->retrieveEmailAddresses();
+
+            $email->date_start = '';
+            $email->time_start = '';
+            $dateSent = explode(' ', $email->date_sent);
+            if (!empty($dateSent)) {
+                $email->date_start = $dateSent[0];
+                if (isset($dateSent[1])) {
+                    $email->time_start = $dateSent[1];
+                }
             }
         }
 
-        return $ret;
+        return $email;
     }
 
 
