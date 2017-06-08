@@ -56,8 +56,10 @@
                 </div>
             </div>
             <div>
+
                 <select multiple size="8" name="userFolders[]" id="userFolders"
                         onchange="SUGAR.email2.folders.updateSubscriptions();"></select>
+
             </div>
         </td>
 
