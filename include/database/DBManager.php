@@ -3901,4 +3901,9 @@ protected function checkQuery($sql, $object_name = false)
      * @return string
      */
 	abstract public function getGuidSQL();
+
+
+    function removeLineBreaks($sql) {
+        return trim(str_replace(array("\r", "\n"), " ", $sql));
+    }
 }
