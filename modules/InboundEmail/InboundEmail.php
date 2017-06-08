@@ -6403,13 +6403,13 @@ class InboundEmail extends SugarBean
     public function hardDelete($id)
     {
         $q = "DELETE FROM inbound_email WHERE id = '{$id}'";
-        $r = $this->db->query($q, true);
+        $this->db->query($q, true);
 
         $q = "DELETE FROM folders WHERE id = '{$id}'";
-        $r = $this->db->query($q, true);
+        $this->db->query($q, true);
 
-        $q = "DELETE FROM folders WHERE parent_id = '{$id}'";
-        $r = $this->db->query($q, true);
+        $q = "DELETE FROM folders WHERE parent_folder = '{$id}'";
+        $this->db->query($q, true);
     }
 
     /**
