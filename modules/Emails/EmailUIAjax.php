@@ -1017,7 +1017,6 @@ eoq;
 
         $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: setFolderViewSelection");
         $viewFolders = $_REQUEST['ieIdShow'];
-        $userSubscriptions = $email->et->folder->getSubscriptions($focus);
         $current_user->setPreference('showFolders', base64_encode(serialize($viewFolders)), '', 'Emails');
         $tree = $email->et->getMailboxNodes(false);
         $return = $tree->generateNodesRaw();
