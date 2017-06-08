@@ -48,6 +48,7 @@
     "use strict";
     var self = $(this);
     var opts = $.extend({}, $.fn.EmailsComposeView.defaults, options);
+    var jQueryFormComposeView = $('form[name="ComposeView"]')[0];
 
     self.attachFile = undefined;
     self.attachNote = undefined;
@@ -444,6 +445,13 @@
         $(self).find('textarea#description').val($(self).find('.html_preview').text());
       });
 
+      editor.on('SetContent', function () {
+        // copy html to plain
+        $(self).find('.html_preview').html(editor.getContent());
+        $(self).find('input#description_html').val(editor.getContent());
+        $(self).find('textarea#description').val($(self).find('.html_preview').text());
+      });
+
       $(self).on('emailComposeViewGetFromFields', function () {
         self.updateSignature();
       });
@@ -478,7 +486,7 @@
 
       var fileCount = 0;
       // Use FormData v2 to send form data via ajax
-      var formData = new FormData($(this));
+      var formData = new FormData(jQueryFormComposeView);
 
       $(this).find('input').each(function (inputIndex, inputValue) {
         if ($(inputValue).attr('type').toLowerCase() === 'file') {
@@ -829,7 +837,7 @@
 
       var fileCount = 0;
       // Use FormData v2 to send form data via ajax
-      var formData = new FormData($(this));
+      var formData = new FormData(jQueryFormComposeView);
 
       $(this).find('input').each(function (i, v) {
         if ($(v).attr('type').toLowerCase() === 'file') {
@@ -926,7 +934,7 @@
         mb.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
 
         // Use FormData v2 to send form data via ajax
-        var formData = new FormData($(this));
+        var formData = new FormData(jQueryFormComposeView);
 
         $(this).find('input').each(function (i, v) {
           if ($(v).attr('type').toLowerCase() === 'file') {
@@ -1198,11 +1206,13 @@
   $.fn.EmailsComposeView.onTemplateSelect = function (args) {
 
     var confirmed = function (args) {
+      var self = $('[name="'+args.form_name+'"]');
       $.post('index.php?entryPoint=emailTemplateData', {
         emailTemplateId: args.name_to_value_array.emails_email_templates_idb
       }, function (resp) {
         var r = JSON.parse(resp);
-        tinyMCE.get('description').setContent($('<textarea />').html(r.data.body_html).text());
+        tinymce.activeEditor.setContent(r.data.body_from_html, {format: 'html'});
+        tinymce.activeEditor.change();
       });
       set_return(args);
     };
