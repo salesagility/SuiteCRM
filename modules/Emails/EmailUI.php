@@ -52,6 +52,7 @@ if (!defined('sugarEntry') || !sugarEntry){
 require_once("include/ytree/Tree.php");
 require_once("include/ytree/ExtNode.php");
 require_once("include/SugarFolders/SugarFolders.php");
+require_once 'include/Exceptions/SuiteException.php';
 
 
 
@@ -383,14 +384,21 @@ eoq;
         global $focus;
         $myBean = $focus;
 
+		$emailLink = '';
+
         if(!empty($bean)) {
             $myBean = $bean;
         } else {
             $GLOBALS['log']->warn('EmailUI::populateComposeViewFields - $bean is empty');
         }
 
-        $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="'.$myBean->module_name.'" '.
-            'data-record-id="'.$myBean->id.'" data-module-name="'.$myBean->name.'"  data-email-address="'.$myBean->$emailField.'">';
+		// focus is set?
+		if(!is_object($myBean)) {
+			$GLOBALS['log']->warn('incorrect bean');
+		} else {
+			$emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
+				'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . $myBean->$emailField . '">';
+		}
 
         return $emailLink;
     }
