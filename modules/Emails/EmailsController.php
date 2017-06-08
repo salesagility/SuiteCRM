@@ -126,8 +126,6 @@ class EmailsController extends SugarController
      */
     public function action_ComposeView()
     {
-        global $current_user;
-        $this->composeSignature($this->bean, $current_user);
         $this->view = 'compose';
     }
 
@@ -175,7 +173,7 @@ class EmailsController extends SugarController
 
     /**
      * Gets the values of the "from" field
-     *
+     * includes the signatures for each account
      */
     public function action_GetFromFields()
     {
@@ -185,16 +183,33 @@ class EmailsController extends SugarController
         $ie = new InboundEmail();
         $ie->email = $email;
         $accounts = $ieAccountsFull = $ie->retrieveAllByGroupIdWithGroupAccounts($current_user->id);
+        $emailSignatures = unserialize(base64_decode($current_user->getPreference('account_signatures', 'Emails')));
+        $defaultEmailSignature = $current_user->getPreference('signature_default');
+
         $data = array();
         foreach ($accounts as $inboundEmailId => $inboundEmail) {
             $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
-            $data[] = array(
+            $dataAddress = array(
                 'type' => $inboundEmail->module_name,
                 'id' => $inboundEmail->id,
                 'attributes' => array(
                     'from' => $storedOptions['from_addr']
                 )
             );
+
+            // Include signature
+            if(isset($emailSignatures[$inboundEmail->id])) {
+                $emailSignatureId = $emailSignatures[$inboundEmail->id];
+            } else {
+                $emailSignatureId = $defaultEmailSignature;
+            }
+
+            $signature = $current_user->getSignature($emailSignatureId);
+            $dataAddress['emailSignatures'] = array(
+                'html' => html_entity_decode($signature['signature_html']),
+                'plain' => $signature['signature']
+            );
+            $data[] = $dataAddress;
         }
 
 
@@ -333,7 +348,6 @@ class EmailsController extends SugarController
     {
         global $current_user;
         $this->composeBean($_REQUEST, self::COMPOSE_BEAN_MODE_REPLY_TO);
-        $this->composeSignature($this->bean, $current_user);
         $this->view = 'compose';
     }
 
@@ -341,7 +355,6 @@ class EmailsController extends SugarController
     {
         global $current_user;
         $this->composeBean($_REQUEST, self::COMPOSE_BEAN_MODE_REPLY_TO_ALL);
-        $this->composeSignature($this->bean, $current_user);
         $this->view = 'compose';
     }
 
@@ -349,7 +362,6 @@ class EmailsController extends SugarController
     {
         global $current_user;
         $this->composeBean($_REQUEST, self::COMPOSE_BEAN_MODE_FORWARD);
-        $this->composeSignature($this->bean, $current_user);
         $this->view = 'compose';
     }
 
@@ -423,7 +435,6 @@ class EmailsController extends SugarController
 
         if (isset($request['record']) && !empty($request['record'])) {
             $this->bean->retrieve($request['record']);
-
         } else {
             $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($request['inbound_email_record']));
             $inboundEmail->connectMailserver();
@@ -476,37 +487,6 @@ class EmailsController extends SugarController
             }
         }
 
-    }
-
-    /**
-     * Prepends body with $user's default signature
-     * @param Email $email
-     * @param User $user
-     * @return bool|Email
-     * @throws SugarControllerException
-     */
-    public function composeSignature(Email $email, User $user)
-    {
-        if(empty($user->id) || $user->new_with_id === true) {
-            throw new \SugarControllerException(
-                'EmailsController::composeSignature() requires an existing User and not a new User object. '.
-                'This is typically the $current_user global'
-            );
-        }
-
-        $defaultEmailSignatureId = $user->getPreference('signature_default');
-        if(gettype($defaultEmailSignatureId) === 'string') {
-            $emailSignatures = $user->getSignature($defaultEmailSignatureId);
-            $email->description = PHP_EOL .  $emailSignatures['signature'] . $email->description;
-            $email->description_html = html_entity_decode($emailSignatures['signature_html']) . $email->description_html;
-            return $email;
-        } else {
-            $GLOBALS['log']->warn(
-                'EmailsController::composeSignature() was unable to get the default signature id for user: '.
-                $user->name
-            );
-            return false;
-        }
     }
 
 
