@@ -380,6 +380,13 @@
         $(self).find('input#description_html').val(editor.getContent());
         $(self).find('textarea#description').val($(self).find('.html_preview').text());
       });
+
+      editor.on('SetContent', function () {
+        // copy html to plain
+        $(self).find('.html_preview').html(editor.getContent());
+        $(self).find('input#description_html').val(editor.getContent());
+        $(self).find('textarea#description').val($(self).find('.html_preview').text());
+      });
     };
 
     /**
@@ -1116,8 +1123,8 @@
         emailTemplateId: args.name_to_value_array.emails_email_templates_idb
       }, function(resp){
         var r = JSON.parse(resp);
-        $(self).find('[name="name"]').val(r.data.subject);
-        tinyMCE.get('description').setContent($('<textarea />').html(r.data.body_html).text());
+        tinymce.activeEditor.setContent(r.data.body_from_html, {format: 'html'});
+        tinymce.activeEditor.change();
       });
       set_return(args);
     };
