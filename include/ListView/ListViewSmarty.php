@@ -142,7 +142,7 @@ class ListViewSmarty extends ListViewDisplay
         $this->ss->assign('selectLinkString',$app_strings['LBL_LINK_SELECT']);
 
         if(!isset($this->data['pageData']['offsets'])) {
-            $GLOBALS['log']->fatal('Incorrect pageData: offset is not set');
+            $GLOBALS['log']->warn('Incorrect pageData: offset is not set');
         } else {
             // Bug 24677 - Correct the page total amount on the last page of listviews
             $pageTotal = $this->data['pageData']['offsets']['next'] - $this->data['pageData']['offsets']['current'];
@@ -182,7 +182,7 @@ class ListViewSmarty extends ListViewDisplay
         }
 
         if(!isset($data['pageData']['ordering'])) {
-            $GLOBALS['log']->fatal("Incorrect pageData: ordering is not set");
+            $GLOBALS['log']->warn("Incorrect pageData: ordering is not set");
         } else {
             $this->processArrows($data['pageData']['ordering']);
         }
@@ -248,7 +248,7 @@ class ListViewSmarty extends ListViewDisplay
             "sugar_flavor" => $sugar_flavor));
 
         if(!isset($this->data['pageData']['offsets'])) {
-            $GLOBALS['log']->fatal("Incorrect pageData: trying to display but offset is not set");
+            $GLOBALS['log']->warn("Incorrect pageData: trying to display but offset is not set");
         } else {
             $this->data['pageData']['offsets']['lastOffsetOnPage'] = $this->data['pageData']['offsets']['current'] + count($this->data['data']);
         }

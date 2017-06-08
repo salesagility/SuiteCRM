@@ -670,7 +670,7 @@ class ListViewDataEmails extends ListViewData
 
 
         } catch (SuiteException $e) {
-            $GLOBALS['log']->fatal($e->getMessage());
+            $GLOBALS['log']->warn($e->getMessage());
             $GLOBALS['log']->debug("trace info:\n" . $e->getTraceAsString());
         }
 

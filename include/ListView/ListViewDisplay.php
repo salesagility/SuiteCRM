@@ -217,7 +217,7 @@ class ListViewDisplay {
 	function process($file, $data, $htmlVar) {
 		$this->rowCount = count($data['data']);
 		if(!isset($data['pageData']['bean'])) {
-			$GLOBALS['log']->fatal("List view process error: Invalid data, bean is not set");
+			$GLOBALS['log']->warn("List view process error: Invalid data, bean is not set");
 			return false;
 		}
 		$this->moduleString = $data['pageData']['bean']['moduleDir'] . '2_' . strtoupper($htmlVar) . '_offset';
