@@ -86,7 +86,6 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
 
 
 
-        $crmEmails = $this->lvde->db->query($crmEmailsQuery);
 
         $this->lvde->setVariableName($seed->object_name, $crmWhere, $this->lvde->listviewName, $id);
 
@@ -122,12 +121,12 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
 
         $data = array();
 
-        $temp = clone $seed;
-
         $rows = array();
         $count = 0;
         $idIndex = array();
         $id_list = '';
+
+        $crmEmails = $this->lvde->db->query($crmEmailsQuery);
 
         while(($row = $this->lvde->db->fetchByAssoc($crmEmails)) != null)
         {
