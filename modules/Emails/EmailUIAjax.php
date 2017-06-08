@@ -42,6 +42,45 @@ if (!defined('sugarEntry') || !sugarEntry){
     die('Not A Valid Entry Point');
 }
 
+
+/**
+ * handle requested subscriptions
+ *
+ * @param array $subs
+ * @param $email
+ * @param $json
+ * @return string JSON
+ */
+function handleSubs($subs, $email, $json) {
+
+    // flows into next case statement
+    global $db;
+    global $current_user;
+
+    $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: setFolderViewSelection");
+    $viewFolders = $subs;
+    $current_user->setPreference('showFolders', base64_encode(serialize($viewFolders)), '', 'Emails');
+    $tree = $email->et->getMailboxNodes(false);
+    $return = $tree->generateNodesRaw();
+    $out = $json->encode($return);
+
+
+    $sub = array();
+    foreach($viewFolders as $f) {
+        $query = 'SELECT * FROM folders WHERE folders.id LIKE "'. $f
+            .'" OR folders.parent_folder LIKE "'. $f .'"';
+        $result = $db->query($query);
+        while(($row = $db->fetchByAssoc($result)))
+        {
+            $sub[] = $row['id'];
+        }
+    }
+
+    $email->et->folder->setSubscriptions($sub);
+
+    return $out;
+}
+
  /*********************************************************************************
 
   * Description:
@@ -945,6 +984,9 @@ eoq;
 
             $subs = array_merge($subs, $childrenSubs);
             $email->et->folder->setSubscriptions($subs);
+
+            $out = handleSubs($subs, $email, $json);
+
         }
         elseif(empty($_REQUEST['subscriptions'])) {
             $email->et->folder->clearSubscriptions();
@@ -1007,34 +1049,7 @@ eoq;
         break;
 
     case "setFolderViewSelection":
-        // flows into next case statement
-        global $db;
-        global $current_user;
-
-        if(isset($_REQUEST['record'])) {
-            $focus = BeanFactory::getBean('Users', $_REQUEST['record']);
-        }
-
-        $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: setFolderViewSelection");
-        $viewFolders = $_REQUEST['ieIdShow'];
-        $current_user->setPreference('showFolders', base64_encode(serialize($viewFolders)), '', 'Emails');
-        $tree = $email->et->getMailboxNodes(false);
-        $return = $tree->generateNodesRaw();
-        $out = $json->encode($return);
-
-        $sub = array();
-        foreach($viewFolders as $f) {
-            $query = 'SELECT * FROM folders WHERE folders.id LIKE "'. $f
-                .'" OR folders.parent_folder LIKE "'. $f .'"';
-            $result = $db->query($query);
-            while(($row = $db->fetchByAssoc($result)))
-            {
-                $sub[] = $row['id'];
-            }
-        }
-
-        $email->et->folder->setSubscriptions($sub);
-
+        $out = handleSubs($_REQUEST['ieIdShow'], $email, $json);
         echo $out;
         break;
 
