@@ -415,10 +415,12 @@
 
       var body = tinymce.activeEditor.getContent();
       if (body === '') {
-        tinymce.activeEditor.setContent(signatureElement[0].outerHTML , {format: 'html'});
+        tinymce.activeEditor.setContent('<p></p>' + signatureElement[0].outerHTML , {format: 'html'});
       } else if($(body).hasClass('email-signature')) {
-        body = signatureElement[0].outerHTML;
-        tinymce.activeEditor.setContent(body, {format: 'html'});
+        var newBody = $('<div></div>');
+       $(body).appendTo(newBody);
+        $(newBody).find('.email-signature').replaceWith(signatureElement[0].outerHTML);
+        tinymce.activeEditor.setContent(newBody.html(), {format: 'html'});
       }
     };
 
