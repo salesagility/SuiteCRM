@@ -131,14 +131,6 @@ class EmailUI {
 		$this->preflightUserCache();
 		$ie = new InboundEmail();
 
-		// focus listView
-		$list = array(
-			'mbox' => 'Home',
-			'ieId' => '',
-			'name' => 'Home',
-			'unreadChecked' => 0,
-			'out' => array(),
-		);
 
 		$this->_generateComposeConfigData('email_compose');
 
