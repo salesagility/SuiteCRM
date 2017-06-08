@@ -951,13 +951,21 @@ eoq;
         break;
 
     case "refreshSugarFolders":
-        $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: refreshSugarFolders");
-        $rootNode = new ExtNode('','');
-        $folderOpenState = $current_user->getPreference('folderOpenState', 'Emails');
-        $folderOpenState = (empty($folderOpenState)) ? "" : $folderOpenState;
-        $ret = $email->et->folder->getUserFolders($rootNode, sugar_unserialize($folderOpenState), $current_user, true);
-        $out = $json->encode($ret);
-        echo $out;
+        try {
+            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: refreshSugarFolders");
+            $rootNode = new ExtNode('', '');
+            $folderOpenState = $current_user->getPreference('folderOpenState', 'Emails');
+            $folderOpenState = (empty($folderOpenState)) ? "" : $folderOpenState;
+            $ret = $email->et->folder->getUserFolders($rootNode, sugar_unserialize($folderOpenState), $current_user, true);
+            $out = $json->encode($ret);
+            echo $out;
+        } catch (SugarFolderEmptyException $e) {
+            $GLOBALS['log']->warn($e);
+            $out = $json->encode(array(
+                'message' => 'No folder selected warning message here...',
+            ));
+            echo $out;
+        }
         break;
 
 
