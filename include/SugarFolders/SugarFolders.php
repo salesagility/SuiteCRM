@@ -226,6 +226,10 @@ class SugarFolder
 
         $cleanSubscriptions = array();
 
+        // remove the duplications
+
+        $subs = array_unique($subs);
+
         // ensure parent folders are selected, regardless.
         foreach ($subs as $id) {
             $id = trim($id);
