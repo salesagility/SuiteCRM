@@ -5947,7 +5947,12 @@ class InboundEmail extends SugarBean
      */
     public function retrieveByGroupId($groupId)
     {
-        $q = 'SELECT id FROM inbound_email WHERE group_id = \'' . $groupId . '\' AND deleted = 0 AND status = \'Active\'';
+        $q = '
+          SELECT id FROM inbound_email
+          WHERE
+            group_id = \'' . $groupId . '\' AND
+            deleted = 0 AND
+            status = \'Active\'';
         $r = $this->db->query($q, true);
 
         $beans = array();
@@ -6005,11 +6010,16 @@ class InboundEmail extends SugarBean
      */
     public function retrieveAllByGroupId($id, $includePersonal = true)
     {
-        global $current_user;
 
         $beans = ($includePersonal) ? $this->retrieveByGroupId($id) : array();
-        $teamJoin = '';
-        $q = "SELECT inbound_email.id FROM inbound_email {$teamJoin} WHERE is_personal = 0 AND (groupfolder_id is null OR groupfolder_id = '') AND mailbox_type not like 'bounce' AND inbound_email.deleted = 0 AND status = 'Active' ";
+        $q = "
+          SELECT inbound_email.id FROM inbound_email
+          WHERE
+            is_personal = 0 AND
+            -- (groupfolder_id is null OR groupfolder_id = '') AND
+            mailbox_type not like 'bounce' AND
+            inbound_email.deleted = 0 AND
+            status = 'Active' ";
         $r = $this->db->query($q, true);
 
         while ($a = $this->db->fetchByAssoc($r)) {
