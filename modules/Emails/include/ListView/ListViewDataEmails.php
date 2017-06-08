@@ -53,6 +53,15 @@ include_once 'modules/Emails/include/ListView/ListViewDataEmailsSearchOnIMap.php
 
 class ListViewDataEmails extends ListViewData
 {
+
+
+    /**
+     * enum('crm', 'imap')
+     *
+     * @var string
+     */
+    protected $searchType;
+
     /**
      * @var array
      * when searching the IMap filter map the crm fields
@@ -154,11 +163,11 @@ class ListViewDataEmails extends ListViewData
     }
 
     /**
-     * set $inboundEmail->mailbox and return searchType
+     * set $inboundEmail->mailbox and return $this->searchType
      *
      * @param Folder $folder
      * @param InboundEmail $inboundEmail
-     * @return string
+     * @return string $this->searchType
      */
     protected function getSearchType(Folder $folder, InboundEmail $inboundEmail) {
 
@@ -166,40 +175,39 @@ class ListViewDataEmails extends ListViewData
 
             case "sent":
                 $inboundEmail->mailbox = $inboundEmail->get_stored_options('sentFolder');
-                $searchType = "imap";
+                $this->searchType = "imap";
                 break;
 
             case "draft":
                 $inboundEmail->mailbox = $inboundEmail->get_stored_options('draftFolder');
-                $searchType = "crm";
+                $this->searchType = "crm";
                 break;
 
             case "trash":
                 $inboundEmail->mailbox = $inboundEmail->get_stored_options('trashFolder');
-                $searchType = "imap";
+                $this->searchType = "imap";
                 break;
 
             default:
                 $GLOBALS['log']->warn("unknown or undefined folder type (we will use 'imap' instead): " . $folder->getType());
-                $searchType = "imap";
+                $this->searchType = "imap";
                 break;
         }
 
-        return $searchType;
+        return $this->searchType;
     }
 
 
     /**
      * it returns filter fields,
-     * set searchType to 'crm' if any field is not IMap field
+     * set $this->searchType to 'crm' if any field is not IMap field
      *
      * @param array $filterFields
      * @param string $where
      * @param array $request
-     * @param string $searchType
      * @return array
      */
-    protected function getFilter($filterFields, $where, $request, &$searchType) {
+    protected function getFilter($filterFields, $where, $request) {
         // Create a list of fields to filter and decide based on the field which type of filter to carry out
 
         $filter = array();
@@ -237,7 +245,7 @@ class ListViewDataEmails extends ListViewData
 
                     // if field name is not an IMap field
                     if (!array_key_exists($f, self::$mapServerFields)) {
-                        $searchType = 'crm';
+                        $this->searchType = 'crm';
                     }
                 } else {
                     // use the field names
@@ -247,7 +255,7 @@ class ListViewDataEmails extends ListViewData
 
                     // if field name is not an IMap field
                     if (!array_key_exists($filteredField, self::$mapServerFields)) {
-                        $searchType = 'crm';
+                        $this->searchType = 'crm';
                     } else {
                         if (!empty($request[$filteredField.'_advanced'])) {
                             $filter[self::$mapServerFields[$filteredField]] = $request[$filteredField.'_advanced'];
@@ -614,7 +622,7 @@ class ListViewDataEmails extends ListViewData
             $inboundEmail = $this->getInboundEmail($current_user, $folderObj);
 
 
-            $searchType = $this->getSearchType($folderObj, $inboundEmail);
+            $this->searchType = $this->getSearchType($folderObj, $inboundEmail);
 
 
             // search in draft in CRM db?
@@ -629,11 +637,11 @@ class ListViewDataEmails extends ListViewData
 
             $folder = $inboundEmail->mailbox;
 
-            $filter = $this->getFilter($filter_fields, $where, $request, $searchType);
+            $filter = $this->getFilter($filter_fields, $where, $request);
 
 
             // carry out the filter type
-            switch ($searchType) {
+            switch ($this->searchType) {
                 case 'crm':
 
 
@@ -661,7 +669,7 @@ class ListViewDataEmails extends ListViewData
 
                     // handle default case
 
-                    $GLOBALS['log']->fatal("Unknown or undefined search type" . ($searchType ? " ($searchType)" : ''));
+                    $GLOBALS['log']->fatal("Unknown or undefined search type" . ($this->searchType ? " ($this->searchType)" : ''));
 
                     break;
             }
