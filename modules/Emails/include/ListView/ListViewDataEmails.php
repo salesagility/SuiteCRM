@@ -156,7 +156,7 @@ class ListViewDataEmails extends ListViewData
         $inboundEmail = BeanFactory::getBean('InboundEmail', $inboundEmailID);
 
         if(!$inboundEmail) {
-            throw new SuiteException("Error: InboundEmail not loaded");
+            throw new SuiteException("Error: InboundEmail not loaded (id:{$inboundEmailID})");
         }
 
         return $inboundEmail;

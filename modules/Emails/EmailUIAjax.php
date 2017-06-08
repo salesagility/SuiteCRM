@@ -939,14 +939,17 @@ eoq;
             $childrenSubs = array();
             //Find all children of the group folder subscribed to and add
             //them to the list of folders to show.
-            foreach ($subs as $singleSub)
+            foreach ($subs as $singleSub) {
                 $email->et->folder->findAllChildren($singleSub, $childrenSubs);
+            }
 
             $subs = array_merge($subs, $childrenSubs);
             $email->et->folder->setSubscriptions($subs);
         }
         elseif(empty($_REQUEST['subscriptions'])) {
             $email->et->folder->clearSubscriptions();
+        } else {
+            $GLOBALS['log']->fatal('Incorrect request for update subscriptions');
         }
         break;
 
