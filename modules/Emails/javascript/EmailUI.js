@@ -171,15 +171,8 @@ SE.accounts = {
 	            var oColumn = this.getColumn(elCheckbox);
 	          	if(oColumn.key == 'is_active')
 	          	{
-	          		var oRecord = this.getRecord(elCheckbox);
-	          		oRecord.setData("is_active",elCheckbox.checked);
-	          		var t_id = oRecord.getData('id');
-	            	var isGroupFolder = oRecord.getData('has_groupfolder');
 
-	            	if(isGroupFolder)
-	            	    SUGAR.email2.folders.updateSubscriptions();
-	            	else
-    	            	SUGAR.email2.folders.setFolderSelection();
+                SUGAR.email2.folders.setFolderSelection();
 
 	          	}
 	        });
