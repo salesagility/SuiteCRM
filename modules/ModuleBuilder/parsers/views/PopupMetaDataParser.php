@@ -109,7 +109,7 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
      * @param array $fielddefs
      * @return array
      */
-    function mergeFieldDefinitions($viewdefs, $fielddefs)
+    public function mergeFieldDefinitions($viewdefs, $fielddefs)
     {
         $viewdefs = $this->_viewdefs = array_change_key_case($viewdefs);
         $viewdefs = $this->_viewdefs = $this->convertSearchToListDefs($viewdefs);
@@ -117,7 +117,11 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
         return $viewdefs;
     }
 
-    function convertSearchToListDefs($defs)
+    /**
+     * @param array $defs
+     * @return array
+     */
+    public function convertSearchToListDefs($defs)
     {
         $temp = array();
         foreach ($defs as $key => $value) {
@@ -139,13 +143,19 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
         return $temp;
     }
 
-    function getOriginalViewDefs()
+    /**
+     * @return array
+     */
+    public function getOriginalViewDefs()
     {
         $defs = parent::getOriginalViewDefs();
 
         return $this->convertSearchToListDefs($defs);
     }
 
+    /**
+     * @return array
+     */
     public function getSearchFields()
     {
         $searchFields = array();
@@ -163,7 +173,10 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
         return $searchFields;
     }
 
-    function handleSave($populate = true)
+    /**
+     * @param bool $populate
+     */
+    public function handleSave($populate = true)
     {
         if (empty ($this->_packageName)) {
             foreach (array(MB_CUSTOMMETADATALOCATION, MB_BASEMETADATALOCATION) as $value) {
@@ -228,6 +241,10 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
         $GLOBALS['mod_strings'] = $oldModStrings;
     }
 
+    /**
+     * @param array $searchDefs
+     * @param array $popupMeta
+     */
     public function addNewSearchDef($searchDefs, &$popupMeta)
     {
         if (!empty($searchDefs)) {
@@ -236,6 +253,11 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
         }
     }
 
+    /**
+     * @param array $newDefs
+     * @param array $targetDefs
+     * @param bool $forWhere
+     */
     private function __diffAndUpdate($newDefs, &$targetDefs, $forWhere = false)
     {
         if (!is_array($targetDefs)) {
@@ -265,6 +287,10 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
 
     }
 
+    /**
+     * @param array $def
+     * @return string
+     */
     private function __getTargetModuleName($def)
     {
         $dir = strtolower($this->implementation->getModuleDir());
@@ -277,4 +303,3 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
 
 }
 
-?>
