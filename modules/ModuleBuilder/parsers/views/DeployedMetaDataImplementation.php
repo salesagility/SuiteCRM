@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*
  * Implementation class (following a Bridge Pattern) for handling loading and saving deployed module metadata
@@ -54,7 +58,7 @@ require_once 'modules/ModuleBuilder/parsers/constants.php' ;
 class DeployedMetaDataImplementation extends AbstractMetaDataImplementation implements MetaDataImplementationInterface
 {
 
-	/*
+	/**
 	 * Constructor
 	 * @param string $view
 	 * @param string $moduleName
@@ -136,7 +140,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
 	        		$this->_sourceFilename = self::getFileName ( $view, $moduleName, MB_CUSTOMMETADATALOCATION ) ;
 	        		$needSave = false;
 	        		if(file_exists( "custom/modules/{$moduleName}/metadata/".basename ( $this->_sourceFilename))){
-	        			$loaded = $this->_loadFromFile ( "custom/modules/{$moduleName}/metadata/".basename ( $this->_sourceFilename) )  ;	  
+	        			$loaded = $this->_loadFromFile ( "custom/modules/{$moduleName}/metadata/".basename ( $this->_sourceFilename) )  ;
 	        		}
 	        		elseif(file_exists(
 	        			"modules/{$moduleName}/Dashlets/My{$moduleName}Dashlet/My{$moduleName}Dashlet.data.php")){
@@ -144,7 +148,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
 	        		}
 	        		else{
 	        			$loaded = $this->_loadFromFile ( "include/SugarObjects/templates/$type/metadata/".basename ( $this->_sourceFilename ) ) ;
-	        			$needSave = true; 			
+	        			$needSave = true;
 	        		}
 	        		if ($loaded === null)
 						throw new Exception( get_class ( $this ) . ": cannot create dashlet view for module $moduleName - definitions for $view are missing in the SugarObject template for type $type" ) ;
@@ -212,36 +216,34 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
               }
             }
           }
-          
+
           if (null === $layout) {
             $sourceFilename = $this->getFileName($view, $moduleName, MB_CUSTOMMETADATALOCATION );
             $layout = $this->_loadFromFile($sourceFilename );
           }
-          
+
           if (null !== $layout  ) {
             $this->_originalViewdefs = $layout ;
           }
         }
-        
+
 		$this->_fielddefs = $fielddefs ;
 		$this->_history = new History ( $this->getFileName ( $view, $moduleName, MB_HISTORYMETADATALOCATION ) ) ;
 
 	}
 
+    /**
+     * @return string module name
+     */
 	function getLanguage ()
 	{
 		return $this->_moduleName ;
 	}
-	
-	function getOriginalViewdefs()
-	{
-		return $this->_originalViewdefs;
-	}
 
 
-	/*
+	/**
 	 * Save a draft layout
-	 * @param array defs    Layout definition in the same format as received by the constructor
+	 * @param array $defs    Layout definition in the same format as received by the constructor
 	 */
 	function save ($defs)
 	{
@@ -261,9 +263,9 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
 		$this->_saveToFile ( $this->getFileName ( $this->_view, $this->_moduleName, MB_WORKINGMETADATALOCATION ), $defs ) ;
 	}
 
-	/*
+	/**
 	 * Deploy a layout
-	 * @param array defs    Layout definition in the same format as received by the constructor
+	 * @param array $defs    Layout definition in the same format as received by the constructor
 	 */
 	function deploy ($defs)
 	{
@@ -292,12 +294,13 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
 		TemplateHandler::clearCache ( $this->_moduleName ) ;
 	}
 
-	/*
+	/**
 	 * Construct a full pathname for the requested metadata
 	 * Can be called statically
-	 * @param string view           The view type, that is, EditView, DetailView etc
-	 * @param string modulename     The name of the module that will use this layout
-	 * @param string type
+	 * @param string $view           The view type, that is, EditView, DetailView etc
+	 * @param string $moduleName     The name of the module that will use this layout
+	 * @param string $type
+     * @return array
 	 */
 	public static function getFileName ($view , $moduleName , $type = MB_CUSTOMMETADATALOCATION)
 	{
@@ -344,27 +347,41 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
         }
 		// END ASSERTIONS
 
-		
+
 
 		// Construct filename
 		return $pathMap [ $type ] . 'modules/' . $moduleName . '/metadata/' . $filenames [ $view ] . '.php' ;
 	}
-	
+
+    /**
+     * @param $defs
+     * @param $module
+     * @return array
+     */
 	private function replaceVariables($defs, $module) {
 		$var_values = array(
-			"<object_name>" => $module->seed->object_name, 
-			"<_object_name>" => strtolower($module->seed->object_name),  
-			"<OBJECT_NAME>" => strtoupper($module->seed->object_name), 
-			"<module_name>" => $module->seed->module_dir,  
-			'<_module_name>'=> strtolower ( $module->seed->module_dir ) 
+			"<object_name>" => $module->seed->object_name,
+			"<_object_name>" => strtolower($module->seed->object_name),
+			"<OBJECT_NAME>" => strtoupper($module->seed->object_name),
+			"<module_name>" => $module->seed->module_dir,
+			'<_module_name>'=> strtolower ( $module->seed->module_dir )
 		);
 		return $this->recursiveVariableReplace($defs, $module, $var_values);
 	}
 
+    /**
+     * @return string
+     */
 	public function getModuleDir(){
 		return $this->module_dir;
 	}
-    
+
+    /**
+     * @param array $arr
+     * @param $module
+     * @param $replacements
+     * @return array
+     */
     private function recursiveVariableReplace($arr, $module, $replacements) {
         $ret = array();
 		foreach ($arr as $key => $val) {
