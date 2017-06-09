@@ -728,6 +728,9 @@ SE.accounts = {
         document.getElementById('mailbox').value = o.mailbox;
 
 
+        $('#account_signature_id').html($('#signature_id').html());
+        $('#account_signature_id').val(o.email_signatures);
+
         var i = 0;
 
         // handle SSL

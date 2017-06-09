@@ -179,12 +179,12 @@
         style: {classes: 'emails-qtip'}
       });
       $(this).qtip("show");
-      $(this).unbind('unfocus').blur(function(e) {
+      $(this).unbind('unfocus').blur(function (e) {
         var isButton = $(e.relatedTarget).hasClass('btn-qtip-bar');
-        var isQtipContent =  $(e.relatedTarget).hasClass('qtip-content');
-        var isQtip =  $(e.relatedTarget).hasClass('qtip-tip');
+        var isQtipContent = $(e.relatedTarget).hasClass('qtip-content');
+        var isQtip = $(e.relatedTarget).hasClass('qtip-tip');
 
-        if(isButton || isQtipContent || isQtip) {
+        if (isButton || isQtipContent || isQtip) {
           return false;
         }
 
@@ -364,14 +364,80 @@
       return false;
     };
 
+
+    self.updateSignature = function () {
+      var inboundId = $('#from_addr_name').find('option:selected').attr('inboundId');
+      if(inboundId === undefined) {
+        console.warn('Unable to retrieve selected inbound id in the "From" field.');
+        return false;
+      }
+
+      var signatureElement = $('<div></div>')
+        .addClass('email-signature');
+      var signatures = $(self).find('.email-signature');
+      var htmlSignature = null;
+      var plainTextSignature = null;
+
+      // Find signature
+      $.each(signatures, function (index, value) {
+        if ($(value).attr('data-inbound-email-id') === inboundId) {
+
+          if ($(value).hasClass('html')) {
+            htmlSignature = $(value).val();
+          } else if ($(value).hasClass('plain')) {
+            plainTextSignature = $(value).val();
+          }
+        }
+      });
+
+      if(
+        htmlSignature === null &&
+        plainTextSignature === null
+      ) {
+        console.warn('Unable to retrieve signature from document.');
+        return false;
+      }
+
+      if(htmlSignature === null) {
+        // use plain signature instead
+        $(plainTextSignature).appendTo(signatureElement);
+      } else if(plainTextSignature === null) {
+        // use html signature
+        $(htmlSignature).appendTo(signatureElement);
+      } else {
+        $(htmlSignature).appendTo(signatureElement);
+      }
+
+      if(tinymce.editors.length < 1) {
+        console.warn('unable to find tinymce editor');
+        return false;
+      }
+
+      var body = tinymce.activeEditor.getContent();
+      if (body === '') {
+        tinymce.activeEditor.setContent('<p></p>' + signatureElement[0].outerHTML , {format: 'html'});
+      } else if($(body).hasClass('email-signature')) {
+        var newBody = $('<div></div>');
+       $(body).appendTo(newBody);
+        $(newBody).find('.email-signature').replaceWith(signatureElement[0].outerHTML);
+        tinymce.activeEditor.setContent(newBody.html(), {format: 'html'});
+      }
+    };
+
     /**
      *
      * @param editor
      */
     self.tinyMceSetup = function (editor) {
+      var html = $(self).find('#description_html').html();
+
       editor.on('init', function () {
         this.getDoc().body.style.fontName = 'tahoma';
         this.getDoc().body.style.fontSize = '13px';
+        if (html !== null) {
+          editor.setContent(html);
+        }
+        $(self).trigger('emailComposeViewGetFromFields');
       });
 
       editor.on('change', function () {
@@ -386,6 +452,10 @@
         $(self).find('.html_preview').html(editor.getContent());
         $(self).find('input#description_html').val(editor.getContent());
         $(self).find('textarea#description').val($(self).find('.html_preview').text());
+      });
+
+      $(self).on('emailComposeViewGetFromFields', function () {
+        self.updateSignature();
       });
     };
 
@@ -994,6 +1064,23 @@
               selectOption.attr('inboundId', v.id);
               selectOption.html(v.attributes.from);
               selectOption.appendTo(selectFrom);
+
+              // include signature for account
+              $('<textarea></textarea>')
+                .val(v.emailSignatures.html)
+                .addClass('email-signature')
+                .addClass('html')
+                .addClass('hidden')
+                .attr('data-inbound-email-id', v.id)
+                .appendTo(self);
+
+              $('<textarea></textarea>')
+                .val(v.emailSignatures.plain)
+                .addClass('email-signature')
+                .addClass('plain')
+                .addClass('hidden')
+                .attr('data-inbound-email-id', v.id)
+                .appendTo(self);
             });
 
             var selectedInboundEmail = $(self).find('[name=inbound_email_id]').val();
@@ -1004,7 +1091,10 @@
 
             $(selectFrom).change(function (e) {
               $(self).find('[name=inbound_email_id]').val($(this).find('option:selected').attr('inboundId'));
+              self.updateSignature();
             });
+
+            $(self).trigger('emailComposeViewGetFromFields');
 
           }
 
@@ -1017,12 +1107,12 @@
             mb.setBody('message');
             mb.show();
 
-            mb.on('ok', function() {
+            mb.on('ok', function () {
               "use strict";
               mb.remove();
             });
 
-            mb.on('cancel', function() {
+            mb.on('cancel', function () {
               "use strict";
               mb.remove();
             });
@@ -1115,13 +1205,13 @@
     return $(self);
   };
 
-  $.fn.EmailsComposeView.onTemplateSelect = function(args) {
+  $.fn.EmailsComposeView.onTemplateSelect = function (args) {
 
-    var confirmed = function(args) {
+    var confirmed = function (args) {
       var self = $('[name="'+args.form_name+'"]');
       $.post('index.php?entryPoint=emailTemplateData', {
         emailTemplateId: args.name_to_value_array.emails_email_templates_idb
-      }, function(resp){
+      }, function (resp) {
         var r = JSON.parse(resp);
         tinymce.activeEditor.setContent(r.data.body_from_html, {format: 'html'});
         tinymce.activeEditor.change();
@@ -1134,13 +1224,13 @@
     mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_BODY'));
     mb.show();
 
-    mb.on('ok', function() {
+    mb.on('ok', function () {
       "use strict";
       confirmed(args);
       mb.remove();
     });
 
-    mb.on('cancel', function() {
+    mb.on('cancel', function () {
       "use strict";
       mb.remove();
     });
