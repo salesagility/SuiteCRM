@@ -171,6 +171,7 @@ class ListViewDataEmails extends ListViewData
                 WHERE
                   inbound_email.status = 'Active' AND
                   inbound_email.mailbox_type = 'pick' AND
+                  inbound_email.is_personal = 0 AND
                   inbound_email.deleted = 0";
 
             $results = $this->db->query($query);
