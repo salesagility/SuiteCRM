@@ -65,6 +65,16 @@ abstract class AbstractMetaDataParser
     protected $implementation;
 
     /**
+     * @var string $_packageName
+     */
+    protected $_packageName;
+
+    /**
+     * @var string $view
+     */
+    protected $view;
+
+    /**
      * @see AbstractMetaDataParser::_panels
      */
     public function getLayoutAsArray()
