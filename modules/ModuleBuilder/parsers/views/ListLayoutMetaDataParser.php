@@ -300,8 +300,6 @@ class ListLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
 
         $originalViewDefs = $this->getOriginalViewDefs();
 
-        $originalViewDefsTemplateMeta = $this->getOriginalTemplateDefinitions();
-
         foreach ($this->_viewdefs as $key => $def) {
             /**
              * If the field is on the layout, but studio disabled, put it back on the layout at the front
@@ -373,6 +371,9 @@ class ListLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
         $this->_viewdefs = $newViewdefs;
     }
 
+    /**
+     * @return array
+     */
     public function getOriginalTemplateDefinitions()
     {
         return $this->implementation->getOriginalViewTemplateDefinitions();

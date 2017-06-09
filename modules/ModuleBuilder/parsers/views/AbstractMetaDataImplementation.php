@@ -135,7 +135,7 @@ abstract class AbstractMetaDataImplementation
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getOriginalViewTemplateDefinitions()
     {

@@ -65,6 +65,11 @@ abstract class AbstractMetaDataParser
     protected $implementation;
 
     /**
+     * @var History $_history
+     */
+    protected $_history;
+
+    /**
      * @var string $_packageName
      */
     protected $_packageName;
