@@ -192,6 +192,14 @@ abstract class AbstractMetaDataParser
         }
     }
 
+    /**
+     * @param bool $populate
+     */
+    public function handleSave($populate = true)
+    {
+        $GLOBALS['log']->warn(get_class().'::handleSave is not implemented');
+    }
+
 }
 
 ?>
