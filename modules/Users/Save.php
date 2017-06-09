@@ -458,7 +458,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 
         $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: saveSettingsGeneral");
         $emailSettings = array();
-        $emailSettings['emailCheckInterval'] = $_REQUEST['emailCheckInterval'];
+        $emailSettings['emailCheckInterval'] = isset($_REQUEST['emailCheckInterval']) ? $_REQUEST['emailCheckInterval'] : null;
         //$emailSettings['autoImport'] = isset($_REQUEST['autoImport']) ? '1' : '0';
         $emailSettings['alwaysSaveOutbound'] = '1';
         $emailSettings['sendPlainText'] = isset($_REQUEST['sendPlainText']) ? '1' : '0';
