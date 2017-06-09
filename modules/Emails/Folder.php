@@ -87,11 +87,10 @@ class Folder
      * @return null|string (folder ID)
      * @throws SuiteException
      */
-    public function retrieve($folderId = -1, $encode = true, $deleted = true)
+    public function retrieve($folderId = -1)
     {
         if(isValidId($folderId)) {
 
-            // TODO: use parent::retrieve here
             $result = $this->db->query('SELECT * FROM folders WHERE id="' . $folderId . '"');
             $row = $this->db->fetchByAssoc($result);
 

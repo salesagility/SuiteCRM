@@ -155,7 +155,7 @@ class ListViewDataEmails extends ListViewData
          */
         $inboundEmail = BeanFactory::getBean('InboundEmail', $inboundEmailID);
 
-        if(!$inboundEmail) {
+        if(!$inboundEmail || !isset($inboundEmail->id) || !$inboundEmail->id) {
 
             // something went wrong when SugarBean trying to retrieve the inbound email account
             // maybe there is no IE bean in database or wrong ID stored in user preferences?
