@@ -108,8 +108,12 @@ abstract class AbstractMetaDataImplementation
     /**
      * @var array $_originalViewTemplateDefs
      */
-
     protected $_originalViewTemplateDefs;
+
+    /**
+     * @var array $_variables
+     */
+    protected $_variables;
 
     /**
      * Getters for the definitions loaded by the Constructor
