@@ -195,7 +195,8 @@ class User extends Person {
 	public function getSignatures(
 	    $live = false,
 	    $defaultSig = '',
-	    $forSettings = false
+	    $forSettings = false,
+        $elementId = 'signature_id'
 	    )
 	{
 		$sig = $this->getSignaturesArray();
@@ -210,7 +211,7 @@ class User extends Person {
 			$change = ($forSettings) ? "onChange='displaySignatureEdit();'" : "onChange='setSigEditButtonVisibility();'";
 		}
 
-		$id = (!$forSettings) ? 'signature_id' : 'signature_idDisplay';
+		$id = (!$forSettings) ? $elementId : 'signature_idDisplay';
 
 		$out  = "<select {$change} id='{$id}' name='{$id}'>";
 		$out .= get_select_options_with_id($sigs, $defaultSig).'</select>';

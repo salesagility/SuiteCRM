@@ -1342,6 +1342,18 @@ eoq;
                     $current_user->setPreference('showFolders', $showStore, 0, 'Emails');
                 }
 
+                if(!empty($_REQUEST['account_signature_id'])){
+                    $email_signatures = $current_user->getPreference('account_signatures', 'Emails');
+                    $email_signatures = unserialize(base64_decode($email_signatures));
+                    if(empty($email_signatures)) {
+                        $email_signatures = array();
+                    }
+
+                    $email_signatures[$ie->id] = $_REQUEST['account_signature_id'];
+                    $showStore = base64_encode(serialize($email_signatures));
+                    $current_user->setPreference('account_signatures', $showStore, 0, 'Emails');
+                }
+
                 foreach($ie->field_defs as $k => $v) {
                 	if (isset($v['type']) && ($v['type'] == 'link')) {
                 		continue;
@@ -1393,7 +1405,9 @@ eoq;
 
     case "getIeAccount":
         $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getIeAccount");
-        $ie->retrieve($_REQUEST['ieId']);
+        $ieId = $_REQUEST['ieId'];
+        $ie->retrieve($ieId);
+
         if($ie->group_id == $current_user->id) {
             $ret = array();
 
@@ -1418,6 +1432,17 @@ eoq;
                 $ret[$k] = $ie->$k;
             }
             unset($ret['email_password']); // no need to send the password out
+
+            $email_signatures = $current_user->getPreference('account_signatures', 'Emails');
+            $email_signatures = unserialize(base64_decode($email_signatures));
+
+
+            if(!empty($email_signatures) && isset($email_signatures[$ieId])) {
+                $ret['email_signatures'] = $email_signatures[$ieId];
+            } else {
+                $ret['email_signatures'] = null;
+            }
+
 
             $out = $json->encode($ret);
         } else {
