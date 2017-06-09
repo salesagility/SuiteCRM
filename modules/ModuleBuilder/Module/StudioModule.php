@@ -45,12 +45,6 @@ require_once 'modules/ModuleBuilder/parsers/constants.php';
 
 class StudioModule
 {
-
-    /**
-     * @var array $popups
-     */
-    private $popups = array();
-
     /**
      * @var array $sources - list of source files
      */
