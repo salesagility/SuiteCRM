@@ -414,4 +414,3 @@ abstract class AbstractMetaDataImplementation
 
 }
 
-?>
