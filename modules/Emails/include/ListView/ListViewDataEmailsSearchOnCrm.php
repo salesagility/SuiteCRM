@@ -54,7 +54,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
      * @param array $params
      * @param Email $seed
      * @param bool $singleSelect
-     * @param ??? $id
+     * @param string $id
      * @param int $limit
      * @param User $currentUser
      * @param string $idField
@@ -63,6 +63,10 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
      */
     public function search($filterFields, $request, $where, InboundEmail $inboundEmail, $params, Email $seed, $singleSelect, $id, $limit, User $currentUser, $idField, $offset) {
         // Fix fields in filter fields
+
+        if(!is_string($id)) {
+            $GLOBALS['log']->warn("ID should be a string: {$id}");
+        }
 
         $filterFields = $this->lvde->fixFieldsInFilter($filterFields, $request, $where);
 

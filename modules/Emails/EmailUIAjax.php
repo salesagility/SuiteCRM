@@ -47,8 +47,8 @@ if (!defined('sugarEntry') || !sugarEntry){
  * handle requested subscriptions
  *
  * @param array $subs
- * @param $email
- * @param $json
+ * @param Email $email
+ * @param JSON $json
  * @return string JSON
  */
 function handleSubs($subs, $email, $json) {

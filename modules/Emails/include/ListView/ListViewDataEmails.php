@@ -674,28 +674,26 @@ class ListViewDataEmails extends ListViewData
 
             // carry out the filter type
             switch ($this->searchType) {
-                case 'crm':
 
+                case 'crm':
 
                     $limit = $sugar_config['list_max_entries_per_page'];
 
                     $search = new ListViewDataEmailsSearchOnCrm($this);
-                    $ret = $search->search($filter_fields, $request, $where, $inboundEmail, $params, $seed, $singleSelect, $id, $limit, $current_user, $id_field, $offset);
-
-
+                    $ret = $search->search(
+                        $filter_fields, $request, $where, $inboundEmail, $params, $seed,
+                        $singleSelect, $id, $limit, $current_user, $id_field, $offset
+                    );
 
                     break;
-                case 'imap':
 
+                case 'imap':
 
                     $limitPerPage = isset($sugar_config['list_max_entries_per_page']) && (int)$sugar_config['list_max_entries_per_page'] ? $sugar_config['list_max_entries_per_page'] : 10;
 
-
                     $search = new ListViewDataEmailsSearchOnIMap($this);
                     $ret = $search->search($seed, $where, $id, $inboundEmail, $filter, $folderObj, $current_user, $folder, $limit, $limitPerPage);
-
                     break;
-
 
                 default:
 

@@ -52,6 +52,11 @@ abstract class ListViewDataEmailsSearchAbstract {
      */
     protected $lvde;
 
+    /**
+     * @var Emails $seed
+     */
+    public $seed;
+
     public function __construct(ListViewDataEmails $listViewDataEmails) {
         $this->lvde = $listViewDataEmails;
     }

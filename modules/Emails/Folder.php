@@ -50,7 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * represent a fake SugarBean:
  * in legacy logic, Folder ID equals to an Inbound Email ID
  */
-class Folder extends SugarBean
+class Folder
 {
 
     /**
@@ -75,7 +75,6 @@ class Folder extends SugarBean
      * Folder constructor.
      */
     public function __construct() {
-        parent::__construct();
         $this->db = DBManagerFactory::getInstance();
         $this->id = null;
         $this->type = "inbound";
