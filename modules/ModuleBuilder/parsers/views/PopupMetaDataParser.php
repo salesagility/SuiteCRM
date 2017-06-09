@@ -70,6 +70,12 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
     public static $defsMap = array(MB_POPUPSEARCH => 'searchdefs', MB_POPUPLIST => 'listviewdefs');
 
     /**
+     * @var bool $search
+     */
+    protected $search;
+
+
+    /**
      * Constructor
      * Must set:
      * $this->columns   Array of 'Column LBL'=>function_to_retrieve_fields_for_this_column() - expected by the view
@@ -97,7 +103,11 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
     }
 
     /**
-     * Dashlets contain both a searchview and list view definition, therefore we need to merge only the relevant info
+     * Dashlets contain both a searchview and list view definition,
+     * therefore we need to merge only the relevant info
+     * @param array $viewdefs
+     * @param array $fielddefs
+     * @return array
      */
     function mergeFieldDefinitions($viewdefs, $fielddefs)
     {
