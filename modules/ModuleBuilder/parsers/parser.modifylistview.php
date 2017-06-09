@@ -324,7 +324,6 @@ class ParserModifyListView extends ModuleBuilderParser
 	}
 	function handleSave ()
 	{
-		xdebug_break();
 		$fields = $this->_loadLayoutFromRequest();
 		$this->_writeToFile($this->customFile,'ListView',$this->module_name,$fields,$this->_variables);
 

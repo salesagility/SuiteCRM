@@ -746,7 +746,6 @@ class ModuleBuilderController extends SugarController
 
     function action_saveLayout ()
     {
-        xdebug_break();
             $parser = ParserFactory::getParser ( $_REQUEST [ 'view' ], $_REQUEST [ 'view_module' ], isset ( $_REQUEST [ 'view_package' ] ) ? $_REQUEST [ 'view_package' ] : null ) ;
             $this->view = 'layoutview' ;
         $parser->writeWorkingFile () ;
@@ -762,7 +761,6 @@ class ModuleBuilderController extends SugarController
 
     function action_saveAndPublishLayout ()
     {
-        xdebug_break();
         $parser = ParserFactory::getParser ( $_REQUEST [ 'view' ], $_REQUEST [ 'view_module' ], isset ( $_REQUEST [ 'view_package' ] ) ? $_REQUEST [ 'view_package' ] : null ) ;
         $parser->handleSave () ;
 
