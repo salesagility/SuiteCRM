@@ -71,10 +71,27 @@ abstract class AbstractMetaDataImplementation
      * @var array $_viewdefs
      */
     protected $_viewdefs;
+
+    /**
+     * @var array $_originalViewdefs
+     */
     protected $_originalViewdefs = array();
+
+    /**
+     * @var array $_fielddefs
+     */
     protected $_fielddefs;
-    protected $_sourceFilename = ''; // the name of the file from which we loaded the definition we're working on - needed when we come to write out the historical record
-    // would like this to be a constant, but alas, constants cannot contain arrays...
+
+    /**
+     * @var string $_sourceFilename
+     * the name of the file from which we loaded the definition we're working on - needed when we come to write out
+     * the historical record would like this to be a constant, but alas, constants cannot contain arrays...
+     */
+    protected $_sourceFilename = '';
+
+    /**
+     * @var array $_fileVariables
+     */
     protected $_fileVariables = array(
         MB_DASHLETSEARCH => 'dashletData',
         MB_DASHLET => 'dashletData',
@@ -88,11 +105,15 @@ abstract class AbstractMetaDataImplementation
         MB_QUICKCREATE => 'viewdefs',
     );
 
+    /**
+     * @var array $_originalViewTemplateDefs
+     */
 
     protected $_originalViewTemplateDefs;
 
-    /*
+    /**
      * Getters for the definitions loaded by the Constructor
+     * @return array
      */
     public function getViewdefs()
     {
