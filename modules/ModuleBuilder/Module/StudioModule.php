@@ -54,7 +54,7 @@ class StudioModule
     /**
      * @var array $sources - list of source files
      */
-    private $sources = array();
+    public $sources = array();
 
     /**
      * @var string $name name of module
