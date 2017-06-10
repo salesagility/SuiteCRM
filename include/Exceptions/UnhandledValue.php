@@ -46,14 +46,14 @@ require_once __DIR__ . '/UndefinedBehaviour.php';
 require_once __DIR__ . '/exceptions.php';
 
 /**
- * Class UnexpectedUsableValue
+ * Class UnhandledValue
  *
- * UnexpectedUsableValue is thrown when a value is usable but it is unexpected. Meaning that your code
+ * UnhandledValue is thrown when a value is usable but it is unexpected. Meaning that your code
  * does not handle this value. Typically this is thrown on an else condition or a default condition in the switch case.
  *
  * Use UnusableValue instead when the value is unusable such as false, null, empty, NaN etc.
  */
-class UnexpectedUsableValue extends UndefinedBehaviour
+class UnhandledValue extends UndefinedBehaviour
 {
     /**
      * @var string $message
