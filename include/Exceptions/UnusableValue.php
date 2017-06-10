@@ -49,6 +49,8 @@ require_once __DIR__ . '/exceptions.php';
  * Class UnusableValue
  *
  * Thrown when a value is unusable such as false, null, empty, NaN etc.
+ *
+ * Use UnexpectedValueException instead when the value is usable but was not expected.
  */
 class UnusableValue extends UndefinedBehaviour
 {
