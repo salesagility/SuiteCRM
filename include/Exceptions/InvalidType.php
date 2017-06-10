@@ -43,13 +43,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__ . '/SuiteException.php';
+require_once __DIR__ . '/UndefinedBehaviour.php';
 require_once __DIR__ . '/exceptions.php';
 
 /**
- * Class SuiteInvalidTypeException
+ * Class InvalidType
+ *
+ * InvalidType is thrown when the data type of the value is different that what was expected
  */
-class SuiteInvalidTypeException extends SuiteException
+class InvalidType extends UndefinedBehaviour
 {
     /**
      * @var string $message
@@ -65,7 +67,7 @@ class SuiteInvalidTypeException extends SuiteException
     protected $userMessage;
 
     /**
-     * SuiteInvalidTypeException constructor.
+     * InvalidType constructor.
      * @param string $message
      * @param int $code
      * @param Throwable|null $previous

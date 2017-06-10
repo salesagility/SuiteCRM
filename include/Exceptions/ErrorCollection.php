@@ -42,24 +42,26 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__ . '/SuiteException.php';
+require_once __DIR__ . '/UndefinedBehaviour.php';
 require_once __DIR__ . '/exceptions.php';
 
 /**
- * Class SuiteErrorHandler
+ * Class ErrorCollection
  * Soft Exception handler
  *
- * Since old code does not handle exceptions, We cannot throw exceptions  without potentially
+ * Since old code does not handle undefined behaviour well, We cannot throw exceptions without potentially
  * breaking old customisations.
  *
- * SuiteErrorHandler allows us to check for exceptions without breaking legacy code.  SuiteErrorHandler can give us
- * a stack trace or at least where the in the code base should throw exceptions.
+ * ErrorCollection allows us to collect undefined behaviour and check for exceptions without breaking legacy code.
+ * ErrorCollection tells us where the in the code base should throw exceptions.
+ * When $sugar_config['show_log_trace'] is assigned to true, ErrorCollection will give us a stack trace
+ * to help find where problems have occurred during the SuiteCRM operation.
  *
  * Typical usage:
- * SuiteErrorHandler::throwError(new SuiteException('Custom message');
+ * ErrorCollection::throwError(new UndefinedBehaviour('Custom message');
  *
  */
-class SuiteErrorHandler
+class ErrorCollection
 {
     /**
      * @var array $errors
@@ -69,12 +71,12 @@ class SuiteErrorHandler
     /**
      * Throws and logs the error.
      *
-     * @param SuiteException $exception The error presented as a exception
+     * @param UndefinedBehaviour $exception The error presented as a exception
      * @param int $sugarErrorLevel determines the log level reported in the log file(s)
      * @param boolean $throwException offers a means for new code to throw exception and keep the same log convention
      * @throws Exception
      */
-    public static function throwError($exception, $sugarErrorLevel = SuiteErrorLevel::fatal, $throwException = false)
+    public static function throwError($exception, $sugarErrorLevel = ErrorLevel::fatal, $throwException = false)
     {
         global $sugar_config;
         self::$errors[] = $exception;
@@ -84,7 +86,7 @@ class SuiteErrorHandler
             $errorMessage .= 'PHP Stack trace:' . PHP_EOL . $exception->getTraceAsString() . PHP_EOL;
         }
 
-        $logFunction = SuiteErrorLevel::toString($sugarErrorLevel);
+        $logFunction = ErrorLevel::toString($sugarErrorLevel);
         $GLOBALS['log']->{$logFunction}($errorMessage);
 
         if ($throwException === true) {
@@ -93,7 +95,7 @@ class SuiteErrorHandler
     }
 
     /**
-     * @param SuiteException $type
+     * @param UndefinedBehaviour $type
      * @return bool
      */
     public static function hasThrownError($type)

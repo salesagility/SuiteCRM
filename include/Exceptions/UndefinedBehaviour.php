@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -42,54 +43,56 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__ . '/SuiteException.php';
+require_once __DIR__ . '/UndefinedBehaviour.php';
 require_once __DIR__ . '/exceptions.php';
 
-class SuiteErrorLevel
+
+/**
+ * Class UndefinedBehaviour
+ *
+ * Undefined behavior extends the Exception class so that we can add additional information such as userMessage
+ * to communicate better information when an un expected behaviour has occurred.
+ *
+ * UndefinedBehaviour is the base class for all SuiteCRM Exceptions.
+ */
+class UndefinedBehaviour extends Exception
 {
-    const debug      = 100;
-    const info       = 70;
-    const warn       = 50;
-    const deprecated = 40;
-    const error      = 25;
-    const fatal      = 10;
-    const security   = 5;
-    const off        = 0;
+    /**
+     * @var string $message
+     * The message which is reported to the system administrator or software engineer
+     */
+    protected $message = 'Undefined Behaviour';
 
     /**
-     * @param $sugarErrorLevel
-     * @return bool|string
+     * @var int $code
+     * The reference code used to quickly find the type of undefined behaviour
      */
-    public static function toString($sugarErrorLevel)
+    protected $code = 0;
+
+    /**
+     * @var string $userMessage
+     * The message which is reported to the user
+     */
+    protected $userMessage;
+
+    /**
+     * UndefinedBehaviour constructor.
+     * @param string $message
+     * @param int $code
+     * @param Throwable|null $previous
+     */
+    public function __construct($message = "", $code = 0, Throwable $previous = null)
     {
-        $response = false;
-        switch ($sugarErrorLevel)
-        {
-            case self::debug:
-                $response = 'debug';
-                break;
-            case self::info:
-                $response = 'info';
-                break;
-            case self::warn:
-                $response = 'warn';
-                break;
-            case self::deprecated:
-                $response = 'deprecated';
-                break;
-            case self::error:
-                $response = 'error';
-                break;
-            case self::fatal:
-                $response = 'fatal';
-                break;
-            case self::security:
-                $response = 'security';
-                break;
-            case self::off:
-                $response = 'off';
-                break;
-        }
-        return $response;
+        global $app_strings;
+        $this->userMessage = $app_strings['ERR_AJAX_LOAD'];
+        parent::__construct($this->message .': '. $message, $code, $previous);
+    }
+
+    /**
+     * @return string - The message which is to be reported to the user
+     */
+    protected function getUserMessage()
+    {
+        return $this->userMessage;
     }
 }

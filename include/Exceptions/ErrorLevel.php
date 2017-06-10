@@ -42,39 +42,60 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__ . '/SuiteException.php';
+require_once __DIR__ . '/UndefinedBehaviour.php';
 require_once __DIR__ . '/exceptions.php';
 
 /**
- * Class SuiteEmptyValueException
+ * Class ErrorLevel
+ *
+ * An enumerator which is used to set the log level of an UndefinedBehaviour which give the logger the ability to
+ * filter out the reports which are considered unhelpful to the target log.
  */
-class SuiteEmptyValueException extends SuiteException
+class ErrorLevel
 {
-    /**
-     * @var string $message
-     */
-    protected $message = 'Empty value';
+    const debug      = 100;
+    const info       = 70;
+    const warn       = 50;
+    const deprecated = 40;
+    const error      = 25;
+    const fatal      = 10;
+    const security   = 5;
+    const off        = 0;
 
     /**
-     * @var int $code
+     * @param $sugarErrorLevel
+     * @return bool|string
      */
-    protected $code = 1;
-
-    /**
-     * @var string $userMessage
-     */
-    protected $userMessage;
-
-    /**
-     * SuiteEmptyValueException constructor.
-     * @param string $message
-     * @param int $code
-     * @param Throwable|null $previous
-     */
-    public function __construct($message = "", $code = 0, Throwable $previous = null)
+    public static function toString($sugarErrorLevel)
     {
-        global $app_strings;
-        $this->userMessage = $app_strings['ERR_AJAX_LOAD'];
-        parent::__construct($this->message .': '. $message, $code, $previous);
+        $response = false;
+        switch ($sugarErrorLevel)
+        {
+            case self::debug:
+                $response = 'debug';
+                break;
+            case self::info:
+                $response = 'info';
+                break;
+            case self::warn:
+                $response = 'warn';
+                break;
+            case self::deprecated:
+                $response = 'deprecated';
+                break;
+            case self::error:
+                $response = 'error';
+                break;
+            case self::fatal:
+                $response = 'fatal';
+                break;
+            case self::security:
+                $response = 'security';
+                break;
+            case self::off:
+                $response = 'off';
+                break;
+        }
+        return $response;
     }
 }

@@ -45,8 +45,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * Requires all the exception classes
  */
-require_once __DIR__ . '/SuiteException.php';
-require_once __DIR__ . '/SuiteErrorHandler.php';
-require_once __DIR__ . '/SuiteEmptyValueException.php';
-require_once __DIR__ . '/SuiteInvalidTypeException.php';
-require_once __DIR__ . '/SuiteErrorLevel.php';
+require_once __DIR__ . '/UndefinedBehaviour.php';
+require_once __DIR__ . '/ErrorCollection.php';
+require_once __DIR__ . '/UnusableValue.php';
+require_once __DIR__ . '/InvalidType.php';
+require_once __DIR__ . '/ErrorLevel.php';
