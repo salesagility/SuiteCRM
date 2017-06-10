@@ -81,7 +81,7 @@ class UndefinedBehaviour extends Exception
      * @param int $code
      * @param Throwable|null $previous
      */
-    public function __construct($message = "", $code = 0, Throwable $previous = null)
+    public function __construct($message = "", $code = 0, $previous = null)
     {
         global $app_strings;
         $this->userMessage = $app_strings['ERR_AJAX_LOAD'];
