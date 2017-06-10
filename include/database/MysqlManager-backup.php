@@ -92,11 +92,12 @@ if (!defined('sugarEntry') || !sugarEntry)
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  * ****************************************************************************** */
-require_once('include/database/DoctrineManager.php');
 
 /**
  * MySQL manager implementation for mysql extension
  */
+
+
 class MysqlManager extends \SuiteCRM\Database\DoctrineManager {
 
     /**
@@ -156,6 +157,39 @@ class MysqlManager extends \SuiteCRM\Database\DoctrineManager {
         "create_db" => true,
         "disable_keys" => true,
     );
+
+    /**
+     * Parses and runs queries
+     *
+     * @param  string   $sql        SQL Statement to execute
+     * @param  bool     $dieOnError True if we want to call die if the query returns errors
+     * @param  string   $msg        Message to log if error occurs
+     * @param  bool     $suppress   Flag to suppress all error output unless in debug logging mode.
+     * @param  bool     $keepResult True if we want to push this result into the $lastResult array.
+     * @return resource result set
+     */
+    public function query($sql, $dieOnError = false, $msg = '', $suppress = false, $keepResult = false) {
+        if (is_array($sql)) {
+            return $this->queryArray($sql, $dieOnError, $msg, $suppress);
+        }
+
+        parent::countQuery($sql);
+        $GLOBALS['log']->info('Query:' . $sql);
+        $this->checkConnection();
+        $this->query_time = microtime(true);
+        $this->lastsql = $sql;
+        $result = $suppress ? @mysql_query($sql, $this->database) : mysql_query($sql, $this->database);
+
+        $this->query_time = microtime(true) - $this->query_time;
+        $GLOBALS['log']->info('Query Execution Time:' . $this->query_time);
+
+
+        if ($keepResult)
+            $this->lastResult = $result;
+
+        $this->checkError($msg . ' Query Failed:' . $sql . '::', $dieOnError);
+        return $result;
+    }
 
     /**
      * Returns the number of rows affected by the last query
@@ -324,6 +358,16 @@ class MysqlManager extends \SuiteCRM\Database\DoctrineManager {
     }
 
     /**
+     * @see DBManager::fetchRow()
+     */
+    public function fetchRow($result) {
+        if (empty($result))
+            return false;
+
+        return mysql_fetch_assoc($result);
+    }
+
+    /**
      * @see DBManager::getTablesArray()
      */
     public function getTablesArray() {
@@ -389,10 +433,84 @@ class MysqlManager extends \SuiteCRM\Database\DoctrineManager {
     }
 
     /**
+     * @see DBManager::quote()
+     */
+    public function quote($string) {
+        if (is_array($string)) {
+            return $this->arrayQuote($string);
+        }
+        return mysql_real_escape_string($this->quoteInternal($string), $this->getDatabase());
+    }
+
+    /**
      * @see DBManager::quoteIdentifier()
      */
     public function quoteIdentifier($string) {
         return '`' . $string . '`';
+    }
+
+    /**
+     * @see DBManager::connect()
+     */
+    public function connect(array $configOptions = null, $dieOnError = false) {
+        global $sugar_config;
+
+        if (is_null($configOptions))
+            $configOptions = $sugar_config['dbconfig'];
+
+        if ($this->getOption('persistent')) {
+            $this->database = @mysql_pconnect(
+                            $configOptions['db_host_name'], $configOptions['db_user_name'], $configOptions['db_password']
+            );
+        }
+
+        if (!$this->database) {
+            $this->database = mysql_connect(
+                    $configOptions['db_host_name'], $configOptions['db_user_name'], $configOptions['db_password']
+            );
+            if (empty($this->database)) {
+                $GLOBALS['log']->fatal("Could not connect to server " . $configOptions['db_host_name'] . " as " . $configOptions['db_user_name'] . ":" . mysql_error());
+                if ($dieOnError) {
+                    if (isset($GLOBALS['app_strings']['ERR_NO_DB'])) {
+                        sugar_die($GLOBALS['app_strings']['ERR_NO_DB']);
+                    } else {
+                        sugar_die("Could not connect to the database. Please refer to suitecrm.log for details.");
+                    }
+                } else {
+                    return false;
+                }
+            }
+            // Do not pass connection information because we have not connected yet
+            if ($this->database && $this->getOption('persistent')) {
+                $_SESSION['administrator_error'] = "<b>Severe Performance Degradation: Persistent Database Connections "
+                        . "not working.  Please set \$sugar_config['dbconfigoption']['persistent'] to false "
+                        . "in your config.php file</b>";
+            }
+        }
+        if (!empty($configOptions['db_name']) && !@mysql_select_db($configOptions['db_name'])) {
+            $GLOBALS['log']->fatal("Unable to select database {$configOptions['db_name']}: " . mysql_error($this->database));
+            if ($dieOnError) {
+                sugar_die($GLOBALS['app_strings']['ERR_NO_DB']);
+            } else {
+                return false;
+            }
+        }
+
+        // cn: using direct calls to prevent this from spamming the Logs
+        mysql_query("SET CHARACTER SET utf8", $this->database);
+        $names = "SET NAMES 'utf8'";
+        $collation = $this->getOption('collation');
+        if (!empty($collation)) {
+            $names .= " COLLATE '$collation'";
+        }
+        mysql_query($names, $this->database);
+
+        if (!$this->checkError('Could Not Connect:', $dieOnError))
+            $GLOBALS['log']->info("connected to db");
+        $this->connectOptions = $configOptions;
+
+        $GLOBALS['log']->info("Connect:" . $this->database);
+        return true;
     }
 
     /**
@@ -944,6 +1062,24 @@ class MysqlManager extends \SuiteCRM\Database\DoctrineManager {
             return $this->convert($this->quoted("00:00:00"), "time");
         }
         return parent::emptyValue($type);
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see DBManager::lastDbError()
+     */
+    public function lastDbError() {
+        if ($this->database) {
+            if (mysql_errno($this->database)) {
+                return "MySQL error " . mysql_errno($this->database) . ": " . mysql_error($this->database);
+            }
+        } else {
+            $err = mysql_error();
+            if ($err) {
+                return $err;
+            }
+        }
+        return false;
     }
 
     /**

@@ -1,103 +1,23 @@
 <?php
 
-if (!defined('sugarEntry') || !sugarEntry)
-    die('Not A Valid Entry Point');
-/* * *******************************************************************************
- * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License version 3 as published by the
- * Free Software Foundation with the addition of the following permission added
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
- * details.
- *
- * You should have received a copy of the GNU Affero General Public License along with
- * this program; if not, see http://www.gnu.org/licenses or write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- *
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- *
- * The interactive user interfaces in modified source and object code versions
- * of this program must display Appropriate Legal Notices, as required under
- * Section 5 of the GNU Affero General Public License version 3.
- *
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
- * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- * ****************************************************************************** */
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-/* * *******************************************************************************
+namespace SuiteCRM\Database;
 
- * Description: This file handles the Data base functionality for the application.
- * It acts as the DB abstraction layer for the application. It depends on helper classes
- * which generate the necessary SQL. This sql is then passed to PEAR DB classes.
- * The helper class is chosen in DBManagerFactory, which is driven by 'db_type' in 'dbconfig' under config.php.
- *
- * All the functions in this class will work with any bean which implements the meta interface.
- * The passed bean is passed to helper class which uses these functions to generate correct sql.
- *
- * The meta interface has the following functions:
- * getTableName()	        	Returns table name of the object.
- * getFieldDefinitions()	    	Returns a collection of field definitions in order.
- * getFieldDefintion(name)		Return field definition for the field.
- * getFieldValue(name)	    	Returns the value of the field identified by name.
- *                           	If the field is not set, the function will return boolean FALSE.
- * getPrimaryFieldDefinition()	Returns the field definition for primary key
- *
- * The field definition is an array with the following keys:
- *
- * name 		This represents name of the field. This is a required field.
- * type 		This represents type of the field. This is a required field and valid values are:
- *           �   int
- *           �   long
- *           �   varchar
- *           �   text
- *           �   date
- *           �   datetime
- *           �   double
- *           �   float
- *           �   uint
- *           �   ulong
- *           �   time
- *           �   short
- *           �   enum
- * length    This is used only when the type is varchar and denotes the length of the string.
- *           The max value is 255.
- * enumvals  This is a list of valid values for an enum separated by "|".
- *           It is used only if the type is �enum�;
- * required  This field dictates whether it is a required value.
- *           The default value is �FALSE�.
- * isPrimary This field identifies the primary key of the table.
- *           If none of the fields have this flag set to �TRUE�,
- *           the first field definition is assume to be the primary key.
- *           Default value for this field is �FALSE�.
- * default   This field sets the default value for the field definition.
- *
- *
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- * ****************************************************************************** */
+require_once "vendor/autoload.php";
+require_once('include/database/Utils.php');
 
 /**
- * Base database driver implementation
- * @api
+ * Description of DoctrineManager
+ * @version 0.0.1
+ * @author opravil.jan
  */
-abstract class DBManager {
+abstract class DoctrineManager {
+    //put your code here
 
     /**
      * Name of database
@@ -147,7 +67,7 @@ abstract class DBManager {
 
     /**
      * TimeDate instance
-     * @var TimeDate
+     * @var \TimeDate
      */
     protected $timedate;
 
@@ -263,7 +183,7 @@ abstract class DBManager {
      * Create DB Driver
      */
     public function __construct() {
-        $this->timedate = TimeDate::getInstance();
+        $this->timedate = \TimeDate::getInstance();
         $this->log = isset($GLOBALS['log']) ? $GLOBALS['log'] : null;
         $this->helper = $this; // compatibility
     }
@@ -458,13 +378,6 @@ abstract class DBManager {
         $this->last_error = '';
         if (!isset($this->database)) {
             $this->connect();
-        } else {
-            try {
-                $this->database->ping();
-            } catch (Exception $ex) {
-                unset($this->database);
-                $this->connect();
-            }
         }
     }
 
@@ -484,7 +397,7 @@ abstract class DBManager {
      * @return bool query result
      *
      */
-    public function insert(SugarBean $bean) {
+    public function insert(\SugarBean $bean) {
         $sql = $this->insertSQL($bean);
         $tablename = $bean->getTableName();
         $msg = "Error inserting into table: $tablename:";
@@ -536,10 +449,10 @@ abstract class DBManager {
             }
         }
 
-        if (empty($values))
+        if (empty($values)) {
             return $execute ? true : ''; // no columns set
+        }
 
-            
 // get the entire sql
         $query = "INSERT INTO $table (" . implode(",", array_keys($values)) . ")
 					VALUES (" . implode(",", $values) . ")";
@@ -556,7 +469,7 @@ abstract class DBManager {
      * @return bool query result
      *
      */
-    public function update(SugarBean $bean, array $where = array()) {
+    public function update(\SugarBean $bean, array $where = array()) {
         $sql = $this->updateSQL($bean, $where);
         $tablename = $bean->getTableName();
         $msg = "Error updating table: $tablename:";
@@ -572,7 +485,7 @@ abstract class DBManager {
      * If where is not passed, it defaults to id of table
      * @return bool query result
      */
-    public function delete(SugarBean $bean, array $where = array()) {
+    public function delete(\SugarBean $bean, array $where = array()) {
         $sql = $this->deleteSQL($bean, $where);
         $tableName = $bean->getTableName();
         $msg = "Error deleting from table: " . $tableName . ":";
@@ -589,7 +502,7 @@ abstract class DBManager {
      * @param  array    $where values with the keys as names of fields.
      * @return resource result from the query
      */
-    public function retrieve(SugarBean $bean, array $where = array()) {
+    public function retrieve(\SugarBean $bean, array $where = array()) {
         $sql = $this->retrieveSQL($bean, $where);
         $tableName = $bean->getTableName();
         $msg = "Error retriving values from table:" . $tableName . ":";
@@ -624,7 +537,7 @@ abstract class DBManager {
      * NOTE: does not handle out-of-table constraints, use createConstraintSQL for that
      * @param SugarBean $bean  Sugarbean instance
      */
-    public function createTable(SugarBean $bean) {
+    public function createTable(\SugarBean $bean) {
         $sql = $this->createTableSQL($bean);
         $tablename = $bean->getTableName();
         $msg = "Error creating table: $tablename:";
@@ -644,7 +557,7 @@ abstract class DBManager {
      * @param  SugarBean $bean SugarBean instance
      * @return array list of SQL statements
      */
-    protected function createConstraintSql(SugarBean $bean) {
+    protected function createConstraintSql(\SugarBean $bean) {
         return $this->getConstraintSql($bean->getIndices(), $bean->getTableName());
     }
 
@@ -685,7 +598,7 @@ abstract class DBManager {
      * @param  bool   $execute true if we want the action to take place, false if we just want the sql returned
      * @return string SQL statement or empty string, depending upon $execute
      */
-    public function repairTable(SugarBean $bean, $execute = true) {
+    public function repairTable(\SugarBean $bean, $execute = true) {
         $indices = $bean->getIndices();
         $fielddefs = $bean->getFieldDefinitions();
         $tablename = $bean->getTableName();
@@ -739,6 +652,9 @@ abstract class DBManager {
      * @return string
      */
     public function repairTableParams($tablename, $fielddefs, $indices, $execute = true, $engine = null) {
+        if (is_array($indices) === false){
+            $indices = array();
+        }
         //jc: had a bug when running the repair if the tablename is blank the repair will
         //fail when it tries to create a repair table
         if ($tablename == '' || empty($fielddefs))
@@ -1010,54 +926,6 @@ abstract class DBManager {
         return $returnArray;
     }
 
-//
-//    /**
-//     * Compare an index in two different tables
-//     * @deprecated
-//     * @param  string $name   index name
-//     * @param  string $table1
-//     * @param  string $table2
-//     * @return array  array with keys 'msg','table1','table2'
-//     */
-//    public function compareIndexInTables($name, $table1, $table2)
-//    {
-//        $row1 = $this->describeIndex($name, $table1);
-//        $row2 = $this->describeIndex($name, $table2);
-//        $returnArray = array(
-//            'table1' => $row1,
-//            'table2' => $row2,
-//            'msg'    => 'error',
-//            );
-//        $ignore_filter = array('Table'=>1, 'Seq_in_index'=>1,'Cardinality'=>1, 'Sub_part'=>1, 'Packed'=>1, 'Comment'=>1);
-//
-//        if ($row1) {
-//            if (!$row2) {
-//                //Exists on table1 but not table2
-//                $returnArray['msg'] = 'not_exists_table2';
-//            }
-//            else {
-//                if (sizeof($row1) != sizeof($row2)) {
-//                    $returnArray['msg'] = 'no_match';
-//                }
-//                else {
-//                    $returnArray['msg'] = 'match';
-//                    foreach ($row1 as $fname => $fvalue) {
-//                        if (!isset($row2[$fname])) {
-//                            $returnArray['msg'] = 'no_match';
-//                        }
-//                        if(!isset($ignore_filter[$fname]) && $row1[$fname] != $row2[$fname]){
-//                            $returnArray['msg'] = 'no_match';
-//                        }
-//                    }
-//                }
-//            }
-//        } else {
-//            $returnArray['msg'] = 'not_exists_table1';
-//        }
-//
-//        return $returnArray;
-//    }
-
     /**
      * Creates an index identified by name on the given fields.
      *
@@ -1067,7 +935,7 @@ abstract class DBManager {
      * @param bool   $unique    optional, true if we want to create an unique index
      * @return bool query result
      */
-    public function createIndex(SugarBean $bean, $fieldDefs, $name, $unique = true) {
+    public function createIndex(\SugarBean $bean, $fieldDefs, $name, $unique = true) {
         $sql = $this->createIndexSQL($bean, $fieldDefs, $name, $unique);
         $tablename = $bean->getTableName();
         $msg = "Error creating index $name on table: $tablename:";
@@ -1220,7 +1088,7 @@ abstract class DBManager {
      * @param SugarBean $bean SugarBean instance
      * @return bool query result
      */
-    public function dropTable(SugarBean $bean) {
+    public function dropTable(\SugarBean $bean) {
         return $this->dropTableName($bean->getTableName());
     }
 
@@ -1242,7 +1110,7 @@ abstract class DBManager {
      * @param array  $fieldDefs Vardef definition of the field
      * @return bool query result
      */
-    public function deleteColumn(SugarBean $bean, $fieldDefs) {
+    public function deleteColumn(\SugarBean $bean, $fieldDefs) {
         $tablename = $bean->getTableName();
         $sql = $this->dropColumnSQL($tablename, $fieldDefs);
         $msg = "Error deleting column(s) on table: $tablename:";
@@ -1262,7 +1130,7 @@ abstract class DBManager {
      * @param bool $is_related_query
      * @return string SQL insert statement
      */
-    public function generateInsertSQL(SugarBean $bean, $select_query, $start, $count = -1, $table, $is_related_query = false) {
+    public function generateInsertSQL(\SugarBean $bean, $select_query, $start, $count = -1, $table, $is_related_query = false) {
         $this->log->info('call to DBManager::generateInsertSQL() is deprecated');
         global $sugar_config;
 
@@ -1343,9 +1211,9 @@ abstract class DBManager {
                                     $values[$fieldDef['name']] = $GLOBALS['db']->quote(from_html($val));
                             } else {
                                 if (!empty($custom_fields[$fieldDef['name']]))
-                                    $cstm_values[$fieldDef['name']] = " " . $GLOBALS['db']->quote(from_html($val));
+                                    $cstm_values[$fieldDef['name']] = "'" . $GLOBALS['db']->quote(from_html($val)) . "'";
                                 else
-                                    $values[$fieldDef['name']] = " " . $GLOBALS['db']->quote(from_html($val));
+                                    $values[$fieldDef['name']] = "'" . $GLOBALS['db']->quote(from_html($val)) . "'";
                             }
                         }
                         if (!$built_columns) {
@@ -1400,14 +1268,6 @@ abstract class DBManager {
     }
 
     /**
-     * @deprecated
-     * Disconnects all instances
-     */
-    public function disconnectAll() {
-        DBManagerFactory::disconnectAll();
-    }
-
-    /**
      * This function sets the query threshold limit
      *
      * @param int $limit value of query threshold limit
@@ -1459,6 +1319,7 @@ abstract class DBManager {
     /**
      * Return string properly quoted with ''
      * @param string $string
+     * @deprecated since version 0.0.1 - Use instead binding.
      * @return string
      */
     public function quoted($string) {
@@ -1810,7 +1671,7 @@ abstract class DBManager {
      * @param SugarBean $bean SugarBean instance
      * @return string SQL Create Table statement
      */
-    public function createTableSQL(SugarBean $bean) {
+    public function createTableSQL(\SugarBean $bean) {
         $tablename = $bean->getTableName();
         $fieldDefs = $bean->getFieldDefinitions();
         $indices = $bean->getIndices();
@@ -1823,7 +1684,7 @@ abstract class DBManager {
      * @param  SugarBean $bean SugarBean instance
      * @return string SQL Create Table statement
      */
-    public function insertSQL(SugarBean $bean) {
+    public function insertSQL(\SugarBean $bean) {
         // get column names and values
         $sql = $this->insertParams($bean->getTableName(), $bean->getFieldDefinitions(), get_object_vars($bean), isset($bean->field_name_map) ? $bean->field_name_map : null, false);
         return $sql;
@@ -1836,7 +1697,7 @@ abstract class DBManager {
      * @param  array  $where Optional, where conditions in an array
      * @return string SQL Create Table statement
      */
-    public function updateSQL(SugarBean $bean, array $where = array()) {
+    public function updateSQL(\SugarBean $bean, array $where = array()) {
         $primaryField = $bean->getPrimaryFieldDefinition();
         $columns = array();
         $fields = $bean->getFieldDefinitions();
@@ -1893,10 +1754,10 @@ abstract class DBManager {
             }
         }
 
-        if (sizeof($columns) == 0)
+        if (sizeof($columns) == 0) {
             return ""; // no columns set
+        }
 
-            
 // build where clause
         $where = $this->getWhereClause($bean, $this->updateWhereArray($bean, $where));
         if (isset($fields['deleted'])) {
@@ -1916,7 +1777,7 @@ abstract class DBManager {
      * @param  array  $where Optional, where conditions in an array
      * @return array
      */
-    protected function updateWhereArray(SugarBean $bean, array $where = array()) {
+    protected function updateWhereArray(\SugarBean $bean, array $where = array()) {
         if (count($where) == 0) {
             $fieldDef = $bean->getPrimaryFieldDefinition();
             $primaryColumn = $fieldDef['name'];
@@ -1973,7 +1834,7 @@ abstract class DBManager {
      * @param  array  $whereArray Optional, where conditions in an array
      * @return string
      */
-    protected function getWhereClause(SugarBean $bean, array $whereArray = array()) {
+    protected function getWhereClause(\SugarBean $bean, array $whereArray = array()) {
         return " WHERE " . $this->getColumnWhereClause($bean->getTableName(), $whereArray);
     }
 
@@ -2147,7 +2008,7 @@ abstract class DBManager {
      * @param  array  $where where conditions in an array
      * @return string SQL Update Statement
      */
-    public function deleteSQL(SugarBean $bean, array $where) {
+    public function deleteSQL(\SugarBean $bean, array $where) {
         $where = $this->getWhereClause($bean, $this->updateWhereArray($bean, $where));
         return "UPDATE " . $bean->getTableName() . " SET deleted=1 $where";
     }
@@ -2159,7 +2020,7 @@ abstract class DBManager {
      * @param  array  $where where conditions in an array
      * @return string SQL Select Statement
      */
-    public function retrieveSQL(SugarBean $bean, array $where) {
+    public function retrieveSQL(\SugarBean $bean, array $where) {
         $where = $this->getWhereClause($bean, $this->updateWhereArray($bean, $where));
         return "SELECT * FROM " . $bean->getTableName() . " $where AND deleted=0";
     }
@@ -2265,7 +2126,7 @@ abstract class DBManager {
      * @param  bool   $unique Optional, set to true if this is an unique index
      * @return string SQL Select Statement
      */
-    public function createIndexSQL(SugarBean $bean, array $fields, $name, $unique = true) {
+    public function createIndexSQL(\SugarBean $bean, array $fields, $name, $unique = true) {
         $unique = ($unique) ? "unique" : "";
         $tablename = $bean->getTableName();
         $columns = array();
@@ -2526,7 +2387,7 @@ abstract class DBManager {
      * @param  SugarBean $bean Sugarbean instance
      * @return string SQL statement
      */
-    public function dropTableSQL(SugarBean $bean) {
+    public function dropTableSQL(\SugarBean $bean) {
         return $this->dropTableNameSQL($bean->getTableName());
     }
 
@@ -2556,7 +2417,7 @@ abstract class DBManager {
      * @param  array  $fieldDefs
      * @return string SQL statement
      */
-    public function deleteColumnSQL(SugarBean $bean, $fieldDefs) {
+    public function deleteColumnSQL(\SugarBean $bean, $fieldDefs) {
         return $this->dropColumnSQL($bean->getTableName(), $fieldDefs);
     }
 
@@ -2668,7 +2529,7 @@ abstract class DBManager {
      * @param array $changes List of changes, contains 'before' and 'after'
      * @return string  Audit table INSERT query
      */
-    protected function auditSQL(SugarBean $bean, $changes) {
+    protected function auditSQL(\SugarBean $bean, $changes) {
         global $current_user;
         $sql = "INSERT INTO " . $bean->get_audit_table_name();
         //get field defs for the audit table.
@@ -2687,7 +2548,7 @@ abstract class DBManager {
             $values['before_value_string'] = $this->massageValue($changes['before'], $fieldDefs['before_value_string']);
             $values['after_value_string'] = $this->massageValue($changes['after'], $fieldDefs['after_value_string']);
         }
-        $values['date_created'] = $this->massageValue(TimeDate::getInstance()->nowDb(), $fieldDefs['date_created']);
+        $values['date_created'] = $this->massageValue(\TimeDate::getInstance()->nowDb(), $fieldDefs['date_created']);
         $values['created_by'] = $this->massageValue($current_user->id, $fieldDefs['created_by']);
 
         $sql .= "(" . implode(",", array_keys($values)) . ") ";
@@ -2703,7 +2564,7 @@ abstract class DBManager {
      * @return bool query result
      *
      */
-    public function save_audit_records(SugarBean $bean, $changes) {
+    public function save_audit_records(\SugarBean $bean, $changes) {
         return $this->query($this->auditSQL($bean, $changes));
     }
 
@@ -2716,7 +2577,7 @@ abstract class DBManager {
      * @param array|null $field_filter Array of filter names to be inspected (NULL means all fields)
      * @return array
      */
-    public function getDataChanges(SugarBean &$bean, array $field_filter = null) {
+    public function getDataChanges(\SugarBean &$bean, array $field_filter = null) {
         $changed_values = array();
 
         $fetched_row = array();
@@ -2801,7 +2662,7 @@ abstract class DBManager {
      * @param SugarBean $bean Sugarbean instance that was changed
      * @return array
      */
-    public function getAuditDataChanges(SugarBean $bean) {
+    public function getAuditDataChanges(\SugarBean $bean) {
         $audit_fields = $bean->getAuditEnabledFieldDefinitions();
         return $this->getDataChanges($bean, array_keys($audit_fields));
     }
@@ -3024,7 +2885,7 @@ abstract class DBManager {
      * @return string
      */
     public function now() {
-        return $this->convert($this->quoted(TimeDate::getInstance()->nowDb()), "datetime");
+        return $this->convert($this->quoted(\TimeDate::getInstance()->nowDb()), "datetime");
     }
 
     /**
@@ -3388,9 +3249,15 @@ abstract class DBManager {
     /**
      * Quote string in DB-specific manner
      * @param string $string
+     * @deprecated since version 0.0.1 - Use instead binding.
      * @return string
      */
-    abstract public function quote($string);
+    public function quote($string) {
+        if (\SuiteCRM\Database\Utils::startsWith($string, "'") && \SuiteCRM\Database\Utils::endsWith($string, "'")) {
+            return $string;
+        }
+        return $this->database->getConnection()->quote($string);
+    }
 
     abstract public function quoteIdentifier($string);
 
@@ -3447,7 +3314,41 @@ abstract class DBManager {
      * @param  bool     $keepResult Keep query result in the object?
      * @return resource|bool result set or success/failure bool
      */
-    abstract public function query($sql, $dieOnError = false, $msg = '', $suppress = false, $keepResult = false);
+    public function query($sql, $dieOnError = false, $msg = '', $suppress = false, $keepResult = false) {
+        if (is_array($sql)) {
+            return $this->queryArray($sql, $dieOnError, $msg, $suppress);
+        }
+        static $queryMD5 = array();
+        self::countQuery();
+        $GLOBALS['log']->info('Query:' . $sql);
+        $this->checkConnection();
+        $this->query_time = \microtime(true);
+        $this->lastsql = $sql;
+        try {
+            $result = $this->database->getConnection()->prepare($sql);
+            $result->execute();
+        } catch (\Exception $ex) {
+            $this->last_error = $ex->getMessage();
+            $this->dump($sql);
+            $this->dump($ex, true);
+            //$this->registerError($msg, "Query Failed: " . $sql, $dieOnError);
+        }
+
+        $md5 = md5($sql);
+
+        if (empty($queryMD5[$md5])) {
+            $queryMD5[$md5] = true;
+        }
+        $this->query_time = microtime(true) - $this->query_time;
+        $GLOBALS['log']->info('Query Execution Time:' . $this->query_time);
+
+        if ($keepResult) {
+            $this->lastResult = $result;
+        }
+        //$this->checkError($msg . ' Query Failed: ' . $sql, $dieOnError);
+
+        return $result;
+    }
 
     /**
      * Runs a limit query: one where we specify where to start getting records and how many to get
@@ -3460,7 +3361,26 @@ abstract class DBManager {
      * @param  bool     $execute Execute or return SQL?
      * @return resource query result
      */
-    abstract function limitQuery($sql, $start, $count, $dieOnError = false, $msg = '', $execute = true);
+    function limitQuery($sql, $start, $count, $dieOnError = false, $msg = '', $execute = true) {
+        $offset = (int) $start;
+        $limit = (int) $count;
+        if ($limit < 0) {
+            $limit = 0;
+        }
+        $GLOBALS['log']->debug('Limit Query:' . $sql . ' offset: ' . $offset . ' limit: ' . $limit);
+
+        $sql = $sql . " OFFSET " . $offset . " LIMIT " . $limit;
+        $this->lastsql = $sql;
+
+        if (!empty($GLOBALS['sugar_config']['check_query'])) {
+            $this->checkQuery($sql);
+        }
+        if (!$execute) {
+            return $sql;
+        }
+
+        return $this->query($sql, $dieOnError, $msg);
+    }
 
     /**
      * Free Database result
@@ -3569,10 +3489,12 @@ abstract class DBManager {
     /**
      * Fetches the next row in the query result into an associative array
      *
-     * @param  resource $result
+     * @param  \Doctrine\DBAL\Statement $result
      * @return array    returns false if there are no more rows available to fetch
      */
-    abstract public function fetchRow($result);
+    public function fetchRow(\Doctrine\DBAL\Driver\Statement $statement) {
+        return $statement->fetch();
+    }
 
     /**
      * Connects to the database backend
@@ -3589,7 +3511,48 @@ abstract class DBManager {
      * @param array   $configOptions
      * @param boolean $dieOnError
      */
-    abstract public function connect(array $configOptions = null, $dieOnError = false);
+    public function connect(array $configOptions = null, $dieOnError = false) {
+        if (is_null($configOptions)) {
+            $configOptions = $this->config['dbconfig'];
+        }
+        if (!isset($configOptions["db_host_name"])) {
+            $this->log->fatal("Could not connect to server parameter db_host_name is not filled");
+            sugar_die("Could not connect to the database. Please refer to suitecrm.log for details.");
+            return false;
+        }
+        if (!isset($configOptions["db_port"])) {
+            $this->log->fatal("Could not connect to server parameter db_port is not filled");
+            sugar_die("Could not connect to the database. Please refer to suitecrm.log for details.");
+            return false;
+        }
+        if (!isset($configOptions["db_user_name"])) {
+            $this->log->fatal("Could not connect to server parameter db_user_name is not filled");
+            sugar_die("Could not connect to the database. Please refer to suitecrm.log for details.");
+            return false;
+        }
+        if (!isset($configOptions["db_password"])) {
+            $this->log->fatal("Could not connect to server parameter db_password is not filled");
+            sugar_die("Could not connect to the database. Please refer to suitecrm.log for details.");
+            return false;
+        }
+
+        $paths = array("modules/", "custom/modules");
+        $isDevMode = false;
+
+// the connection configuration
+        $dbParams = array(
+            'driver' => 'pdo_mysql',
+            'user' => $configOptions["db_user_name"],
+            'password' => $configOptions["db_password"],
+            'host' => $configOptions["db_host_name"] . ':' . $configOptions["db_port"],
+            'dbname' => $configOptions["db_name"],
+        );
+
+        $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
+        $this->database = \Doctrine\ORM\EntityManager::create($dbParams, $config);
+
+        return true;
+    }
 
     /**
      * Generates sql for create table statement for a bean.
@@ -3625,7 +3588,12 @@ abstract class DBManager {
      * and should return false if no error condition happened
      * @return string|false Error message or false if no error happened
      */
-    abstract public function lastDbError();
+    public function lastDbError() {
+        if ($this->last_error !== null) {
+            return $this->last_error;
+        }
+        return false;
+    }
 
     /**
      * Check if this query is valid
@@ -3726,4 +3694,14 @@ abstract class DBManager {
      * @return string
      */
     abstract public function getGuidSQL();
+
+    protected function dump($value, $die = false) {
+        echo("<br>");
+        echo("\n");
+        print_r($value);
+        if ($die === true) {
+            die();
+        }
+    }
+
 }
