@@ -72,11 +72,11 @@ class ErrorCollection
      * Throws and logs the error.
      *
      * @param UndefinedBehaviour $exception The error presented as a exception
-     * @param int $sugarErrorLevel determines the log level reported in the log file(s)
+     * @param int $errorLevel determines the log level reported in the log file(s)
      * @param boolean $throwException offers a means for new code to throw exception and keep the same log convention
      * @throws UndefinedBehaviour when $throwException is assigned to true
      */
-    public static function throwError($exception, $sugarErrorLevel = ErrorLevel::fatal, $throwException = false)
+    public static function throwError($exception, $errorLevel = ErrorLevel::fatal, $throwException = false)
     {
         global $sugar_config;
         self::$errors[] = $exception;
@@ -86,7 +86,7 @@ class ErrorCollection
             $errorMessage .= 'PHP Stack trace:' . PHP_EOL . $exception->getTraceAsString() . PHP_EOL;
         }
 
-        $logFunction = ErrorLevel::toString($sugarErrorLevel);
+        $logFunction = ErrorLevel::toString($errorLevel);
         $GLOBALS['log']->{$logFunction}($errorMessage);
 
         if ($throwException === true) {
