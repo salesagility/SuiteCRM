@@ -759,8 +759,7 @@ EOQ;
 	public static function findUserPassword($name, $password, $where = '')
 	{
 	    global $db;
-		$name = $db->quote($name);
-		$query = "SELECT * from users where user_name='$name'";
+		$query = "SELECT * from users where user_name=".$db->quote($name). " ";
 		if(!empty($where)) {
 		    $query .= " AND $where";
 		}
