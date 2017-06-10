@@ -74,7 +74,7 @@ class ErrorCollection
      * @param UndefinedBehaviour $exception The error presented as a exception
      * @param int $sugarErrorLevel determines the log level reported in the log file(s)
      * @param boolean $throwException offers a means for new code to throw exception and keep the same log convention
-     * @throws Exception
+     * @throws UndefinedBehaviour when $throwException is assigned to true
      */
     public static function throwError($exception, $sugarErrorLevel = ErrorLevel::fatal, $throwException = false)
     {
