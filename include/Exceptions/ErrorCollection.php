@@ -71,7 +71,7 @@ class ErrorCollection
     protected static $errors = array();
 
     /**
-     * @var bool
+     * @var bool $showStackTrace
      */
     public static $showStackTrace = false;
 
