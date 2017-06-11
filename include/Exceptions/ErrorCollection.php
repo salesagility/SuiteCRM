@@ -85,7 +85,7 @@ class ErrorCollection
 
         $errorMessage = 'PHP ' . $exception->getMessage() . ' in ' . $exception->getFile() . ':'
             . $exception->getLine() . PHP_EOL;
-        if(isset($sugar_config['show_log_trace']) && $sugar_config['show_log_trace'] === true) {
+        if (isset($sugar_config['show_log_trace']) && $sugar_config['show_log_trace'] === true) {
             $errorMessage .= 'PHP Stack trace:' . PHP_EOL . $exception->getTraceAsString() . PHP_EOL;
         }
 
@@ -143,8 +143,7 @@ class ErrorCollection
      */
     public static function assert($condition = false, UndefinedBehaviour $throwError)
     {
-        if($condition === true)
-        {
+        if ($condition === true) {
             self::throwError($throwError);
         }
     }
