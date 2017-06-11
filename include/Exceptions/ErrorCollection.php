@@ -85,7 +85,6 @@ class ErrorCollection
      */
     public static function throwAndLog($exception, $errorLevel = ErrorLevel::fatal, $throwException = false)
     {
-        global $sugar_config;
         self::$errors[] = $exception;
 
         $errorMessage = 'PHP ' . $exception->getMessage() . ' in ' . $exception->getFile() . ':'
