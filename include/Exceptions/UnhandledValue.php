@@ -79,7 +79,7 @@ class UnhandledValue extends UndefinedBehaviour
     public function __construct($message = "", $code = 0, $previous = null)
     {
         global $app_strings;
-        $this->userMessage = $app_strings['ERR_AJAX_LOAD'];
+        $this->userMessage = $app_strings['LBL_ERROR_UNHANDLED_VALUE'];
         parent::__construct($this->message .': '. $message, $code, $previous);
     }
 }
