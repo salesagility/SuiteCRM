@@ -57,8 +57,10 @@ require_once __DIR__ . '/exceptions.php';
  * When $sugar_config['show_log_trace'] is assigned to true, ErrorCollection will give us a stack trace
  * to help find where problems have occurred during the SuiteCRM operation.
  *
- * Typical usage:
- * ErrorCollection::throwError(new UndefinedBehaviour('Custom message');
+ * Typical usage(s):
+ *     * ErrorCollection::assert($foo === 1, new UndefinedBehaviour());
+ *
+ *     * ErrorCollection::throwError(new UndefinedBehaviour('Custom message');
  *
  */
 class ErrorCollection
