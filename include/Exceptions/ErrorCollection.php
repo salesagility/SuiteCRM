@@ -135,6 +135,19 @@ class ErrorCollection
     }
 
     /**
+     * Asserts that condition is true
+     * @param bool $condition
+     * @param UndefinedBehaviour $throwError
+     */
+    public static function assert($condition = false, UndefinedBehaviour $throwError)
+    {
+        if($condition === true)
+        {
+            self::throwError($throwError);
+        }
+    }
+
+    /**
      * Clears errors (used for testing)
      */
     public static function clearErrors()
