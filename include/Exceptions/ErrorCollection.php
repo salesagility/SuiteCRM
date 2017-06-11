@@ -78,7 +78,7 @@ class ErrorCollection
      * @param boolean $throwException offers a means for new code to throw exception and keep the same log convention
      * @throws UndefinedBehaviour when $throwException is assigned to true
      */
-    public static function throwError($exception, $errorLevel = ErrorLevel::fatal, $throwException = false)
+    public static function throwAndLog($exception, $errorLevel = ErrorLevel::fatal, $throwException = false)
     {
         global $sugar_config;
         self::$errors[] = $exception;
@@ -144,7 +144,7 @@ class ErrorCollection
     public static function assert($condition = false, UndefinedBehaviour $throwError)
     {
         if ($condition === true) {
-            self::throwError($throwError);
+            self::throwAndLog($throwError);
         }
     }
 
