@@ -54,7 +54,7 @@ require_once __DIR__ . '/exceptions.php';
  *
  * ErrorCollection allows us to collect undefined behaviour and check for exceptions without breaking legacy code.
  * ErrorCollection tells us where the in the code base should throw exceptions.
- * When $sugar_config['show_log_trace'] is assigned to true, ErrorCollection will give us a stack trace
+ * When showStackTrace is assigned to true, ErrorCollection will give us a stack trace
  * to help find where problems have occurred during the SuiteCRM operation.
  *
  * Typical usage(s):
@@ -71,6 +71,11 @@ class ErrorCollection
     protected static $errors = array();
 
     /**
+     * @var bool
+     */
+    public static $showStackTrace = false;
+
+    /**
      * Throws and logs the error.
      *
      * @param UndefinedBehaviour $exception The error presented as a exception
@@ -85,7 +90,7 @@ class ErrorCollection
 
         $errorMessage = 'PHP ' . $exception->getMessage() . ' in ' . $exception->getFile() . ':'
             . $exception->getLine() . PHP_EOL;
-        if (isset($sugar_config['show_log_trace']) && $sugar_config['show_log_trace'] === true) {
+        if (self::$showStackTrace === true) {
             $errorMessage .= 'PHP Stack trace:' . PHP_EOL . $exception->getTraceAsString() . PHP_EOL;
         }
 
