@@ -122,7 +122,6 @@ class ErrorCollection
      */
     public static function getStackTraceMessage()
     {
-
         $stackTraceString = '';
         if (!empty(self::$errors)) {
             foreach (self::$errors as $error) {
