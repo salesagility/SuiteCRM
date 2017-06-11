@@ -60,7 +60,7 @@ require_once __DIR__ . '/exceptions.php';
  * Typical usage(s):
  *     * ErrorCollection::assert($foo === 1, new UndefinedBehaviour());
  *
- *     * ErrorCollection::throwError(new UndefinedBehaviour('Custom message');
+ *     * ErrorCollection::throwAndLog(new UndefinedBehaviour('Custom message');
  *
  */
 class ErrorCollection
