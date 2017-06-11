@@ -83,7 +83,8 @@ class ErrorCollection
         global $sugar_config;
         self::$errors[] = $exception;
 
-        $errorMessage = 'PHP ' . $exception->getMessage() . ' in ' . $exception->getFile() . ':' . $exception->getLine() . PHP_EOL;
+        $errorMessage = 'PHP ' . $exception->getMessage() . ' in ' . $exception->getFile() . ':'
+            . $exception->getLine() . PHP_EOL;
         if(isset($sugar_config['show_log_trace']) && $sugar_config['show_log_trace'] === true) {
             $errorMessage .= 'PHP Stack trace:' . PHP_EOL . $exception->getTraceAsString() . PHP_EOL;
         }
