@@ -1,4 +1,9 @@
 <?php
+$sapi_type = php_sapi_name();
+if (substr($sapi_type, 0, 3) != 'cli') {
+    sugar_die("testinstall.php is CLI only.");
+}
+
 /* DEFINE SOME VARIABLES FOR INSTALLER */
 $_SERVER['HTTP_HOST'] = 'localhost';
 $_SERVER['REQUEST_URI'] = 'install.php';
