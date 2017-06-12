@@ -2507,7 +2507,7 @@ class SugarBean
                         }
                     } else {
                         $logFunction = 'fatal';
-                        if (isset($this->field_defs[$linkField]['source']) && $this->field_defs[$linkField]['source'] !== 'non-db') {
+                        if (isset($this->field_defs[$linkField]['source']) && $this->field_defs[$linkField]['source'] === 'non-db') {
                             $logFunction = 'warn';
                         }
                         $GLOBALS['log']->$logFunction("Failed to load relationship {$linkField} while saving {$this->module_dir}");
