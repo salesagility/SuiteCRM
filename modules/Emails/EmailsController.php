@@ -188,6 +188,7 @@ class EmailsController extends SugarController
             $emailSignatures = unserialize(base64_decode($accountSignatures));
             $defaultEmailSignature = $current_user->getPreference('signature_default');
         } else {
+            $defaultEmailSignature = null;
             $GLOBALS['log']->warn('User has not signature');
         }
 
