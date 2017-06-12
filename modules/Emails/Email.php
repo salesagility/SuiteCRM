@@ -2407,7 +2407,7 @@ class Email extends Basic
         }
 
         $this->saved_attachments = array();
-        foreach ($this->attachments as $note) {
+        foreach ((array)$this->attachments as $note) {
             if (!empty($note->id)) {
                 array_push($this->saved_attachments, $note);
                 continue;
