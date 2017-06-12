@@ -211,9 +211,13 @@ class EmailsController extends SugarController
             }
 
             $signature = $current_user->getSignature($emailSignatureId);
+            if(!$signature) {
+                $GLOBALS['log']->warn('User has not signature, empty string will used instead');
+                $signature['signature_html'] = '';
+            }
             $dataAddress['emailSignatures'] = array(
                 'html' => html_entity_decode($signature['signature_html']),
-                'plain' => $signature['signature']
+                'plain' => $signature['signature'],
             );
             $data[] = $dataAddress;
         }
