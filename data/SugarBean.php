@@ -4547,7 +4547,7 @@ class SugarBean
      * @param string $where where clause. defaults to ""
      * @param bool $check_dates . defaults to false
      * @param int $show_deleted show deleted records. defaults to 0
-     * @return SugarBean[]
+     * @return null|SugarBean[]
      */
     public function get_full_list($order_by = "", $where = "", $check_dates = false, $show_deleted = 0)
     {
@@ -4565,7 +4565,7 @@ class SugarBean
      * Internal function, do not override.
      * @param string $query query to be processed.
      * @param bool $check_date Optional, default false. if set to true date time values are processed.
-     * @return array Fetched data.
+     * @return null|array Fetched data.
      *
      */
     public function process_full_list_query($query, $check_date = false)

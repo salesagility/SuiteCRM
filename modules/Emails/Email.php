@@ -2361,7 +2361,7 @@ class Email extends Basic
             if (!empty($this->id) && !$this->new_with_id) {
                 $note = new Note();
                 $where = "notes.parent_id='{$this->id}'";
-                $notes_list = $note->get_full_list("", $where, true);
+                $notes_list = (array)$note->get_full_list("", $where, true);
             }
             $this->attachments = array_merge($this->attachments, $notes_list);
         }
