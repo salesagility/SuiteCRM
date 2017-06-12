@@ -63,6 +63,8 @@
      */
     self.startUpTasks = [];
 
+    self.prependSignature = false;
+
     /**
      * Defines the buttons that are displayed when the user focuses in on a to, cc and bcc field.
      *
@@ -431,7 +433,12 @@
         $(newBody).find('.email-signature').replaceWith(signatureElement[0].outerHTML);
         tinymce.activeEditor.setContent(newBody.html(), {format: 'html'});
       } else {
-        tinymce.activeEditor.setContent(body + signatureElement[0].outerHTML, {format: 'html'});
+        // reply to / forward
+        if(self.prependSignature === true) {
+          tinymce.activeEditor.setContent('<p></p>' + signatureElement[0].outerHTML + body, {format: 'html'});
+        } else {
+          tinymce.activeEditor.setContent(body + signatureElement[0].outerHTML, {format: 'html'});
+        }
       }
     };
 
@@ -446,7 +453,7 @@
         this.getDoc().body.style.fontName = 'tahoma';
         this.getDoc().body.style.fontSize = '13px';
         if (html !== null) {
-          editor.setContent(html);
+          editor.setContent('<p></p>' + html);
         }
         $(self).trigger('emailComposeViewGetFromFields');
       });
@@ -1088,6 +1095,10 @@
                   .addClass('hidden')
                   .attr('data-inbound-email-id', v.id)
                   .appendTo(self);
+
+                if(typeof v.prepend !== "undefined" && v.prepend === true) {
+                  self.prependSignature = true;
+                }
               });
 
               var selectedInboundEmail = $(self).find('[name=inbound_email_id]').val();
@@ -1152,7 +1163,26 @@
         });
       } else {
         $(self).find('[data-label="description_html"]').closest('.edit-view-row-item').addClass('hidden');
-        self.startUpTasks.push(tinymce.init(opts.tinyMceOptions));
+
+
+        self.startUpTasks.push( function () {
+          var dfd = jQuery.Deferred();
+
+          var intervalCheckTinymce = window.setInterval(function(){
+            if(tinymce.editors.length > 0) {
+              dfd.resolve( "found tinymce");
+              clearInterval(intervalCheckTinymce);
+            } else {
+              dfd.notify( "working... " );
+            }
+          }, 300);
+          return dfd.promise();
+        });
+
+        self.startUpTasks.push(tinymce.init(opts.tinyMceOptions).then(function(editors) {
+        }));
+
+
       }
 
       // Handle sent email submission
