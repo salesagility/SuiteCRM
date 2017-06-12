@@ -187,37 +187,36 @@ class EmailsController extends SugarController
         if($accountSignatures != null) {
             $emailSignatures = unserialize(base64_decode($accountSignatures));
             $defaultEmailSignature = $current_user->getPreference('signature_default');
-
-            $data = array();
-            foreach ($accounts as $inboundEmailId => $inboundEmail) {
-                $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
-                $dataAddress = array(
-                    'type' => $inboundEmail->module_name,
-                    'id' => $inboundEmail->id,
-                    'attributes' => array(
-                        'from' => $storedOptions['from_addr']
-                    )
-                );
-
-                // Include signature
-                if (isset($emailSignatures[$inboundEmail->id])) {
-                    $emailSignatureId = $emailSignatures[$inboundEmail->id];
-                } else {
-                    $emailSignatureId = $defaultEmailSignature;
-                }
-
-                $signature = $current_user->getSignature($emailSignatureId);
-                $dataAddress['emailSignatures'] = array(
-                    'html' => html_entity_decode($signature['signature_html']),
-                    'plain' => $signature['signature']
-                );
-                $data[] = $dataAddress;
-            }
-            echo json_encode(array('data' => $data));
         } else {
-            echo json_encode(array('data' => null));
             $GLOBALS['log']->warn('User has not signature');
         }
+
+        $data = array();
+        foreach ($accounts as $inboundEmailId => $inboundEmail) {
+            $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
+            $dataAddress = array(
+                'type' => $inboundEmail->module_name,
+                'id' => $inboundEmail->id,
+                'attributes' => array(
+                    'from' => $storedOptions['from_addr']
+                )
+            );
+
+            // Include signature
+            if (isset($emailSignatures[$inboundEmail->id])) {
+                $emailSignatureId = $emailSignatures[$inboundEmail->id];
+            } else {
+                $emailSignatureId = $defaultEmailSignature;
+            }
+
+            $signature = $current_user->getSignature($emailSignatureId);
+            $dataAddress['emailSignatures'] = array(
+                'html' => html_entity_decode($signature['signature_html']),
+                'plain' => $signature['signature']
+            );
+            $data[] = $dataAddress;
+        }
+        echo json_encode(array('data' => $data));
 
         $this->view = 'ajax';
     }
