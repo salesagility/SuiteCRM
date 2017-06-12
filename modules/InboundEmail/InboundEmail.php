@@ -6042,14 +6042,23 @@ class InboundEmail extends SugarBean
 
     /**
      * Retrieves an array of I-E beans that the user has team access to including group
+     *
+     * @param string $id
+     * @param bool $includePersonal
+     * @return InboundEmail[]
      */
     public function retrieveAllByGroupIdWithGroupAccounts($id, $includePersonal = true)
     {
-        global $current_user;
-
         $beans = ($includePersonal) ? $this->retrieveByGroupId($id) : array();
-        $teamJoin = '';
-        $q = "SELECT DISTINCT inbound_email.id FROM inbound_email {$teamJoin} WHERE is_personal = 0 AND mailbox_type not like 'bounce' AND status = 'Active' AND inbound_email.deleted = 0 ";
+
+        $q = "
+          SELECT DISTINCT inbound_email.id
+          FROM inbound_email
+          WHERE
+            is_personal = 0 AND
+            mailbox_type not like 'bounce' AND
+            status = 'Active' AND
+            inbound_email.deleted = 0 ";
         $r = $this->db->query($q, true);
 
         while ($a = $this->db->fetchByAssoc($r)) {
