@@ -189,7 +189,7 @@ class EmailsController extends SugarController
             $defaultEmailSignature = $current_user->getPreference('signature_default');
         } else {
             $defaultEmailSignature = null;
-            $GLOBALS['log']->warn('User has not signature');
+            $GLOBALS['log']->warn('User does not have a signature');
         }
 
         $data = array();
@@ -212,7 +212,7 @@ class EmailsController extends SugarController
 
             $signature = $current_user->getSignature($emailSignatureId);
             if(!$signature) {
-                $GLOBALS['log']->warn('User has not signature, empty string will used instead');
+                $GLOBALS['log']->warn('User does not have a signature, empty string will used instead');
                 $signature['signature_html'] = '';
                 $signature['signature'] = '';
             }
