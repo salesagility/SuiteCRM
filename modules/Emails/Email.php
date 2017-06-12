@@ -3899,7 +3899,7 @@ eoq;
      * @param array $request TODO: implement PSR 7 interface and refactor
      * @return bool|Email|SugarBean
      */
-    public function populateBeanFromRequest(Email $bean, $request)
+    public function populateBeanFromRequest($bean, $request)
     {
         if (empty($bean)) {
             $bean = BeanFactory::getBean('Emails');
