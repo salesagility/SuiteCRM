@@ -139,7 +139,7 @@ class ListViewDataEmails extends ListViewData
      * @return InboundEmail
      * @throws SuiteException
      */
-    protected function getInboundEmail(User $currentUser, Folder $folder) {
+    protected function getInboundEmail($currentUser, $folder) {
 
         $inboundEmailID = $currentUser->getPreference('defaultIEAccount', 'Emails');
         if (!empty($folder->getId())) {
@@ -202,7 +202,7 @@ class ListViewDataEmails extends ListViewData
      * @param InboundEmail $inboundEmail
      * @return string $this->searchType
      */
-    protected function getSearchType(Folder $folder, InboundEmail $inboundEmail) {
+    protected function getSearchType($folder, $inboundEmail) {
 
         switch ($folder->getType()) {
 
@@ -367,7 +367,7 @@ class ListViewDataEmails extends ListViewData
      * @param bool $singleSelect
      * @return array
      */
-    public function getCrmQueryArray($crmWhere, $filterFields, $params, Email $seed, $singleSelect) {
+    public function getCrmQueryArray($crmWhere, $filterFields, $params, $seed, $singleSelect) {
 
         $crmQueryArray = $seed->create_new_list_query(
             'id',
@@ -474,7 +474,7 @@ class ListViewDataEmails extends ListViewData
      * @param Folder $folderObj
      * @return bool|string
      */
-    protected function getEmailRecordFieldValue($field, $emailHeader, InboundEmail $inboundEmail, User $currentUser, $folder, Folder $folderObj) {
+    protected function getEmailRecordFieldValue($field, $emailHeader, $inboundEmail, $currentUser, $folder, $folderObj) {
 
         switch ($field) {
             case 'from_addr_name':
@@ -564,7 +564,7 @@ class ListViewDataEmails extends ListViewData
      * @param string $folder
      * @return array|bool
      */
-    public function getEmailRecord(Folder $folderObj, $emailHeader, Email $seed, InboundEmail $inboundEmail, User $currentUser, $folder) {
+    public function getEmailRecord($folderObj, $emailHeader, $seed, $inboundEmail, $currentUser, $folder) {
         $emailRecord = array();
 
         if ($folderObj->getType() === 'draft' && $emailHeader['draft'] === 0) {
