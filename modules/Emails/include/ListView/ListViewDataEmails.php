@@ -64,7 +64,7 @@ class ListViewDataEmails extends ListViewData
 
     /**
      * @var array
-     * when searching the IMap filter map the crm fields
+     * when searching the imap filter map the crm fields
      * to the IMap fields.
      */
     protected static $mapServerFields = array(
