@@ -53,16 +53,10 @@
     self.attachFile = undefined;
     self.attachNote = undefined;
     self.attachDocument = undefined;
-
     /**
-     * Holds a list of asynchronous methods which all must be processed before the EmailComposeView is fully
-     * initialised
-     * @see self.construct - $.when.apply
-     * @url https://api.jquery.com/deferred.done/
-     * @type {Array}
+     * Determines if the signature comes before the reply to message
+     * @type {boolean}
      */
-    self.startUpTasks = [];
-
     self.prependSignature = false;
 
     /**
@@ -455,7 +449,6 @@
         if (html !== null) {
           editor.setContent('<p></p>' + html);
         }
-        $(self).trigger('emailComposeViewGetFromFields');
       });
 
       editor.on('change', function () {
@@ -1066,7 +1059,6 @@
         var from_addr = $(self).find('#from_addr_name');
         from_addr.replaceWith(selectFrom);
 
-        self.startUpTasks.push(
           $.ajax({
             "url": 'index.php?module=Emails&action=getFromFields'
           }).done(function (response) {
@@ -1137,8 +1129,7 @@
             }
           }).error(function (response) {
             console.error(response);
-          })
-        );
+          });
       }
 
       /**
@@ -1164,24 +1155,15 @@
       } else {
         $(self).find('[data-label="description_html"]').closest('.edit-view-row-item').addClass('hidden');
 
+        var intervalCheckTinymce = window.setInterval(function(){
+          var isFromPopulated = $('#from_addr_name').prop("tagName").toLowerCase() === 'select';
+          if(tinymce.editors.length > 0 && isFromPopulated === true) {
+            self.updateSignature();
+            clearInterval(intervalCheckTinymce);
+          }
+        }, 300);
 
-        self.startUpTasks.push( function () {
-          var dfd = jQuery.Deferred();
-
-          var intervalCheckTinymce = window.setInterval(function(){
-            if(tinymce.editors.length > 0) {
-              dfd.resolve( "found tinymce");
-              clearInterval(intervalCheckTinymce);
-            } else {
-              dfd.notify( "working... " );
-            }
-          }, 300);
-          return dfd.promise();
-        });
-
-        self.startUpTasks.push(tinymce.init(opts.tinyMceOptions).then(function(editors) {
-        }));
-
+        tinymce.init(opts.tinyMceOptions)
 
       }
 
@@ -1220,10 +1202,6 @@
         $('.emails-qtip').remove();
       });
 
-
-      $.when.apply(null, self.startUpTasks).done(function() {
-        self.updateSignature();
-      });
 
       $(self).trigger("constructEmailsComposeView", [self]);
     };
