@@ -183,33 +183,38 @@ class EmailsController extends SugarController
         $ie = new InboundEmail();
         $ie->email = $email;
         $accounts = $ieAccountsFull = $ie->retrieveAllByGroupIdWithGroupAccounts($current_user->id);
-        $emailSignatures = unserialize(base64_decode($current_user->getPreference('account_signatures', 'Emails')));
-        $defaultEmailSignature = $current_user->getPreference('signature_default');
+        $accountSignatures = $current_user->getPreference('account_signatures', 'Emails');
+        if($accountSignatures != null) {
+            $emailSignatures = unserialize(base64_decode($accountSignatures));
+            $defaultEmailSignature = $current_user->getPreference('signature_default');
 
-        $data = array();
-        foreach ($accounts as $inboundEmailId => $inboundEmail) {
-            $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
-            $dataAddress = array(
-                'type' => $inboundEmail->module_name,
-                'id' => $inboundEmail->id,
-                'attributes' => array(
-                    'from' => $storedOptions['from_addr']
-                )
-            );
+            $data = array();
+            foreach ($accounts as $inboundEmailId => $inboundEmail) {
+                $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
+                $dataAddress = array(
+                    'type' => $inboundEmail->module_name,
+                    'id' => $inboundEmail->id,
+                    'attributes' => array(
+                        'from' => $storedOptions['from_addr']
+                    )
+                );
 
-            // Include signature
-            if(isset($emailSignatures[$inboundEmail->id])) {
-                $emailSignatureId = $emailSignatures[$inboundEmail->id];
-            } else {
-                $emailSignatureId = $defaultEmailSignature;
+                // Include signature
+                if (isset($emailSignatures[$inboundEmail->id])) {
+                    $emailSignatureId = $emailSignatures[$inboundEmail->id];
+                } else {
+                    $emailSignatureId = $defaultEmailSignature;
+                }
+
+                $signature = $current_user->getSignature($emailSignatureId);
+                $dataAddress['emailSignatures'] = array(
+                    'html' => html_entity_decode($signature['signature_html']),
+                    'plain' => $signature['signature']
+                );
+                $data[] = $dataAddress;
             }
-
-            $signature = $current_user->getSignature($emailSignatureId);
-            $dataAddress['emailSignatures'] = array(
-                'html' => html_entity_decode($signature['signature_html']),
-                'plain' => $signature['signature']
-            );
-            $data[] = $dataAddress;
+        } else {
+            $GLOBALS['log']->warn('User has not signature');
         }
 
 
