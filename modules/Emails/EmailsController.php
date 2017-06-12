@@ -247,7 +247,7 @@ class EmailsController extends SugarController
                 true);
             $out = json_encode(array('response' => $ret));
         } catch (SugarFolderEmptyException $e) {
-            $GLOBALS['log']->fatal($e->getMessage());
+            $GLOBALS['log']->warn($e->getMessage());
             $out = json_encode(array('errors' => array($mod_strings['LBL_ERROR_NO_FOLDERS'])));
         }
 
