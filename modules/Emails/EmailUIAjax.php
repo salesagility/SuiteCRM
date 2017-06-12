@@ -484,7 +484,7 @@ if (!defined('sugarEntry') || !sugarEntry){
         $out = $email->et->doAssignment($_REQUEST['distribute_method'], $_REQUEST['ieId'], $_REQUEST['folder'], $_REQUEST['uids'], $_REQUEST['users']);
         echo $out;
         break;
-    case "doAssignmentDelete";
+      case "doAssignmentDelete":
     $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: doAssignmentDelete");
     if(isset($_REQUEST['uids']) && !empty($_REQUEST['uids']) &&
     isset($_REQUEST['ieId']) && !empty($_REQUEST['ieId']) &&
