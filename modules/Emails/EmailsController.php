@@ -214,6 +214,7 @@ class EmailsController extends SugarController
             if(!$signature) {
                 $GLOBALS['log']->warn('User has not signature, empty string will used instead');
                 $signature['signature_html'] = '';
+                $signature['signature'] = '';
             }
             $dataAddress['emailSignatures'] = array(
                 'html' => html_entity_decode($signature['signature_html']),
