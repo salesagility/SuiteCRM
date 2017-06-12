@@ -1,4 +1,9 @@
 <?php
+$sapi_type = php_sapi_name();
+if (substr($sapi_type, 0, 3) != 'cli') {
+    sugar_die("cron.php is CLI only.");
+}
+
 /* DEFINE SOME VARIABLES FOR INSTALLER */
 $_SERVER['HTTP_HOST'] = 'localhost';
 $_SERVER['REQUEST_URI'] = 'install.php';
@@ -14,13 +19,6 @@ $_POST['email_reminder_checked'] = false;
 
 
 try {
-    /*
-     * Do some cleanup so we can relaunch installer over and over again (we can get rid of this)
-     */
-    if(is_file("config.php")) {
-        unlink("config.php");
-    }
-
     ob_start();
     require_once 'install.php';
     ob_end_clean();
