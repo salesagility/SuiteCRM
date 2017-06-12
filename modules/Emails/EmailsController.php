@@ -192,6 +192,8 @@ class EmailsController extends SugarController
             $GLOBALS['log']->warn('User does not have a signature');
         }
 
+        $prependSignature = $current_user->getPreference('signature_prepend');
+
         $data = array();
         foreach ($accounts as $inboundEmailId => $inboundEmail) {
             $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
@@ -200,7 +202,8 @@ class EmailsController extends SugarController
                 'id' => $inboundEmail->id,
                 'attributes' => array(
                     'from' => $storedOptions['from_addr']
-                )
+                ),
+                'prepend' => $prependSignature
             );
 
             // Include signature
@@ -220,6 +223,8 @@ class EmailsController extends SugarController
                 'html' => html_entity_decode($signature['signature_html']),
                 'plain' => $signature['signature'],
             );
+
+            
             $data[] = $dataAddress;
         }
         echo json_encode(array('data' => $data));
