@@ -213,12 +213,12 @@ class EmailsController extends SugarController
                 );
                 $data[] = $dataAddress;
             }
+            echo json_encode(array('data' => $data));
         } else {
+            echo json_encode(array('data' => null));
             $GLOBALS['log']->warn('User has not signature');
         }
 
-
-        echo json_encode(array('data' => $data));
         $this->view = 'ajax';
     }
 
