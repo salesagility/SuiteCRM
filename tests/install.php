@@ -1,7 +1,7 @@
 <?php
 $sapi_type = php_sapi_name();
 if (substr($sapi_type, 0, 3) != 'cli') {
-    sugar_die("install.php is CLI only.");
+    die("install.php is CLI only.");
 }
 
 
