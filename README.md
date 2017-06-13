@@ -14,7 +14,7 @@ This repository has been created to allow community members to collaborate and c
 #### Security ####
 
 We take Security seriously here at SuiteCRM so if you have discovered a security risk report it by
-emailing security@salesagility.com. This will be delivered to the product team who handle security issues.
+emailing security@suitecrm.com. This will be delivered to the product team who handle security issues.
 Please don't disclose security bugs publicly until they have been handled by the security team.
 
 Your email will be acknowledged within 24 hours, and you’ll receive a more
