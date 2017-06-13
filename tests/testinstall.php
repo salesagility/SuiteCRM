@@ -1,13 +1,13 @@
 <?php
 $sapi_type = php_sapi_name();
 if (substr($sapi_type, 0, 3) != 'cli') {
-    sugar_die("testinstall.php is CLI only.");
+    die('testinstall.php is CLI only.');
 }
 
 /* DEFINE SOME VARIABLES FOR INSTALLER */
 $_SERVER['HTTP_HOST'] = 'localhost';
 $_SERVER['REQUEST_URI'] = 'install.php';
-$_SERVER["SERVER_SOFTWARE"] = 'Apache';
+$_SERVER['SERVER_SOFTWARE'] = 'Apache';
 $_SERVER['SERVER_NAME'] = 'travis';
 $_SERVER['SERVER_PORT'] = '80';
 
@@ -23,11 +23,11 @@ try {
     require_once 'install.php';
     ob_end_clean();
 } catch(\Exception $e) {
-    echo "\nINSTALLATION FAILED! file: " . $e->getFile() . " - line: " . $e->getLine()
+    echo "\nINSTALLATION FAILED! file: " . $e->getFile() . ' - line: ' . $e->getLine()
          . "\n" . $e->getMessage()
-         . "\n" . str_repeat("-", 120)
+         . "\n" . str_repeat('-', 120)
          . "\n" . print_r($e->getTrace(), true)
-         . "\n" . str_repeat("-", 120)
+         . "\n" . str_repeat('-', 120)
          . "\n";
 }
 
