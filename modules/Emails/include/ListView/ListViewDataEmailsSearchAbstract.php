@@ -1,4 +1,4 @@
-{*
+<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,40 +37,28 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-*}
 
-<table cellpadding="4" class="view">
-    <tr>
-        <th colspan="4">
-            <h4>{$app_strings.LBL_EMAIL_FOLDERS_TITLE}</h4>
-        </th>
-    </tr>
-    <tr>
-        <td valign="top" scope="row">
-            <div class="div-title">
-                {$app_strings.LBL_EMAIL_SETTINGS_USER_FOLDERS}:
-                <div id="rollover">
-                    <a href="#"
-                       class="rollover">{sugar_getimage alt=$mod_strings.LBL_HELP name="helpInline" ext=".gif" other_attributes='border="0" '}
-                        <span>{$app_strings.LBL_EMAIL_MULTISELECT}</span></a>
-                </div>
-            </div>
-            <div>
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-                <select multiple size="8" name="userFolders[]" id="userFolders"
-                        onchange="SUGAR.email2.folders.updateSubscriptions();"></select>
+/**
+ * Class ListViewDataEmailsSearchAbstract
+ */
+abstract class ListViewDataEmailsSearchAbstract {
 
-            </div>
-        </td>
+    /**
+     * @var ListViewDataEmails
+     */
+    protected $lvde;
 
-    </tr>
-    <tr>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td align="right">
-            <input type="button" class="button" value="   {$app_strings.LBL_EMAIL_DONE_BUTTON_LABEL}   "
-                   onclick="javascript:SUGAR.email2.settings.saveOptionsGeneral(true);">
-        </td>
-    </tr>
-</table>
+    /**
+     * @var Emails $seed
+     */
+    public $seed;
+
+    public function __construct($listViewDataEmails) {
+        $this->lvde = $listViewDataEmails;
+    }
+
+}

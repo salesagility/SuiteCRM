@@ -183,8 +183,16 @@ class EmailsController extends SugarController
         $ie = new InboundEmail();
         $ie->email = $email;
         $accounts = $ieAccountsFull = $ie->retrieveAllByGroupIdWithGroupAccounts($current_user->id);
-        $emailSignatures = unserialize(base64_decode($current_user->getPreference('account_signatures', 'Emails')));
-        $defaultEmailSignature = $current_user->getPreference('signature_default');
+        $accountSignatures = $current_user->getPreference('account_signatures', 'Emails');
+        if($accountSignatures != null) {
+            $emailSignatures = unserialize(base64_decode($accountSignatures));
+            $defaultEmailSignature = $current_user->getPreference('signature_default');
+        } else {
+            $defaultEmailSignature = null;
+            $GLOBALS['log']->warn('User does not have a signature');
+        }
+
+        $prependSignature = $current_user->getPreference('signature_prepend');
 
         $data = array();
         foreach ($accounts as $inboundEmailId => $inboundEmail) {
@@ -194,26 +202,33 @@ class EmailsController extends SugarController
                 'id' => $inboundEmail->id,
                 'attributes' => array(
                     'from' => $storedOptions['from_addr']
-                )
+                ),
+                'prepend' => $prependSignature
             );
 
             // Include signature
-            if(isset($emailSignatures[$inboundEmail->id])) {
+            if (isset($emailSignatures[$inboundEmail->id])) {
                 $emailSignatureId = $emailSignatures[$inboundEmail->id];
             } else {
                 $emailSignatureId = $defaultEmailSignature;
             }
 
             $signature = $current_user->getSignature($emailSignatureId);
+            if(!$signature) {
+                $GLOBALS['log']->warn('User does not have a signature, empty string will used instead');
+                $signature['signature_html'] = '';
+                $signature['signature'] = '';
+            }
             $dataAddress['emailSignatures'] = array(
                 'html' => html_entity_decode($signature['signature_html']),
-                'plain' => $signature['signature']
+                'plain' => $signature['signature'],
             );
+
+            
             $data[] = $dataAddress;
         }
-
-
         echo json_encode(array('data' => $data));
+
         $this->view = 'ajax';
     }
 
@@ -247,7 +262,7 @@ class EmailsController extends SugarController
                 true);
             $out = json_encode(array('response' => $ret));
         } catch (SugarFolderEmptyException $e) {
-            $GLOBALS['log']->fatal($e->getMessage());
+            $GLOBALS['log']->warn($e->getMessage());
             $out = json_encode(array('errors' => array($mod_strings['LBL_ERROR_NO_FOLDERS'])));
         }
 

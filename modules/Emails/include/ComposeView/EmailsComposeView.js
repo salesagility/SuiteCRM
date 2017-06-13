@@ -53,6 +53,11 @@
     self.attachFile = undefined;
     self.attachNote = undefined;
     self.attachDocument = undefined;
+    /**
+     * Determines if the signature comes before the reply to message
+     * @type {boolean}
+     */
+    self.prependSignature = false;
 
     /**
      * Defines the buttons that are displayed when the user focuses in on a to, cc and bcc field.
@@ -418,9 +423,16 @@
         tinymce.activeEditor.setContent('<p></p>' + signatureElement[0].outerHTML , {format: 'html'});
       } else if($(body).hasClass('email-signature')) {
         var newBody = $('<div></div>');
-       $(body).appendTo(newBody);
+        $(body).appendTo(newBody);
         $(newBody).find('.email-signature').replaceWith(signatureElement[0].outerHTML);
         tinymce.activeEditor.setContent(newBody.html(), {format: 'html'});
+      } else {
+        // reply to / forward
+        if(self.prependSignature === true) {
+          tinymce.activeEditor.setContent('<p></p>' + signatureElement[0].outerHTML + body, {format: 'html'});
+        } else {
+          tinymce.activeEditor.setContent(body + signatureElement[0].outerHTML, {format: 'html'});
+        }
       }
     };
 
@@ -435,9 +447,8 @@
         this.getDoc().body.style.fontName = 'tahoma';
         this.getDoc().body.style.fontSize = '13px';
         if (html !== null) {
-          editor.setContent(html);
+          editor.setContent('<p></p>' + html);
         }
-        $(self).trigger('emailComposeViewGetFromFields');
       });
 
       editor.on('change', function () {
@@ -452,10 +463,6 @@
         $(self).find('.html_preview').html(editor.getContent());
         $(self).find('input#description_html').val(editor.getContent());
         $(self).find('textarea#description').val($(self).find('.html_preview').text());
-      });
-
-      $(self).on('emailComposeViewGetFromFields', function () {
-        self.updateSignature();
       });
     };
 
@@ -1052,74 +1059,77 @@
         var from_addr = $(self).find('#from_addr_name');
         from_addr.replaceWith(selectFrom);
 
+          $.ajax({
+            "url": 'index.php?module=Emails&action=getFromFields'
+          }).done(function (response) {
+            var json = JSON.parse(response);
+            if (typeof json.data !== "undefined") {
+              $(json.data).each(function (i, v) {
+                var selectOption = $('<option></option>');
+                selectOption.attr('value', v.attributes.from);
+                selectOption.attr('inboundId', v.id);
+                selectOption.html(v.attributes.from);
+                selectOption.appendTo(selectFrom);
 
-        $.ajax({
-          "url": 'index.php?module=Emails&action=getFromFields'
-        }).done(function (response) {
-          var json = JSON.parse(response);
-          if (typeof json.data !== "undefined") {
-            $(json.data).each(function (i, v) {
-              var selectOption = $('<option></option>');
-              selectOption.attr('value', v.attributes.from);
-              selectOption.attr('inboundId', v.id);
-              selectOption.html(v.attributes.from);
-              selectOption.appendTo(selectFrom);
+                // include signature for account
+                $('<textarea></textarea>')
+                  .val(v.emailSignatures.html)
+                  .addClass('email-signature')
+                  .addClass('html')
+                  .addClass('hidden')
+                  .attr('data-inbound-email-id', v.id)
+                  .appendTo(self);
 
-              // include signature for account
-              $('<textarea></textarea>')
-                .val(v.emailSignatures.html)
-                .addClass('email-signature')
-                .addClass('html')
-                .addClass('hidden')
-                .attr('data-inbound-email-id', v.id)
-                .appendTo(self);
+                $('<textarea></textarea>')
+                  .val(v.emailSignatures.plain)
+                  .addClass('email-signature')
+                  .addClass('plain')
+                  .addClass('hidden')
+                  .attr('data-inbound-email-id', v.id)
+                  .appendTo(self);
 
-              $('<textarea></textarea>')
-                .val(v.emailSignatures.plain)
-                .addClass('email-signature')
-                .addClass('plain')
-                .addClass('hidden')
-                .attr('data-inbound-email-id', v.id)
-                .appendTo(self);
-            });
+                if(typeof v.prepend !== "undefined" && v.prepend === true) {
+                  self.prependSignature = true;
+                }
+              });
 
-            var selectedInboundEmail = $(self).find('[name=inbound_email_id]').val();
+              var selectedInboundEmail = $(self).find('[name=inbound_email_id]').val();
 
-            $(selectFrom).val(
-              $(selectFrom).find('[inboundid=' + selectedInboundEmail + ']').val()
-            );
+              $(selectFrom).val(
+                $(selectFrom).find('[inboundid=' + selectedInboundEmail + ']').val()
+              );
 
-            $(selectFrom).change(function (e) {
-              $(self).find('[name=inbound_email_id]').val($(this).find('option:selected').attr('inboundId'));
-              self.updateSignature();
-            });
+              $(selectFrom).change(function (e) {
+                $(self).find('[name=inbound_email_id]').val($(this).find('option:selected').attr('inboundId'));
+                self.updateSignature();
+              });
 
-            $(self).trigger('emailComposeViewGetFromFields');
+              $(self).trigger('emailComposeViewGetFromFields');
 
-          }
+            }
 
-          if (typeof json.errors !== "undefined") {
-            var message = '';
-            $.each(json.errors, function (i, v) {
-              message = message + v.title;
-            });
-            var mb = messageBox();
-            mb.setBody('message');
-            mb.show();
+            if (typeof json.errors !== "undefined") {
+              var message = '';
+              $.each(json.errors, function (i, v) {
+                message = message + v.title;
+              });
+              var mb = messageBox();
+              mb.setBody('message');
+              mb.show();
 
-            mb.on('ok', function () {
-              "use strict";
-              mb.remove();
-            });
+              mb.on('ok', function () {
+                "use strict";
+                mb.remove();
+              });
 
-            mb.on('cancel', function () {
-              "use strict";
-              mb.remove();
-            });
-          }
-        }).error(function (response) {
-          console.error(response);
-        });
+              mb.on('cancel', function () {
+                "use strict";
+                mb.remove();
+              });
+            }
+          }).error(function (response) {
+            console.error(response);
+          });
       }
 
       /**
@@ -1144,7 +1154,17 @@
         });
       } else {
         $(self).find('[data-label="description_html"]').closest('.edit-view-row-item').addClass('hidden');
-        tinymce.init(opts.tinyMceOptions);
+
+        var intervalCheckTinymce = window.setInterval(function(){
+          var isFromPopulated = $('#from_addr_name').prop("tagName").toLowerCase() === 'select';
+          if(tinymce.editors.length > 0 && isFromPopulated === true) {
+            self.updateSignature();
+            clearInterval(intervalCheckTinymce);
+          }
+        }, 300);
+
+        tinymce.init(opts.tinyMceOptions)
+
       }
 
       // Handle sent email submission
@@ -1181,6 +1201,7 @@
       $(self).on('sendEmail', function () {
         $('.emails-qtip').remove();
       });
+
 
       $(self).trigger("constructEmailsComposeView", [self]);
     };
