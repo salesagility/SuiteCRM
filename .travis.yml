@@ -1,22 +1,89 @@
 language: php
+
 php:
+  - 5.3
+  - 5.4
   - 5.5
   - 5.6
+  - hhvm
   - 7.0
   - 7.1
-  - 5.4
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+    - $HOME/.app/cache
+
+env:
+  global:
+    - deps="no"
+    - SYMFONY_VERSION=""
+    - PHP_CS="yes"
+    - SYMFONY_DEPRECATIONS_HELPER=weak
+
 matrix:
+  fast_finish: true
+  #include:
+  #  - php: 5.3
+  #    env: COMPOSER_FLAGS="--prefer-lowest"
+  #  - php: 5.6
+  #    env: SYMFONY_VERSION=2.3.*
+  #  - php: 5.6
+  #    env: SYMFONY_VERSION=2.7.*
+  #  - php: 5.6
+  #    env: SYMFONY_VERSION=2.8.*
+  #  - php: 5.6
+  #    env: TWIG_VERSION="2.0.x-dev"
+  #  - php: 5.6
+  #    env: PHP_CS="yes"
+  #  - php: 7.0
+  #    env: PHP_CS="yes"
+  #  - php: 7.1
+  #    env: PHP_CS="yes"
+      
   allow_failures:
+    - php: hhvm
+    - env: TWIG_VERSION="2.0.x-dev"
     - php: 5.4
+
+
+
+before_install:
+  #- if [[ "SYMFONY_VERSION" == "2.8.*" || "SYMFONY_VERSION" == "3.0.*" ]]; then export SYMFONY_DEPRECATIONS_HELPER="strict"; fi;
+  #- if [[ "$SYMFONY_VERSION" = "" ]] && [[ "$TWIG_VERSION" = "" ]] && [[ "$TRAVIS_PHP_VERSION" =~ 5.[45] ]] && [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then export skip="yes"; fi;
+  - if [[ "$skip" != "yes" ]]; then composer selfupdate; fi
+  #- if [[ "$skip" != "yes" && "$SYMFONY_VERSION" != "" ]]; then composer require "symfony/symfony:${SYMFONY_VERSION}" --no-update; fi;
+  #- if [[ "$skip" != "yes" && "$TWIG_VERSION" != "" ]]; then composer require "twig/twig:${TWIG_VERSION}" --no-update; fi;
+  - if [[ "$skip" != "yes" && "$TRAVIS_PHP_VERSION" != 7.0 && "$TRAVIS_PHP_VERSION" != hhvm ]]; then phpenv config-rm xdebug.ini; fi;
+  - if [[ "$PHP_CS" == "yes" ]]; then composer require --dev friendsofphp/php-cs-fixer:dev-master; fi;
+  
+install:
+  #- if [[ "$PHP_CS" == "yes" ]]; then curl http://get.sensiolabs.org/php-cs-fixer.phar -o php-cs-fixer && chmod +x php-cs-fixer; fi;
+  - if [[ "$skip" != "yes" ]]; then composer update --prefer-dist --no-interaction $COMPOSER_FLAGS; fi
+  - if [[ "$skip" != "yes" && "$TRAVIS_PHP_VERSION" == 7.0 ]]; then composer require --dev satooshi/php-coveralls:~0.6; fi
+
 before_script:
   - composer self-update
   - composer install --no-interaction
   - \[ -f "config_si.php" \] || cp tests/travis_config_si.php config_si.php
   - php tests/testinstall.php
+
 script:
   - cd tests
   - ../vendor/bin/phpunit
   - cat ../suitecrm.log
+  - if [[ "$skip" != "yes" && "$TRAVIS_PHP_VERSION" == 7.0 ]]; then phpunit --coverage-text --coverage-clover build/logs/clover.xml; else if [[ "$skip" != "yes" ]]; then phpunit; fi; fi
+  - if [[ "$skip" == "yes" ]]; then echo "Skipping matrix entry for pull requests"; fi
+  - cd ..
+  - if [[ "$PHP_CS" == "yes" ]]; then vendor/bin/php-cs-fixer --no-interaction --dry-run --diff -v fix; fi;
+  #- if [[ "$PHP_CS" == "yes" ]]; then vendor/bin/php-cs-fixer --no-interaction --dry-run fix .; fi;
+  - if [[ "$PHP_CS" == "yes" ]]; then mv ./.php_cs.cache $HOME/.app/cache/.php_cs.cache; fi;
+
+after_success: |
+    if [[ "$TRAVIS_PHP_VERSION" == 7.0 ]]; then php vendor/bin/coveralls -v --config .coveralls.yml; fi;
+
 services:
   - mysql
 branches:
@@ -25,3 +92,5 @@ branches:
     - hotfix
     - develop
     - /feature.*/
+    - /patch-*/
+    

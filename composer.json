@@ -1,25 +1,52 @@
 {
   "name": "salesagility/suitecrm",
-  "description": "SuiteCRM",
   "type": "project",
+  "description": "GPL-3.0",
+  "keywords": [
+    "SuiteCRM",
+    "SugarCRM",
+    "SalesForce",
+    "Microsoft Dynamics",
+    "Customer Relationship Management"
+  ],
+  "homepage": "https://suitecrm.com/",
   "license": "GPL-3.0",
   "authors": [],
   "minimum-stability": "dev",
-  "config": {
-    "vendor-dir": "vendor"
+  "require": {
+    "php": ">=5.3.0",
+    "smarty/smarty": "~2.6.29",
+    "zendframework/zendframework1": "^1.12.0",
+    "symfony/security-csrf": "^3.2",
+    "google/recaptcha": "^1.1",
+    "google/apiclient": "^2.1",
+    "ezyang/htmlpurifier": "^4.9",
+    "leafo/lessphp": "^0.5.0",
+    "econea/nusoap": "v0.9.5.1",
+    "FriendsOfSymfony/oauth2-php": "^1.2",
+    "onelogin/php-saml": "^2.10",
+    "pclzip/pclzip": "^2.8",
+    "phpmailer/phpmailer": "^5.2",
+    "tecnickcom/tcpdf": "^6.2",
+    "moneyphp/money": "^3.0",
+    "florianv/swap": "^3.1",
+    "php-http/message": "^1.5",
+    "php-http/guzzle6-adapter": "^1.1"
   },
-  "require": {},
   "require-dev": {
-    "leafo/scssphp": "dev-master",
-    "phpunit/phpunit": "^3.7",
-    "mikey179/vfsStream": "1.4.*"
+    "phpunit/phpunit": "^4.0",
+    "symfony/yaml": "^2.1",
+    "mikey179/vfsStream": "^1.4",
+    "friendsofphp/php-cs-fixer": "dev-master",
+    "squizlabs/php_codesniffer": "^2.8",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.3.2",
+    "frenck/php-compatibility": "^7.1",
+    "leafo/scssphp": "dev-master"
   },
-  "scripts": {},
   "prefer-stable": true,
   "autoload": {
-    "psr-0": {
-      "": "src/"
+    "psr-4": {
+      "SuiteCRM\\": "src/"
     }
-  },
-  "extra": {}
+  }
 }
