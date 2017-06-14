@@ -223,10 +223,6 @@ class AOR_ReportsController extends SugarController
                 }
             }
 
-            /*            foreach($graphs as $g)
-                        {
-                            $graphHtml.="<img src='.$g.' style='width:$width%;' />";
-                        }*/
             $graphHtml .= "</div>";
         }
 
@@ -754,13 +750,6 @@ class AOR_ReportsController extends SugarController
         $focus = new $beanList[$module];
         $vardef = $focus->getFieldDefinition($fieldname);
 
-
-        /*if($vardef['module'] == $alt_module){
-            $valid_opp = array('Value','Field');
-        }
-        else{
-            $valid_opp = array('Value');
-        }*/
         $valid_opp = array('Value');
 
         foreach ($app_list_strings['aor_rel_action_type_list'] as $key => $keyValue) {
