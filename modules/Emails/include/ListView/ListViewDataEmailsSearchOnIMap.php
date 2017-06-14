@@ -48,6 +48,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
 
     /**
      * @param Email $seed
+     * @param array $request
      * @param string $where
      * @param string $id
      * @param InboundEmail $inboundEmail
@@ -56,10 +57,10 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
      * @param User $currentUser
      * @param string $folder
      * @param int $limit
-     * @param ??? $limitPerPage
+     * @param string $limitPerPage
      * @return array
      */
-    public function search($seed, $where, $id, $inboundEmail, $filter, $folderObj, $currentUser, $folder, $limit, $limitPerPage) {
+    public function search($seed, &$request, $where, $id, $inboundEmail, $filter, $folderObj, $currentUser, $folder, $limit, $limitPerPage) {
 
 
         // Create the data structure which are required to view a list view.

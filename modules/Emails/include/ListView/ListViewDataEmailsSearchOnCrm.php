@@ -312,6 +312,8 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
             }
         }
 
+        
+
         $ret =  array('data'=>$data , 'pageData'=>$pageData, 'query' => $queryString);
 
         return $ret;
