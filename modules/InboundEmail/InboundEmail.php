@@ -4581,9 +4581,11 @@ class InboundEmail extends SugarBean
 
     /**
      * shiny new importOneEmail() method
+     * @deprecated since - 7.9 use returnImportedEmail instead
      * @param int msgNo
      * @param bool forDisplay
      * @param clean_email boolean, default true,
+     * @return boolean|string
      */
     public function importOneEmail($msgNo, $uid, $forDisplay = false, $clean_email = true)
     {
