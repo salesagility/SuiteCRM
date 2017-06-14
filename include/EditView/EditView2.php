@@ -929,7 +929,7 @@ class EditView
             require_once('modules/SecurityGroups/SecurityGroup.php');
             $groupFocus = new SecurityGroup();
             $security_modules = $groupFocus->getSecurityModules();
-            if (array_keys_exists($this->focus->module_dir, $security_modules)) {
+            if (array_key_exists($this->focus->module_dir, $security_modules)) {
                 global $current_user;
 
                 $group_count = $groupFocus->getMembershipCount($current_user->id);
