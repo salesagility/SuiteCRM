@@ -385,6 +385,8 @@ eoq;
             $GLOBALS['log']->warn('EmailUI::populateComposeViewFields - $bean is empty');
         }
 
+		$emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
+			'data-record-id="" data-module-name=""  data-email-address="">';
 		// focus is set?
 		if(!is_object($myBean)) {
 			$GLOBALS['log']->warn('incorrect bean');
