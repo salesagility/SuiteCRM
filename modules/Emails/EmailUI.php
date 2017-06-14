@@ -388,10 +388,12 @@ eoq;
 		// focus is set?
 		if(!is_object($myBean)) {
 			$GLOBALS['log']->warn('incorrect bean');
-		} else {
+		} else if(property_exists($myBean, $emailField)) {
 			$emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
-				'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . $myBean->$emailField . '">';
-		}
+				'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . $myBean->{$emailField} . '">';
+		} else {
+            $GLOBALS['log']->warn(get_class($myBean).' does not have email1 field');
+        }
 
         return $emailLink;
     }
