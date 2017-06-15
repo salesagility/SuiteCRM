@@ -2898,7 +2898,6 @@ class InboundEmail extends SugarBean
             if (($errors = imap_last_error()) || ($alerts = imap_alerts())) {
                 // login failure means don't bother trying the rest
                 if ($errors == 'Too many login failures'
-                    || $errors == '[CLOSED] IMAP connection broken (server response)'
                     // @link http://tools.ietf.org/html/rfc5530#section-3
                     || strpos($errors, '[AUTHENTICATIONFAILED]') !== false
                     // MS Exchange 2010
