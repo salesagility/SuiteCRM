@@ -111,7 +111,6 @@ $mod_strings = array(
     'LBL_FP_EVENTS_LEADS_1_FROM_LEADS_TITLE' => 'Leads',
     'LBL_FP_EVENTS_PROSPECTS_1_FROM_PROSPECTS_TITLE' => 'Targets',
     'LBL_FP_EVENTS_FP_EVENT_DELEGATES_1_FROM_FP_EVENT_DELEGATES_TITLE' => 'Delegates',
-	// 2 lines bellow doesnt appear in git version
 	'LBL_HOURS_ABBREV' => 'h',
 	'LBL_MINSS_ABBREV' => 'm',
 
