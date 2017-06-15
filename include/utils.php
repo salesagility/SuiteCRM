@@ -1,11 +1,11 @@
 <?php
-/*
+/**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,16 +34,11 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
- * Description:  Includes generic helper functions used throughout the application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+require_once 'php_version.php';
 require_once 'include/SugarObjects/SugarConfig.php';
 require_once 'include/utils/security_utils.php';
 
@@ -3034,64 +3029,43 @@ function decodeJavascriptUTF8($str)
 }
 
 /**
- * Will check if a given PHP version string is supported (tested on this ver),
- * unsupported (results unknown), or invalid (something will break on this
- * ver).  Do not pass in any pararameter to default to a check against the
+ * Will check if a given PHP version string is accepted or not.
+ * Do not pass in any pararameter to default to a check against the
  * current environment's PHP version.
  *
- * @return 1 implies supported, 0 implies unsupported, -1 implies invalid
+ * @param string Version to check against, defaults to the current environment's.
+ *
+ * @return  integer  1 if version is greater than the recommended PHP version,
+ *                   0 if version is between minimun and recomended PHP versions,
+ *                   -1 otherwise (less than minimum or buggy version)
  */
-function check_php_version($sys_php_version = '')
-{
-    $sys_php_version = empty($sys_php_version) ? constant('PHP_VERSION') : $sys_php_version;
-    // versions below $min_considered_php_version considered invalid by default,
-    // versions equal to or above this ver will be considered depending
-    // on the rules that follow
-    $min_considered_php_version = '5.3.0';
-
-    // only the supported versions,
-    // should be mutually exclusive with $invalid_php_versions
-    $supported_php_versions = array(
-        '5.3.0',
-    );
-
-    // invalid versions above the $min_considered_php_version,
-    // should be mutually exclusive with $supported_php_versions
-
-    // SugarCRM prohibits install on PHP 5.2.7 on all platforms
-    $invalid_php_versions = array('5.2.7');
-
-    // default unsupported
-    $retval = 0;
-
-    // versions below $min_considered_php_version are invalid
-    if (1 == version_compare($sys_php_version, $min_considered_php_version, '<')) {
-        $retval = -1;
+function check_php_version($sys_php_version = '') {
+    if ($sys_php_version === '') {
+        $sys_php_version = constant('PHP_VERSION');
     }
 
-    // supported version check overrides default unsupported
-    foreach ($supported_php_versions as $ver) {
-        if (1 == version_compare($sys_php_version, $ver, 'eq') || strpos($sys_php_version, $ver) !== false) {
-            $retval = 1;
-            break;
+    // versions below MIN_PHP_VERSION are not accepted, so return early.
+    if (version_compare($sys_php_version, constant('SUITECRM_PHP_MIN_VERSION'), '<') === true) {
+        return -1;
+    }
+
+    // If there are some bug ridden versions, we should include them here
+    // and check immediately for one of this versions
+    $bug_php_versions = array();
+
+    foreach ($bug_php_versions as $v) {
+        if (version_compare($sys_php_version, $v, '=') === true) {
+            return -1;
         }
     }
 
-    // invalid version check overrides default unsupported
-    foreach ($invalid_php_versions as $ver) {
-        if (1 == version_compare($sys_php_version, $ver, 'eq') && strpos($sys_php_version, $ver) !== false) {
-            $retval = -1;
-            break;
-        }
+    // If the checked version is between the minimum and recommended versions, return 0
+    if (version_compare($sys_php_version, constant('SUITECRM_PHP_REC_VERSION'), '<') === true) {
+        return 0;
     }
 
-    //allow a redhat distro to install, regardless of version.  We are assuming the redhat naming convention is followed
-    //and the php version contains 'rh' characters
-    if (strpos($sys_php_version, 'rh') !== false) {
-        $retval = 1;
-    }
-
-    return $retval;
+    // Everything else is fair game
+    return 1;
 }
 
 /**
@@ -4485,29 +4459,6 @@ function code2utf($num)
     return '';
 }
 
-function str_split_php4($string, $length = 1)
-{
-    $string_length = strlen($string);
-    $return = array();
-    $cursor = 0;
-    if ($length > $string_length) {
-        // use the string_length as the string is shorter than the length
-        $length = $string_length;
-    }
-    for ($cursor = 0; $cursor < $string_length; $cursor = $cursor + $length) {
-        $return[] = substr($string, $cursor, $length);
-    }
-
-    return $return;
-}
-
-if (version_compare(phpversion(), '5.0.0', '<')) {
-    function str_split($string, $length = 1)
-    {
-        return str_split_php4($string, $length);
-    }
-}
-
 /*
  * @deprecated use DBManagerFactory::isFreeTDS
  */
@@ -4965,13 +4916,13 @@ function verify_image_file($path, $jpeg = false)
             return false;
         }
         $data = '';
-        // read the whole file in chunks
+        // read the whole file in chunks
         while (!feof($fp)) {
             $data .= fread($fp, 8192);
         }
 
         fclose($fp);
-        if (preg_match("/<(\?php|html|!doctype|script|body|head|plaintext|table|img |pre(>| )|frameset|iframe|object|link|base|style|font|applet|meta|center|form|isindex)/i",
+        if (preg_match("/<(\?php|html|!doctype|script|body|head|plaintext|table|img |pre(>| )|frameset|iframe|object|link|base|style|font|applet|meta|center|form|isindex)/i",
             $data, $m)) {
             $GLOBALS['log']->fatal("Found {$m[0]} in $path, not allowing upload");
 
