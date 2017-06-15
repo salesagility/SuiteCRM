@@ -1104,6 +1104,12 @@ $app_strings = array(
     'LBL_NO_ACTION' => 'There is no action by that name: %s',
     'LBL_NO_SHORTCUT_MENU' => 'There are no actions available.',
     'LBL_NO_DATA' => 'No Data',
+
+    'LBL_ERROR_UNDEFINED_BEHAVIOR' => 'An unexpected error has occurred.',
+    'LBL_ERROR_UNHANDLED_VALUE' => 'A value has not been handled correctly which is preventing a process from continuing.',
+    'LBL_ERROR_UNUSABLE_VALUE' => 'An unusable value was found which is preventing a process from continuing.',
+    'LBL_ERROR_INVALID_TYPE' => 'The type of a value is different than what was expected.',
+
     'LBL_ROUTING_ADD_RULE' => 'Add Rule',
     'LBL_ROUTING_ALL' => 'At Least',
     'LBL_ROUTING_ANY' => 'Any',

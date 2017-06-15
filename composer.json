@@ -13,7 +13,8 @@
   "require-dev": {
     "leafo/scssphp": "dev-master",
     "mikey179/vfsStream": "1.4.*",
-    "codeception/codeception": "^2.2"
+    "codeception/codeception": "^2.2",
+    "codeception/robo-paracept": "*"
   },
   "scripts": {},
   "prefer-stable": true,

@@ -92,6 +92,7 @@ require_once('include/SugarTheme/SugarTheme.php');
 require_once('include/utils/LogicHook.php');
 require_once('data/SugarBean.php');
 require_once('include/entryPoint.php');
+require_once 'include/Exceptions/exceptions.php';
 //check to see if the script files need to be rebuilt, add needed variables to request array
 $_REQUEST['root_directory'] = getcwd();
 $_REQUEST['js_rebuild_concat'] = 'rebuild';
