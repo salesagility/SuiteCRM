@@ -1,4 +1,4 @@
-## SuiteCRM 7.8.4
+## SuiteCRM 7.8.5
 
 [![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=hotfix)](https://travis-ci.org/salesagility/SuiteCRM)
 
