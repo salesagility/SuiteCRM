@@ -226,6 +226,10 @@ class SugarFolder
 
         $cleanSubscriptions = array();
 
+        // remove the duplications
+
+        $subs = array_unique($subs);
+
         // ensure parent folders are selected, regardless.
         foreach ($subs as $id) {
             $id = trim($id);
@@ -324,10 +328,10 @@ class SugarFolder
         global $current_user;
         $q = "SELECT emails.id , emails.name, emails.date_sent, emails.status, emails.type, emails.flagged, ".
             "emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs, 'Emails'".
-            " polymorphic_module FROM emails JOIN emails_text on emails.id = emails_text.email_id".
+            " polymorphic_module FROM emails JOIN emails_text on emails.id = emails_text.email_id ".
             "WHERE emails.deleted=0 AND emails.type NOT IN ('out', 'draft')"."
             AND emails.status NOT IN ('sent', 'draft') AND emails.id IN (".
-            "SELECT eear.email_id FROM emails_email_addr_rel eear".
+            "SELECT eear.email_id FROM emails_email_addr_rel eear " .
             "JOIN email_addr_bean_rel eabr ON eabr.email_address_id=eear.email_address_id AND".
             " eabr.bean_id = '{$current_user->id}' AND eabr.bean_module = 'Users' WHERE eear.deleted=0)";
 
@@ -542,6 +546,7 @@ class SugarFolder
         $myEmailTypeString = 'inbound';
         $myDraftsTypeString = 'draft';
         $mySentEmailTypeString = 'sent';
+        $myArchiveTypeString = 'archived';
 
         if (empty($user)) {
             global $current_user;
@@ -564,7 +569,10 @@ class SugarFolder
 
         $found = array();
         while ($a = $this->db->fetchByAssoc($r)) {
-            if ($a['folder_type'] == $myEmailTypeString) {
+            if (!empty($a['folder_type']) &&
+                $a['folder_type'] !== $myArchiveTypeString &&
+                $a['created_by'] === $current_user->id
+            ) {
                 if (!isset($found[$a['id']])) {
                     $found[$a['id']] = true;
 
@@ -673,11 +681,40 @@ class SugarFolder
             // And empty sugar folder exception is ok in this case.
         }
 
+        $user = $this->removeDeletedFolders($user);
 
         $ret = array(
             'userFolders' => $user,
             'groupFolders' => $grp,
         );
+
+        return $ret;
+    }
+
+    /**
+     * Remove folders of deleted inbounds
+     *
+     * @param array $folders - array of folders table rows
+     * @return array
+     */
+    private function removeDeletedFolders($folders) {
+
+        $ret = array();
+
+        foreach($folders as $folder) {
+            $correct = false;
+            if(!$folder['id']) {
+                $correct = true;
+            }
+            $ie = BeanFactory::getBean('InboundEmail', $folder['id']);
+            if($ie) {
+                $correct = true;
+            }
+
+            if($correct) {
+                $ret[] = $folder;
+            }
+        }
 
         return $ret;
     }

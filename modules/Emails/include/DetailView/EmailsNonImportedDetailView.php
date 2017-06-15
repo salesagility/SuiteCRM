@@ -78,7 +78,7 @@ class EmailsNonImportedDetailView extends EmailsDetailView
             $this->focus = $email;
             $this->populateFields();
         } else {
-            $GLOBALS['log']->debug("Unable to populate bean, no inbound_email_record and msgno parameter found");
+            $GLOBALS['log']->debug('Unable to populate bean, no inbound_email_record and uid parameter found');
         }
     }
 }

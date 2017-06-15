@@ -31,3 +31,4 @@ branches:
     - hotfix
     - develop
     - /feature.*/
+    - /fix.*/

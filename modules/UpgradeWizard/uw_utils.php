@@ -246,7 +246,7 @@ function commitCopyNewFiles($unzip_dir, $zip_from_dir, $path='') {
 
 //On cancel put back the copied files from 500 to 451 state
 function copyFilesOnCancel($step){
-//place hoder for cancel action
+//place holder for cancel action
 
 }
 
@@ -1048,21 +1048,20 @@ function checkSystemCompliance() {
 	$ret['error_found'] = false;
 
 	// PHP version
-	$php_version = constant('PHP_VERSION');
-	$check_php_version_result = check_php_version($php_version);
-
-	switch($check_php_version_result) {
-		case -1:
-			$ret['phpVersion'] = "<b><span class=stop>{$installer_mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} {$php_version} )</span></b>";
-			$ret['error_found'] = true;
-			break;
-		case 0:
-			$ret['phpVersion'] = "<b><span class=go>{$installer_mod_strings['ERR_CHECKSYS_PHP_UNSUPPORTED']} {$php_version} )</span></b>";
-			break;
-		case 1:
-			$ret['phpVersion'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_PHP_OK']} {$php_version} )</span></b>";
-			break;
+	if (check_php_version() === -1) {
+		$ret['phpVersion'] = "<b><span class=stop>{$installer_mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} ".constant('PHP_VERSION')." )</span></b>";
+		$ret['error_found'] = true;
 	}
+
+	if (check_php_version() === 0) {
+		$ret['phpVersion'] = "<b><span class=stop>{$installer_mod_strings['LBL_CURRENT_PHP_VERSION']} ".constant('PHP_VERSION').". ";
+		$ret['phpVersion'] .= $mod_strings['LBL_RECOMMENDED_PHP_VERSION_1'].constant('SUITECRM_PHP_REC_VERSION').$mod_strings['LBL_RECOMMENDED_PHP_VERSION_2'].'</span></b>';
+		$ret['warn_found'] = true;
+	}
+
+	if (check_php_version() === 1) {
+		$ret['phpVersion'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_PHP_OK']} ".constant('PHP_VERSION')." )</span></b>";
+	};
 
 	// database and connect
     $canInstall = $db->canInstall();
