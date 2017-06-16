@@ -197,13 +197,18 @@ class EmailsController extends SugarController
         $data = array();
         foreach ($accounts as $inboundEmailId => $inboundEmail) {
             $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
+            $isGroupEmailAccount = $inboundEmail->isGroupEmailAccount();
+            $isPersonalEmailAccount = $inboundEmail->isPersonalEmailAccount();
+
             $dataAddress = array(
                 'type' => $inboundEmail->module_name,
                 'id' => $inboundEmail->id,
                 'attributes' => array(
                     'from' => $storedOptions['from_addr']
                 ),
-                'prepend' => $prependSignature
+                'prepend' => $prependSignature,
+                'isPersonalEmailAccount' => $isPersonalEmailAccount,
+                'isGroupEmailAccount' => $isGroupEmailAccount
             );
 
             // Include signature
@@ -220,14 +225,16 @@ class EmailsController extends SugarController
                 $signature['signature'] = '';
             }
             $dataAddress['emailSignatures'] = array(
-                'html' => html_entity_decode($signature['signature_html']),
+                'html' => utf8_encode(html_entity_decode($signature['signature_html'])),
                 'plain' => $signature['signature'],
             );
 
             
             $data[] = $dataAddress;
         }
-        echo json_encode(array('data' => $data));
+
+        $dataEncoded = json_encode(array('data' => $data));
+        echo $dataEncoded;
 
         $this->view = 'ajax';
     }

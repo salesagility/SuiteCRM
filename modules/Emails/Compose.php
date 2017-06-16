@@ -69,7 +69,7 @@ function initFullCompose($ret)
         echo $composeOut;
     } else {
         //For normal full compose screen
-        include('modules/Emails/index.php');
+//        include('modules/Emails/index.php');
         echo "<script type='text/javascript' language='javascript'>\ncomposePackage = {$composeOut};\n</script>";
     }
 }
