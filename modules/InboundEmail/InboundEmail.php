@@ -316,6 +316,7 @@ class InboundEmail extends SugarBean
         } else if ($this->is_personal === '1') {
             return true;
         } else {
+            // TODO: TASK UNDEFINED - Standardize the exceptions
             throw new Exception(
                 'Cannot tell if the inbound email account is a personal account '.
                 'or a group account.'
@@ -333,6 +334,7 @@ class InboundEmail extends SugarBean
         } else if ($this->is_personal === '1') {
             return false;
         } else {
+            // TODO: TASK UNDEFINED - Standardize the exceptions
             throw new Exception(
                 'Cannot tell if the inbound email account is a personal account '.
                 'or a group account.'
