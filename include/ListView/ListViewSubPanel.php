@@ -539,8 +539,10 @@
             global $currentModule;
             global $app_strings;
 
-            if(!isset($current_offset) || empty($current_offset))                                                                    
+            if(!isset($current_offset) || empty($current_offset))
+	    {
   		$current_offset=0;
+	    }
 	    $start_record = $current_offset + 1;
 
             if (!is_numeric($col_count)) {
