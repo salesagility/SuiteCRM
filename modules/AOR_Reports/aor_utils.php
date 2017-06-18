@@ -158,7 +158,7 @@ function getConditionsAsParameters($report, $override = array())
  */
 function getPeriodDate($date_time_period_list_selected)
 {
-    global $sugar_config;
+    global $sugar_config, $timedate;
     $datetime_period = new DateTime();
 
     // Setup when year quarters start & end
@@ -217,6 +217,7 @@ function getPeriodDate($date_time_period_list_selected)
     }
     // set time to 00:00:00
     $datetime_period = $datetime_period->setTime(0, 0, 0);
+    $datetime_period = $timedate->tzGMT($datetime_period);
     return $datetime_period;
 }
 
@@ -227,6 +228,7 @@ function getPeriodDate($date_time_period_list_selected)
  */
 function getPeriodEndDate($dateTimePeriodListSelected)
 {
+    global $timedate;
     switch($dateTimePeriodListSelected) {
         case 'today':
         case 'yesterday':
@@ -299,7 +301,7 @@ function getPeriodEndDate($dateTimePeriodListSelected)
             $datetimePeriod->setTime(0, 0, 0);
             break;
     }
-
+    $datetimePeriod = $timedate->tzGMT($datetimePeriod);
     return $datetimePeriod;
 }
 
@@ -331,21 +333,25 @@ function calculateQuarters($offsetMonths = 0)
     }
     $q1end = DateTime::createFromFormat(DATE_ISO8601, $q1start->format(DATE_ISO8601));
     $q1end->add(new DateInterval('P2M'));
+    $q1end->modify('last day of this month');
 
     $q2start = DateTime::createFromFormat(DATE_ISO8601, $q1start->format(DATE_ISO8601));
     $q2start->add(new DateInterval('P3M'));
     $q2end = DateTime::createFromFormat(DATE_ISO8601, $q2start->format(DATE_ISO8601));
     $q2end->add(new DateInterval('P2M'));
+    $q2end->modify('last day of this month');
 
     $q3start = DateTime::createFromFormat(DATE_ISO8601, $q2start->format(DATE_ISO8601));
     $q3start->add(new DateInterval('P3M'));
     $q3end = DateTime::createFromFormat(DATE_ISO8601, $q3start->format(DATE_ISO8601));
     $q3end->add(new DateInterval('P2M'));
+    $q3end->modify('last day of this month');
 
     $q4start = DateTime::createFromFormat(DATE_ISO8601, $q3start->format(DATE_ISO8601));
     $q4start->add(new DateInterval('P3M'));
     $q4end = DateTime::createFromFormat(DATE_ISO8601, $q4start->format(DATE_ISO8601));
     $q4end->add(new DateInterval('P2M'));
+    $q4end->modify('last day of this month');
 
     // Assign quarter boundaries
     $q['1']['start'] = $q1start;
