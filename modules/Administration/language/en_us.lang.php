@@ -1278,12 +1278,12 @@ $mod_strings = array(
 
     'LBL_BUSINESS_HOURS' => 'Business hours',
     'LBL_BUSINESS_HOURS_DESC' => "Manage Business Hours",
-	'LBL_BUSINESS_HOURS_FROM' => 'From',
-	'LBL_BUSINESS_HOURS_TO' => 'To',
-	'LBL_BUSINESS_HOURS_OPEN' => "Open",
+    'LBL_BUSINESS_HOURS_FROM' => 'From',
+    'LBL_BUSINESS_HOURS_TO' => 'To',
+    'LBL_BUSINESS_HOURS_OPEN' => "Open",
 
-	'LBL_LIST_SYMBOL' => "List Symbol",
-	'LBL_LIST_RATE' => "List Rate",
+    'LBL_LIST_SYMBOL' => "List Symbol",
+    'LBL_LIST_RATE' => "List Rate",
 
     'LBL_SYNC_MESSAGE' => "Sync Inbound Email Account. This may take several minutes. Going away from this page will not cancel the process, so feel free to move on or wait for confirmation...",
     'LBL_SYNC_PROCESSING' => "Processing '%s' Inbound Email Account...",
