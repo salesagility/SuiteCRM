@@ -83,6 +83,10 @@ class sendEmail
             }
         }
 
+        // TODO: FIX UID / Inbound Email Account
+        $inboundEmailID = $current_user->getPreference('defaultIEAccount', 'Emails');
+        $email->mailbox_id = $inboundEmailID;
+
         $contact = new Contact;
         if ($contact->retrieve($contact_id)) {
             $email->parent_type = 'Contacts';
@@ -90,7 +94,9 @@ class sendEmail
 
             if (!empty($contact->email1)) {
                 $email->to_addrs_emails = $contact->email1 . ";";
-                $email->to_addrs = $module->billing_contact_name . " <" . $contact->email1 . ">";
+                $email->to_addrs = $contact->name . " <" . $contact->email1 . ">";
+                $email->to_addrs_names = $contact->name . " <" . $contact->email1 . ">";
+                $email->parent_name = $contact->name;
             }
         }
 
@@ -114,9 +120,14 @@ class sendEmail
             $note->parent_id = $email_id;
             $note->file_mime_type = 'application/pdf';
             $note->filename = $file_name;
-            $note->save();
+            $noteId = $note->save();
 
-            rename($sugar_config['upload_dir'] . 'attachfile.pdf', $sugar_config['upload_dir'] . $note->id);
+            if($noteID !== false && !empty($noteId)) {
+                rename($sugar_config['upload_dir'] . 'attachfile.pdf', $sugar_config['upload_dir'] . $note->id);
+                $email->attachNote($note);
+            } else {
+               $GLOBALS['log']->error('AOS_PDF_Templates: Unable to save note');
+            }
         }
 
         // redirect

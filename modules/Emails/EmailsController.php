@@ -487,6 +487,9 @@ class EmailsController extends SugarController
             if ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {
                 $this->bean->to_addrs = '';
                 $this->bean->to_addrs_names = '';
+            } else if($mode === self::COMPOSE_BEAN_WITH_PDF_TEMPLATE) {
+                // Get Related To Field
+                // Populate to
             }
         }
 
@@ -501,6 +504,10 @@ class EmailsController extends SugarController
         if ($mode === self::COMPOSE_BEAN_MODE_REPLY_TO || $mode === self::COMPOSE_BEAN_MODE_REPLY_TO_ALL) {
             // Add Re to subject
             $this->bean->name = $mod_strings['LBL_RE'] . $this->bean->name;
+        } else if($mode === self::COMPOSE_BEAN_WITH_PDF_TEMPLATE) {
+            // get subject from template
+            // Don not add $mod_strings['LBL_NO_SUBJECT']
+            // $this->bean->name = $this->bean->name;
         } else {
             if ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {
                 // Add FW to subject
@@ -519,6 +526,10 @@ class EmailsController extends SugarController
                 $this->bean->description = PHP_EOL . $mod_strings['LBL_ORIGINAL_MESSAGE_SEPERATOR'] . PHP_EOL .
                     $this->bean->description;
             }
+        }
+
+        if ($mode === self::COMPOSE_BEAN_WITH_PDF_TEMPLATE) {
+
         }
 
     }
