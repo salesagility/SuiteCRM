@@ -648,7 +648,8 @@ class EditView
                         $value = call_user_func($function, $this->focus, $name, $value, $this->view);
                         $valueFormatted = true;
                     } else {
-                        $this->fieldDefs[$name]['options'] = $function(
+                        $this->fieldDefs[$name]['options'] = call_user_func(
+                            $function,
                             $this->focus,
                             $name, $value,
                             $this->view

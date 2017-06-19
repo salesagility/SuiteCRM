@@ -546,6 +546,7 @@ class SugarFolder
         $myEmailTypeString = 'inbound';
         $myDraftsTypeString = 'draft';
         $mySentEmailTypeString = 'sent';
+        $myArchiveTypeString = 'archived';
 
         if (empty($user)) {
             global $current_user;
@@ -568,7 +569,10 @@ class SugarFolder
 
         $found = array();
         while ($a = $this->db->fetchByAssoc($r)) {
-            if ($a['folder_type'] == $myEmailTypeString) {
+            if (!empty($a['folder_type']) &&
+                $a['folder_type'] !== $myArchiveTypeString &&
+                $a['created_by'] === $current_user->id
+            ) {
                 if (!isset($found[$a['id']])) {
                     $found[$a['id']] = true;
 

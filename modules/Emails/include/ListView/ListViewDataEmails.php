@@ -142,7 +142,8 @@ class ListViewDataEmails extends ListViewData
     protected function getInboundEmail($currentUser, $folder) {
 
         $inboundEmailID = $currentUser->getPreference('defaultIEAccount', 'Emails');
-        if (!empty($folder->getId())) {
+        $id = $folder->getId();
+        if (!empty($id)) {
             $inboundEmailID = $folder->getId();
         }
 
@@ -365,7 +366,7 @@ class ListViewDataEmails extends ListViewData
      * @param array $params
      * @param Email $seed
      * @param bool $singleSelect
-     * @return array
+     * @return array|string
      */
     public function getCrmQueryArray($crmWhere, $filterFields, $params, $seed, $singleSelect) {
 
@@ -588,7 +589,7 @@ class ListViewDataEmails extends ListViewData
         return
             (isset($request["searchFormTab"]) && $request["searchFormTab"] == "advanced_search") ||
             (
-                isset($request["type_basic"]) && count($request["type_basic"] > 1) ||
+                isset($request["type_basic"]) && count($request["type_basic"]) > 1 ||
                 $request["type_basic"][0] != ""
             ) ||
             (isset($request["module"]) && $request["module"] == "MergeRecords");
@@ -693,7 +694,7 @@ class ListViewDataEmails extends ListViewData
                     $limitPerPage = isset($sugar_config['list_max_entries_per_page']) && (int)$sugar_config['list_max_entries_per_page'] ? $sugar_config['list_max_entries_per_page'] : 10;
 
                     $search = new ListViewDataEmailsSearchOnIMap($this);
-                    $ret = $search->search($seed, $where, $id, $inboundEmail, $filter, $folderObj, $current_user, $folder, $limit, $limitPerPage);
+                    $ret = $search->search($seed, $request, $where, $id, $inboundEmail, $filter, $folderObj, $current_user, $folder, $limit, $limitPerPage);
                     break;
 
                 default:

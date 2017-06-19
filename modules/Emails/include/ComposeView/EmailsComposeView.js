@@ -1234,6 +1234,7 @@
         emailTemplateId: args.name_to_value_array.emails_email_templates_idb
       }, function (resp) {
         var r = JSON.parse(resp);
+        $(self).find('[name="name"]').val(r.data.subject);
         tinymce.activeEditor.setContent(r.data.body_from_html, {format: 'html'});
         tinymce.activeEditor.change();
       });
