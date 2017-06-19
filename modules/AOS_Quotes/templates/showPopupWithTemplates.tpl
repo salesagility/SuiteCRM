@@ -94,7 +94,6 @@
    */
   {/literal}
   function showPopup(task) {ldelim}
-    debugger;
     var form = document.getElementById('popupForm');
     var ppd = document.getElementById('popupDivBack_ara');
     var ppd2 = document.getElementById('popupDiv_ara');
