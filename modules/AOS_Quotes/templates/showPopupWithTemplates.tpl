@@ -85,7 +85,16 @@
 <div id="popupDivBack_ara" onclick="this.style.display='none';document.getElementById('popupDiv_ara').style.display='none';" style="top:0px;left:0px;position:fixed;height:100%;width:100%;background:#000000;opacity:0.5;display:none;vertical-align:middle;text-align:center;z-index:9998;">
 </div>
 <script>
+  {literal}
+  /**
+   *
+   * @param task
+   * @return {boolean}
+   * @see generatePdf (entrypoint)
+   */
+  {/literal}
   function showPopup(task) {ldelim}
+    debugger;
     var form = document.getElementById('popupForm');
     var ppd = document.getElementById('popupDivBack_ara');
     var ppd2 = document.getElementById('popupDiv_ara');
