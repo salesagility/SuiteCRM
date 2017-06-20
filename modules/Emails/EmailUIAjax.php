@@ -1342,7 +1342,7 @@ eoq;
                     $current_user->setPreference('showFolders', $showStore, 0, 'Emails');
                 }
 
-                if(!empty($_REQUEST['account_signature_id'])){
+                if(isset($_REQUEST['account_signature_id'])){
                     $email_signatures = $current_user->getPreference('account_signatures', 'Emails');
                     $email_signatures = unserialize(base64_decode($email_signatures));
                     if(empty($email_signatures)) {
