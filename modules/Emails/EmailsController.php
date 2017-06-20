@@ -504,17 +504,15 @@ class EmailsController extends SugarController
         if ($mode === self::COMPOSE_BEAN_MODE_REPLY_TO || $mode === self::COMPOSE_BEAN_MODE_REPLY_TO_ALL) {
             // Add Re to subject
             $this->bean->name = $mod_strings['LBL_RE'] . $this->bean->name;
-        } else if($mode === self::COMPOSE_BEAN_WITH_PDF_TEMPLATE) {
-            // get subject from template
-            // Don not add $mod_strings['LBL_NO_SUBJECT']
-            // $this->bean->name = $this->bean->name;
         } else {
             if ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {
                 // Add FW to subject
                 $this->bean->name = $mod_strings['LBL_FW'] . $this->bean->name;
-            } else {
-                $this->bean->name = $mod_strings['LBL_NO_SUBJECT'] . $this->bean->name;
             }
+        }
+
+        if (empty($this->bean->name)) {
+            $this->bean->name = $mod_strings['LBL_NO_SUBJECT'] . $this->bean->name;
         }
 
         // Move body into original message
@@ -527,11 +525,6 @@ class EmailsController extends SugarController
                     $this->bean->description;
             }
         }
-
-        if ($mode === self::COMPOSE_BEAN_WITH_PDF_TEMPLATE) {
-
-        }
-
     }
 
 
