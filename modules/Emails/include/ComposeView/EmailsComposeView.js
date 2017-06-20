@@ -687,7 +687,7 @@
      * @event attachDocument
      * @returns {boolean}
      */
-    self.attachDocument = function () {
+    self.attachDocument = function (event) {
       "use strict";
       event.preventDefault();
       $(self).trigger("attachDocument", [self]);
