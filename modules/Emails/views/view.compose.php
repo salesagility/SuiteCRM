@@ -73,7 +73,6 @@ class EmailsViewCompose extends ViewEdit {
     public function preDisplay()
     {
         global $current_user;
-
         $metadataFile = $this->getMetaDataFile();
         $this->ev = $this->getEditView();
         $this->ev->ss =& $this->ss;
@@ -106,5 +105,44 @@ class EmailsViewCompose extends ViewEdit {
         require_once 'modules/Emails/include/ComposeView/ComposeView.php';
         return new ComposeView();
     }
+
+    /**
+     * Prepends body with $user's default signature
+     * @param Email $email
+     * @param User $user
+     * @return bool|Email
+     * @throws SugarControllerException
+     */
+    public function getSignatures(User $user)
+    {
+        if(empty($user->id) || $user->new_with_id === true) {
+            throw new \SugarControllerException(
+                'EmailsController::composeSignature() requires an existing User and not a new User object. '.
+                'This is typically the $current_user global'
+            );
+        }
+
+        $emailSignatures = unserialize(base64_decode($user->getPreference('account_signatures', 'Emails')));
+
+        if(isset($emailSignatures[$email->mailbox_id])) {
+            $emailSignatureId = $emailSignatures[$email->mailbox_id];
+        } else {
+            $emailSignatureId = $user->getPreference('signature_default');
+        }
+        if(gettype($emailSignatureId) === 'string') {
+            $emailSignatures = $user->getSignature($emailSignatureId);
+            $email->description .= $emailSignatures['signature'];
+            $email->description_html .= html_entity_decode($emailSignatures['signature_html']);
+            return $email;
+        } else {
+            $GLOBALS['log']->warn(
+                'EmailsController::composeSignature() was unable to get the signature id for user: '.
+                $user->name
+            );
+            return false;
+        }
+    }
+
+
 
 }

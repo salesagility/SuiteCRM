@@ -387,8 +387,13 @@ if($_REQUEST['module'] == 'Campaigns'){
 
     $GLOBALS['log']->debug("Saved record with id of ".$return_id);
 
+    $redirectUrl = "Location: index.php?module=$return_module&action=$return_action&record=$return_id$edit";
 
-    header("Location: index.php?module=$return_module&action=$return_action&record=$return_id$edit$error");
+    if(isset($error) && $error) {
+        $redirectUrl .= $error;
+    }
+
+    header($redirectUrl);
 }
 
 /**

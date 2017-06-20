@@ -206,16 +206,22 @@ class ListViewDisplay {
         return $filter_fields;
 	}
 
-
 	/**
 	 * Any additional processing
-	 * @param file File template file to use
-	 * @param data array row data
-	 * @param html_var string html string to be passed back and forth
+	 *
+	 * @param $file (legacy, unused) File template file to use
+	 * @param array $data array row data
+	 * @param string $htmlVar html string to be passed back and forth
+	 * @return bool
 	 */
 	function process($file, $data, $htmlVar) {
 		$this->rowCount = count($data['data']);
+		if(!isset($data['pageData']['bean'])) {
+			$GLOBALS['log']->warn("List view process error: Invalid data, bean is not set");
+			return false;
+		}
 		$this->moduleString = $data['pageData']['bean']['moduleDir'] . '2_' . strtoupper($htmlVar) . '_offset';
+		return true;
 	}
 
 	/**
@@ -331,7 +337,8 @@ class ListViewDisplay {
             foreach ( $this->actionsMenuExtraItems as $item )
                 $menuItems[] = $item;
 
-            if(!$this->show_action_dropdown_as_delete) {
+
+            if($this->delete && !$this->show_action_dropdown_as_delete) {
                 $menuItems[] = $this->buildDeleteLink($location);
             }
         }

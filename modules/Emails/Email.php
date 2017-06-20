@@ -403,6 +403,10 @@ class Email extends Basic
      */
     public $orphaned;
 
+    /**
+     * @var Link2 $notes
+     */
+    public $notes;
 
     /**
      * sole constructor
@@ -2361,7 +2365,7 @@ class Email extends Basic
             if (!empty($this->id) && !$this->new_with_id) {
                 $note = new Note();
                 $where = "notes.parent_id='{$this->id}'";
-                $notes_list = $note->get_full_list("", $where, true);
+                $notes_list = (array)$note->get_full_list("", $where, true);
             }
             $this->attachments = array_merge($this->attachments, $notes_list);
         }
@@ -2407,7 +2411,7 @@ class Email extends Basic
         }
 
         $this->saved_attachments = array();
-        foreach ($this->attachments as $note) {
+        foreach ((array)$this->attachments as $note) {
             if (!empty($note->id)) {
                 array_push($this->saved_attachments, $note);
                 continue;
@@ -3899,7 +3903,7 @@ eoq;
      * @param array $request TODO: implement PSR 7 interface and refactor
      * @return bool|Email|SugarBean
      */
-    public function populateBeanFromRequest(Email $bean, $request)
+    public function populateBeanFromRequest($bean, $request)
     {
         if (empty($bean)) {
             $bean = BeanFactory::getBean('Emails');
@@ -4155,5 +4159,14 @@ eoq;
         }
 
         return $bean;
+    }
+
+    /**
+     * @param Note $note
+     */
+    public function attachNote(Note $note)
+    {
+        $this->load_relationship('notes');
+        $this->notes->addBean($note);
     }
 } // end class def
