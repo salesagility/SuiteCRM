@@ -180,6 +180,14 @@
             <td>&nbsp;</td>
         </tr>
     </table>
+    <table class="edit view">
+        <td scope="row">
+            {$app_strings.LBL_EMAIL_SIGNATURES}:
+        </td>
+        <td>
+            {$signaturesAccountSettings}
+        </td>
+    </table>
     <table border="0" cellspacing="0" cellpadding="0" class="edit view" width="100%">
         <tr>
             <td colspan="2">

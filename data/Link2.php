@@ -122,7 +122,7 @@ class Link2
 
         if (!$this->loadedSuccesfully()) {
             $logFunction = 'fatal';
-            if (!isset($this->def['source']) || $this->def['source'] !== 'non-db') {
+            if (!isset($this->def['source']) || $this->def['source'] === 'non-db') {
                 $logFunction = 'warn';
             }
             $GLOBALS['log']->$logFunction("{$this->name} for {$this->def['relationship']} failed to load\n");
