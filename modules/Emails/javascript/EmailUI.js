@@ -171,15 +171,8 @@ SE.accounts = {
 	            var oColumn = this.getColumn(elCheckbox);
 	          	if(oColumn.key == 'is_active')
 	          	{
-	          		var oRecord = this.getRecord(elCheckbox);
-	          		oRecord.setData("is_active",elCheckbox.checked);
-	          		var t_id = oRecord.getData('id');
-	            	var isGroupFolder = oRecord.getData('has_groupfolder');
 
-	            	if(isGroupFolder)
-	            	    SUGAR.email2.folders.updateSubscriptions();
-	            	else
-    	            	SUGAR.email2.folders.setFolderSelection();
+                SUGAR.email2.folders.setFolderSelection();
 
 	          	}
 	        });
@@ -727,6 +720,9 @@ SE.accounts = {
         document.getElementById('group_id').value = o.group_id;
         document.getElementById('mailbox').value = o.mailbox;
 
+
+        $('#account_signature_id').html($('#signature_id').html());
+        $('#account_signature_id').val(o.email_signatures);
 
         var i = 0;
 

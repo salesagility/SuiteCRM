@@ -307,6 +307,42 @@ class InboundEmail extends SugarBean
 
 
     /**
+     * @return bool
+     * @throws Exception
+     */
+    public function isPersonalEmailAccount() {
+        if($this->is_personal === '0') {
+            return false;
+        } else if ($this->is_personal === '1') {
+            return true;
+        } else {
+            // TODO: TASK UNDEFINED - Standardize the exceptions
+            throw new Exception(
+                'Cannot tell if the inbound email account is a personal account '.
+                'or a group account.'
+            );
+        }
+    }
+
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    public function isGroupEmailAccount() {
+        if($this->is_personal === '0') {
+            return true;
+        } else if ($this->is_personal === '1') {
+            return false;
+        } else {
+            // TODO: TASK UNDEFINED - Standardize the exceptions
+            throw new Exception(
+                'Cannot tell if the inbound email account is a personal account '.
+                'or a group account.'
+            );
+        }
+    }
+
+    /**
      * @param int $offset
      * @param int $pageSize
      * @param array $order
@@ -4581,9 +4617,11 @@ class InboundEmail extends SugarBean
 
     /**
      * shiny new importOneEmail() method
+     * @deprecated since - 7.9 use returnImportedEmail instead
      * @param int msgNo
      * @param bool forDisplay
      * @param clean_email boolean, default true,
+     * @return boolean|string
      */
     public function importOneEmail($msgNo, $uid, $forDisplay = false, $clean_email = true)
     {
@@ -5947,7 +5985,12 @@ class InboundEmail extends SugarBean
      */
     public function retrieveByGroupId($groupId)
     {
-        $q = 'SELECT id FROM inbound_email WHERE group_id = \'' . $groupId . '\' AND deleted = 0 AND status = \'Active\'';
+        $q = '
+          SELECT id FROM inbound_email
+          WHERE
+            group_id = \'' . $groupId . '\' AND
+            deleted = 0 AND
+            status = \'Active\'';
         $r = $this->db->query($q, true);
 
         $beans = array();
@@ -6005,11 +6048,16 @@ class InboundEmail extends SugarBean
      */
     public function retrieveAllByGroupId($id, $includePersonal = true)
     {
-        global $current_user;
 
         $beans = ($includePersonal) ? $this->retrieveByGroupId($id) : array();
-        $teamJoin = '';
-        $q = "SELECT inbound_email.id FROM inbound_email {$teamJoin} WHERE is_personal = 0 AND (groupfolder_id is null OR groupfolder_id = '') AND mailbox_type not like 'bounce' AND inbound_email.deleted = 0 AND status = 'Active' ";
+        $q = "
+          SELECT inbound_email.id FROM inbound_email
+          WHERE
+            is_personal = 0 AND
+            -- (groupfolder_id is null OR groupfolder_id = '') AND
+            mailbox_type not like 'bounce' AND
+            inbound_email.deleted = 0 AND
+            status = 'Active' ";
         $r = $this->db->query($q, true);
 
         while ($a = $this->db->fetchByAssoc($r)) {
@@ -6032,14 +6080,23 @@ class InboundEmail extends SugarBean
 
     /**
      * Retrieves an array of I-E beans that the user has team access to including group
+     *
+     * @param string $id
+     * @param bool $includePersonal
+     * @return InboundEmail[]
      */
     public function retrieveAllByGroupIdWithGroupAccounts($id, $includePersonal = true)
     {
-        global $current_user;
-
         $beans = ($includePersonal) ? $this->retrieveByGroupId($id) : array();
-        $teamJoin = '';
-        $q = "SELECT DISTINCT inbound_email.id FROM inbound_email {$teamJoin} WHERE is_personal = 0 AND mailbox_type not like 'bounce' AND status = 'Active' AND inbound_email.deleted = 0 ";
+
+        $q = "
+          SELECT DISTINCT inbound_email.id
+          FROM inbound_email
+          WHERE
+            is_personal = 0 AND
+            mailbox_type not like 'bounce' AND
+            status = 'Active' AND
+            inbound_email.deleted = 0 ";
         $r = $this->db->query($q, true);
 
         while ($a = $this->db->fetchByAssoc($r)) {
@@ -6393,13 +6450,13 @@ class InboundEmail extends SugarBean
     public function hardDelete($id)
     {
         $q = "DELETE FROM inbound_email WHERE id = '{$id}'";
-        $r = $this->db->query($q, true);
+        $this->db->query($q, true);
 
         $q = "DELETE FROM folders WHERE id = '{$id}'";
-        $r = $this->db->query($q, true);
+        $this->db->query($q, true);
 
-        $q = "DELETE FROM folders WHERE parent_id = '{$id}'";
-        $r = $this->db->query($q, true);
+        $q = "DELETE FROM folders WHERE parent_folder = '{$id}'";
+        $this->db->query($q, true);
     }
 
     /**

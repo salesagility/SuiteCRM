@@ -71,6 +71,11 @@ class EmailsController extends SugarController
      */
     const COMPOSE_BEAN_MODE_FORWARD = 3;
 
+    /**
+     * @see EmailsController::composeBean()
+     */
+    const COMPOSE_BEAN_WITH_PDF_TEMPLATE = 4;
+
     protected static $doNotImportFields = array(
         'action',
         'type',
@@ -173,7 +178,7 @@ class EmailsController extends SugarController
 
     /**
      * Gets the values of the "from" field
-     *
+     * includes the signatures for each account
      */
     public function action_GetFromFields()
     {
@@ -183,20 +188,59 @@ class EmailsController extends SugarController
         $ie = new InboundEmail();
         $ie->email = $email;
         $accounts = $ieAccountsFull = $ie->retrieveAllByGroupIdWithGroupAccounts($current_user->id);
+        $accountSignatures = $current_user->getPreference('account_signatures', 'Emails');
+        if($accountSignatures != null) {
+            $emailSignatures = unserialize(base64_decode($accountSignatures));
+            $defaultEmailSignature = $current_user->getPreference('signature_default');
+        } else {
+            $defaultEmailSignature = null;
+            $GLOBALS['log']->warn('User does not have a signature');
+        }
+
+        $prependSignature = $current_user->getPreference('signature_prepend');
+
         $data = array();
         foreach ($accounts as $inboundEmailId => $inboundEmail) {
             $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
-            $data[] = array(
+            $isGroupEmailAccount = $inboundEmail->isGroupEmailAccount();
+            $isPersonalEmailAccount = $inboundEmail->isPersonalEmailAccount();
+
+            $dataAddress = array(
                 'type' => $inboundEmail->module_name,
                 'id' => $inboundEmail->id,
                 'attributes' => array(
                     'from' => $storedOptions['from_addr']
-                )
+                ),
+                'prepend' => $prependSignature,
+                'isPersonalEmailAccount' => $isPersonalEmailAccount,
+                'isGroupEmailAccount' => $isGroupEmailAccount
             );
+
+            // Include signature
+            if (isset($emailSignatures[$inboundEmail->id])) {
+                $emailSignatureId = $emailSignatures[$inboundEmail->id];
+            } else {
+                $emailSignatureId = $defaultEmailSignature;
+            }
+
+            $signature = $current_user->getSignature($emailSignatureId);
+            if(!$signature) {
+                $GLOBALS['log']->warn('User does not have a signature, empty string will used instead');
+                $signature['signature_html'] = '';
+                $signature['signature'] = '';
+            }
+            $dataAddress['emailSignatures'] = array(
+                'html' => utf8_encode(html_entity_decode($signature['signature_html'])),
+                'plain' => $signature['signature'],
+            );
+
+            
+            $data[] = $dataAddress;
         }
 
+        $dataEncoded = json_encode(array('data' => $data));
+        echo $dataEncoded;
 
-        echo json_encode(array('data' => $data));
         $this->view = 'ajax';
     }
 
@@ -230,7 +274,7 @@ class EmailsController extends SugarController
                 true);
             $out = json_encode(array('response' => $ret));
         } catch (SugarFolderEmptyException $e) {
-            $GLOBALS['log']->fatal($e->getMessage());
+            $GLOBALS['log']->warn($e->getMessage());
             $out = json_encode(array('errors' => array($mod_strings['LBL_ERROR_NO_FOLDERS'])));
         }
 
@@ -345,12 +389,64 @@ class EmailsController extends SugarController
         $this->view = 'compose';
     }
 
+    /**
+     * Fills compose view body with the output from PDF Template
+     * @see sendEmail::send_email()
+     */
+    public function action_ComposeViewWithPdfTemplate()
+    {
+        $this->composeBean($_REQUEST, self::COMPOSE_BEAN_WITH_PDF_TEMPLATE);
+        $this->view = 'compose';
+    }
+
     public function action_SendDraft()
     {
         $this->view = 'ajax';
         echo json_encode(array());
     }
 
+
+    /**
+     * @throws SugarControllerException
+     */
+    public function action_MarkEmails()
+    {
+        $this->markEmails($_REQUEST);
+        echo json_encode(array('response' => true));
+        $this->view = 'ajax';
+    }
+
+    /**
+     * @param array $request
+     * @throws SugarControllerException
+     */
+    public function markEmails($request)
+    {
+        // validate the request
+
+        if (!isset($request['inbound_email_record']) || !$request['inbound_email_record']) {
+            throw new SugarControllerException('No Inbound Email record in request');
+        }
+
+        if (!isset($request['folder']) || !$request['folder']) {
+            throw new SugarControllerException('No Inbound Email folder in request');
+        }
+
+        // connect to requested inbound email server
+        // and select the folder
+
+        $ie = $this->getInboundEmail($request['inbound_email_record']);
+        $ie->mailbox = $request['folder'];
+        $ie->connectMailserver();
+
+        // get requested UIDs and flag type
+
+        $UIDs = $this->getRequestedUIDs($request);
+        $type = $this->getRequestedFlagType($request);
+
+        // mark emails
+        $ie->markEmails($UIDs, $type);
+    }
 
     /**
      * @param array $request
@@ -373,7 +469,6 @@ class EmailsController extends SugarController
 
         if (isset($request['record']) && !empty($request['record'])) {
             $this->bean->retrieve($request['record']);
-
         } else {
             $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($request['inbound_email_record']));
             $inboundEmail->connectMailserver();
@@ -392,6 +487,9 @@ class EmailsController extends SugarController
             if ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {
                 $this->bean->to_addrs = '';
                 $this->bean->to_addrs_names = '';
+            } else if($mode === self::COMPOSE_BEAN_WITH_PDF_TEMPLATE) {
+                // Get Related To Field
+                // Populate to
             }
         }
 
@@ -410,9 +508,11 @@ class EmailsController extends SugarController
             if ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {
                 // Add FW to subject
                 $this->bean->name = $mod_strings['LBL_FW'] . $this->bean->name;
-            } else {
-                $this->bean->name = $mod_strings['LBL_NO_SUBJECT'] . $this->bean->name;
             }
+        }
+
+        if (empty($this->bean->name)) {
+            $this->bean->name = $mod_strings['LBL_NO_SUBJECT'] . $this->bean->name;
         }
 
         // Move body into original message
@@ -425,46 +525,8 @@ class EmailsController extends SugarController
                     $this->bean->description;
             }
         }
-
     }
 
-    /**
-     * @throws SugarControllerException
-     */
-    public function action_MarkEmails()
-    {
-        $request = $_REQUEST;
-
-        // validate the request
-
-        if (!isset($request['inbound_email_record']) || !$request['inbound_email_record']) {
-            throw new SugarControllerException('No Inbound Email record in request');
-        }
-
-        if (!isset($request['folder']) || !$request['folder']) {
-            throw new SugarControllerException('No Inbound Email folder in request');
-        }
-
-
-        // connect to requested inbound email server
-        // and select the folder
-
-        $ie = $this->getInboundEmail($request['inbound_email_record']);
-        $ie->mailbox = $request['folder'];
-        $ie->connectMailserver();
-
-        // get requested UIDs and flag type
-
-        $UIDs = $this->getRequestedUIDs($request);
-        $type = $this->getRequestedFlagType($request);
-
-        // mark emails
-
-        $ie->markEmails($UIDs, $type);
-
-        echo json_encode(array('response' => true));
-        $this->view = 'ajax';
-    }
 
     /**
      * @param $request
