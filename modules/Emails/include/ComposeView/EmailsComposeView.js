@@ -529,6 +529,11 @@
         formData.append($(v).attr('name'), $(v).val());
       });
 
+
+      $(this).find('input[type=checkbox]').each(function (i, v) {
+        formData.append($(v).attr('name'), $(v).prop('checked'));
+      })
+
       $.ajax({
         type: "POST",
         data: formData,
