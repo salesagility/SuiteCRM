@@ -403,10 +403,6 @@ class Email extends Basic
      */
     public $orphaned;
 
-    /**
-     * @var Link2 $notes
-     */
-    public $notes;
 
     /**
      * sole constructor
@@ -4159,14 +4155,5 @@ eoq;
         }
 
         return $bean;
-    }
-
-    /**
-     * @param Note $note
-     */
-    public function attachNote(Note $note)
-    {
-        $this->load_relationship('notes');
-        $this->notes->addBean($note);
     }
 } // end class def

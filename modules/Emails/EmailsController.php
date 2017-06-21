@@ -71,11 +71,6 @@ class EmailsController extends SugarController
      */
     const COMPOSE_BEAN_MODE_FORWARD = 3;
 
-    /**
-     * @see EmailsController::composeBean()
-     */
-    const COMPOSE_BEAN_WITH_PDF_TEMPLATE = 4;
-
     protected static $doNotImportFields = array(
         'action',
         'type',
@@ -202,18 +197,13 @@ class EmailsController extends SugarController
         $data = array();
         foreach ($accounts as $inboundEmailId => $inboundEmail) {
             $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
-            $isGroupEmailAccount = $inboundEmail->isGroupEmailAccount();
-            $isPersonalEmailAccount = $inboundEmail->isPersonalEmailAccount();
-
             $dataAddress = array(
                 'type' => $inboundEmail->module_name,
                 'id' => $inboundEmail->id,
                 'attributes' => array(
                     'from' => $storedOptions['from_addr']
                 ),
-                'prepend' => $prependSignature,
-                'isPersonalEmailAccount' => $isPersonalEmailAccount,
-                'isGroupEmailAccount' => $isGroupEmailAccount
+                'prepend' => $prependSignature
             );
 
             // Include signature
@@ -230,16 +220,14 @@ class EmailsController extends SugarController
                 $signature['signature'] = '';
             }
             $dataAddress['emailSignatures'] = array(
-                'html' => utf8_encode(html_entity_decode($signature['signature_html'])),
+                'html' => html_entity_decode($signature['signature_html']),
                 'plain' => $signature['signature'],
             );
 
             
             $data[] = $dataAddress;
         }
-
-        $dataEncoded = json_encode(array('data' => $data));
-        echo $dataEncoded;
+        echo json_encode(array('data' => $data));
 
         $this->view = 'ajax';
     }
@@ -373,29 +361,22 @@ class EmailsController extends SugarController
 
     public function action_ReplyTo()
     {
+        global $current_user;
         $this->composeBean($_REQUEST, self::COMPOSE_BEAN_MODE_REPLY_TO);
         $this->view = 'compose';
     }
 
     public function action_ReplyToAll()
     {
+        global $current_user;
         $this->composeBean($_REQUEST, self::COMPOSE_BEAN_MODE_REPLY_TO_ALL);
         $this->view = 'compose';
     }
 
     public function action_Forward()
     {
+        global $current_user;
         $this->composeBean($_REQUEST, self::COMPOSE_BEAN_MODE_FORWARD);
-        $this->view = 'compose';
-    }
-
-    /**
-     * Fills compose view body with the output from PDF Template
-     * @see sendEmail::send_email()
-     */
-    public function action_ComposeViewWithPdfTemplate()
-    {
-        $this->composeBean($_REQUEST, self::COMPOSE_BEAN_WITH_PDF_TEMPLATE);
         $this->view = 'compose';
     }
 
@@ -487,9 +468,6 @@ class EmailsController extends SugarController
             if ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {
                 $this->bean->to_addrs = '';
                 $this->bean->to_addrs_names = '';
-            } else if($mode === self::COMPOSE_BEAN_WITH_PDF_TEMPLATE) {
-                // Get Related To Field
-                // Populate to
             }
         }
 
@@ -508,11 +486,9 @@ class EmailsController extends SugarController
             if ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {
                 // Add FW to subject
                 $this->bean->name = $mod_strings['LBL_FW'] . $this->bean->name;
+            } else {
+                $this->bean->name = $mod_strings['LBL_NO_SUBJECT'] . $this->bean->name;
             }
-        }
-
-        if (empty($this->bean->name)) {
-            $this->bean->name = $mod_strings['LBL_NO_SUBJECT'] . $this->bean->name;
         }
 
         // Move body into original message
@@ -525,6 +501,7 @@ class EmailsController extends SugarController
                     $this->bean->description;
             }
         }
+
     }
 
 
