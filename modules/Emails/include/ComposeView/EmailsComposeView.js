@@ -1113,6 +1113,17 @@
 
             }
 
+            if ($('#is_only_plain_text').length === 1) {
+              $('#is_only_plain_text').click(function() {
+                var tinemceToolbar = $(tinymce.EditorManager.activeEditor.getContainer()).find('.mce-toolbar');
+                if ($('#is_only_plain_text').prop('checked')) {
+                  tinemceToolbar.hide();
+                } else {
+                  tinemceToolbar.show();
+                }
+              });
+            }
+
             if (typeof json.errors !== "undefined") {
               var message = '';
               $.each(json.errors, function (i, v) {
