@@ -1113,8 +1113,8 @@
 
             }
 
-            if ($('#is_only_plain_text').length === 1) {
-              $('#is_only_plain_text').click(function() {
+            if ($(self).find('#is_only_plain_text').length === 1) {
+              $(self).find('#is_only_plain_text').click(function() {
                 var tinemceToolbar = $(tinymce.EditorManager.activeEditor.getContainer()).find('.mce-toolbar');
                 if ($('#is_only_plain_text').prop('checked')) {
                   tinemceToolbar.hide();
