@@ -50,11 +50,11 @@ require_once('modules/Contacts/Contact.php');
 class sendEmail
 {
     /**
-     * @param $module
-     * @param $module_type
-     * @param $printable
-     * @param $file_name
-     * @param $attach
+     * @param SugarBean $module
+     * @param string $module_type
+     * @param string $printable
+     * @param string $file_name
+     * @param bool $attach
      * @see generatePDF (Entrypoint)
      * @deprecated use EmailController::composeViewFrom
      */
@@ -135,7 +135,7 @@ class sendEmail
             echo "Unable to initiate Email Client";
             exit;
         } else {
-            header('Location: index.php?action=ComposeViewWithPdfTemplate&module=Emails&return_module=' . $module_type . '&return_action=DetailView&return_id=' . $_REQUEST['record'] . '&record=' . $email_id);
+            header('Location: index.php?action=ComposeViewWithPdfTemplate&module=Emails&return_module=' . $module_type . '&return_action=DetailView&return_id=' . $module->id . '&record=' . $email_id);
         }
     }
 }
