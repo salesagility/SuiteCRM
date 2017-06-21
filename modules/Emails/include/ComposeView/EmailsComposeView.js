@@ -551,19 +551,39 @@
 
           // If the user is viewing the form in the standard view
           if ($(self).find('input[type="hidden"][name="return_module"]').val() !== '') {
-            location.href = 'index.php?module=' + $('#' + self.attr('id') + ' input[type="hidden"][name="return_module"]').val() +
-              '&action=' +
-              $(self).find('input[type="hidden"][name="return_action"]').val();
+            mb.on('ok', function() {
+              var url = 'index.php?';
+
+              var module = $('#' + self.attr('id') + ' input[type="hidden"][name="return_module"]').val();
+              if(module !== undefined) {
+                url = url + 'module=' + module;
+              }
+
+              var action =  $('#' + self.attr('id') + ' input[type="hidden"][name="return_action"]').val();
+              if(action !== undefined) {
+                url = url + '&action=' + action;
+              }
+
+              var record =  $('#' + self.attr('id') + ' input[type="hidden"][name="return_id"]').val();
+              if(record !== undefined) {
+                url = url + '&record=' + record;
+              }
+
+              location.href = url;
+            });
           } else {
-            // The user is viewing in the modal view
-            $(self).trigger("sentEmail", [self, data]);
+            mb.on('ok', function() {
+              // The user is viewing in the modal view
+              $(self).trigger("sentEmail", [self, response]);
+            });
+
           }
         }
       }).fail(function (response) {
         "use strict";
         mb.showHeader();
         mb.setBody(response.errors.title);
-        $(self).trigger("sentEmailError", [self, data]);
+        $(self).trigger("sentEmailError", [self, response]);
       }).always(function (data) {
         $(self).trigger("sentEmailAlways", [self, data]);
       });
