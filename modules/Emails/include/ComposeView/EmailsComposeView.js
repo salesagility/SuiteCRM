@@ -529,6 +529,11 @@
         formData.append($(v).attr('name'), $(v).val());
       });
 
+
+      $(this).find('input[type=checkbox]').each(function (i, v) {
+        formData.append($(v).attr('name'), $(v).prop('checked'));
+      })
+
       $.ajax({
         type: "POST",
         data: formData,
@@ -1126,6 +1131,17 @@
 
               $(self).trigger('emailComposeViewGetFromFields');
 
+            }
+
+            if ($(self).find('#is_only_plain_text').length === 1) {
+              $(self).find('#is_only_plain_text').click(function() {
+                var tinemceToolbar = $(tinymce.EditorManager.activeEditor.getContainer()).find('.mce-toolbar');
+                if ($('#is_only_plain_text').prop('checked')) {
+                  tinemceToolbar.hide();
+                } else {
+                  tinemceToolbar.show();
+                }
+              });
             }
 
             if (typeof json.errors !== "undefined") {
