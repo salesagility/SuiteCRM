@@ -50,7 +50,7 @@
             {foreach name=template from=$TEMPLATES key=templateKey item=template}
                 {if empty($template) == false}
                     {capture name=on_click_js assign=on_click_js}
-                        document.getElementById('popupDivBack_ara').style.display='none';document.getElementById('popupDiv_ara').style.display='none';var form=document.getElementById('popupForm');if(form!=null){ldelim}form.templateID.value='"{$template}"';form.submit();{rdelim}else{ldelim}alert('Error!');{rdelim}
+                        document.getElementById('popupDivBack_ara').style.display='none';document.getElementById('popupDiv_ara').style.display='none';var form=document.getElementById('popupForm');if(form!=null){ldelim}form.templateID.value='{$template}';form.submit();{rdelim}else{ldelim}alert('Error!');{rdelim}
                     {/capture}
                     <tr height="20">
                         <td width="17" valign="center"><a href="#" onclick="{$on_click_js}">
