@@ -1116,6 +1116,7 @@
                 if(typeof v.prepend !== "undefined" && v.prepend === true) {
                   self.prependSignature = true;
                 }
+                self.updateSignature();
               });
 
               var selectedInboundEmail = $(self).find('[name=inbound_email_id]').val();

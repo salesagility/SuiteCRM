@@ -1500,6 +1500,7 @@ $app_strings = array(
     'LBL_EMAIL_INVALID_SYSTEM_OUTBOUND' => 'An outgoing mail server is not configured to send emails. Please configure an outgoing mail server or select an outgoing mail server for the mail account that you are using in Settings >> Mail Account.',
     'LBL_EMAIL_SHOW_READ' => 'Show All',
     'LBL_EMAIL_SHOW_UNREAD_ONLY' => 'Show Unread Only',
+    'LBL_DEFAULT_EMAIL_SIGNATURES' => 'Default Signature',
     'LBL_EMAIL_SIGNATURES' => 'Signatures',
     'LBL_EMAIL_SIGNATURE_CREATE' => 'Create Signature',
     'LBL_EMAIL_SIGNATURE_NAME' => 'Signature Name',

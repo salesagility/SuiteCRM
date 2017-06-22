@@ -191,10 +191,19 @@ class EmailsController extends SugarController
         $accountSignatures = $current_user->getPreference('account_signatures', 'Emails');
         if($accountSignatures != null) {
             $emailSignatures = unserialize(base64_decode($accountSignatures));
-            $defaultEmailSignature = $current_user->getPreference('signature_default');
         } else {
-            $defaultEmailSignature = null;
-            $GLOBALS['log']->warn('User does not have a signature');
+            $GLOBALS['log']->warn('User '.$current_user->name.' does not have a signature');
+        }
+
+        $defaultEmailSignature = $current_user->getDefaultSignature();
+        if(empty($defaultEmailSignature)) {
+            $defaultEmailSignature = array(
+                'html' => '<br>',
+                'plain' => '\r\n',
+            );
+            $defaultEmailSignature['no_default_available'] = true;
+        } else {
+            $defaultEmailSignature['no_default_available'] = false;
         }
 
         $prependSignature = $current_user->getPreference('signature_prepend');
@@ -217,24 +226,30 @@ class EmailsController extends SugarController
             );
 
             // Include signature
-            if (isset($emailSignatures[$inboundEmail->id])) {
+            if (isset($emailSignatures[$inboundEmail->id]) && !empty($emailSignatures[$inboundEmail->id])) {
                 $emailSignatureId = $emailSignatures[$inboundEmail->id];
             } else {
-                $emailSignatureId = $defaultEmailSignature;
+                $emailSignatureId = '';
             }
 
             $signature = $current_user->getSignature($emailSignatureId);
             if(!$signature) {
-                $GLOBALS['log']->warn('User does not have a signature, empty string will used instead');
-                $signature['signature_html'] = '';
-                $signature['signature'] = '';
-            }
-            $dataAddress['emailSignatures'] = array(
-                'html' => utf8_encode(html_entity_decode($signature['signature_html'])),
-                'plain' => $signature['signature'],
-            );
 
-            
+                if($defaultEmailSignature['no_default_available'] === true) {
+                    $dataAddress['emailSignatures'] = $defaultEmailSignature;
+                } else {
+                    $dataAddress['emailSignatures'] = array(
+                        'html' => utf8_encode(html_entity_decode($defaultEmailSignature['signature_html'])),
+                        'plain' => $defaultEmailSignature['signature'],
+                    );
+                }
+            } else {
+                $dataAddress['emailSignatures'] = array(
+                    'html' => utf8_encode(html_entity_decode($signature['signature_html'])),
+                    'plain' => $signature['signature'],
+                );
+            }
+
             $data[] = $dataAddress;
         }
 
