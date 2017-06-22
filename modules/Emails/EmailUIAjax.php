@@ -1444,13 +1444,8 @@ eoq;
 
             global $current_user;
             $email_default_signatures = $current_user->getPreference('signature_default');
-            if(empty($email_signatures[$ieId])) {
-                $email_signatures_id = $email_default_signatures;
-                $email_account_signatures = $current_user->getEmailAccountSignatures(false, '');
-            } else {
-                $email_signatures_id = $email_signatures[$ieId];
-                $email_account_signatures = $current_user->getEmailAccountSignatures(false, $email_signatures_id);
-            }
+            $email_account_signatures = $current_user->getEmailAccountSignatures(false, '');
+
 
             $ret['email_account_signatures'] = $email_account_signatures;
 
