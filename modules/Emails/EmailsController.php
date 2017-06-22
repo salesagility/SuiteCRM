@@ -194,8 +194,9 @@ class EmailsController extends SugarController
         if(empty($defaultEmailSignature)) {
             $defaultEmailSignature = array(
                 'html' => '<br>',
-                'plain' => '\n',
+                'plain' => '\r\n',
             );
+            $defaultEmailSignature['no_default_available'] = true;
         } else {
             $defaultEmailSignature['no_default_available'] = false;
         }
@@ -228,7 +229,15 @@ class EmailsController extends SugarController
 
             $signature = $current_user->getSignature($emailSignatureId);
             if(!$signature) {
-                $dataAddress['emailSignatures'] = $defaultEmailSignature;
+
+                if($defaultEmailSignature['no_default_available'] === true) {
+                    $dataAddress['emailSignatures'] = $defaultEmailSignature;
+                } else {
+                    $dataAddress['emailSignatures'] = array(
+                        'html' => utf8_encode(html_entity_decode($defaultEmailSignature['signature_html'])),
+                        'plain' => $defaultEmailSignature['signature'],
+                    );
+                }
             } else {
                 $dataAddress['emailSignatures'] = array(
                     'html' => utf8_encode(html_entity_decode($signature['signature_html'])),
