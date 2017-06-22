@@ -1062,7 +1062,6 @@
           $.ajax({
             "url": 'index.php?module=Emails&action=getFromFields'
           }).done(function (response) {
-            debugger;
             var json = JSON.parse(response);
             if (typeof json.data !== "undefined") {
               $(json.data).each(function (i, v) {
@@ -1092,6 +1091,7 @@
                 if(typeof v.prepend !== "undefined" && v.prepend === true) {
                   self.prependSignature = true;
                 }
+                self.updateSignature();
               });
 
               var selectedInboundEmail = $(self).find('[name=inbound_email_id]').val();
