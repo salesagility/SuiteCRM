@@ -1639,6 +1639,7 @@ function get_select_options_with_id_separate_key($label_list, $key_list, $select
     $select_options = '';
 
     //for setting null selection values to human readable --None--
+    get_select_empty_option();
     $pattern = "/'0?'></";
     $replacement = "''>".$app_strings['LBL_NONE'].'<';
     if ($massupdate) {
@@ -1671,6 +1672,76 @@ function get_select_options_with_id_separate_key($label_list, $key_list, $select
     $select_options = preg_replace($pattern, $replacement, $select_options);
 
     return $select_options;
+}
+
+
+/**
+ * @param string $value
+ * @param bool $isSelected
+ * @param string $app_strings_label
+ * @return string as HTML eg <OPTION value="">--None--</OPTION>
+ */
+function get_select_empty_option($value = '', $isSelected = false, $app_strings_label = 'LBL_NONE')
+{
+    global $app_strings;
+
+    $response = '<OPTION value="'.$value.'"';
+
+    if($isSelected === true) {
+        $response .= ' ' . 'selected';
+    }
+
+    $response .= '>' .  $app_strings[$app_strings_label] . '</OPTION>';
+
+    return $response;
+}
+
+function get_select_full_option($value = '', $isSelected = false, $translatedLabel = '----')
+{
+    global $app_strings;
+
+    $response = '<OPTION value="'.$value.'"';
+
+    if($isSelected === true) {
+        $response .= ' ' . 'selected';
+    }
+
+    $response .= '>';
+    $response .= $translatedLabel;
+    $response .= '</OPTION>';
+
+    return $response;
+}
+
+/**
+ * @param array $option_list
+ * @param string $selected_key
+ * @return string as HTML <OPTION value="id1">apple</OPTION><OPTION value="id2">banana</OPTION>
+ */
+function get_select_full_options_with_id($option_list = array(), $selected_key = '')
+{
+    $response = '';
+
+    foreach ($option_list as $option_key => $option_value)
+    {
+        $isSelected = false;
+
+        if(empty($option_key)) {
+         continue;
+        }
+
+        if(empty($option_value)) {
+            continue;
+        }
+
+        if($option_key === $selected_key)
+        {
+            $isSelected = true;
+        }
+
+        $response .= get_select_full_option($option_key, $isSelected, $option_value);
+    }
+    return $response;
 }
 
 /**

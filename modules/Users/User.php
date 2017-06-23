@@ -154,6 +154,7 @@ class User extends Person {
 
 	/**
 	 * convenience function to get user's default signature
+     * return array
 	 */
 	function getDefaultSignature() {
 		if($defaultId = $this->getPreference('signature_default')) {
@@ -218,6 +219,43 @@ class User extends Person {
 
 		return $out;
 	}
+
+
+    /**
+     * retrieves any signatures that the User may have created as <select>
+     */
+    public function getEmailAccountSignatures(
+        $live = false,
+        $defaultSig = '',
+        $forSettings = false,
+        $elementId = 'account_signature_id'
+    )
+    {
+        $sig = $this->getSignaturesArray();
+        $sigs = array();
+        foreach ($sig as $key => $arr)
+        {
+            $sigs[$key] = !empty($arr['name']) ? $arr['name'] : '';
+        }
+
+        $change = '';
+        if(!$live) {
+            $change = ($forSettings) ? "onChange='displaySignatureEdit();'" : "onChange='setSigEditButtonVisibility();'";
+        }
+
+        $id = (!$forSettings) ? $elementId : 'signature_idDisplay';
+
+        $out  = "<select {$change} id='{$id}' name='{$id}'>";
+        if(empty($defaultSig)) {
+            $out .= get_select_empty_option($defaultSig, true, 'LBL_DEFAULT_EMAIL_SIGNATURES');
+        } else {
+            $out .= get_select_empty_option($defaultSig, false, 'LBL_DEFAULT_EMAIL_SIGNATURES');
+        }
+        $out .= get_select_full_options_with_id($sigs, $defaultSig);
+        $out .= '</select>';
+
+        return $out;
+    }
 
 	/**
 	 * returns buttons and JS for signatures
