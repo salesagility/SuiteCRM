@@ -1424,8 +1424,7 @@ class SugarThemeRegistry
         }
         asort($themelist, SORT_STRING);
         if (count($themelist)==0) {
-		$themelist= array('SuiteP' => 'Suite P');
-		$GLOBALS['log']->error('availableThemes() was returning empty array, SuiteP added! Check disabled_themes in config.php and config_override.php');
+     		$GLOBALS['log']->fatal('availableThemes() is returning an empty array! Check disabled_themes in config.php and config_override.php');
         }
         return $themelist;
     }
