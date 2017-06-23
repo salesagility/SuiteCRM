@@ -7606,7 +7606,7 @@ eoq;
         foreach ($msgNumbers as $msgNumber) {
             $uid = $this->getMessageUID($msgNumber, $protocol);
             $GLOBALS['log']->info('Importing message no: ' . $msgNumber);
-            $this->importOneEmail($msgNumber, $uid, false, false);
+            $this->returnImportedEmail($msgNumber, $uid, false, false);
         }
     }
 
