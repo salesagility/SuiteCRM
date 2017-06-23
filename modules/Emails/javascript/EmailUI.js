@@ -171,15 +171,8 @@ SE.accounts = {
 	            var oColumn = this.getColumn(elCheckbox);
 	          	if(oColumn.key == 'is_active')
 	          	{
-	          		var oRecord = this.getRecord(elCheckbox);
-	          		oRecord.setData("is_active",elCheckbox.checked);
-	          		var t_id = oRecord.getData('id');
-	            	var isGroupFolder = oRecord.getData('has_groupfolder');
 
-	            	if(isGroupFolder)
-	            	    SUGAR.email2.folders.updateSubscriptions();
-	            	else
-    	            	SUGAR.email2.folders.setFolderSelection();
+                SUGAR.email2.folders.setFolderSelection();
 
 	          	}
 	        });
@@ -728,6 +721,11 @@ SE.accounts = {
         document.getElementById('mailbox').value = o.mailbox;
 
 
+      if(typeof o.email_account_signatures !== "undefined") {
+        jQuery('#account_signature_id').replaceWith(o.email_account_signatures);
+      }
+      $('#account_signature_id').val(o.email_signatures);
+
         var i = 0;
 
         // handle SSL
@@ -1024,6 +1022,7 @@ SE.accounts = {
         SUGAR.showMessageBox(app_strings.LBL_EMAIL_SETTINGS_RETRIEVING_ACCOUNT, app_strings.LBL_EMAIL_ONE_MOMENT);
 		var query = "&emailUIAction=getIeAccount&ieId=" + ieId;
 
+        console.log(urlStandard + query);
         AjaxObject.startRequest(callbackIeAccountRetrieve, urlStandard + query);
     },
 
@@ -3386,7 +3385,6 @@ SE.settings = {
 
         SE.settings.settingsDialog.hide();
     },
-
     /**
      * Shows settings container screen
      */

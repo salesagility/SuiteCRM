@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,89 +34,25 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
 
 {{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
-{* Compose view has a TEMP ID in case you want to display multi instance of the ComposeView *}
-<form class="compose-view" id="ComposeView" name="ComposeView" method="POST" action="index.php?module=Emails&action=send">
+<form class="email-import-view" id="EditView" name="EditView" method="POST" action="index.php?module=Emails&action=send">
     <input type="hidden" name="module" value="Emails">
-    <input type="hidden" name="action" value="send">
+    <input type="hidden" name="action" value="Import">
     <input type="hidden" name="record" value="">
     <input type="hidden" name="type" value="out">
     <input type="hidden" name="send" value="1">
     <input type="hidden" name="return_module" value="{$RETURN_MODULE}">
     <input type="hidden" name="return_action" value="{$RETURN_ACTION}">
-    <input type="hidden" name="return_id" value="{$RETURN_ID}">
     <input type="hidden" name="inbound_email_id" value="{$INBOUND_ID}">
 <div id="EditView_tabs">
     {*display tabs*}
     {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
-    <ul class="nav nav-tabs">
-        {{if $useTabs}}
-        {{foreach name=section from=$sectionPanels key=label item=panel}}
-        {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
-        {* if tab *}
-        {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true)}}
-        {*if tab display*}
-        {{counter name="tabCount" print=false}}
-        {{if $tabCount == '0'}}
-        <li role="presentation" class="active">
-            <a id="tab{{$tabCount}}" data-toggle="tab" class="hidden-xs">
-                {sugar_translate label='{{$label}}' module='{{$module}}'}
-            </a>
-            {* Count Tabs *}
-            {{counter name="tabCountOnlyXS" start=-1 print=false assign="tabCountOnlyXS"}}
-            {{foreach name=sectionOnlyXS from=$sectionPanels key=labelOnly item=panelOnlyXS}}
-            {{capture name=label_upper_count_only assign=label_upper_count_only}}{{$labelOnly|upper}}{{/capture}}
-            {{if (isset($tabDefs[$label_upper_count_only].newTab) && $tabDefs[$label_upper_count_only].newTab == true)}}
-                {{counter name="tabCountOnlyXS" print=false}}
-            {{/if}}
-            {{/foreach}}
-
-            {*
-                For the mobile view, only show the first tab has a drop down when:
-                * There is more than one tab set
-                * When Acton Menu's are enabled
-            *}
-            <!-- Counting Tabs {{$tabCountOnlyXS}}-->
-            <a id="xstab{{$tabCount}}" href="#" class="visible-xs first-tab{{if $tabCountOnlyXS > 0}}-xs{{/if}} dropdown-toggle" data-toggle="dropdown">
-                {sugar_translate label='{{$label}}' module='{{$module}}'}
-            </a>
-            {{if $tabCountOnlyXS > 0}}
-            <ul id="first-tab-menu-xs" class="dropdown-menu">
-                {{counter name="tabCountXS" start=0 print=false assign="tabCountXS"}}
-                {{foreach name=sectionXS from=$sectionPanels key=label item=panelXS}}
-                {{capture name=label_upper_xs assign=label_upper_xs}}{{$label|upper}}{{/capture}}
-                {{if (isset($tabDefs[$label_upper_xs].newTab) && $tabDefs[$label_upper_xs].newTab == true)}}
-                <li role="presentation">
-                    <a id="tab{{$tabCountXS}}" data-toggle="tab" onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
-                        {sugar_translate label='{{$label}}' module='{{$module}}'}
-                    </a>
-                </li>
-                {{counter name="tabCountXS" print=false}}
-                {{/if}}
-                {{/foreach}}
-            </ul>
-            {{/if}}
-        </li>
-        {{else}}
-        <li role="presentation" class="hidden-xs">
-            <a id="tab{{$tabCount}}"  data-toggle="tab">
-                {sugar_translate label='{{$label}}' module='{{$module}}'}
-            </a>
-        </li>
-        {{/if}}
-        {{else}}
-        {* if panel skip*}
-        {{/if}}
-        {{/foreach}}
-        {{/if}}
-
-    </ul>
 
     <div class="clearfix"></div>
     {{if $useTabs}}
@@ -190,10 +126,6 @@
             {{/foreach}}
         </div>
     </div>
-    <div class="attachments">
-        <div class="file-attachments"></div>
-        <div class="document-attachments"></div>
-    </div>
 {{sugar_include type='smarty' file=$footerTpl}}
 
 {if $RETURN_MODULE}
@@ -249,12 +181,5 @@
         </script>
 
     {/literal}
-
-    <script>
-        {* Compose view has a TEMP ID in case you want to display multi instance of the ComposeView *}
-      $(document).ready(function() {ldelim}
-          $('#ComposeView').EmailsComposeView();
-      {rdelim});
-    </script>
     {/if}
 </form>

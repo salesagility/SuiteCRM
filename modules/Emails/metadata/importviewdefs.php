@@ -38,22 +38,41 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+$module_name = 'Emails';
+$viewdefs[$module_name]['EditView'] = array(
+    'templateMeta' => array(
+        'maxColumns' => '2',
+        'widths' => array(
+            array('label' => '10', 'field' => '30'),
+            array('label' => '10', 'field' => '30')
+        ),
+        'form' => array(
+            'headerTpl' => 'modules/Emails/include/ComposeView/ComposeViewBlank.tpl',
+            'footerTpl' => 'modules/Emails/include/ComposeView/ComposeViewBlank.tpl',
+            'buttons' => array(),
+            'includes' => array(
+                array(
+                    'file' => 'modules/Emails/include/DetailView/ImportView.js'
+                ),
+                array(
+                    'file' => 'modules/Emails/include/DetailView/import.js'
+                )
+            ),
+        ),
+    ),
+    'panels' => array(
+        'LBL_EMAIL_INFORMATION' => array(
+            array(
+                'parent_name' => array(
+                    'name' => 'assigned_user_name',
+                    'label' => 'LBL_ASSIGNED_TO',
+                )
+            ),
+            array(
+                'parent_name'
+            ),
 
-class <module_name>ViewEdit extends ViewEdit{
+        )
+    )
 
-    public function display()
-    {
-        if (isset($this->bean->id)) {
-            $this->ss->assign('FILE_OR_HIDDEN', 'hidden');
-            if (empty($_REQUEST['isDuplicate']) || $_REQUEST['isDuplicate'] === 'false') {
-                $this->ss->assign('DISABLED', 'disabled');
-            }
-        } else {
-            $this->ss->assign('FILE_OR_HIDDEN', 'file');
-        }
-        parent::display();
-    }
-}
+);

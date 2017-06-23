@@ -46,7 +46,7 @@ require_once('include/SugarPHPMailer.php');
 require_once 'include/UploadFile.php';
 require_once 'include/UploadMultipleFiles.php';
 
-class Email extends SugarBean
+class Email extends Basic
 {
     /**
      * @var string $from_addr
@@ -403,6 +403,10 @@ class Email extends SugarBean
      */
     public $orphaned;
 
+    /**
+     * @var Link2 $notes
+     */
+    public $notes;
 
     /**
      * sole constructor
@@ -1385,6 +1389,10 @@ class Email extends SugarBean
             $this->bcc_addrs_names = $this->cleanEmails($this->bcc_addrs_names);
             $this->reply_to_addr = $this->cleanEmails($this->reply_to_addr);
             $this->description = SugarCleaner::cleanHtml($this->description);
+            if(empty($this->description_html)) {
+                $this->description_html = $this->description;
+                $this->description_html = nl2br($this->description_html);
+            }
             $this->description_html = SugarCleaner::cleanHtml($this->description_html, true);
             $this->raw_source = SugarCleaner::cleanHtml($this->raw_source, true);
             $this->saveEmailText();
@@ -1562,53 +1570,53 @@ class Email extends SugarBean
             }
         }
 
-        return join(", ", $res);
+        return implode(", ", $res);
     }
 
     protected function saveEmailText()
     {
-        $text = SugarModule::get("EmailText")->loadBean();
+        $emailText = SugarModule::get("EmailText")->loadBean();
         foreach ($this->email_to_text as $textfield => $mailfield) {
-            $text->$textfield = $this->$mailfield;
+            $emailText->{$textfield} = $this->{$mailfield};
         }
-        $text->email_id = $this->id;
+        $emailText->email_id = $this->id;
         if (!$this->new_with_id) {
-            $this->db->update($text);
+            $this->db->update($emailText);
         } else {
-            $this->db->insert($text);
+            $this->db->insert($emailText);
         }
     }
 
     ///////////////////////////////////////////////////////////////////////////
     ////	RETRIEVERS
-    function retrieve($id = -1, $encoded = true, $deleted = true)
+    public function retrieve($id = -1, $encoded = true, $deleted = true)
     {
         // cn: bug 11915, return SugarBean's retrieve() call bean instead of $this
-        $ret = parent::retrieve($id, $encoded, $deleted);
+        $email = parent::retrieve($id, $encoded, $deleted);
 
-        if ($ret) {
-            $ret->retrieveEmailText();
+        if ($email) {
+            $email->retrieveEmailText();
             //$ret->raw_source = SugarCleaner::cleanHtml($ret->raw_source);
-            $ret->description = to_html($ret->description);
-            //$ret->description_html = SugarCleaner::cleanHtml($ret->description_html);
-            $ret->retrieveEmailAddresses();
-
-            $ret->date_start = '';
-            $ret->time_start = '';
-            $dateSent = explode(' ', $ret->date_sent);
-            if (!empty($dateSent)) {
-                $ret->date_start = $dateSent[0];
-                if (isset($dateSent[1])) {
-                    $ret->time_start = $dateSent[1];
-                }
+            $email->description = $email->description;
+            if(empty($email->description_html)) {
+                $email->description_html = $email->description;
+                $email->description_html = nl2br($email->description_html);
             }
-            // for Email 2.0
-            foreach ($ret as $k => $v) {
-                $this->$k = $v;
+            //$ret->description_html = SugarCleaner::cleanHtml($ret->description_html);
+            $email->retrieveEmailAddresses();
+
+            $email->date_start = '';
+            $email->time_start = '';
+            $dateSent = explode(' ', $email->date_sent);
+            if (!empty($dateSent)) {
+                $email->date_start = $dateSent[0];
+                if (isset($dateSent[1])) {
+                    $email->time_start = $dateSent[1];
+                }
             }
         }
 
-        return $ret;
+        return $email;
     }
 
 
@@ -2357,7 +2365,7 @@ class Email extends SugarBean
             if (!empty($this->id) && !$this->new_with_id) {
                 $note = new Note();
                 $where = "notes.parent_id='{$this->id}'";
-                $notes_list = $note->get_full_list("", $where, true);
+                $notes_list = (array)$note->get_full_list("", $where, true);
             }
             $this->attachments = array_merge($this->attachments, $notes_list);
         }
@@ -2403,7 +2411,7 @@ class Email extends SugarBean
         }
 
         $this->saved_attachments = array();
-        foreach ($this->attachments as $note) {
+        foreach ((array)$this->attachments as $note) {
             if (!empty($note->id)) {
                 array_push($this->saved_attachments, $note);
                 continue;
@@ -2589,31 +2597,23 @@ class Email extends SugarBean
     public function handleBody($mail)
     {
         global $current_user;
-        ///////////////////////////////////////////////////////////////////////
-        ////	HANDLE EMAIL FORMAT PREFERENCE
-        // the if() below is HIGHLY dependent on the Javascript unchecking the Send HTML Email box
-        // HTML email
-        if ((isset($_REQUEST['setEditor']) /* from Email EditView navigation */
-                && $_REQUEST['setEditor'] == 1
-                && trim($_REQUEST['description_html']) != '')
-            || trim($this->description_html) != '' /* from email templates */
-            && $current_user->getPreference('email_editor_option',
-                'global') !== 'plain' //user preference is not set to plain text
-        ) {
-            $this->handleBodyInHTMLformat($mail);
-        } else {
+
+        // User preferences should takee precedence over everything else
+        $emailSettings = $current_user->getPreference('emailSettings',  'Emails');
+        $alwaysSendEmailsInPlainText = $emailSettings['sendPlainText'] === '1';
+
+        $sendEmailsInPlainText = false;
+        if(isset($_REQUEST['is_only_plain_text']) && $_REQUEST['is_only_plain_text'] === 'true') {
+            $sendEmailsInPlainText = true;
+        }
+
+        if($alwaysSendEmailsInPlainText === true) {
             // plain text only
-            $this->description_html = '';
-            $mail->IsHTML(false);
-            $plainText = from_html($this->description);
-            $plainText = str_replace("&nbsp;", " ", $plainText);
-            $plainText = str_replace("</p>", "</p><br />", $plainText);
-            $plainText = strip_tags(br2nl($plainText));
-            $plainText = str_replace("&amp;", "&", $plainText);
-            $plainText = str_replace("&#39;", "'", $plainText);
-            $mail->Body = wordwrap($plainText, 996);
-            $mail->Body = $this->decodeDuringSend($mail->Body);
-            $this->description = $mail->Body;
+            $this->handleBodyInPlainTextFormat($mail);
+        } else if($alwaysSendEmailsInPlainText === false && $sendEmailsInPlainText === true) {
+            $this->handleBodyInPlainTextFormat($mail);
+        } else {
+            $this->handleBodyInHTMLformat($mail);
         }
 
         // wp: if plain text version has lines greater than 998, use base64 encoding
@@ -2623,8 +2623,6 @@ class Email extends SugarBean
                 break;
             }
         }
-        ////	HANDLE EMAIL FORMAT PREFERENCE
-        ///////////////////////////////////////////////////////////////////////
 
         return $mail;
     }
@@ -3895,7 +3893,7 @@ eoq;
      * @param array $request TODO: implement PSR 7 interface and refactor
      * @return bool|Email|SugarBean
      */
-    public function populateBeanFromRequest(Email $bean, $request)
+    public function populateBeanFromRequest($bean, $request)
     {
         if (empty($bean)) {
             $bean = BeanFactory::getBean('Emails');
@@ -4151,5 +4149,32 @@ eoq;
         }
 
         return $bean;
+    }
+
+    /**
+     * @param Note $note
+     */
+    public function attachNote(Note $note)
+    {
+        $this->load_relationship('notes');
+        $this->notes->addBean($note);
+    }
+
+    /**
+     * @param $mail
+     */
+    protected function handleBodyInPlainTextFormat($mail)
+    {
+        $this->description_html = '';
+        $mail->IsHTML(false);
+        $plainText = from_html($this->description);
+        $plainText = str_replace("&nbsp;", " ", $plainText);
+        $plainText = str_replace("</p>", "</p><br />", $plainText);
+        $plainText = strip_tags(br2nl($plainText));
+        $plainText = str_replace("&amp;", "&", $plainText);
+        $plainText = str_replace("&#39;", "'", $plainText);
+        $mail->Body = wordwrap($plainText, 996);
+        $mail->Body = $this->decodeDuringSend($mail->Body);
+        $this->description = $mail->Body;
     }
 } // end class def

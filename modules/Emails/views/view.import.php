@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 
-class EmailsViewCompose extends ViewEdit {
+class EmailsViewImport extends ViewEdit {
 
     /**
      * @var Email $bean
@@ -56,15 +56,13 @@ class EmailsViewCompose extends ViewEdit {
      */
     public function __construct()
     {
-        $this->type = 'compose';
-        if(empty($_REQUEST['return_module'])) {
-            $this->options['show_title'] = false;
-            $this->options['show_header'] = false;
-            $this->options['show_footer'] = false;
-            $this->options['show_javascript'] = false;
-            $this->options['show_subpanels'] = false;
-            $this->options['show_search'] = false;
-        }
+        $this->options['show_title'] = false;
+        $this->options['show_header'] = false;
+        $this->options['show_footer'] = false;
+        $this->options['show_javascript'] = false;
+        $this->options['show_subpanels'] = false;
+        $this->options['show_search'] = false;
+        $this->type = 'ImportView';
     }
 
     /**
@@ -73,6 +71,7 @@ class EmailsViewCompose extends ViewEdit {
     public function preDisplay()
     {
         global $current_user;
+
         $metadataFile = $this->getMetaDataFile();
         $this->ev = $this->getEditView();
         $this->ev->ss =& $this->ss;
@@ -85,65 +84,13 @@ class EmailsViewCompose extends ViewEdit {
         }
 
         $this->ev->ss->assign('TEMP_ID', create_guid());
-        $this->ev->ss->assign('RETURN_MODULE', isset($_GET['return_module']) ? $_GET['return_module'] : '');
-        $this->ev->ss->assign('RETURN_ACTION', isset($_GET['return_action']) ? $_GET['return_action'] : '');
-        $this->ev->ss->assign('RETURN_ID', isset($_GET['return_id']) ? $_GET['return_id'] : '');
+        $this->ev->ss->assign('RETURN_MODULE', isset($_REQUEST['return_module']) ? $_REQUEST['return_module'] : '');
+        $this->ev->ss->assign('RETURN_ACTION', isset($_REQUEST['return_action']) ? $_REQUEST['return_action'] : '');
         $this->ev->setup(
             $this->module,
             $this->bean,
-            $metadataFile,
-            get_custom_file_if_exists('modules/Emails/include/ComposeView/ComposeView.tpl')
+            'modules/Emails/metadata/importviewdefs.php',
+            'modules/Emails/include/ImportView/ImportView.tpl'
         );
     }
-
-    /**
-     * Get EditView object
-     * @return EditView
-     */
-    public function getEditView()
-    {
-        $a = dirname( dirname(__FILE__) ) . '/include/ComposeView/ComposeView.php';
-        require_once 'modules/Emails/include/ComposeView/ComposeView.php';
-        return new ComposeView();
-    }
-
-    /**
-     * Prepends body with $user's default signature
-     * @param Email $email
-     * @param User $user
-     * @return bool|Email
-     * @throws SugarControllerException
-     */
-    public function getSignatures(User $user)
-    {
-        if(empty($user->id) || $user->new_with_id === true) {
-            throw new \SugarControllerException(
-                'EmailsController::composeSignature() requires an existing User and not a new User object. '.
-                'This is typically the $current_user global'
-            );
-        }
-
-        $emailSignatures = unserialize(base64_decode($user->getPreference('account_signatures', 'Emails')));
-
-        if(isset($emailSignatures[$email->mailbox_id])) {
-            $emailSignatureId = $emailSignatures[$email->mailbox_id];
-        } else {
-            $emailSignatureId = $user->getPreference('signature_default');
-        }
-        if(gettype($emailSignatureId) === 'string') {
-            $emailSignatures = $user->getSignature($emailSignatureId);
-            $email->description .= $emailSignatures['signature'];
-            $email->description_html .= html_entity_decode($emailSignatures['signature_html']);
-            return $email;
-        } else {
-            $GLOBALS['log']->warn(
-                'EmailsController::composeSignature() was unable to get the signature id for user: '.
-                $user->name
-            );
-            return false;
-        }
-    }
-
-
-
 }
