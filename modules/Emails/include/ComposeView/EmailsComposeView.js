@@ -529,6 +529,11 @@
         formData.append($(v).attr('name'), $(v).val());
       });
 
+
+      $(this).find('input[type=checkbox]').each(function (i, v) {
+        formData.append($(v).attr('name'), $(v).prop('checked'));
+      })
+
       $.ajax({
         type: "POST",
         data: formData,
@@ -551,19 +556,39 @@
 
           // If the user is viewing the form in the standard view
           if ($(self).find('input[type="hidden"][name="return_module"]').val() !== '') {
-            location.href = 'index.php?module=' + $('#' + self.attr('id') + ' input[type="hidden"][name="return_module"]').val() +
-              '&action=' +
-              $(self).find('input[type="hidden"][name="return_action"]').val();
+            mb.on('ok', function() {
+              var url = 'index.php?';
+
+              var module = $('#' + self.attr('id') + ' input[type="hidden"][name="return_module"]').val();
+              if(module !== undefined) {
+                url = url + 'module=' + module;
+              }
+
+              var action =  $('#' + self.attr('id') + ' input[type="hidden"][name="return_action"]').val();
+              if(action !== undefined) {
+                url = url + '&action=' + action;
+              }
+
+              var record =  $('#' + self.attr('id') + ' input[type="hidden"][name="return_id"]').val();
+              if(record !== undefined) {
+                url = url + '&record=' + record;
+              }
+
+              location.href = url;
+            });
           } else {
-            // The user is viewing in the modal view
-            $(self).trigger("sentEmail", [self, data]);
+            mb.on('ok', function() {
+              // The user is viewing in the modal view
+              $(self).trigger("sentEmail", [self, response]);
+            });
+
           }
         }
       }).fail(function (response) {
         "use strict";
         mb.showHeader();
         mb.setBody(response.errors.title);
-        $(self).trigger("sentEmailError", [self, data]);
+        $(self).trigger("sentEmailError", [self, response]);
       }).always(function (data) {
         $(self).trigger("sentEmailAlways", [self, data]);
       });
@@ -1091,6 +1116,7 @@
                 if(typeof v.prepend !== "undefined" && v.prepend === true) {
                   self.prependSignature = true;
                 }
+                self.updateSignature();
               });
 
               var selectedInboundEmail = $(self).find('[name=inbound_email_id]').val();
@@ -1106,6 +1132,17 @@
 
               $(self).trigger('emailComposeViewGetFromFields');
 
+            }
+
+            if ($(self).find('#is_only_plain_text').length === 1) {
+              $(self).find('#is_only_plain_text').click(function() {
+                var tinemceToolbar = $(tinymce.EditorManager.activeEditor.getContainer()).find('.mce-toolbar');
+                if ($('#is_only_plain_text').prop('checked')) {
+                  tinemceToolbar.hide();
+                } else {
+                  tinemceToolbar.show();
+                }
+              });
             }
 
             if (typeof json.errors !== "undefined") {
