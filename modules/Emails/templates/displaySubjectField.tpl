@@ -40,12 +40,20 @@
 *}
 <div class="email-subject">
     {if $bean}
-        {if !empty($bean.id) and $bean.status == $APP_LIST_STRINGS.dom_email_status.draft}
-            <a href="index.php?module=Emails&action=DetailDraftView&record={$bean.id}">{$bean.name}</a>
-        {elseif !empty($bean.id) and $bean.status != $APP_LIST_STRINGS.dom_email_status.draft}
-            <a href="index.php?module=Emails&action=DetailView&record={$bean.id}">{$bean.name}</a>
+        {* Handle empty subject *}
+        {if $bean.name == ''}
+            {capture name=subject assign=subject}{$MOD.LBL_NO_SUBJECT}{/capture}
         {else}
-            <a href="index.php?module=Emails&action=DisplayDetailView&folder={$bean.folder}&folder={$bean.folder_type}&inbound_email_record={$bean.inbound_email_record}&uid={$bean.uid}&msgno={$bean.msgno}">{$bean.name}</a>
+            {capture name=subject assign=subject}{$bean.name}{/capture}
+        {/if}
+
+        {* Display Link *}
+        {if !empty($bean.id) and $bean.status == $APP_LIST_STRINGS.dom_email_status.draft}
+            <a href="index.php?module=Emails&action=DetailDraftView&record={$bean.id}">{$subject}</a>
+        {elseif !empty($bean.id) and $bean.status != $APP_LIST_STRINGS.dom_email_status.draft}
+            <a href="index.php?module=Emails&action=DetailView&record={$bean.id}">{$subject}</a>
+        {else}
+            <a href="index.php?module=Emails&action=DisplayDetailView&folder={$bean.folder}&folder={$bean.folder_type}&inbound_email_record={$bean.inbound_email_record}&uid={$bean.uid}&msgno={$bean.msgno}">{$subject}</a>
         {/if}
     {/if}
 </div>
