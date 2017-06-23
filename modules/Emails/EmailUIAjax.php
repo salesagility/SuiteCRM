@@ -1342,7 +1342,7 @@ eoq;
                     $current_user->setPreference('showFolders', $showStore, 0, 'Emails');
                 }
 
-                if(!empty($_REQUEST['account_signature_id'])){
+                if(isset($_REQUEST['account_signature_id'])){
                     $email_signatures = $current_user->getPreference('account_signatures', 'Emails');
                     $email_signatures = unserialize(base64_decode($email_signatures));
                     if(empty($email_signatures)) {
@@ -1436,12 +1436,18 @@ eoq;
             $email_signatures = $current_user->getPreference('account_signatures', 'Emails');
             $email_signatures = unserialize(base64_decode($email_signatures));
 
-
             if(!empty($email_signatures) && isset($email_signatures[$ieId])) {
                 $ret['email_signatures'] = $email_signatures[$ieId];
             } else {
                 $ret['email_signatures'] = null;
             }
+
+            global $current_user;
+            $email_default_signatures = $current_user->getPreference('signature_default');
+            $email_account_signatures = $current_user->getEmailAccountSignatures(false, '');
+
+
+            $ret['email_account_signatures'] = $email_account_signatures;
 
 
             $out = $json->encode($ret);
