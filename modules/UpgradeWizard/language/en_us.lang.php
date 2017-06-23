@@ -317,5 +317,5 @@ $mod_strings = array(
 													7 => 'Failed to write file to disk.',
 													8 => 'File upload stopped by extension.',
 ),
-	'LBL_UPGRD_CSTM_CHK' => "Upgrade process will updates some files but these files also exists in custom/ folder. Please review the changes before continue:",
+	'LBL_UPGRD_CSTM_CHK' => "Upgrade process will update some files but these files also exist in custom/ folder. Please review the changes before continuing:",
 );
