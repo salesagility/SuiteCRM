@@ -403,10 +403,6 @@ class Email extends Basic
      */
     public $orphaned;
 
-    /**
-     * @var Link2 $notes
-     */
-    public $notes;
 
     /**
      * sole constructor
@@ -2597,23 +2593,31 @@ class Email extends Basic
     public function handleBody($mail)
     {
         global $current_user;
-
-        // User preferences should takee precedence over everything else
-        $emailSettings = $current_user->getPreference('emailSettings',  'Emails');
-        $alwaysSendEmailsInPlainText = $emailSettings['sendPlainText'] === '1';
-
-        $sendEmailsInPlainText = false;
-        if(isset($_REQUEST['is_only_plain_text']) && $_REQUEST['is_only_plain_text'] === 'true') {
-            $sendEmailsInPlainText = true;
-        }
-
-        if($alwaysSendEmailsInPlainText === true) {
-            // plain text only
-            $this->handleBodyInPlainTextFormat($mail);
-        } else if($alwaysSendEmailsInPlainText === false && $sendEmailsInPlainText === true) {
-            $this->handleBodyInPlainTextFormat($mail);
-        } else {
+        ///////////////////////////////////////////////////////////////////////
+        ////	HANDLE EMAIL FORMAT PREFERENCE
+        // the if() below is HIGHLY dependent on the Javascript unchecking the Send HTML Email box
+        // HTML email
+        if ((isset($_REQUEST['setEditor']) /* from Email EditView navigation */
+                && $_REQUEST['setEditor'] == 1
+                && trim($_REQUEST['description_html']) != '')
+            || trim($this->description_html) != '' /* from email templates */
+            && $current_user->getPreference('email_editor_option',
+                'global') !== 'plain' //user preference is not set to plain text
+        ) {
             $this->handleBodyInHTMLformat($mail);
+        } else {
+            // plain text only
+            $this->description_html = '';
+            $mail->IsHTML(false);
+            $plainText = from_html($this->description);
+            $plainText = str_replace("&nbsp;", " ", $plainText);
+            $plainText = str_replace("</p>", "</p><br />", $plainText);
+            $plainText = strip_tags(br2nl($plainText));
+            $plainText = str_replace("&amp;", "&", $plainText);
+            $plainText = str_replace("&#39;", "'", $plainText);
+            $mail->Body = wordwrap($plainText, 996);
+            $mail->Body = $this->decodeDuringSend($mail->Body);
+            $this->description = $mail->Body;
         }
 
         // wp: if plain text version has lines greater than 998, use base64 encoding
@@ -2623,6 +2627,8 @@ class Email extends Basic
                 break;
             }
         }
+        ////	HANDLE EMAIL FORMAT PREFERENCE
+        ///////////////////////////////////////////////////////////////////////
 
         return $mail;
     }
@@ -4149,32 +4155,5 @@ eoq;
         }
 
         return $bean;
-    }
-
-    /**
-     * @param Note $note
-     */
-    public function attachNote(Note $note)
-    {
-        $this->load_relationship('notes');
-        $this->notes->addBean($note);
-    }
-
-    /**
-     * @param $mail
-     */
-    protected function handleBodyInPlainTextFormat($mail)
-    {
-        $this->description_html = '';
-        $mail->IsHTML(false);
-        $plainText = from_html($this->description);
-        $plainText = str_replace("&nbsp;", " ", $plainText);
-        $plainText = str_replace("</p>", "</p><br />", $plainText);
-        $plainText = strip_tags(br2nl($plainText));
-        $plainText = str_replace("&amp;", "&", $plainText);
-        $plainText = str_replace("&#39;", "'", $plainText);
-        $mail->Body = wordwrap($plainText, 996);
-        $mail->Body = $this->decodeDuringSend($mail->Body);
-        $this->description = $mail->Body;
     }
 } // end class def
