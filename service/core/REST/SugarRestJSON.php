@@ -117,7 +117,7 @@ class SugarRestJSON extends SugarRest{
 		foreach ($params as $param) {
 			$name = $param->getName();
 			if (!isset($data[$name])) {
-				$result[$name] = "";
+				$result[$name] = $param->getDefaultValue();
 			} else {
 				$result[$name] = $data[$name];
 			}
