@@ -86,11 +86,6 @@ $where = '';
 
 $where = $popup->_get_where_clause();
 
-// We can't attach remote documents to emails because we can't necessarialy fetch a copy of them to include.
-if ( ! empty($where) ) {
-    $where .= ' AND ';
-}
-$where .= "documents.doc_type IN ( '', 'Sugar')";
 
 
 $name = empty($_REQUEST['name']) ? '' : $_REQUEST['name'];
