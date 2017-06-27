@@ -1417,7 +1417,6 @@ class AOR_Report extends Basic
                         $condition->value = $condParam['value'];
                         $condition->operator = $condParam['operator'];
                         $condition->value_type = $condParam['type'];
-                        $condition->field = $condParam['field'];
                     }
 
                     switch ($condition->value_type) {
@@ -1540,7 +1539,12 @@ class AOR_Report extends Basic
                             } else {
                                 $value = "'" . $this->db->quote($condition->value) . "'";
                             }
-                            break;
+
+                            if ($condition->operator == 'Less_Than_or_Equal_To') {
+                                $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $field . ' ' . $aor_sql_operator_list[$condition->operator] . ' ' . str_replace('00:00:00',
+                                        '23:59:59', $value);
+                                $where_set = true;
+                            }
                         default:
                             $value = "'" . $this->db->quote($condition->value) . "'";
                             break;
