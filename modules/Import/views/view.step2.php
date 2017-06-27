@@ -181,7 +181,7 @@ function publishMapping(elem, publish, mappingId)
     if( typeof(elem.publish) != 'undefined' )
         publish = elem.publish;
 
-    var url = 'index.php?action=mapping&module=Import&publish=' + publish + '&import_map_id=' + mappingId;
+    var url = 'index.php?action=mapping&module=Import&publish=' + publish + '&import_map_id=' + mappingId + '&import_module=' + importModule;
     var callback = {
                         success: function(o)
                         {
