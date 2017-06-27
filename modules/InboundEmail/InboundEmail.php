@@ -4404,10 +4404,10 @@ class InboundEmail extends SugarBean
         $this->compoundMessageId = md5($this->compoundMessageId);
 
         $query = 'SELECT count(emails.id) AS c FROM emails WHERE emails.message_id = \'' . $this->compoundMessageId . '\' and emails.deleted = 0';
-        $r = $this->db->query($query, true);
-        $a = $this->db->fetchByAssoc($r);
+        $results = $this->db->query($query, true);
+        $row = $this->db->fetchByAssoc($results);
 
-        if ($a['c'] > 1) {
+        if ($row['c'] > 1) {
             $GLOBALS['log']->debug('InboundEmail found a duplicate email with ID (' . $this->compoundMessageId . ')');
 
             return false; // we have a dupe and don't want to import the email'
@@ -4602,13 +4602,13 @@ class InboundEmail extends SugarBean
             if (!$dupeCheckResult && !empty($this->compoundMessageId)) {
                 // we have a duplicate email
                 $query = 'SELECT id FROM emails WHERE emails.message_id = \'' . $this->compoundMessageId . '\' and emails.deleted = 0';
-                $r = $this->db->query($query, true);
-                $a = $this->db->fetchByAssoc($r);
+                $results = $this->db->query($query, true);
+                $row = $this->db->fetchByAssoc($results);
 
                 $this->email = new Email();
-                $this->email->id = $a['id'];
+                $this->email->id = $row['id'];
 
-                return $a['id'];
+                return $row['id'];
             } // if
             return "";
         } // else
@@ -5665,10 +5665,10 @@ class InboundEmail extends SugarBean
                 $query = 'SELECT id FROM cases WHERE case_number = '
                     . $this->db->quoted($sub3)
                     . ' and deleted = 0';
-                $r = $this->db->query($query, true);
-                $a = $this->db->fetchByAssoc($r);
-                if (!empty($a['id'])) {
-                    return $a['id'];
+                $results = $this->db->query($query, true);
+                $row = $this->db->fetchByAssoc($results);
+                if (!empty($row['id'])) {
+                    return $row['id'];
                 }
             }
         }
