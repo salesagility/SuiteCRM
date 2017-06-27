@@ -1,5 +1,6 @@
 <?php
 $sugar_config_si  = array (
+    'demoData' => 'yes',
     'dbUSRData' => 'create',
     'default_date_format' => 'Y-m-d',
     'default_decimal_seperator' => '.',
