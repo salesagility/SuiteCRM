@@ -787,7 +787,7 @@ function upgradeUWFiles($file) {
 
 	if($filesInCustom = checkCustomOverrides($from_dir)) {
 		global $mod_strings;
-		$alertMessage = $mod_strings["LBL_UPGRD_CSTM_CHK"]; //
+		$alertMessage = $mod_strings["LBL_UPGRD_CSTM_CHK"];
 		echo "<div class=\"error\">$alertMessage<br><ul>";
 		foreach($filesInCustom as $fileInCustom) {
 			echo "<li>$fileInCustom => custom/$fileInCustom</li>";
