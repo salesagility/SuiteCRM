@@ -958,8 +958,8 @@
       "use strict";
 
       var mb = messageBox();
-      mb.setTitle(SUGAR.language.translate('Emails', 'LBL_CONFIRM_TITLE'));
-      mb.setBody(SUGAR.language.translate('Emails', 'LBL_EMAIL_DRAFT_CONFIRM_DISCARD'));
+      mb.setTitle(SUGAR.language.translate('Emails', 'LBL_CONFIRM_DISREGARD_DRAFT_TITLE'));
+      mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_DISREGARD_DRAFT_BODY'));
       mb.show();
 
       mb.on('ok', function () {
@@ -1279,8 +1279,8 @@
     };
 
     var mb = messageBox();
-    mb.setTitle(SUGAR.language.translate('Emails', 'LBL_CONFIRM_TITLE'));
-    mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_BODY'));
+    mb.setTitle(SUGAR.language.translate('Emails', 'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_TITLE'));
+    mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_BODY'));
     mb.show();
 
     mb.on('ok', function () {

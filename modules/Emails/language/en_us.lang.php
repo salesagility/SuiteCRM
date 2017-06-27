@@ -414,8 +414,11 @@ $mod_strings = array (
 	'LBL_LIST_CATEGORY' => 'Category',
 	'LBL_EMAIL_TEMPLATE' => 'Email Template',
 
-	'LBL_CONFIRM_TITLE' => 'Apply an Email Template',
-	'LBL_CONFIRM_BODY' => 'This operation will override the email Body and Subject fields, do you want to continue?',
+	'LBL_CONFIRM_DISREGARD_DRAFT_TITLE' => 'Disregard draft',
+    'LBL_CONFIRM_DISREGARD_DRAFT_BODY' => 'This operation will delete this email, do you want to continue?',
+
+    'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_TITLE' => 'Apply an Email Template',
+	'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_BODY' => 'This operation will override the email Body and Subject fields, do you want to continue?',
 
 	'LBL_MAILBOX_ID' => 'Mailbox ID',
 	'LBL_PARENT_ID' => 'Parent ID',
