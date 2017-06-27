@@ -801,7 +801,7 @@ function upgradeUWFiles($file) {
 /**
  * find files in custom folder if it also in upgrade pack
  *
- * @param $fromDir uploaded temp directory
+ * @param string $fromDir uploaded temp directory
  * @return array filelist (or empty array if there is no any)
  */
 function checkCustomOverrides($fromDir) {
