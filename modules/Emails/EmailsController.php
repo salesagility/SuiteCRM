@@ -139,19 +139,28 @@ class EmailsController extends SugarController
      */
     public function action_send()
     {
-        $this->bean = $this->bean->populateBeanFromRequest($this->bean, $_REQUEST);
-        $this->bean->save();
-
-        $this->bean->handleMultipleFileAttachments();
-
-        if ($this->bean->send()) {
-            $this->bean->status = 'sent';
+        global $current_user;
+        if($this->userHasAccessToSendEmail($current_user)) {
+            $this->bean = $this->bean->populateBeanFromRequest($this->bean, $_REQUEST);
             $this->bean->save();
-        } else {
-            $this->bean->status = 'sent_error';
-        }
 
-        $this->view = 'sendemail';
+            $this->bean->handleMultipleFileAttachments();
+
+            if ($this->bean->send()) {
+                $this->bean->status = 'sent';
+                $this->bean->save();
+            } else {
+                $this->bean->status = 'sent_error';
+            }
+
+            $this->view = 'sendemail';
+        } else {
+            $GLOBALS['log']->security(
+                'User ' . $current_user->name .
+                ' attempted to send an email using incorrect email account settings.'
+            );
+            sugar_die('invalid/incorrect request');
+        }
     }
 
 
@@ -626,5 +635,17 @@ class EmailsController extends SugarController
         $emails->save();
 
         return $emails;
+    }
+
+    /**
+     * @param User $user
+     * @param InboundEmail $inboundEmailAccount
+     * @param Email $email
+     * @return bool false if user doesn't have access
+     */
+    protected function userHasAccessToSendEmail($user, $inboundEmailAccount, $email)
+    {
+        // Check inbound email account
+        return false;
     }
 }
