@@ -967,6 +967,7 @@
 
         mb.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
 
+        $(jQueryFormComposeView).find('input[name=action]').val('DeleteDraft');
         // Use FormData v2 to send form data via ajax
         var formData = new FormData(jQueryFormComposeView);
 

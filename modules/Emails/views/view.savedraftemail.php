@@ -45,6 +45,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class EmailsViewSavedraftemail extends ViewAjax
 {
+    /**
+     * @var Email $bean
+     */
+    public $bean;
+
+
     public function __construct()
     {
         parent::__construct();
