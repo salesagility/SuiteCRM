@@ -1529,6 +1529,37 @@ class AOR_Report extends Basic
                             $value = '"' . $current_user->id . '"';
                             break;
                         case 'Value':
+                            global $timedate;
+                            $hours = $timedate->getUserUTCOffset()/60;
+                            $utc = new DateTimeZone("UTC");
+                            $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $condition->value, $utc);
+                            //Can also get passed just a date, so check if a date and not datetime is passed
+                            if($dateTime === FALSE) {
+                                $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $condition->value . " 00:00:00", $utc);
+                            }
+                            //If its a datetime field, then modify the query to meet difference in UTC
+                            if ($dateTime !== FALSE) {
+
+                                $field = $this->db->convert(
+                                    $this->db->convert($field, "add_time", array($hours, "00")),
+                                    "date_cast"
+                                );
+                                $value = $this->db->convert(
+                                    $this->db->convert($this->db->quoted($dateTime->format('Y-m-d H:i:s')), "add_time", array($hours, "00")),
+                                    "date_cast"
+                                );
+
+                            }
+
+                            if ($condition->operator == 'Less_Than_or_Equal_To') {
+                                $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $field . ' ' . $aor_sql_operator_list[$condition->operator] . ' ' . str_replace('00:00:00', '23:59:59', $value);
+                                $where_set = true;
+                            }
+
+                            else{
+                                $value = "'" . $this->db->quote($condition->value) . "'";
+                            }
+
                         default:
                             $value = "'" . $this->db->quote($condition->value) . "'";
                             break;
