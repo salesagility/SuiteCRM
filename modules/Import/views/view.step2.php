@@ -176,7 +176,7 @@ document.getElementById('gonext').onclick = function(){
 
 }
 
-function publishMapping(elem, publish, mappingId)
+function publishMapping(elem, publish, mappingId, importModule)
 {
     if( typeof(elem.publish) != 'undefined' )
         publish = elem.publish;
