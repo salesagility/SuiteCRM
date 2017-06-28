@@ -50,9 +50,13 @@ The following links offer various ways to view, contribute and collaborate to th
 
 ### Development Roadmap ###
 
-[ View the Roadmap here and get involved][suitecrm_roadmap]
+[ View the Community Roadmap here and get involved][suitecrm_roadmap]
 
 [suitecrm_roadmap]: https://suitecrm.com/community/roadmap
+
+[More detailed SuiteCRM Community LTS Roadmap][suitecrm_detailed_roadmap]
+
+[suitecrm_detailed_roadmap]: https://suitecrm.com/lts/
 
 ### Support & Licensing ###
 
