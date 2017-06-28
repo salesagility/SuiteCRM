@@ -17,8 +17,8 @@ We take Security seriously here at SuiteCRM so if you have discovered a security
 emailing security@suitecrm.com. This will be delivered to the product team who handle security issues.
 Please don't disclose security bugs publicly until they have been handled by the security team.
 
-Your email will be acknowledged within 24 hours, and you’ll receive a more
-detailed response to your email within 72 hours indicating the next steps in
+Your email will be acknowledged within 24 hours during the business week (Mon - Fri), and you’ll receive a more
+detailed response to your email within 72 hours during the business week (Mon - Fri) indicating the next steps in
 handling your report.
 
 ##### Important: Please read before developing code intended for inclusion in the SuiteCRM project. #####
