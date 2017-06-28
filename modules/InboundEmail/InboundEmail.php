@@ -4407,7 +4407,7 @@ class InboundEmail extends SugarBean
         $results = $this->db->query($query, true);
         $row = $this->db->fetchByAssoc($results);
 
-        if ($row['c'] > 1) {
+        if ($row['c'] > 0) {
             $GLOBALS['log']->debug('InboundEmail found a duplicate email with ID (' . $this->compoundMessageId . ')');
 
             return false; // we have a dupe and don't want to import the email'
