@@ -140,8 +140,10 @@ class EmailsController extends SugarController
     public function action_send()
     {
         global $current_user;
-        if($this->userHasAccessToSendEmail($current_user)) {
-            $this->bean = $this->bean->populateBeanFromRequest($this->bean, $_REQUEST);
+        $this->bean = $this->bean->populateBeanFromRequest($this->bean);
+        $inboundEmailAccount = new InboundEmail();
+        $inboundEmailAccount->retrieve($_REQUEST['inbound_email_id']);
+        if($this->userHasAccessToSendEmail($current_user, $inboundEmailAccount, $this->bean)) {
             $this->bean->save();
 
             $this->bean->handleMultipleFileAttachments();
@@ -639,12 +641,14 @@ class EmailsController extends SugarController
 
     /**
      * @param User $user
-     * @param InboundEmail $inboundEmailAccount
+     * @param InboundEmail $inboundEmail
      * @param Email $email
      * @return bool false if user doesn't have access
      */
-    protected function userHasAccessToSendEmail($user, $inboundEmailAccount, $email)
+    protected function userHasAccessToSendEmail($user,  $inboundEmail, $email)
     {
+        // Check for personal email
+        // Check for group email
         // Check inbound email account
         return false;
     }
