@@ -5692,6 +5692,16 @@ class InboundEmail extends SugarBean
     }
 
     /**
+     * Returns the stored options property un-encoded and un serialised.
+     * @return array
+     */
+    public function getStoredOptions()
+    {
+        return unserialize(base64_decode($this->stored_options));
+    }
+
+
+    /**
      * @param $option_name
      * @param null $default_value
      * @param null $stored_options
@@ -6045,6 +6055,11 @@ class InboundEmail extends SugarBean
 
     /**
      * Retrieves an array of I-E beans that the user has team access to
+     */
+    /**
+     * @param string $id user id
+     * @param bool $includePersonal
+     * @return array
      */
     public function retrieveAllByGroupId($id, $includePersonal = true)
     {

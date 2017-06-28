@@ -140,10 +140,13 @@ class EmailsController extends SugarController
     public function action_send()
     {
         global $current_user;
+        global $app_strings;
+
         $this->bean = $this->bean->populateBeanFromRequest($this->bean);
         $inboundEmailAccount = new InboundEmail();
         $inboundEmailAccount->retrieve($_REQUEST['inbound_email_id']);
-        if($this->userHasAccessToSendEmail($current_user, $inboundEmailAccount, $this->bean)) {
+
+        if($this->userIsAllowedToSendEmail($current_user, $inboundEmailAccount, $this->bean)) {
             $this->bean->save();
 
             $this->bean->handleMultipleFileAttachments();
@@ -159,9 +162,19 @@ class EmailsController extends SugarController
         } else {
             $GLOBALS['log']->security(
                 'User ' . $current_user->name .
-                ' attempted to send an email using incorrect email account settings.'
+                ' attempted to send an email using incorrect email account settings in'.
+                ' which they do not have access to.'
             );
-            sugar_die('invalid/incorrect request');
+
+            $this->view = 'ajax';
+            $response['errors'] = array(
+                'type' => get_class($this->bean),
+                'id' => $this->bean->id,
+                'title' => $app_strings['LBL_EMAIL_ERROR_SENDING']
+            );
+            echo json_encode($response);
+            // log out the user
+            session_destroy();
         }
     }
 
@@ -640,16 +653,47 @@ class EmailsController extends SugarController
     }
 
     /**
-     * @param User $user
-     * @param InboundEmail $inboundEmail
-     * @param Email $email
+     * @param User $requestedUser
+     * @param InboundEmail $requestedInboundEmail
+     * @param Email $requestedEmail
      * @return bool false if user doesn't have access
      */
-    protected function userHasAccessToSendEmail($user,  $inboundEmail, $email)
+    protected function userIsAllowedToSendEmail($requestedUser,  $requestedInboundEmail, $requestedEmail)
     {
-        // Check for personal email
-        // Check for group email
-        // Check inbound email account
-        return false;
+        $hasAccess = false;
+        $hasAccessToInboundEmailAccount = false;
+
+        // Check that user is allowed to use inbound email account
+        $usersInboundEmailAccounts = $requestedInboundEmail->retrieveByGroupId($requestedUser->id);
+        foreach ($usersInboundEmailAccounts as $inboundEmailId => $userInboundEmail) {
+            if($userInboundEmail->id === $requestedInboundEmail->id) {
+                $hasAccessToInboundEmailAccount = true;
+                break;
+            }
+        }
+
+        $inboundEmailStoredOptions = $requestedInboundEmail->getStoredOptions();
+
+        // Check that the from address is the same as the inbound email account
+        $isFromAddressTheSame = false;
+        if($inboundEmailStoredOptions['from_addr'] === $requestedEmail->from_addr) {
+            $isFromAddressTheSame = true;
+        }
+
+        // check if user is using the system account, as the email address for the system account
+        // is likely to be different
+        $outboundEmailAccount = new OutboundEmail();
+        $outboundEmailAccount->retrieve($inboundEmailStoredOptions['outbound_email']);
+        if($outboundEmailAccount->type === 'system') {
+            $admin = new Administration();
+            $admin->retrieveSettings();
+            $adminNotifyFromAddress = $admin->settings['notify_fromaddress'];
+            if($adminNotifyFromAddress === $requestedEmail->from_addr) {
+                $isFromAddressTheSame = true;
+            }
+        }
+
+        $hasAccess = ($hasAccessToInboundEmailAccount === true) && ($isFromAddressTheSame === true);
+        return $hasAccess;
     }
 }
