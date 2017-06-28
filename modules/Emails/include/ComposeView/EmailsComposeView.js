@@ -1200,10 +1200,7 @@
           }
         }, 300);
 
-        var inPopup = self.closest('.message-box').length > 0;
-        if(!inPopup) {
-          tinymce.init(opts.tinyMceOptions);
-        }
+        tinymce.init(opts.tinyMceOptions);
 
       }
 
