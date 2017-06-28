@@ -6414,7 +6414,7 @@ class InboundEmail extends SugarBean
                     }
 
                     if (!empty($msgNo)) {
-                        $importStatus = $this->importOneEmail($msgNo, $uid);
+                        $importStatus = $this->returnImportedEmail($msgNo, $uid);
                         // add to folder
                         if ($importStatus) {
                             $sugarFolder->addBean($this->email);
@@ -6689,7 +6689,7 @@ class InboundEmail extends SugarBean
 
             }
 
-            $this->importOneEmail($msgNo, $uid, true);
+            $this->returnImportedEmail($msgNo, $uid, true);
             $this->email->id = '';
             $this->email->new_with_id = false;
             $ret = 'import';
