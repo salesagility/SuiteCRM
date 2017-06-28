@@ -1074,7 +1074,7 @@
       }
 
       if (typeof opts.tinyMceOptions.selector === "undefined") {
-        opts.tinyMceOptions.selector = $(self).find('#description_html');
+        opts.tinyMceOptions.selector = 'form[name="ComposeView"] textarea#description';
       }
 
       if ($(self).find('#from_addr_name').length !== 0) {
@@ -1298,7 +1298,6 @@
 
   $.fn.EmailsComposeView.defaults = {
     "tinyMceOptions": {
-      mode: "specific_textareas",
       plugins: "fullscreen",
       menubar: false,
       toolbar: ['fontselect | fontsizeselect | bold italic underline | styleselect'],
