@@ -302,7 +302,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
 	 * @param string $type
      * @return array
 	 */
-	public static function getFileName ($view , $moduleName , $type = MB_CUSTOMMETADATALOCATION)
+	public function getFileName ($view , $moduleName , $type = MB_CUSTOMMETADATALOCATION)
 	{
 
 		$pathMap = array (
