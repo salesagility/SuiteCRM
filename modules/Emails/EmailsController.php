@@ -142,7 +142,7 @@ class EmailsController extends SugarController
         global $current_user;
         global $app_strings;
 
-        $this->bean = $this->bean->populateBeanFromRequest($this->bean);
+        $this->bean = $this->bean->populateBeanFromRequest($this->bean, $_REQUEST);
         $inboundEmailAccount = new InboundEmail();
         $inboundEmailAccount->retrieve($_REQUEST['inbound_email_id']);
 
@@ -155,7 +155,15 @@ class EmailsController extends SugarController
                 $this->bean->status = 'sent';
                 $this->bean->save();
             } else {
-                $this->bean->status = 'sent_error';
+                // Don't save status if the email is a draft.
+                // We need to ensure that drafts will still show
+                // in the list view
+                if($this->bean->status !== 'draft') {
+                    $this->bean->status = 'send_error';
+                    $this->bean->save();
+                } else {
+                    $this->bean->status = 'send_error';
+                }
             }
 
             $this->view = 'sendemail';
@@ -658,7 +666,7 @@ class EmailsController extends SugarController
      * @param Email $requestedEmail
      * @return bool false if user doesn't have access
      */
-    protected function userIsAllowedToSendEmail($requestedUser,  $requestedInboundEmail, $requestedEmail)
+    protected function userIsAllowedToSendEmail($requestedUser, $requestedInboundEmail, $requestedEmail)
     {
         $hasAccess = false;
         $hasAccessToInboundEmailAccount = false;
