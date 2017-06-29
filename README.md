@@ -31,6 +31,13 @@ The Contributor Agreement only needs to be signed once for all pull requests and
 
 Once signed and confirmed, any pull requests will be considered for inclusion in the SuiteCRM project.
 
+### Translations ###
+SuiteCRM in your language: [ Download and install language packs from][suitecrm_languages]
+
+[suitecrm_languages]: https://crowdin.com/project/suitecrmtranslations
+
+
+
 ### Helpful links for the community ###
 
 The following links offer various ways to view, contribute and collaborate to the SuiteCRM project:
