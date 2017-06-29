@@ -1296,6 +1296,11 @@
   };
 
 
+  $.fn.EmailsComposeView.onParentSelect = function (args) {
+    console.log(args);
+    set_return(args);
+  };
+
   $.fn.EmailsComposeView.defaults = {
     "tinyMceOptions": {
       plugins: "fullscreen",
