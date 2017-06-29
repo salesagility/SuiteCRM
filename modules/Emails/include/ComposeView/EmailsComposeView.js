@@ -1074,7 +1074,7 @@
       }
 
       if (typeof opts.tinyMceOptions.selector === "undefined") {
-        opts.tinyMceOptions.selector = 'form[name="ComposeView"] textarea#description';
+        opts.tinyMceOptions.selector = $(self).find('#description_html');
       }
 
       if ($(self).find('#from_addr_name').length !== 0) {
@@ -1084,89 +1084,89 @@
         var from_addr = $(self).find('#from_addr_name');
         from_addr.replaceWith(selectFrom);
 
-        $.ajax({
-          "url": 'index.php?module=Emails&action=getFromFields'
-        }).done(function (response) {
-          var json = JSON.parse(response);
-          if (typeof json.data !== "undefined") {
-            $(json.data).each(function (i, v) {
-              var selectOption = $('<option></option>');
-              selectOption.attr('value', v.attributes.from);
-              selectOption.attr('inboundId', v.id);
-              selectOption.html(v.attributes.from);
-              selectOption.appendTo(selectFrom);
+          $.ajax({
+            "url": 'index.php?module=Emails&action=getFromFields'
+          }).done(function (response) {
+            var json = JSON.parse(response);
+            if (typeof json.data !== "undefined") {
+              $(json.data).each(function (i, v) {
+                var selectOption = $('<option></option>');
+                selectOption.attr('value', v.attributes.from);
+                selectOption.attr('inboundId', v.id);
+                selectOption.html(v.attributes.from);
+                selectOption.appendTo(selectFrom);
 
-              // include signature for account
-              $('<textarea></textarea>')
-                .val(v.emailSignatures.html)
-                .addClass('email-signature')
-                .addClass('html')
-                .addClass('hidden')
-                .attr('data-inbound-email-id', v.id)
-                .appendTo(self);
+                // include signature for account
+                $('<textarea></textarea>')
+                  .val(v.emailSignatures.html)
+                  .addClass('email-signature')
+                  .addClass('html')
+                  .addClass('hidden')
+                  .attr('data-inbound-email-id', v.id)
+                  .appendTo(self);
 
-              $('<textarea></textarea>')
-                .val(v.emailSignatures.plain)
-                .addClass('email-signature')
-                .addClass('plain')
-                .addClass('hidden')
-                .attr('data-inbound-email-id', v.id)
-                .appendTo(self);
+                $('<textarea></textarea>')
+                  .val(v.emailSignatures.plain)
+                  .addClass('email-signature')
+                  .addClass('plain')
+                  .addClass('hidden')
+                  .attr('data-inbound-email-id', v.id)
+                  .appendTo(self);
 
-              if(typeof v.prepend !== "undefined" && v.prepend === true) {
-                self.prependSignature = true;
-              }
-              self.updateSignature();
-            });
+                if(typeof v.prepend !== "undefined" && v.prepend === true) {
+                  self.prependSignature = true;
+                }
+                self.updateSignature();
+              });
 
-            var selectedInboundEmail = $(self).find('[name=inbound_email_id]').val();
+              var selectedInboundEmail = $(self).find('[name=inbound_email_id]').val();
 
-            $(selectFrom).val(
-              $(selectFrom).find('[inboundid="' + selectedInboundEmail + '"]').val()
-            );
+              $(selectFrom).val(
+                $(selectFrom).find('[inboundid=' + selectedInboundEmail + ']').val()
+              );
 
-            $(selectFrom).change(function (e) {
-              $(self).find('[name=inbound_email_id]').val($(this).find('option:selected').attr('inboundId'));
-              self.updateSignature();
-            });
+              $(selectFrom).change(function (e) {
+                $(self).find('[name=inbound_email_id]').val($(this).find('option:selected').attr('inboundId'));
+                self.updateSignature();
+              });
 
-            $(self).trigger('emailComposeViewGetFromFields');
+              $(self).trigger('emailComposeViewGetFromFields');
 
-          }
+            }
 
-          if ($(self).find('#is_only_plain_text').length === 1) {
-            $(self).find('#is_only_plain_text').click(function() {
-              var tinemceToolbar = $(tinymce.EditorManager.activeEditor.getContainer()).find('.mce-toolbar');
-              if ($('#is_only_plain_text').prop('checked')) {
-                tinemceToolbar.hide();
-              } else {
-                tinemceToolbar.show();
-              }
-            });
-          }
+            if ($(self).find('#is_only_plain_text').length === 1) {
+              $(self).find('#is_only_plain_text').click(function() {
+                var tinemceToolbar = $(tinymce.EditorManager.activeEditor.getContainer()).find('.mce-toolbar');
+                if ($('#is_only_plain_text').prop('checked')) {
+                  tinemceToolbar.hide();
+                } else {
+                  tinemceToolbar.show();
+                }
+              });
+            }
 
-          if (typeof json.errors !== "undefined") {
-            var message = '';
-            $.each(json.errors, function (i, v) {
-              message = message + v.title;
-            });
-            var mb = messageBox();
-            mb.setBody('message');
-            mb.show();
+            if (typeof json.errors !== "undefined") {
+              var message = '';
+              $.each(json.errors, function (i, v) {
+                message = message + v.title;
+              });
+              var mb = messageBox();
+              mb.setBody('message');
+              mb.show();
 
-            mb.on('ok', function () {
-              "use strict";
-              mb.remove();
-            });
+              mb.on('ok', function () {
+                "use strict";
+                mb.remove();
+              });
 
-            mb.on('cancel', function () {
-              "use strict";
-              mb.remove();
-            });
-          }
-        }).error(function (response) {
-          console.error(response);
-        });
+              mb.on('cancel', function () {
+                "use strict";
+                mb.remove();
+              });
+            }
+          }).error(function (response) {
+            console.error(response);
+          });
       }
 
       /**
@@ -1200,7 +1200,7 @@
           }
         }, 300);
 
-        tinymce.init(opts.tinyMceOptions);
+        tinymce.init(opts.tinyMceOptions)
 
       }
 
@@ -1298,6 +1298,7 @@
 
   $.fn.EmailsComposeView.defaults = {
     "tinyMceOptions": {
+      mode: "specific_textareas",
       plugins: "fullscreen",
       menubar: false,
       toolbar: ['fontselect | fontsizeselect | bold italic underline | styleselect'],
