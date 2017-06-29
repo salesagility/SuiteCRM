@@ -935,8 +935,8 @@
             id = $(self).find('[name=id]');
             $(id).val(response.data.id);
           }
+          $(self).find('input[name=record]').val(response.data.id);
         }
-
       }).fail(function (response) {
         "use strict";
         response = JSON.parse(response);
