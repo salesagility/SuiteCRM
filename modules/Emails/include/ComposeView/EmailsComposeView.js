@@ -607,7 +607,7 @@
       e.preventDefault();
       $(this).find('[name=action]').val('send');
       if (self.validate()) {
-        $(self).submit();
+        $(this).submit();
       }
       return false;
     };
