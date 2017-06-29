@@ -196,8 +196,7 @@
     </div>
 {{sugar_include type='smarty' file=$footerTpl}}
 
-{if !$IS_MODAL}
-
+{if $RETURN_MODULE}
     {literal}
 
         <script type="text/javascript">
