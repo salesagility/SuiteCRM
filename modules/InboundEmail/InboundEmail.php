@@ -6055,8 +6055,7 @@ class InboundEmail extends SugarBean
 
     /**
      * Retrieves an array of I-E beans that the user has team access to
-     */
-    /**
+     *
      * @param string $id user id
      * @param bool $includePersonal
      * @return array
