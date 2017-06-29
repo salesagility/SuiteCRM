@@ -935,8 +935,8 @@
             id = $(self).find('[name=id]');
             $(id).val(response.data.id);
           }
+          $(self).find('input[name=record]').val(response.data.id);
         }
-
       }).fail(function (response) {
         "use strict";
         response = JSON.parse(response);
@@ -958,8 +958,8 @@
       "use strict";
 
       var mb = messageBox();
-      mb.setTitle(SUGAR.language.translate('Emails', 'LBL_CONFIRM_TITLE'));
-      mb.setBody(SUGAR.language.translate('Emails', 'LBL_EMAIL_DRAFT_CONFIRM_DISCARD'));
+      mb.setTitle(SUGAR.language.translate('Emails', 'LBL_CONFIRM_DISREGARD_DRAFT_TITLE'));
+      mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_DISREGARD_DRAFT_BODY'));
       mb.show();
 
       mb.on('ok', function () {
@@ -967,6 +967,7 @@
 
         mb.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
 
+        $(jQueryFormComposeView).find('input[name=action]').val('DeleteDraft');
         // Use FormData v2 to send form data via ajax
         var formData = new FormData(jQueryFormComposeView);
 
@@ -1279,8 +1280,8 @@
     };
 
     var mb = messageBox();
-    mb.setTitle(SUGAR.language.translate('Emails', 'LBL_CONFIRM_TITLE'));
-    mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_BODY'));
+    mb.setTitle(SUGAR.language.translate('Emails', 'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_TITLE'));
+    mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_BODY'));
     mb.show();
 
     mb.on('ok', function () {

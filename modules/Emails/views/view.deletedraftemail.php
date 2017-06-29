@@ -33,34 +33,28 @@
  * Section 5 of the GNU Affero General Public License version 3.
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
- * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * these Appropriate Legal Notices must retain the display of the 'Powered by
+ * SugarCRM' logo and 'Supercharged by SuiteCRM' logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * display the words  'Powered by SugarCRM' and 'Supercharged by SuiteCRM'.
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die ('Not A Valid Entry Point');
 }
 
-class EmailsViewSendEmail extends ViewAjax
+class EmailsViewDeleteDraftEmail extends ViewAjax
 {
     /**
      * @var Email $bean
      */
     public $bean;
 
-    /**
-     * EmailsViewSendemail constructor.
-     */
     public function __construct()
     {
         parent::__construct();
     }
 
-    /**
-     * @return string
-     */
     public function display()
     {
         global $app_strings;
@@ -71,20 +65,20 @@ class EmailsViewSendEmail extends ViewAjax
         }
 
         switch ($this->bean->status) {
-            case 'sent':
+            case 'draft':
                 $response['data'] = array(
                     'type' => get_class($this->bean),
                     'id' => $this->bean->id,
-                    'title' => $app_strings['LBL_EMAIL_SENT_SUCCESS'],
                     'attributes' => array(),
                     'relationships' => array(),
+                    'title' => $app_strings['LBL_EMAIL_DRAFT_DELETED']
                 );
                 break;
-            case 'sent_error':
+            case 'save_error':
                 $response['errors'] = array(
                     'type' => get_class($this->bean),
                     'id' => $this->bean->id,
-                    'title' => $app_strings['LBL_EMAIL_ERROR_SENDING']
+                    'title' => $app_strings['LBL_EMAIL_DRAFT_ERROR_DELETING']
                 );
                 break;
             default:
