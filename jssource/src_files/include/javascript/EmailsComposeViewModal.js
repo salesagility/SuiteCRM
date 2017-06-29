@@ -51,7 +51,7 @@
       composeBox.messageBox({"showHeader": false, "showFooter": false, "size": 'lg',});
       composeBox.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
       composeBox.show();
-      $.ajax({type: "GET", cache: false, url: 'index.php?module=Emails&action=ComposeView'}).done(function (data) {
+      $.ajax({type: "GET", cache: false, url: 'index.php?module=Emails&action=ComposeView&in_popup=1'}).done(function (data) {
         if (data.length === 0) {
           console.error("Unable to display ComposeView");
           composeBox.setBody(SUGAR.language.translate('', 'ERR_AJAX_LOAD'));
@@ -114,10 +114,10 @@
     self.emailComposeView = null;
     var opts = $.extend({}, $.fn.EmailsComposeViewModal.defaults);
     var composeBox = $('<div></div>').appendTo(opts.contentSelector);
-    composeBox.messageBox({"showHeader": false, "showFooter": false, "size": 'lg'});
+    composeBox.messageBox({"showHeader": false, "showFooter": false, "size": 'lg',});
     composeBox.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
     composeBox.show();
-    $.ajax({type: "GET", cache: false, url: 'index.php?module=Emails&action=ComposeView'}).done(function (data) {
+    $.ajax({type: "GET", cache: false, url: 'index.php?module=Emails&action=ComposeView&in_popup=1'}).done(function (data) {
       if (data.length === 0) {
         console.error("Unable to display ComposeView");
         composeBox.setBody(SUGAR.language.translate('', 'ERR_AJAX_LOAD'));
