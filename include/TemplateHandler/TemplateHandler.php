@@ -434,6 +434,7 @@ class TemplateHandler
 
                 if ($field['type'] === 'relate' &&
                     isset($field['module']) &&
+                    !empty($field['module']) &&
                     !empty($field['quicksearch']) ||
                     preg_match('/_name$|_c$/si', $name)
 
