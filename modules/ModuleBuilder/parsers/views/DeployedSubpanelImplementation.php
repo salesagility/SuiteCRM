@@ -169,4 +169,61 @@ class DeployedSubpanelImplementation extends AbstractMetaDataImplementation impl
 
     }
 
+    /**
+     * Construct a full pathname for the requested metadata
+     * Can be called statically
+     * @param string $view           The view type, that is, EditView, DetailView etc
+     * @param string $moduleName     The name of the module that will use this layout
+     * @param string $type
+     * @return array
+     */
+    public function getFileName($view, $moduleName, $type = MB_CUSTOMMETADATALOCATION)
+    {
+        $pathMap = array (
+            MB_BASEMETADATALOCATION => '' ,
+            MB_CUSTOMMETADATALOCATION => 'custom/' ,
+            MB_WORKINGMETADATALOCATION => 'custom/working/' ,
+            MB_HISTORYMETADATALOCATION => 'custom/history/'
+        ) ;
+        $type = strtolower ( $type ) ;
+
+        $filenames = array (
+            MB_DASHLETSEARCH => 'dashletviewdefs',
+            MB_DASHLET => 'dashletviewdefs',
+            MB_POPUPSEARCH => 'popupdefs',
+            MB_POPUPLIST => 'popupdefs',
+            MB_LISTVIEW => 'listviewdefs' ,
+            MB_BASICSEARCH => 'searchdefs' ,
+            MB_ADVANCEDSEARCH => 'searchdefs' ,
+            MB_EDITVIEW => 'editviewdefs' ,
+            MB_DETAILVIEW => 'detailviewdefs' ,
+            MB_QUICKCREATE => 'quickcreatedefs',
+        ) ;
+
+        //In a deployed module, we can check for a studio module with file name overrides.
+        $sm = StudioModuleFactory::getStudioModule($moduleName);
+        foreach($sm->sources as $file => $def)
+        {
+            if (!empty($def['view'])) {
+                $filenames[$def['view']] = substr($file, 0, strlen($file) - 4);
+            }
+
+        }
+
+        // BEGIN ASSERTIONS
+        if (! isset ( $pathMap [ $type ] ))
+        {
+            sugar_die ( "DeployedSubpanelImplementation->getFileName(): Type $type is not recognized" ) ;
+        }
+        if (! isset ( $filenames [ $view ] ))
+        {
+            sugar_die ( "DeployedSubpanelImplementation->getFileName(): View $view is not recognized" ) ;
+        }
+        // END ASSERTIONS
+
+
+        // Construct filename
+        return $pathMap [ $type ] . 'modules/' . $moduleName . '/metadata/' . $filenames [ $view ] . '.php' ;
+    }
+
 }
