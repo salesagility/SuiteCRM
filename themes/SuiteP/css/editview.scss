@@ -553,10 +553,9 @@ table.view {
   font-weight: 700;
   color: $main-font-color;
   padding: 0 0 0 8px;
-  line-height: 48px;
   text-align: left;
   vertical-align: baseline;
-  white-space: nowrap;
+  white-space: pre-wrap;
 }
 
 .edit-view-row .label {
@@ -565,10 +564,9 @@ table.view {
   font-weight: 700;
   color: $main-font-color;
   padding: 0 0 0 8px;
-  line-height: 48px;
   text-align: left;
   vertical-align: baseline;
-  white-space: nowrap;
+  white-space: pre-wrap;
 }
 
 #lineItems {
