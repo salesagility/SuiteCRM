@@ -31,6 +31,12 @@ The Contributor Agreement only needs to be signed once for all pull requests and
 
 Once signed and confirmed, any pull requests will be considered for inclusion in the SuiteCRM project.
 
+### Code of Conduct ###
+
+See our [Code of Conduct][code_of_conduct] on our Wiki.
+
+[code_of_conduct]: https://suitecrm.com/wiki/index.php/Contributing_to_SuiteCRM#Code_of_Conduct
+
 ### Helpful links for the community ###
 
 The following links offer various ways to view, contribute and collaborate to the SuiteCRM project:
