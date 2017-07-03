@@ -66,8 +66,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
 	 */
 	function __construct ($view , $moduleName)
 	{
-
-		// BEGIN ASSERTIONS
+ 		// BEGIN ASSERTIONS
 		if (! isset ( $GLOBALS [ 'beanList' ] [ $moduleName ] ))
 		{
 			sugar_die ( get_class ( $this ) . ": Modulename $moduleName is not a Deployed Module" ) ;
@@ -129,7 +128,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
 					unset ( $loaded [ GridLayoutMetaDataParser::$variableMap [ MB_EDITVIEW ] ] ) ;
 					$loaded [ GridLayoutMetaDataParser::$variableMap [ MB_QUICKCREATE ] ] = $temp ;
 					// finally, save out our new definition so that we have a base record for the history to work from
-					$this->_sourceFilename = self::getFileName ( MB_QUICKCREATE, $this->_moduleName, MB_CUSTOMMETADATALOCATION ) ;
+					$this->_sourceFilename = $this->getFileName ( MB_QUICKCREATE, $this->_moduleName, MB_CUSTOMMETADATALOCATION ) ;
 					$this->_saveToFile ( $this->_sourceFilename, $loaded ) ;
 					$this->_mergeFielddefs ( $fielddefs , $loaded ) ;
 					break;
@@ -137,7 +136,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
 				case MB_DASHLETSEARCH:
         		case MB_DASHLET:
 	        		$type = $module->getType () ;
-	        		$this->_sourceFilename = self::getFileName ( $view, $moduleName, MB_CUSTOMMETADATALOCATION ) ;
+	        		$this->_sourceFilename = $this->getFileName ( $view, $moduleName, MB_CUSTOMMETADATALOCATION ) ;
 	        		$needSave = false;
 	        		if(file_exists( "custom/modules/{$moduleName}/metadata/".basename ( $this->_sourceFilename))){
 	        			$loaded = $this->_loadFromFile ( "custom/modules/{$moduleName}/metadata/".basename ( $this->_sourceFilename) )  ;
@@ -165,7 +164,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
 				case MB_POPUPLIST:
         		case MB_POPUPSEARCH:
         			$type = $module->getType () ;
-					$this->_sourceFilename = self::getFileName ( $view, $moduleName, MB_CUSTOMMETADATALOCATION ) ;
+					$this->_sourceFilename = $this->getFileName ( $view, $moduleName, MB_CUSTOMMETADATALOCATION ) ;
 
 					global $current_language;
 					$mod = return_module_language($current_language , $moduleName);
