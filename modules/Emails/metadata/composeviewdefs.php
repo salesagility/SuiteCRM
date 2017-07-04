@@ -88,7 +88,7 @@ $viewdefs['Emails']['ComposeView'] = array(
                         'field_to_name_array' => array(
                             'id' => 'parent_id',
                             'name' => 'parent_name',
-                            'type' => 'parent_type',
+                            'email1' => 'email1',
                         )
                     ),
                 )

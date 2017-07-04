@@ -1297,8 +1297,22 @@
 
 
   $.fn.EmailsComposeView.onParentSelect = function (args) {
-    console.log(args);
     set_return(args);
+    console.log(args);
+    if(isValidEmail(args.name_to_value_array.email1)) {
+      var emailAddress = args.name_to_value_array.email1;
+      var self = $('[name="'+args.form_name+'"]');
+      var toField = $(self).find('[name=to_addrs_names]');
+      if(toField.val().indexOf(emailAddress) === -1) {
+        var toFieldVal = toField.val();
+        if(toFieldVal === '') {
+          toField.val(emailAddress);
+        } else {
+          toField.val(toFieldVal + ', ' + emailAddress);
+        }
+
+      }
+    }
   };
 
   $.fn.EmailsComposeView.defaults = {
