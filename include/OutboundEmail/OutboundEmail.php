@@ -249,6 +249,18 @@ class OutboundEmail {
 	function getUserMailerSettings(&$user, $mailer_id='', $ieId='') {
 		$mailer = '';
 
+
+		//  Sending emails uses personal instead of system outbound by default
+
+		if(!$ieId) {
+			if(!$user) {
+				global $current_user;
+				$user = $current_user;
+			}
+			$ieId = $user->getPreference('defaultIEAccount', 'Emails');
+		}
+
+
 		if(!empty($mailer_id)) {
 			$mailer = "AND id = '{$mailer_id}'";
 		} elseif(!empty($ieId)) {
