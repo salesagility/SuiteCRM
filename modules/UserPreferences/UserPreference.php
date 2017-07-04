@@ -197,7 +197,11 @@ class UserPreference extends SugarBean
 
         if($user->object_name != 'User')
             return;
-        if(!empty($user->id) && (!isset($_SESSION[$user->user_name . '_PREFERENCES'][$category]) || (!empty($_SESSION['unique_key']) && $_SESSION['unique_key'] != $sugar_config['unique_key']))) {
+        if(!empty($user->id) &&
+            (!isset($_SESSION[$user->user_name . '_PREFERENCES'][$category]) ||
+                (!empty($_SESSION['unique_key']) && $_SESSION['unique_key'] != $sugar_config['unique_key'])
+            )
+        ) {
             // cn: moving this to only log when valid - throwing errors on install
             return $this->reloadPreferences($category);
         }
