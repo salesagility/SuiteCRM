@@ -56,7 +56,12 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar {
 		if(!$this->mail_smtppass && $this->id) {
 			$bean = new OutboundEmailAccounts();
 			$bean->retrieve($this->id);
-			$this->mail_smtppass = $bean->mail_smtppass;
+			if(!$bean->mail_smtppass) {
+				$GLOBALS['log']->warn("No mail SMTP password");
+				$this->mail_smtppass = null;
+			} else {
+				$this->mail_smtppass = $bean->mail_smtppass;
+			}
 		}
 		$this->mail_smtppass = $this->mail_smtppass ? blowfishEncode(blowfishGetKey('OutBoundEmail'), $this->mail_smtppass) : null;
 		$results = parent::save($check_notify);
