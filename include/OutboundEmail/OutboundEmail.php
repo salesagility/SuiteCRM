@@ -252,12 +252,12 @@ class OutboundEmail {
 		if(!empty($mailer_id)) {
 			$mailer = "AND id = '{$mailer_id}'";
 		} elseif(!empty($ieId)) {
-			$q = "SELECT stored_options FROM inbound_email WHERE id = '{$ieId}'";
-			$r = $this->db->query($q);
-			$a = $this->db->fetchByAssoc($r);
+			$query = "SELECT stored_options FROM inbound_email WHERE id = '{$ieId}'";
+			$results = $this->db->query($query);
+			$row = $this->db->fetchByAssoc($results);
 
-			if(!empty($a)) {
-				$opts = unserialize(base64_decode($a['stored_options']));
+			if(!empty($row)) {
+				$opts = unserialize(base64_decode($row['stored_options']));
 
 				if(isset($opts['outbound_email'])) {
 					$mailer = "AND id = '{$opts['outbound_email']}'";
@@ -265,14 +265,14 @@ class OutboundEmail {
 			}
 		}
 
-		$q = "SELECT id FROM outbound_email WHERE user_id = '{$user->id}' {$mailer}";
-		$r = $this->db->query($q);
-		$a = $this->db->fetchByAssoc($r);
+		$query = "SELECT * FROM outbound_email WHERE user_id = '{$user->id}' {$mailer} AND deleted = 0;";
+		$results = $this->db->query($query);
+		$row = $this->db->fetchByAssoc($results);
 
-		if(empty($a)) {
+		if(empty($row)) {
 			$ret = $this->getSystemMailerSettings();
 		} else {
-			$ret = $this->retrieve($a['id']);
+			$ret = $this->retrieve($row['id']);
 		}
 		return $ret;
 	}
