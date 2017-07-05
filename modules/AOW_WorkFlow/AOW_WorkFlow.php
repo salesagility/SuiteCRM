@@ -214,7 +214,7 @@ class AOW_WorkFlow extends Basic {
                 case 'custom_relationship':
                     $main_name = str_replace("_cstm", "", $name);
                     $query['join'][$name] = 'LEFT JOIN '.$module->get_custom_table_name().' '.$name.' ON '.$main_name.'.id = '. $name.'.id_c ';
-                    echo $query['join'][$name];
+                    #echo $query['join'][$name];
                     break;
 				
                 case 'relationship':
