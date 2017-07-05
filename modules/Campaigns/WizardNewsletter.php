@@ -416,6 +416,8 @@ if($targetList) {
         $targetListDataArray[] = $nxt;
         $targetListDataAssoc[$prospectLst->id] = $nxt;
     }
+} else {
+    $GLOBALS['log']->warn('No any target list for campaign');
 }
 
 
