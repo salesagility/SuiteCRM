@@ -795,6 +795,21 @@
                         $subpanelTiles = new SubPanelTiles($sugarbean);
                         $html_text .= "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\"><tr><td align=\"left\"  >";
 
+                        if (isset($subpanelTiles->subpanel_definitions->layout_defs['subpanel_setup']['delegates']['select_link_top']) &&
+                            $subpanelTiles->subpanel_definitions->layout_defs['subpanel_setup']['delegates']['select_link_top'] === true) {
+                            $html_text .= '<ul id="selectLinkTop" class="clickMenu selectmenu SugarActionMenu" name="">
+<li class="sugar_action_button">
+<input class="checkallContacts" class="checkbox massall" type="checkbox" name="checkallContacts" style="float: left;margin: 2px 0 0 2px;" onclick="">
+<ul class="cust_list" style="background: none repeat scroll 0 0 #FFFFFF;background-color: #778591;border: 1px solid #CCCCCC;box-shadow: 0 5px 10px #999999;float: left;left: 0;list-style: none outside none;margin: 0;overflow: hidden;padding: 8px 0;position: absolute;top: 18px;width: auto;z-index: 10;display: none;">
+<li style="clear: both;margin: 0;padding: 0;white-space: nowrap;width: 100%;"><a class="button_select_this_page_top" style="border: 0 none !important;float: left;font-size: 12px !important;padding: 1px 10px !important;text-align: left;width: 100%;line-height: 18px;display: block;" href="#">Select This Page</a></li>
+<li style="clear: both;margin: 0;padding: 0;white-space: nowrap;width: 100%;"><a class="button_select_all_top" style="border: 0 none !important;float: left;font-size: 12px !important;padding: 1px 10px !important;text-align: left;width: 100%;line-height: 18px;display: block;" href="#" name="selectall">Select All‎</a></li>
+<li style="clear: both;margin: 0;padding: 0;white-space: nowrap;width: 100%;"><a class="button_deselect_top" style="border: 0 none !important;float: left;font-size: 12px !important;padding: 1px 10px !important;text-align: left;width: 100%;line-height: 18px;display: block;" href="#" name="deselect">Deselect All</a></li>
+</ul>
+<span class="cust_select" class="subhover"> </span>
+</li>
+</ul>';
+                        }
+
                         //attempt to get the query to recreate this subpanel
                         if (!empty($this->response)) {
                             $response =& $this->response;
