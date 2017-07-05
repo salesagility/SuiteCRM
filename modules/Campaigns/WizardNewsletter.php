@@ -397,7 +397,7 @@ if (!isset($targetListDataArray)) {
     $targetListDataArray = array();
 }
 if (!isset($targetListDataAssoc)) {
-    $$targetListDataAssoc = array();
+    $targetListDataAssoc = array();
 }
 
 $targetList = BeanFactory::getBean('ProspectLists')->get_full_list();
