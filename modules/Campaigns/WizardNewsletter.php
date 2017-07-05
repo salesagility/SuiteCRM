@@ -393,20 +393,29 @@ $ss->assign('encoded_target_list_popup_request_data', $encoded_newsletter_popup_
 
 // ----- show target lists...
 
+if (!isset($targetListDataArray)) {
+    $targetListDataArray = array();
+}
+if (!isset($targetListDataAssoc)) {
+    $$targetListDataAssoc = array();
+}
+
 $targetList = BeanFactory::getBean('ProspectLists')->get_full_list();
 
-$targetListData = array();
-foreach($targetList as $prospectLst) {
-    $nxt = array(
-        'id' => $prospectLst->id,
-        'name' => $prospectLst->name,
-        //'type' => $prospectLst->type,
-        'description' => $prospectLst->description,
-        'type' => $prospectLst->list_type,
-        'count' => $prospectLst->get_entry_count(),
-    );
-    $targetListDataArray[] = $nxt;
-    $targetListDataAssoc[$prospectLst->id] = $nxt;
+if($targetList) {
+    $targetListData = array();
+    foreach ($targetList as $prospectLst) {
+        $nxt = array(
+            'id' => $prospectLst->id,
+            'name' => $prospectLst->name,
+            //'type' => $prospectLst->type,
+            'description' => $prospectLst->description,
+            'type' => $prospectLst->list_type,
+            'count' => $prospectLst->get_entry_count(),
+        );
+        $targetListDataArray[] = $nxt;
+        $targetListDataAssoc[$prospectLst->id] = $nxt;
+    }
 }
 
 
