@@ -271,8 +271,12 @@ if (empty($mrkt_focus->inbound_email_id)) {
 }
 
 $outboundEmailAccountLabels = array();
-foreach($outboundEmailAccounts = BeanFactory::getBean('OutboundEmailAccounts')->get_full_list() as $outboundEmailAccount) {
-    $outboundEmailLabels[$outboundEmailAccount->id] = $outboundEmailAccount->name;
+$outboundEmailLabels = array();
+$outboundEmailAccounts = BeanFactory::getBean('OutboundEmailAccounts')->get_full_list();
+if ($outboundEmailAccounts) {
+    foreach ($outboundEmailAccounts as $outboundEmailAccount) {
+        $outboundEmailLabels[$outboundEmailAccount->id] = $outboundEmailAccount->name;
+    }
 }
 
 $ss->assign('OUTBOUND_MAILBOXES', get_select_options_with_id($outboundEmailLabels, $mrkt_focus->outbound_email_id));
