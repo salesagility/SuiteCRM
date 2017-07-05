@@ -508,6 +508,7 @@
           }
         } else {
           if ($(inputValue).attr('name') === 'action') {
+            formData.append('refer_' + $(inputValue).attr('name'), $(inputValue).val());
             formData.append($(inputValue).attr('name'), 'send');
           } else if ($(inputValue).attr('name') === 'send') {
             formData.append($(inputValue).attr('name'), 1);
