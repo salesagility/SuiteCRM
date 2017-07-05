@@ -638,7 +638,7 @@ if(isset($_REQUEST['wizardtype'])) {
 
 $ss->display(file_exists('custom/modules/Campaigns/tpls/WizardNewsletter.tpl') ? 'custom/modules/Campaigns/tpls/WizardNewsletter.tpl' : 'modules/Campaigns/tpls/WizardNewsletter.tpl');
 
-if(!$focus->id) {
+if(!$focus->id && isset($campaign_id) && $campaign_id) {
     unset($_SESSION['campaignWizard'][$campaign_id]['defaultSelectedMarketingId']);
 }
 
