@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -17,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,9 +34,14 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 class AOR_Report extends Basic
 {
     var $new_schema = true;
@@ -1263,8 +1267,9 @@ class AOR_Report extends Basic
                         $params['join_table_link_alias'] = $this->db->quoteIdentifier($linkAlias);
                         $join = $module->$name->getJoin($params, true);
                         $query['join'][$alias] = $join['join'];
-                        if($rel_module != null) {
-                            $query['join'][$alias] .= $this->build_report_access_query($rel_module, $this->db->quoteIdentifier($alias));
+                        if ($rel_module != null) {
+                            $query['join'][$alias] .= $this->build_report_access_query($rel_module,
+                                $this->db->quoteIdentifier($alias));
                         }
                         $query['id_select'][$alias] = $join['select'] . " AS '" . $alias . "_id'";
                         $query['id_select_group'][$alias] = $join['select'];
@@ -1529,6 +1534,40 @@ class AOR_Report extends Basic
                             $value = '"' . $current_user->id . '"';
                             break;
                         case 'Value':
+                            if ($condition->operator == 'Less_Than_or_Equal_To') {
+                                $utc = new DateTimeZone("UTC");
+                                $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $condition->value, $utc);
+
+                                if ($dateTime != false) {
+                                    $equal_less_than_query = "( $field < '" . $this->db->quote($condition->value) . "'";
+                                    $day_ahead = $dateTime->modify('+1 day');
+                                    $equal_less_than_query .= " OR $field  BETWEEN '" . $this->db->quote($condition->value) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
+                                    $query['where'][] = $equal_less_than_query;
+                                } else {
+                                    break;
+                                }
+                                $where_set = true;
+                            } else {
+                                $value = "'" . $this->db->quote($condition->value) . "'";
+                            }
+
+                            if ($condition->operator == 'Equal_To') {
+                                $utc = new DateTimeZone("UTC");
+                                $dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $condition->value, $utc);
+
+                                if ($dateTime != false) {
+                                    $day_ahead = $dateTime->modify('+1 day');
+                                    $equal_query = "( $field  BETWEEN '" . $this->db->quote($condition->value) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
+                                    $query['where'][] = $equal_query;
+                                } else {
+                                    break;
+                                }
+                                $where_set = true;
+                            } else {
+                                $value = "'" . $this->db->quote($condition->value) . "'";
+                            }
+                            break;
+
                         default:
                             $value = "'" . $this->db->quote($condition->value) . "'";
                             break;
@@ -1549,7 +1588,7 @@ class AOR_Report extends Basic
 
                     if ($condition->value_type == 'Value' && !$condition->value && $condition->operator == 'Equal_To') {
                         $value = "{$value} OR {$field} IS NULL)";
-                        $field = "(".$field;
+                        $field = "(" . $field;
                     }
 
                     if (!$where_set) {
