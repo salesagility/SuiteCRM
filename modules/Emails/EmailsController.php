@@ -172,7 +172,8 @@ class EmailsController extends SugarController
      * @param array $request
      * @return Email
      */
-    protected function replaceEmailVariables(Email $email, $request) {
+    protected function replaceEmailVariables(Email $email, $request)
+    {
 
         // request validation before replace bean variables
 
@@ -226,15 +227,16 @@ class EmailsController extends SugarController
      * @param array $request
      * @return bool
      */
-    protected function isValidRequestForReplaceEmailVariables($request) {
+    protected function isValidRequestForReplaceEmailVariables($request)
+    {
 
-        $ok = true;
+        $isValidRequestForReplaceEmailVariables = true;
 
         if (!is_array($request)) {
 
             // request should be an array like standard $_REQUEST
 
-            $ok = false;
+            $isValidRequestForReplaceEmailVariables = false;
             $this->log('Incorrect request format');
         }
 
@@ -244,7 +246,7 @@ class EmailsController extends SugarController
             // there is no any selected option in 'Related To' field
             // so impossible to replace variables to selected bean data
 
-            $ok = false;
+            $isValidRequestForReplaceEmailVariables = false;
             $this->log('There isn\'t any selected BEAN-TYPE option in \'Related To\' dropdown');
         }
 
@@ -254,12 +256,12 @@ class EmailsController extends SugarController
             // there is no any selected bean in 'Related To' field
             // so impossible to replace variables to selected bean data
 
-            $ok = false;
+            $isValidRequestForReplaceEmailVariables = false;
             $this->log('There isn\'t any selected BEAN-ELEMENT in \'Related To\' field');
         }
 
 
-        return $ok;
+        return $isValidRequestForReplaceEmailVariables;
     }
 
     /**
@@ -268,7 +270,8 @@ class EmailsController extends SugarController
      * @param string $msg
      * @param string $level
      */
-    private function log($msg, $level = 'info') {
+    private function log($msg, $level = 'info')
+    {
         $GLOBALS['log']->$level($msg);
     }
 

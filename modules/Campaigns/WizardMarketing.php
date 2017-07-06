@@ -278,7 +278,8 @@ if ($outboundEmailAccounts) {
         $outboundEmailLabels[$outboundEmailAccount->id] = $outboundEmailAccount->name;
     }
 } else {
-    $GLOBALS['log']->warn('No any outbound email account');
+    $GLOBALS['log']->warn('There are no outbound email accounts available.');
+    $GLOBALS['log']->info('Please ensure that the email settings are configured correctly');
 }
 
 $ss->assign('OUTBOUND_MAILBOXES', get_select_options_with_id($outboundEmailLabels, $mrkt_focus->outbound_email_id));
