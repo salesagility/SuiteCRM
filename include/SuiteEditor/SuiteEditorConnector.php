@@ -74,7 +74,8 @@ class SuiteEditorConnector
                     editor.on('focus', function(e){
                         onClickTemplateBody();
                     });
-                }
+                },
+                plugins: ['code', 'table', 'link'],
             }");
     }
 
