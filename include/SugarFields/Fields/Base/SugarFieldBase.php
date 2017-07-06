@@ -137,7 +137,7 @@ class SugarFieldBase {
     function getSmartyView($parentFieldArray, $vardef, $displayParams, $tabindex, $view){
 
         // set $tabindex = -1 by default
-        if(!is_numeric($tabindex)) {
+        if (is_null($tabindex)) {
             $tabindex = -1;
         }
 
