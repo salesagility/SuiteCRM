@@ -277,7 +277,7 @@ class OutboundEmail {
 			}
 		}
 
-		$query = "SELECT * FROM outbound_email WHERE user_id = '{$user->id}' {$mailer} AND deleted = 0;";
+		$query = "SELECT id FROM outbound_email WHERE user_id = '{$user->id}' {$mailer} AND deleted = 0;";
 		$results = $this->db->query($query);
 		$row = $this->db->fetchByAssoc($results);
 
