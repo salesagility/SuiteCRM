@@ -4388,11 +4388,7 @@ class InboundEmail extends SugarBean
             }
         }
 
-        //if(empty($message_id) && !isset($message_id)) {
-        if (empty($message_id) || !isset($message_id)) {
-            $GLOBALS['log']->debug('*********** NO MESSAGE_ID.');
-            $message_id = $this->getMessageId($header);
-        }
+        $message_id = $this->getMessageId($header);
 
         // generate compound messageId
         $this->compoundMessageId = trim($message_id) . trim($deliveredTo);
