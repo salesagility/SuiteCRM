@@ -397,7 +397,7 @@ $targetList = BeanFactory::getBean('ProspectLists')->get_full_list();
 
 $targetListData = array();
 foreach($targetList as $prospectLst) {
-    $nxt = array(
+    $next = array(
         'id' => $prospectLst->id,
         'name' => $prospectLst->name,
         //'type' => $prospectLst->type,
@@ -405,8 +405,8 @@ foreach($targetList as $prospectLst) {
         'type' => $prospectLst->list_type,
         'count' => $prospectLst->get_entry_count(),
     );
-    $targetListDataArray[] = $nxt;
-    $targetListDataAssoc[$prospectLst->id] = $nxt;
+    $targetListDataArray[] = $next;
+    $targetListDataAssoc[$prospectLst->id] = $next;
 }
 
 
