@@ -173,10 +173,10 @@ class SugarCleaner
     /**
      * Clean string from potential XSS problems
      * @param string $dirty_html
-     * @param bool $html_encode - encodes html
+     * @param bool $encode_html - encodes html
      * @return string
      */
-    public static function cleanHtml($dirty_html, $html_encode = false)
+    public static function cleanHtml($dirty_html, $encode_html = false)
     {
         $sugarCleaner = new SugarCleaner();
         $purifier = $sugarCleaner->purifier;
@@ -185,7 +185,7 @@ class SugarCleaner
         $dirty_html = html_entity_decode($dirty_html);
         $clean_html = $purifier->purify($dirty_html);
 
-        if ($html_encode) {
+        if ($encode_html) {
             $clean_html = htmlentities($clean_html);
         }
 
