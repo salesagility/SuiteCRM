@@ -181,11 +181,13 @@ class SugarCleaner
         $sugarCleaner = new SugarCleaner();
         $purifier = $sugarCleaner->purifier;
 
-        // decode anyway just in case calling method is incorrectly passing false into method.
+        // $encode_html previously effected the decoding process.
+        // we should decode regardless, just in case, the calling method passing encoded html
         $dirty_html_decoded = utf8_decode(html_entity_decode($dirty_html));
         $clean_html = $purifier->purify($dirty_html_decoded);
 
-        if ($encode_html) {
+        // Re-encode html
+        if ($encode_html === true) {
             $clean_html = htmlentities($clean_html);
         }
 
