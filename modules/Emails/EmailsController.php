@@ -207,6 +207,7 @@ class EmailsController extends SugarController
                 $macro_nv
             );
 
+            $email->name = $templateData['subject'];
             $email->description_html = $templateData['body_html'];
             $email->description = $templateData['body'];
 
