@@ -179,7 +179,7 @@ class SugarCleaner
      * @param bool $encoded Was it entity-encoded?
      * @return string
      */
-    static public function cleanHtml($html, $encoded = false)
+    public static function cleanHtml($html, $encoded = false)
     {
         if(empty($html)) return $html;
 
