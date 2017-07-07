@@ -102,7 +102,7 @@ class SugarCleaner
         $config->set('CSS.Proprietary', true);
         $config->set('HTML.TidyLevel', 'light');
         $config->set('HTML.ForbiddenElements', array('body' => true, 'html' => true));
-        $config->set('AutoFormat.RemoveEmpty', false);
+        $config->set('AutoFormat.RemoveEmpty', true);
         $config->set('Cache.SerializerPermissions', 0775);
         // for style
         //$config->set('Filter.ExtractStyleBlocks', true);
@@ -182,8 +182,8 @@ class SugarCleaner
         $purifier = $sugarCleaner->purifier;
 
         // decode anyway just in case calling method is incorrectly passing false into method.
-        $dirty_html = html_entity_decode($dirty_html);
-        $clean_html = $purifier->purify($dirty_html);
+        $dirty_html_decoded = utf8_decode(html_entity_decode($dirty_html));
+        $clean_html = $purifier->purify($dirty_html_decoded);
 
         if ($encode_html) {
             $clean_html = htmlentities($clean_html);
