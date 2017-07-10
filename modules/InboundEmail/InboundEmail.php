@@ -2541,6 +2541,10 @@ class InboundEmail extends SugarBean
         }
         $ie_name = $_REQUEST['ie_name'];
 
+        $stored_options = $this->getStoredOptions();
+        $stored_options['outbound_email'] = $_REQUEST['outbound_email'];
+        $this->setStoredOptions($stored_options);
+
         $this->is_personal = 1;
         $this->name = $ie_name;
         $this->group_id = $groupId;
@@ -5698,6 +5702,14 @@ class InboundEmail extends SugarBean
     public function getStoredOptions()
     {
         return unserialize(base64_decode($this->stored_options));
+    }
+
+    /**
+     * @param array $options
+     */
+    public function setStoredOptions($options)
+    {
+        $this->stored_options = base64_encode(serialize($this->stored_options));
     }
 
 

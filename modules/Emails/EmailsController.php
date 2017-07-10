@@ -683,9 +683,9 @@ class EmailsController extends SugarController
     protected function userIsAllowedToSendEmail($requestedUser, $requestedInboundEmail, $requestedEmail)
     {
         $hasAccess = false;
-        $hasAccessToInboundEmailAccount = false;
 
         // Check that user is allowed to use inbound email account
+        $hasAccessToInboundEmailAccount = false;
         $usersInboundEmailAccounts = $requestedInboundEmail->retrieveAllByGroupIdWithGroupAccounts($requestedUser->id);
         foreach ($usersInboundEmailAccounts as $inboundEmailId => $userInboundEmail) {
             if ($userInboundEmail->id === $requestedInboundEmail->id) {
@@ -696,39 +696,54 @@ class EmailsController extends SugarController
 
         $inboundEmailStoredOptions = $requestedInboundEmail->getStoredOptions();
 
+        // if group email account check that user is allowed to use email account
+        if ($requestedInboundEmail->isGroupEmailAccount()) {
+            if ($inboundEmailStoredOptions['allow_outbound_group_usage'] === true) {
+                $hasAccessToInboundEmailAccount = true;
+            } else {
+                $hasAccessToInboundEmailAccount = false;
+            }
+        }
+
         // Check that the from address is the same as the inbound email account
         $isFromAddressTheSame = false;
         if ($inboundEmailStoredOptions['from_addr'] === $requestedEmail->from_addr) {
             $isFromAddressTheSame = true;
         }
-
-        // if group email account check that user is allowed to use email account
-        $isAllowedToUseGroupEmail = false;
-        if ($requestedInboundEmail->isPersonalEmailAccount()) {
-            $isAllowedToUseGroupEmail = true;
-        }
-
-        if ($requestedInboundEmail->isGroupEmailAccount()) {
-            if ($inboundEmailStoredOptions['allow_outbound_group_usage'] === true) {
-                $isAllowedToUseGroupEmail = true;
-            }
-        }
-
-
         // check if user is using the system account, as the email address for the system account
         // is likely to be different
         $outboundEmailAccount = new OutboundEmail();
-        $outboundEmailAccount->retrieve($inboundEmailStoredOptions['outbound_email']);
+        if(empty($inboundEmailStoredOptions['outbound_email'])) {
+            $outboundEmailAccount->getUserMailerSettings();
+        } else {
+            $outboundEmailAccount->retrieve($inboundEmailStoredOptions['outbound_email']);
+        }
+
+        $isAllowedToUseOutboundEmail = false;
         if ($outboundEmailAccount->type === 'system') {
+            if($outboundEmailAccount->isAllowUserAccessToSystemDefaultOutbound()) {
+                $isAllowedToUseOutboundEmail = true;
+            }
+
+            // allow when there are not authentication details
+            if($outboundEmailAccount->mail_smtpauth_req == 0) {
+                $isAllowedToUseOutboundEmail = true;
+            }
+
             $admin = new Administration();
             $admin->retrieveSettings();
             $adminNotifyFromAddress = $admin->settings['notify_fromaddress'];
             if ($adminNotifyFromAddress === $requestedEmail->from_addr) {
                 $isFromAddressTheSame = true;
             }
+        } else if ($outboundEmailAccount->type === 'user') {
+            $isAllowedToUseOutboundEmail = true;
         }
 
-        $hasAccess = ($hasAccessToInboundEmailAccount === true) && ($isFromAddressTheSame === true) && ($isAllowedToUseGroupEmail === true);
+        $hasAccess =
+            ($hasAccessToInboundEmailAccount === true) &&
+            ($isFromAddressTheSame === true) &&
+            ($isAllowedToUseOutboundEmail === true);
 
         return $hasAccess;
     }
