@@ -298,7 +298,7 @@
       // Reply to checkbox
       var replyToCheckbox = lineContainer.find('input#email-address-reply-to-flag');
       if (replyToCheckbox.length == 1) {
-        replyToCheckbox.attr('name', this.module + _eaw.id + '"emailAddressReplyToFlag');
+        replyToCheckbox.attr('name', this.module + _eaw.id + 'emailAddressReplyToFlag');
         replyToCheckbox.attr('id', this.module + _eaw.id + 'emailAddressReplyToFlag' + _eaw.totalEmailAddresses);
         replyToCheckbox.attr('value', this.module + _eaw.id + 'emailAddress' + _eaw.totalEmailAddresses);
         replyToCheckbox.attr('tabindex', tabIndexCount);
