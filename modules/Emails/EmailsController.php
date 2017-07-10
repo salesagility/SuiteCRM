@@ -146,7 +146,7 @@ class EmailsController extends SugarController
         $inboundEmailAccount = new InboundEmail();
         $inboundEmailAccount->retrieve($_REQUEST['inbound_email_id']);
 
-        if($this->userIsAllowedToSendEmail($current_user, $inboundEmailAccount, $this->bean)) {
+        if ($this->userIsAllowedToSendEmail($current_user, $inboundEmailAccount, $this->bean)) {
             $this->bean->save();
 
             $this->bean->handleMultipleFileAttachments();
@@ -158,7 +158,7 @@ class EmailsController extends SugarController
                 // Don't save status if the email is a draft.
                 // We need to ensure that drafts will still show
                 // in the list view
-                if($this->bean->status !== 'draft') {
+                if ($this->bean->status !== 'draft') {
                     $this->bean->status = 'send_error';
                     $this->bean->save();
                 } else {
@@ -170,7 +170,7 @@ class EmailsController extends SugarController
         } else {
             $GLOBALS['log']->security(
                 'User ' . $current_user->name .
-                ' attempted to send an email using incorrect email account settings in'.
+                ' attempted to send an email using incorrect email account settings in' .
                 ' which they do not have access to.'
             );
 
@@ -233,14 +233,14 @@ class EmailsController extends SugarController
         $ie->email = $email;
         $accounts = $ieAccountsFull = $ie->retrieveAllByGroupIdWithGroupAccounts($current_user->id);
         $accountSignatures = $current_user->getPreference('account_signatures', 'Emails');
-        if($accountSignatures != null) {
+        if ($accountSignatures != null) {
             $emailSignatures = unserialize(base64_decode($accountSignatures));
         } else {
-            $GLOBALS['log']->warn('User '.$current_user->name.' does not have a signature');
+            $GLOBALS['log']->warn('User ' . $current_user->name . ' does not have a signature');
         }
 
         $defaultEmailSignature = $current_user->getDefaultSignature();
-        if(empty($defaultEmailSignature)) {
+        if (empty($defaultEmailSignature)) {
             $defaultEmailSignature = array(
                 'html' => '<br>',
                 'plain' => '\r\n',
@@ -277,9 +277,9 @@ class EmailsController extends SugarController
             }
 
             $signature = $current_user->getSignature($emailSignatureId);
-            if(!$signature) {
+            if (!$signature) {
 
-                if($defaultEmailSignature['no_default_available'] === true) {
+                if ($defaultEmailSignature['no_default_available'] === true) {
                     $dataAddress['emailSignatures'] = $defaultEmailSignature;
                 } else {
                     $dataAddress['emailSignatures'] = array(
@@ -546,9 +546,11 @@ class EmailsController extends SugarController
             if ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {
                 $this->bean->to_addrs = '';
                 $this->bean->to_addrs_names = '';
-            } else if($mode === self::COMPOSE_BEAN_WITH_PDF_TEMPLATE) {
-                // Get Related To Field
-                // Populate to
+            } else {
+                if ($mode === self::COMPOSE_BEAN_WITH_PDF_TEMPLATE) {
+                    // Get Related To Field
+                    // Populate to
+                }
             }
         }
 
@@ -684,9 +686,9 @@ class EmailsController extends SugarController
         $hasAccessToInboundEmailAccount = false;
 
         // Check that user is allowed to use inbound email account
-        $usersInboundEmailAccounts = $requestedInboundEmail->retrieveByGroupId($requestedUser->id);
+        $usersInboundEmailAccounts = $requestedInboundEmail->retrieveAllByGroupIdWithGroupAccounts($requestedUser->id);
         foreach ($usersInboundEmailAccounts as $inboundEmailId => $userInboundEmail) {
-            if($userInboundEmail->id === $requestedInboundEmail->id) {
+            if ($userInboundEmail->id === $requestedInboundEmail->id) {
                 $hasAccessToInboundEmailAccount = true;
                 break;
             }
@@ -696,24 +698,38 @@ class EmailsController extends SugarController
 
         // Check that the from address is the same as the inbound email account
         $isFromAddressTheSame = false;
-        if($inboundEmailStoredOptions['from_addr'] === $requestedEmail->from_addr) {
+        if ($inboundEmailStoredOptions['from_addr'] === $requestedEmail->from_addr) {
             $isFromAddressTheSame = true;
         }
+
+        // if group email account check that user is allowed to use email account
+        $isAllowedToUseGroupEmail = false;
+        if ($requestedInboundEmail->isPersonalEmailAccount()) {
+            $isAllowedToUseGroupEmail = true;
+        }
+
+        if ($requestedInboundEmail->isGroupEmailAccount()) {
+            if ($inboundEmailStoredOptions['allow_outbound_group_usage'] === true) {
+                $isAllowedToUseGroupEmail = true;
+            }
+        }
+
 
         // check if user is using the system account, as the email address for the system account
         // is likely to be different
         $outboundEmailAccount = new OutboundEmail();
         $outboundEmailAccount->retrieve($inboundEmailStoredOptions['outbound_email']);
-        if($outboundEmailAccount->type === 'system') {
+        if ($outboundEmailAccount->type === 'system') {
             $admin = new Administration();
             $admin->retrieveSettings();
             $adminNotifyFromAddress = $admin->settings['notify_fromaddress'];
-            if($adminNotifyFromAddress === $requestedEmail->from_addr) {
+            if ($adminNotifyFromAddress === $requestedEmail->from_addr) {
                 $isFromAddressTheSame = true;
             }
         }
 
-        $hasAccess = ($hasAccessToInboundEmailAccount === true) && ($isFromAddressTheSame === true);
+        $hasAccess = ($hasAccessToInboundEmailAccount === true) && ($isFromAddressTheSame === true) && ($isAllowedToUseGroupEmail === true);
+
         return $hasAccess;
     }
 }
