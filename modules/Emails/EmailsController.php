@@ -201,6 +201,18 @@ class EmailsController extends SugarController
     }
 
     /**
+     * @see EmailsViewCompose
+     */
+    public function action_DeleteDraft()
+    {
+        $this->bean->deleted = '1';
+        $this->bean->status = 'draft';
+        $this->bean->save();
+        $this->view = 'deletedraftemail';
+    }
+
+
+    /**
      * @see EmailsViewPopup
      */
     public function action_Popup()

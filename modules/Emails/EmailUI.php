@@ -1697,7 +1697,7 @@ function doAssignment($distributeMethod, $ieid, $folder, $uids, $users) {
 			}
 
 			if(!empty($msgNo)) {
-				if ($ie->importOneEmail($msgNo, $uid)) {
+				if ($ie->returnImportedEmail($msgNo, $uid)) {
 					$emailIds[] = $ie->email->id;
 					$ie->deleteMessageOnMailServer($uid);
 					//$ie->retrieve($ieid);
