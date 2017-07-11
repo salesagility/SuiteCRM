@@ -696,7 +696,7 @@ class EmailsController extends SugarController
 
         $inboundEmailStoredOptions = $requestedInboundEmail->getStoredOptions();
 
-        // if group email account check that user is allowed to use email account
+        // if group email account, check that user is allowed to use group email account
         if ($requestedInboundEmail->isGroupEmailAccount()) {
             if ($inboundEmailStoredOptions['allow_outbound_group_usage'] === true) {
                 $hasAccessToInboundEmailAccount = true;
@@ -710,11 +710,13 @@ class EmailsController extends SugarController
         if ($inboundEmailStoredOptions['from_addr'] === $requestedEmail->from_addr) {
             $isFromAddressTheSame = true;
         }
-        // check if user is using the system account, as the email address for the system account
-        // is likely to be different
+
+        // Check if user is using the system account, as the email address for the system account, will have different
+        // settings. If there is not an outbound email id in the stored options then we should try
+        // and use the system account, provided that the user is allowed to use to the system account.
         $outboundEmailAccount = new OutboundEmail();
         if(empty($inboundEmailStoredOptions['outbound_email'])) {
-            $outboundEmailAccount->getUserMailerSettings();
+            $outboundEmailAccount->getSystemMailerSettings();
         } else {
             $outboundEmailAccount->retrieve($inboundEmailStoredOptions['outbound_email']);
         }
@@ -725,7 +727,7 @@ class EmailsController extends SugarController
                 $isAllowedToUseOutboundEmail = true;
             }
 
-            // allow when there are not authentication details
+            // allow when there are not any authentication details
             if($outboundEmailAccount->mail_smtpauth_req == 0) {
                 $isAllowedToUseOutboundEmail = true;
             }
