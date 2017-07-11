@@ -199,40 +199,56 @@ class OutboundEmail {
         		      $autoCreateUserSystemOverride = TRUE;
         		 }
 
-                //Substitute in the users system override if its available.
-                if($userSystemOverride != null)
-        		   $system = $userSystemOverride;
-        		else if ($autoCreateUserSystemOverride)
-        	       $system = $this->createUserSystemOverrideAccount($user->id,"","");
+                // Substitute in the users system override if its available.
+                if($userSystemOverride != null) {
+                    $system = $userSystemOverride;
+                }
+        		else if ($autoCreateUserSystemOverride) {
+                    $system = $this->createUserSystemOverrideAccount($user->id, "", "");
+                }
+                // User overrides can be edited.
+                $isEditable = ($system->type == 'system' || $system->type == 'system-override') ? FALSE : TRUE;
 
-			    $isEditable = ($system->type == 'system') ? FALSE : TRUE; //User overrides can be edited.
-
-                if( !empty($system->mail_smtpserver) )
-				    $ret[] = array('id' =>$system->id, 'name' => "$system->name", 'mail_smtpserver' => $system->mail_smtpdisplay,
-								   'is_editable' => $isEditable, 'type' => $system->type, 'errors' => $systemErrors);
+                if( !empty($system->mail_smtpserver) ) {
+                    $ret[] = array(
+                        'id' => $system->id,
+                        'name' => "$system->name",
+                        'mail_smtpserver' => $system->mail_smtpdisplay,
+                        'is_editable' => $isEditable,
+                        'type' => $system->type,
+                        'errors' => $systemErrors
+                    );
+                }
 			}
 			else //Sendmail
 			{
-				$ret[] = array('id' =>$system->id, 'name' => "{$system->name} - sendmail", 'mail_smtpserver' => 'sendmail',
-								'is_editable' => false, 'type' => $system->type, 'errors' => '');
+				$ret[] = array(
+				    'id' =>$system->id,
+                    'name' => "{$system->name} - sendmail",
+                    'mail_smtpserver' => 'sendmail',
+					'is_editable' => false,
+                    'type' => $system->type,
+                    'errors' => ''
+                );
 			}
 		}
 
 		while($a = $this->db->fetchByAssoc($r))
 		{
 			$oe = array();
-			if($a['mail_sendtype'] != 'SMTP')
+			if($a['mail_sendtype'] != 'SMTP') {
 				continue;
-
+            }
 			$oe['id'] =$a['id'];
 			$oe['name'] = $a['name'];
 			$oe['type'] = $a['type'];
 			$oe['is_editable'] = true;
 			$oe['errors'] = '';
-			if ( !empty($a['mail_smtptype']) )
-			    $oe['mail_smtpserver'] = $this->_getOutboundServerDisplay($a['mail_smtptype'],$a['mail_smtpserver']);
-			else
-			    $oe['mail_smtpserver'] = $a['mail_smtpserver'];
+			if ( !empty($a['mail_smtptype']) ) {
+                $oe['mail_smtpserver'] = $this->_getOutboundServerDisplay($a['mail_smtptype'], $a['mail_smtpserver']);
+            } else {
+                $oe['mail_smtpserver'] = $a['mail_smtpserver'];
+            }
 
 			$ret[] = $oe;
 		}
