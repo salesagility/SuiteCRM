@@ -727,7 +727,8 @@ class EmailsController extends SugarController
                 $isAllowedToUseOutboundEmail = true;
             }
 
-            // allow when there are not any authentication details
+            // When there are not any authentication details for the system account, allow the user to use the system
+            // email account.
             if($outboundEmailAccount->mail_smtpauth_req == 0) {
                 $isAllowedToUseOutboundEmail = true;
             }
