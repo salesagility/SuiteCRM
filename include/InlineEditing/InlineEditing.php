@@ -397,7 +397,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
     }
 
     //If field is of type link and name.
-    if ($vardef['link'] && $vardef['type'] == "name" && $_REQUEST['view'] != "DetailView") {
+    if (isset($vardef['link']) && $vardef['link'] && $vardef['type'] == "name" && $_REQUEST['view'] != "DetailView") {
 
         require_once("include/generic/SugarWidgets/SugarWidgetSubPanelDetailViewLink.php");
 
