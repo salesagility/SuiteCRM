@@ -105,6 +105,9 @@ class HomeController extends SugarController{
                         $fielddef['label'] = $mod_strings[$fielddef['vname']];
                     } else {
                         $GLOBALS['log']->warn("Unknown text label in a fielddef: {$fielddef['vname']}");
+                        if(!isset($fielddef['label'])) {
+                            $fielddef['label'] = null;
+                        }
                     }
                 }
 
