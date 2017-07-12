@@ -93,7 +93,7 @@ class HomeController extends SugarController{
                     $fielddef['required'] = false;
                 }
 
-                if($fielddef['name'] == "email1" || $fielddef['email2']){
+                if ($fielddef['name'] == "email1" || (isset($fielddef['email2']) && $fielddef['email2'])) {
                     $fielddef['type'] = "email";
                     $fielddef['vname'] = "LBL_EMAIL_ADDRESSES";
                 }
