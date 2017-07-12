@@ -98,10 +98,14 @@ class HomeController extends SugarController{
                     $fielddef['vname'] = "LBL_EMAIL_ADDRESSES";
                 }
 
-                if($app_strings[$fielddef['vname']]){
+                if (isset($app_strings[$fielddef['vname']])) {
                     $fielddef['label'] = $app_strings[$fielddef['vname']];
-                }else{
-                    $fielddef['label'] = $mod_strings[$fielddef['vname']];
+                } else {
+                    if (isset($mod_strings[$fielddef['vname']])) {
+                        $fielddef['label'] = $mod_strings[$fielddef['vname']];
+                    } else {
+                        $GLOBALS['log']->warn("Unknown text label in a fielddef: {$fielddef['vname']}");
+                    }
                 }
 
                 $validate_array = array('type' => $fielddef['type'], 'required' => $fielddef['required'],'label' => $fielddef['label']);
