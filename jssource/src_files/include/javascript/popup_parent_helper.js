@@ -48,9 +48,10 @@ function get_close_popup() {
 }
 
 function open_popup(module_name, width, height, initial_filter, close_popup, hide_clear_button, popup_request_data, popup_mode, create, metadata) {
-  "use strict";
-  if (typeof(popupCount) === "undefined" || popupCount == 0) {
-    popupCount = 1;
+  if (typeof popupCount === "undefined") {
+    var popupCount = 1;
+  } else if(popupCount == 0) {
+    var popupCount = 1;
   }
   // set the variables that the popup will pull from
   window.document.popup_request_data = popup_request_data;
