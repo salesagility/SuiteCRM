@@ -374,11 +374,7 @@
     <div class="nav-buttons">
         <input title="{$MOD.LBL_WIZARD_BACK_BUTTON}"
                class="button" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_BACK_BUTTON}  "
-                {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
-               onclick="SugarWizard.changeScreen('smtp',true);" id="previous_tab_smtp" />&nbsp;
-        {else}
         onclick="SugarWizard.changeScreen('locale',true);" id="previous_tab_locale" />&nbsp;
-        {/if}
         <input title="{$MOD.LBL_WIZARD_FINISH_BUTTON}" class="button primary"
                type="submit" name="save" value="  {$MOD.LBL_WIZARD_FINISH_BUTTON}  " />&nbsp;
     </div>
