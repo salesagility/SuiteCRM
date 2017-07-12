@@ -89,7 +89,7 @@ class HomeController extends SugarController{
 
                 $fielddef = $bean->field_defs[$_REQUEST['field']];
 
-                if(!$fielddef['required']){
+                if(!isset($fielddef['required']) || !$fielddef['required']){
                     $fielddef['required'] = false;
                 }
 
