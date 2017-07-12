@@ -364,8 +364,6 @@ function getDisplayValue($bean, $field, $method = "save")
         $metadata = require("modules/Accounts/metadata/listviewdefs.php");
     }
 
-    $listViewDefs = $listViewDefs['Accounts'][strtoupper($field)];
-
     $fieldlist[$field] = $bean->getFieldDefinition($field);
 
     if(is_array($listViewDefs)){
