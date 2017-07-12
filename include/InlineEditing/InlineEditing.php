@@ -340,7 +340,14 @@ function saveField($field, $id, $module, $value)
             }
         }
 
-        $bean->save($check_notify);
+        if($bean->ACLAccess("edit") || is_admin($current_user)) {
+            if(!$bean->save($check_notify)) {
+                $GLOBALS['log']->fatal("Saving probably failed or bean->save() method did not return with a positive result.");
+            }
+        } else {
+            $GLOBALS['log']->fatal("ACLAccess denied to save this field.");
+        }
+        $bean->retrieve();
         return getDisplayValue($bean, $field);
     } else {
         return false;
