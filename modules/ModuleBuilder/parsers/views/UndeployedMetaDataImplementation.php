@@ -169,7 +169,7 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
      * @param string modulename     The name of the module that will use this layout
      * @param string type
      */
-    public static function getFileName ($view , $moduleName , $packageName , $type = MB_BASEMETADATALOCATION)
+    public function getFileName ($view , $moduleName , $packageName , $type = MB_BASEMETADATALOCATION)
     {
 
         $type = strtolower ( $type ) ;
