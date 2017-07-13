@@ -2701,7 +2701,10 @@ class Email extends Basic
 
         // use personal email by default
 
-        if($mailBefore->oe->type === 'user' && $mail->oe->type === 'system') {
+        if(
+            $mailBefore->oe->type === 'user' &&
+            ($mail->oe->type === 'system' || $mail->oe->type === 'system-override')
+        ) {
             $mail = $mailBefore;
         }
 
