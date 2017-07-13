@@ -140,12 +140,12 @@ class SugarEmailAddress extends SugarBean {
         // validate the request first
 
         if(!$this->isUserProfileEditViewPageSaveAction($request)) {
-            $GLOBALS['log']->error('This function made for save user profile only');
+            $GLOBALS['log']->error('This function created for user profile (save) only');
             return false;
         }
 
         if(!$request) {
-            $GLOBALS['log']->error('This function need a request');
+            $GLOBALS['log']->error('This function requires a request');
             return false;
         }
 
@@ -180,12 +180,12 @@ class SugarEmailAddress extends SugarBean {
         }
 
         if(!$usefulRequest) {
-            $GLOBALS['log']->error('There is no any useful email address in request');
+            $GLOBALS['log']->error('There is not any useful email address in request');
             return false;
         }
 
         if(!isset($usefulRequest['Users']) || !$usefulRequest['Users']) {
-            $GLOBALS['log']->error('There is no user in request');
+            $GLOBALS['log']->error('There is not user in request');
             return false;
         }
 
@@ -222,19 +222,19 @@ class SugarEmailAddress extends SugarBean {
         if($primary && preg_match('/^Users(\d+)emailAddress(\d+)$/', $primary, $matches)) {
             $usefulRequest['Users'][$matches[1]]['emailAddress'][$matches[2]]['primary'] = true;
         } else {
-            $GLOBALS['log']->warn("There is no selected primary email");
+            $GLOBALS['log']->warn("There is not selected primary email");
         }
 
         if($replyTo && preg_match('/^Users(\d+)emailAddress(\d+)$/', $replyTo, $matches)) {
             $usefulRequest['Users'][$matches[1]]['emailAddress'][$matches[2]]['replyTo'] = true;
         } else {
-            $GLOBALS['log']->warn("There is no selected reply-to email");
+            $GLOBALS['log']->warn("There is not selected reply-to email");
         }
 
         //echo '<pre>';print_r($usefulRequest);
 
         if(count($usefulRequest['Users']) < 1) {
-            $GLOBALS['log']->error("There is no user in request");
+            $GLOBALS['log']->error("There is not user in request");
             return false;
         }
 
@@ -246,7 +246,7 @@ class SugarEmailAddress extends SugarBean {
         foreach($usefulRequest['Users'] as $user) {
             foreach($user['emailAddress'] as $email) {
                 if(!$this->handleEmailSaveAtUserProfile($email['id'], $email['email'], $email['primary'], $email['replyTo'])) {
-                    $GLOBALS['log']->warn("An email not saved or updated: {$email['id']} ({$email['email']})");
+                    $GLOBALS['log']->warn("One of the Emails not saved or updated: {$email['id']} ({$email['email']})");
                     $ret = false;
                 }
             }
@@ -276,12 +276,12 @@ class SugarEmailAddress extends SugarBean {
         // first validations
 
         if(!$id) {
-            $GLOBALS['log']->error("No email ID");
+            $GLOBALS['log']->error("Missing email ID");
             return false;
         }
 
         if(!$address) {
-            $GLOBALS['log']->error("No email address");
+            $GLOBALS['log']->error("Missing email address");
             return false;
         }
 
@@ -292,7 +292,7 @@ class SugarEmailAddress extends SugarBean {
 
         $email = new SugarEmailAddress();
         if(!$email->retrieve($id)) {
-            $GLOBALS['log']->error('Email retrieve error, may a wrong email ID');
+            $GLOBALS['log']->error('Email retrieve error, make sure the email ID is correct');
             return false;
         }
 
@@ -307,7 +307,7 @@ class SugarEmailAddress extends SugarBean {
         $row = $requests->fetch_assoc();
 
         if(!$row) {
-            $GLOBALS['log']->error("Email ID not found");
+            $GLOBALS['log']->error("Missing Email ID ($id)");
             return false;
         }
 
@@ -328,10 +328,10 @@ class SugarEmailAddress extends SugarBean {
                     deleted = 0";
             $result = $db->query($query);
             if (!$result) {
-                $GLOBALS['log']->warn("No error info about email save but probably something went wrong");
+                $GLOBALS['log']->warn("Missing error info about email save but probably something went wrong");
             }
             if ($db->getAffectedRowCount($result) != 1) {
-                $GLOBALS['log']->debug("Email address didn't change");
+                $GLOBALS['log']->debug("Email address has not change");
             }
         }
 
@@ -351,10 +351,10 @@ class SugarEmailAddress extends SugarBean {
                 deleted = 0";
         $result = $db->query($query);
         if (!$result) {
-            $GLOBALS['log']->warn("No error info about email save but probably something went wrong");
+            $GLOBALS['log']->warn("Missing error info about email save but probably something went wrong");
         }
         if ($db->getAffectedRowCount($result) != 1) {
-            $GLOBALS['log']->debug("Email address primary or reply-to didn't change");
+            $GLOBALS['log']->debug("Email address primary or reply-to has not change");
         }
 
         return true;
