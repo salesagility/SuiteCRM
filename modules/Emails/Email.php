@@ -4138,6 +4138,18 @@ eoq;
             }
         }
 
+        // When use is sending email after selecting forward or reply to
+        // We need to generate a new id
+        if (isset($_REQUEST['refer_action']) && !empty($_REQUEST['refer_action'])) {
+            $referActions = array('Forward', 'ReplyTo', 'ReplyToAll');
+            if(in_array($_REQUEST['refer_action'], $referActions)) {
+                $bean->id = create_guid();
+                $bean->new_with_id = true;
+                $bean->type = 'out';
+                $bean->status = 'draft';
+            }
+        }
+
         return $bean;
     }
 
