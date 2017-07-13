@@ -71,6 +71,11 @@ class EmailsController extends SugarController
      */
     const COMPOSE_BEAN_MODE_FORWARD = 3;
 
+    /**
+     * @see EmailsController::composeBean()
+     */
+    const COMPOSE_BEAN_WITH_PDF_TEMPLATE = 4;
+
     protected static $doNotImportFields = array(
         'action',
         'type',
@@ -134,21 +139,168 @@ class EmailsController extends SugarController
      */
     public function action_send()
     {
-        $this->bean = $this->bean->populateBeanFromRequest($this->bean, $_REQUEST);
-        $this->bean->save();
+        global $current_user;
+        global $app_strings;
 
-        $this->bean->handleMultipleFileAttachments();
+        $request = $_REQUEST;
+
+        $this->bean = $this->bean->populateBeanFromRequest($this->bean, $request);
+        $inboundEmailAccount = new InboundEmail();
+        $inboundEmailAccount->retrieve($_REQUEST['inbound_email_id']);
+
+        if ($this->userIsAllowedToSendEmail($current_user, $inboundEmailAccount, $this->bean)) {
+            $this->bean->save();
+
+            $this->bean->handleMultipleFileAttachments();
+
+        // parse and replace bean variables
+        $this->bean = $this->replaceEmailVariables($this->bean, $request);
 
         if ($this->bean->send()) {
             $this->bean->status = 'sent';
             $this->bean->save();
         } else {
-            $this->bean->status = 'sent_error';
+            // Don't save status if the email is a draft.
+                // We need to ensure that drafts will still show
+                // in the list view
+                if ($this->bean->status !== 'draft') {
+                    $this->bean->status = 'send_error';
+                    $this->bean->save();
+                } else {
+                    $this->bean->status = 'send_error';
+                }
         }
 
-        $this->view = 'sendemail';
+            $this->view = 'sendemail';
+        } else {
+            $GLOBALS['log']->security(
+                'User ' . $current_user->name .
+                ' attempted to send an email using incorrect email account settings in' .
+                ' which they do not have access to.'
+            );
+
+            $this->view = 'ajax';
+            $response['errors'] = array(
+                'type' => get_class($this->bean),
+                'id' => $this->bean->id,
+                'title' => $app_strings['LBL_EMAIL_ERROR_SENDING']
+            );
+            echo json_encode($response);
+            // log out the user
+            session_destroy();
+        }
     }
 
+    /**
+     * Parse and replace bean variables
+     * but first validate request,
+     * see log to check validation problems
+     *
+     * return Email bean
+     *
+     * @param Email $email
+     * @param array $request
+     * @return Email
+     */
+    protected function replaceEmailVariables(Email $email, $request)
+    {
+        // request validation before replace bean variables
+
+        if ($this->isValidRequestForReplaceEmailVariables($request)) {
+
+            $macro_nv = array();
+
+            $focusName = $request['parent_type'];
+            $focus = BeanFactory::getBean($focusName, $request['parent_id']);
+            if ($email->module_dir == 'Accounts') {
+                $focusName = 'Accounts';
+            }
+
+            /**
+             * @var EmailTemplate $emailTemplate
+             */
+            $emailTemplate = BeanFactory::getBean(
+                'EmailTemplates',
+                isset($request['emails_email_templates_idb']) ?
+                    $request['emails_email_templates_idb'] :
+                    null
+            );
+            $templateData = $emailTemplate->parse_email_template(
+                array(
+                    'subject' => $email->name,
+                    'body_html' => $email->description_html,
+                    'body' => $email->description,
+                ),
+                $focusName,
+                $focus,
+                $macro_nv
+            );
+
+            $email->name = $templateData['subject'];
+            $email->description_html = $templateData['body_html'];
+            $email->description = $templateData['body'];
+        } else {
+            $this->log('Email variables is not replaced because an invalid request.');
+        }
+
+
+        return $email;
+    }
+
+    /**
+     * Request validation before replace bean variables,
+     * see log to check validation problems
+     *
+     * @param array $request
+     * @return bool
+     */
+    protected function isValidRequestForReplaceEmailVariables($request)
+    {
+
+        $isValidRequestForReplaceEmailVariables = true;
+
+        if (!is_array($request)) {
+
+            // request should be an array like standard $_REQUEST
+
+            $isValidRequestForReplaceEmailVariables = false;
+            $this->log('Incorrect request format');
+        }
+
+
+        if (!isset($request['parent_type']) || !$request['parent_type']) {
+
+            // there is no any selected option in 'Related To' field
+            // so impossible to replace variables to selected bean data
+
+            $isValidRequestForReplaceEmailVariables = false;
+            $this->log('There isn\'t any selected BEAN-TYPE option in \'Related To\' dropdown');
+        }
+
+
+        if (!isset($request['parent_id']) || !$request['parent_id']) {
+
+            // there is no any selected bean in 'Related To' field
+            // so impossible to replace variables to selected bean data
+
+            $isValidRequestForReplaceEmailVariables = false;
+            $this->log('There isn\'t any selected BEAN-ELEMENT in \'Related To\' field');
+        }
+
+
+        return $isValidRequestForReplaceEmailVariables;
+    }
+
+    /**
+     * Add a message to log
+     *
+     * @param string $msg
+     * @param string $level
+     */
+    private function log($msg, $level = 'info')
+    {
+        $GLOBALS['log']->$level($msg);
+    }
 
     /**
      * @see EmailsViewCompose
@@ -164,6 +316,18 @@ class EmailsController extends SugarController
     }
 
     /**
+     * @see EmailsViewCompose
+     */
+    public function action_DeleteDraft()
+    {
+        $this->bean->deleted = '1';
+        $this->bean->status = 'draft';
+        $this->bean->save();
+        $this->view = 'deletedraftemail';
+    }
+
+
+    /**
      * @see EmailsViewPopup
      */
     public function action_Popup()
@@ -173,7 +337,7 @@ class EmailsController extends SugarController
 
     /**
      * Gets the values of the "from" field
-     *
+     * includes the signatures for each account
      */
     public function action_GetFromFields()
     {
@@ -183,20 +347,77 @@ class EmailsController extends SugarController
         $ie = new InboundEmail();
         $ie->email = $email;
         $accounts = $ieAccountsFull = $ie->retrieveAllByGroupIdWithGroupAccounts($current_user->id);
-        $data = array();
-        foreach ($accounts as $inboundEmailId => $inboundEmail) {
-            $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
-            $data[] = array(
-                'type' => $inboundEmail->module_name,
-                'id' => $inboundEmail->id,
-                'attributes' => array(
-                    'from' => $storedOptions['from_addr']
-                )
-            );
+        $accountSignatures = $current_user->getPreference('account_signatures', 'Emails');
+        $showFolders = unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+        if ($accountSignatures != null) {
+            $emailSignatures = unserialize(base64_decode($accountSignatures));
+        } else {
+            $GLOBALS['log']->warn('User ' . $current_user->name . ' does not have a signature');
         }
 
+        $defaultEmailSignature = $current_user->getDefaultSignature();
+        if (empty($defaultEmailSignature)) {
+            $defaultEmailSignature = array(
+                'html' => '<br>',
+                'plain' => '\r\n',
+            );
+            $defaultEmailSignature['no_default_available'] = true;
+        } else {
+            $defaultEmailSignature['no_default_available'] = false;
+        }
 
-        echo json_encode(array('data' => $data));
+        $prependSignature = $current_user->getPreference('signature_prepend');
+
+        $data = array();
+        foreach ($accounts as $inboundEmailId => $inboundEmail) {
+            if(in_array($inboundEmail->id, $showFolders)) {
+                $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
+                $isGroupEmailAccount = $inboundEmail->isGroupEmailAccount();
+                $isPersonalEmailAccount = $inboundEmail->isPersonalEmailAccount();
+
+                $dataAddress = array(
+                    'type' => $inboundEmail->module_name,
+                    'id' => $inboundEmail->id,
+                    'attributes' => array(
+                        'from' => $storedOptions['from_addr']
+                    ),
+                    'prepend' => $prependSignature,
+                    'isPersonalEmailAccount' => $isPersonalEmailAccount,
+                    'isGroupEmailAccount' => $isGroupEmailAccount
+                );
+
+                // Include signature
+                if (isset($emailSignatures[$inboundEmail->id]) && !empty($emailSignatures[$inboundEmail->id])) {
+                    $emailSignatureId = $emailSignatures[$inboundEmail->id];
+                } else {
+                    $emailSignatureId = '';
+                }
+
+                $signature = $current_user->getSignature($emailSignatureId);
+                if (!$signature) {
+
+                    if ($defaultEmailSignature['no_default_available'] === true) {
+                        $dataAddress['emailSignatures'] = $defaultEmailSignature;
+                    } else {
+                        $dataAddress['emailSignatures'] = array(
+                            'html' => utf8_encode(html_entity_decode($defaultEmailSignature['signature_html'])),
+                            'plain' => $defaultEmailSignature['signature'],
+                        );
+                    }
+                } else {
+                    $dataAddress['emailSignatures'] = array(
+                        'html' => utf8_encode(html_entity_decode($signature['signature_html'])),
+                        'plain' => $signature['signature'],
+                    );
+                }
+
+                $data[] = $dataAddress;
+            }
+        }
+
+        $dataEncoded = json_encode(array('data' => $data));
+        echo $dataEncoded;
+
         $this->view = 'ajax';
     }
 
@@ -230,7 +451,7 @@ class EmailsController extends SugarController
                 true);
             $out = json_encode(array('response' => $ret));
         } catch (SugarFolderEmptyException $e) {
-            $GLOBALS['log']->fatal($e->getMessage());
+            $GLOBALS['log']->warn($e->getMessage());
             $out = json_encode(array('errors' => array($mod_strings['LBL_ERROR_NO_FOLDERS'])));
         }
 
@@ -246,7 +467,7 @@ class EmailsController extends SugarController
     {
         global $db;
         $emails = BeanFactory::getBean("Emails");
-        $result = $emails->get_full_list('', "uid = '{$db->quote($_REQUEST['uid'])}'");
+        $result = $emails->get_full_list('', "mailbox_id = '" . $db->quote($_REQUEST['inbound_email_record']) . "' AND uid = '{$db->quote($_REQUEST['uid'])}'");
         if (empty($result)) {
             $this->view = 'detailnonimported';
         } else {
@@ -345,12 +566,64 @@ class EmailsController extends SugarController
         $this->view = 'compose';
     }
 
+    /**
+     * Fills compose view body with the output from PDF Template
+     * @see sendEmail::send_email()
+     */
+    public function action_ComposeViewWithPdfTemplate()
+    {
+        $this->composeBean($_REQUEST, self::COMPOSE_BEAN_WITH_PDF_TEMPLATE);
+        $this->view = 'compose';
+    }
+
     public function action_SendDraft()
     {
         $this->view = 'ajax';
         echo json_encode(array());
     }
 
+
+    /**
+     * @throws SugarControllerException
+     */
+    public function action_MarkEmails()
+    {
+        $this->markEmails($_REQUEST);
+        echo json_encode(array('response' => true));
+        $this->view = 'ajax';
+    }
+
+    /**
+     * @param array $request
+     * @throws SugarControllerException
+     */
+    public function markEmails($request)
+    {
+        // validate the request
+
+        if (!isset($request['inbound_email_record']) || !$request['inbound_email_record']) {
+            throw new SugarControllerException('No Inbound Email record in request');
+        }
+
+        if (!isset($request['folder']) || !$request['folder']) {
+            throw new SugarControllerException('No Inbound Email folder in request');
+        }
+
+        // connect to requested inbound email server
+        // and select the folder
+
+        $ie = $this->getInboundEmail($request['inbound_email_record']);
+        $ie->mailbox = $request['folder'];
+        $ie->connectMailserver();
+
+        // get requested UIDs and flag type
+
+        $UIDs = $this->getRequestedUIDs($request);
+        $type = $this->getRequestedFlagType($request);
+
+        // mark emails
+        $ie->markEmails($UIDs, $type);
+    }
 
     /**
      * @param array $request
@@ -373,7 +646,6 @@ class EmailsController extends SugarController
 
         if (isset($request['record']) && !empty($request['record'])) {
             $this->bean->retrieve($request['record']);
-
         } else {
             $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($request['inbound_email_record']));
             $inboundEmail->connectMailserver();
@@ -392,6 +664,11 @@ class EmailsController extends SugarController
             if ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {
                 $this->bean->to_addrs = '';
                 $this->bean->to_addrs_names = '';
+            } else {
+                if ($mode === self::COMPOSE_BEAN_WITH_PDF_TEMPLATE) {
+                    // Get Related To Field
+                    // Populate to
+                }
             }
         }
 
@@ -410,9 +687,11 @@ class EmailsController extends SugarController
             if ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {
                 // Add FW to subject
                 $this->bean->name = $mod_strings['LBL_FW'] . $this->bean->name;
-            } else {
-                $this->bean->name = $mod_strings['LBL_NO_SUBJECT'] . $this->bean->name;
             }
+        }
+
+        if (empty($this->bean->name)) {
+            $this->bean->name = $mod_strings['LBL_NO_SUBJECT'] . $this->bean->name;
         }
 
         // Move body into original message
@@ -425,46 +704,8 @@ class EmailsController extends SugarController
                     $this->bean->description;
             }
         }
-
     }
 
-    /**
-     * @throws SugarControllerException
-     */
-    public function action_MarkEmails()
-    {
-        $request = $_REQUEST;
-
-        // validate the request
-
-        if (!isset($request['inbound_email_record']) || !$request['inbound_email_record']) {
-            throw new SugarControllerException('No Inbound Email record in request');
-        }
-
-        if (!isset($request['folder']) || !$request['folder']) {
-            throw new SugarControllerException('No Inbound Email folder in request');
-        }
-
-
-        // connect to requested inbound email server
-        // and select the folder
-
-        $ie = $this->getInboundEmail($request['inbound_email_record']);
-        $ie->mailbox = $request['folder'];
-        $ie->connectMailserver();
-
-        // get requested UIDs and flag type
-
-        $UIDs = $this->getRequestedUIDs($request);
-        $type = $this->getRequestedFlagType($request);
-
-        // mark emails
-
-        $ie->markEmails($UIDs, $type);
-
-        echo json_encode(array('response' => true));
-        $this->view = 'ajax';
-    }
 
     /**
      * @param $request
@@ -549,5 +790,82 @@ class EmailsController extends SugarController
         $emails->save();
 
         return $emails;
+    }
+
+    /**
+     * @param User $requestedUser
+     * @param InboundEmail $requestedInboundEmail
+     * @param Email $requestedEmail
+     * @return bool false if user doesn't have access
+     */
+    protected function userIsAllowedToSendEmail($requestedUser, $requestedInboundEmail, $requestedEmail)
+    {
+        $hasAccess = false;
+
+        // Check that user is allowed to use inbound email account
+        $hasAccessToInboundEmailAccount = false;
+        $usersInboundEmailAccounts = $requestedInboundEmail->retrieveAllByGroupIdWithGroupAccounts($requestedUser->id);
+        foreach ($usersInboundEmailAccounts as $inboundEmailId => $userInboundEmail) {
+            if ($userInboundEmail->id === $requestedInboundEmail->id) {
+                $hasAccessToInboundEmailAccount = true;
+                break;
+            }
+        }
+
+        $inboundEmailStoredOptions = $requestedInboundEmail->getStoredOptions();
+
+        // if group email account, check that user is allowed to use group email account
+        if ($requestedInboundEmail->isGroupEmailAccount()) {
+            if ($inboundEmailStoredOptions['allow_outbound_group_usage'] === true) {
+                $hasAccessToInboundEmailAccount = true;
+            } else {
+                $hasAccessToInboundEmailAccount = false;
+            }
+        }
+
+        // Check that the from address is the same as the inbound email account
+        $isFromAddressTheSame = false;
+        if ($inboundEmailStoredOptions['from_addr'] === $requestedEmail->from_addr) {
+            $isFromAddressTheSame = true;
+        }
+
+        // Check if user is using the system account, as the email address for the system account, will have different
+        // settings. If there is not an outbound email id in the stored options then we should try
+        // and use the system account, provided that the user is allowed to use to the system account.
+        $outboundEmailAccount = new OutboundEmail();
+        if(empty($inboundEmailStoredOptions['outbound_email'])) {
+            $outboundEmailAccount->getSystemMailerSettings();
+        } else {
+            $outboundEmailAccount->retrieve($inboundEmailStoredOptions['outbound_email']);
+        }
+
+        $isAllowedToUseOutboundEmail = false;
+        if ($outboundEmailAccount->type === 'system') {
+            if($outboundEmailAccount->isAllowUserAccessToSystemDefaultOutbound()) {
+                $isAllowedToUseOutboundEmail = true;
+            }
+
+            // When there are not any authentication details for the system account, allow the user to use the system
+            // email account.
+            if($outboundEmailAccount->mail_smtpauth_req == 0) {
+                $isAllowedToUseOutboundEmail = true;
+            }
+
+            $admin = new Administration();
+            $admin->retrieveSettings();
+            $adminNotifyFromAddress = $admin->settings['notify_fromaddress'];
+            if ($adminNotifyFromAddress === $requestedEmail->from_addr) {
+                $isFromAddressTheSame = true;
+            }
+        } else if ($outboundEmailAccount->type === 'user') {
+            $isAllowedToUseOutboundEmail = true;
+        }
+
+        $hasAccess =
+            ($hasAccessToInboundEmailAccount === true) &&
+            ($isFromAddressTheSame === true) &&
+            ($isAllowedToUseOutboundEmail === true);
+
+        return $hasAccess;
     }
 }

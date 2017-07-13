@@ -43,8 +43,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die ('Not A Valid Entry Point');
 }
 
-class EmailsViewSavedraftemail extends ViewAjax
+class EmailsViewSaveDraftEmail extends ViewAjax
 {
+    /**
+     * @var Email $bean
+     */
+    public $bean;
+
+
     public function __construct()
     {
         parent::__construct();
