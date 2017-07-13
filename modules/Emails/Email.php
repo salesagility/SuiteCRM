@@ -287,16 +287,6 @@ class Email extends Basic
     public $replyDelimiter = "> ";
 
     /**
-     * @var string $emailDescription
-     */
-    public $emailDescription;
-
-    /**
-     * @var string $emailDescriptionHTML
-     */
-    public $emailDescriptionHTML;
-
-    /**
      * @var string $emailRawSource
      */
     public $emailRawSource;
@@ -3899,12 +3889,12 @@ eoq;
             $bean = BeanFactory::getBean('Emails');
         }
 
-        if (isset($_REQUEST['id'])) {
+        if (isset($request['id'])) {
             $bean = $bean->retrieve($_REQUEST['id']);
         }
 
 
-        foreach ($_REQUEST as $fieldName => $field) {
+        foreach ($request as $fieldName => $field) {
             if (array_key_exists($fieldName, $bean->field_defs)) {
                 $bean->$fieldName = $field;
             }

@@ -142,7 +142,9 @@ class EmailsController extends SugarController
         global $current_user;
         global $app_strings;
 
-        $this->bean = $this->bean->populateBeanFromRequest($this->bean, $_REQUEST);
+        $request = $_REQUEST;
+
+        $this->bean = $this->bean->populateBeanFromRequest($this->bean, $request);
         $inboundEmailAccount = new InboundEmail();
         $inboundEmailAccount->retrieve($_REQUEST['inbound_email_id']);
 
@@ -151,11 +153,14 @@ class EmailsController extends SugarController
 
             $this->bean->handleMultipleFileAttachments();
 
-            if ($this->bean->send()) {
-                $this->bean->status = 'sent';
-                $this->bean->save();
-            } else {
-                // Don't save status if the email is a draft.
+        // parse and replace bean variables
+        $this->bean = $this->replaceEmailVariables($this->bean, $request);
+
+        if ($this->bean->send()) {
+            $this->bean->status = 'sent';
+            $this->bean->save();
+        } else {
+            // Don't save status if the email is a draft.
                 // We need to ensure that drafts will still show
                 // in the list view
                 if ($this->bean->status !== 'draft') {
@@ -164,7 +169,7 @@ class EmailsController extends SugarController
                 } else {
                     $this->bean->status = 'send_error';
                 }
-            }
+        }
 
             $this->view = 'sendemail';
         } else {
@@ -186,6 +191,116 @@ class EmailsController extends SugarController
         }
     }
 
+    /**
+     * Parse and replace bean variables
+     * but first validate request,
+     * see log to check validation problems
+     *
+     * return Email bean
+     *
+     * @param Email $email
+     * @param array $request
+     * @return Email
+     */
+    protected function replaceEmailVariables(Email $email, $request)
+    {
+        // request validation before replace bean variables
+
+        if ($this->isValidRequestForReplaceEmailVariables($request)) {
+
+            $macro_nv = array();
+
+            $focusName = $request['parent_type'];
+            $focus = BeanFactory::getBean($focusName, $request['parent_id']);
+            if ($email->module_dir == 'Accounts') {
+                $focusName = 'Accounts';
+            }
+
+            /**
+             * @var EmailTemplate $emailTemplate
+             */
+            $emailTemplate = BeanFactory::getBean(
+                'EmailTemplates',
+                isset($request['emails_email_templates_idb']) ?
+                    $request['emails_email_templates_idb'] :
+                    null
+            );
+            $templateData = $emailTemplate->parse_email_template(
+                array(
+                    'subject' => $email->name,
+                    'body_html' => $email->description_html,
+                    'body' => $email->description,
+                ),
+                $focusName,
+                $focus,
+                $macro_nv
+            );
+
+            $email->name = $templateData['subject'];
+            $email->description_html = $templateData['body_html'];
+            $email->description = $templateData['body'];
+        } else {
+            $this->log('Email variables is not replaced because an invalid request.');
+        }
+
+
+        return $email;
+    }
+
+    /**
+     * Request validation before replace bean variables,
+     * see log to check validation problems
+     *
+     * @param array $request
+     * @return bool
+     */
+    protected function isValidRequestForReplaceEmailVariables($request)
+    {
+
+        $isValidRequestForReplaceEmailVariables = true;
+
+        if (!is_array($request)) {
+
+            // request should be an array like standard $_REQUEST
+
+            $isValidRequestForReplaceEmailVariables = false;
+            $this->log('Incorrect request format');
+        }
+
+
+        if (!isset($request['parent_type']) || !$request['parent_type']) {
+
+            // there is no any selected option in 'Related To' field
+            // so impossible to replace variables to selected bean data
+
+            $isValidRequestForReplaceEmailVariables = false;
+            $this->log('There isn\'t any selected BEAN-TYPE option in \'Related To\' dropdown');
+        }
+
+
+        if (!isset($request['parent_id']) || !$request['parent_id']) {
+
+            // there is no any selected bean in 'Related To' field
+            // so impossible to replace variables to selected bean data
+
+            $isValidRequestForReplaceEmailVariables = false;
+            $this->log('There isn\'t any selected BEAN-ELEMENT in \'Related To\' field');
+        }
+
+
+        return $isValidRequestForReplaceEmailVariables;
+    }
+
+    /**
+     * Add a message to log
+     *
+     * @param string $msg
+     * @param string $level
+     */
+    private function log($msg, $level = 'info')
+    {
+        $GLOBALS['log']->$level($msg);
+    }
 
     /**
      * @see EmailsViewCompose
@@ -233,6 +348,7 @@ class EmailsController extends SugarController
         $ie->email = $email;
         $accounts = $ieAccountsFull = $ie->retrieveAllByGroupIdWithGroupAccounts($current_user->id);
         $accountSignatures = $current_user->getPreference('account_signatures', 'Emails');
+        $showFolders = unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
         if ($accountSignatures != null) {
             $emailSignatures = unserialize(base64_decode($accountSignatures));
         } else {
@@ -254,47 +370,49 @@ class EmailsController extends SugarController
 
         $data = array();
         foreach ($accounts as $inboundEmailId => $inboundEmail) {
-            $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
-            $isGroupEmailAccount = $inboundEmail->isGroupEmailAccount();
-            $isPersonalEmailAccount = $inboundEmail->isPersonalEmailAccount();
+            if(in_array($inboundEmail->id, $showFolders)) {
+                $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
+                $isGroupEmailAccount = $inboundEmail->isGroupEmailAccount();
+                $isPersonalEmailAccount = $inboundEmail->isPersonalEmailAccount();
 
-            $dataAddress = array(
-                'type' => $inboundEmail->module_name,
-                'id' => $inboundEmail->id,
-                'attributes' => array(
-                    'from' => $storedOptions['from_addr']
-                ),
-                'prepend' => $prependSignature,
-                'isPersonalEmailAccount' => $isPersonalEmailAccount,
-                'isGroupEmailAccount' => $isGroupEmailAccount
-            );
+                $dataAddress = array(
+                    'type' => $inboundEmail->module_name,
+                    'id' => $inboundEmail->id,
+                    'attributes' => array(
+                        'from' => $storedOptions['from_addr']
+                    ),
+                    'prepend' => $prependSignature,
+                    'isPersonalEmailAccount' => $isPersonalEmailAccount,
+                    'isGroupEmailAccount' => $isGroupEmailAccount
+                );
 
-            // Include signature
-            if (isset($emailSignatures[$inboundEmail->id]) && !empty($emailSignatures[$inboundEmail->id])) {
-                $emailSignatureId = $emailSignatures[$inboundEmail->id];
-            } else {
-                $emailSignatureId = '';
-            }
+                // Include signature
+                if (isset($emailSignatures[$inboundEmail->id]) && !empty($emailSignatures[$inboundEmail->id])) {
+                    $emailSignatureId = $emailSignatures[$inboundEmail->id];
+                } else {
+                    $emailSignatureId = '';
+                }
 
-            $signature = $current_user->getSignature($emailSignatureId);
-            if (!$signature) {
+                $signature = $current_user->getSignature($emailSignatureId);
+                if (!$signature) {
 
-                if ($defaultEmailSignature['no_default_available'] === true) {
-                    $dataAddress['emailSignatures'] = $defaultEmailSignature;
+                    if ($defaultEmailSignature['no_default_available'] === true) {
+                        $dataAddress['emailSignatures'] = $defaultEmailSignature;
+                    } else {
+                        $dataAddress['emailSignatures'] = array(
+                            'html' => utf8_encode(html_entity_decode($defaultEmailSignature['signature_html'])),
+                            'plain' => $defaultEmailSignature['signature'],
+                        );
+                    }
                 } else {
                     $dataAddress['emailSignatures'] = array(
-                        'html' => utf8_encode(html_entity_decode($defaultEmailSignature['signature_html'])),
-                        'plain' => $defaultEmailSignature['signature'],
+                        'html' => utf8_encode(html_entity_decode($signature['signature_html'])),
+                        'plain' => $signature['signature'],
                     );
                 }
-            } else {
-                $dataAddress['emailSignatures'] = array(
-                    'html' => utf8_encode(html_entity_decode($signature['signature_html'])),
-                    'plain' => $signature['signature'],
-                );
-            }
 
-            $data[] = $dataAddress;
+                $data[] = $dataAddress;
+            }
         }
 
         $dataEncoded = json_encode(array('data' => $data));
@@ -349,7 +467,7 @@ class EmailsController extends SugarController
     {
         global $db;
         $emails = BeanFactory::getBean("Emails");
-        $result = $emails->get_full_list('', "uid = '{$db->quote($_REQUEST['uid'])}'");
+        $result = $emails->get_full_list('', "mailbox_id = '" . $db->quote($_REQUEST['inbound_email_record']) . "' AND uid = '{$db->quote($_REQUEST['uid'])}'");
         if (empty($result)) {
             $this->view = 'detailnonimported';
         } else {

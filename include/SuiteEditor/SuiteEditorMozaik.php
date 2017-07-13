@@ -86,7 +86,7 @@ class SuiteEditorMozaik implements SuiteEditorInterface
             $this->settings->group,
             $this->settings->tinyMCESetup
         ));
-        return $smarty->fetch('include/SuiteEditor/tpls/SuiteEditorMozaik.tpl');
+        return $smarty->fetch(get_custom_file_if_exists('include/SuiteEditor/tpls/SuiteEditorMozaik.tpl'));
     }
 
 }

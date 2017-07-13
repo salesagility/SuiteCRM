@@ -393,20 +393,31 @@ $ss->assign('encoded_target_list_popup_request_data', $encoded_newsletter_popup_
 
 // ----- show target lists...
 
+if (!isset($targetListDataArray)) {
+    $targetListDataArray = array();
+}
+if (!isset($targetListDataAssoc)) {
+    $targetListDataAssoc = array();
+}
+
 $targetList = BeanFactory::getBean('ProspectLists')->get_full_list();
 
-$targetListData = array();
-foreach($targetList as $prospectLst) {
-    $nxt = array(
-        'id' => $prospectLst->id,
-        'name' => $prospectLst->name,
-        //'type' => $prospectLst->type,
-        'description' => $prospectLst->description,
-        'type' => $prospectLst->list_type,
-        'count' => $prospectLst->get_entry_count(),
-    );
-    $targetListDataArray[] = $nxt;
-    $targetListDataAssoc[$prospectLst->id] = $nxt;
+if($targetList) {
+    $targetListData = array();
+    foreach ($targetList as $prospectLst) {
+        $nxt = array(
+            'id' => $prospectLst->id,
+            'name' => $prospectLst->name,
+            //'type' => $prospectLst->type,
+            'description' => $prospectLst->description,
+            'type' => $prospectLst->list_type,
+            'count' => $prospectLst->get_entry_count(),
+        );
+        $targetListDataArray[] = $nxt;
+        $targetListDataAssoc[$prospectLst->id] = $nxt;
+    }
+} else {
+    $GLOBALS['log']->warn('There are no outbound target lists available for campaign .');
 }
 
 
@@ -629,7 +640,11 @@ if(isset($_REQUEST['wizardtype'])) {
 
 $ss->display(file_exists('custom/modules/Campaigns/tpls/WizardNewsletter.tpl') ? 'custom/modules/Campaigns/tpls/WizardNewsletter.tpl' : 'modules/Campaigns/tpls/WizardNewsletter.tpl');
 
-if(!$focus->id) {
+/**
+ * Marketing dropdown on summary page stores the last selected value in session
+ * but we should unset it before user select an other campaign
+ */
+if(!$focus->id && isset($campaign_id) && $campaign_id) {
     unset($_SESSION['campaignWizard'][$campaign_id]['defaultSelectedMarketingId']);
 }
 
