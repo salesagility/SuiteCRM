@@ -311,6 +311,7 @@ class Employee extends Person {
         if ($current_user->id) {
             if (!is_admin($current_user)) {
                 if ($this->id && $current_user->id != $this->id) {
+                	$GLOBALS['log']->security("{$current_user->name} tried to update {$this->name} record with out permission.");
                     $GLOBALS['log']->fatal("You can change only your own employee data.");
                     return false;
                 }
