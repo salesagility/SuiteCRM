@@ -2695,7 +2695,15 @@ class Email extends Basic
             }
         }
 
+        $mailBefore = clone $mail;
+
         $mail = $this->setMailer($mail);
+
+        // use personal email by default
+
+        if($mailBefore->oe->type === 'user' && $mail->oe->type === 'system') {
+            $mail = $mailBefore;
+        }
 
         // FROM ADDRESS
         if (!empty($this->from_addr)) {
@@ -2805,6 +2813,7 @@ class Email extends Basic
         }
         $GLOBALS['log']->debug($app_strings['LBL_EMAIL_ERROR_PREPEND'] . $mail->ErrorInfo);
 
+        $GLOBALS['log']->fatal("Email send() error: email ID: {$this->id}, OE-ID: {$mail->oe->id} (type: {$mail->oe->type})");
         return false;
     }
 
