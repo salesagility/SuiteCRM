@@ -139,10 +139,17 @@ class EmailsController extends SugarController
      */
     public function action_send()
     {
-        $this->bean = $this->bean->populateBeanFromRequest($this->bean, $_REQUEST);
+        $request = $_REQUEST;
+
+        $this->bean = $this->bean->populateBeanFromRequest($this->bean, $request);
         $this->bean->save();
 
         $this->bean->handleMultipleFileAttachments();
+
+
+        // parse and replace bean variables
+
+        $this->bean = $this->replaceEmailVariables($this->bean, $request);
 
         if ($this->bean->send()) {
             $this->bean->status = 'sent';
@@ -154,6 +161,120 @@ class EmailsController extends SugarController
         $this->view = 'sendemail';
     }
 
+    /**
+     * Parse and replace bean variables
+     * but first validate request,
+     * see log to check validation problems
+     *
+     * return Email bean
+     *
+     * @param Email $email
+     * @param array $request
+     * @return Email
+     */
+    protected function replaceEmailVariables(Email $email, $request)
+    {
+
+        // request validation before replace bean variables
+
+        if ($this->isValidRequestForReplaceEmailVariables($request)) {
+
+            $macro_nv = array();
+
+            $focusName = $request['parent_type'];
+            $focus = BeanFactory::getBean($focusName, $request['parent_id']);
+            if ($email->module_dir == 'Accounts') {
+                $focusName = 'Accounts';
+            }
+
+            /**
+             * @var EmailTemplate $emailTemplate
+             */
+            $emailTemplate = BeanFactory::getBean(
+                'EmailTemplates',
+                isset($request['emails_email_templates_idb']) ?
+                    $request['emails_email_templates_idb'] :
+                    null
+            );
+            $templateData = $emailTemplate->parse_email_template(
+                array(
+                    'subject' => $email->name,
+                    'body_html' => $email->description_html,
+                    'body' => $email->description,
+                ),
+                $focusName,
+                $focus,
+                $macro_nv
+            );
+
+            $email->name = $templateData['subject'];
+            $email->description_html = $templateData['body_html'];
+            $email->description = $templateData['body'];
+
+        } else {
+
+            $this->log('Email variables is not replaced because an invalid request.');
+
+        }
+
+
+        return $email;
+    }
+
+    /**
+     * Request validation before replace bean variables,
+     * see log to check validation problems
+     *
+     * @param array $request
+     * @return bool
+     */
+    protected function isValidRequestForReplaceEmailVariables($request)
+    {
+
+        $isValidRequestForReplaceEmailVariables = true;
+
+        if (!is_array($request)) {
+
+            // request should be an array like standard $_REQUEST
+
+            $isValidRequestForReplaceEmailVariables = false;
+            $this->log('Incorrect request format');
+        }
+
+
+        if (!isset($request['parent_type']) || !$request['parent_type']) {
+
+            // there is no any selected option in 'Related To' field
+            // so impossible to replace variables to selected bean data
+
+            $isValidRequestForReplaceEmailVariables = false;
+            $this->log('There isn\'t any selected BEAN-TYPE option in \'Related To\' dropdown');
+        }
+
+
+        if (!isset($request['parent_id']) || !$request['parent_id']) {
+
+            // there is no any selected bean in 'Related To' field
+            // so impossible to replace variables to selected bean data
+
+            $isValidRequestForReplaceEmailVariables = false;
+            $this->log('There isn\'t any selected BEAN-ELEMENT in \'Related To\' field');
+        }
+
+
+        return $isValidRequestForReplaceEmailVariables;
+    }
+
+    /**
+     * Add a message to log
+     *
+     * @param string $msg
+     * @param string $level
+     */
+    private function log($msg, $level = 'info')
+    {
+        $GLOBALS['log']->$level($msg);
+    }
 
     /**
      * @see EmailsViewCompose

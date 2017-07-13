@@ -287,16 +287,6 @@ class Email extends Basic
     public $replyDelimiter = "> ";
 
     /**
-     * @var string $emailDescription
-     */
-    public $emailDescription;
-
-    /**
-     * @var string $emailDescriptionHTML
-     */
-    public $emailDescriptionHTML;
-
-    /**
      * @var string $emailRawSource
      */
     public $emailRawSource;
