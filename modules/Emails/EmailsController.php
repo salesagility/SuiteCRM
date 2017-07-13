@@ -722,7 +722,7 @@ class EmailsController extends SugarController
         }
 
         $isAllowedToUseOutboundEmail = false;
-        if ($outboundEmailAccount->type === 'system') {
+        if ($outboundEmailAccount->type === 'system' || $outboundEmailAccount->type === 'system-override') {
             if($outboundEmailAccount->isAllowUserAccessToSystemDefaultOutbound()) {
                 $isAllowedToUseOutboundEmail = true;
             }
