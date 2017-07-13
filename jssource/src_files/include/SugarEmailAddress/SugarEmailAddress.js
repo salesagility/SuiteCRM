@@ -487,3 +487,6 @@
   };
   emailAddressWidgetLoaded = true;
 })();
+$(document).ready(function(){
+  $('.email-address-primary-flag[checked="checked"]').click();
+});

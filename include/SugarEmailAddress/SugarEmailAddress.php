@@ -125,6 +125,274 @@ class SugarEmailAddress extends SugarBean {
         }
     }
 
+
+    /**
+     * User Profile specific save email addresses,
+     * returns:
+     * true - success
+     * false - error
+     *
+     * @param array $request $_REQUEST
+     * @return bool
+     */
+    public function saveAtUserProfile($request) {
+
+        // validate the request first
+
+        if(!$this->isUserProfileEditViewPageSaveAction($request)) {
+            $GLOBALS['log']->error('This function made for save user profile only');
+            return false;
+        }
+
+        if(!$request) {
+            $GLOBALS['log']->error('This function need a request');
+            return false;
+        }
+
+        // first grab the needed information from a messy request
+
+        $neededRequest = array();
+        foreach($request as $key => $value) {
+            if(preg_match('/^Users\d+emailAddress/', $key)) {
+                $neededRequest[$key] = $value;
+            }
+        }
+
+        if(!$neededRequest) {
+            $GLOBALS['log']->error('Email info is not found in request');
+            return false;
+        }
+
+        // re-parsing the request and convert into a useful format
+
+        //var_dump($neededRequest);
+
+        $usefulRequest = array();
+        foreach($neededRequest as $key => $value) {
+            if(preg_match('/^Users(\d+)emailAddress(\d+)/', $key, $matches)) {
+                $usefulRequest['Users'][$matches[1]]['emailAddress'][$matches[2]] = array(
+                    'email' => $neededRequest["Users{$matches[1]}emailAddress{$matches[2]}"],
+                    'id' => $neededRequest["Users{$matches[1]}emailAddressId{$matches[2]}"],
+                    'primary' => false,
+                    'replyTo' => false,
+                );
+            }
+        }
+
+        if(!$usefulRequest) {
+            $GLOBALS['log']->error('There is no any useful email address in request');
+            return false;
+        }
+
+        if(!isset($usefulRequest['Users']) || !$usefulRequest['Users']) {
+            $GLOBALS['log']->error('There is no user in request');
+            return false;
+        }
+
+        // find the selected primary and replyTo
+
+        $primary = null;
+        $replyTo = null;
+        foreach($usefulRequest['Users'] as $ukey => $user) {
+
+            if(
+                !$primary &&
+                isset($neededRequest["Users{$ukey}emailAddressPrimaryFlag"]) &&
+                $neededRequest["Users{$ukey}emailAddressPrimaryFlag"]
+            ) {
+                $primary = $neededRequest["Users{$ukey}emailAddressPrimaryFlag"];
+            }
+
+            if(
+                !$replyTo &&
+                isset($neededRequest["Users{$ukey}emailAddressReplyToFlag"]) &&
+                $neededRequest["Users{$ukey}emailAddressReplyToFlag"]
+            ) {
+                $replyTo = $neededRequest["Users{$ukey}emailAddressReplyToFlag"];
+            }
+
+            // founds?
+            if($primary && $replyTo) {
+                break;
+            }
+        }
+
+        // add primary and replyTo into useful formatted request
+
+        if($primary && preg_match('/^Users(\d+)emailAddress(\d+)$/', $primary, $matches)) {
+            $usefulRequest['Users'][$matches[1]]['emailAddress'][$matches[2]]['primary'] = true;
+        } else {
+            $GLOBALS['log']->warn("There is no selected primary email");
+        }
+
+        if($replyTo && preg_match('/^Users(\d+)emailAddress(\d+)$/', $replyTo, $matches)) {
+            $usefulRequest['Users'][$matches[1]]['emailAddress'][$matches[2]]['replyTo'] = true;
+        } else {
+            $GLOBALS['log']->warn("There is no selected reply-to email");
+        }
+
+        //echo '<pre>';print_r($usefulRequest);
+
+        if(count($usefulRequest['Users']) < 1) {
+            $GLOBALS['log']->error("There is no user in request");
+            return false;
+        }
+
+        if(count($usefulRequest['Users']) > 1) {
+            $GLOBALS['log']->warn("Trying to use multiple requested user");
+        }
+
+        $ret = true;
+        foreach($usefulRequest['Users'] as $user) {
+            foreach($user['emailAddress'] as $email) {
+                if(!$this->handleEmailSaveAtUserProfile($email['id'], $email['email'], $email['primary'], $email['replyTo'])) {
+                    $GLOBALS['log']->warn("An email not saved or updated: {$email['id']} ({$email['email']})");
+                    $ret = false;
+                }
+            }
+        }
+
+
+        return $ret;
+    }
+
+
+    /**
+     * Handle save on User Profile specific Email Addresses,
+     * returns:
+     * true - success
+     * false - error
+     *
+     * @param string $id Email address ID
+     * @param string $address Valid Email address
+     * @param bool $primary
+     * @param bool $replyTo
+     * @return bool
+     */
+    protected function handleEmailSaveAtUserProfile($id, $address, $primary, $replyTo) {
+
+        global $current_user;
+
+        // first validations
+
+        if(!$id) {
+            $GLOBALS['log']->error("No email ID");
+            return false;
+        }
+
+        if(!$address) {
+            $GLOBALS['log']->error("No email address");
+            return false;
+        }
+
+        if(!$this->isValidEmail($address)) {
+            $GLOBALS['log']->error("Invalid email address format");
+            return false;
+        }
+
+        $email = new SugarEmailAddress();
+        if(!$email->retrieve($id)) {
+            $GLOBALS['log']->error('Email retrieve error, may a wrong email ID');
+            return false;
+        }
+
+
+        // update email address
+
+        $db = DBManagerFactory::getInstance();
+
+        $_id = $db->quote($id);
+        $query = "SELECT * FROM email_addresses WHERE id = '{$_id}' AND deleted = 0 LIMIT 1";
+        $requests = $db->query($query);
+        $row = $requests->fetch_assoc();
+
+        if(!$row) {
+            $GLOBALS['log']->error("Email ID not found");
+            return false;
+        }
+
+        // do we have to update the address?
+
+        if($email->email_address != $address) {
+            $_address = $db->quote($address);
+            $_addressCaps = $db->quote(strtoupper($address));
+            $query =
+                "UPDATE email_addresses 
+                  SET 
+                    email_address = '$_address', 
+                    email_address_caps = '$_addressCaps' 
+                  WHERE 
+                    id = {$_id} AND
+                    bean_module = 'Users' AND 
+                    bean_id = '{$current_user->id}' AND
+                    deleted = 0";
+            $result = $db->query($query);
+            if (!$result) {
+                $GLOBALS['log']->warn("No error info about email save but probably something went wrong");
+            }
+            if ($db->getAffectedRowCount($result) != 1) {
+                $GLOBALS['log']->debug("Email address didn't change");
+            }
+        }
+
+        // update primary and replyTo
+
+        $_primary = (bool)$primary ? '1' : '0';
+        $_replyTo = (bool)$replyTo ? '1' : '0';
+        $query =
+            "UPDATE email_addr_bean_rel 
+              SET 
+                primary_address = '{$_primary}', 
+                reply_to_address = '{$_replyTo}' 
+              WHERE 
+                email_address_id = '{$_id}' AND             
+                bean_module = 'Users' AND 
+                bean_id = '{$current_user->id}' AND
+                deleted = 0";
+        $result = $db->query($query);
+        if (!$result) {
+            $GLOBALS['log']->warn("No error info about email save but probably something went wrong");
+        }
+        if ($db->getAffectedRowCount($result) != 1) {
+            $GLOBALS['log']->debug("Email address primary or reply-to didn't change");
+        }
+
+        return true;
+    }
+
+
+    /**
+     * Check a valid email format,
+     * return false if the email validation failed
+     *
+     * @param string $email
+     * @return mixed
+     */
+    protected function isValidEmail($email) {
+        $ret = filter_var($email, FILTER_VALIDATE_EMAIL);
+        return $ret;
+    }
+
+
+    /**
+     * Check for User Profile EditView / Save action for
+     * Email Addresses updates
+     * returns:
+     * true - User Profile Save action called by request
+     *
+     * @param array $request $_REQUEST
+     * @return bool
+     */
+    protected function isUserProfileEditViewPageSaveAction($request) {
+        $ret =
+            (isset($request['page']) && $request['page'] == 'EditView') &&
+            (isset($request['module']) && $request['module'] == 'Users') &&
+            (isset($request['action']) && $request['action'] == 'Save');
+
+        return $ret;
+    }
+
+
     /**
      * Fills standard email1 legacy fields
      * @param string id
