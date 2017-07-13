@@ -201,6 +201,7 @@ class EmailsController extends SugarController
         $ie->email = $email;
         $accounts = $ieAccountsFull = $ie->retrieveAllByGroupIdWithGroupAccounts($current_user->id);
         $accountSignatures = $current_user->getPreference('account_signatures', 'Emails');
+        $showFolders = unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
         if($accountSignatures != null) {
             $emailSignatures = unserialize(base64_decode($accountSignatures));
         } else {
@@ -222,47 +223,49 @@ class EmailsController extends SugarController
 
         $data = array();
         foreach ($accounts as $inboundEmailId => $inboundEmail) {
-            $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
-            $isGroupEmailAccount = $inboundEmail->isGroupEmailAccount();
-            $isPersonalEmailAccount = $inboundEmail->isPersonalEmailAccount();
+            if(in_array($inboundEmail->id, $showFolders)) {
+                $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
+                $isGroupEmailAccount = $inboundEmail->isGroupEmailAccount();
+                $isPersonalEmailAccount = $inboundEmail->isPersonalEmailAccount();
 
-            $dataAddress = array(
-                'type' => $inboundEmail->module_name,
-                'id' => $inboundEmail->id,
-                'attributes' => array(
-                    'from' => $storedOptions['from_addr']
-                ),
-                'prepend' => $prependSignature,
-                'isPersonalEmailAccount' => $isPersonalEmailAccount,
-                'isGroupEmailAccount' => $isGroupEmailAccount
-            );
+                $dataAddress = array(
+                    'type' => $inboundEmail->module_name,
+                    'id' => $inboundEmail->id,
+                    'attributes' => array(
+                        'from' => $storedOptions['from_addr']
+                    ),
+                    'prepend' => $prependSignature,
+                    'isPersonalEmailAccount' => $isPersonalEmailAccount,
+                    'isGroupEmailAccount' => $isGroupEmailAccount
+                );
 
-            // Include signature
-            if (isset($emailSignatures[$inboundEmail->id]) && !empty($emailSignatures[$inboundEmail->id])) {
-                $emailSignatureId = $emailSignatures[$inboundEmail->id];
-            } else {
-                $emailSignatureId = '';
-            }
+                // Include signature
+                if (isset($emailSignatures[$inboundEmail->id]) && !empty($emailSignatures[$inboundEmail->id])) {
+                    $emailSignatureId = $emailSignatures[$inboundEmail->id];
+                } else {
+                    $emailSignatureId = '';
+                }
 
-            $signature = $current_user->getSignature($emailSignatureId);
-            if(!$signature) {
+                $signature = $current_user->getSignature($emailSignatureId);
+                if (!$signature) {
 
-                if($defaultEmailSignature['no_default_available'] === true) {
-                    $dataAddress['emailSignatures'] = $defaultEmailSignature;
+                    if ($defaultEmailSignature['no_default_available'] === true) {
+                        $dataAddress['emailSignatures'] = $defaultEmailSignature;
+                    } else {
+                        $dataAddress['emailSignatures'] = array(
+                            'html' => utf8_encode(html_entity_decode($defaultEmailSignature['signature_html'])),
+                            'plain' => $defaultEmailSignature['signature'],
+                        );
+                    }
                 } else {
                     $dataAddress['emailSignatures'] = array(
-                        'html' => utf8_encode(html_entity_decode($defaultEmailSignature['signature_html'])),
-                        'plain' => $defaultEmailSignature['signature'],
+                        'html' => utf8_encode(html_entity_decode($signature['signature_html'])),
+                        'plain' => $signature['signature'],
                     );
                 }
-            } else {
-                $dataAddress['emailSignatures'] = array(
-                    'html' => utf8_encode(html_entity_decode($signature['signature_html'])),
-                    'plain' => $signature['signature'],
-                );
-            }
 
-            $data[] = $dataAddress;
+                $data[] = $dataAddress;
+            }
         }
 
         $dataEncoded = json_encode(array('data' => $data));
