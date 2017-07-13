@@ -148,7 +148,7 @@ $mod_strings = array(
 	'LBL_NONE' => 'None',
 
 	'LBL_AOS_PRODUCTS_AM_PROJECTTEMPLATES_1_FROM_AM_PROJECTTEMPLATES_TITLE' => 'Product: Project Templates from Project Templates Title',
-	'LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_PROJECT_TITLE' => 'Project Templates Project from Project Title',
+	'LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_PROJECT_TITLE' => 'Project Templates: Project from Project Title',
 
 
 );

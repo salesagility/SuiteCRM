@@ -114,6 +114,9 @@ $mod_strings = array (
   'NTC_NONE'=>'None',
 	'LBL_ACCEPT_THIS'=>'Accept?',
 	'LBL_DEFAULT_SUBPANEL_TITLE' => 'History',
+
+	'LBL_CATEGORY' => 'Category',
+	'LBL_LIST_CATEGORY' => 'Category',
 );
 
 ?>

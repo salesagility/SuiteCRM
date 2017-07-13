@@ -205,6 +205,7 @@ eoq;
 		$this->ss->assign("MAIL_SENDTYPE", get_select_options_with_id($app_list_strings['notifymail_sendtype'], $current_user->getPreference('mail_sendtype')));
 		$this->ss->assign("NEW_EMAIL", $current_user->emailAddress->getEmailAddressWidgetEditView($current_user->id, $current_user->module_dir));
 		$this->ss->assign('EMAIL_LINK_TYPE', get_select_options_with_id($app_list_strings['dom_email_link_type'], $current_user->getPreference('email_link_type')));
+        $this->ss->assign('EDITOR_TYPE', get_select_options_with_id($app_list_strings['dom_editor_type'], $current_user->getPreference('editor_type')));
 
         $selectedLocaleNameFormat = $current_user->_userPreferenceFocus->getDefaultPreference('default_locale_name_format');
         if (array_key_exists($selectedLocaleNameFormat, $sugar_config['name_formats'])) {

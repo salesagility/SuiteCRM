@@ -186,6 +186,8 @@ $mod_strings['LBL_CONFIG_MAP_MARKERS_CLUSTERER_MAX_ZOOM_DESC'] = "'map_clusterer
 $mod_strings['LBL_CONFIG_CUSTOM_CONTROLLER_DESC'] = "Important Note: All saved settings can be found in the 'config' table under category 'jjwg'. Note, a custom controller.php file should no longer be used to override settings.";
 $mod_strings['LBL_JJWG_MAPS_JJWG_AREAS_FROM_JJWG_AREAS_TITLE'] = 'Areas';
 $mod_strings['LBL_JJWG_MAPS_JJWG_MARKERS_FROM_JJWG_MARKERS_TITLE'] = 'Markers';
-
 $mod_strings['LBL_PARENT_ID'] = 'Parent ID';
 $mod_strings['LBL_JJWP_PARTNERS'] = 'JJWP Partners';
+$mod_strings['LBL_GET_GOOGLE_API_KEY'] = 'Get A Key';
+$mod_strings['LBL_GOOGLE_API_KEY'] = 'Google Api Key';
+$mod_strings['LBL_ERROR_NO_GOOGLE_API_KEY'] = 'Please set the Google Api Key in the Google Maps Administrative Panel.';

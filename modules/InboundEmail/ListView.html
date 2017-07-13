@@ -76,16 +76,16 @@
 		<tbody>
 		<!-- BEGIN: row -->
 		<tr height="20" class="{ROW_COLOR}S1">
-			<td scope='row' valign=TOP class="inline-email-td"><slot>{PREROW}</slot></td>
+			<td scope='row' valign=TOP class="inline-email-td"><span>{PREROW}</span></td>
 			<td valign=TOP class="inline-email-td">
 				<a class="listViewTdToolsS1" href="{URL_PREFIX}index.php?action=EditView&module=InboundEmail&record={InboundEmail.ID}">{EDIT_INLINE_IMG}</a></td>
 			<td scope='row' valign=TOP class="inline-email-td">
-				<slot><a href="{URL_PREFIX}index.php?action=DetailView&module=InboundEmail&record={InboundEmail.ID}" >
-					{InboundEmail.NAME}</a></slot></td>
-			<td valign=TOP class="inline-email-td"><slot>{InboundEmail.GLOBAL_PERSONAL_STRING}</slot></td>
-			<td valign=TOP class="inline-email-td"><slot>{InboundEmail.MAILBOX_TYPE_NAME}</slot></td>
-			<td valign=TOP class="inline-email-td"><slot>{InboundEmail.SERVER_URL}</slot></td>
-			<td valign=TOP class="inline-email-td"><slot>{InboundEmail.STATUS}</slot></td>
+				<span><a href="{URL_PREFIX}index.php?action=DetailView&module=InboundEmail&record={InboundEmail.ID}" >
+					{InboundEmail.NAME}</a></span></td>
+			<td valign=TOP class="inline-email-td"><span>{InboundEmail.GLOBAL_PERSONAL_STRING}</span></td>
+			<td valign=TOP class="inline-email-td"><span>{InboundEmail.MAILBOX_TYPE_NAME}</span></td>
+			<td valign=TOP class="inline-email-td"><span>{InboundEmail.SERVER_URL}</span></td>
+			<td valign=TOP class="inline-email-td"><span>{InboundEmail.STATUS}</span></td>
 		</tr>
 		<!-- END: row -->
 		</tbody>

@@ -221,7 +221,7 @@ $mod_strings = array (
     'LBL_GRAND_TOTAL_USDOLLAR' => 'Grand Total (Default Currency)',
     'LBL_QUOTE_TO' => 'Quote To',
 
-    'LBL_SUBTOTAL_TAX_AMOUNT_USDOLLAR' => 'Subtotal Tax (Default Currency)',
+    'LBL_SUBTOTAL_TAX_AMOUNT_USDOLLAR' => 'Subtotal + Tax (Default Currency)',
     'LBL_AOS_QUOTES_AOS_CONTRACTS' => 'Quotes: Contracts',
     'LBL_AOS_QUOTES_AOS_INVOICES' => 'Quotes: Invoices',
     'LBL_AOS_LINE_ITEM_GROUPS' => 'Line Item Groups',

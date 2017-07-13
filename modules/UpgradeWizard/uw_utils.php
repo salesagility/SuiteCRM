@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,11 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
+if (!defined('sugarEntry') || !sugarEntry) {
+	die('Not A Valid Entry Point');
+}
 
 
 /**
@@ -246,7 +248,7 @@ function commitCopyNewFiles($unzip_dir, $zip_from_dir, $path='') {
 
 //On cancel put back the copied files from 500 to 451 state
 function copyFilesOnCancel($step){
-//place hoder for cancel action
+//place holder for cancel action
 
 }
 
@@ -759,7 +761,91 @@ function upgradeUWFiles($file) {
         $allFiles[] = "$from_dir/include/utils/autoloader.php";
     }
 
-    upgradeUWFilesCopy($allFiles, $from_dir);
+	if(file_exists("$from_dir/include/UploadFile.php")) {
+		$allFiles[] = "$from_dir/include/UploadFile.php";
+	}
+	if(file_exists("$from_dir/include/SugarTheme/SugarTheme.php")) {
+		$allFiles[] = "$from_dir/include/SugarTheme/SugarTheme.php";
+	}
+
+	// add extra files to post upgrade process
+	if(file_exists(realpath("$from_dir/../scripts/files_to_add_post.php"))) {
+		include(realpath("$from_dir/../scripts/files_to_add_post.php"));
+		if(isset($filesToAddPost) && is_array($filesToAddPost) && $filesToAddPost) {
+			foreach($filesToAddPost as $file) {
+				if(file_exists("$from_dir/$file")) {
+					$allFiles[] = "$from_dir/$file";
+					$GLOBALS['log']->info("File added to post upgrade: $from_dir/$file");
+				} else {
+					$GLOBALS['log']->error("File not found for post upgrade: $from_dir/$file");
+				}
+			}
+		}
+	}
+
+	// check custom changes and alert the user before upgrade
+
+	if($filesInCustom = checkCustomOverrides($from_dir)) {
+		global $mod_strings;
+		$alertMessage = $mod_strings["LBL_UPGRD_CSTM_CHK"];
+		echo "<div class=\"error\">$alertMessage<br><ul>";
+		foreach($filesInCustom as $fileInCustom) {
+			echo "<li>$fileInCustom => custom/$fileInCustom</li>";
+		}
+		echo "</ul></div>";
+	}
+
+	upgradeUWFilesCopy($allFiles, $from_dir);
+}
+
+/**
+ * find files in custom folder if it also in upgrade pack
+ *
+ * @param string $fromDir uploaded temp directory
+ * @return array filelist (or empty array if there is no any)
+ */
+function checkCustomOverrides($fromDir) {
+
+	$ret = array();
+
+	logThis(' -------------- Check Custom Overrides ------------- ');
+
+	$path = realpath($fromDir);
+	logThis("Upload temp directory: $fromDir");
+
+	// read all upgrade files
+
+	$objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST);
+
+	foreach($objects as $name => $object){
+
+		// check only files (folder doesn't matter)
+
+		if(!is_dir($name)) {
+
+			// get the original file name
+
+			$orig = str_replace("$fromDir/", '', $name);
+
+			// original file exists?
+
+			if (file_exists($orig)) {
+
+				// custom for this file exists?
+
+				if(file_exists("custom/$orig")) {
+
+					// grab the customized files
+
+					logThis("A file in upgrade pack found in custom folder: $orig");
+					$ret[] = $orig;
+				}
+			}
+		}
+
+	}
+
+	return $ret;
 }
 
 /**
@@ -1026,21 +1112,20 @@ function checkSystemCompliance() {
 	$ret['error_found'] = false;
 
 	// PHP version
-	$php_version = constant('PHP_VERSION');
-	$check_php_version_result = check_php_version($php_version);
-
-	switch($check_php_version_result) {
-		case -1:
-			$ret['phpVersion'] = "<b><span class=stop>{$installer_mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} {$php_version} )</span></b>";
-			$ret['error_found'] = true;
-			break;
-		case 0:
-			$ret['phpVersion'] = "<b><span class=go>{$installer_mod_strings['ERR_CHECKSYS_PHP_UNSUPPORTED']} {$php_version} )</span></b>";
-			break;
-		case 1:
-			$ret['phpVersion'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_PHP_OK']} {$php_version} )</span></b>";
-			break;
+	if (check_php_version() === -1) {
+		$ret['phpVersion'] = "<b><span class=stop>{$installer_mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} ".constant('PHP_VERSION')." )</span></b>";
+		$ret['error_found'] = true;
 	}
+
+	if (check_php_version() === 0) {
+		$ret['phpVersion'] = "<b><span class=stop>{$installer_mod_strings['LBL_CURRENT_PHP_VERSION']} ".constant('PHP_VERSION').". ";
+		$ret['phpVersion'] .= $mod_strings['LBL_RECOMMENDED_PHP_VERSION_1'].constant('SUITECRM_PHP_REC_VERSION').$mod_strings['LBL_RECOMMENDED_PHP_VERSION_2'].'</span></b>';
+		$ret['warn_found'] = true;
+	}
+
+	if (check_php_version() === 1) {
+		$ret['phpVersion'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_PHP_OK']} ".constant('PHP_VERSION')." )</span></b>";
+	};
 
 	// database and connect
     $canInstall = $db->canInstall();
@@ -2038,7 +2123,7 @@ function validate_manifest($manifest) {
     global $sugar_flavor;
 	global $mod_strings;
 
-	include_once('suitecrm_version.php');
+	include('suitecrm_version.php');
 
     if(!isset($manifest['type'])) {
         return $mod_strings['ERROR_MANIFEST_TYPE'];
@@ -2308,7 +2393,7 @@ function resetUwSession() {
  * runs rebuild scripts
  */
 function UWrebuild() {
-	
+
 	$GLOBALS['log']->deprecated('UWrebuild is deprecated');
 }
 
@@ -4050,7 +4135,7 @@ function upgrade_connectors() {
  * This function removes linkedin config from custom/modules/Connectors/metadata/display_config.php, linkedin connector is removed in 6.5.16
  *
  */
-function remove_linkedin_config() 
+function remove_linkedin_config()
 {
     $display_file = 'custom/modules/Connectors/metadata/display_config.php';
 

@@ -587,7 +587,7 @@ class SugarEmailAddress extends SugarBean {
                 } elseif ($primary && $address['primary_address'] == '1') {
                     // We should only have one primary. If we are adding a primary but
                     // we find an existing primary, reset this one's primary flag.
-                    $address['primary_address'] = '0';
+                    $this->addresses[$k]['primary_address'] = '0';
                 }
             }
 

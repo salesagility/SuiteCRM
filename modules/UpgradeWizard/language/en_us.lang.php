@@ -1,45 +1,45 @@
 <?php
-/**
- *
- * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License version 3 as published by the
- * Free Software Foundation with the addition of the following permission added
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
- * details.
- *
- * You should have received a copy of the GNU Affero General Public License along with
- * this program; if not, see http://www.gnu.org/licenses or write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- *
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- *
- * The interactive user interfaces in modified source and object code versions
- * of this program must display Appropriate Legal Notices, as required under
- * Section 5 of the GNU Affero General Public License version 3.
- *
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
- * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+/** 
+ * 
+ * SugarCRM Community Edition is a customer relationship management program developed by 
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc. 
+ * 
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd. 
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd. 
+ * 
+ * This program is free software; you can redistribute it and/or modify it under 
+ * the terms of the GNU Affero General Public License version 3 as published by the 
+ * Free Software Foundation with the addition of the following permission added 
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK 
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY 
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS. 
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more 
+ * details. 
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with 
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free 
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 
+ * 02110-1301 USA. 
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road, 
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com. 
+ * 
+ * The interactive user interfaces in modified source and object code versions 
+ * of this program must display Appropriate Legal Notices, as required under 
+ * Section 5 of the GNU Affero General Public License version 3. 
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3, 
+ * these Appropriate Legal Notices must retain the display of the "Powered by 
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not 
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must 
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM". 
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
+	die('Not A Valid Entry Point');
 }
 
 $mod_strings = array(
@@ -57,15 +57,15 @@ $mod_strings = array(
 	'ERR_UW_FILE_NOT_WRITABLE'					=> 'File cannot be moved or written to',
 	'ERR_UW_FLAVOR_2'							=> 'Upgrade Flavor: ',
 	'ERR_UW_FLAVOR'								=> 'SuiteCRM System Flavor: ',
-	'ERR_UW_LOG_FILE_UNWRITABLE'				=> './upgradeWizard.log could not be created/written to.  Please fix permissions on your SuiteCRM directory.',
-	'ERR_UW_MBSTRING_FUNC_OVERLOAD'				=> 'mbstring.func_overload set to a value higher than 1.  Please change this in your php.ini and restart the web server.',
-	'ERR_UW_MYSQL_VERSION'						=> 'SuiteCRM requires MySQL version 4.1.2 or newer.  Found: ',
-	'ERR_UW_OCI8_VERSION'				        => 'Your version of Oracle is not supported by SuiteCRM.  You will need to install a version that is compatible with the SuiteCRM application.  Please consult the Compatibility Matrix in the Release Notes for supported Oracle Versions. Current version: ',
+	'ERR_UW_LOG_FILE_UNWRITABLE'				=> './upgradeWizard.log could not be created/written to. Please fix permissions on your SuiteCRM directory.',
+	'ERR_UW_MBSTRING_FUNC_OVERLOAD'				=> 'mbstring.func_overload set to a value higher than 1. Please change this in your php.ini and restart the web server.',
+	'ERR_UW_MYSQL_VERSION'						=> 'SuiteCRM requires MySQL version 4.1.2 or newer. Found: ',
+	'ERR_UW_OCI8_VERSION'				        => 'Your version of Oracle is not supported by SuiteCRM. You will need to install a version that is compatible with the SuiteCRM application. Please consult the Compatibility Matrix in the Release Notes for supported Oracle Versions. Current version: ',
 	'ERR_UW_NO_FILE_UPLOADED'					=> 'Please specify a file and try again!',
 	'ERR_UW_NO_FILES'							=> 'An error occurred, no files were found to check.',
-	'ERR_UW_NO_MANIFEST'						=> 'The zip file is missing a manifest.php file.  Cannot proceed.',
+	'ERR_UW_NO_MANIFEST'						=> 'The zip file is missing a manifest.php file. Cannot proceed.',
 	'ERR_UW_NO_VIEW'							=> 'Invalid view specified.',
-	'ERR_UW_NO_VIEW2'							=> 'View not defined.  Please go to the Administration home to navigate to this page.',
+	'ERR_UW_NO_VIEW2'							=> 'View not defined. Please go to the Administration home to navigate to this page.',
 	'ERR_UW_NOT_VALID_UPLOAD'					=> 'Not valid upload.',
 	'ERR_UW_NO_CREATE_TMP_DIR'					=> 'Could not create the temp directory. Check file permissions.',
 	'ERR_UW_ONLY_PATCHES'						=> 'You can only upload patches on this page.',
@@ -97,9 +97,9 @@ $mod_strings = array(
 	'LBL_UW_COMMIT_ADD_TASK_DESC_1'				=> "Backups of Overwritten Files are in the following directory: \n",
 	'LBL_UW_COMMIT_ADD_TASK_DESC_2'				=> "Manually merge the following files:\n",
 	'LBL_UW_COMMIT_ADD_TASK_NAME'				=> 'Upgrade Process: Manually Merge Files',
-	'LBL_UW_COMMIT_ADD_TASK_OVERVIEW'			=> 'Please use whichever diff method is most familiar to you to merge these files.  Until this is complete, your SuiteCRM installation will be in an uncertain state, and the upgrade incomplete.',
+	'LBL_UW_COMMIT_ADD_TASK_OVERVIEW'			=> 'Please use whichever diff method is most familiar to you to merge these files. Until this is complete, your SuiteCRM installation will be in an uncertain state, and the upgrade incomplete.',
 	'LBL_UW_COMPLETE'							=> 'Complete',
-	'LBL_UW_CONTINUE_CONFIRMATION'              => 'This new version of SuiteCRM contains new license agreement.  Would you like to continue?',
+	'LBL_UW_CONTINUE_CONFIRMATION'              => 'This new version of SuiteCRM contains new license agreement. Would you like to continue?',
 	'LBL_UW_COMPLIANCE_ALL_OK'					=> 'All System Settings Requirements Satisfied',
 	'LBL_UW_COMPLIANCE_CALLTIME'				=> 'PHP Setting: Call Time Pass By Reference',
 	'LBL_UW_COMPLIANCE_CURL'					=> 'cURL Module',
@@ -143,7 +143,7 @@ $mod_strings = array(
 
 	'LBL_UW_DESC_MODULES_INSTALLED'				=> 'The following upgrade packages have been installed:',
 	'LBL_UW_END_DESC'							=> 'The system has been upgraded.',
-	'LBL_UW_END_DESC2'							=> 'If you have chosen to manually run any steps such as file merges or SQL queries, please do this now.  Your system will be in an unstable state until those steps are completed.',
+	'LBL_UW_END_DESC2'							=> 'If you have chosen to manually run any steps such as file merges or SQL queries, please do this now. Your system will be in an unstable state until those steps are completed.',
 	'LBL_UW_END_LOGOUT_PRE'						=> 'The upgrade is complete.',
 	'LBL_UW_END_LOGOUT_PRE2'					=> 'Click Done to exit the Upgrade Wizard.',
 	'LBL_UW_END_LOGOUT'							=> 'If you plan to apply another upgrade package using the Upgrade Wizard, log out and log back in prior to doing so.',
@@ -170,8 +170,8 @@ $mod_strings = array(
 	'LBL_UW_INCOMPLETE'							=> 'Incomplete',
 	'LBL_UW_INSTALL'							=> 'File INSTALL',
 	'LBL_UW_MANUAL_MERGE'						=> 'File Merge',
-	'LBL_UW_MODULE_READY_UNINSTALL'				=> "Module is ready to be uninstalled.  Click \"Commit\" to proceed with uninstallation.<br>\n",
-	'LBL_UW_MODULE_READY'						=> "Module is ready to be installed.  Click \"Commit\" to proceed with installation.",
+	'LBL_UW_MODULE_READY_UNINSTALL'				=> "Module is ready to be uninstalled. Click \"Commit\" to proceed with uninstallation.<br>\n",
+	'LBL_UW_MODULE_READY'						=> "Module is ready to be installed. Click \"Commit\" to proceed with installation.",
 	'LBL_UW_NO_INSTALLED_UPGRADES'				=> 'No recorded Upgrades detected.',
 	'LBL_UW_NONE'								=> 'None',
 	'LBL_UW_NOT_AVAILABLE'						=> 'Not available',
@@ -186,7 +186,7 @@ $mod_strings = array(
 	'LBL_UW_PREFLIGHT_COMPLETE'					=> 'Preflight Check',
 	'LBL_UW_PREFLIGHT_DIFF'						=> 'Differentiated ',
 	'LBL_UW_PREFLIGHT_EMAIL_REMINDER'			=> 'Email Yourself a Reminder for Manual Merge?',
-	'LBL_UW_PREFLIGHT_FILES_DESC'				=> 'The files listed below have been modified.  Uncheck items that require a manual merge. <i>Any detected layout changes are automatically unchecked; checkmark any that should be overwritten.',
+	'LBL_UW_PREFLIGHT_FILES_DESC'				=> 'The files listed below have been modified. Uncheck items that require a manual merge. <i>Any detected layout changes are automatically unchecked; checkmark any that should be overwritten.',
 	'LBL_UW_PREFLIGHT_NO_DIFFS'					=> 'No Manual File Merge Required.',
 	'LBL_UW_PREFLIGHT_NOT_NEEDED'				=> 'Not needed.',
 	'LBL_UW_PREFLIGHT_PRESERVE_FILES'			=> 'Auto-preserved Files:',
@@ -216,7 +216,7 @@ $mod_strings = array(
 	'LBL_UW_START_UPGRADED_UW_DESC'				=> 'The new Upgrade Wizard will now resume the upgrade process. Please continue your upgrade.',
 	'LBL_UW_START_UPGRADED_UW_TITLE'			=> 'Welcome to the new Upgrade Wizard',
 
-	'LBL_UW_SYSTEM_CHECK_CHECKING'				=> 'Now checking, please wait.  This could take up to 30 seconds.',
+	'LBL_UW_SYSTEM_CHECK_CHECKING'				=> 'Now checking, please wait. This could take up to 30 seconds.',
 	'LBL_UW_SYSTEM_CHECK_FILE_CHECK_START'		=> 'Finding all pertinent files to check.',
 	'LBL_UW_SYSTEM_CHECK_FILES'					=> 'Files',
 	'LBL_UW_SYSTEM_CHECK_FOUND'					=> 'Found',
@@ -262,7 +262,7 @@ $mod_strings = array(
 	'LBL_UW_SHOW_OLD_SCHEMA_TO_DROP'			=> 'Show Old Schema that could be dropped',
 	'LBL_UW_SKIPPED_QUERIES_ALREADY_EXIST'      => 'Skipped Queries',
 	'LBL_INCOMPATIBLE_PHP_VERSION'              => 'Php version 5 or above is required.',
-	'ERR_CHECKSYS_PHP_INVALID_VER'      => 'Your version of PHP is not supported by SuiteCRM.  You will need to install a version that is compatible with the SuiteCRM application.  Please consult the Compatibility Matrix in the Release Notes for supported PHP Versions. Your version is ',
+	'ERR_CHECKSYS_PHP_INVALID_VER'      => 'Your version of PHP is not supported by SuiteCRM. You will need to install a version that is compatible with the SuiteCRM application. Please consult the Compatibility Matrix in the Release Notes for supported PHP Versions. Your version is ',
 	'LBL_BACKWARD_COMPATIBILITY_ON' 			=> 'Php Backward Compatibility mode is turned on. Set zend.ze1_compatibility_mode to Off for proceeding further',
 	//including some strings from moduleinstall that are used in Upgrade
 	'LBL_ML_ACTION' => 'Action',
@@ -278,13 +278,14 @@ $mod_strings = array(
 	'LBL_ML_INSTALL'=>'Install',
 	//adding the string used in tracker. copying from homepage
 	'LBL_HOME_PAGE_4_NAME' => 'Tracker',
-	'LBL_CURRENT_PHP_VERSION' => '(Your current php version is ',
-	'LBL_RECOMMENDED_PHP_VERSION' => '. Recommended php version is 5.2.2 or above)',
+	'LBL_CURRENT_PHP_VERSION' => 'Your current php version is: ',
+	'LBL_RECOMMENDED_PHP_VERSION_1' => 'The recommended php version is ',
+	'LBL_RECOMMENDED_PHP_VERSION_2' => ' or above.',
 	'LBL_MODULE_NAME' => 'UpgradeWizard',
 	'LBL_UPLOAD_SUCCESS' => 'Upgrade package successfully uploaded. Click Next to perform a final check.',
 	'LBL_UW_TITLE_LAYOUTS' => 'Confirm Layouts',
 	'LBL_LAYOUT_MODULE_TITLE' => 'Layouts',
-	'LBL_LAYOUT_MERGE_DESC' => 'There are new fields available which have been added as part of this upgrade and can be automatically appended to your existing module layouts.  To learn more about the new fields, please refer to the Release Notes for the version to which you are upgrading.<br><br>If you do not wish to append the new fields, please uncheck the module, and your custom layouts will remain unchanged. The fields will be available in Studio after the upgrade. <br><br>',
+	'LBL_LAYOUT_MERGE_DESC' => 'There are new fields available which have been added as part of this upgrade and can be automatically appended to your existing module layouts. To learn more about the new fields, please refer to the Release Notes for the version to which you are upgrading.<br><br>If you do not wish to append the new fields, please uncheck the module, and your custom layouts will remain unchanged. The fields will be available in Studio after the upgrade. <br><br>',
 	'LBL_LAYOUT_MERGE_TITLE' => 'Click Next to confirm changes and to finish the upgrade.',
 	'LBL_LAYOUT_MERGE_TITLE2' => 'Click Next to complete the upgrade.',
 	'LBL_UW_CONFIRM_LAYOUTS' => 'Confirm Layouts',
@@ -313,4 +314,5 @@ $mod_strings = array(
 													7 => 'Failed to write file to disk.',
 													8 => 'File upload stopped by extension.',
 ),
+	'LBL_UPGRD_CSTM_CHK' => "Upgrade process will update some files but these files also exist in custom/ folder. Please review the changes before continuing:",
 );

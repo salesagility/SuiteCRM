@@ -126,7 +126,7 @@ $mod_strings = array(
     'LBL_TIME_TO' => 'Active To',
     'LBL_WARN_CURL_TITLE' => 'cURL Warning:',
     'LBL_WARN_CURL' => 'Warning:',
-    'LBL_WARN_NO_CURL' => 'This system does not have the cURL libraries enabled/compiled into the PHP module (--with-curl=/path/to/curl_library).  Please contact your administrator to resolve this issue.  Without the cURL functionality, the Scheduler cannot thread its jobs.',
+    'LBL_WARN_NO_CURL' => 'This system does not have the cURL libraries enabled/compiled into the PHP module (--with-curl=/path/to/curl_library). Please contact your administrator to resolve this issue. Without the cURL functionality, the Scheduler cannot thread its jobs.',
     'LBL_BASIC_OPTIONS' => 'Basic Setup',
     'LBL_ADV_OPTIONS' => 'Advanced Options',
     'LBL_TOGGLE_ADV' => 'Show Advanced Options',
@@ -136,7 +136,7 @@ $mod_strings = array(
     'LNK_NEW_SCHEDULER' => 'Create Scheduler',
     'LNK_LIST_SCHEDULED' => 'Scheduled Jobs',
 // Messages
-    'SOCK_GREETING' => "\nThis is the interface for SuiteCRM Schedulers Service. \n[ Available daemon commands: start|restart|shutdown|status ]\nTo quit, type 'quit'.  To shutdown the service 'shutdown'.\n",
+    'SOCK_GREETING' => "\nThis is the interface for SuiteCRM Schedulers Service. \n[ Available daemon commands: start|restart|shutdown|status ]\nTo quit, type 'quit'. To shutdown the service 'shutdown'.\n",
     'ERR_DELETE_RECORD' => 'You must specify a record number to delete the schedule.',
     'ERR_CRON_SYNTAX' => 'Invalid Cron syntax',
     'NTC_DELETE_CONFIRMATION' => 'Are you sure you want to delete this record?',

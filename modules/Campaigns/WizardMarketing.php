@@ -521,7 +521,7 @@ else {
     $steps[$mod_strings['LBL_NAVIGATION_MENU_SUMMARY']] = $summaryURLForProgressBar;
 }
 
-include_once('DotListWizardMenu.php');
+include_once('modules/Campaigns/DotListWizardMenu.php');
 $dotListWizardMenu = new DotListWizardMenu($mod_strings, $steps, true);
 //    array(
 //        $mod_strings['LBL_NAVIGATION_MENU_GEN1'] => $camp_url.'1',
@@ -587,15 +587,23 @@ else {
 $ss->assign('link_to_choose_template', 'index.php?return_module=Campaigns&module=Campaigns&action=WizardMarketing&campaign_id=' . $campaign_focus->id);
 $ss->assign('link_to_sender_details', 'index.php?return_module=Campaigns&module=Campaigns&action=WizardMarketing&campaign_id=' . $campaign_focus->id . '&jump=2');
 
-require_once('include/SuiteMozaik.php');
-$mozaik = new SuiteMozaik();
-$ss->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_html', 'email_template_editor', 'initial', '', "tinyMCE: {
-    setup: function(editor) {
-        editor.on('focus', function(e){
-            onClickTemplateBody();
-        });
-    }
-}"));
+
+// ---------------------------------
+// ------------ EDITOR -------------
+// ---------------------------------
+
+
+require_once 'include/SuiteEditor/SuiteEditorConnector.php';
+$templateWidth = 600;
+$ss->assign('template_width', $templateWidth);
+$ss->assign('BODY_EDITOR', SuiteEditorConnector::getHtml(SuiteEditorConnector::getSuiteSettings(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', $templateWidth)));
+$ss->assign('hide_width_set', $current_user->getEditorType() != 'mozaik');
+
+// ---------------------------------
+// ---------------------------------
+// ---------------------------------
+
+
 
 if(!empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'])) {
     $ss->assign('EmailMarketingId', $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
