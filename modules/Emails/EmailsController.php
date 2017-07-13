@@ -139,26 +139,56 @@ class EmailsController extends SugarController
      */
     public function action_send()
     {
+        global $current_user;
+        global $app_strings;
+
         $request = $_REQUEST;
 
         $this->bean = $this->bean->populateBeanFromRequest($this->bean, $request);
-        $this->bean->save();
+        $inboundEmailAccount = new InboundEmail();
+        $inboundEmailAccount->retrieve($_REQUEST['inbound_email_id']);
 
-        $this->bean->handleMultipleFileAttachments();
+        if ($this->userIsAllowedToSendEmail($current_user, $inboundEmailAccount, $this->bean)) {
+            $this->bean->save();
 
+            $this->bean->handleMultipleFileAttachments();
 
         // parse and replace bean variables
-
         $this->bean = $this->replaceEmailVariables($this->bean, $request);
 
         if ($this->bean->send()) {
             $this->bean->status = 'sent';
             $this->bean->save();
         } else {
-            $this->bean->status = 'sent_error';
+            // Don't save status if the email is a draft.
+                // We need to ensure that drafts will still show
+                // in the list view
+                if ($this->bean->status !== 'draft') {
+                    $this->bean->status = 'send_error';
+                    $this->bean->save();
+                } else {
+                    $this->bean->status = 'send_error';
+                }
         }
 
-        $this->view = 'sendemail';
+            $this->view = 'sendemail';
+        } else {
+            $GLOBALS['log']->security(
+                'User ' . $current_user->name .
+                ' attempted to send an email using incorrect email account settings in' .
+                ' which they do not have access to.'
+            );
+
+            $this->view = 'ajax';
+            $response['errors'] = array(
+                'type' => get_class($this->bean),
+                'id' => $this->bean->id,
+                'title' => $app_strings['LBL_EMAIL_ERROR_SENDING']
+            );
+            echo json_encode($response);
+            // log out the user
+            session_destroy();
+        }
     }
 
     /**
@@ -174,7 +204,6 @@ class EmailsController extends SugarController
      */
     protected function replaceEmailVariables(Email $email, $request)
     {
-
         // request validation before replace bean variables
 
         if ($this->isValidRequestForReplaceEmailVariables($request)) {
@@ -210,11 +239,8 @@ class EmailsController extends SugarController
             $email->name = $templateData['subject'];
             $email->description_html = $templateData['body_html'];
             $email->description = $templateData['body'];
-
         } else {
-
             $this->log('Email variables is not replaced because an invalid request.');
-
         }
 
 
@@ -323,14 +349,14 @@ class EmailsController extends SugarController
         $accounts = $ieAccountsFull = $ie->retrieveAllByGroupIdWithGroupAccounts($current_user->id);
         $accountSignatures = $current_user->getPreference('account_signatures', 'Emails');
         $showFolders = unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
-        if($accountSignatures != null) {
+        if ($accountSignatures != null) {
             $emailSignatures = unserialize(base64_decode($accountSignatures));
         } else {
-            $GLOBALS['log']->warn('User '.$current_user->name.' does not have a signature');
+            $GLOBALS['log']->warn('User ' . $current_user->name . ' does not have a signature');
         }
 
         $defaultEmailSignature = $current_user->getDefaultSignature();
-        if(empty($defaultEmailSignature)) {
+        if (empty($defaultEmailSignature)) {
             $defaultEmailSignature = array(
                 'html' => '<br>',
                 'plain' => '\r\n',
@@ -638,9 +664,11 @@ class EmailsController extends SugarController
             if ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {
                 $this->bean->to_addrs = '';
                 $this->bean->to_addrs_names = '';
-            } else if($mode === self::COMPOSE_BEAN_WITH_PDF_TEMPLATE) {
-                // Get Related To Field
-                // Populate to
+            } else {
+                if ($mode === self::COMPOSE_BEAN_WITH_PDF_TEMPLATE) {
+                    // Get Related To Field
+                    // Populate to
+                }
             }
         }
 
@@ -762,5 +790,82 @@ class EmailsController extends SugarController
         $emails->save();
 
         return $emails;
+    }
+
+    /**
+     * @param User $requestedUser
+     * @param InboundEmail $requestedInboundEmail
+     * @param Email $requestedEmail
+     * @return bool false if user doesn't have access
+     */
+    protected function userIsAllowedToSendEmail($requestedUser, $requestedInboundEmail, $requestedEmail)
+    {
+        $hasAccess = false;
+
+        // Check that user is allowed to use inbound email account
+        $hasAccessToInboundEmailAccount = false;
+        $usersInboundEmailAccounts = $requestedInboundEmail->retrieveAllByGroupIdWithGroupAccounts($requestedUser->id);
+        foreach ($usersInboundEmailAccounts as $inboundEmailId => $userInboundEmail) {
+            if ($userInboundEmail->id === $requestedInboundEmail->id) {
+                $hasAccessToInboundEmailAccount = true;
+                break;
+            }
+        }
+
+        $inboundEmailStoredOptions = $requestedInboundEmail->getStoredOptions();
+
+        // if group email account, check that user is allowed to use group email account
+        if ($requestedInboundEmail->isGroupEmailAccount()) {
+            if ($inboundEmailStoredOptions['allow_outbound_group_usage'] === true) {
+                $hasAccessToInboundEmailAccount = true;
+            } else {
+                $hasAccessToInboundEmailAccount = false;
+            }
+        }
+
+        // Check that the from address is the same as the inbound email account
+        $isFromAddressTheSame = false;
+        if ($inboundEmailStoredOptions['from_addr'] === $requestedEmail->from_addr) {
+            $isFromAddressTheSame = true;
+        }
+
+        // Check if user is using the system account, as the email address for the system account, will have different
+        // settings. If there is not an outbound email id in the stored options then we should try
+        // and use the system account, provided that the user is allowed to use to the system account.
+        $outboundEmailAccount = new OutboundEmail();
+        if(empty($inboundEmailStoredOptions['outbound_email'])) {
+            $outboundEmailAccount->getSystemMailerSettings();
+        } else {
+            $outboundEmailAccount->retrieve($inboundEmailStoredOptions['outbound_email']);
+        }
+
+        $isAllowedToUseOutboundEmail = false;
+        if ($outboundEmailAccount->type === 'system') {
+            if($outboundEmailAccount->isAllowUserAccessToSystemDefaultOutbound()) {
+                $isAllowedToUseOutboundEmail = true;
+            }
+
+            // When there are not any authentication details for the system account, allow the user to use the system
+            // email account.
+            if($outboundEmailAccount->mail_smtpauth_req == 0) {
+                $isAllowedToUseOutboundEmail = true;
+            }
+
+            $admin = new Administration();
+            $admin->retrieveSettings();
+            $adminNotifyFromAddress = $admin->settings['notify_fromaddress'];
+            if ($adminNotifyFromAddress === $requestedEmail->from_addr) {
+                $isFromAddressTheSame = true;
+            }
+        } else if ($outboundEmailAccount->type === 'user') {
+            $isAllowedToUseOutboundEmail = true;
+        }
+
+        $hasAccess =
+            ($hasAccessToInboundEmailAccount === true) &&
+            ($isFromAddressTheSame === true) &&
+            ($isAllowedToUseOutboundEmail === true);
+
+        return $hasAccess;
     }
 }
