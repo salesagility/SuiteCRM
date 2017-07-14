@@ -53,11 +53,7 @@ $mod_strings = array (
 	'LBL_CONFIGURE_SETTINGS'					=> 'Configure Email Settings',
 	'LBL_CUSTOM_LOCATION'						=> 'User Defined',
 	'LBL_DEFAULT_LOCATION'						=> 'Default',
-	
-	'LBL_DISCLOSURE_TITLE'						=> 'Append Disclosure Message to Every Email',
-	'LBL_DISCLOSURE_TEXT_TITLE'					=> 'Disclosure Contents',
-	'LBL_DISCLOSURE_TEXT_SAMPLE'				=> 'NOTICE: This email message is for the sole use of the intended recipient(s) and may contain confidential and privileged information. Any unauthorized review, use, disclosure, or distribution is prohibited. If you are not the intended recipient, please destroy all copies of the original message and notify the sender so that our address record can be corrected. Thank you.',
-	
+
 	'LBL_EMAIL_DEFAULT_CHARSET'					=> 'Compose email messages in this character set',
 	'LBL_EMAIL_DEFAULT_EDITOR'					=> 'Compose email using this client',
 	'LBL_EMAIL_DEFAULT_DELETE_ATTACHMENTS'		=> 'Delete related notes & attachments with deleted Emails',
@@ -100,7 +96,6 @@ $mod_strings = array (
 	'LBL_EXCHANGE_SMTPPORT'					=> 'Exchange Server Port',
 	'LBL_EXCHANGE_SMTPSERVER'				=> 'Exchange Server',
 	'LBL_EMAIL_LINK_TYPE'				=> 'Email Client',
-    'LBL_EMAIL_LINK_TYPE_HELP'			=> '<b>SuiteCRM Mail Client:</b> Send emails using the email client in the SuiteCRM application.<br><b>External Mail Client:</b> Send email using an email client outside of the SuiteCRM application, such as Microsoft Outlook.',
 	'LBL_MARKETING_ID'							=> 'Marketing Id',
     'LBL_MODULE_ID'                             => 'EmailMan',
 	'LBL_MODULE_NAME'							=> 'Email Settings',
@@ -110,9 +105,7 @@ $mod_strings = array (
 	'LBL_NOTIFY_FROMADDRESS' 					=> '"From" Address:',
 	'LBL_NOTIFY_FROMNAME' 						=> '"From" Name:',
 	'LBL_NOTIFY_ON'								=> 'Assignment Notifications',
-	'LBL_NOTIFY_SEND_BY_DEFAULT'				=> 'Send notifications to new users',
 	'LBL_NOTIFY_TITLE'							=> 'Email Options',
-	'LBL_OLD_ID'								=> 'Old Id',
 	'LBL_OUTBOUND_EMAIL_TITLE'					=> 'Outbound Email Options',
 	'LBL_RELATED_ID'							=> 'Related Id',
 	'LBL_RELATED_TYPE'							=> 'Related Type',

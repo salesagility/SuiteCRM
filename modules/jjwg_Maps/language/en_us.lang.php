@@ -57,7 +57,6 @@ $mod_strings['LBL_MODULE_TYPE'] = 'Module Type to Display:';
 $mod_strings['LBL_DISTANCE'] = 'Distance (Radius):';
 $mod_strings['LBL_UNIT_TYPE'] = 'Unit Type:';
 
-$mod_strings['LBL_MAP_ACTION'] = 'Map It';
 $mod_strings['LBL_MAP_DISPLAY'] = 'Map Display';
 $mod_strings['LBL_MAP_LEGEND'] = 'Legend:';
 $mod_strings['LBL_MAP_USERS'] = 'Users:';
@@ -75,7 +74,6 @@ $mod_strings['LNK_IMPORT_MAPS'] = 'Import Maps';
 $mod_strings['LBL_MAP_GEOCODE_ADDRESSES'] = 'Geocode Addresses';
 $mod_strings['LBL_MAP_DONATE'] = 'Donate';
 $mod_strings['LBL_MAP_DONATE_TO_THIS_PROJECT'] = 'Donate to this Project';
-$mod_strings['LBL_BUG_FIX'] = 'Bug Fix';
 
 $mod_strings['LBL_MAP_ADDRESS_TEST'] = 'Geocoding Test';
 $mod_strings['LBL_MAP_QUICK_RADIUS'] = 'Quick Radius Map';

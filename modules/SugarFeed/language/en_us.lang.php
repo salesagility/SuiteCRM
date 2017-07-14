@@ -43,8 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $mod_strings = array(
-    'LBL_TEAM' => 'Team',
-    'LBL_TEAM_ID' => 'Team Id',
     'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
     'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
     'LBL_ID' => 'ID',
@@ -111,14 +109,8 @@ $mod_strings = array(
     'WON_OPPORTUNITY' => 'has <b>WON</b> an {0}',
     'WITH' => 'with',
 
-    'LBL_LINK_TYPE_Link' => 'Link',
-    'LBL_LINK_TYPE_Image' => 'Image',
-    'LBL_LINK_TYPE_YouTube' => 'YouTube&#153;',
-
     'LBL_SELECT' => 'Select',
     'LBL_POST' => 'Post',
-    'LBL_EXTERNAL_PREFIX' => 'External: ',
-    'LBL_EXTERNAL_WARNING' => 'Items labeled "external" require an <a href="?module=EAPM">external account</a>.',
     'LBL_AUTHENTICATE' => 'Connect to',
     'LBL_AUTHENTICATION_PENDING' => 'Not all of the external accounts you have selected have been authenticated. Click \'Cancel\' to return to the Options window to authenticate the external accounts, or click \'Ok\' to proceed without authenticating.',
     'LBL_ADVANCED_SEARCH' => 'Advanced Filter' /*for 508 compliance fix*/,
@@ -128,7 +120,5 @@ $mod_strings = array(
     'LBL_VIEW' => 'View',
     'LBL_POST_TITLE' => 'Post Status Update for ',
     'LBL_URL_LINK_TITLE' => 'URL Link to use',
-    'LBL_TEAM_VISIBILITY_TITLE' => 'team that can see this post',
-    'LBL_SOCIAL' => 'Social',
 );
 ?>
