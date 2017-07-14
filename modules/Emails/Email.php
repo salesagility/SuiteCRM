@@ -2695,17 +2695,17 @@ class Email extends Basic
             }
         }
 
-        $mailBefore = clone $mail;
+        $mailTemp = clone $mail;
 
         $mail = $this->setMailer($mail);
 
         // use personal email by default
 
         if(
-            $mailBefore->oe->type === 'user' &&
+            $mailTemp->oe->type === 'user' &&
             ($mail->oe->type === 'system' || $mail->oe->type === 'system-override')
         ) {
-            $mail = $mailBefore;
+            $mail = $mailTemp;
         }
 
         // FROM ADDRESS
