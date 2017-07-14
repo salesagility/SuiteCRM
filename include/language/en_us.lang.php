@@ -1,14 +1,11 @@
 <?php
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -19,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -37,16 +34,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 //the left value is the key stored in the db and the right value is ie display value
 //to translate, only modify the right value in each key/value pair
@@ -1075,7 +1069,7 @@ $app_strings = array(
     'LBL_SORT' => 'Sort',
     'LBL_OUTBOUND_EMAIL_ADD_SERVER' => 'Add Server...',
     'LBL_EMAIL_SMTP_SSL_OR_TLS' => 'Enable SMTP over SSL or TLS?',
-    'LBL_NO_ACTION' => 'There is no action by that name.',
+    'LBL_NO_ACTION' => 'There is no action by that name: %s',
     'LBL_NO_SHORTCUT_MENU' => 'There are no actions available.',
     'LBL_NO_DATA' => 'No Data',
 
@@ -1262,7 +1256,7 @@ $app_strings = array(
     'LBL_EMAIL_IE_DELETE_SUCCESSFUL' => 'Deletion successful.',
     'LBL_EMAIL_IE_SAVE' => 'Saving Mail Account Information',
     'LBL_EMAIL_IMPORTING_EMAIL' => 'Importing Email',
-    'LBL_EMAIL_IMPORT_EMAIL' => 'Import to SuiteCRM',
+    'LBL_EMAIL_IMPORT_EMAIL' => 'Import into SuiteCRM',
     'LBL_EMAIL_IMPORT_SETTINGS' => 'Import Settings',
     'LBL_EMAIL_INVALID' => 'Invalid',
     'LBL_EMAIL_LOADING' => 'Loading...',
@@ -1427,6 +1421,7 @@ $app_strings = array(
     'LBL_EMAIL_INVALID_SYSTEM_OUTBOUND' => 'An outgoing mail server is not configured to send emails. Please configure an outgoing mail server or select an outgoing mail server for the mail account that you are using in Settings >> Mail Account.',
     'LBL_EMAIL_SHOW_READ' => 'Show All',
     'LBL_EMAIL_SHOW_UNREAD_ONLY' => 'Show Unread Only',
+    'LBL_DEFAULT_EMAIL_SIGNATURES' => 'Default Signature',
     'LBL_EMAIL_SIGNATURES' => 'Signatures',
     'LBL_EMAIL_SIGNATURE_CREATE' => 'Create Signature',
     'LBL_EMAIL_SIGNATURE_NAME' => 'Signature Name',

@@ -39,7 +39,7 @@
 (function ($) {
   $.fn.EmailsComposeViewModal = function (options) {
     "use strict";
-    var self = {};
+    var self = this;
     var opts = $.extend({}, $.fn.EmailsComposeViewModal.defaults, options);
 
     self.handleClick = function (e) {
@@ -51,7 +51,7 @@
       composeBox.messageBox({"showHeader": false, "showFooter": false, "size": 'lg',});
       composeBox.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
       composeBox.show();
-      $.ajax({type: "GET", cache: false, url: 'index.php?module=Emails&action=ComposeView'}).done(function (data) {
+      $.ajax({type: "GET", cache: false, url: 'index.php?module=Emails&action=ComposeView&in_popup=1'}).done(function (data) {
         if (data.length === 0) {
           console.error("Unable to display ComposeView");
           composeBox.setBody(SUGAR.language.translate('', 'ERR_AJAX_LOAD'));
@@ -94,7 +94,7 @@
       }).fail(function (data) {
         composeBox.controls.modal.content.html(SUGAR.language.translate('', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
       });
-      return $(this);
+      return $(self);
     };
 
     self.construct = function () {
@@ -117,7 +117,7 @@
     composeBox.messageBox({"showHeader": false, "showFooter": false, "size": 'lg',});
     composeBox.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
     composeBox.show();
-    $.ajax({type: "GET", cache: false, url: 'index.php?module=Emails&action=ComposeView'}).done(function (data) {
+    $.ajax({type: "GET", cache: false, url: 'index.php?module=Emails&action=ComposeView&in_popup=1'}).done(function (data) {
       if (data.length === 0) {
         console.error("Unable to display ComposeView");
         composeBox.setBody(SUGAR.language.translate('', 'ERR_AJAX_LOAD'));
@@ -178,12 +178,12 @@
     }).fail(function (data) {
       composeBox.controls.modal.content.html(SUGAR.language.translate('', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
     });
-    return $(this);
+    return $(self);
   };
 
   $.fn.EmailsComposeViewModal.defaults = {
     'selected': 'INBOX',
     'buttonSelector': '[data-action=emails-show-compose-modal]',
     'contentSelector': '#content'
-  }
+  };
 }(jQuery));

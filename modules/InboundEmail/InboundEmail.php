@@ -307,6 +307,42 @@ class InboundEmail extends SugarBean
 
 
     /**
+     * @return bool
+     * @throws Exception
+     */
+    public function isPersonalEmailAccount() {
+        if($this->is_personal === '0') {
+            return false;
+        } else if ($this->is_personal === '1') {
+            return true;
+        } else {
+            // TODO: TASK UNDEFINED - Standardize the exceptions
+            throw new Exception(
+                'Cannot tell if the inbound email account is a personal account '.
+                'or a group account.'
+            );
+        }
+    }
+
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    public function isGroupEmailAccount() {
+        if($this->is_personal === '0') {
+            return true;
+        } else if ($this->is_personal === '1') {
+            return false;
+        } else {
+            // TODO: TASK UNDEFINED - Standardize the exceptions
+            throw new Exception(
+                'Cannot tell if the inbound email account is a personal account '.
+                'or a group account.'
+            );
+        }
+    }
+
+    /**
      * @param int $offset
      * @param int $pageSize
      * @param array $order
@@ -2074,11 +2110,42 @@ class InboundEmail extends SugarBean
     /**
      * Sets flags on emails.  Assumes that connection is live, correct folder is
      * set.
-     * @param string $uids Sequence of UIDs, comma separated
+     * @param string|array $uids Sequence of UIDs, comma separated string or array
      * @param string $type Flag to mark
+     * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
      */
     public function markEmails($uids, $type)
     {
+
+        // repair uids value (confert to string)
+
+        if(is_array($uids)) {
+            $uids = implode(',', $uids);
+        }
+
+
+        // validate for comma separated and numeric UIDs
+
+        $splits = explode(',', $uids);
+        if(!$splits) {
+            $GLOBALS['log']->fatal("No IMAP uids");
+            return false;
+        }
+        foreach($splits as $uid) {
+            if(!is_numeric($uid)) {
+                $GLOBALS['log']->fatal("Incorrect UID format");
+                return false;
+            }
+        }
+
+
+        // validate for IMAP flag type
+
+        if(!$type) {
+            $GLOBALS['log']->fatal("IMAP flag type doesn't set");
+            return false;
+        }
+
         switch ($type) {
             case 'unread':
                 $result = imap_clearflag_full($this->conn, $uids, '\\SEEN', ST_UID);
@@ -2095,7 +2162,19 @@ class InboundEmail extends SugarBean
             case 'answered':
                 $result = imap_setflag_full($this->conn, $uids, '\\Answered', ST_UID);
                 break;
+            default:
+
+                // Logging of incorrect (unknown) IMap flag type
+
+                $GLOBALS['log']->fatal("Unknown IMap flag type: $type");
+                return false;
         }
+
+        if(!$result) {
+            $GLOBALS['log']->fatal("Some emails doesn't marked as $type");
+        }
+
+        return $result;
     }
     ////	END EMAIL 2.0 SPECIFIC
     ///////////////////////////////////////////////////////////////////////////
@@ -2461,6 +2540,10 @@ class InboundEmail extends SugarBean
             $accountExists = true;
         }
         $ie_name = $_REQUEST['ie_name'];
+
+        $stored_options = $this->getStoredOptions();
+        $stored_options['outbound_email'] = $_REQUEST['outbound_email'];
+        $this->setStoredOptions($stored_options);
 
         $this->is_personal = 1;
         $this->name = $ie_name;
@@ -4309,11 +4392,7 @@ class InboundEmail extends SugarBean
             }
         }
 
-        //if(empty($message_id) && !isset($message_id)) {
-        if (empty($message_id) || !isset($message_id)) {
-            $GLOBALS['log']->debug('*********** NO MESSAGE_ID.');
-            $message_id = $this->getMessageId($header);
-        }
+        $message_id = $this->getMessageId($header);
 
         // generate compound messageId
         $this->compoundMessageId = trim($message_id) . trim($deliveredTo);
@@ -4325,10 +4404,10 @@ class InboundEmail extends SugarBean
         $this->compoundMessageId = md5($this->compoundMessageId);
 
         $query = 'SELECT count(emails.id) AS c FROM emails WHERE emails.message_id = \'' . $this->compoundMessageId . '\' and emails.deleted = 0';
-        $r = $this->db->query($query, true);
-        $a = $this->db->fetchByAssoc($r);
+        $results = $this->db->query($query, true);
+        $row = $this->db->fetchByAssoc($results);
 
-        if ($a['c'] > 0) {
+        if ($row['c'] > 0) {
             $GLOBALS['log']->debug('InboundEmail found a duplicate email with ID (' . $this->compoundMessageId . ')');
 
             return false; // we have a dupe and don't want to import the email'
@@ -4523,13 +4602,13 @@ class InboundEmail extends SugarBean
             if (!$dupeCheckResult && !empty($this->compoundMessageId)) {
                 // we have a duplicate email
                 $query = 'SELECT id FROM emails WHERE emails.message_id = \'' . $this->compoundMessageId . '\' and emails.deleted = 0';
-                $r = $this->db->query($query, true);
-                $a = $this->db->fetchByAssoc($r);
+                $results = $this->db->query($query, true);
+                $row = $this->db->fetchByAssoc($results);
 
                 $this->email = new Email();
-                $this->email->id = $a['id'];
+                $this->email->id = $row['id'];
 
-                return $a['id'];
+                return $row['id'];
             } // if
             return "";
         } // else
@@ -4538,9 +4617,11 @@ class InboundEmail extends SugarBean
 
     /**
      * shiny new importOneEmail() method
+     * @deprecated since - 7.9 use returnImportedEmail instead
      * @param int msgNo
      * @param bool forDisplay
      * @param clean_email boolean, default true,
+     * @return boolean|string
      */
     public function importOneEmail($msgNo, $uid, $forDisplay = false, $clean_email = true)
     {
@@ -5227,6 +5308,11 @@ class InboundEmail extends SugarBean
                 true
             ); // runs through handleTranserEncoding() already
 
+            if(empty($email->description_html)) {
+                $email->description_html = $email->description;
+                $email->description_html = nl2br($email->description_html);
+            }
+
             $this->imagePrefix = $oldPrefix;
 
             $email->msgno = $msgNo;
@@ -5245,6 +5331,7 @@ class InboundEmail extends SugarBean
      */
     public function importAllFromFolder()
     {
+        $response = array();
         $emailSortedHeaders = imap_sort(
             $this->conn,
             SORTDATE,
@@ -5254,8 +5341,9 @@ class InboundEmail extends SugarBean
 
 
         foreach($emailSortedHeaders as $uid){
-            $this->returnImportedEmail(null, $uid);
+            $response[] = $this->returnImportedEmail(null, $uid);
         }
+        return $response;
     }
 
     /**
@@ -5577,10 +5665,10 @@ class InboundEmail extends SugarBean
                 $query = 'SELECT id FROM cases WHERE case_number = '
                     . $this->db->quoted($sub3)
                     . ' and deleted = 0';
-                $r = $this->db->query($query, true);
-                $a = $this->db->fetchByAssoc($r);
-                if (!empty($a['id'])) {
-                    return $a['id'];
+                $results = $this->db->query($query, true);
+                $row = $this->db->fetchByAssoc($results);
+                if (!empty($row['id'])) {
+                    return $row['id'];
                 }
             }
         }
@@ -5602,6 +5690,24 @@ class InboundEmail extends SugarBean
 
         return self::get_stored_options_static($option_name, $default_value, $stored_options);
     }
+
+    /**
+     * Returns the stored options property un-encoded and un serialised.
+     * @return array
+     */
+    public function getStoredOptions()
+    {
+        return unserialize(base64_decode($this->stored_options));
+    }
+
+    /**
+     * @param array $options
+     */
+    public function setStoredOptions($options)
+    {
+        $this->stored_options = base64_encode(serialize($this->stored_options));
+    }
+
 
     /**
      * @param $option_name
@@ -5897,7 +6003,12 @@ class InboundEmail extends SugarBean
      */
     public function retrieveByGroupId($groupId)
     {
-        $q = 'SELECT id FROM inbound_email WHERE group_id = \'' . $groupId . '\' AND deleted = 0 AND status = \'Active\'';
+        $q = '
+          SELECT id FROM inbound_email
+          WHERE
+            group_id = \'' . $groupId . '\' AND
+            deleted = 0 AND
+            status = \'Active\'';
         $r = $this->db->query($q, true);
 
         $beans = array();
@@ -5952,14 +6063,23 @@ class InboundEmail extends SugarBean
 
     /**
      * Retrieves an array of I-E beans that the user has team access to
+     *
+     * @param string $id user id
+     * @param bool $includePersonal
+     * @return array
      */
     public function retrieveAllByGroupId($id, $includePersonal = true)
     {
-        global $current_user;
 
         $beans = ($includePersonal) ? $this->retrieveByGroupId($id) : array();
-        $teamJoin = '';
-        $q = "SELECT inbound_email.id FROM inbound_email {$teamJoin} WHERE is_personal = 0 AND (groupfolder_id is null OR groupfolder_id = '') AND mailbox_type not like 'bounce' AND inbound_email.deleted = 0 AND status = 'Active' ";
+        $q = "
+          SELECT inbound_email.id FROM inbound_email
+          WHERE
+            is_personal = 0 AND
+            -- (groupfolder_id is null OR groupfolder_id = '') AND
+            mailbox_type not like 'bounce' AND
+            inbound_email.deleted = 0 AND
+            status = 'Active' ";
         $r = $this->db->query($q, true);
 
         while ($a = $this->db->fetchByAssoc($r)) {
@@ -5982,14 +6102,23 @@ class InboundEmail extends SugarBean
 
     /**
      * Retrieves an array of I-E beans that the user has team access to including group
+     *
+     * @param string $id
+     * @param bool $includePersonal
+     * @return InboundEmail[]
      */
     public function retrieveAllByGroupIdWithGroupAccounts($id, $includePersonal = true)
     {
-        global $current_user;
-
         $beans = ($includePersonal) ? $this->retrieveByGroupId($id) : array();
-        $teamJoin = '';
-        $q = "SELECT DISTINCT inbound_email.id FROM inbound_email {$teamJoin} WHERE is_personal = 0 AND mailbox_type not like 'bounce' AND status = 'Active' AND inbound_email.deleted = 0 ";
+
+        $q = "
+          SELECT DISTINCT inbound_email.id
+          FROM inbound_email
+          WHERE
+            is_personal = 0 AND
+            mailbox_type not like 'bounce' AND
+            status = 'Active' AND
+            inbound_email.deleted = 0 ";
         $r = $this->db->query($q, true);
 
         while ($a = $this->db->fetchByAssoc($r)) {
@@ -6307,7 +6436,7 @@ class InboundEmail extends SugarBean
                     }
 
                     if (!empty($msgNo)) {
-                        $importStatus = $this->importOneEmail($msgNo, $uid);
+                        $importStatus = $this->returnImportedEmail($msgNo, $uid);
                         // add to folder
                         if ($importStatus) {
                             $sugarFolder->addBean($this->email);
@@ -6343,13 +6472,13 @@ class InboundEmail extends SugarBean
     public function hardDelete($id)
     {
         $q = "DELETE FROM inbound_email WHERE id = '{$id}'";
-        $r = $this->db->query($q, true);
+        $this->db->query($q, true);
 
         $q = "DELETE FROM folders WHERE id = '{$id}'";
-        $r = $this->db->query($q, true);
+        $this->db->query($q, true);
 
-        $q = "DELETE FROM folders WHERE parent_id = '{$id}'";
-        $r = $this->db->query($q, true);
+        $q = "DELETE FROM folders WHERE parent_folder = '{$id}'";
+        $this->db->query($q, true);
     }
 
     /**
@@ -6582,7 +6711,7 @@ class InboundEmail extends SugarBean
 
             }
 
-            $this->importOneEmail($msgNo, $uid, true);
+            $this->returnImportedEmail($msgNo, $uid, true);
             $this->email->id = '';
             $this->email->new_with_id = false;
             $ret = 'import';
@@ -7499,7 +7628,7 @@ eoq;
         foreach ($msgNumbers as $msgNumber) {
             $uid = $this->getMessageUID($msgNumber, $protocol);
             $GLOBALS['log']->info('Importing message no: ' . $msgNumber);
-            $this->importOneEmail($msgNumber, $uid, false, false);
+            $this->returnImportedEmail($msgNumber, $uid, false, false);
         }
     }
 

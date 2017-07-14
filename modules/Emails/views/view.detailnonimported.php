@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('modules/Emails/include/DetailView/EmailsNonImportedDetailView.php');
 
-class EmailsViewDetailnonimported extends ViewDetail
+class EmailsViewDetailNonImported extends ViewDetail
 {
     /**
      * @var Email $bean

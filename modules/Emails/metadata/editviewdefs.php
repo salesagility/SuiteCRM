@@ -51,7 +51,7 @@ $viewdefs[$module_name]['EditView'] = array(
 
         'LBL_EMAIL_INFORMATION' => array(
             array(
-                'parent_name' => array(
+                'assigned_user_name' => array(
                     'name' => 'assigned_user_name',
                     'label' => 'LBL_ASSIGNED_TO',
                 )

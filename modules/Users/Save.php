@@ -102,7 +102,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
         if (isset($field['source']) && $field['source'] == 'custom_fields')
         {
             $type = !empty($field['custom_type']) ? $field['custom_type'] : $field['type'];
-            $sf = $sfh->getSugarField($type);
+            $sf = $sfh::getSugarField($type);
             if ($sf != null)
             {
                 $sf->save($focus, $_POST, $fieldName, $field, '');
@@ -153,7 +153,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
         {
             $field = $focus->field_defs[$fieldName];
             $type = !empty($field['custom_type']) ? $field['custom_type'] : $field['type'];
-            $sf = $sfh->getSugarField($type);
+            $sf = $sfh::getSugarField($type);
             if ($sf != null)
             {
                 $sf->save($focus, $_POST, $fieldName, $field, '');
@@ -167,7 +167,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
         {
             $field = $focus->field_defs[$fieldName];
             $type = !empty($field['custom_type']) ? $field['custom_type'] : $field['type'];
-            $sf = $sfh->getSugarField($type);
+            $sf = $sfh::getSugarField($type);
             if ($sf != null)
             {
                 $sf->save($focus, $_POST, $fieldName, $field, '');
@@ -456,19 +456,26 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 		}
 
 
-        $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: saveSettingsGeneral");
-        $emailSettings = array();
-        $emailSettings['emailCheckInterval'] = $_REQUEST['emailCheckInterval'];
-        //$emailSettings['autoImport'] = isset($_REQUEST['autoImport']) ? '1' : '0';
-        $emailSettings['alwaysSaveOutbound'] = '1';
-        $emailSettings['sendPlainText'] = isset($_REQUEST['sendPlainText']) ? '1' : '0';
-        $emailSettings['showNumInList'] = $_REQUEST['showNumInList'];
-        $emailSettings['defaultOutboundCharset'] = $_REQUEST['default_charset'];
-        $focus->setPreference('emailSettings', $emailSettings, '', 'Emails');
+		if(
+			isset($_REQUEST['emailCheckInterval']) &&
+			isset($_REQUEST['showNumInList']) &&
+			isset($_REQUEST['default_charset']) &&
+			isset($_REQUEST['signature_id'])
+		) {
+			$GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: saveSettingsGeneral");
+			$emailSettings = array();
+			$emailSettings['emailCheckInterval'] = isset($_REQUEST['emailCheckInterval']) ? $_REQUEST['emailCheckInterval'] : null;
+			//$emailSettings['autoImport'] = isset($_REQUEST['autoImport']) ? '1' : '0';
+			$emailSettings['alwaysSaveOutbound'] = '1';
+			$emailSettings['sendPlainText'] = isset($_REQUEST['sendPlainText']) ? '1' : '0';
+			$emailSettings['showNumInList'] = isset($_REQUEST['showNumInList']) ? $_REQUEST['showNumInList'] : null;
+			$emailSettings['defaultOutboundCharset'] = isset($_REQUEST['default_charset']) ? $_REQUEST['default_charset'] : null;
+			$focus->setPreference('emailSettings', $emailSettings, '', 'Emails');
 
-        // signature
-        $focus->setPreference('signature_default', $_REQUEST['signature_id']);
-        $focus->setPreference('signature_prepend', (isset($_REQUEST['signature_prepend'])) ? true : false);
+			// signature
+			$focus->setPreference('signature_default', isset($_REQUEST['signature_id']) ? $_REQUEST['signature_id'] : null);
+			$focus->setPreference('signature_prepend', (isset($_REQUEST['signature_prepend'])) ? true : false);
+		}
 	}
 
 

@@ -83,6 +83,14 @@ $viewdefs['Emails']['ComposeView'] = array(
                 array(
                     'name' =>  'parent_name',
                     'label' => 'LBL_EMAIL_RELATE',
+                    'displayParams' => array(
+                        'call_back_function' => '$.fn.EmailsComposeView.onParentSelect',
+                        'field_to_name_array' => array(
+                            'id' => 'parent_id',
+                            'name' => 'parent_name',
+                            'email1' => 'email1',
+                        )
+                    ),
                 )
             ),
             array(
@@ -130,6 +138,12 @@ $viewdefs['Emails']['ComposeView'] = array(
                     'label' => 'LBL_BODY',
                 )
             ),
+            array(
+                array(
+                    'name' => 'is_only_plain_text',
+                    'label' => 'LBL_SEND_IN_PLAIN_TEXT'
+                )
+            )
         )
     )
 

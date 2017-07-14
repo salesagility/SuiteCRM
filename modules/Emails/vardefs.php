@@ -47,84 +47,6 @@ $dictionary['Email'] = array(
     'acl_fields' => false,
     'comment' => 'Contains a record of emails sent to and from the Sugar application',
     'fields' => array(
-        'id' => array(
-            'name' => 'id',
-            'vname' => 'LBL_ID',
-            'type' => 'id',
-            'required' => true,
-            'reportable' => true,
-            'comment' => 'Unique identifier',
-            'inline_edit' => false,
-        ),
-        'date_entered' => array(
-            'name' => 'date_entered',
-            'vname' => 'LBL_DATE_ENTERED',
-            'type' => 'datetime',
-            'required' => true,
-            'comment' => 'Date record created',
-            'inline_edit' => false,
-        ),
-        'date_modified' => array(
-            'name' => 'date_modified',
-            'vname' => 'LBL_DATE_MODIFIED',
-            'type' => 'datetime',
-            'required' => true,
-            'comment' => 'Date record last modified',
-            'inline_edit' => false,
-        ),
-        'assigned_user_id' => array(
-            'name' => 'assigned_user_id',
-            'rname' => 'user_name',
-            'id_name' => 'assigned_user_id',
-            'vname' => 'LBL_ASSIGNED_TO',
-            'type' => 'assigned_user_name',
-            'table' => 'users',
-            'isnull' => 'false',
-            'reportable' => true,
-            'dbType' => 'id',
-            'comment' => 'User ID that last modified record',
-            'inline_edit' => false,
-        ),
-        'assigned_user_name' => array(
-            'name' => 'assigned_user_name',
-            'vname' => 'LBL_ASSIGNED_TO',
-            'type' => 'varchar',
-            'reportable' => false,
-            'source' => 'non-db',
-            'table' => 'users',
-            'inline_edit' => false,
-        ),
-        'modified_user_id' => array(
-            'name' => 'modified_user_id',
-            'rname' => 'user_name',
-            'id_name' => 'modified_user_id',
-            'vname' => 'LBL_MODIFIED_BY',
-            'type' => 'assigned_user_name',
-            'table' => 'users',
-            'isnull' => 'false',
-            'reportable' => true,
-            'dbType' => 'id',
-            'comment' => 'User ID that last modified record',
-            'inline_edit' => false,
-        ),
-        'created_by' => array(
-            'name' => 'created_by',
-            'vname' => 'LBL_CREATED_BY',
-            'type' => 'id',
-            'len' => '36',
-            'reportable' => false,
-            'comment' => 'User name who created record',
-            'inline_edit' => false,
-        ),
-        'deleted' => array(
-            'name' => 'deleted',
-            'vname' => 'LBL_DELETED',
-            'type' => 'bool',
-            'required' => false,
-            'reportable' => false,
-            'comment' => 'Record deletion indicator',
-            'inline_edit' => false,
-        ),
         'orphaned' => array(
             'name' => 'orphaned',
             'vname' => 'LBL_ORPHANED',
@@ -512,6 +434,16 @@ $dictionary['Email'] = array(
             ),
         ),
 
+        'is_only_plain_text' => array(
+            'name' => 'is_only_plain_text',
+            'type' => 'bool',
+            'default' => false,
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'inline_edit' => false,
+            'source' => 'non-db',
+        ),
         /* relationship collection attributes */
         /* added to support InboundEmail */
         'accounts' => array(
@@ -791,11 +723,6 @@ $dictionary['Email'] = array(
     ), // end relationships
     'indices' => array(
         array(
-            'name' => 'emailspk',
-            'type' => 'primary',
-            'fields' => array('id'),
-        ),
-        array(
             'name' => 'idx_email_name',
             'type' => 'index',
             'fields' => array('name')
@@ -827,6 +754,9 @@ VardefManager::createVardef(
     'Emails',
     'Email',
     array(
+        'default',
+        'basic',
+        'assignable',
         'security_groups',
     )
 );

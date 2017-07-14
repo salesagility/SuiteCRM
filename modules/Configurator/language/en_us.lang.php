@@ -1,9 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,80 +34,14 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-$mod_strings = array(
-    /*'ADMIN_EXPORT_ONLY'=>'Admin export only',*/
-    'ADVANCED' => 'Advanced',
-    'DEFAULT_CURRENCY_ISO4217' => 'ISO 4217 currency code',
-    'DEFAULT_CURRENCY_NAME' => 'Currency name',
-    'DEFAULT_CURRENCY_SYMBOL' => 'Currency symbol',
-    'DEFAULT_CURRENCY' => 'Default Currency',
-    'DEFAULT_DATE_FORMAT' => 'Default date format',
-    'DEFAULT_DECIMAL_SEP' => 'Decimal symbol',
-    'DEFAULT_LANGUAGE' => 'Default language',
-    'DEFAULT_NUMBER_GROUPING_SEP' => '1000s separator',
-    'DEFAULT_SYSTEM_SETTINGS' => 'User Interface',
-    'DEFAULT_THEME' => 'Default theme',
-    'DEFAULT_TIME_FORMAT' => 'Default time format',
-    /*	'DISABLE_EXPORT'=>'Disable export',*/
-    'DISPLAY_RESPONSE_TIME' => 'Display server response times',
-    /*'EXPORT'=>'Export',
-    'EXPORT_CHARSET' => 'Default Export Character Set',
-    'EXPORT_DELIMITER' => 'Export Delimiter',*/
-    'IMAGES' => 'Logos',
-    'LBL_CONFIGURE_SETTINGS_TITLE' => 'System Settings',
-    'LBL_LOGVIEW' => 'View Log',
-    'LBL_MAIL_SMTPAUTH_REQ' => 'Use SMTP Authentication?',
-    'LBL_MAIL_SMTPPASS' => 'SMTP Password:',
-    'LBL_MAIL_SMTPPORT' => 'SMTP Port:',
-    'LBL_MAIL_SMTPSERVER' => 'SMTP Server:',
-    'LBL_MAIL_SMTPUSER' => 'SMTP Username:',
-    'LBL_MAIL_SMTPTYPE' => 'SMTP Server Type:',
-    'LBL_MAIL_SMTP_SETTINGS' => 'SMTP Server Specification',
-    'LBL_CHOOSE_EMAIL_PROVIDER' => 'Choose your Email provider:',
-    'LBL_YAHOOMAIL_SMTPPASS' => 'Yahoo! Mail Password:',
-    'LBL_YAHOOMAIL_SMTPUSER' => 'Yahoo! Mail ID:',
-    'LBL_GMAIL_SMTPPASS' => 'Gmail Password:',
-    'LBL_GMAIL_SMTPUSER' => 'Gmail Email Address:',
-    'LBL_EXCHANGE_SMTPPASS' => 'Exchange Password:',
-    'LBL_EXCHANGE_SMTPUSER' => 'Exchange Username:',
-    'LBL_EXCHANGE_SMTPPORT' => 'Exchange Server Port:',
-    'LBL_EXCHANGE_SMTPSERVER' => 'Exchange Server:',
-    'LBL_ALLOW_DEFAULT_SELECTION' => 'Allow users to use this account for outgoing email:',
-    'LBL_ALLOW_DEFAULT_SELECTION_HELP' => 'When this option is selected, all users will be able to send emails using the same outgoing mail account used to send system notifications and alerts.  If the option is not selected, users can still use the outgoing mail server after providing their own account information.',
-    'LBL_MIN_AUTO_REFRESH_INTERVAL' => 'Minimum Dashlet Auto-Refresh Interval',
-    'LBL_MIN_AUTO_REFRESH_INTERVAL_HELP' => 'This is the minimum value one can choose to have dashlets auto-refresh. Setting to \'Never\' disables auto-refreshing of dashlets entirely.',
-    'LBL_MODULE_FAVICON' => 'Display module icon as favicon',
-    'LBL_MODULE_FAVICON_HELP' => 'If you are in a module with an icon, use the module\'s icon as the favicon, instead of the theme\'s favicon, in the browser tab.',
-    'LBL_MODULE_NAME' => 'System Settings',
-    'LBL_MODULE_ID' => 'Configurator',
-    'LBL_NOTIFY_FROMADDRESS' => '"From" Address:',
-    'LBL_NOTIFY_SUBJECT' => 'Email subject:',
-    'LBL_PROXY_AUTH' => 'Authentication?',
-    'LBL_PROXY_HOST' => 'Proxy Host',
-    'LBL_PROXY_ON_DESC' => 'Configure proxy server address and authentication settings',
-    'LBL_PROXY_ON' => 'Use proxy server?',
-    'LBL_PROXY_PASSWORD' => 'Password',
-    'LBL_PROXY_PORT' => 'Port',
-    'LBL_PROXY_TITLE' => 'Proxy Settings',
-    'LBL_PROXY_USERNAME' => 'User Name',
-    'LBL_RESTORE_BUTTON_LABEL' => 'Restore',
-    'LBL_SYSTEM_SETTINGS' => 'System Settings',
-    'LBL_SKYPEOUT_ON_DESC' => 'Allows users to click on phone numbers to call using the phone dialer on your mobile device, or a telephony app on your computer (SkypeOut&reg;, etc.). The numbers must be formatted properly to make use of this feature. That is, it must be "+"  "The Country Code" "The Number", like +1 (555) 555-1234.',
-    'LBL_SKYPEOUT_ON' => 'Enable click-to-call for phone numbers',
-    'LBL_SKYPEOUT_TITLE' => 'Click-To-Call',
-    'LBL_USE_REAL_NAMES' => 'Show Full Names',
-    'LBL_USE_REAL_NAMES_DESC' => 'Display users\' full names instead of their User Names in assignment fields.',
 $mod_strings = array (
 	/*'ADMIN_EXPORT_ONLY'=>'Admin export only',*/
 	'ADVANCED'=>'Advanced',
@@ -252,16 +188,6 @@ $mod_strings = array (
     'LBL_SEARCH' => 'Search:',
     'LBL_REG_EXP' => 'Reg Exp:',
     'LBL_IGNORE_SELF' => 'Ignore Self:',
-    'LBL_MARKING_WHERE_START_LOGGING' => 'Marking Where To Start Logging From',
-    'LBL_DISPLAYING_LOG' => 'Displaying Log',
-    'LBL_YOUR_PROCESS_ID' => 'Your process ID',
-    'LBL_YOUR_IP_ADDRESS' => 'Your IP Address is',
-    'LBL_IT_WILL_BE_IGNORED' => ' It will be ignored ',
-    'LBL_LOG_NOT_CHANGED' => 'Log has not changed',
-    'LBL_ALERT_JPG_IMAGE' => 'The file format of the image must be JPEG.  Upload a new file with the file extension .jpg.',
-    'LBL_ALERT_TYPE_IMAGE' => 'The file format of the image must be JPEG or PNG.  Upload a new file with the file extension .jpg or .png.',
-    'LBL_ALERT_SIZE_RATIO' => 'The aspect ratio of the image should be between 1:1 and 10:1.  The image will be resized.',
-    'LBL_ALERT_SIZE_RATIO_QUOTES' => 'The aspect ratio of the image must be between 3:1 and 20:1.  Upload a new file with this ratio.',
     'LBL_MARKING_WHERE_START_LOGGING'=>'Marking Where To Start Logging From',
     'LBL_DISPLAYING_LOG'=>'Displaying Log',
     'LBL_YOUR_PROCESS_ID'=>'Your process ID',
@@ -288,7 +214,6 @@ $mod_strings = array (
     'LBL_VCAL_PERIOD' => 'vCal Updates Time Period:',
     'LBL_IMPORT_MAX_RECORDS' => 'Import - Maximum Number of Rows:',
     'LBL_IMPORT_MAX_RECORDS_HELP' => 'Specify how many rows are allowed within import files.<br>If the number of rows in an import file exceeds this number, the user will be alerted.<br>If no number is entered, an unlimited number of rows are allowed.',
-    'vCAL_HELP' => 'Use this setting to determine the number of months in advance of the current date that Free/Busy information for calls and meetings is published.<BR>To turn Free/Busy publishing off, enter "0".  The minimum is 1 month; the maximum is 12 months.',
 	'vCAL_HELP' => 'Use this setting to determine the number of months in advance of the current date that Free/Busy information for calls and meetings is published.<BR>To turn Free/Busy publishing off, enter "0". The minimum is 1 month; the maximum is 12 months.',
     'LBL_PDFMODULE_NAME' => 'PDF Settings',
     'SUGARPDF_BASIC_SETTINGS' => 'Document Properties',
@@ -430,10 +355,6 @@ More help : www.tcpdf.org',
     'ERR_PDF_NO_UPLOAD' => 'Error during the upload of the font or metric file.',
 
 // Wizard
-    //Wizard Scenarios
-    'LBL_WIZARD_SCENARIOS' => 'Your Scenarios',
-    'LBL_WIZARD_SCENARIOS_EMPTY_LIST' => 'No scenarios have been configured',
-    'LBL_WIZARD_SCENARIOS_DESC' => 'Choose which scenarios are appropriate for your installation.  These options can be changed post-install.',
 	//Wizard Scenarios
 	'LBL_WIZARD_SCENARIOS' => 'Your Scenarios',
 	'LBL_WIZARD_SCENARIOS_EMPTY_LIST' => 'No scenarios have been configured',
