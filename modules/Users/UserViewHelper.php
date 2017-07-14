@@ -677,6 +677,9 @@ class UserViewHelper {
     protected function setupAdvancedTabPdfSettings() {
     }
 
+    /**
+     * @todo: solve using deprecated method: getUsersMailerForSystemOverride
+     */
     protected function setupEmailSettings() {
         global $current_user, $app_list_strings;
 
@@ -733,6 +736,7 @@ class UserViewHelper {
 
             if( !$systemOutboundEmail->isAllowUserAccessToSystemDefaultOutbound() ) {
                 $mail_smtpauth_req = $systemOutboundEmail->mail_smtpauth_req;
+                // todo: #3841, PR 3873, scrm-648???  method createUserSystemOverrideAccount() is deprecated
                 $userOverrideOE = $systemOutboundEmail->getUsersMailerForSystemOverride($this->bean->id);
                 if($userOverrideOE != null) {
                     $mail_smtpuser = $userOverrideOE->mail_smtpuser;

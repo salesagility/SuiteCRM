@@ -828,6 +828,8 @@ SE.accounts = {
         SUGAR.email2.accounts.toggleOutboundAccountDisabledFields(false);
 
         YAHOO.util.Connect.setForm(document.getElementById("outboundEmailForm"));
+
+        // todo: #3841, PR 3873, scrm-648??? - 'system-override' is deprecated
         if(outboundType == 'system-override')
             SUGAR.email2.accounts.toggleOutboundAccountDisabledFields(true);
 

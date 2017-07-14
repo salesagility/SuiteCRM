@@ -64,6 +64,7 @@ class ViewWizard extends SugarView
 
 	/**
 	 * @see SugarView::display()
+     * @todo: do not use deprecated methods: getUsersMailerForSystemOverride()
 	 */
 	public function display()
     {
@@ -230,6 +231,7 @@ eoq;
             {
 
             	$mail_smtpauth_req = $systemOutboundEmail->mail_smtpauth_req;
+                // todo: #3841, PR 3873, scrm-648???  method getUsersMailerForSystemOverride() is deprecated
                 $userOverrideOE = $systemOutboundEmail->getUsersMailerForSystemOverride($current_user->id);
                 if($userOverrideOE != null) {
                     $mail_smtpuser = $userOverrideOE->mail_smtpuser;

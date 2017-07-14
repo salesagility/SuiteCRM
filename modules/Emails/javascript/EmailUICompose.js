@@ -1155,6 +1155,7 @@ SE.composeLayout = {
 
     /**
      * Initializes d&d, auto-complete, email templates
+     * @deprecated action 'fillComposeCache' is deprecated
      */
     _2_final : function() {
         var idx = SE.composeLayout.currentInstanceId;
@@ -1164,6 +1165,7 @@ SE.composeLayout = {
         } else {
             //populate email template cache
             AjaxObject.target = '';
+            // todo: action 'fillComposeCache' is deprecated
             AjaxObject.startRequest(callbackComposeCache, urlStandard + "&emailUIAction=fillComposeCache");
         }
 

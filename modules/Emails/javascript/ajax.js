@@ -465,6 +465,7 @@ AjaxObject.accounts = {
 			SUGAR.email2.accounts.smtp_authenticate_field_display();
 			document.getElementById("mail_smtpssl").options[ret.mail_smtpssl].selected = true;
 
+			// todo: #3841, PR 3873, scrm-648??? - 'system-override' is deprecated
             if(ret.type == 'system-override') {
 			     SUGAR.email2.accounts.toggleOutboundAccountDisabledFields(true);
 			     SUGAR.email2.accounts.changeEmailScreenDisplay(ret.mail_smtptype,true);

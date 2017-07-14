@@ -416,6 +416,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 		//saving their own username/password for the system account
 		if( ! $sysOutboundAccunt->isAllowUserAccessToSystemDefaultOutbound() )
         {
+        	// todo: #3841, PR 3873, scrm-648???  method getUsersMailerForSystemOverride() is deprecated
             $userOverrideOE = $sysOutboundAccunt->getUsersMailerForSystemOverride($focus->id);
             if($userOverrideOE != null)
             {
@@ -428,6 +429,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
             {
                 //If a user name and password for the mail account is set, create the users override account.
                 if( ! (empty($_REQUEST['mail_smtpuser']) || empty($_REQUEST['mail_smtppass'])) )
+                    // todo: #3841, PR 3873, scrm-648???  method createUserSystemOverrideAccount() is deprecated
                     $sysOutboundAccunt->createUserSystemOverrideAccount($focus->id,$_REQUEST['mail_smtpuser'],$_REQUEST['mail_smtppass'] );
             }
         }

@@ -2545,6 +2545,14 @@ eoq;
 		return $email_templates_arr;
 	}
 
+    /**
+     * @param InboundEmail $ie
+     * @return array
+     * @deprecated
+     * @todo #3841, PR 3873, scrm-648???
+     * deprecated methods:
+     * getUsersMailerForSystemOverride()
+     */
 	function getFromAccountsArray($ie) {
         global $current_user;
         global $app_strings;

@@ -107,6 +107,9 @@ class OutboundEmail {
 	 * and password for the default system account.
 	 *
 	 * @param String $user_id
+     * @return OutboundEmail
+     * @deprecated 'system-override' doesn't exist anymore
+     * @todo: #3841, PR 3873, scrm-648??? remove / handle 'system-override'-s
 	 */
 	function getUsersMailerForSystemOverride($user_id)
 	{
@@ -129,6 +132,9 @@ class OutboundEmail {
 	 * @param string $user_id
 	 * @param string $user_name
 	 * @param string $user_pass
+     * @return OutboundEmail self reference
+     * @deprecated 'system-override' doesn't exist anymore
+     * @todo #3841, PR 3873, scrm-648???  remove / handle 'system-override'-s
 	 */
 	function createUserSystemOverrideAccount($user_id,$user_name = "",$user_pass = "")
 	{
@@ -150,6 +156,8 @@ class OutboundEmail {
 	 *
 	 * @param unknown_type $user_id
 	 * @return unknown
+     * @deprecated still using method getUsersMailerForSystemOverride() deprecated
+     * @todo remove / handle 'system-override'-s
 	 */
 	function doesUserOverrideAccountRequireCredentials($user_id)
 	{
@@ -171,6 +179,13 @@ class OutboundEmail {
 
 	/**
 	 * Retrieves name value pairs for opts lists
+     * @return OutboundEmail[]
+     * @deprecated
+     * @todo #3841, PR 3873, scrm-648???  remove / handle 'system-override'-s
+     * still using deprecated methods:
+     * getUsersMailerForSystemOverride()
+     * doesUserOverrideAccountRequireCredentials()
+     * createUserSystemOverrideAccount()
 	 */
     function getUserMailers($user)
     {
@@ -512,6 +527,8 @@ class OutboundEmail {
 
 	/**
 	 * Saves system mailer.  Presumes all values are filled.
+     * @deprecated
+     * @todo #3841, PR 3873, scrm-648???  method updateUserSystemOverrideAccounts() is deprecated
 	 */
 	function saveSystem() {
 		$q = "SELECT id FROM outbound_email WHERE type = 'system'";
@@ -534,7 +551,8 @@ class OutboundEmail {
 
 	/**
 	 * Update the user system override accounts with the system information if anything has changed.
-	 *
+     * @deprecated
+     * @todo #3841, PR 3873, scrm-648???  remove / handle 'system-override'-s
 	 */
 	function updateUserSystemOverrideAccounts()
 	{
@@ -559,6 +577,8 @@ class OutboundEmail {
 	/**
 	 * Remove all of the user override accounts.
 	 *
+     * @deprecated
+     * @todo #3841, PR 3873, scrm-648???  remove / handle 'system-override'-s
 	 */
 	function removeUserOverrideAccounts()
 	{
@@ -601,6 +621,10 @@ class OutboundEmail {
 	 * @param User $user
 	 * @param string $name
 	 * @return OutboundEmail|false
+     * @deprecated
+     * @todo #3841, PR 3873, scrm-648???
+     * deprecated methods:
+     * getUsersMailerForSystemOverride()
 	 */
 	public function getMailerByName($user, $name)
 	{

@@ -208,7 +208,8 @@ function handleSubs($subs, $email, $json) {
         unlink($filePath);
         break;
 
-    case "fillComposeCache": // fills client-side compose email cache with signatures and email templates
+      case "fillComposeCache": // fills client-side compose email cache with signatures and email templates
+        // TODO: #3841, PR 3873, scrm-648??? - case fillComposeCache is deprecated still use deprecated methods
         $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: fillComposeCache");
         $out = array();
         $email_templates_arr = $email->et->getEmailTemplatesArray();
@@ -226,15 +227,19 @@ function handleSubs($subs, $email, $json) {
 			}
         }
         $out['signatures'] = $sigs;
+        // todo: #3841, PR 3873, scrm-648???  method getFromAccountsArray() is deprecated
         $out['fromAccounts'] = $email->et->getFromAccountsArray($ie);
         $out['errorArray'] = array();
 
         $oe = new OutboundEmail();
+          // todo: #3841, PR 3873, scrm-648???  method doesUserOverrideAccountRequireCredentials() is deprecated
         if( $oe->doesUserOverrideAccountRequireCredentials($current_user->id) )
         {
+            // todo: #3841, PR 3873, scrm-648???  method getUsersMailerForSystemOverride() is deprecated
             $overideAccount = $oe->getUsersMailerForSystemOverride($current_user->id);
             //If the user override account has not been created yet, create it for the user.
             if($overideAccount == null)
+                // todo: #3841, PR 3873, scrm-648???  method createUserSystemOverrideAccount() is deprecated
                 $overideAccount = $oe->createUserSystemOverrideAccount($current_user->id);
 
 		    $out['errorArray'] = array($overideAccount->id => $app_strings['LBL_EMAIL_WARNING_MISSING_USER_CREDS']);
