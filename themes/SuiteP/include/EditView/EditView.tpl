@@ -139,11 +139,13 @@
         {*display panels*}
         <div class="panel-content">
             <div>&nbsp;</div>
+            {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
             {{counter name="panelCount" start=-1 print=false assign="panelCount"}}
             {{foreach name=section from=$sectionPanels key=label item=panel}}
             {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
             {* if tab *}
             {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true && $useTabs)}}
+            {{counter name="tabCount" print=false}}
             {*if tab skip*}
             {{else}}
             {* if panel display*}
@@ -161,7 +163,15 @@
             {{assign var='panelHeadingCollapse' value=""}}
             {{/if}}
 
-            <div class="panel panel-default">
+            {{if $useTabs}}
+                 {{if $tabCount == 0}}
+                     <div class="panel panel-default tab-panel-{{$tabCount}}" style="display: block;">
+                 {{else}}
+                     <div class="panel panel-default tab-panel-{{$tabCount}}" style="display: none;">
+                 {{/if}}
+            {{else}}
+              <div class="panel panel-default">
+            {{/if}}
                 <div class="panel-heading {{$panelHeadingCollapse}}">
                     <a class="{{$collapsed}}" role="button" data-toggle="collapse-edit" aria-expanded="false">
                         <div class="col-xs-10 col-sm-11 col-md-11">
@@ -216,6 +226,8 @@ $(document).ready(function() {ldelim}
     var selectTab = function(tab) {
         $('#EditView_tabs div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').hide();
         $('#EditView_tabs div.tab-content div.tab-pane-NOBOOTSTRAPTOGGLER').eq(tab).show().addClass('active').addClass('in');
+        $('#EditView_tabs div.panel-content div.panel').hide();
+        $('#EditView_tabs div.panel-content div.panel.tab-panel-' + tab).show()
     };
 
     var selectTabOnError = function(tab) {
