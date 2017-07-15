@@ -23,7 +23,7 @@
  */
 
 
-function display_condition_lines($focus, $field, $value, $view){
+function display_condition_lines($focus, $field, $value, $view) {
 
     global $locale, $app_list_strings, $mod_strings;
 
@@ -35,7 +35,7 @@ function display_condition_lines($focus, $field, $value, $view){
     }
     $html .= '<script src="cache/jsLanguage/AOW_Conditions/'. $GLOBALS['current_language'] . '.js"></script>';
 
-    if($view == 'EditView'){
+    if($view == 'EditView') {
 
         $html .= '<script src="modules/AOW_Conditions/conditionLines.js"></script>';
         $html .= "<table border='0' cellspacing='4' width='100%' id='conditionLines'></table>";
@@ -45,7 +45,7 @@ function display_condition_lines($focus, $field, $value, $view){
         $html .= "</div>";
 
 
-        if(isset($focus->flow_module) && $focus->flow_module != ''){
+        if(isset($focus->flow_module) && $focus->flow_module != '') {
             require_once(get_custom_file_if_exists("modules/AOW_WorkFlow/aow_utils.php"));
             $html .= "<script>";
             $html .= "flow_rel_modules = \"".trim(preg_replace('/\s+/', ' ', getModuleRelationships($focus->flow_module)))."\";";
