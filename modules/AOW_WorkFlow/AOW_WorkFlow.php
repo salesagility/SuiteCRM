@@ -55,7 +55,7 @@ class AOW_WorkFlow extends Basic {
 		parent::__construct();
         if($init){
             $this->load_flow_beans();
-            require_once('modules/AOW_WorkFlow/aow_utils.php');
+            require_once(get_custom_file_if_exists('modules/AOW_WorkFlow/aow_utils.php'));
         }
 	}
 
@@ -88,11 +88,11 @@ class AOW_WorkFlow extends Basic {
 
         parent::save($check_notify);
 
-        require_once('modules/AOW_Conditions/AOW_Condition.php');
+        require_once(get_custom_file_if_exists('modules/AOW_Conditions/AOW_Condition.php'));
         $condition = new AOW_Condition();
         $condition->save_lines($_POST, $this, 'aow_conditions_');
 
-        require_once('modules/AOW_Actions/AOW_Action.php');
+        require_once(get_custom_file_if_exists('modules/AOW_Actions/AOW_Action.php'));
         $action = new AOW_Action();
         $action->save_lines($_POST, $this, 'aow_actions_');
     }
@@ -444,7 +444,7 @@ class AOW_WorkFlow extends Basic {
     function check_valid_bean(SugarBean &$bean){
         global $app_list_strings, $timedate;
 
-        require_once('modules/AOW_Processed/AOW_Processed.php');
+        require_once(get_custom_file_if_exists('modules/AOW_Processed/AOW_Processed.php'));
         $processed = new AOW_Processed();
         if(!$this->multiple_runs){
             $processed->retrieve_by_string_fields(array('aow_workflow_id' => $this->id,'parent_id' => $bean->id));
