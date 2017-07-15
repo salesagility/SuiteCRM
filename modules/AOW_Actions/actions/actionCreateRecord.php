@@ -23,7 +23,7 @@
  */
 
 
-require_once('modules/AOW_Actions/actions/actionBase.php');
+require_once(get_custom_file_if_exists('modules/AOW_Actions/actions/actionBase.php'));
 class actionCreateRecord extends actionBase {
 
     function __construct($id = ''){
@@ -88,7 +88,7 @@ class actionCreateRecord extends actionBase {
 
 
         if(isset($params['record_type']) && $params['record_type'] != ''){
-            require_once("modules/AOW_WorkFlow/aow_utils.php");
+            require_once(get_custom_file_if_exists("modules/AOW_WorkFlow/aow_utils.php"));
             $html .= "<script id ='aow_script".$line."'>";
             $html .= "cr_fields[".$line."] = \"".trim(preg_replace('/\s+/', ' ', getModuleFields($params['record_type'])))."\";";
             $html .= "cr_relationships[".$line."] = \"".trim(preg_replace('/\s+/', ' ', getModuleRelationships($params['record_type'])))."\";";
@@ -123,7 +123,7 @@ class actionCreateRecord extends actionBase {
                 $this->set_relationships($record, $bean, $params);
 
                 if(isset($params['relate_to_workflow']) && $params['relate_to_workflow']){
-                    require_once('modules/Relationships/Relationship.php');
+                    require_once(get_custom_file_if_exists('modules/Relationships/Relationship.php'));
                     $key = Relationship::retrieve_by_modules($bean->module_dir, $record->module_dir, $GLOBALS['db']);
                     if (!empty($key)) {
                         foreach($bean->field_defs as $field=>$def){
@@ -186,8 +186,8 @@ class actionCreateRecord extends actionBase {
                         if($record_vardefs[$field]['type'] == 'date') $dformat = 'Y-m-d';
                         switch($params['value'][$key][3]) {
                             case 'business_hours';
-                                if(file_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php')){
-                                    require_once('modules/AOBH_BusinessHours/AOBH_BusinessHours.php');
+                                if(file_exists(get_custom_file_if_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php'))){
+                                    require_once(get_custom_file_if_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php'));
 
                                     $businessHours = new AOBH_BusinessHours();
 
@@ -235,15 +235,15 @@ class actionCreateRecord extends actionBase {
                     Case 'Random':
                         switch($params['value'][$key][0]) {
                             Case 'security_group':
-                                if(file_exists('modules/SecurityGroups/SecurityGroup.php')){
-                                    require_once('modules/SecurityGroups/SecurityGroup.php');
+                                if(file_exists(get_custom_file_if_exists('modules/SecurityGroups/SecurityGroup.php'))){
+                                    require_once(get_custom_file_if_exists('modules/SecurityGroups/SecurityGroup.php'));
                                     $security_group = new SecurityGroup();
                                     $security_group->retrieve($params['value'][$key][1]);
                                     $group_users = $security_group->get_linked_beans( 'users','User');
                                     $users = array();
                                     $r_users = array();
                                     if($params['value'][$key][2] != ''){
-                                        require_once('modules/ACLRoles/ACLRole.php');
+                                        require_once(get_custom_file_if_exists('modules/ACLRoles/ACLRole.php'));
                                         $role = new ACLRole();
                                         $role->retrieve($params['value'][$key][2]);
                                         $role_users = $role->get_linked_beans( 'users','User');
@@ -261,7 +261,7 @@ class actionCreateRecord extends actionBase {
                                 }
                             //No Security Group module found - fall through.
                             Case 'role':
-                                require_once('modules/ACLRoles/ACLRole.php');
+                                require_once(get_custom_file_if_exists('modules/ACLRoles/ACLRole.php'));
                                 $role = new ACLRole();
                                 $role->retrieve($params['value'][$key][2]);
                                 $role_users = $role->get_linked_beans( 'users','User');
@@ -339,7 +339,7 @@ class actionCreateRecord extends actionBase {
 
         $record_vardefs = $record->getFieldDefinitions();
 
-        require_once('modules/Relationships/Relationship.php');
+        require_once(get_custom_file_if_exists('modules/Relationships/Relationship.php'));
         if(isset($params['rel'])){
             foreach($params['rel'] as $key => $field){
                 if($field == '' || $params['rel_value'][$key] == '') continue;
