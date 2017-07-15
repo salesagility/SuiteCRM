@@ -97,7 +97,7 @@ class AOW_Condition extends Basic
     function save_lines($post_data, $parent, $key = '')
     {
 
-        require_once('modules/AOW_WorkFlow/aow_utils.php');
+        require_once(get_custom_file_if_exists('modules/AOW_WorkFlow/aow_utils.php'));
 
         $line_count = count($post_data[$key . 'field']);
         $j = 0;
