@@ -46,7 +46,7 @@ function display_condition_lines($focus, $field, $value, $view){
 
 
         if(isset($focus->report_module) && $focus->report_module != ''){
-            require_once("modules/AOW_WorkFlow/aow_utils.php");
+            require_once(get_custom_file_if_exists("modules/AOW_WorkFlow/aow_utils.php"));
             $html .= "<script>";
             $html .= "report_module = \"".$focus->report_module."\";";
             $html .= "document.getElementById('btn_ConditionLine').disabled = '';";
@@ -77,7 +77,7 @@ function display_condition_lines($focus, $field, $value, $view){
 
 
         if(isset($focus->report_module) && $focus->report_module != ''){
-            require_once("modules/AOW_WorkFlow/aow_utils.php");
+            require_once(get_custom_file_if_exists("modules/AOW_WorkFlow/aow_utils.php"));
             $html .= "<script>";
             $html .= "report_fields = \"".trim(preg_replace('/\s+/', ' ', getModuleFields($focus->report_module)))."\";";
             $html .= "report_module = \"".$focus->report_module."\";";
