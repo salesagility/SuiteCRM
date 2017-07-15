@@ -24,7 +24,7 @@
 
 
 
-require_once('modules/AOW_Actions/actions/actionCreateRecord.php');
+require_once(get_custom_file_if_exists('modules/AOW_Actions/actions/actionCreateRecord.php'));
 class actionModifyRecord extends actionCreateRecord {
 
     function __construct($id = ''){
@@ -51,7 +51,7 @@ class actionModifyRecord extends actionCreateRecord {
     }
 
     function edit_display($line,SugarBean $bean = null, $params = array()){
-        require_once("modules/AOW_WorkFlow/aow_utils.php");
+        require_once(get_custom_file_if_exists("modules/AOW_WorkFlow/aow_utils.php"));
 
         $modules = getModuleRelationships($bean->module_dir,'EditView', $params['rel_type']);
 
