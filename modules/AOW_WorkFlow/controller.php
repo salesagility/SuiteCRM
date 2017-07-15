@@ -23,7 +23,7 @@
  */
 
 
-require_once("modules/AOW_WorkFlow/aow_utils.php");
+require_once(get_custom_file_if_exists("modules/AOW_WorkFlow/aow_utils.php"));
 
 class AOW_WorkFlowController extends SugarController {
 
@@ -490,7 +490,7 @@ class AOW_WorkFlowController extends SugarController {
         $id = '';
         $params = array();
         if(isset($_REQUEST['id'])){
-            require_once('modules/AOW_Actions/AOW_Action.php');
+            require_once(get_custom_file_if_exists('modules/AOW_Actions/AOW_Action.php'));
             $aow_action = new AOW_Action();
             $aow_action->retrieve($_REQUEST['id']);
             $id = $aow_action->id;
@@ -551,7 +551,7 @@ class AOW_WorkFlowController extends SugarController {
     protected function action_testFlow(){
 
         echo 'Started<br />';
-        require_once('modules/AOW_WorkFlow/AOW_WorkFlow.php');
+        require_once(get_custom_file_if_exists('modules/AOW_WorkFlow/AOW_WorkFlow.php'));
         $workflow = new AOW_WorkFlow();
 
         if($workflow->run_flows())echo 'PASSED';
