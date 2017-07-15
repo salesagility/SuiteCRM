@@ -41,7 +41,7 @@
  *
  */
 
-require_once('modules/AOW_Actions/actions/actionBase.php');
+require_once(get_custom_file_if_exists('modules/AOW_Actions/actions/actionBase.php'));
 
 /**
  * Class actionComputeField
@@ -70,7 +70,7 @@ class actionComputeField extends actionBase
     public function run_action(SugarBean $bean, $params = array(), $in_save = false)
     {
         try {
-            require_once('modules/AOW_Actions/FormulaCalculator.php');
+            require_once(get_custom_file_if_exists('modules/AOW_Actions/FormulaCalculator.php'));
 
             $bean->fill_in_additional_detail_fields();
 
@@ -306,7 +306,7 @@ class actionComputeField extends actionBase
      */
     public function edit_display($line, SugarBean $bean = null, $params = array())
     {
-        require_once("modules/AOW_WorkFlow/aow_utils.php");
+        require_once(get_custom_file_if_exists("modules/AOW_WorkFlow/aow_utils.php"));
 
         $containerName = "computeFieldParameterContainerLine" . $line;
 
