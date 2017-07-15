@@ -68,8 +68,8 @@ class AOR_Report extends Basic
     {
         parent::__construct();
         $this->load_report_beans();
-        require_once('modules/AOW_WorkFlow/aow_utils.php');
-        require_once('modules/AOR_Reports/aor_utils.php');
+        require_once(get_custom_file_if_exists('modules/AOW_WorkFlow/aow_utils.php'));
+        require_once(get_custom_file_if_exists('modules/AOR_Reports/aor_utils.php'));
     }
 
     /**
