@@ -46,7 +46,7 @@ function display_condition_lines($focus, $field, $value, $view){
 
 
         if(isset($focus->flow_module) && $focus->flow_module != ''){
-            require_once("modules/AOW_WorkFlow/aow_utils.php");
+            require_once(get_custom_file_if_exists("modules/AOW_WorkFlow/aow_utils.php"));
             $html .= "<script>";
             $html .= "flow_rel_modules = \"".trim(preg_replace('/\s+/', ' ', getModuleRelationships($focus->flow_module)))."\";";
             $html .= "flow_module = \"".$focus->flow_module."\";";
@@ -79,7 +79,7 @@ function display_condition_lines($focus, $field, $value, $view){
 
 
         if(isset($focus->flow_module) && $focus->flow_module != ''){
-            require_once("modules/AOW_WorkFlow/aow_utils.php");
+            require_once(get_custom_file_if_exists("modules/AOW_WorkFlow/aow_utils.php"));
             $html .= "<script>";
             $html .= "flow_rel_modules = \"".trim(preg_replace('/\s+/', ' ', getModuleRelationships($focus->flow_module)))."\";";
             $html .= "flow_module = \"".$focus->flow_module."\";";
