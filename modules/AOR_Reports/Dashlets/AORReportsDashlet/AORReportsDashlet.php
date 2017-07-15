@@ -4,8 +4,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 
-require_once('include/Dashlets/Dashlet.php');
-require_once 'modules/AOR_Reports/aor_utils.php';
+require_once(get_custom_file_if_exists('include/Dashlets/Dashlet.php'));
+require_once (get_custom_file_if_exists('modules/AOR_Reports/aor_utils.php'));
 
 class AORReportsDashlet extends Dashlet
 {
