@@ -49,8 +49,8 @@ require_once('modules/AOW_Actions/actions/actionBase.php');
 class actionComputeField extends actionBase
 {
 
-    const rawValue = "raw";
-    const formattedValue = "formatted";
+    const RAW_VALUE = "raw";
+    const FORMATTED_VALUE = "formatted";
 
     /**
      * @return array
@@ -145,7 +145,7 @@ class actionComputeField extends actionBase
         $resolvedParameters = array();
 
         for ($i = 0; $i < count($parameters); $i++) {
-            if ($parameterTypes[$i] == actionComputeField::formattedValue) {
+            if ($parameterTypes[$i] == actionComputeField::FORMATTED_VALUE) {
                 $dataType = $bean->field_name_map[$parameters[$i]]['type'];
 
                 if ($dataType == 'enum') {
@@ -250,7 +250,7 @@ class actionComputeField extends actionBase
                 continue;
             }
 
-            if ($relationParameterTypes[$i] == actionComputeField::formattedValue) {
+            if ($relationParameterTypes[$i] == actionComputeField::FORMATTED_VALUE) {
                 $dataType = $entity->field_name_map[$relationParameterFields[$i]]['type'];
 
                 if ($dataType == 'enum') {
