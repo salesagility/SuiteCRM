@@ -827,7 +827,7 @@ class Email extends Basic
                     $request['parent_type'] == 'Prospects')
             ) {
                 if (isset($beanList[$request['parent_type']]) && !empty($beanList[$request['parent_type']])) {
-                    $className = $beanList[v['parent_type']];
+                    $className = $beanList[$request['parent_type']];
                     if (isset($beanFiles[$className]) && !empty($beanFiles[$className])) {
                         if (!class_exists($className)) {
                             require_once($beanFiles[$className]);
