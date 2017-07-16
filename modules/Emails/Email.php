@@ -2685,7 +2685,8 @@ class Email extends Basic
             }
         }
 
-        $mail = $this->setMailer($mail);
+        $ieId = $this->mailbox_id;
+        $mail = $this->setMailer($mail, '', $ieId);
 
         // FROM ADDRESS
         if (!empty($this->from_addr)) {
@@ -3898,6 +3899,10 @@ eoq;
             if (array_key_exists($fieldName, $bean->field_defs)) {
                 $bean->$fieldName = $field;
             }
+        }
+
+        if (isset($_REQUEST['inbound_email_id'])) {
+            $bean->mailbox_id = $_REQUEST['inbound_email_id'];
         }
 
 
