@@ -98,11 +98,7 @@ $mod_strings = array(
     'LBL_VIEW_GANTT_DURATION' => 'Duration',
     'LBL_TASK_TITLE' => 'Edit Task',
     'LBL_PREDECESSOR_TITLE' => 'Edit Predecessor',
-    'LBL_START_DATE_TITLE' => 'Select Start Date',
-    'LBL_END_DATE_TITLE' => 'Select End Date',
     'LBL_DURATION_TITLE' => 'Edit Duration',
-    'LBL_PERCENTAGE_COMPLETE_TITLE' => 'Edit % Complete',
-    'LBL_ACTUAL_DURATION_TITLE' => 'Edit Actual Duration',
     'LBL_DESCRIPTION' => 'Notes',
     'LBL_ASSIGNED_USER_ID' => 'Assigned To:',
 
@@ -130,7 +126,6 @@ $mod_strings = array(
 	'LBL_TOOLTIP_TITLE' => 'Hint',
 	'LBL_TOOLTIP_TEXT' => 'Copies All tasks with assigned users',
 
-	
 	'LBL_EMAIL' => 'Email',
 	'LBL_PHONE' => 'Phone Office:',
 	'LBL_ADD_BUTTON'=> 'Add',
@@ -147,6 +142,7 @@ $mod_strings = array(
 	'LBL_SCHEDULING_FORM_TITLE' => 'Resource List',
 	'LBL_NONE' => 'None',
 
+	'LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_PROJECT_TITLE' => 'Project Templates Project from Project Title',
 	'LBL_AOS_PRODUCTS_AM_PROJECTTEMPLATES_1_FROM_AM_PROJECTTEMPLATES_TITLE' => 'Product: Project Templates from Project Templates Title',
 	'LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_PROJECT_TITLE' => 'Project Templates: Project from Project Title',
 

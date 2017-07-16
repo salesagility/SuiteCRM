@@ -56,7 +56,6 @@ $mod_strings = array (
   'LBL_MERGE_VALUE_OVER' => 'Merge value over',
 
   'LBL_NEXT_STEP_TITLE' => 'Move to Next Step[Ctrl+N]',
-  'LBL_NEXT_STEP_BUTTON_KEY' => 'N',
   'LBL_NEXT_STEP_BUTTON_LABEL' => 'Next Step >',
 
   'LBL_PERFORM_MERGE_BUTTON_TITLE' => 'Perform Merge[Ctrl+P]',
@@ -64,7 +63,6 @@ $mod_strings = array (
   'LBL_PERFORM_MERGE_BUTTON_LABEL' => 'Perform Merge',
 
   'LBL_SAVE_MERGED_RECORD_BUTTON_TITLE' => 'Save Merge[Ctrl+S]',
-  'LBL_SAVE_MERGED_RECORD_BUTTON_KEY' => 'S',
   'LBL_SAVE_MERGED_RECORD_BUTTON_LABEL' => 'Save Merge',
 
   'LBL_STEP2_FORM_TITLE' => 'Records Found To Merge With',
