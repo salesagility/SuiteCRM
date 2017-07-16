@@ -55,4 +55,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class SuiteEditorSettingsForTinyMCE extends SuiteEditorSettingsForDirectHTML
 {
 
+    /**
+     * JSON setting for TinyMCE initializer script
+     *
+     * @var string
+     */
+    public $tinyMCESetup = '{}';
+
 }

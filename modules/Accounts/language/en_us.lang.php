@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,17 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array (
 	// DON'T CONVERT THESE THEY ARE MAPPINGS
@@ -137,10 +133,8 @@ $mod_strings = array (
 	'LBL_POSTAL_CODE' => 'Postal Code:',
 	'LBL_PRODUCTS_TITLE'=>'Products',
 	'LBL_PROJECTS_SUBPANEL_TITLE' => 'Projects',
-	'LBL_PUSH_BILLING' => 'Push Billing',
 	'LBL_PUSH_CONTACTS_BUTTON_LABEL' => 'Copy to Contacts',
 	'LBL_PUSH_CONTACTS_BUTTON_TITLE' => 'Copy...',
-	'LBL_PUSH_SHIPPING' => 'Push Shipping',
 	'LBL_RATING' => 'Rating:',
 	'LBL_SAVE_ACCOUNT' => 'Save Account',
 	'LBL_SEARCH_FORM_TITLE' => 'Account Search',
@@ -171,13 +165,6 @@ $mod_strings = array (
 	'LNK_IMPORT_ACCOUNTS' => 'Import Accounts',
 	'MSG_DUPLICATE' => 'The account record you are about to create might be a duplicate of an account record that already exists. Account records containing similar names are listed below.<br>Click Create Account to continue creating this new account, or select an existing account listed below.',
 	'MSG_SHOW_DUPLICATES' => 'The account record you are about to create might be a duplicate of an account record that already exists. Account records containing similar names are listed below.<br>Click Save to continue creating this new account, or click Cancel to return to the module without creating the account.',
-	'NTC_COPY_BILLING_ADDRESS' => 'Copy billing address to shipping address',
-	'NTC_COPY_BILLING_ADDRESS2' => 'Copy to shipping',
-	'NTC_COPY_SHIPPING_ADDRESS' => 'Copy shipping address to billing address',
-	'NTC_COPY_SHIPPING_ADDRESS2' => 'Copy to billing',
-	'NTC_DELETE_CONFIRMATION' => 'Are you sure you want to delete this record?',
-	'NTC_REMOVE_ACCOUNT_CONFIRMATION' => 'Are you sure you want to remove this record?',
-	'NTC_REMOVE_MEMBER_ORG_CONFIRMATION' => 'Are you sure you want to remove this record as a member organization?',
 	'LBL_ASSIGNED_USER_NAME' => 'Assigned to:',
     'LBL_PROSPECT_LIST' => 'Prospect List',
     'LBL_ACCOUNTS_SUBPANEL_TITLE'=>'Accounts',
@@ -189,7 +176,6 @@ $mod_strings = array (
     'LBL_PHONE_ALTERNATE' => 'Phone Alternate',
     'LBL_EXPORT_ASSIGNED_USER_NAME' => 'Assigned User Name',
     // SNIP
-    'LBL_CONTACT_HISTORY_SUBPANEL_TITLE' => 'Related Contacts\' Emails',
 	'LBL_PRODUCTS_SERVICES_PURCHASED_SUBPANEL_TITLE' => 'Products and Services Purchased',
 
 	'LBL_AOS_CONTRACTS' => 'Contracts',

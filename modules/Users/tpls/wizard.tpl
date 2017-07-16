@@ -86,13 +86,7 @@
                         </tr>
                         <tr>
                             <td scope="row">
-
-                                {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
-                                    <p> {$MOD.LBL_WIZARD_WELCOME}</p>
-                                {else}
-                                    <p> {$MOD.LBL_WIZARD_WELCOME_NOSMTP}</p>
-                                {/if}
-
+                                <p> {$MOD.LBL_WIZARD_WELCOME_NOSMTP}</p>
                                 <div class="userWizWelcome"><img src='include/images/sugar_wizard_welcome.jpg' border='0' alt='{$MOD.LBL_WIZARD_WELCOME_TAB}' width='765px' height='325px'></div>
                             </td>
                         </tr>
@@ -266,68 +260,9 @@
                onclick="SugarWizard.changeScreen('personalinfo',true);" id="previous_tab_personalinfo" />&nbsp;
         <input title="{$MOD.LBL_WIZARD_NEXT_BUTTON}"
                class="button primary" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_NEXT_BUTTON}  "
-                {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
-               onclick="SugarWizard.changeScreen('smtp',false);" id="next_tab_smtp" />
-        {else}
         onclick="SugarWizard.changeScreen('finish',false);" id="next_tab_finish" />
-        {/if}
     </div>
 </div>
-{if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
-    <div id="smtp" class="screen">
-        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-                <td>
-                    <div class="edit view">
-                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                            <tr>
-                                <th align="left" scope="row" colspan="4">
-                                    <h2>{$MOD.LBL_WIZARD_SMTP}</h2>
-                                </th>
-                            </tr>
-                            <tr>
-                                <td align="left" scope="row" colspan="4"><i>{$MOD.LBL_WIZARD_SMTP_DESC}</i></td>
-                            </tr>
-                            <tr>
-                                <td width="20%" scope="row"><span id="mail_smtpserver_label">{$MOD.LBL_EMAIL_PROVIDER}</span></td>
-                                <td width="30%" ><span>{$mail_smtpdisplay}<input id='mail_smtpserver' name='mail_smtpserver' type="hidden" value='{$mail_smtpserver}' /></span></td>
-                                <td scope="row">&nbsp;</td>
-                                <td >&nbsp;</td>
-                            </tr>
-                            {if !empty($mail_smtpauth_req)}
-                                <tr>
-                                    <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtpuser_label">{$MOD.LBL_MAIL_SMTPUSER}</span></td>
-                                    <td width="30%" ><span><input type="text" id="mail_smtpuser" name="mail_smtpuser" size="25" maxlength="64" value="{$mail_smtpuser}" tabindex='1' ></span></td>
-                                    <td scope="row">&nbsp;</td>
-                                    <td >&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtppass_label">{$MOD.LBL_MAIL_SMTPPASS}</span></td>
-                                    <td width="30%" ><span><input type="password" id="mail_smtppass" name="mail_smtppass" size="25" maxlength="64" value="{$mail_smtppass}" tabindex='1'></span></td>
-                                    <td scope="row">&nbsp;</td>
-                                    <td >&nbsp;</td>
-                                </tr>
-                            {/if}
-                            <tr>
-                                <td width="17%" scope="row"><input type="button" class="button" value="{$APP.LBL_EMAIL_TEST_OUTBOUND_SETTINGS}" onclick="startOutBoundEmailSettingsTest();"></td>
-                                <td width="33%" >&nbsp;</td>
-                                <td width="17%" scope="row">&nbsp;</td>
-                                <td width="33%" >&nbsp;</td>
-                            </tr>
-                        </table>
-                    </div>
-                </td>
-        </table>
-        <div class="nav-buttons">
-            <input title="{$MOD.LBL_WIZARD_BACK_BUTTON}"
-                   class="button" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_BACK_BUTTON}  "
-                   onclick="SugarWizard.changeScreen('locale',true);" id="previous_tab_locale" />&nbsp;
-            <input title="{$MOD.LBL_WIZARD_NEXT_BUTTON}"
-                   class="button primary" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_NEXT_BUTTON}  "
-                   onclick="SugarWizard.changeScreen('finish',false);" id="next_tab_finish" />
-        </div>
-    </div>
-{/if}
 <div id="finish" class="screen">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
@@ -374,11 +309,7 @@
     <div class="nav-buttons">
         <input title="{$MOD.LBL_WIZARD_BACK_BUTTON}"
                class="button" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_BACK_BUTTON}  "
-                {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
-               onclick="SugarWizard.changeScreen('smtp',true);" id="previous_tab_smtp" />&nbsp;
-        {else}
         onclick="SugarWizard.changeScreen('locale',true);" id="previous_tab_locale" />&nbsp;
-        {/if}
         <input title="{$MOD.LBL_WIZARD_FINISH_BUTTON}" class="button primary"
                type="submit" name="save" value="  {$MOD.LBL_WIZARD_FINISH_BUTTON}  " />&nbsp;
     </div>

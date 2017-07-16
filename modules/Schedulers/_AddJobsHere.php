@@ -162,7 +162,7 @@ function pollMonitoredInboxes()
                             $uid = imap_uid($ieX->conn, $msgNo);
                         } // else
                         if ($isGroupFolderExists) {
-                            if ($ieX->importOneEmail($msgNo, $uid)) {
+                            if ($ieX->returnImportedEmail($msgNo, $uid)) {
                                 // add to folder
                                 $sugarFolder->addBean($ieX->email);
                                 if ($ieX->isPop3Protocol()) {
@@ -206,7 +206,7 @@ function pollMonitoredInboxes()
                             } // if
                         } else {
                             if ($ieX->isAutoImport()) {
-                                $ieX->importOneEmail($msgNo, $uid);
+                                $ieX->returnImportedEmail($msgNo, $uid);
                             } else {
                                 /*If the group folder doesn't exist then download only those messages
                                  which has caseid in message*/
@@ -612,7 +612,7 @@ function pollMonitoredInboxesAOP()
                             } // if
                         } else {
                             if ($aopInboundEmailX->isAutoImport()) {
-                                $aopInboundEmailX->importOneEmail($msgNo, $uid);
+                                $aopInboundEmailX->returnImportedEmail($msgNo, $uid);
                             } else {
                                 /*If the group folder doesn't exist then download only those messages
                                  which has caseid in message*/

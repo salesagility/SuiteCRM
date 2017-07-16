@@ -77,7 +77,7 @@ class SugarCleaner
      * Singleton instance
      * @var SugarCleaner
      */
-    static public $instance;
+    private static $instance;
 
     /**
      * HTMLPurifier instance
@@ -102,7 +102,7 @@ class SugarCleaner
         $config->set('CSS.Proprietary', true);
         $config->set('HTML.TidyLevel', 'light');
         $config->set('HTML.ForbiddenElements', array('body' => true, 'html' => true));
-        $config->set('AutoFormat.RemoveEmpty', false);
+        $config->set('AutoFormat.RemoveEmpty', true);
         $config->set('Cache.SerializerPermissions', 0775);
         // for style
         //$config->set('Filter.ExtractStyleBlocks', true);
@@ -167,40 +167,31 @@ class SugarCleaner
      */
     public static function getInstance()
     {
-        if(is_null(self::$instance)) {
-            self::$instance = new self;
-        }
-        return self::$instance;
+        return self::$instance instanceof self ? self::$instance : (self::$instance = new self());
     }
 
     /**
      * Clean string from potential XSS problems
-     * @param string $html
-     * @param bool $encoded Was it entity-encoded?
+     * @param string $dirty_html
+     * @param bool $encode_html - encodes html
      * @return string
      */
-    static public function cleanHtml($html, $encoded = false)
+    public static function cleanHtml($dirty_html, $encode_html = false)
     {
-        if(empty($html)) return $html;
+        $sugarCleaner = new SugarCleaner();
+        $purifier = $sugarCleaner->purifier;
 
-        if($encoded) {
-            $html = from_html($html);
+        // $encode_html previously effected the decoding process.
+        // we should decode regardless, just in case, the calling method passing encoded html
+        $dirty_html_decoded = utf8_decode(html_entity_decode($dirty_html));
+        $clean_html = $purifier->purify($dirty_html_decoded);
+
+        // Re-encode html
+        if ($encode_html === true) {
+            $clean_html = htmlentities($clean_html);
         }
-        if(!preg_match('<[^-A-Za-z0-9 `~!@#$%^&*()_=+{}\[\];:\'",./\\?\r\n|\x80-\xFF]>', $html)) {
-            /* if it only has "safe" chars, don't bother */
-            $cleanhtml = $html;
-        } else {
-            $purifier = self::getInstance()->purifier;
-            $cleanhtml = $purifier->purify($html);
-//            $styles = $purifier->context->get('StyleBlocks');
-//            if(count($styles) > 0) {
-//                $cleanhtml = "<style>".join("</style><style>", $styles)."</style>".$cleanhtml;
-//            }
-        }
-        if($encoded) {
-            $cleanhtml = to_html($cleanhtml);
-        }
-        return $cleanhtml;
+
+        return $clean_html;
     }
 
     static public function stripTags($string, $encoded = true)
