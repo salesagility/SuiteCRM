@@ -53,7 +53,7 @@ class actionSendEmail extends actionBase {
 
     function edit_display($line,SugarBean $bean = null, $params = array()){
         global $app_list_strings;
-        $email_templates_arr = get_bean_select_array(true, 'EmailTemplate','name');
+        $email_templates_arr = get_bean_select_array(true, 'EmailTemplate', 'name', '', 'name');
 
         if(!in_array($bean->module_dir,getEmailableModules())) unset($app_list_strings['aow_email_type_list']['Record Email']);
         $targetOptions = getRelatedEmailableFields($bean->module_dir);
@@ -65,11 +65,12 @@ class actionSendEmail extends actionBase {
         $checked = '';
         if(isset($params['individual_email']) && $params['individual_email']) $checked = 'CHECKED';
 
-        $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%'>";
+        $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%' data-workflow-action='send-email'>";
         $html .= "<tr>";
-        $html .= '<td id="relate_label" scope="row" valign="top">'.translate("LBL_INDIVIDUAL_EMAILS","AOW_Actions").':';
+        $html .= '<td id="relate_label" scope="row" valign="top"><label>' . translate("LBL_INDIVIDUAL_EMAILS",
+                "AOW_Actions") . ':</label>';
         $html .= '</td>';
-        $html .= "<td valign='top' width='37.5%'>";
+        $html .= "<td valign='top'>";
         $html .= "<input type='hidden' name='aow_actions_param[".$line."][individual_email]' value='0' >";
         $html .= "<input type='checkbox' id='aow_actions_param[".$line."][individual_email]' name='aow_actions_param[".$line."][individual_email]' value='1' $checked></td>";
         $html .= '</td>';
@@ -78,8 +79,9 @@ class actionSendEmail extends actionBase {
         $hidden = "style='visibility: hidden;'";
         if($params['email_template'] != '') $hidden = "";
 
-        $html .= '<td id="name_label" scope="row" valign="top" width="12.5%">'.translate("LBL_EMAIL_TEMPLATE","AOW_Actions").':<span class="required">*</span></td>';
-        $html .= "<td valign='top' width='37.5%'>";
+        $html .= '<td id="name_label" scope="row" valign="top"><label>' . translate("LBL_EMAIL_TEMPLATE",
+                "AOW_Actions") . ':<span class="required">*</span></label></td>';
+        $html .= "<td valign='top'>";
         $html .= "<select name='aow_actions_param[".$line."][email_template]' id='aow_actions_param_email_template".$line."' onchange='show_edit_template_link(this,".$line.");' >".get_select_options_with_id($email_templates_arr, $params['email_template'])."</select>";
 
         $html .= "&nbsp;<a href='javascript:open_email_template_form(".$line.")' >".translate('LBL_CREATE_EMAIL_TEMPLATE','AOW_Actions')."</a>";
@@ -87,11 +89,12 @@ class actionSendEmail extends actionBase {
         $html .= "</td>";
         $html .= "</tr>";
         $html .= "<tr>";
-        $html .= '<td id="name_label" scope="row" valign="top" width="12.5%">'.translate("LBL_EMAIL","AOW_Actions").':<span class="required">*</span></td>';
-        $html .= '<td valign="top" scope="row" width="37.5%">';
+        $html .= '<td id="name_label" scope="row" valign="top"><label>' . translate("LBL_EMAIL",
+                "AOW_Actions") . ':<span class="required">*</span></label></td>';
+        $html .= '<td valign="top" scope="row">';
 
         $html .='<button type="button" onclick="add_emailLine('.$line.')"><img src="'.SugarThemeRegistry::current()->getImageURL('id-ff-add.png').'"></button>';
-        $html .= '<table id="emailLine'.$line.'_table" width="100%"></table>';
+        $html .= '<table id="emailLine'.$line.'_table" width="100%" class="email-line"></table>';
         $html .= '</td>';
         $html .= "</tr>";
         $html .= "</table>";

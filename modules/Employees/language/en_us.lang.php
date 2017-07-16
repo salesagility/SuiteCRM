@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,17 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array (
   'LBL_MODULE_NAME' => 'Employees',
@@ -114,22 +110,22 @@ $mod_strings = array (
   'LBL_MESSENGER_ID' => 'IM Name:',
   'LBL_MESSENGER_TYPE' => 'IM Type:',
   'ERR_EMPLOYEE_NAME_EXISTS_1' => 'The employee name ',
-  'ERR_EMPLOYEE_NAME_EXISTS_2' => ' already exists.  Duplicate employee names are not allowed.  Change the employee name to be unique.',
+  'ERR_EMPLOYEE_NAME_EXISTS_2' => ' already exists. Duplicate employee names are not allowed. Change the employee name to be unique.',
   'ERR_LAST_ADMIN_1' => 'The employee name "',
-  'ERR_LAST_ADMIN_2' => '" is the last employee with administrator access.  At least one employee must be an administrator.',
+  'ERR_LAST_ADMIN_2' => '" is the last employee with administrator access. At least one employee must be an administrator.',
   'LNK_NEW_EMPLOYEE' => 'Create Employee',
   'LNK_EMPLOYEE_LIST' => 'View Employees',
   'ERR_DELETE_RECORD' => 'You must specify a record number to delete the account.',
   'LBL_LIST_EMPLOYEE_STATUS' => 'Employee Status',
 
   'LBL_SUGAR_LOGIN' => 'Is User',
-  'LBL_RECEIVE_NOTIFICATIONS' => 'Notify on Assignment',  
-  'LBL_IS_ADMIN' => 'Is Administrator',  
+  'LBL_RECEIVE_NOTIFICATIONS' => 'Notify on Assignment',
+  'LBL_IS_ADMIN' => 'Is Administrator',
   'LBL_GROUP' => 'Group User',
   'LBL_PORTAL_ONLY'	=> 'Portal Only User',
   'LBL_PHOTO'	=> 'Photo',
-  'LBL_DELETE_USER_CONFIRM'           => 'This Employee is also a User. Deleting the Employee record will also delete the User record, and the User will no longer be able to access the application. Do you want to proceed with deleting this record?',
-  'LBL_DELETE_EMPLOYEE_CONFIRM'       => 'Are you sure you want to delete this employee?',
+  'LBL_DELETE_USER_CONFIRM' => 'This Employee is also a User. Deleting the Employee record will also delete the User record, and the User will no longer be able to access the application. Do you want to proceed with deleting this record?',
+  'LBL_DELETE_EMPLOYEE_CONFIRM' => 'Are you sure you want to delete this employee?',
   'LBL_ONLY_ACTIVE' => 'Active Employees',
 	'LBL_SELECT' => 'Select' /*for 508 compliance fix*/,
   'LBL_AUTHENTICATE_ID' => 'Authentication Id',
@@ -157,6 +153,14 @@ $mod_strings = array (
   'LBL_DATE_MODIFIED' => 'Date Modified',
   'LBL_DATE_ENTERED' => 'Date Entered',
   'LBL_DELETED' => 'Deleted',
+
+  'LBL_CONTACTS_SYNC' => 'Contact Sync',
+  'LBL_OAUTH_TOKENS' => 'OAuth Tokens',
+  'LBL_PROJECT_USERS_1_FROM_PROJECT_TITLE' => 'Project Users from Project Title',
+  'LBL_PROJECT_CONTACTS_1_FROM_CONTACTS_TITLE' => 'Project Contacts from Contacts Title',
+  'LBL_ROLES' => 'Roles',
+  'LBL_SECURITYGROUPS' => 'Security Groups',
+  'LBL_PROSPECT_LIST' => 'Prospect List',
 );
 
 

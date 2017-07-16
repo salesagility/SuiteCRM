@@ -40,7 +40,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-include_once 'suitecrm_version.php';
+include 'suitecrm_version.php';
 global $sugar_config, $mod_strings;
 
 ?>
@@ -90,9 +90,6 @@ global $sugar_config, $mod_strings;
                         <li><?php echo $mod_strings['LBL_CONTRIBUTOR_RESPONSETAP']; ?> (<a
                                     href="https://www.responsetap.com">https://www.responsetap.com</a>)
                         </li>
-                        <li><?php echo $mod_strings['LBL_LANGUAGE_SPANISH']; ?> (<a href="http://www.disytel.com"
-                                                                                    target="_blank">http://www.disytel.com</a>)
-                        </li>
                         <li><?php echo $mod_strings['LBL_SOURCE_SUGAR']; ?> (<a href="http://www.sugarcrm.com"
                                                                                 target="_blank">http://www.sugarcrm.com</a>)
                         </li>
@@ -101,6 +98,19 @@ global $sugar_config, $mod_strings;
                         </li>
                     </ul>
                 </div>
+
+               <div class="about_suite">
+                    <br>
+                    <h3><?php echo $mod_strings['LBL_LANGUAGE_ABOUT']; ?></h3>
+                    <ul id="about_menu">
+                        <li><?php echo $mod_strings['LBL_LANGUAGE_COMMUNITY_ABOUT']; ?>
+                        </li>
+                        <li><?php echo $mod_strings['LBL_LANGUAGE_COMMUNITY_PACKS']; ?> (<a
+                                href="https://crowdin.com/project/suitecrmtranslations" target="_blank">https://crowdin.com/project/suitecrmtranslations</a>)
+                        </li>
+                    </ul>
+                </div>
+
                 <div class="about_suite">
                     <br>
                     <h3><?php echo $mod_strings['LBL_PARTNERS']; ?></h3>

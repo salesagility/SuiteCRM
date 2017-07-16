@@ -57,8 +57,12 @@ $subpanel_layout = array(
              'parent_info'          => true
 		),
 		'status' => array(
-			 'vname'				=> 'LBL_LIST_STATUS',
-			 'width'				=> '15%',
+			'vname'				=> 'LBL_LIST_STATUS',
+			'width'				=> '15%',
+		),
+		'category_id' => array(
+			'vname'				=> 'LBL_LIST_CATEGORY',
+			'width'				=> '15%',
 		),
 		'reply_to_status' => array(
 			 'usage'				=> 'query_only',

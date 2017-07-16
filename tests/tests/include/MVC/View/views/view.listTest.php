@@ -11,30 +11,6 @@ class ViewListTest extends PHPUnit_Framework_TestCase
         $this->assertAttributeEquals('list', 'type', $view);
     }
 
-    public function testoldSearch()
-    {
-        $view = new ViewList();
-
-        //execute the method and test if it works and does not throws an exception.
-        try {
-            $view->oldSearch();
-        } catch (Exception $e) {
-            $this->fail();
-        }
-    }
-
-    public function testnewSearch()
-    {
-        $view = new ViewList();
-
-        //execute the method and test if it works and does not throws an exception.
-        try {
-            $view->newSearch();
-        } catch (Exception $e) {
-            $this->fail();
-        }
-    }
-
     public function testlistViewPrepare()
     {
         error_reporting(E_ERROR | E_PARSE);

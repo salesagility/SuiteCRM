@@ -684,7 +684,7 @@ class SecurityGroup extends SecurityGroup_sugar
     public function getUserSecurityGroups($user_id)
     {
         global $db;
-        $query = 'seect securitygroups.id, securitygroups.name from securitygroups_users '
+        $query = 'select securitygroups.id, securitygroups.name from securitygroups_users '
             . 'inner join securitygroups on securitygroups_users.securitygroup_id = securitygroups.id '
             . '      and securitygroups.deleted = 0 '
             . "where securitygroups_users.user_id='$user_id' and securitygroups_users.deleted = 0 "

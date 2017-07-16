@@ -49,6 +49,17 @@
   height: auto;
 }
 
+// Fix the icons in the dashlet pagination.
+#pageContainer .dashletcontainer .aor_reports .pagination h3 {
+  margin: 0;
+}
+
+#pageContainer .dashletcontainer .aor_reports .pagination button {
+  height: 16px;
+  line-height: 16px;
+  padding: 0 2px;
+}
+
 .dashletcontainer button[disabled], .dashletcontainer input[type="submit"][disabled], .dashletcontainer input[type="reset"][disabled], .dashletcontainer input[type="button"][disabled] {
   line-height: 100% ;
 }

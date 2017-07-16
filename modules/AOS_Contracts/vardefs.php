@@ -369,7 +369,7 @@ $dictionary['AOS_Contracts'] = array(
             array(
                 'required' => false,
                 'name' => 'call_id',
-                'vname' => '',
+                'vname' => 'LBL_CALL_ID',
                 'type' => 'id',
                 'massupdate' => 0,
                 'comments' => '',
@@ -683,6 +683,7 @@ $dictionary['AOS_Contracts'] = array(
         'accounts' =>
             array(
                 'name' => 'accounts',
+                'vname' => 'LBL_ACCOUNTS',
                 'type' => 'link',
                 'relationship' => 'account_aos_contracts',
                 'module' => 'Accounts',
@@ -692,6 +693,7 @@ $dictionary['AOS_Contracts'] = array(
         'contacts' =>
             array(
                 'name' => 'contacts',
+                'vname' => 'LBL_CONTACTS',
                 'type' => 'link',
                 'relationship' => 'contact_aos_contracts',
                 'module' => 'Contacts',
@@ -701,6 +703,7 @@ $dictionary['AOS_Contracts'] = array(
         'tasks' =>
             array(
                 'name' => 'tasks',
+                'vname' => 'LBL_TASKS',
                 'type' => 'link',
                 'relationship' => 'aos_contracts_tasks',
                 'module' => 'Tasks',
@@ -710,6 +713,7 @@ $dictionary['AOS_Contracts'] = array(
         'notes' =>
             array(
                 'name' => 'notes',
+                'vname' => 'LBL_NOTES',
                 'type' => 'link',
                 'relationship' => 'aos_contracts_notes',
                 'module' => 'Notes',
@@ -719,6 +723,7 @@ $dictionary['AOS_Contracts'] = array(
         'meetings' =>
             array(
                 'name' => 'meetings',
+                'vname' => 'LBL_MEETINGS',
                 'type' => 'link',
                 'relationship' => 'aos_contracts_meetings',
                 'module' => 'Meetings',
@@ -728,6 +733,7 @@ $dictionary['AOS_Contracts'] = array(
         'calls' =>
             array(
                 'name' => 'calls',
+                'vname' => 'LBL_CALLS',
                 'type' => 'link',
                 'relationship' => 'aos_contracts_calls',
                 'module' => 'Calls',
@@ -737,6 +743,7 @@ $dictionary['AOS_Contracts'] = array(
         'emails' =>
             array(
                 'name' => 'emails',
+                'vname' => 'LBL_EMAILS',
                 'type' => 'link',
                 'relationship' => 'emails_aos_contracts_rel',/* reldef in emails */
                 'source' => 'non-db',
@@ -745,6 +752,7 @@ $dictionary['AOS_Contracts'] = array(
         'aos_quotes_aos_contracts' =>
             array(
                 'name' => 'aos_quotes_aos_contracts',
+                'vname' => 'LBL_AOS_QUOTES_AOS_CONTRACTS',
                 'type' => 'link',
                 'relationship' => 'aos_quotes_aos_contracts',
                 'source' => 'non-db',
@@ -753,6 +761,7 @@ $dictionary['AOS_Contracts'] = array(
         "documents" =>
             array(
                 'name' => 'documents',
+                'vname' => 'LBL_DOCUMENTS',
                 'type' => 'link',
                 'relationship' => 'aos_contracts_documents',
                 'source' => 'non-db',
@@ -761,6 +770,7 @@ $dictionary['AOS_Contracts'] = array(
         "aos_products_quotes" =>
             array(
                 'name' => 'aos_products_quotes',
+                'vname' => 'LBL_AOS_PRODUCT_QUOTES',
                 'type' => 'link',
                 'relationship' => 'aos_contracts_aos_products_quotes',
                 'module' => 'AOS_Products_Quotes',
@@ -770,6 +780,7 @@ $dictionary['AOS_Contracts'] = array(
         'aos_line_item_groups' =>
             array(
                 'name' => 'aos_line_item_groups',
+                'vname' => 'LBL_AOS_LINE_ITEM_GROUPS',
                 'type' => 'link',
                 'relationship' => 'aos_contracts_aos_line_item_groups',
                 'module' => 'AOS_Line_Item_Groups',

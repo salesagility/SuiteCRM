@@ -126,3 +126,15 @@ a:hover {
   }
 
 }
+
+.content {
+  margin: 0 0 0 0;
+}
+
+@media (max-width: 750px) {
+  .content {
+    margin: 0 0 0 0;
+    width: 100%;
+  }
+}
+

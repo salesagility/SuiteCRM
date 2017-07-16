@@ -49,6 +49,9 @@ var LBL_HIDEOPTIONS = '{sugar_translate module="Users" label="LBL_HIDEOPTIONS"}'
 </script>
 <!-- Start login container -->
 <div class="container">
+    {if $LOGIN_ERROR_MESSAGE}
+        <p align='center' class='error'>{$LOGIN_ERROR_MESSAGE}</p>
+    {/if}
     <div id="loginform">
     <form class="form-signin" role="form" action="index.php" method="post" name="DetailView" id="form" onsubmit="return document.getElementById('cant_login').value == ''">
         <div class="companylogo">{$LOGIN_IMAGE}</div>

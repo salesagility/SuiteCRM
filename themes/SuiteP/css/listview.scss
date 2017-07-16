@@ -731,6 +731,10 @@ a.listViewTdToolsS1 {
   margin: 14px 20px 0 0;
 }
 
+#massassign_form h3 span {
+  color: $mass-assign-color;
+}
+
 #massassign_form .button {
   margin-right: 10px;
 }
@@ -747,6 +751,10 @@ a.listViewTdToolsS1 {
 #mass_update_table td {
   padding-left: 15px;
   line-height: 40px;
+}
+
+#mass_update_table.tabForm td {
+  color: $mass-assign-color;
 }
 
 #mass_update_table td select {
@@ -1653,7 +1661,6 @@ label.selected-actions-label {
 }
 
 div.modal-content {
-  width: 450px;
   margin: 0 auto;
   max-width: 100%;
 }
@@ -3017,11 +3024,23 @@ table.subpanel-table li.sugar_action_button {
   border-radius: 4px;
 }
 
+@-moz-document url-prefix() {
+  #selectLinkTop li.sugar_action_button {
+    padding-left: 7px;
+  }
+}
+
 #selectLinkBottom li.sugar_action_button {
   padding: 0px;
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
   border-radius: 4px;
+}
+
+@-moz-document url-prefix() {
+  #selectLinkBottom li.sugar_action_button {
+    padding-left: 7px;
+  }
 }
 
 table.subpanel-table .pagination .sugar_action_button {
@@ -3330,6 +3349,27 @@ ul.clickMenu > li > span.searchAppliedAlert {
   background-repeat: no-repeat;
 }
 
+// list-view-action-buttons
+
+.list-view-action-buttons {
+  margin-right: 5px;
+}
+
+.list-view-action-buttons > li {
+  background-color: transparent;
+  display: inline-block;
+  padding: 0 2px 0 2px;
+}
+
+.list-view-action-buttons > li .btn {
+  background-color: $list-view-action-button-bg;
+  border: 0;
+  color: $default-btn-color;
+  font-size: 13px;
+  margin: 0 0 0 0;
+  padding: 5px 8px 4px 8px;
+}
+
 /* search form (and popup search form) */
 
 .modal-content .search_form .view input[type="text"] {
@@ -3516,10 +3556,6 @@ ul.clickMenu > li > span.searchAppliedAlert {
   display: none;
 }
 
-td.paginationActionButtons ul.selectmenu > li > a.clearSearchIcon {
-  padding: 3px 4px 4px 7px;
-}
-
 .listViewEmpty .clearSearchIcon {
   margin: 3px 0px 0px 8px;
 }
@@ -3532,4 +3568,42 @@ td.paginationActionButtons ul.selectmenu > li > a.clearSearchIcon {
 .filterContainer{
   padding: 10px;
   font-size: 14px;
+}
+
+@media (max-width: $xs-breakpoint) {
+  .list #pagination td .paginationTable .pageNumbers {
+    display: none;
+  }
+
+  .parent-dropdown-handler {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  [name=listViewStartButton] {
+    display: none;
+  }
+
+  [name=listViewEndButton] {
+    display: none;
+  }
+}
+
+@media (max-width: $md-breakpoint) {
+  .selected-actions-label-text {
+    display: none;
+  }
+  .selected-actions-label .glyphicon {
+    display: inline-block;
+  }
+}
+
+@media (min-width: $md-breakpoint) {
+  .selected-actions-label .glyphicon {
+    display: none;
+  }
+
+  .selected-actions-label-text {
+    display: inline-block;
+  }
 }

@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -64,31 +64,6 @@ $mod_strings = array(
     'db_amount' => 'LBL_LIST_AMOUNT',
     'db_date_closed' => 'LBL_LIST_DATE_CLOSED',
     //END DON'T CONVERT
-    'UPDATE' => 'Sale - Currency Update',
-    'UPDATE_DOLLARAMOUNTS' => 'Update U.S. Dollar Amounts',
-    'UPDATE_VERIFY' => 'Verify Amounts',
-    'UPDATE_VERIFY_TXT' => 'Verifies that the amount values in sales are valid decimal numbers with only numeric characters(0-9) and decimals(.)',
-    'UPDATE_FIX' => 'Fix Amounts',
-    'UPDATE_FIX_TXT' => 'Attempts to fix any invalid amounts by creating a valid decimal from the current amount. Any modified amount is backed up in the amount_backup database field. If you run this and notice bugs, do not rerun it without restoring from the backup as it may overwrite the backup with new invalid data.',
-    'UPDATE_DOLLARAMOUNTS_TXT' => 'UPDATE the U.S. Dollar amounts FOR sales based ON the CURRENT SET currency rates. This VALUE IS used TO calculate Graphs AND LIST VIEW Currency Amounts.',
-    'UPDATE_CREATE_CURRENCY' => 'Creating New Currency:',
-    'UPDATE_VERIFY_FAIL' => 'Record Failed Verification:',
-    'UPDATE_VERIFY_CURAMOUNT' => 'Current Amount:',
-    'UPDATE_VERIFY_FIX' => 'Running Fix would give',
-    'UPDATE_INCLUDE_CLOSE' => 'Include Closed Records',
-    'UPDATE_VERIFY_NEWAMOUNT' => 'New Amount:',
-    'UPDATE_VERIFY_NEWCURRENCY' => 'New Currency:',
-    'UPDATE_DONE' => 'Done',
-    'UPDATE_BUG_COUNT' => 'Bugs Found and Attempted to Resolve:',
-    'UPDATE_BUGFOUND_COUNT' => 'Bugs Found:',
-    'UPDATE_COUNT' => 'Records Updated:',
-    'UPDATE_RESTORE_COUNT' => 'Record Amounts Restored:',
-    'UPDATE_RESTORE' => 'Restore Amounts',
-    'UPDATE_RESTORE_TXT' => 'Restores amount values from the backups created during fix.',
-    'UPDATE_FAIL' => 'Could not update - ',
-    'UPDATE_NULL_VALUE' => 'Amount is NULL setting it to 0 -',
-    'UPDATE_MERGE' => 'Merge Currencies',
-    'UPDATE_MERGE_TXT' => 'Merge multiple currencies into a single currency. If there are multiple currency records for the same currency, you merge them together. This will also merge the currencies for all other modules.',
     'LBL_ACCOUNT_NAME' => 'Account Name:',
     'LBL_AMOUNT' => 'Amount:',
     'LBL_AMOUNT_USDOLLAR' => 'Amount USD:',

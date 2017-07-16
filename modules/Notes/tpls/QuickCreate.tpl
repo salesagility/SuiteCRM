@@ -87,15 +87,15 @@
 <td>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-	<th align="left" scope="row" colspan="4"><h4><slot>{$MOD.LBL_NEW_FORM_TITLE}</slot></h4></th>
+	<th align="left" scope="row" colspan="4"><h4><span>{$MOD.LBL_NEW_FORM_TITLE}</span></h4></th>
 	</tr>
 	<tr>
-	<td valign="top" scope="row"><slot>{$MOD.LBL_SUBJECT} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td><slot><textarea name='name' cols="50" tabindex='1' rows="1">{$NAME}</textarea></slot></td>
+	<td valign="top" scope="row"><span>{$MOD.LBL_SUBJECT} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td><span><textarea name='name' cols="50" tabindex='1' rows="1">{$NAME}</textarea></span></td>
 	</tr>
 	<tr>
-	<td valign="top" scope="row"><slot>{$MOD.LBL_NOTE}</slot></td>
-	<td><slot><textarea name='description' tabindex='1' cols="75" rows="6">{$DESCRIPTION}</textarea></slot></td>
+	<td valign="top" scope="row"><span>{$MOD.LBL_NOTE}</span></td>
+	<td><span><textarea name='description' tabindex='1' cols="75" rows="6">{$DESCRIPTION}</textarea></span></td>
 	</tr>
 	</table>
 </td></tr></table>

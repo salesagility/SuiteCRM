@@ -58,10 +58,10 @@
 <td scope="row" valign="top" nowrap="nowrap">{MOD.LBL_USER_NAME}</td>
 <td ><input type="text" size="10" tabindex='2' name="user_name"  value="{USER_NAME}" /></td>
 <td scope="row">
-<slot>{MOD.LBL_GROUP_USER}</slot>
+<span>{MOD.LBL_GROUP_USER}</span>
 </td>
 <td>
-<slot><input name='is_group' class="checkbox" value='1' type="checkbox" tabindex='2' {IS_GROUP}></slot>
+<span><input name='is_group' class="checkbox" value='1' type="checkbox" tabindex='2' {IS_GROUP}></span>
 </td>
 <td rowspan='2' valign="top" align="right">
 <input type="hidden" name="module" value="{MODULE_NAME}" />
@@ -92,7 +92,7 @@
 <td scope="col"  NOWRAP>{CHECKALL}</td>
 <td scope="col" width="50%"  nowrap="nowrap"><a href="{ORDER_BY}last_name" class="listViewThLinkS1">{MOD.LBL_LIST_NAME}{arrow_start}{first_name_arrow}{arrow_end}</a></td>
 <td scope="col" width="50%"  nowrap="nowrap"><a href="{ORDER_BY}user_name" class="listViewThLinkS1" >{MOD.LBL_LIST_USER_NAME}{arrow_start}{user_name_arrow}{arrow_end}</a></td>
-<td scope="col"  NOWRAP><slot><a href="{ORDER_BY}IS_GROUP" class="listViewThLinkS1">{MOD.LBL_LIST_GROUP}{arrow_start}{IS_GROUP_arrow}{arrow_end}</a></slot></td>
+<td scope="col"  NOWRAP><span><a href="{ORDER_BY}IS_GROUP" class="listViewThLinkS1">{MOD.LBL_LIST_GROUP}{arrow_start}{IS_GROUP_arrow}{arrow_end}</a></span></td>
 </tr>
 <!-- BEGIN: row -->
 <tr height="20" class="{ROW_COLOR}S1">

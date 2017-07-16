@@ -287,41 +287,27 @@
                         </li>
                     {/foreach}
                 </ul>
-                {* 7.8 Hide filter menu items when the windows is too small to display them *}
+                {* 7.8 Hide filter menu items when the window is too small to display them *}
             {literal}
                 <script>
                   var windowResize = function() {
+                    // Since the height can be changed in Sass.
+                    // Take a measurement of the initial desktop navigation bar height with just one menu item
+                    $('.desktop-toolbar ul.navbar-nav > li').not('.all').addClass('hidden');
+                    var dth = $('.desktop-toolbar').outerHeight();
 
-                    // only run if the desktop toolbar is in view
-                    if($(window).width() < 1201) { return true; }
-
+                    // Show all desktop menu items
                     $('.desktop-toolbar ul.navbar-nav > li.hidden').removeClass('hidden');
 
-                    var tw = ($(window).width()) - $('.desktop-bar').width() - ($(window).width() * 0.05);
-                    var ti = $('.desktop-toolbar ul.navbar-nav > li');
-                    var tiw = 0;
-
-                    var calcTiw = function() {
-                      var paddingLeft = parseInt( $(this).css('padding-left').replace('px', '') );
-                      var paddingRight = parseInt( $(this).css('padding-right').replace('px', '') );
-                      var marginLeft = parseInt( $(this).css('margin-left').replace('px', '') );
-                      var marginRight = parseInt( $(this).css('margin-right').replace('px', '') );
-                      tiw += $(this).width() + paddingLeft + paddingRight + marginLeft + marginRight;
-                    }
-
-                    ti.each(calcTiw);
-
-                    while (tiw > tw) {
+                    // Remove the each menu item from the end of the toolbar until
+                    // the navigation bar is the matches the initial height.
+                    while($('.desktop-toolbar').outerHeight() > dth) {
                       ti = $('.desktop-toolbar ul.navbar-nav > li').not('.hidden').not('.all');
                       $(ti).last().addClass('hidden');
-                      tiw = 0;
-                      ti.each(calcTiw);
                     }
-
-                    $('.desktop-toolbar ul.navbar-nav > li.all').removeClass('hidden');
                   };
                   $(window).resize(windowResize);
-                  windowResize();
+                  $(document).ready(windowResize);
                 </script>
             {/literal}
             {else}
