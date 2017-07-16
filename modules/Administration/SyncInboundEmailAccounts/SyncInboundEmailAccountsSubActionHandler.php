@@ -198,6 +198,7 @@ class SyncInboundEmailAccountsSubActionHandler
     /**
      * @throws SyncInboundEmailAccountsException
      * @throws SyncInboundEmailAccountsInvalidSubActionArgumentsException
+     * @throws SyncInboundEmailException
      */
     protected function action_Sync() {
 
@@ -330,27 +331,19 @@ class SyncInboundEmailAccountsSubActionHandler
     }
 
     /**
-     * @param $ieId
+     * @param string $ieId
      * @return array
      * @throws SyncInboundEmailAccountsEmptyException
+     * @throws SyncInboundEmailException
      */
     protected function getEmailIdsOfInboundEmail($ieId) {
-        $this->isValidGUID($ieId);
+        if(!isValidId($ieId)) {
+            throw new SyncInboundEmailException("Invalid Inbound Email ID");
+        }
         $query = "SELECT id FROM emails WHERE mailbox_id = '{$ieId}' AND deleted = 0;";
         $emailIds = $this->select($query);
 
         return $emailIds;
-    }
-
-    /**
-     * @param $guid
-     * @return bool
-     */
-    protected function isValidGUID($guid) {
-
-        $valid = is_string($guid) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/', $guid);
-
-        return $valid;
     }
 
     /**

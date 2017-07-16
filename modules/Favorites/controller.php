@@ -68,8 +68,13 @@ class FavoritesController extends SugarController
 
     public function action_check_favorite()
     {
-        $favourite_class = new Favorites();
-        $return = $favourite_class->getFavoriteID($_REQUEST['record_module'], $_REQUEST['record_id']);
+        if(isset($_REQUEST['record_module']) &&  $_REQUEST['record_id']) {
+            $favourite_class = new Favorites();
+            $return = $favourite_class->getFavoriteID($_REQUEST['record_module'], $_REQUEST['record_id']);
+        } else {
+            $return = false;
+        }
+
         echo json_encode($return);
     }
 

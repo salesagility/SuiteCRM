@@ -226,6 +226,10 @@ class SugarFolder
 
         $cleanSubscriptions = array();
 
+        // remove the duplications
+
+        $subs = array_unique($subs);
+
         // ensure parent folders are selected, regardless.
         foreach ($subs as $id) {
             $id = trim($id);
@@ -542,6 +546,7 @@ class SugarFolder
         $myEmailTypeString = 'inbound';
         $myDraftsTypeString = 'draft';
         $mySentEmailTypeString = 'sent';
+        $myArchiveTypeString = 'archived';
 
         if (empty($user)) {
             global $current_user;
@@ -564,7 +569,10 @@ class SugarFolder
 
         $found = array();
         while ($a = $this->db->fetchByAssoc($r)) {
-            if ($a['folder_type'] == $myEmailTypeString) {
+            if (!empty($a['folder_type']) &&
+                $a['folder_type'] !== $myArchiveTypeString &&
+                $a['created_by'] === $current_user->id
+            ) {
                 if (!isset($found[$a['id']])) {
                     $found[$a['id']] = true;
 
@@ -673,11 +681,40 @@ class SugarFolder
             // And empty sugar folder exception is ok in this case.
         }
 
+        $user = $this->removeDeletedFolders($user);
 
         $ret = array(
             'userFolders' => $user,
             'groupFolders' => $grp,
         );
+
+        return $ret;
+    }
+
+    /**
+     * Remove folders of deleted inbounds
+     *
+     * @param array $folders - array of folders table rows
+     * @return array
+     */
+    private function removeDeletedFolders($folders) {
+
+        $ret = array();
+
+        foreach($folders as $folder) {
+            $correct = false;
+            if(!$folder['id']) {
+                $correct = true;
+            }
+            $ie = BeanFactory::getBean('InboundEmail', $folder['id']);
+            if($ie) {
+                $correct = true;
+            }
+
+            if($correct) {
+                $ret[] = $folder;
+            }
+        }
 
         return $ret;
     }
