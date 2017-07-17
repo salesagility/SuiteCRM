@@ -230,8 +230,13 @@ global  $timedate;
 	* All Rights Reserved..
 	* Contributor(s): ______________________________________..
 	*/
-	function  gen_xml($datay=array('foo','bar'), $user_id=array('1'), $cache_file_name='a_file', $refresh=false,$current_module_strings) {
-		global $app_strings, $charset, $lang, $barChartColors,$app_list_strings, $current_user;
+	function  gen_xml($datay=array('foo','bar'), $user_id=array('1'), $cache_file_name='a_file', $refresh=false,$current_module_strings = array()) {
+		global $app_strings, $charset, $lang, $barChartColors,$app_list_strings, $current_user, $current_language;
+
+		// set $current_module_strings to 'Charts' module strings by default
+		if (empty($current_module_strings)) {
+			$current_module_strings = return_module_language($current_language, 'Charts');
+		}
 
 		$kDelim = $current_user->getPreference('num_grp_sep');
 

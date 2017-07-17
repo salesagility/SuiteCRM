@@ -190,6 +190,13 @@ a, a:visited {
 a[href]:after {
     content: " (" attr(href) ")"}
 
+/* Fix issue no.1338 */
+@media print {
+    a[href]:after {
+        content: none !important;
+    }
+}
+
 abbr[title]:after {
     content: " (" attr(title) ")"}
 

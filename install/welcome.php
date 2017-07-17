@@ -328,9 +328,9 @@ function onLangSelect(e) {
 </body>
 </html>
 EOQ;
-if (version_compare(phpversion(),'5.2.2') < 0) {
+if (check_php_version() === -1) {
 	if(empty($mod_strings['LBL_MINIMUM_PHP_VERSION'])){
-		$mod_strings['LBL_MINIMUM_PHP_VERSION'] = 'The minimum PHP version required is 5.2.2.';
+		$mod_strings['LBL_MINIMUM_PHP_VERSION'] = 'The minimum PHP version required is '.constant('SUITECRM_PHP_MIN_VERSION');
 	}
 
 $php_verison_warning =<<<eoq

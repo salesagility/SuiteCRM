@@ -340,7 +340,14 @@ function saveField($field, $id, $module, $value)
             }
         }
 
-        $bean->save($check_notify);
+        if($bean->ACLAccess("edit") || is_admin($current_user)) {
+            if(!$bean->save($check_notify)) {
+                $GLOBALS['log']->fatal("Saving probably failed or bean->save() method did not return with a positive result.");
+            }
+        } else {
+            $GLOBALS['log']->fatal("ACLAccess denied to save this field.");
+        }
+        $bean->retrieve();
         return getDisplayValue($bean, $field);
     } else {
         return false;
@@ -356,8 +363,6 @@ function getDisplayValue($bean, $field, $method = "save")
     } else {
         $metadata = require("modules/Accounts/metadata/listviewdefs.php");
     }
-
-    $listViewDefs = $listViewDefs['Accounts'][strtoupper($field)];
 
     $fieldlist[$field] = $bean->getFieldDefinition($field);
 
@@ -392,7 +397,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
     }
 
     //If field is of type link and name.
-    if ($vardef['link'] && $vardef['type'] == "name" && $_REQUEST['view'] != "DetailView") {
+    if (isset($vardef['link']) && $vardef['link'] && $vardef['type'] == "name" && $_REQUEST['view'] != "DetailView") {
 
         require_once("include/generic/SugarWidgets/SugarWidgetSubPanelDetailViewLink.php");
 

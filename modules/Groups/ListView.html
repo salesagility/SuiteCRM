@@ -48,16 +48,16 @@
 	<!-- END: list_nav_row -->
 	<tr height="20" >
 		<td scope="col" width="12%"  NOWRAP>
-			<slot><a href="{ORDER_BY}user_name" class="listViewThLinkS1">{MOD.LBL_LIST_USER_NAME}{arrow_start}{user_name_arrow}{arrow_end}</a></slot>
+			<span><a href="{ORDER_BY}user_name" class="listViewThLinkS1">{MOD.LBL_LIST_USER_NAME}{arrow_start}{user_name_arrow}{arrow_end}</a></span>
 		</td>
 	</tr>
 
 <!-- BEGIN: row -->
 	<tr height="20"  class="{ROW_COLOR}S1">
 		<td scope="row" valign=TOP >
-			<slot><a href="{URL_PREFIX}index.php?action=DetailView&module=Groups&record={USER.ID}&offset={USER.OFFSET}&stamp={USER.STAMP}" >
+			<span><a href="{URL_PREFIX}index.php?action=DetailView&module=Groups&record={USER.ID}&offset={USER.OFFSET}&stamp={USER.STAMP}" >
 				{USER.USER_NAME}
-			</a></slot>
+			</a></span>
 		</td>
 	</tr>
 	<tr>
