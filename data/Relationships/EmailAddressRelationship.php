@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,12 +34,15 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-require_once("data/Relationships/M2MRelationship.php");
+require_once __DIR__ . 'M2MRelationship.php';
 
 /**
  * Represents a many to many relationship that is table based.
@@ -51,88 +54,97 @@ class EmailAddressRelationship extends M2MRelationship
      * For Email Addresses, there is only a link from the left side, so we need a new add function that ignores rhs
      * @param  $lhs SugarBean left side bean to add to the relationship.
      * @param  $rhs SugarBean right side bean to add to the relationship.
-     * @param  $additionalFields key=>value pairs of fields to save on the relationship
+     * @param  array $additionalFields key=>value pairs of fields to save on the relationship
      * @return boolean true if successful
      */
     public function add($lhs, $rhs, $additionalFields = array())
     {
         $lhsLinkName = $this->lhsLink;
 
-        if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName))
-        {
+        if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName)) {
             $lhsClass = get_class($lhs);
             $GLOBALS['log']->fatal("could not load LHS $lhsLinkName in $lhsClass");
+
             return false;
         }
 
-            if ($lhs->$lhsLinkName->beansAreLoaded())
-                $lhs->$lhsLinkName->addBean($rhs);
+        if ($lhs->$lhsLinkName->beansAreLoaded()) {
+            $lhs->$lhsLinkName->addBean($rhs);
+        }
 
-            $this->callBeforeAdd($lhs, $rhs, $lhsLinkName);
+        $this->callBeforeAdd($lhs, $rhs, $lhsLinkName);
 
         //Many to many has no additional logic, so just add a new row to the table and notify the beans.
         $dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
 
         $this->addRow($dataToInsert);
 
-        if ($this->self_referencing)
+        if ($this->self_referencing) {
             $this->addSelfReferencing($lhs, $rhs, $additionalFields);
+        }
 
-            if ($lhs->$lhsLinkName->beansAreLoaded())
-                $lhs->$lhsLinkName->addBean($rhs);
+        if ($lhs->$lhsLinkName->beansAreLoaded()) {
+            $lhs->$lhsLinkName->addBean($rhs);
+        }
 
-            $this->callAfterAdd($lhs, $rhs, $lhsLinkName);
+        $this->callAfterAdd($lhs, $rhs, $lhsLinkName);
 
         return true;
     }
 
+    /**
+     * @param SugarBean $lhs
+     * @param SugarBean $rhs
+     * @return bool
+     */
     public function remove($lhs, $rhs)
     {
         $lhsLinkName = $this->lhsLink;
 
         if (!($lhs instanceof SugarBean)) {
-            $GLOBALS['log']->fatal("LHS is not a SugarBean object");
-            return false;
-        }
-        if (!($rhs instanceof SugarBean)) {
-            $GLOBALS['log']->fatal("RHS is not a SugarBean object");
-            return false;
-        }
-        if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName))
-        {
-            $GLOBALS['log']->fatal("could not load LHS $lhsLinkName");
-            return false;
-        }
+            $GLOBALS['log']->fatal('LHS is not a SugarBean object');
 
-        if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes")
-        {
-            if (!empty($lhs->$lhsLinkName))
-            {
-                $lhs->$lhsLinkName->load();
-                $this->callBeforeDelete($lhs, $rhs, $lhsLinkName);
+            $ret = false;
+        } else {
+            if (!($rhs instanceof SugarBean)) {
+                $GLOBALS['log']->fatal('RHS is not a SugarBean object');
+
+                $ret = false;
+            } else {
+                if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName)) {
+                    $GLOBALS['log']->fatal("could not load LHS $lhsLinkName");
+
+                    $ret = false;
+                } else {
+
+                    if ((empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != 'Yes') && !empty($lhs->$lhsLinkName)) {
+                            $lhs->$lhsLinkName->load();
+                            $this->callBeforeDelete($lhs, $rhs, $lhsLinkName);
+                    }
+
+                    $dataToRemove = array(
+                        $this->def['join_key_lhs'] => $lhs->id,
+                        $this->def['join_key_rhs'] => $rhs->id
+                    );
+
+                    $this->removeRow($dataToRemove);
+
+                    if ($this->self_referencing) {
+                        $this->removeSelfReferencing($lhs, $rhs);
+                    }
+
+                    if ((empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != 'Yes') && !empty($lhs->$lhsLinkName)) {
+                            $lhs->$lhsLinkName->load();
+                            $this->callAfterDelete($lhs, $rhs, $lhsLinkName);
+                    }
+
+                    $ret = true;
+
+                }
             }
         }
 
-        $dataToRemove = array(
-            $this->def['join_key_lhs'] => $lhs->id,
-            $this->def['join_key_rhs'] => $rhs->id
-        );
-
-        $this->removeRow($dataToRemove);
-
-        if ($this->self_referencing)
-            $this->removeSelfReferencing($lhs, $rhs);
-
-        if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes")
-        {
-            if (!empty($lhs->$lhsLinkName))
-            {
-                $lhs->$lhsLinkName->load();
-                $this->callAfterDelete($lhs, $rhs, $lhsLinkName);
-            }
-        }
-
-        return true;
+        return $ret;
     }
 
     /**
@@ -142,14 +154,15 @@ class EmailAddressRelationship extends M2MRelationship
      * @param bool $ignore_role_filter
      * @return string
      */
-    protected function getRoleWhere($table = "", $ignore_role_filter = false)
+    protected function getRoleWhere($table = '', $ignore_role_filter = false)
     {
         $roleCheck = parent::getRoleWhere($table, $ignore_role_filter);
 
         if ($this->def['relationship_role_column'] == 'primary_address' &&
-            $this->def["relationship_role_column_value"] == '1') {
+            $this->def['relationship_role_column_value'] == '1'
+        ) {
             if (empty($table)) {
-                $roleCheck .= " AND bean_module";
+                $roleCheck .= ' AND bean_module';
             } else {
                 $roleCheck .= " AND $table.bean_module";
             }
