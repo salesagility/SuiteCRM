@@ -1595,7 +1595,6 @@ $app_strings = array(
     'LBL_DIRECT_REPORTS' => 'Direct Reports',
     'LBL_DONE_BUTTON_LABEL' => 'Done',
     'LBL_DONE_BUTTON_TITLE' => 'Done',
-    'LBL_DST_NEEDS_FIXIN' => 'The application requires a Daylight Saving Time fix to be applied.  Please go to the <a href="index.php?module=Administration&action=DstFix">Repair</a> link in the Admin console and apply the Daylight Saving Time fix.',
     'LBL_DST_NEEDS_FIXIN' => 'The application requires a Daylight Saving Time fix to be applied. Please go to the <a href="index.php?module=Administration&action=DstFix">Repair</a> link in the Admin console and apply the Daylight Saving Time fix.',
     'LBL_EDIT_AS_NEW_BUTTON_LABEL' => 'Edit As New',
     'LBL_EDIT_AS_NEW_BUTTON_TITLE' => 'Edit As New',
@@ -2034,7 +2033,6 @@ $app_strings = array(
     //Meta-Data framework
     'ERR_CANNOT_CREATE_METADATA_FILE' => 'Error: File [[file]] is missing.  Unable to create because no corresponding HTML file was found.',
     'ERR_MISSING_VARDEF_NAME' => 'Warning: field [[field]] does not have a mapped entry in [moduleDir] vardefs.php file',
-    'ERR_CANNOT_CREATE_METADATA_FILE' => 'Error: File [[file]] is missing. Unable to create because no corresponding HTML file was found.',
     'ERR_CANNOT_FIND_MODULE' => 'Error: Module [module] does not exist.',
     'LBL_ALT_ADDRESS' => 'Other Address:',
     'ERR_SMARTY_UNEQUAL_RELATED_FIELD_PARAMETERS' => 'Error: There are an unequal number of arguments for the \'key\' and \'copy\' elements in the displayParams array.',

@@ -101,7 +101,7 @@ $mod_strings = array (
 	'LNK_NEW_PROJECT_TASK'	=> 'Create Project Task',
 	'LNK_PROJECT_TASK_LIST'	=> 'Project Tasks',
 
-	'LBL_LIST_Y_PROJECT_TASKS' => 'My Project Tasks',
+	'LBL_LIST_MY_PROJECT_TASKS' => 'My Project Tasks',
 	'LBL_DEFAULT_SUBPANEL_TITLE' => 'Project Tasks',
 	'LBL_NEW_FORM_TITLE' => 'New Project Task',
 
