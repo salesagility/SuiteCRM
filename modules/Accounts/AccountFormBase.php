@@ -447,7 +447,10 @@ function handleSave($prefix,$redirect=true, $useRequired=false){
 				foreach($focus->field_defs as $name=>$field) {	
 					if (!empty($field['source']) && $field['source'] == 'custom_fields')
 					{
-						$get .= "&Accounts$name=".urlencode($focus->$name);
+						if(!isset($focus->$name)) {
+							$GLOBALS['log']->warn("Undefined property: " . get_class($focus) . "::$name");
+						}
+						$get .= "&Accounts$name=".urlencode(isset($focus->$name) ? $focus->$name : null);
 					}			    
 				}
 			}
