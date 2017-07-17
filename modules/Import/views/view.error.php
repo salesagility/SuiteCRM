@@ -57,9 +57,15 @@ class ImportViewError extends SugarView
         )
     {
         global $mod_strings, $current_language;
-        
-        if ( empty($module) )
-            $module = $_REQUEST['import_module'];
+
+        if ( empty($module) ) {
+            if(isset($_REQUEST['import_module']) && $_REQUEST['impoert_module']) {
+                $module = $_REQUEST['import_module'];
+            } else {
+                $module = null;
+                $GLOBALS['log']->warn("requested import_module is not defined for menu");
+            }
+        }
         
         $old_mod_strings = $mod_strings;
         $mod_strings = return_module_language($current_language, $module);
@@ -75,17 +81,23 @@ class ImportViewError extends SugarView
  	protected function _getModuleTab()
     {
         global $app_list_strings, $moduleTabMap;
-        
+
  		// Need to figure out what tab this module belongs to, most modules have their own tabs, but there are exceptions.
         if ( !empty($_REQUEST['module_tab']) )
             return $_REQUEST['module_tab'];
-        elseif ( isset($moduleTabMap[$_REQUEST['import_module']]) )
+        elseif ( isset($_REQUEST['import_module']) && $_REQUEST['impoert_module'] && isset($moduleTabMap[$_REQUEST['import_module']]) )
             return $moduleTabMap[$_REQUEST['import_module']];
         // Default anonymous pages to be under Home
-        elseif ( !isset($app_list_strings['moduleList'][$_REQUEST['import_module']]) )
+        elseif ( isset($_REQUEST['import_module']) && $_REQUEST['impoert_module'] && !isset($app_list_strings['moduleList'][$_REQUEST['import_module']]) )
             return 'Home';
-        else
+        elseif (isset($_REQUEST['import_module']) && $_REQUEST['impoert_module']) {
             return $_REQUEST['import_module'];
+        } else {
+            if(!isset($_REQUEST['import_module'])) {
+                $GLOBALS['log']->warn("requested import_module is not defined for module tab");
+            }
+            return null;
+        }
  	}
  	
  	/** 
@@ -93,7 +105,7 @@ class ImportViewError extends SugarView
      */
  	public function display()
     {
-        $this->ss->assign("IMPORT_MODULE", $_REQUEST['import_module']);
+        $this->ss->assign("IMPORT_MODULE", isset($_REQUEST['import_module']) && $_REQUEST['impoert_module'] ? $_REQUEST['import_module'] : null);
         $this->ss->assign("ACTION", 'Step1');
         $this->ss->assign("MESSAGE",$_REQUEST['message']);
         $this->ss->assign("SOURCE","");
