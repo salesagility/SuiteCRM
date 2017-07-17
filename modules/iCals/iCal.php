@@ -214,6 +214,12 @@ class iCal extends vCal {
             $taskAsVTODO = false;
         }
 
+        $showCompleted = true;
+        if (!empty($_REQUEST['show_completed']) && ($_REQUEST['show_completed'] == "0"  || $_REQUEST['show_completed'] == "false"))
+        {
+            $showCompleted = false;
+        }
+
         $activityList = array(
             "Meetings" => array(
                 "showCompleted" => true,
@@ -237,7 +243,8 @@ class iCal extends vCal {
             $start_date_time,
             $end_date_time,
             'month',
-            !$hide_calls);
+            !$hide_calls,
+            $showCompleted);
 
 
         // loop thru each activity, get start/end time in UTC, and return iCal strings
