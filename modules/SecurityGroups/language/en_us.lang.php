@@ -50,10 +50,8 @@ $mod_strings = array (
   'LBL_DATE_ENTERED' => 'Date Created',
   'LBL_DATE_MODIFIED' => 'Date Modified',
   'LBL_MODIFIED' => 'Modified By',
-  'LBL_MODIFIED_ID' => 'Modified By Id',
   'LBL_MODIFIED_NAME' => 'Modified By Name',
   'LBL_CREATED' => 'Created By',
-  'LBL_CREATED_ID' => 'Created By Id',
   'LBL_DESCRIPTION' => 'Description',
   'LBL_DELETED' => 'Deleted',
   'LBL_NONINHERITABLE' => 'Not Inheritable',
@@ -112,19 +110,12 @@ $mod_strings = array (
   'LBL_SECURITYGROUP_USER_FORM_TITLE' => 'SecurityGroup/User',
   'LBL_USER_NAME' => 'User Name',
   'LBL_SECURITYGROUP_NAME' => 'SecurityGroup Name',
-  'LBL_LIST_USER_NONINHERITABLE' => 'Not Inheritable',
   'LBL_HOMEPAGE_TITLE' => 'Group Messages',
   'LBL_TITLE' => 'Title',
   'LBL_ROWS' => 'Rows',
-  'LBL_MAKE_POST' => 'Make a Post',
   'LBL_POST' => 'Post',
-  'LBL_SELECT_GROUP' => 'Select a Group',
   'LBL_SELECT_GROUP_ERROR' => 'Please select a group and try again.',
-  
-  'LBL_HOOKUP_SELECT' => "Select a module",
-  'LBL_HOOKUP_CONFIRM_PART1' => "You are about to add a relationship between Security Groups and ",
-  'LBL_HOOKUP_CONFIRM_PART2' => ". Continue?",
-  
+
   'LBL_GROUP_SELECT' => 'Select which groups should have access to this record',
   'LBL_ERROR_DUPLICATE' => 'Due to a possible duplicate detected by SuiteCRM you will have to manually add Security Groups to your newly created record.',
 
