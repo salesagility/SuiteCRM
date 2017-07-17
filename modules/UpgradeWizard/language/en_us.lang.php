@@ -200,7 +200,6 @@ $mod_strings = array(
 	'LBL_UW_START_UPGRADED_UW_DESC'				=> 'The new Upgrade Wizard will now resume the upgrade process. Please continue your upgrade.',
 	'LBL_UW_START_UPGRADED_UW_TITLE'			=> 'Welcome to the new Upgrade Wizard',
 
-	'LBL_UW_SYSTEM_CHECK_CHECKING'				=> 'Now checking, please wait.  This could take up to 30 seconds.',
 	'LBL_UW_SYSTEM_CHECK_CHECKING'				=> 'Now checking, please wait. This could take up to 30 seconds.',
 	'LBL_UW_SYSTEM_CHECK_FILE_CHECK_START'		=> 'Finding all pertinent files to check.',
 	'LBL_UW_SYSTEM_CHECK_FILES'					=> 'Files',
