@@ -110,7 +110,12 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
     } // if
     $temp = explode("_", $_REQUEST['id'], 2);
     if (is_array($temp)) {
-        $image_field = $temp[1];
+        if(isset($temp[1])) {
+            $image_field = $temp[1];
+        } else {
+            $image_field = null;
+            $GLOBALS['log']->warn('Incorrect format in a requested ID');
+        }
         $image_id = $temp[0];
     }
     if (isset($_REQUEST['ieId']) && isset($_REQUEST['isTempFile'])) {
