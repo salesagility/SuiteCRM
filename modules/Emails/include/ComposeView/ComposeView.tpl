@@ -45,11 +45,12 @@
 <form class="compose-view" id="ComposeView" name="ComposeView" method="POST" action="index.php?module=Emails&action=send">
     <input type="hidden" name="module" value="Emails">
     <input type="hidden" name="action" value="send">
-    <input type="hidden" name="record" value="">
+    <input type="hidden" name="record" value="{$RECORD}">
     <input type="hidden" name="type" value="out">
     <input type="hidden" name="send" value="1">
     <input type="hidden" name="return_module" value="{$RETURN_MODULE}">
     <input type="hidden" name="return_action" value="{$RETURN_ACTION}">
+    <input type="hidden" name="return_id" value="{$RETURN_ID}">
     <input type="hidden" name="inbound_email_id" value="{$INBOUND_ID}">
 <div id="EditView_tabs">
     {*display tabs*}
@@ -195,7 +196,8 @@
     </div>
 {{sugar_include type='smarty' file=$footerTpl}}
 
-{if $RETURN_MODULE}
+{if !$IS_MODAL}
+
     {literal}
 
         <script type="text/javascript">

@@ -721,8 +721,10 @@ SE.accounts = {
         document.getElementById('mailbox').value = o.mailbox;
 
 
-        $('#account_signature_id').html($('#signature_id').html());
-        $('#account_signature_id').val(o.email_signatures);
+      if(typeof o.email_account_signatures !== "undefined") {
+        jQuery('#account_signature_id').replaceWith(o.email_account_signatures);
+      }
+      $('#account_signature_id').val(o.email_signatures);
 
         var i = 0;
 
@@ -1020,6 +1022,7 @@ SE.accounts = {
         SUGAR.showMessageBox(app_strings.LBL_EMAIL_SETTINGS_RETRIEVING_ACCOUNT, app_strings.LBL_EMAIL_ONE_MOMENT);
 		var query = "&emailUIAction=getIeAccount&ieId=" + ieId;
 
+        console.log(urlStandard + query);
         AjaxObject.startRequest(callbackIeAccountRetrieve, urlStandard + query);
     },
 
@@ -3382,7 +3385,6 @@ SE.settings = {
 
         SE.settings.settingsDialog.hide();
     },
-
     /**
      * Shows settings container screen
      */

@@ -130,6 +130,12 @@ $viewdefs['Emails']['ComposeView'] = array(
                     'label' => 'LBL_BODY',
                 )
             ),
+            array(
+                array(
+                    'name' => 'is_only_plain_text',
+                    'label' => 'LBL_SEND_IN_PLAIN_TEXT'
+                )
+            )
         )
     )
 
