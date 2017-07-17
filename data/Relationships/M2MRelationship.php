@@ -54,32 +54,32 @@ class M2MRelationship extends SugarRelationship
 {
 
     /**
-     * @var array|bool
+     * @var array|bool $lhsLinkDef
      */
     public $lhsLinkDef;
 
     /**
-     * @var array|bool
+     * @var array|bool $rhsLinkDef
      */
     public $rhsLinkDef;
 
     /**
-     * @var array|string
+     * @var array|string $relationship_role_column
      */
     public $relationship_role_column;
 
     /**
-     * @var array|string
+     * @var array|string $relationship_role_column_value
      */
     public $relationship_role_column_value;
 
     /**
-     * @var string
+     * @var string $join_key_lhs
      */
     public $join_key_lhs;
 
     /**
-     * @var string
+     * @var string $join_key_rhs
      */
     public $join_key_rhs;
 
