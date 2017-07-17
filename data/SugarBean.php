@@ -211,7 +211,7 @@ class SugarBean
     public $field_defs;
 
     /**
-     * @var array $custom_fields
+     * @var DynamicField $custom_fields
      */
     public $custom_fields;
 

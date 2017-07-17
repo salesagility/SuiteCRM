@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,23 +34,64 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-require_once("data/Relationships/SugarRelationship.php");
+require_once __DIR__ . 'SugarRelationship.php';
 
 /**
  * Represents a many to many relationship that is table based.
+ * @property array|string relationship_role_column
+ * @property array|string relationship_role_column_value
  * @api
  */
 class M2MRelationship extends SugarRelationship
 {
-    var $type = "many-to-many";
 
+    /**
+     * @var array|bool
+     */
+    public $lhsLinkDef;
+
+    /**
+     * @var array|bool
+     */
+    public $rhsLinkDef;
+
+    /**
+     * @var array|string
+     */
+    public $relationship_role_column;
+
+    /**
+     * @var array|string
+     */
+    public $relationship_role_column_value;
+
+    /**
+     * @var string
+     */
+    public $join_key_lhs;
+
+    /**
+     * @var string
+     */
+    public $join_key_rhs;
+
+
+
+    /**
+     * M2MRelationship constructor.
+     * @param $def
+     */
     public function __construct($def)
     {
+        $this->type = 'many-to-many';
         $this->def = $def;
         $this->name = $def['name'];
 
@@ -77,22 +118,20 @@ class M2MRelationship extends SugarRelationship
      */
     public function getLinkedDefForModuleByRelationship($module)
     {
-        $results = VardefManager::getLinkFieldForRelationship( $module, BeanFactory::getObjectName($module), $this->name);
+        $results = VardefManager::getLinkFieldForRelationship($module, BeanFactory::getObjectName($module),
+            $this->name);
         //Only a single link was found
-        if( isset($results['name']) )
-        {
+        if (isset($results['name'])) {
             return $results;
         }
         //Multiple links with same relationship name
-        else if( is_array($results) )
-        {
+        if (is_array($results)) {
             $GLOBALS['log']->error("Warning: Multiple links found for relationship {$this->name} within module {$module}");
+
             return $this->getMostAppropriateLinkedDefinition($results);
         }
-        else
-        {
-            return FALSE;
-        }
+
+        return false;
     }
 
     /**
@@ -105,103 +144,115 @@ class M2MRelationship extends SugarRelationship
     protected function getMostAppropriateLinkedDefinition($links)
     {
         //First priority is to find a link name that matches the relationship name
-        foreach($links as $link)
-        {
-            if( isset($link['name']) && $link['name'] == $this->name )
-            {
+        /** @var array $links */
+        foreach ($links as $link) {
+            if (isset($link['name']) && $link['name'] == $this->name) {
                 return $link;
             }
         }
         //Next would be a relationship that has a side defined
-        foreach($links as $link)
-        {
-            if( isset($link['id_name']))
-            {
+        foreach ($links as $link) {
+            if (isset($link['id_name'])) {
                 return $link;
             }
         }
         //Unable to find an appropriate link, guess and use the first one
         $GLOBALS['log']->error("Unable to determine best appropriate link for relationship {$this->name}");
+
         return $links[0];
     }
+
     /**
      * @param  $lhs SugarBean left side bean to add to the relationship.
      * @param  $rhs SugarBean right side bean to add to the relationship.
-     * @param  $additionalFields key=>value pairs of fields to save on the relationship
+     * @param  array $additionalFields key=>value pairs of fields to save on the relationship
      * @return boolean true if successful
      */
     public function add($lhs, $rhs, $additionalFields = array())
     {
         $lhsLinkName = $this->lhsLink;
         $rhsLinkName = $this->rhsLink;
-        
-    	/* BEGIN - SECURITY GROUPS */
-    	//Need to hijack this as security groups will not contain a link on the module side
-    	//due to the way the module works. Plus it would remove the relative ease of adding custom module support
-    	
-    	if(get_class($rhs) != 'User' && get_class($rhs) != 'ACLRole' && get_class($lhs) == 'SecurityGroup') {
-			$rhs->$rhsLinkName->addBean($lhs);			
-			$this->callBeforeAdd($rhs, $lhs, $rhsLinkName);
-
-			$dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
-			$this->addRow($dataToInsert);
-    		$rhs->$rhsLinkName->addBean($lhs);
-    		$this->callAfterAdd($lhs, $rhs, $lhsLinkName);
-    	} else if(get_class($lhs) != 'User' && get_class($lhs) != 'ACLRole' && get_class($rhs) == 'SecurityGroup') {
-			$lhs->$lhsLinkName->addBean($rhs);			
-			$this->callBeforeAdd($lhs, $rhs, $lhsLinkName);
-
-			$dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
-			$this->addRow($dataToInsert);
-    		$lhs->$lhsLinkName->addBean($rhs);
-    		$this->callAfterAdd($rhs, $lhs, $rhsLinkName);
-    	} else {
-    	/* END - SECURITY GROUPS */
-
-        if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName))
-        {
-            $lhsClass = get_class($lhs);
-            $GLOBALS['log']->fatal("could not load LHS $lhsLinkName in $lhsClass");
-            return false;
-        }
-        if (empty($rhs->$rhsLinkName) && !$rhs->load_relationship($rhsLinkName))
-        {
-            $rhsClass = get_class($rhs);
-            $GLOBALS['log']->fatal("could not load RHS $rhsLinkName in $rhsClass");
-            return false;
-        }
-
-            $lhs->$lhsLinkName->addBean($rhs);
-            $rhs->$rhsLinkName->addBean($lhs);
-
-            $this->callBeforeAdd($lhs, $rhs, $lhsLinkName);
-            $this->callBeforeAdd($rhs, $lhs, $rhsLinkName);
-
-        //Many to many has no additional logic, so just add a new row to the table and notify the beans.
-        $dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
-
-        $this->addRow($dataToInsert);
-
-        if ($this->self_referencing)
-            $this->addSelfReferencing($lhs, $rhs, $additionalFields);
-
-            $lhs->$lhsLinkName->addBean($rhs);
-            $rhs->$rhsLinkName->addBean($lhs);
-
-            $this->callAfterAdd($lhs, $rhs, $lhsLinkName);
-            $this->callAfterAdd($rhs, $lhs, $rhsLinkName);
 
         /* BEGIN - SECURITY GROUPS */
-        } //end normal 
+        //Need to hijack this as security groups will not contain a link on the module side
+        //due to the way the module works. Plus it would remove the relative ease of adding custom module support
+
+        $rhsClass = get_class($rhs);
+        $lhsClass = get_class($lhs);
+
+        if ($rhsClass != 'User' && $rhsClass != 'ACLRole' && $lhsClass == 'SecurityGroup') {
+            $rhs->$rhsLinkName->addBean($lhs);
+            $this->callBeforeAdd($rhs, $lhs, $rhsLinkName);
+
+            $dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
+            $this->addRow($dataToInsert);
+            $rhs->$rhsLinkName->addBean($lhs);
+            $this->callAfterAdd($lhs, $rhs, $lhsLinkName);
+        } else {
+
+            if ($lhsClass != 'User' && $lhsClass != 'ACLRole' && $rhsClass == 'SecurityGroup') {
+                $lhs->$lhsLinkName->addBean($rhs);
+                $this->callBeforeAdd($lhs, $rhs, $lhsLinkName);
+
+                $dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
+                $this->addRow($dataToInsert);
+                $lhs->$lhsLinkName->addBean($rhs);
+                $this->callAfterAdd($rhs, $lhs, $rhsLinkName);
+            } else {
+                /* END - SECURITY GROUPS */
+
+                if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName)) {
+                    $lhsClass = get_class($lhs);
+                    $GLOBALS['log']->fatal("could not load LHS $lhsLinkName in $lhsClass");
+
+                    return false;
+                }
+                if (empty($rhs->$rhsLinkName) && !$rhs->load_relationship($rhsLinkName)) {
+                    $rhsClass = get_class($rhs);
+                    $GLOBALS['log']->fatal("could not load RHS $rhsLinkName in $rhsClass");
+
+                    return false;
+                }
+
+                $lhs->$lhsLinkName->addBean($rhs);
+                $rhs->$rhsLinkName->addBean($lhs);
+
+                $this->callBeforeAdd($lhs, $rhs, $lhsLinkName);
+                $this->callBeforeAdd($rhs, $lhs, $rhsLinkName);
+
+                //Many to many has no additional logic, so just add a new row to the table and notify the beans.
+                $dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
+
+                $this->addRow($dataToInsert);
+
+                if ($this->self_referencing) {
+                    $this->addSelfReferencing($lhs, $rhs, $additionalFields);
+                }
+
+                $lhs->$lhsLinkName->addBean($rhs);
+                $rhs->$rhsLinkName->addBean($lhs);
+
+                $this->callAfterAdd($lhs, $rhs, $lhsLinkName);
+                $this->callAfterAdd($rhs, $lhs, $rhsLinkName);
+
+                /* BEGIN - SECURITY GROUPS */
+            }
+        } //end normal
         /* END - SECURITY GROUPS */
 
         return true;
     }
 
-    protected function getRowToInsert($lhs, $rhs, $additionalFields = array())
+    /**
+     * @param $lhs
+     * @param $rhs
+     * @param array $additionalFields
+     * @return array
+     */
+    protected function getRowToInsert($lhs, $rhs, array $additionalFields = array())
     {
         $row = array(
-            "id" => create_guid(),
+            'id' => create_guid(),
             $this->def['join_key_lhs'] => $lhs->id,
             $this->def['join_key_rhs'] => $rhs->id,
             'date_modified' => TimeDate::getInstance()->nowDb(),
@@ -209,23 +260,26 @@ class M2MRelationship extends SugarRelationship
         );
 
 
-        if (!empty($this->def['relationship_role_column']) && !empty($this->def['relationship_role_column_value']) && !$this->ignore_role_filter )
-        {
+        if (
+            !$this->ignore_role_filter &&
+            !empty($this->def['relationship_role_column']) &&
+            !empty($this->def['relationship_role_column_value'])
+        ) {
             $row[$this->relationship_role_column] = $this->relationship_role_column_value;
         }
 
-        if (!empty($this->def['fields']))
-        {
-            foreach($this->def['fields'] as $fieldDef)
-            {
-                if (!empty($fieldDef['name']) && !isset($row[$fieldDef['name']]) && !empty($fieldDef['default']))
-                {
+        if (!empty($this->def['fields'])) {
+            foreach ((array)$this->def['fields'] as $fieldDef) {
+                if (
+                    !empty($fieldDef['name']) &&
+                    !empty($fieldDef['default']) &&
+                    !isset($row[$fieldDef['name']])
+                ) {
                     $row[$fieldDef['name']] = $fieldDef['default'];
                 }
             }
         }
-        if (!empty($additionalFields))
-        {
+        if (!empty($additionalFields)) {
             $row = array_merge($row, $additionalFields);
         }
 
@@ -239,128 +293,126 @@ class M2MRelationship extends SugarRelationship
      * @param array $additionalFields
      * @return void
      */
-    protected function addSelfReferencing($lhs, $rhs, $additionalFields = array())
+    protected function addSelfReferencing($lhs, $rhs, array $additionalFields = array())
     {
-        if ($rhs->id != $lhs->id)
-        {
+        if ($rhs->id != $lhs->id) {
             $dataToInsert = $this->getRowToInsert($rhs, $lhs, $additionalFields);
             $this->addRow($dataToInsert);
         }
     }
 
+
+    /**
+     * @param  $lhs SugarBean
+     * @param  $rhs SugarBean
+     *
+     * @return bool
+     */
     public function remove($lhs, $rhs)
     {
-        if(!($lhs instanceof SugarBean) || !($rhs instanceof SugarBean)) {
-            $GLOBALS['log']->fatal("LHS and RHS must be beans");
+        if (!($lhs instanceof SugarBean) || !($rhs instanceof SugarBean)) {
+            $GLOBALS['log']->fatal('LHS and RHS must be beans');
+
             return false;
         }
         $lhsLinkName = $this->lhsLink;
         $rhsLinkName = $this->rhsLink;
 
         if (!($lhs instanceof SugarBean)) {
-            $GLOBALS['log']->fatal("LHS is not a SugarBean object");
+            $GLOBALS['log']->fatal('LHS is not a SugarBean object');
+
             return false;
         }
         if (!($rhs instanceof SugarBean)) {
-            $GLOBALS['log']->fatal("RHS is not a SugarBean object");
-            return false;
-        }
-        
-    	/* BEGIN - SECURITY GROUPS */
-    	//Need to hijack this as security groups will not contain a link on the module side
-    	//due to the way the module works. Plus it would remove the relative ease of adding custom module support
-    	
-    	if(get_class($lhs) == 'SecurityGroup' || get_class($rhs) == 'SecurityGroup') {
-			$dataToRemove = array(
-				$this->def['join_key_lhs'] => $lhs->id,
-				$this->def['join_key_rhs'] => $rhs->id
-			);
+            $GLOBALS['log']->fatal('RHS is not a SugarBean object');
 
-
-              if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes")
-              {
-                  if (get_class($lhs) != 'SecurityGroup' && $lhs->$lhsLinkName instanceof Link2)
-                  {
-                      $lhs->$lhsLinkName->load();
-                      $this->callBeforeDelete($lhs, $rhs, $lhsLinkName);
-                  }
-
-                  if (get_class($rhs) != 'SecurityGroup' && $rhs->$rhsLinkName instanceof Link2)
-                  {
-                      $rhs->$rhsLinkName->load();
-                      $this->callBeforeDelete($rhs, $lhs, $rhsLinkName);
-                  }
-              }
-
-			$this->removeRow($dataToRemove);
-			
-			if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes")
-			{
-				if (get_class($lhs) != 'SecurityGroup' && $lhs->$lhsLinkName instanceof Link2)
-				{
-					$lhs->$lhsLinkName->load();
-					$this->callAfterDelete($lhs, $rhs, $lhsLinkName);
-				}
-
-				if (get_class($rhs) != 'SecurityGroup' && $rhs->$rhsLinkName instanceof Link2)
-				{
-					$rhs->$rhsLinkName->load();
-					$this->callAfterDelete($rhs, $lhs, $rhsLinkName);
-				}
-			}
-		} else {
-    	/* END - SECURITY GROUPS */        
-        if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName))
-        {
-            $GLOBALS['log']->fatal("could not load LHS $lhsLinkName");
-            return false;
-        }
-        if (empty($rhs->$rhsLinkName) && !$rhs->load_relationship($rhsLinkName))
-        {
-            $GLOBALS['log']->fatal("could not load RHS $rhsLinkName");
             return false;
         }
 
-        if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes")
-        {
-            if ($lhs->$lhsLinkName instanceof Link2)
-            {
-                $lhs->$lhsLinkName->load();
-                $this->callBeforeDelete($lhs, $rhs, $lhsLinkName);
-            }
-
-            if ($rhs->$rhsLinkName instanceof Link2)
-            {
-                $rhs->$rhsLinkName->load();
-                $this->callBeforeDelete($rhs, $lhs, $rhsLinkName);
-            }
-        }
-
-        $dataToRemove = array(
-            $this->def['join_key_lhs'] => $lhs->id,
-            $this->def['join_key_rhs'] => $rhs->id
-        );
-
-        $this->removeRow($dataToRemove);
-
-        if ($this->self_referencing)
-            $this->removeSelfReferencing($lhs, $rhs);
-
-        if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes")
-        {
-            if ($lhs->$lhsLinkName instanceof Link2)
-            {
-                $lhs->$lhsLinkName->load();
-                $this->callAfterDelete($lhs, $rhs, $lhsLinkName);
-            }
-
-            if ($rhs->$rhsLinkName instanceof Link2)
-            {
-                $rhs->$rhsLinkName->load();
-                $this->callAfterDelete($rhs, $lhs, $rhsLinkName);
-            }
-        }
         /* BEGIN - SECURITY GROUPS */
+        //Need to hijack this as security groups will not contain a link on the module side
+        //due to the way the module works. Plus it would remove the relative ease of adding custom module support
+
+        if (get_class($lhs) == 'SecurityGroup' || get_class($rhs) == 'SecurityGroup') {
+            $dataToRemove = array(
+                $this->def['join_key_lhs'] => $lhs->id,
+                $this->def['join_key_rhs'] => $rhs->id
+            );
+
+
+            if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != 'Yes') {
+                if ($lhs->$lhsLinkName instanceof Link2 && get_class($lhs) != 'SecurityGroup') {
+                    $lhs->$lhsLinkName->load();
+                    $this->callBeforeDelete($lhs, $rhs, $lhsLinkName);
+                }
+
+                if ($rhs->$rhsLinkName instanceof Link2 && get_class($rhs) != 'SecurityGroup') {
+                    $rhs->$rhsLinkName->load();
+                    $this->callBeforeDelete($rhs, $lhs, $rhsLinkName);
+                }
+            }
+
+            $this->removeRow($dataToRemove);
+
+            if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != 'Yes') {
+                if ($lhs->$lhsLinkName instanceof Link2 && get_class($lhs) != 'SecurityGroup') {
+                    $lhs->$lhsLinkName->load();
+                    $this->callAfterDelete($lhs, $rhs, $lhsLinkName);
+                }
+
+                if ($rhs->$rhsLinkName instanceof Link2 && get_class($rhs) != 'SecurityGroup') {
+                    $rhs->$rhsLinkName->load();
+                    $this->callAfterDelete($rhs, $lhs, $rhsLinkName);
+                }
+            }
+        } else {
+            /* END - SECURITY GROUPS */
+            if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName)) {
+                $GLOBALS['log']->fatal("could not load LHS $lhsLinkName");
+
+                return false;
+            }
+            if (empty($rhs->$rhsLinkName) && !$rhs->load_relationship($rhsLinkName)) {
+                $GLOBALS['log']->fatal("could not load RHS $rhsLinkName");
+
+                return false;
+            }
+
+            if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != 'Yes') {
+                if ($lhs->$lhsLinkName instanceof Link2) {
+                    $lhs->$lhsLinkName->load();
+                    $this->callBeforeDelete($lhs, $rhs, $lhsLinkName);
+                }
+
+                if ($rhs->$rhsLinkName instanceof Link2) {
+                    $rhs->$rhsLinkName->load();
+                    $this->callBeforeDelete($rhs, $lhs, $rhsLinkName);
+                }
+            }
+
+            $dataToRemove = array(
+                $this->def['join_key_lhs'] => $lhs->id,
+                $this->def['join_key_rhs'] => $rhs->id
+            );
+
+            $this->removeRow($dataToRemove);
+
+            if ($this->self_referencing) {
+                $this->removeSelfReferencing($lhs, $rhs);
+            }
+
+            if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != 'Yes') {
+                if ($lhs->$lhsLinkName instanceof Link2) {
+                    $lhs->$lhsLinkName->load();
+                    $this->callAfterDelete($lhs, $rhs, $lhsLinkName);
+                }
+
+                if ($rhs->$rhsLinkName instanceof Link2) {
+                    $rhs->$rhsLinkName->load();
+                    $this->callAfterDelete($rhs, $lhs, $rhsLinkName);
+                }
+            }
+            /* BEGIN - SECURITY GROUPS */
         } //end normal 
         /* END - SECURITY GROUPS */
 
@@ -371,13 +423,12 @@ class M2MRelationship extends SugarRelationship
      * Removes the reversed version of this relationship
      * @param $lhs
      * @param $rhs
-     * @param array $additionalFields
      * @return void
+     * @internal param array $additionalFields
      */
-    protected function removeSelfReferencing($lhs, $rhs, $additionalFields = array())
+    protected function removeSelfReferencing($lhs, $rhs)
     {
-        if ($rhs->id != $lhs->id)
-        {
+        if ($rhs->id != $lhs->id) {
             $dataToRemove = array(
                 $this->def['join_key_lhs'] => $rhs->id,
                 $this->def['join_key_rhs'] => $lhs->id
@@ -388,7 +439,8 @@ class M2MRelationship extends SugarRelationship
 
     /**
      * @param  $link Link2 loads the relationship for this link.
-     * @return void
+     * @param array $params
+     * @return array
      */
     public function load($link, $params = array())
     {
@@ -397,36 +449,54 @@ class M2MRelationship extends SugarRelationship
         $result = $db->query($query);
         $rows = Array();
         $idField = $link->getSide() == REL_LHS ? $this->def['join_key_rhs'] : $this->def['join_key_lhs'];
-        while ($row = $db->fetchByAssoc($result, FALSE))
-        {
-            if (empty($row['id']) && empty($row[$idField]))
+        while ($row = $db->fetchByAssoc($result, false)) {
+            if (empty($row['id']) && empty($row[$idField])) {
                 continue;
+            }
             $id = empty($row['id']) ? $row[$idField] : $row['id'];
             $rows[$id] = $row;
         }
-        return array("rows" => $rows);
+
+        return array('rows' => $rows);
     }
 
-    protected function linkIsLHS($link) {
+    /**
+     * @param Link2 $link
+     * @return bool
+     */
+    protected function linkIsLHS($link)
+    {
         return $link->getSide() == REL_LHS;
     }
 
+    /**
+     * Gets the query to load a link.
+     * This is currently public, but should prob be made protected later.
+     * See Link2->getQuery.
+     *
+     * @abstract
+     *
+     * @param  $link Link2 Object to get query for.
+     * @param array $params
+     *
+     * @return array|string query used to load this relationship
+     */
     public function getQuery($link, $params = array())
     {
         if ($this->linkIsLHS($link)) {
             $knownKey = $this->def['join_key_lhs'];
             $targetKey = $this->def['join_key_rhs'];
             $relatedSeed = BeanFactory::getBean($this->getRHSModule());
-            $relatedSeedKey = $this->def['rhs_key'];
-            if (!empty($params['where']) || !empty($params['order_by']))
+            if (!empty($params['where']) || !empty($params['order_by'])) {
                 $whereTable = (empty($params['right_join_table_alias']) ? $relatedSeed->table_name : $params['right_join_table_alias']);
+            }
         } else {
             $knownKey = $this->def['join_key_rhs'];
             $targetKey = $this->def['join_key_lhs'];
             $relatedSeed = BeanFactory::getBean($this->getLHSModule());
-            $relatedSeedKey = $this->def['lhs_key'];
-            if (!empty($params['where']) || !empty($params['order_by']))
+            if (!empty($params['where']) || !empty($params['order_by'])) {
                 $whereTable = (empty($params['left_join_table_alias']) ? $relatedSeed->table_name : $params['left_join_table_alias']);
+            }
         }
         $rel_table = $this->getRelationshipTable();
 
@@ -435,9 +505,14 @@ class M2MRelationship extends SugarRelationship
 
         //Add any optional where clause
         if (!empty($params['where'])) {
+            /** @var string $whereTable */
+            if (null === $whereTable) {
+                $whereTable = '';
+            }
             $add_where = is_string($params['where']) ? $params['where'] : "$whereTable." . $this->getOptionalWhereClause($params['where']);
-            if (!empty($add_where))
+            if (!empty($add_where)) {
                 $where .= " AND $add_where";
+            }
         }
 
         //Add any optional order clauses
@@ -446,10 +521,11 @@ class M2MRelationship extends SugarRelationship
         }
 
         $deleted = !empty($params['deleted']) ? 1 : 0;
-        $from = $rel_table . " ";
+        $from = $rel_table . ' ';
         if (!empty($params['where']) || !empty($params['order_by'])) {
+            /** @var string $whereTable */
             $from .= ", $whereTable";
-            if (isset($relatedSeed->custom_fields)) {
+            if (null !== $relatedSeed->custom_fields) {
                 $customJoin = $relatedSeed->custom_fields->getJOIN();
                 $from .= $customJoin ? $customJoin['join'] : '';
             }
@@ -457,24 +533,38 @@ class M2MRelationship extends SugarRelationship
         }
 
         if (empty($params['return_as_array'])) {
-            $query = "SELECT $targetKey id FROM $from WHERE $where AND $rel_table.deleted=$deleted";
-            if(!empty($order_by)) $query .= ' ORDER BY '.$order_by;
+            $query = /** @lang text */
+                "SELECT $targetKey id FROM $from WHERE $where AND $rel_table.deleted=$deleted";
+            if (!empty($order_by)) {
+                $query .= ' ORDER BY ' . $order_by;
+            }
             //Limit is not compatible with return_as_array
             if (!empty($params['limit']) && $params['limit'] > 0) {
                 $offset = isset($params['offset']) ? $params['offset'] : 0;
-                $query = DBManagerFactory::getInstance()->limitQuery($query, $offset, $params['limit'], false, "", false);
+                $query = DBManagerFactory::getInstance()->limitQuery($query, $offset, $params['limit'], false, '',
+                    false);
             }
+
             return $query;
-        } else {
-            return array(
-                'select' => "SELECT $targetKey id",
-                'from' => "FROM $from",
-                'where' => "WHERE $where AND $rel_table.deleted=$deleted",
-                'order_by' => $order_by
-            );
         }
+
+        return array(
+            'select' => "SELECT $targetKey id",
+            'from' => "FROM $from",
+            'where' => "WHERE $where AND $rel_table.deleted=$deleted",
+            'order_by' => $order_by
+        );
     }
 
+    /**
+     * @abstract
+     *
+     * @param Link2 $link
+     * @param array $params
+     * @param bool  $return_array
+     *
+     * @return array|string the query to join against the related modules table for the given link.
+     */
     public function getJoin($link, $params = array(), $return_array = false)
     {
         $linkIsLHS = $link->getSide() == REL_LHS;
@@ -492,35 +582,33 @@ class M2MRelationship extends SugarRelationship
         $targetTable = $linkIsLHS ? $this->def['rhs_table'] : $this->def['lhs_table'];
         $targetTableWithAlias = $targetTable;
         $targetKey = $linkIsLHS ? $this->def['rhs_key'] : $this->def['lhs_key'];
-        $join_type= isset($params['join_type']) ? $params['join_type'] : ' INNER JOIN ';
+        $join_type = isset($params['join_type']) ? $params['join_type'] : ' INNER JOIN ';
 
         $join = '';
 
         //Set up any table aliases required
-        if (!empty($params['join_table_link_alias']))
-        {
-            $joinTableWithAlias = $joinTable . " ". $params['join_table_link_alias'];
+        if (!empty($params['join_table_link_alias'])) {
+            $joinTableWithAlias = $joinTable . ' ' . $params['join_table_link_alias'];
             $joinTable = $params['join_table_link_alias'];
         }
-        if ( ! empty($params['join_table_alias']))
-        {
-            $targetTableWithAlias = $targetTable . " ". $params['join_table_alias'];
+        if (!empty($params['join_table_alias'])) {
+            $targetTableWithAlias = $targetTable . ' ' . $params['join_table_alias'];
             $targetTable = $params['join_table_alias'];
         }
 
         $join1 = "$startingTable.$startingKey=$joinTable.$startingJoinKey";
         $join2 = "$targetTable.$targetKey=$joinTable.$joinKey";
-        $where = "";
+        $where = '';
 
 
         //First join the relationship table
         $join .= "$join_type $joinTableWithAlias ON $join1 AND $joinTable.deleted=0\n"
-        //Next add any role filters
-               . $this->getRoleWhere($joinTable) . "\n"
-        //Then finally join the related module's table
-               . "$join_type $targetTableWithAlias ON $join2 AND $targetTable.deleted=0\n";
+            //Next add any role filters
+            . $this->getRoleWhere($joinTable) . "\n"
+            //Then finally join the related module's table
+            . "$join_type $targetTableWithAlias ON $join2 AND $targetTable.deleted=0\n";
 
-        if($return_array){
+        if ($return_array) {
             return array(
                 'join' => $join,
                 'type' => $this->type,
@@ -530,35 +618,35 @@ class M2MRelationship extends SugarRelationship
                 'select' => "$targetTable.id",
             );
         }
+
         return $join . $where;
     }
 
     /**
      * Similar to getQuery or Get join, except this time we are starting from the related table and
      * searching for items with id's matching the $link->focus->id
-     * @param  $link
+     * @param Link2 $link
      * @param array $params
      * @param bool $return_array
-     * @return String|Array
+     * @return String|array
      */
-    public function getSubpanelQuery($link, $params = array(), $return_array = false)
+    public function getSubpanelQuery($link, array $params = array(), $return_array = false)
     {
         $targetIsLHS = $link->getSide() == REL_RHS;
-        $startingTable = $targetIsLHS ? $this->def['lhs_table'] : $this->def['rhs_table'];;
+        $startingTable = $targetIsLHS ? $this->def['lhs_table'] : $this->def['rhs_table'];
         $startingKey = $targetIsLHS ? $this->def['lhs_key'] : $this->def['rhs_key'];
         $startingJoinKey = $targetIsLHS ? $this->def['join_key_lhs'] : $this->def['join_key_rhs'];
         $joinTable = $this->getRelationshipTable();
         $joinTableWithAlias = $joinTable;
         $joinKey = $targetIsLHS ? $this->def['join_key_rhs'] : $this->def['join_key_lhs'];
         $targetKey = $targetIsLHS ? $this->def['rhs_key'] : $this->def['lhs_key'];
-        $join_type= isset($params['join_type']) ? $params['join_type'] : ' INNER JOIN ';
+        $join_type = isset($params['join_type']) ? $params['join_type'] : ' INNER JOIN ';
 
         $query = '';
 
         //Set up any table aliases required
-        if (!empty($params['join_table_link_alias']))
-        {
-            $joinTableWithAlias = $joinTable . " ". $params['join_table_link_alias'];
+        if (!empty($params['join_table_link_alias'])) {
+            $joinTableWithAlias = $joinTable . ' ' . $params['join_table_link_alias'];
             $joinTable = $params['join_table_link_alias'];
         }
 
@@ -569,41 +657,44 @@ class M2MRelationship extends SugarRelationship
 
         //First join the relationship table
         $query .= "$join_type $joinTableWithAlias ON $where AND $joinTable.deleted=0\n"
-        //Next add any role filters
-               . $this->getRoleWhere($joinTable, $ignoreRole) . "\n";
+            //Next add any role filters
+            . $this->getRoleWhere($joinTable, $ignoreRole) . "\n";
 
         if (!empty($params['return_as_array'])) {
             $return_array = true;
         }
-        if($return_array){
+        if ($return_array) {
             return array(
                 'join' => $query,
                 'type' => $this->type,
                 'rel_key' => $joinKey,
                 'join_tables' => array($joinTable),
-                'where' => "",
-                'select' => " ",
+                'where' => '',
+                'select' => ' ',
             );
         }
+
         return $query;
 
     }
 
+    /**
+     * @return string
+     */
     protected function getRoleFilterForJoin()
     {
-        $ret = "";
-        if (!empty($this->relationship_role_column) && !$this->ignore_role_filter)
-        {
-            $ret .= " AND ".$this->getRelationshipTable().'.'.$this->relationship_role_column;
+        $ret = '';
+        if (!empty($this->relationship_role_column) && !$this->ignore_role_filter) {
+            $ret .= ' AND ' . $this->getRelationshipTable() . '.' . $this->relationship_role_column;
             //role column value.
-            if (empty($this->relationship_role_column_value))
-            {
-                $ret.=' IS NULL';
+            if (empty($this->relationship_role_column_value)) {
+                $ret .= ' IS NULL';
             } else {
-                $ret.= "='".$this->relationship_role_column_value."'";
+                $ret .= "='" . $this->relationship_role_column_value . "'";
             }
-            $ret.= "\n";
+            $ret .= "\n";
         }
+
         return $ret;
     }
 
@@ -617,52 +708,62 @@ class M2MRelationship extends SugarRelationship
         $query = "SELECT id FROM {$this->getRelationshipTable()} WHERE {$this->join_key_lhs} = '{$lhs->id}' AND {$this->join_key_rhs} = '{$rhs->id}'";
 
         //Roles can allow for multiple links between two records with different roles
-        $query .= $this->getRoleWhere() . " and deleted = 0";
+        $query .= $this->getRoleWhere() . ' and deleted = 0';
 
         return $GLOBALS['db']->getOne($query);
     }
 
     /**
-     * @return Array - set of fields that uniquely identify an entry in this relationship
+     * @return array - set of fields that uniquely identify an entry in this relationship
      */
     protected function getAlternateKeyFields()
     {
         $fields = array($this->join_key_lhs, $this->join_key_rhs);
 
         //Roles can allow for multiple links between two records with different roles
-        if (!empty($this->def['relationship_role_column']) && !$this->ignore_role_filter)
-        {
+        if (!$this->ignore_role_filter && !empty($this->def['relationship_role_column'])) {
             $fields[] = $this->relationship_role_column;
         }
 
         return $fields;
     }
 
+    /**
+     * @abstract
+     *
+     * @return string name of the table for this relationship
+     */
     public function getRelationshipTable()
     {
-        if (!empty($this->def['table']))
+        if (!empty($this->def['table'])) {
             return $this->def['table'];
-        else if(!empty($this->def['join_table']))
+        }
+
+        if (!empty($this->def['join_table'])) {
             return $this->def['join_table'];
+        }
 
         return false;
     }
 
+    /**
+     * @return array names of fields stored on the relationship
+     */
     public function getFields()
     {
-        if (!empty($this->def['fields']))
+        if (!empty($this->def['fields'])) {
             return $this->def['fields'];
+        }
         $fields = array(
-            "id" => array('name' => 'id'),
+            'id' => array('name' => 'id'),
             'date_modified' => array('name' => 'date_modified'),
             'modified_user_id' => array('name' => 'modified_user_id'),
             'created_by' => array('name' => 'created_by'),
             $this->def['join_key_lhs'] => array('name' => $this->def['join_key_lhs']),
             $this->def['join_key_rhs'] => array('name' => $this->def['join_key_rhs'])
         );
-        if (!empty($this->def['relationship_role_column']))
-        {
-            $fields[$this->def['relationship_role_column']] = array("name" => $this->def['relationship_role_column']);
+        if (!empty($this->def['relationship_role_column'])) {
+            $fields[$this->def['relationship_role_column']] = array('name' => $this->def['relationship_role_column']);
         }
         $fields['deleted'] = array('name' => 'deleted');
 
