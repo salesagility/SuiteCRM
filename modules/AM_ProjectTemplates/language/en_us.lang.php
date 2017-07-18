@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array(
     'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
@@ -93,11 +98,7 @@ $mod_strings = array(
     'LBL_VIEW_GANTT_DURATION' => 'Duration',
     'LBL_TASK_TITLE' => 'Edit Task',
     'LBL_PREDECESSOR_TITLE' => 'Edit Predecessor',
-    'LBL_START_DATE_TITLE' => 'Select Start Date',
-    'LBL_END_DATE_TITLE' => 'Select End Date',
     'LBL_DURATION_TITLE' => 'Edit Duration',
-    'LBL_PERCENTAGE_COMPLETE_TITLE' => 'Edit % Complete',
-    'LBL_ACTUAL_DURATION_TITLE' => 'Edit Actual Duration',
     'LBL_DESCRIPTION' => 'Notes',
     'LBL_ASSIGNED_USER_ID' => 'Assigned To:',
 
@@ -125,7 +126,6 @@ $mod_strings = array(
 	'LBL_TOOLTIP_TITLE' => 'Hint',
 	'LBL_TOOLTIP_TEXT' => 'Copies All tasks with assigned users',
 
-	
 	'LBL_EMAIL' => 'Email',
 	'LBL_PHONE' => 'Phone Office:',
 	'LBL_ADD_BUTTON'=> 'Add',
@@ -142,6 +142,7 @@ $mod_strings = array(
 	'LBL_SCHEDULING_FORM_TITLE' => 'Resource List',
 	'LBL_NONE' => 'None',
 
+	'LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_PROJECT_TITLE' => 'Project Templates Project from Project Title',
 	'LBL_AOS_PRODUCTS_AM_PROJECTTEMPLATES_1_FROM_AM_PROJECTTEMPLATES_TITLE' => 'Product: Project Templates from Project Templates Title',
 	'LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_PROJECT_TITLE' => 'Project Templates: Project from Project Title',
 

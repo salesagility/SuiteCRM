@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,17 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array (
   'LBL_STEP_1' => 'Step 1: Select Module and Template',
@@ -67,15 +63,12 @@ $mod_strings = array (
   'LBL_DOC_VERSION' => 'Revision:',
   'LBL_DOC_DESCRIPTION'=>'Description:',
   'LBL_LIST_NAME' => 'Name',
-  'LBL_LIST_RELATIONSHIP' => 'Set Contact Relationship',
   'LBL_FINISH' => 'Begin Merge',
   'LBL_NEXT' => 'Next >',
   'LBL_BACK' => '< Back',
   'LBL_START' => 'Click Here to Continue',
-  'LBL_TEMPLATE_NOTICE' => 'Templates are Microsoft Word documents containing merge fields that have been uploaded and stored in the Documents module.',
   'LBL_CONTAINS_CONTACT_INFO' => 'Selected template contains related ',
   'LBL_ADDIN_NOTICE' => 'This requires the installation of SuiteCRM Mail Merge add-in to Microsoft Word.',
-  'LBL_BROWSER_NOTICE' => 'You must be running IE 6.0 or greater to perform the actual merge.',
   'LBL_REMOVE' => 'Remove Item(s)' /*for 508 compliance fix*/,
   'LBL_ADD' => 'Add Item(s)' /*for 508 compliance fix*/,
   'LBL_BROWSER_REQUIREMENT' => 'This requires IE 6.0 or greater for Windows.',

@@ -44,6 +44,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once 'include/MVC/View/views/view.popup.php';
 
-class EmailsViewPopup extends ViewPopup {
+class EmailsViewPopup extends ViewPopup
+{
+    /**
+     * @var Email $bean
+     */
+    public $bean;
 
 }
