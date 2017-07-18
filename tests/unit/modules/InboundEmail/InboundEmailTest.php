@@ -1809,7 +1809,7 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
         //execute the method and test if it works and does not throws an exception.
         try {
-            $result = $inboundEmail->importOneEmail('1', '1');
+            $result = $inboundEmail->returnImportedEmail('1', '1');
             $this->assertEquals(false, $result);
         } catch (Exception $e) {
             $this->fail();

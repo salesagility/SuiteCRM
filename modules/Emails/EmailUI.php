@@ -52,6 +52,7 @@ if (!defined('sugarEntry') || !sugarEntry){
 require_once("include/ytree/Tree.php");
 require_once("include/ytree/ExtNode.php");
 require_once("include/SugarFolders/SugarFolders.php");
+require_once 'include/Exceptions/SuiteException.php';
 
 
 
@@ -233,7 +234,8 @@ class EmailUI {
 		$prependSignature = ($current_user->getPreference('signature_prepend')) ? 'true' : 'false';
 		$defsigID = $current_user->getPreference('signature_default');
 		$this->smarty->assign('signatures', $current_user->getSignatures(false, $defsigID));
-		$this->smarty->assign('signaturesSettings', $current_user->getSignatures(false, $defsigID, false));
+		$this->smarty->assign('signaturesSettings', $current_user->getSignatures(false, $defsigID, false, 'signature_id'));
+		$this->smarty->assign('signaturesAccountSettings', $current_user->getEmailAccountSignatures(false, $defsigID, false, 'account_signature_id'));
 		$signatureButtons = $current_user->getSignatureButtons('SUGAR.email2.settings.createSignature', !empty($defsigID));
 		if (!empty($defsigID)) {
 			$signatureButtons = $signatureButtons . '<span name="delete_sig" id="delete_sig" style="visibility:inherit;"><input class="button" onclick="javascript:SUGAR.email2.settings.deleteSignature();" value="'.$app_strings['LBL_EMAIL_DELETE'].'" type="button" tabindex="392">&nbsp;
@@ -382,6 +384,8 @@ eoq;
     {
         global $focus;
         $myBean = $focus;
+
+		$emailLink = '';
 
         if(!empty($bean)) {
             $myBean = $bean;

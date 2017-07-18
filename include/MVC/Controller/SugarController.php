@@ -171,8 +171,9 @@ class SugarController
     /**
      * This can be set from the application to tell us whether we have authorization to
      * process the action. If this is set we will default to the noaccess view.
+     * @var bool
      */
-    public $hasAccess = true;
+    public $hasAccess;
 
     /**
      * Map case sensitive filenames to action.  This is used for linux/unix systems
@@ -190,6 +191,7 @@ class SugarController
      */
     public function __construct()
     {
+        $this->hasAccess = true;
     }
 
     /**

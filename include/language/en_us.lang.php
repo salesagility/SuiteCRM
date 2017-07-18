@@ -1,14 +1,11 @@
 <?php
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -19,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -37,16 +34,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 //the left value is the key stored in the db and the right value is ie display value
 //to translate, only modify the right value in each key/value pair
@@ -77,7 +71,6 @@ $app_list_strings = array(
             'Feeds' => 'RSS',
             'iFrames' => 'My Sites',
             'TimePeriods' => 'Time Periods',
-            'TaxRates' => 'Tax Rates',
             'ContractTypes' => 'Contract Types',
             'Schedulers' => 'Schedulers',
             'Project' => 'Projects',
@@ -100,12 +93,10 @@ $app_list_strings = array(
             'Queues' => 'Queues',
             'EmailMarketing' => 'Email Marketing',
             'EmailTemplates' => 'Email Templates',
-            'SNIP' => 'Email Archiving',
             'ProspectLists' => 'Target Lists',
             'SavedSearch' => 'Saved Searches',
             'UpgradeWizard' => 'Upgrade Wizard',
             'Trackers' => 'Trackers',
-            'TrackerPerfs' => 'Tracker Performance',
             'TrackerSessions' => 'Tracker Sessions',
             'TrackerQueries' => 'Tracker Queries',
             'FAQ' => 'FAQ',
@@ -143,7 +134,6 @@ $app_list_strings = array(
             'Prospects' => 'Target',
             'Campaigns' => 'Campaign',
             'Documents' => 'Document',
-            'SugarFollowing' => 'SuiteCRM Following',
             'Sync' => 'Sync',
             'Users' => 'User',
             'SugarFavorites' => 'SuiteCRM Favorites',
@@ -261,10 +251,6 @@ $app_list_strings = array(
             'Net 15' => 'Net 15',
             'Net 30' => 'Net 30',
         ),
-    'fts_type' => array(
-        '' => '',
-        'Elastic' => 'elasticsearch',
-    ),
     'sales_stage_default_key' => 'Prospecting',
     'sales_stage_dom' => array(
             'Prospecting' => 'Prospecting',
@@ -933,13 +919,6 @@ $app_list_strings = array(
         'required' => 'Required',
     ),
 
-    'Elastic_boost_options' => array(
-        '0' => 'Disabled',
-        '1' => 'Low Boost',
-        '2' => 'Medium Boost',
-        '3' => 'High Boost',
-    ),
-
     'custom_fields_merge_dup_dom' => array(
         0 => 'Disabled',
         1 => 'Enabled',
@@ -966,7 +945,6 @@ $app_list_strings = array(
         'expandlegend' => 'Expand Legend',
         'collapselegend' => 'Collapse Legend',
         'clickfordrilldown' => 'Click for Drilldown',
-        'drilldownoptions' => 'Drill Down Options',
         'detailview' => 'More Details...',
         'piechart' => 'Pie Chart',
         'groupchart' => 'Group Chart',
@@ -1061,10 +1039,6 @@ $app_strings = array(
     'LBL_TOUR_BACK' => 'Back',
     'LBL_TOUR_CLOSE' => 'Close',
     'LBL_TOUR_TAKE_TOUR' => 'Take the tour',
-    'LBL_MY_AREA_LINKS' => 'My area links: ' /*for 508 compliance fix*/,
-    'LBL_GETTINGAIR' => 'Getting Air' /*for 508 compliance fix*/,
-    'LBL_WELCOMEBAR' => 'Welcome' /*for 508 compliance fix*/,
-    'LBL_ADVANCEDSEARCH' => 'Advanced Search' /*for 508 compliance fix*/,
     'LBL_MOREDETAIL' => 'More Detail' /*for 508 compliance fix*/,
     'LBL_EDIT_INLINE' => 'Edit Inline' /*for 508 compliance fix*/,
     'LBL_VIEW_INLINE' => 'View' /*for 508 compliance fix*/,
@@ -1072,22 +1046,20 @@ $app_strings = array(
     'LBL_PROJECT_MINUS' => 'Remove' /*for 508 compliance fix*/,
     'LBL_PROJECT_PLUS' => 'Add' /*for 508 compliance fix*/,
     'LBL_Blank' => ' ' /*for 508 compliance fix*/,
-    'LBL_ICON_COLUMN_1' => 'Column' /*for 508 compliance fix*/,
-    'LBL_ICON_COLUMN_2' => '2 Columns' /*for 508 compliance fix*/,
-    'LBL_ICON_COLUMN_3' => '3 Columns' /*for 508 compliance fix*/,
     'LBL_ID_FF_ADD' => 'Add' /*for 508 compliance fix*/,
+    'LBL_ID_FF_ADD_EMAIL' => 'Add Email Address' /*for 508 compliance fix*/,
     'LBL_HIDE_SHOW' => 'Hide/Show' /*for 508 compliance fix*/,
     'LBL_DELETE_INLINE' => 'Delete' /*for 508 compliance fix*/,
     'LBL_PLUS_INLINE' => 'Add' /*for 508 compliance fix*/,
     'LBL_ID_FF_CLEAR' => 'Clear' /*for 508 compliance fix*/,
     'LBL_ID_FF_VCARD' => 'vCard' /*for 508 compliance fix*/,
     'LBL_ID_FF_REMOVE' => 'Remove' /*for 508 compliance fix*/,
+    'LBL_ID_FF_REMOVE_EMAIL' => 'Remove Email Address' /*for 508 compliance fix*/,
+    'LBL_ID_FF_OPT_OUT' => 'Opt Out',
+    'LBL_ID_FF_INVALID' => 'Make Invalid',
     'LBL_ADD' => 'Add' /*for 508 compliance fix*/,
     'LBL_COMPANY_LOGO' => 'Company logo' /*for 508 compliance fix*/,
     'LBL_JS_CALENDAR' => 'Calendar' /*for 508 compliance fix*/,
-    'LBL_ADVANCED' => 'Advanced',
-    'LBL_BASIC' => 'BASIC',
-    'LBL_MODULE_FILTER' => 'Filter By',
     'LBL_CONNECTORS_POPUPS' => 'Connectors Popups',
     'LBL_CLOSEINLINE' => 'Close',
     'LBL_EDITINLINE' => 'Edit',
@@ -1104,57 +1076,12 @@ $app_strings = array(
     'LBL_NO_ACTION' => 'There is no action by that name: %s',
     'LBL_NO_SHORTCUT_MENU' => 'There are no actions available.',
     'LBL_NO_DATA' => 'No Data',
-    'LBL_ROUTING_ADD_RULE' => 'Add Rule',
-    'LBL_ROUTING_ALL' => 'At Least',
-    'LBL_ROUTING_ANY' => 'Any',
-    'LBL_ROUTING_BREAK' => '-',
-    'LBL_ROUTING_BUTTON_CANCEL' => 'Cancel',
-    'LBL_ROUTING_BUTTON_SAVE' => 'Save Rule',
-
-    'LBL_ROUTING_ACTIONS_COPY_MAIL' => 'Copy Mail',
-    'LBL_ROUTING_ACTIONS_DELETE_BEAN' => 'Delete SuiteCRM Object',
-    'LBL_ROUTING_ACTIONS_DELETE_FILE' => 'Delete File',
-    'LBL_ROUTING_ACTIONS_DELETE_MAIL' => 'Delete Email',
-    'LBL_ROUTING_ACTIONS_FORWARD' => 'Forward Email',
-    'LBL_ROUTING_ACTIONS_MARK_FLAGGED' => 'Flag Email',
-    'LBL_ROUTING_ACTIONS_MARK_READ' => 'Mark Read',
-    'LBL_ROUTING_ACTIONS_MARK_UNREAD' => 'Mark Unread',
-    'LBL_ROUTING_ACTIONS_MOVE_MAIL' => 'Move Email',
-    'LBL_ROUTING_ACTIONS_PEFORM' => 'Perform the following actions',
-    'LBL_ROUTING_ACTIONS_REPLY' => 'Reply to Email',
-
-    'LBL_ROUTING_CHECK_RULE' => 'An error was detected:\n',
-    'LBL_ROUTING_CHECK_RULE_DESC' => 'Please verify all fields that are marked.',
-    'LBL_ROUTING_CONFIRM_DELETE' => 'Are you sure you want to delete this rule?\nThis cannot be undone.',
 
     'LBL_ROUTING_FLAGGED' => 'flag set',
-    'LBL_ROUTING_FORM_DESC' => 'Saved Rules are immediately active.',
-    'LBL_ROUTING_FW' => 'FW: ',
-    'LBL_ROUTING_LIST_TITLE' => 'Rules',
-    'LBL_ROUTING_MATCH' => 'If',
-    'LBL_ROUTING_MATCH_2' => 'of the following conditions are met:',
-    'LBL_NOTIFICATIONS' => 'Notifications',
-    'LBL_ROUTING_MATCH_CC_ADDR' => 'CC',
-    'LBL_ROUTING_MATCH_DESCRIPTION' => 'Body Content',
-    'LBL_ROUTING_MATCH_FROM_ADDR' => 'From',
-    'LBL_ROUTING_MATCH_NAME' => 'Subject',
-    'LBL_ROUTING_MATCH_PRIORITY_HIGH' => 'High Priority',
-    'LBL_ROUTING_MATCH_PRIORITY_NORMAL' => 'Normal Priority',
-    'LBL_ROUTING_MATCH_PRIORITY_LOW' => 'Low Priority',
-    'LBL_ROUTING_MATCH_TO_ADDR' => 'To',
-    'LBL_ROUTING_MATCH_TYPE_MATCH' => 'Contains',
-    'LBL_ROUTING_MATCH_TYPE_NOT_MATCH' => 'Does not contain',
-
-    'LBL_ROUTING_NAME' => 'Rule Name',
-    'LBL_ROUTING_NEW_NAME' => 'New Rule',
-    'LBL_ROUTING_ONE_MOMENT' => 'One moment please...',
-    'LBL_ROUTING_ORIGINAL_MESSAGE_FOLLOWS' => 'Original message follows.',
-    'LBL_ROUTING_RE' => 'RE: ',
-    'LBL_ROUTING_SAVING_RULE' => 'Saving Rule',
-    'LBL_ROUTING_SUB_DESC' => 'Checked rules are active. Click name to edit.',
     'LBL_ROUTING_TO' => 'to',
     'LBL_ROUTING_TO_ADDRESS' => 'to address',
     'LBL_ROUTING_WITH_TEMPLATE' => 'with template',
+
     'NTC_OVERWRITE_ADDRESS_PHONE_CONFIRM' => 'This record currently contains values in the Office Phone and Address fields. To overwrite these values with the following Office Phone and Address of the Account that you selected, click "OK". To keep the current values, click "Cancel".',
     'LBL_DROP_HERE' => '[Drop Here]',
     'LBL_EMAIL_ACCOUNTS_EDIT' => 'Edit',
@@ -1214,7 +1141,6 @@ $app_strings = array(
     'LBL_EMAIL_ATTACHMENTS3' => 'Template Attachments',
     'LBL_EMAIL_ATTACHMENTS_FILE' => 'File',
     'LBL_EMAIL_ATTACHMENTS_DOCUMENT' => 'Document',
-    'LBL_EMAIL_ATTACHMENTS_EMBEDED' => 'Embeded',
     'LBL_EMAIL_BCC' => 'BCC',
     'LBL_EMAIL_CANCEL' => 'Cancel',
     'LBL_EMAIL_CC' => 'CC',
@@ -1458,7 +1384,6 @@ $app_strings = array(
     'LBL_EMAIL_SETTINGS_ADD_ACCOUNT' => 'Clear Form',
     'LBL_EMAIL_SETTINGS_AUTO_IMPORT' => 'Import Email Upon View',
     'LBL_EMAIL_SETTINGS_CHECK_INTERVAL' => 'Check for New Mail',
-    'LBL_EMAIL_SETTINGS_COMPOSE_INLINE' => 'Use Preview Pane',
     'LBL_EMAIL_SETTINGS_COMPOSE_POPUP' => 'Use Popup Window',
     'LBL_EMAIL_SETTINGS_DISPLAY_NUM' => 'Number emails per page',
     'LBL_EMAIL_SETTINGS_EDIT_ACCOUNT' => 'Edit Mail Account',
@@ -1500,6 +1425,7 @@ $app_strings = array(
     'LBL_EMAIL_INVALID_SYSTEM_OUTBOUND' => 'An outgoing mail server is not configured to send emails. Please configure an outgoing mail server or select an outgoing mail server for the mail account that you are using in Settings >> Mail Account.',
     'LBL_EMAIL_SHOW_READ' => 'Show All',
     'LBL_EMAIL_SHOW_UNREAD_ONLY' => 'Show Unread Only',
+    'LBL_DEFAULT_EMAIL_SIGNATURES' => 'Default Signature',
     'LBL_EMAIL_SIGNATURES' => 'Signatures',
     'LBL_EMAIL_SIGNATURE_CREATE' => 'Create Signature',
     'LBL_EMAIL_SIGNATURE_NAME' => 'Signature Name',
@@ -1521,7 +1447,6 @@ $app_strings = array(
     'LBL_EMAIL_TEXT_LAST' => 'Last Page',
     'LBL_EMAIL_TEXT_REFRESH' => 'Refresh',
     'LBL_EMAIL_TO' => 'To',
-    'LBL_EMAIL_TOGGLE_LIST' => 'Toggle List',
     'LBL_EMAIL_VIEW' => 'View',
     'LBL_EMAIL_VIEWS' => 'Views',
     'LBL_EMAIL_VIEW_HEADERS' => 'Display Headers',
@@ -1541,7 +1466,6 @@ $app_strings = array(
     'LBL_LINK_RECORDS' => 'Records',
     'LBL_LINK_SELECT' => 'Select',
     'LBL_LINK_ACTIONS' => 'ACTIONS',
-    'LBL_LINK_MORE' => 'More',
     'LBL_CLOSE_ACTIVITY_HEADER' => 'Confirm',
     'LBL_CLOSE_ACTIVITY_CONFIRM' => 'Do you want to close this #module#?',
     'LBL_CLOSE_ACTIVITY_REMEMBER' => 'Do not display this message in the future: &nbsp;',
@@ -1594,13 +1518,11 @@ $app_strings = array(
     'ERR_DB_VERSION' => 'SuiteCRM {0} Files May Only Be Used With A SuiteCRM {1} Database.',
 
     'LBL_ACCOUNT' => 'Account',
-    'LBL_OLD_ACCOUNT_LINK' => 'Old Account',
     'LBL_ACCOUNTS' => 'Accounts',
     'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
     'LBL_ACCUMULATED_HISTORY_BUTTON_KEY' => 'H',
     'LBL_ACCUMULATED_HISTORY_BUTTON_LABEL' => 'View Summary',
     'LBL_ACCUMULATED_HISTORY_BUTTON_TITLE' => 'View Summary',
-    'LBL_ADD_BUTTON_KEY' => 'A',
     'LBL_ADD_BUTTON_TITLE' => 'Add',
     'LBL_ADD_BUTTON' => 'Add',
     'LBL_ADD_DOCUMENT' => 'Add Document',
@@ -1631,21 +1553,17 @@ $app_strings = array(
     'LBL_SUBMIT_BUTTON_LABEL' => 'Submit',
     'LBL_CASE' => 'Case',
     'LBL_CASES' => 'Cases',
-    'LBL_CHANGE_BUTTON_KEY' => 'G',
     'LBL_CHANGE_PASSWORD' => 'Change password',
     'LBL_CHANGE_BUTTON_LABEL' => 'Change',
     'LBL_CHANGE_BUTTON_TITLE' => 'Change',
     'LBL_CHARSET' => 'UTF-8',
     'LBL_CHECKALL' => 'Check All',
     'LBL_CITY' => 'City',
-    'LBL_CLEAR_BUTTON_KEY' => 'C',
     'LBL_CLEAR_BUTTON_LABEL' => 'Clear',
     'LBL_CLEAR_BUTTON_TITLE' => 'Clear',
     'LBL_CLEARALL' => 'Clear All',
     'LBL_CLOSE_BUTTON_TITLE' => 'Close',
-    'LBL_CLOSE_BUTTON_KEY' => 'Q',
     'LBL_CLOSE_WINDOW' => 'Close Window',
-    'LBL_CLOSEALL_BUTTON_KEY' => 'Q',
     'LBL_CLOSEALL_BUTTON_LABEL' => 'Close All',
     'LBL_CLOSEALL_BUTTON_TITLE' => 'Close All',
     'LBL_CLOSE_AND_CREATE_BUTTON_LABEL' => 'Close and Create New',
@@ -1679,28 +1597,23 @@ $app_strings = array(
     'LBL_DELETE' => 'Delete',
     'LBL_DELETED' => 'Deleted',
     'LBL_DIRECT_REPORTS' => 'Direct Reports',
-    'LBL_DONE_BUTTON_KEY' => 'X',
     'LBL_DONE_BUTTON_LABEL' => 'Done',
     'LBL_DONE_BUTTON_TITLE' => 'Done',
     'LBL_DST_NEEDS_FIXIN' => 'The application requires a Daylight Saving Time fix to be applied. Please go to the <a href="index.php?module=Administration&action=DstFix">Repair</a> link in the Admin console and apply the Daylight Saving Time fix.',
     'LBL_EDIT_AS_NEW_BUTTON_LABEL' => 'Edit As New',
     'LBL_EDIT_AS_NEW_BUTTON_TITLE' => 'Edit As New',
     'LBL_FAVORITES' => 'Favorites',
-    'LBL_FILTER_MENU_BY' => 'Filter Menu By',
     'LBL_VCARD' => 'vCard',
     'LBL_EMPTY_VCARD' => 'Please select a vCard file',
     'LBL_EMPTY_REQUIRED_VCARD' => 'vCard does not have all the required fields for this module. Please refer to suitecrm.log for details.',
     'LBL_VCARD_ERROR_FILESIZE' => 'The uploaded file exceeds the 30000 bytes size limit which was specified in the HTML form.',
     'LBL_VCARD_ERROR_DEFAULT' => 'There was an error uploading the vCard file. Please refer to suitecrm.log for details.',
     'LBL_IMPORT_VCARD' => 'Import vCard:',
-    'LBL_IMPORT_VCARD_BUTTON_KEY' => 'I',
     'LBL_IMPORT_VCARD_BUTTON_LABEL' => 'Import vCard',
     'LBL_IMPORT_VCARD_BUTTON_TITLE' => 'Import vCard',
-    'LBL_VIEW_BUTTON_KEY' => 'V',
     'LBL_VIEW_BUTTON_LABEL' => 'View',
     'LBL_VIEW_BUTTON_TITLE' => 'View',
     'LBL_VIEW_BUTTON' => 'View',
-    'LBL_EMAIL_PDF_BUTTON_KEY' => 'M',
     'LBL_EMAIL_PDF_BUTTON_LABEL' => 'Email as PDF',
     'LBL_EMAIL_PDF_BUTTON_TITLE' => 'Email as PDF',
     'LBL_EMAILS' => 'Emails',
@@ -1717,8 +1630,6 @@ $app_strings = array(
     'LBL_IMPORT_STARTED' => 'Import Started: ',
     'LBL_MISSING_CUSTOM_DELIMITER' => 'Must specify a custom delimiter.',
     'LBL_LAST_VIEWED' => 'Recently Viewed',
-    'LBL_SHOW_LESS' => 'Show Less',
-    'LBL_SHOW_MORE' => 'Show More',
     'LBL_TODAYS_ACTIVITIES' => 'Today\'s Activities',
     'LBL_LEADS' => 'Leads',
     'LBL_LESS' => 'less',
@@ -1760,7 +1671,6 @@ $app_strings = array(
     'LBL_LOGIN_TO_ACCESS' => 'Please sign in to access this area.',
     'LBL_LOGOUT' => 'Log Out',
     'LBL_PROFILE' => 'Profile',
-    'LBL_MAILMERGE_KEY' => 'M',
     'LBL_MAILMERGE' => 'Mail Merge',
     'LBL_MASS_UPDATE' => 'Mass Update',
     'LBL_NO_MASS_UPDATE_FIELDS_AVAILABLE' => 'There are no fields available for the Mass Update operation',
@@ -1784,10 +1694,8 @@ $app_strings = array(
     'LBL_NEXT_BUTTON_LABEL' => 'Next',
     'LBL_NONE' => '--None--',
     'LBL_NOTES' => 'Notes',
-    'LBL_OPENALL_BUTTON_KEY' => 'O',
     'LBL_OPENALL_BUTTON_LABEL' => 'Open All',
     'LBL_OPENALL_BUTTON_TITLE' => 'Open All',
-    'LBL_OPENTO_BUTTON_KEY' => 'T',
     'LBL_OPENTO_BUTTON_LABEL' => 'Open To: ',
     'LBL_OPENTO_BUTTON_TITLE' => 'Open To:',
     'LBL_OPPORTUNITIES' => 'Opportunities',
@@ -1819,27 +1727,23 @@ $app_strings = array(
     'LBL_PRODUCTS' => 'Products',
     'LBL_PROJECT_TASKS' => 'Project Tasks',
     'LBL_PROJECTS' => 'Projects',
-    'LBL_QUOTE_TO_OPPORTUNITY_KEY' => 'O',
     'LBL_QUOTE_TO_OPPORTUNITY_LABEL' => 'Create Opportunity from Quote',
     'LBL_QUOTE_TO_OPPORTUNITY_TITLE' => 'Create Opportunity from Quote',
     'LBL_QUOTES_SHIP_TO' => 'Quotes Ship to',
     'LBL_QUOTES' => 'Quotes',
 
     'LBL_RELATED' => 'Related',
-    'LBL_RELATED_INFORMATION' => 'Related Information',
     'LBL_RELATED_RECORDS' => 'Related Records',
     'LBL_REMOVE' => 'Remove',
     'LBL_REPORTS_TO' => 'Reports To',
     'LBL_REQUIRED_SYMBOL' => '*',
     'LBL_REQUIRED_TITLE' => 'Indicates required field',
     'LBL_EMAIL_DONE_BUTTON_LABEL' => 'Done',
-    'LBL_SAVE_AS_BUTTON_KEY' => 'A',
     'LBL_SAVE_AS_BUTTON_LABEL' => 'Save As',
     'LBL_SAVE_AS_BUTTON_TITLE' => 'Save As',
     'LBL_FULL_FORM_BUTTON_KEY' => 'L',
     'LBL_FULL_FORM_BUTTON_LABEL' => 'Full Form',
     'LBL_FULL_FORM_BUTTON_TITLE' => 'Full Form',
-    'LBL_SAVE_NEW_BUTTON_KEY' => 'V',
     'LBL_SAVE_NEW_BUTTON_LABEL' => 'Save & Create New',
     'LBL_SAVE_NEW_BUTTON_TITLE' => 'Save & Create New',
     'LBL_SAVE_OBJECT' => 'Save {0}',
@@ -1849,18 +1753,12 @@ $app_strings = array(
     'LBL_FILTER' => 'Filter',
     'LBL_SEARCH' => 'Search',
     'LBL_SEARCH_ALT' => '',
-    'LBL_SEARCH_TIPS' => 'Press the search button or click enter to get an exact match for them.',
-    'LBL_SEARCH_TIPS_2' => 'Press the search button or click enter to get an exact match for',
     'LBL_SEARCH_MORE' => 'more',
     'LBL_SEE_ALL' => 'See All',
     'LBL_UPLOAD_IMAGE_FILE_INVALID' => 'Invalid file format, only image file can be uploaded.',
     'LBL_SELECT_BUTTON_KEY' => 'T',
     'LBL_SELECT_BUTTON_LABEL' => 'Select',
     'LBL_SELECT_BUTTON_TITLE' => 'Select',
-    'LBL_SELECT_TEAMS_KEY' => 'Z',
-    'LBL_SELECT_TEAMS_LABEL' => 'Add Team(s)',
-    'LBL_SELECT_TEAMS_TITLE' => 'Add Teams(s)',
-    'LBL_BROWSE_DOCUMENTS_BUTTON_KEY' => 'B',
     'LBL_BROWSE_DOCUMENTS_BUTTON_LABEL' => 'Browse Documents',
     'LBL_BROWSE_DOCUMENTS_BUTTON_TITLE' => 'Browse Documents',
     'LBL_SELECT_CONTACT_BUTTON_KEY' => 'T',
@@ -1971,11 +1869,7 @@ $app_strings = array(
     'LBL_TABGROUP_SUPPORT' => 'Support',
     'LBL_TABGROUP_TOOLS' => 'Tools',
     'LBL_TASKS' => 'Tasks',
-    'LBL_TEAMS_LINK' => 'Teams',
-    'LBL_THEME_COLOR' => 'Color',
-    'LBL_THEME_FONT' => 'Font',
     'LBL_THOUSANDS_SYMBOL' => 'K',
-    'LBL_TRACK_EMAIL_BUTTON_KEY' => 'K',
     'LBL_TRACK_EMAIL_BUTTON_LABEL' => 'Archive Email',
     'LBL_TRACK_EMAIL_BUTTON_TITLE' => 'Archive Email',
     'LBL_UNAUTH_ADMIN' => 'Unauthorized access to administration',
@@ -1991,7 +1885,6 @@ $app_strings = array(
     'LBL_VERIFY_EMAIL_ADDRESS' => 'Checking for existing email entry...',
     'LBL_VERIFY_PORTAL_NAME' => 'Checking for existing portal name...',
     'LBL_VIEW_IMAGE' => 'view',
-    'LBL_VIEW_PDF_BUTTON_KEY' => 'P',
     'LBL_VIEW_PDF_BUTTON_LABEL' => 'Print as PDF',
     'LBL_VIEW_PDF_BUTTON_TITLE' => 'Print as PDF',
 
@@ -2142,12 +2035,11 @@ $app_strings = array(
     'ERR_MSSQL_WARNING' => 'Warning:',
 
     //Meta-Data framework
+    'ERR_CANNOT_CREATE_METADATA_FILE' => 'Error: File [[file]] is missing.  Unable to create because no corresponding HTML file was found.',
     'ERR_MISSING_VARDEF_NAME' => 'Warning: field [[field]] does not have a mapped entry in [moduleDir] vardefs.php file',
-    'ERR_CANNOT_CREATE_METADATA_FILE' => 'Error: File [[file]] is missing. Unable to create because no corresponding HTML file was found.',
     'ERR_CANNOT_FIND_MODULE' => 'Error: Module [module] does not exist.',
     'LBL_ALT_ADDRESS' => 'Other Address:',
     'ERR_SMARTY_UNEQUAL_RELATED_FIELD_PARAMETERS' => 'Error: There are an unequal number of arguments for the \'key\' and \'copy\' elements in the displayParams array.',
-    'ERR_SMARTY_MISSING_DISPLAY_PARAMS' => 'Missing index in displayParams Array for: ',
 
     /* MySugar Framework (for Home and Dashboard) */
     'LBL_DASHLET_CONFIGURE_GENERAL' => 'General',
@@ -2189,13 +2081,8 @@ $app_strings = array(
     'LBL_SEARCH_RESULTS' => 'Search Results',
     'LBL_SEARCH_MODULES' => 'Modules',
     'LBL_SEARCH_CHARTS' => 'Charts',
-    'LBL_SEARCH_REPORT_CHARTS' => 'Report Charts',
     'LBL_SEARCH_TOOLS' => 'Tools',
     'LBL_SEARCH_HELP_TITLE' => 'Search Tips',
-    'LBL_SEARCH_HELP_CLOSE_TOOLTIP' => 'Close',
-    'LBL_SEARCH_RESULTS_FOUND' => 'Search Results Found',
-    'LBL_SEARCH_RESULTS_TIME' => 'ms.',
-    'ERR_BLANK_PAGE_NAME' => 'Please enter a page name.',
     /* End MySugar Framework strings */
 
     'LBL_NO_IMAGE' => 'No Image',
@@ -2261,31 +2148,20 @@ $app_strings = array(
     //jchi #  20776
     'LBL_DROPDOWN_LIST_ALL' => 'All',
 
-    'LBL_OPERATOR_IN_TEXT' => 'is one of the following:',
-    'LBL_OPERATOR_NOT_IN_TEXT' => 'is not one of the following:',
-
     //Connector
     'ERR_CONNECTOR_FILL_BEANS_SIZE_MISMATCH' => 'Error: The Array count of the bean parameter does not match the Array count of the results.',
     'ERR_MISSING_MAPPING_ENTRY_FORM_MODULE' => 'Error: Missing mapping entry for module.',
     'ERROR_UNABLE_TO_RETRIEVE_DATA' => 'Error: Unable to retrieve data for {0} Connector. The service may currently be inaccessible or the configuration settings may be invalid. Connector error message: ({1}).',
     'LBL_MERGE_CONNECTORS' => 'Get Data',
-    'LBL_MERGE_CONNECTORS_BUTTON_KEY' => '[D]',
     'LBL_REMOVE_MODULE_ENTRY' => 'Are you sure you want to disable connector integration for this module?',
 
     // fastcgi checks
     'LBL_FASTCGI_LOGGING' => 'For optimal experience using IIS/FastCGI sapi, set fastcgi.logging to 0 in your php.ini file.',
 
-    //cma
-    'LBL_MASSUPDATE_DELETE_GLOBAL_TEAM' => 'The Global team cannot be deleted.',
-    'LBL_MASSUPDATE_DELETE_USER_EXISTS' => 'This private team [{0}] cannot be deleted until the user [{1}] is deleted.',
-
-    //martin #25548
-    'LBL_NO_FLASH_PLAYER' => 'You either have Abobe Flash turned off or are using an older version of the Adobe Flash Player. To get the latest version of the Flash Player, <a href="http://www.adobe.com/go/getflashplayer/">click here</a>.',
     //Collection Field
     'LBL_COLLECTION_NAME' => 'Name',
     'LBL_COLLECTION_PRIMARY' => 'Primary',
     'ERROR_MISSING_COLLECTION_SELECTION' => 'Empty required field',
-    'LBL_COLLECTION_EXACT' => 'Exact',
 
     //MB -Fixed Bug #32812 -Max
     'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
@@ -2335,26 +2211,9 @@ $app_strings = array(
     'LBL_BEFORE' => 'Before',
 
     // File fields
-    'LBL_UPLOAD_FROM_COMPUTER' => 'Upload From Your Computer',
     'LBL_SEARCH_EXTERNAL_API' => 'File on External Source',
     'LBL_EXTERNAL_SECURITY_LEVEL' => 'Security',
-    'LBL_SHARE_PRIVATE' => 'Private',
-    'LBL_SHARE_COMPANY' => 'Company',
-    'LBL_SHARE_LINKABLE' => 'Linkable',
-    'LBL_SHARE_PUBLIC' => 'Public',
 
-    // Web Services REST RSS
-    'LBL_RSS_FEED' => 'RSS Feed',
-    'LBL_RSS_RECORDS_FOUND' => 'record(s) found',
-    'ERR_RSS_INVALID_INPUT' => 'RSS is not a valid input_type',
-    'ERR_RSS_INVALID_RESPONSE' => 'RSS is not a valid response_type for this method',
-
-    //External API Error Messages
-    'ERR_GOOGLE_API_415' => 'Google Docs does not support the file format you provided.',
-
-    'LBL_EMPTY' => 'Empty',
-    'LBL_IS_EMPTY' => 'Is empty',
-    'LBL_IS_NOT_EMPTY' => 'Is not empty',
     //IMPORT SAMPLE TEXT
     'LBL_IMPORT_SAMPLE_FILE_TEXT' => '
 "This is a sample import file which provides an example of the expected contents of a file that is ready for import."
@@ -2377,19 +2236,10 @@ $app_strings = array(
     //define labels to be used for overriding local values during import/export
     'LBL_EXPORT_ASSIGNED_USER_ID' => 'Assigned To',
     'LBL_EXPORT_ASSIGNED_USER_NAME' => 'Assigned User',
-    'LBL_EXPORT_REPORTS_TO_ID' => 'Reports To ID',
-    'LBL_EXPORT_FULL_NAME' => 'Full Name',
-    'LBL_EXPORT_TEAM_ID' => 'Team ID',
-    'LBL_EXPORT_TEAM_NAME' => 'Teams',
-    'LBL_EXPORT_TEAM_SET_ID' => 'Team Set ID',
-
-    'LBL_QUICKEDIT_NODEFS_NAVIGATION' => 'Navigating... ',
 
     'LBL_PENDING_NOTIFICATIONS' => 'Notifications',
     'LBL_NOTIFICATIONS_NONE' => 'No Current Notifications',
-    'LBL_ALT_ADD_TEAM_ROW' => 'Add new team row',
     'LBL_ALT_REMOVE_TEAM_ROW' => 'Remove team',
-    'LBL_ALT_SPOT_SEARCH' => 'Spot Search',
     'LBL_ALT_SORT_DESC' => 'Sorted Descending',
     'LBL_ALT_SORT_ASC' => 'Sorted Ascending',
     'LBL_ALT_SORT' => 'Sort',
@@ -2405,11 +2255,9 @@ $app_strings = array(
     'LBL_EMAIL_TITLE' => 'email address',
     'LBL_EMAIL_OPT_TITLE' => 'opted out email address',
     'LBL_EMAIL_INV_TITLE' => 'invalid email address',
-    'LBL_EMAIL_PRIM_TITLE' => 'primary email address',
+    'LBL_EMAIL_PRIM_TITLE' => 'Make Primary Email Address',
     'LBL_SELECT_ALL_TITLE' => 'Select all',
     'LBL_SELECT_THIS_ROW_TITLE' => 'Select this row',
-    'LBL_TEAM_SELECTED_TITLE' => 'Team Selected ',
-    'LBL_TEAM_SELECT_AS_PRIM_TITLE' => 'Select to make this team primary',
 
     //for upload errors
     'UPLOAD_ERROR_TEXT' => 'ERROR: There was an error during upload. Error code: {0} - {1}',
@@ -2439,9 +2287,6 @@ $app_strings = array(
     'LBL_FIRST_INPUT_EDIT_VIEW_KEY' => '7',
     'LBL_ADV_SEARCH_LNK_KEY' => '8',
     'LBL_FIRST_INPUT_SEARCH_KEY' => '9',
-    'LBL_GLOBAL_SEARCH_LNK_KEY' => '0',
-    'LBL_KEYBOARD_SHORTCUTS_HELP_TITLE' => 'Keyboard Shortcuts',
-    'LBL_KEYBOARD_SHORTCUTS_HELP' => '<p><strong>Form Functionality - Alt+</strong><br/> I = ed<b>I</b>t (detailview)<br/> U = d<b>U</b>plicate (detailview)<br/> D = <b>D</b>elete (detailview)<br/> A = s<b>A</b>ve (editview)<br/> L = cance<b>L</b> (editview) <br/><br/></p><p><strong>Search and Navigation  - Alt+</strong><br/> 7 = first input on Edit form<br/> 8 = Advanced Search link<br/> 9 = First Search Form input<br/> 0 = Unified search input<br></p>',
 
     'ERR_CONNECTOR_NOT_ARRAY' => 'connector array in {0} been defined incorrectly or is empty and could not be used.',
     'ERR_SUHOSIN' => 'Upload stream is blocked by Suhosin, please add &quot;upload&quot; to suhosin.executor.include.whitelist (See suitecrm.log for more information)',
@@ -2483,13 +2328,6 @@ $app_list_strings['project_priority_options'] = array(
     'High' => 'High',
     'Medium' => 'Medium',
     'Low' => 'Low',
-);
-
-$app_list_strings['kbdocument_status_dom'] = array(
-    'Draft' => 'Draft',
-    'Expired' => 'Expired',
-    'In Review' => 'In Review',
-    'Published' => 'Published',
 );
 
 $app_list_strings['kbadmin_actions_dom'] =
@@ -2601,7 +2439,6 @@ $app_list_strings['countries_dom'] = array(
     'CANARY ISLAND' => 'CANARY ISLAND',
     'CAPE VERDI ISLANDS' => 'CAPE VERDI ISLANDS',
     'CAYMAN ISLANDS' => 'CAYMAN ISLANDS',
-    'CEVLON' => 'CEVLON',
     'CHAD' => 'CHAD',
     'CHANNEL ISLAND UK' => 'CHANNEL ISLAND UK',
     'CHILE' => 'CHILE',
@@ -2773,7 +2610,6 @@ $app_list_strings['countries_dom'] = array(
     'UKRAINE' => 'UKRAINE',
     'UNITED ARAB EMIRATES' => 'UNITED ARAB EMIRATES',
     'UNITED KINGDOM' => 'UNITED KINGDOM',
-    'UPPER VOLTA' => 'UPPER VOLTA',
     'URUGUAY' => 'URUGUAY',
     'US PACIFIC ISLAND' => 'US PACIFIC ISLAND',
     'US VIRGIN ISLANDS' => 'US VIRGIN ISLANDS',
@@ -3240,14 +3076,6 @@ $app_list_strings ['emailTemplates_type_list_no_workflow'] = array(
     '' => '',
     'campaign' => 'Campaign',
     'email' => 'Email',
-);
-$app_strings ['documentation'] = array(
-    'LBL_DOCS' => 'Documentation',
-    'ULT' => '02_Sugar_Ultimate',
-    'ENT' => '02_Sugar_Enterprise',
-    'CORP' => '03_Sugar_Corporate',
-    'PRO' => '04_Sugar_Professional',
-    'COM' => '05_Sugar_Community_Edition',
 );
 
 // knowledge base

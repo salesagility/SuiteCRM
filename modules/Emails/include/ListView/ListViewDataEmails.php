@@ -665,7 +665,7 @@ class ListViewDataEmails extends ListViewData
                 if (!empty($where)) {
                     $where .= ' AND ';
                 }
-                $where .= ' emails.status LIKE "draft" ';
+                $where .= ' emails.status LIKE "draft" AND emails.deleted LIKE "0" ';
             }
 
 
