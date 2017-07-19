@@ -282,9 +282,10 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 	 *
 	 * @param STRING $name
 	 * @param STRING $password
-	 * @return boolean
+     * @param STRING $fallback - is this authentication a fallback from a failed authentication
+     * @return boolean
 	 */
-	function loadUserOnLogin($name, $password) {
+	function loadUserOnLogin($name, $password, $fallback = false, $PARAMS = Array()) {
 
 	    global $mod_strings;
 
