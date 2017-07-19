@@ -64,7 +64,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
      *
      * Contributions by Erik Mitchell erikm@logicpd.com
      */
-    function authenticateUser($name, $password)
+    function authenticateUser($name, $password, $fallback = false)
     {
 
         $server = $GLOBALS['ldap_config']->settings['ldap_hostname'];
@@ -324,7 +324,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
         }
         checkAuthUserStatus();
 
-        $user_id = $this->authenticateUser($name, $password);
+        $user_id = $this->authenticateUser($name, $password, $fallback = false);
         if (empty($user_id)) {
             //check if the user can login as a normal sugar user
             $GLOBALS['log']->fatal('SECURITY: User authentication for ' . $name . ' failed');
