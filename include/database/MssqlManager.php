@@ -254,7 +254,7 @@ class MssqlManager extends DBManager
                     if (isset($GLOBALS['app_strings']['ERR_NO_DB'])) {
                         sugar_die($GLOBALS['app_strings']['ERR_NO_DB']);
                     } else {
-                        sugar_die('Could not connect to the database. Please refer to suitecrm.log for details.');
+                        sugar_die('Could not connect to the database. Please refer to suitecrm.log for details (3).');
                     }
                 } else {
                     return false;
