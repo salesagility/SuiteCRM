@@ -134,7 +134,7 @@ class WebDriverHelper extends \Codeception\Module
             $config = $webDriver->_getConfig();
             if(empty($config["capabilities"]["browserstack.user"])) {
                 // return default
-                return 'automated_tests';
+                return '';
             } else {
                 return $config["capabilities"]["browserstack.user"];
             }
@@ -156,7 +156,7 @@ class WebDriverHelper extends \Codeception\Module
             $config = $webDriver->_getConfig();
             if(empty($config["capabilities"]["browserstack.key"])) {
                 // return default
-                return 'automated_tests';
+                return '';
             } else {
                 return $config["capabilities"]["browserstack.key"];
             }
@@ -178,7 +178,7 @@ class WebDriverHelper extends \Codeception\Module
             $config = $webDriver->_getConfig();
             if(empty($config["capabilities"]["browserstack.localfolderurl"])) {
                 // return default
-                return 'automated_tests';
+                return '';
             } else {
                 return $config["capabilities"]["browserstack.localfolderurl"];
             }
