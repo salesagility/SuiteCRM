@@ -80,6 +80,10 @@ class ParserModifyListView extends ModuleBuilderParser
         'LBL_HIDDEN' => 'getAvailableFields'
     );
 
+    /**
+     * @param string $module_name
+     * @param string $submodule
+     */
     function init($module_name, $submodule = '')
     {
         global $app_list_strings;
@@ -109,12 +113,17 @@ class ParserModifyListView extends ModuleBuilderParser
         $this->language_module = $this->module_name;
     }
 
+    /**
+     * @return string
+     */
     function getLanguage()
     {
         return $this->language_module;
     }
 
-    // re-key array so that every entry has a key=name and all keys are lowercase - makes it easier in handleSave() later...
+    /**
+     * @param $defs re-key array so that every entry has a key=name and all keys are lowercase - makes it easier in handleSave() later...
+     */
     function fixKeys(&$defs)
     {
         $temp = array();
@@ -206,12 +215,19 @@ class ParserModifyListView extends ModuleBuilderParser
         return $this->availableFields;
     }
 
+    /**
+     * @return array
+     */
     function getFieldDefs()
     {
         return $this->module->field_defs;
     }
 
-
+    /**
+     * @param string $key
+     * @param array $def
+     * @return bool
+     */
     function isValidField($key, $def)
     {
         //Allow fields that are studio visible
@@ -239,6 +255,10 @@ class ParserModifyListView extends ModuleBuilderParser
     }
 
 
+    /**
+     * @param string $fieldName
+     * @return array
+     */
     function getField($fieldName)
     {
         $fieldName = strtolower($fieldName);
@@ -258,6 +278,11 @@ class ParserModifyListView extends ModuleBuilderParser
         return array();
     }
 
+    /**
+     * @param $fieldname
+     * @param $listfielddef
+     * @return mixed
+     */
     function addRelateData($fieldname, $listfielddef)
     {
         $modFieldDef = $this->module->field_defs [strtolower($fieldname)];
@@ -271,6 +296,9 @@ class ParserModifyListView extends ModuleBuilderParser
         return $listfielddef;
     }
 
+    /**
+     * @return array
+     */
     function _loadLayoutFromRequest()
     {
         $GLOBALS['log']->debug("ParserModifyListView->_loadLayoutFromRequest()");
@@ -345,6 +373,9 @@ class ParserModifyListView extends ModuleBuilderParser
         return $fields;
     }
 
+    /**
+     * handleSave
+     */
     function handleSave()
     {
         $fields = $this->_loadLayoutFromRequest();
@@ -357,5 +388,3 @@ class ParserModifyListView extends ModuleBuilderParser
             "ListView.tpl"); // not currently cached, but here for the future
     }
 }
-
-?>
