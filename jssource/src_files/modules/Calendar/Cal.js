@@ -1083,6 +1083,10 @@ $($.fullCalendar).ready(function () {
 						},
 						show: {solo: true},
 						hide: {event: false},
+							event: 'mouseleave',
+							fixed: true,
+							delay: 500
+						},
 						style: {
 							width: 224,
 							padding: 5,
