@@ -62,7 +62,7 @@ class ParserLabel
 
     /**
      * ParserLabel constructor.
-     * @param $moduleName
+     * @param string $moduleName
      * @param string $packageName
      */
     public function __construct($moduleName, $packageName = '')
