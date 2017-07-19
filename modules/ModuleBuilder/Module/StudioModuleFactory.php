@@ -56,8 +56,8 @@ class StudioModuleFactory
      */
     public static function getStudioModule($module)
 	{
-		if (!empty(self::$loadedMods[$module]))
-            return self::$loadedMods[$module];
+//		if (!empty(self::$loadedMods[$module]))
+//            return self::$loadedMods[$module];
 
         $studioModClass = "{$module}StudioModule";
 		if (file_exists("custom/modules/{$module}/{$studioModClass}.php"))
@@ -75,7 +75,6 @@ class StudioModuleFactory
 		{
 			$sm = new StudioModule($module);
 		}
-        self::$loadedMods[$module] = $sm;
         return $sm;
 	}
 }
