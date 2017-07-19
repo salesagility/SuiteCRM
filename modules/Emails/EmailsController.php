@@ -813,12 +813,14 @@ class EmailsController extends SugarController
 
         $inboundEmailStoredOptions = $requestedInboundEmail->getStoredOptions();
 
-        // if group email account, check that user is allowed to use group email account
-        if ($requestedInboundEmail->isGroupEmailAccount()) {
-            if ($inboundEmailStoredOptions['allow_outbound_group_usage'] === true) {
-                $hasAccessToInboundEmailAccount = true;
-            } else {
-                $hasAccessToInboundEmailAccount = false;
+        if (!$hasAccessToInboundEmailAccount) {
+            // if group email account, check that user is allowed to use group email account
+            if ($requestedInboundEmail->isGroupEmailAccount()) {
+                if ($inboundEmailStoredOptions['allow_outbound_group_usage'] === true) {
+                    $hasAccessToInboundEmailAccount = true;
+                } else {
+                    $hasAccessToInboundEmailAccount = false;
+                }
             }
         }
 
@@ -864,6 +866,15 @@ class EmailsController extends SugarController
             ($hasAccessToInboundEmailAccount === true) &&
             ($isFromAddressTheSame === true) &&
             ($isAllowedToUseOutboundEmail === true);
+//
+//        if(!$hasAccess) {
+//            $msg = 'User is not allowed to send email';
+//            if(!$hasAccessToInboundEmailAccount) {
+//                $msg .= ': User has not access to inbound email account.';
+//            } else if(!$isFromAddressTheSame){
+//                $msg .= ': User has not access to inbound email account.';
+//            }
+//        }
 
         return $hasAccess;
     }
