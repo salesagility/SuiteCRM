@@ -373,7 +373,7 @@ class ParserLabel
      * Takes in the request params from a save request and processes
      * them for the save.
      *
-     * @param $metadata
+     * @param array $metadata
      * @param string $language Language key, for example 'en_us'
      */
     public function handleSaveRelationshipLabels($metadata, $language)
@@ -386,7 +386,7 @@ class ParserLabel
     }
 
     /**
-     * @param $labels
+     * @param array $labels
      */
     public function addLabelsToAllLanguages($labels)
     {
