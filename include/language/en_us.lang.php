@@ -1623,7 +1623,7 @@ $app_strings = array(
     'LBL_EXPORT' => 'Export',
     'LBL_FAVORITES_FILTER' => 'My Favorites:',
     'LBL_GO_BUTTON_LABEL' => 'Go',
-    'LBL_GS_HELP' => 'The fields in this module used in this search appear above.  The highlighted text matches your search criteria.',
+    'LBL_GS_HELP' => 'The fields in this module used in this search appear above. The highlighted text matches your search criteria.',
     'LBL_HIDE' => 'Hide',
     'LBL_ID' => 'ID',
     'LBL_IMPORT' => 'Import',
@@ -2035,7 +2035,7 @@ $app_strings = array(
     'ERR_MSSQL_WARNING' => 'Warning:',
 
     //Meta-Data framework
-    'ERR_CANNOT_CREATE_METADATA_FILE' => 'Error: File [[file]] is missing.  Unable to create because no corresponding HTML file was found.',
+    'ERR_CANNOT_CREATE_METADATA_FILE' => 'Error: File [[file]] is missing. Unable to create because no corresponding HTML file was found.',
     'ERR_MISSING_VARDEF_NAME' => 'Warning: field [[field]] does not have a mapped entry in [moduleDir] vardefs.php file',
     'ERR_CANNOT_FIND_MODULE' => 'Error: Module [module] does not exist.',
     'LBL_ALT_ADDRESS' => 'Other Address:',

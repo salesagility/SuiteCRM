@@ -107,7 +107,7 @@ $mod_strings = array(
     'LBL_ERROR_MSG_1' => 'All Linked contacts have already been Invited.',
     'LBL_ERROR_MSG_2' => 'Sending the invite emails has failed! Please check your email settings.',
     'LBL_ERROR_MSG_3' => 'More than 10 emails have failed to send. Please check that all the contacts you are inviting have a valid email address. (See suitecrm.log)',
-    'LBL_ERROR_MSG_4' => ' emails have failed to send. Please check that all the contacts you are inviting have a valid email address. (See suitecrm.log)',
+    'LBL_ERROR_MSG_4' => ' emails have failed to send. Please check that all the contacts you are inviting have a valid email address. (See suitecrm.log)', //LBL_ERROR_MSG_4 Begins with a number (controller.php line 581) for example 10 emails have failed to send. 
     'LBL_ERROR_MSG_5' => 'Invalid Email Template',
     'LBL_EMAIL_INVITE' => 'Email Invite',
 
@@ -141,4 +141,3 @@ $mod_strings = array(
 	'LBL_ACTIVITY_STATUS' => 'Activity Status',
 	'LBL_FP_EVENT_LOCATIONS_FP_EVENTS_1_FROM_FP_EVENTS_TITLE' => 'Event Locations from Events Title',
 );
-//LBL_ERROR_MSG_4 Begins with a number (controller.php line 581) for example 10 emails have failed to send. 
