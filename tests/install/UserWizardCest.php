@@ -25,6 +25,10 @@ class UserWizardCest
     {
     }
 
+    /**
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     * Dependency injection
+     */
     protected function _inject(\Helper\WebDriverHelper $webDriverHelper)
     {
         $this->webDriverHelper = $webDriverHelper;
@@ -36,7 +40,7 @@ class UserWizardCest
      *
      * As an administrative user, I want to use the install wizard (web based) to install SuiteCRM.
      * Given that that I install SuiteCRM with the default configuration settings I
-     * Exepect to be able to login as an administrator.
+     * Expect to be able to login as an administrator.
      */
     public function testScenarioInstallSuiteCRMWithDefaultConfiguration(InstallTester $I)
     {

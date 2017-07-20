@@ -8,6 +8,11 @@ use Codeception\Test\Metadata;
 use Codeception\TestInterface;
 use SuiteCRM\Enumerator\DatabaseDriver;
 
+/**
+ * Class WebDriverHelper
+ * @package Helper
+ * Helps to get configuration / environment variables for the WebDriver
+ */
 class WebDriverHelper extends \Codeception\Module
 {
     /**

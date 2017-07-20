@@ -87,6 +87,3 @@ Test your configuration
 codecept run demo --env selenium-hub --env chrome
 </pre>
 
-## Set up with travis
-## Set up with browser stack
-

@@ -23,7 +23,7 @@ class InstallTester extends \Codeception\Actor
     use _generated\InstallTesterActions;
 
     /**
-     *
+     * Tests the old version detected screen and moves to the next stage in the wizard
      */
     public function maySeeOldVersionDetected()
     {
@@ -43,7 +43,7 @@ class InstallTester extends \Codeception\Actor
     }
 
     /**
-     *
+     * Accept the license agreement and moves to the next stage of the wizard
      */
     public function acceptLicense()
     {
@@ -62,7 +62,7 @@ class InstallTester extends \Codeception\Actor
 
 
     /**
-     *
+     * Tests the System Environment Stage and moves to the next stage of the wizard
      */
     public function seeValidSystemEnvironment()
     {
@@ -77,6 +77,7 @@ class InstallTester extends \Codeception\Actor
     /**
      * @param \Helper\WebDriverHelper $webDriverHelper
      * @throws Exception
+     * Configures the installer based on the webdriver configuration and moves to the next stage of the wizard
      */
     public function configureInstaller(\Helper\WebDriverHelper $webDriverHelper)
     {
@@ -122,7 +123,7 @@ class InstallTester extends \Codeception\Actor
     }
 
     /**
-     *
+     * Waits for the login screen after the installer has finished and moves to the next stage of the wizard
      */
     public function waitForInstallerToFinish()
     {
