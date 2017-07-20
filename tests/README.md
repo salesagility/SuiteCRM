@@ -67,12 +67,13 @@ Set up the environment variables
 <pre>
 export DATABASE_DRIVER=MYSQL
 export DATABASE_NAME=automated_tests
+export DATABASE_HOST=localhost
 export DATABASE_USER=automated_tests
 export DATABASE_PASSWORD=automated_tests
-export INSTANCE_URL=http://php_5_5/path/to/instance
+export INSTANCE_URL=http://path/to/instance
+export INSTANCE_ADMIN_USER=admin
+export INSTANCE_ADMIN_PASSWORD=admin
 </pre>
-
-export INSTANCE_URL=http://php_5_5/sdk/instances/codeception
 
 to make it easier to run the commands
 

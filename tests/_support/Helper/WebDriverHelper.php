@@ -72,10 +72,32 @@ class WebDriverHelper extends \Codeception\Module
                 // return default
                 return 'automated_tests';
             } else {
-                return $config['database_driver'];
+                return $config['database_name'];
             }
         } else {
             return $envDatabaseName;
+        }
+    }
+
+
+    /**
+     * Gets the 'DATABASE_HOST' environment variable or 'database_host' in a yaml file.
+     * @return string
+     */
+    public function getDatabaseHost()
+    {
+        $envDatabaseHost = getenv('DATABASE_HOST');
+        if($envDatabaseHost === false) {
+            $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
+            $config = $webDriver->_getConfig();
+            if(empty($config['database_host'])) {
+                // return default
+                return 'localhost';
+            } else {
+                return $config['database_host'];
+            }
+        } else {
+            return $envDatabaseHost;
         }
     }
 
@@ -93,7 +115,7 @@ class WebDriverHelper extends \Codeception\Module
                 // return default
                 return 'automated_tests';
             } else {
-                return $config['database_driver'];
+                return $config['database_user'];
             }
         } else {
             return $envDatabaseUser;
@@ -114,7 +136,50 @@ class WebDriverHelper extends \Codeception\Module
                 // return default
                 return 'automated_tests';
             } else {
-                return $config['database_driver'];
+                return $config['database_password'];
+            }
+        } else {
+            return $envDatabasePassword;
+        }
+    }
+
+
+    /**
+     * Gets the 'INSTANCE_ADMIN_USER' environment variable or 'instance_admin_user' in a yaml file.
+     * @return string
+     */
+    public function getAdminUser()
+    {
+        $envDatabasePassword = getenv('INSTANCE_ADMIN_USER');
+        if($envDatabasePassword === false) {
+            $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
+            $config = $webDriver->_getConfig();
+            if(empty($config['INSTANCE_ADMIN_USER'])) {
+                // return default
+                return 'admin';
+            } else {
+                return $config['instance_admin_user'];
+            }
+        } else {
+            return $envDatabasePassword;
+        }
+    }
+
+    /**
+     * Gets the 'INSTANCE_ADMIN_PASSWORD' environment variable or 'instance_admin_password' in a yaml file.
+     * @return string
+     */
+    public function getAdminPassword()
+    {
+        $envDatabasePassword = getenv('INSTANCE_ADMIN_PASSWORD');
+        if($envDatabasePassword === false) {
+            $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
+            $config = $webDriver->_getConfig();
+            if(empty($config['INSTANCE_ADMIN_PASSWORD'])) {
+                // return default
+                return 'admin';
+            } else {
+                return $config['instance_admin_password'];
             }
         } else {
             return $envDatabasePassword;
@@ -186,5 +251,6 @@ class WebDriverHelper extends \Codeception\Module
             return $envBrowserStackAccessKey;
         }
     }
-    // Add other environmental variables here
+
+    // Add other methods to get environmental variables here...
 }
