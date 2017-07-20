@@ -82,7 +82,7 @@ class InstallTester extends \Codeception\Actor
     public function configureInstaller(\Helper\WebDriverHelper $webDriverHelper)
     {
         $I = $this;
-        $I->comment('View System Environment.');
+        $I->comment('Configure installer using Web Driver configuration.');
         $I->see('Database Configuration');
         $I->dontSeeMissingLabels();
 
