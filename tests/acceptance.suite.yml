@@ -15,3 +15,5 @@ modules:
         \SuiteCRM\Test\Driver\WebDriver:
             url: "https://demo.suiteondemand.com"
             browser: chrome
+            restart: true
+            wait: 1
