@@ -308,38 +308,16 @@ class InboundEmail extends SugarBean
 
     /**
      * @return bool
-     * @throws Exception
      */
     public function isPersonalEmailAccount() {
-        if($this->is_personal === '0') {
-            return false;
-        } else if ($this->is_personal === '1') {
-            return true;
-        } else {
-            // TODO: TASK UNDEFINED - Standardize the exceptions
-            throw new Exception(
-                'Cannot tell if the inbound email account is a personal account '.
-                'or a group account.'
-            );
-        }
+        return (bool)$this->is_personal;
     }
 
     /**
      * @return bool
-     * @throws Exception
      */
     public function isGroupEmailAccount() {
-        if($this->is_personal === '0') {
-            return true;
-        } else if ($this->is_personal === '1') {
-            return false;
-        } else {
-            // TODO: TASK UNDEFINED - Standardize the exceptions
-            throw new Exception(
-                'Cannot tell if the inbound email account is a personal account '.
-                'or a group account.'
-            );
-        }
+        return !$this->isPersonalEmailAccount();
     }
 
     /**

@@ -183,7 +183,7 @@ class SugarCleaner
 
         // $encode_html previously effected the decoding process.
         // we should decode regardless, just in case, the calling method passing encoded html
-        $dirty_html_decoded = utf8_decode(html_entity_decode($dirty_html));
+        $dirty_html_decoded = html_entity_decode($dirty_html);
         $clean_html = $purifier->purify($dirty_html_decoded);
 
         // Re-encode html
