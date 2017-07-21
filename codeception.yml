@@ -12,3 +12,5 @@ settings:
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
+params:
+    - env
