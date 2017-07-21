@@ -1185,7 +1185,6 @@ class Email extends Basic
         ) {
 
             // saving a draft OR saving a sent email
-            $decodedFromName = mb_decode_mimeheader($mail->FromName);
             $this->from_addr = "{$decodedFromName} <{$mail->From}>";
             $this->from_addr_name = $this->from_addr;
             $this->to_addrs = $_REQUEST['sendTo'];
@@ -4018,8 +4017,9 @@ eoq;
             // Strip out name from email address
             // eg Angel Mcmahon <sales.vegan@example.it>
             if (count($matches) > 3) {
-                $display = trim($matches[1]);
                 $email = $matches[2];
+                $display = (str_replace($email, '', $address));
+                $display = (trim(str_replace('"', '', $display)));
             } else {
                 $email = $address;
                 $display = '';
@@ -4033,7 +4033,7 @@ eoq;
 
             $bean->to_addrs_arr[] = array(
                 'email' => $email,
-                'display' => $display,
+                'display' => mb_encode_mimeheader($display, 'UTF-8', 'Q')
             );
         }
 
