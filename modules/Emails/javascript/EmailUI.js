@@ -2032,7 +2032,7 @@
             app_strings.LBL_EMAIL_ONE_MOMENT + "<br>&nbsp;<br><i>" + app_strings.LBL_EMAIL_CHECKING_DESC + "</i>");
         }
         var user = getUserEditViewUserId();
-        AjaxObject.startRequest(AjaxObject.folders.callback.checkMail, urlStandard + '&emailUIAction=checkEmail&all=true') + (user ? '&user=' + user : '');
+        AjaxObject.startRequest(AjaxObject.folders.callback.checkMail, urlStandard + '&emailUIAction=checkEmail&all=true' + (user ? '&user=' + user : ''));
       } else {
         // wait 5 secs before trying again.
         SE.folders.checkingMail = setTimeout("SE.folders.checkEmailAccountsSilent(false);", 5000);

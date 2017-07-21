@@ -913,7 +913,8 @@ eoq;
                 ob_end_flush();
                 //die();
             } else {
-                echo "error: no ieID";
+                echo $msg = 'error: no ieID';
+                $GLOBALS['log']->error($msg);
             }
             break;
 
