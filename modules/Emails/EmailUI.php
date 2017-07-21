@@ -170,22 +170,32 @@ class EmailUI
         $extAllDebugValue = "ext-all.js";
         $this->smarty->assign('extFileName', $extAllDebugValue);
 
+        $useRequestedRecord = false;
+        if (isset($_REQUEST['record']) && $_REQUEST['record'] && $_REQUEST['record'] != $current_user->id) {
+            $useRequestedRecord = true;
+        }
+
+        $user = $current_user;
+        if ($useRequestedRecord) {
+            $user = $current_user->getRequestedUserRecord();
+        }
+
         // settings: general
-        $e2UserPreferences = $this->getUserPreferencesJS();
+        $e2UserPreferences = $this->getUserPreferencesJS($useRequestedRecord);
         $emailSettings = $e2UserPreferences['emailSettings'];
 
         ///////////////////////////////////////////////////////////////////////
         ////	USER SETTINGS
         // settings: accounts
 
-        $cuDatePref = $current_user->getUserDateTimePreferences();
+        $cuDatePref = $user->getUserDateTimePreferences();
         $this->smarty->assign('dateFormat', $cuDatePref['date']);
         $this->smarty->assign('dateFormatExample',
             str_replace(array("Y", "m", "d"), array("yyyy", "mm", "dd"), $cuDatePref['date']));
         $this->smarty->assign('calFormat', $timedate->get_cal_date_format());
         $this->smarty->assign('TIME_FORMAT', $timedate->get_user_time_format());
 
-        $ieAccounts = $ie->retrieveByGroupId($current_user->id);
+        $ieAccounts = $ie->retrieveByGroupId($user->id);
         $ieAccountsOptions = "<option value=''>{$app_strings['LBL_NONE']}</option>\n";
 
         foreach ($ieAccounts as $k => $v) {
@@ -205,7 +215,7 @@ class EmailUI
 
         $charsetSelectedValue = isset($emailSettings['defaultOutboundCharset']) ? $emailSettings['defaultOutboundCharset'] : false;
         if (!$charsetSelectedValue) {
-            $charsetSelectedValue = $current_user->getPreference('default_export_charset', 'global');
+            $charsetSelectedValue = $user->getPreference('default_export_charset', 'global');
             if (!$charsetSelectedValue) {
                 $charsetSelectedValue = $locale->getPrecedentPreference('default_email_charset');
             }
@@ -231,16 +241,6 @@ class EmailUI
 
         ///////////////////////////////////////////////////////////////////////
         ////	SIGNATURES
-
-        $useRequestedRecord = false;
-        if (isset($_REQUEST['record']) && $_REQUEST['record'] && $_REQUEST['record'] != $current_user->id) {
-            $useRequestedRecord = true;
-        }
-
-        $user = $current_user;
-        if ($useRequestedRecord) {
-            $user = $current_user->getRequestedUserRecord();
-        }
 
         $prependSignature = $user->getPreference('signature_prepend') ?
             'true' :
