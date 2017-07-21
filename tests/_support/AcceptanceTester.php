@@ -37,11 +37,11 @@ class AcceptanceTester extends \Codeception\Actor
         }
 
         // Loggin In
-        $I->seeInTitle('SuiteCRM');
         $I->seeElement('#loginform');
         $I->fillField('#user_name', $username);
         $I->fillField('#user_password', $password);
         $I->click('Log In');
+        $I->dontSeeElement('#loginform');
 
         // Saving snapshot
         $I->saveSessionSnapshot('login');
