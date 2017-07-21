@@ -363,7 +363,7 @@ $mod_strings = array(
     'LBL_LDAP_GROUP_NAME' => 'Group Name:',
     'LBL_LDAP_GROUP_NAME_DESC' => 'Example cn=SuiteCRM',
     'LBL_LDAP_USER_DN_DESC' => 'Example: ou=people,dc=example,dc=com',
-    'LBL_LDAP_AUTO_CREATE_USERS_DESC' => 'If an authenticated user does not exist one will be created in SuiteCRM.',
+    'LBL_LDAP_AUTO_CREATE_USERS_DESC' => 'If an authenticated user does not exist, one will be created in SuiteCRM.',
     'LBL_LDAP_ENC_KEY' => 'Encryption Key:',
 
     'LBL_LOADING' => 'Loading, Please wait...',
