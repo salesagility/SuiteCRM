@@ -79,7 +79,7 @@
                     </td>
                 </tr>
                         </table>
-                        <button class="button" id="settingsButton" onclick="SUGAR.email2.settings.showSettings(); return false;"><img src="themes/default/images/icon_email_settings.gif" align="absmiddle" border="0"> {$APP.LBL_EMAIL_SETTINGS}</button>
+                        <button class="button" id="settingsButton" onclick="SUGAR.email2.settings.showSettings(getUserEditViewUserId()); return false;"><img src="themes/default/images/icon_email_settings.gif" align="absmiddle" border="0"> {$APP.LBL_EMAIL_SETTINGS}</button>
             </div>
 </div>
 <div class="user-tab-content">

@@ -44,6 +44,20 @@
 //Override Sugar Languge so quick creates work properly
 
 
+var getUserEditViewUserId = function() {
+	var uid = null;
+	if(
+      typeof editViewSnapshots !== 'undefined' &&
+      typeof editViewSnapshots.EditView !== 'undefined'
+	) {
+      uid = editViewSnapshots.EditView
+		.split('moduleUsersrecord')[1]
+		.split('actionpageEditView')[0];
+    }
+
+    return uid;
+};
+
 function email2init() {
 
 	//Init Tiny MCE
@@ -98,13 +112,16 @@ function email2init() {
 	
     // initialize and display UI framework (complexLayout.js)
     complexLayoutInit();
-    
+
+
+    var user = getUserEditViewUserId();
+
     // initialize and display grid (grid.js)
-    gridInit();
+    gridInit(user);
     
     // initialize treeview for folders
 	//onloadTreeinit();
-	SUGAR.email2.folders.rebuildFolders(true);
+	SUGAR.email2.folders.rebuildFolders(true, user);
 	
 	
     //Setup the Message Box overlay

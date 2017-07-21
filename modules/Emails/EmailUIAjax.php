@@ -106,6 +106,14 @@ function handleSubs($subs, $email, $json) {
   $showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
  if (isset($_REQUEST['emailUIAction'])) {
+
+     if (isset($_REQUEST['user']) && $_REQUEST['user']) {
+         $cid = $current_user->id;
+         $current_user = BeanFactory::getBean('Users', $_REQUEST['user']);
+     } else {
+         $GLOBALS['log']->fatal('TODO: add user to request on user edit view: [emailUIAction:'.$_REQUEST['emailUIAction'].']');
+     }
+
   switch($_REQUEST['emailUIAction']) {
 
 
@@ -1505,7 +1513,7 @@ eoq;
         ////    SETTINGS
     case "loadPreferences":
         $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: loadPreferences");
-        $prefs = $email->et->getUserPrefsJS();
+        $prefs = $email->et->getUserPreferencesJS();
         $out = $json->encode($prefs);
         echo $out;
         break;
@@ -1525,7 +1533,7 @@ eoq;
         $current_user->setPreference('signature_default', $_REQUEST['signature_id']);
         $current_user->setPreference('signature_prepend', (isset($_REQUEST['signature_prepend'])) ? true : false);
 
-        $out = $json->encode($email->et->getUserPrefsJS());
+        $out = $json->encode($email->et->getUserPreferencesJS());
         echo $out;
         break;
 
@@ -1725,4 +1733,9 @@ eoq;
         echo "NOOP";
         break;
   } // switch
+
+     if (isset($cid) && $cid) {
+         $current_user = BeanFactory::getBean('Users', $cid);
+     }
+
  } // if

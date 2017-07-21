@@ -83,7 +83,7 @@
         <td NOWRAP style="padding-bottom: 2px;">
             <button class="button" id="checkEmailButton" onclick="SUGAR.email2.folders.startEmailAccountCheck();"><img src="themes/default/images/icon_email_check.gif" alt=$mod_strings.LBL_CHECKEMAIL align="absmiddle" border="0"> {$app_strings.LBL_EMAIL_CHECK}</button>
             <button class="button" id="composeButton" onclick="SUGAR.email2.composeLayout.c0_composeNewEmail();"><img src="themes/default/images/icon_email_compose.gif" alt=$mod_strings.LBL_COMPOSEEMAIL align="absmiddle" border="0"> {$mod_strings.LNK_NEW_SEND_EMAIL}</button>
-            <button class="button" id="settingsButton" onclick="SUGAR.email2.settings.showSettings();"><img src="themes/default/images/icon_email_settings.gif" alt=$mod_strings.LBL_EMAILSETTINGS align="absmiddle" border="0"> {$app_strings.LBL_EMAIL_SETTINGS}</button>
+            <button class="button" id="settingsButton" onclick="SUGAR.email2.settings.showSettings(getUserEditViewUserId());"><img src="themes/default/images/icon_email_settings.gif" alt=$mod_strings.LBL_EMAILSETTINGS align="absmiddle" border="0"> {$app_strings.LBL_EMAIL_SETTINGS}</button>
         </td>
         <td NOWRAP align="right" style="padding-bottom: 2px;">
             <a href="index.php?module=Administration&action=SupportPortal&view=documentation&version={$sugar_version}&edition={$sugar_flavor}&lang={$current_language}&help_module=Emails&help_action=index&key={$server_unique_key}" width='13' height='13' alt='{$app_strings.LNK_HELP}' border='0' align='absmiddle' target="_blank"></a>

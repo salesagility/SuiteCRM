@@ -109,9 +109,10 @@ class EmailUI {
 
 	///////////////////////////////////////////////////////////////////////////
 	////	CORE
-	/**
-	 * Renders the frame for emails
-	 */
+    /**
+     * Renders the frame for emails
+     * @throws \RuntimeException
+     */
 	function displayEmailFrame($baseTpl = "modules/Emails/templates/_baseEmail.tpl") {
 
 		require_once("include/OutboundEmail/OutboundEmail.php");
@@ -169,7 +170,7 @@ class EmailUI {
 		$this->smarty->assign('extFileName', $extAllDebugValue);
 
 		// settings: general
-		$e2UserPreferences = $this->getUserPrefsJS();
+		$e2UserPreferences = $this->getUserPreferencesJS();
 		$emailSettings = $e2UserPreferences['emailSettings'];
 
 		///////////////////////////////////////////////////////////////////////
@@ -223,13 +224,34 @@ class EmailUI {
 
 		///////////////////////////////////////////////////////////////////////
 		////	SIGNATURES
-		$prependSignature = ($current_user->getPreference('signature_prepend')) ? 'true' : 'false';
-		$defsigID = $current_user->getPreference('signature_default');
-		$this->smarty->assign('signatures', $current_user->getSignatures(false, $defsigID));
-		$this->smarty->assign('signaturesSettings', $current_user->getSignatures(false, $defsigID, false, 'signature_id'));
-		$this->smarty->assign('signaturesAccountSettings', $current_user->getEmailAccountSignatures(false, $defsigID, false, 'account_signature_id'));
-		$signatureButtons = $current_user->getSignatureButtons('SUGAR.email2.settings.createSignature', !empty($defsigID));
-		if (!empty($defsigID)) {
+
+        $useRequestedRecord = false;
+        if(isset($_REQUEST['record']) && $_REQUEST['record'] && $_REQUEST['record'] != $current_user->id) {
+            $useRequestedRecord = true;
+        }
+
+        $user = $current_user;
+        if($useRequestedRecord) {
+            $user = $current_user->getRequestedUserRecord();
+        }
+
+		$prependSignature = $user->getPreference('signature_prepend') ?
+            'true' :
+            'false';
+		$defaultSignatureId = $user->getPreference('signature_default');
+        $this->smarty->assign(
+            'signatures',
+            $user->getSignatures(false, $defaultSignatureId, false, 'signature_id')
+        );
+		$this->smarty->assign(
+		    'signaturesSettings',
+            $user->getSignatures(false, $defaultSignatureId, false, 'signature_id')
+        );
+		$this->smarty->assign(
+		    'signaturesAccountSettings',
+            $user->getEmailAccountSignatures(false, $defaultSignatureId, false, 'account_signature_id'));
+		$signatureButtons = $user->getSignatureButtons('SUGAR.email2.settings.createSignature', !empty($defaultSignatureId));
+		if (!empty($defaultSignatureId)) {
 			$signatureButtons = $signatureButtons . '<span name="delete_sig" id="delete_sig" style="visibility:inherit;"><input class="button" onclick="javascript:SUGAR.email2.settings.deleteSignature();" value="'.$app_strings['LBL_EMAIL_DELETE'].'" type="button" tabindex="392">&nbsp;
 					</span>';
 		} else {
@@ -443,6 +465,7 @@ eoq;
      * returned is the minimum set needed by the quick compose UI.
      *
      * @param String $type Drives which tinyMCE options will be included.
+     * @throws \RuntimeException
      */
 	function _generateComposeConfigData($type = "email_compose_light" )
 	{
@@ -499,16 +522,34 @@ eoq;
         $ie1 = new InboundEmail();
 
         //Signatures
-        $defsigID = $current_user->getPreference('signature_default');
-		$defaultSignature = $current_user->getDefaultSignature();
-		$sigJson = !empty($defaultSignature) ? json_encode(array($defaultSignature['id'] => from_html($defaultSignature['signature_html']))) : "new Object()";
+
+        $useRequestedRecord = false;
+        if(isset($_REQUEST['record']) && $_REQUEST['record'] && $_REQUEST['record'] != $current_user->id) {
+            $useRequestedRecord = true;
+        }
+
+        $user = $current_user;
+        if($useRequestedRecord) {
+            $user = $current_user->getRequestedUserRecord();
+        }
+
+		$defaultSignature = $user->getDefaultSignature();
+		$sigJson = !empty($defaultSignature) ?
+            json_encode(array($defaultSignature['id'] => from_html($defaultSignature['signature_html']))) :
+            'new Object()';
 		$this->smarty->assign('defaultSignature', $sigJson);
-		$this->smarty->assign('signatureDefaultId', (isset($defaultSignature['id'])) ? $defaultSignature['id'] : "");
+		$this->smarty->assign(
+		    'signatureDefaultId',
+            isset($defaultSignature['id']) ? $defaultSignature['id'] : ''
+        );
 		//User Preferences
-		$this->smarty->assign('userPrefs', json_encode($this->getUserPrefsJS()));
+		$this->smarty->assign(
+		    'userPrefs',
+            json_encode($this->getUserPreferencesJS($useRequestedRecord))
+        );
 
 		//Get the users default outbound id
-		$defaultOutID = $ie1->getUsersDefaultOutboundServerId($current_user);
+		$defaultOutID = $ie1->getUsersDefaultOutboundServerId($user);
 		$this->smarty->assign('defaultOutID', $defaultOutID);
 
 		//Character Set
@@ -756,29 +797,38 @@ eoq;
 
 	///////////////////////////////////////////////////////////////////////////
 	////	EMAIL 2.0 Preferences
-	function getUserPrefsJS() {
+    /**
+     * @param bool $useRequestedRecord
+     * @return array
+     * @throws \RuntimeException
+     */
+    public function getUserPreferencesJS($useRequestedRecord = false) {
 		global $current_user;
-		global $locale;
+
+		$user = $current_user;
+		if($useRequestedRecord) {
+		    $user = $current_user->getRequestedUserRecord();
+        }
 
 		// sort order per mailbox view
-		$sortSerial = $current_user->getPreference('folderSortOrder', 'Emails');
+		$sortSerial = $user->getPreference('folderSortOrder', 'Emails');
 		$sortArray = array();
 		if(!empty($sortSerial)) {
 			$sortArray = sugar_unserialize($sortSerial);
 		}
 
 		// treeview collapsed/open states
-		$folderStateSerial = $current_user->getPreference('folderOpenState', 'Emails');
+		$folderStateSerial = $user->getPreference('folderOpenState', 'Emails');
 		$folderStates = array();
 		if(!empty($folderStateSerial)) {
 			$folderStates = sugar_unserialize($folderStateSerial);
 		}
 
 		// subscribed accounts
-		$showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+		$showFolders = sugar_unserialize(base64_decode($user->getPreference('showFolders', 'Emails')));
 
 		// general settings
-		$emailSettings = $current_user->getPreference('emailSettings', 'Emails');
+		$emailSettings = $user->getPreference('emailSettings', 'Emails');
 
 		if(empty($emailSettings)) {
 			$emailSettings = array();
@@ -791,11 +841,11 @@ eoq;
 		}
 
 		// focus folder
-		$focusFolder = $current_user->getPreference('focusFolder', 'Emails');
+		$focusFolder = $user->getPreference('focusFolder', 'Emails');
 		$focusFolder = !empty($focusFolder) ? sugar_unserialize($focusFolder) : array();
 
 		// unread only flag
-		$showUnreadOnly = $current_user->getPreference('showUnreadOnly', 'Emails');
+		$showUnreadOnly = $user->getPreference('showUnreadOnly', 'Emails');
 
 		$listViewSort = array(
 			"sortBy" => 'date',
@@ -803,8 +853,8 @@ eoq;
 		);
 
 		// signature prefs
-		$signaturePrepend = $current_user->getPreference('signature_prepend') ? 'true' : 'false';
-		$signatureDefault = $current_user->getPreference('signature_default');
+		$signaturePrepend = $user->getPreference('signature_prepend') ? 'true' : 'false';
+		$signatureDefault = $user->getPreference('signature_default');
 		$signatures = array(
 			'signature_prepend' => $signaturePrepend,
 			'signature_default' => $signatureDefault
@@ -813,8 +863,8 @@ eoq;
 
 		// current_user
 		$user = array(
-			'emailAddresses' => $current_user->emailAddress->getAddressesByGUID($current_user->id, 'Users'),
-			'full_name' => from_html($current_user->full_name),
+			'emailAddresses' => $user->emailAddress->getAddressesByGUID($user->id, 'Users'),
+			'full_name' => from_html($user->full_name),
 		);
 
 		$userPreferences = array();

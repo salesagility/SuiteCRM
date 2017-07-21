@@ -36,13 +36,13 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-function gridInit() {
+function gridInit(user) {
 	if(SUGAR.email2.grid) {
 		SUGAR.email2.grid.destroy();
 	}
 
 	e2Grid = {
-		init : function() {
+		init : function(user) {
 
 			var Ck = YAHOO.util.Cookie;
 			var widths = [ 10, 10, 150, 250, 175, 125 ];
@@ -170,6 +170,7 @@ function gridInit() {
 		            metaFields: {total: 'TotalCount', unread:"UnreadCount", fromCache: "FromCache"}
 				}
 		    });
+
 			var params = {
 					to_pdf : "true",
 					module : "Emails",
@@ -177,8 +178,11 @@ function gridInit() {
 					emailUIAction : "getMessageList",
 					mbox : "INBOX",
 					ieId : "",
-					forceRefresh : "false"
+					forceRefresh : "false",
 			};
+			if(user) {
+				params.user = user;
+			}
 			if(lazyLoadFolder != null) {
 				params['mbox'] = lazyLoadFolder.folder;
 				params['ieId'] = lazyLoadFolder.ieId;
@@ -303,7 +307,7 @@ function gridInit() {
 			dataModel.subscribe("responseParseEvent", grid.undisable, grid, true);
 		}
 	};
-	e2Grid.init();
+	e2Grid.init(user);
 };
 
 

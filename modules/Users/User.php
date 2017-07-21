@@ -176,8 +176,21 @@ class User extends Person {
 	    return isset($signatures[$id]) ? $signatures[$id] : FALSE;
 	}
 
-	function getSignaturesArray() {
-		$q = 'SELECT * FROM users_signatures WHERE user_id = \''.$this->id.'\' AND deleted = 0 ORDER BY name ASC';
+    /**
+     * @param bool $useRequestedRecord
+     * @return array
+     * @throws \RuntimeException
+     */
+    public function getSignaturesArray($useRequestedRecord = false) {
+
+        if($useRequestedRecord) {
+            $user = $this->getRequestedUserRecord();
+            $uid = $user->id;
+        } else {
+            $uid = $this->id;
+        }
+
+		$q = 'SELECT * FROM users_signatures WHERE user_id = \''.$uid.'\' AND deleted = 0 ORDER BY name ASC';
 		$r = $this->db->query($q);
 
 		// provide "none"
@@ -190,17 +203,25 @@ class User extends Person {
 		return $sig;
 	}
 
-	/**
-	 * retrieves any signatures that the User may have created as <select>
-	 */
+    /**
+     * retrieves any signatures that the User may have created as <select>
+     * @param bool $live
+     * @param string $defaultSig
+     * @param bool $forSettings
+     * @param string $elementId
+     * @param bool $useRequestedRecord
+     * @return string
+     * @throws \RuntimeException
+     */
 	public function getSignatures(
 	    $live = false,
 	    $defaultSig = '',
 	    $forSettings = false,
-        $elementId = 'signature_id'
+        $elementId = 'signature_id',
+        $useRequestedRecord = false
 	    )
 	{
-		$sig = $this->getSignaturesArray();
+		$sig = $this->getSignaturesArray($useRequestedRecord);
 		$sigs = array();
 		foreach ($sig as $key => $arr)
 		{
@@ -223,15 +244,23 @@ class User extends Person {
 
     /**
      * retrieves any signatures that the User may have created as <select>
+     * @param bool $live
+     * @param string $defaultSig
+     * @param bool $forSettings
+     * @param string $elementId
+     * @param bool $useRequestedRecord
+     * @return string
+     * @throws \RuntimeException
      */
     public function getEmailAccountSignatures(
         $live = false,
         $defaultSig = '',
         $forSettings = false,
-        $elementId = 'account_signature_id'
+        $elementId = 'account_signature_id',
+        $useRequestedRecord = false
     )
     {
-        $sig = $this->getSignaturesArray();
+        $sig = $this->getSignaturesArray($useRequestedRecord);
         $sigs = array();
         foreach ($sig as $key => $arr)
         {
@@ -437,15 +466,36 @@ class User extends Person {
         return $user->_userPreferenceFocus->loadPreferences($category);
 	}
 
-	/**
-	 * Interface for the User object to calling the UserPreference::setPreference() method in modules/UserPreferences/UserPreference.php
-	 *
-	 * @see UserPreference::getPreference()
-	 *
-	 * @param string $name name of the preference to retreive
-	 * @param string $category name of the category to retreive, defaults to global scope
-	 * @return mixed the value of the preference (string, array, int etc)
-	 */
+    /**
+     * @return bool|SugarBean
+     * @throws \RuntimeException
+     */
+    public function getRequestedUserRecord() {
+	    if(!isset($_REQUEST['record']) || !$_REQUEST['record']) {
+	        throw new RuntimeException('Error: requested record is not set');
+        }
+        $user = BeanFactory::getBean('Users', $_REQUEST['record']);
+        if(!$user) {
+            throw new RuntimeException('Error: retrieve requested user record');
+        }
+        $uid = $user->id;
+        if(!$uid) {
+            throw new RuntimeException('Error: retrieve requested user ID');
+        }
+
+        return $user;
+    }
+
+    /**
+     * Interface for the User object to calling the UserPreference::setPreference() method in modules/UserPreferences/UserPreference.php
+     *
+     * @see UserPreference::getPreference()
+     *
+     * @param string $name name of the preference to retreive
+     * @param string $category name of the category to retreive, defaults to global scope
+     * @return mixed the value of the preference (string, array, int etc)
+     * @internal param bool $useRequestedRecord
+     */
 	public function getPreference(
 	    $name,
 	    $category = 'global'

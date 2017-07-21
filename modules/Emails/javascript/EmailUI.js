@@ -97,14 +97,14 @@ SE.accounts = {
     /**
      * Called on "Accounts" tab activation event
      */
-    lazyLoad : function() {
+    lazyLoad : function(user) {
 
-    	this._setupInboundAccountTable();
-    	this._setupOutboundAccountTable();
+    	this._setupInboundAccountTable(user);
+    	this._setupOutboundAccountTable(user);
 
     },
 
-    _setupInboundAccountTable: function()
+    _setupInboundAccountTable: function(user)
     {
     	//Setup the inbound mail settings
     	if(!this.inboundAccountsSettingsTable)
@@ -157,7 +157,7 @@ SE.accounts = {
     		                      {key:'type',label:mod_strings.LBL_LIST_TYPE + typeHoverHelp },
     		                      {key:'edit',label:mod_strings.LBL_BUTTON_EDIT,formatter:"customImage",className:'yui-cstm-cntrd-liner'},
     		                      {key:'delete',label:app_strings.LBL_EMAIL_DELETE,formatter:"customImage",className:'yui-cstm-cntrd-liner'}];
-    		var query = "index.php?module=Emails&action=EmailUIAjax&to_pdf=true&emailUIAction=rebuildShowAccount";
+    		var query = "index.php?module=Emails&action=EmailUIAjax&to_pdf=true&emailUIAction=rebuildShowAccount" + (user ? '&user=' + user : '');
     		this.ieDataSource = new YAHOO.util.DataSource(query);
 			this.ieDataSource.responseType = YAHOO.util.DataSource.TYPE_JSON;
 			this.ieDataSource.responseSchema = {
@@ -202,7 +202,7 @@ SE.accounts = {
 			this.inboundAccountsSettingsTable.subscribe("rowMouseoutEvent", this.inboundAccountsSettingsTable.onEventUnhighlightRow);
         }
     },
-     _setupOutboundAccountTable: function()
+     _setupOutboundAccountTable: function(user)
     {
     	if(!this.outboundAccountsSettingsTable)
     	{
@@ -256,7 +256,7 @@ SE.accounts = {
     								   {key:'delete', label:app_strings.LBL_EMAIL_DELETE,formatter:"actionsImage",className:'yui-cstm-cntrd-liner'},
     								   {key:'messages',label:'', formatter:"messageDisplay",className:'yui-cstm-cntrd-liner'}];
 
-    		var query = "index.php?module=Emails&action=EmailUIAjax&to_pdf=true&emailUIAction=retrieveAllOutbound";
+    		var query = "index.php?module=Emails&action=EmailUIAjax&to_pdf=true&emailUIAction=retrieveAllOutbound" + (user ? '&user=' + user : '');
     		this.obDataSource = new YAHOO.util.DataSource(query);
 			this.obDataSource.responseType = YAHOO.util.DataSource.TYPE_JSON;
 			this.obDataSource.responseSchema = {
@@ -872,7 +872,7 @@ SE.accounts = {
         }
     },
 
-    saveIeAccount : function() {
+    saveIeAccount : function(user) {
 
         //Before saving check if there are any error messages associated with the outbound account.
         var outboundID = document.getElementById('outbound_email').value;
@@ -889,7 +889,7 @@ SE.accounts = {
 
             AjaxObject._reset();
             AjaxObject.target = 'frameFlex';
-            AjaxObject.startRequest(callbackAccount, urlStandard + '&emailUIAction=saveIeAccount');
+            AjaxObject.startRequest(callbackAccount, urlStandard + '&emailUIAction=saveIeAccount' + (user ? '&user=' + user : ''));
         }
     },
 
@@ -2026,7 +2026,8 @@ SE.folders = {
                 SUGAR.showMessageBox(app_strings.LBL_EMAIL_CHECKING_NEW,
                       app_strings.LBL_EMAIL_ONE_MOMENT + "<br>&nbsp;<br><i>" + app_strings.LBL_EMAIL_CHECKING_DESC + "</i>");
             }
-            AjaxObject.startRequest(AjaxObject.folders.callback.checkMail, urlStandard + '&emailUIAction=checkEmail&all=true');
+            var user = getUserEditViewUserId();
+            AjaxObject.startRequest(AjaxObject.folders.callback.checkMail, urlStandard + '&emailUIAction=checkEmail&all=true') + (user ? '&user=' + user : '');
         } else {
             // wait 5 secs before trying again.
             SE.folders.checkingMail = setTimeout("SE.folders.checkEmailAccountsSilent(false);", 5000);
@@ -2099,18 +2100,18 @@ SE.folders = {
     /**
      * loads folder lists in Settings->Folders
      */
-    lazyLoadSettings : function() {
+    lazyLoadSettings : function(user) {
         AjaxObject.timeout = 300000; // 5 min timeout for long checks
-        AjaxObject.startRequest(callbackSettingsFolderRefresh, urlStandard + '&emailUIAction=getFoldersForSettings');
+        AjaxObject.startRequest(callbackSettingsFolderRefresh, urlStandard + '&emailUIAction=getFoldersForSettings' + (user ? '&user=' + user : ''));
     },
 
     /**
      * After the add new folder is done via folders tab on seetings, this function should get called
      * It will refresh the folder list after inserting an entry on the UI to update the new folder list
      */
-    loadSettingFolder : function() {
+    loadSettingFolder : function(user) {
         AjaxObject.timeout = 300000; // 5 min timeout for long checks
-        AjaxObject.startRequest(callbackLoadSettingFolder, urlStandard + '&emailUIAction=getFoldersForSettings');
+        AjaxObject.startRequest(callbackLoadSettingFolder, urlStandard + '&emailUIAction=getFoldersForSettings' + (user ? '&user=' + user : ''));
     },
 
     /**
@@ -2129,9 +2130,9 @@ SE.folders = {
         }
     },
 
-    rebuildFolders : function(silent) {
+    rebuildFolders : function(silent, user) {
       if (!silent) SUGAR.showMessageBox(app_strings.LBL_EMAIL_REBUILDING_FOLDERS, app_strings.LBL_EMAIL_ONE_MOMENT);
-       AjaxObject.startRequest(callbackFolders, urlStandard + '&emailUIAction=getAllFoldersTree');
+       AjaxObject.startRequest(callbackFolders, urlStandard + '&emailUIAction=getAllFoldersTree' + (user ? '&user=' + user : ''));
     },
 
 
@@ -2139,10 +2140,10 @@ SE.folders = {
     /**
      * Updates TreeView with Sugar Folders
      */
-    setSugarFolders : function(delay) {
+    setSugarFolders : function(delay, user) {
         this.removeSugarFolders();
 		//AjaxObject.forceAbort = true;
-		AjaxObject.startRequest(callbackRefreshSugarFolders, urlStandard + "&emailUIAction=refreshSugarFolders");
+		AjaxObject.startRequest(callbackRefreshSugarFolders, urlStandard + "&emailUIAction=refreshSugarFolders" + (user ? '&user=' + user : ''));
     },
 
     /**
@@ -3381,7 +3382,8 @@ SE.settings = {
         SE.composeLayout.emailTemplates = null;
 
         AjaxObject.target = 'frameFlex';
-        AjaxObject.startRequest(callbackSettings, urlStandard + '&emailUIAction=saveSettingsGeneral');
+        var user = getUserEditViewUserId();
+        AjaxObject.startRequest(callbackSettings, urlStandard + '&emailUIAction=saveSettingsGeneral' + (user ? '&user=' + user : ''));
 
         if(displayMessage)
             alert(app_strings.LBL_EMAIL_SETTINGS_SAVED);
@@ -3391,7 +3393,7 @@ SE.settings = {
     /**
      * Shows settings container screen
      */
-    showSettings : function() {
+    showSettings : function(user) {
         if(!SE.settings.settingsDialog) {
     		var dlg = SE.settings.settingsDialog = new YAHOO.widget.Dialog("settingsDialog", {
             	modal:true,
@@ -3444,8 +3446,8 @@ SE.settings = {
         }
 
         SE.settings.settingsDialog.show();
-        SE.folders.lazyLoadSettings();
-        SE.accounts.lazyLoad();
+        SE.folders.lazyLoadSettings(user);
+        SE.accounts.lazyLoad(user);
       $(window).scrollLeft(0);
     },
 

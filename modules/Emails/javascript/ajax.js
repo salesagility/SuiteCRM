@@ -1137,7 +1137,9 @@ AjaxObject.folders = {
 		var data = YAHOO.lang.JSON.parse(o.responseText);
 
 		email2treeinit(SUGAR.email2.tree, data.tree_data, 'frameFolders', data.param);
-		SUGAR.email2.folders.setSugarFolders();
+
+        var user = getUserEditViewUserId();
+		SUGAR.email2.folders.setSugarFolders(null, user);
 	}
 };
 AjaxObject.folders.callback = {
