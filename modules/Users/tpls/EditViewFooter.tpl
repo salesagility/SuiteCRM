@@ -81,10 +81,12 @@
             </td>
         </tr>
     </table>
-    <button class="button" id="settingsButton"
-            onclick="SUGAR.email2.settings.showSettings(getUserEditViewUserId()); return false;"><img
-                src="themes/default/images/icon_email_settings.gif" align="absmiddle"
-                border="0"> {$APP.LBL_EMAIL_SETTINGS}</button>
+    {if $ID}
+        <button class="button" id="settingsButton"
+                onclick="SUGAR.email2.settings.showSettings(getUserEditViewUserId()); return false;"><img
+                    src="themes/default/images/icon_email_settings.gif" align="absmiddle"
+                    border="0"> {$APP.LBL_EMAIL_SETTINGS}</button>
+    {/if}
 </div>
 </div>
 <div class="user-tab-content">
