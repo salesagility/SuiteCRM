@@ -1185,6 +1185,7 @@ class Email extends Basic
         ) {
 
             // saving a draft OR saving a sent email
+            $decodedFromName = mb_decode_mimeheader($mail->FromName);
             $this->from_addr = "{$decodedFromName} <{$mail->From}>";
             $this->from_addr_name = $this->from_addr;
             $this->to_addrs = $_REQUEST['sendTo'];
