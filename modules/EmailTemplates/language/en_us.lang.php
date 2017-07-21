@@ -110,6 +110,6 @@ $mod_strings = array (
 	'LBL_SELECT' => 'Select' /*for 508 compliance fix*/,
 	'LBL_ID_FF_CLEAR' => 'Clear' /*for 508 compliance fix*/,
     'LBL_TYPE' => 'Type',
-	'LBL_WIDTH' => 'Width default',
+	'LBL_WIDTH' => 'Width Default',
 );
 ?>

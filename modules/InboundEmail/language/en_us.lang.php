@@ -1,41 +1,41 @@
 <?php
-/** 
- * 
- * SugarCRM Community Edition is a customer relationship management program developed by 
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc. 
- * 
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd. 
- * Copyright (C) 2011 - 2017 SalesAgility Ltd. 
- * 
- * This program is free software; you can redistribute it and/or modify it under 
- * the terms of the GNU Affero General Public License version 3 as published by the 
- * Free Software Foundation with the addition of the following permission added 
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK 
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY 
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS. 
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more 
- * details. 
- * 
- * You should have received a copy of the GNU Affero General Public License along with 
- * this program; if not, see http://www.gnu.org/licenses or write to the Free 
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 
- * 02110-1301 USA. 
- * 
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road, 
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com. 
- * 
- * The interactive user interfaces in modified source and object code versions 
- * of this program must display Appropriate Legal Notices, as required under 
- * Section 5 of the GNU Affero General Public License version 3. 
- * 
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3, 
- * these Appropriate Legal Notices must retain the display of the "Powered by 
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not 
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must 
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM". 
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -46,12 +46,12 @@ $mod_strings = array(
 
 
     'LBL_RE' => 'RE:',
-  
+
     'ERR_BAD_LOGIN_PASSWORD' => 'Login or Password Incorrect',
-    'ERR_INI_ZLIB' => 'Could not turn off Zlib compression temporarily.  "Test Settings" may fail.',
+    'ERR_INI_ZLIB' => 'Could not turn off Zlib compression temporarily. "Test Settings" may fail.',
     'ERR_MAILBOX_FAIL' => 'Could not retrieve any mail accounts.',
-    'ERR_NO_IMAP' => 'No IMAP libraries found.  Please resolve this before continuing with Inbound Email',
-    'ERR_NO_OPTS_SAVED' => 'No optimums were saved with your Inbound Email account.  Please review the settings',
+    'ERR_NO_IMAP' => 'No IMAP libraries found. Please resolve this before continuing with Inbound Email',
+    'ERR_NO_OPTS_SAVED' => 'No optimums were saved with your Inbound Email account. Please review the settings',
     'ERR_TEST_MAILBOX' => 'Please check your settings and try again.',
 
     'LBL_ASSIGN_TO_USER' => 'Assign To User',
@@ -74,7 +74,7 @@ $mod_strings = array(
     'LBL_ASSIGN_TO_GROUP_FOLDER_DESC' => 'Select to automatically create email records in SuiteCRM for all incoming emails.',
     'LBL_POSSIBLE_ACTION_DESC' => 'For the Create Case option, a Group Folder must be selected',
     'LBL_FILTER_DOMAIN' => 'No Auto-Reply to this Domain',
-    'LBL_FIND_SSL_WARN' => '<br>Testing SSL may take a long time.  Please be patient.<br>',
+    'LBL_FIND_SSL_WARN' => '<br>Testing SSL may take a long time. Please be patient.<br>',
     'LBL_FOUND_MAILBOXES' => 'Found the following usable folders.<br>Click one to choose it:',
     'LBL_FROM_ADDR' => '"From" Address',
     // as long as XTemplate doesn't support output escaping, transform
@@ -95,7 +95,7 @@ $mod_strings = array(
     'LBL_MAILBOX_TYPE' => 'Possible Actions',
     'LBL_DISTRIBUTION_METHOD' => 'Distribution Method',
     'LBL_CREATE_CASE_REPLY_TEMPLATE' => 'New Case Auto-Reply Template',
-    'LBL_CREATE_CASE_REPLY_TEMPLATE_HELP' => 'Select an automated response to notify email senders that a case has been created. The email contains the case number in the Subject line which adheres to the Case Macro setting.  This response is only sent when the first email is received from the recipient.',
+    'LBL_CREATE_CASE_REPLY_TEMPLATE_HELP' => 'Select an automated response to notify email senders that a case has been created. The email contains the case number in the Subject line which adheres to the Case Macro setting. This response is only sent when the first email is received from the recipient.',
     'LBL_MAILBOX' => 'Monitored Folders',
     'LBL_TRASH_FOLDER' => 'Trash Folder',
     'LBL_GET_TRASH_FOLDER' => 'Get Trash Folder',
@@ -146,7 +146,7 @@ $mod_strings = array(
     'LBL_TEST_WAIT_MESSAGE' => 'One moment please...',
     'LBL_WARN_IMAP_TITLE' => 'Inbound Email Disabled',
     'LBL_WARN_IMAP' => 'Warnings:',
-    'LBL_WARN_NO_IMAP' => 'Inbound Email <b>cannot</b> function without the IMAP c-client libraries enabled/compiled with the PHP module.  Please contact your administrator to resolve this issue.',
+    'LBL_WARN_NO_IMAP' => 'Inbound Email <b>cannot</b> function without the IMAP c-client libraries enabled/compiled with the PHP module. Please contact your administrator to resolve this issue.',
 
     'LNK_LIST_CREATE_NEW_GROUP' => 'New Group Mail Account',
     'LNK_LIST_CREATE_NEW_BOUNCE' => 'New Bounce Handling Account',

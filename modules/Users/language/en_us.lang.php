@@ -61,7 +61,7 @@ $mod_strings = array(
     'ERR_LAST_ADMIN_1' => 'The user name "',
     'ERR_LAST_ADMIN_2' => '" is the last user with administrator access. At least one user must be an administrator.',
     'ERR_PASSWORD_CHANGE_FAILED_1' => 'User password change failed for ',
-    'ERR_PASSWORD_CHANGE_FAILED_2' => ' failed.	The new password must be set.',
+    'ERR_PASSWORD_CHANGE_FAILED_2' => ' failed. The new password must be set.',
     'ERR_PASSWORD_CHANGE_FAILED_3' => '. The new password is invalid.',
     'ERR_PASSWORD_INCORRECT_OLD_1' => 'Incorrect current password for user ',
     'ERR_PASSWORD_INCORRECT_OLD_2' => '. Re-enter password information.',
@@ -257,7 +257,6 @@ $mod_strings = array(
 
     'LBL_PSW_MODIFIED' => 'Password Last Changed',
     'LBL_PHONE' => 'Phone',
-    'LBL_PICK_TZ_DESCRIPTION' => 'Before continuing, please confirm your time zone.  Select the appropriate time zone from the list below, and click Save to continue. The time zone can be changed at any time in your user settings.',
     'LBL_PICK_TZ_WELCOME' => 'Welcome to SuiteCRM.',
     'LBL_PICK_TZ_DESCRIPTION' => 'Before continuing, please confirm your time zone. Select the appropriate time zone from the list below, and click Save to continue. The time zone can be changed at any time in your user settings.',
     'LBL_PORTAL_ONLY_DESC' => 'Use for the Portal API. This type cannot login through the SuiteCRM web interface.',
@@ -444,7 +443,7 @@ $mod_strings = array(
     'LBL_EXCHANGE_SMTPUSER' => 'Exchange Username:',
     'LBL_EXCHANGE_SMTPPORT' => 'Exchange Server Port:',
     'LBL_EXCHANGE_SMTPSERVER' => 'Exchange Server:',
-  
+
     'LBL_OK' => 'OK',
     'LBL_CANCEL' => 'Cancel',
     'LBL_DELETE_USER' => 'Delete User',
@@ -605,7 +604,7 @@ $mod_strings = array(
     'LBL_SAVE_AS_DRAFT_BUTTON_TITLE'=> 'Save Draft',
     'LBL_SEARCH_FORM_DRAFTS_TITLE'=> 'Search Drafts',
     'LBL_SEARCH_FORM_SENT_TITLE'=> 'Search Sent Emails',
-    'LBL_SEND_ANYWAYS'			=> 'This email has no subject.  Send/save anyway?',
+    'LBL_SEND_ANYWAYS'			=> 'This email has no subject. Send/save anyway?',
     'LBL_SEND_BUTTON_LABEL'		=> 'Send',
     'LBL_SEND_BUTTON_TITLE'		=> 'Send',
     'LBL_SEND'					=> 'SEND',
@@ -656,8 +655,8 @@ $mod_strings = array(
 
     'NTC_REMOVE_INVITEE'		=> 'Are you sure you want to remove this recipient from the email?',
     'WARNING_SETTINGS_NOT_CONF'	=> 'Warning: Your email settings are not configured to send email.',
-    'WARNING_NO_UPLOAD_DIR'		=> 'Attachments may fail: No value for "upload_tmp_dir" was detected.  Please correct this in your php.ini file.',
-    'WARNING_UPLOAD_DIR_NOT_WRITABLE'	=> 'Attachments may fail: An incorrect or unusable value for "upload_tmp_dir" was detected.  Please correct this in your php.ini file.',
+    'WARNING_NO_UPLOAD_DIR'		=> 'Attachments may fail: No value for "upload_tmp_dir" was detected. Please correct this in your php.ini file.',
+    'WARNING_UPLOAD_DIR_NOT_WRITABLE'	=> 'Attachments may fail: An incorrect or unusable value for "upload_tmp_dir" was detected. Please correct this in your php.ini file.',
 
     // for All emails
     'LBL_BUTTON_RAW_TITLE'   => 'Show Raw Message',
@@ -707,7 +706,7 @@ $mod_strings = array(
     'LBL_MASS_DELETE_ERROR'		=> 'No checked items were passed for deletion.',
     'LBL_NEW'					=> 'New',
     'LBL_NEXT_EMAIL'			=> 'Next Free Item',
-    'LBL_NO_GRAB_DESC'			=> 'There were no items available.  Try again in a moment.',
+    'LBL_NO_GRAB_DESC'			=> 'There were no items available. Try again in a moment.',
     'LBL_QUICK_REPLY'			=> 'Reply',
     'LBL_REPLIED'				=> 'Replied',
     'LBL_TAKE_ONE_TITLE'		=> 'Reps',
@@ -795,7 +794,7 @@ $mod_strings = array(
     'LBL_NO_SUBJECT' =>'(no subject)',
     'LBL_CHECKING_ACCOUNT'	=> 'Checking Account',
     'LBL_OF'	=> 'of',
-    'LBL_TEST_EMAIL_BODY' => 'This email was sent in order to test the outgoing mail server information provided in the SuiteCRM application.  A successful receipt of this email indicates that the outgoing mail server information provided is valid.',
+    'LBL_TEST_EMAIL_BODY' => 'This email was sent in order to test the outgoing mail server information provided in the SuiteCRM application. A successful receipt of this email indicates that the outgoing mail server information provided is valid.',
 
     // for outbound email dialog
     'LBL_MAIL_SMTPAUTH_REQ'				=> 'Use SMTP Authentication?',
@@ -820,7 +819,7 @@ $mod_strings = array(
     'LBL_EMAILSETTINGS' => 'Email Settings' /*for 508 compliance fix*/,
 
     // SNIP
-    'LBL_EMAILS_MEETINGS_REL' => 'Emails:Meetings',
+    'LBL_EMAILS_MEETINGS_REL' => 'Emails: Meetings',
     'LBL_DATE_CREATED' => 'Date Created',
     'LBL_DATE_MODIFIED' => 'Date Modified',
 
