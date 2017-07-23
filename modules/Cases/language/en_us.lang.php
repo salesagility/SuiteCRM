@@ -60,17 +60,14 @@ $mod_strings = array(
     'LBL_ACCOUNT_NAME' => 'Account Name:',
     'LBL_ACCOUNTS_SUBPANEL_TITLE' => 'Accounts',
     'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-    'LBL_ATTACH_NOTE' => 'Attach Note',
     'LBL_BUGS_SUBPANEL_TITLE' => 'Bugs',
     'LBL_CASE_NUMBER' => 'Case Number:',
     'LBL_CASE' => 'Case:',
-    'LBL_CONTACT_CASE_TITLE' => 'Contact-Case:',
     'LBL_CONTACT_NAME' => 'Contact Name:',
     'LBL_CONTACT_ROLE' => 'Role:',
     'LBL_CONTACTS_SUBPANEL_TITLE' => 'Contacts',
     'LBL_DEFAULT_SUBPANEL_TITLE' => 'Cases',
     'LBL_DESCRIPTION' => 'Description:',
-    'LBL_FILENANE_ATTACHMENT' => 'File Attachment',
     'LBL_HISTORY_SUBPANEL_TITLE' => 'History',
     'LBL_INVITEE' => 'Contacts',
     'LBL_MEMBER_OF' => 'Account',
@@ -99,8 +96,6 @@ $mod_strings = array(
 
     'LNK_CASE_LIST' => 'View Cases',
     'LNK_NEW_CASE' => 'Create Case',
-    'NTC_REMOVE_FROM_BUG_CONFIRMATION' => 'Are you sure you want to remove this case from the bug?',
-    'NTC_REMOVE_INVITEE' => 'Are you sure you want to remove this contact from the case?',
     'LBL_LIST_DATE_CREATED' => 'Date Created',
     'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
     'LBL_TYPE' => 'Type',
@@ -112,9 +107,6 @@ $mod_strings = array(
     'LBL_PROJECT_SUBPANEL_TITLE' => 'Projects',
     'LBL_CASE_INFORMATION' => 'OVERVIEW',
 
-    //For export labels
-    'LBL_MODIFIED_USER_NAME' => 'Modified User Name',
-
     // SNIP
     'LBL_UPDATE_TEXT' => 'Update Text',
     'LBL_INTERNAL' => 'Internal Update',
@@ -122,7 +114,6 @@ $mod_strings = array(
     'LBL_AOP_CASE_UPDATES_THREADED' => 'Case Updates Threaded',
     'LBL_CASE_UPDATES_COLLAPSE_ALL' => 'Collapse All',
     'LBL_CASE_UPDATES_EXPAND_ALL' => 'Expand All',
-    'LBL_NO_CASE_UPDATES' => "There have been no updates to this case",
     'LBL_AOP_CASE_ATTACHMENTS' => 'Attachments: ',
 
     'LBL_AOP_CASE_EVENTS' => 'Case Events',
