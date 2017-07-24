@@ -68,7 +68,10 @@ class EmailTest extends PHPUnit_Framework_TestCase
 
         $email->email2init();
         $addresses = 'abc<abc@xyz.com>,xyz<xyz@abc.com>';
-        $expected = array(array('email' => 'abc@xyz.com', 'display' => 'abc'), array('email' => 'xyz@abc.com', 'display' => 'xyz'));
+        $expected = array(
+            array('email' => 'abc@xyz.com', 'display' => 'abc'),
+            array('email' => 'xyz@abc.com', 'display' => 'xyz')
+        );
 
         $result = $email->email2ParseAddresses($addresses);
         $this->assertSame($expected, $result);
@@ -103,7 +106,8 @@ class EmailTest extends PHPUnit_Framework_TestCase
         $email = new Email();
 
         $this->assertEquals('some text', $email->decodeDuringSend('some text'));
-        $this->assertEquals('&lt; some text &gt;', $email->decodeDuringSend('sugarLessThan some text sugarGreaterThan'));
+        $this->assertEquals('&lt; some text &gt;',
+            $email->decodeDuringSend('sugarLessThan some text sugarGreaterThan'));
     }
 
     public function testisDraftEmail()
@@ -111,15 +115,15 @@ class EmailTest extends PHPUnit_Framework_TestCase
         $email = new Email();
 
         //test with required parametr set
-        $this->assertEquals(true,  $email->isDraftEmail(array('saveDraft' => '1')));
+        $this->assertEquals(true, $email->isDraftEmail(array('saveDraft' => '1')));
 
         //test with one of required attribute set
         $email->type = 'draft';
-        $this->assertEquals(false,  $email->isDraftEmail(array()));
+        $this->assertEquals(false, $email->isDraftEmail(array()));
 
         //test with both of required attribute set
         $email->status = 'draft';
-        $this->assertEquals(true,  $email->isDraftEmail(array()));
+        $this->assertEquals(true, $email->isDraftEmail(array()));
     }
 
     public function testgetNamePlusEmailAddressesForCompose()
@@ -159,19 +163,19 @@ class EmailTest extends PHPUnit_Framework_TestCase
     public function testemail2Send()
     {
         $this->markTestIncomplete('Not testing sending email currently');
-    /*	$email = new Email();
-    	
-    	$_REQUEST['sendSubject'] = "test subject";
-    	$_REQUEST['sendDescription'] = "test text"; 
-    	$_REQUEST['fromAccount'] = "from@email.com";		
-    	$_REQUEST['setEditor']  = 1;
-    	$_REQUEST['description_html']  = "test html";
-    	$_REQUEST['sendTo'] = "abc@email.com";
-    
-    	$result = $email->email2Send($_REQUEST);
-    	
-    	$this->assertEquals(false, $result);
-    */
+        /*	$email = new Email();
+
+            $_REQUEST['sendSubject'] = "test subject";
+            $_REQUEST['sendDescription'] = "test text";
+            $_REQUEST['fromAccount'] = "from@email.com";
+            $_REQUEST['setEditor']  = 1;
+            $_REQUEST['description_html']  = "test html";
+            $_REQUEST['sendTo'] = "abc@email.com";
+
+            $result = $email->email2Send($_REQUEST);
+
+            $this->assertEquals(false, $result);
+        */
     }
 
     public function testsend()
@@ -536,7 +540,10 @@ class EmailTest extends PHPUnit_Framework_TestCase
         $addrs_names = 'abc;xyz';
         $addrs_emails = 'abc@email.com;xyz@email.com';
 
-        $expected = array(array('email' => 'abc@email.com', 'display' => 'abc', 'contact_id' => '1'), array('email' => 'xyz@email.com', 'display' => 'xyz', 'contact_id' => '2'));
+        $expected = array(
+            array('email' => 'abc@email.com', 'display' => 'abc', 'contact_id' => '1'),
+            array('email' => 'xyz@email.com', 'display' => 'xyz', 'contact_id' => '2')
+        );
 
         $actual = $email->parse_addrs($addrs, $addrs_ids, $addrs_names, $addrs_emails);
 
@@ -596,14 +603,14 @@ class EmailTest extends PHPUnit_Framework_TestCase
         //test without assigned_user_id in url
         $url = 'index.php?module=Users&offset=6&stamp=1453274421025259800&return_module=Users&action=DetailView&record=seed_max_id';
         $expected = array(
-                'module' => 'Users',
-                'action' => 'DetailView',
-                'group' => '',
-                'record' => 'seed_max_id',
-                'type' => '',
-                'offset' => '6',
-                'stamp' => '1453274421025259800',
-                'return_module' => 'Users',
+            'module' => 'Users',
+            'action' => 'DetailView',
+            'group' => '',
+            'record' => 'seed_max_id',
+            'type' => '',
+            'offset' => '6',
+            'stamp' => '1453274421025259800',
+            'return_module' => 'Users',
         );
         $actual = $email->getStartPage($url);
         $this->assertSame($expected, $actual);
@@ -611,16 +618,16 @@ class EmailTest extends PHPUnit_Framework_TestCase
         //test with assigned_user_id in url
         $url = 'index.php?module=Users&offset=6&stamp=1453274421025259800&return_module=Users&action=DetailView&record=seed_max_id&assigned_user_id=1';
         $expected = array(
-                'module' => 'Users',
-                'action' => 'DetailView',
-                'group' => '',
-                'record' => 'seed_max_id',
-                'type' => '',
-                'offset' => '6',
-                'stamp' => '1453274421025259800',
-                'return_module' => 'Users',
-                'assigned_user_id' => '1',
-                'current_view' => 'DetailView&module=Users&assigned_user_id=1&type=',
+            'module' => 'Users',
+            'action' => 'DetailView',
+            'group' => '',
+            'record' => 'seed_max_id',
+            'type' => '',
+            'offset' => '6',
+            'stamp' => '1453274421025259800',
+            'return_module' => 'Users',
+            'assigned_user_id' => '1',
+            'current_view' => 'DetailView&module=Users&assigned_user_id=1&type=',
         );
         $actual = $email->getStartPage($url);
         $this->assertSame($expected, $actual);
@@ -862,8 +869,10 @@ class EmailTest extends PHPUnit_Framework_TestCase
         $email = new Email();
 
         $this->assertEquals('test string', $email->trimLongTo('test string')); //test without any separator
-        $this->assertEquals('test string 1...', $email->trimLongTo('test string 1, test string2')); //test with , separator
-        $this->assertEquals('test string 1...', $email->trimLongTo('test string 1; test string2'));//test with ; separator
+        $this->assertEquals('test string 1...',
+            $email->trimLongTo('test string 1, test string2')); //test with , separator
+        $this->assertEquals('test string 1...',
+            $email->trimLongTo('test string 1; test string2'));//test with ; separator
     }
 
     public function testget_summary_text()

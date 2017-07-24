@@ -76,7 +76,8 @@ class EmailManTest extends PHPUnit_Framework_TestCase
 
         //with parameters
         $expected = "SELECT emailman.* ,\n					campaigns.name as campaign_name,\n					email_marketing.name as message_name,\n					(CASE related_type\n						WHEN 'Contacts' THEN LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,''),' ',IFNULL(contacts.last_name,''))))\n						WHEN 'Leads' THEN LTRIM(RTRIM(CONCAT(IFNULL(leads.first_name,''),' ',IFNULL(leads.last_name,''))))\n						WHEN 'Accounts' THEN accounts.name\n						WHEN 'Users' THEN LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,''))))\n						WHEN 'Prospects' THEN LTRIM(RTRIM(CONCAT(IFNULL(prospects.first_name,''),' ',IFNULL(prospects.last_name,''))))\n					END) recipient_name FROM emailman\n		            LEFT JOIN users ON users.id = emailman.related_id and emailman.related_type ='Users'\n					LEFT JOIN contacts ON contacts.id = emailman.related_id and emailman.related_type ='Contacts'\n					LEFT JOIN leads ON leads.id = emailman.related_id and emailman.related_type ='Leads'\n					LEFT JOIN accounts ON accounts.id = emailman.related_id and emailman.related_type ='Accounts'\n					LEFT JOIN prospects ON prospects.id = emailman.related_id and emailman.related_type ='Prospects'\n					LEFT JOIN prospect_lists ON prospect_lists.id = emailman.list_id\n                    LEFT JOIN email_addr_bean_rel ON email_addr_bean_rel.bean_id = emailman.related_id and emailman.related_type = email_addr_bean_rel.bean_module and email_addr_bean_rel.primary_address = 1 and email_addr_bean_rel.deleted=0\n					LEFT JOIN campaigns ON campaigns.id = emailman.campaign_id\n					LEFT JOIN email_marketing ON email_marketing.id = emailman.marketing_id INNER JOIN (select min(id) as id from emailman  em GROUP BY em.user_id  ) secondary\n			           on emailman.id = secondary.id	WHERE emailman.user_id=\"\" AND  emailman.deleted=0";
-        $actual = $emailMan->create_queue_items_query('emailman.id', 'emailman.user_id=""', array(), array('group_by' => 'emailman.user_id'));
+        $actual = $emailMan->create_queue_items_query('emailman.id', 'emailman.user_id=""', array(),
+            array('group_by' => 'emailman.user_id'));
         $this->assertSame($expected, $actual);
     }
 
@@ -100,10 +101,10 @@ class EmailManTest extends PHPUnit_Framework_TestCase
         $emailMan = new EmailMan();
 
         $expected = array(
-                'IN_QUEUE' => '0',
-                'SEND_ATTEMPTS' => '0',
-                'DELETED' => '0',
-                'EMAIL1_LINK' => '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="EmailMan" data-record-id="" data-module-name=""  data-email-address="">',
+            'IN_QUEUE' => '0',
+            'SEND_ATTEMPTS' => '0',
+            'DELETED' => '0',
+            'EMAIL1_LINK' => '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="EmailMan" data-record-id="" data-module-name=""  data-email-address="">',
         );
 
         $actual = $emailMan->get_list_view_data();
@@ -224,7 +225,8 @@ class EmailManTest extends PHPUnit_Framework_TestCase
         $emailMan = new EmailMan();
         $emailMan->test = true;
 
-        $result = $emailMan->create_ref_email(0, 'test', 'test text', 'test html', 'test campaign', 'from@test.com', '1', '', array(), true, 'test from address');
+        $result = $emailMan->create_ref_email(0, 'test', 'test text', 'test html', 'test campaign', 'from@test.com',
+            '1', '', array(), true, 'test from address');
 
         //test for email id returned and mark delete for cleanup
         $this->assertEquals(36, strlen($result));

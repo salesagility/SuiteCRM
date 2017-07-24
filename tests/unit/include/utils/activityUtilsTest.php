@@ -1,6 +1,7 @@
 <?php
 
 require_once 'include/utils/activity_utils.php';
+
 class activity_utilsTest extends PHPUnit_Framework_TestCase
 {
 

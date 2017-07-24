@@ -1268,7 +1268,8 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
         $inboundEmail = new InboundEmail();
 
-        $result = $inboundEmail->setSessionInboundFoldersString('mail.google.com', 'test', 22, 'IMAP', 'foldersList string');
+        $result = $inboundEmail->setSessionInboundFoldersString('mail.google.com', 'test', 22, 'IMAP',
+            'foldersList string');
         $this->assertEquals('foldersList string', $_SESSION['mail.google.comtest22IMAPfoldersList']);
     }
 
@@ -1451,8 +1452,16 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
         $inboundEmail = new InboundEmail();
 
         $parts = array(
-                    (Object) array('encoding' => 'utf-8', 'parts' => array((Object) array('encoding' => 'utf-8', 'parts' => array((Object) array('encoding' => 'utf-8', 'parts' => 'dummy parts 2'))))),
-                );
+            (Object)array(
+                'encoding' => 'utf-8',
+                'parts' => array(
+                    (Object)array(
+                        'encoding' => 'utf-8',
+                        'parts' => array((Object)array('encoding' => 'utf-8', 'parts' => 'dummy parts 2'))
+                    )
+                )
+            ),
+        );
 
         //$result = $inboundEmail->getEncodingFromBreadCrumb("1.2.3", $parts);
 
@@ -1466,7 +1475,26 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
         $inboundEmail = new InboundEmail();
 
         $parts = array(
-                (Object) array('ifparameters' => 1, 'attribute' => 'charset', 'value' => 'test', 'parts' => array((Object) array('ifparameters' => 1, 'attribute' => 'charset', 'value' => 'test', 'parts' => array((Object) array('ifparameters' => 1, 'attribute' => 'charset', 'value' => 'test', 'parts' => 'dummy parts 2'))))),
+            (Object)array(
+                'ifparameters' => 1,
+                'attribute' => 'charset',
+                'value' => 'test',
+                'parts' => array(
+                    (Object)array(
+                        'ifparameters' => 1,
+                        'attribute' => 'charset',
+                        'value' => 'test',
+                        'parts' => array(
+                            (Object)array(
+                                'ifparameters' => 1,
+                                'attribute' => 'charset',
+                                'value' => 'test',
+                                'parts' => 'dummy parts 2'
+                            )
+                        )
+                    )
+                )
+            ),
         );
 
         $result = $inboundEmail->getCharsetFromBreadCrumb('1.2.3', $parts);
@@ -1544,14 +1572,14 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
         $inboundEmail = new InboundEmail();
 
         $expected = array(
-                          'From' => 'Media Temple user (mt.kb.user@gmail.com)',
-                          'Subject' => 'article: How to Trace a Email',
-                          'Date' => 'January 25, 2011 3:30:58 PM PDT',
-                          'To' => 'user@example.com',
-                          'Return-Path' => '<mt.kb.user@gmail.com>',
-                          'Envelope-To' => 'user@example.com',
-                          'Delivery-Date' => 'Tue, 25 Jan 2011 15:31:01 -0700',
-                        );
+            'From' => 'Media Temple user (mt.kb.user@gmail.com)',
+            'Subject' => 'article: How to Trace a Email',
+            'Date' => 'January 25, 2011 3:30:58 PM PDT',
+            'To' => 'user@example.com',
+            'Return-Path' => '<mt.kb.user@gmail.com>',
+            'Envelope-To' => 'user@example.com',
+            'Delivery-Date' => 'Tue, 25 Jan 2011 15:31:01 -0700',
+        );
         $header = "From: Media Temple user (mt.kb.user@gmail.com)\r\nSubject: article: How to Trace a Email\r\nDate: January 25, 2011 3:30:58 PM PDT\r\nTo: user@example.com\r\nReturn-Path: <mt.kb.user@gmail.com>\r\nEnvelope-To: user@example.com\r\nDelivery-Date: Tue, 25 Jan 2011 15:31:01 -0700";
 
         $result = $inboundEmail->decodeHeader($header);
@@ -1695,18 +1723,29 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
         $inboundEmail = new InboundEmail();
 
         //test with filename attribute
-        $part = (Object) array('dparameters' => array((Object) array('attribute' => 'filename', 'value' => 'test1.txt'), (Object) array('attribute' => 'filename', 'value' => 'test2.txt')),
-                                'parameters' => array((Object) array('attribute' => 'name', 'value' => 'test1'), (Object) array('attribute' => 'name', 'value' => 'test2')),
-                                );
+        $part = (Object)array(
+            'dparameters' => array(
+                (Object)array('attribute' => 'filename', 'value' => 'test1.txt'),
+                (Object)array('attribute' => 'filename', 'value' => 'test2.txt')
+            ),
+            'parameters' => array(
+                (Object)array('attribute' => 'name', 'value' => 'test1'),
+                (Object)array('attribute' => 'name', 'value' => 'test2')
+            ),
+        );
 
         $result = $inboundEmail->retrieveAttachmentNameFromStructure($part);
         $this->assertEquals('test1.txt', $result);
 
         //test with no filename attribute
-        $part = (Object) array('dparameters' => array((Object) array('attribute' => 'name', 'value' => 'test1.txt')),
-                                'parameters' => array((Object) array('attribute' => 'name', 'value' => 'test1'), (Object) array('attribute' => 'name', 'value' => 'test2')),
+        $part = (Object)array(
+            'dparameters' => array((Object)array('attribute' => 'name', 'value' => 'test1.txt')),
+            'parameters' => array(
+                (Object)array('attribute' => 'name', 'value' => 'test1'),
+                (Object)array('attribute' => 'name', 'value' => 'test2')
+            ),
 
-                                );
+        );
 
         $result = $inboundEmail->retrieveAttachmentNameFromStructure($part);
         $this->assertEquals('test1', $result);
@@ -1722,7 +1761,7 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
         $inboundEmail = new InboundEmail();
 
-        $part = (Object) array('disposition' => 'multipart', 'subtype' => 10);
+        $part = (Object)array('disposition' => 'multipart', 'subtype' => 10);
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -1817,7 +1856,8 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(false, $inboundEmail->isUuencode('test'));
 
-        $this->assertEquals(false, $inboundEmail->isUuencode("begin 0744 odt_uuencoding_file.dat\r+=&5S=\"!S=')I;F<`\r`\rend"));
+        $this->assertEquals(false,
+            $inboundEmail->isUuencode("begin 0744 odt_uuencoding_file.dat\r+=&5S=\"!S=')I;F<`\r`\rend"));
     }
 
     public function testhandleUUEncodedEmailBody()
@@ -1828,7 +1868,7 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
         $result = $inboundEmail->handleUUEncodedEmailBody($raw, 1);
 
-        $this->assertEquals("\n".$raw, $result);
+        $this->assertEquals("\n" . $raw, $result);
     }
 
     public function testhandleUUDecode()
@@ -1927,16 +1967,16 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
         $expected = "<form action=\"index.php\" method=\"post\" name=\"Macro\" id=\"form\"><input type=\"hidden\" name=\"module\" value=\"InboundEmail\"><input type=\"hidden\" name=\"action\" value=\"ListView\"><input type=\"hidden\" name=\"save\" value=\"true\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td><input title=\"Save\"accessKey=\"a\"class=\"button\"onclick=\"this.form.return_module.value='InboundEmail'; this.form.return_action.value='ListView';\"type=\"submit\" name=\"Edit\" value=\" Save \"></td></tr></table><table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"detail view\"><tr><td valign=\"top\" width='10%' NOWRAP scope=\"row\"><span><b>:</b></span></td><td valign=\"top\" width='20%'><span><input name=\"inbound_email_case_macro\" type=\"text\" value=\"[CASE:%1]\"></span></td><td valign=\"top\" width='70%'><span><br/><i></i></span></td></tr></table></form>";
         $result = $inboundEmail->getSystemSettingsForm();
         $expected = trim($expected);
-        $expected = str_replace(' ','', $expected);
-        $expected = str_replace("\n",'', $expected);
-        $expected = str_replace("\r",'', $expected);
-        $expected = str_replace("\t",'', $expected);
+        $expected = str_replace(' ', '', $expected);
+        $expected = str_replace("\n", '', $expected);
+        $expected = str_replace("\r", '', $expected);
+        $expected = str_replace("\t", '', $expected);
 
         $actual = trim($result);
-        $actual = str_replace(' ','', $actual);
-        $actual = str_replace("\n",'', $actual);
-        $actual = str_replace("\r",'', $actual);
-        $actual = str_replace("\t",'', $actual);
+        $actual = str_replace(' ', '', $actual);
+        $actual = str_replace("\n", '', $actual);
+        $actual = str_replace("\r", '', $actual);
+        $actual = str_replace("\t", '', $actual);
         $this->assertSame($expected, $actual);
     }
 
@@ -1992,8 +2032,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
         $inboundEmail = new InboundEmail();
 
         $this->assertEquals('{:/service=}', $inboundEmail->getConnectString()); //test with default options
-        $this->assertEquals('{:/service=mail.google.com}INBOX', $inboundEmail->getConnectString('mail.google.com', 'INBOX'));//test with includeMbox true
-        $this->assertEquals('{:/service=mail.google.com}', $inboundEmail->getConnectString('mail.google.com', 'INBOX', false));//test with includeMbox false
+        $this->assertEquals('{:/service=mail.google.com}INBOX',
+            $inboundEmail->getConnectString('mail.google.com', 'INBOX'));//test with includeMbox true
+        $this->assertEquals('{:/service=mail.google.com}',
+            $inboundEmail->getConnectString('mail.google.com', 'INBOX', false));//test with includeMbox false
     }
 
     public function testdisconnectMailserver()
@@ -2072,14 +2114,14 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
         $result = $inboundEmail->get_list_view_data();
 
         $expected = array(
-                        'DELETED' => '0',
-                        'STATUS' => null,
-                        'DELETE_SEEN' => '0',
-                        'MAILBOX_TYPE' => 'INBOX',
-                        'IS_PERSONAL' => '0',
-                        'MAILBOX_TYPE_NAME' => null,
-                        'GLOBAL_PERSONAL_STRING' => null,
-                    );
+            'DELETED' => '0',
+            'STATUS' => null,
+            'DELETE_SEEN' => '0',
+            'MAILBOX_TYPE' => 'INBOX',
+            'IS_PERSONAL' => '0',
+            'MAILBOX_TYPE_NAME' => null,
+            'GLOBAL_PERSONAL_STRING' => null,
+        );
 
         $this->assertTrue(is_array($result));
         $this->assertEquals($expected, $result);
@@ -2269,8 +2311,28 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
         $inboundEmail->email->reply_to_addr = 'reply';
 
         $expected = array(
-                          'meta' => array('type' => 'archived', 'uid' => 1, 'ieId' => 1, 'email' => array('name' => 'test', 'from_name' => '', 'from_addr' => 'from', 'date_start' => ' ', 'time_start' => '', 'message_id' => '', 'cc_addrs' => 'cc', 'attachments' => '', 'toaddrs' => 'to', 'description' => '', 'reply_to_addr' => 'reply'), 'mbox' => 'INBOX', 'cc' => '', 'is_sugarEmail' => false),
-                        );
+            'meta' => array(
+                'type' => 'archived',
+                'uid' => 1,
+                'ieId' => 1,
+                'email' => array(
+                    'name' => 'test',
+                    'from_name' => '',
+                    'from_addr' => 'from',
+                    'date_start' => ' ',
+                    'time_start' => '',
+                    'message_id' => '',
+                    'cc_addrs' => 'cc',
+                    'attachments' => '',
+                    'toaddrs' => 'to',
+                    'description' => '',
+                    'reply_to_addr' => 'reply'
+                ),
+                'mbox' => 'INBOX',
+                'cc' => '',
+                'is_sugarEmail' => false
+            ),
+        );
         $result = $inboundEmail->displayOneEmail(1, 'INBOX');
 
         $this->assertEquals($expected, $result);
