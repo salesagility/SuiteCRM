@@ -1,7 +1,7 @@
 SuiteCRM Automated Test Suite
 ====
 
-Automated tested provides a means to ensure that the quality of the product is kept to a high standard. Tests help to ensure that each team member continues to work in harmony, by providing a consistent testing framework, in which every one contributes tests with the changes being made in the product. Generally speaking, The more code is covered by high quality automated tests, the more likely the quality of the product is good.
+Automated tested provides a means to ensure that the quality of the product is kept to a high standard. Tests help to ensure that each contributor continues to work in harmony, by providing a consistent testing framework, in which every one contributes tests with the changes being made in the product. Generally speaking, The more code is covered by high quality automated tests, the more likely the quality of the product is good.
 
 
 ## Introduction Automated testing
