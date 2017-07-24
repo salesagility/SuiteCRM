@@ -68,8 +68,8 @@ Automated system testing are acceptance or functional tests which can used to te
 
 Regression tests are typically functional or acceptance test which check that the software which was previously developed and tested still performs correctly after it was changed. Regression tests are also written when a user raises an issue with the software. If a tester can replicate an issue, then it is best practice to write an automated test that developers can also replicate and test the issue. This ensures that any future work doesn't contain the same issue.
 
-## Installing the test suite
-The suite is built on top of composer and bower. 
+## Installing the testing framework
+The automated test framework is built on top of [codeception](http://codeception.com) and [mocha](https://mochajs.org/) (in the browser). It uses composer and bower to manage the dependencies.
 
 Run the following in your terminal
 <pre>
@@ -79,7 +79,7 @@ composer install
 
 ## Configuring the automated tests
 
-SuiteCRM requires you to configure the automated test with your setup. Here you have some choices how you wish to configure your environment. 
+SuiteCRM requires you to configure the automated test with your development environment. There are a number of ways to configure your environment. 
 
 - You can configure the automated test by add an yml file to the tests/_envs folder
 - You can edit the yml files for each test suite
