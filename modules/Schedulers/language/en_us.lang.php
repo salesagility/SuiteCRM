@@ -63,10 +63,8 @@ $mod_strings = array(
     'LBL_LIST_LIST_ORDER' => 'Schedulers:',
     'LBL_LIST_NAME' => 'Scheduler:',
     'LBL_LIST_RANGE' => 'Range:',
-    'LBL_LIST_REMOVE' => 'Remove:',
     'LBL_LIST_STATUS' => 'Status:',
     'LBL_LIST_TITLE' => 'Schedule List:',
-    'LBL_LIST_EXECUTE_TIME' => 'Will Run At:',
 // human readable:
     'LBL_SUN' => 'Sunday',
     'LBL_MON' => 'Monday',
@@ -76,19 +74,14 @@ $mod_strings = array(
     'LBL_FRI' => 'Friday',
     'LBL_SAT' => 'Saturday',
     'LBL_ALL' => 'Every Day',
-    'LBL_EVERY_DAY' => 'Every day ',
-    'LBL_AT_THE' => 'At the ',
     'LBL_EVERY' => 'Every ',
     'LBL_FROM' => 'From ',
     'LBL_ON_THE' => 'On the ',
     'LBL_RANGE' => ' to ',
-    'LBL_AT' => ' at ',
-    'LBL_IN' => ' in ',
     'LBL_AND' => ' and ',
     'LBL_MINUTES' => ' minutes ',
     'LBL_HOUR' => ' hours',
     'LBL_HOUR_SING' => ' hour',
-    'LBL_MONTH' => ' month',
     'LBL_OFTEN' => ' As often as possible.',
     'LBL_MIN_MARK' => ' minute mark',
 
@@ -131,7 +124,6 @@ $mod_strings = array(
 // Links
     'LNK_LIST_SCHEDULER' => 'Schedulers',
     'LNK_NEW_SCHEDULER' => 'Create Scheduler',
-    'LNK_LIST_SCHEDULED' => 'Scheduled Jobs',
 // Messages
     'ERR_CRON_SYNTAX' => 'Invalid Cron syntax',
     'NTC_LIST_ORDER' => 'Set the order this schedule will appear in the Scheduler dropdown lists',
