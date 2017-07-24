@@ -16,6 +16,11 @@ class BasicModule
     /**
      * @var string $NAME
      */
+    public static $PACKAGE_NAME = 'BasicTestModule';
+
+    /**
+     * @var string $NAME
+     */
     public static $NAME = 'BasicTestModule';
 
     /**

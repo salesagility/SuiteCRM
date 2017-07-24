@@ -3,7 +3,7 @@
 namespace Page;
 
 use \AcceptanceTester as Tester;
-use SuiteCRM\Enumerator\DesignBreakPoints;
+use SuiteCRM\Enumerator\DesignBreakPoint;
 
 class NavigationBar
 {
@@ -37,19 +37,19 @@ class NavigationBar
         $breakpoint = Design::getBreakpointString($config['width']);
         switch ($breakpoint)
         {
-            case DesignBreakPoints::lg:
+            case DesignBreakPoint::lg:
                 $this->tester->click('.desktop-bar #toolbar .globalLinks-desktop');
                 $this->tester->click($link, '.desktop-bar #toolbar .globalLinks-desktop');
                 break;
-            case DesignBreakPoints::md:
+            case DesignBreakPoint::md:
                 $this->tester->click('.tablet-bar #toolbar .globalLinks-mobile');
                 $this->tester->click($link, '.tablet-bar #toolbar .globalLinks-mobile');
                 break;
-            case DesignBreakPoints::sm:
+            case DesignBreakPoint::sm:
                 $this->tester->click('.tablet-bar #toolbar .globalLinks-mobile');
                 $this->tester->click($link, '.tablet-bar #toolbar .globalLinks-mobile');
                 break;
-            case DesignBreakPoints::xs:
+            case DesignBreakPoint::xs:
                 $this->tester->click('.mobile-bar #toolbar .globalLinks-mobile');
                 $this->tester->click($link, '.mobile-bar #toolbar .globalLinks-mobile');
                 break;
@@ -75,28 +75,28 @@ class NavigationBar
         $breakpoint = Design::getBreakpointString($config['width']);
         switch ($breakpoint)
         {
-            case DesignBreakPoints::lg:
+            case DesignBreakPoint::lg:
                 $allMenuButton = '#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav.all';
                 $this->tester->click('All', $allMenuButton);
                 $allMenu = $allMenuButton . ' > span.notCurrentTab > ul.dropdown-menu';
                 $this->tester->waitForElementVisible($allMenu);
                 $this->tester->click($link, $allMenu);
                 break;
-            case DesignBreakPoints::md:
+            case DesignBreakPoint::md:
                 $allMenuButton = 'div.navbar-header > button.navbar-toggle';
                 $this->tester->click($allMenuButton);
                 $allMenu = 'div.navbar-header > #mobile_menu';
                 $this->tester->waitForElementVisible($allMenu);
                 $this->tester->click($link, $allMenu);
                 break;
-            case DesignBreakPoints::sm:
+            case DesignBreakPoint::sm:
                 $allMenuButton = 'div.navbar-header > button.navbar-toggle';
                 $this->tester->click($allMenuButton);
                 $allMenu = 'div.navbar-header > #mobile_menu';
                 $this->tester->waitForElementVisible($allMenu);
                 $this->tester->click($link, $allMenu);
                 break;
-            case DesignBreakPoints::xs:
+            case DesignBreakPoint::xs:
                 $allMenuButton = 'div.navbar-header > button.navbar-toggle';
                 $this->tester->click($allMenuButton);
                 $allMenu = 'div.navbar-header > #mobile_menu';
