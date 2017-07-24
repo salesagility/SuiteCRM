@@ -300,4 +300,4 @@ Example:
 codecept run acceptance --env selenium-hub,selenium-xga
 </pre>
 
-**Please note:** that the SuiteCRM automate test uses **height** and **width** values instead of the window_size. window_size is ignored by the automated test suite.
+**Please note:** that the SuiteCRM automated test framework uses **height** and **width** values to define the window size instead of the window_size. window_size is ignored by the automated test suite.
