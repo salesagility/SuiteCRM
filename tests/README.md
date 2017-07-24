@@ -197,7 +197,7 @@ INSTANCE_ADMIN_USER=admin
 INSTANCE_ADMIN_PASSWORD=admin
 </pre>
 
-and then reference it in your php container:
+and then reference it in your php container (docker-compose.yml):
 <pre>
 version: '3'
 services:
@@ -243,7 +243,7 @@ In your selenium developement environment, It is recommended that you employ doc
 
 #### Using Docker Compose with the Selenium Hub
 
-You can configure selenium using docker compose. Please ensure you have the following in your DockerCompose file.
+You can configure selenium using docker compose. Please ensure you have the following in your docker-compose.yml file.
 
 <pre>
  selenium-hub:
