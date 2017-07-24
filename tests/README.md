@@ -300,7 +300,7 @@ You may prefer to run in a local php environment instead of using docker compose
 codecept run demo --env chrome
 </pre>
 
-### Resolutions
+#### Screen Resolutions
 There are also different configurations for each target device we test for:
 
 - selenium-iphone-6 (375x667)
