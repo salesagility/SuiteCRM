@@ -13,13 +13,15 @@
   "require-dev": {
     "leafo/scssphp": "dev-master",
     "mikey179/vfsStream": "1.4.*",
-    "codeception/codeception": "^2.2"
+    "codeception/codeception": "^2.0"
   },
   "scripts": {},
   "prefer-stable": true,
   "autoload": {
-    "psr-0": {
-      "": "src/"
+    "psr-4": {
+      "SuiteCRM\\": [
+        "tests/SuiteCRM"
+      ]
     }
   },
   "extra": {}
