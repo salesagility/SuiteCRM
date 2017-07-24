@@ -77,7 +77,7 @@ cd /path/to/suitecrm/instance
 composer install
 </pre>
 
-## Configuring the automated test
+## Configuring the automated tests
 
 SuiteCRM requires you to configure the automated test with your setup. Here you have some choices how you wish to configure your environment. 
 
