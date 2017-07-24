@@ -41,7 +41,7 @@ A test scenario is a set of conditions or variables under which a tester will de
 ### Acceptance Tests
 
 Acceptance tests ensure that the software meets requirements of a user story. Since user stories are the examples given at the start of a development cycle, acceptance test tend to be the first set of tests to be written. Acceptances tests are also the easiest  tests to write, as they resemble a simple list of instructs like:
-- $I->goto('/home');
+- $I->goto('/');
 - $I->click('button');
 - $I->see('dashboard')
 Automated user acceptance tests mock the behaviour of a user.  These tests tell the developer/engineer that the a part of the system is displaying the right elements after an action has been carried out.
@@ -65,9 +65,46 @@ Automated system testing are acceptance or functional tests which can used to te
 
 Regression tests are typically functional or acceptance test which check that the software which was previously developed and tested still performs correctly after it was changed. Regression tests are also written when a user raises an issue with the software. If a tester can replicate an issue, then it is best practice to write an automated test that developers can also replicate and test the issue. This ensures that any future work doesn't contain the same issue.
 
-## Set up locally
+## Configuring the automated test
 
-Set up the environment variables
+SuiteCRM requires you to configure the automated test with your setup. Here you have some choices how you wish to configure your environment. 
+
+- You can configure the automated test by add an yml file to the tests/_envs folder
+- You can edit the yml files for each test suite
+- You can set up environment variables in the terminal or command prompt
+
+### Add a file to tests/_envs
+
+Adding a file to tests/_envs enables to create different configurations. This enables you to 
+
+Example: tests/_envs/mysql.yml
+<pre>
+modules:
+  config:
+    \SuiteCRM\Test\Driver\WebDriver:
+      url: "http://path/to/instance"
+      database_driver: "MYSQL"
+      # Also can be set to database_driver: "MSSQL"
+      database_name: "automated_tests"
+      database_host: "localhost"
+      database_user: "automated_tester"
+      database_password: "automated_password"
+      instance_admin_user: "admin"
+      instance_admin_password: "secret"
+</pre>
+
+Then you need to add this env into your command like so:
+
+<pre>
+codecept run --env mysql.
+</pre>
+
+For more details please refer to tests/_support/Helper/WebDriverHelper.php.
+
+### Editing test suite files
+
+### Environment Variables
+Using environment variables command line variables (bash):
 <pre>
 export DATABASE_DRIVER=MYSQL
 export DATABASE_NAME=automated_tests
@@ -78,6 +115,21 @@ export INSTANCE_URL=http://path/to/instance
 export INSTANCE_ADMIN_USER=admin
 export INSTANCE_ADMIN_PASSWORD=admin
 </pre>
+
+Using environment variables command line variables (command prompt):
+<pre>
+set DATABASE_DRIVER=MYSQL
+set DATABASE_NAME=automated_tests
+set DATABASE_HOST=localhost
+set DATABASE_USER=automated_tests
+set DATABASE_PASSWORD=automated_tests
+set INSTANCE_URL=http://path/to/instance
+set INSTANCE_ADMIN_USER=admin
+set INSTANCE_ADMIN_PASSWORD=admin
+</pre>
+
+DATABASE_DRIVER=MYSQL
+DATABASE_DRIVER=MSSQL
 
 to make it easier to run the commands
 
@@ -94,8 +146,7 @@ codecept run demo --env selenium-hub,chrome
 
 ## Test Environments
 
-The SuiteCRM Test Suite can support different environments. You can see the different configurations for test environments in tests/_env folder.
-There are different prefixes depending the testing environment you deploy.
+The SuiteCRM automated tests can support different environments. You can see the different configurations for test environments in tests/_env folder. There are different prefixes depending the testing environment you deploy.
  
 - selenium- Configures the features for selenium web driver environment
 - browser-stack- Configures features for browser stack environment
@@ -161,10 +212,8 @@ You may prefer to run in a local php environment instead of using docker compose
 codecept run demo --env chrome
 </pre>
 
-
-
-#### Resolutions
-There are also different configurations for each device we test
+### Resolutions
+There are also different configurations for each target device we test for:
 
 - selenium-iphone-6 (375x667)
 - selenium-ipad-2 (768x1024)
