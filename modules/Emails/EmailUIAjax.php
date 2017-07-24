@@ -1747,6 +1747,7 @@ eoq;
     } // switch
 
     if (isset($cid) && $cid) {
+        $current_user->savePreferencesToDB();
         $current_user = BeanFactory::getBean('Users', $cid);
     }
 
