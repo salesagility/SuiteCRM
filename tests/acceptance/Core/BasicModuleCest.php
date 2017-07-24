@@ -16,9 +16,15 @@ class BasicModuleCest
     {
     }
 
-    public function createBasicModule(\Step\Acceptance\Administration $I, \Helper\WebDriverHelper $webDriverHelper)
-    {
-
+    // Tests
+    /**
+     * @param \Step\Acceptance\ModuleBuilder $I
+     *
+     */
+    public function testScenarioCreateBasicModule(
+       \Step\Acceptance\ModuleBuilder $I,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
         $I->wantTo('Create a basic module for testing');
 
         $I->amOnUrl(
@@ -26,66 +32,23 @@ class BasicModuleCest
         );
 
         $I->loginAsAdmin();
-        $I->gotoAdministration();
 
-        // Go To Module Builder
-        $I->click('#moduleBuilder');
-
-        $I->dontSee(\Page\BasicModule::$NAME);
-
-        // Create new package
-        $I->click('#newPackageLink');
-        $I->wait(3);
-        $I->fillField(['name' => 'name'], \Page\BasicModule::$NAME);
-        $I->fillField(['name' => 'author'], 'Acceptance Tester');
-        $I->fillField(['name' => 'key'], 'Test');
-        $I->fillField(['name' => 'description'], 'test module');
-        $I->click('Save');
-
-        // Close confirmation window
-        $I->wait(3);
-        $I->click('.container-close');
-
-        // Create new basic module
-        $I->click('New Module');
-        $I->waitForElement('[name="label"]');
-        $I->fillField(['name' => 'name'], \Page\BasicModule::$NAME);
-        $I->fillField(['name' => 'label'], \Page\BasicModule::$NAME);
-        $I->checkOption('[name=importable]');
-        $I->click('#type_basic');
-        $I->click('Save');
-
-        // Close popup
-        $I->wait(3);
-        $I->click('.container-close');
-
-        // Deploy module
-        $I->wait(3);
-        $I->click('Module Builder');
-        $I->wait(3);
-        $I->click(\Page\BasicModule::$NAME, '.bodywrapper');
-        $I->wait(3);
-        $I->click('Deploy');
-
-        // Close popup
-        $I->wait(3);
-        $I->click('.container-close');
-
-        // Wait for page to refresh and look for new package link
-        $I->waitForElement('#newPackageLink', 120);
+        $I->createModule(
+            \Page\BasicModule::$PACKAGE_NAME,
+            \Page\BasicModule::$NAME,
+            \SuiteCRM\Enumerator\SugarObjectType::basic
+        );
     }
 
-    // tests
-
     /**
-     * @param \Step\Acceptance\Administration $I
+     * @param \Step\Acceptance\ModuleBuilder $I
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to view my basic test module so that I can see if it has been
      * deployed correctly
      */
     public function testScenarioViewBasicTestModule(
-        \Step\Acceptance\Administration $I,
+        \Step\Acceptance\ModuleBuilder $I,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('View Basic Test Module');
@@ -97,6 +60,8 @@ class BasicModuleCest
 
         $navigationBar = new \Page\NavigationBar($I);
         $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
-    }
 
+        $I->see(\Page\BasicModule::$NAME);
+        $I->seeElement('.listViewBody');
+    }
 }
