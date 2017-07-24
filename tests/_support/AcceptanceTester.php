@@ -31,19 +31,20 @@ class AcceptanceTester extends \Codeception\Actor
     {
         $I = $this;
 
-        // if snapshot exists - skipping login
-        if ($I->loadSessionSnapshot('login')) {
-            return;
-        }
-
-        // Loggin In
+        // Log In
         $I->seeElement('#loginform');
         $I->fillField('#user_name', $username);
         $I->fillField('#user_password', $password);
         $I->click('Log In');
         $I->dontSeeElement('#loginform');
+    }
 
-        // Saving snapshot
-        $I->saveSessionSnapshot('login');
+    /**
+     * Clicks the logout link in the users menu
+     */
+    public function logout()
+    {
+        $tabletNavigationBar = new NavigationBar($this);
+        $tabletNavigationBar->clickUserMenuItem('#logout_link');
     }
 }
