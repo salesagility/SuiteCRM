@@ -4,9 +4,9 @@ SuiteCRM Automated Test Suite
 Automated tested provides a means to ensure that the quality of the product is kept to a high standard. Tests help to ensure that each team member continues to work in harmony, by providing a consistent testing framework, in which every one contributes tests with the changes being made in the product. Generally speaking, The more code is covered by high quality automated tests, the more likely the quality of the product is good.
 
 
-##Introduction Automated testing
+## Introduction Automated testing
 
-###Test Scenario
+### Test Scenario
 
 A test scenario is a set of conditions or variables under which a tester will determine whether a system under the test conditions satisfies requirements of the software. The process of developing test scenarios can also help find problems in the requirements or design of an application.
 
@@ -38,26 +38,26 @@ A test scenario is a set of conditions or variables under which a tester will de
 * Not expressing the intent of the test scenario (PHP Doc, method names, variables, failure messages)
 * Using loops in your test scenario
 
-###Acceptance Tests
+### Acceptance Tests
 
 Acceptance tests ensure that the software meets requirements of a user story. Since user stories are the examples given at the start of a development cycle, acceptance test tend to be the first set of tests to be written. Acceptances tests are also the easiest  tests to write, as they resemble a simple list of instructs like $I->goto('/home'); $I->click('button'); $I->see('dashboard'). Automated user acceptance tests mock the behaviour of a user.  These tests tell the developer/engineer that the a part of the system is displaying the right elements after an action has been carried out.
 
-###Functional Tests
+### Functional Tests
 
 The goal of a functional test is check how different parts of the code base interact including their dependencies, to ensure that the overall behaviour is correct. For example checking the output of a view when you use a controller action with some arguments against the expected output. These test are written instead of acceptance tests when it is not suitable to use a web browser to run the test. Functional tests can also be referred to as integration tests because they often inspect the interactions between sub systems. These tests tell the developer/engineer that the a part of the system is performing the right tasks.
 
 These tests are often written after acceptance tests, however they may be omitted entirely. Functional tests are particularly useful when deciding on the structure of your code, such as classes and name spaces. They help you to think about the "bigger picture".
 
-###Unit Tests
+### Unit Tests
 
 Unit tests reflect that a single unit of code (like a method / function) with all dependencies mocked up, has managed to assert that the unit of code has passed the minimum requirements. Since a pass doesn't guarantee absolute correctness of code but rather that the code meets the minimum requirements to pass a unit test. It is important to always be skeptical when a unit test pass. When a unit test fails, it is an indication that the code doesn't meet the minimum requirements. However a failure can also indicate that the code has changed and that the tests need to be updated to match the new requirements. Unit tests tell the developer/engineer that a unit is working correctly and is doing the right things.
 
 These tests are often written before a developer writes/modifies a method or function. This helps the developer to defined how a client will use their code. So that they can better understand the requirements and hopefully produce code which is more maintainable.
 
-###System Tests
+### System Tests
 Automated system testing are acceptance or functional tests which can used to test the performance of the software. System tests are written after developing code, as early optimisation can lead to badly written code.
 
-###Regression Tests
+### Regression Tests
 
 Regression tests are typically functional or acceptance test which check that the software which was previously developed and tested still performs correctly after it was changed. Regression tests are also written when a user raises an issue with the software. If a tester can replicate an issue, then it is best practice to write an automated test that developers can also replicate and test the issue. This ensures that any future work doesn't contain the same issue.
 
@@ -84,6 +84,81 @@ export PATH=$PATH:/path/to/instance/vendor/bin
 
 Test your configuration
 <pre>
-codecept run demo --env selenium-hub --env chrome
+codecept run demo --env selenium-hub,chrome
 </pre>
 
+
+## Test Environments
+
+The SuiteCRM Test Suite can support different environments. You can see the different environments in tests/_env folder.
+There are different prefixes depending the testing environment you deploy.
+ 
+- selenium- Configures the features for selenium web driver environment
+- browser-stack- Configures features for browser stack environment
+
+To run the tests in a single environment by adding --env flag, seperating each configuration by a comma: 
+
+<pre>
+codecept run acceptance --env selenium-hub,selenium-iphone-6
+</pre>
+
+It is also possible to run multi environments at the same time by adding multiple --env flags
+
+<pre>
+codecept run acceptance --env selenium-hub,selenium-iphone-6 --env browser-stack,browser-stack-ipad-2
+</pre>
+The tests will be executed 2 times. One for each environment
+
+### Selenium Environment
+
+#### Selenium Hub
+
+You can configure selenium using docker compose. Please ensure you can the following in your DockerCompose file.
+
+<pre>
+ selenium-hub:
+      image: selenium/hub
+      restart: always
+      ports:
+        - 4444:4444
+  selenium-node-chrome:
+      image: selenium/node-chrome-debug
+      restart: always
+      ports: 
+        - 5900:5900
+      links:
+        - selenium-hub:hub
+      environment:
+              - "HUB_PORT_4444_TCP_ADDR=selenium-hub"
+              - "HUB_PORT_4444_TCP_PORT=4444"
+  selenium-node-firefox:
+      image: selenium/node-firefox-debug
+      restart: always
+      ports: 
+        - 5901:5900
+      links:
+        - selenium-hub:hub
+      environment:
+              - "HUB_PORT_4444_TCP_ADDR=selenium-hub"
+              - "HUB_PORT_4444_TCP_PORT=4444"
+</pre>
+
+You can select the browser you wish to test by adding it to the --env.
+
+<pre>
+codecept run demo --env selenium-hub,chrome --env selenium-hub,firefox
+</pre>
+
+#### Resolutions
+There are also different configurations for each device we test
+
+- selenium-iphone-6 (375x667)
+- selenium-ipad-2 (768x1024)
+- selenium-xga (1024x768)
+- selenium-hd (1280x720)
+- selenium-fhd (1920x1080)
+
+Example:
+<pre>
+codecept run acceptance --env selenium-hub,selenium-xga
+</pre>

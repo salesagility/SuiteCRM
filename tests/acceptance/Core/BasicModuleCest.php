@@ -20,6 +20,7 @@ class BasicModuleCest
     {
 
         $I->wantTo('Create a basic module for testing');
+
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
@@ -29,6 +30,8 @@ class BasicModuleCest
 
         // Go To Module Builder
         $I->click('#moduleBuilder');
+
+        $I->dontSee(\Page\BasicModule::$NAME);
 
         // Create new package
         $I->click('#newPackageLink');
@@ -73,4 +76,13 @@ class BasicModuleCest
     }
 
     // tests
+    public function testScenarioViewBasicTestModule(\Step\Acceptance\Administration $I, \Helper\WebDriverHelper $webDriverHelper)
+    {
+        $I->wantTo('View Basic Test Module');
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL().
+            \Page\BasicModule::$URL
+        );
+    }
+
 }

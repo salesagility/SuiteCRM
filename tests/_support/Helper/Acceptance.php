@@ -9,5 +9,4 @@ use Codeception\TestInterface;
 
 class Acceptance extends \Codeception\Module
 {
-
 }

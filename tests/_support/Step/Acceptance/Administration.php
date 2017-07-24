@@ -1,6 +1,8 @@
 <?php
 namespace Step\Acceptance;
 
+use Page\NavigationBar;
+
 class Administration extends \AcceptanceTester
 {
 
@@ -16,11 +18,8 @@ class Administration extends \AcceptanceTester
     public function gotoAdministration()
     {
         $I = $this;
-
         // TODO: TASK UNDEFINED - Add support for desktop, tablet, and mobile
-        $I->click('.tablet-bar #toolbar .globalLinks-mobile');
-        $I->click('.tablet-bar #toolbar .globalLinks-mobile #admin_link');
+        $tabletNavigationBar = new NavigationBar($this);
+        $tabletNavigationBar->clickUserMenuItem('#admin_link');
     }
-
-
 }
