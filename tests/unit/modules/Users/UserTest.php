@@ -94,10 +94,10 @@ class UserTest extends PHPUnit_Framework_TestCase
 
 		$user->retrieve(1);
 
-		$expected = "<select onChange='setSigEditButtonVisibility();' id='signature_id' name='signature_id'>\n<OPTION selected value=''>--None--</OPTION></select>";
+		$expected = "<select onChange='setSigEditButtonVisibility();' id='signature_id' name='signature_id'>\n<OPTION selected value=''>--None--</OPTION>";
 		$actual = $user->getSignatures();
-		$this->assertSame($expected, $actual);
-
+		$this->assertTrue(strpos($actual, $expected)===0);
+        $this->assertEquals(preg_match('/\<\/select\>$/', $actual), 1);
 	}
 
 
@@ -827,8 +827,8 @@ class UserTest extends PHPUnit_Framework_TestCase
 
 		$user = new User();
 
-		$expected = array( 'email' => 'do_not_reply@example.com', 'name' => 'SuiteCRM');
-		$actual = $user->getSystemDefaultNameAndEmail();
+		$expected = array( 'email', 'name');
+		$actual = array_keys($user->getSystemDefaultNameAndEmail());
 		$this->assertSame($expected,$actual);
 
 	}

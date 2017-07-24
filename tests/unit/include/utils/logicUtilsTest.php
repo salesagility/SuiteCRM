@@ -9,8 +9,10 @@ class logic_utilsTest extends PHPUnit_Framework_TestCase
     public function testget_hook_array()
     {
         //test with a vaid module. it will return an array
-        $AccountsHooks = get_hook_array('Accounts');
-        $this->assertTrue(is_array($AccountsHooks));
+        if(file_exists("custom/modules/Accounts/logic_hooks.php")) {
+            $AccountsHooks = get_hook_array('Accounts');
+            $this->assertTrue(is_array($AccountsHooks));
+        }
 
         //test with an invalid array. it will throw an file include exception.
         $BugsHooks = '';

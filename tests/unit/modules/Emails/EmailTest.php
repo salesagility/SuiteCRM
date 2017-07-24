@@ -641,7 +641,7 @@ class EmailTest extends PHPUnit_Framework_TestCase
         $email = new Email();
 
         //test without setting REQUEST parameters
-        $email->description = "some email description containing email text &amp; &#39; <br>&nbsp;";
+        $email->description_html = "some email description containing email text &amp; &#39; <br>&nbsp;";
         $result = $email->handleBody(new SugarPHPMailer());
         $expected = "some email description containing email text & ' \n ";
         $actual = $email->description;
@@ -691,8 +691,8 @@ class EmailTest extends PHPUnit_Framework_TestCase
     {
         $email = new Email();
 
-        $expected = array('email' => 'do_not_reply@example.com', 'name' => 'SuiteCRM');
-        $actual = $email->getSystemDefaultEmail();
+        $expected = array('email', 'name');
+        $actual = array_keys($email->getSystemDefaultEmail());
 
         $this->assertSame($expected, $actual);
     }

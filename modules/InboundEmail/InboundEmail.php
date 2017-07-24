@@ -4333,6 +4333,8 @@ class InboundEmail extends SugarBean
      * Outlook/Exchange.
      *
      * We need to derive a reliable one for duplicate import checking.
+     * @param mixed $header
+     * @return string
      */
     public function getMessageId($header)
     {
@@ -4885,7 +4887,6 @@ class InboundEmail extends SugarBean
         return true;
     }
 
-
     /**
      * Imports A Single Email
      * @param $msgNo
@@ -4898,9 +4899,6 @@ class InboundEmail extends SugarBean
     {
         $GLOBALS['log']->debug("InboundEmail processing 1 email {$msgNo}-----------------------------------------------------------------------------------------");
         global $timedate;
-        global $app_strings;
-        global $app_list_strings;
-        global $sugar_config;
         global $current_user;
 
         // Bug # 45477
@@ -4934,11 +4932,10 @@ class InboundEmail extends SugarBean
             ///////////////////////////////////////////////////////////////////
             ////	CREATE SEED EMAIL OBJECT
             $email = new Email();
-            $email->isDuplicate = ($dupeCheckResult) ? false : true;
+            $email->isDuplicate = $dupeCheckResult ? false : true;
             $email->mailbox_id = $this->id;
             $email->uid =  $uid;
-            $email->msgno = $msgNo;
-            $message = array();
+            $email->msgNo = $msgNo;
             $email->id = create_guid();
             $email->new_with_id = true; //forcing a GUID here to prevent double saves.
             ////	END CREATE SEED EMAIL
@@ -4952,7 +4949,7 @@ class InboundEmail extends SugarBean
                 $current_user = new User();
                 $current_user->getSystemUser();
             }
-            $tPref = $current_user->getUserDateTimePreferences();
+            $current_user->getUserDateTimePreferences();
             ////	END USER PREP
             ///////////////////////////////////////////////////////////////////
             if (!empty($header->date)) {
@@ -4966,7 +4963,7 @@ class InboundEmail extends SugarBean
                 $GLOBALS['log']->debug('InboundEmail found multipart email - saving attachments if found.');
                 $this->saveAttachments($msgNo, $structure->parts, $email->id, 0, $forDisplay);
             } elseif ($structure->type == 0) {
-                $uuemail = ($this->isUuencode($email->description)) ? true : false;
+                $UUEncodedEmail = $this->isUuencode($email->description) ? true : false;
                 /*
                  * UUEncoded attachments - legacy, but still have to deal with it
                  * format:
@@ -4976,14 +4973,16 @@ class InboundEmail extends SugarBean
                  * end
                  */
                 // set body to the filtered one
-                if ($uuemail) {
+                if ($UUEncodedEmail) {
                     $email->description = $this->handleUUEncodedEmailBody($email->description, $email->id);
                     $email->retrieve($email->id);
                     $email->save();
                 }
             } else {
                 if ($this->port != 110) {
-                    $GLOBALS['log']->debug('InboundEmail found a multi-part email (id:' . $msgNo . ') with no child parts to parse.');
+                    $GLOBALS['log']->debug(
+                        'InboundEmail found a multi-part email (id:' . $msgNo . ') with no child parts to parse.'
+                    );
                 }
             }
             ////	END HANDLE EMAIL ATTACHEMENTS OR HTML TEXT
@@ -4992,7 +4991,7 @@ class InboundEmail extends SugarBean
             ///////////////////////////////////////////////////////////////////
             ////	ASSIGN APPROPRIATE ATTRIBUTES TO NEW EMAIL OBJECT
             // handle UTF-8/charset encoding in the ***headers***
-            global $db;
+
             $email->name = $this->handleMimeHeaderDecode($header->subject);
             $email->type = 'inbound';
             if (!empty($unixHeaderDate)) {
@@ -5030,7 +5029,7 @@ class InboundEmail extends SugarBean
             $oldPrefix = $this->imagePrefix;
             if (!$forDisplay) {
                 // Store CIDs in imported messages, convert on display
-                $this->imagePrefix = "cid:";
+                $this->imagePrefix = 'cid:';
             }
             // handle multi-part email bodies
             $email->description_html = $this->getMessageTextWithUid(
@@ -5059,9 +5058,6 @@ class InboundEmail extends SugarBean
             // assign_to group
             if (!empty($_REQUEST['user_id'])) {
                 $email->assigned_user_id = $_REQUEST['user_id'];
-            } else {
-                // Samir Gandhi : Commented out this code as its not needed
-                //$email->assigned_user_id = $this->group_id;
             }
 
             //Assign Parent Values if set
@@ -5071,7 +5067,7 @@ class InboundEmail extends SugarBean
 
                 $mod = strtolower($email->parent_type);
                 //Custom modules rel name
-                $rel = array_key_exists($mod, $email->field_defs) ? $mod : $mod . "_activities_emails";
+                $rel = array_key_exists($mod, $email->field_defs) ? $mod : $mod . '_activities_emails';
 
                 if (!$email->load_relationship($rel)) {
                     return false;
@@ -5080,10 +5076,8 @@ class InboundEmail extends SugarBean
             }
 
             // override $forDisplay w/user pref
-            if ($forDisplay) {
-                if ($this->isAutoImport()) {
-                    $forDisplay = false; // triggers save of imported email
-                }
+            if ($forDisplay && $this->isAutoImport()) {
+                $forDisplay = false; // triggers save of imported email
             }
 
             if (!$forDisplay) {
@@ -5095,7 +5089,7 @@ class InboundEmail extends SugarBean
 
                 ///////////////////////////////////////////////////////////////////
                 ////	LINK APPROPRIATE BEANS TO NEWLY SAVED EMAIL
-                //$contactAddr = $this->handleLinking($email);
+                //$contactAddress = $this->handleLinking($email);
                 ////	END LINK APPROPRIATE BEANS TO NEWLY SAVED EMAIL
                 ///////////////////////////////////////////////////////////////////
 
@@ -5108,12 +5102,12 @@ class InboundEmail extends SugarBean
                 ///////////////////////////////////////////////////////////////////
                 ////	SEND AUTORESPONSE
                 if (!empty($email->reply_to_email)) {
-                    $contactAddr = $email->reply_to_email;
+                    $contactAddress = $email->reply_to_email;
                 } else {
-                    $contactAddr = $email->from_addr;
+                    $contactAddress = $email->from_addr;
                 }
                 if (!$this->isMailBoxTypeCreateCase()) {
-                    $this->handleAutoresponse($email, $contactAddr);
+                    $this->handleAutoresponse($email, $contactAddress);
                 }
                 ////	END SEND AUTORESPONSE
                 ///////////////////////////////////////////////////////////////////
@@ -5123,7 +5117,7 @@ class InboundEmail extends SugarBean
         } else {
             // only log if not POP3; pop3 iterates through ALL mail
             if ($this->protocol != 'pop3') {
-                $GLOBALS['log']->info("InboundEmail found a duplicate email: " . $header->message_id);
+                $GLOBALS['log']->info('InboundEmail found a duplicate email: ' . $header->message_id);
                 //echo "This email has already been imported";
             }
 
@@ -5293,7 +5287,7 @@ class InboundEmail extends SugarBean
 
             $this->imagePrefix = $oldPrefix;
 
-            $email->msgno = $msgNo;
+            $email->msgNo = $msgNo;
             $email->uid = $uid;
             $email->inbound_email_record = $this->id;
 

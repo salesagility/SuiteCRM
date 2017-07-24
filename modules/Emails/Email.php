@@ -46,6 +46,7 @@ require_once('include/SugarPHPMailer.php');
 require_once 'include/UploadFile.php';
 require_once 'include/UploadMultipleFiles.php';
 
+
 class Email extends Basic
 {
     /**
@@ -397,6 +398,16 @@ class Email extends Basic
      * @var Link2 $notes
      */
     public $notes;
+
+    /**
+     * @var mixed
+     */
+    public $msgNo;
+
+    /**
+     * @var string
+     */
+    public $to_name;
 
     /**
      * sole constructor

@@ -1807,13 +1807,8 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
         $inboundEmail->mailbox = 'INBOX';
         $inboundEmail->id = 1;
 
-        //execute the method and test if it works and does not throws an exception.
-        try {
-            $result = $inboundEmail->returnImportedEmail('1', '1');
-            $this->assertEquals(false, $result);
-        } catch (Exception $e) {
-            $this->fail();
-        }
+        self::assertEquals($inboundEmail->getMessageId(null), 'd41d8cd98f00b204e9800998ecf8427e');
+
     }
 
     public function testisUuencode()

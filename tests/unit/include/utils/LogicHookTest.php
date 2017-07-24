@@ -106,13 +106,18 @@ class LogicHookTest extends PHPUnit_Framework_TestCase {
     	);
 
     	$LogicHook = new LogicHook();
-    	$LogicHook->scanHooksDir('custom/modules/Accounts');
-    	$hook_map = $LogicHook->getHooksMap();
-    	$hookscan = $LogicHook->getHooksList();
+		$LogicHook->scanHooksDir('custom/modules/Accounts');
+		$hook_map = $LogicHook->getHooksMap();
+		$hookscan = $LogicHook->getHooksList();
 
 
-    	$this->assertSame($expected_hook_map,$hook_map);
-    	$this->assertSame($expected_hookscan,$hookscan);
+        if(file_exists('custom/modules/Accounts') && is_dir('custom/modules/Accounts')) {
+			$this->assertSame($expected_hook_map,$hook_map);
+			$this->assertSame($expected_hookscan,$hookscan);
+        } else {
+            $this->assertTrue(empty($hook_map));
+            $this->assertTrue(empty($hookscan));
+		}
 
 
     }
@@ -153,34 +158,33 @@ class LogicHookTest extends PHPUnit_Framework_TestCase {
 
         $expected_default = array(
 					'after_save' => array(
-						array(1, 'AOD Index Changes', 'modules/AOD_Index/AOD_LogicHooks.php', 'AOD_LogicHooks', 'saveModuleChanges'),
-						array(30, 'popup_select', 'modules/SecurityGroups/AssignGroups.php', 'AssignGroups', 'popup_select'),
 						array(99, 'AOW_Workflow', 'modules/AOW_WorkFlow/AOW_WorkFlow.php', 'AOW_WorkFlow', 'run_bean_flows'),
-					),
-					'after_delete' => array(
-						array(1, 'AOD Index changes', 'modules/AOD_Index/AOD_LogicHooks.php', 'AOD_LogicHooks', 'saveModuleDelete'),
-					),
-					'after_restore' => array(
-						array(1, 'AOD Index changes', 'modules/AOD_Index/AOD_LogicHooks.php', 'AOD_LogicHooks', 'saveModuleRestore'),
-					),
-                    'after_ui_footer' => array(
-                            array(10, 'popup_onload', 'modules/SecurityGroups/AssignGroups.php', 'AssignGroups', 'popup_onload'),
-                    ),
-                    'after_ui_frame' => array(
-                            array(20, 'mass_assign', 'modules/SecurityGroups/AssignGroups.php', 'AssignGroups', 'mass_assign'),
-                            array(1, 'Load Social JS', 'include/social/hooks.php', 'hooks', 'load_js'),
-                    ),
+					)
                 );
 
         $LogicHook = new LogicHook();
 
         //test with a valid module
         $accounts_hooks = $LogicHook->loadHooks('Accounts');
-        $this->assertSame($expected_accounts, $accounts_hooks);
+        if(
+        	file_exists("custom/modules/Accounts/logic_hooks.php") ||
+			file_exists("custom/modules/Accounts/Ext/LogicHooks/logichooks.ext.php")
+		) {
+            $this->assertSame($expected_accounts, $accounts_hooks);
+        } else {
+        	$this->assertTrue(empty($accounts_hooks));
+		}
 
         //test with an invalid module, it will get the application hooks
         $default_hooks = $LogicHook->loadHooks('');
-        $this->assertSame($expected_default, $default_hooks);
+        if(
+            file_exists("custom/modules/logic_hooks.php") ||
+            file_exists("custom/application/Ext/LogicHooks/logichooks.ext.php")
+		) {
+            $this->assertSame($expected_default, $default_hooks);
+        } else {
+            $this->assertTrue(empty($default_hooks));
+		}
     }
 
     /*
@@ -282,11 +286,25 @@ class LogicHookTest extends PHPUnit_Framework_TestCase {
 
 		//test with refresh false/default
 		$hooks = $LogicHook->getHooks('Accounts');
-		$this->assertEquals($expected, $hooks);
+		if(
+			file_exists("custom/modules/Accounts/logic_hooks.php") ||
+			file_exists("custom/modules/Accounts/Ext/LogicHooks/logichooks.ext.php")
+		) {
+            $this->assertEquals($expected, $hooks);
+        } else {
+            $this->assertTrue(empty($hooks));
+		}
 
 		//test wit hrefresh true
 		$hooks = $LogicHook->getHooks('Accounts',true);
-		$this->assertSame($expected, $hooks);
+		if(
+            file_exists("custom/modules/Accounts/logic_hooks.php") ||
+			file_exists("custom/modules/Accounts/Ext/LogicHooks/logichooks.ext.php")
+		) {
+            $this->assertSame($expected, $hooks);
+        } else {
+            $this->assertTrue(empty($hooks));
+		}
 
 
 
