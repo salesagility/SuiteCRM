@@ -40,7 +40,11 @@ A test scenario is a set of conditions or variables under which a tester will de
 
 ### Acceptance Tests
 
-Acceptance tests ensure that the software meets requirements of a user story. Since user stories are the examples given at the start of a development cycle, acceptance test tend to be the first set of tests to be written. Acceptances tests are also the easiest  tests to write, as they resemble a simple list of instructs like $I->goto('/home'); $I->click('button'); $I->see('dashboard'). Automated user acceptance tests mock the behaviour of a user.  These tests tell the developer/engineer that the a part of the system is displaying the right elements after an action has been carried out.
+Acceptance tests ensure that the software meets requirements of a user story. Since user stories are the examples given at the start of a development cycle, acceptance test tend to be the first set of tests to be written. Acceptances tests are also the easiest  tests to write, as they resemble a simple list of instructs like:
+- $I->goto('/home');
+- $I->click('button');
+- $I->see('dashboard')
+Automated user acceptance tests mock the behaviour of a user.  These tests tell the developer/engineer that the a part of the system is displaying the right elements after an action has been carried out.
 
 ### Functional Tests
 
