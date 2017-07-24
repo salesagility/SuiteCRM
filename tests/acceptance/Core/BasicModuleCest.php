@@ -25,7 +25,7 @@ class BasicModuleCest
             $webDriverHelper->getInstanceURL()
         );
 
-        $I->loginAsAdmin($webDriverHelper);
+        $I->loginAsAdmin();
         $I->gotoAdministration();
 
         // Go To Module Builder
@@ -76,13 +76,27 @@ class BasicModuleCest
     }
 
     // tests
-    public function testScenarioViewBasicTestModule(\Step\Acceptance\Administration $I, \Helper\WebDriverHelper $webDriverHelper)
-    {
+
+    /**
+     * @param \Step\Acceptance\Administration $I
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to view my basic test module so that I can see if it has been
+     * deployed correctly
+     */
+    public function testScenarioViewBasicTestModule(
+        \Step\Acceptance\Administration $I,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
         $I->wantTo('View Basic Test Module');
         $I->amOnUrl(
-            $webDriverHelper->getInstanceURL().
-            \Page\BasicModule::$URL
+            $webDriverHelper->getInstanceURL()
         );
+
+        $I->loginAsAdmin();
+
+        $navigationBar = new \Page\NavigationBar($I);
+        $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
     }
 
 }

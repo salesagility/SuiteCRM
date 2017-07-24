@@ -61,7 +61,7 @@ class NavigationBar
      * @param $link
      *
      * <?php
-     * $I->clickAllModuleItem('Accounts')
+     * $I->clickAllMenuItem('Accounts')
      *
      * Watch out - the mobile navigation employs a different structure with with tablet and desktop versions. It is
      * best to use just the module translations.
@@ -69,7 +69,7 @@ class NavigationBar
      * Also:
      * the non filter navigation is not supported by this method
      */
-    public function clickAllModuleItem($link)
+    public function clickAllMenuItem($link)
     {
         $config = $this->tester->getConfig();
         $breakpoint = Design::getBreakpointString($config['width']);
