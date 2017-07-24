@@ -253,9 +253,9 @@ codecept run acceptance --env selenium-hub,selenium-iphone-6 --env browser-stack
 The tests will be executed 2 times. One for each environment
 
 ### Selenium Environment
-In your developement, It is recommended that you employ docker compose to set up a selenium hub with a selenium node. 
+In your selenium developement environment, It is recommended that you employ docker compose to set up a selenium hub with a selenium node. 
 
-#### Selenium Hub
+#### Using Docker Compose with the Selenium Hub
 
 You can configure selenium using docker compose. Please ensure you have the following in your DockerCompose file.
 
@@ -293,14 +293,14 @@ You can select the browser you wish to test by adding it to the --env.
 codecept run demo --env selenium-hub,chrome --env selenium-hub,firefox
 </pre>
 
-#### Selenium Locally
+#### Using Selenium with a local php environment
 You may prefer to run in a local php environment instead of using docker compose. This requires that you need to have selenium running locally on your computer. When running in a local environment you do not need to include the selenium-hub environment variable. Instead you must choose which browser you have set up locally;
 
 <pre>
 codecept run demo --env chrome
 </pre>
 
-#### Screen Resolutions
+#### Screen Resolutions / Fake Devices
 There are also different configurations for each target device we test for:
 
 - selenium-iphone-6 (375x667)
