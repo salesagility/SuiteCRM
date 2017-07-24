@@ -11,32 +11,32 @@ Automated tested provides a means to ensure that the quality of the product is k
 A test scenario is a set of conditions or variables under which a tester will determine whether a system under the test conditions satisfies requirements of the software. The process of developing test scenarios can also help find problems in the requirements or design of an application.
 
 '''Characteristics of a good test scenario:'''
-* Accurate: Exactly test the purpose of a scenarios.
-* Economical: No unnecessary steps used in the test.
-* Traceable: Capable of being traced to requirements.
-* Repeatable: Can be used to perform the test over and over under different operating environments.
-* Reusable: Can be reused if necessary.
+- Accurate: Exactly test the purpose of a scenarios.
+- Economical: No unnecessary steps used in the test.
+- Traceable: Capable of being traced to requirements.
+- Repeatable: Can be used to perform the test over and over under different operating environments.
+- Reusable: Can be reused if necessary.
 
 '''Best Practices:'''
-* Write test scenarios in such a way that you test only one situation at a time. Do not overlap or complicate test scenarios.
-** You can use as many assertions as you need, provided that the assertions prove only the validity of the test scenario/case you are testing.
-* Ensure that all positive scenarios and negative scenarios are covered.
-* Language:
-** Write in the PHP Docs using the format:  "As a thing I (do not)want to do <scenario> so that I can/cannot <requirement> GIVEN that <some scenario is true> WHEN <condition is happening> EXPECT <some behavior will occur>"
-** Use easy to understand language. Use variable names to express intent like $expectedSomething, $doSomething and $actualSomething.
-** Use active voice: use present / current tense words like: has, is, call, do etc...
-** Use exact and consistent names (of forms, fields, actions etc).
-** Try to remove any ambiguity from your tests
+- Write test scenarios in such a way that you test only one situation at a time. Do not overlap or complicate test scenarios.
+ - You can use as many assertions as you need, provided that the assertions prove only the validity of the test scenario/case you are testing.
+- Ensure that all positive scenarios and negative scenarios are covered.
+- Language:
+ - Write in the PHP Docs using the format:  "As a thing I (do not)want to do <scenario> so that I can/cannot <requirement> GIVEN that <some scenario is true> WHEN <condition is happening> EXPECT <some behavior will occur>"
+ - Use easy to understand language. Use variable names to express intent like $expectedSomething, $doSomething and $actualSomething.
+ - Use active voice: use present / current tense words like: has, is, call, do etc...
+ - Use exact and consistent names (of forms, fields, actions etc).
+ - Try to remove any ambiguity from your tests
 
 '''Characteristics of a bad test scenario:'''
-* Runs other tests scenarios (or does the job of the test framework)
-* Do not assert the valid and invalid test conditions
-* The name of the test scenario has nothing to do with what it is testing
-* Adding assertions for a different test case
-* Testing the scenario dependencies instead of the scenario itself
-* Not testing the behaviour or data flow of the scenario
-* Not expressing the intent of the test scenario (PHP Doc, method names, variables, failure messages)
-* Using loops in your test scenario
+- Runs other tests scenarios (or does the job of the test framework)
+- Do not assert the valid and invalid test conditions
+- The name of the test scenario has nothing to do with what it is testing
+- Adding assertions for a different test case
+- Testing the scenario dependencies instead of the scenario itself
+- Not testing the behaviour or data flow of the scenario
+- Not expressing the intent of the test scenario (PHP Doc, method names, variables, failure messages)
+- Using loops in your test scenario
 
 ### Acceptance Tests
 
