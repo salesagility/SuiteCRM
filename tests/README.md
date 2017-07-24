@@ -219,7 +219,7 @@ services:
 
 ## Test Environments
 
-The SuiteCRM automated tests can support different environments. You can see the different configurations for test environments in tests/_env folder. There are different prefixes depending the testing environment you deploy.
+The SuiteCRM automated testing framework can support different environments. You can see the different configurations for test environments in tests/_env folder. There are different prefixes fore each testing environment you choose to deploy.
  
 - selenium- Configures the features for selenium web driver environment
 - browser-stack- Configures features for browser stack environment
