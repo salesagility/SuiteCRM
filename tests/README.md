@@ -223,6 +223,7 @@ The SuiteCRM automated tests can support different environments. You can see the
  
 - selenium- Configures the features for selenium web driver environment
 - browser-stack- Configures features for browser stack environment
+- travis-ci- Configures features for travis-ci environment
 
 To run the tests in a single environment by adding --env flag, seperating each configuration by a comma: 
 
