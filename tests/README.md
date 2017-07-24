@@ -10,14 +10,14 @@ Automated tested provides a means to ensure that the quality of the product is k
 
 A test scenario is a set of conditions or variables under which a tester will determine whether a system under the test conditions satisfies requirements of the software. The process of developing test scenarios can also help find problems in the requirements or design of an application.
 
-'''Characteristics of a good test scenario:'''
+**Characteristics of a good test scenario:**
 - Accurate: Exactly test the purpose of a scenarios.
 - Economical: No unnecessary steps used in the test.
 - Traceable: Capable of being traced to requirements.
 - Repeatable: Can be used to perform the test over and over under different operating environments.
 - Reusable: Can be reused if necessary.
 
-'''Best Practices:'''
+**Best Practices:**
 - Write test scenarios in such a way that you test only one situation at a time. Do not overlap or complicate test scenarios.
  - You can use as many assertions as you need, provided that the assertions prove only the validity of the test scenario/case you are testing.
 - Ensure that all positive scenarios and negative scenarios are covered.
@@ -28,7 +28,7 @@ A test scenario is a set of conditions or variables under which a tester will de
  - Use exact and consistent names (of forms, fields, actions etc).
  - Try to remove any ambiguity from your tests
 
-'''Characteristics of a bad test scenario:'''
+**Characteristics of a bad test scenario:**
 - Runs other tests scenarios (or does the job of the test framework)
 - Do not assert the valid and invalid test conditions
 - The name of the test scenario has nothing to do with what it is testing
@@ -90,7 +90,7 @@ codecept run demo --env selenium-hub,chrome
 
 ## Test Environments
 
-The SuiteCRM Test Suite can support different environments. You can see the different environments in tests/_env folder.
+The SuiteCRM Test Suite can support different environments. You can see the different configurations for test environments in tests/_env folder.
 There are different prefixes depending the testing environment you deploy.
  
 - selenium- Configures the features for selenium web driver environment
@@ -110,10 +110,11 @@ codecept run acceptance --env selenium-hub,selenium-iphone-6 --env browser-stack
 The tests will be executed 2 times. One for each environment
 
 ### Selenium Environment
+In your developement, It is recommended that you employ docker compose to set up a selenium hub with a selenium node. 
 
 #### Selenium Hub
 
-You can configure selenium using docker compose. Please ensure you can the following in your DockerCompose file.
+You can configure selenium using docker compose. Please ensure you have the following in your DockerCompose file.
 
 <pre>
  selenium-hub:
@@ -148,6 +149,15 @@ You can select the browser you wish to test by adding it to the --env.
 <pre>
 codecept run demo --env selenium-hub,chrome --env selenium-hub,firefox
 </pre>
+
+#### Selenium Locally
+You may prefer to run in a local php environment instead of using docker compose. This requires that you need to have selenium running locally on your computer. When running in a local environment you do not need to include the selenium-hub environment variable. Instead you must choose which browser you have set up locally;
+
+<pre>
+codecept run demo --env chrome
+</pre>
+
+
 
 #### Resolutions
 There are also different configurations for each device we test
