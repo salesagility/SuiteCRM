@@ -87,7 +87,7 @@ SuiteCRM requires you to configure the automated test with your setup. Here you 
 
 ### Add a file to tests/_envs
 
-Adding a file to tests/_envs enables to create different configurations. This enables you to 
+Adding a file to tests/_envs enables to create different configurations.
 
 Example: tests/_envs/mysql.yml
 <pre>
