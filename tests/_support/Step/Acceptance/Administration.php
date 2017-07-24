@@ -6,19 +6,18 @@ use Page\NavigationBar;
 class Administration extends \AcceptanceTester
 {
 
-    public function loginAsAdmin(\Helper\WebDriverHelper $webDriverHelper)
+    public function loginAsAdmin()
     {
         $I = $this;
+
         $I->login(
-            $webDriverHelper->getAdminUser(),
-            $webDriverHelper->getAdminPassword()
+            $I->getAdminUser(),
+            $I->getAdminPassword()
         );
     }
 
     public function gotoAdministration()
     {
-        $I = $this;
-        // TODO: TASK UNDEFINED - Add support for desktop, tablet, and mobile
         $tabletNavigationBar = new NavigationBar($this);
         $tabletNavigationBar->clickUserMenuItem('#admin_link');
     }
