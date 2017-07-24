@@ -152,7 +152,7 @@ modules:
 </pre>
 
 ### Environment Variables
-Using environment variables enables more advanced user to script or automate there development environment. Also you can add these values to Docker Compose.
+Using environment variables enables more advanced users to script or automate there development environment. Also you can add these values to Docker Compose.
 
 Using environment variables command line variables (bash):
 <pre>
@@ -185,14 +185,52 @@ set INSTANCE_ADMIN_USER=admin
 set INSTANCE_ADMIN_PASSWORD=admin
 </pre>
 
-
-
-
-Test your configuration
+You can add a .env file into your docker compose setup:
 <pre>
-codecept run demo --env selenium-hub,chrome
+DATABASE_DRIVER=MYSQL
+DATABASE_NAME=automated_tests
+DATABASE_HOST=localhost
+DATABASE_USER=automated_tests
+DATABASE_PASSWORD=automated_tests
+INSTANCE_URL=http://path/to/instance
+INSTANCE_ADMIN_USER=admin
+INSTANCE_ADMIN_PASSWORD=admin
 </pre>
 
+and then reference it in your php container:
+<pre>
+version: '3'
+services:
+  php:
+      image: php:7.0-apache
+      restart: always
+      ports:
+        - 9001:80
+      environment:
+       - DATABASE_DRIVER: $DATABASE_DRIVER
+       - DATABASE_NAME: $DATABASE_NAME
+       - DATABASE_HOST: $DATABASE_HOST
+       - DATABASE_USER: $DATABASE_USER
+       - DATABASE_PASSWORD: $DATABASE_PASSWORD
+       - INSTANCE_URL: $INSTANCE_URL
+       - INSTANCE_ADMIN_USER: $INSTANCE_ADMIN_USER
+       - INSTANCE_ADMIN_PASSWORD: $INSTANCE_ADMIN_PASSWORD
+  selenium-hub:
+      image: selenium/hub
+      restart: always
+      ports:
+        - 4444:4444
+  selenium-node-chrome:
+      build: selenium/node-chrome-debug
+      restart: always
+      ports: 
+        - 5900:5900
+      links:
+        - selenium-hub:hub
+      environment:
+              - "HUB_PORT_4444_TCP_ADDR=selenium-hub"
+              - "HUB_PORT_4444_TCP_PORT=4444"
+</pre>
 
 ## Test Environments
 
