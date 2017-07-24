@@ -215,21 +215,6 @@ services:
        - INSTANCE_URL: $INSTANCE_URL
        - INSTANCE_ADMIN_USER: $INSTANCE_ADMIN_USER
        - INSTANCE_ADMIN_PASSWORD: $INSTANCE_ADMIN_PASSWORD
-  selenium-hub:
-      image: selenium/hub
-      restart: always
-      ports:
-        - 4444:4444
-  selenium-node-chrome:
-      build: selenium/node-chrome-debug
-      restart: always
-      ports: 
-        - 5900:5900
-      links:
-        - selenium-hub:hub
-      environment:
-              - "HUB_PORT_4444_TCP_ADDR=selenium-hub"
-              - "HUB_PORT_4444_TCP_PORT=4444"
 </pre>
 
 ## Test Environments
