@@ -41,9 +41,12 @@ A test scenario is a set of conditions or variables under which a tester will de
 ### Acceptance Tests
 
 Acceptance tests ensure that the software meets requirements of a user story. Since user stories are the examples given at the start of a development cycle, acceptance test tend to be the first set of tests to be written. Acceptances tests are also the easiest  tests to write, as they resemble a simple list of instructs like:
-- $I->goto('/');
-- $I->click('button');
-- $I->see('dashboard')
+<pre>
+$I->goto('/');
+$I->click('button');
+$I->see('dashboard');
+</pre>
+
 Automated user acceptance tests mock the behaviour of a user.  These tests tell the developer/engineer that the a part of the system is displaying the right elements after an action has been carried out.
 
 ### Functional Tests
@@ -64,6 +67,15 @@ Automated system testing are acceptance or functional tests which can used to te
 ### Regression Tests
 
 Regression tests are typically functional or acceptance test which check that the software which was previously developed and tested still performs correctly after it was changed. Regression tests are also written when a user raises an issue with the software. If a tester can replicate an issue, then it is best practice to write an automated test that developers can also replicate and test the issue. This ensures that any future work doesn't contain the same issue.
+
+## Installing the test suite
+The suite is built on top of composer and bower. 
+
+Run the following in your terminal
+<pre>
+cd /path/to/suitecrm/instance
+composer install
+</pre>
 
 ## Configuring the automated test
 
@@ -93,17 +105,55 @@ modules:
       instance_admin_password: "secret"
 </pre>
 
-Then you need to add this env into your command like so:
+Then you need to add this configuration into your command argument(s):
 
 <pre>
-codecept run --env mysql.
+codecept run install --env chrome,mysql
 </pre>
 
 For more details please refer to tests/_support/Helper/WebDriverHelper.php.
 
 ### Editing test suite files
+Using the same technique, described in  "Add a file to tests/_envs", You can also choose to edit the suite.yml files which live in the tests folder. 
+
+Example: acceptance.suite.yml
+<pre>
+# Codeception Test Suite Configuration
+#
+# Suite for acceptance tests.
+# Perform tests in browser using the SuiteCRM WebDriver
+#
+# Use the enviornmental config files to configure the driver
+
+class_name: AcceptanceTester
+modules:
+    enabled:
+        - \Helper\Acceptance
+        - \Helper\WebDriverHelper
+        - \SuiteCRM\Test\Driver\WebDriver
+    config:
+        \SuiteCRM\Test\Driver\WebDriver:
+            url: "https://demo.suiteondemand.com"
+            browser: chrome
+            restart: true
+            wait: 1
+            # iPad 2
+            # See _env
+            width: 768
+            height: 1024
+            database_driver: "MYSQL"
+            # Also can be set to database_driver: "MSSQL"
+            database_name: "automated_tests"
+            database_host: "localhost"
+            database_user: "automated_tester"
+            database_password: "automated_password"
+            instance_admin_user: "admin"
+            instance_admin_password: "secret"
+</pre>
 
 ### Environment Variables
+Using environment variables enables more advanced user to script or automate there development environment. Also you can add these values to Docker Compose.
+
 Using environment variables command line variables (bash):
 <pre>
 export DATABASE_DRIVER=MYSQL
@@ -115,6 +165,13 @@ export INSTANCE_URL=http://path/to/instance
 export INSTANCE_ADMIN_USER=admin
 export INSTANCE_ADMIN_PASSWORD=admin
 </pre>
+
+to make it easier to run the vendor/bin/ commands
+
+<pre>
+export PATH=$PATH:/path/to/instance/vendor/bin
+</pre>
+
 
 Using environment variables command line variables (command prompt):
 <pre>
@@ -128,14 +185,7 @@ set INSTANCE_ADMIN_USER=admin
 set INSTANCE_ADMIN_PASSWORD=admin
 </pre>
 
-DATABASE_DRIVER=MYSQL
-DATABASE_DRIVER=MSSQL
 
-to make it easier to run the commands
-
-<pre>
-export PATH=$PATH:/path/to/instance/vendor/bin
-</pre>
 
 
 Test your configuration
@@ -225,3 +275,5 @@ Example:
 <pre>
 codecept run acceptance --env selenium-hub,selenium-xga
 </pre>
+
+**Please note:** that the SuiteCRM automate test uses **height** and **width** values instead of the window_size. window_size is ignored by the automated test suite.
