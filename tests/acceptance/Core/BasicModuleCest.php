@@ -61,7 +61,6 @@ class BasicModuleCest
         $navigationBar = new \Page\NavigationBar($I);
         $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
 
-        $I->see(\Page\BasicModule::$NAME);
         $I->seeElement('.listViewBody');
     }
 }
