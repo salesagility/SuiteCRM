@@ -133,7 +133,6 @@ class NavigationBar
         }
     }
 
-    // TODO: TASK: SCRM-660 - Create Test For Current Module Item Actions Menu
     /**
      * Selects a menu item from the current module menu (top nav)
      * @param $link
@@ -155,9 +154,9 @@ class NavigationBar
         switch ($breakpoint)
         {
             case DesignBreakPoint::lg:
-                $I->click('.currentTab > a');
+                $I->click('//*[@id="toolbar"]/ul/li[2]/span[2]/a');
                 $I->waitForElementVisible('#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav ul.dropdown-menu');
-                $I->click($link);
+                $I->click($link, '//*[@id="toolbar"]/ul/li[2]/ul');
                 break;
             case DesignBreakPoint::md:
                 $I->click('#modulelinks > .modulename > a');

@@ -2,8 +2,6 @@
 namespace Page;
 
 use \AcceptanceTester as Tester;
-use Faker\Factory;
-use Faker\Generator;
 
 
 class BasicModule
@@ -24,11 +22,6 @@ class BasicModule
     public static $NAME = 'BasicTestModule';
 
     /**
-     * @var Generator
-     */
-    public static $fakeData ;
-
-    /**
      * @var Tester;
      */
     protected $tester;
@@ -40,8 +33,5 @@ class BasicModule
     public function __construct(Tester $I)
     {
         $this->tester = $I;
-        if(!self::$fakeData) {
-            self::$fakeData = Factory::create()->unique();
-        }
     }
 }

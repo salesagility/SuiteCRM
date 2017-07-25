@@ -22,17 +22,27 @@ class SideBar
 
     }
 
-    // TODO: TASK: SCRM-660 - Create Test For Sidebar
-
     public function clickSideBarAction($link)
-    {}
+    {
+        $I = $this->tester;
+        $I->click($link, '#actionMenuSidebar');
+    }
 
     public function clickSideBarRecentlyViewed($link)
-    {}
+    {
+        $I = $this->tester;
+        $I->click($link, '#recentlyViewedSidebar');
+    }
 
     public function clickSideBarFavorite($link)
-    {}
+    {
+        $I = $this->tester;
+        $I->click($link, '#favoritesSidebar');
+    }
 
     public function clickToggleSideBar()
-    {}
+    {
+        $I = $this->tester;
+        $I->click('#buttontoggle', '#sidebar_container');
+    }
 }
