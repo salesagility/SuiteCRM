@@ -110,7 +110,10 @@ if (isset($_REQUEST['emailUIAction'])) {
         $cid = $current_user->id;
         $current_user = BeanFactory::getBean('Users', $_REQUEST['user']);
     } else {
-        $GLOBALS['log']->debug('TODO: add user to request on user edit view: [emailUIAction:' . $_REQUEST['emailUIAction'] . ']');
+        $GLOBALS['log']->debug(
+            'If you are on user edit view and want to apply the email settings for the selected user,' .
+            ' add user to request on user edit view: [emailUIAction:' . $_REQUEST['emailUIAction'] . ']'
+        );
     }
 
     switch ($_REQUEST['emailUIAction']) {
