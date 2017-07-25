@@ -165,12 +165,13 @@ class BasicModuleCest
 
         $this->fakeData->seed($this->fakeDataSeed);
         $I->click($this->fakeData->name, '//*[@id="MassUpdate"]/div[3]/table');
-        $I->click('ACTIONS', '#tab-actions');
-        $I->waitForElementVisible('#tab-actions > .dropdown-menu');
 
-        $I->click('Delete', '#tab-actions > .dropdown-menu');
+        $detailView = new \Page\DetailView($I);
+        $detailView->clickActionMenuItem('Delete');
+
         $I->acceptPopup();
 
         $I->waitForElementVisible('.listViewBody');
+
     }
 }
