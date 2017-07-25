@@ -152,7 +152,7 @@ modules:
 </pre>
 
 ### Environment Variables
-Using environment variables enables more advanced users to script or automate there development environment. Also you can add these values to Docker Compose.
+Using environment variables enables more advanced users to script or automate their development environment. Also you can add these values to Docker Compose.
 
 Using environment variables command line variables (bash):
 <pre>
@@ -185,6 +185,7 @@ set INSTANCE_ADMIN_USER=admin
 set INSTANCE_ADMIN_PASSWORD=admin
 </pre>
 
+#### For Docker Compose
 You can add a .env file into your docker compose setup:
 <pre>
 DATABASE_DRIVER=MYSQL
