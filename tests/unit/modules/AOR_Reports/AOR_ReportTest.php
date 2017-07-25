@@ -101,8 +101,6 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
 
     public function testbuild_report_chart()
     {
-        $this->markTestSkipped('Skipping pChart Test');
-
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
 
@@ -186,6 +184,9 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(20, $aor_Report->calculateTotal('AVG', $totals));
     }
 
+    /**
+     * @todo implement
+     */
     public function testbuild_report_csv()
     {
 
@@ -196,7 +197,7 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         $aor_Report->build_report_csv();
         */
 
-        $this->markTestIncomplete('Can Not be implemented');
+        //$this->markTestIncomplete('Can Not be implemented');
     }
 
     public function testbuild_report_query()

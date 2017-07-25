@@ -1,5 +1,7 @@
 <?php
 
+include_once 'tests/TestLogger.php';
+
 class SugarControllerTest  extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
@@ -61,6 +63,7 @@ class SugarControllerTest  extends PHPUnit_Framework_TestCase
         $SugarController = new SugarController();
 
         // replace and use a temporary logger
+
 
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
