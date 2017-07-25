@@ -77,6 +77,35 @@ cd /path/to/suitecrm/instance
 composer install
 </pre>
 
+## Running Codeception for the first time
+
+Codeception and the other commands live inside the vendor/bin/ directory of your SuiteCRM instance
+
+<pre>
+cd /path/to/suitecrm/instance/
+./vendor/bin/codecept run demo
+</pre>
+
+To make it easier to run codeception and the other commands which live in vendor/bin/ directory. You can add the
+vendor/bin location to your PATH environment variable.
+
+Adding vendor/bin to PATH (Bash):
+<pre>
+export PATH=$PATH:/path/to/instance/vendor/bin
+</pre>
+
+Adding vendor/bin to PATH (Command Prompt):
+<pre>
+set PATH=%PATH%;C:\path\to\instance\vendor\bin
+</pre>
+
+This allows you to call the codecept command directoy without having to prefix the command with its location. When running codecept you should ensure that your current working directory is the same as your suitecrm instance.
+
+<pre>
+cd /path/to/suitecrm/instance/
+codecept run demo
+</pre>
+
 ## Configuring the automated tests
 
 SuiteCRM requires you to configure the automated test with your development environment. There are a number of ways to configure your environment. 
@@ -177,21 +206,6 @@ set INSTANCE_URL=http://path/to/instance
 set INSTANCE_ADMIN_USER=admin
 set INSTANCE_ADMIN_PASSWORD=admin
 </pre>
-
-
-To make it easier to run codeception and the other commands which live in vendor/bin/ directory. You can add the
-vendor/bin location to your PATH environment variable.
-
-Adding vendor/bin to PATH (Bash):
-<pre>
-export PATH=$PATH:/path/to/instance/vendor/bin
-</pre>
-
-Adding vendor/bin to PATH (Command Prompt):
-<pre>
-set PATH=%PATH%;C:\path\to\instance\vendor\bin
-</pre>
-
 
 #### For Docker Compose
 You can add a .env file into your docker compose setup:
