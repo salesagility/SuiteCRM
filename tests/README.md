@@ -1,46 +1,53 @@
-SuiteCRM Automated Test Suite
+SuiteCRM Automated Testing Framework
 ====
 
-Automated tested provides a means to ensure that the quality of the product is kept to a high standard. Tests help to ensure that each team member continues to work in harmony, by providing a consistent testing framework, in which every one contributes tests with the changes being made in the product. Generally speaking, The more code is covered by high quality automated tests, the more likely the quality of the product is good.
+Automated testing provides a means to ensure that the quality of the product is kept to a high standard. By working with a consistent testing framework, it helps to ensure that each contributor continues to work in harmony, The concept is that everyone shares tests with the changes being made in the product. Generally speaking, The more code is covered by high quality automated tests, the more likely the quality of the product is good.
 
 
-## Introduction Automated testing
+## Introduction
 
 ### Test Scenario
 
 A test scenario is a set of conditions or variables under which a tester will determine whether a system under the test conditions satisfies requirements of the software. The process of developing test scenarios can also help find problems in the requirements or design of an application.
 
-'''Characteristics of a good test scenario:'''
-* Accurate: Exactly test the purpose of a scenarios.
-* Economical: No unnecessary steps used in the test.
-* Traceable: Capable of being traced to requirements.
-* Repeatable: Can be used to perform the test over and over under different operating environments.
-* Reusable: Can be reused if necessary.
+**Characteristics of a good test scenario:**
+- Accurate: Exactly test the purpose of a scenarios.
+- Economical: No unnecessary steps used in the test.
+- Traceable: Capable of being traced to requirements.
+- Repeatable: Can be used to perform the test over and over under different operating environments.
+- Reusable: Can be reused if necessary.
 
-'''Best Practices:'''
-* Write test scenarios in such a way that you test only one situation at a time. Do not overlap or complicate test scenarios.
-** You can use as many assertions as you need, provided that the assertions prove only the validity of the test scenario/case you are testing.
-* Ensure that all positive scenarios and negative scenarios are covered.
-* Language:
-** Write in the PHP Docs using the format:  "As a thing I (do not)want to do <scenario> so that I can/cannot <requirement> GIVEN that <some scenario is true> WHEN <condition is happening> EXPECT <some behavior will occur>"
-** Use easy to understand language. Use variable names to express intent like $expectedSomething, $doSomething and $actualSomething.
-** Use active voice: use present / current tense words like: has, is, call, do etc...
-** Use exact and consistent names (of forms, fields, actions etc).
-** Try to remove any ambiguity from your tests
+**Best Practices:**
+- Write test scenarios in such a way that you test only one situation at a time. Do not overlap or complicate test scenarios.
+ - You can use as many assertions as you need, provided that the assertions prove only the validity of the test scenario/case you are testing.
+- Ensure that all positive scenarios and negative scenarios are covered.
+- Language:
+ - Write in the PHP Docs using the format:  "As a thing I (do not)want to do <scenario> so that I can/cannot <requirement> GIVEN that <some scenario is true> WHEN <condition is happening> EXPECT <some behavior will occur>"
+ - Use easy to understand language. Use variable names to express intent like $expectedSomething, $doSomething and $actualSomething.
+ - Use active voice: use present / current tense words like: has, is, call, do etc...
+ - Use exact and consistent names (of forms, fields, actions etc).
+ - Try to remove any ambiguity from your tests
 
-'''Characteristics of a bad test scenario:'''
-* Runs other tests scenarios (or does the job of the test framework)
-* Do not assert the valid and invalid test conditions
-* The name of the test scenario has nothing to do with what it is testing
-* Adding assertions for a different test case
-* Testing the scenario dependencies instead of the scenario itself
-* Not testing the behaviour or data flow of the scenario
-* Not expressing the intent of the test scenario (PHP Doc, method names, variables, failure messages)
-* Using loops in your test scenario
+**Characteristics of a bad test scenario:**
+- Runs other tests scenarios (or does the job of the test framework)
+- Do not assert the valid and invalid test conditions
+- The name of the test scenario has nothing to do with what it is testing
+- Adding assertions for a different test case
+- Testing the scenario dependencies instead of the scenario itself
+- Not testing the behaviour or data flow of the scenario
+- Not expressing the intent of the test scenario (PHP Doc, method names, variables, failure messages)
+- Using loops in your test scenario
 
 ### Acceptance Tests
 
-Acceptance tests ensure that the software meets requirements of a user story. Since user stories are the examples given at the start of a development cycle, acceptance test tend to be the first set of tests to be written. Acceptances tests are also the easiest  tests to write, as they resemble a simple list of instructs like $I->goto('/home'); $I->click('button'); $I->see('dashboard'). Automated user acceptance tests mock the behaviour of a user.  These tests tell the developer/engineer that the a part of the system is displaying the right elements after an action has been carried out.
+Acceptance tests ensure that the software meets requirements of a user story. Since user stories are the examples given at the start of a development cycle, acceptance test tend to be the first set of tests to be written. Acceptances tests are also the easiest  tests to write, as they resemble a simple list of instructs like:
+<pre>
+$I->goto('/');
+$I->click('button');
+$I->see('dashboard');
+</pre>
+
+Automated user acceptance tests mock the behaviour of a user.  These tests tell the developer/engineer that the a part of the system is displaying the right elements after an action has been carried out.
 
 ### Functional Tests
 
@@ -61,9 +68,93 @@ Automated system testing are acceptance or functional tests which can used to te
 
 Regression tests are typically functional or acceptance test which check that the software which was previously developed and tested still performs correctly after it was changed. Regression tests are also written when a user raises an issue with the software. If a tester can replicate an issue, then it is best practice to write an automated test that developers can also replicate and test the issue. This ensures that any future work doesn't contain the same issue.
 
-## Set up locally
+## Installing the testing framework
+The automated test framework is built on top of [codeception](http://codeception.com) and [mocha](https://mochajs.org/) (in the browser). It uses composer and bower to manage the dependencies.
 
-Set up the environment variables
+Run the following in your terminal
+<pre>
+cd /path/to/suitecrm/instance
+composer install
+</pre>
+
+## Configuring the automated tests
+
+SuiteCRM requires you to configure the automated test with your development environment. There are a number of ways to configure your environment. 
+
+- You can configure the automated test by add an yml file to the tests/_envs folder
+- You can edit the yml files for each test suite
+- You can set up environment variables in the terminal or command prompt
+
+### Add a file to tests/_envs
+
+Adding a file to tests/_envs enables to create different configurations.
+
+Example: tests/_envs/mysql.yml
+<pre>
+modules:
+  config:
+    \SuiteCRM\Test\Driver\WebDriver:
+      url: "http://path/to/instance"
+      database_driver: "MYSQL"
+      # Also can be set to database_driver: "MSSQL"
+      database_name: "automated_tests"
+      database_host: "localhost"
+      database_user: "automated_tester"
+      database_password: "automated_password"
+      instance_admin_user: "admin"
+      instance_admin_password: "secret"
+</pre>
+
+Then you need to add this configuration into your command argument(s):
+
+<pre>
+codecept run install --env chrome,mysql
+</pre>
+
+For more details please refer to tests/_support/Helper/WebDriverHelper.php.
+
+### Editing test suite files
+Using the same technique, described in  "Add a file to tests/_envs", You can also choose to edit the suite.yml files which live in the tests folder. 
+
+Example: acceptance.suite.yml
+<pre>
+# Codeception Test Suite Configuration
+#
+# Suite for acceptance tests.
+# Perform tests in browser using the SuiteCRM WebDriver
+#
+# Use the enviornmental config files to configure the driver
+
+class_name: AcceptanceTester
+modules:
+    enabled:
+        - \Helper\Acceptance
+        - \Helper\WebDriverHelper
+        - \SuiteCRM\Test\Driver\WebDriver
+    config:
+        \SuiteCRM\Test\Driver\WebDriver:
+            url: "https://demo.suiteondemand.com"
+            browser: chrome
+            restart: true
+            wait: 1
+            # iPad 2
+            # See _env
+            width: 768
+            height: 1024
+            database_driver: "MYSQL"
+            # Also can be set to database_driver: "MSSQL"
+            database_name: "automated_tests"
+            database_host: "localhost"
+            database_user: "automated_tester"
+            database_password: "automated_password"
+            instance_admin_user: "admin"
+            instance_admin_password: "secret"
+</pre>
+
+### Environment Variables
+Using environment variables enables more advanced users to script or automate their development environment. Also you can add these values to Docker Compose.
+
+Using environment variables command line variables (bash):
 <pre>
 export DATABASE_DRIVER=MYSQL
 export DATABASE_NAME=automated_tests
@@ -75,26 +166,65 @@ export INSTANCE_ADMIN_USER=admin
 export INSTANCE_ADMIN_PASSWORD=admin
 </pre>
 
-to make it easier to run the commands
+to make it easier to run the vendor/bin/ commands
 
 <pre>
 export PATH=$PATH:/path/to/instance/vendor/bin
 </pre>
 
 
-Test your configuration
+Using environment variables command line variables (command prompt):
 <pre>
-codecept run demo --env selenium-hub,chrome
+set DATABASE_DRIVER=MYSQL
+set DATABASE_NAME=automated_tests
+set DATABASE_HOST=localhost
+set DATABASE_USER=automated_tests
+set DATABASE_PASSWORD=automated_tests
+set INSTANCE_URL=http://path/to/instance
+set INSTANCE_ADMIN_USER=admin
+set INSTANCE_ADMIN_PASSWORD=admin
 </pre>
 
+#### For Docker Compose
+You can add a .env file into your docker compose setup:
+<pre>
+DATABASE_DRIVER=MYSQL
+DATABASE_NAME=automated_tests
+DATABASE_HOST=localhost
+DATABASE_USER=automated_tests
+DATABASE_PASSWORD=automated_tests
+INSTANCE_URL=http://path/to/instance
+INSTANCE_ADMIN_USER=admin
+INSTANCE_ADMIN_PASSWORD=admin
+</pre>
+
+and then reference it in your php container (docker-compose.yml):
+<pre>
+version: '3'
+services:
+  php:
+      image: php:7.0-apache
+      restart: always
+      ports:
+        - 9001:80
+      environment:
+       - DATABASE_DRIVER: $DATABASE_DRIVER
+       - DATABASE_NAME: $DATABASE_NAME
+       - DATABASE_HOST: $DATABASE_HOST
+       - DATABASE_USER: $DATABASE_USER
+       - DATABASE_PASSWORD: $DATABASE_PASSWORD
+       - INSTANCE_URL: $INSTANCE_URL
+       - INSTANCE_ADMIN_USER: $INSTANCE_ADMIN_USER
+       - INSTANCE_ADMIN_PASSWORD: $INSTANCE_ADMIN_PASSWORD
+</pre>
 
 ## Test Environments
 
-The SuiteCRM Test Suite can support different environments. You can see the different environments in tests/_env folder.
-There are different prefixes depending the testing environment you deploy.
+The SuiteCRM automated testing framework can support different environments. You can see the different configurations for test environments in tests/_env folder. There are different prefixes fore each testing environment you choose to deploy.
  
 - selenium- Configures the features for selenium web driver environment
 - browser-stack- Configures features for browser stack environment
+- travis-ci- Configures features for travis-ci environment
 
 To run the tests in a single environment by adding --env flag, seperating each configuration by a comma: 
 
@@ -110,10 +240,11 @@ codecept run acceptance --env selenium-hub,selenium-iphone-6 --env browser-stack
 The tests will be executed 2 times. One for each environment
 
 ### Selenium Environment
+In your selenium developement environment, It is recommended that you employ docker compose to set up a selenium hub with a selenium node. 
 
-#### Selenium Hub
+#### Using Docker Compose with the Selenium Hub
 
-You can configure selenium using docker compose. Please ensure you can the following in your DockerCompose file.
+You can configure selenium using docker compose. Please ensure you have the following in your docker-compose.yml file.
 
 <pre>
  selenium-hub:
@@ -149,8 +280,15 @@ You can select the browser you wish to test by adding it to the --env.
 codecept run demo --env selenium-hub,chrome --env selenium-hub,firefox
 </pre>
 
-#### Resolutions
-There are also different configurations for each device we test
+#### Using Selenium with a local PHP environment
+You may prefer to run in a local PHP environment instead of using docker compose. This requires that you need to have selenium running locally on your computer. When running in a local environment, you do not need to include the selenium-hub environment variable. Instead, you must choose which browser you have set up locally:
+
+<pre>
+codecept run demo --env chrome
+</pre>
+
+#### Screen Resolutions / Fake Devices
+There are also different configurations for each target device we test for:
 
 - selenium-iphone-6 (375x667)
 - selenium-ipad-2 (768x1024)
@@ -162,3 +300,5 @@ Example:
 <pre>
 codecept run acceptance --env selenium-hub,selenium-xga
 </pre>
+
+**Please note:** that the SuiteCRM automated test framework uses **height** and **width** values to define the window size instead of the window_size. window_size is ignored by the automated test framework.
