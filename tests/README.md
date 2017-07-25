@@ -299,14 +299,14 @@ You can configure selenium using docker compose. Please ensure you have the foll
 You can select the browser you wish to test by adding it to the --env.
 
 <pre>
-codecept run demo --env selenium-hub,chrome --env selenium-hub,firefox
+codecept run demo --env selenium-hub,selenium-chrome --env selenium-hub,selenium-firefox
 </pre>
 
 #### Using Selenium with a local PHP environment
 You may prefer to run in a local PHP environment instead of using docker compose. This requires that you need to have selenium running locally on your computer. When running in a local environment, you do not need to include the selenium-hub environment variable. Instead, you must choose which browser you have set up locally:
 
 <pre>
-codecept run demo --env chrome
+codecept run demo --env selenium-chrome
 </pre>
 
 #### Screen Resolutions / Fake Devices
