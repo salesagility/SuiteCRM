@@ -1034,7 +1034,11 @@ class AOR_Report extends Basic
 
         if (empty($query_array['group_by'])) {
             foreach ($query_array['id_select'] as $select) {
-                $query .= ', ' . $select;
+                if(!$query) {
+                    $query = 'SELECT ' . $select;
+                } else {
+                    $query .= ', ' . $select;
+                }
             }
         }
 
