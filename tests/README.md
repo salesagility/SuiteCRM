@@ -295,6 +295,7 @@ You can configure selenium using docker compose. Please ensure you have the foll
               - "HUB_PORT_4444_TCP_ADDR=selenium-hub"
               - "HUB_PORT_4444_TCP_PORT=4444"
 </pre>
+**Note: you can using the nodes without vnc support if you prefer**
 
 You can select the browser you wish to test by adding it to the --env.
 
