@@ -248,7 +248,7 @@ The SuiteCRM automated testing framework can support different environments. You
 - browser-stack- Configures features for browser stack environment
 - travis-ci- Configures features for travis-ci environment
 
-To run the tests in a single environment by adding --env flag, seperating each configuration by a comma: 
+To run the tests in a single environment, add a --env flag to the codecept command; seperating each configuration by a comma: 
 
 <pre>
 codecept run acceptance --env selenium-hub,selenium-iphone-6
@@ -257,12 +257,12 @@ codecept run acceptance --env selenium-hub,selenium-iphone-6
 It is also possible to run multi environments at the same time by adding multiple --env flags
 
 <pre>
-codecept run acceptance --env selenium-hub,selenium-iphone-6 --env browser-stack,browser-stack-ipad-2
+codecept run acceptance --env selenium-hub,selenium-iphone-6  --env selenium-hub,selenium-hd --env browser-stack,browser-stack-ipad-2 
 </pre>
-The tests will be executed 2 times. One for each environment
+The tests will be executed 3 times. One for each environment
 
 ### Selenium Environment
-In your selenium developement environment, It is recommended that you employ docker compose to set up a selenium hub with a selenium node. 
+In your selenium developement environment, It is recommended that you employ docker compose to set up a selenium hub with a selenium node. As this will ensure your version of chrome and firefox are kept up-to-date with the latest version. Plus you can then run multiple version of PHP on the same host machine.
 
 #### Using Docker Compose with the Selenium Hub
 
