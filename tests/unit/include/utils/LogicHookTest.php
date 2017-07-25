@@ -269,7 +269,6 @@ class LogicHookTest extends PHPUnit_Framework_TestCase
             file_exists("custom/modules/Accounts/logic_hooks.php") ||
             file_exists("custom/modules/Accounts/Ext/LogicHooks/logichooks.ext.php")
         ) {
-            // test commit
             $this->assertSame($expected_accounts, $accounts_hooks);
         } else {
             $this->assertTrue(empty($accounts_hooks));
