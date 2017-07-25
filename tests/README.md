@@ -166,20 +166,6 @@ export INSTANCE_ADMIN_USER=admin
 export INSTANCE_ADMIN_PASSWORD=admin
 </pre>
 
-to make it easier to run codeception and the other commands which live in vendor/bin/. You can add the
-vendor/bin location to your PATH environment variable.
-
-Bash:
-<pre>
-export PATH=$PATH:/path/to/instance/vendor/bin
-</pre>
-
-Command Prompt
-<pre>
-set PATH=%PATH%;C:\path\to\instance\vendor\bin
-</pre>
-
-
 Using environment variables command line variables (command prompt):
 <pre>
 set DATABASE_DRIVER=MYSQL
@@ -191,6 +177,21 @@ set INSTANCE_URL=http://path/to/instance
 set INSTANCE_ADMIN_USER=admin
 set INSTANCE_ADMIN_PASSWORD=admin
 </pre>
+
+
+To make it easier to run codeception and the other commands which live in vendor/bin/ directory. You can add the
+vendor/bin location to your PATH environment variable.
+
+Adding vendor/bin to PATH (Bash):
+<pre>
+export PATH=$PATH:/path/to/instance/vendor/bin
+</pre>
+
+Adding vendor/bin to PATH (Command Prompt):
+<pre>
+set PATH=%PATH%;C:\path\to\instance\vendor\bin
+</pre>
+
 
 #### For Docker Compose
 You can add a .env file into your docker compose setup:
