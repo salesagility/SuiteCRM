@@ -99,7 +99,7 @@ Adding vendor/bin to PATH (Command Prompt):
 set PATH=%PATH%;C:\path\to\instance\vendor\bin
 </pre>
 
-This allows you to call the codecept command directoy without having to prefix the command with its location. When running codecept you should ensure that your current working directory is the same as your suitecrm instance.
+This allows you to call the codecept command without having to prefix the command with its location. When running codecept you should ensure that your current working directory is the same as your suitecrm instance.
 
 <pre>
 cd /path/to/suitecrm/instance/
