@@ -81,7 +81,7 @@ composer install
 
 SuiteCRM requires you to configure the automated test with your development environment. There are a number of ways to configure your environment. 
 
-- You can configure the automated test by add an yml file to the tests/_envs folder
+- You can configure the automated test by adding an yml file to the tests/_envs folder
 - You can edit the yml files for each test suite
 - You can set up environment variables in the terminal or command prompt
 
@@ -111,10 +111,10 @@ Then you need to add this configuration into your command argument(s):
 codecept run install --env chrome,mysql
 </pre>
 
-For more details please refer to tests/_support/Helper/WebDriverHelper.php.
+For more details please refer to tests/_support/Helper/WebDriverHelper.php. For security reasons make sure you add the yml file to the gitignore file. DO NOT COMMIT SECURITY INFORMATION IN GIT.
 
 ### Editing test suite files
-Using the same technique, described in  "Add a file to tests/_envs", You can also choose to edit the suite.yml files which live in the tests folder. 
+Using the same technique, described in  "Add a file to tests/_envs", You can also choose to edit the suite.yml files which live in the tests folder. This method is discoraged as you should not commit security information to the git repository.
 
 Example: acceptance.suite.yml
 <pre>
@@ -152,7 +152,7 @@ modules:
 </pre>
 
 ### Environment Variables
-Using environment variables enables more advanced users to script or automate their development environment. Also you can add these values to Docker Compose.
+Environment variables allows more advanced users to script or automate their development environment. Also you can add these values to Docker Compose. This is the prefered method to store sensative information, as it cannot be commited to the git repository.
 
 Using environment variables command line variables (bash):
 <pre>
@@ -166,10 +166,17 @@ export INSTANCE_ADMIN_USER=admin
 export INSTANCE_ADMIN_PASSWORD=admin
 </pre>
 
-to make it easier to run the vendor/bin/ commands
+to make it easier to run codeception and the other commands which live in vendor/bin/. You can add the
+vendor/bin location to your PATH environment variable.
 
+Bash:
 <pre>
 export PATH=$PATH:/path/to/instance/vendor/bin
+</pre>
+
+Command Prompt
+<pre>
+set PATH=%PATH%;C:\path\to\instance\vendor\bin
 </pre>
 
 
