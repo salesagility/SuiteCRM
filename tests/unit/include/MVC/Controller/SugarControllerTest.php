@@ -2,14 +2,14 @@
 
 include_once 'tests/TestLogger.php';
 
-class SugarControllerTest  extends PHPUnit_Framework_TestCase
+class SugarControllerTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
         global $current_user;
         $current_user = new User();
         get_sugar_config_defaults();
-        if(!isset($GLOBALS['app']) || !$GLOBALS['app']) {
+        if (!isset($GLOBALS['app']) || !$GLOBALS['app']) {
             $GLOBALS['app'] = new SugarApplication();
         }
     }

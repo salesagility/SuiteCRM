@@ -1,10 +1,12 @@
 <?php
 
-class TestLogger {
+class TestLogger
+{
 
     public $calls;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->calls = array();
     }
 
