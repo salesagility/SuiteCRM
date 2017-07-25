@@ -164,6 +164,14 @@ class SugarView
     protected function _initSmarty()
     {
         $this->ss = new Sugar_Smarty();
+        if(!isset($GLOBALS['mod_strings'])) {
+            $GLOBALS['log']->warn('Undefined index: mod_strings');
+            $GLOBALS['mod_strings'] = array();
+        }
+        if(!isset($GLOBALS['app_strings'])) {
+            $GLOBALS['log']->warn('Undefined index: app_strings');
+            $GLOBALS['app_strings'] = array();
+        }
         $this->ss->assign('MOD', $GLOBALS['mod_strings']);
         $this->ss->assign('APP', $GLOBALS['app_strings']);
     }

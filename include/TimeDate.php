@@ -229,7 +229,7 @@ class TimeDate
                     $tz = "UTC"; // guess failed, switch to UTC
                 }
                 if(isset($GLOBALS['log'])) {
-                    $GLOBALS['log']->fatal("Configuration variable date.timezone is not set, guessed timezone $tz. Please set date.timezone=\"$tz\" in php.ini!");
+                    $GLOBALS['log']->warn("Configuration variable date.timezone is not set, guessed timezone $tz. Please set date.timezone=\"$tz\" in php.ini!");
                 }
                 date_default_timezone_set($tz);
             }
