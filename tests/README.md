@@ -183,7 +183,7 @@ modules:
 ### Environment Variables
 Environment variables allows more advanced users to script or automate their development environment. Also you can add these values to Docker Compose. This is the prefered method to store sensative information, as it cannot be commited to the git repository.
 
-Using environment variables command line variables (bash):
+Setup environment variables (bash):
 <pre>
 export DATABASE_DRIVER=MYSQL
 export DATABASE_NAME=automated_tests
@@ -195,7 +195,7 @@ export INSTANCE_ADMIN_USER=admin
 export INSTANCE_ADMIN_PASSWORD=admin
 </pre>
 
-Using environment variables command line variables (command prompt):
+Setup environment variables  (Command Prompt):
 <pre>
 set DATABASE_DRIVER=MYSQL
 set DATABASE_NAME=automated_tests
