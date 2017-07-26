@@ -1,6 +1,5 @@
 <?php
 
-use Faker\Factory;
 use Faker\Generator;
 
 class BasicModuleCest
@@ -37,7 +36,8 @@ class BasicModuleCest
 
     // Tests
     /**
-     * @param \Step\Acceptance\ModuleBuilder $I
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As an administrator I want to create and deploy a basic module so that I can test
@@ -45,7 +45,8 @@ class BasicModuleCest
      * the module before testing.
      */
     public function testScenarioCreateBasicModule(
-       \Step\Acceptance\ModuleBuilder $I,
+       \AcceptanceTester $I,
+       \Step\Acceptance\ModuleBuilder $moduleBuilder,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a basic module for testing');
@@ -56,7 +57,7 @@ class BasicModuleCest
 
         $I->loginAsAdmin();
 
-        $I->createModule(
+        $moduleBuilder->createModule(
             \Page\BasicModule::$PACKAGE_NAME,
             \Page\BasicModule::$NAME,
             \SuiteCRM\Enumerator\SugarObjectType::basic
@@ -64,7 +65,7 @@ class BasicModuleCest
     }
 
     /**
-     * @param \Step\Acceptance\ModuleBuilder $I
+     * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Helper\WebDriverHelper $webDriverHelper
@@ -73,7 +74,7 @@ class BasicModuleCest
      * deployed correctly.
      */
     public function testScenarioViewBasicTestModule(
-        \Step\Acceptance\ModuleBuilder $I,
+        \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Helper\WebDriverHelper $webDriverHelper
@@ -92,7 +93,7 @@ class BasicModuleCest
     }
 
     /**
-     * @param \Step\Acceptance\ModuleBuilder $I
+     * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\EditView $editView
      * @param \Helper\WebDriverHelper $webDriverHelper
@@ -101,7 +102,7 @@ class BasicModuleCest
      * the standard fields.
      */
     public function testScenarioCreateRecord(
-        \Step\Acceptance\ModuleBuilder $I,
+        \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\EditView $editView,
         \Helper\WebDriverHelper $webDriverHelper
@@ -128,7 +129,7 @@ class BasicModuleCest
     }
 
     /**
-     * @param \Step\Acceptance\ModuleBuilder $I
+     * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Helper\WebDriverHelper $webDriverHelper
@@ -136,7 +137,7 @@ class BasicModuleCest
      * As administrative user I want to view the record by selecting it in the list view
      */
     public function testScenarioViewRecordFromListView(
-        \Step\Acceptance\ModuleBuilder $I,
+        \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Helper\WebDriverHelper $webDriverHelper
@@ -152,11 +153,18 @@ class BasicModuleCest
         $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
 
         $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->fillField('#name_basic', $this->fakeData->name);
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
+        $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickNameLink($this->fakeData->name);
     }
 
     /**
-     * @param \Step\Acceptance\ModuleBuilder $I
+     * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
@@ -166,7 +174,7 @@ class BasicModuleCest
      * As administrative user I want to edit the record by selecting it in the detail view
      */
     public function testScenarioEditRecordFromDetailView(
-        \Step\Acceptance\ModuleBuilder $I,
+        \AcceptanceTester$I,
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
@@ -184,6 +192,12 @@ class BasicModuleCest
         $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
 
         // Select record from list view
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->fillField('#name_basic', $this->fakeData->name);
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
         $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickNameLink($this->fakeData->name);
 
@@ -197,7 +211,61 @@ class BasicModuleCest
     }
 
     /**
-     * @param \Step\Acceptance\ModuleBuilder $I
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\EditView $editView
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to edit the record by selecting it in the detail view
+     */
+    public function testScenarioDuplicateRecordFromDetailView(
+        \AcceptanceTester $I,
+        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\EditView $editView,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Duplicate Basic Test Module Record from detail view');
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        $I->loginAsAdmin();
+
+        // Go to Basic Test Module
+        $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
+
+        // Select record from list view
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->fillField('#name_basic', $this->fakeData->name);
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->clickNameLink($this->fakeData->name);
+
+        // Edit Record
+        $detailView->clickActionMenuItem('Duplicate');
+
+        $this->fakeData->seed($this->fakeDataSeed);
+        $editView->fillField('#name', $this->fakeData->name . '1');
+
+        // Save record
+        $editView->click('Save');
+
+        $detailView->waitForDetailViewVisible();
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+
+        $listView->waitForListViewVisible();
+    }
+
+    /**
+     * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
@@ -206,7 +274,7 @@ class BasicModuleCest
      * As administrative user I want to delete the record by selecting it in the detail view
      */
     public function testScenarioDeleteRecordFromDetailView(
-        \Step\Acceptance\ModuleBuilder $I,
+        \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
@@ -223,12 +291,18 @@ class BasicModuleCest
         $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
 
         // Select record from list view
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $listView->fillField('#name_basic', $this->fakeData->name);
+        $listView->click('Search', '.submitButtons');
+        $listView->wait(1);
         $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickNameLink($this->fakeData->name);
 
         // Delete Record
         $detailView->clickActionMenuItem('Delete');
-        $I->acceptPopup();
+        $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
     }

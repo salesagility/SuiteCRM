@@ -22,6 +22,8 @@ class ListView  extends Tester
     public function clickFilterButton()
     {
         $I = $this;
+        $I->click('a.glyphicon-filter','.searchLink');
+        $I->waitForFilterModalVisible();
     }
 
     /**
@@ -31,5 +33,11 @@ class ListView  extends Tester
     {
         $I = $this;
         $I->waitForElementVisible('.listViewBody');
+    }
+
+    public function waitForFilterModalVisible()
+    {
+        $I = $this;
+        $I->waitForElementVisible('#searchDialog');
     }
 }
