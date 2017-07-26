@@ -10,6 +10,7 @@ modules:
     enabled:
         - \Helper\Acceptance
         - \Helper\WebDriverHelper
+        - Filesystem
         - \SuiteCRM\Test\Driver\WebDriver
     config:
         \SuiteCRM\Test\Driver\WebDriver:
