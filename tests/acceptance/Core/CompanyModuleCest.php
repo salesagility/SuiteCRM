@@ -2,7 +2,7 @@
 
 use Faker\Generator;
 
-class BasicModuleCest
+class CompanyModuleCest
 {
 
     /**
@@ -22,6 +22,9 @@ class BasicModuleCest
     {
         if(!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
+            $this->fakeData->addProvider(new Faker\Provider\en_US\Address($this->fakeData));
+            $this->fakeData->addProvider(new Faker\Provider\en_US\PhoneNumber($this->fakeData));
+            $this->fakeData->addProvider(new Faker\Provider\en_US\Company($this->fakeData));
             $this->fakeDataSeed = rand(0, 2048);
         }
         $this->fakeData->seed($this->fakeDataSeed);
@@ -40,16 +43,16 @@ class BasicModuleCest
      * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
-     * As an administrator I want to create and deploy a basic module so that I can test
-     * that the basic functionality is working. Given that I have already created a module I expect to deploy
+     * As an administrator I want to create and deploy a company module so that I can test
+     * that the company functionality is working. Given that I have already created a module I expect to deploy
      * the module before testing.
      */
-    public function testScenarioCreateBasicModule(
+    public function testScenarioCreateCompanyModule(
        \AcceptanceTester $I,
        \Step\Acceptance\ModuleBuilder $moduleBuilder,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
-        $I->wantTo('Create a basic module for testing');
+        $I->wantTo('Create a company module for testing');
 
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
@@ -58,9 +61,9 @@ class BasicModuleCest
         $I->loginAsAdmin();
 
         $moduleBuilder->createModule(
-            \Page\BasicModule::$PACKAGE_NAME,
-            \Page\BasicModule::$NAME,
-            \SuiteCRM\Enumerator\SugarObjectType::basic
+            \Page\CompanyModule::$PACKAGE_NAME,
+            \Page\CompanyModule::$NAME,
+            \SuiteCRM\Enumerator\SugarObjectType::company
         );
     }
 
@@ -70,16 +73,16 @@ class BasicModuleCest
      * @param \Step\Acceptance\ListView $listView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
-     * As administrative user I want to view my basic test module so that I can see if it has been
+     * As administrative user I want to view my company test module so that I can see if it has been
      * deployed correctly.
      */
-    public function testScenarioViewBasicTestModule(
+    public function testScenarioViewCompanyTestModule(
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
-        $I->wantTo('View Basic Test Module');
+        $I->wantTo('View Company Test Module');
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
@@ -87,7 +90,7 @@ class BasicModuleCest
         $I->loginAsAdmin();
 
         // Navigate to module
-        $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
+        $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
 
         $listView->waitForListViewVisible();
     }
@@ -99,7 +102,7 @@ class BasicModuleCest
      * @param \Step\Acceptance\EditView $editView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
-     * As administrative user I want to create a record with my basic test module so that I can test
+     * As administrative user I want to create a record with my company test module so that I can test
      * the standard fields.
      */
     public function testScenarioCreateRecord(
@@ -109,23 +112,37 @@ class BasicModuleCest
         \Step\Acceptance\EditView $editView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
-        $I->wantTo('Create Basic Test Module Record');
+        $I->wantTo('Create Company Test Module Record');
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
 
         $I->loginAsAdmin();
 
-        // Go to Basic Test Module
-        $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
+        // Go to Company Test Module
+        $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
         $listView->waitForListViewVisible();
 
-        // Select create Basic Test Module form the current menu
-        $navigationBar->clickCurrentMenuItem('Create ' . \Page\BasicModule::$NAME);
+        // Select create Company Test Module form the current menu
+        $navigationBar->clickCurrentMenuItem('Create ' . \Page\CompanyModule::$NAME);
 
         // Create a record
         $this->fakeData->seed($this->fakeDataSeed);
-        $editView->fillField('#name', $this->fakeData->name);
+        $editView->fillField('#name', $this->fakeData->company);
+        $editView->fillField('#phone_office', $this->fakeData->phoneNumber);
+        $editView->fillField('#phone_fax', $this->fakeData->phoneNumber);
+        $editView->fillField('#phone_alternate', $this->fakeData->phoneNumber);
+        $editView->fillField('#ticker_symbol', $this->fakeData->randomAscii);
+        $editView->fillField('#rating', $this->fakeData->randomAscii);
+        $editView->fillField('#ownership', $this->fakeData->randomAscii);
+        $editView->selectOption('#industry', 'Other');
+        $editView->selectOption('test_'.strtolower(\Page\CompanyModule::$NAME).'_type', 'Other');
+        $editView->fillField('#billing_address_street', $this->fakeData->streetAddress);
+        $editView->fillField('#billing_address_city', $this->fakeData->city);
+        $editView->fillField('#billing_address_state', $this->fakeData->randomAscii);
+        $editView->fillField('#billing_address_postalcode', $this->fakeData->postcode);
+        $editView->fillField('#billing_address_country', $this->fakeData->country);
+        $editView->checkOption('#shipping_checkbox');
         $editView->fillField('#description', $this->fakeData->paragraph);
         $editView->clickSaveButton();
     }
@@ -151,19 +168,20 @@ class BasicModuleCest
 
         $I->loginAsAdmin();
 
-        // Go to Basic Test Module
-        $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
+        // Go to Company Test Module
+        $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
         $listView->waitForListViewVisible();
 
         $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickFilterButton();
         $listView->click('Quick Filter');
         $this->fakeData->seed($this->fakeDataSeed);
-        $listView->fillField('#name_basic', $this->fakeData->name);
+        $listView->fillField('#name_basic', $this->fakeData->company);
         $listView->click('Search', '.submitButtons');
         $listView->wait(1);
+        $listView->dontSee('No results found');
         $this->fakeData->seed($this->fakeDataSeed);
-        $listView->clickNameLink($this->fakeData->name);
+        $listView->clickNameLink($this->fakeData->company);
     }
 
     /**
@@ -184,26 +202,27 @@ class BasicModuleCest
         \Step\Acceptance\EditView $editView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
-        $I->wantTo('Edit Basic Test Module Record from detail view');
+        $I->wantTo('Edit Company Test Module Record from detail view');
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
 
         $I->loginAsAdmin();
 
-        // Go to Basic Test Module
-        $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
+        // Go to Company Test Module
+        $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
         $listView->waitForListViewVisible();
 
         // Select record from list view
         $listView->clickFilterButton();
         $listView->click('Quick Filter');
         $this->fakeData->seed($this->fakeDataSeed);
-        $listView->fillField('#name_basic', $this->fakeData->name);
+        $listView->fillField('#name_basic', $this->fakeData->company);
         $listView->click('Search', '.submitButtons');
         $listView->wait(1);
+        $listView->dontSee('No results found');
         $this->fakeData->seed($this->fakeDataSeed);
-        $listView->clickNameLink($this->fakeData->name);
+        $listView->clickNameLink($this->fakeData->company);
 
         // Edit Record
         $detailView->clickActionMenuItem('Edit');
@@ -232,32 +251,33 @@ class BasicModuleCest
         \Step\Acceptance\EditView $editView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
-        $I->wantTo('Duplicate Basic Test Module Record from detail view');
+        $I->wantTo('Duplicate Company Test Module Record from detail view');
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
 
         $I->loginAsAdmin();
 
-        // Go to Basic Test Module
-        $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
+        // Go to Company Test Module
+        $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
         $listView->waitForListViewVisible();
 
         // Select record from list view
         $listView->clickFilterButton();
         $listView->click('Quick Filter');
         $this->fakeData->seed($this->fakeDataSeed);
-        $listView->fillField('#name_basic', $this->fakeData->name);
+        $listView->fillField('#name_basic', $this->fakeData->company);
         $listView->click('Search', '.submitButtons');
         $listView->wait(1);
+        $listView->dontSee('No results found');
         $this->fakeData->seed($this->fakeDataSeed);
-        $listView->clickNameLink($this->fakeData->name);
+        $listView->clickNameLink($this->fakeData->company);
 
         // Edit Record
         $detailView->clickActionMenuItem('Duplicate');
 
         $this->fakeData->seed($this->fakeDataSeed);
-        $editView->fillField('#name', $this->fakeData->name . '1');
+        $editView->fillField('#name', $this->fakeData->company . '1');
 
         // Save record
         $editView->click('Save');
@@ -285,26 +305,27 @@ class BasicModuleCest
         \Step\Acceptance\DetailView $detailView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
-        $I->wantTo('Delete Basic Test Module Record from detail view');
+        $I->wantTo('Delete Company Test Module Record from detail view');
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
 
         $I->loginAsAdmin();
 
-        // Go to Basic Test Module
-        $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
+        // Go to Company Test Module
+        $navigationBar->clickAllMenuItem(\Page\CompanyModule::$NAME);
         $listView->waitForListViewVisible();
 
         // Select record from list view
         $listView->clickFilterButton();
         $listView->click('Quick Filter');
         $this->fakeData->seed($this->fakeDataSeed);
-        $listView->fillField('#name_basic', $this->fakeData->name);
+        $listView->fillField('#name_basic', $this->fakeData->company);
         $listView->click('Search', '.submitButtons');
         $listView->wait(1);
+        $listView->dontSee('No results found');
         $this->fakeData->seed($this->fakeDataSeed);
-        $listView->clickNameLink($this->fakeData->name);
+        $listView->clickNameLink($this->fakeData->company);
 
         // Delete Record
         $detailView->clickActionMenuItem('Delete');

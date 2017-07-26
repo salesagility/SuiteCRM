@@ -15,4 +15,12 @@ class EditView extends Tester
         $I = $this;
         $I->waitForElementVisible('#EditView');
     }
+
+    public function clickSaveButton()
+    {
+        $I = $this;
+        $I->scrollTo('#pagecontent');
+        $I->click('Save');
+    }
+
 }
