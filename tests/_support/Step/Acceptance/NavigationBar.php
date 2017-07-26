@@ -146,19 +146,19 @@ class NavigationBar extends  Tester
                 $I->click($link, '//*[@id="toolbar"]/ul/li[2]/ul');
                 break;
             case DesignBreakPoint::md:
-                $I->click('#modulelinks > .modulename > a');
-                $I->waitForElementVisible('#modulelinks >ul.dropdown-menu');
-                $I->click($link, '#modulelinks >ul.dropdown-menu');
+                $I->click('div#mobileheader > div#modulelinks > .modulename > a');
+                $I->waitForElementVisible('div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
+                $I->click($link, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
                 break;
             case DesignBreakPoint::sm:
-                $I->click('#modulelinks > .modulename > a');
-                $I->waitForElementVisible('#modulelinks >ul.dropdown-menu');
-                $I->click($link, '#modulelinks >ul.dropdown-menu');
+                $I->click('div#mobileheader > div#modulelinks > .modulename > a');
+                $I->waitForElementVisible('#modulelinks > ul.dropdown-menu');
+                $I->click($link, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
                 break;
             case DesignBreakPoint::xs:
-                $I->click('#modulelinks > .modulename > a');
-                $I->waitForElementVisible('#modulelinks >ul.dropdown-menu');
-                $I->click($link, '#modulelinks >ul.dropdown-menu');
+                $I->click('div#mobileheader > div#modulelinks > .modulename > a');
+                $I->waitForElementVisible('div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
+                $I->click($link, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
                 break;
         }
     }

@@ -95,6 +95,7 @@ class BasicModuleCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\EditView $editView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
@@ -104,6 +105,7 @@ class BasicModuleCest
     public function testScenarioCreateRecord(
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\ListView $listView,
         \Step\Acceptance\EditView $editView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
@@ -116,6 +118,7 @@ class BasicModuleCest
 
         // Go to Basic Test Module
         $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
+        $listView->waitForListViewVisible();
 
         // Select create Basic Test Module form the current menu
         $navigationBar->clickCurrentMenuItem('Create ' . \Page\BasicModule::$NAME);
@@ -151,6 +154,7 @@ class BasicModuleCest
 
         // Go to Basic Test Module
         $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
+        $listView->waitForListViewVisible();
 
         $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickFilterButton();
@@ -190,6 +194,7 @@ class BasicModuleCest
 
         // Go to Basic Test Module
         $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
+        $listView->waitForListViewVisible();
 
         // Select record from list view
         $listView->clickFilterButton();
@@ -237,6 +242,7 @@ class BasicModuleCest
 
         // Go to Basic Test Module
         $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
+        $listView->waitForListViewVisible();
 
         // Select record from list view
         $listView->clickFilterButton();
@@ -289,6 +295,7 @@ class BasicModuleCest
 
         // Go to Basic Test Module
         $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
+        $listView->waitForListViewVisible();
 
         // Select record from list view
         $listView->clickFilterButton();
