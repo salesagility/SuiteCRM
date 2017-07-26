@@ -72,25 +72,28 @@ class ModuleBuilder extends Administration
             // Close popup
             $I->wait(3);
             $I->click('.container-close');
+
+            // Deploy module
+            $I->wait(3);
+            $I->click('Module Builder');
+            $I->wait(3);
+            $I->click($moduleName, '.bodywrapper');
+            $I->wait(3);
+            $I->click('Deploy');
+
+            if($packageExists) {
+                $I->acceptPopup();
+            }
+
+            // Close popup
+            $I->wait(3);
+            $I->click('.container-close');
+
+            // Wait for page to refresh and look for new package link
+            $I->waitForElement('#newPackageLink', 120);
+
+        } else {
+            $I->getScenario()->skip($packageName . ' already exists. Please remove package and module manually.');
         }
-
-        // Deploy module
-        $I->wait(3);
-        $I->click('Module Builder');
-        $I->wait(3);
-        $I->click($moduleName, '.bodywrapper');
-        $I->wait(3);
-        $I->click('Deploy');
-
-        if($packageExists) {
-            $I->acceptPopup();
-        }
-
-        // Close popup
-        $I->wait(3);
-        $I->click('.container-close');
-
-        // Wait for page to refresh and look for new package link
-        $I->waitForElement('#newPackageLink', 120);
     }
 }

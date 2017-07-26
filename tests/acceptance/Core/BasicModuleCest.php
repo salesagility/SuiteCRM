@@ -146,6 +146,39 @@ class BasicModuleCest
      * @param \Step\Acceptance\ModuleBuilder $I
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
+     * As administrative user I want to edit the record by selecting it in the detail view
+     */
+    public function testScenarioEditRecordFromDetailView(
+        \Step\Acceptance\ModuleBuilder $I,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Edit Basic Test Module Record from detail view');
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        $I->loginAsAdmin();
+
+        // Go to Basic Test Module
+        $navigationBar = new \Page\NavigationBar($I);
+        $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
+
+        $this->fakeData->seed($this->fakeDataSeed);
+        $I->click($this->fakeData->name, '//*[@id="MassUpdate"]/div[3]/table');
+
+        $detailView = new \Page\DetailView($I);
+        $detailView->clickActionMenuItem('Edit');
+
+        $I->click('Save');
+
+        $I->waitForElementVisible('.detail-view');
+
+    }
+
+    /**
+     * @param \Step\Acceptance\ModuleBuilder $I
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
      * As administrative user I want to delete the record by selecting it in the detail view
      */
     public function testScenarioDeleteRecordFromDetailView(
