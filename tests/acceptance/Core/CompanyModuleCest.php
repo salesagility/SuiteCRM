@@ -143,6 +143,7 @@ class CompanyModuleCest
         $editView->fillField('#billing_address_postalcode', $this->fakeData->postcode);
         $editView->fillField('#billing_address_country', $this->fakeData->country);
         $editView->checkOption('#shipping_checkbox');
+        $editView->fillField('#Test_'.\Page\CompanyModule::$NAME.'0emailAddress0', $this->fakeData->companyEmail);
         $editView->fillField('#description', $this->fakeData->paragraph);
         $editView->clickSaveButton();
     }
