@@ -87,15 +87,17 @@
                                 <ul class="dropdown-menu" role="menu">
                                 {if $name !='Home'}
                                     {if count($shortcutTopMenu.$name) > 0}
-                                       <ul>
-                                           {foreach from=$shortcutTopMenu.$name item=item}
-                                               {if $item.URL == "-"}
-                                                   <li class="mobile-action"><a></a><span>&nbsp;</span></li>
-                                               {else}
-                                                   <li class="mobile-action"><a href="{$item.URL}">{$item.LABEL}</a></li>
-                                               {/if}
-                                           {/foreach}
-                                       </ul>
+                                        <li class="mobile-current-actions" role="presentation">
+                                           <ul class="mobileCurrentTab">
+                                               {foreach from=$shortcutTopMenu.$name item=item}
+                                                   {if $item.URL == "-"}
+                                                       <li class="mobile-action"><a></a><span>&nbsp;</span></li>
+                                                   {else}
+                                                       <li class="mobile-action"><a href="{$item.URL}">{$item.LABEL}</a></li>
+                                                   {/if}
+                                               {/foreach}
+                                           </ul>
+                                        </li>
                                     {else}
                                         <li class="mobile-action"><a>{$APP.LBL_NO_SHORTCUT_MENU}</a></li>
                                     {/if}

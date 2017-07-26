@@ -7,3 +7,8 @@ modules:
       \SuiteCRM\Test\Driver\WebDriver:
         url: "https://demo.suiteondemand.com"
         browser: chrome
+        restart: true
+        wait: 1
+        # XGA Resolution / iPad 2 resolution (horizontal)
+        width: 1280
+        height: 720

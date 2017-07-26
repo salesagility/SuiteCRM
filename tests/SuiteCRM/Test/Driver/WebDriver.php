@@ -1,15 +1,24 @@
 <?php
 
 namespace SuiteCRM\Test\Driver;
-use Codeception\Command\Shared\Config;
-use Codeception\Configuration as Configuration;
-use Symfony\Component\Yaml\Yaml as Yaml;
+
+use Helper\WebDriverHelper;
 
 class WebDriver extends \Codeception\Module\WebDriver
 {
     public function _initialize()
     {
-        // TODO: use environment variables to override configuration
         parent::_initialize();
+        $config = $this->_getConfig();
+        $this->config['host'] = $config['host'];
+        $this->config['port'] = $config['port'];
+    }
+
+    protected function initialWindowSize()
+    {
+        $config = $this->_getConfig();
+        $width =  $config['width'];
+        $height = $config['height'];
+        $this->resizeWindow($width, $height);
     }
 }
