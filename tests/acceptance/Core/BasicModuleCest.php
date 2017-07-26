@@ -38,6 +38,8 @@ class BasicModuleCest
     // Tests
     /**
      * @param \Step\Acceptance\ModuleBuilder $I
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
      * As an administrator I want to create and deploy a basic module so that I can test
      * that the basic functionality is working. Given that I have already created a module I expect to deploy
      * the module before testing.
@@ -63,6 +65,7 @@ class BasicModuleCest
 
     /**
      * @param \Step\Acceptance\ModuleBuilder $I
+     * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to view my basic test module so that I can see if it has been
@@ -70,6 +73,7 @@ class BasicModuleCest
      */
     public function testScenarioViewBasicTestModule(
         \Step\Acceptance\ModuleBuilder $I,
+        \Step\Acceptance\NavigationBar $navigationBar,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('View Basic Test Module');
@@ -79,7 +83,7 @@ class BasicModuleCest
 
         $I->loginAsAdmin();
 
-        $navigationBar = new \Page\NavigationBar($I);
+        // Navigate to module
         $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
 
         $I->seeElement('.listViewBody');
@@ -87,6 +91,7 @@ class BasicModuleCest
 
     /**
      * @param \Step\Acceptance\ModuleBuilder $I
+     * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a record with my basic test module so that I can test
@@ -94,6 +99,7 @@ class BasicModuleCest
      */
     public function testScenarioCreateRecord(
         \Step\Acceptance\ModuleBuilder $I,
+        \Step\Acceptance\NavigationBar $navigationBar,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create Basic Test Module Record');
@@ -104,12 +110,12 @@ class BasicModuleCest
         $I->loginAsAdmin();
 
         // Go to Basic Test Module
-        $navigationBar = new \Page\NavigationBar($I);
         $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
 
         // Select create Basic Test Module form the current menu
         $navigationBar->clickCurrentMenuItem('Create ' . \Page\BasicModule::$NAME);
 
+        // Create a record
         $this->fakeData->seed($this->fakeDataSeed);
         $I->fillField('#name', $this->fakeData->name);
         $I->fillField('#description', $this->fakeData->paragraph);
@@ -119,12 +125,14 @@ class BasicModuleCest
 
     /**
      * @param \Step\Acceptance\ModuleBuilder $I
+     * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to view the record by selecting it in the list view
      */
     public function testScenarioViewRecordFromListView(
         \Step\Acceptance\ModuleBuilder $I,
+        \Step\Acceptance\NavigationBar $navigationBar,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Select Record from list view');
@@ -135,7 +143,6 @@ class BasicModuleCest
         $I->loginAsAdmin();
 
         // Go to Basic Test Module
-        $navigationBar = new \Page\NavigationBar($I);
         $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
 
         $this->fakeData->seed($this->fakeDataSeed);
@@ -144,12 +151,16 @@ class BasicModuleCest
 
     /**
      * @param \Step\Acceptance\ModuleBuilder $I
+     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param Step\Acceptance\DetailView $detailView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to edit the record by selecting it in the detail view
      */
     public function testScenarioEditRecordFromDetailView(
         \Step\Acceptance\ModuleBuilder $I,
+        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\DetailView $detailView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Edit Basic Test Module Record from detail view');
@@ -160,29 +171,31 @@ class BasicModuleCest
         $I->loginAsAdmin();
 
         // Go to Basic Test Module
-        $navigationBar = new \Page\NavigationBar($I);
         $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
 
+        // Select record from list view
         $this->fakeData->seed($this->fakeDataSeed);
         $I->click($this->fakeData->name, '//*[@id="MassUpdate"]/div[3]/table');
 
-        $detailView = new \Page\DetailView($I);
+        // Edit Record
         $detailView->clickActionMenuItem('Edit');
 
         $I->click('Save');
-
         $I->waitForElementVisible('.detail-view');
-
     }
 
     /**
      * @param \Step\Acceptance\ModuleBuilder $I
+     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param Step\Acceptance\DetailView $detailView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to delete the record by selecting it in the detail view
      */
     public function testScenarioDeleteRecordFromDetailView(
         \Step\Acceptance\ModuleBuilder $I,
+        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\DetailView $detailView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Delete Basic Test Module Record from detail view');
@@ -193,18 +206,16 @@ class BasicModuleCest
         $I->loginAsAdmin();
 
         // Go to Basic Test Module
-        $navigationBar = new \Page\NavigationBar($I);
         $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
 
+        // Select record from list view
         $this->fakeData->seed($this->fakeDataSeed);
         $I->click($this->fakeData->name, '//*[@id="MassUpdate"]/div[3]/table');
 
-        $detailView = new \Page\DetailView($I);
+        // Delete Record
         $detailView->clickActionMenuItem('Delete');
 
         $I->acceptPopup();
-
         $I->waitForElementVisible('.listViewBody');
-
     }
 }

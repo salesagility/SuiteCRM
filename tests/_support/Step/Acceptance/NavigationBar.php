@@ -1,32 +1,19 @@
 <?php
 
-namespace Page;
+namespace Step\Acceptance;
 
 use \AcceptanceTester as Tester;
+use Page\Design;
 use SuiteCRM\Enumerator\DesignBreakPoint;
 
-class NavigationBar
+class NavigationBar extends  Tester
 {
-    /**
-     * @var Tester;
-     */
-    protected $tester;
-
-    /**
-     * BasicModule constructor.
-     * @param Tester $I
-     */
-    public function __construct(Tester $I)
-    {
-        $this->tester = $I;
-    }
-
     /**
      * Click on the home buton / navbar brand
      */
     public function clickHome()
     {
-        $I = $this->tester;
+        $I = $this;
         $config = $I->getConfig();
         $breakpoint = Design::getBreakpointString($config['width']);
         switch ($breakpoint)
@@ -58,7 +45,7 @@ class NavigationBar
      */
     public function clickUserMenuItem($link)
     {
-        $I = $this->tester;
+        $I = $this;
         $config = $I->getConfig();
         $breakpoint = Design::getBreakpointString($config['width']);
         switch ($breakpoint)
@@ -97,7 +84,7 @@ class NavigationBar
      */
     public function clickAllMenuItem($link)
     {
-        $I = $this->tester;
+        $I = $this;
         $config = $I->getConfig();
         $breakpoint = Design::getBreakpointString($config['width']);
         switch ($breakpoint)
@@ -148,7 +135,7 @@ class NavigationBar
      */
     public function clickCurrentMenuItem($link)
     {
-        $I = $this->tester;
+        $I = $this;
         $config = $I->getConfig();
         $breakpoint = Design::getBreakpointString($config['width']);
         switch ($breakpoint)

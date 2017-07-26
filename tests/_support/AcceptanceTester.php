@@ -39,12 +39,22 @@ class AcceptanceTester extends \Codeception\Actor
         $I->dontSeeElement('#loginform');
     }
 
+    public function loginAsAdmin()
+    {
+        $I = $this;
+
+        $I->login(
+            $I->getAdminUser(),
+            $I->getAdminPassword()
+        );
+    }
+
     /**
      * Clicks the logout link in the users menu
      */
     public function logout()
     {
-        $tabletNavigationBar = new NavigationBar($this);
-        $tabletNavigationBar->clickUserMenuItem('#logout_link');
+        $I = $this;
+        $I->clickUserMenuItem('#logout_link');
     }
 }
