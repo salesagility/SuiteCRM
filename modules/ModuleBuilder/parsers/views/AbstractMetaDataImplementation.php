@@ -407,10 +407,11 @@ abstract class AbstractMetaDataImplementation
     /**
      * @param string $view
      * @param string $moduleName
+     * @param string $packageName
      * @param string $type
      * @return mixed
      */
-    abstract public function getFileName($view , $moduleName , $type = MB_CUSTOMMETADATALOCATION);
+    abstract public function getFileName($view, $moduleName, $packageName, $type = MB_CUSTOMMETADATALOCATION);
 
 }
 
