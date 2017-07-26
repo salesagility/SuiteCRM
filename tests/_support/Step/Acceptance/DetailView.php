@@ -25,4 +25,14 @@ class DetailView extends Tester
 
         $I->click($link, '#tab-actions > .dropdown-menu');
     }
+
+    /**
+     * Wait for for the detail view to become visible
+     */
+    public function waitForDetailViewVisible()
+    {
+        $I = $this;
+        $I->waitForElementVisible('.detail-view');
+    }
+
 }

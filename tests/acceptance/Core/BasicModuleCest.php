@@ -66,6 +66,7 @@ class BasicModuleCest
     /**
      * @param \Step\Acceptance\ModuleBuilder $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\ListView $listView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to view my basic test module so that I can see if it has been
@@ -74,6 +75,7 @@ class BasicModuleCest
     public function testScenarioViewBasicTestModule(
         \Step\Acceptance\ModuleBuilder $I,
         \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\ListView $listView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('View Basic Test Module');
@@ -86,12 +88,13 @@ class BasicModuleCest
         // Navigate to module
         $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
 
-        $I->seeElement('.listViewBody');
+        $listView->waitForListViewVisible();
     }
 
     /**
      * @param \Step\Acceptance\ModuleBuilder $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\EditView $editView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a record with my basic test module so that I can test
@@ -100,6 +103,7 @@ class BasicModuleCest
     public function testScenarioCreateRecord(
         \Step\Acceptance\ModuleBuilder $I,
         \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\EditView $editView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create Basic Test Module Record');
@@ -117,15 +121,16 @@ class BasicModuleCest
 
         // Create a record
         $this->fakeData->seed($this->fakeDataSeed);
-        $I->fillField('#name', $this->fakeData->name);
-        $I->fillField('#description', $this->fakeData->paragraph);
+        $editView->fillField('#name', $this->fakeData->name);
+        $editView->fillField('#description', $this->fakeData->paragraph);
 
-        $I->click('Save');
+        $editView->click('Save');
     }
 
     /**
      * @param \Step\Acceptance\ModuleBuilder $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\ListView $listView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to view the record by selecting it in the list view
@@ -133,6 +138,7 @@ class BasicModuleCest
     public function testScenarioViewRecordFromListView(
         \Step\Acceptance\ModuleBuilder $I,
         \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\ListView $listView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Select Record from list view');
@@ -146,13 +152,15 @@ class BasicModuleCest
         $navigationBar->clickAllMenuItem(\Page\BasicModule::$NAME);
 
         $this->fakeData->seed($this->fakeDataSeed);
-        $I->click($this->fakeData->name, '//*[@id="MassUpdate"]/div[3]/table');
+        $listView->clickNameLink($this->fakeData->name);
     }
 
     /**
      * @param \Step\Acceptance\ModuleBuilder $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
-     * @param Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\EditView $editView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to edit the record by selecting it in the detail view
@@ -160,7 +168,9 @@ class BasicModuleCest
     public function testScenarioEditRecordFromDetailView(
         \Step\Acceptance\ModuleBuilder $I,
         \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\EditView $editView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Edit Basic Test Module Record from detail view');
@@ -175,19 +185,22 @@ class BasicModuleCest
 
         // Select record from list view
         $this->fakeData->seed($this->fakeDataSeed);
-        $I->click($this->fakeData->name, '//*[@id="MassUpdate"]/div[3]/table');
+        $listView->clickNameLink($this->fakeData->name);
 
         // Edit Record
         $detailView->clickActionMenuItem('Edit');
 
-        $I->click('Save');
-        $I->waitForElementVisible('.detail-view');
+        // Save record
+        $editView->click('Save');
+
+        $detailView->waitForDetailViewVisible();
     }
 
     /**
      * @param \Step\Acceptance\ModuleBuilder $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
-     * @param Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\DetailView $detailView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to delete the record by selecting it in the detail view
@@ -195,6 +208,7 @@ class BasicModuleCest
     public function testScenarioDeleteRecordFromDetailView(
         \Step\Acceptance\ModuleBuilder $I,
         \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
@@ -210,12 +224,12 @@ class BasicModuleCest
 
         // Select record from list view
         $this->fakeData->seed($this->fakeDataSeed);
-        $I->click($this->fakeData->name, '//*[@id="MassUpdate"]/div[3]/table');
+        $listView->clickNameLink($this->fakeData->name);
 
         // Delete Record
         $detailView->clickActionMenuItem('Delete');
-
         $I->acceptPopup();
-        $I->waitForElementVisible('.listViewBody');
+
+        $listView->waitForListViewVisible();
     }
 }
