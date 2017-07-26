@@ -10,7 +10,7 @@ class BasicModule
     /**
      * @var string $URL include url of current page
      */
-    public static $URL = 'index.php?module=BasicModule&action=index';
+    public static $URL = 'index.php?module=Test_BasicModule&action=index';
 
     /**
      * @var string $NAME
