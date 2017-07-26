@@ -77,11 +77,40 @@ cd /path/to/suitecrm/instance
 composer install
 </pre>
 
+## Running Codeception for the first time
+
+Codeception and the other commands live inside the vendor/bin/ directory of your SuiteCRM instance
+
+<pre>
+cd /path/to/suitecrm/instance/
+./vendor/bin/codecept run demo
+</pre>
+
+To make it easier to run codeception and the other commands which live in vendor/bin/ directory. You can add the
+vendor/bin location to your PATH environment variable.
+
+Adding vendor/bin to PATH (Bash):
+<pre>
+export PATH=$PATH:/path/to/instance/vendor/bin
+</pre>
+
+Adding vendor/bin to PATH (Command Prompt):
+<pre>
+set PATH=%PATH%;C:\path\to\instance\vendor\bin
+</pre>
+
+This allows you to call the codecept command without having to prefix the command with its location. When running codecept you should ensure that your current working directory is the same as your suitecrm instance.
+
+<pre>
+cd /path/to/suitecrm/instance/
+codecept run demo
+</pre>
+
 ## Configuring the automated tests
 
 SuiteCRM requires you to configure the automated test with your development environment. There are a number of ways to configure your environment. 
 
-- You can configure the automated test by add an yml file to the tests/_envs folder
+- You can configure the automated test by adding an yml file to the tests/_envs folder
 - You can edit the yml files for each test suite
 - You can set up environment variables in the terminal or command prompt
 
@@ -111,10 +140,10 @@ Then you need to add this configuration into your command argument(s):
 codecept run install --env chrome,mysql
 </pre>
 
-For more details please refer to tests/_support/Helper/WebDriverHelper.php.
+For more details please refer to tests/_support/Helper/WebDriverHelper.php. For security reasons make sure you add the yml file to the gitignore file. DO NOT COMMIT SECURITY INFORMATION IN GIT.
 
 ### Editing test suite files
-Using the same technique, described in  "Add a file to tests/_envs", You can also choose to edit the suite.yml files which live in the tests folder. 
+Using the same technique, described in  "Add a file to tests/_envs", You can also choose to edit the suite.yml files which live in the tests folder. This method is discoraged as you should not commit security information to the git repository.
 
 Example: acceptance.suite.yml
 <pre>
@@ -152,9 +181,9 @@ modules:
 </pre>
 
 ### Environment Variables
-Using environment variables enables more advanced users to script or automate their development environment. Also you can add these values to Docker Compose.
+Environment variables allows more advanced users to script or automate their development environment. Also you can add these values to Docker Compose. This is the prefered method to store sensative information, as it cannot be commited to the git repository.
 
-Using environment variables command line variables (bash):
+Setup environment variables (bash):
 <pre>
 export DATABASE_DRIVER=MYSQL
 export DATABASE_NAME=automated_tests
@@ -166,14 +195,7 @@ export INSTANCE_ADMIN_USER=admin
 export INSTANCE_ADMIN_PASSWORD=admin
 </pre>
 
-to make it easier to run the vendor/bin/ commands
-
-<pre>
-export PATH=$PATH:/path/to/instance/vendor/bin
-</pre>
-
-
-Using environment variables command line variables (command prompt):
+Setup environment variables  (Command Prompt):
 <pre>
 set DATABASE_DRIVER=MYSQL
 set DATABASE_NAME=automated_tests
@@ -226,7 +248,7 @@ The SuiteCRM automated testing framework can support different environments. You
 - browser-stack- Configures features for browser stack environment
 - travis-ci- Configures features for travis-ci environment
 
-To run the tests in a single environment by adding --env flag, seperating each configuration by a comma: 
+To run the tests in a single environment, add a --env flag to the codecept command; seperating each configuration by a comma: 
 
 <pre>
 codecept run acceptance --env selenium-hub,selenium-iphone-6
@@ -235,12 +257,12 @@ codecept run acceptance --env selenium-hub,selenium-iphone-6
 It is also possible to run multi environments at the same time by adding multiple --env flags
 
 <pre>
-codecept run acceptance --env selenium-hub,selenium-iphone-6 --env browser-stack,browser-stack-ipad-2
+codecept run acceptance --env selenium-hub,selenium-iphone-6  --env selenium-hub,selenium-hd --env browser-stack,browser-stack-ipad-2 
 </pre>
-The tests will be executed 2 times. One for each environment
+The tests will be executed 3 times. One for each environment
 
 ### Selenium Environment
-In your selenium developement environment, It is recommended that you employ docker compose to set up a selenium hub with a selenium node. 
+In your selenium developement environment, It is recommended that you employ docker compose to set up a selenium hub with a selenium node. As this will ensure your version of chrome and firefox are kept up-to-date with the latest version. Plus you can then run multiple version of PHP on the same host machine.
 
 #### Using Docker Compose with the Selenium Hub
 
@@ -273,18 +295,19 @@ You can configure selenium using docker compose. Please ensure you have the foll
               - "HUB_PORT_4444_TCP_ADDR=selenium-hub"
               - "HUB_PORT_4444_TCP_PORT=4444"
 </pre>
+**Note: you can also choose different images for the nodes, for example the nodes without vnc support**
 
 You can select the browser you wish to test by adding it to the --env.
 
 <pre>
-codecept run demo --env selenium-hub,chrome --env selenium-hub,firefox
+codecept run demo --env selenium-hub,selenium-chrome --env selenium-hub,selenium-firefox
 </pre>
 
 #### Using Selenium with a local PHP environment
 You may prefer to run in a local PHP environment instead of using docker compose. This requires that you need to have selenium running locally on your computer. When running in a local environment, you do not need to include the selenium-hub environment variable. Instead, you must choose which browser you have set up locally:
 
 <pre>
-codecept run demo --env chrome
+codecept run demo --env selenium-chrome
 </pre>
 
 #### Screen Resolutions / Fake Devices
