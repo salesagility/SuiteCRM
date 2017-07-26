@@ -218,7 +218,7 @@ class BasicModuleCest
      * @param \Step\Acceptance\EditView $editView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
-     * As administrative user I want to edit the record by selecting it in the detail view
+     * As administrative user I want to duplicate the record
      */
     public function testScenarioDuplicateRecordFromDetailView(
         \AcceptanceTester $I,
