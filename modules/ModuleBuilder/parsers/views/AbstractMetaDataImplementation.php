@@ -407,6 +407,7 @@ abstract class AbstractMetaDataImplementation
     /**
      * @param string $view
      * @param string $moduleName
+     * @param string $packageName
      * @param string $type
      * @return mixed
      */
