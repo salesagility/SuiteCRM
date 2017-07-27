@@ -10,10 +10,15 @@ modules:
     enabled:
         - \Helper\Acceptance
         - \Helper\WebDriverHelper
+        - Filesystem
         - \SuiteCRM\Test\Driver\WebDriver
     config:
         \SuiteCRM\Test\Driver\WebDriver:
             url: "https://demo.suiteondemand.com"
             browser: chrome
             restart: true
-            wait: 1
+            wait: 10
+            # iPad 2
+            # See _env
+            width: 768
+            height: 1024
