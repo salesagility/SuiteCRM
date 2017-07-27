@@ -3995,14 +3995,13 @@ eoq;
         }
 
 
-        if (empty($bean->to_addrs)) {
-            if (!empty($request['to_addrs_names'])) {
-                $bean->to_addrs_names = htmlspecialchars_decode($request['to_addrs_names']);
-            }
 
-            if (!empty($bean->to_addrs_names)) {
-                $bean->to_addrs = htmlspecialchars_decode($bean->to_addrs_names);
-            }
+        if (!empty($request['to_addrs_names'])) {
+            $bean->to_addrs_names = htmlspecialchars_decode($request['to_addrs_names']);
+        }
+
+        if (!empty($bean->to_addrs_names)) {
+            $bean->to_addrs = htmlspecialchars_decode($bean->to_addrs_names);
         }
 
 
