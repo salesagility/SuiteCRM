@@ -36,62 +36,62 @@ class SaleModuleCest
     }
 
     // Tests
-//    /**
-//     * @param \AcceptanceTester $I
-//     * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
-//     * @param \Helper\WebDriverHelper $webDriverHelper
-//     *
-//     * As an administrator I want to create and deploy a sale module so that I can test
-//     * that the sale functionality is working. Given that I have already created a module I expect to deploy
-//     * the module before testing.
-//     */
-//    public function testScenarioCreateSaleModule(
-//       \AcceptanceTester $I,
-//       \Step\Acceptance\ModuleBuilder $moduleBuilder,
-//        \Helper\WebDriverHelper $webDriverHelper
-//    ) {
-//        $I->wantTo('Create a sale module for testing');
-//
-//        $I->amOnUrl(
-//            $webDriverHelper->getInstanceURL()
-//        );
-//
-//        $I->loginAsAdmin();
-//
-//        $moduleBuilder->createModule(
-//            \Page\SaleModule::$PACKAGE_NAME,
-//            \Page\SaleModule::$NAME,
-//            \SuiteCRM\Enumerator\SugarObjectType::sale
-//        );
-//    }
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As an administrator I want to create and deploy a sale module so that I can test
+     * that the sale functionality is working. Given that I have already created a module I expect to deploy
+     * the module before testing.
+     */
+    public function testScenarioCreateSaleModule(
+       \AcceptanceTester $I,
+       \Step\Acceptance\ModuleBuilder $moduleBuilder,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Create a sale module for testing');
 
-//    /**
-//     * @param \AcceptanceTester $I
-//     * @param \Step\Acceptance\NavigationBar $navigationBar
-//     * @param \Step\Acceptance\ListView $listView
-//     * @param \Helper\WebDriverHelper $webDriverHelper
-//     *
-//     * As administrative user I want to view my sale test module so that I can see if it has been
-//     * deployed correctly.
-//     */
-//    public function testScenarioViewSaleTestModule(
-//        \AcceptanceTester $I,
-//        \Step\Acceptance\NavigationBar $navigationBar,
-//        \Step\Acceptance\ListView $listView,
-//        \Helper\WebDriverHelper $webDriverHelper
-//    ) {
-//        $I->wantTo('View Sale Test Module');
-//        $I->amOnUrl(
-//            $webDriverHelper->getInstanceURL()
-//        );
-//
-//        $I->loginAsAdmin();
-//
-//        // Navigate to module
-//        $navigationBar->clickAllMenuItem(\Page\SaleModule::$NAME);
-//
-//        $listView->waitForListViewVisible();
-//    }
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        $I->loginAsAdmin();
+
+        $moduleBuilder->createModule(
+            \Page\SaleModule::$PACKAGE_NAME,
+            \Page\SaleModule::$NAME,
+            \SuiteCRM\Enumerator\SugarObjectType::sale
+        );
+    }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to view my sale test module so that I can see if it has been
+     * deployed correctly.
+     */
+    public function testScenarioViewSaleTestModule(
+        \AcceptanceTester $I,
+        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\ListView $listView,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('View Sale Test Module');
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        $I->loginAsAdmin();
+
+        // Navigate to module
+        $navigationBar->clickAllMenuItem(\Page\SaleModule::$NAME);
+
+        $listView->waitForListViewVisible();
+    }
 
     /**
      * @param \AcceptanceTester $I
