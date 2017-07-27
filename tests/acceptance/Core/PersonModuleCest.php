@@ -1,6 +1,7 @@
 <?php
 
 use Faker\Generator;
+use JeroenDesloovere\VCard\VCard;
 
 class PersonModuleCest
 {
@@ -317,8 +318,6 @@ class PersonModuleCest
         $listView->waitForListViewVisible();
     }
 
-    // TODO: TASK: UNDEFINED - Add test for create from vcard
-
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
@@ -368,5 +367,75 @@ class PersonModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
+    }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to delete the record by selecting it in the detail view
+     */
+    public function testScenarioImportVCardFromDetailView(
+        \AcceptanceTester $I,
+        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\SideBar $sideBar,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\DetailView $detailView,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Create a Person Record using a vcard');
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+
+        // Create VCard for test
+        $vcard = new VCard();
+
+        // define variables
+        $lastname = $this->fakeData->lastName;
+        $firstname = $this->fakeData->lastName;
+        $additional = '';
+        $prefix = '';
+        $suffix = '';
+
+        // add personal data
+        $vcard->addName($lastname, $firstname, $additional, $prefix, $suffix);
+
+        // add work data
+        $vcard->addCompany($this->fakeData->company);
+        $vcard->addJobtitle($this->fakeData->jobTitle);
+        $vcard->addRole($this->fakeData->colorName);
+        $vcard->addEmail($this->fakeData->email);
+        $vcard->addPhoneNumber($this->fakeData->phoneNumber, 'PREF;WORK');
+        $vcard->addPhoneNumber($this->fakeData->phoneNumber, 'WORK');
+        $vcard->addAddress(null, null, 'street', $this->fakeData->city, null, 'workpostcode', $this->fakeData->country);
+        $vcard->addURL($this->fakeData->url);
+
+        // Write to file
+        $fileContent = $vcard->getOutput();
+        $fileDir = 'tests/_data/';
+        $fileName = $lastname.'.test.vcf';
+        $I->writeToFile($fileDir.$fileName, $fileContent);
+
+        // Go to Person Test Module
+        $I->loginAsAdmin();
+        $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
+        $listView->waitForListViewVisible();
+
+        $navigationBar->clickCurrentMenuItem('Create From vCard');
+        $I->waitForElementVisible('.import-vcard');
+
+        $I->attachFile('#vcard_file', $fileName);
+        $I->wait(1);
+        $I->click('#import_vcard_button', '.import-vcard');
+
+        $detailView->waitForDetailViewVisible();
+        $detailView->see($firstname.' '.$lastname, '.module-title-text');
+
+        $I->deleteFile($fileDir.$fileName);
     }
 }

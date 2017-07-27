@@ -142,8 +142,8 @@ class NavigationBar extends  Tester
         {
             case DesignBreakPoint::lg:
                 $I->click('//*[@id="toolbar"]/ul/li[2]/span[2]/a');
-                $I->waitForElementVisible('#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav ul.dropdown-menu');
-                $I->click($link, '//*[@id="toolbar"]/ul/li[2]/ul');
+                $I->waitForElementVisible('#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav ul.dropdown-menu > li.current-module-action-links > ul');
+                $I->click($link, '#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav ul.dropdown-menu > li.current-module-action-links > ul');
                 break;
             case DesignBreakPoint::md:
                 $I->click('div#mobileheader > div#modulelinks > .modulename > a');
