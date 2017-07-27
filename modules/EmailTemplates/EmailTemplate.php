@@ -474,7 +474,12 @@ class EmailTemplate extends SugarBean
                     $value = $user->$userFieldName;
                     //_pp($userFieldName."[{$value}]");
                 } else {
-                    $value = $focus->{$field_name};
+                    if(isset($focus->{$field_name})) {
+                        $value = $focus->{$field_name};
+                    } else {
+                        $value = null;
+                        $GLOBALS['log']->warn("Undefined field name in email template: $field_name");
+                    }
                 }
 
                 //check dom

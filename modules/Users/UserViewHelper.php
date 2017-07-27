@@ -718,7 +718,6 @@ class UserViewHelper {
         /////////////////////////////////////////////
         /// Handle email account selections for users
         /////////////////////////////////////////////
-        $hide_if_can_use_default = true;
         if( !($this->usertype=='GROUP' || $this->usertype=='PORTAL_ONLY') ) {
             // email smtp
             $systemOutboundEmail = new OutboundEmail();
@@ -757,8 +756,6 @@ class UserViewHelper {
             $this->ss->assign('MAIL_SMTPPORT',$mail_smtpport);
             $this->ss->assign('MAIL_SMTPSSL',$mail_smtpssl);
         }
-        $this->ss->assign('HIDE_IF_CAN_USE_DEFAULT_OUTBOUND',$hide_if_can_use_default );
-
     }
 
 

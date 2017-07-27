@@ -80,7 +80,7 @@ class EmailsViewSendEmail extends ViewAjax
                     'relationships' => array(),
                 );
                 break;
-            case 'sent_error':
+            case 'send_error':
                 $response['errors'] = array(
                     'type' => get_class($this->bean),
                     'id' => $this->bean->id,

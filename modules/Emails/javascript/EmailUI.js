@@ -2187,7 +2187,8 @@ SE.folders = {
     	for(i=0;i<a_rs.length;i++)
     	{
     		var t_record = a_rs[i];
-    		var is_active = t_record.getData('is_active');
+    		var is_active = $('#' + t_record._sId + ' input[type="checkbox"]').prop('checked');
+
     		if(is_active)
     			a_active_accnts += ("&ieIdShow[]=" + t_record.getData('id'));
     	}
@@ -2795,6 +2796,7 @@ SE.folders = {
     /**
      * Updates user's group folder subscriptsion (Sugar only)
      * @param ieID The group folder to add to the tree view
+     * @see SE.folders.setFolderSelection()
      */
     retrieveGroupFolderSubscriptions : function() {
 
@@ -2804,6 +2806,7 @@ SE.folders = {
     	for(i=0;i<a_rs.length;i++)
     	{
     		var t_record = a_rs[i];
+    		
     		var is_active = t_record.getData('is_active');
     		var isGroupFolder = t_record.getData('has_groupfolder');
     		var ieID = t_record.getData('id');
