@@ -1373,7 +1373,12 @@ class Email extends Basic
                 $this->id = create_guid();
                 $this->new_with_id = true;
             }
-            $this->from_addr_name = $this->cleanEmails($this->from_addr_name);
+
+            if ($this->cleanEmails($this->from_addr_name) === '') {
+                $this->from_addr_name = $this->cleanEmails($this->from_name);
+            } else {
+                $this->from_addr_name = $this->cleanEmails($this->from_addr_name);
+            }
             $this->to_addrs_names = $this->cleanEmails($this->to_addrs_names);
             $this->cc_addrs_names = $this->cleanEmails($this->cc_addrs_names);
             $this->bcc_addrs_names = $this->cleanEmails($this->bcc_addrs_names);
