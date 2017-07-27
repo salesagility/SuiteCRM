@@ -13,7 +13,9 @@
   "require-dev": {
     "leafo/scssphp": "dev-master",
     "mikey179/vfsStream": "1.4.*",
-    "codeception/codeception": "^2.0"
+    "codeception/codeception": "^2.0",
+    "fzaninotto/Faker": "^1.6",
+    "jeroendesloovere/vcard": "v1.5"
   },
   "scripts": {},
   "prefer-stable": true,

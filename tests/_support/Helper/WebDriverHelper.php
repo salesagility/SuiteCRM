@@ -20,6 +20,12 @@ class WebDriverHelper extends \Codeception\Module
      */
     public $metadata;
 
+    public function getConfig()
+    {
+        $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
+        return $webDriver->_getConfig();
+    }
+
     /**
      * Gets the 'INSTANCE_URL' environment variable or 'url' in a yaml file.
      * @return string the test instance url.
