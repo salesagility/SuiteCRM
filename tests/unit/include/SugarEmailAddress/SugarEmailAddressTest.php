@@ -21,7 +21,8 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $this->ea = new SugarEmailAddress();
     }
 
-    public function tearDown() {
+    public function tearDown()
+    {
         $db = DBManagerFactory::getInstance();
         $query = "DELETE FROM email_addresses WHERE email_address = 'test9@email.com'";
         $db->query($query);
