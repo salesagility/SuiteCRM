@@ -1034,10 +1034,8 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
             "INSERT INTO contacts (id) VALUES ('test_contact_{$i}')";
         $db->query($q);
 
-        // TODO: make testStast() first to set a value for $this->ea->stateBeforeWorkflow
         $result = $this->ea->AddUpdateEmailAddress(null, 0, 0, "test_email_{$i}");
         self::assertEquals('', $result);
-
 
         //
         $q = /** @lang sql */
