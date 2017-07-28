@@ -19,7 +19,7 @@ class EditView extends Tester
     public function clickSaveButton()
     {
         $I = $this;
-        $I->scrollTo('#bootstrap-container', 0, 0);
+        $I->executeJS('window.scrollTo(0,0); return true;');
         $I->click('Save');
     }
 
