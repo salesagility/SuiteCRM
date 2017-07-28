@@ -2611,12 +2611,10 @@ class Email extends Basic
         if ($alwaysSendEmailsInPlainText === true) {
             // plain text only
             $this->handleBodyInPlainTextFormat($mail);
+        } elseif ($alwaysSendEmailsInPlainText === false && $sendEmailsInPlainText === true) {
+            $this->handleBodyInPlainTextFormat($mail);
         } else {
-            if ($alwaysSendEmailsInPlainText === false && $sendEmailsInPlainText === true) {
-                $this->handleBodyInPlainTextFormat($mail);
-            } else {
-                $this->handleBodyInHTMLformat($mail);
-            }
+            $this->handleBodyInHTMLformat($mail);
         }
 
         // wp: if plain text version has lines greater than 998, use base64 encoding
