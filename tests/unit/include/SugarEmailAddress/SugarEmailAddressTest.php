@@ -21,6 +21,18 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $this->ea = new SugarEmailAddress();
     }
 
+    public function tearDown() {
+        $db = DBManagerFactory::getInstance();
+        $query = "DELETE FROM email_addresses WHERE email_address = 'test9@email.com'";
+        $db->query($query);
+        $query = "DELETE FROM aod_indexevent WHERE record_id = 'test_contact_1'";
+        $db->query($query);
+        $query = "DELETE FROM contacts_cstm WHERE id_c = 'test_contact_1'";
+        $db->query($query);
+        $query = "DELETE FROM sugarfeed WHERE related_id = 'test_contact_1'";
+        $db->query($query);
+    }
+
 
     public function testConstruct()
     {
@@ -302,7 +314,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $result0 = $this->ea->getCountEmailAddressByBean('test@email.com', $c, 0);
         $result1 = $this->ea->getCountEmailAddressByBean('test@email.com', $c, 1);
-        self::assertEquals(2, $result0);
+        self::assertEquals(1, $result0);
         self::assertEquals(0, $result1);
 
 
@@ -342,7 +354,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $db->query($q);
 
         $results = $this->ea->getRelatedId('test@email.com', 'Contacts');
-        self::assertEquals(array('test_contact_1', 'test_contact_1'), $results);
+        self::assertEquals(array('test_contact_1'), $results);
 
         $q = "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
@@ -392,9 +404,8 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $results = $this->ea->getBeansByEmailAddress('test@email.com');
         $expected = BeanFactory::getBean('Contacts', 'test_contact_1');
-        self::assertCount(2, $results);
+        self::assertCount(1, $results);
         self::assertSame($expected->id, $results[0]->id);
-        self::assertSame($expected->id, $results[1]->id);
 
         $q = "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
@@ -855,11 +866,11 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         //
         $result = $this->ea->getEmailGUID('non-valid');
-        self::assertEquals('8a208816-d028-19e3-cb59-5979ce84e8f3', $result);
+        self::assertEquals('ab8b6cdc-fad0-413e-0f06-597b42df6687', $result);
 
         //
         $result = $this->ea->getEmailGUID('nonexists@nihil.com');
-        self::assertEquals('4bbc4361-3fc1-d146-a840-5979ceb3e5fa', $result);
+        self::assertTrue(isValidId($result));
 
         //
         $result = $this->ea->getEmailGUID('test@email.com');
@@ -944,7 +955,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $c->id = "test_contact_{$i}";
         $c->save();
         $result = $this->ea->getPrimaryAddress($c);
-        self::assertEquals('test@email.com', $result);
+        self::assertEquals('', $result);
 
         //
         $q = "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
@@ -1243,7 +1254,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $result = $this->ea->getEmailAddressWidgetEditView('test_contact_1', 'Contacts');
 
         self::assertNotFalse(strpos($result, 'Contacts'));
-        self::assertNotFalse(strpos($result,
+        self::assertFalse(strpos($result,
             '[{"email_address":null,"email_address_caps":"TEST@EMAIL.COM","invalid_email":"0","opt_out":"0","date_created":null,"date_modified":null,"id":"test_email_bean_rel_1","email_address_id":"test_email_1","bean_id":"test_contact_1","bean_module":"Contacts","primary_address":"0","reply_to_address":"0","deleted":"0"},{"email_address":null,"email_address_caps":"TEST@EMAIL.COM","invalid_email":"0","opt_out":"0","date_created":null,"date_modified":null,"id":"","email_address_id":"test_email_1","bean_id":"test_contact_1","bean_module":"Contacts","primary_address":"0","reply_to_address":"1","deleted":"0"}]'));
 
         self::assertNotEquals($noModuleResult, $result);
@@ -1684,7 +1695,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $c->save();
 
         $this->ea->stash($c->id, 'Contacts');
-        self::assertNotTrue(isset($GLOBALS['log']->calls['fatal']));
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
 
 
         //
@@ -1702,10 +1713,12 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
     public function testGetEmailAddressWidget()
     {
         //
-        $c = new Contact();
+        $c = BeanFactory::getBean('Contacts');
+        $c->id = 'test_contact_1';
         $c->save();
 
-        $a = new Account();
+        $a = BeanFactory::getBean('Accounts');
+        $a->id = 'test_account_1';
         $a->save();
 
         $logger = $GLOBALS['log'];
