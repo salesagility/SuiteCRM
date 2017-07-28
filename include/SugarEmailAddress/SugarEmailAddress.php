@@ -70,6 +70,11 @@ class SugarEmailAddress extends SugarBean {
     static $count = 0;
 
     /**
+     * @var int
+     */
+    public $index;
+
+    /**
      * Sole constructor
      */
     public function __construct() {
@@ -297,17 +302,25 @@ class SugarEmailAddress extends SugarBean {
     /**
      * returns the number of email addresses found for a specifed bean
      *
-     * @param  string $email       Address to match
-     * @param  object $bean        Bean to query against
-     * @param  string $addresstype Optional, pass a 1 to query against the primary address, 0 for the other addresses
+     * @param  string $email Address to match
+     * @param  Bean $bean Bean to query against
+     * @param  string $addressType Optional, pass a 1 to query against the primary address, 0 for the other addresses
      * @return int                 Count of records found
+     * @throws \InvalidArgumentException
      */
     function getCountEmailAddressByBean(
         $email,
         $bean,
-        $addresstype
+        $addressType
         )
     {
+        $addressTypeInt = (int)$addressType;
+        if($addressType != 0 && $addressType != 1) {
+            throw new InvalidArgumentException(
+                'Invalid Address Type Argument: '.
+                'pass a 1 to query against the primary address, 0 for the other addresses'
+            );
+        }
         $emailCaps = strtoupper(trim($email));
         if(empty($emailCaps))
             return 0;
@@ -319,14 +332,16 @@ class SugarEmailAddress extends SugarBean {
                         ON (eabl.bean_id = bean.id)
                 WHERE ea.email_address_caps = '".$this->db->quote($emailCaps)."'
                     and eabl.bean_module = '".$this->db->quote($bean->module_dir)."'
-                    and eabl.primary_address = '".$this->db->quote($addresstype)."'
+                    and eabl.primary_address = '".$this->db->quote($addressTypeInt)."'
                     and eabl.deleted=0 ";
 
         $r = $this->db->query($q);
 
         // do it this way to make the count accurate in oracle
         $i = 0;
-        while ($this->db->fetchByAssoc($r)) ++$i;
+        while ($this->db->fetchByAssoc($r)) {
+            ++$i;
+        }
 
         return $i;
     }
@@ -413,6 +428,12 @@ class SugarEmailAddress extends SugarBean {
      * @param string $invalid GUID of invalid address
      */
     function populateAddresses($id, $module, $new_addrs=array(), $primary='', $replyTo='', $invalid='', $optOut='') {
+        if(!is_array($new_addrs)) {
+            $GLOBALS['log']->fatal(
+                'Invalid Argument: new address should be an array of strings, ' .
+                gettype($new_addrs) . ' given.'
+            );
+        }
         $module = $this->getCorrectedModule($module);
         //One last check for the ConvertLead action in which case we need to change $module to 'Leads'
         $module = (isset($_REQUEST) && isset($_REQUEST['action']) && $_REQUEST['action'] == 'ConvertLead') ? 'Leads' : $module;
@@ -435,10 +456,15 @@ class SugarEmailAddress extends SugarBean {
                 $widget_id = $_REQUEST[$module .'_email_widget_id'];
             }
 
+            if (empty($widget_id)) {
+                $GLOBALS['log']->fatal('Widget not found');
+                return false;
+            }
+
             //Iterate over the widgets for this module, in case there are multiple email widgets for this module
-            while(isset($_REQUEST[$module . $widget_id . "emailAddress" . $widgetCount]))
+            while(isset($_REQUEST[$module . $widget_id . 'emailAddress' . $widgetCount]))
             {
-                if (empty($_REQUEST[$module . $widget_id . "emailAddress" . $widgetCount])) {
+                if (empty($_REQUEST[$module . $widget_id . 'emailAddress' . $widgetCount])) {
                     $widgetCount++;
                     continue;
                 }
@@ -505,12 +531,16 @@ class SugarEmailAddress extends SugarBean {
                     }
                 }
 
+                // NOTE: probably it's never gonna happen:
+                // $fromRequest became true if there is any emailAddress in request but
+                // $new_addrs never empty because it's got a value if there is any emailAddress
                 if($fromRequest && empty($new_addrs)) {
                     foreach($_REQUEST as $k => $v) {
                         if(preg_match('/'.$eId.'emailAddressVerifiedValue[0-9]+$/i', $k) && !empty($v)) {
                             $validateFlag = str_replace("Value", "Flag", $k);
-                            if (isset($_REQUEST[$validateFlag]) && $_REQUEST[$validateFlag] == "true")
-                              $new_addrs[$k] = $v;
+                            if (isset($_REQUEST[$validateFlag]) && $_REQUEST[$validateFlag] == "true") {
+                                $new_addrs[$k] = $v;
+                            }
                         }
                     }
                 }
@@ -524,7 +554,8 @@ class SugarEmailAddress extends SugarBean {
                     foreach($new_addrs as $k=>$email) {
                        preg_match('/emailAddress([0-9])+$/', $k, $matches);
                        $count = $matches[1];
-                       $result = $this->db->query("SELECT opt_out, invalid_email from email_addresses where email_address_caps = '" . $this->db->quote(strtoupper($email)) . "'");
+                       $query = "SELECT opt_out, invalid_email from email_addresses where email_address_caps = '" . $this->db->quote(strtoupper($email)) . "'";
+                       $result = $this->db->query($query);
                        if(!empty($result)) {
                           $row=$this->db->fetchByAssoc($result);
                           if(!empty($row['opt_out'])) {
@@ -542,13 +573,18 @@ class SugarEmailAddress extends SugarBean {
                         //$key = preg_match("/^$eId/s", $k) ? substr($k, strlen($eId)) : $k;
                         $reqVar = trim($reqVar);
                         if(strpos($k, 'emailAddress') !== false) {
-                            if(!empty($reqVar) && !in_array($k, $deleteValues)) {
-                                $email_id   = (array_key_exists($k, $email_ids)) ? $email_ids[$k] : null;
-                                $primary    = ($k == $primaryValue) ? true : false;
-                                $replyTo    = ($k == $replyToField) ? true : false;
-                                $invalid    = (in_array($k, $invalidValues)) ? true : false;
-                                $optOut     = (in_array($k, $optOutValues)) ? true : false;
-                                $this->addAddress(trim($new_addrs[$k]), $primary, $replyTo, $invalid, $optOut, $email_id);
+                            if(!is_array($deleteValues)) {
+                                $GLOBALS['log']->fatal('Invalid Argument: Delete Values to be an array, ' . gettype($deleteValues) . ' given.');
+                            } else {
+                                if (!empty($reqVar) && !in_array($k, $deleteValues)) {
+                                    $email_id = (array_key_exists($k, $email_ids)) ? $email_ids[$k] : null;
+                                    $primary = ($k == $primaryValue) ? true : false;
+                                    $replyTo = ($k == $replyToField) ? true : false;
+                                    $invalid = (in_array($k, $invalidValues)) ? true : false;
+                                    $optOut = (in_array($k, $optOutValues)) ? true : false;
+                                    $this->addAddress(trim($new_addrs[$k]), $primary, $replyTo, $invalid, $optOut,
+                                        $email_id);
+                                }
                             }
                         }
                     } //foreach
@@ -617,11 +653,30 @@ class SugarEmailAddress extends SugarBean {
                     $r = $this->db->query($q);
                     $a = $this->db->fetchByAssoc($r);
 
-                    if(!empty($a)) {
-                        if(isset($a['invalid_email']) && isset($addressMeta['invalid_email']) && isset($addressMeta['opt_out']) && $a['invalid_email'] != $addressMeta['invalid_email'] || $a['opt_out'] != $addressMeta['opt_out']) {
-                            $qUpdate = "UPDATE email_addresses SET invalid_email = ".intval($addressMeta['invalid_email']).", opt_out = ".intval($addressMeta['opt_out']).", date_modified = '".TimeDate::getInstance()->nowDb()."' WHERE id = '".$this->db->quote($a['id'])."'";
-                            $rUpdate = $this->db->query($qUpdate);
-                        }
+                    if(
+                        !empty($a) &&
+                        (
+                            isset($a['invalid_email']) &&
+                            isset($addressMeta['invalid_email']) &&
+                            isset($addressMeta['opt_out']) &&
+                            $a['invalid_email'] != $addressMeta['invalid_email'] ||
+                            $a['opt_out'] != $addressMeta['opt_out']
+                        )
+                    ) {
+                        $addressMetaInvalidEmailInt = (int)$addressMeta['invalid_email'];
+                        $addressMetaOptOutInt = (int)$addressMeta['opt_out'];
+                        $now = TimeDate::getInstance()->nowDb();
+                        $id = $this->db->quote($a['id']);
+
+                        $qUpdate = /** @lang sql */
+                            "UPDATE email_addresses SET 
+                              invalid_email = {$addressMetaInvalidEmailInt}, 
+                              opt_out = {$addressMetaOptOutInt}, 
+                              date_modified = '{$now}' 
+                            WHERE id = '{$id}'";
+
+                        $this->db->query($qUpdate);
+
                     }
                 }
             }
@@ -711,7 +766,8 @@ class SugarEmailAddress extends SugarBean {
 
         // check if we are changing an email address, where workflow might be in play
         if ($id) {
-            $r = $this->db->query("SELECT * FROM email_addresses WHERE id='".$this->db->quote($id)."'");
+            $query = "SELECT * FROM email_addresses WHERE id='".$this->db->quote($id)."'";
+            $r = $this->db->query($query);
             $current_email = $this->db->fetchByAssoc($r);
         }
         else {
@@ -873,8 +929,18 @@ class SugarEmailAddress extends SugarBean {
      */
     function getEmailAddressWidgetEditView($id, $module, $asMetadata=false, $tpl='',$tabindex='0')
     {
-        if ( !($this->smarty instanceOf Sugar_Smarty ) )
+        if(null === $id) {
+            $GLOBALS['log']->fatal('Invalid Argument: ID');
+            return false;
+        }
+        if(null === $module) {
+            $GLOBALS['log']->fatal('Invalid Argument: module');
+            return false;
+        }
+
+        if ( !($this->smarty instanceOf Sugar_Smarty ) ) {
             $this->smarty = new Sugar_Smarty();
+        }
 
         global $app_strings, $dictionary, $beanList;
 
@@ -885,15 +951,26 @@ class SugarEmailAddress extends SugarBean {
         $module = $this->getCorrectedModule($module);
         $saveModule = $module;
         if(isset($_POST['is_converted']) && $_POST['is_converted']==true){
-            $id=$_POST['return_id'];
-            $module=$_POST['return_module'];
+            if(!isset($_POST['return_id'])) {
+                $GLOBALS['log']->fatal('return_id not set');
+                $id = null;
+            } else {
+                $id = $_POST['return_id'];
+            }
+            if(!isset($_POST['return_module'])) {
+                $GLOBALS['log']->fatal('return_module not set');
+                $module = '';
+            } else {
+                $module = $_POST['return_module'];
+            }
         }
         $prefillDataArr = array();
         if(!empty($id)) {
             $prefillDataArr = $this->getAddressesByGUID($id, $module);
             //When coming from convert leads, sometimes module is Contacts while the id is for a lead.
-            if (empty($prefillDataArr) && $module == "Contacts")
+            if (empty($prefillDataArr) && $module == "Contacts") {
                 $prefillDataArr = $this->getAddressesByGUID($id, "Leads");
+            }
         } else if(isset($_REQUEST['full_form']) && !empty($_REQUEST['emailAddressWidget'])){
             $widget_id = isset($_REQUEST[$module . '_email_widget_id']) ? $_REQUEST[$module . '_email_widget_id'] : '0';
             $count = 0;
@@ -917,9 +994,20 @@ class SugarEmailAddress extends SugarBean {
         }
 
         $required = false;
-        $vardefs = $dictionary[$beanList[$passedModule]]['fields'];
-        if (!empty($vardefs['email1']) && isset($vardefs['email1']['required']) && $vardefs['email1']['required'])
+        $moduleFound = true;
+        if(!isset($beanList[$passedModule])) {
+            $GLOBALS['log']->fatal('Module not found in bean list: ' . $passedModule);
+            $moduleFound = false;
+        } else if(!isset($dictionary[$beanList[$passedModule]])) {
+            $GLOBALS['log']->fatal('Module bean not found in dictionary: ' . $beanList[$passedModule]);
+            $moduleFound = false;
+        }
+        if($moduleFound) {
+            $vardefs = $dictionary[$beanList[$passedModule]]['fields'];
+        }
+        if (!empty($vardefs['email1']) && isset($vardefs['email1']['required']) && $vardefs['email1']['required']) {
             $required = true;
+        }
         $this->smarty->assign('required', $required);
 
         $this->smarty->assign('module', $saveModule);
@@ -942,8 +1030,8 @@ class SugarEmailAddress extends SugarBean {
             } else {
                 $form = 'form_DC'.$this->view .'_'.$module;
             }
-            if(isset($_REQUEST['action']) && $_REQUEST['action']=='SubpanelCreates' ||  $_REQUEST['action']=='SubpanelEdits'){
-                $form = 'form_Subpanel'.$this->view .'_'.$module;
+            if (isset($_REQUEST['action']) && (isset($_REQUEST['action']) && $_REQUEST['action'] == 'SubpanelCreates' || $_REQUEST['action'] == 'SubpanelEdits')) {
+                $form = 'form_Subpanel' . $this->view . '_' . $module;
             }
         }
 
@@ -980,13 +1068,16 @@ class SugarEmailAddress extends SugarBean {
      */
     function getEmailAddressWidgetDetailView($focus, $tpl='')
     {
-        if ( !($this->smarty instanceOf Sugar_Smarty ) )
+        if ( !($this->smarty instanceOf Sugar_Smarty ) ) {
             $this->smarty = new Sugar_Smarty();
+        }
 
         global $app_strings;
         global $current_user;
         $assign = array();
-        if(empty($focus->id))return '';
+        if(empty($focus->id)) {
+            return '';
+        }
         $prefillData = $this->getAddressesByGUID($focus->id, $focus->module_dir);
 
         foreach($prefillData as $addressItem) {
@@ -1015,8 +1106,9 @@ class SugarEmailAddress extends SugarBean {
      */
     function getEmailAddressWidgetDuplicatesView($focus)
     {
-        if ( !($this->smarty instanceOf Sugar_Smarty ) )
+        if ( !($this->smarty instanceOf Sugar_Smarty ) ) {
             $this->smarty = new Sugar_Smarty();
+        }
 
         $count = 0;
         $emails = array();
@@ -1025,12 +1117,25 @@ class SugarEmailAddress extends SugarBean {
         $invalid = array();
         $mod = isset($focus) ? $focus->module_dir : "";
 
-        $widget_id = $_POST[$mod .'_email_widget_id'];
+        if(!isset($_POST) || !isset($_POST[$mod .'_email_widget_id'])) {
+            $GLOBALS['log']->fatal("Missing Argument: a required post variable not found: {$mod}_email_widget_id");
+            $widget_id = null;
+        } else {
+            $widget_id = $_POST[$mod . '_email_widget_id'];
+        }
         $this->smarty->assign('email_widget_id',$widget_id);
-        $this->smarty->assign('emailAddressWidget',$_POST['emailAddressWidget']);
+
+        $emailAddressWidget = null;
+        if(isset($_POST['emailAddressWidget'])) {
+            $emailAddressWidget = $_POST['emailAddressWidget'];
+        } else {
+            $GLOBALS['log']->fatal('Missing Argument: a required post variable not found: emailAddressWidget');
+        }
+
+        $this->smarty->assign('emailAddressWidget', $emailAddressWidget);
 
         if(isset($_POST[$mod . $widget_id . 'emailAddressPrimaryFlag'])) {
-           $primary = $_POST[$mod . $widget_id . 'emailAddressPrimaryFlag'];
+            $primary = $_POST[$mod . $widget_id . 'emailAddressPrimaryFlag'];
         }
 
         while(isset($_POST[$mod . $widget_id . "emailAddress" . $count])) {
@@ -1039,34 +1144,88 @@ class SugarEmailAddress extends SugarBean {
         }
 
         if($count == 0) {
-           return "";
+            return "";
         }
 
         if(isset($_POST[$mod . $widget_id . 'emailAddressOptOutFlag'])) {
-           foreach($_POST[$mod . $widget_id . 'emailAddressOptOutFlag'] as $v) {
-              $optOut[] = $v;
-           }
+            if(
+                !is_array($_POST[$mod . $widget_id . 'emailAddressOptOutFlag']) ||
+                !is_object($_POST[$mod . $widget_id . 'emailAddressOptOutFlag'])
+            ) {
+                $GLOBALS['log']->fatal(
+                    'Invalid Argument: post variable ' .
+                    $mod . $widget_id . 'emailAddressOptOutFlag' .
+                    ' should be an array, ' .
+                    gettype($_POST[$mod . $widget_id . 'emailAddressOptOutFlag']) . ' given'
+                );
+            }
+            foreach((array)$_POST[$mod . $widget_id . 'emailAddressOptOutFlag'] as $v) {
+                $optOut[] = $v;
+            }
         }
 
         if(isset($_POST[$mod . $widget_id . 'emailAddressInvalidFlag'])) {
-           foreach($_POST[$mod . $widget_id . 'emailAddressInvalidFlag'] as $v) {
-              $invalid[] = $v;
-           }
+            if(
+                !is_array($_POST[$mod . $widget_id . 'emailAddressInvalidFlag']) ||
+                !is_object($_POST[$mod . $widget_id . 'emailAddressInvalidFlag'])
+            ) {
+                $GLOBALS['log']->fatal(
+                    'Invalid Argument: post variable ' .
+                    $mod . $widget_id . 'emailAddressInvalidFlag' .
+                    ' should be an array, ' .
+                    gettype($_POST[$mod . $widget_id . 'emailAddressInvalidFlag']) . ' given'
+                );
+            }
+            foreach((array)$_POST[$mod . $widget_id . 'emailAddressInvalidFlag'] as $v) {
+                $invalid[] = $v;
+            }
         }
 
         if(isset($_POST[$mod . $widget_id . 'emailAddressReplyToFlag'])) {
-           foreach($_POST[$mod . $widget_id . 'emailAddressReplyToFlag'] as $v) {
-              $replyTo[] = $v;
-           }
+            if(
+                !is_array($_POST[$mod . $widget_id . 'emailAddressReplyToFlag']) ||
+                !is_object($_POST[$mod . $widget_id . 'emailAddressReplyToFlag'])
+            ) {
+                $GLOBALS['log']->fatal(
+                    'Invalid Argument: post variable ' .
+                    $mod . $widget_id . 'emailAddressReplyToFlag' .
+                    ' should be an array, ' .
+                    gettype($_POST[$mod . $widget_id . 'emailAddressReplyToFlag']) . ' given'
+                );
+            }
+            foreach((array)$_POST[$mod . $widget_id . 'emailAddressReplyToFlag'] as $v) {
+                $replyTo[] = $v;
+            }
         }
 
         if(isset($_POST[$mod . $widget_id . 'emailAddressDeleteFlag'])) {
-           foreach($_POST[$mod . $widget_id . 'emailAddressDeleteFlag'] as $v) {
-              $delete[] = $v;
-           }
+            if(
+                !is_array($_POST[$mod . $widget_id . 'emailAddressDeleteFlag']) ||
+                !is_object($_POST[$mod . $widget_id . 'emailAddressDeleteFlag'])
+            ) {
+                $GLOBALS['log']->fatal(
+                    'Invalid Argument: post variable ' .
+                    $mod . $widget_id . 'emailAddressDeleteFlag' .
+                    ' should be an array, ' .
+                    gettype($_POST[$mod . $widget_id . 'emailAddressDeleteFlag']) . ' given'
+                );
+            }
+            foreach((array)$_POST[$mod . $widget_id . 'emailAddressDeleteFlag'] as $v) {
+                $delete[] = $v;
+            }
         }
 
         while(isset($_POST[$mod . $widget_id . "emailAddressVerifiedValue" . $count])) {
+            if(
+                !is_array($_POST[$mod . $widget_id . 'emailAddressVerifiedValue' . $count]) ||
+                !is_object($_POST[$mod . $widget_id . 'emailAddressVerifiedValue' . $count])
+            ) {
+                $GLOBALS['log']->fatal(
+                    'Invalid Argument: post variable ' .
+                    $mod . $widget_id . 'emailAddressVerifiedValue' . $count .
+                    ' not found.'
+                );
+            }
             $verified[] = $_POST[$mod . $widget_id . 'emailAddressVerifiedValue' . $count];
             $count++;
         }
@@ -1092,9 +1251,27 @@ class SugarEmailAddress extends SugarBean {
         $count = 0;
         $mod = isset($focus) ? $focus->module_dir : "";
 
-        $widget_id = $_POST[$mod .'_email_widget_id'];
+        if(!$mod) {
+            $GLOBALS['log']->fatal('Invalid Argument: Missing module dir.');
+            return false;
+        }
+
+        $widget_id = '';
+        if(!isset($_POST[$mod .'_email_widget_id'])) {
+            $GLOBALS['log']->fatal('Invalid Argument: requested argument missing: "' . $mod .'_email_widget_id"');
+        } else {
+            $widget_id = $_POST[$mod .'_email_widget_id'];
+        }
+
         $get .= '&' . $mod . '_email_widget_id='. $widget_id;
-        $get .= '&emailAddressWidget='.$_POST['emailAddressWidget'];
+
+        if(!isset($_POST['emailAddressWidget'])) {
+            $GLOBALS['log']->fatal('Invalid Argument: requested argument missing: "emailAddressWidget"');
+            $get .= '&emailAddressWidget=';
+        } else {
+            $get .= '&emailAddressWidget='.$_POST['emailAddressWidget'];
+        }
+
 
         while(isset($_REQUEST[$mod . $widget_id . 'emailAddress' . $count])) {
               $get .= "&" . $mod . $widget_id . "emailAddress" . $count . "=" . urlencode($_REQUEST[$mod . $widget_id . 'emailAddress' . $count]);
@@ -1174,12 +1351,14 @@ function getEmailAddressWidget($focus, $field, $value, $view, $tabindex='0') {
     $sea = new SugarEmailAddress();
     $sea->setView($view);
 
-        if($view == 'EditView' || $view == 'QuickCreate' || $view == 'ConvertLead') {
-            $module = $focus->module_dir;
-            if ($view == 'ConvertLead' && $module == "Contacts")  $module = "Leads";
-
-            return $sea->getEmailAddressWidgetEditView($focus->id, $module, false,'',$tabindex);
+    if($view == 'EditView' || $view == 'QuickCreate' || $view == 'ConvertLead') {
+        $module = $focus->module_dir;
+        if ($view == 'ConvertLead' && $module == "Contacts")  {
+            $module = "Leads";
         }
+
+        return $sea->getEmailAddressWidgetEditView($focus->id, $module, false,'',$tabindex);
+    }
 
     return $sea->getEmailAddressWidgetDetailView($focus);
 }

@@ -398,7 +398,11 @@ class Contact extends Person {
 		{
 			$this->account_name = $row['name'];
 			$this->account_id = $row['id'];
-			$this->report_to_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name'],'','','',null,true);
+			if(null === $locale || !is_object($locale) || !method_exists($locale, 'getLocaleFormattedName')) {
+			    $GLOBALS['log']->fatal('Call to a member function getLocaleFormattedName() on ' . gettype($locale));
+            } else {
+                $this->report_to_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name'],'','','',null,true);
+            }
 		}
 		else
 		{
