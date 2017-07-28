@@ -1,0 +1,11 @@
+modules:
+  enabled:
+    - \SuiteCRM\Test\Driver\WebDriver
+  config:
+    \SuiteCRM\Test\Driver\WebDriver:
+      host: "hub-cloud.browserstack.com"
+      port: "80"
+      browser: chrome
+      capabilities:
+              'browserstack.user': 'username'
+              'browserstack.key' : 'key'

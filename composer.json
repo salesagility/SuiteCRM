@@ -9,6 +9,7 @@
     "vendor-dir": "vendor"
   },
   "require": {
+    "browserstack/browserstack-local": "^1.1"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",

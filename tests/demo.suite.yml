@@ -3,6 +3,8 @@ modules:
     enabled:
         - \Helper\Demo
         - \SuiteCRM\Test\Driver\WebDriver
+        - \Helper\WebDriverHelper
+        - Filesystem
     config:
       \SuiteCRM\Test\Driver\WebDriver:
         url: "https://demo.suiteondemand.com"
