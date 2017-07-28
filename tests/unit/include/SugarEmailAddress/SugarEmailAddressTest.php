@@ -12,7 +12,8 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
     protected $ea;
 
 
-    public function setUp() {
+    public function setUp()
+    {
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -29,8 +30,8 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $ea = new SugarEmailAddress();
         $indexAfter = $ea->index;
         $countAfter = $ea::$count;
-        self::assertEquals($indexBefore, $indexAfter-1);
-        self::assertEquals($indexBefore, $indexAfter-1);
+        self::assertEquals($indexBefore, $indexAfter - 1);
+        self::assertEquals($indexBefore, $indexAfter - 1);
     }
 
 
@@ -42,8 +43,8 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $ea = new SugarEmailAddress();
         $indexAfter = $ea->index;
         $countAfter = $ea::$count;
-        self::assertEquals($indexBefore, $indexAfter-1);
-        self::assertEquals($indexBefore, $indexAfter-1);
+        self::assertEquals($indexBefore, $indexAfter - 1);
+        self::assertEquals($indexBefore, $indexAfter - 1);
     }
 
 
@@ -62,7 +63,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $this->ea->handleLegacySave($c);
         self::assertCount(0, $this->ea->addresses);
 
-        if(!empty($req)) {
+        if (!empty($req)) {
             $_REQUEST = $req;
         } else {
             unset($_REQUEST);
@@ -259,7 +260,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $row = $db->fetchByAssoc($r);
         self::assertEquals(8, $row['cnt']);
 
-        if(!empty($req)) {
+        if (!empty($req)) {
             $_REQUEST = $req;
         } else {
             unset($_REQUEST);
@@ -356,11 +357,11 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
     {
         global $locale, $current_user;
 
-        if(empty($locale)) {
+        if (empty($locale)) {
             $locale = new Localization();
         }
 
-        if(empty($current_user)) {
+        if (empty($current_user)) {
             $current_user = BeanFactory::getBean('Users', 1);
         }
 
@@ -666,7 +667,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $GLOBALS['log'] = $logger;
 
-        if(!empty($req)) {
+        if (!empty($req)) {
             $_REQUEST = $req;
         } else {
             unset($_REQUEST);
@@ -680,7 +681,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $this->ea->addAddress('test20@email.com', true);
         $this->ea->addAddress('test21@email.com', true);
         self::assertSame(array(
-            0 => array (
+            0 => array(
                 'email_address' => 'test20@email.com',
                 'primary_address' => '0',
                 'reply_to_address' => '0',
@@ -688,7 +689,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
                 'opt_out' => '0',
                 'email_address_id' => null,
             ),
-            1 => array (
+            1 => array(
                 'email_address' => 'test21@email.com',
                 'primary_address' => '1',
                 'reply_to_address' => '0',
@@ -1061,13 +1062,13 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $GLOBALS['log'] = new TestLogger();
 
         $env = array();
-        if(isset($_POST)) {
+        if (isset($_POST)) {
             $env['$_POST'] = $_POST;
         }
-        if(isset($_GET)) {
+        if (isset($_GET)) {
             $env['$_GET'] = $_GET;
         }
-        if(isset($_REQUEST)) {
+        if (isset($_REQUEST)) {
             $env['$_REQUEST'] = $_REQUEST;
         }
 
@@ -1113,7 +1114,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         self::assertCount(2, $result);
         self::assertSame(array(
-            0 => array (
+            0 => array(
                 'email_address' => true,
                 'primary_address' => false,
                 'invalid_email' => false,
@@ -1124,7 +1125,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $expected = !empty($result['html']) && is_string($result['html']);
         self::assertTrue($expected);
 
-        if(isset($env['$_REQUEST'])) {
+        if (isset($env['$_REQUEST'])) {
             $_REQUEST = $env['$_REQUEST'];
         }
 
@@ -1146,7 +1147,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $expected = !empty($result) && is_string($result);
         self::assertTrue($expected);
 
-        if(isset($env['$_REQUEST'])) {
+        if (isset($env['$_REQUEST'])) {
             $_REQUEST = $env['$_REQUEST'];
         }
 
@@ -1167,7 +1168,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $expected = !empty($result) && is_string($result);
         self::assertTrue($expected);
 
-        if(isset($env['$_REQUEST'])) {
+        if (isset($env['$_REQUEST'])) {
             $_REQUEST = $env['$_REQUEST'];
         }
 
@@ -1242,7 +1243,8 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $result = $this->ea->getEmailAddressWidgetEditView('test_contact_1', 'Contacts');
 
         self::assertNotFalse(strpos($result, 'Contacts'));
-        self::assertNotFalse(strpos($result, '[{"email_address":null,"email_address_caps":"TEST@EMAIL.COM","invalid_email":"0","opt_out":"0","date_created":null,"date_modified":null,"id":"test_email_bean_rel_1","email_address_id":"test_email_1","bean_id":"test_contact_1","bean_module":"Contacts","primary_address":"0","reply_to_address":"0","deleted":"0"},{"email_address":null,"email_address_caps":"TEST@EMAIL.COM","invalid_email":"0","opt_out":"0","date_created":null,"date_modified":null,"id":"","email_address_id":"test_email_1","bean_id":"test_contact_1","bean_module":"Contacts","primary_address":"0","reply_to_address":"1","deleted":"0"}]'));
+        self::assertNotFalse(strpos($result,
+            '[{"email_address":null,"email_address_caps":"TEST@EMAIL.COM","invalid_email":"0","opt_out":"0","date_created":null,"date_modified":null,"id":"test_email_bean_rel_1","email_address_id":"test_email_1","bean_id":"test_contact_1","bean_module":"Contacts","primary_address":"0","reply_to_address":"0","deleted":"0"},{"email_address":null,"email_address_caps":"TEST@EMAIL.COM","invalid_email":"0","opt_out":"0","date_created":null,"date_modified":null,"id":"","email_address_id":"test_email_1","bean_id":"test_contact_1","bean_module":"Contacts","primary_address":"0","reply_to_address":"1","deleted":"0"}]'));
 
         self::assertNotEquals($noModuleResult, $result);
         $expected = !empty($result) && is_string($result);
@@ -1275,7 +1277,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $expected = !empty($result) && is_string($result);
         self::assertTrue($expected);
 
-        if(isset($env['$_REQUEST'])) {
+        if (isset($env['$_REQUEST'])) {
             $_REQUEST = $env['$_REQUEST'];
         }
 
@@ -1294,7 +1296,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $expected = !empty($result) && is_string($result);
         self::assertTrue($expected);
 
-        if(isset($env['$_REQUEST'])) {
+        if (isset($env['$_REQUEST'])) {
             $_REQUEST = $env['$_REQUEST'];
         }
 
@@ -1306,13 +1308,13 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $q = "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
         $db->query($q);
 
-        if(isset($env['$_POST'])) {
+        if (isset($env['$_POST'])) {
             $_POST = $env['$_POST'];
         }
-        if(isset($env['$_GET'])) {
+        if (isset($env['$_GET'])) {
             $_GET = $env['$_GET'];
         }
-        if(isset($env['$_REQUEST'])) {
+        if (isset($env['$_REQUEST'])) {
             $_REQUEST = $env['$_REQUEST'];
         }
 
@@ -1380,13 +1382,13 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $GLOBALS['log'] = new TestLogger();
 
         $env = array();
-        if(isset($_POST)) {
+        if (isset($_POST)) {
             $env['$_POST'] = $_POST;
         }
-        if(isset($_GET)) {
+        if (isset($_GET)) {
             $env['$_GET'] = $_GET;
         }
-        if(isset($_REQUEST)) {
+        if (isset($_REQUEST)) {
             $env['$_REQUEST'] = $_REQUEST;
         }
 
@@ -1508,13 +1510,13 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
 
         //
-        if(isset($env['$_POST'])) {
+        if (isset($env['$_POST'])) {
             $_POST = $env['$_POST'];
         }
-        if(isset($env['$_GET'])) {
+        if (isset($env['$_GET'])) {
             $_GET = $env['$_GET'];
         }
-        if(isset($env['$_REQUEST'])) {
+        if (isset($env['$_REQUEST'])) {
             $_REQUEST = $env['$_REQUEST'];
         }
 
@@ -1529,13 +1531,13 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $GLOBALS['log'] = new TestLogger();
 
         $env = array();
-        if(isset($_POST)) {
+        if (isset($_POST)) {
             $env['$_POST'] = $_POST;
         }
-        if(isset($_GET)) {
+        if (isset($_GET)) {
             $env['$_GET'] = $_GET;
         }
-        if(isset($_REQUEST)) {
+        if (isset($_REQUEST)) {
             $env['$_REQUEST'] = $_REQUEST;
         }
 
@@ -1599,13 +1601,13 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
 
         //
-        if(isset($env['$_POST'])) {
+        if (isset($env['$_POST'])) {
             $_POST = $env['$_POST'];
         }
-        if(isset($env['$_GET'])) {
+        if (isset($env['$_GET'])) {
             $_GET = $env['$_GET'];
         }
-        if(isset($env['$_REQUEST'])) {
+        if (isset($env['$_REQUEST'])) {
             $_REQUEST = $env['$_REQUEST'];
         }
 
