@@ -320,7 +320,7 @@ class SugarEmailAddress extends SugarBean
      * returns the number of email addresses found for a specifed bean
      *
      * @param  string $email Address to match
-     * @param  Bean $bean Bean to query against
+     * @param  SugarBean $bean Bean to query against
      * @param  string $addressType Optional, pass a 1 to query against the primary address, 0 for the other addresses
      * @return int                 Count of records found
      * @throws \InvalidArgumentException
@@ -365,8 +365,8 @@ class SugarEmailAddress extends SugarBean
 
     /**
      * This function returns a contact or user ID if a matching email is found
-     * @param   $email      the email address to match
-     * @param   $table      which table to query
+     * @param   string $email      the email address to match
+     * @param   string $table      which table to query
      */
     function getRelatedId($email, $module)
     {
@@ -744,7 +744,7 @@ class SugarEmailAddress extends SugarBean
 
     /**
      * preps a passed email address for email address storage
-     * @param array $addr Address in focus, must be RFC compliant
+     * @param string $addr Address in focus, must be RFC compliant
      * @return string $id email_addresses ID
      */
     function getEmailGUID($addr)

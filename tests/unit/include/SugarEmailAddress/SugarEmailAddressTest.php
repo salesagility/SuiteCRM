@@ -44,7 +44,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $indexAfter = $ea->index;
         $countAfter = $ea::$count;
         self::assertEquals($indexBefore, $indexAfter - 1);
-        self::assertEquals($indexBefore, $indexAfter - 1);
+        self::assertEquals($countBefore, $countAfter - 1);
     }
 
 
@@ -57,7 +57,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $indexAfter = $ea->index;
         $countAfter = $ea::$count;
         self::assertEquals($indexBefore, $indexAfter - 1);
-        self::assertEquals($indexBefore, $indexAfter - 1);
+        self::assertEquals($countBefore, $countAfter - 1);
     }
 
 
@@ -150,6 +150,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
 
+        /** @noinspection PhpDeprecationInspection */
         $this->ea->save(null, null, null, null, null, null, null, null);
         self::assertCount(1, $GLOBALS['log']->calls['deprecated']);
 
@@ -1053,6 +1054,9 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(0, $count);
 
         //
+        /**
+         * @var Contact $c
+         */
         $c = BeanFactory::getBean('Contacts');
         $c->email1 = 'test30@email.com';
         //$c->save();
@@ -1074,12 +1078,15 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $GLOBALS['log'] = new TestLogger();
 
         $env = array();
+        /** @noinspection UnSafeIsSetOverArrayInspection */
         if (isset($_POST)) {
             $env['$_POST'] = $_POST;
         }
+        /** @noinspection UnSafeIsSetOverArrayInspection */
         if (isset($_GET)) {
             $env['$_GET'] = $_GET;
         }
+        /** @noinspection UnSafeIsSetOverArrayInspection */
         if (isset($_REQUEST)) {
             $env['$_REQUEST'] = $_REQUEST;
         }
@@ -1116,7 +1123,9 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $result = $this->ea->getEmailAddressWidgetEditView('', 'non-exists-module', true);
 
+        /** @noinspection PhpIllegalStringOffsetInspection */
         self::assertNotFalse(strpos($result['html'], 'non-exists-module'));
+        /** @noinspection PhpIllegalStringOffsetInspection */
         self::assertNotFalse(
             strpos(
                 $result['html'],
@@ -1125,6 +1134,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         );
 
         self::assertCount(2, $result);
+        /** @noinspection PhpIllegalStringOffsetInspection */
         self::assertSame(array(
             0 => array(
                 'email_address' => true,
@@ -1134,6 +1144,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
                 'reply_to_address' => false,
             ),
         ), $result['prefillData']);
+        /** @noinspection PhpIllegalStringOffsetInspection */
         $expected = !empty($result['html']) && is_string($result['html']);
         self::assertTrue($expected);
 
@@ -1394,12 +1405,15 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $GLOBALS['log'] = new TestLogger();
 
         $env = array();
+        /** @noinspection UnSafeIsSetOverArrayInspection */
         if (isset($_POST)) {
             $env['$_POST'] = $_POST;
         }
+        /** @noinspection UnSafeIsSetOverArrayInspection */
         if (isset($_GET)) {
             $env['$_GET'] = $_GET;
         }
+        /** @noinspection UnSafeIsSetOverArrayInspection */
         if (isset($_REQUEST)) {
             $env['$_REQUEST'] = $_REQUEST;
         }
@@ -1543,12 +1557,15 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $GLOBALS['log'] = new TestLogger();
 
         $env = array();
+        /** @noinspection UnSafeIsSetOverArrayInspection */
         if (isset($_POST)) {
             $env['$_POST'] = $_POST;
         }
+        /** @noinspection UnSafeIsSetOverArrayInspection */
         if (isset($_GET)) {
             $env['$_GET'] = $_GET;
         }
+        /** @noinspection UnSafeIsSetOverArrayInspection */
         if (isset($_REQUEST)) {
             $env['$_REQUEST'] = $_REQUEST;
         }
