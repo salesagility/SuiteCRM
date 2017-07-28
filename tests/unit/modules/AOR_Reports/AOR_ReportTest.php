@@ -197,7 +197,7 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         $aor_Report->build_report_csv();
         */
 
-        //$this->markTestIncomplete('Can Not be implemented');
+        $this->markTestIncomplete('Can Not be implemented');
     }
 
     public function testbuild_report_query()
