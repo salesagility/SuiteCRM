@@ -88,7 +88,7 @@ class SchedulerTest extends PHPUnit_Framework_TestCase
         $result = $scheduler->deriveDBDateTimes($scheduler);
         $this->assertEquals(false, (bool)$result);
 
-        // TODO: add this valid test case:
+        // NOTE: add this valid test case:
         //$scheduler->job_interval = '*::*::*::*::3';
         //$result = $scheduler->deriveDBDateTimes($scheduler);
         //$this->assertEquals(false, (bool)$result);

@@ -184,9 +184,6 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(20, $aor_Report->calculateTotal('AVG', $totals));
     }
 
-    /**
-     * @todo implement
-     */
     public function testbuild_report_csv()
     {
 
