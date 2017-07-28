@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+
 class AOR_Report extends Basic
 {
     var $new_schema = true;

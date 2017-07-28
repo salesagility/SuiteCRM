@@ -1,27 +1,46 @@
 <?php
 /**
  *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * @package
- * @copyright SalesAgility Ltd http://www.salesagility.com
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * Returns the display labels for a module path and field.
@@ -48,7 +67,8 @@ function getDisplayForField($modulePath, $field, $reportModule)
             continue;
         }
         if (!empty($currentBean->field_name_map[$relName]['vname'])) {
-            $moduleLabel = trim(translate($currentBean->field_name_map[$relName]['vname'], $currentBean->module_dir), ':');
+            $moduleLabel = trim(translate($currentBean->field_name_map[$relName]['vname'], $currentBean->module_dir),
+                ':');
         }
         $thisModule = getRelatedModule($currentBean->module_dir, $relName);
         $currentBean = BeanFactory::getBean($thisModule);
@@ -62,23 +82,26 @@ function getDisplayForField($modulePath, $field, $reportModule)
     $fieldDisplay = $currentBean->field_name_map[$field]['vname'];
     $fieldDisplay = translate($fieldDisplay, $currentBean->module_dir);
     $fieldDisplay = trim($fieldDisplay, ':');
-    foreach($modulePathDisplay as &$module) {
+    foreach ($modulePathDisplay as &$module) {
         $module = isset($app_list_strings['aor_moduleList'][$module]) ? $app_list_strings['aor_moduleList'][$module] : (
-            isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module
+        isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module
         );
     }
+
     return array('field' => $fieldDisplay, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay)));
 }
 
 function requestToUserParameters()
 {
     $params = array();
-    if(isset($_REQUEST['parameter_id']) && $_REQUEST['parameter_id']) {
+    if (isset($_REQUEST['parameter_id']) && $_REQUEST['parameter_id']) {
         foreach ($_REQUEST['parameter_id'] as $key => $parameterId) {
             if ($_REQUEST['parameter_type'][$key] === 'Multi') {
-                $_REQUEST['parameter_value'][$key] = encodeMultienumValue(explode(',', $_REQUEST['parameter_value'][$key]));
+                $_REQUEST['parameter_value'][$key] = encodeMultienumValue(explode(',',
+                    $_REQUEST['parameter_value'][$key]));
             }
-            $params[$parameterId] = array('id' => $parameterId,
+            $params[$parameterId] = array(
+                'id' => $parameterId,
                 'operator' => $_REQUEST['parameter_operator'][$key],
                 'type' => $_REQUEST['parameter_type'][$key],
                 'value' => $_REQUEST['parameter_value'][$key],
@@ -110,6 +133,7 @@ function requestToUserParameters()
             }
         }
     }
+
     return $params;
 }
 
@@ -157,6 +181,7 @@ function getConditionsAsParameters($report, $override = array())
             'additionalConditions' => $additionalConditions
         );
     }
+
     return $conditions;
 }
 
@@ -179,53 +204,93 @@ function getPeriodDate($date_time_period_list_selected)
 
     if ($date_time_period_list_selected == 'today') {
         $datetime_period = new DateTime();
-    } else if ($date_time_period_list_selected == 'yesterday') {
-        $datetime_period = $datetime_period->sub(new DateInterval("P1D"));
-    } else if ($date_time_period_list_selected == 'this_week') {
-        $datetime_period = $datetime_period->setTimestamp(strtotime('this week'));
-    } else if ($date_time_period_list_selected == 'last_week') {
-        $datetime_period = $datetime_period->setTimestamp(strtotime('last week'));
-    } else if ($date_time_period_list_selected == 'this_month') {
-        $datetime_period = $datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m'), 1);
-    } else if ($date_time_period_list_selected == 'last_month') {
-        $datetime_period = $datetime_period->modify('first day of last month');
-    } else if ($date_time_period_list_selected == 'this_quarter') {
-        $thisMonth = $datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m'), 1);
-        if ($thisMonth >= $q[1]['start'] && $thisMonth <= $q[1]['end']) {
-            // quarter 1
-            $datetime_period = $datetime_period->setDate($q[1]['start']->format('Y'), $q[1]['start']->format('m'), $q[1]['start']->format('d'));
-        } else if ($thisMonth >= $q[2]['start'] && $thisMonth <= $q[2]['end']) {
-            // quarter 2
-            $datetime_period = $datetime_period->setDate($q[2]['start']->format('Y'), $q[2]['start']->format('m'), $q[2]['start']->format('d'));
-        } else if ($thisMonth >= $q[3]['start'] && $thisMonth <= $q[3]['end']) {
-            // quarter 3
-            $datetime_period = $datetime_period->setDate($q[3]['start']->format('Y'), $q[3]['start']->format('m'), $q[3]['start']->format('d'));
-        } else if ($thisMonth >= $q[4]['start'] && $thisMonth <= $q[4]['end']) {
-            // quarter 4
-            $datetime_period = $datetime_period->setDate($q[4]['start']->format('Y'), $q[4]['start']->format('m'), $q[4]['start']->format('d'));
+    } else {
+        if ($date_time_period_list_selected == 'yesterday') {
+            $datetime_period = $datetime_period->sub(new DateInterval("P1D"));
+        } else {
+            if ($date_time_period_list_selected == 'this_week') {
+                $datetime_period = $datetime_period->setTimestamp(strtotime('this week'));
+            } else {
+                if ($date_time_period_list_selected == 'last_week') {
+                    $datetime_period = $datetime_period->setTimestamp(strtotime('last week'));
+                } else {
+                    if ($date_time_period_list_selected == 'this_month') {
+                        $datetime_period = $datetime_period->setDate($datetime_period->format('Y'),
+                            $datetime_period->format('m'), 1);
+                    } else {
+                        if ($date_time_period_list_selected == 'last_month') {
+                            $datetime_period = $datetime_period->modify('first day of last month');
+                        } else {
+                            if ($date_time_period_list_selected == 'this_quarter') {
+                                $thisMonth = $datetime_period->setDate($datetime_period->format('Y'),
+                                    $datetime_period->format('m'), 1);
+                                if ($thisMonth >= $q[1]['start'] && $thisMonth <= $q[1]['end']) {
+                                    // quarter 1
+                                    $datetime_period = $datetime_period->setDate($q[1]['start']->format('Y'),
+                                        $q[1]['start']->format('m'), $q[1]['start']->format('d'));
+                                } else {
+                                    if ($thisMonth >= $q[2]['start'] && $thisMonth <= $q[2]['end']) {
+                                        // quarter 2
+                                        $datetime_period = $datetime_period->setDate($q[2]['start']->format('Y'),
+                                            $q[2]['start']->format('m'), $q[2]['start']->format('d'));
+                                    } else {
+                                        if ($thisMonth >= $q[3]['start'] && $thisMonth <= $q[3]['end']) {
+                                            // quarter 3
+                                            $datetime_period = $datetime_period->setDate($q[3]['start']->format('Y'),
+                                                $q[3]['start']->format('m'), $q[3]['start']->format('d'));
+                                        } else {
+                                            if ($thisMonth >= $q[4]['start'] && $thisMonth <= $q[4]['end']) {
+                                                // quarter 4
+                                                $datetime_period = $datetime_period->setDate($q[4]['start']->format('Y'),
+                                                    $q[4]['start']->format('m'), $q[4]['start']->format('d'));
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                if ($date_time_period_list_selected == 'last_quarter') {
+                                    $thisMonth = $datetime_period->setDate($datetime_period->format('Y'),
+                                        $datetime_period->format('m'), 1);
+                                    if ($thisMonth >= $q[1]['start'] && $thisMonth <= $q[1]['end']) {
+                                        // quarter 1 - 3 months
+                                        $datetime_period = $q[1]['start']->sub(new DateInterval('P3M'));
+                                    } else {
+                                        if ($thisMonth >= $q[2]['start'] && $thisMonth <= $q[2]['end']) {
+                                            // quarter 2 - 3 months
+                                            $datetime_period = $q[2]['start']->sub(new DateInterval('P3M'));
+                                        } else {
+                                            if ($thisMonth >= $q[3]['start'] && $thisMonth <= $q[3]['end']) {
+                                                // quarter 3 - 3 months
+                                                $datetime_period = $q[3]['start']->sub(new DateInterval('P3M'));
+                                            } else {
+                                                if ($thisMonth >= $q[4]['start'] && $thisMonth <= $q[4]['end']) {
+                                                    // quarter 4 - 3 months
+                                                    $datetime_period = $q[3]['start']->sub(new DateInterval('P3M'));
+                                                }
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if ($date_time_period_list_selected == 'this_year') {
+                                        $datetime_period = $datetime_period = $datetime_period->setDate($datetime_period->format('Y'),
+                                            1, 1);
+                                    } else {
+                                        if ($date_time_period_list_selected == 'last_year') {
+                                            $datetime_period = $datetime_period = $datetime_period->setDate($datetime_period->format('Y') - 1,
+                                                1, 1);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-    } else if ($date_time_period_list_selected == 'last_quarter') {
-        $thisMonth = $datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m'), 1);
-        if ($thisMonth >= $q[1]['start'] && $thisMonth <= $q[1]['end']) {
-            // quarter 1 - 3 months
-            $datetime_period = $q[1]['start']->sub(new DateInterval('P3M'));
-        } else if ($thisMonth >= $q[2]['start'] && $thisMonth <= $q[2]['end']) {
-            // quarter 2 - 3 months
-            $datetime_period = $q[2]['start']->sub(new DateInterval('P3M'));
-        } else if ($thisMonth >= $q[3]['start'] && $thisMonth <= $q[3]['end']) {
-            // quarter 3 - 3 months
-            $datetime_period = $q[3]['start']->sub(new DateInterval('P3M'));
-        } else if ($thisMonth >= $q[4]['start'] && $thisMonth <= $q[4]['end']) {
-            // quarter 4 - 3 months
-            $datetime_period = $q[3]['start']->sub(new DateInterval('P3M'));
-        }
-    } else if ($date_time_period_list_selected == 'this_year') {
-        $datetime_period = $datetime_period = $datetime_period->setDate($datetime_period->format('Y'), 1, 1);
-    } else if ($date_time_period_list_selected == 'last_year') {
-        $datetime_period = $datetime_period = $datetime_period->setDate($datetime_period->format('Y') - 1, 1, 1);
     }
     // set time to 00:00:00
     $datetime_period = $datetime_period->setTime(0, 0, 0);
+
     return $datetime_period;
 }
 
@@ -236,7 +301,7 @@ function getPeriodDate($date_time_period_list_selected)
  */
 function getPeriodEndDate($dateTimePeriodListSelected)
 {
-    switch($dateTimePeriodListSelected) {
+    switch ($dateTimePeriodListSelected) {
         case 'today':
         case 'yesterday':
             $datetimePeriod = new DateTime();
@@ -380,7 +445,7 @@ function convertToDateTime($value)
 
     $user_dateformat = $current_user->getPreference('datef');
 
-    switch($user_dateformat) {
+    switch ($user_dateformat) {
         case 'Y-m-d':
             $formattedValue = date('Y-m-d', strtotime($value));
             break;
