@@ -99,6 +99,15 @@ function requestToUserParameters()
                     'value' => $values,
                 );
             }
+
+            if ($_REQUEST['parameter_type'][$key] === 'Value') {
+                $params[$parameterId] = array(
+                    'id' => $parameterId,
+                    'operator' => $_REQUEST['parameter_operator'][$key],
+                    'type' => $_REQUEST['parameter_type'][$key],
+                    'value' => convertToDateTime($_REQUEST['parameter_value'][$key])->format('Y-m-d H:i:s'),
+                );
+            }
         }
     }
     return $params;
@@ -358,4 +367,97 @@ function calculateQuarters($offsetMonths = 0)
     $q['4']['end'] = $q4end;
 
     return $q;
+}
+
+/**
+ * convertDateValue
+ * @param string $value - date in any user format
+ * @return DateTime $dateTime - converted string
+ */
+function convertToDateTime($value)
+{
+    global $current_user;
+
+    $user_dateformat = $current_user->getPreference('datef');
+
+    switch($user_dateformat) {
+        case 'Y-m-d':
+            $formattedValue = date('Y-m-d', strtotime($value));
+            break;
+        case 'm-d-Y':
+            $formattedValue = $value;
+            $day = substr($formattedValue, 3, 2);
+            $month = substr($formattedValue, 0, 2);
+            $year = substr($formattedValue, 6, 4);
+            $formattedValue = substr_replace($formattedValue, $day, 6, 4);
+            $formattedValue = substr_replace($formattedValue, $month, 3, 2);
+            $formattedValue = substr_replace($formattedValue, $year, 0, 2);
+            $formattedValue = date('Y-m-d', strtotime($formattedValue));
+            break;
+        case 'd-m-Y':
+            $formattedValue = $value;
+            $day = substr($formattedValue, 0, 2);
+            $month = substr($formattedValue, 3, 2);
+            $year = substr($formattedValue, 6, 4);
+            $formattedValue = substr_replace($formattedValue, $day, 6, 4);
+            $formattedValue = substr_replace($formattedValue, $month, 3, 2);
+            $formattedValue = substr_replace($formattedValue, $year, 0, 2);
+            $formattedValue = date('Y-m-d', strtotime($formattedValue));
+            break;
+        case 'Y/m/d':
+            $formattedValue = str_replace('/', '-', $value);
+            break;
+        case 'm/d/Y':
+            $formattedValue = str_replace('/', '-', $value);
+            $day = substr($formattedValue, 3, 2);
+            $month = substr($formattedValue, 0, 2);
+            $year = substr($formattedValue, 6, 4);
+            $formattedValue = substr_replace($formattedValue, $day, 6, 4);
+            $formattedValue = substr_replace($formattedValue, $month, 3, 2);
+            $formattedValue = substr_replace($formattedValue, $year, 0, 2);
+            $formattedValue = date('Y-m-d', strtotime($formattedValue));
+            break;
+        case 'd/m/Y':
+            $formattedValue = str_replace('/', '-', $value);
+            $day = substr($formattedValue, 0, 2);
+            $month = substr($formattedValue, 3, 2);
+            $year = substr($formattedValue, 6, 4);
+            $formattedValue = substr_replace($formattedValue, $day, 6, 4);
+            $formattedValue = substr_replace($formattedValue, $month, 3, 2);
+            $formattedValue = substr_replace($formattedValue, $year, 0, 2);
+            $formattedValue = date('Y-m-d', strtotime($formattedValue));
+            break;
+        case 'Y.m.d':
+            $formattedValue = str_replace('.', '-', $value);
+            break;
+        case 'd.m.Y':
+            $formattedValue = str_replace('.', '-', $value);
+            $day = substr($formattedValue, 0, 2);
+            $month = substr($formattedValue, 3, 2);
+            $year = substr($formattedValue, 6, 4);
+            $formattedValue = substr_replace($formattedValue, $day, 6, 4);
+            $formattedValue = substr_replace($formattedValue, $month, 3, 2);
+            $formattedValue = substr_replace($formattedValue, $year, 0, 2);
+            $formattedValue = date('Y-m-d', strtotime($formattedValue));
+            break;
+        case 'm.d.Y':
+            $formattedValue = str_replace('.', '-', $value);
+            $day = substr($formattedValue, 3, 2);
+            $month = substr($formattedValue, 0, 2);
+            $year = substr($formattedValue, 6, 4);
+            $formattedValue = substr_replace($formattedValue, $day, 6, 4);
+            $formattedValue = substr_replace($formattedValue, $month, 3, 2);
+            $formattedValue = substr_replace($formattedValue, $year, 0, 2);
+            $formattedValue = date('Y-m-d', strtotime($formattedValue));
+            break;
+    }
+
+    $formattedValue .= ' 00:00:00';
+    $userTimezone = $current_user->getPreference('timezone');
+    $utz = new DateTimeZone($userTimezone);
+    $dateTime = DateTime::createFromFormat('Y-m-d H:i:s',
+        $formattedValue, $utz);
+    $dateTime->setTimezone(new DateTimeZone('UTC'));
+
+    return $dateTime;
 }
