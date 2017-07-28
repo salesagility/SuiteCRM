@@ -51,6 +51,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
      */
     public function testConstruct()
     {
+        // test
         $ea = new SugarEmailAddress();
         $indexBefore = $ea->index;
         $countBefore = $ea::$count;
@@ -67,6 +68,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
      */
     public function testSugarEmailAddress()
     {
+        // test
         $ea = new SugarEmailAddress();
         $indexBefore = $ea->index;
         $countBefore = $ea::$count;
@@ -85,6 +87,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
     {
         $c = new Contact();
 
+        // test
         if (!empty($_REQUEST)) {
             $req = $_REQUEST;
         }
@@ -102,6 +105,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
             unset($_REQUEST);
         }
 
+        // test
         $c->email1 = 'test@email.com';
         $c->email2 = 'test2@email.com';
         $this->ea->handleLegacySave($c);
@@ -129,9 +133,11 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
     {
         $c = new Contact();
 
+        // test
         $this->ea->handleLegacyRetrieve($c);
         self::assertFalse($c->fetched_row);
 
+        // test
         $c->email1 = 'test5@email.com';
         $this->ea->handleLegacyRetrieve($c);
         self::assertSame(array(
@@ -147,12 +153,14 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
     {
         $c = new Contact();
 
+        // test
         $this->ea->populateLegacyFields($c);
         self::assertEquals(null, $c->email1);
         self::assertEquals(null, $c->email_opt_out);
         self::assertEquals(null, $c->invalid_email);
         self::assertEquals(null, $c->email2);
 
+        // test
         $this->ea->addAddress('test6@email.com');
         $this->ea->addAddress('test7@email.com');
         $this->ea->populateLegacyFields($c);
@@ -161,6 +169,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(0, $c->invalid_email);
         self::assertEquals('test7@email.com', $c->email2);
 
+        // test
         $this->ea->addresses[1]['primary_address'] = 1;
         $this->ea->populateLegacyFields($c);
         self::assertEquals('test7@email.com', $c->email1);
@@ -179,6 +188,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
 
+        // test
         /** @noinspection PhpDeprecationInspection */
         $this->ea->save(null, null, null, null, null, null, null, null);
         self::assertCount(1, $GLOBALS['log']->calls['deprecated']);
@@ -199,6 +209,8 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         }
 
         $db = DBManagerFactory::getInstance();
+
+        // test
         $db->query(/** @lang sql */
             "delete  from email_addr_bean_rel  WHERE email_addr_bean_rel.bean_id = '' AND email_addr_bean_rel.bean_module = '' and email_addr_bean_rel.deleted=0");
 
@@ -211,7 +223,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $this->ea->saveEmail(false, null);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
 
         $this->ea->addAddress('test8@email.com');
         $this->ea->addAddress('test9@email.com');
@@ -231,7 +243,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $row = $db->fetchByAssoc($r);
         self::assertEquals(2, $row['cnt']);
 
-        //
+        // test
 
         $this->ea->addAddress('test10@email.com');
         $this->ea->addAddress('test11@email.com');
@@ -251,7 +263,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $row = $db->fetchByAssoc($r);
         self::assertEquals(4, $row['cnt']);
 
-        //
+        // test
 
         $this->ea->addAddress('test12@email.com');
         $this->ea->addAddress('test13@email.com');
@@ -284,7 +296,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $row = $db->fetchByAssoc($r);
         self::assertEquals(6, $row['cnt']);
 
-        //
+        // test
 
         $_REQUEST['action'] = 'ConvertLead';
 
@@ -339,7 +351,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(0, $result0);
         self::assertEquals(0, $result1);
 
-        //
+        // test
         $i = 1;
         $db = DBManagerFactory::getInstance();
 
@@ -373,7 +385,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(0, $result1);
 
 
-        //
+        // test
         $q = /** @lang sql */
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
@@ -390,9 +402,11 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
      */
     public function testGetRelatedId()
     {
+        // test
         $results = $this->ea->getRelatedId('test@email.com', 'Contacts');
         self::assertEquals(false, $results);
 
+        // test
         $i = 1;
         $db = DBManagerFactory::getInstance();
 
@@ -452,7 +466,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $results = $this->ea->getBeansByEmailAddress('test@email.com');
         self::assertEquals(array(), $results);
 
-        //
+        // test
         $i = 1;
         $db = DBManagerFactory::getInstance();
 
@@ -494,12 +508,12 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
             "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
         $db->query($q);
 
-        //
+        // test
 
         $results = $this->ea->getBeansByEmailAddress('');
         self::assertEquals(array(), $results);
 
-        //
+        // test
         $i = 2;
         $q = /** @lang sql */
             "
@@ -544,23 +558,23 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $db = DBManagerFactory::getInstance();
 
 
-        //
+        // test
         $results = $this->ea->populateAddresses('', '');
         self::assertEquals(null, $results);
 
-        //
+        // test
         $_REQUEST['emailAddressWidget'] = true;
         $results = $this->ea->populateAddresses('', '');
         self::assertEquals(null, $results);
 
-        //
+        // test
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
         $results = $this->ea->populateAddresses('', $module);
         self::assertEquals(false, $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -570,7 +584,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(false, $results);
         self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -579,7 +593,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(false, $results);
         self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -589,7 +603,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(false, $results);
         self::assertCount(3, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -599,7 +613,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(false, $results);
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -609,7 +623,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(false, $results);
         self::assertCount(5, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -619,7 +633,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(false, $results);
         self::assertCount(6, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -629,7 +643,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(false, $results);
         self::assertCount(7, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -639,7 +653,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(false, $results);
         self::assertCount(8, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -649,7 +663,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(false, $results);
         self::assertCount(9, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -659,7 +673,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(false, $results);
         self::assertCount(10, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -669,7 +683,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(false, $results);
         self::assertCount(11, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -679,7 +693,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(false, $results);
         self::assertCount(12, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -689,7 +703,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(false, $results);
         self::assertCount(13, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -700,7 +714,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(false, $results);
         self::assertCount(14, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         $i = 1;
         $q = /** @lang sql */
             "
@@ -815,7 +829,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
     {
         $db = DBManagerFactory::getInstance();
 
-        //
+        // test
         $i = 1;
         $q = /** @lang sql */
             "
@@ -967,7 +981,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
     {
         $db = DBManagerFactory::getInstance();
 
-        //
+        // test
         $q = /** @lang sql */
             "
           DELETE FROM email_addresses 
@@ -978,19 +992,19 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $result = $this->ea->getEmailGUID(null);
         self::assertEquals('', $result);
 
-        //
+        // test
         $result = $this->ea->getEmailGUID('non-valid');
         self::assertEquals('ab8b6cdc-fad0-413e-0f06-597b42df6687', $result);
 
-        //
+        // test
         $result = $this->ea->getEmailGUID('nonexists@nihil.com');
         self::assertTrue(isValidId($result));
 
-        //
+        // test
         $result = $this->ea->getEmailGUID('test@email.com');
         self::assertTrue(isValidId($result));
 
-        //
+        // test
         $q = /** @lang sql */
             "
           DELETE FROM email_addresses 
@@ -1007,19 +1021,19 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
      */
     public function testAddUpdateEmailAddress()
     {
-        //
+        // test
         $db = DBManagerFactory::getInstance();
 
-        //
+        // test
         $result = $this->ea->AddUpdateEmailAddress(null);
         self::assertEquals('', $result);
 
-        //
+        // test
         $result = $this->ea->AddUpdateEmailAddress(null, 0, 0, 1);
         self::assertEquals('', $result);
 
 
-        //
+        // test
         $i = 1;
         $q = /** @lang sql */
             "
@@ -1037,7 +1051,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $result = $this->ea->AddUpdateEmailAddress(null, 0, 0, "test_email_{$i}");
         self::assertEquals('', $result);
 
-        //
+        // test
         $q = /** @lang sql */
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
@@ -1058,12 +1072,12 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $c = new Contact();
 
-        //
+        // test
         $result = $this->ea->getPrimaryAddress($c);
         self::assertEquals('', $result);
 
 
-        //
+        // test
         $i = 1;
         $q = /** @lang sql */
             "
@@ -1083,7 +1097,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $result = $this->ea->getPrimaryAddress($c);
         self::assertEquals('', $result);
 
-        //
+        // test
         $q = /** @lang sql */
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
@@ -1105,7 +1119,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $c = BeanFactory::getBean('Contacts');
 
 
-        //
+        // test
         $i = 1;
         $q = /** @lang sql */
             "
@@ -1137,7 +1151,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $result = $this->ea->getReplyToAddress($c, true);
         self::assertEquals('test@email.com', $result);
 
-        //
+        // test
         $q = /** @lang sql */
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
@@ -1149,11 +1163,11 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $db->query($q);
 
 
-        //
+        // test
         $result = $this->ea->getReplyToAddress($c);
         self::assertEquals('', $result);
 
-        //
+        // test
         $result = $this->ea->getReplyToAddress($c, true);
         self::assertEquals('', $result);
 
@@ -1167,7 +1181,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $db = DBManagerFactory::getInstance();
 
-        //
+        // test
         $id = null;
         $module = null;
 
@@ -1185,7 +1199,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $count = count($result);
         self::assertEquals($cnt, $count);
 
-        //
+        // test
         $id = 'non-exists-xyz';
         $module = null;
 
@@ -1193,13 +1207,12 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $count = count($result);
         self::assertEquals(0, $count);
 
-        //
+        // test
         /**
          * @var Contact $c
          */
         $c = BeanFactory::getBean('Contacts');
         $c->email1 = 'test30@email.com';
-        //$c->save();
 
         $id = $c->id;
         $module = $c->module_name;
@@ -1248,7 +1261,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $db->query($q);
 
 
-        //
+        // test
         $result = $this->ea->getEmailAddressWidgetEditView(null, null);
         self::assertEquals(false, $result);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
@@ -1261,7 +1274,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertEquals(false, $result);
         self::assertCount(3, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         $_REQUEST['full_form'] = true;
         $_REQUEST['emailAddressWidget'] = true;
         $_REQUEST['non-exists-module0emailAddress0'] = true;
@@ -1297,7 +1310,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
             $_REQUEST = $env['$_REQUEST'];
         }
 
-        //
+        // test
         $_REQUEST['full_form'] = true;
         $_REQUEST['emailAddressWidget'] = true;
         $_REQUEST['non-exists-module0emailAddress0'] = true;
@@ -1319,7 +1332,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
             $_REQUEST = $env['$_REQUEST'];
         }
 
-        //
+        // test
         $_REQUEST['full_form'] = true;
         $_REQUEST['emailAddressWidget'] = true;
 
@@ -1340,7 +1353,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
             $_REQUEST = $env['$_REQUEST'];
         }
 
-        //
+        // test
         $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'non-exists-module');
 
         self::assertNotFalse(strpos($result, 'non-exists-module'));
@@ -1349,7 +1362,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $expected = !empty($result) && is_string($result);
         self::assertTrue($expected);
 
-        //
+        // test
         $_POST['is_converted'] = true;
         $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'non-exists-module');
 
@@ -1360,7 +1373,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertTrue($expected);
         self::assertCount(10, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         $_POST['is_converted'] = true;
         $_POST['return_id'] = 'any-non-exists-id';
         $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'non-exists-module');
@@ -1372,7 +1385,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertTrue($expected);
         self::assertCount(12, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         $_POST['is_converted'] = true;
         $_POST['return_module'] = 'any-non-exists-module';
         $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'non-exists-module');
@@ -1384,7 +1397,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertTrue($expected);
         self::assertCount(13, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'Contacts');
 
         self::assertNotFalse(strpos($result, 'Contacts'));
@@ -1395,7 +1408,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 
         $noModuleResult = $result;
 
-        //
+        // test
         $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'Users');
 
         self::assertNotFalse(strpos($result, 'Users'));
@@ -1405,7 +1418,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertTrue($expected);
         self::assertNotEquals($noModuleResult, $result);
 
-        //
+        // test
         $_POST['return_id'] = 'test_contact_1';
         $_POST['return_module'] = 'Contacts';
         $result = $this->ea->getEmailAddressWidgetEditView('test_contact_1', 'Contacts');
@@ -1418,7 +1431,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $expected = !empty($result) && is_string($result);
         self::assertTrue($expected);
 
-        //
+        // test
         $_POST['return_id'] = 'non-exists-id';
         $_POST['return_module'] = 'Contacts';
         $result = $this->ea->getEmailAddressWidgetEditView('test_contact_1', 'Contacts');
@@ -1430,7 +1443,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $expected = !empty($result) && is_string($result);
         self::assertTrue($expected);
 
-        //
+        // test
         $_REQUEST['full_form'] = true;
         $_REQUEST['emailAddressWidget'] = true;
         $_REQUEST['non-exists-module0emailAddress0'] = true;
@@ -1449,7 +1462,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
             $_REQUEST = $env['$_REQUEST'];
         }
 
-        //
+        // test
         $_REQUEST['full_form'] = true;
         $_REQUEST['emailAddressWidget'] = true;
         $_REQUEST['non-exists-module0emailAddress0'] = true;
@@ -1468,7 +1481,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
             $_REQUEST = $env['$_REQUEST'];
         }
 
-        //
+        // test
         $q = /** @lang sql */
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
@@ -1514,16 +1527,16 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $db->query($q);
 
 
-        //
+        // test
         $result = $this->ea->getEmailAddressWidgetDetailView(null);
         self::assertEquals('', $result);
 
-        //
+        // test
         $c = BeanFactory::getBean('Contacts');
         $result = $this->ea->getEmailAddressWidgetDetailView($c);
         self::assertEquals('', $result);
 
-        //
+        // test
         $c = BeanFactory::getBean('Contacts');
         $c->id = 'an-non-exists-id';
         $result = $this->ea->getEmailAddressWidgetDetailView($c);
@@ -1532,7 +1545,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $expected = !empty($result) && is_string($result);
         self::assertTrue($expected);
 
-        //
+        // test
         $c->id = "test_contact_{$i}";
         $result = $this->ea->getEmailAddressWidgetDetailView($c);
         self::assertFalse(strpos($result, '--None--'));
@@ -1541,7 +1554,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertTrue($expected);
 
 
-        //
+        // test
         $q = /** @lang sql */
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
@@ -1577,18 +1590,18 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         }
 
 
-        //
+        // test
         $result = $this->ea->getEmailAddressWidgetDuplicatesView(null);
         self::assertEquals('', $result);
         self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         $_POST['emailAddressPrimaryFlag'] = '';
         $result = $this->ea->getEmailAddressWidgetDuplicatesView(null);
         self::assertEquals('', $result);
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         $_POST['emailAddressPrimaryFlag'] = '';
         $_POST['emailAddress0'] = true;
         $result = $this->ea->getEmailAddressWidgetDuplicatesView(null);
@@ -1602,7 +1615,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 <input type="hidden" name="useEmailWidget" value="true">', $result);
         self::assertCount(6, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         $_POST['emailAddressPrimaryFlag'] = '';
         $_POST['emailAddress0'] = true;
         $_POST['emailAddressOptOutFlag'] = true;
@@ -1618,7 +1631,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 <input type="hidden" name="useEmailWidget" value="true">', $result);
         self::assertCount(9, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         $_POST['emailAddressPrimaryFlag'] = '';
         $_POST['emailAddressInvalidFlag'] = '';
         $_POST['emailAddress0'] = true;
@@ -1638,7 +1651,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 <input type="hidden" name="useEmailWidget" value="true">', $result);
         self::assertCount(13, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         $_POST['emailAddressPrimaryFlag'] = '';
         $_POST['emailAddressReplyToFlag'] = '';
         $_POST['emailAddress0'] = true;
@@ -1658,7 +1671,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 <input type="hidden" name="useEmailWidget" value="true">', $result);
         self::assertCount(18, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         $_POST['emailAddressPrimaryFlag'] = '';
         $_POST['emailAddressDeleteFlag'] = '';
         $_POST['emailAddress0'] = true;
@@ -1678,7 +1691,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 <input type="hidden" name="useEmailWidget" value="true">', $result);
         self::assertCount(24, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         $_POST['emailAddressPrimaryFlag'] = '';
         $_POST['emailAddressVerifiedValue1'] = '';
         $_POST['emailAddress0'] = true;
@@ -1699,7 +1712,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertCount(31, $GLOBALS['log']->calls['fatal']);
 
 
-        //
+        // test
         if (isset($env['$_POST'])) {
             $_POST = $env['$_POST'];
         }
@@ -1718,7 +1731,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
      */
     public function testGetFormBaseURL()
     {
-        //
+        // test
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
 
@@ -1739,29 +1752,29 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $focus = new Contact();
 
 
-        //
+        // test
         $result = $this->ea->getFormBaseURL(null);
         self::assertEquals(false, $result);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         $result = $this->ea->getFormBaseURL($focus);
         self::assertEquals('&Contacts_email_widget_id=&emailAddressWidget=', $result);
         self::assertCount(3, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         $_POST['Contacts_email_widget_id'] = 'testid';
         $result = $this->ea->getFormBaseURL($focus);
         self::assertEquals('&Contacts_email_widget_id=testid&emailAddressWidget=', $result);
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         $_POST['emailAddressWidget'] = 'testaddress';
         $result = $this->ea->getFormBaseURL($focus);
         self::assertEquals('&Contacts_email_widget_id=testid&emailAddressWidget=testaddress', $result);
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         $_REQUEST['ContactstestidemailAddress0'] = 'testadrr0';
         $result = $this->ea->getFormBaseURL($focus);
         self::assertEquals(
@@ -1770,14 +1783,14 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         );
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         $_REQUEST['ContactstestidemailAddressVerifiedValue1'] = 'testverfdv1';
         $result = $this->ea->getFormBaseURL($focus);
         self::assertEquals('&Contacts_email_widget_id=testid&emailAddressWidget=testaddress' .
             '&ContactstestidemailAddress0=testadrr0&ContactstestidemailAddressVerifiedValue1=testverfdv1', $result);
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         $_REQUEST['ContactstestidemailAddressPrimaryFlag'] = 'testadentprimflg';
         $result = $this->ea->getFormBaseURL($focus);
         self::assertEquals('&Contacts_email_widget_id=testid&emailAddressWidget=testaddress' .
@@ -1785,7 +1798,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
             '&ContactstestidemailAddressPrimaryFlag=testadentprimflg', $result);
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
-        //
+        // test
         $_REQUEST['ContactstestidemailAddressPrimaryFlag'] = array('testadentprimflg1', 'testadentprimflg2');
         $result = $this->ea->getFormBaseURL($focus);
         self::assertEquals('&Contacts_email_widget_id=testid&emailAddressWidget=testaddress' .
@@ -1795,7 +1808,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
 
-        //
+        // tear down
         if (isset($env['$_POST'])) {
             $_POST = $env['$_POST'];
         }
@@ -1826,27 +1839,27 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
      */
     public function testGetCorrectedModule()
     {
-        //
+        // test
         $module = null;
         $result = $this->ea->getCorrectedModule($module);
         self::assertSame($module, $result);
 
-        //
+        // test
         $module = '';
         $result = $this->ea->getCorrectedModule($module);
         self::assertSame('', $result);
 
-        //
+        // test
         $module = 'Nonexists';
         $result = $this->ea->getCorrectedModule($module);
         self::assertSame('Nonexists', $result);
 
-        //
+        // test
         $module = 'Contacts';
         $result = $this->ea->getCorrectedModule($module);
         self::assertSame('Contacts', $result);
 
-        //
+        // test
         $module = 'Employees';
         $result = $this->ea->getCorrectedModule($module);
         self::assertSame('Users', $result);
@@ -1865,11 +1878,11 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
 
-        //
+        // test
         $this->ea->stash(null, null);
         self::assertNotTrue(isset($GLOBALS['log']->calls['fatal']));
 
-        //
+        // test
         $i = 1;
         $q = /** @lang sql */
             "
@@ -1891,7 +1904,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
 
 
-        //
+        // test
         $GLOBALS['log'] = $logger;
 
         $q = /** @lang sql */
@@ -1910,7 +1923,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
      */
     public function testGetEmailAddressWidget()
     {
-        //
+        // test
         $c = BeanFactory::getBean('Contacts');
         $c->id = 'test_contact_1';
         $c->save();
@@ -1922,21 +1935,21 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
 
-        //
+        // test
         $result = getEmailAddressWidget($c, null, null, 'ConvertLead');
         self::assertFalse(strpos($result, '--None--'));
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
 
-        //
+        // test
         $result = getEmailAddressWidget($a, null, null, 'ConvertLead');
         self::assertFalse(strpos($result, '--None--'));
 
-        //
+        // test
         $result = getEmailAddressWidget($c, null, null, 'EditView');
         self::assertFalse(strpos($result, '--None--'));
 
-        //
+        // test
         $result = getEmailAddressWidget($c, null, null, 'DetailView');
         self::assertEquals(/** @lang html */
             '
@@ -1948,12 +1961,12 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
 				</tr>
 							</table>', $result);
 
-        //
+        // test
         $result = getEmailAddressWidget(null, null, null, null);
         self::assertEquals('', $result);
 
 
-        //
+        // test
         $GLOBALS['log'] = $logger;
     }
 
