@@ -1555,6 +1555,7 @@ class AOR_Report extends Basic
                                         $equal_query .= "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
                                         $query['where'][] = $equal_query;
                                     } else {
+                                        $value = "'" . $this->db->quote($condition->value) . "'";
                                         break;
                                     }
                                 }
@@ -1575,6 +1576,7 @@ class AOR_Report extends Basic
                                             $not_equal_query .= "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
                                             $query['where'][] = $not_equal_query;
                                         } else {
+                                            $value = "'" . $this->db->quote($condition->value) . "'";
                                             break;
                                         }
                                     }
@@ -1592,6 +1594,7 @@ class AOR_Report extends Basic
                                                 $greater_than_query = "( $field > '" . $this->db->quote($query_date) . "' ) ";
                                                 $query['where'][] = $greater_than_query;
                                             } else {
+                                                $value = "'" . $this->db->quote($condition->value) . "'";
                                                 break;
                                             }
                                         }
@@ -1609,6 +1612,7 @@ class AOR_Report extends Basic
                                                     $less_than_query = "( $field < '" . $this->db->quote($query_date) . "' ) ";
                                                     $query['where'][] = $less_than_query;
                                                 } else {
+                                                    $value = "'" . $this->db->quote($condition->value) . "'";
                                                     break;
                                                 }
                                             }
@@ -1630,6 +1634,7 @@ class AOR_Report extends Basic
                                                         $equal_greater_than_query .= " OR $field  BETWEEN '" . $this->db->quote($query_date) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
                                                         $query['where'][] = $equal_greater_than_query;
                                                     } else {
+                                                        $value = "'" . $this->db->quote($condition->value) . "'";
                                                         break;
                                                     }
                                                 }
@@ -1651,6 +1656,7 @@ class AOR_Report extends Basic
                                                             $equal_less_than_query .= " OR $field  BETWEEN '" . $this->db->quote($query_date) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
                                                             $query['where'][] = $equal_less_than_query;
                                                         } else {
+                                                            $value = "'" . $this->db->quote($condition->value) . "'";
                                                             break;
                                                         }
                                                     }
