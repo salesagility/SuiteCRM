@@ -76,6 +76,11 @@ public/
 #Ingore composer files
 composer.lock
 
+#Ignore bower_components
+bower_components/
+node_modules/
+
+
 #Ignore Sass Generated files in SuiteP
 themes/SuiteP/css/*.map
 themes/SuiteP/css/*.css
