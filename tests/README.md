@@ -350,7 +350,7 @@ To run the test framework with browser stack. You need to use the --env browser-
 
 <pre>
 codecept run demo  --env browser-stack-hub
-<pre>
+</pre>
 
 
 #### Browser stack local
