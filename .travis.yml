@@ -7,11 +7,6 @@ php:
   - '7.1'
 sudo: required
 dist: trusty
-addons:
-  browserstack:
-    username: "username"
-    access_key:
-      secure: "securestring"
   hosts:
   - travishost
 services:
@@ -38,8 +33,9 @@ before_script:
   - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
   # configure apache virtual hosts
-  - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
-  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
+  - sudo cd $TRAVIS_BUILD_DIR
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place ./build/travis-ci-apache
+  - sudo cp -f ./build/travis-ci-apache /etc/apache2/sites-available/default
   - sudo service apache2 restart
   # configure database
   - mysql -e "CREATE DATABASE automated_tests;"
