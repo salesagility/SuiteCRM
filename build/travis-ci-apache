@@ -4,6 +4,7 @@
   DocumentRoot %TRAVIS_BUILD_DIR%
 
   <Directory "%TRAVIS_BUILD_DIR%">
+    DirectoryIndex index.php
     Options FollowSymLinks MultiViews ExecCGI
     AllowOverride All
     Order deny,allow
