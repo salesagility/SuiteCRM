@@ -27,7 +27,7 @@ install:
 
 before_script:
   # Use php built in web server
-  - php -S localhost:8080 > $(pwd)/webserver.log 2>&1 &
+  - php -S localhost:8080 -c ./build/php.ini > $(pwd)/webserver.log 2>&1 &
   # configure database
   - mysql -e "CREATE DATABASE automated_tests;"
   - mysql -u root -e "CREATE USER 'automated_tests'@'localhost' IDENTIFIED BY 'automated_tests';"
