@@ -49,7 +49,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * in constructor, set the default settings for a mozaik editor
  * and if settings argument exists extends it
  */
-class SuiteEditorSettingsForMozaik extends SuiteEditorSettingsForDirectHTML
+class SuiteEditorSettingsForMozaik extends SuiteEditorSettingsForTinyMCE
 {
 
     /**
@@ -61,10 +61,5 @@ class SuiteEditorSettingsForMozaik extends SuiteEditorSettingsForDirectHTML
      * @var string
      */
     public $group = '';
-
-    /**
-     * @var string
-     */
-    public $tinyMCESetup = '{}';
 
 }

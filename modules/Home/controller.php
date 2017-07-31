@@ -89,19 +89,26 @@ class HomeController extends SugarController{
 
                 $fielddef = $bean->field_defs[$_REQUEST['field']];
 
-                if(!$fielddef['required']){
+                if(!isset($fielddef['required']) || !$fielddef['required']){
                     $fielddef['required'] = false;
                 }
 
-                if($fielddef['name'] == "email1" || $fielddef['email2']){
+                if ($fielddef['name'] == "email1" || (isset($fielddef['email2']) && $fielddef['email2'])) {
                     $fielddef['type'] = "email";
                     $fielddef['vname'] = "LBL_EMAIL_ADDRESSES";
                 }
 
-                if($app_strings[$fielddef['vname']]){
+                if (isset($app_strings[$fielddef['vname']])) {
                     $fielddef['label'] = $app_strings[$fielddef['vname']];
-                }else{
-                    $fielddef['label'] = $mod_strings[$fielddef['vname']];
+                } else {
+                    if (isset($mod_strings[$fielddef['vname']])) {
+                        $fielddef['label'] = $mod_strings[$fielddef['vname']];
+                    } else {
+                        $GLOBALS['log']->warn("Unknown text label in a fielddef: {$fielddef['vname']}");
+                        if(!isset($fielddef['label'])) {
+                            $fielddef['label'] = null;
+                        }
+                    }
                 }
 
                 $validate_array = array('type' => $fielddef['type'], 'required' => $fielddef['required'],'label' => $fielddef['label']);

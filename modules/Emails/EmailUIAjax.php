@@ -407,7 +407,7 @@ function handleSubs($subs, $email, $json) {
                 $_REQUEST['uid'] = $ie->getCorrectMessageNoForPop3($_REQUEST['uid']);
             }
 
-            if (!$ie->importOneEmail($_REQUEST['uid'], $uid)) {
+            if (!$ie->returnImportedEmail($_REQUEST['uid'], $uid)) {
             	$ie->getDuplicateEmailId($_REQUEST['uid'], $uid);
             } // id
             $ie->email->retrieve($ie->email->id);
@@ -696,9 +696,9 @@ function handleSubs($subs, $email, $json) {
             	$uid = $msgNo;
                 if($ie->protocol == 'imap') {
                     $msgNo = imap_msgno($ie->conn, $msgNo);
-                    $status = $ie->importOneEmail($msgNo, $uid);
+                    $status = $ie->returnImportedEmail($msgNo, $uid);
                 } else {
-                	$status = $ie->importOneEmail($ie->getCorrectMessageNoForPop3($msgNo), $uid);
+                	$status = $ie->returnImportedEmail($ie->getCorrectMessageNoForPop3($msgNo), $uid);
                 } // else
             	$return[] = $app_strings['LBL_EMAIL_MESSAGE_NO'] . " " . $count . ", " . $app_strings['LBL_STATUS'] . " " . ($status ? $app_strings['LBL_EMAIL_IMPORT_SUCCESS'] : $app_strings['LBL_EMAIL_IMPORT_FAIL']);
             	$count++;
@@ -711,9 +711,9 @@ function handleSubs($subs, $email, $json) {
             $msgNo = $_REQUEST['uid'];
             if($ie->protocol == 'imap') {
                 $msgNo = imap_msgno($ie->conn, $_REQUEST['uid']);
-                $status = $ie->importOneEmail($msgNo, $_REQUEST['uid']);
+                $status = $ie->returnImportedEmail($msgNo, $_REQUEST['uid']);
             } else {
-            	$status = $ie->importOneEmail($ie->getCorrectMessageNoForPop3($msgNo), $_REQUEST['uid']);
+            	$status = $ie->returnImportedEmail($ie->getCorrectMessageNoForPop3($msgNo), $_REQUEST['uid']);
             } // else
             $return[] = $app_strings['LBL_EMAIL_MESSAGE_NO'] . " " . $count . ", " . $app_strings['LBL_STATUS'] . " " . ($status ? $app_strings['LBL_EMAIL_IMPORT_SUCCESS'] : $app_strings['LBL_EMAIL_IMPORT_FAIL']);
 
