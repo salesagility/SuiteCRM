@@ -7,19 +7,9 @@ php:
   - '7.1'
 sudo: required
 dist: trusty
-  hosts:
-  - travishost
 services:
   # TODO: user docker to support different databases
   - mysql
-#
-#env:
-#  - DOCKER_COMPOSE_VERSION=1.11.2
-
-addons:
-  browserstack:
-    username:
-    forcelocal: true
 
 install:
   - composer self-update && composer --version
@@ -33,7 +23,7 @@ before_script:
   - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
   # configure apache virtual hosts
-  - sudo cd $TRAVIS_BUILD_DIR
+  - ls
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place ./build/travis-ci-apache
   - sudo cp -f ./build/travis-ci-apache /etc/apache2/sites-available/default
   - sudo service apache2 restart
