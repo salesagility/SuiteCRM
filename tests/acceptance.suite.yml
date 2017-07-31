@@ -18,7 +18,3 @@ modules:
             browser: chrome
             restart: true
             wait: 10
-            # iPad 2
-            # See _env
-            width: 768
-            height: 1024
