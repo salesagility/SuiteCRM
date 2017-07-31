@@ -26,7 +26,7 @@ class ModuleBuilder extends Administration
         if($packageExists === false) {
             // Create new package
             $I->click('#newPackageLink');
-            $I->wait(3);
+            $I->waitForElementVisible('#CreatePackage', 120);
             $I->fillField(['name' => 'name'], $packageName);
             $I->fillField(['name' => 'author'], 'Acceptance Tester');
             $I->fillField(['name' => 'key'], 'Test');
@@ -34,7 +34,7 @@ class ModuleBuilder extends Administration
             $I->click('Save');
 
             // Close confirmation window
-            $I->wait(3);
+            $I->waitForElementVisible('#sugarMsgWindow_mask', 120);
             $I->click('.container-close');
 
             // Create new module
@@ -70,8 +70,9 @@ class ModuleBuilder extends Administration
             $I->click('Save');
 
             // Close popup
-            $I->wait(3);
-            $I->click('.container-close');
+            $I->waitForElementVisible('#sugarMsgWindow_mask', 120);
+            $I->waitForElementVisible('.yui-dialog .container-close', 120);
+            $I->click('.container-close', '.yui-dialog');
 
             // Deploy module
             $I->wait(3);
