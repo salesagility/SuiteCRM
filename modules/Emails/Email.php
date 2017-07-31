@@ -287,16 +287,6 @@ class Email extends Basic
     public $replyDelimiter = "> ";
 
     /**
-     * @var string $emailDescription
-     */
-    public $emailDescription;
-
-    /**
-     * @var string $emailDescriptionHTML
-     */
-    public $emailDescriptionHTML;
-
-    /**
      * @var string $emailRawSource
      */
     public $emailRawSource;
@@ -2695,7 +2685,8 @@ class Email extends Basic
             }
         }
 
-        $mail = $this->setMailer($mail);
+        $ieId = $this->mailbox_id;
+        $mail = $this->setMailer($mail, '', $ieId);
 
         // FROM ADDRESS
         if (!empty($this->from_addr)) {
@@ -3899,15 +3890,19 @@ eoq;
             $bean = BeanFactory::getBean('Emails');
         }
 
-        if (isset($_REQUEST['id'])) {
+        if (isset($request['id'])) {
             $bean = $bean->retrieve($_REQUEST['id']);
         }
 
 
-        foreach ($_REQUEST as $fieldName => $field) {
+        foreach ($request as $fieldName => $field) {
             if (array_key_exists($fieldName, $bean->field_defs)) {
                 $bean->$fieldName = $field;
             }
+        }
+
+        if (isset($_REQUEST['inbound_email_id'])) {
+            $bean->mailbox_id = $_REQUEST['inbound_email_id'];
         }
 
 
@@ -4145,6 +4140,18 @@ eoq;
         if (empty($bean->description)) {
             if (!empty($request['description'])) {
                 $bean->description = $request['description'];
+            }
+        }
+
+        // When use is sending email after selecting forward or reply to
+        // We need to generate a new id
+        if (isset($_REQUEST['refer_action']) && !empty($_REQUEST['refer_action'])) {
+            $referActions = array('Forward', 'ReplyTo', 'ReplyToAll');
+            if(in_array($_REQUEST['refer_action'], $referActions)) {
+                $bean->id = create_guid();
+                $bean->new_with_id = true;
+                $bean->type = 'out';
+                $bean->status = 'draft';
             }
         }
 

@@ -78,7 +78,7 @@ class OutboundEmail {
 	var $mail_smtpauth_req; // bool
 	var $mail_smtpssl; // bool
 	var $mail_smtpdisplay; // calculated value, not in DB
-	var $new_with_id = FALSE;
+	var $new_with_id = false;
 
 	/**
 	 * Sole constructor
@@ -134,7 +134,7 @@ class OutboundEmail {
 	{
 	    $ob = $this->getSystemMailerSettings();
 	    $ob->id = create_guid();
-	    $ob->new_with_id = TRUE;
+	    $ob->new_with_id = true;
 	    $ob->user_id = $user_id;
 	    $ob->type = 'system-override';
 	    $ob->mail_smtpuser = $user_name;
@@ -153,7 +153,7 @@ class OutboundEmail {
 	 */
 	function doesUserOverrideAccountRequireCredentials($user_id)
 	{
-	    $userCredentialsReq = FALSE;
+	    $userCredentialsReq = false;
 	    $sys = new OutboundEmail();
 	    $ob = $sys->getSystemMailerSettings(); //Dirties '$this'
 
@@ -163,7 +163,7 @@ class OutboundEmail {
 
 	    $userOverideAccount = $this->getUsersMailerForSystemOverride($user_id);
 	    if( $userOverideAccount == null || empty($userOverideAccount->mail_smtpuser) || empty($userOverideAccount->mail_smtpuser) )
-	       $userCredentialsReq = TRUE;
+	       $userCredentialsReq = true;
 
         return $userCredentialsReq;
 
@@ -172,73 +172,86 @@ class OutboundEmail {
 	/**
 	 * Retrieves name value pairs for opts lists
 	 */
-	function getUserMailers($user) {
-		global $app_strings;
+    function getUserMailers($user)
+    {
+        global $app_strings;
 
-		$q = "SELECT * FROM outbound_email WHERE user_id = '{$user->id}' AND type = 'user' ORDER BY name";
-		$r = $this->db->query($q);
+        $q = "SELECT * FROM outbound_email WHERE user_id = '{$user->id}' AND type = 'user' ORDER BY name";
+        $r = $this->db->query($q);
 
-		$ret = array();
+        $ret = array();
 
-		$system = $this->getSystemMailerSettings();
+        $system = $this->getSystemMailerSettings();
 
-		//Now add the system default or user override default to the response.
-		if(!empty($system->id) )
-		{
-			if ($system->mail_sendtype == 'SMTP')
-			{
-			    $systemErrors = "";
+        //Now add the system default or user override default to the response.
+        if (!empty($system->id)) {
+            if ($system->mail_sendtype == 'SMTP') {
+                $systemErrors = "";
                 $userSystemOverride = $this->getUsersMailerForSystemOverride($user->id);
 
                 //If the user is required to to provide a username and password but they have not done so yet,
-        	    //create the account for them.
-        	     $autoCreateUserSystemOverride = FALSE;
-        		 if( $this->doesUserOverrideAccountRequireCredentials($user->id) )
-        		 {
-        		      $systemErrors = $app_strings['LBL_EMAIL_WARNING_MISSING_USER_CREDS'];
-        		      $autoCreateUserSystemOverride = TRUE;
-        		 }
+                //create the account for them.
+                $autoCreateUserSystemOverride = false;
+                if ($this->doesUserOverrideAccountRequireCredentials($user->id)) {
+                    $systemErrors = $app_strings['LBL_EMAIL_WARNING_MISSING_USER_CREDS'];
+                    $autoCreateUserSystemOverride = true;
+                }
 
-                //Substitute in the users system override if its available.
-                if($userSystemOverride != null)
-        		   $system = $userSystemOverride;
-        		else if ($autoCreateUserSystemOverride)
-        	       $system = $this->createUserSystemOverrideAccount($user->id,"","");
+                // Substitute in the users system override if its available.
+                if ($userSystemOverride != null) {
+                    $system = $userSystemOverride;
+                } else {
+                    if ($autoCreateUserSystemOverride) {
+                        $system = $this->createUserSystemOverrideAccount($user->id, "", "");
+                    }
+                }
+                // User overrides can be edited.
+                $isEditable = !($system->type == 'system' || $system->type == 'system-override');
 
-			    $isEditable = ($system->type == 'system') ? FALSE : TRUE; //User overrides can be edited.
+                if (!empty($system->mail_smtpserver)) {
+                    $ret[] = array(
+                        'id' => $system->id,
+                        'name' => "$system->name",
+                        'mail_smtpserver' => $system->mail_smtpdisplay,
+                        'is_editable' => $isEditable,
+                        'type' => $system->type,
+                        'errors' => $systemErrors
+                    );
+                }
+            } else {
+                // use sendmail
+                $ret[] = array(
+                    'id' => $system->id,
+                    'name' => "{$system->name} - sendmail",
+                    'mail_smtpserver' => 'sendmail',
+                    'is_editable' => false,
+                    'type' => $system->type,
+                    'errors' => ''
+                );
+            }
+        }
 
-                if( !empty($system->mail_smtpserver) )
-				    $ret[] = array('id' =>$system->id, 'name' => "$system->name", 'mail_smtpserver' => $system->mail_smtpdisplay,
-								   'is_editable' => $isEditable, 'type' => $system->type, 'errors' => $systemErrors);
-			}
-			else //Sendmail
-			{
-				$ret[] = array('id' =>$system->id, 'name' => "{$system->name} - sendmail", 'mail_smtpserver' => 'sendmail',
-								'is_editable' => false, 'type' => $system->type, 'errors' => '');
-			}
-		}
+        while ($a = $this->db->fetchByAssoc($r)) {
+            $oe = array();
+            if ($a['mail_sendtype'] != 'SMTP') {
+                continue;
+            }
+            $oe['id'] = $a['id'];
+            $oe['name'] = $a['name'];
+            $oe['type'] = $a['type'];
+            $oe['is_editable'] = true;
+            $oe['errors'] = '';
+            if (!empty($a['mail_smtptype'])) {
+                $oe['mail_smtpserver'] = $this->_getOutboundServerDisplay($a['mail_smtptype'], $a['mail_smtpserver']);
+            } else {
+                $oe['mail_smtpserver'] = $a['mail_smtpserver'];
+            }
 
-		while($a = $this->db->fetchByAssoc($r))
-		{
-			$oe = array();
-			if($a['mail_sendtype'] != 'SMTP')
-				continue;
+            $ret[] = $oe;
+        }
 
-			$oe['id'] =$a['id'];
-			$oe['name'] = $a['name'];
-			$oe['type'] = $a['type'];
-			$oe['is_editable'] = true;
-			$oe['errors'] = '';
-			if ( !empty($a['mail_smtptype']) )
-			    $oe['mail_smtpserver'] = $this->_getOutboundServerDisplay($a['mail_smtptype'],$a['mail_smtpserver']);
-			else
-			    $oe['mail_smtpserver'] = $a['mail_smtpserver'];
-
-			$ret[] = $oe;
-		}
-
-		return $ret;
-	}
+        return $ret;
+    }
 
 	/**
 	 * Retrieves a cascading mailer set
@@ -302,6 +315,7 @@ class OutboundEmail {
 
 		return $results;
 	}
+
 	/**
 	 * Retrieves a cascading mailer set
 	 * @param object user
@@ -353,7 +367,7 @@ class OutboundEmail {
 	 */
 	function isAllowUserAccessToSystemDefaultOutbound()
 	{
-	    $allowAccess = FALSE;
+	    $allowAccess = false;
 
 	    // first check that a system default exists
 	    $q = "SELECT id FROM outbound_email WHERE type = 'system'";
@@ -362,10 +376,10 @@ class OutboundEmail {
 		if (!empty($a)) {
 		    // next see if the admin preference for using the system outbound is set
             $admin = new Administration();
-            $admin->retrieveSettings('',TRUE);
+            $admin->retrieveSettings('',true);
             if (isset($admin->settings['notify_allow_default_outbound'])
                 &&  $admin->settings['notify_allow_default_outbound'] == 2 )
-                $allowAccess = TRUE;
+                $allowAccess = true;
         }
 
         return $allowAccess;
