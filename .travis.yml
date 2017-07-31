@@ -1,30 +1,60 @@
+
 language: php
+sudo: required
+dist: trusty
+addons:
+  browserstack:
+    username: "Your BrowserStack username"
+    access_key:
+      secure: "The secure string output of `travis encrypt`"
+  hosts:
+  - travishost
 matrix:
   allow_failures:
     - php: 5.4
 
-  include:
-    - php: 5.4 # lowest versions of all dependencies
-    - php: 5.5
-    - php: 5.6
-    - php: 7.0
-    - php: 7.1
+include:
+  - php: 5.4 # lowest versions of all dependencies
+  - php: 5.5
+  - php: 5.6
+  - php: 7.0
+  - php: 7.1
+
+services:
+  # TODO: user docker to support different databases
+  - mysql
+#
+#env:
+#  - DOCKER_COMPOSE_VERSION=1.11.2
+
+addons:
+  browserstack:
+    username:
+    forcelocal: true
+
 install:
   - composer self-update && composer --version
 
 before_script:
+  - sudo apt-get update
+  - sudo apt-get install apache2 libapache2-mod-fastcgi
+  # enable php-fpm
+  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+  - sudo a2enmod rewrite actions fastcgi alias
+  - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+  # configure apache virtual hosts
+  - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
+  - sudo service apache2 restart
+  # configure database
   - mysql -e "CREATE DATABASE automated_tests;"
   - mysql -u root -e "CREATE USER 'automated_tests'@'localhost' IDENTIFIED BY 'automated_tests';"
   - mysql -u root -e "GRANT ALL PRIVILEGES ON automated_tests.* TO 'automated_tests'@'localhost';"
   - composer install
 script:
-  - php tests/install.php
-  - ./vendor/bin/pscss -f compressed themes/SuiteP/css/style.scss >  themes/SuiteP/css/style.css
-  - ./vendor/bin/codecept run -f unit
-  - cat sugarcrm.log
-  - cat suitecrm.log
-services:
-  - mysql
+  # Install SuiteCRM Using Acceptance Test
+  - ./vendor/bin/codecept run -f install --env browser-stack-hub,browser-stack-local,browser-stack-chrome-fhd,travis-ci
 branches:
   only:
     - master
