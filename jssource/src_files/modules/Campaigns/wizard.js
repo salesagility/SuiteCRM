@@ -498,6 +498,10 @@ var onSendAsTestClick = function(e, campaignId, marketingId) {
     $('#show_wizard_summary').val('1');
     $('#sendMarketingEmailSchedule').val('0');
     $('#sendMarketingEmailTest').val('1');
+    if ($('#wizform input[name="marketing_id"]').length == 0) {
+      $('#wizform').append('<input type="hidden" name="marketing_id">');
+    }
+    $('#wizform input[name="marketing_id"]').val(marketingId);
     $('#wizform').submit();
 };
 

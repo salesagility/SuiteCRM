@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,17 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array (
 	'LBL_SEND_DATE_TIME'						=> 'Send Date',
@@ -57,11 +53,7 @@ $mod_strings = array (
 	'LBL_CONFIGURE_SETTINGS'					=> 'Configure Email Settings',
 	'LBL_CUSTOM_LOCATION'						=> 'User Defined',
 	'LBL_DEFAULT_LOCATION'						=> 'Default',
-	
-	'LBL_DISCLOSURE_TITLE'						=> 'Append Disclosure Message to Every Email',
-	'LBL_DISCLOSURE_TEXT_TITLE'					=> 'Disclosure Contents',
-	'LBL_DISCLOSURE_TEXT_SAMPLE'				=> 'NOTICE: This email message is for the sole use of the intended recipient(s) and may contain confidential and privileged information. Any unauthorized review, use, disclosure, or distribution is prohibited. If you are not the intended recipient, please destroy all copies of the original message and notify the sender so that our address record can be corrected. Thank you.',
-	
+
 	'LBL_EMAIL_DEFAULT_CHARSET'					=> 'Compose email messages in this character set',
 	'LBL_EMAIL_DEFAULT_EDITOR'					=> 'Compose email using this client',
 	'LBL_EMAIL_DEFAULT_DELETE_ATTACHMENTS'		=> 'Delete related notes & attachments with deleted Emails',
@@ -104,7 +96,6 @@ $mod_strings = array (
 	'LBL_EXCHANGE_SMTPPORT'					=> 'Exchange Server Port',
 	'LBL_EXCHANGE_SMTPSERVER'				=> 'Exchange Server',
 	'LBL_EMAIL_LINK_TYPE'				=> 'Email Client',
-    'LBL_EMAIL_LINK_TYPE_HELP'			=> '<b>SuiteCRM Mail Client:</b> Send emails using the email client in the SuiteCRM application.<br><b>External Mail Client:</b> Send email using an email client outside of the SuiteCRM application, such as Microsoft Outlook.',
 	'LBL_MARKETING_ID'							=> 'Marketing Id',
     'LBL_MODULE_ID'                             => 'EmailMan',
 	'LBL_MODULE_NAME'							=> 'Email Settings',
@@ -114,9 +105,7 @@ $mod_strings = array (
 	'LBL_NOTIFY_FROMADDRESS' 					=> '"From" Address:',
 	'LBL_NOTIFY_FROMNAME' 						=> '"From" Name:',
 	'LBL_NOTIFY_ON'								=> 'Assignment Notifications',
-	'LBL_NOTIFY_SEND_BY_DEFAULT'				=> 'Send notifications to new users',
 	'LBL_NOTIFY_TITLE'							=> 'Email Options',
-	'LBL_OLD_ID'								=> 'Old Id',
 	'LBL_OUTBOUND_EMAIL_TITLE'					=> 'Outbound Email Options',
 	'LBL_RELATED_ID'							=> 'Related Id',
 	'LBL_RELATED_TYPE'							=> 'Related Type',

@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,17 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array (
 	'LBL_FROM_ADDR' => '"From" Address: ',
@@ -117,19 +113,15 @@ $mod_strings = array (
 	'LNK_NEW_EMAIL_TEMPLATE' => 'Create Email Template',
 	'LNK_EMAIL_TEMPLATE_LIST' => 'View Email Templates',
 	'LBL_TRACK_BUTTON_TITLE' =>'View Status',
-	'LBL_TRACK_BUTTON_KEY' =>'T',
 	'LBL_TRACK_BUTTON_LABEL' =>'View Status',
 	'LBL_QUEUE_BUTTON_TITLE'=>'Send Emails',
-	'LBL_QUEUE_BUTTON_KEY'=>'u',
 	'LBL_QUEUE_BUTTON_LABEL'=>'Send Emails',
 	'LBL_TEST_BUTTON_TITLE'=>'Send Test',
-	'LBL_TEST_BUTTON_KEY'=>'e',
 	'LBL_TEST_BUTTON_LABEL'=>'Send Test',
 	'LBL_COPY_AND_PASTE_CODE' => 'Or copy and paste the html below into an existing page',
 	'LBL_CHARSET_NOTICE' => 'NOTE: Please make sure that the page containing the web-to-lead form has the following lines in the &lt;head&gt; section:',
 
 	'LBL_TODETAIL_BUTTON_TITLE'=>'View Details',
-	'LBL_TODETAIL_BUTTON_KEY'=>'T',
 	'LBL_TODETAIL_BUTTON_LABEL'=>'View Details',
 
 	'LBL_DEFAULT'=>'All Target Lists',
@@ -147,7 +139,6 @@ $mod_strings = array (
 	'LBL_OPPORTUNITY_SUBPANEL_TITLE'=>'Opportunities',
 	'LBL_LOG_ENTRIES_CONTACT_TITLE'=>'Contacts Created',
 
-	'LBL_BACK_TO_CAMPAIGNS'=>'Back to Campaigns',
 	//error messages.
 	'ERR_NO_EMAIL_MARKETING'=>'There must be at least one active Email Marketing message associated with the campaign.',
 	'ERR_NO_TARGET_LISTS'=>'There must be at least one Target List associated with the campaign.',
@@ -157,7 +148,6 @@ $mod_strings = array (
 	'ERR_MESS_DUPLICATE_FOR_LIST'=>'Multiple Email Marketing messages are defined for this target list',
 	'ERR_FIX_MESSAGES'=>'Please correct the following errors before proceeding',
 
-	'LBL_TRACK_DELETE_BUTTON_KEY'=>'D',
 	'LBL_TRACK_ROI_BUTTON_LABEL' =>'View ROI',
 	'LBL_TRACK_DELETE_BUTTON_TITLE'=>'Delete Test Entries',
 	'LBL_TRACK_DELETE_BUTTON_LABEL'=>'Delete Test Entries',
@@ -228,7 +218,7 @@ $mod_strings = array (
 	'LBL_WIZARD_BUDGET_MESSAGE' => 'Enter the budget to calculate the return on investment (ROI)',
 	'LBL_WIZARD_SUBSCRIPTION_MESSAGE' => 'Each newsletter must have three target lists (Subscription, Unsubscription, and Test). You can assign an existing target list. If not, an empty target list will be created when you save the newsletter.',
 	'LBL_WIZARD_TARGET_MESSAGE1' => 'Select or create a target list for use with your campaign. This list will be used while sending emails with your marketing messages.',
-	'LBL_WIZARD_TARGET_MESSAGE2' => 'Create New Target:',
+	'LBL_WIZARD_TARGET_MESSAGE2' => 'Create New Target List:',
 	'LBL_WIZARD_TRACKER_MESSAGE' => 'Define a tracker URL here to use with this campaign. You must enter both the name and the URL to create the tracker.',
 	'LBL_WIZARD_MARKETING_MESSAGE' => 'Fill out the form below to create an email instance for your newsletter. This will allow you to specify the information regarding when and how your newsletter should be distributed.',
 	'LBL_WIZARD_SENDMAIL_MESSAGE' => 'This is the last step in the process. Select whether you wish to send out a test email, schedule your newsletter for distribution, or save the changes and proceed to the summary page.',
@@ -349,7 +339,6 @@ $mod_strings = array (
 	'LBL_SCHEDULER_NAME' =>   'Scheduler',
 	'LBL_SCHEDULER_STATUS' =>   'Status',
 	'LBL_MARKETING_CHECK1_GOOD' => 'Email marketing components detected.',
-	'LBL_MARKETING_CHECK1_BAD'  => 'No Email marketing components detected, you will need to create one to mail out a campaign.',
 	'LBL_MARKETING_CHECK2_GOOD' => 'Target lists detected.',
 	'LBL_MARKETING_CHECK2_BAD'  => 'No target lists detected, you will need to create one from desired campaign screen.',
 	'LBL_EMAIL_SETUP_WIZ' => 'Launch Email Setup',
@@ -478,7 +467,6 @@ $mod_strings = array (
 	'LBL_INSERT_VARIABLE_SUBJECT_BTN'	=> 'Insert Variable',
 	'LBL_EMAIL_VARIABLES'	=> 'Email Variables',
 	'LBL_SAVE' => 'Save',
-	'LBL_EMAIL_TEMPLATE_TITLE' => 'Email Template Details',
 	'LBL_SAVE_TEMPLATE_BTN' => 'Save',
 	'LBL_CREATE_TEMPLATE_BTN' => 'Create',
 	'LBL_EDIT_TEMPLATE_BTN' => 'Edit',
@@ -496,11 +484,10 @@ $mod_strings = array (
 	'LBL_CHOOSE_TARGETS' => 'Choose Targets',
 	'LBL_CAMPAIGN_DETAILS_AND_CONDITIONS' => 'Campaign Details and Conditions',
 	'LBL_OPEN_IN_NEW_WINDOW' => 'Open in new window..',
-	'LBL_OVERWRITE_TEMPLATE_CONFIRM_DIALOG' => 'Do you wish to overwrite the selected template? Select "Cancel" to continue without saving.',
 	'LBL_CREATE_MARKETING_RECORD' => 'Next',
 	'LBL_NO_TEMPLATE_SELECTED' => 'Email Template not selected',
 	'LBL_SELECT_TEMPLATE' => 'Templates',
-	'LBL_WIZARD_ADD_TARGET' => 'Add Existing Targets:',
+	'LBL_WIZARD_ADD_TARGET' => 'Add Existing Target List:',
 	'LBL_CLICK_TO_ADD' => 'Click the template item(s) to add.',
 	'LBL_CANCEL' => 'Cancel',
 	'LBL_EMPTY_SUBJECT' => 'The Email Subject is blank. Are you sure you wish to continue?',
@@ -514,7 +501,6 @@ $mod_strings = array (
 		'LBL_STEP_INFO_EMAIL_TEMPLATE' => 'Please select an email template or create a new email template.',
 	'LBL_STEP_INFO_MARKETING' => 'Please choose the email accounts.',
 	'LBL_STEP_INFO_BUDGET' => 'Enter the budget to calculate the return on investment (ROI).',
-	'LBL_EMAIL_TRACKERS' => 'Each campaign must have at least three target lists (Subscription, Unsubscription, and Test). If a list is not specified, an empty target list will be created when you click next.',
 	'LBL_NO_SUBJECT' => 'The selected email template doesn\'t have a subject',
 	'LBL_NO_HTML_BODY_CONTENTS' => 'The selected email template does not have a html body',
 	'LBL_NO_SELECTED_TEMPLATE' => 'No selected template!',

@@ -2093,9 +2093,8 @@ class SugarBean
 
             if ($def['type'] == 'html' || $def['type'] == 'longhtml') {
                 $this->$key = SugarCleaner::cleanHtml($this->$key, true);
-            } elseif ((strpos($type, 'char') !== false ||
-                    strpos($type, 'text') !== false ||
-                    $type == 'enum') &&
+            } elseif (
+                (strpos($type, 'char') !== false || strpos($type, 'text') !== false || $type == 'enum') &&
                 !empty($this->$key)
             ) {
                 $this->$key = SugarCleaner::cleanHtml($this->$key);

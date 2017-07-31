@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,17 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description: Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array (
 	'LBL_ADD_ANOTHER_FILE'		=> 'Add Another File',
@@ -77,8 +73,6 @@ $mod_strings = array (
 	'LBL_SHOW_ALT_TEXT'			=> 'Show Plain Text',
 	'LBL_SUBJECT'				=> 'Subject:',
     'LBL_SUGAR_DOCUMENT'        => 'Document',
-	'LBL_TEAMS'					=> 'Teams:',
-	'LBL_TEAMS_LINK'			=> 'Teams',
 	'LBL_TEXT_BODY'				=> 'Text Body',
 	'LBL_USERS'					=> 'Users',
 
@@ -101,7 +95,6 @@ $mod_strings = array (
 	'LNK_MY_ARCHIVED_LIST'		=> 'My Archives',
 	'LNK_MY_DRAFTS'				=> 'My Drafts',
 	'LNK_MY_INBOX'				=> 'My Email',
-	'LBL_LIST_BASE_MODULE'		=> 'Base Module:',
     'LBL_TEXT_ONLY'             => 'Text Only',
     'LBL_SEND_AS_TEXT'          => 'Send Text Only',
     'LBL_ACCOUNT'               => 'Account',
@@ -111,14 +104,12 @@ $mod_strings = array (
     'LBL_CREATED_BY'=>'Created By',
     'LBL_FROM_ADDRESS'=>'From Address',
     'LBL_PUBLISHED'=>'Published',
-    'LBL_ACTIVITIES_REPORTS' 	=> 'Activities Report',
     'LNK_VIEW_MY_INBOX' => 'View My Email',
 	'LBL_ASSIGNED_TO_ID' => 'Assigned To',
 	'LBL_EDIT_LAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
 	'LBL_SELECT' => 'Select' /*for 508 compliance fix*/,
 	'LBL_ID_FF_CLEAR' => 'Clear' /*for 508 compliance fix*/,
     'LBL_TYPE' => 'Type',
-    'LBL_EDIT_BUTTON_TITLE_MOZAIK' => 'RWD Edit',
-	'LBL_WIDTH' => 'Width default',
+	'LBL_WIDTH' => 'Width Default',
 );
 ?>
