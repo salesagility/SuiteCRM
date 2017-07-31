@@ -182,6 +182,7 @@ class SugarBean
      * @var string $object_name
      */
     public $object_name = '';
+
     /** Set this to true if you query contains a sub-select and bean is converting both select statements
      * into count queries.
      * @var boolean $ungreedy_count
