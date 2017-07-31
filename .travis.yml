@@ -23,8 +23,7 @@ before_script:
   - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
   # configure apache virtual hosts
-  - sudo chown www-data:root $(pwd) -R
-  - sudo chmod 776 $(pwd) -R
+  - ls -al
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place ./build/travis-ci-apache
   - sudo cp -f ./build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
   - sudo service apache2 restart
@@ -35,7 +34,7 @@ before_script:
   - composer install
 script:
   # Install SuiteCRM Using Acceptance Test
-  - ./vendor/bin/codecept run -f install --env browser-stack-hub,browser-stack-local,browser-stack-chrome-fhd,travis-ci-hub --debug
+  - sudo ./vendor/bin/codecept run -f install --env browser-stack-hub,browser-stack-local,browser-stack-chrome-fhd,travis-ci-hub --debug
 branches:
   only:
     - master
