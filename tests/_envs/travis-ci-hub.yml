@@ -3,4 +3,4 @@ modules:
     - \SuiteCRM\Test\Driver\WebDriver
   config:
     \SuiteCRM\Test\Driver\WebDriver:
-      url: "http://travishost/"
+      url: "http://127.0.0.1/"
