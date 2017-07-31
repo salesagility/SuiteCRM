@@ -9,14 +9,14 @@
     "vendor-dir": "vendor"
   },
   "require": {
-    "browserstack/browserstack-local": "^1.1"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",
     "mikey179/vfsStream": "1.4.*",
     "codeception/codeception": "^2.0",
     "fzaninotto/Faker": "^1.6",
-    "jeroendesloovere/vcard": "v1.5"
+    "jeroendesloovere/vcard": "v1.5",
+    "browserstack/browserstack-local": "dev-master"
   },
   "scripts": {},
   "prefer-stable": true,

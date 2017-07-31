@@ -3,16 +3,11 @@ modules:
     - \SuiteCRM\Test\Driver\WebDriver
   config:
     \SuiteCRM\Test\Driver\WebDriver:
-      host: "hub-cloud.browserstack.com"
-      port: "80"
-      browser: chrome
       width: 1920
       height: 1080
       capabilities:
-        'browserstack.user': 'username'
-        'browserstack.key' : 'key'
         'os': 'Windows'
         'os_version': '10'
-        'browser': 'Edge'
-        'browser_version': '14.0'
+        'browser': 'IE'
+        'browser_version': '11.0'
         'resolution': '1920x1080'

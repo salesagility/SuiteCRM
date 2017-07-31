@@ -3,6 +3,7 @@
 namespace SuiteCRM\Test\Driver;
 
 use Helper\WebDriverHelper;
+use SuiteCRM\Test\BrowserStack\Local;
 
 class WebDriver extends \Codeception\Module\WebDriver
 {
@@ -19,7 +20,6 @@ class WebDriver extends \Codeception\Module\WebDriver
         }
 
         parent::_initialize();
-
     }
 
     /**
@@ -28,11 +28,8 @@ class WebDriver extends \Codeception\Module\WebDriver
     protected function isBrowserStackEnabled()
     {
         $webDriverHelper = new WebDriverHelper($this->moduleContainer, $this->_getConfig());
-        if(empty($webDriverHelper->getBrowserStackUsername()) ||empty($webDriverHelper->getBrowserStackAccessKey())) {
-            return false;
-        } else {
-            return true;
-        }
+
+        return (!empty($webDriverHelper->getBrowserStackUsername()) || !empty($webDriverHelper->getBrowserStackAccessKey()));
     }
 
     /**
@@ -40,14 +37,9 @@ class WebDriver extends \Codeception\Module\WebDriver
      */
     protected function isBrowserStackLocalEnabled()
     {
-        if(
+        return
             array_key_exists('browserstack.local', $this->config['capabilities']) &&
-            $this->config['capabilities']['browserstack.local']
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+            $this->config['capabilities']['browserstack.local'];
     }
 
     protected function configureBrowserStack()
@@ -57,24 +49,39 @@ class WebDriver extends \Codeception\Module\WebDriver
         $this->config['capabilities']['browserstack.key'] = $webDriverHelper->getBrowserStackAccessKey();
 
         if($this->isBrowserStackLocalEnabled()) {
-            $bs_local_args = array("key" => $this->config["capabilities"]["browserstack.key"]);
-            $this->browserStackLocal = new \BrowserStack\Local();
-            $this->browserStackLocal->start($bs_local_args);
+            $bs_local_args = array(
+                "key" => $this->config["capabilities"]["browserstack.key"],
+                "v" => true,
+                "force" => true,
+                "forcelocal" => true,
+            );
+
+            $this->browserStackLocal = new Local();
+            try {
+                $this->browserStackLocal->start($bs_local_args);
+            } catch (\BrowserStack\LocalException $exception) {
+                echo $exception->getMessage();
+            }
+            echo $this->browserStackLocal->isRunning();
         }
     }
-
 
     protected function initialWindowSize()
     {
         $config = $this->_getConfig();
         $width =  $config['width'];
         $height = $config['height'];
-        $this->resizeWindow($width, $height);
+        // Don't resize window for browser stack instead maximize
+        if($this->isBrowserStackEnabled()) {
+            $this->maximizeWindow();
+        }  else {
+            $this->resizeWindow($width, $height);
+        }
     }
 
     public function _afterSuite() {
         parent::_afterSuite();
-        if ($this->browserStackLocal) {
+        if ($this->isBrowserStackLocalEnabled()) {
             $this->browserStackLocal->stop();
         }
     }

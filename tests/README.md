@@ -325,3 +325,56 @@ codecept run acceptance --env selenium-hub,selenium-xga
 </pre>
 
 **Please note:** that the SuiteCRM automated test framework uses **height** and **width** values to define the window size instead of the window_size. window_size is ignored by the automated test framework.
+
+
+### Browser Stack Environment
+
+The SuiteCRM Automated Test Framework can run on browser stack. It requires that you have an account with browser stack that enables automated testing. You also need to configure the testing framework with your username and access key. You can get your details from [automate](https://www.browserstack.com/automate) menu item.
+
+
+To configure using environment variables (bash):
+<pre>
+export BROWSERSTACK_USERNAME=<Username>
+export BROWSERSTACK_ACCESS_KEY=<Key>
+</pre>
+
+
+To configure using environment variables (Command Prompt):
+<pre>
+set BROWSERSTACK_USERNAME=<Username>
+set BROWSERSTACK_ACCESS_KEY=<Key>
+</pre>
+
+
+To run the test framework with browser stack. You need to use the --env browser-stack-hub: 
+
+<pre>
+codecept run demo  --env browser-stack-hub
+<pre>
+
+
+#### Browser stack local
+
+When you need to test a application that resides on a private server, You will need to run the browser-stack-local env option:
+
+<pre>
+codecept run demo  --env browser-stack-hub,browser-stack-local
+<pre>
+
+
+#### Screen Resolutions / Devices
+
+There are also different configurations for each target device we test for:
+
+- browser-stack-chrome-fhd (1920x1080)
+- browser-stack-edge-fhd (1920x1080)
+- browser-stack-firefox-fhd (1920x1080)
+- browser-stack-ie-fhd (1920x1080)
+- browser-stack-safari-fhd (1920x1080)
+- browser-stack-iphone-6 (375x667)
+- browser-stack-ipad-2 (768x1024)
+
+
+<pre>
+codecept run demo --env browser-stack-hub,browser-stack-local,browser-stack-chrome-fhd
+<pre>
