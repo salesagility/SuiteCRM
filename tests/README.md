@@ -359,7 +359,7 @@ When you need to test a application that resides on a private server, You will n
 
 <pre>
 codecept run demo  --env browser-stack-hub,browser-stack-local
-<pre>
+</pre>
 
 
 #### Screen Resolutions / Devices
@@ -377,4 +377,4 @@ There are also different configurations for each target device we test for:
 
 <pre>
 codecept run demo --env browser-stack-hub,browser-stack-local,browser-stack-chrome-fhd
-<pre>
+</pre>
