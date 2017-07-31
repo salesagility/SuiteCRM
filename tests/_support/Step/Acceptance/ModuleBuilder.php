@@ -39,7 +39,7 @@ class ModuleBuilder extends Administration
 
             // Create new module
             $I->click('New Module');
-            $I->waitForElement('[name="label"]');
+            $I->waitForElement('[name="label"]', 120);
             $I->fillField(['name' => 'name'], $moduleName);
             $I->fillField(['name' => 'label'], $moduleName);
             $I->checkOption('[name=importable]');

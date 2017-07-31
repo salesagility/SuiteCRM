@@ -36,7 +36,7 @@ class AcceptanceTester extends \Codeception\Actor
         $I->fillField('#user_name', $username);
         $I->fillField('#user_password', $password);
         $I->click('Log In');
-        $I->waitForElementNotVisible('#loginform');
+        $I->waitForElementNotVisible('#loginform', 120);
     }
 
     public function loginAsAdmin()

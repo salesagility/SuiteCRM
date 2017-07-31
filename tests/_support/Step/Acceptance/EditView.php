@@ -13,7 +13,7 @@ class EditView extends Tester
     public function waitForDetailViewVisible()
     {
         $I = $this;
-        $I->waitForElementVisible('#EditView');
+        $I->waitForElementVisible('#EditView', 120);
     }
 
     public function clickSaveButton()

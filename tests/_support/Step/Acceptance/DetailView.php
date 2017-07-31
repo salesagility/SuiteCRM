@@ -21,7 +21,7 @@ class DetailView extends Tester
         $I = $this;
 
         $I->click('ACTIONS', '#tab-actions');
-        $I->waitForElementVisible('#tab-actions > .dropdown-menu');
+        $I->waitForElementVisible('#tab-actions > .dropdown-menu', 120);
 
         $I->click($link, '#tab-actions > .dropdown-menu');
     }
@@ -32,7 +32,7 @@ class DetailView extends Tester
     public function waitForDetailViewVisible()
     {
         $I = $this;
-        $I->waitForElementVisible('.detail-view');
+        $I->waitForElementVisible('.detail-view', 120);
     }
 
 }
