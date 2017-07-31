@@ -35,6 +35,7 @@ before_script:
   - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
   # configure apache virtual hosts
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place ./build/travis-ci-apache
+  - cat ./build/travis-ci-apache
   - sudo cp -f ./build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
   - sudo chown travis:www-data $(pwd) -R
   - sudo service apache2 restart
