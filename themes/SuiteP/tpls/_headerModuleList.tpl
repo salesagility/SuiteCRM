@@ -87,15 +87,17 @@
                                 <ul class="dropdown-menu" role="menu">
                                 {if $name !='Home'}
                                     {if count($shortcutTopMenu.$name) > 0}
-                                       <ul>
-                                           {foreach from=$shortcutTopMenu.$name item=item}
-                                               {if $item.URL == "-"}
-                                                   <li class="mobile-action"><a></a><span>&nbsp;</span></li>
-                                               {else}
-                                                   <li class="mobile-action"><a href="{$item.URL}">{$item.LABEL}</a></li>
-                                               {/if}
-                                           {/foreach}
-                                       </ul>
+                                        <li class="mobile-current-actions" role="presentation">
+                                           <ul class="mobileCurrentTab">
+                                               {foreach from=$shortcutTopMenu.$name item=item}
+                                                   {if $item.URL == "-"}
+                                                       <li class="mobile-action"><a></a><span>&nbsp;</span></li>
+                                                   {else}
+                                                       <li class="mobile-action"><a href="{$item.URL}">{$item.LABEL}</a></li>
+                                                   {/if}
+                                               {/foreach}
+                                           </ul>
+                                        </li>
                                     {else}
                                         <li class="mobile-action"><a>{$APP.LBL_NO_SHORTCUT_MENU}</a></li>
                                     {/if}
@@ -184,7 +186,7 @@
                                     {if $foundRecents || $foundFavorits || count($shortcutTopMenu.$name) > 0}
 
                                         <ul class="dropdown-menu" role="menu">
-                                            <li>
+                                            <li class="current-module-action-links">
                                                 <ul>
                                                     {if count($shortcutTopMenu.$name) > 0}
                                                         {foreach from=$shortcutTopMenu.$name item=item}
@@ -206,7 +208,7 @@
                                                     {counter name="submoduleRecentRecordsTotal" print=false}
                                                 {/if}
                                             {/foreach}
-                                                <li>
+                                                <li class="current-module-recent-links">
                                                     <ul>
                                                         {* when records are found for the current submodule show the first 3 records *}
                                                         {counter start=0 name="submoduleRecentRecords" assign="submoduleRecentRecords"  print=false}
@@ -237,7 +239,7 @@
                                                     {counter name="submoduleFavoriteRecordsTotal" print=false}
                                                 {/if}
                                             {/foreach}
-                                            <li>
+                                            <li class="current-module-favorite-links">
                                                 <ul>
                                                     {* when records are found for the current submodule show the first 3 records *}
                                                     {counter start=0 name="submoduleFavoriteRecords" assign="submoduleFavoriteRecords" print=false}
