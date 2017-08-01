@@ -119,7 +119,7 @@ class InstallTester extends \Codeception\Actor
 
 
         $I->click('Next');
-        $I->see('Install');
+        $I->waitForText('Install', 120);
     }
 
     /**
