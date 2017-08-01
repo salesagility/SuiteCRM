@@ -5,6 +5,11 @@ use JeroenDesloovere\VCard\VCard;
 
 class PersonModuleCest
 {
+    /**
+     * @var string $lastView helps the test skip some repeated tests in order to make the test framework run faster at the
+     * potential cost of being accurate and reliable
+     */
+    protected $lastView;
 
     /**
      * @var Generator $fakeData
@@ -63,6 +68,8 @@ class PersonModuleCest
             \Page\PersonModule::$NAME,
             \SuiteCRM\Enumerator\SugarObjectType::person
         );
+
+        $this->lastView = 'ModuleBuilder';
     }
 
     /**
@@ -91,6 +98,7 @@ class PersonModuleCest
         $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
 
         $listView->waitForListViewVisible();
+        $this->lastView = 'ListView';
     }
 
     /**
@@ -113,15 +121,17 @@ class PersonModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create Person Test Module Record');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
+        if($this->lastView !== 'ListView') {
+            $I->amOnUrl(
+                $webDriverHelper->getInstanceURL()
+            );
 
-        $I->loginAsAdmin();
+            $I->loginAsAdmin();
 
-        // Go to Person Test Module
-        $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
-        $listView->waitForListViewVisible();
+            // Go to Person Test Module
+            $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
+            $listView->waitForListViewVisible();
+        }
 
         // Select create Person Test Module form the current menu
         $navigationBar->clickCurrentMenuItem('Create ' . \Page\PersonModule::$NAME);
@@ -157,12 +167,14 @@ class PersonModuleCest
         $editView->clickSaveButton();
 
         $detailView->waitForDetailViewVisible();
+        $this->lastView = 'DetailView';
     }
 
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\DetailView $detailView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to view the record by selecting it in the list view
@@ -171,6 +183,7 @@ class PersonModuleCest
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\DetailView $detailView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Select Record from list view');
@@ -199,6 +212,8 @@ class PersonModuleCest
         $listView->wait(1);
         $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickNameLink($name);
+        $detailView->waitForDetailViewVisible();
+        $this->lastView = 'DetailView';
     }
 
     /**
@@ -220,32 +235,34 @@ class PersonModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Edit Person Test Module Record from detail view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
+        if($this->lastView !== 'DetailView') {
+            $I->amOnUrl(
+                $webDriverHelper->getInstanceURL()
+            );
 
-        $I->loginAsAdmin();
+            $I->loginAsAdmin();
 
-        // Go to Person Test Module
-        $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
-        $listView->waitForListViewVisible();
+            // Go to Person Test Module
+            $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
+            $listView->waitForListViewVisible();
 
-        // Select record from list view
-        $listView->clickFilterButton();
-        $listView->click('Quick Filter');
-        $this->fakeData->seed($this->fakeDataSeed);
-        $name = $this->fakeData->title;
-        $name .= ' ';
-        $this->fakeData->seed($this->fakeDataSeed);
-        $name = $this->fakeData->firstName;
-        $name .= ' ';
-        $this->fakeData->seed($this->fakeDataSeed);
-        $name .= $this->fakeData->lastName;
-        $listView->fillField('#search_name_basic', $name);
-        $listView->click('Search', '.submitButtons');
-        $listView->wait(1);
-        $this->fakeData->seed($this->fakeDataSeed);
-        $listView->clickNameLink($name);
+            // Select record from list view
+            $listView->clickFilterButton();
+            $listView->click('Quick Filter');
+            $this->fakeData->seed($this->fakeDataSeed);
+            $name = $this->fakeData->title;
+            $name .= ' ';
+            $this->fakeData->seed($this->fakeDataSeed);
+            $name = $this->fakeData->firstName;
+            $name .= ' ';
+            $this->fakeData->seed($this->fakeDataSeed);
+            $name .= $this->fakeData->lastName;
+            $listView->fillField('#search_name_basic', $name);
+            $listView->click('Search', '.submitButtons');
+            $listView->wait(1);
+            $this->fakeData->seed($this->fakeDataSeed);
+            $listView->clickNameLink($name);
+        }
 
         // Edit Record
         $detailView->clickActionMenuItem('Edit');
@@ -254,6 +271,7 @@ class PersonModuleCest
         $editView->click('Save');
 
         $detailView->waitForDetailViewVisible();
+        $this->lastView = "DetailView";
     }
 
     /**
@@ -275,33 +293,35 @@ class PersonModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Duplicate Person Test Module Record from detail view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
-        $I->loginAsAdmin();
+        if ($this->lastView !== 'DetailView') {
+            $I->amOnUrl(
+                $webDriverHelper->getInstanceURL()
+            );
 
-        // Go to Person Test Module
-        $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
-        $listView->waitForListViewVisible();
+            $I->loginAsAdmin();
 
-        // Select record from list view
-        $listView->clickFilterButton();
-        $listView->click('Quick Filter');
-        $this->fakeData->seed($this->fakeDataSeed);
-        $name = $this->fakeData->title;
-        $name .= ' ';
-        $this->fakeData->seed($this->fakeDataSeed);
-        $name = $this->fakeData->firstName;
-        $name .= ' ';
-        $this->fakeData->seed($this->fakeDataSeed);
-        $name .= $this->fakeData->lastName;
-        $listView->fillField('#search_name_basic', $name);
-        $listView->click('Search', '.submitButtons');
-        $listView->wait(1);
-        $this->fakeData->seed($this->fakeDataSeed);
-        $listView->clickNameLink($name);
+            // Go to Person Test Module
+            $navigationBar->clickAllMenuItem(\Page\PersonModule::$NAME);
+            $listView->waitForListViewVisible();
 
+            // Select record from list view
+            $listView->clickFilterButton();
+            $listView->click('Quick Filter');
+            $this->fakeData->seed($this->fakeDataSeed);
+            $name = $this->fakeData->title;
+            $name .= ' ';
+            $this->fakeData->seed($this->fakeDataSeed);
+            $name = $this->fakeData->firstName;
+            $name .= ' ';
+            $this->fakeData->seed($this->fakeDataSeed);
+            $name .= $this->fakeData->lastName;
+            $listView->fillField('#search_name_basic', $name);
+            $listView->click('Search', '.submitButtons');
+            $listView->wait(1);
+            $this->fakeData->seed($this->fakeDataSeed);
+            $listView->clickNameLink($name);
+        }
         // Edit Record
         $detailView->clickActionMenuItem('Duplicate');
 
@@ -367,8 +387,10 @@ class PersonModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
+        $this->lastView = 'ListView';
     }
 
+    /**
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
@@ -434,6 +456,7 @@ class PersonModuleCest
         $I->click('#import_vcard_button', '.import-vcard');
 
         $detailView->waitForDetailViewVisible();
+        $this->lastView = ' DetailView';
         $detailView->see($firstname.' '.$lastname, '.module-title-text');
 
         $I->deleteFile($fileDir.$fileName);
