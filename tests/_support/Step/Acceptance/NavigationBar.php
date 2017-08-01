@@ -14,8 +14,8 @@ class NavigationBar extends  Tester
     public function clickHome()
     {
         $I = $this;
-        $config = $I->getConfig();
-        $breakpoint = Design::getBreakpointString($config['width']);
+        $design = new Design($I);
+        $breakpoint = $design->getBreakpointString();
         switch ($breakpoint)
         {
             // The home button is only available on the large desktop
@@ -46,8 +46,8 @@ class NavigationBar extends  Tester
     public function clickUserMenuItem($link)
     {
         $I = $this;
-        $config = $I->getConfig();
-        $breakpoint = Design::getBreakpointString($config['width']);
+        $design = new Design($I);
+        $breakpoint = $design->getBreakpointString();
         switch ($breakpoint)
         {
             case DesignBreakPoint::lg:
@@ -85,8 +85,8 @@ class NavigationBar extends  Tester
     public function clickAllMenuItem($link)
     {
         $I = $this;
-        $config = $I->getConfig();
-        $breakpoint = Design::getBreakpointString($config['width']);
+        $design = new Design($I);
+        $breakpoint = $design->getBreakpointString();
         switch ($breakpoint)
         {
             case DesignBreakPoint::lg:
@@ -136,8 +136,8 @@ class NavigationBar extends  Tester
     public function clickCurrentMenuItem($link)
     {
         $I = $this;
-        $config = $I->getConfig();
-        $breakpoint = Design::getBreakpointString($config['width']);
+        $design = new Design($I);
+        $breakpoint = $design->getBreakpointString();
         switch ($breakpoint)
         {
             case DesignBreakPoint::lg:

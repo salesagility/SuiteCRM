@@ -15,11 +15,6 @@ use SuiteCRM\Enumerator\DatabaseDriver;
  */
 class WebDriverHelper extends \Codeception\Module
 {
-    /**
-     * @var Metadata $metadata
-     */
-    public $metadata;
-
     public function getConfig()
     {
         $webDriver = $this->moduleContainer->getModule('\SuiteCRM\Test\Driver\WebDriver');
@@ -264,4 +259,5 @@ class WebDriverHelper extends \Codeception\Module
     }
 
     // Add other methods to get environmental variables here...
+
 }
