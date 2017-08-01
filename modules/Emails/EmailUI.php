@@ -372,7 +372,7 @@ eoq;
     	return $this->generateComposePackageForQuickCreate($a_composeData,$emailLinkUrl, $lazyLoad);
     }
 
-    function populateComposeViewFields($bean = null, $emailField = 'email1')
+    function populateComposeViewFields($bean = null, $emailField = 'email1', $composeData = null)
     {
         global $focus;
         $myBean = $focus;
@@ -390,7 +390,10 @@ eoq;
 		// focus is set?
 		if(!is_object($myBean)) {
 			$GLOBALS['log']->warn('incorrect bean');
-		} else if(property_exists($myBean, $emailField)) {
+		} elseif (!empty($composeData)){
+            $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $composeData['parent_type'] . '" ' .
+                'data-record-id="' . $composeData['parent_id'] . '" data-module-name="' . $composeData['parent_name'] . '"  data-email-address="' . $composeData['to_addrs'] . '">';
+        } elseif(property_exists($myBean, $emailField)) {
 			$emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
 				'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . $myBean->{$emailField} . '">';
 		} else {
