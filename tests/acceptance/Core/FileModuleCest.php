@@ -4,6 +4,11 @@ use Faker\Generator;
 
 class FileModuleCest
 {
+    /**
+     * @var string $lastView helps the test skip some repeated tests in order to make the test framework run faster at the
+     * potential cost of being accurate and reliable
+     */
+    protected $lastView;
 
     /**
      * @var Generator $fakeData
@@ -20,7 +25,7 @@ class FileModuleCest
      */
     public function _before(AcceptanceTester $I)
     {
-        if(!$this->fakeData) {
+        if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
             $this->fakeDataSeed = rand(0, 2048);
         }
@@ -62,6 +67,8 @@ class FileModuleCest
             \Page\FileModule::$NAME,
             \SuiteCRM\Enumerator\SugarObjectType::file
         );
+
+        $this->lastView = 'ModuleBuilder';
     }
 
     /**
@@ -91,6 +98,7 @@ class FileModuleCest
         $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
 
         $listView->waitForListViewVisible();
+        $this->lastView = 'ListView';
     }
 
     /**
@@ -113,16 +121,18 @@ class FileModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create File Test Module Record');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
 
-        $I->loginAsAdmin();
+        if ($this->lastView !== 'ListView') {
+            $I->amOnUrl(
+                $webDriverHelper->getInstanceURL()
+            );
 
-        // Go to File Test Module
-        $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
-        $listView->waitForListViewVisible();
+            $I->loginAsAdmin();
 
+            // Go to File Test Module
+            $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
+            $listView->waitForListViewVisible();
+        }
         // Select create File Test Module form the current menu
         $navigationBar->clickCurrentMenuItem('Create ' . \Page\FileModule::$NAME);
 
@@ -138,6 +148,7 @@ class FileModuleCest
         // TODO: other fields
         $editView->clickSaveButton();
         $detailview->waitForDetailViewVisible();
+        $this->lastView = 'DetailView';
         $detailview->see($fileName, '#uploadfile');
         
         $I->deleteFile($fileDir.$fileName);
@@ -147,6 +158,7 @@ class FileModuleCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\DetailView $detailView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to view the record by selecting it in the list view
@@ -155,28 +167,35 @@ class FileModuleCest
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\DetailView $detailView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Select Record from list view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
+        if ($this->lastView !== 'ListView') {
+            $I->amOnUrl(
+                $webDriverHelper->getInstanceURL()
+            );
 
-        $I->loginAsAdmin();
+            $I->loginAsAdmin();
 
-        // Go to File Test Module
-        $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
-        $listView->waitForListViewVisible();
+            // Go to File Test Module
+            $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
+            $listView->waitForListViewVisible();
+
+            $this->fakeData->seed($this->fakeDataSeed);
+            $listView->clickFilterButton();
+            $listView->click('Quick Filter');
+            $this->fakeData->seed($this->fakeDataSeed);
+            $listView->fillField('#document_name_basic', $this->fakeData->lastName . '.test.txt');
+            $listView->click('Search', '.submitButtons');
+            $listView->wait(1);
+        }
 
         $this->fakeData->seed($this->fakeDataSeed);
-        $listView->clickFilterButton();
-        $listView->click('Quick Filter');
-        $this->fakeData->seed($this->fakeDataSeed);
-        $listView->fillField('#document_name_basic', $this->fakeData->lastName.'.test.txt');
-        $listView->click('Search', '.submitButtons');
-        $listView->wait(1);
-        $this->fakeData->seed($this->fakeDataSeed);
-        $listView->clickNameLink($this->fakeData->lastName.'.test.txt');
+        $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
+        $detailView->waitForDetailViewVisible();
+        $this->lastView = 'DetailView';
+
     }
 
     /**
@@ -198,26 +217,27 @@ class FileModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Edit File Test Module Record from detail view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
+        if ($this->lastView !== 'DetailView') {
+            $I->amOnUrl(
+                $webDriverHelper->getInstanceURL()
+            );
 
-        $I->loginAsAdmin();
+            $I->loginAsAdmin();
 
-        // Go to File Test Module
-        $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
-        $listView->waitForListViewVisible();
+            // Go to File Test Module
+            $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
+            $listView->waitForListViewVisible();
 
-        // Select record from list view
-        $listView->clickFilterButton();
-        $listView->click('Quick Filter');
-        $this->fakeData->seed($this->fakeDataSeed);
-        $listView->fillField('#document_name_basic', $this->fakeData->lastName.'.test.txt');
-        $listView->click('Search', '.submitButtons');
-        $listView->wait(1);
-        $this->fakeData->seed($this->fakeDataSeed);
-        $listView->clickNameLink($this->fakeData->lastName.'.test.txt');
-
+            // Select record from list view
+            $listView->clickFilterButton();
+            $listView->click('Quick Filter');
+            $this->fakeData->seed($this->fakeDataSeed);
+            $listView->fillField('#document_name_basic', $this->fakeData->lastName . '.test.txt');
+            $listView->click('Search', '.submitButtons');
+            $listView->wait(1);
+            $this->fakeData->seed($this->fakeDataSeed);
+            $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
+        }
         // Edit Record
         $detailView->clickActionMenuItem('Edit');
 
@@ -225,6 +245,7 @@ class FileModuleCest
         $editView->click('Save');
 
         $detailView->waitForDetailViewVisible();
+        $this->lastView = 'DetailView';
     }
 
     /**
@@ -246,26 +267,27 @@ class FileModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Duplicate File Test Module Record from detail view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
+        if ($this->lastView !== 'DetailView') {
+            $I->amOnUrl(
+                $webDriverHelper->getInstanceURL()
+            );
 
-        $I->loginAsAdmin();
+            $I->loginAsAdmin();
 
-        // Go to File Test Module
-        $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
-        $listView->waitForListViewVisible();
+            // Go to File Test Module
+            $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
+            $listView->waitForListViewVisible();
 
-        // Select record from list view
-        $listView->clickFilterButton();
-        $listView->click('Quick Filter');
-        $this->fakeData->seed($this->fakeDataSeed);
-        $listView->fillField('#document_name_basic', $this->fakeData->lastName.'.test.txt');
-        $listView->click('Search', '.submitButtons');
-        $listView->wait(1);
-        $this->fakeData->seed($this->fakeDataSeed);
-        $listView->clickNameLink($this->fakeData->lastName.'.test.txt');
-
+            // Select record from list view
+            $listView->clickFilterButton();
+            $listView->click('Quick Filter');
+            $this->fakeData->seed($this->fakeDataSeed);
+            $listView->fillField('#document_name_basic', $this->fakeData->lastName . '.test.txt');
+            $listView->click('Search', '.submitButtons');
+            $listView->wait(1);
+            $this->fakeData->seed($this->fakeDataSeed);
+            $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
+        }
         // Edit Record
         $detailView->clickActionMenuItem('Duplicate');
 
@@ -280,6 +302,7 @@ class FileModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
+        $this->lastView = 'ListView';
     }
 
     /**
@@ -299,30 +322,32 @@ class FileModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Delete File Test Module Record from detail view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
+        if ($this->lastView !== 'DetailView') {
+            $I->amOnUrl(
+                $webDriverHelper->getInstanceURL()
+            );
 
-        $I->loginAsAdmin();
+            $I->loginAsAdmin();
 
-        // Go to File Test Module
-        $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
-        $listView->waitForListViewVisible();
+            // Go to File Test Module
+            $navigationBar->clickAllMenuItem(\Page\FileModule::$NAME);
+            $listView->waitForListViewVisible();
 
-        // Select record from list view
-        $listView->clickFilterButton();
-        $listView->click('Quick Filter');
-        $this->fakeData->seed($this->fakeDataSeed);
-        $listView->fillField('#document_name_basic', $this->fakeData->lastName);
-        $listView->click('Search', '.submitButtons');
-        $listView->wait(1);
-        $this->fakeData->seed($this->fakeDataSeed);
-        $listView->clickNameLink($this->fakeData->lastName.'.test.txt');
-
+            // Select record from list view
+            $listView->clickFilterButton();
+            $listView->click('Quick Filter');
+            $this->fakeData->seed($this->fakeDataSeed);
+            $listView->fillField('#document_name_basic', $this->fakeData->lastName);
+            $listView->click('Search', '.submitButtons');
+            $listView->wait(1);
+            $this->fakeData->seed($this->fakeDataSeed);
+            $listView->clickNameLink($this->fakeData->lastName . '.test.txt');
+        }
         // Delete Record
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
+        $this->lastView = 'ListView';
     }
 }
