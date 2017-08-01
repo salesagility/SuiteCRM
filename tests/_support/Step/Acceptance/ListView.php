@@ -40,4 +40,10 @@ class ListView  extends Tester
         $I = $this;
         $I->waitForElementVisible('#searchDialog', 120);
     }
+
+    public function waitForFilterModalNotVisible()
+    {
+        $I = $this;
+        $I->waitForElementNotVisible('#searchDialog', 120);
+    }
 }

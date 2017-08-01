@@ -4,4 +4,3 @@ modules:
   config:
     \SuiteCRM\Test\Driver\WebDriver:
       url: "http://localhost:8080/"
-      start: false
