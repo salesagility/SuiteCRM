@@ -6,6 +6,12 @@ class IssueModuleCest
 {
 
     /**
+     * @var string $lastView helps the test skip some repeated tests in order to make the test framework run faster at the
+     * potential cost of being accurate and reliable
+     */
+    protected $lastView;
+
+    /**
      * @var Generator $fakeData
      */
     protected $fakeData;
@@ -62,6 +68,8 @@ class IssueModuleCest
             \Page\IssueModule::$NAME,
             \SuiteCRM\Enumerator\SugarObjectType::issue
         );
+
+        $this->lastView = 'ModuleBuilder';
     }
 
     /**
@@ -90,6 +98,7 @@ class IssueModuleCest
         $navigationBar->clickAllMenuItem(\Page\IssueModule::$NAME);
 
         $listView->waitForListViewVisible();
+        $this->lastView = 'ListView';
     }
 
     /**
@@ -97,6 +106,7 @@ class IssueModuleCest
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\EditView $editView
+     * @param \Step\Acceptance\DetailView $detailView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to create a record with my issue test module so that I can test
@@ -107,6 +117,7 @@ class IssueModuleCest
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\EditView $editView,
+        \Step\Acceptance\DetailView $detailView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create Issue Test Module Record');
@@ -128,12 +139,15 @@ class IssueModuleCest
         $editView->fillField('#name', $this->fakeData->name);
         $editView->fillField('#description', $this->fakeData->paragraph);
         $editView->clickSaveButton();
+        $detailView->waitForDetailViewVisible();
+        $this->lastView = 'DetailView';
     }
 
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\DetailView $detailView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to view the record by selecting it in the list view
@@ -142,6 +156,7 @@ class IssueModuleCest
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\DetailView $detailView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Select Record from list view');
@@ -164,6 +179,9 @@ class IssueModuleCest
         $listView->wait(1);
         $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickNameLink($this->fakeData->name);
+        $detailView->waitForDetailViewVisible();
+        $this->lastView = 'DetailView';
+
     }
 
     /**
@@ -185,26 +203,27 @@ class IssueModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Edit Issue Test Module Record from detail view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
+        if($this->lastView !== 'DetailView') {
+            $I->amOnUrl(
+                $webDriverHelper->getInstanceURL()
+            );
 
-        $I->loginAsAdmin();
+            $I->loginAsAdmin();
 
-        // Go to Issue Test Module
-        $navigationBar->clickAllMenuItem(\Page\IssueModule::$NAME);
-        $listView->waitForListViewVisible();
+            // Go to Issue Test Module
+            $navigationBar->clickAllMenuItem(\Page\IssueModule::$NAME);
+            $listView->waitForListViewVisible();
 
-        // Select record from list view
-        $listView->clickFilterButton();
-        $listView->click('Quick Filter');
-        $this->fakeData->seed($this->fakeDataSeed);
-        $listView->fillField('#name_basic', $this->fakeData->name);
-        $listView->click('Search', '.submitButtons');
-        $listView->wait(1);
-        $this->fakeData->seed($this->fakeDataSeed);
-        $listView->clickNameLink($this->fakeData->name);
-
+            // Select record from list view
+            $listView->clickFilterButton();
+            $listView->click('Quick Filter');
+            $this->fakeData->seed($this->fakeDataSeed);
+            $listView->fillField('#name_basic', $this->fakeData->name);
+            $listView->click('Search', '.submitButtons');
+            $listView->wait(1);
+            $this->fakeData->seed($this->fakeDataSeed);
+            $listView->clickNameLink($this->fakeData->name);
+        }
         // Edit Record
         $detailView->clickActionMenuItem('Edit');
 
@@ -212,6 +231,7 @@ class IssueModuleCest
         $editView->click('Save');
 
         $detailView->waitForDetailViewVisible();
+        $this->lastView = 'DetailView';
     }
 
     /**
@@ -233,25 +253,27 @@ class IssueModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Duplicate Issue Test Module Record from detail view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
+        if($this->lastView !== 'DetailView') {
+            $I->amOnUrl(
+                $webDriverHelper->getInstanceURL()
+            );
 
-        $I->loginAsAdmin();
+            $I->loginAsAdmin();
 
-        // Go to Issue Test Module
-        $navigationBar->clickAllMenuItem(\Page\IssueModule::$NAME);
-        $listView->waitForListViewVisible();
+            // Go to Issue Test Module
+            $navigationBar->clickAllMenuItem(\Page\IssueModule::$NAME);
+            $listView->waitForListViewVisible();
 
-        // Select record from list view
-        $listView->clickFilterButton();
-        $listView->click('Quick Filter');
-        $this->fakeData->seed($this->fakeDataSeed);
-        $listView->fillField('#name_basic', $this->fakeData->name);
-        $listView->click('Search', '.submitButtons');
-        $listView->wait(1);
-        $this->fakeData->seed($this->fakeDataSeed);
-        $listView->clickNameLink($this->fakeData->name);
+            // Select record from list view
+            $listView->clickFilterButton();
+            $listView->click('Quick Filter');
+            $this->fakeData->seed($this->fakeDataSeed);
+            $listView->fillField('#name_basic', $this->fakeData->name);
+            $listView->click('Search', '.submitButtons');
+            $listView->wait(1);
+            $this->fakeData->seed($this->fakeDataSeed);
+            $listView->clickNameLink($this->fakeData->name);
+        }
 
         // Edit Record
         $detailView->clickActionMenuItem('Duplicate');
@@ -267,6 +289,7 @@ class IssueModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
+        $this->lastView = 'ListView';
     }
 
     /**
@@ -286,30 +309,32 @@ class IssueModuleCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Delete Issue Test Module Record from detail view');
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
+        if($this->lastView !== 'DetailView') {
+            $I->amOnUrl(
+                $webDriverHelper->getInstanceURL()
+            );
 
-        $I->loginAsAdmin();
+            $I->loginAsAdmin();
 
-        // Go to Issue Test Module
-        $navigationBar->clickAllMenuItem(\Page\IssueModule::$NAME);
-        $listView->waitForListViewVisible();
+            // Go to Issue Test Module
+            $navigationBar->clickAllMenuItem(\Page\IssueModule::$NAME);
+            $listView->waitForListViewVisible();
 
-        // Select record from list view
-        $listView->clickFilterButton();
-        $listView->click('Quick Filter');
-        $this->fakeData->seed($this->fakeDataSeed);
-        $listView->fillField('#name_basic', $this->fakeData->name);
-        $listView->click('Search', '.submitButtons');
-        $listView->wait(1);
-        $this->fakeData->seed($this->fakeDataSeed);
-        $listView->clickNameLink($this->fakeData->name);
-
+            // Select record from list view
+            $listView->clickFilterButton();
+            $listView->click('Quick Filter');
+            $this->fakeData->seed($this->fakeDataSeed);
+            $listView->fillField('#name_basic', $this->fakeData->name);
+            $listView->click('Search', '.submitButtons');
+            $listView->wait(1);
+            $this->fakeData->seed($this->fakeDataSeed);
+            $listView->clickNameLink($this->fakeData->name);
+        }
         // Delete Record
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
+        $this->lastView = 'ListView';
     }
 }
