@@ -143,21 +143,25 @@ class NavigationBar extends  Tester
             case DesignBreakPoint::lg:
                 $I->click('//*[@id="toolbar"]/ul/li[2]/span[2]/a');
                 $I->waitForElementVisible('#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav ul.dropdown-menu > li.current-module-action-links > ul');
+                $I->waitForText($link, 30, '#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav ul.dropdown-menu > li.current-module-action-links > ul');
                 $I->click($link, '#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav ul.dropdown-menu > li.current-module-action-links > ul');
                 break;
             case DesignBreakPoint::md:
                 $I->click('div#mobileheader > div#modulelinks > .modulename > a');
                 $I->waitForElementVisible('div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
+                $I->waitForText($link, 30, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
                 $I->click($link, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
                 break;
             case DesignBreakPoint::sm:
                 $I->click('div#mobileheader > div#modulelinks > .modulename > a');
                 $I->waitForElementVisible('#modulelinks > ul.dropdown-menu');
+                $I->waitForText($link, 30, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
                 $I->click($link, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
                 break;
             case DesignBreakPoint::xs:
                 $I->click('div#mobileheader > div#modulelinks > .modulename > a');
                 $I->waitForElementVisible('div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
+                $I->waitForText($link, 30, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
                 $I->click($link, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
                 break;
         }
