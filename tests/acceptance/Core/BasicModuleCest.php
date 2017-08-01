@@ -351,5 +351,6 @@ class BasicModuleCest
         $detailView->acceptPopup();
 
         $listView->waitForListViewVisible();
+        $this->lastView = 'ListView';
     }
 }
