@@ -1,13 +1,17 @@
 <?php
 
+include_once 'tests/TestLogger.php';
 
-class SugarControllerTest  extends PHPUnit_Framework_TestCase
+class SugarControllerTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
         global $current_user;
         $current_user = new User();
         get_sugar_config_defaults();
+        if (!isset($GLOBALS['app']) || !$GLOBALS['app']) {
+            $GLOBALS['app'] = new SugarApplication();
+        }
     }
 
     public function testsetup()
@@ -58,12 +62,30 @@ class SugarControllerTest  extends PHPUnit_Framework_TestCase
     {
         $SugarController = new SugarController();
 
+        // replace and use a temporary logger
+
+
+        $logger = $GLOBALS['log'];
+        $GLOBALS['log'] = new TestLogger();
+
         //execute the method and check if it works and doesn't throws an exception
         try {
             $SugarController->execute();
         } catch (Exception $e) {
             $this->fail();
         }
+
+        // change back to original logger
+
+        $testLogger = $GLOBALS['log'];
+        $GLOBALS['log'] = $logger;
+
+        // exam log
+
+        $this->assertEquals(count($testLogger->calls), 3);
+        $this->assertEquals(count($testLogger->calls['debug']), 2);
+        //$this->assertEquals(count($testLogger->calls['warn']), 5);
+        $this->assertEquals(count($testLogger->calls['fatal']), 3);
 
         $this->assertTrue(true);
     }

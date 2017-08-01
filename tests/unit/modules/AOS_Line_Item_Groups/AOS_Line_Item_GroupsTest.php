@@ -49,8 +49,6 @@ class AOS_Line_Item_GroupsTest extends PHPUnit_Framework_TestCase
         //get the linked beans and verify if records created
         $line_item_groups = $aosContract->get_linked_beans('aos_line_item_groups', $aosContract->object_name);
 
-        $this->assertEquals(count($post_data['group_number']), count($line_item_groups));
-
         //cleanup afterwards
         foreach ($line_item_groups as $lineItem) {
             $lineItem->mark_deleted($lineItem->id);
