@@ -425,11 +425,11 @@ class InboundEmail extends SugarBean
 
 
         usort($emailHeaders, function ($a, $b) use ($sortCRM) {  // defaults to DESC order
-            if ($a[$sortCRM] === $b[$sortCRM]) {
+            if($a[$sortCRM] === $b[$sortCRM]) {
                 return 0;
-            } elseif ($a[$sortCRM] !== $b[$sortCRM] && $a[$sortCRM] < $b[$sortCRM]) {
+            } elseif($a[$sortCRM] < $b[$sortCRM]) {
                 return 1;
-            } elseif ($a[$sortCRM] !== $b[$sortCRM]) {
+            } else {
                 return -1;
             }
 
