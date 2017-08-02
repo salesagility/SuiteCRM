@@ -576,6 +576,7 @@ class SugarBean
      * @param string $value
      * @param bool $time Should be expect time set too?
      * @return string
+     *
      * @throws \Exception
      */
     protected function parseDateDefault($value, $time = false)
