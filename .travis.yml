@@ -33,6 +33,7 @@ script:
 #  - ./vendor/bin/codecept run -f acceptance --env browser-stack-hub,browser-stack-local,browser-stack-firefox-fhd,travis-ci-hub --debug
 #  - ./vendor/bin/codecept run -f acceptance --env browser-stack-hub,browser-stack-local,browser-stack-safari-fhd,travis-ci-hub --debug
 #  - ./vendor/bin/codecept run -f acceptance --env browser-stack-hub,browser-stack-local,browser-stack-edge-fhd,travis-ci-hub --debug
+  - ./vendor/bin/codecept run -f unit --debug
   - cat suitecrm.log
   - cat sugarcrm.log
   - cat webserver.log
