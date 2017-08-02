@@ -1027,16 +1027,18 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $bean = new Contact();
         $bean->id = 'test_contact1';
         $bean->save();
-        $results = $bean->process_union_list_query(null, 'SELECT DISTINCT * FROM contacts', null);
+        $results = $bean->process_union_list_query(null, /** @lang sql */
+            'SELECT DISTINCT * FROM contacts', null);
         self::assertTrue(2 <= count($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(
-            'list' => Array (),
-            'parent_data' => Array (),
+            'list' => Array(),
+            'parent_data' => Array(),
             'row_count' => 0,
             'next_offset' => 10,
             'previous_offset' => -10,
             'current_offset' => 0,
-            'query' => 'SELECT DISTINCT * FROM contacts',
+            'query' => /** @lang sql */
+            'SELECT DISTINCT * FROM contacts',
         ), $results);
 
 
@@ -1052,13 +1054,14 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         }
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
         self::assertEquals(array(
-            'list' => Array (),
-            'parent_data' => Array (),
+            'list' => Array(),
+            'parent_data' => Array(),
             'row_count' => 0,
             'next_offset' => 10,
             'previous_offset' => -10,
             'current_offset' => 0,
-            'query' => 'SELECT DISTINCT * FROM contacts',
+            'query' => /** @lang sql */
+            'SELECT DISTINCT * FROM contacts',
         ), $results);
 
 
@@ -1081,7 +1084,8 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $GLOBALS['log']->reset();
         $bean = new Contact();
         $bean->retrieve('test_contact1');
-        $results = $bean->process_union_list_query(null, 'SELECT DISTINCT * FROM contacts', 'end');
+        $results = $bean->process_union_list_query(null, /** @lang sql */
+            'SELECT DISTINCT * FROM contacts', 'end');
         self::assertCount(2, $GLOBALS['log']->calls['fatal']);
         self::assertEquals(array(
             'list' => Array(),
@@ -1090,7 +1094,8 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             'next_offset' => 9.0,
             'previous_offset' => -11.0,
             'current_offset' => -1.0,
-            'query' => 'SELECT DISTINCT * FROM contacts',
+            'query' => /** @lang sql */
+            'SELECT DISTINCT * FROM contacts',
         ), $results);
 
     }
