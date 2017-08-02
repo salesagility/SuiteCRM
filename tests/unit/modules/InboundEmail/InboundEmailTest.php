@@ -1181,8 +1181,9 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(false, $result);
 
         //test with valid username
-        $result = $inboundEmail->deletePersonalEmailAccount($id, 'admin');
-        static::assertEquals(false, $result);
+        $result1 = $inboundEmail->deletePersonalEmailAccount($id, 'admin');
+        $result2 = $inboundEmail->deletePersonalEmailAccount($id, 'automated_tester');
+        static::assertEquals(true, $result1 || $result2);
     }
 
     public function testgetFoldersListForMailBox()
