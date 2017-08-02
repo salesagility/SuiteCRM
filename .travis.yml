@@ -6,9 +6,7 @@ php:
 #  - '7.0'
 #  - '7.1'
 matrix:
-  allow_failures:
-    - php: 5.4
-
+  fast_finish: true
 sudo: required
 dist: trusty
 services:
@@ -31,9 +29,12 @@ script:
   - ./vendor/bin/codecept run -f install --env browser-stack-hub,browser-stack-local,browser-stack-chrome-fhd,travis-ci-hub --debug
   - ./vendor/bin/codecept run -f tests/acceptance/Core/PersonModuleCest.php --env browser-stack-hub,browser-stack-local,browser-stack-chrome-fhd,travis-ci-hub --debug
   - ./vendor/bin/codecept run -f unit --debug
+
+after_script:
   - cat suitecrm.log
   - cat sugarcrm.log
   - cat webserver.log
+
 branches:
   only:
     - master
