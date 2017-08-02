@@ -1162,7 +1162,12 @@ class SugarBean
         $toEnd = strval($row_offset) == 'end';
         global $sugar_config;
         $use_count_query = false;
-        $processing_collection = $subpanel_def->isCollection();
+        if(!method_exists($subpanel_def, 'isCollection')) {
+            $GLOBALS['log']->fatal('Call to a member function isCollection() on ' . get_class($subpanel_def));
+            $processing_collection = null;
+        } else {
+            $processing_collection = $subpanel_def->isCollection();
+        }
 
         $GLOBALS['log']->debug("process_union_list_query: " . $query);
         if ($max_per_page == -1) {

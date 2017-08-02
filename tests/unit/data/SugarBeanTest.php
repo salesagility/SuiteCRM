@@ -24,6 +24,11 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     protected $db;
 
     /**
+     * @var array
+     */
+    protected $dbManagerFactoryInstances;
+
+    /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
@@ -33,10 +38,13 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $current_user = new User();
         get_sugar_config_defaults();
 
-        $this->db = DBManagerFactory::getInstance();
-
         $this->log = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
+
+        $this->dbManagerFactoryInstances = DBManagerFactory::$instances;
+        DBManagerFactory::$instances = array();
+        $this->db = DBManagerFactory::getInstance();
+
 
         if (isset($GLOBALS['reload_vardefs'])) {
             $this->env['$GLOBALS']['reload_vardefs'] = $GLOBALS['reload_vardefs'];
@@ -44,6 +52,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         if (isset($GLOBALS['dictionary'])) {
             $this->env['$GLOBALS']['dictionary'] = $GLOBALS['dictionary'];
         }
+
     }
 
     /**
@@ -60,6 +69,8 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         }
 
         $GLOBALS['log'] = $this->log;
+
+        DBManagerFactory::$instances = $this->dbManagerFactoryInstances;
     }
 
 
@@ -879,29 +890,33 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $_SESSION['show_deleted'] = 1;
         $parentBean = new SugarBeanMock();
         $subPanelDef = new aSubPanel(null, null, $parentBean);
-        try {
-            $results = SugarBean::get_union_related_list($parentBean, '', '', '', 0, -1, -1, 0, $subPanelDef);
-            self::assertTrue(false);
-        } /** @noinspection PhpUndefinedClassInspection */ catch (\PHPUnit_Framework_Exception $e) {
-            $code = $e->getCode();
-            self::assertEquals(2, $code);
-        }
-        self::assertCount(4, $GLOBALS['log']->calls['fatal']);
-        self::assertEquals(null, $results);
+        $results = SugarBean::get_union_related_list($parentBean, '', '', '', 0, -1, -1, 0, $subPanelDef);
+        self::assertCount(5, $GLOBALS['log']->calls['fatal']);
+        self::assertEquals(array(
+            'list' => array(),
+            'parent_data' => array(),
+            'row_count' => 0,
+            'next_offset' => 10,
+            'previous_offset' => -10,
+            'current_offset' => 0,
+            'query' => '',
+        ), $results);
 
 
         // test
         $GLOBALS['log']->reset();
         $subPanelDef->_instance_properties['type'] = 'collection';
-        try {
-            $results = SugarBean::get_union_related_list($parentBean, '', '', '', 0, -1, -1, 0, $subPanelDef);
-            self::assertTrue(false);
-        } /** @noinspection PhpUndefinedClassInspection */ catch (\PHPUnit_Framework_Exception $e) {
-            $code = $e->getCode();
-            self::assertEquals(2, $code);
-        }
-        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
-        self::assertEquals(null, $results);
+        $results = SugarBean::get_union_related_list($parentBean, '', '', '', 0, -1, -1, 0, $subPanelDef);
+        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+        self::assertEquals(array(
+            'list' => Array(),
+            'parent_data' => Array(),
+            'row_count' => 0,
+            'next_offset' => 10,
+            'previous_offset' => -10,
+            'current_offset' => 0,
+            'query' => '',
+        ), $results);
 
 
         // test
@@ -915,16 +930,18 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         );
         $subPanelDef->_instance_properties['get_subpanel_data'] = 'function';
         $subPanelDef->_instance_properties['generate_select'] = array();
-        try {
-            $results = SugarBean::get_union_related_list($parentBean, '', '', '', 0, -1, -1, 0, $subPanelDef);
-            self::assertTrue(false);
-        } /** @noinspection PhpUndefinedClassInspection */ catch (\PHPUnit_Framework_Exception $e) {
-            $code = $e->getCode();
-            self::assertEquals(2, $code);
-        }
+        $results = SugarBean::get_union_related_list($parentBean, '', '', '', 0, -1, -1, 0, $subPanelDef);
 
-        self::assertCount(6, $GLOBALS['log']->calls['fatal']);
-        self::assertEquals(null, $results);
+        self::assertCount(7, $GLOBALS['log']->calls['fatal']);
+        self::assertEquals(array(
+            'list' => Array(),
+            'parent_data' => Array(),
+            'row_count' => 0,
+            'next_offset' => 10,
+            'previous_offset' => -10,
+            'current_offset' => 0,
+            'query' => '',
+        ), $results);
 
     }
 
@@ -999,6 +1016,73 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $results = SugarBeanMock::publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentbean, $order_by);
         self::assertEquals(array(), $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+    }
+
+    public function testProcessUnionListQuery()
+    {
+
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $bean->id = 'test_contact1';
+        $bean->save();
+        try {
+            $results = $bean->process_union_list_query(null, 'SELECT DISTINCT * FROM contacts', null);
+            self::assertTrue(false);
+        } catch (\Exception $e) {
+            self::assertTrue(true);
+            self::assertEquals(8, $e->getCode());
+        }
+        self::assertCount(4, $GLOBALS['log']->calls['fatal']);
+        self::assertNotTrue(isset($results));
+
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new SugarBeanMock();
+        try {
+            $results = $bean->process_union_list_query(null, 'DISTINCT', null);
+            self::assertTrue(false);
+        } catch (\Exception $e) {
+            self::assertTrue(true);
+            self::assertEquals(1, $e->getCode());
+        }
+        self::assertCount(4, $GLOBALS['log']->calls['fatal']);
+        self::assertNotTrue(isset($results));
+
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new SugarBeanMock();
+        $results = $bean->process_union_list_query(null, null, null);
+        self::assertCount(4, $GLOBALS['log']->calls['fatal']);
+        self::assertEquals(array(
+            'list' => Array(),
+            'parent_data' => Array(),
+            'row_count' => 0,
+            'next_offset' => 10,
+            'previous_offset' => -10,
+            'current_offset' => 0,
+            'query' => null,
+        ), $results);
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $bean->retrieve('test_contact1');
+        $results = $bean->process_union_list_query(null, 'SELECT DISTINCT * FROM contacts', 'end');
+        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+        self::assertEquals(array(
+            'list' => Array(),
+            'parent_data' => Array(),
+            'row_count' => 2010,
+            'next_offset' => 2010.0,
+            'previous_offset' => 1990.0,
+            'current_offset' => 2000.0,
+            'query' => 'SELECT DISTINCT * FROM contacts',
+        ), $results);
+
     }
 
 
