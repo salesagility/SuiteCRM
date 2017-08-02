@@ -8,12 +8,25 @@ include_once __DIR__ . '/../../../include/SubPanel/SubPanelDefinitions.php';
 class SugarBeanTest extends PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @var array
+     */
     protected $env = array();
 
+    /**
+     * @var LoggerManager
+     */
     protected $log;
 
+    /**
+     * @var DBManager
+     */
     protected $db;
 
+    /**
+     * Sets up the fixture, for example, open a network connection.
+     * This method is called before a test is executed.
+     */
     public function setUp()
     {
         global $current_user;
@@ -33,6 +46,10 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Tears down the fixture, for example, close a network connection.
+     * This method is called after a test is executed.
+     */
     public function tearDown()
     {
         if (isset($this->env['$GLOBALS']['reload_vardefs'])) {
@@ -529,6 +546,9 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Test for setupCustomFields()
+     */
     public function testSetupCustomFields()
     {
         $bean = new SugarBean();
@@ -542,6 +562,9 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertEquals('custom/Extension/modules/Users/Ext/Vardefs', $bean->custom_fields->base_path);
     }
 
+    /**
+     * Test for bean_implements()
+     */
     public function testBeanImplements()
     {
         $bean = new SugarBean();
@@ -551,6 +574,9 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertEquals(false, $results);
     }
 
+    /**
+     * Test for populateDefaultValues()
+     */
     public function testPopulateDefaultValues()
     {
 
@@ -719,6 +745,9 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Test for parseDateDefault()
+     */
     public function testParseDateDefault()
     {
         $bean = new SugarBeanMock();
@@ -751,7 +780,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * Test for removeRelationshipMeta()
      */
     public function testRemoveRelationshipMeta()
     {
@@ -781,6 +810,9 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Test for createRelationshipMeta()
+     */
     public function testCreateRelationshipMeta()
     {
         // test
