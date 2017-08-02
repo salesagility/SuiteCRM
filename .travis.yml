@@ -25,8 +25,8 @@ before_script:
   - composer install
 script:
   # Install SuiteCRM Using Acceptance Test
-  - ./vendor/bin/codecept run -f install --env browser-stack-hub,browser-stack-local,browser-stack-chrome-fhd,travis-ci-hub --debug
-  - ./vendor/bin/codecept run -f tests/acceptance/Core/PersonModuleCest.php --env browser-stack-hub,browser-stack-local,browser-stack-chrome-fhd,travis-ci-hub --debug
+#  - ./vendor/bin/codecept run -f install --env browser-stack-hub,browser-stack-local,browser-stack-chrome-fhd,travis-ci-hub --debug
+#  - ./vendor/bin/codecept run -f tests/acceptance/Core/PersonModuleCest.php --env browser-stack-hub,browser-stack-local,browser-stack-chrome-fhd,travis-ci-hub --debug
   - ./vendor/bin/codecept run -f unit --debug
 
 after_script:

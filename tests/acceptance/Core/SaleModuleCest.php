@@ -212,7 +212,7 @@ class SaleModuleCest
         $name = implode(' ', $this->fakeData->words());
         $listView->fillField('#name_basic', $name);
         $listView->click('Search', '.submitButtons');
-        $listView->wait(1);
+        $listView->waitForListViewVisible();
         $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickNameLink($name);
 
@@ -261,7 +261,7 @@ class SaleModuleCest
         $name = implode(' ', $this->fakeData->words());
         $listView->fillField('#name_basic', $name);
         $listView->click('Search', '.submitButtons');
-        $listView->wait(1);
+        $listView->waitForListViewVisible();
         $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickNameLink($name);
 
@@ -314,7 +314,7 @@ class SaleModuleCest
         $name = implode(' ', $this->fakeData->words());
         $listView->fillField('#name_basic', $name);
         $listView->click('Search', '.submitButtons');
-        $listView->wait(1);
+        $listView->waitForListViewVisible();
         $this->fakeData->seed($this->fakeDataSeed);
         $listView->clickNameLink($name);
 

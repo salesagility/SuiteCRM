@@ -40,7 +40,7 @@ class Design extends Module
             $breakpoint = DesignBreakPoint::md;
         } elseif ($browserWidth >= 750 && $browserWidth < 1024) {
             $breakpoint = DesignBreakPoint::sm;
-        }  elseif ($browserWidth < 750) {
+        } elseif ($browserWidth < 750) {
             $breakpoint = DesignBreakPoint::xs;
         }
         return $breakpoint;

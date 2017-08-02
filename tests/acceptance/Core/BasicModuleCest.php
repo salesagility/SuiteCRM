@@ -229,7 +229,7 @@ class BasicModuleCest
             $this->fakeData->seed($this->fakeDataSeed);
             $listView->fillField('#name_basic', $this->fakeData->name);
             $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
+            $listView->waitForListViewVisible();
             $this->fakeData->seed($this->fakeDataSeed);
             $listView->clickNameLink($this->fakeData->name);
         }
@@ -282,7 +282,7 @@ class BasicModuleCest
             $this->fakeData->seed($this->fakeDataSeed);
             $listView->fillField('#name_basic', $this->fakeData->name);
             $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
+            $listView->waitForListViewVisible();
             $this->fakeData->seed($this->fakeDataSeed);
             $listView->clickNameLink($this->fakeData->name);
 
@@ -341,7 +341,7 @@ class BasicModuleCest
             $this->fakeData->seed($this->fakeDataSeed);
             $listView->fillField('#name_basic', $this->fakeData->name);
             $listView->click('Search', '.submitButtons');
-            $listView->wait(1);
+            $listView->waitForListViewVisible();
             $this->fakeData->seed($this->fakeDataSeed);
             $listView->clickNameLink($this->fakeData->name);
         }
