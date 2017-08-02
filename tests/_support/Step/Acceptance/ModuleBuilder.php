@@ -26,7 +26,8 @@ class ModuleBuilder extends Administration
         if($packageExists === false) {
             // Create new package
             $I->click('#newPackageLink');
-            $I->wait(3);
+
+            $I->waitForElementVisible(['name' => 'author']);
             $I->fillField(['name' => 'name'], $packageName);
             $I->fillField(['name' => 'author'], 'Acceptance Tester');
             $I->fillField(['name' => 'key'], 'Test');
@@ -34,6 +35,7 @@ class ModuleBuilder extends Administration
             $I->click('Save');
 
             // Close confirmation window
+            $I->waitForElementVisible('#sugarMsgWindow_mask');
             $I->wait(3);
             $I->click('.container-close');
 
@@ -70,15 +72,16 @@ class ModuleBuilder extends Administration
             $I->click('Save');
 
             // Close popup
+            $I->waitForElementVisible('#sugarMsgWindow_mask');
             $I->wait(3);
             $I->click('.container-close');
 
             // Deploy module
-            $I->wait(3);
+            $I->waitForElementVisible('[name="name"]');
             $I->click('Module Builder');
-            $I->wait(3);
+            $I->waitForElementVisible('.bodywrapper');
             $I->click($moduleName, '.bodywrapper');
-            $I->wait(3);
+            $I->waitForElementVisible('[name="name"]');
             $I->click('Deploy');
 
             if($packageExists) {
@@ -86,11 +89,12 @@ class ModuleBuilder extends Administration
             }
 
             // Close popup
+            $I->waitForElementVisible('#sugarMsgWindow_mask');
             $I->wait(3);
             $I->click('.container-close');
 
             // Wait for page to refresh and look for new package link
-            $I->waitForElement('#newPackageLink', 120);
+            $I->waitForElement('#newPackageLink', 360);
 
         } else {
             $I->getScenario()->skip($packageName . ' already exists. Please remove package and module manually.');
