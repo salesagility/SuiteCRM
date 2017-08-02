@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $db, $current_user, $timedate;
 function displayAdminError($errorString)
 {
-    $output = '<p class="error">'.$errorString.'</p>';
+    $output = '<p class="error">' . $errorString . '</p>';
     echo $output;
 }
 
@@ -57,12 +57,15 @@ if (isset($_SESSION['rebuild_extensions'])) {
     displayAdminError(translate('MSG_REBUILD_EXTENSIONS', 'Administration'));
 }
 
-if ((strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false) && (php_sapi_name() == 'cgi-fcgi') && (ini_get('fastcgi.logging') != '0')) {
+if ((strpos((string)$_SERVER['SERVER_SOFTWARE'],
+            'Microsoft-IIS') !== false) && (php_sapi_name() == 'cgi-fcgi') && (ini_get('fastcgi.logging') != '0')
+) {
     displayAdminError(translate('LBL_FASTCGI_LOGGING', 'Administration'));
 }
 if (is_admin($current_user)) {
     if (!empty($_SESSION['COULD_NOT_CONNECT'])) {
-        displayAdminError(translate('LBL_COULD_NOT_CONNECT', 'Administration').' '.$timedate->to_display_date_time($_SESSION['COULD_NOT_CONNECT']));
+        displayAdminError(translate('LBL_COULD_NOT_CONNECT',
+                'Administration') . ' ' . $timedate->to_display_date_time($_SESSION['COULD_NOT_CONNECT']));
     }
     //No SMTP server is set up Error.
     $smtp_error = false;
@@ -90,7 +93,8 @@ if (is_admin($current_user)) {
         if (isset($_SESSION['invalid_versions'])) {
             $invalid_versions = $_SESSION['invalid_versions'];
             foreach ($invalid_versions as $invalid) {
-                displayAdminError(translate('WARN_UPGRADE', 'Administration').$invalid['name'].translate('WARN_UPGRADE2', 'Administration'));
+                displayAdminError(translate('WARN_UPGRADE',
+                        'Administration') . $invalid['name'] . translate('WARN_UPGRADE2', 'Administration'));
             }
         }
     }

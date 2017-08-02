@@ -104,7 +104,7 @@ class AccountTest extends PHPUnit_Framework_TestCase
             'JJWG_MAPS_LNG_C' => '0.00000000',
             'JJWG_MAPS_LAT_C' => '0.00000000',
             'EMAIL1' => '',
-            'EMAIL1_LINK' => '<a href="javascript:void(0);" onclick=" $(document).openComposeViewModal(this);" data-module="Accounts" data-record-id="" data-module-name=""  data-email-address="">',
+            'EMAIL1_LINK' => '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="Accounts" data-record-id="" data-module-name=""  data-email-address="">',
             'ENCODED_NAME' => null,
             'CITY' => null,
             'BILLING_ADDRESS_STREET' => null,
@@ -116,7 +116,7 @@ class AccountTest extends PHPUnit_Framework_TestCase
         //execute the method and verify that it retunrs expected results
         $actual = $Account->get_list_view_data();
 
-        foreach($expected as $key => $value) {
+        foreach ($expected as $key => $value) {
             $this->assertSame($expected[$key], $actual[$key]);
         }
     }
@@ -165,17 +165,17 @@ FROM   accounts
 WHERE ( accounts.deleted IS NULL
          OR accounts.deleted = 0 )  ";
         $expected = trim($expected);
-        $expected = str_replace(' ','', $expected);
-        $expected = str_replace("\n",'', $expected);
-        $expected = str_replace("\t",'', $expected);
-        $expected = str_replace("\t",'', $expected);
+        $expected = str_replace(' ', '', $expected);
+        $expected = str_replace("\n", '', $expected);
+        $expected = str_replace("\t", '', $expected);
+        $expected = str_replace("\t", '', $expected);
 
         $actual = $Account->create_export_query('', '');
         $actual = trim($actual);
-        $actual = str_replace(' ','', $actual);
-        $actual = str_replace("\n",'', $actual);
-        $actual = str_replace("\t",'', $actual);
-        $actual = str_replace("\t",'', $actual);
+        $actual = str_replace(' ', '', $actual);
+        $actual = str_replace("\n", '', $actual);
+        $actual = str_replace("\t", '', $actual);
+        $actual = str_replace("\t", '', $actual);
 
         $this->assertSame($expected, $expected);
     }
@@ -209,12 +209,13 @@ WHERE ( accounts.deleted IS NULL
         $this->assertSame($expected, $actual);
 
         //with type parameter set
-        $expected = array('select' => 'SELECT emails.id ',
-                           'from' => 'FROM emails ',
-                           'where' => '',
-                           'join' => " JOIN (select DISTINCT email_id from emails_email_addr_rel eear\n\n	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Accounts' and\n	eabr.email_address_id = eear.email_address_id and eabr.deleted=0\n	where eear.deleted=0 and eear.email_id not in\n	(select eb.email_id from emails_beans eb where eb.bean_module ='Accounts' and eb.bean_id = '')\n	) derivedemails on derivedemails.email_id = emails.id",
-                          'join_tables' => array(''),
-                    );
+        $expected = array(
+            'select' => 'SELECT emails.id ',
+            'from' => 'FROM emails ',
+            'where' => '',
+            'join' => " JOIN (select DISTINCT email_id from emails_email_addr_rel eear\n\n	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Accounts' and\n	eabr.email_address_id = eear.email_address_id and eabr.deleted=0\n	where eear.deleted=0 and eear.email_id not in\n	(select eb.email_id from emails_beans eb where eb.bean_module ='Accounts' and eb.bean_id = '')\n	) derivedemails on derivedemails.email_id = emails.id",
+            'join_tables' => array(''),
+        );
 
         $actual = $Account->get_unlinked_email_query(array('return_as_array' => 'true'));
         $this->assertSame($expected, $actual);

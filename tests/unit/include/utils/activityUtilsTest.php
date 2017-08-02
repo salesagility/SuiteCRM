@@ -1,8 +1,17 @@
 <?php
 
 require_once 'include/utils/activity_utils.php';
+
 class activity_utilsTest extends PHPUnit_Framework_TestCase
 {
+
+    protected function setUp()
+    {
+        global $current_user;
+        $current_user = new User();
+        get_sugar_config_defaults();
+    }
+
     public function testbuild_related_list_by_user_id()
     {
         error_reporting(E_ERROR | E_PARSE);

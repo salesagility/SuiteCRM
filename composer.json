@@ -6,7 +6,10 @@
   "authors": [],
   "minimum-stability": "dev",
   "config": {
-    "vendor-dir": "vendor"
+    "vendor-dir": "vendor",
+    "platform": {
+      "php": "5.5"
+    }
   },
   "require": {
   },

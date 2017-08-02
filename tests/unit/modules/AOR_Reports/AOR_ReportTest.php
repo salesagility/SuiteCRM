@@ -101,8 +101,6 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
 
     public function testbuild_report_chart()
     {
-        $this->markTestSkipped('Skipping pChart Test');
-
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
 
@@ -231,14 +229,18 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
 
         //test with type custom and verify that it retunrs expected results
         $expected = array('join' => array('accounts_contacts' => 'LEFT JOIN `accounts_cstm` `contacts` ON `accounts`.id = `contacts`.id_c '));
-        $actual = $aor_Report->build_report_query_join('contacts', 'accounts_contacts', 'accounts', new Account(), 'custom', array());
+        $actual = $aor_Report->build_report_query_join('contacts', 'accounts_contacts', 'accounts', new Account(),
+            'custom', array());
         $this->assertSame($expected, $actual);
 
         //test with type relationship and verify that it retunrs expected results
-        $expected = array('join' => array('accounts_contacts' => "LEFT JOIN accounts_contacts `accounts|accounts_contacts` ON `accounts`.id=`accounts|accounts_contacts`.account_id AND `accounts|accounts_contacts`.deleted=0\n\nLEFT JOIN contacts `accounts_contacts` ON `accounts_contacts`.id=`accounts|accounts_contacts`.contact_id AND `accounts_contacts`.deleted=0\n"),
+        $expected = array(
+            'join' => array('accounts_contacts' => "LEFT JOIN accounts_contacts `accounts|accounts_contacts` ON `accounts`.id=`accounts|accounts_contacts`.account_id AND `accounts|accounts_contacts`.deleted=0\n\nLEFT JOIN contacts `accounts_contacts` ON `accounts_contacts`.id=`accounts|accounts_contacts`.contact_id AND `accounts_contacts`.deleted=0\n"),
             'id_select' => array('accounts_contacts' => '`accounts_contacts`.id AS \'accounts_contacts_id\''),
-            'id_select_group' => array ('accounts_contacts' => '`accounts_contacts`.id'));
-        $actual = $aor_Report->build_report_query_join('contacts', 'accounts_contacts', 'accounts', new Account(), 'relationship', array());
+            'id_select_group' => array('accounts_contacts' => '`accounts_contacts`.id')
+        );
+        $actual = $aor_Report->build_report_query_join('contacts', 'accounts_contacts', 'accounts', new Account(),
+            'relationship', array());
         $this->assertSame($expected, $actual);
     }
 
