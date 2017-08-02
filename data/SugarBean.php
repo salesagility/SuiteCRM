@@ -595,6 +595,10 @@ class SugarBean
                 $timeValue = $timedate->fromString($dtAry[1]);
                 $dateValue->setTime($timeValue->hour, $timeValue->min, $timeValue->sec);
             }
+            if(is_bool($dateValue)) {
+                $GLOBALS['log']->fatal('Type Error: Argument 1 passed to TimeDate::asUser() must be an instance of DateTime, boolean given');
+                return false;
+            }
             return $timedate->asUser($dateValue);
         } else {
             $now = $timedate->getNow(true);
