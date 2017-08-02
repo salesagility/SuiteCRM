@@ -1,4 +1,3 @@
-
 language: php
 php:
   - '5.5'
@@ -9,11 +8,6 @@ matrix:
   fast_finish: true
 sudo: required
 dist: trusty
-addons:
-  browserstack:
-    username: %BROWSERSTACK_USERNAME%
-    access_key: %BROWSERSTACK_ACCESS_KEY%
-
 services:
   # TODO: use docker to support different databases
   - mysql
