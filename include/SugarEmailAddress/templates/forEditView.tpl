@@ -37,7 +37,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 *}
 {php}
 global $emailInstances;
@@ -125,21 +124,24 @@ var emailAddressWidgetLoaded = false;
 </div>
 <input type="hidden" name="useEmailWidget" value="true">
 <script type="text/javascript" language="javascript">
-SUGAR_callsInProgress++;
-var eaw = SUGAR.EmailAddressWidget.instances.{$module}{$index} = new SUGAR.EmailAddressWidget("{$module}");
-eaw.emailView = '{$emailView}';
-eaw.emailIsRequired = "{$required}";
-eaw.tabIndex = '{$tabindex}';
-var addDefaultAddress = '{$addDefaultAddress}';
-var prefillEmailAddress = '{$prefillEmailAddresses}';
-var prefillData = {$prefillData};
-if(prefillEmailAddress == 'true') {ldelim}
-	eaw.prefillEmailAddresses('{$module}emailAddressesTable{$index}', prefillData);
-{rdelim} else if(addDefaultAddress == 'true') {ldelim}
-	eaw.addEmailAddress('{$module}emailAddressesTable{$index}', '',true);
-{rdelim}
-if('{$module}_email_widget_id') {ldelim}
-   document.getElementById('{$module}_email_widget_id').value = eaw.count;
-{rdelim}
-SUGAR_callsInProgress--;
+  SUGAR_callsInProgress++;
+  var eaw = SUGAR.EmailAddressWidget.instances.{$module}{$index} = new SUGAR.EmailAddressWidget("{$module}");
+  eaw.emailView = '{$emailView}';
+  eaw.emailIsRequired = "{$required}";
+  eaw.tabIndex = '{$tabindex}';
+  var addDefaultAddress = '{$addDefaultAddress}';
+  var prefillEmailAddress = '{$prefillEmailAddresses}';
+  var prefillData = {$prefillData};
+  debugger;
+  if (prefillEmailAddress === 'true') {ldelim}
+    eaw.prefillEmailAddresses('{$module}emailAddressesTable{$index}', prefillData);
+      {rdelim} else if (addDefaultAddress === 'true') {ldelim}
+    eaw.addEmailAddress('{$module}emailAddressesTable{$index}', '', true);
+    document.getElementById('{$module}{$index}emailAddress{$index}').value = document.getElementById('email_addr').value;
+  {rdelim}
+  if ('{$module}_email_widget_id') {ldelim}
+    document.getElementById('{$module}_email_widget_id').value = eaw.count;
+      {rdelim}
+  SUGAR_callsInProgress--;
 </script>
+
