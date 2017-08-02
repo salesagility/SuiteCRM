@@ -692,8 +692,9 @@ class UserTest extends PHPUnit_Framework_TestCase
     {
         $user = new User();
 
-        $result = $user->retrieve_user_id("admin");
-        static::assertEquals(false, $result);
+        $result1 = $user->retrieve_user_id('admin');
+        $result2 = $user->retrieve_user_id('automated_tester');
+        static::assertEquals(false, $result1 && $result2);
     }
 
 
