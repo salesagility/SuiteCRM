@@ -1033,7 +1033,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         } catch (\Exception $e) {
             self::assertTrue(true);
         }
-        self::assertCount(4, $GLOBALS['log']->calls['fatal']);
+        self::assertTrue(2 <= count($GLOBALS['log']->calls['fatal']));
         self::assertNotTrue(isset($results));
 
 
