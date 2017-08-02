@@ -122,7 +122,13 @@ class aSubPanel
 			$this->canDisplay = $this->load_sub_subpanels () ; //load sub-panel definition.
 		} else
 		{
-			if (!is_dir('modules/' . $this->_instance_properties [ 'module' ])){
+			if(!isset($this->_instance_properties [ 'module' ])) {
+				$GLOBALS['log']->fatal('Undefined index: module');
+                $instancePropertiesModule = null;
+            } else {
+				$instancePropertiesModule = $this->_instance_properties [ 'module' ];
+			}
+			if (!is_dir('modules/' . $instancePropertiesModule)){
 				_pstack_trace();
 			}
 			if(!isset($this->_instance_properties [ 'subpanel_name' ])) {

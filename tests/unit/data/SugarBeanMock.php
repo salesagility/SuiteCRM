@@ -76,12 +76,23 @@ class SugarBeanMock extends SugarBean
     }
 
     /**
-     * @param $value
+     * @param string $value
      * @param bool $time
      * @return string
      */
     public function publicParseDateDefault($value, $time = false) {
         return $this->parseDateDefault($value, $time);
+    }
+
+    /**
+     * @param array $subpanel_list
+     * @param array $subpanel_def
+     * @param SugarBean $parentbean
+     * @param string $order_by
+     * @return array
+     */
+    public static function publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentbean, $order_by) {
+        return self::build_sub_queries_for_union($subpanel_list, $subpanel_def, $parentbean, $order_by);
     }
 
 }

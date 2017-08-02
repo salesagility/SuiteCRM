@@ -62,6 +62,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $GLOBALS['log'] = $this->log;
     }
 
+
     /**
      * Test for __construct()
      */
@@ -854,6 +855,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
     /**
      * Test for get_union_related_list()
+     * @todo need more test coverage and less function complexity
      */
     public function testGetUnionRelatedList()
     {
@@ -884,7 +886,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             $code = $e->getCode();
             self::assertEquals(2, $code);
         }
-        self::assertCount(3, $GLOBALS['log']->calls['fatal']);
+        self::assertCount(4, $GLOBALS['log']->calls['fatal']);
         self::assertEquals(null, $results);
 
 
@@ -921,10 +923,83 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             self::assertEquals(2, $code);
         }
 
-        self::assertCount(5, $GLOBALS['log']->calls['fatal']);
+        self::assertCount(6, $GLOBALS['log']->calls['fatal']);
         self::assertEquals(null, $results);
 
-
     }
+
+
+    /**
+     * Test for build_sub_queries_for_union()
+     */
+    public function testBuildSubQueriesForUnion()
+    {
+
+        // test
+        $bean = new SugarBeanMock();
+        $panel =
+            new aSubPanel('Test', array(
+                'get_subpanel_data' => 1,
+            ), $bean);
+        $subpanel_list = array(
+            $panel
+        );
+        $subpanel_def = null;
+        $parentbean = new SugarBeanMock();
+        $order_by = null;
+        $GLOBALS['log']->reset();
+        $results = SugarBeanMock::publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentbean, $order_by);
+        self::assertEquals(array(), $results);
+        self::assertNotTrue(isset($GLOBALS['log']->calls['fatal']));
+
+
+        // test
+        $subpanel_list = array(
+            new aSubPanel('Test', array(), new SugarBeanMock())
+        );
+        $subpanel_def = null;
+        $parentbean = null;
+        $order_by = null;
+        $GLOBALS['log']->reset();
+        $results = SugarBeanMock::publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentbean, $order_by);
+        self::assertEquals(array(
+            array(
+                'select' => ' , \'Test\' panel_name ',
+                'query_array' => null,
+                'params' => array(
+                    'distinct' => false,
+                    'joined_tables' => null,
+                    'include_custom_fields' => null,
+                    'collection_list' => null,
+                ),
+            ),
+        ), $results);
+        self::assertCount(6, $GLOBALS['log']->calls['fatal']);
+
+
+        // test
+        $subpanel_list = array(
+            1
+        );
+        $subpanel_def = null;
+        $parentbean = null;
+        $order_by = null;
+        $GLOBALS['log']->reset();
+        $results = SugarBeanMock::publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentbean, $order_by);
+        self::assertEquals(array(), $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+
+        // test
+        $subpanel_list = null;
+        $subpanel_def = null;
+        $parentbean = null;
+        $order_by = null;
+        $GLOBALS['log']->reset();
+        $results = SugarBeanMock::publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentbean, $order_by);
+        self::assertEquals(array(), $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+    }
+
 
 }

@@ -576,20 +576,34 @@ class SugarBean
      * @param string $value
      * @param bool $time Should be expect time set too?
      * @return string
+     * @throws \Exception
      */
     protected function parseDateDefault($value, $time = false)
     {
         global $timedate;
         if ($time) {
             $dtAry = explode('&', $value, 2);
-            $dateValue = $timedate->getNow(true)->modify($dtAry[0]);
+            $now = $timedate->getNow(true);
+            try {
+                $dateValue = $now->modify($dtAry[0]);
+            } catch (Exception $e) {
+                $GLOBALS['log']->fatal('DateTime error: ' . $e->getMessage());
+                throw $e;
+            }
             if (!empty($dtAry[1])) {
                 $timeValue = $timedate->fromString($dtAry[1]);
                 $dateValue->setTime($timeValue->hour, $timeValue->min, $timeValue->sec);
             }
             return $timedate->asUser($dateValue);
         } else {
-            return $timedate->asUserDate($timedate->getNow(true)->modify($value));
+            $now = $timedate->getNow(true);
+            try {
+                $results = $now->modify($value);
+            } catch(Exception $e) {
+                $GLOBALS['log']->fatal('DateTime error: ' . $e->getMessage());
+                throw $e;
+            }
+            return $timedate->asUserDate($results);
         }
     }
 
@@ -963,90 +977,147 @@ class SugarBean
 
         global $beanList;
         $subqueries = array();
+
+        if(!is_array($subpanel_list) or is_object($subpanel_list)) {
+            $GLOBALS['log']->fatal('Invalid Argument: Subpanel list should be an array.');
+            $subpanel_list = (array) $subpanel_list;
+        }
+
         foreach ($subpanel_list as $this_subpanel) {
-            if (!$this_subpanel->isDatasourceFunction() || ($this_subpanel->isDatasourceFunction()
-                    && isset($this_subpanel->_instance_properties['generate_select'])
-                    && $this_subpanel->_instance_properties['generate_select'])
+
+            if (
+                method_exists($this_subpanel, 'isDatasourceFunction')
             ) {
-                //the custom query function must return an array with
-                if ($this_subpanel->isDatasourceFunction()) {
-                    $shortcut_function_name = $this_subpanel->get_data_source_name();
-                    $parameters = $this_subpanel->get_function_parameters();
-                    if (!empty($parameters)) {
-                        //if the import file function is set, then import the file to call the custom function from
-                        if (is_array($parameters) && isset($parameters['import_function_file'])) {
-                            //this call may happen multiple times, so only require if function does not exist
-                            if (!function_exists($shortcut_function_name)) {
-                                require_once($parameters['import_function_file']);
+
+                if (!$this_subpanel->isDatasourceFunction() || ($this_subpanel->isDatasourceFunction()
+                        && isset($this_subpanel->_instance_properties['generate_select'])
+                        && $this_subpanel->_instance_properties['generate_select'])
+                ) {
+                    //the custom query function must return an array with
+                    if ($this_subpanel->isDatasourceFunction()) {
+                        $shortcut_function_name = $this_subpanel->get_data_source_name();
+                        $parameters = $this_subpanel->get_function_parameters();
+                        if (!empty($parameters)) {
+                            //if the import file function is set, then import the file to call the custom function from
+                            if (is_array($parameters) && isset($parameters['import_function_file'])) {
+                                //this call may happen multiple times, so only require if function does not exist
+                                if (!function_exists($shortcut_function_name)) {
+                                    require_once($parameters['import_function_file']);
+                                }
+                                //call function from required file
+                                $query_array = $shortcut_function_name($parameters);
+                            } else {
+                                //call function from parent bean
+                                $query_array = $parentbean->$shortcut_function_name($parameters);
                             }
-                            //call function from required file
-                            $query_array = $shortcut_function_name($parameters);
                         } else {
-                            //call function from parent bean
-                            $query_array = $parentbean->$shortcut_function_name($parameters);
+                            $query_array = $parentbean->$shortcut_function_name();
                         }
                     } else {
-                        $query_array = $parentbean->$shortcut_function_name();
-                    }
-                } else {
-                    $related_field_name = $this_subpanel->get_data_source_name();
-                    if (!$parentbean->load_relationship($related_field_name)) {
-                        if(isset($parentbean->$related_field_name)) {
-                            unset($parentbean->$related_field_name);
+                        $related_field_name = $this_subpanel->get_data_source_name();
+                        if(!method_exists($parentbean, 'load_relationship')) {
+                            $GLOBALS['log']->fatal('Fatal error:  Call to a member function load_relationship() on ' . get_class($parentbean));
+                        } else {
+                            if (!$parentbean->load_relationship($related_field_name)) {
+                                if (isset($parentbean->$related_field_name)) {
+                                    unset($parentbean->$related_field_name);
+                                }
+                                continue;
+                            }
+                            $query_array = $parentbean->$related_field_name->getSubpanelQuery(array(), true);
                         }
-                        continue;
                     }
-                    $query_array = $parentbean->$related_field_name->getSubpanelQuery(array(), true);
-                }
-                $table_where = preg_replace('/^\s*WHERE/i', '', $this_subpanel->get_where());
-                $where_definition = preg_replace('/^\s*WHERE/i', '', $query_array['where']);
-
-                if (!empty($table_where)) {
-                    if (empty($where_definition)) {
-                        $where_definition = $table_where;
+                    $table_where = preg_replace('/^\s*WHERE/i', '', $this_subpanel->get_where());
+                    $queryArrayWhere = '';
+                    if(isset($query_array)) {
+                        $queryArrayWhere = $query_array['where'];
                     } else {
-                        $where_definition .= ' AND ' . $table_where;
+                        $GLOBALS['log']->fatal('Undefined variable: query_array');
                     }
-                }
+                    $where_definition = preg_replace('/^\s*WHERE/i', '', $queryArrayWhere);
 
-                $submodulename = $this_subpanel->_instance_properties['module'];
-                $submoduleclass = $beanList[$submodulename];
-
-                /** @var SugarBean $submodule */
-                $submodule = new $submoduleclass();
-                $subwhere = $where_definition;
-
-
-                $list_fields = $this_subpanel->get_list_fields();
-                foreach ($list_fields as $list_key => $list_field) {
-                    if (isset($list_field['usage']) && $list_field['usage'] == 'display_only') {
-                        unset($list_fields[$list_key]);
+                    if (!empty($table_where)) {
+                        if (empty($where_definition)) {
+                            $where_definition = $table_where;
+                        } else {
+                            $where_definition .= ' AND ' . $table_where;
+                        }
                     }
+
+                    if(isset($this_subpanel->_instance_properties['module'])) {
+                        $submodulename = $this_subpanel->_instance_properties['module'];
+                    } else {
+                        $GLOBALS['log']->fatal('Undefined index: module');
+                        $submodulename = '';
+                    }
+                    if(isset($beanList[$submodulename])) {
+                        $submoduleclass = $beanList[$submodulename];
+                    } else {
+                        $GLOBALS['log']->fatal('Undefined index: ' . $submodulename);
+                        $submoduleclass = null;
+                    }
+
+                    /** @var SugarBean $submodule */
+                    if(class_exists($submoduleclass)) {
+                        $submodule = new $submoduleclass();
+                    } else {
+                        $GLOBALS['log']->fatal('Class name must be a valid object or a string');
+                        $submodule = null;
+                    }
+                    $subwhere = $where_definition;
+
+
+                    $list_fields = $this_subpanel->get_list_fields();
+                    foreach ($list_fields as $list_key => $list_field) {
+                        if (isset($list_field['usage']) && $list_field['usage'] == 'display_only') {
+                            unset($list_fields[$list_key]);
+                        }
+                    }
+
+
+                    if(!method_exists($subpanel_def, 'isCollection')) {
+                        $GLOBALS['log']->fatal('Call to a member function isCollection() on ' . get_class($subpanel_def));
+                    }
+                    if (
+                        method_exists($subpanel_def, 'isCollection') &&
+                        !$subpanel_def->isCollection() &&
+                        isset($list_fields[$order_by]) &&
+                        isset($submodule->field_defs[$order_by]) &&
+                        (!isset($submodule->field_defs[$order_by]['source']) || $submodule->field_defs[$order_by]['source'] == 'db')
+                    ) {
+                        $order_by = $submodule->table_name . '.' . $order_by;
+                    }
+                    $panel_name = $this_subpanel->name;
+                    $params = array();
+                    $params['distinct'] = $this_subpanel->distinct_query();
+
+                    $params['joined_tables'] = isset($query_array['join_tables']) ? $query_array['join_tables'] : null;
+                    $params['include_custom_fields'] = method_exists($subpanel_def, 'isCollection') ? !$subpanel_def->isCollection() : null;
+                    $params['collection_list'] = method_exists($subpanel_def, 'get_inst_prop_value') ? $subpanel_def->get_inst_prop_value('collection_list') : null;
+
+                    // use single select in case when sorting by relate field
+                    $singleSelect = method_exists($submodule, 'is_relate_field') ? $submodule->is_relate_field($order_by) : null;
+
+                    $subquery = method_exists($submodule, 'create_new_list_query') ? $submodule->create_new_list_query('', $subwhere, $list_fields, $params, 0, '', true,
+                        $parentbean, $singleSelect) : null;
+
+                    if(isset($subquery['select'])) {
+                        $subquery['select'] .= " , '$panel_name' panel_name ";
+                    } else {
+                        $subquery['select'] = " , '$panel_name' panel_name ";
+                    }
+                    if(isset($query_array)) {
+                        $subquery['from'] .= $query_array['join'];
+                        $subquery['query_array'] = $query_array;
+                    } else {
+                        $subquery['query_array'] = null;
+                    }
+                    $subquery['params'] = $params;
+
+                    $subqueries[] = $subquery;
                 }
-
-
-                if (!$subpanel_def->isCollection() && isset($list_fields[$order_by]) && isset($submodule->field_defs[$order_by]) && (!isset($submodule->field_defs[$order_by]['source']) || $submodule->field_defs[$order_by]['source'] == 'db')) {
-                    $order_by = $submodule->table_name . '.' . $order_by;
-                }
-                $panel_name = $this_subpanel->name;
-                $params = array();
-                $params['distinct'] = $this_subpanel->distinct_query();
-
-                $params['joined_tables'] = $query_array['join_tables'];
-                $params['include_custom_fields'] = !$subpanel_def->isCollection();
-                $params['collection_list'] = $subpanel_def->get_inst_prop_value('collection_list');
-
-                // use single select in case when sorting by relate field
-                $singleSelect = $submodule->is_relate_field($order_by);
-
-                $subquery = $submodule->create_new_list_query('', $subwhere, $list_fields, $params, 0, '', true, $parentbean, $singleSelect);
-
-                $subquery['select'] .= " , '$panel_name' panel_name ";
-                $subquery['from'] .= $query_array['join'];
-                $subquery['query_array'] = $query_array;
-                $subquery['params'] = $params;
-
-                $subqueries[] = $subquery;
+            } else {
+                $GLOBALS['log']->fatal('isDatasourceFunction() is not implemented.');
             }
         }
         return $subqueries;
