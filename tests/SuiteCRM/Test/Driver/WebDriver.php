@@ -62,7 +62,12 @@ class WebDriver extends \Codeception\Module\WebDriver
             } catch (\BrowserStack\LocalException $exception) {
                 echo $exception->getMessage();
             }
-            echo $this->browserStackLocal->isRunning();
+            if($this->browserStackLocal->isRunning()) {
+                echo "Browser stack binary is running";
+            } else {
+                throw new \Exception('Unable to start browser stack binary');
+            }
+
         }
     }
 

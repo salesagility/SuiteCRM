@@ -30,9 +30,6 @@ script:
   # Install SuiteCRM Using Acceptance Test
   - ./vendor/bin/codecept run -f install --env browser-stack-hub,browser-stack-local,browser-stack-chrome-fhd,travis-ci-hub --debug
   - ./vendor/bin/codecept run -f tests/acceptance/Core/PersonModuleCest.php --env browser-stack-hub,browser-stack-local,browser-stack-chrome-fhd,travis-ci-hub --debug
-#  - ./vendor/bin/codecept run -f acceptance --env browser-stack-hub,browser-stack-local,browser-stack-firefox-fhd,travis-ci-hub --debug
-#  - ./vendor/bin/codecept run -f acceptance --env browser-stack-hub,browser-stack-local,browser-stack-safari-fhd,travis-ci-hub --debug
-#  - ./vendor/bin/codecept run -f acceptance --env browser-stack-hub,browser-stack-local,browser-stack-edge-fhd,travis-ci-hub --debug
   - ./vendor/bin/codecept run -f unit --debug
   - cat suitecrm.log
   - cat sugarcrm.log
