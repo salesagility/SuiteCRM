@@ -459,6 +459,13 @@ class PersonModuleCest
         $this->lastView = ' DetailView';
         $detailView->see($firstname.' '.$lastname, '.module-title-text');
 
+        // Delete Record
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+
+        $listView->waitForListViewVisible();
+        $this->lastView = 'ListView';
+
         $I->deleteFile($fileDir.$fileName);
     }
 }
