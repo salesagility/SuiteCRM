@@ -1544,7 +1544,7 @@ class AOR_Report extends Basic
                                 if ($dateTime !== false) {
                                     $day_ahead = $dateTime->modify('+1 day');
                                     $equal_query = "( $field  BETWEEN '" . $this->db->quote($condition->value) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
-                                    $query['where'][] = $equal_query;
+                                    $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_query;
                                 } else {
                                     if ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
                                         $dateTime = convertToDateTime($condition->value);
@@ -1553,7 +1553,7 @@ class AOR_Report extends Basic
                                         $equal_query = "( $field  BETWEEN '" . $this->db->quote($query_date);
                                         $day_ahead = $dateTime->modify('+1 day');
                                         $equal_query .= "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
-                                        $query['where'][] = $equal_query;
+                                        $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_query;
                                     } else {
                                         $value = "'" . $this->db->quote($condition->value) . "'";
                                         break;
@@ -1565,7 +1565,7 @@ class AOR_Report extends Basic
                                     if ($dateTime !== false) {
                                         $day_ahead = $dateTime->modify('+1 day');
                                         $not_equal_query = "( $field NOT BETWEEN '" . $this->db->quote($condition->value) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
-                                        $query['where'][] = $not_equal_query;
+                                        $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $not_equal_query;
                                     } else {
                                         if ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
                                             $dateTime = convertToDateTime($condition->value);
@@ -1574,7 +1574,7 @@ class AOR_Report extends Basic
                                             $not_equal_query = "( $field NOT BETWEEN '" . $this->db->quote($query_date);
                                             $day_ahead = $dateTime->modify('+1 day');
                                             $not_equal_query .= "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
-                                            $query['where'][] = $not_equal_query;
+                                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $not_equal_query;
                                         } else {
                                             $value = "'" . $this->db->quote($condition->value) . "'";
                                             break;
@@ -1585,14 +1585,14 @@ class AOR_Report extends Basic
                                     if ($condition->operator === 'Greater_Than') {
                                         if ($dateTime !== false) {
                                             $greater_than_query = "( $field > '" . $this->db->quote($condition->value) . "' ) ";
-                                            $query['where'][] = $greater_than_query;
+                                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $greater_than_query;
                                         } else {
                                             if ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
                                                 $dateTime = convertToDateTime($condition->value);
 
                                                 $query_date = $dateTime->format('Y-m-d H:i:s');
                                                 $greater_than_query = "( $field > '" . $this->db->quote($query_date) . "' ) ";
-                                                $query['where'][] = $greater_than_query;
+                                                $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $greater_than_query;
                                             } else {
                                                 $value = "'" . $this->db->quote($condition->value) . "'";
                                                 break;
@@ -1603,14 +1603,14 @@ class AOR_Report extends Basic
                                         if ($condition->operator === 'Less_Than') {
                                             if ($dateTime !== false) {
                                                 $less_than_query = "( $field < '" . $this->db->quote($condition->value) . "' ) ";
-                                                $query['where'][] = $less_than_query;
+                                                $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $less_than_query;
                                             } else {
                                                 if ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
                                                     $dateTime = convertToDateTime($condition->value);
 
                                                     $query_date = $dateTime->format('Y-m-d H:i:s');
                                                     $less_than_query = "( $field < '" . $this->db->quote($query_date) . "' ) ";
-                                                    $query['where'][] = $less_than_query;
+                                                    $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $less_than_query;
                                                 } else {
                                                     $value = "'" . $this->db->quote($condition->value) . "'";
                                                     break;
@@ -1623,7 +1623,7 @@ class AOR_Report extends Basic
                                                     $equal_greater_than_query = "( $field > '" . $this->db->quote($condition->value) . "'";
                                                     $day_ahead = $dateTime->modify('+1 day');
                                                     $equal_greater_than_query .= " OR $field  BETWEEN '" . $this->db->quote($condition->value) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
-                                                    $query['where'][] = $equal_greater_than_query;
+                                                    $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_greater_than_query;
                                                 } else {
                                                     if ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
                                                         $dateTime = convertToDateTime($condition->value);
@@ -1632,7 +1632,7 @@ class AOR_Report extends Basic
                                                         $equal_greater_than_query = "( $field > '" . $this->db->quote($query_date) . "'";
                                                         $day_ahead = $dateTime->modify('+1 day');
                                                         $equal_greater_than_query .= " OR $field  BETWEEN '" . $this->db->quote($query_date) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
-                                                        $query['where'][] = $equal_greater_than_query;
+                                                        $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_greater_than_query;
                                                     } else {
                                                         $value = "'" . $this->db->quote($condition->value) . "'";
                                                         break;
@@ -1645,7 +1645,7 @@ class AOR_Report extends Basic
                                                         $equal_less_than_query = "( $field < '" . $this->db->quote($condition->value) . "'";
                                                         $day_ahead = $dateTime->modify('+1 day');
                                                         $equal_less_than_query .= " OR $field  BETWEEN '" . $this->db->quote($condition->value) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
-                                                        $query['where'][] = $equal_less_than_query;
+                                                        $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_less_than_query;
                                                     } else {
                                                         if ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
                                                             $dateTime = convertToDateTime($condition->value);
@@ -1654,7 +1654,7 @@ class AOR_Report extends Basic
                                                             $equal_less_than_query = "( $field < '" . $this->db->quote($query_date) . "'";
                                                             $day_ahead = $dateTime->modify('+1 day');
                                                             $equal_less_than_query .= " OR $field  BETWEEN '" . $this->db->quote($query_date) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
-                                                            $query['where'][] = $equal_less_than_query;
+                                                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_less_than_query;
                                                         } else {
                                                             $value = "'" . $this->db->quote($condition->value) . "'";
                                                             break;
