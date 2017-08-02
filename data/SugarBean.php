@@ -602,7 +602,7 @@ class SugarBean
      * @param string $key module whose meta cache is to be cleared.
      * @param string $db database handle.
      * @param string $tablename table name
-     * @param string $dictionary vardef for the module
+     * @param array $dictionary vardef for the module
      * @param string $module_dir name of subdirectory where module is installed.
      *
      * @static

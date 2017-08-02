@@ -556,6 +556,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
         $testBean1 = new SugarBean();
         $testBean1->field_defs = null;
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $testBean1->populateDefaultValues();
         self::assertEquals(null, $results);
         self::assertEquals(null, $testBean1->field_defs);
@@ -564,6 +565,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $bean = new SugarBean();
         $force = false;
         $fieldDefsBefore = $bean->field_defs;
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->populateDefaultValues($force);
         self::assertEquals(null, $results);
         self::assertEquals($fieldDefsBefore, $bean->field_defs);
@@ -575,6 +577,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $bean->field_defs['test'] = array(
             'default' => true,
         );
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->populateDefaultValues($force);
         self::assertEquals(null, $results);
         self::assertEquals(array(
@@ -590,6 +593,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $bean->field_defs['test'] = array(
             'default' => true,
         );
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->populateDefaultValues($force);
         self::assertEquals(null, $results);
         self::assertEquals(array(
@@ -601,13 +605,13 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertEquals(1, $bean->$field);
 
 
-
         // test
         $bean = new SugarBean();
         $force = true;
         $bean->field_defs['test'] = array(
             'default' => '<b>bold</b>',
         );
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->populateDefaultValues($force);
         self::assertEquals(null, $results);
         self::assertEquals(array(
@@ -625,6 +629,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $bean->field_defs['test'] = array(
             'default' => '',
         );
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->populateDefaultValues($force);
         self::assertEquals(null, $results);
         self::assertEquals(array(
@@ -643,6 +648,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             'default' => '<b>bold</b>',
             'type' => 'multienum',
         );
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->populateDefaultValues($force);
         self::assertEquals(null, $results);
         self::assertEquals(array(
@@ -655,8 +661,6 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertEquals('<b>bold</b>', $bean->$field);
 
 
-
-
         // test
         $bean = new SugarBean();
         $force = true;
@@ -664,6 +668,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             'display_default' => '<b>bold</b>',
             'type' => 'multienum',
         );
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->populateDefaultValues($force);
         self::assertEquals(null, $results);
         self::assertEquals(array(
@@ -674,8 +679,6 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         ), $bean->field_defs);
         $field = 'test';
         self::assertEquals('<b>bold</b>', $bean->$field);
-
-
 
 
         // test
@@ -691,10 +694,11 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         );
         $exception = null;
         try {
+            /** @noinspection PhpVoidFunctionResultUsedInspection */
             $results = $bean->populateDefaultValues($force);
             // this function call should failed with an exception
             self::assertTrue(false);
-        } catch (\PHPUnit_Framework_Exception $e) {
+        } /** @noinspection PhpUndefinedClassInspection */ catch (\PHPUnit_Framework_Exception $e) {
             $exception = $e;
             self::assertEquals(2, $e->getCode());
         }
@@ -715,14 +719,15 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
     }
 
-    public function testParseDateDefault() {
+    public function testParseDateDefault()
+    {
         $bean = new SugarBeanMock();
 
         // test
         try {
             $bean->publicParseDateDefault(null);
             self::assertTrue(false);
-        } catch (\PHPUnit_Framework_Exception $e) {
+        } /** @noinspection PhpUndefinedClassInspection */ catch (\PHPUnit_Framework_Exception $e) {
             $code = $e->getCode();
             self::assertEquals(2, $code);
         }
@@ -745,7 +750,11 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertEquals('05/05/2015 11:11', $results);
     }
 
-    public function testRemoveRelationshipMeta() {
+    /**
+     *
+     */
+    public function testRemoveRelationshipMeta()
+    {
         // test
         $GLOBALS['log']->reset();
         SugarBean::removeRelationshipMeta(null, null, null, null, null);
@@ -791,22 +800,22 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta('User', null, null, null, 'Contacts', false);
+        SugarBean::createRelationshipMeta('User', null, null, null, 'Contacts');
         self::assertCount(6, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta('User', $this->db, null, null, 'Contacts', false);
+        SugarBean::createRelationshipMeta('User', $this->db, null, null, 'Contacts');
         self::assertNotTrue(isset($GLOBALS['log']->calls['fatal']));
 
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta('Nonexists1', $this->db, null, null, 'Nonexists2', false);
+        SugarBean::createRelationshipMeta('Nonexists1', $this->db, null, null, 'Nonexists2');
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta('User', null, null, null, 'Contacts', false);
+        SugarBean::createRelationshipMeta('User', null, null, null, 'Contacts');
         self::assertCount(6, $GLOBALS['log']->calls['fatal']);
 
     }
@@ -814,7 +823,8 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     /**
      * Test for get_union_related_list()
      */
-    public function testGetUnionRelatedList() {
+    public function testGetUnionRelatedList()
+    {
         // test
         $GLOBALS['log']->reset();
         $results = SugarBean::get_union_related_list(null);
@@ -836,9 +846,9 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $parentBean = new SugarBeanMock();
         $subPanelDef = new aSubPanel(null, null, $parentBean);
         try {
-            $results = SugarBean::get_union_related_list($parentBean, "", '', "", 0, -1, -1, 0, $subPanelDef);
+            $results = SugarBean::get_union_related_list($parentBean, '', '', '', 0, -1, -1, 0, $subPanelDef);
             self::assertTrue(false);
-        } catch (\PHPUnit_Framework_Exception $e) {
+        } /** @noinspection PhpUndefinedClassInspection */ catch (\PHPUnit_Framework_Exception $e) {
             $code = $e->getCode();
             self::assertEquals(2, $code);
         }
@@ -850,9 +860,9 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $GLOBALS['log']->reset();
         $subPanelDef->_instance_properties['type'] = 'collection';
         try {
-            $results = SugarBean::get_union_related_list($parentBean, "", '', "", 0, -1, -1, 0, $subPanelDef);
+            $results = SugarBean::get_union_related_list($parentBean, '', '', '', 0, -1, -1, 0, $subPanelDef);
             self::assertTrue(false);
-        } catch (\PHPUnit_Framework_Exception $e) {
+        } /** @noinspection PhpUndefinedClassInspection */ catch (\PHPUnit_Framework_Exception $e) {
             $code = $e->getCode();
             self::assertEquals(2, $code);
         }
@@ -872,9 +882,9 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $subPanelDef->_instance_properties['get_subpanel_data'] = 'function';
         $subPanelDef->_instance_properties['generate_select'] = array();
         try {
-            $results = SugarBean::get_union_related_list($parentBean, "", '', "", 0, -1, -1, 0, $subPanelDef);
+            $results = SugarBean::get_union_related_list($parentBean, '', '', '', 0, -1, -1, 0, $subPanelDef);
             self::assertTrue(false);
-        } catch (\PHPUnit_Framework_Exception $e) {
+        } /** @noinspection PhpUndefinedClassInspection */ catch (\PHPUnit_Framework_Exception $e) {
             $code = $e->getCode();
             self::assertEquals(2, $code);
         }
