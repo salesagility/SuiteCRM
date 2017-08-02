@@ -693,7 +693,7 @@ class UserTest extends PHPUnit_Framework_TestCase
         $user = new User();
 
         $result = $user->retrieve_user_id("admin");
-        $this->assertEquals(1, $result);
+        static::assertEquals(false, $result);
     }
 
 

@@ -1901,7 +1901,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $c->save();
 
         $this->ea->stash($c->id, 'Contacts');
-        self::assertNotTrue(isset($GLOBALS['log']->calls['fatal']));
+        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 
 
         // test

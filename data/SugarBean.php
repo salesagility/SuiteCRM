@@ -212,7 +212,7 @@ class SugarBean
     public $field_defs;
 
     /**
-     * @var array $custom_fields
+     * @var DynamicField $custom_fields
      */
     public $custom_fields;
 
@@ -520,11 +520,18 @@ class SugarBean
     public function populateDefaultValues($force = false)
     {
         if (!is_array($this->field_defs)) {
+            $GLOBALS['log']->fatal('field_defs should be an array');
             return;
         }
         foreach ($this->field_defs as $field => $value) {
             if ((isset($value['default']) || !empty($value['display_default'])) && ($force || empty($this->$field))) {
-                $type = $value['type'];
+
+                if(!isset($value['type'])) {
+                    $GLOBALS['log']->fatal('Undefined index: type');
+                    $type = null;
+                } else {
+                    $type = $value['type'];
+                }
 
                 switch ($type) {
                     case 'date':
@@ -557,6 +564,9 @@ class SugarBean
                         }
                 } //switch
             }
+            // refact info:
+            // may we should htmlentities on field:
+            // $this->field = htmlentities($this->$field, ENT_QUOTES, 'UTF-8');
         } //foreach
     }
 
@@ -614,6 +624,10 @@ class SugarBean
         } else {
             if (isset($dictionary[$key]['relationships'])) {
                 $RelationshipDefs = $dictionary[$key]['relationships'];
+                if(!is_array($RelationshipDefs)) {
+                    $GLOBALS['log']->fatal('Relationship definitions should be an array');
+                    $RelationshipDefs = (array)$RelationshipDefs;
+                }
                 foreach ($RelationshipDefs as $rel_name) {
                     Relationship::delete($rel_name, $db);
                 }
@@ -660,7 +674,9 @@ class SugarBean
                     $dictionary = $GLOBALS['dictionary'];
                 }
             } else {
-                $GLOBALS['log']->debug("createRelationshipMeta: no metadata file found" . $filename);
+                $msg = "createRelationshipMeta: no metadata file found" . $filename;
+                $GLOBALS['log']->debug($msg);
+                $GLOBALS['log']->fatal($msg);
                 return;
             }
         }
@@ -709,7 +725,11 @@ class SugarBean
 
                         //create the record. todo add error check.
                         $insert_string = "INSERT into relationships (" . $column_list . ") values (" . $value_list . ")";
-                        $db->query($insert_string, true);
+                        if($db instanceof DBManager) {
+                            $db->query($insert_string, true);
+                        } else {
+                            $GLOBALS['log']->fatal('Invalid Argument: Argument 2 should be a DBManager, ' . get_class($db) . ' given.');
+                        }
                     }
                 }
             } else {
@@ -752,12 +772,20 @@ class SugarBean
         $final_query = '';
         $final_query_rows = '';
         $subpanel_list = array();
-        if ($subpanel_def->isCollection()) {
-            $subpanel_def->load_sub_subpanels();
-            $subpanel_list = $subpanel_def->sub_subpanels;
+        if (method_exists($subpanel_def, 'isCollection')) {
+            if ($subpanel_def->isCollection()) {
+                if($subpanel_def->load_sub_subpanels() === false) {
+                    $subpanel_list = array();
+                } else {
+                    $subpanel_list = $subpanel_def->sub_subpanels;
+                }
+            } else {
+                $subpanel_list[] = $subpanel_def;
+            }
         } else {
-            $subpanel_list[] = $subpanel_def;
+            $GLOBALS['log']->fatal('Subpanel definition should be an aSubPanel');
         }
+
 
         $first = true;
 
@@ -913,7 +941,13 @@ class SugarBean
             return $response;
         }
 
-        return $parentbean->process_union_list_query($parentbean, $final_query, $row_offset, $limit, $max, '', $subpanel_def, $final_query_rows, $secondary_queries);
+        if(method_exists($parentbean, 'process_union_list_query')) {
+            return $parentbean->process_union_list_query($parentbean, $final_query, $row_offset, $limit, $max, '',
+                $subpanel_def, $final_query_rows, $secondary_queries);
+        } else {
+            $GLOBALS['log']->fatal('Parent bean should be a SugarBean');
+            return null;
+        }
     }
 
     /**
@@ -957,7 +991,9 @@ class SugarBean
                 } else {
                     $related_field_name = $this_subpanel->get_data_source_name();
                     if (!$parentbean->load_relationship($related_field_name)) {
-                        unset($parentbean->$related_field_name);
+                        if(isset($parentbean->$related_field_name)) {
+                            unset($parentbean->$related_field_name);
+                        }
                         continue;
                     }
                     $query_array = $parentbean->$related_field_name->getSubpanelQuery(array(), true);

@@ -1,31 +1,48 @@
 <?php
 
+include_once __DIR__ . '/../../TestLogger.php';
+include_once __DIR__ . '/SugarBeanMock.php';
+include_once __DIR__ . '/../../../include/SubPanel/SubPanelDefinitions.php';
 
+/** @noinspection PhpUndefinedClassInspection */
 class SugarBeanTest extends PHPUnit_Framework_TestCase
 {
 
     protected $env = array();
 
-    public function setUp() {
+    protected $log;
+
+    protected $db;
+
+    public function setUp()
+    {
         global $current_user;
         $current_user = new User();
         get_sugar_config_defaults();
 
-        if(isset($GLOBALS['reload_vardefs'])) {
+        $this->db = DBManagerFactory::getInstance();
+
+        $this->log = $GLOBALS['log'];
+        $GLOBALS['log'] = new TestLogger();
+
+        if (isset($GLOBALS['reload_vardefs'])) {
             $this->env['$GLOBALS']['reload_vardefs'] = $GLOBALS['reload_vardefs'];
         }
-        if(isset($GLOBALS['dictionary'])) {
+        if (isset($GLOBALS['dictionary'])) {
             $this->env['$GLOBALS']['dictionary'] = $GLOBALS['dictionary'];
         }
     }
 
-    public function tearDown() {
-        if(isset($this->env['$GLOBALS']['reload_vardefs'])) {
+    public function tearDown()
+    {
+        if (isset($this->env['$GLOBALS']['reload_vardefs'])) {
             $GLOBALS['reload_vardefs'] = $this->env['$GLOBALS']['reload_vardefs'];
         }
-        if(isset($this->env['$GLOBALS']['dictionary'])) {
+        if (isset($this->env['$GLOBALS']['dictionary'])) {
             $GLOBALS['dictionary'] = $this->env['$GLOBALS']['dictionary'];
         }
+
+        $GLOBALS['log'] = $this->log;
     }
 
     /**
@@ -34,8 +51,6 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     public function testConstruct()
     {
         global $dictionary;
-
-        $_REQUEST['test1'] = true;
 
         // test dup3
         include_once __DIR__ . '/../../../modules/AM_ProjectTemplates/AM_ProjectTemplates_sugar.php';
@@ -52,7 +67,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertSame(DBManagerFactory::getInstance(), $bean->custom_fields->db);
         self::assertSame($bean, $bean->custom_fields->bean);
         self::assertEquals('AM_ProjectTemplates', $bean->custom_fields->module);
-        self::assertEquals(Array (
+        self::assertEquals(Array(
             0 => 'id',
             1 => 'name',
             2 => 'date_entered',
@@ -78,7 +93,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         ), $bean->column_fields);
 
         $keys = array_keys($bean->field_name_map);
-        self::assertEquals(Array (
+        self::assertEquals(Array(
             0 => 'id',
             1 => 'name',
             2 => 'date_entered',
@@ -111,7 +126,10 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
 
         // test
+
+        $GLOBALS['log']->reset();
         $bean = new SugarBean();
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
         self::assertInstanceOf(DBManager::class, $bean->db);
         self::assertEquals('', $bean->module_name);
         self::assertNotTrue(isset($bean->required_fields));
@@ -396,7 +414,6 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertNotTrue(isset($bean->acl_fields));
 
 
-
         // test
         $GLOBALS['reload_vardefs'] = true;
         $dictionary['']['fields'] = $dictionary['User']['fields'];
@@ -509,6 +526,362 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertEquals(array(), $bean->list_fields);
         self::assertNotTrue(isset($bean->added_custom_field_defs));
         self::assertNotTrue(isset($bean->acl_fields));
+
+    }
+
+    public function testSetupCustomFields()
+    {
+        $bean = new SugarBean();
+
+        // test
+        $bean->setupCustomFields('test');
+        self::assertEquals('custom/Extension/modules/test/Ext/Vardefs', $bean->custom_fields->base_path);
+
+        // test
+        $bean->setupCustomFields('Users');
+        self::assertEquals('custom/Extension/modules/Users/Ext/Vardefs', $bean->custom_fields->base_path);
+    }
+
+    public function testBeanImplements()
+    {
+        $bean = new SugarBean();
+
+        // test
+        $results = $bean->bean_implements('test');
+        self::assertEquals(false, $results);
+    }
+
+    public function testPopulateDefaultValues()
+    {
+
+        $testBean1 = new SugarBean();
+        $testBean1->field_defs = null;
+        $results = $testBean1->populateDefaultValues();
+        self::assertEquals(null, $results);
+        self::assertEquals(null, $testBean1->field_defs);
+
+        // test
+        $bean = new SugarBean();
+        $force = false;
+        $fieldDefsBefore = $bean->field_defs;
+        $results = $bean->populateDefaultValues($force);
+        self::assertEquals(null, $results);
+        self::assertEquals($fieldDefsBefore, $bean->field_defs);
+
+
+        // test
+        $bean = new SugarBean();
+        $force = true;
+        $bean->field_defs['test'] = array(
+            'default' => true,
+        );
+        $results = $bean->populateDefaultValues($force);
+        self::assertEquals(null, $results);
+        self::assertEquals(array(
+            'test' => array(
+                'default' => true,
+            ),
+        ), $bean->field_defs);
+
+
+        // test
+        $bean = new SugarBean();
+        $force = true;
+        $bean->field_defs['test'] = array(
+            'default' => true,
+        );
+        $results = $bean->populateDefaultValues($force);
+        self::assertEquals(null, $results);
+        self::assertEquals(array(
+            'test' => array(
+                'default' => true,
+            ),
+        ), $bean->field_defs);
+        $field = 'test';
+        self::assertEquals(1, $bean->$field);
+
+
+
+        // test
+        $bean = new SugarBean();
+        $force = true;
+        $bean->field_defs['test'] = array(
+            'default' => '<b>bold</b>',
+        );
+        $results = $bean->populateDefaultValues($force);
+        self::assertEquals(null, $results);
+        self::assertEquals(array(
+            'test' => array(
+                'default' => '<b>bold</b>',
+            ),
+        ), $bean->field_defs);
+        $field = 'test';
+        self::assertEquals('&lt;b&gt;bold&lt;/b&gt;', $bean->$field);
+
+
+        // test
+        $bean = new SugarBean();
+        $force = true;
+        $bean->field_defs['test'] = array(
+            'default' => '',
+        );
+        $results = $bean->populateDefaultValues($force);
+        self::assertEquals(null, $results);
+        self::assertEquals(array(
+            'test' => array(
+                'default' => '',
+            ),
+        ), $bean->field_defs);
+        $field = 'test';
+        self::assertEquals('', $bean->$field);
+
+
+        // test
+        $bean = new SugarBean();
+        $force = true;
+        $bean->field_defs['test'] = array(
+            'default' => '<b>bold</b>',
+            'type' => 'multienum',
+        );
+        $results = $bean->populateDefaultValues($force);
+        self::assertEquals(null, $results);
+        self::assertEquals(array(
+            'test' => array(
+                'default' => '<b>bold</b>',
+                'type' => 'multienum',
+            ),
+        ), $bean->field_defs);
+        $field = 'test';
+        self::assertEquals('<b>bold</b>', $bean->$field);
+
+
+
+
+        // test
+        $bean = new SugarBean();
+        $force = true;
+        $bean->field_defs['test'] = array(
+            'display_default' => '<b>bold</b>',
+            'type' => 'multienum',
+        );
+        $results = $bean->populateDefaultValues($force);
+        self::assertEquals(null, $results);
+        self::assertEquals(array(
+            'test' => array(
+                'display_default' => '<b>bold</b>',
+                'type' => 'multienum',
+            ),
+        ), $bean->field_defs);
+        $field = 'test';
+        self::assertEquals('<b>bold</b>', $bean->$field);
+
+
+
+
+        // test
+        $bean = new SugarBean();
+        $force = true;
+        $bean->field_defs['test'] = array(
+            'display_default' => '<b>bold</b>',
+            'type' => 'datetime',
+        );
+        $bean->field_defs['test2'] = array(
+            'display_default' => '<b>bold</b>',
+            'type' => 'date',
+        );
+        $exception = null;
+        try {
+            $results = $bean->populateDefaultValues($force);
+            // this function call should failed with an exception
+            self::assertTrue(false);
+        } catch (\PHPUnit_Framework_Exception $e) {
+            $exception = $e;
+            self::assertEquals(2, $e->getCode());
+        }
+        self::assertNotNull($exception);
+        self::assertEquals(null, $results);
+        self::assertEquals(array(
+            'test' => array(
+                'display_default' => '<b>bold</b>',
+                'type' => 'datetime',
+            ),
+            'test2' => array(
+                'display_default' => '<b>bold</b>',
+                'type' => 'date',
+            ),
+        ), $bean->field_defs);
+        $field = 'test';
+        self::assertEquals('<b>bold</b>', $bean->$field);
+
+    }
+
+    public function testParseDateDefault() {
+        $bean = new SugarBeanMock();
+
+        // test
+        try {
+            $bean->publicParseDateDefault(null);
+            self::assertTrue(false);
+        } catch (\PHPUnit_Framework_Exception $e) {
+            $code = $e->getCode();
+            self::assertEquals(2, $code);
+        }
+
+        // test
+        $results = $bean->publicParseDateDefault('2015-05-05');
+        self::assertEquals('05/05/2015', $results);
+
+        // test
+        $results = $bean->publicParseDateDefault('2015-05-05', true);
+        self::assertNotEquals('05/05/2015', $results);
+        self::assertEquals(1, preg_match('/05\/05\/2015 \d{2}:\d{2}/', $results));
+
+        // test
+        $results = $bean->publicParseDateDefault('2015-05-05 11:11', true);
+        self::assertEquals('05/05/2015 11:11', $results);
+
+        // test
+        $results = $bean->publicParseDateDefault('2015-05-05&11:11', true);
+        self::assertEquals('05/05/2015 11:11', $results);
+    }
+
+    public function testRemoveRelationshipMeta() {
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::removeRelationshipMeta(null, null, null, null, null);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::removeRelationshipMeta(null, null, null, null, 'Contacts');
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::removeRelationshipMeta('key', null, null, array('key' => 'value'), 'Tests');
+        self::assertNotTrue(isset($GLOBALS['log']->calls['fatal']));
+
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::removeRelationshipMeta('key', null, null, array(
+            'key' => array(
+                'relationships' => true,
+            ),
+        ), 'Tests');
+        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+
+    }
+
+    public function testCreateRelationshipMeta()
+    {
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::createRelationshipMeta(null, null, null, null, null);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::createRelationshipMeta(null, null, null, null, 'Contacts');
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::createRelationshipMeta(null, null, null, null, 'Contacts', true);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::createRelationshipMeta('User', null, null, null, 'Contacts', false);
+        self::assertCount(6, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::createRelationshipMeta('User', $this->db, null, null, 'Contacts', false);
+        self::assertNotTrue(isset($GLOBALS['log']->calls['fatal']));
+
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::createRelationshipMeta('Nonexists1', $this->db, null, null, 'Nonexists2', false);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::createRelationshipMeta('User', null, null, null, 'Contacts', false);
+        self::assertCount(6, $GLOBALS['log']->calls['fatal']);
+
+    }
+
+    /**
+     * Test for get_union_related_list()
+     */
+    public function testGetUnionRelatedList() {
+        // test
+        $GLOBALS['log']->reset();
+        $results = SugarBean::get_union_related_list(null);
+        self::assertCount(3, $GLOBALS['log']->calls['fatal']);
+        self::assertEquals(null, $results);
+
+
+        // test
+        $GLOBALS['log']->reset();
+        $_SESSION['show_deleted'] = 1;
+        $results = SugarBean::get_union_related_list(null);
+        self::assertCount(3, $GLOBALS['log']->calls['fatal']);
+        self::assertEquals(null, $results);
+
+
+        // test
+        $GLOBALS['log']->reset();
+        $_SESSION['show_deleted'] = 1;
+        $parentBean = new SugarBeanMock();
+        $subPanelDef = new aSubPanel(null, null, $parentBean);
+        try {
+            $results = SugarBean::get_union_related_list($parentBean, "", '', "", 0, -1, -1, 0, $subPanelDef);
+            self::assertTrue(false);
+        } catch (\PHPUnit_Framework_Exception $e) {
+            $code = $e->getCode();
+            self::assertEquals(2, $code);
+        }
+        self::assertCount(3, $GLOBALS['log']->calls['fatal']);
+        self::assertEquals(null, $results);
+
+
+        // test
+        $GLOBALS['log']->reset();
+        $subPanelDef->_instance_properties['type'] = 'collection';
+        try {
+            $results = SugarBean::get_union_related_list($parentBean, "", '', "", 0, -1, -1, 0, $subPanelDef);
+            self::assertTrue(false);
+        } catch (\PHPUnit_Framework_Exception $e) {
+            $code = $e->getCode();
+            self::assertEquals(2, $code);
+        }
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+        self::assertEquals(null, $results);
+
+
+        // test
+        $GLOBALS['log']->reset();
+        $_SESSION['show_deleted'] = 1;
+        $parentBean = new SugarBeanMock();
+        $subPanelDef = new aSubPanel(null, null, $parentBean);
+        $subPanelDef->_instance_properties['type'] = 'collection';
+        $subPanelDef->_instance_properties['collection_list'] = array(
+            array('module' => 'Contacts'),
+        );
+        $subPanelDef->_instance_properties['get_subpanel_data'] = 'function';
+        $subPanelDef->_instance_properties['generate_select'] = array();
+        try {
+            $results = SugarBean::get_union_related_list($parentBean, "", '', "", 0, -1, -1, 0, $subPanelDef);
+            self::assertTrue(false);
+        } catch (\PHPUnit_Framework_Exception $e) {
+            $code = $e->getCode();
+            self::assertEquals(2, $code);
+        }
+
+        self::assertCount(5, $GLOBALS['log']->calls['fatal']);
+        self::assertEquals(null, $results);
+
 
     }
 
