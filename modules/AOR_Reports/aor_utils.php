@@ -123,22 +123,33 @@ function requestToUserParameters()
                 );
             }
 
+            // determine if parameter is a date
             if ($_REQUEST['parameter_type'][$key] === 'Value') {
-                $value = convertToDateTime($_REQUEST['parameter_value'][$key])->format('Y-m-d H:i:s');
-                if (strpos($value, '1970') !== false) {
-                    $params[$parameterId] = array(
-                        'id' => $parameterId,
-                        'operator' => $_REQUEST['parameter_operator'][$key],
-                        'type' => $_REQUEST['parameter_type'][$key],
-                        'value' => $_REQUEST['parameter_value'][$key],
-                    );
-                } else {
-                    $params[$parameterId] = array(
-                        'id' => $parameterId,
-                        'operator' => $_REQUEST['parameter_operator'][$key],
-                        'type' => $_REQUEST['parameter_type'][$key],
-                        'value' => convertToDateTime($_REQUEST['parameter_value'][$key])->format('Y-m-d H:i:s'),
-                    );
+                $paramLength = strlen($_REQUEST['parameter_value'][$key]);
+                $paramValue = $_REQUEST['parameter_value'][$key];
+                if ($paramLength === 10) {
+                    if (strpos($paramValue, '/') === 2 || strpos($paramValue, '/') === 4) {
+                        $params[$parameterId] = array(
+                            'id' => $parameterId,
+                            'operator' => $_REQUEST['parameter_operator'][$key],
+                            'type' => $_REQUEST['parameter_type'][$key],
+                            'value' => convertToDateTime($_REQUEST['parameter_value'][$key])->format('Y-m-d H:i:s'),
+                        );
+                    } elseif (strpos($paramValue, '-') === 2 || strpos($paramValue, '-') === 4) {
+                        $params[$parameterId] = array(
+                            'id' => $parameterId,
+                            'operator' => $_REQUEST['parameter_operator'][$key],
+                            'type' => $_REQUEST['parameter_type'][$key],
+                            'value' => convertToDateTime($_REQUEST['parameter_value'][$key])->format('Y-m-d H:i:s'),
+                        );
+                    } elseif (strpos($paramValue, '.') === 2 || strpos($paramValue, '.') === 4) {
+                        $params[$parameterId] = array(
+                            'id' => $parameterId,
+                            'operator' => $_REQUEST['parameter_operator'][$key],
+                            'type' => $_REQUEST['parameter_type'][$key],
+                            'value' => convertToDateTime($_REQUEST['parameter_value'][$key])->format('Y-m-d H:i:s'),
+                        );
+                    }
                 }
             }
         }
