@@ -608,6 +608,10 @@ class SugarBean
                 $GLOBALS['log']->fatal('DateTime error: ' . $e->getMessage());
                 throw $e;
             }
+            if(is_bool($results)) {
+                $GLOBALS['log']->fatal('Type Error: Argument 1 passed to TimeDate::asUser() must be an instance of DateTime, boolean given');
+                return false;
+            }
             return $timedate->asUserDate($results);
         }
     }
