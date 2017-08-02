@@ -11,8 +11,8 @@ sudo: required
 dist: trusty
 addons:
   browserstack:
-    username: $BROWSERSTACK_USERNAME
-    access_key: $BROWSERSTACK_ACCESS_KEY
+    username: %BROWSERSTACK_USERNAME%
+    access_key: %BROWSERSTACK_ACCESS_KEY%
 
 services:
   # TODO: use docker to support different databases
