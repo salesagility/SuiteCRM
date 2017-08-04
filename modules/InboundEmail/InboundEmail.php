@@ -347,30 +347,20 @@ class InboundEmail extends SugarBean
         if (stristr($order['orderBy'], 'date') !== false) {
             $sortCriteria = SORTDATE;
             $sortCRM = 'udate';
-        } else {
-            if (stristr($order['orderBy'], 'to') !== false) {
-                $sortCriteria = SORTTO;
-                $sortCRM = 'to';
-            } else {
-                if (stristr($order['orderBy'], 'from') !== false) {
-                    $sortCriteria = SORTFROM;
-                    $sortCRM = 'from';
-                } else {
-                    if (stristr($order['orderBy'], 'cc') !== false) {
-                        $sortCriteria = SORTCC;
-                    } else {
-                        if (stristr($order['orderBy'], 'name') !== false) {
-                            $sortCriteria = SORTSUBJECT;
-                            $sortCRM = 'subject';
-                        } else {
-                            if (stristr($order['orderBy'], 'subject') !== false) {
-                                $sortCriteria = SORTSUBJECT;
-                                $sortCRM = 'subject';
-                            }
-                        }
-                    }
-                }
-            }
+        } elseif (stristr($order['orderBy'], 'to') !== false) {
+            $sortCriteria = SORTTO;
+            $sortCRM = 'to';
+        } elseif (stristr($order['orderBy'], 'from') !== false) {
+            $sortCriteria = SORTFROM;
+            $sortCRM = 'from';
+        } elseif (stristr($order['orderBy'], 'cc') !== false) {
+            $sortCriteria = SORTCC;
+        } elseif (stristr($order['orderBy'], 'name') !== false) {
+            $sortCriteria = SORTSUBJECT;
+            $sortCRM = 'subject';
+        } elseif (stristr($order['orderBy'], 'subject') !== false) {
+            $sortCriteria = SORTSUBJECT;
+            $sortCRM = 'subject';
         }
 
         // handle filtering
@@ -403,10 +393,8 @@ class InboundEmail extends SugarBean
         // paginate
         if ($offset === "end") {
             $offset = $lastSequenceNumber - $pageSize;
-        } else {
-            if ($offset <= 0) {
-                $offset = 0;
-            }
+        } elseif ($offset <= 0) {
+            $offset = 0;
         }
 
         $uids = array_slice($emailSortedHeaders, $offset, $pageSize);
@@ -437,15 +425,14 @@ class InboundEmail extends SugarBean
 
 
         usort($emailHeaders, function ($a, $b) use ($sortCRM) {  // defaults to DESC order
-            if ($a[$sortCRM] === $b[$sortCRM]) {
+            if($a[$sortCRM] === $b[$sortCRM]) {
                 return 0;
+            } elseif($a[$sortCRM] < $b[$sortCRM]) {
+                return 1;
             } else {
-                if ($a[$sortCRM] < $b[$sortCRM]) {
-                    return 1;
-                } else {
-                    return -1;
-                }
+                return -1;
             }
+
         });
         if (!$sortOrder) {
             array_reverse($emailHeaders);
