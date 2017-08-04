@@ -1546,107 +1546,115 @@ class AOR_Report extends Basic
                                     $equal_query = "( $field  BETWEEN '" . $this->db->quote($condition->value) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
                                     $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_query;
                                 } elseif ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
-                                        $dateTime = convertToDateTime($condition->value);
+                                    $dateTime = convertToDateTime($condition->value);
 
-                                        $query_date = $dateTime->format('Y-m-d H:i:s');
-                                        $equal_query = "( $field  BETWEEN '" . $this->db->quote($query_date);
-                                        $day_ahead = $dateTime->modify('+1 day');
-                                        $equal_query .= "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
-                                        $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_query;
-                                    } else {
-                                        $value = "'" . $this->db->quote($condition->value) . "'";
-                                        break;
-                                    }
+                                    $query_date = $dateTime->format('Y-m-d H:i:s');
+                                    $equal_query = "( $field  BETWEEN '" . $this->db->quote($query_date);
+                                    $day_ahead = $dateTime->modify('+1 day');
+                                    $equal_query .= "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
+                                    $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_query;
+                                } else {
+                                    $value = "'" . $this->db->quote($condition->value) . "'";
+                                    break;
+                                }
                                 $where_set = true;
                             } elseif ($condition->operator === 'Not_Equal_To') {
-                                    if ($dateTime !== false) {
-                                        $day_ahead = $dateTime->modify('+1 day');
-                                        $not_equal_query = "( $field NOT BETWEEN '" . $this->db->quote($condition->value) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
-                                        $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $not_equal_query;
-                                    } elseif ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
-                                            $dateTime = convertToDateTime($condition->value);
+                                if ($dateTime !== false) {
+                                    $day_ahead = $dateTime->modify('+1 day');
+                                    $not_equal_query = "( $field NOT BETWEEN '" . $this->db->quote($condition->value) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
+                                    $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $not_equal_query;
+                                } elseif ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
+                                    $dateTime = convertToDateTime($condition->value);
 
-                                            $query_date = $dateTime->format('Y-m-d H:i:s');
-                                            $not_equal_query = "( $field NOT BETWEEN '" . $this->db->quote($query_date);
-                                            $day_ahead = $dateTime->modify('+1 day');
-                                            $not_equal_query .= "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
-                                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $not_equal_query;
-                                        } else {
-                                            $value = "'" . $this->db->quote($condition->value) . "'";
-                                            break;
-                                        }
-                                    $where_set = true;
-                                } elseif ($condition->operator === 'Greater_Than') {
-                                        if ($dateTime !== false) {
-                                            $greater_than_query = "( $field > '" . $this->db->quote($condition->value) . "' ) ";
-                                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $greater_than_query;
-                                        } elseif ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
-                                                $dateTime = convertToDateTime($condition->value);
+                                    $query_date = $dateTime->format('Y-m-d H:i:s');
+                                    $not_equal_query = "( $field NOT BETWEEN '" . $this->db->quote($query_date);
+                                    $day_ahead = $dateTime->modify('+1 day');
+                                    $not_equal_query .= "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
+                                    $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $not_equal_query;
+                                } else {
+                                    $value = "'" . $this->db->quote($condition->value) . "'";
+                                    break;
+                                }
+                                $where_set = true;
+                            } elseif ($condition->operator === 'Greater_Than') {
+                                if ($dateTime !== false) {
+                                    $greater_than_query = "( $field > '" . $this->db->quote($condition->value) . "' ) ";
+                                    $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $greater_than_query;
+                                } elseif ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
+                                    $dateTime = convertToDateTime($condition->value);
 
-                                                $query_date = $dateTime->format('Y-m-d H:i:s');
-                                                $greater_than_query = "( $field > '" . $this->db->quote($query_date) . "' ) ";
-                                                $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $greater_than_query;
-                                            } else {
-                                                $value = "'" . $this->db->quote($condition->value) . "'";
-                                                break;
-                                            }
-                                        $where_set = true;
-                                    } elseif ($condition->operator === 'Less_Than') {
-                                            if ($dateTime !== false) {
-                                                $less_than_query = "( $field < '" . $this->db->quote($condition->value) . "' ) ";
-                                                $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $less_than_query;
-                                            } elseif ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
-                                                    $dateTime = convertToDateTime($condition->value);
+                                    $query_date = $dateTime->format('Y-m-d H:i:s');
+                                    $greater_than_query = "( $field > '" . $this->db->quote($query_date) . "' ) ";
+                                    $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $greater_than_query;
+                                } else {
+                                    $value = "'" . $this->db->quote($condition->value) . "'";
+                                    break;
+                                }
+                                $where_set = true;
+                            } elseif ($condition->operator === 'Less_Than') {
+                                if ($dateTime !== false) {
+                                    $less_than_query = "( $field < '" . $this->db->quote($condition->value) . "' ) ";
+                                    $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $less_than_query;
+                                } elseif ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
+                                    $dateTime = convertToDateTime($condition->value);
 
-                                                    $query_date = $dateTime->format('Y-m-d H:i:s');
-                                                    $less_than_query = "( $field < '" . $this->db->quote($query_date) . "' ) ";
-                                                    $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $less_than_query;
-                                                } else {
-                                                    $value = "'" . $this->db->quote($condition->value) . "'";
-                                                    break;
-                                                }
-                                            $where_set = true;
-                                        } elseif ($condition->operator === 'Greater_Than_or_Equal_To') {
-                                                if ($dateTime !== false) {
-                                                    $equal_greater_than_query = "( $field > '" . $this->db->quote($condition->value) . "'";
-                                                    $day_ahead = $dateTime->modify('+1 day');
-                                                    $equal_greater_than_query .= " OR $field  BETWEEN '" . $this->db->quote($condition->value) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
-                                                    $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_greater_than_query;
-                                                } elseif ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
-                                                        $dateTime = convertToDateTime($condition->value);
+                                    $query_date = $dateTime->format('Y-m-d H:i:s');
+                                    $less_than_query = "( $field < '" . $this->db->quote($query_date) . "' ) ";
+                                    $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $less_than_query;
+                                } else {
+                                    $value = "'" . $this->db->quote($condition->value) . "'";
+                                    break;
+                                }
+                                $where_set = true;
+                            } elseif ($condition->operator === 'Greater_Than_or_Equal_To') {
+                                if ($dateTime !== false) {
+                                    $equal_greater_than_query = "( $field > '" . $this->db->quote($condition->value) . "'";
+                                    $day_ahead = $dateTime->modify('+1 day');
+                                    $equal_greater_than_query .= " OR $field  BETWEEN '" . $this->db->quote($condition->value) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
+                                    $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_greater_than_query;
+                                } elseif ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
+                                    $dateTime = convertToDateTime($condition->value);
 
-                                                        $query_date = $dateTime->format('Y-m-d H:i:s');
-                                                        $equal_greater_than_query = "( $field > '" . $this->db->quote($query_date) . "'";
-                                                        $day_ahead = $dateTime->modify('+1 day');
-                                                        $equal_greater_than_query .= " OR $field  BETWEEN '" . $this->db->quote($query_date) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
-                                                        $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_greater_than_query;
-                                                    } else {
-                                                        $value = "'" . $this->db->quote($condition->value) . "'";
-                                                        break;
-                                                    }
-                                                $where_set = true;
-                                            } elseif ($condition->operator === 'Less_Than_or_Equal_To') {
-                                                    if ($dateTime !== false) {
-                                                        $equal_less_than_query = "( $field < '" . $this->db->quote($condition->value) . "'";
-                                                        $day_ahead = $dateTime->modify('+1 day');
-                                                        $equal_less_than_query .= " OR $field  BETWEEN '" . $this->db->quote($condition->value) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
-                                                        $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_less_than_query;
-                                                    } elseif ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
-                                                            $dateTime = convertToDateTime($condition->value);
+                                    $query_date = $dateTime->format('Y-m-d H:i:s');
+                                    $equal_greater_than_query = "( $field > '" . $this->db->quote($query_date) . "'";
+                                    $day_ahead = $dateTime->modify('+1 day');
+                                    $equal_greater_than_query .= " OR $field  BETWEEN '" . $this->db->quote($query_date) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
+                                    $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_greater_than_query;
+                                } else {
+                                    $value = "'" . $this->db->quote($condition->value) . "'";
+                                    break;
+                                }
+                                $where_set = true;
+                            } elseif ($condition->operator === 'Less_Than_or_Equal_To') {
+                                if ($dateTime !== false) {
+                                    $equal_less_than_query = "( $field < '" . $this->db->quote($condition->value) . "'";
+                                    $day_ahead = $dateTime->modify('+1 day');
+                                    $equal_less_than_query .= " OR $field  BETWEEN '" . $this->db->quote($condition->value) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
+                                    $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_less_than_query;
+                                } elseif ($dateTime === false && $data['type'] === 'datetime') { // check for incorrectly converted dateTime
+                                    $dateTime = convertToDateTime($condition->value);
 
-                                                            $query_date = $dateTime->format('Y-m-d H:i:s');
-                                                            $equal_less_than_query = "( $field < '" . $this->db->quote($query_date) . "'";
-                                                            $day_ahead = $dateTime->modify('+1 day');
-                                                            $equal_less_than_query .= " OR $field  BETWEEN '" . $this->db->quote($query_date) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
-                                                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_less_than_query;
-                                                        } else {
-                                                            $value = "'" . $this->db->quote($condition->value) . "'";
-                                                            break;
-                                                        }
-                                                    $where_set = true;
-                                                } else {
-                                                    $value = "'" . $this->db->quote($condition->value) . "'";
-                                                }
+                                    $query_date = $dateTime->format('Y-m-d H:i:s');
+                                    $equal_less_than_query = "( $field < '" . $this->db->quote($query_date) . "'";
+                                    $day_ahead = $dateTime->modify('+1 day');
+                                    $equal_less_than_query .= " OR $field  BETWEEN '" . $this->db->quote($query_date) . "' AND '" . $this->db->quote($day_ahead->format('Y-m-d H:i:s')) . "' ) ";
+                                    $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $equal_less_than_query;
+                                } else {
+                                    $value = "'" . $this->db->quote($condition->value) . "'";
+                                    break;
+                                }
+                                $where_set = true;
+                            } elseif ($condition->operator === 'Contains') {
+                                if (strpos($condition->value, '^') === false) {
+                                    $value = '^' . str_replace (',', '^,^', $condition->value) . '^';
+                                    $value = "'" . $this->db->quote($value) . "'";
+                                } else {
+                                    $value = "'" . $this->db->quote($condition->value) . "'";
+                                    break;
+                                }
+                            } else {
+                                $value = "'" . $this->db->quote($condition->value) . "'";
+                            }
                             break;
                         default:
                             $value = "'" . $this->db->quote($condition->value) . "'";
