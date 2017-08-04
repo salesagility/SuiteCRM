@@ -29,12 +29,17 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     protected $dbManagerFactoryInstances;
 
     /**
+     * @var array
+     */
+    protected $sugarConfig;
+
+    /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
     public function setUp()
     {
-        global $current_user;
+        global $current_user, $sugar_config;
         $current_user = new User();
         get_sugar_config_defaults();
 
@@ -53,6 +58,8 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             $this->env['$GLOBALS']['dictionary'] = $GLOBALS['dictionary'];
         }
 
+        $this->sugarConfig = $sugar_config;
+
     }
 
     /**
@@ -61,6 +68,10 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
+        global $sugar_config;
+
+        $sugar_config = $this->sugarConfig;
+
         if (isset($this->env['$GLOBALS']['reload_vardefs'])) {
             $GLOBALS['reload_vardefs'] = $this->env['$GLOBALS']['reload_vardefs'];
         }
@@ -962,10 +973,10 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             $panel
         );
         $subpanel_def = null;
-        $parentbean = new SugarBeanMock();
+        $parentBean = new SugarBeanMock();
         $order_by = null;
         $GLOBALS['log']->reset();
-        $results = SugarBeanMock::publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentbean, $order_by);
+        $results = SugarBeanMock::publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentBean, $order_by);
         self::assertEquals(array(), $results);
         self::assertNotTrue(isset($GLOBALS['log']->calls['fatal']));
 
@@ -975,10 +986,10 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             new aSubPanel('Test', array(), new SugarBeanMock())
         );
         $subpanel_def = null;
-        $parentbean = null;
+        $parentBean = null;
         $order_by = null;
         $GLOBALS['log']->reset();
-        $results = SugarBeanMock::publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentbean, $order_by);
+        $results = SugarBeanMock::publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentBean, $order_by);
         self::assertEquals(array(
             array(
                 'select' => ' , \'Test\' panel_name ',
@@ -999,10 +1010,10 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             1
         );
         $subpanel_def = null;
-        $parentbean = null;
+        $parentBean = null;
         $order_by = null;
         $GLOBALS['log']->reset();
-        $results = SugarBeanMock::publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentbean, $order_by);
+        $results = SugarBeanMock::publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentBean, $order_by);
         self::assertEquals(array(), $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
@@ -1010,16 +1021,237 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         // test
         $subpanel_list = null;
         $subpanel_def = null;
-        $parentbean = null;
+        $parentBean = null;
         $order_by = null;
         $GLOBALS['log']->reset();
-        $results = SugarBeanMock::publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentbean, $order_by);
+        $results = SugarBeanMock::publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentBean, $order_by);
         self::assertEquals(array(), $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
     }
 
+    /**
+     * Test for process_union_list_query()
+     */
     public function testProcessUnionListQuery()
     {
+
+        global $sugar_config;
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $bean->id = 'test_contact_0';
+        $bean->save();
+        $query = /** @lang sql */
+            "INSERT INTO contacts (id) VALUES ('test_contact_1'), ('test_contact_2'), ('test_contact_3')";
+        $this->db->query($query);
+        $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
+        $tmp = $sugar_config['list_max_entries_per_subpanel'];
+        $sugar_config['list_max_entries_per_subpanel'] = 0;
+        $results = $bean->process_union_list_query($bean, /** @lang sql */
+            'SELECT DISTINCT count(*) AS c FROM contacts', null, 0, -1, '', $subpanelDefinition);
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
+        self::assertEquals(array(
+            'list' => Array(),
+            'parent_data' => Array(),
+            'row_count' => 3,
+            'next_offset' => 0,
+            'previous_offset' => 0,
+            'current_offset' => 0,
+            'query' => /** @lang sql */
+            'SELECT DISTINCT count(*) AS c FROM contacts',
+        ), $results);
+        $query = /** @lang sql */
+            "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
+        $this->db->query($query);
+        $sugar_config['list_max_entries_per_subpanel'] = $tmp;
+
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $bean->id = 'test_contact_0';
+        $bean->save();
+        $query = /** @lang sql */
+            "INSERT INTO contacts (id) VALUES ('test_contact_1'), ('test_contact_2'), ('test_contact_3')";
+        $this->db->query($query);
+        $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
+        $subpanelDefinition->_instance_properties['type'] = 'collection';
+        $results = $bean->process_union_list_query($bean, /** @lang sql */
+            'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
+        self::assertTrue(count($GLOBALS['log']->calls['fatal']) >= 6);
+        self::assertEquals(array(
+            'list' => Array(),
+            'parent_data' => Array(),
+            'row_count' => 3,
+            'next_offset' => 10,
+            'previous_offset' => -10,
+            'current_offset' => 0,
+            'query' => /** @lang sql */
+            'SELECT DISTINCT count(*) AS c FROM contacts',
+        ), $results);
+        $query = /** @lang text */
+            "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
+        $this->db->query($query);
+
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $bean->id = 'test_contact_0';
+        $bean->save();
+        $query = /** @lang text */
+            "INSERT INTO contacts (id) VALUES ('test_contact_1'), ('test_contact_2'), ('test_contact_3')";
+        $this->db->query($query);
+        $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
+        $subpanelDefinition->_instance_properties['type'] = 'collection';
+        $results = $bean->process_union_list_query($bean, /** @lang sql */
+            'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
+        self::assertTrue(count($GLOBALS['log']->calls['fatal']) >= 6);
+        self::assertEquals(array(
+            'list' => Array(),
+            'parent_data' => Array(),
+            'row_count' => 3,
+            'next_offset' => 10,
+            'previous_offset' => -10,
+            'current_offset' => 0,
+            'query' => /** @lang text */
+            'SELECT DISTINCT count(*) AS c FROM contacts',
+        ), $results);
+        $query = /** @lang text */
+            "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
+        $this->db->query($query);
+
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $bean->id = 'test_contact_0';
+        $bean->save();
+        $query = /** @lang text */
+            "INSERT INTO contacts (id) VALUES ('test_contact_1'), ('test_contact_2'), ('test_contact_3')";
+        $this->db->query($query);
+        $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
+        $subpanelDefinition->_instance_properties['type'] = 'collection';
+        $results = $bean->process_union_list_query($bean, /** @lang sql */
+            'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
+        self::assertTrue(count($GLOBALS['log']->calls['fatal']) >= 6);
+        self::assertEquals(array(
+            'list' => Array(),
+            'parent_data' => Array(),
+            'row_count' => 3,
+            'next_offset' => 10,
+            'previous_offset' => -10,
+            'current_offset' => 0,
+            'query' => /** @lang text */
+            'SELECT DISTINCT count(*) AS c FROM contacts',
+        ), $results);
+        $query = /** @lang text */
+            "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
+        $this->db->query($query);
+
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $bean->id = 'test_contact_0';
+        $bean->save();
+        $query = /** @lang text */
+            "INSERT INTO contacts (id) VALUES ('test_contact_1'), ('test_contact_2'), ('test_contact_3')";
+        $this->db->query($query);
+        $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
+        $results = $bean->process_union_list_query($bean, /** @lang sql */
+            'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
+        self::assertTrue(count($GLOBALS['log']->calls['fatal']) >= 6);
+        self::assertEquals(array(
+            'list' => Array(),
+            'parent_data' => Array(),
+            'row_count' => 3,
+            'next_offset' => 10,
+            'previous_offset' => -10,
+            'current_offset' => 0,
+            'query' => /** @lang text */
+            'SELECT DISTINCT count(*) AS c FROM contacts',
+        ), $results);
+        $query = /** @lang text */
+            "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
+        $this->db->query($query);
+
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $bean->id = 'test_contact_0';
+        $bean->save();
+        $query = /** @lang text */
+            "INSERT INTO contacts (id) VALUES ('test_contact_1'), ('test_contact_2'), ('test_contact_3')";
+        $this->db->query($query);
+        $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
+        $subpanelDefinition->template_instance = $bean;
+        $results = $bean->process_union_list_query($bean, /** @lang sql */
+            'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
+        self::assertCount(5, $GLOBALS['log']->calls['fatal']);
+        self::assertEquals(array(
+            'list' => Array('' => $bean),
+            'parent_data' => Array(),
+            'row_count' => 3,
+            'next_offset' => 10,
+            'previous_offset' => -10,
+            'current_offset' => 0,
+            'query' => /** @lang text */
+            'SELECT DISTINCT count(*) AS c FROM contacts',
+        ), $results);
+        $query = /** @lang text */
+            "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
+        $this->db->query($query);
+
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $bean->id = 'test_contact_0';
+        $bean->save();
+        $query = /** @lang text */
+            "INSERT INTO contacts (id) VALUES ('test_contact_1'), ('test_contact_2'), ('test_contact_3')";
+        $this->db->query($query);
+        $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
+        $results = $bean->process_union_list_query(null, /** @lang sql */
+            'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
+        self::assertTrue(count($GLOBALS['log']->calls['fatal']) >= 6);
+        self::assertEquals(array(
+            'list' => Array(),
+            'parent_data' => Array(),
+            'row_count' => 3,
+            'next_offset' => 10,
+            'previous_offset' => -10,
+            'current_offset' => 0,
+            'query' => /** @lang text */
+            'SELECT DISTINCT count(*) AS c FROM contacts',
+        ), $results);
+        $query = /** @lang text */
+            "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
+        $this->db->query($query);
+
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $bean->id = 'test_contact1';
+        $bean->save();
+        $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
+        $results = $bean->process_union_list_query(null, /** @lang sql */
+            'SELECT DISTINCT * FROM contacts', null, -1, -1, '', $subpanelDefinition);
+        self::assertTrue(2 <= count($GLOBALS['log']->calls['fatal']));
+        self::assertEquals(array(
+            'list' => Array(),
+            'parent_data' => Array(),
+            'row_count' => 0,
+            'next_offset' => 10,
+            'previous_offset' => -10,
+            'current_offset' => 0,
+            'query' => /** @lang sql */
+                'SELECT DISTINCT * FROM contacts',
+        ), $results);
 
 
         // test
@@ -1038,7 +1270,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             'previous_offset' => -10,
             'current_offset' => 0,
             'query' => /** @lang sql */
-            'SELECT DISTINCT * FROM contacts',
+                'SELECT DISTINCT * FROM contacts',
         ), $results);
 
 
@@ -1061,7 +1293,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             'previous_offset' => -10,
             'current_offset' => 0,
             'query' => /** @lang sql */
-            'SELECT DISTINCT * FROM contacts',
+                'SELECT DISTINCT * FROM contacts',
         ), $results);
 
 
@@ -1095,8 +1327,37 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             'previous_offset' => -11.0,
             'current_offset' => -1.0,
             'query' => /** @lang sql */
-            'SELECT DISTINCT * FROM contacts',
+                'SELECT DISTINCT * FROM contacts',
         ), $results);
+
+
+        // test
+        $sugar_config['disable_count_query'] = 1;
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $bean->id = 'test_contact_0';
+        $bean->save();
+        $query = /** @lang text */
+            "INSERT INTO contacts (id) VALUES ('test_contact_1'), ('test_contact_2'), ('test_contact_3')";
+        $this->db->query($query);
+        $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
+        $results = $bean->process_union_list_query(null, /** @lang sql */
+            'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
+        self::assertCount(7, $GLOBALS['log']->calls['fatal']);
+        self::assertEquals(array(
+            'list' => Array(),
+            'parent_data' => Array(),
+            'row_count' => 1,
+            'next_offset' => 10,
+            'previous_offset' => -10,
+            'current_offset' => 0,
+            'query' => /** @lang text */
+            'SELECT DISTINCT count(*) AS c FROM contacts',
+        ), $results);
+        $query = /** @lang text */
+            "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
+        $this->db->query($query);
+
 
     }
 
