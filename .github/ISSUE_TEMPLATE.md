@@ -10,6 +10,7 @@
 
 #### Actual Behavior
 <!--- Tell us what happens instead -->
+<!--- Also please check relevant logs (suitecrm.log, php error.log etc.) -->
 
 #### Possible Fix
 <!--- Not obligatory, but suggest a fix or reason for the bug -->
@@ -32,3 +33,4 @@
 * Browser name and version (e.g. Chrome Version 51.0.2704.63 (64-bit)):
 * Environment name and version (e.g. MySQL, PHP 7):
 * Operating System and version (e.g Ubuntu 16.04):
+
