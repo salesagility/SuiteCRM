@@ -77,6 +77,14 @@ require_once('include/formbase.php');
  $linked_field = $_REQUEST['linked_field'];
  $record = $_REQUEST['record'];
  $linked_id = $_REQUEST['linked_id'];
+
+if ($linked_field === 'aclroles') {
+    if (!ACLController::checkAccess($bean_name, 'edit', true)) {
+        ACLController::displayNoAccess();
+        sugar_cleanup(true);
+    }
+}
+
  if($bean_name == 'Team')
  {
  	$focus->retrieve($record);
