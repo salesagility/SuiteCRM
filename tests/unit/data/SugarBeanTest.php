@@ -1503,5 +1503,66 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Test for getAuditEnabledFieldDefinitions()
+     */
+    public function testGetAuditEnabledFieldDefinitions()
+    {
+
+        $GLOBALS['log']->reset();
+
+        // test
+        $bean = new SugarBeanMock();
+        $results = $bean->getAuditEnabledFieldDefinitions();
+        self::assertEquals(array(), $results);
+        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $bean = new Contact();
+        $results = $bean->getAuditEnabledFieldDefinitions();
+        self::assertEquals(array(
+            'assigned_user_id' => Array(
+                'name' => 'assigned_user_id',
+                'rname' => 'user_name',
+                'id_name' => 'assigned_user_id',
+                'vname' => 'LBL_ASSIGNED_TO_ID',
+                'group' => 'assigned_user_name',
+                'type' => 'relate',
+                'table' => 'users',
+                'module' => 'Users',
+                'reportable' => true,
+                'isnull' => 'false',
+                'dbType' => 'id',
+                'audited' => true,
+                'comment' => 'User ID assigned to record',
+                'duplicate_merge' => 'disabled',
+            ),
+            'do_not_call' => Array(
+                'name' => 'do_not_call',
+                'vname' => 'LBL_DO_NOT_CALL',
+                'type' => 'bool',
+                'default' => '0',
+                'audited' => true,
+                'comment' => 'An indicator of whether contact can be called',
+            ),
+            'phone_work' => Array(
+                'name' => 'phone_work',
+                'vname' => 'LBL_OFFICE_PHONE',
+                'type' => 'phone',
+                'dbType' => 'varchar',
+                'len' => 100,
+                'audited' => true,
+                'unified_search' => true,
+                'full_text_search' => Array(
+                    'boost' => 1
+                ),
+                'comment' => 'Work phone number of the contact',
+                'merge_filter' => 'enabled',
+            ),
+        ), $results);
+        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+
+    }
+
 
 }

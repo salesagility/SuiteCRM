@@ -1555,12 +1555,18 @@ class SugarBean
     {
         if (!isset($this->audit_enabled_fields)) {
             $this->audit_enabled_fields = array();
-            foreach ($this->field_defs as $field => $properties) {
-                if (
-                (
-                    !empty($properties['Audited']) || !empty($properties['audited']))
-                ) {
-                    $this->audit_enabled_fields[$field] = $properties;
+            if(!isset($this->field_defs)) {
+                $GLOBALS['log']->fatal('Field definition is not set.');
+            } elseif(!is_array($this->field_defs)) {
+                $GLOBALS['log']->fatal('Field definition is not an array.');
+            } else {
+                foreach ($this->field_defs as $field => $properties) {
+                    if (
+                    (
+                        !empty($properties['Audited']) || !empty($properties['audited']))
+                    ) {
+                        $this->audit_enabled_fields[$field] = $properties;
+                    }
                 }
             }
         }
