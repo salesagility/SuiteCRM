@@ -1891,7 +1891,16 @@ class SugarBean
                 if ($class == "Link2") {
                     $this->$rel_name = new $class($rel_name, $this);
                 } else {
-                    $this->$rel_name = new $class($fieldDefs[$rel_name]['relationship'], $this, $fieldDefs[$rel_name]);
+                    if(!class_exists($class)) {
+                        $GLOBALS['log']->fatal('Class not found: ' . $class);
+                    } else {
+                        if(!isset($fieldDefs[$rel_name]['relationship'])) {
+                            $GLOBALS['log']->fatal('Relationship not found');
+                        } else {
+                            $this->$rel_name = new $class($fieldDefs[$rel_name]['relationship'], $this,
+                                $fieldDefs[$rel_name]);
+                        }
+                    }
                 }
 
                 if (empty($this->$rel_name) ||

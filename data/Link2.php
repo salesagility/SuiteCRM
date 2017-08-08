@@ -98,8 +98,10 @@ class Link2
                     $this->def = $this->def[0];
                 } elseif (isset($this->def[1]['side']) && $this->def[1]['side'] == 'left') {
                     $this->def = $this->def[1];
-                } else {
+                } elseif (isset($this->def[0])){
                     $this->def = $this->def[0];
+                } else {
+                    $GLOBALS['log']->fatal('Link definition not found for: ' . $linkName);
                 }
             }
             if (empty($this->def['name'])) {
