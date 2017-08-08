@@ -1853,4 +1853,56 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Test for getFieldDefinition()
+     */
+    public function testGetFieldDefinition()
+    {
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $results = $bean->getFieldDefinition(null);
+        self::assertFalse($results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $results = $bean->getFieldDefinition('undefined');
+        self::assertFalse($results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $results = $bean->getFieldDefinition('name');
+        self::assertEquals(array(
+            'name' => 'name',
+            'rname' => 'name',
+            'vname' => 'LBL_NAME',
+            'type' => 'name',
+            'link' => true,
+            'fields' => array(
+                0 => 'first_name',
+                1 => 'last_name',
+            ),
+            'sort_on' => 'last_name',
+            'source' => 'non-db',
+            'group' => 'last_name',
+            'len' => '255',
+            'db_concat_fields' => array(
+                0 => 'first_name',
+                1 => 'last_name',
+            ),
+            'importable' => 'false',
+        ), $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+    }
+
 }
