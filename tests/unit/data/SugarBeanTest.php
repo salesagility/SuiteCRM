@@ -1987,4 +1987,33 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Test for __clone()
+     */
+    public function testClone()
+    {
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $clone = clone $bean;
+        self::assertEquals($bean, $clone);
+        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new SugarBeanMock();
+        $bean->foo = 'bar';
+        $bean->setLoadedRelationships(array('foo'));
+        $clone = clone $bean;
+        self::assertEquals('bar', $bean->foo);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertNotTrue(isset($clone->foo));
+        self::assertEquals($bean, $clone);
+        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+
+    }
+
 }
