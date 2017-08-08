@@ -1093,9 +1093,8 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $db->query($q);
 
         $c->id = "test_contact_{$i}";
-        $c->save();
         $result = $this->ea->getPrimaryAddress($c);
-        self::assertEquals('', $result);
+        self::assertEquals('test@email.com', $result);
 
         // test
         $q = /** @lang sql */
@@ -1135,7 +1134,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $db->query($q);
 
         $c->id = "test_contact_{$i}";
-        $c->save();
 
         $query = /** @lang sql */
             "UPDATE email_addr_bean_rel SET deleted = 0 WHERE email_address_id = 'test_email_{$i}'";
@@ -1892,7 +1890,6 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         // test
         $c = BeanFactory::getBean('Contacts');
         $c->id = 'test_contact_1';
-        $c->save();
 
         $a = BeanFactory::getBean('Accounts');
         $a->id = 'test_account_1';

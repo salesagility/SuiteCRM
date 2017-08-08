@@ -1079,7 +1079,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $subpanelDefinition->_instance_properties['type'] = 'collection';
         $results = $bean->process_union_list_query($bean, /** @lang sql */
             'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        self::assertTrue(count($GLOBALS['log']->calls['fatal']) >= 6);
+        self::assertCount(5, $GLOBALS['log']->calls['fatal']);
         self::assertEquals(array(
             'list' => Array(),
             'parent_data' => Array(),
@@ -1107,7 +1107,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $subpanelDefinition->_instance_properties['type'] = 'collection';
         $results = $bean->process_union_list_query($bean, /** @lang sql */
             'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        self::assertTrue(count($GLOBALS['log']->calls['fatal']) >= 6);
+        self::assertCount(5, $GLOBALS['log']->calls['fatal']);
         self::assertEquals(array(
             'list' => Array(),
             'parent_data' => Array(),
@@ -1135,7 +1135,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $subpanelDefinition->_instance_properties['type'] = 'collection';
         $results = $bean->process_union_list_query($bean, /** @lang sql */
             'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        self::assertTrue(count($GLOBALS['log']->calls['fatal']) >= 6);
+        self::assertCount(5, $GLOBALS['log']->calls['fatal']);
         self::assertEquals(array(
             'list' => Array(),
             'parent_data' => Array(),
@@ -1162,7 +1162,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
         $results = $bean->process_union_list_query($bean, /** @lang sql */
             'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        self::assertTrue(count($GLOBALS['log']->calls['fatal']) >= 6);
+        self::assertCount(5, $GLOBALS['log']->calls['fatal']);
         self::assertEquals(array(
             'list' => Array(),
             'parent_data' => Array(),

@@ -319,7 +319,10 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
         $mergeRecord->load_merge_bean('Contacts');
         $mergeRecord->populate_search_params(array('nameSearchField' => 'test', 'idSearchField' => '1'));
 
-        $expected = array("contacts.id='1'",  "contacts.name='test'", "contacts.id !=''");
+        $expected = array(
+            0 => "contacts.id='1'",
+            1 => "contacts.name='test'",
+        );
 
         $actual = $mergeRecord->create_where_statement();
 
