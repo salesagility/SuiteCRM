@@ -1651,6 +1651,10 @@ class SugarBean
      */
     public function getObjectName()
     {
+        if (!isset($this->object_name)) {
+            $GLOBALS['log']->fatal('"object_name" is not set');
+            return null;
+        }
         if ($this->object_name) {
             return $this->object_name;
         }
