@@ -35,9 +35,7 @@ class ModuleBuilder extends Administration
             $I->click('Save');
 
             // Close confirmation window
-            $I->waitForElementVisible('#sugarMsgWindow_mask');
-            $I->wait(3);
-            $I->click('.container-close');
+            $I->closePopupSuccess();
 
             // Create new module
             $I->click('New Module');
@@ -69,18 +67,16 @@ class ModuleBuilder extends Administration
                     break;
             }
 
-            $I->click('Save');
+            $I->doubleClick(['name' => 'savebtn']);
 
             // Close popup
-            $I->waitForElementVisible('#sugarMsgWindow_mask');
-            $I->wait(3);
-            $I->click('.container-close');
+            $I->closePopupSuccess();
 
             // Deploy module
             $I->waitForElementVisible('[name="name"]');
             $I->click('Module Builder');
             $I->waitForElementVisible('.bodywrapper');
-            $I->click($moduleName, '.bodywrapper');
+            $I->click($packageName, '.bodywrapper');
             $I->waitForElementVisible('[name="name"]');
             $I->click('Deploy');
 
@@ -89,9 +85,7 @@ class ModuleBuilder extends Administration
             }
 
             // Close popup
-            $I->waitForElementVisible('#sugarMsgWindow_mask');
-            $I->wait(3);
-            $I->click('.container-close');
+            $I->closePopupSuccess();
 
             // Wait for page to refresh and look for new package link
             $I->waitForElement('#newPackageLink', 360);
@@ -99,5 +93,51 @@ class ModuleBuilder extends Administration
         } else {
             $I->getScenario()->skip($packageName . ' already exists. Please remove package and module manually.');
         }
+    }
+
+
+    /**
+     * @param string $packageName
+     */
+    public function selectPackage($packageName)
+    {
+        $I = $this;
+
+        $I->gotoAdministration();
+
+        // Go To Module Builder
+        $I->click('#moduleBuilder');
+        $I->waitForElementVisible('.bodywrapper', 30);
+        $I->click($packageName, '.bodywrapper');
+        $I->waitForElementVisible(['name' => 'author'], 30);
+    }
+
+
+    /**
+     * @param string $packageName
+     * @param string $moduleName
+     */
+    public function selectModule($packageName, $moduleName)
+    {
+        $I = $this;
+
+        $I->gotoAdministration();
+
+        // Go To Module Builder
+        $I->click('#moduleBuilder');
+        $I->waitForElementVisible('.bodywrapper', 30);
+        $I->click($packageName, '.bodywrapper');
+        $I->waitForElementVisible(['name' => 'author'], 30);
+        $I->click($moduleName, '#package_modules');
+        $I->waitForElementVisible(['name' => 'savebtn'], 30);
+    }
+
+
+    public function closePopupSuccess()
+    {
+        $I = $this;
+        $I->waitForElementVisible('#sugarMsgWindow_mask', 30);
+        $I->waitForText('This operation is completed successfully', 30, '#sugarMsgWindow_c');
+        $I->click('.container-close');
     }
 }

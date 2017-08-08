@@ -13,6 +13,7 @@ class ListView  extends Tester
     public function clickNameLink($name)
     {
         $I = $this;
+        $I->waitForElementVisible('//*[@id="MassUpdate"]', 10);
         $I->click($name, '//*[@id="MassUpdate"]/div[3]/table');
     }
 
@@ -29,6 +30,7 @@ class ListView  extends Tester
     /**
      * Wait for for the list view to become visible
      */
+
     public function waitForListViewVisible()
     {
         $I = $this;

@@ -51,7 +51,7 @@ class NavigationBar extends  Tester
         switch ($breakpoint)
         {
             case DesignBreakPoint::lg:
-                $I->click('.desktop-bar #toolbar .globalLinks-desktop');
+                $I->moveMouseOver('.desktop-bar #toolbar .globalLinks-desktop');
                 $I->click($link, '.desktop-bar #toolbar .globalLinks-desktop');
                 break;
             case DesignBreakPoint::md:
@@ -141,26 +141,26 @@ class NavigationBar extends  Tester
         switch ($breakpoint)
         {
             case DesignBreakPoint::lg:
-                $I->click('//*[@id="toolbar"]/ul/li[2]/span[2]/a');
-                $I->waitForElementVisible('#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav ul.dropdown-menu > li.current-module-action-links > ul');
-                $I->waitForText($link, 30, '#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav ul.dropdown-menu > li.current-module-action-links > ul');
-                $I->click($link, '#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav ul.dropdown-menu > li.current-module-action-links');
+                $I->moveMouseOver('//*[@id="toolbar"]/ul/li[2]/span[2]/a');
+                $I->waitForElementVisible('#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav ul.dropdown-menu > li.current-module-action-links > ul', 30);
+                $I->waitForText($link, 30, '#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav > ul.dropdown-menu > li.current-module-action-links');
+                $I->click($link, '#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav > ul.dropdown-menu > li.current-module-action-links');
                 break;
             case DesignBreakPoint::md:
                 $I->click('div#mobileheader > div#modulelinks > .modulename > a');
-                $I->waitForElementVisible('div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
+                $I->waitForElementVisible('div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab', 30);
                 $I->waitForText($link, 30, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
                 $I->click($link, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
                 break;
             case DesignBreakPoint::sm:
                 $I->click('div#mobileheader > div#modulelinks > .modulename > a');
                 $I->waitForElementVisible('#modulelinks > ul.dropdown-menu');
-                $I->waitForText($link, 30, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
+                $I->waitForText($link, 30, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab', 30);
                 $I->click($link, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
                 break;
             case DesignBreakPoint::xs:
                 $I->click('div#mobileheader > div#modulelinks > .modulename > a');
-                $I->waitForElementVisible('div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
+                $I->waitForElementVisible('div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab', 30);
                 $I->waitForText($link, 30, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
                 $I->click($link, 'div#mobileheader > div#modulelinks > ul.dropdown-menu > li.mobile-current-actions > ul.mobileCurrentTab');
                 break;
