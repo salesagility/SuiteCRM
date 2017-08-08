@@ -1772,7 +1772,10 @@ class SugarBean
                 $this->$field = null;
                 continue;
             }
-            if (!empty($this->$field) && !empty($value['display_default']) && in_array($value['type'], array('date', 'datetime', 'datetimecombo')) &&
+            if (
+                !empty($this->$field) &&
+                !empty($value['display_default']) &&
+                in_array($value['type'], array('date', 'datetime', 'datetimecombo')) &&
                 $this->$field == $this->parseDateDefault($value['display_default'], ($value['type'] != 'date'))
             ) {
                 $this->$field = null;

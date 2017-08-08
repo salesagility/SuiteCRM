@@ -1945,4 +1945,46 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Test for unPopulateDefaultValues()
+     */
+    public function testUnPopulateDefaultValues()
+    {
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
+        $results = $bean->unPopulateDefaultValues();
+        self::assertEquals(null, $results);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals(null, $bean->portal_user_type);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals(null, $bean->jjwg_maps_lat_c);
+        /** @noinspection PhpUndefinedFieldInspection */
+        self::assertEquals(null, $bean->jjwg_maps_lng_c);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $bean->field_defs = false;
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
+        $results = $bean->unPopulateDefaultValues();
+        self::assertEquals(null, $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
+        $results = $bean->unPopulateDefaultValues();
+        self::assertEquals(null, $results);
+        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+
+    }
+
 }
