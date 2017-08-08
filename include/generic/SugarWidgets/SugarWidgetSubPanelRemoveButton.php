@@ -68,19 +68,19 @@ class SugarWidgetSubPanelRemoveButton extends SugarWidgetField
         //and if the condition is met delete button will be removed.
         $hideremove = false;
         if ($current_module === 'DocumentRevisions') {
-            if ($layout_def['fields']['ID'] == $layout_def['fields']['LATEST_REVISION_ID']) {
+            if ($layout_def['fields']['ID'] === $layout_def['fields']['LATEST_REVISION_ID']) {
                 $hideremove = true;
             }
-        } // Implicit Team-memberships are not "removeable"
-        elseif ($_REQUEST['module'] === 'Teams' && $current_module === 'Users') {
-            if ($layout_def['fields']['UPLINE'] != translate('LBL_TEAM_UPLINE_EXPLICIT', 'Users')) {
+        } elseif ($_REQUEST['module'] === 'Teams' && $current_module === 'Users') {
+            // Implicit Team-memberships are not "removeable"
+            if ($layout_def['fields']['UPLINE'] !== translate('LBL_TEAM_UPLINE_EXPLICIT', 'Users')) {
                 $hideremove = true;
             }
 
             //We also cannot remove the user whose private team is set to the parent_record_id value
             $user = new User();
             $user->retrieve($layout_def['fields']['ID']);
-            if ($parent_record_id == $user->getPrivateTeamID()) {
+            if ($parent_record_id === $user->getPrivateTeamID()) {
                 $hideremove = true;
             }
         } elseif ($current_module === 'ACLRoles' && (!ACLController::checkAccess($current_module, 'edit', true))) {
