@@ -1905,4 +1905,44 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Test for getFieldValue()
+     */
+    public function testGetFieldValue()
+    {
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $results = $bean->getFieldValue(null);
+        self::assertFalse($results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $results = $bean->getFieldValue('importable');
+        self::assertEquals(1, $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $results = $bean->getFieldValue('in_workflow');
+        self::assertEquals(0, $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $results = $bean->getFieldValue('portal_user_type');
+        self::assertEquals('Single', $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+    }
+
 }

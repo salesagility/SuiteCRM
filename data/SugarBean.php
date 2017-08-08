@@ -1717,7 +1717,7 @@ class SugarBean
      * The definitions were loaded in the constructor.
      *
      * @param string $name ,
-     * @return array Field properties or bool false if the field doesn't exist
+     * @return mixed Field properties or bool false if the field doesn't exist
      *
      * Internal function, do not override.
      */
