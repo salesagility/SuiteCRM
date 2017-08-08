@@ -1633,8 +1633,23 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $bean->id = 'test_contact_1';
         $bean->created_by = 1;
         $result = $bean->isOwner(1);
-        self::assertFalse($result);
+        self::assertTrue($result);
         self::assertEquals('test_contact_1', $bean->id);
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
+
+    }
+
+    /**
+     * Test for get_custom_table_name()
+     */
+    public function testGetCustomTableName()
+    {
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $result = $bean->get_custom_table_name();
+        self::assertEquals('contacts_cstm', $result);
         self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
     }
