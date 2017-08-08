@@ -2713,7 +2713,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     /**
      * Test for getRelatedFields()
      */
-    public function testGetRelatedFields()
+    public function testGetRelatedFieldsCamelCase()
     {
 
     }
@@ -2737,7 +2737,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     /**
      * Test for get_related_fields()
      */
-    public function testGetRelatedFields()
+    public function testGetRelatedFieldsSnakeCase()
     {
 
     }
