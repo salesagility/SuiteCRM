@@ -2217,4 +2217,46 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Test for get_linked_beans()
+     */
+    public function testGetLinkedBeans()
+    {
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $results = $bean->get_linked_beans(null);
+        self::assertEquals(array(), $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $results = $bean->get_linked_beans(null, 'Case');
+        self::assertEquals(array(), $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $bean->testKey = new ProspectLink('test', $bean);
+        $results = $bean->get_linked_beans('testKey', 'Case');
+        self::assertEquals(array(), $results);
+        self::assertCount(4, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $bean->testKey = new ProspectLink('test', $bean);
+        $results = $bean->get_linked_beans('testKey', 'Case', '', 0, 1);
+        self::assertEquals(array(), $results);
+        self::assertCount(4, $GLOBALS['log']->calls['fatal']);
+
+    }
+
 }
