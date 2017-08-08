@@ -1634,6 +1634,10 @@ class SugarBean
             return $this->table_name;
         }
         global $dictionary;
+        if(!isset($dictionary[$this->getObjectName()])) {
+            $GLOBALS['log']->fatal('Dictionary doesn\'t contains an index: ' . $this->getObjectName());
+            return null;
+        }
         return $dictionary[$this->getObjectName()]['table'];
     }
 
@@ -1655,6 +1659,10 @@ class SugarBean
         // as the key. The correct way to do this is to override this function
         // in bean and return the object name. That requires changing all the beans
         // as well as put the object name in the generator.
+        if(!isset($this->table_name)) {
+            $GLOBALS['log']->fatal('"table_name" is not set');
+            return null;
+        }
         return $this->table_name;
     }
 

@@ -1659,6 +1659,20 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetTableName()
     {
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new SugarBeanMock();
+        $result = $bean->getTableName();
+        self::assertEquals('', $result);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new SugarBeanMock();
+        unset($bean->table_name);
+        $result = $bean->getTableName();
+        self::assertEquals('', $result);
+        self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
