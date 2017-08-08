@@ -1443,27 +1443,51 @@ class SugarBean
         global $beanList, $beanFiles;
         $templates = array();
         $parent_child_map = array();
-        foreach ($type_info as $children_info) {
-            foreach ($children_info as $child_info) {
+
+        if(!is_array($type_info)) {
+            $GLOBALS['log']->warn('Type info is not an array');
+        }
+        foreach ((array)$type_info as $children_info) {
+            if(!is_array($children_info)) {
+                $GLOBALS['log']->warn('Children info is not an array');
+            }
+            foreach ((array)$children_info as $child_info) {
                 if ($child_info['type'] == 'parent') {
-                    if (empty($templates[$child_info['parent_type']])) {
+                    if(!isset($child_info['parent_type'])) {
+                        $GLOBALS['log']->fatal('"parent_type" is not set');
+                    }
+                    if (!isset($child_info['parent_type']) || empty($templates[$child_info['parent_type']])) {
                         //Test emails will have an invalid parent_type, don't try to load the non-existent parent bean
-                        if ($child_info['parent_type'] == 'test') {
-                            continue;
+                        if(isset($child_info['parent_type'])) {
+                            if ($child_info['parent_type'] == 'test') {
+                                continue;
+                            }
+                            if(isset($beanList[$child_info['parent_type']])) {
+                                $class = $beanList[$child_info['parent_type']];
+                            } else {
+                                $GLOBALS['log']->fatal('Parent type is not a valid bean: ' . $child_info['parent_type']);
+                                $class = null;
+                            }
                         }
-                        $class = $beanList[$child_info['parent_type']];
                         // Added to avoid error below; just silently fail and write message to log
-                        if (empty($beanFiles[$class])) {
-                            $GLOBALS['log']->error($this->object_name . '::retrieve_parent_fields() - cannot load class "' . $class . '", skip loading.');
-                            continue;
+                        if(isset($class)) {
+                            if (empty($beanFiles[$class])) {
+                                $GLOBALS['log']->error($this->object_name . '::retrieve_parent_fields() - cannot load class "' . $class . '", skip loading.');
+                                continue;
+                            }
+                            require_once($beanFiles[$class]);
+                            $templates[$child_info['parent_type']] = new $class();
                         }
-                        require_once($beanFiles[$class]);
-                        $templates[$child_info['parent_type']] = new $class();
                     }
 
-                    if (empty($queries[$child_info['parent_type']])) {
+                    if (isset($child_info['parent_type']) && empty($queries[$child_info['parent_type']])) {
                         $queries[$child_info['parent_type']] = "SELECT id ";
-                        $field_def = $templates[$child_info['parent_type']]->field_defs['name'];
+                        if(isset($templates[$child_info['parent_type']])) {
+                            $field_def = $templates[$child_info['parent_type']]->field_defs['name'];
+                        } else {
+                            $GLOBALS['log']->fatal('No template for Parent type: ' . $child_info['parent_type']);
+                            $field_def = null;
+                        }
                         if (isset($field_def['db_concat_fields'])) {
                             $queries[$child_info['parent_type']] .= ' , ' . $this->db->concat($templates[$child_info['parent_type']]->table_name, $field_def['db_concat_fields']) . ' parent_name';
                         } else {
@@ -1474,13 +1498,27 @@ class SugarBean
                         } elseif (isset($templates[$child_info['parent_type']]->field_defs['created_by'])) {
                             $queries[$child_info['parent_type']] .= ", created_by parent_name_owner, '{$child_info['parent_type']}' parent_name_mod";
                         }
-                        $queries[$child_info['parent_type']] .= " FROM " . $templates[$child_info['parent_type']]->table_name . " WHERE id IN ('{$child_info['parent_id']}'";
-                    } else {
-                        if (empty($parent_child_map[$child_info['parent_id']])) {
-                            $queries[$child_info['parent_type']] .= " ,'{$child_info['parent_id']}'";
+                        if(isset($templates[$child_info['parent_type']])) {
+                            if(isset($child_info['parent_id'])) {
+                                $childInfoParentId = $child_info['parent_id'];
+                            } else {
+                                $GLOBALS['log']->fatal('"parent_id" is not set');
+                                $childInfoParentId = null;
+                            }
+                            $queries[$child_info['parent_type']] .=
+                                " FROM " . $templates[$child_info['parent_type']]->table_name .
+                                " WHERE id IN ('$childInfoParentId'";
                         }
                     }
-                    $parent_child_map[$child_info['parent_id']][] = $child_info['child_id'];
+
+                    if(isset($child_info['parent_id'])) {
+                        if(isset($child_info['child_id'])) {
+                            $parent_child_map[$child_info['parent_id']][] = $child_info['child_id'];
+                        } else {
+                            $GLOBALS['log']->fatal('"child_id" is not set');
+                            $parent_child_map[$child_info['parent_id']][] = null;
+                        }
+                    }
                 }
             }
         }

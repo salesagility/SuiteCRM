@@ -1059,7 +1059,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             'previous_offset' => 0,
             'current_offset' => 0,
             'query' => /** @lang sql */
-            'SELECT DISTINCT count(*) AS c FROM contacts',
+                'SELECT DISTINCT count(*) AS c FROM contacts',
         ), $results);
         $query = /** @lang sql */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
@@ -1088,7 +1088,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             'previous_offset' => -10,
             'current_offset' => 0,
             'query' => /** @lang sql */
-            'SELECT DISTINCT count(*) AS c FROM contacts',
+                'SELECT DISTINCT count(*) AS c FROM contacts',
         ), $results);
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
@@ -1116,7 +1116,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             'previous_offset' => -10,
             'current_offset' => 0,
             'query' => /** @lang text */
-            'SELECT DISTINCT count(*) AS c FROM contacts',
+                'SELECT DISTINCT count(*) AS c FROM contacts',
         ), $results);
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
@@ -1144,7 +1144,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             'previous_offset' => -10,
             'current_offset' => 0,
             'query' => /** @lang text */
-            'SELECT DISTINCT count(*) AS c FROM contacts',
+                'SELECT DISTINCT count(*) AS c FROM contacts',
         ), $results);
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
@@ -1171,7 +1171,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             'previous_offset' => -10,
             'current_offset' => 0,
             'query' => /** @lang text */
-            'SELECT DISTINCT count(*) AS c FROM contacts',
+                'SELECT DISTINCT count(*) AS c FROM contacts',
         ), $results);
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
@@ -1199,7 +1199,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             'previous_offset' => -10,
             'current_offset' => 0,
             'query' => /** @lang text */
-            'SELECT DISTINCT count(*) AS c FROM contacts',
+                'SELECT DISTINCT count(*) AS c FROM contacts',
         ), $results);
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
@@ -1226,7 +1226,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             'previous_offset' => -10,
             'current_offset' => 0,
             'query' => /** @lang text */
-            'SELECT DISTINCT count(*) AS c FROM contacts',
+                'SELECT DISTINCT count(*) AS c FROM contacts',
         ), $results);
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
@@ -1352,12 +1352,154 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             'previous_offset' => -10,
             'current_offset' => 0,
             'query' => /** @lang text */
-            'SELECT DISTINCT count(*) AS c FROM contacts',
+                'SELECT DISTINCT count(*) AS c FROM contacts',
         ), $results);
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
         $this->db->query($query);
 
+    }
+
+
+    /**
+     * Test for _get_num_rows_in_query()
+     */
+    public function testGetNumRowsInQuery()
+    {
+        //self::markTestIncomplete('already covered');
+    }
+
+    /**
+     * Test for retrieve_parent_fields()
+     */
+    public function testRetrieveParentFields()
+    {
+        $GLOBALS['log']->reset();
+
+        // test
+        $bean = new SugarBeanMock();
+        $results = $bean->retrieve_parent_fields(null);
+        self::assertEquals(array(), $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $bean = new SugarBeanMock();
+        $results = $bean->retrieve_parent_fields(array(1));
+        self::assertEquals(array(), $results);
+        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $bean = new SugarBeanMock();
+        $results = $bean->retrieve_parent_fields(array(array(array('type' => 'parent'))));
+        self::assertEquals(array(), $results);
+        self::assertCount(4, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $bean = new SugarBeanMock();
+        $results = $bean->retrieve_parent_fields(array(
+            array(
+                array(
+                    'type' => 'parent',
+                    'parent_type' => 1,
+                )
+            )
+        ));
+        self::assertEquals(array(), $results);
+        self::assertCount(8, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $bean = new SugarBeanMock();
+        $results = $bean->retrieve_parent_fields(array(
+            array(
+                array(
+                    'type' => 'parent',
+                    'parent_type' => 'test',
+                )
+            )
+        ));
+        self::assertEquals(array(), $results);
+        self::assertCount(9, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $bean = new SugarBeanMock();
+        $results = $bean->retrieve_parent_fields(array(
+            array(
+                array(
+                    'type' => 'parent',
+                    'parent_type' => 'test',
+                )
+            )
+        ));
+        self::assertEquals(array(), $results);
+        self::assertCount(10, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $bean = new SugarBeanMock();
+        $results = $bean->retrieve_parent_fields(array(
+            array(
+                array(
+                    'type' => 'parent',
+                    'parent_type' => 'Contacts',
+                )
+            )
+        ));
+        self::assertEquals(array(), $results);
+        self::assertCount(12, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $bean = new SugarBeanMock();
+        $results = $bean->retrieve_parent_fields(array(
+            array(
+                array(
+                    'type' => 'parent',
+                    'parent_id' => 1,
+                )
+            )
+        ));
+        self::assertEquals(array(), $results);
+        self::assertCount(15, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $bean = new SugarBeanMock();
+        $results = $bean->retrieve_parent_fields(array(
+            array(
+                array(
+                    'type' => 'parent',
+                    'parent_id' => 1,
+                    'parent_type' => 'Contacts',
+                )
+            )
+        ));
+        self::assertEquals(array(), $results);
+        self::assertCount(17, $GLOBALS['log']->calls['fatal']);
+
+
+        // test
+        $bean = new SugarBeanMock();
+
+        $this->db->query(/** @lang sql */
+            "INSERT INTO contacts (id, date_entered, date_modified, modified_user_id, created_by, description, deleted, assigned_user_id, salutation, first_name, last_name, title, photo, department, do_not_call, phone_home, phone_mobile, phone_work, phone_other, phone_fax, primary_address_street, primary_address_city, primary_address_state, primary_address_postalcode, primary_address_country, alt_address_street, alt_address_city, alt_address_state, alt_address_postalcode, alt_address_country, assistant, assistant_phone, lead_source, reports_to_id, birthdate, campaign_id, joomla_account_id, portal_account_disabled, portal_user_type) VALUES ('test_parent_contact_1', '2017-08-04 00:00:11', '2017-08-11 00:00:22', 'aaa', 'bbb', 'ccc', '0', 'eee', 'fff', 'ggg', 'hhh', 'jjj', 'kkk', 'lll', '1', 'mmm', 'nnn', 'ooo', 'ppp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Single');");
+        $results = $bean->retrieve_parent_fields(array(
+            array(
+                array(
+                    'type' => 'parent',
+                    'parent_id' => 'test_parent_contact_1',
+                    'parent_type' => 'Contacts',
+                )
+            )
+        ));
+        self::assertEquals(array(
+            '' => array(
+                'id' => 'test_parent_contact_1',
+                'parent_name' => 'ggg hhh',
+                'parent_name_owner' => 'eee',
+                'parent_name_mod' => 'Contacts',
+            ),
+        ), $results);
+        $this->db->query(/** @lang sql */
+            "DELETE FROM contacts WHERE id = 'test_parent_contact_1'");
+
+        self::assertCount(19, $GLOBALS['log']->calls['fatal']);
 
     }
 
