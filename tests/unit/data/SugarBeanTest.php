@@ -1723,4 +1723,84 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Test for getIndices()
+     */
+    public function testGetIndices()
+    {
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $bean->object_name = false;
+        $results = $bean->getIndices();
+        self::assertEquals(array(), $results);
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $results = $bean->getIndices();
+        self::assertEquals(array(
+            'id' => array(
+                'name' => 'contactspk',
+                'type' => 'primary',
+                'fields' => array(
+                    0 => 'id',
+                ),
+            ),
+            0 => array(
+                'name' => 'idx_cont_last_first',
+                'type' => 'index',
+                'fields' => array(
+                    0 => 'last_name',
+                    1 => 'first_name',
+                    2 => 'deleted',
+                ),
+            ),
+            1 => array(
+                'name' => 'idx_contacts_del_last',
+                'type' => 'index',
+                'fields' => array(
+                    0 => 'deleted',
+                    1 => 'last_name',
+                ),
+            ),
+            2 => array(
+                'name' => 'idx_cont_del_reports',
+                'type' => 'index',
+                'fields' => array(
+                    0 => 'deleted',
+                    1 => 'reports_to_id',
+                    2 => 'last_name',
+                ),
+            ),
+            3 => array(
+                'name' => 'idx_reports_to_id',
+                'type' => 'index',
+                'fields' => array(
+                    0 => 'reports_to_id',
+                ),
+            ),
+            4 => array(
+                'name' => 'idx_del_id_user',
+                'type' => 'index',
+                'fields' => array(
+                    0 => 'deleted',
+                    1 => 'id',
+                    2 => 'assigned_user_id',
+                ),
+            ),
+            5 => array(
+                'name' => 'idx_cont_assigned',
+                'type' => 'index',
+                'fields' => array(
+                    0 => 'assigned_user_id',
+                ),
+            ),
+        ), $results);
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
+
+    }
+
 }
