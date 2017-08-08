@@ -196,7 +196,6 @@ if (isset($focus->name)) $xtpl->assign("NAME", $focus->name); else $xtpl->assign
  */
 if (isset($focus->assigned_user_id)) $xtpl->assign("ASSIGNED_USER_ID", $focus->assigned_user_id);
 else if (empty($focus->id) && empty($focus->assigned_user_id)) {
-    global $current_user;
     $xtpl->assign("ASSIGNED_USER_ID", $current_user->id);
     $xtpl->assign("ASSIGNED_USER_NAME", get_assigned_user_name($current_user->id));
 } else $xtpl->assign("ASSIGNED_USER_ID", "");
@@ -221,7 +220,6 @@ require_once("modules/EmailTemplates/templateFields.php");
 $xtpl->assign("FIELD_DEFS_JS", generateFieldDefsJS2());
 $xtpl->assign("LBL_CONTACT", $app_list_strings['moduleList']['Contacts']);
 
-global $current_user;
 if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
     $record = '';
     if (!empty($_REQUEST['record'])) {
