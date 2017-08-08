@@ -1190,7 +1190,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $subpanelDefinition->template_instance = $bean;
         $results = $bean->process_union_list_query($bean, /** @lang sql */
             'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        self::assertCount(5, $GLOBALS['log']->calls['fatal']);
+        self::assertCount(3, $GLOBALS['log']->calls['fatal']);
         self::assertEquals(array(
             'list' => Array('' => $bean),
             'parent_data' => Array(),
