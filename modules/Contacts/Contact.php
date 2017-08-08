@@ -471,7 +471,18 @@ class Contact extends Person
 
         $this->load_relationship("user_sync");
 
-        $beanIDs = $this->user_sync->get();
+        if(!isset($this->user_sync)) {
+            $GLOBALS['log']->fatal('Contact::$user_sync is not set');
+            $beanIDs = null;
+        } elseif(!is_object($this->user_sync)) {
+            $GLOBALS['log']->fatal('Contact::$user_sync is not an object');
+            $beanIDs = null;
+        } elseif(!method_exists($this->user_sync, 'get')) {
+            $GLOBALS['log']->fatal('Contact::$user_sync::get() is not a function');
+            $beanIDs = null;
+        } else {
+            $beanIDs = $this->user_sync->get();
+        }
 
         if (in_array($current_user->id, $beanIDs)) {
             $this->contacts_users_id = $current_user->id;
