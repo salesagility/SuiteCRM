@@ -2257,6 +2257,8 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertEquals(array(), $results);
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
+        $this->markTestIncomplete('Process finished with exit code 139 (interrupted by signal 11: SIGSEGV)');
+
     }
 
     /**
@@ -2272,6 +2274,825 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $results = $bean->get_import_required_fields();
         self::assertEquals(array(), $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        $this->markTestIncomplete('Process finished with exit code 139 (interrupted by signal 11: SIGSEGV)');
     }
+
+    /**
+     * Test for get_importable_fields()
+     */
+    public function testGetImportableFields()
+    {
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $results = $bean->get_importable_fields();
+        self::assertEquals(array(), $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        $this->markTestIncomplete('Process finished with exit code 139 (interrupted by signal 11: SIGSEGV)');
+    }
+
+    /**
+     * Test for create_tables()
+     */
+    public function testCreateTables()
+    {
+
+    }
+
+    /**
+     * Test for getACLCategory()
+     */
+    public function testGetACLCategory()
+    {
+
+    }
+
+    /**
+     * Test for is_AuditEnabled()
+     */
+    public function testIsAuditEnabled()
+    {
+
+    }
+
+    /**
+     * Test for get_audit_table_name()
+     */
+    public function testGetAuditTableNames()
+    {
+
+    }
+
+    /**
+     * Test for create_audit_table()
+     */
+    public function testCreateAuditTable()
+    {
+
+    }
+
+    /**
+     * Test for drop_tables()
+     */
+    public function testDropTables()
+    {
+
+    }
+
+    /**
+     * Test for save()
+     */
+    public function testSave()
+    {
+
+    }
+
+    /**
+     * Test for cleanBean()
+     */
+    public function testCleanBean()
+    {
+
+    }
+
+    /**
+     * Test for ()
+     */
+    public function test()
+    {
+
+    }
+
+    /**
+     * Test for fixUpFormatting()
+     */
+    public function testFixUpFormatting()
+    {
+
+    }
+
+    /**
+     * Test for encrpyt_before_save()
+     */
+    public function testEncrpytBeforeSave()
+    {
+
+    }
+
+    /**
+     * Test for getEncryptKey()
+     */
+    public function testGetEncryptKey()
+    {
+
+    }
+
+    /**
+     * Test for _checkOptimisticLocking()
+     */
+    public function testCheckOptimisticLocking()
+    {
+
+    }
+
+    /**
+     * Test for has_been_modified_since()
+     */
+    public function testHasBeenModifiedSince()
+    {
+
+    }
+
+    /**
+     * Test for toArray()
+     */
+    public function testToArray()
+    {
+
+    }
+
+    /**
+     * Test for save_relationship_changes()
+     */
+    public function testSaveRelationshipChanges()
+    {
+
+    }
+
+    /**
+     * Test for set_relationship_info()
+     */
+    public function testSetRelationshipInfo()
+    {
+
+    }
+
+    /**
+     * Test for handle_preset_relationships()
+     */
+    public function testHandlePresetRelationships()
+    {
+
+    }
+
+    /**
+     * Test for handle_remaining_relate_fields()
+     */
+    public function testHandleRemainingRelateFields()
+    {
+
+    }
+
+    /**
+     * Test for update_parent_relationships()
+     */
+    public function testUpdateParentRelationships()
+    {
+
+    }
+
+    /**
+     * Test for handle_request_relate()
+     */
+    public function testHandleRequestRelate()
+    {
+
+    }
+
+    /**
+     * Test for call_custom_logic()
+     */
+    public function testCallCustomLogic()
+    {
+
+    }
+
+    /**
+     * Test for hasEmails()
+     */
+    public function testHasEmails()
+    {
+
+    }
+
+    /**
+     * Test for preprocess_fields_on_save()
+     */
+    public function testPreprocessFieldsOnSave()
+    {
+
+    }
+
+    /**
+     * Test for _sendNotifications()
+     */
+    public function testSendNotifications()
+    {
+
+    }
+
+    /**
+     * Test for get_notification_recipients()
+     */
+    public function testGetNotificationRecipients()
+    {
+
+    }
+
+    /**
+     * Test for send_assignment_notifications()
+     */
+    public function testSendAssignmentNotifications()
+    {
+
+    }
+
+    /**
+     * Test for create_notification_email()
+     */
+    public function testCreateNotificationEmail()
+    {
+
+    }
+
+    /**
+     * Test for track_view()
+     */
+    public function testTrackView()
+    {
+
+    }
+
+    /**
+     * Test for get_summary_text()
+     */
+    public function testGetSummaryText()
+    {
+
+    }
+
+    /**
+     * Test for add_list_count_joins()
+     */
+    public function testAddListCountJoins()
+    {
+
+    }
+
+    /**
+     * Test for get_list()
+     */
+    public function testGetList()
+    {
+
+    }
+
+    /**
+     * Test for getOwnerWhere()
+     */
+    public function testGetOwnerWhere()
+    {
+
+    }
+
+    /**
+     * Test for create_new_list_query()
+     */
+    public function testCreateNewListQuery()
+    {
+
+    }
+
+    /**
+     * Test for get_relationship_field()
+     */
+    public function testGetRelationshipField()
+    {
+
+    }
+
+    /**
+     * Test for is_relate_field()
+     */
+    public function testIsRelateField()
+    {
+
+    }
+
+    /**
+     * Test for process_order_by()
+     */
+    public function testProcessOrderBy()
+    {
+
+    }
+
+    /**
+     * Test for process_list_query()
+     */
+    public function testProcessListQuery()
+    {
+
+    }
+
+    /**
+     * Test for create_list_count_query()
+     */
+    public function testCreateListCountQuery()
+    {
+
+    }
+
+    /**
+     * Test for fill_in_additional_list_fields()
+     */
+    public function testFillInAdditionalListFields()
+    {
+
+    }
+
+    /**
+     * Test for get_detail()
+     */
+    public function testGetDetail()
+    {
+
+    }
+
+    /**
+     * Test for process_detail_query()
+     */
+    public function testProcessDetailQuery()
+    {
+
+    }
+
+    /**
+     * Test for retrieve()
+     */
+    public function testRetrieve()
+    {
+
+    }
+
+    /**
+     * Test for getCustomJoin()
+     */
+    public function testGetCustomJoin()
+    {
+
+    }
+
+    /**
+     * Test for convertRow()
+     */
+    public function testConvertRow()
+    {
+
+    }
+
+    /**
+     * Test for convertField()
+     */
+    public function testConvertField()
+    {
+
+    }
+
+    /**
+     * Test for populateFromRow()
+     */
+    public function testPopulateFromRow()
+    {
+
+    }
+
+    /**
+     * Test for populateCurrencyFields()
+     */
+    public function testPopulateCurrencyFields()
+    {
+
+    }
+
+    /**
+     * Test for check_date_relationships_load()
+     */
+    public function testCheckDateRelationshipsLoad()
+    {
+
+    }
+
+    /**
+     * Test for decrypt_after_retrieve()
+     */
+    public function testDecryptAfterRetrieve()
+    {
+
+    }
+
+    /**
+     * Test for fill_in_additional_detail_fields()
+     */
+    public function testFillInAdditionalDetailFields()
+    {
+
+    }
+
+    /**
+     * Test for fill_in_additional_parent_fields()
+     */
+    public function testFillInAdditionalParentFields()
+    {
+
+    }
+
+    /**
+     * Test for getRelatedFields()
+     */
+    public function testGetRelatedFields()
+    {
+
+    }
+
+    /**
+     * Test for fill_in_relationship_fields()
+     */
+    public function testFillInRelationshipFields()
+    {
+
+    }
+
+    /**
+     * Test for fill_in_link_field()
+     */
+    public function testFillInLinkField()
+    {
+
+    }
+
+    /**
+     * Test for get_related_fields()
+     */
+    public function testGetRelatedFields()
+    {
+
+    }
+
+    /**
+     * Test for get_related_list()
+     */
+    public function testGetRelatedList()
+    {
+
+    }
+
+    /**
+     * Test for get_full_list()
+     */
+    public function testGetFullList()
+    {
+
+    }
+
+    /**
+     * Test for process_full_list_query()
+     */
+    public function testProcessFullListQuery()
+    {
+
+    }
+
+    /**
+     * Test for create_index()
+     */
+    public function testCreateIndex()
+    {
+
+    }
+
+    /**
+     * Test for mark_deleted()
+     */
+    public function testMarkDeleted()
+    {
+
+    }
+
+    /**
+     * Test for mark_undeleted()
+     */
+    public function testMarkUndeleted()
+    {
+
+    }
+
+    /**
+     * Test for restoreFiles()
+     */
+    public function testRestoreFiles()
+    {
+
+    }
+
+    /**
+     * Test for haveFiles()
+     */
+    public function testHaveFiles()
+    {
+
+    }
+
+    /**
+     * Test for getFiles()
+     */
+    public function testGetFiles()
+    {
+
+    }
+
+    /**
+     * Test for getFilesFields()
+     */
+    public function testGetFilesFields()
+    {
+
+    }
+
+    /**
+     * Test for deleteFileDirectory()
+     */
+    public function testDeleteFileDirectory()
+    {
+
+    }
+
+    /**
+     * Test for mark_relationships_deleted()
+     */
+    public function testMarkRelationshipsDeleted()
+    {
+
+    }
+
+    /**
+     * Test for delete_linked()
+     */
+    public function testDeleteLinked()
+    {
+
+    }
+
+    /**
+     * Test for deleteFiles()
+     */
+    public function testDeleteFiles()
+    {
+
+    }
+
+    /**
+     * Test for build_related_list()
+     */
+    public function testBuildRelatedList()
+    {
+
+    }
+
+    /**
+     * Test for build_related_list_where()
+     */
+    public function testBuildRelatedListWhere()
+    {
+
+    }
+
+    /**
+     * Test for build_related_in()
+     */
+    public function testBuildRelatedIn()
+    {
+
+    }
+
+    /**
+     * Test for build_related_list2()
+     */
+    public function testBuildRelatedList2()
+    {
+
+    }
+
+    /**
+     * Test for list_view_parse_additional_sections()
+     */
+    public function testListViewParseAdditionalSections()
+    {
+
+    }
+
+    /**
+     * Test for get_list_view_data()
+     */
+    public function testGetListViewData()
+    {
+
+    }
+
+    /**
+     * Test for get_list_view_array()
+     */
+    public function testGetListViewArray()
+    {
+
+    }
+
+    /**
+     * Test for retrieve_by_string_fields()
+     */
+    public function testRetrieveByStringFields()
+    {
+
+    }
+
+    /**
+     * Test for get_where()
+     */
+    public function testGetWhere()
+    {
+
+    }
+
+    /**
+     * Test for fromArray()
+     */
+    public function testFromArray()
+    {
+
+    }
+
+    /**
+     * Test for process_special_fields()
+     */
+    public function testProcessSpecialFields()
+    {
+
+    }
+
+    /**
+     * Test for build_generic_where_clause()
+     */
+    public function testBuildGenericWhereClause()
+    {
+
+    }
+
+    /**
+     * Test for parse_additional_headers()
+     */
+    public function testParseAdditionalHeaders()
+    {
+
+    }
+
+    /**
+     * Test for assign_display_fields()
+     */
+    public function testAssignDisplayFields()
+    {
+
+    }
+
+    /**
+     * Test for set_relationship()
+     */
+    public function testSetRelationship()
+    {
+
+    }
+
+    /**
+     * Test for retrieve_relationships()
+     */
+    public function testRetrieveRelationships()
+    {
+
+    }
+
+    /**
+     * Test for loadLayoutDefs()
+     */
+    public function testLoadLayoutDefs()
+    {
+
+    }
+
+    /**
+     * Test for getRealKeyFromCustomFieldAssignedKey()
+     */
+    public function testGetRealKeyFromCustomFieldAssignedKey()
+    {
+
+    }
+
+    /**
+     * Test for getOwnerField()
+     */
+    public function testGetOwnerField()
+    {
+
+    }
+
+    /**
+     * Test for listviewACLHelper()
+     */
+    public function testListviewACLHelper()
+    {
+
+    }
+
+    /**
+     * Test for ACLAccess()
+     */
+    public function testACLAccess()
+    {
+
+    }
+
+    /**
+     * Test for loadFromRow()
+     */
+    public function testLoadFromRow()
+    {
+
+    }
+
+    /**
+     * Test for create_qualified_order_by()
+     */
+    public function testCreateQualifiedOrderBy()
+    {
+
+    }
+
+    /**
+     * Test for add_address_streets()
+     */
+    public function testAddAddressStreets()
+    {
+
+    }
+
+    /**
+     * Test for populateRelatedBean()
+     */
+    public function testPopulateRelatedBean()
+    {
+
+    }
+
+    /**
+     * Test for beforeImportSave()
+     */
+    public function testBeforeImportSave()
+    {
+
+    }
+
+    /**
+     * Test for afterImportSave()
+     */
+    public function testAfterImportSave()
+    {
+
+    }
+
+    /**
+     * Test for create_export_query()
+     */
+    public function testCreateExportQuery()
+    {
+
+    }
+
+    /**
+     * Test for auditBean()
+     */
+    public function testAuditBean()
+    {
+
+    }
+
+    /**
+     * Test for createAuditRecord()
+     */
+    public function testCreateAuditRecord()
+    {
+
+    }
+
 
 }
