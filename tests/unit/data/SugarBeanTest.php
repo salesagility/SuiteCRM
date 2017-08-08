@@ -1803,4 +1803,54 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Test for getPrimaryFieldDefinition()
+     */
+    public function testGetPrimaryFieldDefinition()
+    {
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $results = $bean->getPrimaryFieldDefinition();
+        self::assertEquals(array(
+            'name' => 'id',
+            'vname' => 'LBL_ID',
+            'type' => 'id',
+            'required' => true,
+            'reportable' => true,
+            'comment' => 'Unique identifier',
+            'inline_edit' => false,
+        ), $results);
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        unset($bean->field_defs['id']);
+        $results = $bean->getPrimaryFieldDefinition();
+        self::assertEquals(array(
+            'name' => 'name',
+            'vname' => 'LBL_NAME',
+            'type' => 'name',
+            'rname' => 'name',
+            'link' => true,
+            'fields' => array(
+                0 => 'first_name',
+                1 => 'last_name',
+            ),
+            'sort_on' => 'last_name',
+            'source' => 'non-db',
+            'group' => 'last_name',
+            'len' => '255',
+            'db_concat_fields' => array(
+                0 => 'first_name',
+                1 => 'last_name',
+            ),
+            'importable' => 'false',
+        ), $results);
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
+
+    }
+
 }
