@@ -320,8 +320,8 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
         $mergeRecord->populate_search_params(array('nameSearchField' => 'test', 'idSearchField' => '1'));
 
         $expected = array(
-            0 => "contacts.id='1'",
-            1 => "contacts.name='test'",
+            0 => "contacts.name='test'",
+            1 => "contacts.id !=''",
         );
 
         $actual = $mergeRecord->create_where_statement();
