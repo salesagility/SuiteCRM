@@ -1564,5 +1564,80 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Test for isOwner()
+     */
+    public function testIsOwner()
+    {
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new SugarBeanMock();
+        $result = $bean->isOwner(null);
+        self::assertTrue($result);
+        self::assertEquals('', $bean->id);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $bean->id = 'test_contact_1';
+        $result = $bean->isOwner(null);
+        self::assertFalse($result);
+        self::assertEquals('test_contact_1', $bean->id);
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $bean->id = 'test_contact_1';
+        $bean->fetched_row['assigned_user_id'] = 1;
+        $result = $bean->isOwner(null);
+        self::assertFalse($result);
+        self::assertEquals('test_contact_1', $bean->id);
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $bean->id = 'test_contact_1';
+        $bean->fetched_row['assigned_user_id'] = 1;
+        $result = $bean->isOwner(1);
+        self::assertTrue($result);
+        self::assertEquals('test_contact_1', $bean->id);
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $bean->id = 'test_contact_1';
+        $bean->assigned_user_id = 1;
+        $result = $bean->isOwner(1);
+        self::assertTrue($result);
+        self::assertEquals('test_contact_1', $bean->id);
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $bean->id = 'test_contact_1';
+        $bean->assigned_user_id = 1;
+        $result = $bean->isOwner(2);
+        self::assertFalse($result);
+        self::assertEquals('test_contact_1', $bean->id);
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new Contact();
+        $bean->id = 'test_contact_1';
+        $bean->created_by = 1;
+        $result = $bean->isOwner(1);
+        self::assertFalse($result);
+        self::assertEquals('test_contact_1', $bean->id);
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
+
+    }
+
 
 }
