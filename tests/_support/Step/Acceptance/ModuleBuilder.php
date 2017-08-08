@@ -67,7 +67,8 @@ class ModuleBuilder extends Administration
                     break;
             }
 
-            $I->doubleClick(['name' => 'savebtn']);
+            $I->wait(1);
+            $I->click(['name' => 'savebtn']);
 
             // Close popup
             $I->closePopupSuccess();
