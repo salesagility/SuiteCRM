@@ -2073,4 +2073,20 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Test for getFieldDefinitions()
+     */
+    public function testGetFieldDefinitions()
+    {
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $results = $bean->getFieldDefinitions();
+        self::assertEquals($bean->field_defs, $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+    }
+
 }
