@@ -2011,8 +2011,65 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertEquals('bar', $bean->foo);
         /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertNotTrue(isset($clone->foo));
+        unset($bean->foo);
         self::assertEquals($bean, $clone);
         self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+
+    }
+
+    /**
+     * Test for load_relationships()
+     */
+    public function testLoadRelationships()
+    {
+
+        // $this->markTestIncomplete();
+    }
+
+    /**
+     * Test for get_linked_fields()
+     */
+    public function testGetLinkedFields()
+    {
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $results = $bean->get_linked_fields();
+        self::assertEquals(array(), $results);
+        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $bean->field_defs = array(1);
+        $results = $bean->get_linked_fields();
+        self::assertEquals(array(), $results);
+        self::assertCount(3, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $bean->field_defs = array(array(1));
+        $results = $bean->get_linked_fields();
+        self::assertEquals(array(), $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $bean->field_defs = array(array('type' => 'link'));
+        $results = $bean->get_linked_fields();
+        self::assertEquals(array(
+            0 => array(
+                'type' => 'link',
+            ),
+        ), $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
     }
 
