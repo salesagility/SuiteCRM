@@ -2259,4 +2259,19 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Test for get_import_required_fields()
+     */
+    public function testGetImportRequiredFields()
+    {
+
+        // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
+        $bean = new Contact();
+        $results = $bean->get_import_required_fields();
+        self::assertEquals(array(), $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+    }
+
 }
