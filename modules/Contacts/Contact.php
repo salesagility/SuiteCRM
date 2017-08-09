@@ -629,7 +629,15 @@ class Contact extends Person
             $sql = "SELECT id FROM users WHERE deleted=0 AND is_group=0 AND portal_only=0";
             $result = $this->db->query($sql);
             while ($hash = $this->db->fetchByAssoc($result)) {
-                $this->user_sync->add($hash['id']);
+                if(!isset($this->user_sync)) {
+                    $GLOBALS['log']->fatal('Contact::$user_sync is not set');
+                } elseif(!is_object($this->user_sync)) {
+                    $GLOBALS['log']->fatal('Contact::$user_sync is not an object');
+                } elseif(!method_exists($this->user_sync, 'add')) {
+                    $GLOBALS['log']->fatal('Contact::$user_sync::add() is not a function');
+                } else {
+                    $this->user_sync->add($hash['id']);
+                }
             }
         } else {
             $theList = explode(",", $list_of_users);
@@ -638,7 +646,15 @@ class Contact extends Person
                     || $focus_user->retrieve($eachItem)
                 ) {
                     // it is a user, add user
-                    $this->user_sync->add($user_id ? $user_id : $focus_user->id);
+                    if(!isset($this->user_sync)) {
+                        $GLOBALS['log']->fatal('Contact::$user_sync is not set');
+                    } elseif(!is_object($this->user_sync)) {
+                        $GLOBALS['log']->fatal('Contact::$user_sync is not an object');
+                    } elseif(!method_exists($this->user_sync, 'add')) {
+                        $GLOBALS['log']->fatal('Contact::$user_sync::add() is not a function');
+                    } else {
+                        $this->user_sync->add($user_id ? $user_id : $focus_user->id);
+                    }
 
                     return;
                 }
