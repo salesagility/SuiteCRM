@@ -1230,14 +1230,21 @@ class SugarBean
                 $function_fields = array();
                 if (($index < $row_offset + $max_per_page || $max_per_page == -99)) {
                     if ($processing_collection) {
-                        if(isset($row['panel_name'])) {
-                            $current_bean = $subpanel_def->sub_subpanels[$row['panel_name']]->template_instance;
-                            if (!$isFirstTime) {
-                                $class = get_class($subpanel_def->sub_subpanels[$row['panel_name']]->template_instance);
-                                $current_bean = new $class();
-                            }
-                        } else {
+                        if(!isset($row['panel_name'])) {
                             $GLOBALS['log']->fatal('"panel_name" is not set');
+                            $row['panel_name'] = null;
+                        }
+                        if(
+                            !isset($subpanel_def->sub_subpanels) ||
+                            !isset($subpanel_def->sub_subpanels[$row['panel_name']]) ||
+                            !isset($subpanel_def->sub_subpanels[$row['panel_name']]->template_instance)) {
+                            $current_bean = new stdClass();
+                        } else {
+                            $current_bean = $subpanel_def->sub_subpanels[$row['panel_name']]->template_instance;
+                        }
+                        if (!$isFirstTime) {
+                            $class = get_class($subpanel_def->sub_subpanels[$row['panel_name']]->template_instance);
+                            $current_bean = new $class();
                         }
                     } else {
                         if(!is_object($subpanel_def)) {
@@ -1258,9 +1265,8 @@ class SugarBean
                         $current_bean->panel_name = $row['panel_name'];
                     }
 
+                    $fieldDefs = array();
                     if(isset($current_bean) && is_object($current_bean)) {
-
-                        $fieldDefs = array();
                         if (!isset($current_bean->field_defs)) {
                             $GLOBALS['log']->fatal('Trying to get property of non-object');
                         } else {
@@ -1271,81 +1277,86 @@ class SugarBean
                                 $fieldDefs = $current_bean->field_defs;
                             }
                         }
-
-                        foreach ($fieldDefs as $field => $value) {
-                            if (isset($row[$field])) {
-                                $current_bean->$field = $this->convertField($row[$field], $value);
-                                unset($row[$field]);
-                            } elseif (isset($row[$this->table_name . '.' . $field])) {
-                                $current_bean->$field = $this->convertField($row[$this->table_name . '.' . $field],
-                                    $value);
-                                unset($row[$this->table_name . '.' . $field]);
-                            } else {
-                                $current_bean->$field = "";
-                                unset($row[$field]);
-                            }
-                            if (isset($value['source']) && $value['source'] == 'function') {
-                                $function_fields[] = $field;
-                            }
-                        }
-                        foreach ($row as $key => $value) {
-                            $current_bean->$key = $value;
-                        }
-                        foreach ($function_fields as $function_field) {
-                            $value = $current_bean->field_defs[$function_field];
-                            $can_execute = true;
-                            $execute_params = array();
-                            $execute_function = array();
-                            if (!empty($value['function_class'])) {
-                                $execute_function[] = $value['function_class'];
-                                $execute_function[] = $value['function_name'];
-                            } else {
-                                $execute_function = $value['function_name'];
-                            }
-                            foreach ($value['function_params'] as $param) {
-                                if (empty($value['function_params_source']) || $value['function_params_source'] == 'parent') {
-                                    if (empty($this->$param)) {
-                                        $can_execute = false;
-                                    } elseif ($param == '$this') {
-                                        $execute_params[] = $this;
-                                    } else {
-                                        $execute_params[] = $this->$param;
-                                    }
-                                } elseif ($value['function_params_source'] == 'this') {
-                                    if (empty($current_bean->$param)) {
-                                        $can_execute = false;
-                                    } elseif ($param == '$this') {
-                                        $execute_params[] = $current_bean;
-                                    } else {
-                                        $execute_params[] = $current_bean->$param;
-                                    }
-                                } else {
-                                    $can_execute = false;
-                                }
-                            }
-                            if ($can_execute) {
-                                if (!empty($value['function_require'])) {
-                                    require_once($value['function_require']);
-                                }
-                                $current_bean->$function_field = call_user_func_array($execute_function,
-                                    $execute_params);
-                            }
-                        }
-                        if (!empty($current_bean->parent_type) && !empty($current_bean->parent_id)) {
-                            if (!isset($post_retrieve[$current_bean->parent_type])) {
-                                $post_retrieve[$current_bean->parent_type] = array();
-                            }
-                            $post_retrieve[$current_bean->parent_type][] = array(
-                                'child_id' => $current_bean->id,
-                                'parent_id' => $current_bean->parent_id,
-                                'parent_type' => $current_bean->parent_type,
-                                'type' => 'parent'
-                            );
-                        }
-                        $list[$current_bean->id] = $current_bean;
                     } else {
                         $GLOBALS['log']->fatal('Unresolved current bean');
+                        $current_bean = new stdClass();
                     }
+
+                    foreach ($fieldDefs as $field => $value) {
+                        if (isset($row[$field])) {
+                            $current_bean->$field = $this->convertField($row[$field], $value);
+                            unset($row[$field]);
+                        } elseif (isset($row[$this->table_name . '.' . $field])) {
+                            $current_bean->$field = $this->convertField($row[$this->table_name . '.' . $field],
+                                $value);
+                            unset($row[$this->table_name . '.' . $field]);
+                        } else {
+                            $current_bean->$field = "";
+                            unset($row[$field]);
+                        }
+                        if (isset($value['source']) && $value['source'] == 'function') {
+                            $function_fields[] = $field;
+                        }
+                    }
+                    foreach ($row as $key => $value) {
+                        $current_bean->$key = $value;
+                    }
+                    foreach ($function_fields as $function_field) {
+                        $value = $current_bean->field_defs[$function_field];
+                        $can_execute = true;
+                        $execute_params = array();
+                        $execute_function = array();
+                        if (!empty($value['function_class'])) {
+                            $execute_function[] = $value['function_class'];
+                            $execute_function[] = $value['function_name'];
+                        } else {
+                            $execute_function = $value['function_name'];
+                        }
+                        foreach ($value['function_params'] as $param) {
+                            if (empty($value['function_params_source']) || $value['function_params_source'] == 'parent') {
+                                if (empty($this->$param)) {
+                                    $can_execute = false;
+                                } elseif ($param == '$this') {
+                                    $execute_params[] = $this;
+                                } else {
+                                    $execute_params[] = $this->$param;
+                                }
+                            } elseif ($value['function_params_source'] == 'this') {
+                                if (empty($current_bean->$param)) {
+                                    $can_execute = false;
+                                } elseif ($param == '$this') {
+                                    $execute_params[] = $current_bean;
+                                } else {
+                                    $execute_params[] = $current_bean->$param;
+                                }
+                            } else {
+                                $can_execute = false;
+                            }
+                        }
+                        if ($can_execute) {
+                            if (!empty($value['function_require'])) {
+                                require_once($value['function_require']);
+                            }
+                            $current_bean->$function_field = call_user_func_array($execute_function,
+                                $execute_params);
+                        }
+                    }
+                    if (!empty($current_bean->parent_type) && !empty($current_bean->parent_id)) {
+                        if (!isset($post_retrieve[$current_bean->parent_type])) {
+                            $post_retrieve[$current_bean->parent_type] = array();
+                        }
+                        $post_retrieve[$current_bean->parent_type][] = array(
+                            'child_id' => $current_bean->id,
+                            'parent_id' => $current_bean->parent_id,
+                            'parent_type' => $current_bean->parent_type,
+                            'type' => 'parent'
+                        );
+                    }
+                    if(!isset($current_bean->id)) {
+                        $current_bean->id = null;
+                    }
+                    $list[$current_bean->id] = $current_bean;
+
                 }
                 // go to the next row
                 $index++;
