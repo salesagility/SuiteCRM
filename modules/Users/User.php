@@ -671,16 +671,22 @@ class User extends Person {
 		$q=<<<EOQ
 
 		select id from users where id in ( SELECT  er.bean_id AS id FROM email_addr_bean_rel er,
-			email_addresses ea WHERE ea.id = er.email_address_id
+			email_addresses ea WHERE ea.id = er.email_address_id AND users.deleted = 0
 		    AND ea.deleted = 0 AND er.deleted = 0 AND er.bean_module = 'Users' AND email_address_caps IN ('{$email1}') )
 EOQ;
 
 
 		$res=$this->db->query($q);
-		$row=$this->db->fetchByAssoc($res);
+		while($row=$this->db->fetchByAssoc($res)) {
+		    $rows[] = $row;
+        }
 
-		if (!empty($row['id'])) {
-			return $this->retrieve($row['id']);
+        if(count($rows) > 1) {
+		    $GLOBALS['log']->fatal('ambiguous user email address');
+        }
+
+		if (!empty($rows[0]['id'])) {
+			return $this->retrieve($row[0]['id']);
 		}
 		return '';
 	}
