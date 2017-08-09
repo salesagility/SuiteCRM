@@ -1079,7 +1079,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $subpanelDefinition->_instance_properties['type'] = 'collection';
         $results = $bean->process_union_list_query($bean, /** @lang sql */
             'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        self::assertCount(7, $GLOBALS['log']->calls['fatal']);
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
 
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
@@ -1106,7 +1106,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $subpanelDefinition->_instance_properties['type'] = 'collection';
         $results = $bean->process_union_list_query($bean, /** @lang sql */
             'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        self::assertCount(7, $GLOBALS['log']->calls['fatal']);
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
         self::assertEquals(10, $results['next_offset']);
@@ -1132,7 +1132,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $subpanelDefinition->_instance_properties['type'] = 'collection';
         $results = $bean->process_union_list_query($bean, /** @lang sql */
             'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        self::assertCount(7, $GLOBALS['log']->calls['fatal']);
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
         self::assertEquals(10, $results['next_offset']);
@@ -1157,7 +1157,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
         $results = $bean->process_union_list_query($bean, /** @lang sql */
             'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        self::assertCount(7, $GLOBALS['log']->calls['fatal']);
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
         self::assertEquals(10, $results['next_offset']);
@@ -1183,7 +1183,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $subpanelDefinition->template_instance = $bean;
         $results = $bean->process_union_list_query($bean, /** @lang sql */
             'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        self::assertCount(5, $GLOBALS['log']->calls['fatal']);
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
         self::assertEquals(10, $results['next_offset']);
@@ -1208,7 +1208,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
         $results = $bean->process_union_list_query(null, /** @lang sql */
             'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        self::assertCount(7, $GLOBALS['log']->calls['fatal']);
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
         self::assertEquals(10, $results['next_offset']);
@@ -1230,7 +1230,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
         $results = $bean->process_union_list_query(null, /** @lang sql */
             'SELECT DISTINCT * FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        self::assertCount(5, $GLOBALS['log']->calls['fatal']);
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertEquals(10, $results['next_offset']);
         self::assertEquals(-10, $results['previous_offset']);
@@ -1247,7 +1247,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $bean->save();
         $results = $bean->process_union_list_query(null, /** @lang sql */
             'SELECT DISTINCT * FROM contacts', null);
-        self::assertCount(4, $GLOBALS['log']->calls['fatal']);
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertEquals(10, $results['next_offset']);
         self::assertEquals(-10, $results['previous_offset']);
@@ -1267,7 +1267,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             self::assertTrue(true);
             self::assertEquals(1, $e->getCode());
         }
-        self::assertCount(4, $GLOBALS['log']->calls['fatal']);
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertEquals(10, $results['next_offset']);
         self::assertEquals(-10, $results['previous_offset']);
@@ -1281,7 +1281,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $GLOBALS['log']->reset();
         $bean = new SugarBeanMock();
         $results = $bean->process_union_list_query(null, null, null);
-        self::assertCount(4, $GLOBALS['log']->calls['fatal']);
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertEquals(10, $results['next_offset']);
         self::assertEquals(-10, $results['previous_offset']);
@@ -1295,7 +1295,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $bean->retrieve('test_contact1');
         $results = $bean->process_union_list_query(null, /** @lang sql */
             'SELECT DISTINCT * FROM contacts', 'end');
-        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertEquals(9.0, $results['next_offset']);
         self::assertEquals(-11.0, $results['previous_offset']);
@@ -1316,7 +1316,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
         $results = $bean->process_union_list_query(null, /** @lang sql */
             'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        self::assertCount(7, $GLOBALS['log']->calls['fatal']);
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
         self::assertEquals(10, $results['next_offset']);

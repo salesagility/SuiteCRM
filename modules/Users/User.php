@@ -677,6 +677,7 @@ EOQ;
 
 
 		$res=$this->db->query($q);
+		$rows = array();
 		while($row=$this->db->fetchByAssoc($res)) {
 		    $rows[] = $row;
         }
@@ -686,7 +687,7 @@ EOQ;
         }
 
 		if (!empty($rows[0]['id'])) {
-			return $this->retrieve($row[0]['id']);
+			return $this->retrieve($rows[0]['id']);
 		}
 		return '';
 	}
