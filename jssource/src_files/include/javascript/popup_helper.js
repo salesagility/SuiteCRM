@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,12 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /**
  * Helper function used in send_backs to close the popup window if closePopup is true.
@@ -108,13 +106,13 @@ function send_back(module, id)
 	// cn: end bug 12274 fix
 	
 	var passthru_data = Object();
-	if(typeof(request_data.passthru_data) != 'undefined')
+	if(typeof(request_data.passthru_data) !== 'undefined')
 	{
 		passthru_data = request_data.passthru_data;
 	}
 	var form_name = request_data.form_name;
 	var field_to_name_array = request_data.field_to_name_array;
-	
+
 	var call_back_function = eval("window.opener." + request_data.call_back_function);
 	var array_contents = Array();
 
@@ -122,11 +120,11 @@ function send_back(module, id)
     var fill_array_contents = function(the_key, the_name)
     {
         var the_value = '';
-        if (module != '' && id != '') {
-            if (associated_row_data['DOCUMENT_NAME'] && the_key.toUpperCase() == "NAME") {
+        if (module !== '' && id !== '') {
+            if (associated_row_data['DOCUMENT_NAME'] && the_key.toUpperCase() === "NAME") {
                 the_value = associated_row_data['DOCUMENT_NAME'];
-            } else if ((the_key.toUpperCase() == 'USER_NAME' || the_key.toUpperCase() == 'LAST_NAME' || the_key.toUpperCase() == 'FIRST_NAME')
-                        && typeof(is_show_fullname) != 'undefined' && is_show_fullname && form_name != 'search_form') {
+            } else if ((the_key.toUpperCase() === 'USER_NAME' || the_key.toUpperCase() === 'LAST_NAME' || the_key.toUpperCase() === 'FIRST_NAME')
+                        && typeof(is_show_fullname) !== 'undefined' && is_show_fullname && form_name !== 'search_form') {
                         //if it is from searchform, it will search by assigned_user_name like 'ABC%', then it will return nothing
                 the_value = associated_row_data['FULL_NAME'];
             } else {
@@ -134,16 +132,16 @@ function send_back(module, id)
             }
         }
 
-        if (typeof(the_value) == 'string') {
+        if (typeof(the_value) === 'string') {
             the_value = the_value.replace(/\r\n|\n|\r/g, '\\n');
         }
 
         array_contents.push('"' + the_name + '":"' + the_value + '"');
-    }
+    };
 
 	for(var the_key in field_to_name_array)
 	{
-		if(the_key != 'toJSON')
+		if(the_key !== 'toJSON')
 		{
             if (YAHOO.lang.isArray(field_to_name_array[the_key])) {
                 for (var i = 0; i < field_to_name_array[the_key].length; i++) {
@@ -164,6 +162,47 @@ function send_back(module, id)
 
 	var result_data = {"form_name":form_name,"name_to_value_array":name_to_value_array,"passthru_data":passthru_data,"popupConfirm":popupConfirm};
 	call_back_function(result_data);
+}
+
+function process_email_return (result_data)
+{
+  var contact_name = result_data.name_to_value_array.qtip_bar_name;
+  var contact_email_address = result_data.name_to_value_array.qtip_bar_email_address;
+  var to_addrs = document.getElementById('to_addrs_names');
+
+    if (trim(contact_email_address) === '') {
+      var mb = messageBox();
+      mb.hideHeader();
+      mb.setBody(SUGAR.language.translate('Emails', 'LBL_INSERT_ERROR_BLANK_EMAIL'));
+      mb.show();
+
+      mb.on('ok', function () {
+        "use strict";
+        mb.remove();
+      });
+
+      mb.on('cancel', function () {
+        "use strict";
+        mb.remove();
+      });
+    } else {
+      var formatted_email_address = '';
+      if (trim(contact_name) !== '') {
+        // use name <email address> format
+        formatted_email_address = contact_name + ' <' + contact_email_address + '>';
+      } else {
+        // use email address
+        formatted_email_address = contact_email_address;
+      }
+
+      if (to_addrs.value === '') {
+        to_addrs.value = formatted_email_address
+      } else {
+        to_addrs.value = (to_addrs.value + ', ' + formatted_email_address
+        );
+      }
+    }
+
 }
 
 function send_back_teams(module, form, field, error_message, request_data, form_team_id)
