@@ -1334,7 +1334,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetNumRowsInQuery()
     {
-        //self::markTestIncomplete('already covered');
+        self::markTestIncomplete('already covered');
     }
 
     /**
@@ -1990,8 +1990,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testLoadRelationships()
     {
-
-        // $this->markTestIncomplete();
+        self::markTestIncomplete('already covered');
     }
 
     /**
@@ -2227,8 +2226,6 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertEquals(array(), $results);
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
-        static::markTestIncomplete('Process finished with exit code 139 (interrupted by signal 11: SIGSEGV)');
-
     }
 
     /**
@@ -2245,7 +2242,6 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertEquals(array(), $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
-        static::markTestIncomplete('Process finished with exit code 139 (interrupted by signal 11: SIGSEGV)');
     }
 
     /**
@@ -2260,8 +2256,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $results = $bean->get_importable_fields();
         self::assertEquals(array(), $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
-
-        static::markTestIncomplete('Process finished with exit code 139 (interrupted by signal 11: SIGSEGV)');
+        
     }
 
 
@@ -2270,7 +2265,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateTables()
     {
-        
+
     }
 
     /**
@@ -2278,7 +2273,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetACLCategory()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2286,7 +2281,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testIsAuditEnabled()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2294,7 +2289,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetAuditTableNames()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2302,7 +2297,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateAuditTable()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2310,7 +2305,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testDropTables()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2318,7 +2313,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testSave()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2326,7 +2321,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testCleanBean()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2334,7 +2329,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function test()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2342,7 +2337,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testFixUpFormatting()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2350,7 +2345,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testEncrpytBeforeSave()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2358,7 +2353,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetEncryptKey()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2366,7 +2361,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testCheckOptimisticLocking()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2374,7 +2369,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testHasBeenModifiedSince()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2382,7 +2377,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testToArray()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2390,7 +2385,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testSaveRelationshipChanges()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2398,7 +2393,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testSetRelationshipInfo()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2406,7 +2401,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testHandlePresetRelationships()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2414,7 +2409,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testHandleRemainingRelateFields()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2422,7 +2417,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testUpdateParentRelationships()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2430,7 +2425,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testHandleRequestRelate()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2438,7 +2433,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testCallCustomLogic()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2446,7 +2441,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testHasEmails()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2454,7 +2449,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testPreprocessFieldsOnSave()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2462,7 +2457,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testSendNotifications()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2470,7 +2465,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetNotificationRecipients()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2478,7 +2473,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testSendAssignmentNotifications()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2486,7 +2481,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateNotificationEmail()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2494,7 +2489,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testTrackView()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2502,7 +2497,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetSummaryText()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2510,7 +2505,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testAddListCountJoins()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2518,7 +2513,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetList()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2526,7 +2521,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetOwnerWhere()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2534,7 +2529,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateNewListQuery()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2542,7 +2537,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetRelationshipField()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2550,7 +2545,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testIsRelateField()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2558,7 +2553,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testProcessOrderBy()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2566,7 +2561,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testProcessListQuery()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2574,7 +2569,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateListCountQuery()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2582,7 +2577,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testFillInAdditionalListFields()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2590,7 +2585,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetDetail()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2598,7 +2593,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testProcessDetailQuery()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2606,7 +2601,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testRetrieve()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2614,7 +2609,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetCustomJoin()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2622,7 +2617,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testConvertRow()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2630,7 +2625,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testConvertField()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2638,7 +2633,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testPopulateFromRow()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2646,7 +2641,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testPopulateCurrencyFields()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2654,7 +2649,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testCheckDateRelationshipsLoad()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2662,7 +2657,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testDecryptAfterRetrieve()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2670,7 +2665,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testFillInAdditionalDetailFields()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2678,7 +2673,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testFillInAdditionalParentFields()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2686,7 +2681,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetRelatedFields()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2694,7 +2689,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testFillInRelationshipFields()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2702,7 +2697,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testFillInLinkField()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2710,7 +2705,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetRelatedFieldsSnakeCase()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2718,7 +2713,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetRelatedList()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2726,7 +2721,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetFullList()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2734,7 +2729,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testProcessFullListQuery()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2742,7 +2737,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateIndex()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2750,7 +2745,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testMarkDeleted()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2758,7 +2753,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testMarkUndeleted()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2766,7 +2761,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testRestoreFiles()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2774,7 +2769,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testHaveFiles()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2782,7 +2777,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetFiles()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2790,7 +2785,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetFilesFields()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2798,7 +2793,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testDeleteFileDirectory()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2806,7 +2801,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testMarkRelationshipsDeleted()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2814,7 +2809,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testDeleteLinked()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2822,7 +2817,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testDeleteFiles()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2830,7 +2825,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testBuildRelatedList()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2838,7 +2833,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testBuildRelatedListWhere()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2846,7 +2841,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testBuildRelatedIn()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2854,7 +2849,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testBuildRelatedList2()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2862,7 +2857,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testListViewParseAdditionalSections()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2870,7 +2865,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetListViewData()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2878,7 +2873,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetListViewArray()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2886,7 +2881,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testRetrieveByStringFields()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2894,7 +2889,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetWhere()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2902,7 +2897,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testFromArray()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2910,7 +2905,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testProcessSpecialFields()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2918,7 +2913,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testBuildGenericWhereClause()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2926,7 +2921,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testParseAdditionalHeaders()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2934,7 +2929,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testAssignDisplayFields()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2942,7 +2937,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testSetRelationship()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2950,7 +2945,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testRetrieveRelationships()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2958,7 +2953,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testLoadLayoutDefs()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2966,7 +2961,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetRealKeyFromCustomFieldAssignedKey()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2974,7 +2969,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetOwnerField()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2982,7 +2977,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testListviewACLHelper()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2990,7 +2985,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testACLAccess()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -2998,7 +2993,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testLoadFromRow()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -3006,7 +3001,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateQualifiedOrderBy()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -3014,7 +3009,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testAddAddressStreets()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -3022,7 +3017,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testPopulateRelatedBean()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -3030,7 +3025,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testBeforeImportSave()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -3038,7 +3033,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testAfterImportSave()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -3046,7 +3041,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateExportQuery()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -3054,7 +3049,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testAuditBean()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
     /**
@@ -3062,7 +3057,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateAuditRecord()
     {
-        
+        self::markTestIncomplete('need to implement');
     }
 
 }
