@@ -2256,7 +2256,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $results = $bean->get_importable_fields();
         self::assertEquals(array(), $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
-        
+
     }
 
 
@@ -2265,7 +2265,16 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateTables()
     {
-        self::markTestIncomplete('need to implement');
+
+        // test
+        $bean = new Contact();
+        ob_start();
+        $bean->create_tables();
+        $results = ob_get_contents();
+        ob_get_clean();
+        self::assertEquals(/** @lang text */
+            "Table already exists : $bean->table_name<br>", $results);
+
     }
 
     /**
