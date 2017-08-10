@@ -34,6 +34,11 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     protected $sugarConfig;
 
     /**
+     * @var array
+     */
+    protected $fieldDefsStore;
+
+    /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
@@ -60,6 +65,25 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
         $this->sugarConfig = $sugar_config;
 
+        $this->fieldDefsStore();
+    }
+
+    /**
+     * Store static field_defs per modules
+     * @param string $key
+     */
+    protected function fieldDefsStore($key = 'base') {
+        $contact = new Contact();
+        $this->fieldDefsStore[$key]['Contact'] = $contact->field_defs;
+    }
+
+    /**
+     * Restore static field_defs per modules
+     * @param string $key
+     */
+    protected function fieldDefsRestore($key = 'base') {
+        $contact = new Contact();
+        $contact->field_defs = $this->fieldDefsStore[$key]['Contact'];
     }
 
     /**
@@ -69,6 +93,8 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     public function tearDown()
     {
         global $sugar_config;
+
+        $this->fieldDefsRestore();
 
         $sugar_config = $this->sugarConfig;
 
@@ -1967,7 +1993,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $bean = new Contact();
         $clone = clone $bean;
         self::assertEquals($bean, $clone);
-        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
@@ -2003,9 +2029,10 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
         $bean = new Contact();
+        $bean->field_defs = array();
         $results = $bean->get_linked_fields();
         self::assertEquals(array(), $results);
-        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
@@ -2014,7 +2041,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $bean->field_defs = array(1);
         $results = $bean->get_linked_fields();
         self::assertEquals(array(), $results);
-        self::assertCount(3, $GLOBALS['log']->calls['fatal']);
+        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
@@ -2214,7 +2241,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $bean->testKey = new ProspectLink('test', $bean);
         $results = $bean->get_linked_beans('testKey', 'Case');
         self::assertEquals(array(), $results);
-        self::assertCount(4, $GLOBALS['log']->calls['fatal']);
+        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
@@ -2224,7 +2251,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $bean->testKey = new ProspectLink('test', $bean);
         $results = $bean->get_linked_beans('testKey', 'Case', '', 0, 1);
         self::assertEquals(array(), $results);
-        self::assertCount(4, $GLOBALS['log']->calls['fatal']);
+        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 
     }
 
@@ -2238,6 +2265,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
         $bean = new Contact();
+        $bean->field_defs = array();
         $results = $bean->get_import_required_fields();
         self::assertEquals(array(), $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
@@ -2253,6 +2281,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
         $bean = new Contact();
+        $bean->field_defs = array();
         $results = $bean->get_importable_fields();
         self::assertEquals(array(), $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
@@ -2324,8 +2353,6 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateAuditTable()
     {
-        global $dictionary;
-
         $query = 'DROP TABLE contacts_audit;';
         $this->db->query($query);
 
@@ -2349,7 +2376,219 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testSave()
     {
-        self::markTestIncomplete('need to implement');
+        global $current_user;
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new SugarBeanMock();
+        $results = $bean->save();
+        self::assertTrue(isValidId($results));
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
+
+        self::assertEquals(false, $bean->in_save);
+        self::assertEquals($GLOBALS['timedate']->nowDb(), $bean->date_modified);
+        self::assertEquals($current_user->id, $bean->modified_user_id);
+        self::assertEquals($current_user->user_name, $bean->modified_by_name);
+        self::assertEquals(0, $bean->deleted);
+        self::assertEquals($bean->date_modified, $bean->date_entered);
+        self::assertEquals((isset($current_user)) ? $current_user->id : '', $bean->created_by);
+        self::assertTrue(isValidId($bean->id));
+        self::assertEquals($bean, $bean->custom_fields->bean);
+        self::assertEquals(false, $bean->new_with_id);
+        self::assertEquals(null, $bean->old_modified_by_name);
+
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new SugarBeanMock();
+        $bean->new_with_id = true;
+        $results = $bean->save();
+        self::assertFalse(isValidId($results));
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
+
+        self::assertEquals(false, $bean->in_save);
+        self::assertEquals($GLOBALS['timedate']->nowDb(), $bean->date_modified);
+        self::assertEquals($current_user->id, $bean->modified_user_id);
+        self::assertEquals($current_user->user_name, $bean->modified_by_name);
+        self::assertEquals(0, $bean->deleted);
+        self::assertEquals($bean->date_modified, $bean->date_entered);
+        self::assertEquals((isset($current_user)) ? $current_user->id : '', $bean->created_by);
+        self::assertFalse(isValidId($bean->id));
+        self::assertEquals($bean, $bean->custom_fields->bean);
+        self::assertEquals(false, $bean->new_with_id);
+        self::assertEquals($bean->modified_by_name, $bean->old_modified_by_name);
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new SugarBeanMock();
+        $bean->new_with_id = true;
+        $bean->modified_by_name = 'testing';
+        $results = $bean->save();
+        self::assertFalse(isValidId($results));
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
+
+        self::assertEquals(false, $bean->in_save);
+        self::assertEquals($GLOBALS['timedate']->nowDb(), $bean->date_modified);
+        self::assertEquals($current_user->id, $bean->modified_user_id);
+        self::assertEquals($current_user->user_name, $bean->modified_by_name);
+        self::assertEquals(0, $bean->deleted);
+        self::assertEquals($bean->date_modified, $bean->date_entered);
+        self::assertEquals((isset($current_user)) ? $current_user->id : '', $bean->created_by);
+        self::assertFalse(isValidId($bean->id));
+        self::assertEquals($bean, $bean->custom_fields->bean);
+        self::assertEquals(false, $bean->new_with_id);
+        self::assertEquals('testing', $bean->old_modified_by_name);
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new SugarBeanMock();
+        $bean->id = 'testbean_1';
+        $bean->modified_by_name = 'testing';
+        $results = $bean->save();
+        self::assertFalse(isValidId($results));
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
+
+        self::assertEquals(false, $bean->in_save);
+        self::assertEquals($GLOBALS['timedate']->nowDb(), $bean->date_modified);
+        self::assertEquals($current_user->id, $bean->modified_user_id);
+        self::assertEquals($current_user->user_name, $bean->modified_by_name);
+        self::assertEquals(0, $bean->deleted);
+        self::assertFalse(isset($bean->date_entered));
+        self::assertEquals((isset($current_user)) ? $current_user->id : '', $bean->created_by);
+        self::assertFalse(isValidId($bean->id));
+        self::assertEquals($bean, $bean->custom_fields->bean);
+        self::assertEquals(false, $bean->new_with_id);
+        self::assertEquals('testing', $bean->old_modified_by_name);
+
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new SugarBeanMock();
+        $bean->id = 'testbean_1';
+        $bean->modified_by_name = 'testing';
+        $bean->field_defs = array(
+            'email_addresses' => array(
+                'type' => 'link',
+            ),
+            'email_addresses_non_primary' => array(
+                'type' => 'email',
+            ),
+        );
+        $bean->email_addresses_non_primary = array(true);
+        $results = $bean->save();
+        self::assertFalse(isValidId($results));
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
+
+        self::assertEquals(false, $bean->in_save);
+        self::assertEquals($GLOBALS['timedate']->nowDb(), $bean->date_modified);
+        self::assertEquals($current_user->id, $bean->modified_user_id);
+        self::assertEquals($current_user->user_name, $bean->modified_by_name);
+        self::assertEquals(0, $bean->deleted);
+        self::assertFalse(isset($bean->date_entered));
+        self::assertEquals((isset($current_user)) ? $current_user->id : '', $bean->created_by);
+        self::assertFalse(isValidId($bean->id));
+        self::assertEquals($bean, $bean->custom_fields->bean);
+        self::assertEquals(false, $bean->new_with_id);
+        self::assertEquals('testing', $bean->old_modified_by_name);
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new SugarBeanMock();
+        $bean->id = 'testbean_1';
+        $bean->modified_by_name = 'testing';
+        $bean->field_defs = array(
+            'email_addresses' => array(
+                'type' => 'link',
+            ),
+            'email_addresses_non_primary' => array(
+                'type' => 'email',
+            ),
+        );
+        $bean->emailAddress = new EmailAddress();
+        $bean->email_addresses_non_primary = array(true);
+        $results = $bean->save();
+        self::assertFalse(isValidId($results));
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
+
+        self::assertEquals(false, $bean->in_save);
+        self::assertEquals($GLOBALS['timedate']->nowDb(), $bean->date_modified);
+        self::assertEquals($current_user->id, $bean->modified_user_id);
+        self::assertEquals($current_user->user_name, $bean->modified_by_name);
+        self::assertEquals(0, $bean->deleted);
+        self::assertFalse(isset($bean->date_entered));
+        self::assertEquals((isset($current_user)) ? $current_user->id : '', $bean->created_by);
+        self::assertFalse(isValidId($bean->id));
+        self::assertEquals($bean, $bean->custom_fields->bean);
+        self::assertEquals(false, $bean->new_with_id);
+        self::assertEquals('testing', $bean->old_modified_by_name);
+
+
+        // test
+        $GLOBALS['log']->reset();
+        $bean = new SugarBeanMock();
+        $bean->id = 'testbean_1';
+        $bean->modified_by_name = 'testing';
+        $bean->field_defs = array(
+            'email_addresses' => array(
+                'type' => 'link',
+            ),
+            'email_addresses_non_primary' => array(
+                'type' => 'email',
+            ),
+        );
+        $bean->emailAddress = new EmailAddress();
+        $bean->email_addresses_non_primary = array(true);
+        $results = $bean->save();
+        self::assertFalse(isValidId($results));
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
+
+        self::assertEquals(false, $bean->in_save);
+        self::assertEquals($GLOBALS['timedate']->nowDb(), $bean->date_modified);
+        self::assertEquals($current_user->id, $bean->modified_user_id);
+        self::assertEquals($current_user->user_name, $bean->modified_by_name);
+        self::assertEquals(0, $bean->deleted);
+        self::assertFalse(isset($bean->date_entered));
+        self::assertEquals((isset($current_user)) ? $current_user->id : '', $bean->created_by);
+        self::assertFalse(isValidId($bean->id));
+        self::assertEquals($bean, $bean->custom_fields->bean);
+        self::assertEquals(false, $bean->new_with_id);
+        self::assertEquals('testing', $bean->old_modified_by_name);
+
+        // test
+        $GLOBALS['log']->reset();
+        $this->fieldDefsStore('temp1');
+        $this->fieldDefsRestore();
+        $bean = BeanFactory::getBean('Contacts');
+        $bean->id = 'testbean_1';
+        $bean->modified_by_name = 'testing';
+        $bean->field_defs = array_merge($bean->field_defs, $bean->field_defs = array(
+            'email_addresses' => array(
+                'type' => 'link',
+            ),
+            'email_addresses_non_primary' => array(
+                'type' => 'email',
+            ),
+        ));
+        $bean->emailAddress = new EmailAddress();
+        $bean->email_addresses_non_primary = array('test@email.com');
+        $results = $bean->save();
+        self::assertFalse(isValidId($results));
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
+
+        self::assertEquals(false, $bean->in_save);
+        self::assertEquals($GLOBALS['timedate']->nowDb(), $bean->date_modified);
+        self::assertEquals($current_user->id, $bean->modified_user_id);
+        self::assertEquals($current_user->user_name, $bean->modified_by_name);
+        self::assertEquals(0, $bean->deleted);
+        self::assertFalse(isset($bean->date_entered));
+        self::assertEquals((isset($current_user)) ? $current_user->id : '', $bean->created_by);
+        self::assertFalse(isValidId($bean->id));
+        self::assertEquals($bean, $bean->custom_fields->bean);
+        self::assertEquals(false, $bean->new_with_id);
+        self::assertEquals('testing', $bean->old_modified_by_name);
+
+        $this->fieldDefsRestore('temp1', true);
+
     }
 
     /**

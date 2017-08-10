@@ -664,7 +664,7 @@ class SugarEmailAddress extends SugarBean
                 'email_address_id' => $email_id,
             );
         } else {
-            $GLOBALS['log']->fatal("SUGAREMAILADDRESS: address did not validate [ {$addr} ]");
+            $GLOBALS['log']->fatal("SUGAREMAILADDRESS: address did not valid [ {$addr} ]");
         }
     }
 

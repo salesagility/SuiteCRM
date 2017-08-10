@@ -409,6 +409,12 @@ class SugarBean
     public $acl_category;
 
     /**
+     * @var string $old_modified_by_name
+     */
+    public $old_modified_by_name;
+
+
+    /**
      * SugarBean constructor.
      * Performs following tasks:
      *
@@ -1723,9 +1729,13 @@ class SugarBean
             $def = $this->getFieldDefinition(0);
         }
         if (empty($def)) {
-            $defs = $this->field_defs;
-            reset($defs);
-            $def = current($defs);
+            if(!is_array($this->field_defs) && !is_object($this->field_defs)) {
+                $GLOBALS['log']->fatal('SugarBean::$field_defs should be an array');
+            } else {
+                $defs = (array)$this->field_defs;
+                reset($defs);
+                $def = current($defs);
+            }
         }
         return $def;
     }
@@ -2278,10 +2288,14 @@ class SugarBean
         // If we're importing back semi-colon separated non-primary emails
         if ($this->hasEmails() && !empty($this->email_addresses_non_primary) && is_array($this->email_addresses_non_primary)) {
             // Add each mail to the account
-            foreach ($this->email_addresses_non_primary as $mail) {
-                $this->emailAddress->addAddress($mail);
+            if(!isset($this->emailAddress)) {
+                $GLOBALS['log']->fatal('Undefined property: SugarBeanMock::$emailAddress');
+            } else {
+                foreach ($this->email_addresses_non_primary as $mail) {
+                    $this->emailAddress->addAddress($mail);
+                }
+                $this->emailAddress->save($this->id, $this->module_dir);
             }
-            $this->emailAddress->save($this->id, $this->module_dir);
         }
 
         if (isset($this->custom_fields)) {
@@ -2328,22 +2342,26 @@ class SugarBean
      */
     public function cleanBean()
     {
-        foreach ($this->field_defs as $key => $def) {
-            $type = '';
-            if (isset($def['type'])) {
-                $type = $def['type'];
-            }
-            if (isset($def['dbType'])) {
-                $type .= $def['dbType'];
-            }
+        if(!is_array($this->field_defs) && !is_object($this->field_defs)) {
+            $GLOBALS['log']->fatal('SugarBean::$filed_defs should be an array');
+        } else {
+            foreach ((array)$this->field_defs as $key => $def) {
+                $type = '';
+                if (isset($def['type'])) {
+                    $type = $def['type'];
+                }
+                if (isset($def['dbType'])) {
+                    $type .= $def['dbType'];
+                }
 
-            if ($def['type'] == 'html' || $def['type'] == 'longhtml') {
-                $this->$key = SugarCleaner::cleanHtml($this->$key, true);
-            } elseif (
-                (strpos($type, 'char') !== false || strpos($type, 'text') !== false || $type == 'enum') &&
-                !empty($this->$key)
-            ) {
-                $this->$key = SugarCleaner::cleanHtml($this->$key);
+                if ($def['type'] == 'html' || $def['type'] == 'longhtml') {
+                    $this->$key = SugarCleaner::cleanHtml($this->$key, true);
+                } elseif (
+                    (strpos($type, 'char') !== false || strpos($type, 'text') !== false || $type == 'enum') &&
+                    !empty($this->$key)
+                ) {
+                    $this->$key = SugarCleaner::cleanHtml($this->$key);
+                }
             }
         }
     }
@@ -2358,95 +2376,98 @@ class SugarBean
         global $timedate;
         static $bool_false_values = array('off', 'false', '0', 'no');
 
-
-        foreach ($this->field_defs as $field => $def) {
-            if (!isset($this->$field)) {
-                continue;
-            }
-            if ((isset($def['source']) && $def['source'] == 'non-db') || $field == 'deleted') {
-                continue;
-            }
-            if (isset($this->fetched_row[$field]) && $this->$field == $this->fetched_row[$field]) {
-                // Don't hand out warnings because the field was untouched between retrieval and saving, most database drivers hand pretty much everything back as strings.
-                continue;
-            }
-            $reformatted = false;
-            switch ($def['type']) {
-                case 'datetime':
-                case 'datetimecombo':
-                    if (empty($this->$field) || $this->$field == 'NULL') {
-                        $this->$field = '';
+        if(!is_array($this->field_defs) && !is_object($this->field_defs)) {
+            $GLOBALS['log']->fatal('SugarBean::$filed_defs should be an array');
+        } else {
+            foreach ((array)$this->field_defs as $field => $def) {
+                if (!isset($this->$field)) {
+                    continue;
+                }
+                if ((isset($def['source']) && $def['source'] == 'non-db') || $field == 'deleted') {
+                    continue;
+                }
+                if (isset($this->fetched_row[$field]) && $this->$field == $this->fetched_row[$field]) {
+                    // Don't hand out warnings because the field was untouched between retrieval and saving, most database drivers hand pretty much everything back as strings.
+                    continue;
+                }
+                $reformatted = false;
+                switch ($def['type']) {
+                    case 'datetime':
+                    case 'datetimecombo':
+                        if (empty($this->$field) || $this->$field == 'NULL') {
+                            $this->$field = '';
+                            break;
+                        }
+                        if (!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/', $this->$field)) {
+                            $this->$field = $timedate->to_db($this->$field);
+                            $reformatted = true;
+                        }
                         break;
-                    }
-                    if (!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/', $this->$field)) {
-                        $this->$field = $timedate->to_db($this->$field);
-                        $reformatted = true;
-                    }
-                    break;
-                case 'date':
-                    if (empty($this->$field) || $this->$field == 'NULL') {
-                        $this->$field = '';
+                    case 'date':
+                        if (empty($this->$field) || $this->$field == 'NULL') {
+                            $this->$field = '';
+                            break;
+                        }
+                        if (!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $this->$field)) {
+                            $this->$field = $timedate->to_db_date($this->$field, false);
+                            $reformatted = true;
+                        }
                         break;
-                    }
-                    if (!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $this->$field)) {
-                        $this->$field = $timedate->to_db_date($this->$field, false);
-                        $reformatted = true;
-                    }
-                    break;
-                case 'time':
-                    if (empty($this->$field) || $this->$field == 'NULL') {
-                        $this->$field = '';
+                    case 'time':
+                        if (empty($this->$field) || $this->$field == 'NULL') {
+                            $this->$field = '';
+                            break;
+                        }
+                        if (preg_match('/(am|pm)/i', $this->$field)) {
+                            $this->$field = $timedate->fromUserTime($this->$field)->format(TimeDate::DB_TIME_FORMAT);
+                            $reformatted = true;
+                        }
                         break;
-                    }
-                    if (preg_match('/(am|pm)/i', $this->$field)) {
-                        $this->$field = $timedate->fromUserTime($this->$field)->format(TimeDate::DB_TIME_FORMAT);
-                        $reformatted = true;
-                    }
-                    break;
-                case 'double':
-                case 'decimal':
-                case 'currency':
-                case 'float':
-                    if ($this->$field === '' || $this->$field == null || $this->$field == 'NULL') {
-                        continue;
-                    }
-                    if (is_string($this->$field)) {
-                        $this->$field = (float)unformat_number($this->$field);
-                        $reformatted = true;
-                    }
-                    break;
-                case 'uint':
-                case 'ulong':
-                case 'long':
-                case 'short':
-                case 'tinyint':
-                case 'int':
-                    if ($this->$field === '' || $this->$field == null || $this->$field == 'NULL') {
-                        continue;
-                    }
-                    if (is_string($this->$field)) {
-                        $this->$field = (int)unformat_number($this->$field);
-                        $reformatted = true;
-                    }
-                    break;
-                case 'bool':
-                    if (empty($this->$field) || in_array(strval($this->$field), $bool_false_values)) {
-                        $this->$field = false;
-                    } elseif (true === $this->$field || 1 == $this->$field) {
-                        $this->$field = true;
-                    } else {
-                        $this->$field = true;
-                        $reformatted = true;
-                    }
-                    break;
-                case 'encrypt':
-                    $this->$field = $this->encrpyt_before_save($this->$field);
-                    break;
-                default :
-                    //do nothing
-            }
-            if ($reformatted) {
-                $GLOBALS['log']->deprecated('Formatting correction: ' . $this->module_dir . '->' . $field . ' had formatting automatically corrected. This will be removed in the future, please upgrade your external code');
+                    case 'double':
+                    case 'decimal':
+                    case 'currency':
+                    case 'float':
+                        if ($this->$field === '' || $this->$field == null || $this->$field == 'NULL') {
+                            continue;
+                        }
+                        if (is_string($this->$field)) {
+                            $this->$field = (float)unformat_number($this->$field);
+                            $reformatted = true;
+                        }
+                        break;
+                    case 'uint':
+                    case 'ulong':
+                    case 'long':
+                    case 'short':
+                    case 'tinyint':
+                    case 'int':
+                        if ($this->$field === '' || $this->$field == null || $this->$field == 'NULL') {
+                            continue;
+                        }
+                        if (is_string($this->$field)) {
+                            $this->$field = (int)unformat_number($this->$field);
+                            $reformatted = true;
+                        }
+                        break;
+                    case 'bool':
+                        if (empty($this->$field) || in_array(strval($this->$field), $bool_false_values)) {
+                            $this->$field = false;
+                        } elseif (true === $this->$field || 1 == $this->$field) {
+                            $this->$field = true;
+                        } else {
+                            $this->$field = true;
+                            $reformatted = true;
+                        }
+                        break;
+                    case 'encrypt':
+                        $this->$field = $this->encrpyt_before_save($this->$field);
+                        break;
+                    default :
+                        //do nothing
+                }
+                if ($reformatted) {
+                    $GLOBALS['log']->deprecated('Formatting correction: ' . $this->module_dir . '->' . $field . ' had formatting automatically corrected. This will be removed in the future, please upgrade your external code');
+                }
             }
         }
     }
@@ -2710,52 +2731,58 @@ class SugarBean
             'add' => array('success' => array(), 'failure' => array()),
             'remove' => array('success' => array(), 'failure' => array()),
         );
+        if(!is_array($this->field_defs) && !is_object($this->field_defs)) {
+            $GLOBALS['log']->fatal('SugarBean::$filed_defs should be an array');
+        } else {
+            foreach ((array)$this->field_defs as $def) {
+                if ($def ['type'] == 'relate' && isset($def ['id_name']) && isset($def ['link']) && isset($def['save'])) {
+                    if (in_array($def['id_name'], $exclude) || in_array($def['id_name'], $this->relationship_fields)) {
+                        // continue to honor the exclude array and exclude any relationships that will be handled by the relationship_fields mechanism
+                        continue;
+                    }
 
-        foreach ($this->field_defs as $def) {
-            if ($def ['type'] == 'relate' && isset($def ['id_name']) && isset($def ['link']) && isset($def['save'])) {
-                if (in_array($def['id_name'], $exclude) || in_array($def['id_name'], $this->relationship_fields)) {
-                    // continue to honor the exclude array and exclude any relationships that will be handled by the relationship_fields mechanism
-                    continue;
-                }
+                    $linkField = $def['link'];
+                    if (isset($this->field_defs[$linkField])) {
+                        if ($this->load_relationship($linkField)) {
+                            $idName = $def['id_name'];
 
-                $linkField = $def['link'];
-                if (isset($this->field_defs[$linkField])) {
-                    if ($this->load_relationship($linkField)) {
-                        $idName = $def['id_name'];
-
-                        if (!empty($this->rel_fields_before_value[$idName]) && empty($this->$idName)) {
-                            //if before value is not empty then attempt to delete relationship
-                            $GLOBALS['log']->debug("save_relationship_changes(): From field_defs - attempting to remove the relationship record: {$linkField} = {$this->rel_fields_before_value[$idName]}");
-                            $success = $this->$linkField->delete($this->id, $this->rel_fields_before_value[$idName]);
-                            // just need to make sure it's true and not an array as it's possible to return an array
-                            if ($success) {
-                                $modified_relationships['remove']['success'][] = $linkField;
-                            } else {
-                                $modified_relationships['remove']['failure'][] = $linkField;
-                            }
-                            $GLOBALS['log']->debug("save_relationship_changes(): From field_defs - attempting to remove the relationship record returned " . var_export($success, true));
-                        }
-
-                        if (!empty($this->$idName) && is_string($this->$idName)) {
-                            $GLOBALS['log']->debug("save_relationship_changes(): From field_defs - attempting to add a relationship record - {$linkField} = {$this->$idName}");
-
-                            $success = $this->$linkField->add($this->$idName);
-
-                            // just need to make sure it's true and not an array as it's possible to return an array
-                            if ($success) {
-                                $modified_relationships['add']['success'][] = $linkField;
-                            } else {
-                                $modified_relationships['add']['failure'][] = $linkField;
+                            if (!empty($this->rel_fields_before_value[$idName]) && empty($this->$idName)) {
+                                //if before value is not empty then attempt to delete relationship
+                                $GLOBALS['log']->debug("save_relationship_changes(): From field_defs - attempting to remove the relationship record: {$linkField} = {$this->rel_fields_before_value[$idName]}");
+                                $success = $this->$linkField->delete($this->id,
+                                    $this->rel_fields_before_value[$idName]);
+                                // just need to make sure it's true and not an array as it's possible to return an array
+                                if ($success) {
+                                    $modified_relationships['remove']['success'][] = $linkField;
+                                } else {
+                                    $modified_relationships['remove']['failure'][] = $linkField;
+                                }
+                                $GLOBALS['log']->debug("save_relationship_changes(): From field_defs - attempting to remove the relationship record returned " . var_export($success,
+                                        true));
                             }
 
-                            $GLOBALS['log']->debug("save_relationship_changes(): From field_defs - add a relationship record returned " . var_export($success, true));
+                            if (!empty($this->$idName) && is_string($this->$idName)) {
+                                $GLOBALS['log']->debug("save_relationship_changes(): From field_defs - attempting to add a relationship record - {$linkField} = {$this->$idName}");
+
+                                $success = $this->$linkField->add($this->$idName);
+
+                                // just need to make sure it's true and not an array as it's possible to return an array
+                                if ($success) {
+                                    $modified_relationships['add']['success'][] = $linkField;
+                                } else {
+                                    $modified_relationships['add']['failure'][] = $linkField;
+                                }
+
+                                $GLOBALS['log']->debug("save_relationship_changes(): From field_defs - add a relationship record returned " . var_export($success,
+                                        true));
+                            }
+                        } else {
+                            $logFunction = 'fatal';
+                            if (isset($this->field_defs[$linkField]['source']) && $this->field_defs[$linkField]['source'] === 'non-db') {
+                                $logFunction = 'warn';
+                            }
+                            $GLOBALS['log']->$logFunction("Failed to load relationship {$linkField} while saving {$this->module_dir}");
                         }
-                    } else {
-                        $logFunction = 'fatal';
-                        if (isset($this->field_defs[$linkField]['source']) && $this->field_defs[$linkField]['source'] === 'non-db') {
-                            $logFunction = 'warn';
-                        }
-                        $GLOBALS['log']->$logFunction("Failed to load relationship {$linkField} while saving {$this->module_dir}");
                     }
                 }
             }
@@ -2772,68 +2799,73 @@ class SugarBean
      */
     protected function update_parent_relationships($exclude = array())
     {
-        foreach ($this->field_defs as $def) {
-            if (!empty($def['type']) && $def['type'] == "parent") {
-                if (empty($def['type_name']) || empty($def['id_name'])) {
-                    continue;
-                }
-                $typeField = $def['type_name'];
-                $idField = $def['id_name'];
-                if (in_array($idField, $exclude)) {
-                    continue;
-                }
-                //Determine if the parent field has changed.
-                if (
-                    //First check if the fetched row parent existed and now we no longer have one
-                    (!empty($this->fetched_row[$typeField]) && !empty($this->fetched_row[$idField])
-                        && (empty($this->$typeField) || empty($this->$idField))
-                    ) ||
-                    //Next check if we have one now that doesn't match the fetch row
-                    (!empty($this->$typeField) && !empty($this->$idField) &&
-                        (empty($this->fetched_row[$typeField]) || empty($this->fetched_row[$idField])
-                            || $this->fetched_row[$idField] != $this->$idField)
-                    ) ||
-                    // Check if we are deleting the bean, should remove the bean from any relationships
-                    $this->deleted == 1
-                ) {
-                    $parentLinks = array();
-                    //Correlate links to parent field module types
-                    foreach ($this->field_defs as $ldef) {
-                        if (!empty($ldef['type']) && $ldef['type'] == "link" && !empty($ldef['relationship'])) {
-                            $relDef = SugarRelationshipFactory::getInstance()->getRelationshipDef($ldef['relationship']);
-                            if (!empty($relDef['relationship_role_column']) && $relDef['relationship_role_column'] == $typeField) {
-                                $parentLinks[$relDef['lhs_module']] = $ldef;
+        if(!is_array($this->field_defs) && !is_object($this->field_defs)) {
+            $GLOBALS['log']->fatal('SugarBean::$filed_defs should be an array');
+        } else {
+            foreach ($this->field_defs as $def) {
+                if (!empty($def['type']) && $def['type'] == "parent") {
+                    if (empty($def['type_name']) || empty($def['id_name'])) {
+                        continue;
+                    }
+                    $typeField = $def['type_name'];
+                    $idField = $def['id_name'];
+                    if (in_array($idField, $exclude)) {
+                        continue;
+                    }
+                    //Determine if the parent field has changed.
+                    if (
+                        //First check if the fetched row parent existed and now we no longer have one
+                        (!empty($this->fetched_row[$typeField]) && !empty($this->fetched_row[$idField])
+                            && (empty($this->$typeField) || empty($this->$idField))
+                        ) ||
+                        //Next check if we have one now that doesn't match the fetch row
+                        (!empty($this->$typeField) && !empty($this->$idField) &&
+                            (empty($this->fetched_row[$typeField]) || empty($this->fetched_row[$idField])
+                                || $this->fetched_row[$idField] != $this->$idField)
+                        ) ||
+                        // Check if we are deleting the bean, should remove the bean from any relationships
+                        $this->deleted == 1
+                    ) {
+                        $parentLinks = array();
+                        //Correlate links to parent field module types
+                        foreach ($this->field_defs as $ldef) {
+                            if (!empty($ldef['type']) && $ldef['type'] == "link" && !empty($ldef['relationship'])) {
+                                $relDef = SugarRelationshipFactory::getInstance()->getRelationshipDef($ldef['relationship']);
+                                if (!empty($relDef['relationship_role_column']) && $relDef['relationship_role_column'] == $typeField) {
+                                    $parentLinks[$relDef['lhs_module']] = $ldef;
+                                }
                             }
                         }
-                    }
 
-                    // Save $this->$idField, because it can be reset in case of link->delete() call
-                    $idFieldVal = $this->$idField;
+                        // Save $this->$idField, because it can be reset in case of link->delete() call
+                        $idFieldVal = $this->$idField;
 
-                    //If we used to have a parent, call remove on that relationship
-                    if (!empty($this->fetched_row[$typeField]) && !empty($this->fetched_row[$idField])
-                        && !empty($parentLinks[$this->fetched_row[$typeField]])
-                        && ($this->fetched_row[$idField] != $this->$idField)
-                    ) {
-                        $oldParentLink = $parentLinks[$this->fetched_row[$typeField]]['name'];
-                        //Load the relationship
-                        if ($this->load_relationship($oldParentLink)) {
-                            $this->$oldParentLink->delete($this->fetched_row[$idField]);
-                            // Should re-save the old parent
-                            SugarRelationship::addToResaveList(BeanFactory::getBean($this->fetched_row[$typeField], $this->fetched_row[$idField]));
+                        //If we used to have a parent, call remove on that relationship
+                        if (!empty($this->fetched_row[$typeField]) && !empty($this->fetched_row[$idField])
+                            && !empty($parentLinks[$this->fetched_row[$typeField]])
+                            && ($this->fetched_row[$idField] != $this->$idField)
+                        ) {
+                            $oldParentLink = $parentLinks[$this->fetched_row[$typeField]]['name'];
+                            //Load the relationship
+                            if ($this->load_relationship($oldParentLink)) {
+                                $this->$oldParentLink->delete($this->fetched_row[$idField]);
+                                // Should re-save the old parent
+                                SugarRelationship::addToResaveList(BeanFactory::getBean($this->fetched_row[$typeField],
+                                    $this->fetched_row[$idField]));
+                            }
                         }
-                    }
 
-                    // If both parent type and parent id are set, save it unless the bean is being deleted
-                    if (!empty($this->$typeField)
-                        && !empty($idFieldVal)
-                        && !empty($parentLinks[$this->$typeField]['name'])
-                        && $this->deleted != 1
-                    ) {
-                        //Now add the new parent
-                        $parentLink = $parentLinks[$this->$typeField]['name'];
-                        if ($this->load_relationship($parentLink)) {
-                            $this->$parentLink->add($idFieldVal);
+                        // If both parent type and parent id are set, save it unless the bean is being deleted
+                        if (!empty($this->$typeField)
+                            && !empty($idFieldVal)
+                            && !empty($parentLinks[$this->$typeField]['name'])
+                            && $this->deleted != 1
+                        ) {
+                            //Now add the new parent
+                            $parentLink = $parentLinks[$this->$typeField]['name'];
+                            if ($this->load_relationship($parentLink)) {
+                                $this->$parentLink->add($idFieldVal);
+                            }
                         }
                     }
                 }
