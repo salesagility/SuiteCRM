@@ -305,6 +305,13 @@ function saveField($field, $id, $module, $value)
 {
 
     global $current_user;
+
+    if ($module == 'Users' && $field == 'is_admin' && !$current_user->is_admin) {
+        $err = 'SECURITY: Only admin user can change user type';
+        $GLOBALS['log']->fatal($err);
+        throw new RuntimeException($err);
+    }
+
     $bean = BeanFactory::getBean($module, $id);
 
     if (is_object($bean) && $bean->id != "") {
