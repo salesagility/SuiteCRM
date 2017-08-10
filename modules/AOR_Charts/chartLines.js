@@ -1,6 +1,6 @@
 function loadChartLine(chart){
     var span = $('<tr></tr>');
-    var removeButton = $('<button type="button" class="removeChartButton"><img src="themes/default/images/id-ff-remove-nobg.png" alt=""></button>');
+    var removeButton = $('<button type="button" class="button removeChartButton"><img src="themes/'+ SUGAR.themes.theme_name +'/images/id-ff-remove-nobg.png" alt=""></button>');
     removeButton.click(function(){
         removeButton.closest('tr').remove();
         if($("[name='aor_chart_id\\[\\]']").size() == 0){
@@ -43,6 +43,7 @@ function loadChartLine(chart){
     span.append("<td><select name='aor_chart_x_field[]' class='chartDimensionSelect' data-value='"+chart.x_field+"'></select></td>");
     span.append("<td><select name='aor_chart_y_field[]' class='chartDimensionSelect' data-value='"+chart.y_field+"'></select></td>");
 
+    $('#chartLines tbody').attr('aor-chart-line-body', '');
     $('#chartLines tbody').append(span);
     $('#chartHead').show();
 }
@@ -67,7 +68,7 @@ function updateChartDimensionSelects(){
             if(key == select.data('value')){
                 selected = "selected='selected'";
             }
-            select.append($('<option '+selected+' ></option').val(key).text(val));
+            select.append($('<option '+selected+' ></option>').val(key).text(val));
         });
 
     });

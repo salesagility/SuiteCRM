@@ -5336,15 +5336,26 @@ object{
 /* report layout */
 #report-editview-footer {width: 70%; float: left;}
 
-#detailpanel_fields,
-#detailpanel_conditions,
-#detailpanel_charts {
-    border-top: 1px solid lightgray;
+#detailpanel_fields_select {float: left; width: 100%; overflow-y: auto; margin-right: 20px;}
+.aor_dragbox {height: 250px; overflow: auto;}
+
+.aor-module-panel .col-sm-5 {
+    width: 49.00%;
+}
+
+.aor-module-panel .col-sm-2 {
+    width: 2.00%;
+}
+
+.aor-module-panel h4 {
+    margin-bottom: 8px;
+}
+
+.aor-line-items-panel .drop-area {
+    min-height: 62px;
 }
 
 
-#detailpanel_fields_select {float: left; width: 20%; height: 640px; overflow-y: auto; margin-right: 20px;}
-.aor_dragbox {height: 250px; overflow: scroll;}
 #report-editview-footer .tab-togglers {width: 80%;}
 #report-editview-footer .tab-toggler {display: block; float: left;}
 #report-editview-footer .tab-toggler.active .button {background-color: #286090;}
@@ -5353,6 +5364,9 @@ object{
 #report-editview-footer .parenthesis-line strong {font-size: 18px}
 #report-editview-footer .drop-area.highlighted {background-color: #f7f7f7;}
 
+.aor-line-items-panel .drop-area {
+    min-height: 62px;
+}
 
 /*Rgraph charts*/
 .noGraphDataPoints

@@ -24,8 +24,8 @@
 
 var fieldln = 0;
 var fieldln_count = 0;
-var report_rel_modules =  new Array();
-var report_fields =  new Array();
+var report_rel_modules =  [];
+var report_fields =  [];
 var report_module = '';
 
 var FieldLineHandler = {
@@ -81,7 +81,7 @@ var FieldLineHandler = {
             var id = $(this).attr('id');
             if(id.substr(0, 'aor_fields_id'.length)=='aor_fields_id') {
                 ret = id.substr('aor_fields_id'.length);
-                return ;
+                
             }
         });
         return ret;
@@ -157,9 +157,8 @@ function showFieldCurrentModuleFields(ln, value){
                 }
                 if(value == '') showFieldModuleField(ln);
             }
-        }
-
-        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleFields&aor_module="+report_module+"&view=JSON&rel_field="+rel_field+"&aor_value="+value,callback);
+        };
+      YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleFields&aor_module="+report_module+"&view=JSON&rel_field="+rel_field+"&aor_value="+value,callback);
 
     }
 
@@ -186,9 +185,8 @@ function showFieldModuleField(ln, function_value, label_value){
             failure: function(result) {
                 fieldResetLine(ln);
             }
-        }
-
-        var aor_field_name = "aor_fields_field_function["+ln+"]";
+        };
+      var aor_field_name = "aor_fields_field_function["+ln+"]";
 
         YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleFunctionField&view="+action_sugar_grp1+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_field_name+"&aor_value="+function_value,callback);
 
@@ -218,9 +216,8 @@ function showFieldModuleFieldType(ln, value){
         failure: function(result) {
             document.getElementById('aor_fields_fieldInput'+ln).innerHTML = '';
         }
-    }
-
-    var aor_field = document.getElementById('aor_fields_field'+ln).value;
+    };
+  var aor_field = document.getElementById('aor_fields_field'+ln).value;
     var type_value = document.getElementById("aor_fields_value_type["+ln+"]").value;
     var aor_field_name = "aor_fields_value["+ln+"]";
 
@@ -245,43 +242,43 @@ function insertFieldHeader(){
     //a.style.color="rgb(68,68,68)";
 
     var b=x.insertCell(1);
-    b.style.color="rgb(0,0,0)";
+    
     b.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_MODULE_PATH');
 
     var b1=x.insertCell(2);
-    b1.style.color="rgb(0,0,0)";
+    
     b1.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_FIELD');
 
     var c=x.insertCell(3);
-    c.style.color="rgb(0,0,0)";
+    
     c.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_DISPLAY');
 
     var d=x.insertCell(4);
-    d.style.color="rgb(0,0,0)";
+    
     d.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_LINK');
 
     var e=x.insertCell(5);
-    e.style.color="rgb(0,0,0)";
+    
     e.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_LABEL');
 
     var f=x.insertCell(6);
-    f.style.color="rgb(0,0,0)";
+    
     f.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_FUNCTION');
 
     var g=x.insertCell(7);
-    g.style.color="rgb(0,0,0)";
+    
     g.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_SORT');
 
     var h=x.insertCell(8);
-    h.style.color="rgb(0,0,0)";
+    
     h.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_GROUP');
 
     var i=x.insertCell(9);
-    i.style.color="rgb(0,0,0)";
+    
     i.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_FORMAT');
 
     var h=x.insertCell(10);
-    h.style.color="rgb(0,0,0)";
+    
     h.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_TOTAL');
 }
 
@@ -296,6 +293,7 @@ function insertFieldLine(){
 
     tablebody = document.createElement("tbody");
     tablebody.id = "aor_fields_body" + fieldln;
+    tablebody.setAttribute('aor-field-line-body', '');
     document.getElementById('fieldLines').appendChild(tablebody);
 
 
@@ -304,16 +302,14 @@ function insertFieldLine(){
 
     var a = x.insertCell(0);
     if(action_sugar_grp1 == 'EditView'){
-        a.innerHTML = "<button type='button' id='aor_fields_delete_line" + fieldln + "' class='button' value='' tabindex='116' onclick='markFieldLineDeleted(" + fieldln + ")'><img src='themes/default/images/id-ff-remove-nobg.png' alt=''></button><br>";
+        a.innerHTML = "<button type='button' id='aor_fields_delete_line" + fieldln + "' class='button aor-remove-btn' value='' tabindex='116' onclick='markFieldLineDeleted(" + fieldln + ")'><img src='themes/"+SUGAR.themes.theme_name+"/images/id-ff-remove-nobg.png' alt=''></button><br>";
         a.innerHTML += "<input type='hidden' name='aor_fields_deleted[" + fieldln + "]' id='aor_fields_deleted" + fieldln + "' value='0'><input type='hidden' name='aor_fields_id[" + fieldln + "]' id='aor_fields_id" + fieldln + "' value=''>";
     } else{
         a.innerHTML = fieldln +1;
     }
-    a.innerHTML += "<input type='hidden' name='aor_fields_field_order[" + fieldln + "]' id='aor_fields_field_order" + fieldln + "' value='"+fieldln+"'>"
-    a.style.width = '5%';
+  a.innerHTML += "<input type='hidden' name='aor_fields_field_order[" + fieldln + "]' id='aor_fields_field_order" + fieldln + "' value='" + fieldln + "'>";
 
     var b = x.insertCell(1);
-    b.style.width = '12%';
     var viewStyle = 'display:none';
     if(action_sugar_grp1 == 'EditView'){viewStyle = '';}
     b.innerHTML = "<input type='hidden' name='aor_fields_module_path["+ fieldln +"]' id='aor_fields_module_path" + fieldln + "' value=''>";
@@ -321,7 +317,6 @@ function insertFieldLine(){
     b.innerHTML += "<span id='aor_fields_module_path_display" + fieldln + "'></span>";
 
     var b1 = x.insertCell(2);
-    b1.style.width = '12%';
     var viewStyle = 'display:none';
     if(action_sugar_grp1 == 'EditView'){viewStyle = '';}
     b1.innerHTML = "<input type='hidden' name='aor_fields_field["+ fieldln +"]' id='aor_fields_field" + fieldln + "' value=''>";
@@ -331,37 +326,28 @@ function insertFieldLine(){
     var c = x.insertCell(3);
     c.innerHTML = "<input name='aor_fields_display["+ fieldln +"]' value='0' type='hidden'>";
     c.innerHTML += "<input id='aor_fields_display" + fieldln + "' name='aor_fields_display["+ fieldln +"]' value='1' type='checkbox' CHECKED>";
-    c.style.width = '5%';
 
     var d = x.insertCell(4);
     d.innerHTML = "<input name='aor_fields_link["+ fieldln +"]' value='0' type='hidden'>";
     d.innerHTML += "<input id='aor_fields_link" + fieldln + "' name='aor_fields_link["+ fieldln +"]' value='1' type='checkbox'>";
-    d.style.width = '5%';
 
     var e = x.insertCell(5);
     e.innerHTML = "<input name='aor_fields_label["+ fieldln +"]' id='aor_fields_label" + fieldln + "' size='20' maxlength='150' value='' type='text'>";
-    e.style.width = '12%';
 
     var f = x.insertCell(6);
     f.id='aor_fields_fieldFunction'+fieldln;
-    f.style.width = '10%';
 
     var g=x.insertCell(7);
     g.innerHTML = "<select type='text' name='aor_fields_sort_by["+ fieldln +"]' id='aor_fields_sort_by" + fieldln + "'>"+sort_by_values+"</select>";
-    g.style.width = '10%';
 
     var h=x.insertCell(8);
     h.innerHTML = "<input name='aor_fields_group_by["+ fieldln +"]' value='0' type='hidden'>";
     h.innerHTML += "<input id='aor_fields_group_by" + fieldln + "' name='aor_fields_group_by["+ fieldln +"]' value='1' type='checkbox'>";
-    h.style.width = '10%';
 
     var i=x.insertCell(9);
     i.innerHTML = "<select type='text' name='aor_fields_format["+ fieldln +"]' id='aor_fields_format" + fieldln + "' style='display:none;'>" + format_values + "</select>";
-    i.style.width = '10%';
-
     var h=x.insertCell(10);
     h.innerHTML = "<select type='text' name='aor_fields_total["+ fieldln +"]' id='aor_fields_total" + fieldln + "'>"+total_values+"</select>";
-    h.style.width = '10%';
 
     fieldln++;
     fieldln_count++;

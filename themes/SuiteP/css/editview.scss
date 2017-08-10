@@ -2655,9 +2655,208 @@ input#btn_ActionLine.button[type="button"] {
   background: none;
 }
 
+#fieldLines {
+  display: table;
+  width: 100%;
+}
+
 #fieldLines_head {
   background: none;
 }
+
+thead#fieldLines_head > tr > td {
+  padding-right: 8px;
+  background-color: $default-tab-bg;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+// remove button
+thead#fieldLines_head > tr > td:first-of-type {
+  border-top-left-radius: 4px;
+}
+
+thead#fieldLines_head > tr > td:nth-of-type(1) {
+  width: 40px;
+  height: 32px;
+}
+// module
+thead#fieldLines_head > tr > td:nth-of-type(2) {
+  width: 10%;
+}
+//
+thead#fieldLines_head > tr > td:nth-of-type(3) {
+  width: 10%;
+}
+
+thead#fieldLines_head > tr > td:nth-of-type(5) {
+  width: 5%;
+}
+
+
+thead#fieldLines_head > tr > td:nth-of-type(4) {
+  width: 5%;
+}
+
+thead#fieldLines_head > tr > td:nth-of-type(6) {
+  width: 15%;
+}
+
+thead#fieldLines_head > tr > td:nth-of-type(7) {
+  width: 10%;
+}
+
+thead#fieldLines_head > tr > td:nth-of-type(8) {
+  width: 10%;
+}
+
+thead#fieldLines_head > tr > td:nth-of-type(9) {
+  width: 5%;
+}
+
+thead#fieldLines_head > tr > td:nth-of-type(10) {
+  width: 10%;
+}
+
+thead#fieldLines_head > tr > td:nth-of-type(11) {
+  width: 10%;
+}
+
+[aor-field-line-body]:first-of-type td {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: none;
+  border-bottom: 4px solid $main-alternate-bg;
+}
+
+[aor-field-line-body] td  {
+  background-color: $detail-view-field-bg;
+  border-top: 2px solid $main-alternate-bg;
+  border-bottom: 2px solid $main-alternate-bg;
+  border-radius: 4px;
+  line-height: $input-line-height;
+  padding-bottom: 8px;
+  padding-right: 4px;
+  padding-top: 8px;
+}
+
+[aor-field-line-body] td:first-of-type {
+  padding-left: 4px;
+}
+
+// last
+thead#fieldLines_head > tr > td:last-of-type {
+  border-top-right-radius: 4px;//
+}
+
+#detailpanel_fields > table td {
+  line-height: $input-line-height;
+  padding-left: 8px;
+  padding-right: 4px;
+}
+
+#fieldLines {
+  display: block;
+  margin-top: 8px;
+}
+
+
+#conditionLines {
+  display: table;
+  width: 100%;
+}
+
+#conditionLines_head {
+  background: none;
+}
+
+thead#conditionLines_head > tr > td {
+  padding-right: 8px;
+  background-color: $default-tab-bg;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+// remove button
+thead#conditionLines_head > tr > td:first-of-type {
+  border-top-left-radius: 4px;
+}
+
+thead#conditionLines_head > tr > td:nth-of-type(1) {
+  width: 40px;
+  height: 32px;
+}
+// module
+thead#conditionLines_head > tr > td:nth-of-type(2) {
+  width: 10%;
+}
+//
+thead#conditionLines_head > tr > td:nth-of-type(3) {
+  width: 10%;
+}
+
+thead#conditionLines_head > tr > td:nth-of-type(4) {
+  width: 10%;
+}
+
+thead#conditionLines_head > tr > td:nth-of-type(5) {
+  width: 10%;
+}
+
+thead#conditionLines_head > tr > td:nth-of-type(6) {
+  width: 10%;
+}
+
+thead#conditionLines_head > tr > td:nth-of-type(7) {
+  width: 35%;
+}
+
+thead#conditionLines_head > tr > td:nth-of-type(8) {
+  width: 5%;
+}
+
+
+[aor-condition-line-body]:first-of-type td {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: none;
+  border-bottom: 4px solid $main-alternate-bg;
+}
+
+[aor-condition-line-body] td  {
+  background-color: $detail-view-field-bg;
+  border-top: 2px solid $main-alternate-bg;
+  border-bottom: 2px solid $main-alternate-bg;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  line-height: $input-line-height;
+  padding-bottom: 8px;
+  padding-right: 4px;
+  padding-top: 8px;
+}
+
+[aor-condition-line-body] td:first-of-type {
+  padding-left: 4px;
+}
+
+// last
+thead#conditionLines_head > tr > td:last-of-type {
+  border-top-right-radius: 4px;//
+}
+
+#detailpanel_fields > table td {
+  line-height: $input-line-height;
+  padding-left: 8px;
+  padding-right: 4px;
+}
+
+#conditionLines {
+  display: block;
+  margin-top: 8px;
+}
+
+
+
 
 #actionLines {
   border: 1px solid transparent;
@@ -2686,6 +2885,137 @@ input#btn_ActionLine.button[type="button"] {
   clear: both;
   width: 100%;
 }
+
+
+
+#chartLines {
+  display: table;
+  width: 100%;
+}
+
+#chartHead {
+  background: none;
+}
+
+thead#chartHead > tr > td {
+  padding-right: 8px;
+  background-color: $default-tab-bg;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+// remove button
+thead#chartHead > tr > td:first-of-type {
+  border-top-left-radius: 4px;
+}
+
+thead#chartHead > tr > td:nth-of-type(1) {
+  width: 40px;
+  height: 32px;
+}
+// module
+thead#chartHead > tr > td:nth-of-type(2) {
+  width: 10%;
+}
+//
+thead#chartHead > tr > td:nth-of-type(3) {
+  width: 10%;
+}
+
+thead#chartHead > tr > td:nth-of-type(4) {
+  width: 5%;
+}
+
+thead#chartHead > tr > td:nth-of-type(6) {
+  width: 15%;
+}
+
+thead#chartHead > tr > td:nth-of-type(7) {
+  width: 10%;
+}
+
+thead#chartHead > tr > td:nth-of-type(8) {
+  width: 10%;
+}
+
+thead#chartHead > tr > td:nth-of-type(9) {
+  width: 5%;
+}
+
+thead#chartHead > tr > td:nth-of-type(10) {
+  width: 10%;
+}
+
+thead#chartHead > tr > td:nth-of-type(11) {
+  width: 10%;
+}
+
+[aor-chart-line-body]:first-of-type td {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: none;
+  border-bottom: 4px solid $main-alternate-bg;
+}
+
+[aor-chart-line-body] td  {
+  background-color: $detail-view-field-bg;
+  border-top: 2px solid $main-alternate-bg;
+  border-bottom: 2px solid $main-alternate-bg;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  line-height: $input-line-height;
+  padding-bottom: 8px;
+  padding-right: 4px;
+  padding-top: 8px;
+}
+
+[aor-chart-line-body] td:first-of-type {
+  padding-left: 4px;
+}
+
+[aor-chart-line-body] td  .button {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.aor-line-items-panel thead td {
+  color: darken($main-font-color, 100%);
+}
+
+.aor-line-items-panel td {
+  color: $main-font-color;
+}
+
+
+.aor-line-items-panel .drop-area {
+  min-height: 62px;
+}
+
+// charts border fix
+[aor-chart-line-body] td:first-of-type > td {
+  border-bottom: none;
+  border: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+// last
+thead#conditionLines_head > tr > td:last-of-type {
+  border-top-right-radius: 4px;//
+}
+
+#detailpanel_fields > table td {
+  line-height: $input-line-height;
+  padding-left: 8px;
+  padding-right: 4px;
+}
+
+#conditionLines {
+  display: block;
+  margin-top: 8px;
+}
+
 
 /*Line Items*/
 #lineItems #service_head {
@@ -4560,23 +4890,9 @@ object {
   color: $danger;
 }
 
-#report-editview-footer {
-  float: left;
-  width: 70%;
-}
-
-#detailpanel_fields,
-#detailpanel_conditions,
-#detailpanel_charts {
-  border-top: 1px solid lightgray;
-}
-
 #detailpanel_fields_select {
   margin-right: 20px;
-  float: left;
   overflow-y: auto;
-  width: 20%;
-  height: 640px;
 }
 
 @media (max-width: 767px) {
@@ -4603,22 +4919,63 @@ object {
 }
 
 .aor_dragbox {
-  overflow: scroll;
-  height: 250px;
+  overflow: auto;
+  height: 150px;
+  border: 1px solid $input-border;
+  border-radius: 4px;
+}
+
+.aor-module-panel {
+  border: 1px solid $panel-border-bg;
+  margin-top: 8px;
+  padding: 16px 8px;
+
+}
+
+.aor-module-panel .col-sm-5 {
+  width: 49.00%;
+}
+
+.aor-module-panel .col-sm-2 {
+  width: 2.00%;
+}
+
+.aor-module-panel h4 {
+  margin-bottom: 8px;
+}
+
+.aor-remove-btn {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 #report-editview-footer .tab-togglers {
-  width: 80%;
+  border-top-left-radius: 0;
+  clear: both;
+  height: $input-line-height;
+  margin-bottom: 0;
+}
+
+.aor-line-items-panel {
+  border: 1px solid $panel-border-bg;
+  margin-top: 0;
+  padding: 16px 8px;
 }
 
 #report-editview-footer .tab-toggler {
-  display: block;
-  padding: 0 4px;
-  float: left;
+  display: inline-block;
+  padding: 0 1px 0 1px;
+}
+
+#report-editview-footer .tab-toggler .button {
+  margin-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  background-color: $default-tab-bg;
 }
 
 #report-editview-footer .tab-toggler.active .button {
-  background-color: $danger-btn-bg;
+  background-color: $active-tab-bg;
 }
 
 #report-editview-footer .parentheses-btn {
@@ -4638,10 +4995,6 @@ object {
 
 #report-editview-footer .drop-area.highlighted {
   background-color: #f7f7f7;
-}
-
-#report-editview-footer .tab-panels {
-  width: 110%;
 }
 
 .noGraphDataPoints {
