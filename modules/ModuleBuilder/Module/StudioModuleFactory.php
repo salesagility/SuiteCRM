@@ -46,18 +46,11 @@ require_once 'modules/ModuleBuilder/Module/StudioModule.php' ;
 class StudioModuleFactory
 {
     /**
-     * @var array $loadedMods - array( 'module' => StudioModule )
-     */
-	protected static $loadedMods = array();
-
-    /**
      * @param string $module name
      * @return StudioModule
      */
     public static function getStudioModule($module)
 	{
-		if (!empty(self::$loadedMods[$module]))
-            return self::$loadedMods[$module];
 
         $studioModClass = "{$module}StudioModule";
 		if (file_exists("custom/modules/{$module}/{$studioModClass}.php"))
@@ -75,7 +68,6 @@ class StudioModuleFactory
 		{
 			$sm = new StudioModule($module);
 		}
-        self::$loadedMods[$module] = $sm;
         return $sm;
 	}
 }

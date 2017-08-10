@@ -317,10 +317,11 @@ class ViewLayoutView extends SugarView
 		    $smarty->assign('current_mod_strings', $module->getModStrings());
 		}
 
-        $ajax->addSection ( 'center', $translatedViewType, $smarty->fetch ( 'modules/ModuleBuilder/tpls/layoutView.tpl' ) ) ;
         if ($preview) {
         	echo $smarty->fetch ( 'modules/ModuleBuilder/tpls/Preview/layoutView.tpl' );
 		} else {
+            $layoutViewHtml = $smarty->fetch ( 'modules/ModuleBuilder/tpls/layoutView.tpl' );
+            $ajax->addSection ( 'center', $translatedViewType, $layoutViewHtml) ;
 			echo $ajax->getJavascript () ;
     	}
     }
