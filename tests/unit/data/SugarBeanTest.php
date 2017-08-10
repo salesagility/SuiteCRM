@@ -2570,7 +2570,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
             ),
         ));
         $bean->emailAddress = new EmailAddress();
-        $bean->email_addresses_non_primary = array('test@email.com');
+        $bean->email_addresses_non_primary = array('testbean1@email.com');
         $results = $bean->save();
         self::assertFalse(isValidId($results));
         self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
