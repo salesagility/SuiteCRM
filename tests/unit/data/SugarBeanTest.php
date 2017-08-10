@@ -2311,7 +2311,12 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetAuditTableNames()
     {
-        self::markTestIncomplete('need to implement');
+
+        // test
+        $bean = new Contact();
+        $results = $bean->get_audit_table_name();
+        self::assertEquals('contacts_audit', $results);
+
     }
 
     /**
