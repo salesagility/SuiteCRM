@@ -43,16 +43,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /* BEGIN - SECURITY GROUPS */
-if(file_exists("modules/ACLActions/actiondefs.override.php")){
-	require_once("modules/ACLActions/actiondefs.override.php");
+if (file_exists("modules/ACLActions/actiondefs.override.php")) {
+    require_once("modules/ACLActions/actiondefs.override.php");
 } else {
-require_once('modules/ACLActions/actiondefs.php');
+    require_once('modules/ACLActions/actiondefs.php');
 }
 /* END - SECURITY GROUPS */
 require_once('modules/ACL/ACLJSController.php');
+
 class ACLController
 {
-	/* BEGIN - SECURITY GROUPS - added $in_group */
+    /* BEGIN - SECURITY GROUPS - added $in_group */
     static function checkAccess($category, $action, $is_owner = false, $type = 'module', $in_group = false)
     {
 
@@ -94,174 +95,209 @@ class ACLController
 
     /* END - SECURITY GROUPS */
 
-	static function requireOwner($category, $value, $type='module'){
-			global $current_user;
-			if(is_admin($current_user))return false;
-			return ACLAction::userNeedsOwnership($current_user->id, $category, $value,$type);
-	}
+    static function requireOwner($category, $value, $type = 'module')
+    {
+        global $current_user;
+        if (is_admin($current_user)) {
+            return false;
+        }
 
-	/* BEGIN - SECURITY GROUPS */
-	static function requireSecurityGroup($category, $value, $type='module'){
-			global $current_user;
-			if(is_admin($current_user))return false;
-			return ACLAction::userNeedsSecurityGroup($current_user->id, $category, $value,$type);
-	}
-	/* END - SECURITY GROUPS */
+        return ACLAction::userNeedsOwnership($current_user->id, $category, $value, $type);
+    }
 
-	static function filterModuleList(&$moduleList, $by_value=true){
+    /* BEGIN - SECURITY GROUPS */
+    static function requireSecurityGroup($category, $value, $type = 'module')
+    {
+        global $current_user;
+        if (is_admin($current_user)) {
+            return false;
+        }
 
-		global $aclModuleList, $current_user;
-		if(is_admin($current_user)) return;
-		$actions = ACLAction::getUserActions($current_user->id, false);
+        return ACLAction::userNeedsSecurityGroup($current_user->id, $category, $value, $type);
+    }
 
-		$compList = array();
-		if($by_value){
-			foreach($moduleList as $key=>$value){
-				$compList[$value]= $key;
-			}
-		}else{
-			$compList =& $moduleList;
-		}
-		foreach($actions as $action_name=>$action){
+    /* END - SECURITY GROUPS */
 
-			if(!empty($action['module'])){
-				$aclModuleList[$action_name] = $action_name;
-				if(isset($compList[$action_name])){
-					if($action['module']['access']['aclaccess'] < ACL_ALLOW_ENABLED){
-						if($by_value){
-							unset($moduleList[$compList[$action_name]]);
-						}else{
-							unset($moduleList[$action_name]);
-						}
-					}
-				}
-			}
-		}
-		if(isset($compList['Calendar']) &&
-			!( ACLController::checkModuleAllowed('Calls', $actions) || ACLController::checkModuleAllowed('Meetings', $actions) || ACLController::checkModuleAllowed('Tasks', $actions)))
-	    {
-			if($by_value){
-				unset($moduleList[$compList['Calendar']]);
-			}else{
-				unset($moduleList['Calendar']);
-			}
-			if(isset($compList['Activities']) && !ACLController::checkModuleAllowed('Notes', $actions)){
-				if($by_value){
-					unset($moduleList[$compList['Activities']]);
-				}else{
-					unset($moduleList['Activities']);
-				}
-			}
-		}
+    static function filterModuleList(&$moduleList, $by_value = true)
+    {
 
-	}
+        global $aclModuleList, $current_user;
+        if (is_admin($current_user)) {
+            return;
+        }
+        $actions = ACLAction::getUserActions($current_user->id, false);
 
-	/**
-	 * Check to see if the module is available for this user.
-	 *
-	 * @param String $module_name
-	 * @return true if they are allowed.  false otherwise.
-	 */
-	static function checkModuleAllowed($module_name, $actions)
-	{
-	    if(!empty($actions[$module_name]['module']['access']['aclaccess']) &&
-			ACL_ALLOW_ENABLED == $actions[$module_name]['module']['access']['aclaccess'])
-		{
-			return true;
-		}
+        $compList = array();
+        if ($by_value) {
+            foreach ($moduleList as $key => $value) {
+                $compList[$value] = $key;
+            }
+        } else {
+            $compList =& $moduleList;
+        }
+        foreach ($actions as $action_name => $action) {
 
-		return false;
-	}
+            if (!empty($action['module'])) {
+                $aclModuleList[$action_name] = $action_name;
+                if (isset($compList[$action_name])) {
+                    if ($action['module']['access']['aclaccess'] < ACL_ALLOW_ENABLED) {
+                        if ($by_value) {
+                            unset($moduleList[$compList[$action_name]]);
+                        } else {
+                            unset($moduleList[$action_name]);
+                        }
+                    }
+                }
+            }
+        }
+        if (isset($compList['Calendar']) &&
+            !(ACLController::checkModuleAllowed('Calls', $actions)
+                || ACLController::checkModuleAllowed('Meetings',
+                    $actions
+                ) || ACLController::checkModuleAllowed('Tasks', $actions))
+        ) {
+            if ($by_value) {
+                unset($moduleList[$compList['Calendar']]);
+            } else {
+                unset($moduleList['Calendar']);
+            }
+            if (isset($compList['Activities']) && !ACLController::checkModuleAllowed('Notes', $actions)) {
+                if ($by_value) {
+                    unset($moduleList[$compList['Activities']]);
+                } else {
+                    unset($moduleList['Activities']);
+                }
+            }
+        }
 
-	static function disabledModuleList($moduleList, $by_value=true,$view='list'){
-		global $aclModuleList, $current_user;
-		if(is_admin($GLOBALS['current_user'])) return array();
-		$actions = ACLAction::getUserActions($current_user->id, false);
-		$disabled = array();
-		$compList = array();
+    }
 
-		if($by_value){
-			foreach($moduleList as $key=>$value){
-				$compList[$value]= $key;
-			}
-		}else{
-			$compList =& $moduleList;
-		}
-		if(isset($moduleList['ProductTemplates'])){
-			$moduleList['Products'] ='Products';
-		}
+    /**
+     * Check to see if the module is available for this user.
+     *
+     * @param String $module_name
+     * @return true if they are allowed.  false otherwise.
+     */
+    static function checkModuleAllowed($module_name, $actions)
+    {
+        if (!empty($actions[$module_name]['module']['access']['aclaccess']) &&
+            ACL_ALLOW_ENABLED == $actions[$module_name]['module']['access']['aclaccess']
+        ) {
+            return true;
+        }
 
-		foreach($actions as $action_name=>$action){
+        return false;
+    }
 
-			if(!empty($action['module'])){
-				$aclModuleList[$action_name] = $action_name;
-				if(isset($compList[$action_name])){
-					if($action['module']['access']['aclaccess'] < ACL_ALLOW_ENABLED || $action['module'][$view]['aclaccess'] < 0){
-						if($by_value){
-							$disabled[$compList[$action_name]] =$compList[$action_name] ;
-						}else{
-							$disabled[$action_name] = $action_name;
-						}
-					}
-				}
-			}
-		}
-		if(isset($compList['Calendar'])  && !( ACL_ALLOW_ENABLED == $actions['Calls']['module']['access']['aclaccess'] || ACL_ALLOW_ENABLED == $actions['Meetings']['module']['access']['aclaccess'] || ACL_ALLOW_ENABLED == $actions['Tasks']['module']['access']['aclaccess'])){
-			if($by_value){
-							$disabled[$compList['Calendar']]  = $compList['Calendar'];
-			}else{
-							$disabled['Calendar']  = 'Calendar';
-			}
-			if(isset($compList['Activities'])  &&!( ACL_ALLOW_ENABLED == $actions['Notes']['module']['access']['aclaccess'] || ACL_ALLOW_ENABLED == $actions['Notes']['module']['access']['aclaccess'] )){
-				if($by_value){
-							$disabled[$compList['Activities']]  = $compList['Activities'];
-				}else{
-							$disabled['Activities']  = 'Activities';
-				}
-			}
-		}
-		if(isset($disabled['Products'])){
-			$disabled['ProductTemplates'] = 'ProductTemplates';
-		}
+    static function disabledModuleList($moduleList, $by_value = true, $view = 'list')
+    {
+        global $aclModuleList, $current_user;
+        if (is_admin($GLOBALS['current_user'])) {
+            return array();
+        }
+        $actions = ACLAction::getUserActions($current_user->id, false);
+        $disabled = array();
+        $compList = array();
+
+        if ($by_value) {
+            foreach ($moduleList as $key => $value) {
+                $compList[$value] = $key;
+            }
+        } else {
+            $compList =& $moduleList;
+        }
+        if (isset($moduleList['ProductTemplates'])) {
+            $moduleList['Products'] = 'Products';
+        }
+
+        foreach ($actions as $action_name => $action) {
+
+            if (!empty($action['module'])) {
+                $aclModuleList[$action_name] = $action_name;
+                if (isset($compList[$action_name])) {
+                    if ($action['module']['access']['aclaccess'] < ACL_ALLOW_ENABLED
+                        || $action['module'][$view]['aclaccess'] < 0
+                    ) {
+                        if ($by_value) {
+                            $disabled[$compList[$action_name]] = $compList[$action_name];
+                        } else {
+                            $disabled[$action_name] = $action_name;
+                        }
+                    }
+                }
+            }
+        }
+        if (isset($compList['Calendar']) && !(ACL_ALLOW_ENABLED == $actions['Calls']['module']['access']['aclaccess']
+                || ACL_ALLOW_ENABLED == $actions['Meetings']['module']['access']['aclaccess']
+                || ACL_ALLOW_ENABLED == $actions['Tasks']['module']['access']['aclaccess'])
+        ) {
+            if ($by_value) {
+                $disabled[$compList['Calendar']] = $compList['Calendar'];
+            } else {
+                $disabled['Calendar'] = 'Calendar';
+            }
+            if (isset($compList['Activities']) &&
+                !(ACL_ALLOW_ENABLED == $actions['Notes']['module']['access']['aclaccess']
+                    || ACL_ALLOW_ENABLED == $actions['Notes']['module']['access']['aclaccess'])
+            ) {
+                if ($by_value) {
+                    $disabled[$compList['Activities']] = $compList['Activities'];
+                } else {
+                    $disabled['Activities'] = 'Activities';
+                }
+            }
+        }
+        if (isset($disabled['Products'])) {
+            $disabled['ProductTemplates'] = 'ProductTemplates';
+        }
 
 
-		return $disabled;
+        return $disabled;
 
-	}
+    }
 
 
+    function addJavascript($category, $form_name = '', $is_owner = false)
+    {
+        $jscontroller = new ACLJSController($category, $form_name, $is_owner);
+        echo $jscontroller->getJavascript();
+    }
 
-	function addJavascript($category,$form_name='', $is_owner=false){
-		$jscontroller = new ACLJSController($category, $form_name, $is_owner);
-		echo $jscontroller->getJavascript();
-	}
+    static function moduleSupportsACL($module)
+    {
+        static $checkModules = array();
+        global $beanFiles, $beanList;
+        if (isset($checkModules[$module])) {
+            return $checkModules[$module];
+        }
+        if (!isset($beanList[$module])) {
+            $checkModules[$module] = false;
 
-	static function moduleSupportsACL($module){
-		static $checkModules = array();
-		global $beanFiles, $beanList;
-		if(isset($checkModules[$module])){
-			return $checkModules[$module];
-		}
-		if(!isset($beanList[$module])){
-			$checkModules[$module] = false;
+        } else {
+            $class = $beanList[$module];
+            require_once($beanFiles[$class]);
+            $mod = new $class();
+            if (!is_subclass_of($mod, 'SugarBean')) {
+                $checkModules[$module] = false;
+            } else {
+                $checkModules[$module] = $mod->bean_implements('ACL');
+            }
+        }
 
-		}else{
-			$class = $beanList[$module];
-			require_once($beanFiles[$class]);
-			$mod = new $class();
-			if(!is_subclass_of($mod, 'SugarBean')){
-				$checkModules[$module] = false;
-			}else{
-				$checkModules[$module] = $mod->bean_implements('ACL');
-			}
-		}
-		return $checkModules[$module] ;
+        return $checkModules[$module];
 
-	}
+    }
 
-	static function displayNoAccess($redirect_home = false){
-		echo '<script>function set_focus(){}</script><p class="error">' . translate('LBL_NO_ACCESS', 'ACL') . '</p>';
-		if($redirect_home)echo translate('LBL_REDIRECT_TO_HOME', 'ACL') . ' <span id="seconds_left">3</span> ' . translate('LBL_SECONDS', 'ACL') . '<script> function redirect_countdown(left){document.getElementById("seconds_left").innerHTML = left; if(left == 0){document.location.href = "index.php";}else{left--; setTimeout("redirect_countdown("+ left+")", 1000)}};setTimeout("redirect_countdown(3)", 1000)</script>';
-	}
+    static function displayNoAccess($redirect_home = false)
+    {
+        echo '<script>function set_focus(){}</script><p class="error">' . translate('LBL_NO_ACCESS', 'ACL') . '</p>';
+        if ($redirect_home) {
+            echo translate('LBL_REDIRECT_TO_HOME',
+                    'ACL'
+                ) . ' <span id="seconds_left">3</span> ' . translate('LBL_SECONDS',
+                    'ACL'
+                ) . '<script> function redirect_countdown(left){document.getElementById("seconds_left").innerHTML = left; if(left == 0){document.location.href = "index.php";}else{left--; setTimeout("redirect_countdown("+ left+")", 1000)}};setTimeout("redirect_countdown(3)", 1000)</script>';
+        }
+    }
 
 }
