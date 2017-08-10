@@ -2293,7 +2293,17 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testIsAuditEnabled()
     {
-        self::markTestIncomplete('need to implement');
+
+        // test
+        $bean = new SugarBeanMock();
+        $results = $bean->is_AuditEnabled();
+        self::assertEquals(false, $results);
+
+        // test
+        $bean = new Contact();
+        $results = $bean->is_AuditEnabled();
+        self::assertEquals(true, $results);
+
     }
 
     /**
