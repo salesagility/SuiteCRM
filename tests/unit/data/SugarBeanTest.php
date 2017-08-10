@@ -2324,7 +2324,16 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateAuditTable()
     {
-        self::markTestIncomplete('need to implement');
+        global $dictionary;
+
+        $query = 'DROP TABLE contacts_audit;';
+        $this->db->query($query);
+
+        // test
+        $bean = new Contact();
+        $results = $bean->create_audit_table();
+        self::assertEquals(null, $results);
+
     }
 
     /**
