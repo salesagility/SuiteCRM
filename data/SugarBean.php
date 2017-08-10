@@ -401,6 +401,14 @@ class SugarBean
     protected $is_updated_dependent_fields = false;
 
     /**
+     * Returns the ACL category for this module; defaults to the SugarBean::$acl_category if defined
+     * otherwise it is SugarBean::$module_dir
+     *
+     * @var null|string
+     */
+    public $acl_category;
+
+    /**
      * SugarBean constructor.
      * Performs following tasks:
      *

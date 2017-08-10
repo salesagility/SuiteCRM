@@ -2443,7 +2443,12 @@ protected function checkQuery($sql, $object_name = false)
 	 */
 	protected function oneColumnSQLRep($fieldDef, $ignoreRequired = false, $table = '', $return_as_array = false)
 	{
-		$name = $fieldDef['name'];
+	    if(!isset($fieldDef['name'])) {
+	        $GLOBALS['log']->fatal('"name" field does not exists in field definition.');
+	        $name = null;
+        } else {
+            $name = $fieldDef['name'];
+        }
 		$type = $this->getFieldType($fieldDef);
         $colType = $this->getColumnType($type);
 

@@ -2282,7 +2282,10 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetACLCategory()
     {
-        self::markTestIncomplete('need to implement');
+        // test
+        $bean = new Contact();
+        $results = $bean->getACLCategory();
+        self::assertEquals(!empty($bean->acl_category) ? $bean->acl_category : $bean->module_dir, $results);
     }
 
     /**
