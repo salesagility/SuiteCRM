@@ -2419,8 +2419,13 @@ class SugarBean
                             break;
                         }
                         if (preg_match('/(am|pm)/i', $this->$field)) {
-                            $this->$field = $timedate->fromUserTime($this->$field)->format(TimeDate::DB_TIME_FORMAT);
-                            $reformatted = true;
+                            $fromUserTime = $timedate->fromUserTime($this->$field);
+                            if(is_object($fromUserTime) && method_exists($fromUserTime, 'format')) {
+                                $this->$field = $fromUserTime->format(TimeDate::DB_TIME_FORMAT);
+                                $reformatted = true;
+                            } else {
+                                $GLOBALS['log']->fatal('Get DateTime from user time string is failed.');
+                            }
                         }
                         break;
                     case 'double':
