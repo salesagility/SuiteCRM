@@ -1522,7 +1522,10 @@ class AOR_Report extends Basic
                             } else {
                                 $params = base64_decode($condition->value);
                             }
-                            $value = '"' . getPeriodDate($params)->format('Y-m-d H:i:s') . '"';
+                            //$value = '"' . getPeriodDate($params)->format('Y-m-d H:i:s') . '"';
+                            $value = getPeriodDateWhere($params, $field);
+			    $query['where'][] = $value;
+			    $where_set = true;
                             break;
                         case "CurrentUserID":
                             global $current_user;

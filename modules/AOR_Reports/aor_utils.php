@@ -152,6 +152,137 @@ function getConditionsAsParameters($report, $override = array())
 }
 
 /**
+ * getPeriodDateWhere
+ * @param $date_time_period_list_selected
+ * @field $date_time_period_list_selected
+ * @return string
+ */
+function getPeriodDateWhere($date_time_period_list_selected, $field){
+    global $sugar_config, $timedate;
+	
+	$where = '';
+	
+    $datetime_period = new DateTime();
+	$datetime_period->setTime(0, 0, 0);
+	
+    if (isset($sugar_config['aor']['quarters_begin'])) {
+        $q = calculateQuarters($sugar_config['aor']['quarters_begin']);
+    } else {
+        $q = calculateQuarters();
+    }
+
+    if ($date_time_period_list_selected == 'today') {
+		$today = $timedate->getDayStartEndGMT($datetime_period);
+		$where = " $field >= '{$today['start']}' AND  $field <= '{$today['end']}' ";
+    } else if ($date_time_period_list_selected == 'yesterday') {
+        $datetime_period = $datetime_period->sub(new DateInterval("P1D"));
+		$today = $timedate->getDayStartEndGMT($datetime_period);
+		$where = " $field >= '{$today['start']}' AND  $field <= '{$today['end']}' ";
+    } else if ($date_time_period_list_selected == 'this_week') {
+		$fdw = (int) $timedate->get_first_day_of_week();
+		$day = $datetime_period->format('w');
+
+		$datetime_period->modify('-'.($day-$fdw).' days');
+		$period_start = $timedate->getDayStartEndGMT($datetime_period);
+
+		$datetime_period->modify('+6 days');
+		$period_end = $timedate->getDayStartEndGMT($datetime_period);
+
+		$where = " $field >= '{$period_start['start']}' AND  $field <= '{$period_end['end']}' ";
+    } else if ($date_time_period_list_selected == 'last_week') {
+		$datetime_period->modify('-1 week');
+		$fdw = (int) $timedate->get_first_day_of_week();
+		$day = $datetime_period->format('w');
+
+		$datetime_period->modify('-'.($day-$fdw).' days');
+		$period_start = $timedate->getDayStartEndGMT($datetime_period);
+
+		$datetime_period->modify('+6 days');
+		$period_end = $timedate->getDayStartEndGMT($datetime_period);
+
+		$where = " $field >= '{$period_start['start']}' AND  $field <= '{$period_end['end']}' ";
+    } else if ($date_time_period_list_selected == 'this_month') {
+		$datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m'), 1);
+		$period_start = $timedate->getDayStartEndGMT($datetime_period);
+		
+		$datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m'), $datetime_period->format('t'));
+		$period_end = $timedate->getDayStartEndGMT($datetime_period);
+
+		$where = " $field >= '{$period_start['start']}' AND  $field <= '{$period_end['end']}' ";
+    } else if ($date_time_period_list_selected == 'last_month') {
+		$datetime_period->modify('-1 month');
+		$datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m'), 1);
+		$period_start = $timedate->getDayStartEndGMT($datetime_period);
+		
+		$datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m'), $datetime_period->format('t'));
+		$period_end = $timedate->getDayStartEndGMT($datetime_period);
+
+		$where = " $field >= '{$period_start['start']}' AND  $field <= '{$period_end['end']}' ";
+    } else if ($date_time_period_list_selected == 'this_quarter') {
+        $thisMonth = $datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m'), 1);
+        if ($thisMonth >= $q[1]['start'] && $thisMonth <= $q[1]['end']) {
+            // quarter 1
+            $datetime_period = $datetime_period->setDate($q[1]['start']->format('Y'), $q[1]['start']->format('m'), $q[1]['start']->format('d'));
+        } else if ($thisMonth >= $q[2]['start'] && $thisMonth <= $q[2]['end']) {
+            // quarter 2
+            $datetime_period = $datetime_period->setDate($q[2]['start']->format('Y'), $q[2]['start']->format('m'), $q[2]['start']->format('d'));
+        } else if ($thisMonth >= $q[3]['start'] && $thisMonth <= $q[3]['end']) {
+            // quarter 3
+            $datetime_period = $datetime_period->setDate($q[3]['start']->format('Y'), $q[3]['start']->format('m'), $q[3]['start']->format('d'));
+        } else if ($thisMonth >= $q[4]['start'] && $thisMonth <= $q[4]['end']) {
+            // quarter 4
+            $datetime_period = $datetime_period->setDate($q[4]['start']->format('Y'), $q[4]['start']->format('m'), $q[4]['start']->format('d'));
+        }
+
+		$period_start = $timedate->getDayStartEndGMT($datetime_period);
+
+		$datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m') +2, $datetime_period->format('t'));
+		$period_end = $timedate->getDayStartEndGMT($datetime_period);
+
+		$where = " $field >= '{$period_start['start']}' AND  $field <= '{$period_end['end']}' ";
+    } else if ($date_time_period_list_selected == 'last_quarter') {
+        $thisMonth = $datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m'), 1);
+        if ($thisMonth >= $q[1]['start'] && $thisMonth <= $q[1]['end']) {
+            // quarter 1 - 3 months
+            $datetime_period = $q[1]['start']->sub(new DateInterval('P3M'));
+        } else if ($thisMonth >= $q[2]['start'] && $thisMonth <= $q[2]['end']) {
+            // quarter 2 - 3 months
+            $datetime_period = $q[2]['start']->sub(new DateInterval('P3M'));
+        } else if ($thisMonth >= $q[3]['start'] && $thisMonth <= $q[3]['end']) {
+            // quarter 3 - 3 months
+            $datetime_period = $q[3]['start']->sub(new DateInterval('P3M'));
+        } else if ($thisMonth >= $q[4]['start'] && $thisMonth <= $q[4]['end']) {
+            // quarter 4 - 3 months
+            $datetime_period = $q[3]['start']->sub(new DateInterval('P3M'));
+        }
+		
+		$period_start = $timedate->getDayStartEndGMT($datetime_period);
+
+		$datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m') +2, $datetime_period->format('t'));
+		$period_end = $timedate->getDayStartEndGMT($datetime_period);
+
+		$where = " $field >= '{$period_start['start']}' AND  $field <= '{$period_end['end']}' ";
+    } else if ($date_time_period_list_selected == 'this_year') {
+		$datetime_period->setDate($datetime_period->format('Y'), 1, 1);
+		$period_start = $timedate->getDayStartEndGMT($datetime_period);
+		
+		$datetime_period->setDate($datetime_period->format('Y'), 12, 31);
+		$period_end = $timedate->getDayStartEndGMT($datetime_period);
+		
+		$where = " $field >= '{$period_start['start']}' AND  $field <= '{$period_end['end']}' ";
+    } else if ($date_time_period_list_selected == 'last_year') {
+		$datetime_period->setDate($datetime_period->format('Y')-1, 1, 1);
+		$period_start = $timedate->getDayStartEndGMT($datetime_period);
+
+		$datetime_period->setDate($datetime_period->format('Y'), 12, 31);
+		$period_end = $timedate->getDayStartEndGMT($datetime_period);
+
+		$where = " $field >= '{$period_start['start']}' AND  $field <= '{$period_end['end']}' ";
+    }
+
+    return $where;
+}
+/**
  * getPeriodDate
  * @param $date_time_period_list_selected
  * @return DateTime
