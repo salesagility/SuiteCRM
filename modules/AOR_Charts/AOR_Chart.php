@@ -419,8 +419,8 @@ EOF;
             options: {
             title: '$chartName',
                 gutterBottom: 150,
-                gutterLeft:50,
-                //gutterTop:50,
+                gutterLeft: 128,
+                gutterTop: 25,
                 //title: '$chartName',
                 labels: $chartLabelValues,
                 colorsSequential:true,
