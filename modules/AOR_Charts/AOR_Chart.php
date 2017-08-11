@@ -532,7 +532,7 @@ EOF;
                 tickmarks:'encircle',
                 textSize:10,
                 titleSize:10,
-                gutterLeft:70,
+                gutterLeft:128,
                 //title: '$chartName',
                 labels: $chartLabelValues,
 
