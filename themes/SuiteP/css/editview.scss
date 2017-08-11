@@ -2549,7 +2549,7 @@ dl {
   height: 32px;
 }
 
-#aow_conditionLines [type="button"] img {
+#conditionLines [type="button"] img {
   content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
   width: 32px;
   height: 32px;
@@ -2578,7 +2578,7 @@ dl {
   content: none;
 }
 
-#aow_conditionLines span.id-ff.multiple [type="button"] img {
+#conditionLines span.id-ff.multiple [type="button"] img {
   content: none;
 }
 
@@ -2651,7 +2651,7 @@ input#btn_ActionLine.button[type="button"] {
   background-color: $main-alternate-bg;
 }
 
-#aow_conditionLines_head{
+#conditionLines_head{
   background: none;
 }
 
@@ -4560,25 +4560,6 @@ object {
   color: $danger;
 }
 
-#report-editview-footer {
-  float: left;
-  width: 70%;
-}
-
-#detailpanel_fields,
-#detailpanel_conditions,
-#detailpanel_charts {
-  border-top: 1px solid lightgray;
-}
-
-#detailpanel_fields_select {
-  margin-right: 20px;
-  float: left;
-  overflow-y: auto;
-  width: 20%;
-  height: 640px;
-}
-
 @media (max-width: 767px) {
 
   .col-sm-8.edit-view-field {
@@ -4600,56 +4581,6 @@ object {
     background: none;
     width: 100%;
   }
-}
-
-.aor_dragbox {
-  overflow: scroll;
-  height: 250px;
-}
-
-#report-editview-footer .tab-togglers {
-  width: 80%;
-}
-
-#report-editview-footer .tab-toggler {
-  display: block;
-  padding: 0 4px;
-  float: left;
-}
-
-#report-editview-footer .tab-toggler.active .button {
-  background-color: $danger-btn-bg;
-}
-
-#report-editview-footer .parentheses-btn {
-  display: block;
-  border: 1px solid lightgray;
-  width: 100%;
-  min-height: 30px;
-}
-
-#report-editview-footer .condition-sortable-handle {
-  cursor: move;
-}
-
-#report-editview-footer .parenthesis-line strong {
-  font-size: 18px
-}
-
-#report-editview-footer .drop-area.highlighted {
-  background-color: #f7f7f7;
-}
-
-#report-editview-footer .tab-panels {
-  width: 110%;
-}
-
-.noGraphDataPoints {
-  padding: 10px;
-}
-
-.rgraph_chart_tooltips_css {
-  font-family: 'Lato', Arial;
 }
 
 @media (min-width: 320px) and (max-width: 978px) {

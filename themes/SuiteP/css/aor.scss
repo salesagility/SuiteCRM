@@ -1,0 +1,192 @@
+
+.aor-tab-content {
+  background-color: $panel-bg;
+}
+
+#report-editview-footer {
+  width: 100%;
+}
+
+#detailpanel_fields_select {
+  border-right: 2px solid $panel-border-bg;
+  display: inline-block;
+  padding: 8px;
+  width: 20%;
+}
+
+#detailpanel_fields_display {
+  position: absolute;
+  display: inline-block;
+  padding: 8px;
+  width: 75%;
+}
+
+.aor_dragbox {
+  overflow: scroll;
+  height: 250px;
+}
+
+#report-editview-footer .tab-toggler.active .button {
+  background-color: $danger-btn-bg;
+}
+
+#report-editview-footer .parentheses-btn {
+  display: block;
+  border: 1px solid lightgray;
+  width: 100%;
+  min-height: 30px;
+}
+
+#report-editview-footer .condition-sortable-handle {
+  cursor: move;
+}
+
+#report-editview-footer .parenthesis-line strong {
+  font-size: 18px
+}
+
+#report-editview-footer .drop-area.highlighted {
+  background-color: #f7f7f7;
+}
+
+
+.noGraphDataPoints {
+  padding: 10px;
+}
+
+.rgraph_chart_tooltips_css {
+  font-family: 'Lato', Arial;
+}
+
+
+.aor-tab-content {
+  #group_display_table {
+    margin-bottom: 8px;
+  }
+    #fieldLines_head, #aor_conditionLines_head, #chartHead {
+      td {
+        background-color: $table-header-bg;
+        color: $action-tab-color;
+        height: 32px;
+        font-weight: 700;
+      }
+      td:first-of-type {
+        border-top-left-radius: 4px;
+      }
+
+      td:last-of-type {
+        border-top-right-radius: 4px;
+      }
+    }
+
+  #fieldLines {
+    tbody {
+      tr {
+        height: 64px;
+
+        td {
+          background-color: $default-btn-color;
+
+          [type=text] {
+            margin-right: 4px;
+          }
+        }
+
+        td:first-of-type {
+          padding-left:  4px;
+          .button {
+            padding: 6px 6px 18px 6px;
+            line-height: 10px;
+            height: 0px;
+            font-size: 32px;
+          }
+        }
+      }
+    }
+
+    tbody:nth-of-type(2n) {
+      tr {
+        td {
+          background-color: $panel-bg;
+        }
+      }
+    }
+  }
+
+  #aor_conditionLines {
+    .logic-select {
+      margin-right: 4px;
+    }
+
+    tbody {
+      tr {
+        height: 64px;
+
+        td {
+          background-color: $default-btn-color;
+
+          [type=text] {
+            margin-right: 4px;
+          }
+        }
+
+        td:first-of-type {
+          padding-left:  4px;
+          .button {
+            padding: 6px 6px 18px 6px;
+            line-height: 10px;
+            height: 0px;
+            font-size: 32px;
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr:nth-of-type(2n) {
+        td {
+          background-color: $panel-bg;
+        }
+      }
+    }
+  }
+
+  #detailpanel_charts {
+
+    tbody {
+      tr {
+        height: 64px;
+        td {
+          background-color: $default-btn-color;
+
+          [type=text] {
+            margin-right: 4px;
+          }
+
+          select {
+            margin-right: 4px;
+          }
+        }
+
+        td:first-of-type {
+          padding-left:  4px;
+          .removeChartButton {
+            margin-right: 4px;
+            padding: 6px 6px 18px 6px;
+            line-height: 10px;
+            height: 0px;
+            font-size: 32px;
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr:nth-of-type(2n) {
+        td {
+          background-color: $panel-bg;
+        }
+      }
+    }
+  }
+}
