@@ -3001,7 +3001,8 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertFalse($results);
 
         // test
-        $query = "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
+        $query = /** @lang sql */
+            "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
         $this->db->query($query);
 
         $bean = new Contact();
@@ -3010,11 +3011,13 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $results = $bean->has_been_modified_since('1999-01-01', 'test_user_12');
         self::assertTrue($results);
 
-        $query = "DELETE FROM contacts WHERE id = 'test_contact_11'";
+        $query = /** @lang sql */
+            "DELETE FROM contacts WHERE id = 'test_contact_11'";
         $this->db->query($query);
 
         // test
-        $query = "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
+        $query = /** @lang sql */
+            "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
         $this->db->query($query);
 
         $bean = new Contact();
@@ -3023,11 +3026,13 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $results = $bean->has_been_modified_since('2001-01-01', 'test_user_12');
         self::assertTrue($results);
 
-        $query = "DELETE FROM contacts WHERE id = 'test_contact_11'";
+        $query = /** @lang sql */
+            "DELETE FROM contacts WHERE id = 'test_contact_11'";
         $this->db->query($query);
 
         // test
-        $query = "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
+        $query = /** @lang sql */
+            "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
         $this->db->query($query);
 
         $bean = new Contact();
@@ -3036,11 +3041,13 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $results = $bean->has_been_modified_since('1999-01-01', 'test_user_11');
         self::assertTrue($results);
 
-        $query = "DELETE FROM contacts WHERE id = 'test_contact_11'";
+        $query = /** @lang sql */
+            "DELETE FROM contacts WHERE id = 'test_contact_11'";
         $this->db->query($query);
 
         // test
-        $query = "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
+        $query = /** @lang sql */
+            "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
         $this->db->query($query);
 
         $bean = new Contact();
@@ -3049,11 +3056,13 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $results = $bean->has_been_modified_since('2001-01-01', 'test_user_11');
         self::assertFalse($results);
 
-        $query = "DELETE FROM contacts WHERE id = 'test_contact_11'";
+        $query = /** @lang sql */
+            "DELETE FROM contacts WHERE id = 'test_contact_11'";
         $this->db->query($query);
 
         // test
-        $query = "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
+        $query = /** @lang sql */
+            "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
         $this->db->query($query);
 
         $bean = new Contact();
@@ -3062,7 +3071,8 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $results = $bean->has_been_modified_since('2001-01-01', 'test_user_12');
         self::assertTrue($results);
 
-        $query = "DELETE FROM contacts WHERE id = 'test_contact_11'";
+        $query = /** @lang sql */
+            "DELETE FROM contacts WHERE id = 'test_contact_11'";
         $this->db->query($query);
 
     }
