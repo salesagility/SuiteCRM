@@ -26,6 +26,10 @@
   height: 250px;
 }
 
+#report-editview-footer .tab-togglers {
+  margin-left: 20%;
+}
+
 #report-editview-footer .tab-toggler.active .button {
   background-color: $danger-btn-bg;
 }
