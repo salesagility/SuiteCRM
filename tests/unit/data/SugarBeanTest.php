@@ -2596,7 +2596,12 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testCleanBean()
     {
-        self::markTestIncomplete('need to implement');
+        // test
+        $bean = new Contact();
+        $bean->field_defs['testField'] = array('type' => 'html');
+        $bean->testField = '<p>test <b>html</b> value</p>';
+        $bean->cleanBean();
+        self::assertEquals('&lt;p&gt;test &lt;b&gt;html&lt;/b&gt; value&lt;/p&gt;', $bean->testField);
     }
 
     /**
