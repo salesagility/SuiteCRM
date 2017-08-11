@@ -134,7 +134,7 @@ function getConditionsAsParameters($report, $override = array())
         $value = isset($override[$condition->id]['value']) ? $override[$condition->id]['value'] : $value = $condition->value;
 
 
-        $field = getModuleField($field_module, $condition->field, "parameter_value[$key]", 'EditView', $value);
+        $field = getModuleField($field_module, $condition->field, "parameter_value[]", 'EditView', $value);
         $disp = getDisplayForField($path, $condition->field, $report->report_module);
         $conditions[] = array(
             'id' => $condition->id,
