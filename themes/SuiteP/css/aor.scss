@@ -222,7 +222,6 @@
   background-color: $info-btn-bg;
   color: $default-btn-color;
   font-weight: 700;
-  padding: 4px;
 }
 
 .parentheses-btn:hover {
@@ -230,3 +229,6 @@
   cursor: grab;
 }
 
+.parentheses-btn .condition-sortable-handle {
+  padding: 5px 10px 5px 10px
+}
