@@ -796,12 +796,27 @@ EOQ;
 	 * @param string $password MD5-encoded password
 	 * @param string $where Limiting query
 	 * @param bool $checkPasswordMD5 use md5 check for user_hash before return the user data (default is true)
-	 * @return the matching User of false if not found
+	 * @return bool|array the matching User of false if not found
 	 */
 	public static function findUserPassword($name, $password, $where = '', $checkPasswordMD5 = true)
 	{
+
+        if (!$name) {
+            $GLOBALS['log']->fatal('Invalid Argument: Username is not set');
+            return false;
+        }
+
 	    global $db;
+
+        $before = $name;
+
 		$name = $db->quote($name);
+
+        if ($before && !$name) {
+            $GLOBALS['log']->fatal('DB Quote error: return value is removed, check the Database connection.');
+            return false;
+        }
+
 		$query = "SELECT * from users where user_name='$name'";
 		if(!empty($where)) {
 		    $query .= " AND $where";

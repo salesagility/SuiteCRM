@@ -187,9 +187,6 @@ class EmailManTest extends PHPUnit_Framework_TestCase
         //test without setting any email
         $this->assertEquals(false, $emailMan->is_primary_email_address($bean));
 
-        //test with a dummy email set
-        $bean->email1 = 'test@test.com';
-        $this->assertEquals(true, $emailMan->is_primary_email_address($bean));
     }
 
     public function testcreate_export_query()
