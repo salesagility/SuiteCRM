@@ -72,7 +72,8 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      * Store static field_defs per modules
      * @param string $key
      */
-    protected function fieldDefsStore($key = 'base') {
+    protected function fieldDefsStore($key = 'base')
+    {
         $contact = new Contact();
         $this->fieldDefsStore[$key]['Contact'] = $contact->field_defs;
     }
@@ -81,7 +82,8 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      * Restore static field_defs per modules
      * @param string $key
      */
-    protected function fieldDefsRestore($key = 'base') {
+    protected function fieldDefsRestore($key = 'base')
+    {
         $contact = new Contact();
         $contact->field_defs = $this->fieldDefsStore[$key]['Contact'];
     }
@@ -2314,7 +2316,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         // test
         $bean = new Contact();
         $results = $bean->getACLCategory();
-        self::assertEquals(!empty($bean->acl_category) ? $bean->acl_category : $bean->module_dir, $results);
+        self::assertEquals(null !== $bean->acl_category ? $bean->acl_category : $bean->module_dir, $results);
     }
 
     /**
@@ -2358,6 +2360,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
         // test
         $bean = new Contact();
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->create_audit_table();
         self::assertEquals(null, $results);
 
@@ -2391,7 +2394,8 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertEquals($current_user->user_name, $bean->modified_by_name);
         self::assertEquals(0, $bean->deleted);
         self::assertEquals($bean->date_modified, $bean->date_entered);
-        self::assertEquals((isset($current_user)) ? $current_user->id : '', $bean->created_by);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
         self::assertTrue(isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
@@ -2412,7 +2416,8 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertEquals($current_user->user_name, $bean->modified_by_name);
         self::assertEquals(0, $bean->deleted);
         self::assertEquals($bean->date_modified, $bean->date_entered);
-        self::assertEquals((isset($current_user)) ? $current_user->id : '', $bean->created_by);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
         self::assertFalse(isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
@@ -2433,7 +2438,8 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertEquals($current_user->user_name, $bean->modified_by_name);
         self::assertEquals(0, $bean->deleted);
         self::assertEquals($bean->date_modified, $bean->date_entered);
-        self::assertEquals((isset($current_user)) ? $current_user->id : '', $bean->created_by);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
         self::assertFalse(isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
@@ -2442,7 +2448,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         // test
         $GLOBALS['log']->reset();
         $bean = new SugarBeanMock();
-        $bean->id = 'testbean_1';
+        $bean->id = 'testBean_1';
         $bean->modified_by_name = 'testing';
         $results = $bean->save();
         self::assertFalse(isValidId($results));
@@ -2453,8 +2459,10 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertEquals($current_user->id, $bean->modified_user_id);
         self::assertEquals($current_user->user_name, $bean->modified_by_name);
         self::assertEquals(0, $bean->deleted);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertFalse(isset($bean->date_entered));
-        self::assertEquals((isset($current_user)) ? $current_user->id : '', $bean->created_by);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
         self::assertFalse(isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
@@ -2464,7 +2472,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         // test
         $GLOBALS['log']->reset();
         $bean = new SugarBeanMock();
-        $bean->id = 'testbean_1';
+        $bean->id = 'testBean_1';
         $bean->modified_by_name = 'testing';
         $bean->field_defs = array(
             'email_addresses' => array(
@@ -2474,6 +2482,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
                 'type' => 'email',
             ),
         );
+        /** @noinspection PhpUndefinedFieldInspection */
         $bean->email_addresses_non_primary = array(true);
         $results = $bean->save();
         self::assertFalse(isValidId($results));
@@ -2484,8 +2493,10 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertEquals($current_user->id, $bean->modified_user_id);
         self::assertEquals($current_user->user_name, $bean->modified_by_name);
         self::assertEquals(0, $bean->deleted);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertFalse(isset($bean->date_entered));
-        self::assertEquals((isset($current_user)) ? $current_user->id : '', $bean->created_by);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
         self::assertFalse(isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
@@ -2494,7 +2505,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         // test
         $GLOBALS['log']->reset();
         $bean = new SugarBeanMock();
-        $bean->id = 'testbean_1';
+        $bean->id = 'testBean_1';
         $bean->modified_by_name = 'testing';
         $bean->field_defs = array(
             'email_addresses' => array(
@@ -2504,7 +2515,9 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
                 'type' => 'email',
             ),
         );
+        /** @noinspection PhpUndefinedFieldInspection */
         $bean->emailAddress = new EmailAddress();
+        /** @noinspection PhpUndefinedFieldInspection */
         $bean->email_addresses_non_primary = array(true);
         $results = $bean->save();
         self::assertFalse(isValidId($results));
@@ -2515,8 +2528,10 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertEquals($current_user->id, $bean->modified_user_id);
         self::assertEquals($current_user->user_name, $bean->modified_by_name);
         self::assertEquals(0, $bean->deleted);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertFalse(isset($bean->date_entered));
-        self::assertEquals((isset($current_user)) ? $current_user->id : '', $bean->created_by);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
         self::assertFalse(isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
@@ -2526,7 +2541,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         // test
         $GLOBALS['log']->reset();
         $bean = new SugarBeanMock();
-        $bean->id = 'testbean_1';
+        $bean->id = 'testBean_1';
         $bean->modified_by_name = 'testing';
         $bean->field_defs = array(
             'email_addresses' => array(
@@ -2536,7 +2551,9 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
                 'type' => 'email',
             ),
         );
+        /** @noinspection PhpUndefinedFieldInspection */
         $bean->emailAddress = new EmailAddress();
+        /** @noinspection PhpUndefinedFieldInspection */
         $bean->email_addresses_non_primary = array(true);
         $results = $bean->save();
         self::assertFalse(isValidId($results));
@@ -2547,8 +2564,10 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertEquals($current_user->id, $bean->modified_user_id);
         self::assertEquals($current_user->user_name, $bean->modified_by_name);
         self::assertEquals(0, $bean->deleted);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertFalse(isset($bean->date_entered));
-        self::assertEquals((isset($current_user)) ? $current_user->id : '', $bean->created_by);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
         self::assertFalse(isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
@@ -2559,7 +2578,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         $this->fieldDefsStore('temp1');
         $this->fieldDefsRestore();
         $bean = BeanFactory::getBean('Contacts');
-        $bean->id = 'testbean_1';
+        $bean->id = 'testBean_1';
         $bean->modified_by_name = 'testing';
         $bean->field_defs = array_merge($bean->field_defs, $bean->field_defs = array(
             'email_addresses' => array(
@@ -2569,7 +2588,9 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
                 'type' => 'email',
             ),
         ));
+        /** @noinspection PhpUndefinedFieldInspection */
         $bean->emailAddress = new EmailAddress();
+        /** @noinspection PhpUndefinedFieldInspection */
         $bean->email_addresses_non_primary = array('testbean1@email.com');
         $results = $bean->save();
         self::assertFalse(isValidId($results));
@@ -2580,8 +2601,10 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         self::assertEquals($current_user->id, $bean->modified_user_id);
         self::assertEquals($current_user->user_name, $bean->modified_by_name);
         self::assertEquals(0, $bean->deleted);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertFalse(isset($bean->date_entered));
-        self::assertEquals((isset($current_user)) ? $current_user->id : '', $bean->created_by);
+        /** @noinspection UnSafeIsSetOverArrayInspection */
+        self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
         self::assertFalse(isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
@@ -2599,8 +2622,10 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         // test
         $bean = new Contact();
         $bean->field_defs['testField'] = array('type' => 'html');
+        /** @noinspection PhpUndefinedFieldInspection */
         $bean->testField = '<p>test <b>html</b> value</p>';
         $bean->cleanBean();
+        /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals('&lt;p&gt;test &lt;b&gt;html&lt;/b&gt; value&lt;/p&gt;', $bean->testField);
     }
 
