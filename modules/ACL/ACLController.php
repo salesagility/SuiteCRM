@@ -54,7 +54,19 @@ require_once('modules/ACL/ACLJSController.php');
 class ACLController
 {
     /* BEGIN - SECURITY GROUPS - added $in_group */
-    static function checkAccess($category, $action, $is_owner = false, $type = 'module', $in_group = false)
+
+
+    /**
+     * Checks that the user should be allowed to access a category
+     *
+     * @param string $category
+     * @param string $action
+     * @param bool $is_owner
+     * @param string $type
+     * @param bool $in_group
+     * @return bool
+     */
+    public static function checkAccess($category, $action, $is_owner = false, $type = 'module', $in_group = false)
     {
 
         global $current_user;
@@ -95,7 +107,15 @@ class ACLController
 
     /* END - SECURITY GROUPS */
 
-    static function requireOwner($category, $value, $type = 'module')
+    /**
+     * Determines if user requires ownership
+     *
+     * @param string $category
+     * @param Bool $value
+     * @param string $type
+     * @return bool
+     */
+    public static function requireOwner($category, $value, $type = 'module')
     {
         global $current_user;
         if (is_admin($current_user)) {
@@ -106,7 +126,16 @@ class ACLController
     }
 
     /* BEGIN - SECURITY GROUPS */
-    static function requireSecurityGroup($category, $value, $type = 'module')
+
+    /**
+     * Determines if user requires a security group
+     *
+     * @param string $category
+     * @param Bool $value
+     * @param string $type
+     * @return bool
+     */
+    public static function requireSecurityGroup($category, $value, $type = 'module')
     {
         global $current_user;
         if (is_admin($current_user)) {
@@ -118,7 +147,13 @@ class ACLController
 
     /* END - SECURITY GROUPS */
 
-    static function filterModuleList(&$moduleList, $by_value = true)
+    /**
+     * Filters module list
+     *
+     * @param array $moduleList
+     * @param Bool $by_value
+     */
+    public static function filterModuleList(&$moduleList, $by_value = true)
     {
 
         global $aclModuleList, $current_user;
@@ -152,7 +187,8 @@ class ACLController
         }
         if (isset($compList['Calendar']) &&
             !(ACLController::checkModuleAllowed('Calls', $actions)
-                || ACLController::checkModuleAllowed('Meetings',
+                || ACLController::checkModuleAllowed(
+                    'Meetings',
                     $actions
                 ) || ACLController::checkModuleAllowed('Tasks', $actions))
         ) {
@@ -178,7 +214,7 @@ class ACLController
      * @param String $module_name
      * @return true if they are allowed.  false otherwise.
      */
-    static function checkModuleAllowed($module_name, $actions)
+    public static function checkModuleAllowed($module_name, $actions)
     {
         if (!empty($actions[$module_name]['module']['access']['aclaccess']) &&
             ACL_ALLOW_ENABLED == $actions[$module_name]['module']['access']['aclaccess']
@@ -189,7 +225,15 @@ class ACLController
         return false;
     }
 
-    static function disabledModuleList($moduleList, $by_value = true, $view = 'list')
+    /**
+     * Checks if module is disabled
+     *
+     * @param array $moduleList
+     * @param Bool $by_value
+     * @param String $view
+     * @return array
+     */
+    public static function disabledModuleList($moduleList, $by_value = true, $view = 'list')
     {
         global $aclModuleList, $current_user;
         if (is_admin($GLOBALS['current_user'])) {
@@ -257,13 +301,19 @@ class ACLController
     }
 
 
-    function addJavascript($category, $form_name = '', $is_owner = false)
+    public function addJavascript($category, $form_name = '', $is_owner = false)
     {
         $jscontroller = new ACLJSController($category, $form_name, $is_owner);
         echo $jscontroller->getJavascript();
     }
 
-    static function moduleSupportsACL($module)
+    /**
+     * Returns true if module support ACL
+     *
+     * @param String $module
+     * @return Bool
+     */
+    public static function moduleSupportsACL($module)
     {
         static $checkModules = array();
         global $beanFiles, $beanList;
@@ -288,13 +338,21 @@ class ACLController
 
     }
 
-    static function displayNoAccess($redirect_home = false)
+
+    /**
+     * Redirect the user to home.
+     *
+     * @param Bool $redirect_home
+     */
+    public static function displayNoAccess($redirect_home = false)
     {
         echo '<script>function set_focus(){}</script><p class="error">' . translate('LBL_NO_ACCESS', 'ACL') . '</p>';
         if ($redirect_home) {
-            echo translate('LBL_REDIRECT_TO_HOME',
+            echo translate(
+                    'LBL_REDIRECT_TO_HOME',
                     'ACL'
-                ) . ' <span id="seconds_left">3</span> ' . translate('LBL_SECONDS',
+                ) . ' <span id="seconds_left">3</span> ' . translate(
+                    'LBL_SECONDS',
                     'ACL'
                 ) . '<script> function redirect_countdown(left){document.getElementById("seconds_left").innerHTML = left; if(left == 0){document.location.href = "index.php";}else{left--; setTimeout("redirect_countdown("+ left+")", 1000)}};setTimeout("redirect_countdown(3)", 1000)</script>';
         }
