@@ -2968,6 +2968,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
         // test
         $bean = new Contact();
+        /** @noinspection PhpParamsInspection */
         $results = $bean->has_been_modified_since('wrong1', null);
         self::assertFalse($results);
 
@@ -2978,11 +2979,13 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
         // test
         $bean = new Contact();
+        /** @noinspection PhpParamsInspection */
         $results = $bean->has_been_modified_since('wrong1', 'wrong1');
         self::assertFalse($results);
 
         // test
         $bean = new Contact();
+        /** @noinspection PhpParamsInspection */
         $results = $bean->has_been_modified_since('1900-01-01', null);
         self::assertFalse($results);
 
@@ -2993,6 +2996,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
         // test
         $bean = new Contact();
+        /** @noinspection PhpParamsInspection */
         $results = $bean->has_been_modified_since('1900-01-01', '1');
         self::assertFalse($results);
 
@@ -3002,6 +3006,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
         $bean = new Contact();
         $bean->id = 'test_contact_11';
+        /** @noinspection PhpParamsInspection */
         $results = $bean->has_been_modified_since('1999-01-01', 'test_user_12');
         self::assertTrue($results);
 
@@ -3014,6 +3019,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
         $bean = new Contact();
         $bean->id = 'test_contact_11';
+        /** @noinspection PhpParamsInspection */
         $results = $bean->has_been_modified_since('2001-01-01', 'test_user_12');
         self::assertTrue($results);
 
@@ -3026,6 +3032,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
         $bean = new Contact();
         $bean->id = 'test_contact_11';
+        /** @noinspection PhpParamsInspection */
         $results = $bean->has_been_modified_since('1999-01-01', 'test_user_11');
         self::assertTrue($results);
 
@@ -3038,6 +3045,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
         $bean = new Contact();
         $bean->id = 'test_contact_11';
+        /** @noinspection PhpParamsInspection */
         $results = $bean->has_been_modified_since('2001-01-01', 'test_user_11');
         self::assertFalse($results);
 
@@ -3050,6 +3058,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
         $bean = new Contact();
         $bean->id = 'test_contact_11';
+        /** @noinspection PhpParamsInspection */
         $results = $bean->has_been_modified_since('2001-01-01', 'test_user_12');
         self::assertTrue($results);
 
