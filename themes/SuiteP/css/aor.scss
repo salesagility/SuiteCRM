@@ -190,3 +190,35 @@
     }
   }
 }
+
+#aor_condition_parenthesis_table {
+  border: none;
+  margin-bottom: 8px;
+  min-height: 48px;
+  width: 100%;
+
+  #aor_condition_parenthesis_btn {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: $default-btn-bg;
+    color: $default-btn-color;
+    font-weight: 700;
+    min-height: 48px;
+    width: 100%;
+  }
+}
+
+.parentheses-btn.ui-sortable-helper, .condition-sortable-handle.ui-sortable-handle {
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background-color: $default-btn-bg;
+  color: $default-btn-color;
+  font-weight: 700;
+  min-height: 48px!important;
+  min-width: 128px!important;
+}
+
+#aor_condition_parenthesis_table:hover {
+  background-color: $default-btn-bg-hover;
+  cursor: grab;
+}

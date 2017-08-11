@@ -77,14 +77,21 @@
             </div>
         </div>
         <div class="toggle-panel hidden" id="detailpanel_conditions">
-            <div class="drop-area" id="aor_conditionLines"  style="min-height: 450px;">
-            </div>
-            <hr>
-            <table>
+            <table id="aor_condition_parenthesis_table">
                 <tbody id="aor_condition_parenthesis_btn" class="connectedSortableConditions">
-                <tr class="parentheses-btn"><td class="condition-sortable-handle">{$MOD.LBL_ADD_PARENTHESIS}</td></tr>
+                <tr class="parentheses-btn"><td class="condition-sortable-handle">
+                    <span>
+                    &nbsp;(<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;{$MOD.LBL_ADD_PARENTHESIS}<br>
+                    &nbsp;)
+                    </span>
+                    </td></tr>
                 </tbody>
             </table>
+            <div class="drop-area" id="aor_conditionLines"  style="min-height: 450px;">
+            </div>
+
+
         </div>
         <div class="toggle-panel hidden" id="detailpanel_charts">
             <div id="chartLines">
