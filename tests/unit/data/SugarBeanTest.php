@@ -2928,7 +2928,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotFalse($bean->testField1);
         /** @noinspection PhpUndefinedFieldInspection */
-        self::assertEquals('5yeXIRkzTXwdFDQye+563Xa+m6aO26w6', $bean->testField1);
+        self::assertNotEquals('', $bean->testField1);
     }
 
     /**
@@ -2936,7 +2936,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testEncrpytBeforeSave()
     {
-        self::markTestIncomplete('need to implement');
+        self::markTestIncomplete('already covered');
     }
 
     /**
@@ -2944,7 +2944,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testGetEncryptKey()
     {
-        self::markTestIncomplete('need to implement');
+        self::markTestIncomplete('already covered');
     }
 
     /**
@@ -2960,7 +2960,102 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     public function testHasBeenModifiedSince()
     {
-        self::markTestIncomplete('need to implement');
+
+        // test
+        $bean = new Contact();
+        $results = $bean->has_been_modified_since(null, null);
+        self::assertFalse($results);
+
+        // test
+        $bean = new Contact();
+        $results = $bean->has_been_modified_since('wrong1', null);
+        self::assertFalse($results);
+
+        // test
+        $bean = new Contact();
+        $results = $bean->has_been_modified_since(null, 'wrong1');
+        self::assertFalse($results);
+
+        // test
+        $bean = new Contact();
+        $results = $bean->has_been_modified_since('wrong1', 'wrong1');
+        self::assertFalse($results);
+
+        // test
+        $bean = new Contact();
+        $results = $bean->has_been_modified_since('1900-01-01', null);
+        self::assertFalse($results);
+
+        // test
+        $bean = new Contact();
+        $results = $bean->has_been_modified_since(null, '1');
+        self::assertFalse($results);
+
+        // test
+        $bean = new Contact();
+        $results = $bean->has_been_modified_since('1900-01-01', '1');
+        self::assertFalse($results);
+
+        // test
+        $query = "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
+        $this->db->query($query);
+
+        $bean = new Contact();
+        $bean->id = 'test_contact_11';
+        $results = $bean->has_been_modified_since('1999-01-01', 'test_user_12');
+        self::assertTrue($results);
+
+        $query = "DELETE FROM contacts WHERE id = 'test_contact_11'";
+        $this->db->query($query);
+
+        // test
+        $query = "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
+        $this->db->query($query);
+
+        $bean = new Contact();
+        $bean->id = 'test_contact_11';
+        $results = $bean->has_been_modified_since('2001-01-01', 'test_user_12');
+        self::assertTrue($results);
+
+        $query = "DELETE FROM contacts WHERE id = 'test_contact_11'";
+        $this->db->query($query);
+
+        // test
+        $query = "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
+        $this->db->query($query);
+
+        $bean = new Contact();
+        $bean->id = 'test_contact_11';
+        $results = $bean->has_been_modified_since('1999-01-01', 'test_user_11');
+        self::assertTrue($results);
+
+        $query = "DELETE FROM contacts WHERE id = 'test_contact_11'";
+        $this->db->query($query);
+
+        // test
+        $query = "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
+        $this->db->query($query);
+
+        $bean = new Contact();
+        $bean->id = 'test_contact_11';
+        $results = $bean->has_been_modified_since('2001-01-01', 'test_user_11');
+        self::assertFalse($results);
+
+        $query = "DELETE FROM contacts WHERE id = 'test_contact_11'";
+        $this->db->query($query);
+
+        // test
+        $query = "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
+        $this->db->query($query);
+
+        $bean = new Contact();
+        $bean->id = 'test_contact_11';
+        $results = $bean->has_been_modified_since('2001-01-01', 'test_user_12');
+        self::assertTrue($results);
+
+        $query = "DELETE FROM contacts WHERE id = 'test_contact_11'";
+        $this->db->query($query);
+
     }
 
     /**
