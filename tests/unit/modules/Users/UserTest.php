@@ -35,9 +35,9 @@ class UserTest extends PHPUnit_Framework_TestCase
     public function testgetSystemUser()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $user = new User();
 
@@ -52,9 +52,9 @@ class UserTest extends PHPUnit_Framework_TestCase
     public function testgetDefaultSignature()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $user = new User();
 
@@ -146,9 +146,9 @@ class UserTest extends PHPUnit_Framework_TestCase
     public function testgetUserPrivGuid()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $user = new User();
 
@@ -164,9 +164,9 @@ class UserTest extends PHPUnit_Framework_TestCase
     public function testsetUserPrivGuid()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
 
         $user = new User();
@@ -185,9 +185,9 @@ class UserTest extends PHPUnit_Framework_TestCase
     public function testSetAndGetAndResetPreference()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $user = new User();
 
@@ -215,9 +215,9 @@ class UserTest extends PHPUnit_Framework_TestCase
     public function testsavePreferencesToDB()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $user = new User();
 
@@ -238,9 +238,9 @@ class UserTest extends PHPUnit_Framework_TestCase
     {
         static::markTestIncomplete('Too many connections');
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $user = new User();
 
@@ -255,9 +255,9 @@ class UserTest extends PHPUnit_Framework_TestCase
     public function testgetUserDateTimePreferences()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $user = new User();
 
@@ -278,9 +278,9 @@ class UserTest extends PHPUnit_Framework_TestCase
     {
         static::markTestIncomplete('Too many connections');
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $user = new User();
 
@@ -296,9 +296,9 @@ class UserTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $user = new User();
 
@@ -354,9 +354,9 @@ class UserTest extends PHPUnit_Framework_TestCase
     public function testcheck_role_membership()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $user = new User();
 
@@ -375,9 +375,9 @@ class UserTest extends PHPUnit_Framework_TestCase
         error_reporting(E_ERROR | E_PARSE);
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
 
         $user = new User();
@@ -515,7 +515,7 @@ class UserTest extends PHPUnit_Framework_TestCase
         //test with invalid password
 
         $result = $user->authenticate_user(md5("test1"));
-        $this->assertEquals(true, $result);
+        $this->assertEquals(false, $result);
 
     }
 
@@ -819,9 +819,9 @@ class UserTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
 
         $user = new User();
@@ -972,9 +972,9 @@ class UserTest extends PHPUnit_Framework_TestCase
     public function testgetDeveloperModules()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $user = new User();
 
@@ -987,9 +987,9 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testisDeveloperForModule()
     {
-        global $db;
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $user = new User();
 
@@ -1013,9 +1013,9 @@ class UserTest extends PHPUnit_Framework_TestCase
     public function testgetAdminModules()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $user = new User();
 
@@ -1028,9 +1028,9 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testisAdminForModule()
     {
-        global $db;
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $user = new User();
 
