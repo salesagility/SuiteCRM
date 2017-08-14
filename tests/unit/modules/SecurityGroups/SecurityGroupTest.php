@@ -108,9 +108,9 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
     public function testinherit()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $account = new Account();
         $account->id = 1;
@@ -130,9 +130,9 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $account = new Account();
         $account->id = 1;
@@ -149,9 +149,9 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
     public function testinherit_creator()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $account = new Account();
         $account->id = 1;
@@ -169,9 +169,9 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $account = new Account();
         $account->id = 1;
@@ -190,9 +190,9 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $account = new Account();
         $account->id = 1;
@@ -209,9 +209,9 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
     public function testinherit_parentQuery()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $account = new Account();
         $account->id = 1;
@@ -229,9 +229,9 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
 
@@ -243,9 +243,9 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
 
@@ -258,7 +258,8 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         global $db;
-        unset($db->database);
+        $db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -294,9 +295,9 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        unset($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
 
@@ -350,7 +351,8 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         global $db;
-        unset($db->database);
+        $db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -369,7 +371,8 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
         global $db;
-        unset($db->database);
+        //$db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -387,7 +390,8 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
         global $db;
-        unset($db->database);
+        //$db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -405,7 +409,8 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
         global $db;
-        unset($db->database);
+        //$db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -419,7 +424,8 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
         global $db;
-        unset($db->database);
+        //$db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -433,7 +439,8 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
         global $db;
-        unset($db->database);
+        //$db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -447,7 +454,8 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
         global $db;
-        unset($db->database);
+        //$db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
