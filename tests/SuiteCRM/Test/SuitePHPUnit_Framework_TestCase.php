@@ -14,12 +14,12 @@ class SuitePHPUnit_Framework_TestCase extends \PHPUnit_Framework_TestCase
     protected $env = array();
 
     /**
-     * @var LoggerManager
+     * @var \LoggerManager
      */
     protected $log;
 
     /**
-     * @var DBManager
+     * @var \DBManager
      */
     protected $db;
 
