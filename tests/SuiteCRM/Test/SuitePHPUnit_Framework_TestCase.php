@@ -5,7 +5,7 @@ use User;
 use DBManagerFactory;
 
 /** @noinspection PhpUndefinedClassInspection */
-class SuitePHPUnit_Framework_TestCase extends \PHPUnit_Framework_TestCase
+abstract class SuitePHPUnit_Framework_TestCase extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -32,11 +32,6 @@ class SuitePHPUnit_Framework_TestCase extends \PHPUnit_Framework_TestCase
      * @var array
      */
     protected $sugarConfig;
-
-    /**
-     * @var array
-     */
-    protected $fieldDefsStore;
 
     public static function setUpBeforeClass()
     {
@@ -71,45 +66,6 @@ class SuitePHPUnit_Framework_TestCase extends \PHPUnit_Framework_TestCase
         }
 
         $this->sugarConfig = $sugar_config;
-
-        $this->fieldDefsStore();
-    }
-
-    /**
-     * Store static field_defs per modules
-     * @param string $key
-     */
-    protected function fieldDefsStore($key = 'base')
-    {
-        global $moduleList;
-
-        $this->fieldDefsStore = array();
-        foreach ($moduleList as $module => $class) {
-            $namespaceAndClass = "\\$class";
-            if(class_exists($namespaceAndClass) && isset($namespaceAndClass::$field_defs)) {
-                $object = new $namespaceAndClass();
-                $this->fieldDefsStore[$key][$namespaceAndClass] = $object->field_defs;
-            }
-        }
-
-    }
-
-    /**
-     * Restore static field_defs per modules
-     * @param string $key
-     */
-    protected function fieldDefsRestore($key = 'base')
-    {
-        global $moduleList;
-
-        foreach ($moduleList as $module => $class) {
-            $namespaceAndClass = "\\$class";
-            if(isset($this->fieldDefsStore[$key][$namespaceAndClass])) {
-                $object = new $namespaceAndClass();
-                $object->field_defs = $this->fieldDefsStore[$key][$namespaceAndClass];
-            }
-        }
-
     }
 
     /**
@@ -119,8 +75,6 @@ class SuitePHPUnit_Framework_TestCase extends \PHPUnit_Framework_TestCase
     public function tearDown()
     {
         global $sugar_config;
-
-        $this->fieldDefsRestore();
 
         $sugar_config = $this->sugarConfig;
 
