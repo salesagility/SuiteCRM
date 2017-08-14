@@ -1,7 +1,11 @@
 <?php
+namespace SuiteCRM\Test;
+
+use User;
+use DBManagerFactory;
 
 /** @noinspection PhpUndefinedClassInspection */
-class SuitePHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase
+class SuitePHPUnit_Framework_TestCase extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -56,7 +60,6 @@ class SuitePHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase
         $GLOBALS['log'] = new TestLogger();
 
         $this->dbManagerFactoryInstances = DBManagerFactory::$instances;
-        DBManagerFactory::$instances = array();
         $this->db = DBManagerFactory::getInstance();
 
 
@@ -78,12 +81,17 @@ class SuitePHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase
      */
     protected function fieldDefsStore($key = 'base')
     {
-        global $beanList;
+        global $moduleList;
 
-        foreach ($beanList as $module => $class) {
-            $object = new $class();
-            $this->fieldDefsStore[$key][$class] = $object->field_defs;
+        $this->fieldDefsStore = array();
+        foreach ($moduleList as $module => $class) {
+            $namespaceAndClass = "\\$class";
+            if(class_exists($namespaceAndClass) && isset($namespaceAndClass::$field_defs)) {
+                $object = new $namespaceAndClass();
+                $this->fieldDefsStore[$key][$namespaceAndClass] = $object->field_defs;
+            }
         }
+
     }
 
     /**
@@ -92,13 +100,16 @@ class SuitePHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase
      */
     protected function fieldDefsRestore($key = 'base')
     {
-        global $beanList;
+        global $moduleList;
 
-        foreach ($beanList as $module => $class) {
-            $object = new $class();
-            $this->fieldDefsStore[$key][$class] = $object->field_defs;
-            $object->field_defs = $this->fieldDefsStore[$key][$class];
+        foreach ($moduleList as $module => $class) {
+            $namespaceAndClass = "\\$class";
+            if(isset($this->fieldDefsStore[$key][$namespaceAndClass])) {
+                $object = new $namespaceAndClass();
+                $object->field_defs = $this->fieldDefsStore[$key][$namespaceAndClass];
+            }
         }
+
     }
 
     /**

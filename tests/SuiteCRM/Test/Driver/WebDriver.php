@@ -1,9 +1,6 @@
 <?php
 
 namespace SuiteCRM\Test\Driver;
-use Codeception\Command\Shared\Config;
-use Codeception\Configuration as Configuration;
-use Symfony\Component\Yaml\Yaml as Yaml;
 
 class WebDriver extends \Codeception\Module\WebDriver
 {

@@ -1,4 +1,5 @@
 <?php
+namespace SuiteCRM\Test;
 
 /**
  * Class TestLogger

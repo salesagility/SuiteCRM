@@ -1,4 +1,8 @@
 <?php
+include_once __DIR__ . '/SugarBeanMock.php';
+include_once __DIR__ . '/../../../include/SubPanel/SubPanelDefinitions.php';
+
+use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
 
 /** @noinspection PhpUndefinedClassInspection */
 class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
@@ -1292,6 +1296,19 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             )
         ));
         self::assertEquals(array(), $results);
+        self::assertCount(7, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $bean = new SugarBeanMock();
+        $results = $bean->retrieve_parent_fields(array(
+            array(
+                array(
+                    'type' => 'parent',
+                    'parent_type' => 'test',
+                )
+            )
+        ));
+        self::assertEquals(array(), $results);
         self::assertCount(8, $GLOBALS['log']->calls['fatal']);
 
         // test
@@ -1313,25 +1330,12 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             array(
                 array(
                     'type' => 'parent',
-                    'parent_type' => 'test',
-                )
-            )
-        ));
-        self::assertEquals(array(), $results);
-        self::assertCount(10, $GLOBALS['log']->calls['fatal']);
-
-        // test
-        $bean = new SugarBeanMock();
-        $results = $bean->retrieve_parent_fields(array(
-            array(
-                array(
-                    'type' => 'parent',
                     'parent_type' => 'Contacts',
                 )
             )
         ));
         self::assertEquals(array(), $results);
-        self::assertCount(12, $GLOBALS['log']->calls['fatal']);
+        self::assertCount(11, $GLOBALS['log']->calls['fatal']);
 
         // test
         $bean = new SugarBeanMock();
@@ -1344,7 +1348,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             )
         ));
         self::assertEquals(array(), $results);
-        self::assertCount(15, $GLOBALS['log']->calls['fatal']);
+        self::assertCount(14, $GLOBALS['log']->calls['fatal']);
 
         // test
         $bean = new SugarBeanMock();
@@ -1358,7 +1362,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             )
         ));
         self::assertEquals(array(), $results);
-        self::assertCount(17, $GLOBALS['log']->calls['fatal']);
+        self::assertCount(16, $GLOBALS['log']->calls['fatal']);
 
 
         // test
@@ -1386,7 +1390,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $this->db->query(/** @lang sql */
             "DELETE FROM contacts WHERE id = 'test_parent_contact_1'");
 
-        self::assertCount(19, $GLOBALS['log']->calls['fatal']);
+        self::assertCount(18, $GLOBALS['log']->calls['fatal']);
 
     }
 
@@ -1886,7 +1890,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $bean = new Contact();
         $clone = clone $bean;
         self::assertEquals($bean, $clone);
-        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
@@ -1925,7 +1929,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $bean->field_defs = array();
         $results = $bean->get_linked_fields();
         self::assertEquals(array(), $results);
-        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
@@ -2134,7 +2138,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $bean->testKey = new ProspectLink('test', $bean);
         $results = $bean->get_linked_beans('testKey', 'Case');
         self::assertEquals(array(), $results);
-        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+        self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
@@ -2144,7 +2148,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $bean->testKey = new ProspectLink('test', $bean);
         $results = $bean->get_linked_beans('testKey', 'Case', '', 0, 1);
         self::assertEquals(array(), $results);
-        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
+        self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
     }
 
