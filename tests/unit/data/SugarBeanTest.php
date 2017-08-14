@@ -38,6 +38,14 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
      */
     protected $fieldDefsStore;
 
+    public static function setUpBeforeClass()
+    {
+//        global $db;
+//        $db->disconnect();
+//        unset ($db->database);
+//        $db->checkConnection();
+    }
+
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
@@ -114,7 +122,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * Test for __construct()
+     * @see SugarBean::__construct()
      */
     public function testConstruct()
     {
@@ -598,7 +606,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for setupCustomFields()
+     * @see SugarBean::setupCustomFields()
      */
     public function testSetupCustomFields()
     {
@@ -614,7 +622,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for bean_implements()
+     * @see SugarBean::bean_implements()
      */
     public function testBeanImplements()
     {
@@ -626,7 +634,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for populateDefaultValues()
+     * @see SugarBean::populateDefaultValues()
      */
     public function testPopulateDefaultValues()
     {
@@ -797,7 +805,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for parseDateDefault()
+     * @see SugarBean::parseDateDefault()
      */
     public function testParseDateDefault()
     {
@@ -831,7 +839,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for removeRelationshipMeta()
+     * @see SugarBean::removeRelationshipMeta()
      */
     public function testRemoveRelationshipMeta()
     {
@@ -862,7 +870,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for createRelationshipMeta()
+     * @see SugarBean::createRelationshipMeta()
      */
     public function testCreateRelationshipMeta()
     {
@@ -904,7 +912,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for get_union_related_list()
+     * @see SugarBean::get_union_related_list()
      * @todo need more test coverage and less function complexity
      */
     public function testGetUnionRelatedList()
@@ -986,7 +994,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * Test for build_sub_queries_for_union()
+     * @see SugarBean::build_sub_queries_for_union()
      */
     public function testBuildSubQueriesForUnion()
     {
@@ -1058,7 +1066,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for process_union_list_query()
+     * @see SugarBean::process_union_list_query()
      */
     public function testProcessUnionListQuery()
     {
@@ -1358,7 +1366,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * Test for _get_num_rows_in_query()
+     * @see SugarBean::_get_num_rows_in_query()
      */
     public function testGetNumRowsInQuery()
     {
@@ -1366,7 +1374,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for retrieve_parent_fields()
+     * @see SugarBean::retrieve_parent_fields()
      */
     public function testRetrieveParentFields()
     {
@@ -1500,7 +1508,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for getAuditEnabledFieldDefinitions()
+     * @see SugarBean::getAuditEnabledFieldDefinitions()
      */
     public function testGetAuditEnabledFieldDefinitions()
     {
@@ -1561,7 +1569,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for isOwner()
+     * @see SugarBean::isOwner()
      */
     public function testIsOwner()
     {
@@ -1636,7 +1644,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for get_custom_table_name()
+     * @see SugarBean::get_custom_table_name()
      */
     public function testGetCustomTableName()
     {
@@ -1651,7 +1659,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for getTableName()
+     * @see SugarBean::getTableName()
      */
     public function testGetTableName()
     {
@@ -1680,7 +1688,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for getObjectName()
+     * @see SugarBean::getObjectName()
      */
     public function testGetObjectName()
     {
@@ -1720,7 +1728,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for getIndices()
+     * @see SugarBean::getIndices()
      */
     public function testGetIndices()
     {
@@ -1800,7 +1808,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for getPrimaryFieldDefinition()
+     * @see SugarBean::getPrimaryFieldDefinition()
      */
     public function testGetPrimaryFieldDefinition()
     {
@@ -1850,7 +1858,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for getFieldDefinition()
+     * @see SugarBean::getFieldDefinition()
      */
     public function testGetFieldDefinition()
     {
@@ -1902,7 +1910,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for getFieldValue()
+     * @see SugarBean::getFieldValue()
      */
     public function testGetFieldValue()
     {
@@ -1942,7 +1950,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for unPopulateDefaultValues()
+     * @see SugarBean::unPopulateDefaultValues()
      */
     public function testUnPopulateDefaultValues()
     {
@@ -1984,7 +1992,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for __clone()
+     * @see SugarBean::__clone()
      */
     public function testClone()
     {
@@ -2014,7 +2022,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for load_relationships()
+     * @see SugarBean::load_relationships()
      */
     public function testLoadRelationships()
     {
@@ -2022,7 +2030,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for get_linked_fields()
+     * @see SugarBean::get_linked_fields()
      */
     public function testGetLinkedFields()
     {
@@ -2070,7 +2078,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for getFieldDefinitions()
+     * @see SugarBean::getFieldDefinitions()
      */
     public function testGetFieldDefinitions()
     {
@@ -2086,7 +2094,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for load_relationship()
+     * @see SugarBean::load_relationship()
      */
     public function testLoadRelationship()
     {
@@ -2214,7 +2222,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for get_linked_beans()
+     * @see SugarBean::get_linked_beans()
      */
     public function testGetLinkedBeans()
     {
@@ -2258,7 +2266,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for get_import_required_fields()
+     * @see SugarBean::get_import_required_fields()
      */
     public function testGetImportRequiredFields()
     {
@@ -2275,7 +2283,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for get_importable_fields()
+     * @see SugarBean::get_importable_fields()
      */
     public function testGetImportableFields()
     {
@@ -2292,7 +2300,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * Test for create_tables()
+     * @see SugarBean::create_tables()
      */
     public function testCreateTables()
     {
@@ -2309,7 +2317,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for getACLCategory()
+     * @see SugarBean::getACLCategory()
      */
     public function testGetACLCategory()
     {
@@ -2320,7 +2328,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for is_AuditEnabled()
+     * @see SugarBean::is_AuditEnabled()
      */
     public function testIsAuditEnabled()
     {
@@ -2338,7 +2346,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for get_audit_table_name()
+     * @see SugarBean::get_audit_table_name()
      */
     public function testGetAuditTableNames()
     {
@@ -2351,7 +2359,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for create_audit_table()
+     * @see SugarBean::create_audit_table()
      */
     public function testCreateAuditTable()
     {
@@ -2368,7 +2376,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for drop_tables()
+     * @see SugarBean::drop_tables()
      */
     public function testDropTables()
     {
@@ -2376,7 +2384,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for save()
+     * @see SugarBean::save()
      */
     public function testSave()
     {
@@ -2616,7 +2624,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for cleanBean()
+     * @see SugarBean::cleanBean()
      */
     public function testCleanBean()
     {
@@ -2631,7 +2639,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for fixUpFormatting()
+     * @see SugarBean::fixUpFormatting()
      */
     public function testFixUpFormatting()
     {
@@ -2932,23 +2940,30 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for encrpyt_before_save()
+     * @see SugarBean::encrpyt_before_save()
      */
     public function testEncrpytBeforeSave()
     {
-        self::markTestIncomplete('already covered');
+        $bean = new Contact();
+
+        $fake = new SugarBeanMock();
+
+        $results = $bean->encrpyt_before_save('test value');
+        self::assertEquals(blowfishEncode($fake->getEncryptKeyPublic(), 'test value'), $results);
     }
 
     /**
-     * Test for getEncryptKey()
+     * @see SugarBean::getEncryptKey()
      */
     public function testGetEncryptKey()
     {
-        self::markTestIncomplete('already covered');
+        $bean = new SugarBeanMock();
+        $results = $bean->getEncryptKeyPublic();
+        self::assertEquals(blowfishGetKey('encrypt_field'), $results);
     }
 
     /**
-     * Test for _checkOptimisticLocking()
+     * @see SugarBean::_checkOptimisticLocking()
      */
     public function testCheckOptimisticLocking()
     {
@@ -2956,7 +2971,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for has_been_modified_since()
+     * @see SugarBean::has_been_modified_since()
      */
     public function testHasBeenModifiedSince()
     {
@@ -3078,7 +3093,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for toArray()
+     * @see SugarBean::toArray()
      */
     public function testToArray()
     {
@@ -3086,7 +3101,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for save_relationship_changes()
+     * @see SugarBean::save_relationship_changes()
      */
     public function testSaveRelationshipChanges()
     {
@@ -3094,7 +3109,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for set_relationship_info()
+     * @see SugarBean::set_relationship_info()
      */
     public function testSetRelationshipInfo()
     {
@@ -3102,7 +3117,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for handle_preset_relationships()
+     * @see SugarBean::handle_preset_relationships()
      */
     public function testHandlePresetRelationships()
     {
@@ -3110,7 +3125,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for handle_remaining_relate_fields()
+     * @see SugarBean::handle_remaining_relate_fields()
      */
     public function testHandleRemainingRelateFields()
     {
@@ -3118,7 +3133,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for update_parent_relationships()
+     * @see SugarBean::update_parent_relationships()
      */
     public function testUpdateParentRelationships()
     {
@@ -3126,7 +3141,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for handle_request_relate()
+     * @see SugarBean::handle_request_relate()
      */
     public function testHandleRequestRelate()
     {
@@ -3134,7 +3149,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for call_custom_logic()
+     * @see SugarBean::call_custom_logic()
      */
     public function testCallCustomLogic()
     {
@@ -3142,7 +3157,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for hasEmails()
+     * @see SugarBean::hasEmails()
      */
     public function testHasEmails()
     {
@@ -3150,7 +3165,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for preprocess_fields_on_save()
+     * @see SugarBean::preprocess_fields_on_save()
      */
     public function testPreprocessFieldsOnSave()
     {
@@ -3158,7 +3173,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for _sendNotifications()
+     * @see SugarBean::_sendNotifications()
      */
     public function testSendNotifications()
     {
@@ -3166,7 +3181,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for get_notification_recipients()
+     * @see SugarBean::get_notification_recipients()
      */
     public function testGetNotificationRecipients()
     {
@@ -3174,7 +3189,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for send_assignment_notifications()
+     * @see SugarBean::send_assignment_notifications()
      */
     public function testSendAssignmentNotifications()
     {
@@ -3182,7 +3197,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for create_notification_email()
+     * @see SugarBean::create_notification_email()
      */
     public function testCreateNotificationEmail()
     {
@@ -3190,7 +3205,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for track_view()
+     * @see SugarBean::track_view()
      */
     public function testTrackView()
     {
@@ -3198,7 +3213,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for get_summary_text()
+     * @see SugarBean::get_summary_text()
      */
     public function testGetSummaryText()
     {
@@ -3206,7 +3221,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for add_list_count_joins()
+     * @see SugarBean::add_list_count_joins()
      */
     public function testAddListCountJoins()
     {
@@ -3214,7 +3229,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for get_list()
+     * @see SugarBean::get_list()
      */
     public function testGetList()
     {
@@ -3222,7 +3237,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for getOwnerWhere()
+     * @see SugarBean::getOwnerWhere()
      */
     public function testGetOwnerWhere()
     {
@@ -3230,7 +3245,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for create_new_list_query()
+     * @see SugarBean::create_new_list_query()
      */
     public function testCreateNewListQuery()
     {
@@ -3238,7 +3253,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for get_relationship_field()
+     * @see SugarBean::get_relationship_field()
      */
     public function testGetRelationshipField()
     {
@@ -3246,7 +3261,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for is_relate_field()
+     * @see SugarBean::is_relate_field()
      */
     public function testIsRelateField()
     {
@@ -3254,7 +3269,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for process_order_by()
+     * @see SugarBean::process_order_by()
      */
     public function testProcessOrderBy()
     {
@@ -3262,7 +3277,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for process_list_query()
+     * @see SugarBean::process_list_query()
      */
     public function testProcessListQuery()
     {
@@ -3270,7 +3285,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for create_list_count_query()
+     * @see SugarBean::create_list_count_query()
      */
     public function testCreateListCountQuery()
     {
@@ -3278,7 +3293,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for fill_in_additional_list_fields()
+     * @see SugarBean::fill_in_additional_list_fields()
      */
     public function testFillInAdditionalListFields()
     {
@@ -3286,7 +3301,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for get_detail()
+     * @see SugarBean::get_detail()
      */
     public function testGetDetail()
     {
@@ -3294,7 +3309,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for process_detail_query()
+     * @see SugarBean::process_detail_query()
      */
     public function testProcessDetailQuery()
     {
@@ -3302,7 +3317,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for retrieve()
+     * @see SugarBean::retrieve()
      */
     public function testRetrieve()
     {
@@ -3310,7 +3325,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for getCustomJoin()
+     * @see SugarBean::getCustomJoin()
      */
     public function testGetCustomJoin()
     {
@@ -3318,7 +3333,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for convertRow()
+     * @see SugarBean::convertRow()
      */
     public function testConvertRow()
     {
@@ -3326,7 +3341,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for convertField()
+     * @see SugarBean::convertField()
      */
     public function testConvertField()
     {
@@ -3334,7 +3349,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for populateFromRow()
+     * @see SugarBean::populateFromRow()
      */
     public function testPopulateFromRow()
     {
@@ -3342,7 +3357,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for populateCurrencyFields()
+     * @see SugarBean::populateCurrencyFields()
      */
     public function testPopulateCurrencyFields()
     {
@@ -3350,7 +3365,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for check_date_relationships_load()
+     * @see SugarBean::check_date_relationships_load()
      */
     public function testCheckDateRelationshipsLoad()
     {
@@ -3358,7 +3373,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for decrypt_after_retrieve()
+     * @see SugarBean::decrypt_after_retrieve()
      */
     public function testDecryptAfterRetrieve()
     {
@@ -3366,7 +3381,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for fill_in_additional_detail_fields()
+     * @see SugarBean::fill_in_additional_detail_fields()
      */
     public function testFillInAdditionalDetailFields()
     {
@@ -3374,7 +3389,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for fill_in_additional_parent_fields()
+     * @see SugarBean::fill_in_additional_parent_fields()
      */
     public function testFillInAdditionalParentFields()
     {
@@ -3382,7 +3397,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for getRelatedFields()
+     * @see SugarBean::getRelatedFields()
      */
     public function testGetRelatedFields()
     {
@@ -3390,7 +3405,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for fill_in_relationship_fields()
+     * @see SugarBean::fill_in_relationship_fields()
      */
     public function testFillInRelationshipFields()
     {
@@ -3398,7 +3413,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for fill_in_link_field()
+     * @see SugarBean::fill_in_link_field()
      */
     public function testFillInLinkField()
     {
@@ -3406,7 +3421,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for get_related_fields()
+     * @see SugarBean::get_related_fields()
      */
     public function testGetRelatedFieldsSnakeCase()
     {
@@ -3414,7 +3429,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for get_related_list()
+     * @see SugarBean::get_related_list()
      */
     public function testGetRelatedList()
     {
@@ -3422,7 +3437,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for get_full_list()
+     * @see SugarBean::get_full_list()
      */
     public function testGetFullList()
     {
@@ -3430,7 +3445,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for process_full_list_query()
+     * @see SugarBean::process_full_list_query()
      */
     public function testProcessFullListQuery()
     {
@@ -3438,7 +3453,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for create_index()
+     * @see SugarBean::create_index()
      */
     public function testCreateIndex()
     {
@@ -3446,7 +3461,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for mark_deleted()
+     * @see SugarBean::mark_deleted()
      */
     public function testMarkDeleted()
     {
@@ -3454,7 +3469,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for mark_undeleted()
+     * @see SugarBean::mark_undeleted()
      */
     public function testMarkUndeleted()
     {
@@ -3462,7 +3477,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for restoreFiles()
+     * @see SugarBean::restoreFiles()
      */
     public function testRestoreFiles()
     {
@@ -3470,7 +3485,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for haveFiles()
+     * @see SugarBean::haveFiles()
      */
     public function testHaveFiles()
     {
@@ -3478,7 +3493,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for getFiles()
+     * @see SugarBean::getFiles()
      */
     public function testGetFiles()
     {
@@ -3486,7 +3501,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for getFilesFields()
+     * @see SugarBean::getFilesFields()
      */
     public function testGetFilesFields()
     {
@@ -3494,7 +3509,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for deleteFileDirectory()
+     * @see SugarBean::deleteFileDirectory()
      */
     public function testDeleteFileDirectory()
     {
@@ -3502,7 +3517,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for mark_relationships_deleted()
+     * @see SugarBean::mark_relationships_deleted()
      */
     public function testMarkRelationshipsDeleted()
     {
@@ -3510,7 +3525,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for delete_linked()
+     * @see SugarBean::delete_linked()
      */
     public function testDeleteLinked()
     {
@@ -3518,7 +3533,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for deleteFiles()
+     * @see SugarBean::deleteFiles()
      */
     public function testDeleteFiles()
     {
@@ -3526,7 +3541,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for build_related_list()
+     * @see SugarBean::build_related_list()
      */
     public function testBuildRelatedList()
     {
@@ -3534,7 +3549,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for build_related_list_where()
+     * @see SugarBean::build_related_list_where()
      */
     public function testBuildRelatedListWhere()
     {
@@ -3542,7 +3557,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for build_related_in()
+     * @see SugarBean::build_related_in()
      */
     public function testBuildRelatedIn()
     {
@@ -3550,7 +3565,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for build_related_list2()
+     * @see SugarBean::build_related_list2()
      */
     public function testBuildRelatedList2()
     {
@@ -3558,7 +3573,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for list_view_parse_additional_sections()
+     * @see SugarBean::list_view_parse_additional_sections()
      */
     public function testListViewParseAdditionalSections()
     {
@@ -3566,7 +3581,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for get_list_view_data()
+     * @see SugarBean::get_list_view_data()
      */
     public function testGetListViewData()
     {
@@ -3574,7 +3589,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for get_list_view_array()
+     * @see SugarBean::get_list_view_array()
      */
     public function testGetListViewArray()
     {
@@ -3582,7 +3597,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for retrieve_by_string_fields()
+     * @see SugarBean::retrieve_by_string_fields()
      */
     public function testRetrieveByStringFields()
     {
@@ -3590,7 +3605,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for get_where()
+     * @see SugarBean::get_where()
      */
     public function testGetWhere()
     {
@@ -3598,7 +3613,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for fromArray()
+     * @see SugarBean::fromArray()
      */
     public function testFromArray()
     {
@@ -3606,7 +3621,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for process_special_fields()
+     * @see SugarBean::process_special_fields()
      */
     public function testProcessSpecialFields()
     {
@@ -3614,7 +3629,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for build_generic_where_clause()
+     * @see SugarBean::build_generic_where_clause()
      */
     public function testBuildGenericWhereClause()
     {
@@ -3622,7 +3637,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for parse_additional_headers()
+     * @see SugarBean::parse_additional_headers()
      */
     public function testParseAdditionalHeaders()
     {
@@ -3630,7 +3645,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for assign_display_fields()
+     * @see SugarBean::assign_display_fields()
      */
     public function testAssignDisplayFields()
     {
@@ -3638,7 +3653,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for set_relationship()
+     * @see SugarBean::set_relationship()
      */
     public function testSetRelationship()
     {
@@ -3646,7 +3661,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for retrieve_relationships()
+     * @see SugarBean::retrieve_relationships()
      */
     public function testRetrieveRelationships()
     {
@@ -3654,7 +3669,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for loadLayoutDefs()
+     * @see SugarBean::loadLayoutDefs()
      */
     public function testLoadLayoutDefs()
     {
@@ -3662,7 +3677,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for getRealKeyFromCustomFieldAssignedKey()
+     * @see SugarBean::getRealKeyFromCustomFieldAssignedKey()
      */
     public function testGetRealKeyFromCustomFieldAssignedKey()
     {
@@ -3670,7 +3685,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for getOwnerField()
+     * @see SugarBean::getOwnerField()
      */
     public function testGetOwnerField()
     {
@@ -3678,7 +3693,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for listviewACLHelper()
+     * @see SugarBean::listviewACLHelper()
      */
     public function testListviewACLHelper()
     {
@@ -3686,7 +3701,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for ACLAccess()
+     * @see SugarBean::ACLAccess()
      */
     public function testACLAccess()
     {
@@ -3694,7 +3709,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for loadFromRow()
+     * @see SugarBean::loadFromRow()
      */
     public function testLoadFromRow()
     {
@@ -3702,7 +3717,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for create_qualified_order_by()
+     * @see SugarBean::create_qualified_order_by()
      */
     public function testCreateQualifiedOrderBy()
     {
@@ -3710,7 +3725,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for add_address_streets()
+     * @see SugarBean::add_address_streets()
      */
     public function testAddAddressStreets()
     {
@@ -3718,7 +3733,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for populateRelatedBean()
+     * @see SugarBean::populateRelatedBean()
      */
     public function testPopulateRelatedBean()
     {
@@ -3726,7 +3741,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for beforeImportSave()
+     * @see SugarBean::beforeImportSave()
      */
     public function testBeforeImportSave()
     {
@@ -3734,7 +3749,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for afterImportSave()
+     * @see SugarBean::afterImportSave()
      */
     public function testAfterImportSave()
     {
@@ -3742,7 +3757,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for create_export_query()
+     * @see SugarBean::create_export_query()
      */
     public function testCreateExportQuery()
     {
@@ -3750,7 +3765,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for auditBean()
+     * @see SugarBean::auditBean()
      */
     public function testAuditBean()
     {
@@ -3758,7 +3773,7 @@ class SugarBeanTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for createAuditRecord()
+     * @see SugarBean::createAuditRecord()
      */
     public function testCreateAuditRecord()
     {

@@ -120,4 +120,8 @@ class SugarBeanMock extends SugarBean
         $this->loaded_relationships = $testValue;
     }
 
+    public function getEncryptKeyPublic() {
+        return parent::getEncryptKey();
+    }
+
 }
