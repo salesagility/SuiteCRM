@@ -1,5 +1,7 @@
 <?php
 
+use SuiteCRM\Test\TestLogger;
+
 include_once __DIR__ . '/../../../TestLogger.php';
 
 /** @noinspection PhpUndefinedClassInspection */
