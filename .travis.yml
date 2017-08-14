@@ -20,7 +20,7 @@ before_script:
 script:
   - php tests/install.php
   - ./vendor/bin/pscss -f compressed themes/SuiteP/css/style.scss >  themes/SuiteP/css/style.css
-  - ./vendor/bin/codecept run -f unit
+  - ./vendor/bin/codecept run -f unit --debug -vvv
   - cat sugarcrm.log
   - cat suitecrm.log
 services:
