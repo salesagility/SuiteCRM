@@ -37,9 +37,10 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $mergeRecord = new MergeRecord();
 
@@ -57,9 +58,10 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $mergeRecord = new MergeRecord();
 
@@ -84,9 +86,10 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $mergeRecord = new MergeRecord();
 
@@ -111,9 +114,10 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $mergeRecord = new MergeRecord();
 
@@ -132,9 +136,10 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $mergeRecord = new MergeRecord();
 
@@ -153,9 +158,10 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $mergeRecord = new MergeRecord();
 
@@ -184,9 +190,10 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $mergeRecord = new MergeRecord();
 
@@ -232,9 +239,10 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $mergeRecord = new MergeRecord();
 
@@ -255,9 +263,10 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
         error_reporting(E_ERROR | E_PARSE);
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $mergeRecord = new MergeRecord();
 
@@ -291,9 +300,10 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $mergeRecord = new MergeRecord();
 

@@ -55,9 +55,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
         error_reporting(E_ERROR | E_PARSE);
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -115,9 +116,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -295,9 +297,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -960,9 +963,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1061,9 +1065,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1278,9 +1283,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1298,9 +1304,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1319,9 +1326,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1344,9 +1352,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1361,9 +1370,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1385,9 +1395,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1407,9 +1418,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1429,9 +1441,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1446,9 +1459,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1506,9 +1520,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     public function testgetMessageTextFromSingleMimePart()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1524,9 +1539,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     public function testaddBreadCrumbOffset()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1547,9 +1563,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1566,9 +1583,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1591,9 +1609,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1610,9 +1629,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1629,9 +1649,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1648,9 +1669,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1665,9 +1687,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1678,9 +1701,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     public function testgetMimeType()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1693,9 +1717,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1756,9 +1781,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1825,9 +1851,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1896,9 +1923,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1914,9 +1942,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1928,9 +1957,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -2004,9 +2034,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -2403,9 +2434,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -2417,9 +2449,10 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     public function testcreateAutoImportSugarFolder()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
