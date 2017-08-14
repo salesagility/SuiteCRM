@@ -206,7 +206,7 @@ class MysqliManager extends MysqlManager
         }
         if (!empty($this->database)) {
             $this->freeResult();
-            mysqli_close($this->database);
+            @mysqli_close($this->database);
             $this->database = null;
         }
     }

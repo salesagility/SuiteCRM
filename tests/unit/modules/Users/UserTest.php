@@ -47,6 +47,10 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testgetDefaultSignature()
     {
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $user = new User();
 
@@ -137,6 +141,10 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testgetUserPrivGuid()
     {
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $user = new User();
 
@@ -151,6 +159,10 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testsetUserPrivGuid()
     {
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $user = new User();
 
@@ -167,6 +179,10 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testSetAndGetAndResetPreference()
     {
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $user = new User();
 
@@ -225,6 +241,10 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testgetUserDateTimePreferences()
     {
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $user = new User();
 
@@ -257,6 +277,11 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testGetETagSeedAndIncrementETag()
     {
+
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $user = new User();
 
@@ -311,6 +336,10 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testcheck_role_membership()
     {
+        global $db;
+        $db->disconnect();
+        unset ($db->database);
+        $db->checkConnection();
 
         $user = new User();
 
