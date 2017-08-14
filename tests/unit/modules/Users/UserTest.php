@@ -34,10 +34,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testgetSystemUser()
     {
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $user = new User();
 
@@ -51,10 +47,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testgetDefaultSignature()
     {
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $user = new User();
 
@@ -145,10 +137,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testgetUserPrivGuid()
     {
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $user = new User();
 
@@ -163,11 +151,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testsetUserPrivGuid()
     {
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
-
 
         $user = new User();
 
@@ -184,10 +167,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testSetAndGetAndResetPreference()
     {
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $user = new User();
 
@@ -214,10 +193,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testsavePreferencesToDB()
     {
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $user = new User();
 
@@ -237,10 +212,6 @@ class UserTest extends PHPUnit_Framework_TestCase
     public function testreloadPreferences()
     {
         static::markTestIncomplete('Too many connections');
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $user = new User();
 
@@ -254,10 +225,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testgetUserDateTimePreferences()
     {
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $user = new User();
 
@@ -277,10 +244,6 @@ class UserTest extends PHPUnit_Framework_TestCase
     public function testloadPreferences()
     {
         static::markTestIncomplete('Too many connections');
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $user = new User();
 
@@ -294,11 +257,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testGetETagSeedAndIncrementETag()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $user = new User();
 
@@ -353,10 +311,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testcheck_role_membership()
     {
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $user = new User();
 
@@ -819,12 +773,6 @@ class UserTest extends PHPUnit_Framework_TestCase
     public function testdisplayEmailCounts()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
-
-
         $user = new User();
 
         $expected = '<script type="text/javascript" language="Javascript">var welcome = document.getElementById("welcome");var welcomeContent = welcome.innerHTML;welcome.innerHTML = welcomeContent + "&nbsp;&nbsp;&nbsp;&nbsp;<a href=index.php?module=Emails&action=ListViewGroup>Group Inbox: (0 New)</a>";</script>';
@@ -972,10 +920,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testgetDeveloperModules()
     {
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $user = new User();
 
@@ -988,9 +932,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testisDeveloperForModule()
     {
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $user = new User();
 
@@ -1013,10 +954,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testgetAdminModules()
     {
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $user = new User();
 
@@ -1029,9 +966,6 @@ class UserTest extends PHPUnit_Framework_TestCase
 
     public function testisAdminForModule()
     {
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $user = new User();
 

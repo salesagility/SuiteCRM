@@ -54,10 +54,7 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     {
         error_reporting(E_ERROR | E_PARSE);
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
+        
 
         $inboundEmail = new InboundEmail();
 
@@ -113,11 +110,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function getSingularRelatedId()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -293,11 +285,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function testfilterMailBoxFromRaw()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -959,11 +946,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     public function testfetchCheckedEmails()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
-
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->id = 1;
@@ -1059,11 +1041,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function testgetTeamSetIdForTeams()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1277,11 +1254,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     public function testgroupUserDupeCheck()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
-
         $inboundEmail = new InboundEmail();
 
         //test without name i-e user_name in query
@@ -1296,11 +1268,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function testgetGroupsWithSelectOptions()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1317,11 +1284,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function testhandleAutoresponse()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1343,11 +1305,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     public function testhandleCaseAssignment()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
-
         $inboundEmail = new InboundEmail();
 
         $email = new Email();
@@ -1359,11 +1316,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function testhandleMailboxType()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1384,11 +1336,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     public function testisMailBoxTypeCreateCase()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
-
         $inboundEmail = new InboundEmail();
 
         //test without setting attributes
@@ -1405,11 +1352,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function testhandleCreateCase()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1428,11 +1370,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     public function testhandleLinking()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
-
         $inboundEmail = new InboundEmail();
 
         $email = new Email();
@@ -1444,11 +1381,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function testgetEncodingFromBreadCrumb()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1505,10 +1437,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function testgetMessageTextFromSingleMimePart()
     {
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1523,10 +1451,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function testaddBreadCrumbOffset()
     {
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1546,11 +1470,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     public function testgetMessageText()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
-
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -1564,11 +1483,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function testdecodeHeader()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1590,11 +1504,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     public function testhandleCharsetTranslation()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
-
         $inboundEmail = new InboundEmail();
 
         //test with default
@@ -1608,11 +1517,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function testbuildBreadCrumbs()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1628,11 +1532,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     public function testbuildBreadCrumbsHTML()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
-
         $inboundEmail = new InboundEmail();
 
         //execute the method and test if it works and does not throws an exception.
@@ -1647,11 +1546,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     public function testconvertImapToSugarEmailAddress()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
-
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->mailbox = 'INBOX';
@@ -1664,11 +1558,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     public function testhandleEncodedFilename()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
-
         $inboundEmail = new InboundEmail();
 
         $result = $inboundEmail->handleEncodedFilename('attachment1.pdf');
@@ -1677,10 +1566,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function testgetMimeType()
     {
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1691,11 +1576,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function testsaveAttachments()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1754,11 +1634,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function testsaveAttachmentBinaries()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1823,11 +1698,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function testgetDuplicateEmailId()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1895,11 +1765,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     public function testcheckFilterDomain()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
-
         $inboundEmail = new InboundEmail();
 
         $email = new Email();
@@ -1913,11 +1778,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     public function testcheckOutOfOffice()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
-
         $inboundEmail = new InboundEmail();
 
         $this->assertEquals(false, $inboundEmail->checkOutOfOffice('currently Out of Office, will reply later'));
@@ -1926,11 +1786,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function testsetAndgetAutoreplyStatus()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -1946,11 +1801,7 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function testsaveInboundEmailSystemSettings()
     {
-        global $sugar_config, $db;
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        unset($db->database);
-//        $db->checkConnection();
+        global $sugar_config;
 
         $inboundEmail = new InboundEmail();
 
@@ -2002,11 +1853,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function testgetRelatedId()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
@@ -2402,11 +2248,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
     public function testcreateUserSubscriptionsForGroupAccount()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
-
         $inboundEmail = new InboundEmail();
 
         //$inboundEmail->createUserSubscriptionsForGroupAccount();
@@ -2416,10 +2257,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
 
     public function testcreateAutoImportSugarFolder()
     {
-        //unset and reconnect Db to resolve mysqli fetch exeception
-//        global $db;
-//        unset ($db->database);
-//        $db->checkConnection();
 
         $inboundEmail = new InboundEmail();
 
