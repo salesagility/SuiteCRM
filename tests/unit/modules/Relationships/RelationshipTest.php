@@ -22,10 +22,9 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        $db->disconnect();
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         //test without setting any attributes
         $relationship = new Relationship();
@@ -80,10 +79,9 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        $db->disconnect();
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         //execute the method and test if it works and does not throws an exception.
         try {
@@ -169,10 +167,9 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        $db->disconnect();
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $relationship = new Relationship();
 
@@ -198,10 +195,9 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        $db->disconnect();
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $relationship = new Relationship();
 
@@ -213,10 +209,9 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        $db->disconnect();
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $relationship = new Relationship();
 
@@ -257,10 +252,9 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
-        $db->disconnect();
-        unset ($db->database);
-        $db->checkConnection();
+//        global $db;
+//        unset ($db->database);
+//        $db->checkConnection();
 
         $relationship = new Relationship();
         $result = $relationship->trace_relationship_module('Roles', 'Users');
