@@ -49,6 +49,7 @@ $mod_strings = array (
   'LBL_LIST_FORM_TITLE' => 'Activities List',
   'LBL_LIST_SUBJECT' => 'Subject',
     'LBL_OVERVIEW' => 'OVERVIEW',
+    'LBL_TASKS' => 'TASKS',
     'LBL_MEETINGS' => 'MEETINGS',
     'LBL_CALLS' => 'CALLS',
     'LBL_EMAILS' => 'EMAILS',
@@ -131,6 +132,3 @@ $mod_strings = array (
 
 	'LBL_ACCEPT' => 'Accept' /*for 508 compliance fix*/,
 );
-
-
-?>
