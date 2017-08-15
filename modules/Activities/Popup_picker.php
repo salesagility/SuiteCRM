@@ -397,7 +397,7 @@ class Popup_Picker
         $template->assign('theme', SugarThemeRegistry::current());
         $template->assign('langHeader', get_language_header());
         $template->assign('summaryList', $summary_list);
-        $template->assign('tasklist', $task_list);
+        $template->assign('taskslist', $task_list);
         $template->assign('meetingList', $meeting_list);
         $template->assign('callsList', $calls_list);
         $template->assign('emailsList', $emails_list);
