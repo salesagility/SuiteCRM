@@ -91,6 +91,7 @@ class Popup_Picker
         global $app_strings;
         global $timedate;
 
+        $summary_list = array();
         $task_list = array();
         $meeting_list = array();
         $calls_list = array();
@@ -145,7 +146,7 @@ class Popup_Picker
                     //tasks can have an empty date due field
                     $ts = $timedate->fromDb($task->fetched_row['date_due'])->ts;
                 }
-                $task_list[] = array('name' => $task->name,
+                $summary_list[] = array('name' => $task->name,
                     'id' => $task->id,
                     'type' => "Task",
                     'direction' => '',
@@ -191,7 +192,7 @@ class Popup_Picker
                 }
             }
             if ($meeting->status !== 'Planned') {
-                $meeting_list[] = array(
+                $summary_list[] = array(
                     'name' => $meeting->name,
                     'id' => $meeting->id,
                     'type' => $mod_strings['LBL_MEETING_TYPE'],
@@ -241,7 +242,7 @@ class Popup_Picker
             }
 
             if ($call->status !== 'Planned') {
-                $calls_list[] = array(
+                $summary_list[] = array(
                     'name' => $call->name,
                     'id' => $call->id,
                     'type' => $mod_strings['LBL_CALL_TYPE'],
@@ -293,9 +294,11 @@ class Popup_Picker
             if (!empty($email->fetched_row['date_sent'])) {
                 //emails can have an empty date sent field
                 $ts = $timedate->fromDb($email->fetched_row['date_sent'])->ts;
+            } elseif (!empty($email->fetched_row['date_entered'])) {
+                $ts = $timedate->fromDb($email->fetched_row['date_entered'])->ts;
             }
 
-            $emails_list[] = array(
+            $summary_list[] = array(
                 'name' => $email->name,
                 'id' => $email->id,
                 'type' => $mod_strings['LBL_EMAIL_TYPE'],
@@ -336,7 +339,7 @@ class Popup_Picker
             foreach ($focus_unlinked_emails_list as $email) {
                 $email->retrieve($email->id);
 
-                $emails_list[] = array(
+                $summary_list[] = array(
                     'name' => $email->name,
                     'id' => $email->id,
                     'type' => $mod_strings['LBL_EMAIL_TYPE'],
@@ -360,7 +363,7 @@ class Popup_Picker
         foreach ($focus_notes_list as $note) {
             if ($note->ACLAccess('view')) {
 
-                $notes_list[] = array(
+                $summary_list[] = array(
                     'name' => $note->name,
                     'id' => $note->id,
                     'type' => $mod_strings['LBL_NOTE_TYPE'],
@@ -379,17 +382,33 @@ class Popup_Picker
                     'image' => SugarThemeRegistry::current()->getImageURL('Notes.svg')
                 );
                 if (!empty($note->filename)) {
-                    $count = count($notes_list);
+                    $count = count($summary_list);
                     $count--;
-                    $notes_list[$count]['filename'] = $note->filename;
-                    $notes_list[$count]['fileurl'] = UploadFile::get_url($note->filename, $note->id);
+                    $summary_list[$count]['filename'] = $note->filename;
+                    $summary_list[$count]['fileurl'] = UploadFile::get_url($note->filename, $note->id);
                 }
             }
 
         } // end Notes
 
 
-        $summary_list = array_merge_recursive($task_list, $meeting_list, $calls_list, $emails_list, $notes_list);
+        if (count($summary_list) > 0) {
+            $summary_list = array_csort($summary_list, 'sort_value', SORT_DESC);
+
+            foreach ($summary_list as $list) {
+                if ($list['module'] === 'Tasks') {
+                    $task_list[] = $list;
+                } elseif ($list['module'] === 'Meetings') {
+                    $meeting_list[] = $list;
+                } elseif ($list['module'] === 'Calls') {
+                    $calls_list[] = $list;
+                } elseif ($list['module'] === 'Emails') {
+                    $emails_list[] = $list;
+                } elseif ($list['module'] === 'Notes') {
+                    $notes_list[] = $list;
+                }
+            }
+        }
 
         $template = new Sugar_Smarty();
         $template->assign('app', $app_strings);
