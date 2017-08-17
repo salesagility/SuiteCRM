@@ -84,10 +84,10 @@ class SugarWidgetSubPanelRemoveButton extends SugarWidgetField
 			if($parent_record_id == $user->getPrivateTeamID())
 			{
 			    $hideremove = true;
-            } elseif ($current_module === 'ACLRoles' && (!ACLController::checkAccess($current_module, 'edit', true))) {
-                $hideremove = true;
             }
-		}
+		} elseif ($current_module === 'ACLRoles' && (!ACLController::checkAccess($current_module, 'edit', true))) {
+            $hideremove = true;
+        }
 		
 		$return_module = $_REQUEST['module'];
 		$return_action = 'SubPanelViewer';
