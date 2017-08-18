@@ -122,7 +122,44 @@ class AOW_WorkFlow extends Basic {
 		$flows = AOW_WorkFlow::get_full_list(''," aow_workflow.status = 'Active'  AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'In_Scheduler' OR aow_workflow.run_when = 'Create') ");
 
         foreach($flows as $flow){
-            $flow->run_flow();
+            ## START Trigger Only Once Per Day
+            $temp_trigger = true;
+            if($flow->trigger_only_once_per_day)
+            {
+                $query = "SELECT * FROM aow_workflow_execute WHERE aow_workflow_id = '".$flow->id."' AND 
+                        DATE_FORMAT(execute_datetime, '%Y-%m-%d') = DATE_FORMAT(now(), '%Y-%m-%d')";
+                    
+                $results = $GLOBALS['db']->query($query, true);
+                $num_row = $GLOBALS['db']->getRowCount($results);
+                
+                if($num_row > 0)
+                {
+                    $temp_trigger = false;
+                }else{
+                    $query = "SELECT now() FROM dual WHERE TIME_TO_SEC(CONCAT(DATE_FORMAT(CurDate(), '%Y-%m-%d'), ' ".$flow->once_per_hour.":".$flow->once_per_min."'))  > TIME_TO_SEC(now())";
+                    
+                    $results = $GLOBALS['db']->query($query, true);
+                    $num_row = $GLOBALS['db']->getRowCount($results);
+                    
+                    if($num_row > 0)
+                    {
+                        $temp_trigger = false;
+                    }
+                }
+            }
+            
+            if($temp_trigger) 
+            {
+                $flow->run_flow();
+            
+                if($flow->trigger_only_once_per_day)
+                {
+                    $qry_ins = "INSERT INTO aow_workflow_execute(aow_workflow_id, execute_datetime)
+                                VALUES('".$flow->id."', now())";
+                    $GLOBALS['db']->query($qry_ins, true);
+                }
+            }
+            ## END #DEV-223 HACK for Trigger Only Once Per Day
         }
         return true;
 	}
@@ -133,7 +170,6 @@ class AOW_WorkFlow extends Basic {
     function run_flow(){
         $beans = $this->get_flow_beans();
         if(!empty($beans)){
-
             foreach($beans as $bean){
                 $bean->retrieve($bean->id);
                 $this->run_actions($bean);
@@ -210,13 +246,7 @@ class AOW_WorkFlow extends Basic {
                 case 'custom':
                     $query['join'][$name] = 'LEFT JOIN '.$module->get_custom_table_name().' '.$name.' ON '.$module->table_name.'.id = '. $name.'.id_c ';
                     break;
-				## START HACK Soltuions OEPL
-                case 'custom_relationship':
-                    $main_name = str_replace("_cstm", "", $name);
-                    $query['join'][$name] = 'LEFT JOIN '.$module->get_custom_table_name().' '.$name.' ON '.$main_name.'.id = '. $name.'.id_c ';
-                    echo $query['join'][$name];
-                    break;
-				## END HACK Soltuions OEPL
+                
                 case 'relationship':
                     if($module->load_relationship($name)){
                         $params['join_type'] = 'LEFT JOIN';
@@ -280,20 +310,14 @@ class AOW_WorkFlow extends Basic {
     function build_query_where(AOW_Condition $condition, $module, $query = array()){
         global $beanList, $app_list_strings, $sugar_config, $timedate;
         $path = unserialize(base64_decode($condition->module_path));
-
+        
         $condition_module = $module;
         $table_alias = $condition_module->table_name;
-		## START HACK Soltuions OEPL
-        $oepl_rel = '';
-        ## END HACK Soltuions OEPL
         if(isset($path[0]) && $path[0] != $module->module_dir){
             foreach($path as $rel){
                 $query = $this->build_flow_query_join($rel, $condition_module, 'relationship', $query);
                 $condition_module = new $beanList[getRelatedModule($condition_module->module_dir,$rel)];
                 $table_alias = $rel;
-                ## START HACK Soltuions OEPL
-                $oepl_rel = $rel;
-                ## END HACK Soltuions OEPL
             }
         }
 
@@ -307,13 +331,7 @@ class AOW_WorkFlow extends Basic {
             }
             if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                 $field = $table_alias.'_cstm.'.$condition->field;
-				## START HACK Soltuions OEPL
-                if(!empty($oepl_rel)){
-                    $query = $this->build_flow_query_join($table_alias.'_cstm', $condition_module, 'custom_relationship', $query);
-                }## END HACK Soltuions OEPL
-                else {
-                    $query = $this->build_flow_query_join($table_alias.'_cstm', $condition_module, 'custom', $query);
-                }
+                $query = $this->build_flow_query_join($table_alias.'_cstm', $condition_module, 'custom', $query);
             } else {
                 $field = $table_alias.'.'.$condition->field;
             }
@@ -472,7 +490,7 @@ class AOW_WorkFlow extends Basic {
                 return false;
             }
         }
-
+        
         if(!isset($bean->date_entered)){
             $bean->date_entered = $bean->fetched_row['date_entered'];
         }
@@ -736,6 +754,7 @@ class AOW_WorkFlow extends Basic {
                 return true;
             }
         }
+        
         $processed->aow_workflow_id = $this->id;
         $processed->parent_id = $bean->id;
         $processed->parent_type = $bean->module_dir;
@@ -754,7 +773,7 @@ class AOW_WorkFlow extends Basic {
 
             if($this->multiple_runs || !$processed->db->getOne("select id from aow_processed_aow_actions where aow_processed_id = '".$processed->id."' AND aow_action_id = '".$action->id."' AND status = 'Complete'")){
                 $action_name = 'action'.$action->action;
-
+                
                 if(file_exists('custom/modules/AOW_Actions/actions/'.$action_name.'.php')){
                     require_once('custom/modules/AOW_Actions/actions/'.$action_name.'.php');
                 } else if(file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')){
