@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -13,65 +13,72 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/SugarObjects/forms/PersonFormBase.php');
 
 class LeadFormBase extends PersonFormBase {
 
-var $moduleName = 'Leads';
-var $objectName = 'Lead';
+public $moduleName = 'Leads';
+public $objectName = 'Lead';
 
-/**
- * getDuplicateQuery
- *
- * This function returns the SQL String used for initial duplicate Leads check
- *
- * @see checkForDuplicates (method), ContactFormBase.php, LeadFormBase.php, ProspectFormBase.php
- * @param $focus sugarbean
- * @param $prefix String value of prefix that may be present in $_POST variables
- * @return SQL String of the query that should be used for the initial duplicate lookup check
- */
-public function getDuplicateQuery($focus, $prefix='')
-{
-	$query = "SELECT id, first_name, last_name, account_name, title FROM leads ";
+    /**
+     * getDuplicateQuery
+     *
+     * This function returns the SQL String used for initial duplicate Leads check
+     *
+     * @see checkForDuplicates (method), ContactFormBase.php, LeadFormBase.php, ProspectFormBase.php
+     * @param $focus sugarbean
+     * @param string $prefix value of prefix that may be present in $_POST variables
+     * @return string SQL string of the query that should be used for the initial duplicate lookup check
+     */
+    public function getDuplicateQuery($focus, $prefix = '')
+    {
+        $query = "SELECT id, first_name, last_name, account_name, title FROM leads ";
 
-    // Bug #46427 : Records from other Teams shown on Potential Duplicate Contacts screen during Lead Conversion
-    // add team security
+        // Bug #46427 : Records from other Teams shown on Potential Duplicate Contacts screen during Lead Conversion
+        // add team security
 
-    $query .= " WHERE deleted != 1 AND (status <> 'Converted' OR status IS NULL) AND ";
+        $query .= " WHERE deleted != 1 AND (status <> 'Converted' OR status IS NULL) AND ";
 
-    //Use the first and last name from the $_POST to filter.  If only last name supplied use that
-	if(isset($_POST[$prefix.'first_name']) && strlen($_POST[$prefix.'first_name']) != 0 && isset($_POST[$prefix.'last_name']) && strlen($_POST[$prefix.'last_name']) != 0) {
-		$query .= " (first_name='". $_POST[$prefix.'first_name'] . "' AND last_name = '". $_POST[$prefix.'last_name'] ."')";
-	} else {
-		$query .= " last_name = '". $_POST[$prefix.'last_name'] ."'";
-	}
-    return $query;
-}
+        //Use the first and last name from the $_POST to filter.  If only last name supplied use that
+        if (isset($_POST[$prefix . 'first_name']) && '' !== $_POST[$prefix . 'first_name'] &&
+            isset($_POST[$prefix . 'last_name']) && '' !== $_POST[$prefix . 'last_name']
+        ) {
+            $query .= " (first_name='" . $_POST[$prefix . 'first_name'] . "' AND last_name = '" . $_POST[$prefix . 'last_name'] . "')";
+        } else {
+            $query .= " last_name = '" . $_POST[$prefix . 'last_name'] . "'";
+        }
+
+        return $query;
+    }
 
 
 function getWideFormBody($prefix, $mod='', $formname=''){
