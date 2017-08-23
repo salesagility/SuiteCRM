@@ -237,14 +237,17 @@ Alerts.prototype.updateManager = function () {
       );
     }
 
-    var alertsDiv = $('div#alerts');
-    var alertCount = $('#alerts').find('div.module-alert').size();
+    var alertsDiv = $('.desktop_notifications #alerts');
+    alertsDiv.html(data);
+
+    var alerts = $('<div></div>');
+    $(data).appendTo(alerts);
+    var alertCount = $(alerts).children('.alert').length;
     var alertCountDiv = $('.alert_count');
-    var desktopNotificationsDiv = $('#desktop_notifications');
+    var desktopNotificationsDiv = $('.desktop_notifications');
     var alertButtonDiv = $('.alertsButton');
 
-    alertsDiv.html(data);
-    alertsDiv.css('width', '200px');
+
     alertCountDiv.html(alertCount);
     if (alertCount > 0) {
       alertsDiv.addClass('has-alerts');
