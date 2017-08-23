@@ -2701,8 +2701,7 @@ class Email extends Basic
             $mail->FromName = $this->from_name;
         } elseif (!empty($this->from_addr_name)) {
             $mail->FromName = $this->from_addr_name;
-        }
-        else {
+        } else {
             $mail->FromName = $current_user->getPreference('mail_fromname');
             $this->from_name = $mail->FromName;
         }
