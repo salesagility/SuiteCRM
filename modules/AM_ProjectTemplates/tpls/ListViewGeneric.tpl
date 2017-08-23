@@ -78,7 +78,7 @@
                                               href='index.php?module=Administration&action=SupportPortal&view=documentation&version={$sugar_info.sugar_version}&edition={$sugar_info.sugar_flavor}&lang=&help_module={$currentModule}&help_action=&key='>{$APP.LBL_CLICK_HERE}</a>{/capture}
                 <div class="filterContainer">
                     {if $showFilterIcon}
-                        {{sugar_include type="smarty" file='include/ListView/ListViewSearchLink.tpl'}}
+                        {sugar_include type="smarty" file='include/ListView/ListViewSearchLink.tpl'}
                     {/if}
                 </div>
                 <p class="msg">
@@ -87,7 +87,7 @@
             {elseif $query == "-advanced_search"}
                 <p class="msg">
                     {$APP.MSG_LIST_VIEW_NO_RESULTS_BASIC}
-                    {{sugar_include type="smarty" file='include/ListView/ListViewSearchLink.tpl'}}
+                    {sugar_include type="smarty" file='include/ListView/ListViewSearchLink.tpl'}
                 </p>
             {else}
                 <p class="msg">
@@ -100,7 +100,7 @@
                     </a>
                     {$APP.MSG_LIST_VIEW_CHANGE_SEARCH}
                     {if $showFilterIcon}
-                        {{sugar_include type="smarty" file='include/ListView/ListViewSearchLink.tpl'}}
+                        {sugar_include type="smarty" file='include/ListView/ListViewSearchLink.tpl'}
                     {/if}
                 </p>
             {/if}
@@ -120,7 +120,7 @@
         {assign var="actionsLink" value=$actionsLinkTop}
         {assign var="selectLink" value=$selectLinkTop}
         {assign var="action_menu_location" value="top"}
-        {{sugar_include type="smarty" file='include/ListView/ListViewPagination.tpl'}}
+        {sugar_include type="smarty" file='include/ListView/ListViewPagination.tpl'}
         <tr>
             {if $prerow}
                 <td width='1%' class="td_alt">
@@ -128,7 +128,7 @@
                 </td>
             {/if}
             {if !empty($quickViewLinks)}
-                <td class='td_alt' width='1%' style="padding: 0px;">&nbsp;</td>
+                <td class='td_alt' width='1%' style="padding: 0;">&nbsp;</td>
             {/if}
             {counter start=0 name="colCounter" print=false assign="colCounter"}
             {assign var='datahide' value="phone"}
@@ -265,7 +265,7 @@
         {assign var="selectLink" value=$selectLinkBottom}
         {assign var="actionsLink" value=$actionsLinkBottom}
         {assign var="action_menu_location" value="bottom"}
-        {{sugar_include type="smarty" file='include/ListView/ListViewPagination.tpl'}}
+        {sugar_include type="smarty" file='include/ListView/ListViewPagination.tpl'}
     </table>
 {/if}
 {if $contextMenus}
