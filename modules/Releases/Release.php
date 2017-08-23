@@ -156,7 +156,7 @@ class Release extends SugarBean {
 	function build_generic_where_clause ($the_query_string) {
 	$where_clauses = Array();
 	$the_query_string = $GLOBALS['db']->quote($the_query_string);
-	array_push($where_clauses, "name like '$the_query_string%'");
+	$where_clauses[] = "name like '$the_query_string%'";
 
 	$the_where = "";
 	foreach($where_clauses as $clause)

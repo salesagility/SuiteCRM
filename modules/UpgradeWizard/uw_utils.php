@@ -77,7 +77,7 @@ function implodeVersion($version, $size = 0, $lastSymbol = '', $delimiter = '')
     $parsedVersion = array_slice($parsedVersion, 0, $size);
     if ($lastSymbol !== '') {
         array_pop($parsedVersion);
-        array_push($parsedVersion, $lastSymbol);
+        $parsedVersion[] = $lastSymbol;
     }
 
     return implode($delimiter, $parsedVersion);
@@ -1345,7 +1345,7 @@ function updateQuickCreateDefs(){
 		if(substr($e, 0, 1) == '.' || !is_dir('modules/' . $e))continue;
 		if(file_exists('modules/' . $e . '/metadata/studio.php'))
 		{
-			array_push($studio_modules, $e);
+			$studio_modules[] = $e;
 		}
 	}
 

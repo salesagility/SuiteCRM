@@ -85,7 +85,7 @@ if($_REQUEST['select_entire_list'] == '1'){
 	$uids = array();
 	while($val = $GLOBALS['db']->fetchByAssoc($result,false))
 	{
-		array_push($uids, $val['id']);
+		$uids[] = $val['id'];
 	}
 }
 else{

@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,14 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
 require_once('include/OutboundEmail/OutboundEmail.php');
 require_once('modules/InboundEmail/Overview.php');
@@ -7509,7 +7508,7 @@ eoq;
                             $this->compoundMessageId = str_replace($bad, "", $this->compoundMessageId);
                         }
                     }
-                    array_push($tmpMsgs, array('msgNo' => $msgNo, 'msgId' => $this->compoundMessageId, 'exists' => 0));
+                    $tmpMsgs[] = array('msgNo' => $msgNo, 'msgId' => $this->compoundMessageId, 'exists' => 0);
                     if ($counter == $limit) {
                         $counter = 0;
                         $query = array();
@@ -7531,7 +7530,7 @@ eoq;
                         foreach ($tmpMsgs as $k1 => $v1) {
                             if ($v1['exists'] == 0) {
                                 $repeats = 0;
-                                array_push($result, $v1['msgNo']);
+                                $result[] = $v1['msgNo'];
                             } else {
                                 $repeats++;
                             }

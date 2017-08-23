@@ -298,7 +298,7 @@ function rtf2text($filename) {
             // If we read the opening brace {, then new subgroup starts and we add
             // new array stack element and write the data from previous stack element to it.
             case "{":
-                array_push($stack, $stack[$j++]);
+                $stack[] = $stack[$j++];
                 break;
             // If we read the closing brace }, then we reach the end of subgroup and should remove
             // the last stack element.
