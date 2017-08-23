@@ -45,7 +45,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopButton
 {
 	var $form_value = '';
-    
+
+
+    /**
+     * Calls the parent function getWidgetId to retrieve the widget's unique id.
+     *
+     * @param bool $buttonSuffix If set to true the widget is a button
+     * @return string label of the widget's unique id
+     */
     public function getWidgetId($buttonSuffix = true)
     {
     	global $app_strings;
@@ -53,6 +60,14 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
     	return parent::getWidgetId();
     }
 
+    /**
+     * This function is used to create the HTML for a button.
+     *
+     * @param array $defines
+     * @param array $additionalFormFields
+     * @param bool $nonbutton
+     * @return string HTML
+     */
 	function display($defines, $additionalFormFields = NULL, $nonbutton = false)
 	{
 		if((ACLController::moduleSupportsACL($defines['module'])  && !ACLController::checkAccess($defines['module'], 'edit', true) ||
@@ -61,12 +76,9 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
 			return $temp;
 		}
 		
-		global $app_strings,$current_user,$sugar_config,$beanList,$beanFiles;
+		global $app_strings, $current_user, $sugar_config;
 		$title = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_TITLE'];
-		//$accesskey = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_KEY'];
 		$value = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'];
-		$parent_type = $defines['focus']->module_dir;
-		$parent_id = $defines['focus']->id;
 
 		//martin Bug 19660
 		$userPref = $current_user->getPreference('email_link_type');
@@ -87,7 +99,7 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
 				$button = "<input class='button' type='button'  value='$value'  id='". $this->getWidgetId() ."'  name='".preg_replace('[ ]', '', $value)."'  title='$title' onclick=\"location.href='mailto:';return false;\" />";
 			}
         } else {
-            //Generate the compose package for the quick create options.
+            // Generate html for the email composer popup.
             require_once 'modules/Emails/EmailUI.php';
             $emailUI = new EmailUI();
             $button = $emailUI->populateComposeViewFields() . $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'];
