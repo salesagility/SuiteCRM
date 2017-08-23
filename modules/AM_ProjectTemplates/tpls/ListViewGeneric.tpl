@@ -54,7 +54,7 @@
       });
 
       var selectedTopValue = $("#selectCountTop").attr("value");
-      if (typeof(selectedTopValue) != "undefined" && selectedTopValue != "0") {
+      if (typeof(selectedTopValue) !== "undefined" && selectedTopValue != "0") {
         sugarListView.prototype.toggleSelected();
       }
     });
@@ -71,14 +71,14 @@
         {if $displayEmptyDataMesssages}
             {if strlen($query) == 0}
                 {capture assign="createLink"}<a
-                    href="?module={$pageData.bean.moduleDir}&action=EditView&return_module={$pageData.bean.moduleDir}&return_action=DetailView">{$APP.LBL_CREATE_BUTTON_LABEL}</a>{/capture}
+                    href="index.php?module={$pageData.bean.moduleDir}&action=EditView&return_module={$pageData.bean.moduleDir}&return_action=DetailView">{$APP.LBL_CREATE_BUTTON_LABEL}</a>{/capture}
                 {capture assign="importLink"}<a
-                    href="?module=Import&action=Step1&import_module={$pageData.bean.moduleDir}&return_module={$pageData.bean.moduleDir}&return_action=index">{$APP.LBL_IMPORT}</a>{/capture}
+                    href="index.php?module=Import&action=Step1&import_module={$pageData.bean.moduleDir}&return_module={$pageData.bean.moduleDir}&return_action=index">{$APP.LBL_IMPORT}</a>{/capture}
                 {capture assign="helpLink"}<a target="_blank"
-                                              href='?module=Administration&action=SupportPortal&view=documentation&version={$sugar_info.sugar_version}&edition={$sugar_info.sugar_flavor}&lang=&help_module={$currentModule}&help_action=&key='>{$APP.LBL_CLICK_HERE}</a>{/capture}
+                                              href='index.php?module=Administration&action=SupportPortal&view=documentation&version={$sugar_info.sugar_version}&edition={$sugar_info.sugar_flavor}&lang=&help_module={$currentModule}&help_action=&key='>{$APP.LBL_CLICK_HERE}</a>{/capture}
                 <div class="filterContainer">
                     {if $showFilterIcon}
-                        {include file='include/ListView/ListViewSearchLink.tpl'}
+                        {{sugar_include type="smarty" file='include/ListView/ListViewSearchLink.tpl'}}
                     {/if}
                 </div>
                 <p class="msg">
@@ -87,7 +87,7 @@
             {elseif $query == "-advanced_search"}
                 <p class="msg">
                     {$APP.MSG_LIST_VIEW_NO_RESULTS_BASIC}
-                    {include file='include/ListView/ListViewSearchLink.tpl'}
+                    {{sugar_include type="smarty" file='include/ListView/ListViewSearchLink.tpl'}}
                 </p>
             {else}
                 <p class="msg">
@@ -95,12 +95,12 @@
                     {$APP.MSG_LIST_VIEW_NO_RESULTS|replace:"<item1>":$quotedQuery}
                 </p>
                 <p class="submsg">
-                    <a href="?module={$pageData.bean.moduleDir}&action=EditView&return_module={$pageData.bean.moduleDir}&return_action=DetailView">
+                    <a href="index.php?module={$pageData.bean.moduleDir}&action=EditView&return_module={$pageData.bean.moduleDir}&return_action=DetailView">
                         {$APP.MSG_LIST_VIEW_NO_RESULTS_SUBMSG|replace:"<item1>":$quotedQuery|replace:"<item2>":$singularModule}
                     </a>
                     {$APP.MSG_LIST_VIEW_CHANGE_SEARCH}
                     {if $showFilterIcon}
-                        {include file='include/ListView/ListViewSearchLink.tpl'}
+                        {{sugar_include type="smarty" file='include/ListView/ListViewSearchLink.tpl'}}
                     {/if}
                 </p>
             {/if}
@@ -120,8 +120,8 @@
         {assign var="actionsLink" value=$actionsLinkTop}
         {assign var="selectLink" value=$selectLinkTop}
         {assign var="action_menu_location" value="top"}
-        {include file='include/ListView/ListViewPagination.tpl'}
-        <tr height='20'>
+        {{sugar_include type="smarty" file='include/ListView/ListViewPagination.tpl'}}
+        <tr>
             {if $prerow}
                 <td width='1%' class="td_alt">
                     &nbsp;
@@ -138,7 +138,7 @@
                 {if $colHeader == 'NAME' || $params.bold}
                     <th scope='col' data-toggle="true">
                 {else}<th scope='col' data-hide="{$datahide}">{/if}
-                <div style='white-space: normal;' width='100%' align='{$params.align|default:'left'}'>
+                <div style='white-space: normal;' align='{$params.align|default:'left'}'>
                     {if $params.sortable|default:true}
                     {if $params.url_sort}
                     <a href='{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}'
@@ -192,7 +192,7 @@
             {else}
                 {assign var='_rowColor' value=$rowColor[1]}
             {/if}
-            <tr height='20' class='{$_rowColor}S1'>
+            <tr class='{$_rowColor}S1'>
                 {if $prerow}
                     <td width='1%' class='nowrap'>
                         {if !$is_admin && is_admin_for_user && $rowData.IS_ADMIN==1}
@@ -254,7 +254,7 @@
                 <td align='right'>{$pageData.additionalDetails.$id}</td>
             </tr>
             {foreachelse}
-            <tr height='20' class='{$rowColor[0]}S1'>
+            <tr class='{$rowColor[0]}S1'>
                 <td colspan="{$colCount}">
                     <em>{$APP.LBL_NO_DATA}</em>
                 </td>
@@ -265,7 +265,7 @@
         {assign var="selectLink" value=$selectLinkBottom}
         {assign var="actionsLink" value=$actionsLinkBottom}
         {assign var="action_menu_location" value="bottom"}
-        {include file='include/ListView/ListViewPagination.tpl'}
+        {{sugar_include type="smarty" file='include/ListView/ListViewPagination.tpl'}}
     </table>
 {/if}
 {if $contextMenus}
@@ -274,15 +274,14 @@
         {literal}
         function lvg_nav(m, id, act, offset, t) {
           if (t.href.search(/#/) < 0) {
-            return;
           }
           else {
-            if (act == 'pte') {
+            if (act === 'pte') {
               act = 'ProjectTemplatesEditView';
             }
-            else if (act == 'd') {
+            else if (act === 'd') {
               act = 'DetailView';
-            } else if (act == 'ReportsWizard') {
+            } else if (act === 'ReportsWizard') {
               act = 'ReportsWizard';
             } else {
               act = 'EditView';
