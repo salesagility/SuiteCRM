@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopButton
 {
-	var $form_value = '';
+    var $form_value = '';
 
 
     /**
@@ -55,9 +55,10 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
      */
     public function getWidgetId($buttonSuffix = true)
     {
-    	global $app_strings;
-		$this->form_value = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'];
-    	return parent::getWidgetId();
+        global $app_strings;
+        $this->form_value = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'];
+
+        return parent::getWidgetId();
     }
 
     /**
@@ -68,36 +69,41 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
      * @param bool $nonbutton
      * @return string HTML
      */
-	function display($defines, $additionalFormFields = NULL, $nonbutton = false)
-	{
-		if((ACLController::moduleSupportsACL($defines['module'])  && !ACLController::checkAccess($defines['module'], 'edit', true) ||
-			$defines['module'] == "Activities" & !ACLController::checkAccess("Emails", 'edit', true))){
-			$temp = '';
-			return $temp;
-		}
-		
-		global $app_strings, $current_user, $sugar_config;
-		$title = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_TITLE'];
-		$value = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'];
+    function display($defines, $additionalFormFields = null, $nonbutton = false)
+    {
+        if ((ACLController::moduleSupportsACL($defines['module']) && !ACLController::checkAccess($defines['module'],
+                'edit', true) ||
+            $defines['module'] == "Activities" & !ACLController::checkAccess("Emails", 'edit', true))
+        ) {
+            $temp = '';
 
-		//martin Bug 19660
-		$userPref = $current_user->getPreference('email_link_type');
-		$defaultPref = $sugar_config['email_default_client'];
-		if($userPref != '') {
-			$client = $userPref;
-		} else {
-			$client = $defaultPref;
-		}
-		if($client != 'sugar') {
-			$bean = $defines['focus'];
-			// awu: Not all beans have emailAddress property, we must account for this
-			if (isset($bean->emailAddress)){
-				$to_addrs = $bean->emailAddress->getPrimaryAddress($bean);
-				$button = "<input class='button' type='button'  value='$value'  id='". $this->getWidgetId() . "'  name='".preg_replace('[ ]', '', $value)."'   title='$title' onclick=\"location.href='mailto:$to_addrs';return false;\" />";
-			}
-			else{
-				$button = "<input class='button' type='button'  value='$value'  id='". $this->getWidgetId() ."'  name='".preg_replace('[ ]', '', $value)."'  title='$title' onclick=\"location.href='mailto:';return false;\" />";
-			}
+            return $temp;
+        }
+
+        global $app_strings, $current_user, $sugar_config;
+        $title = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_TITLE'];
+        $value = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'];
+
+        //martin Bug 19660
+        $userPref = $current_user->getPreference('email_link_type');
+        $defaultPref = $sugar_config['email_default_client'];
+        if ($userPref != '') {
+            $client = $userPref;
+        } else {
+            $client = $defaultPref;
+        }
+        if ($client != 'sugar') {
+            $bean = $defines['focus'];
+            // awu: Not all beans have emailAddress property, we must account for this
+            if (isset($bean->emailAddress)) {
+                $to_addrs = $bean->emailAddress->getPrimaryAddress($bean);
+                $button = "<input class='button' type='button'  value='$value'  id='" . $this->getWidgetId() . "'  name='" . preg_replace('[ ]',
+                        '',
+                        $value) . "'   title='$title' onclick=\"location.href='mailto:$to_addrs';return false;\" />";
+            } else {
+                $button = "<input class='button' type='button'  value='$value'  id='" . $this->getWidgetId() . "'  name='" . preg_replace('[ ]',
+                        '', $value) . "'  title='$title' onclick=\"location.href='mailto:';return false;\" />";
+            }
         } else {
             // Generate html for the email composer popup.
             require_once 'modules/Emails/EmailUI.php';

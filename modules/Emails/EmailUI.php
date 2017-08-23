@@ -375,23 +375,23 @@ eoq;
         global $focus;
         $myBean = $focus;
 
-		$emailLink = '';
+        $emailLink = '';
 
-        if(!empty($bean)) {
+        if (!empty($bean)) {
             $myBean = $bean;
         } else {
             $GLOBALS['log']->warn('EmailUI::populateComposeViewFields - $bean is empty');
         }
 
-		$emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
-			'data-record-id="" data-module-name=""  data-email-address="">';
-		// focus is set?
-		if(!is_object($myBean)) {
-			$GLOBALS['log']->warn('incorrect bean');
-		} elseif(property_exists($myBean, $emailField)) {
-			$emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
-				'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . $myBean->{$emailField} . '">';
-		} else {
+        $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="" ' .
+            'data-record-id="" data-module-name=""  data-email-address="">';
+        // focus is set?
+        if (!is_object($myBean)) {
+            $GLOBALS['log']->warn('incorrect bean');
+        } elseif (property_exists($myBean, $emailField)) {
+            $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
+                'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . $myBean->{$emailField} . '">';
+        } else {
             $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="' . $myBean->module_name . '" ' .
                 'data-record-id="' . $myBean->id . '" data-module-name="' . $myBean->name . '"  data-email-address="' . '">';
         }
