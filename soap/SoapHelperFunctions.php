@@ -1066,27 +1066,37 @@ function get_decoded($object){
  *
  * @param $string - the string to decrypt
  *
- * @return a decrypted string if we can decrypt, the original string otherwise
+ * @return string - the decrypted string
  */
-function decrypt_string($string){
-	if(function_exists('mcrypt_cbc')){
+    function decrypt_string($string)
+    {
+        if (function_exists('mcrypt_cbc')) {
 
-		$focus = new Administration();
-		$focus->retrieveSettings();
-		$key = '';
-		if(!empty($focus->settings['ldap_enc_key'])){
-			$key = $focus->settings['ldap_enc_key'];
-		}
-		if(empty($key))
-			return $string;
-		$buffer = $string;
-		$key = substr(md5($key),0,24);
-	    $iv = "password";
-	    return mcrypt_cbc(MCRYPT_3DES, $key, pack("H*", $buffer), MCRYPT_DECRYPT, $iv);
-	}else{
-		return $string;
-	}
-}
+            $focus = new Administration();
+            $focus->retrieveSettings();
+            $key = '';
+            if (!empty($focus->settings['ldap_enc_key'])) {
+                $key = $focus->settings['ldap_enc_key'];
+            }
+            if (empty($key)) {
+                $GLOBALS['log']->info('End: SoapHelperWebServices->decrypt_string - empty key');
+
+                return $string;
+            }
+            $buffer = $string;
+            $key = substr(md5($key), 0, 24);
+            $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('DES-EDE3-CBC'), $isStrong);
+            if ($isStrong === false || $iv === false) {
+                throw new RuntimeException('IV generation failed');
+            }
+            $GLOBALS['log']->info('End: SoapHelperWebServices->decrypt_string');
+
+            return openssl_decrypt(pack("H*", $buffer), 'DES-EDE3-CBC', $key, $iv);
+        }
+        $GLOBALS['log']->info('End: SoapHelperWebServices->decrypt_string');
+
+        return $string;
+    }
 
 }
 

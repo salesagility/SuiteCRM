@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 global $disable_date_format;
 $disable_date_format = true;
@@ -1087,51 +1090,55 @@ function validate_user($user_name, $password){
 	}
 
 
-	/**
-	 * decrypt a string use the TripleDES algorithm. This meant to be
-	 * modified if the end user chooses a different algorithm
-	 *
-	 * @param $string - the string to decrypt
-	 *
-	 * @return a decrypted string if we can decrypt, the original string otherwise
-	 */
-	function decrypt_string($string){
-		$GLOBALS['log']->info('Begin: SoapHelperWebServices->decrypt_string');
-		if(function_exists('mcrypt_cbc')){
-			require_once('modules/Administration/Administration.php');
-			$focus = new Administration();
-			$focus->retrieveSettings();
-			$key = '';
-			if(!empty($focus->settings['ldap_enc_key'])){
-				$key = $focus->settings['ldap_enc_key'];
-			}
-			if(empty($key)) {
-				$GLOBALS['log']->info('End: SoapHelperWebServices->decrypt_string - empty key');
-				return $string;
-			} // if
-			$buffer = $string;
-			$key = substr(md5($key),0,24);
-		    $iv = "password";
-			$GLOBALS['log']->info('End: SoapHelperWebServices->decrypt_string');
-		    return mcrypt_cbc(MCRYPT_3DES, $key, pack("H*", $buffer), MCRYPT_DECRYPT, $iv);
-		}else{
-			$GLOBALS['log']->info('End: SoapHelperWebServices->decrypt_string');
-			return $string;
-		}
-	} // fn
+    /**
+     * decrypt a string use the TripleDES algorithm. This meant to be
+     * modified if the end user chooses a different algorithm
+     *
+     * @param $string - the string to decrypt
+     *
+     * @return string - the decrypted string
+     */
+    function decrypt_string($string)
+    {
+        $GLOBALS['log']->info('Begin: SoapHelperWebServices->decrypt_string');
+        if (function_exists('openssl_decrypt')) {
+            require_once('modules/Administration/Administration.php');
+            $focus = new Administration();
+            $focus->retrieveSettings();
+            $key = '';
+            if (!empty($focus->settings['ldap_enc_key'])) {
+                $key = $focus->settings['ldap_enc_key'];
+            }
+            if (empty($key)) {
+                $GLOBALS['log']->info('End: SoapHelperWebServices->decrypt_string - empty key');
 
-	function isLogLevelDebug() {
-		if (isset($GLOBALS['sugar_config']['logger'])) {
-			if (isset($GLOBALS['sugar_config']['logger']['level'])) {
-				return ($GLOBALS['sugar_config']['logger']['level'] == 'debug');
-			} // if
-		}
-		return false;
-	} // fn
+                return $string;
+            }
+            $buffer = $string;
+            $key = substr(md5($key), 0, 24);
+            $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('DES-EDE3-CBC'), $isStrong);
+            if ($isStrong === false || $iv === false) {
+                throw new RuntimeException('IV generation failed');
+            }
+            $GLOBALS['log']->info('End: SoapHelperWebServices->decrypt_string');
+
+            return openssl_decrypt(pack("H*", $buffer), 'DES-EDE3-CBC', $key, $iv);
+        }
+        $GLOBALS['log']->info('End: SoapHelperWebServices->decrypt_string');
+
+        return $string;
+    }
+
+    function isLogLevelDebug()
+    {
+        if (isset($GLOBALS['sugar_config']['logger'])) {
+            if (isset($GLOBALS['sugar_config']['logger']['level'])) {
+                return ($GLOBALS['sugar_config']['logger']['level'] === 'debug');
+            } // if
+        }
+
+        return false;
+    } // fn
 
 
-
-
-} // clazz
-
-?>
+} // class
