@@ -10,10 +10,12 @@ modules:
     enabled:
         - \Helper\Acceptance
         - \Helper\WebDriverHelper
+        - Filesystem
         - \SuiteCRM\Test\Driver\WebDriver
     config:
         \SuiteCRM\Test\Driver\WebDriver:
             url: "https://demo.suiteondemand.com"
             browser: chrome
-            restart: true
-            wait: 1
+            restart: false
+            clear_cookies: false
+            wait: 3

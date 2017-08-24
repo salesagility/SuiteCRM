@@ -1,8 +1,9 @@
+# XGA Resolution / iPad 2 resolution (horizontal)
 # `selenium-hub` environment config goes here
 modules:
   enabled:
     - \SuiteCRM\Test\Driver\WebDriver
   config:
     \SuiteCRM\Test\Driver\WebDriver:
-      host: "selenium-hub"
-      port: "4444"
+      width: 1024
+      height: 768

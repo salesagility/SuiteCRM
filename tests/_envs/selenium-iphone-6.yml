@@ -1,8 +1,9 @@
+# iPhone 6 resolution (vertical)
 # `selenium-hub` environment config goes here
 modules:
   enabled:
     - \SuiteCRM\Test\Driver\WebDriver
   config:
     \SuiteCRM\Test\Driver\WebDriver:
-      host: "selenium-hub"
-      port: "4444"
+      width: 375
+      height: 667

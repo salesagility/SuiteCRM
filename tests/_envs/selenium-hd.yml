@@ -4,5 +4,5 @@ modules:
     - \SuiteCRM\Test\Driver\WebDriver
   config:
     \SuiteCRM\Test\Driver\WebDriver:
-      host: "selenium-hub"
-      port: "4444"
+      width: 1280
+      height: 720

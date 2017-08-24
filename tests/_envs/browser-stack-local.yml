@@ -1,8 +1,7 @@
-# `selenium-hub` environment config goes here
 modules:
   enabled:
     - \SuiteCRM\Test\Driver\WebDriver
   config:
     \SuiteCRM\Test\Driver\WebDriver:
-      host: "selenium-hub"
-      port: "4444"
+      capabilities:
+              'browserstack.local': true
