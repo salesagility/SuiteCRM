@@ -50,6 +50,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 class SugarAuthenticate{
 	var $userAuthenticateClass = 'SugarAuthenticateUser';
 	var $authenticationDir = 'SugarAuthenticate';
+
+
+    /**
+     * @var SugarAuthenticateUser
+     */
+	public $userAuthenticate;
+
 	/**
 	 * Constructs SugarAuthenticate
 	 * This will load the user authentication class
@@ -256,6 +263,61 @@ class SugarAuthenticate{
 			$GLOBALS['log']->debug('Current user session does not exist redirecting to login');
 			sugar_cleanup(true);
 		}
+
+        $GLOBALS['log']->fatal('DEBUG: -------------------------------------------------------------');
+		$GLOBALS['log']->fatal('DEBUG: --------------------- CHECK FACTOR AUtH ---------------------');
+        $GLOBALS['log']->fatal('DEBUG: -------------------------------------------------------------');
+
+        //session_destroy(); die();
+
+		if ($this->userAuthenticate->isUserNeedFactorAuthentication()) {
+		    $GLOBALS['log']->fatal('DEBUG: User needs factor auth');
+
+
+
+            if (!$this->userAuthenticate->isUserFactorAuthenticated()) {
+                $GLOBALS['log']->fatal('DEBUG: User is not factor authenticated yet');
+
+                if($this->userAuthenticate->isUserFactorTokenReceived()) {
+                    $GLOBALS['log']->fatal('DEBUG: User sent back a token in request');
+
+                    if(!$this->userAuthenticate->factorAuthenticateCheck()) {
+                        $GLOBALS['log']->fatal('DEBUG: User factor auth failed so we show token input form');
+
+                        $this->userAuthenticate->showFactorTokenInput();
+
+                    } else {
+                        $GLOBALS['log']->fatal('DEBUG: User factor auth success!');
+
+                    }
+
+                } else {
+                    $GLOBALS['log']->fatal('DEBUG: User did not sent back the token so we send a new one and redirect to token input form');
+
+                    if($this->userAuthenticate->sendFactorTokenToUser()) {
+                        $GLOBALS['log']->fatal('DEBUG: Factor Token sent to User');
+
+                        $this->userAuthenticate->showFactorTokenInput();
+
+                    } else {
+                        $GLOBALS['log']->fatal('DEBUG: failed to send factor token to user so just redirect to the logout url and kick off ');
+
+                        $this->userAuthenticate->redirectToLogout();
+                    }
+
+                }
+
+            } else {
+                $GLOBALS['log']->fatal('DEBUG: User factor authenticated already');
+
+            }
+
+        } else {
+		    $GLOBALS['log']->fatal('DEBUG: User does`nt need factor auth');
+
+        }
+
+
 		$GLOBALS['log']->debug('Current user is: '.$GLOBALS['current_user']->user_name);
 		return true;
 	}

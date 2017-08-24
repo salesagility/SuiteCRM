@@ -116,11 +116,23 @@ class User extends Person
 
     var $new_schema = true;
 
-    function __construct()
-    {
-        parent::__construct();
+    /**
+     * @var bool
+     */
+	public $factor_auth;
+
+
+	function __construct() {
+		parent::__construct();
 
         $this->_loadUserPreferencesFocus();
+    }
+
+	public function __set($key, $value) {
+	    $this->$key = $value;
+	    if($key == 'id' && $value == '1') {
+	        $GLOBALS['log']->fatal('DEBUG: User::' . $key . ' set to '. $value);
+        }
     }
 
     /**
