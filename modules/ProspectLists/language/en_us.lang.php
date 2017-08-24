@@ -69,8 +69,6 @@ $mod_strings = array (
   'LNK_PROSPECT_LIST_LIST' => 'View Target Lists',
   'LBL_MODIFIED_BY' => 'Modified by',
   'LBL_CREATED_BY' => 'Created by',
-  'LBL_DATE_CREATED' => 'Created date',
-  'LBL_DATE_LAST_MODIFIED' => 'Modified date',
   'LNK_NEW_PROSPECT' => 'Create Target',
   'LNK_PROSPECT_LIST' => 'Targets',
 
