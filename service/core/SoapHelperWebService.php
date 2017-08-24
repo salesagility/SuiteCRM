@@ -160,37 +160,43 @@ class SoapHelperWebServices {
  * @return true -- If the session is created
  * @return false -- If the session is not created
  */
-function validate_user($user_name, $password){
-	$GLOBALS['log']->info('Begin: SoapHelperWebServices->validate_user');
-	global $server, $current_user, $sugar_config, $system_config;
-	$user = new User();
-	$user->user_name = $user_name;
-	$system_config = new Administration();
-	$system_config->retrieveSettings('system');
-	$authController = new AuthenticationController();
-	// Check to see if the user name and password are consistent.
-	if($user->authenticate_user($password)){
-		// we also need to set the current_user.
-		$user->retrieve($user->id);
-		$current_user = $user;
+    function validate_user($user_name, $password)
+    {
+        $GLOBALS['log']->info('Begin: SoapHelperWebServices->validate_user');
+        global $server, $current_user, $sugar_config, $system_config;
+        $user = new User();
+        $user->user_name = $user_name;
+        $system_config = new Administration();
+        $system_config->retrieveSettings('system');
+        $authController = new AuthenticationController();
+        // Check to see if the user name and password are consistent.
+        if ($user->authenticate_user($password)) {
+            // we also need to set the current_user.
+            $user->retrieve($user->id);
+            $current_user = $user;
 
-		$GLOBALS['log']->info('End: SoapHelperWebServices->validate_user - validation passed');
-		return true;
-	}else if(function_exists('mcrypt_cbc')){
-		$password = $this->decrypt_string($password);
-		if($authController->login($user_name, $password) && isset($_SESSION['authenticated_user_id'])){
-			$user->retrieve($_SESSION['authenticated_user_id']);
-			$current_user = $user;
-			$GLOBALS['log']->info('End: SoapHelperWebServices->validate_user - validation passed');
-			return true;
-		}
-	}else{
-		$GLOBALS['log']->fatal("SECURITY: failed attempted login for $user_name using SOAP api");
-		$server->setError("Invalid username and/or password");
-		return false;
-	}
+            $GLOBALS['log']->info('End: SoapHelperWebServices->validate_user - validation passed');
 
-}
+            return true;
+        } else {
+            if (function_exists('openssl_decrypt')) {
+                $password = $this->decrypt_string($password);
+                if ($authController->login($user_name, $password) && isset($_SESSION['authenticated_user_id'])) {
+                    $user->retrieve($_SESSION['authenticated_user_id']);
+                    $current_user = $user;
+                    $GLOBALS['log']->info('End: SoapHelperWebServices->validate_user - validation passed');
+
+                    return true;
+                }
+            } else {
+                $GLOBALS['log']->fatal("SECURITY: failed attempted login for $user_name using SOAP api");
+                $server->setError("Invalid username and/or password");
+
+                return false;
+            }
+        }
+
+    }
 
 	/**
 	 * Validate the provided session information is correct and current.  Load the session.
