@@ -105,10 +105,11 @@ $out = <<<EOQ
             </header>
 		<div id="content">
 			<h2>{$mod_strings['LBL_OLD_PHP']}</h2>
-			<div class="floatbox full">{$msg}</div>
+			<div class="floatbox full">{$msg}
             <div id="licenseaccept">
                 <input type="checkbox" class="checkbox" name="setup_old_php" id="button_next2" onClick='toggleNextButton();' {$checked} />
                 <a href='javascript:void(0)' onClick='toggleOldPHP();toggleNextButton();'>{$mod_strings['LBL_OLD_PHP_OK']}</a>
+            </div>
             </div>
 		</div>
             <hr>
