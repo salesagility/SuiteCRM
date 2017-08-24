@@ -92,3 +92,8 @@ themes/SuiteP/css/*.css
 !themes/SuiteP/css/footable.core.css
 !themes/SuiteP/css/style.css
 tests/_output/*
+
+
+#Ignore browserstack
+BrowserStackLocal
+browserstack.err
