@@ -1060,17 +1060,17 @@ function get_decoded($object){
 
 }
 
-/**
- * decrypt a string use the TripleDES algorithm. This meant to be
- * modified if the end user chooses a different algorithm
- *
- * @param $string - the string to decrypt
- *
- * @return string - the decrypted string
- */
+    /**
+     * decrypt a string use the TripleDES algorithm. This meant to be
+     * modified if the end user chooses a different algorithm
+     *
+     * @param $string - the string to decrypt
+     *
+     * @return string - the decrypted string
+     */
     function decrypt_string($string)
     {
-        if (function_exists('mcrypt_cbc')) {
+        if (function_exists('openssl_decrypt')) {
 
             $focus = new Administration();
             $focus->retrieveSettings();
