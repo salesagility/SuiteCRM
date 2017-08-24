@@ -133,6 +133,71 @@ class SugarAuthenticateUser{
 
 	}
 
+
+
+	public function isUserNeedFactorAuthentication() {
+		global $current_user;
+		if ($current_user->factor_auth) {
+			return true;
+		}
+		return false;
+	}
+
+    public function isUserFactorAuthenticated() {
+        if (!isset($_SESSION['user_factor_authenticated']) || !$_SESSION['user_factor_authenticated']) {
+            return false;
+        }
+        return true;
+    }
+
+	public function isUserFactorTokenReceived() {
+		if (isset($_REQUEST['factor_token']) && $_REQUEST['factor_token']) {
+			return true;
+		}
+		return false;
+	}
+
+	public function factorAuthenticateCheck() {
+		if($_SESSION['user_factor_authenticated'] || $_REQUEST['factor_token'] == $_SESSION['factor_token']) {
+			$_SESSION['user_factor_authenticated'] = true;
+		} else {
+            $_SESSION['user_factor_authenticated'] = false;
+		}
+		return $_SESSION['user_factor_authenticated'];
+	}
+
+	public function showFactorTokenInput() {
+        $GLOBALS['log']->fatal('DEBUG: redirect to factor token input.....');
+        echo '[TOKEN INPUT FORM HERE]';
+        die();
+	}
+
+	public function sendFactorTokenToUser() {
+		global $current_user;
+
+		$token = rand(1000, 9999);
+
+        $GLOBALS['log']->fatal('DEBUG: token sent to user: ' . $current_user->id . ', token: ' . $token . ' so we store it in the session');
+
+        $_SESSION['user_factor_authenticated'] = false;
+		$_SESSION['factor_token'] = $token;
+
+		$GLOBALS['log']->fatal('TODO: implement token sending here....!!!!!!!!!!!!!!!');
+        // todo: return false when token sending failed
+
+        return true;
+	}
+
+	public function redirectToLogout()
+	{
+        $GLOBALS['log']->fatal('DEBUG: session destroy and redirect to logout.....');
+		session_destroy();
+		header('Location: index.php?action=Logout&module=Users');
+		sugar_cleanup(true);
+		die();
+	}
+
+
 }
 
 ?>
