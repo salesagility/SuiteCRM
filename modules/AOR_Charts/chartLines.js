@@ -1,6 +1,6 @@
 function loadChartLine(chart){
     var span = $('<tr></tr>');
-    var removeButton = $('<button type="button" class="removeChartButton"><img src="themes/default/images/id-ff-remove-nobg.png" alt=""></button>');
+    var removeButton = $('<button type="button" class="removeChartButton button">-</button>');
     removeButton.click(function(){
         removeButton.closest('tr').remove();
         if($("[name='aor_chart_id\\[\\]']").size() == 0){
