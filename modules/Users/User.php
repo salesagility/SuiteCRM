@@ -115,6 +115,11 @@ class User extends Person {
      */
 	public $factor_auth;
 
+    /**
+     * @var string
+     */
+    public $factor_auth_interface;
+
 
 	function __construct() {
 		parent::__construct();

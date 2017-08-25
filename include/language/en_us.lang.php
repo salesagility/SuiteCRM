@@ -381,6 +381,9 @@ $app_list_strings = array(
             'Active' => 'Active',
             'Inactive' => 'Inactive',
         ),
+    'user_factor_auth_interface_dom' => array(
+        'FactorAuthEmailCode' => 'Email Code',
+    ),
     'employee_status_dom' => array(
             'Active' => 'Active',
             'Terminated' => 'Terminated',
