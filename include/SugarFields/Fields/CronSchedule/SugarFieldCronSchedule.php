@@ -42,8 +42,8 @@ class SugarFieldCronSchedule extends SugarFieldBase {
         $this->ss->assign('weekdays',get_select_options($weekdays,''));
         $days = $this->getDays();
         $this->ss->assign('days',get_select_options($days,''));
-        $minutes = array_map('padNumbers',range(0,59));
-        $hours = array_map('padNumbers',range(0,23));
+        $minutes = array_map(array($this, 'padNumbers'), range(0,59));
+        $hours = array_map(array($this, 'padNumbers'), range(0,23));
         $this->ss->assign('minutes',get_select_options($minutes,''));
         $this->ss->assign('hours',get_select_options($hours,''));
     }
