@@ -86,7 +86,7 @@ class AM_ProjectTemplatesController extends SugarController {
 
 		$days = array("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday");
 		$businessHours = BeanFactory::getBean("AOBH_BusinessHours");
-		$bhours = [];
+		$bhours = array();
 		foreach($days as $day){
 			$bh = $businessHours->getBusinessHoursForDay($day);
 			
