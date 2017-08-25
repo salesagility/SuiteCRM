@@ -49,8 +49,18 @@ interface FactorAuthInterface
 {
 
     /**
-     * @return mixed
+     * Should implement a token code input page.
+     *
+     * @return void
      */
     public function showTokenInput();
+
+    /**
+     * Should implement a token code sender method to current user.
+     *
+     * @param string $token
+     * @return bool
+     */
+    public function sendToken($token);
 
 }

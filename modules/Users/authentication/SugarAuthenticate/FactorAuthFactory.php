@@ -44,6 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 include_once __DIR__ . '/../../../../include/Exceptions/SuiteException.php';
 
+/**
+ * Class FactorAuthFactory
+ */
 class FactorAuthFactory
 {
 
