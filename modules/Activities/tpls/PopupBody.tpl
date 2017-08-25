@@ -45,6 +45,8 @@
         <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab"
                                                   data-toggle="tab">{$mod.LBL_OVERVIEW}</a>
         </li>
+        <li role="presentation"><a href="#tasks" aria-controls="tasks" role="tab"
+                                   data-toggle="tab">{$mod.LBL_TASKS}</a></li>
         <li role="presentation"><a href="#meetings" aria-controls="meetings" role="tab"
                                    data-toggle="tab">{$mod.LBL_MEETINGS}</a></li>
         <li role="presentation"><a href="#calls" aria-controls="calls" role="tab" data-toggle="tab">{$mod.LBL_CALLS}</a>
@@ -99,6 +101,52 @@
                 </tbody>
                 <!-- END: row -->
             </table>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="tasks">
+            <table class="list view table-responsive subpanel-table">
+                <thead>
+                <tr class="footable-header">
+                    <th>
+                        <img class="blank-space" src="include/images/blank.gif">
+                    </th>
+                    <th>{$mod.LBL_LIST_SUBJECT}</th>
+                    <th>{$mod.LBL_LIST_STATUS}</th>
+                    <th>{$mod.LBL_LIST_CONTACT}</th>
+                    <th>{$mod.LBL_LIST_DATE}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {foreach from=$taskslist key=k item=activity}
+
+                    <!-- BEGIN: row -->
+                    <tr>
+                        <td><img class="icon" src={$activity.image}></td>
+                        <td>{$activity.name} {$activity.attachment}</td>
+                        <td>{$activity.type} {$activity.status}</td>
+                        <td>{$activity.contact_name}</td>
+                        <td>{$activity.date_type} {$activity.date_modified}</td>
+                    </tr>
+                    <!--  BEGIN: description -->
+                    <tr>
+                        <td colspan="1"></td>
+                        <td colspan="4">
+                            <table>
+                                <tr>
+                                    <td>{$activity.description}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <!--  END: description -->
+
+
+                {/foreach}
+
+                </tbody>
+                <!-- END: row -->
+            </table>
+
         </div>
 
         <div role="tabpanel" class="tab-pane" id="meetings">

@@ -287,16 +287,6 @@ class Email extends Basic
     public $replyDelimiter = "> ";
 
     /**
-     * @var string $emailDescription
-     */
-    public $emailDescription;
-
-    /**
-     * @var string $emailDescriptionHTML
-     */
-    public $emailDescriptionHTML;
-
-    /**
      * @var string $emailRawSource
      */
     public $emailRawSource;
@@ -403,6 +393,10 @@ class Email extends Basic
      */
     public $orphaned;
 
+    /**
+     * @var Link2 $notes
+     */
+    public $notes;
 
     /**
      * sole constructor
@@ -1379,7 +1373,12 @@ class Email extends Basic
                 $this->id = create_guid();
                 $this->new_with_id = true;
             }
-            $this->from_addr_name = $this->cleanEmails($this->from_addr_name);
+
+            if ($this->cleanEmails($this->from_addr_name) === '') {
+                $this->from_addr_name = $this->cleanEmails($this->from_name);
+            } else {
+                $this->from_addr_name = $this->cleanEmails($this->from_addr_name);
+            }
             $this->to_addrs_names = $this->cleanEmails($this->to_addrs_names);
             $this->cc_addrs_names = $this->cleanEmails($this->cc_addrs_names);
             $this->bcc_addrs_names = $this->cleanEmails($this->bcc_addrs_names);
@@ -2361,7 +2360,7 @@ class Email extends Basic
             if (!empty($this->id) && !$this->new_with_id) {
                 $note = new Note();
                 $where = "notes.parent_id='{$this->id}'";
-                $notes_list = $note->get_full_list("", $where, true);
+                $notes_list = (array)$note->get_full_list("", $where, true);
             }
             $this->attachments = array_merge($this->attachments, $notes_list);
         }
@@ -2407,7 +2406,7 @@ class Email extends Basic
         }
 
         $this->saved_attachments = array();
-        foreach ($this->attachments as $note) {
+        foreach ((array)$this->attachments as $note) {
             if (!empty($note->id)) {
                 array_push($this->saved_attachments, $note);
                 continue;
@@ -2593,31 +2592,23 @@ class Email extends Basic
     public function handleBody($mail)
     {
         global $current_user;
-        ///////////////////////////////////////////////////////////////////////
-        ////	HANDLE EMAIL FORMAT PREFERENCE
-        // the if() below is HIGHLY dependent on the Javascript unchecking the Send HTML Email box
-        // HTML email
-        if ((isset($_REQUEST['setEditor']) /* from Email EditView navigation */
-                && $_REQUEST['setEditor'] == 1
-                && trim($_REQUEST['description_html']) != '')
-            || trim($this->description_html) != '' /* from email templates */
-            && $current_user->getPreference('email_editor_option',
-                'global') !== 'plain' //user preference is not set to plain text
-        ) {
-            $this->handleBodyInHTMLformat($mail);
-        } else {
+
+        // User preferences should takee precedence over everything else
+        $emailSettings = $current_user->getPreference('emailSettings',  'Emails');
+        $alwaysSendEmailsInPlainText = $emailSettings['sendPlainText'] === '1';
+
+        $sendEmailsInPlainText = false;
+        if(isset($_REQUEST['is_only_plain_text']) && $_REQUEST['is_only_plain_text'] === 'true') {
+            $sendEmailsInPlainText = true;
+        }
+
+        if($alwaysSendEmailsInPlainText === true) {
             // plain text only
-            $this->description_html = '';
-            $mail->IsHTML(false);
-            $plainText = from_html($this->description);
-            $plainText = str_replace("&nbsp;", " ", $plainText);
-            $plainText = str_replace("</p>", "</p><br />", $plainText);
-            $plainText = strip_tags(br2nl($plainText));
-            $plainText = str_replace("&amp;", "&", $plainText);
-            $plainText = str_replace("&#39;", "'", $plainText);
-            $mail->Body = wordwrap($plainText, 996);
-            $mail->Body = $this->decodeDuringSend($mail->Body);
-            $this->description = $mail->Body;
+            $this->handleBodyInPlainTextFormat($mail);
+        } else if($alwaysSendEmailsInPlainText === false && $sendEmailsInPlainText === true) {
+            $this->handleBodyInPlainTextFormat($mail);
+        } else {
+            $this->handleBodyInHTMLformat($mail);
         }
 
         // wp: if plain text version has lines greater than 998, use base64 encoding
@@ -2627,8 +2618,6 @@ class Email extends Basic
                 break;
             }
         }
-        ////	HANDLE EMAIL FORMAT PREFERENCE
-        ///////////////////////////////////////////////////////////////////////
 
         return $mail;
     }
@@ -2701,7 +2690,8 @@ class Email extends Basic
             }
         }
 
-        $mail = $this->setMailer($mail);
+        $ieId = $this->mailbox_id;
+        $mail = $this->setMailer($mail, '', $ieId);
 
         // FROM ADDRESS
         if (!empty($this->from_addr)) {
@@ -3899,21 +3889,25 @@ eoq;
      * @param array $request TODO: implement PSR 7 interface and refactor
      * @return bool|Email|SugarBean
      */
-    public function populateBeanFromRequest(Email $bean, $request)
+    public function populateBeanFromRequest($bean, $request)
     {
         if (empty($bean)) {
             $bean = BeanFactory::getBean('Emails');
         }
 
-        if (isset($_REQUEST['id'])) {
+        if (isset($request['id'])) {
             $bean = $bean->retrieve($_REQUEST['id']);
         }
 
 
-        foreach ($_REQUEST as $fieldName => $field) {
+        foreach ($request as $fieldName => $field) {
             if (array_key_exists($fieldName, $bean->field_defs)) {
                 $bean->$fieldName = $field;
             }
+        }
+
+        if (isset($_REQUEST['inbound_email_id'])) {
+            $bean->mailbox_id = $_REQUEST['inbound_email_id'];
         }
 
 
@@ -4006,14 +4000,13 @@ eoq;
         }
 
 
-        if (empty($bean->to_addrs)) {
-            if (!empty($request['to_addrs_names'])) {
-                $bean->to_addrs_names = htmlspecialchars_decode($request['to_addrs_names']);
-            }
 
-            if (!empty($bean->to_addrs_names)) {
-                $bean->to_addrs = htmlspecialchars_decode($bean->to_addrs_names);
-            }
+        if (!empty($request['to_addrs_names'])) {
+            $bean->to_addrs_names = htmlspecialchars_decode($request['to_addrs_names']);
+        }
+
+        if (!empty($bean->to_addrs_names)) {
+            $bean->to_addrs = htmlspecialchars_decode($bean->to_addrs_names);
         }
 
 
@@ -4029,8 +4022,9 @@ eoq;
             // Strip out name from email address
             // eg Angel Mcmahon <sales.vegan@example.it>
             if (count($matches) > 3) {
-                $display = trim($matches[1]);
                 $email = $matches[2];
+                $display = (str_replace($email, '', $address));
+                $display = (trim(str_replace('"', '', $display)));
             } else {
                 $email = $address;
                 $display = '';
@@ -4044,7 +4038,7 @@ eoq;
 
             $bean->to_addrs_arr[] = array(
                 'email' => $email,
-                'display' => $display,
+                'display' => mb_encode_mimeheader($display, 'UTF-8', 'Q')
             );
         }
 
@@ -4154,6 +4148,45 @@ eoq;
             }
         }
 
+        // When use is sending email after selecting forward or reply to
+        // We need to generate a new id
+        if (isset($_REQUEST['refer_action']) && !empty($_REQUEST['refer_action'])) {
+            $referActions = array('Forward', 'ReplyTo', 'ReplyToAll');
+            if(in_array($_REQUEST['refer_action'], $referActions)) {
+                $bean->id = create_guid();
+                $bean->new_with_id = true;
+                $bean->type = 'out';
+                $bean->status = 'draft';
+            }
+        }
+
         return $bean;
+    }
+
+    /**
+     * @param Note $note
+     */
+    public function attachNote(Note $note)
+    {
+        $this->load_relationship('notes');
+        $this->notes->addBean($note);
+    }
+
+    /**
+     * @param $mail
+     */
+    protected function handleBodyInPlainTextFormat($mail)
+    {
+        $this->description_html = '';
+        $mail->IsHTML(false);
+        $plainText = from_html($this->description);
+        $plainText = str_replace("&nbsp;", " ", $plainText);
+        $plainText = str_replace("</p>", "</p><br />", $plainText);
+        $plainText = strip_tags(br2nl($plainText));
+        $plainText = str_replace("&amp;", "&", $plainText);
+        $plainText = str_replace("&#39;", "'", $plainText);
+        $mail->Body = wordwrap($plainText, 996);
+        $mail->Body = $this->decodeDuringSend($mail->Body);
+        $this->description = $mail->Body;
     }
 } // end class def

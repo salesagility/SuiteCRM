@@ -172,7 +172,9 @@ global $currentModule;
 
     function getMarketingId() {
         $campaignId = isset($_REQUEST['campaign_id']) && $_REQUEST['campaign_id'] ? $_REQUEST['campaign_id'] : $_REQUEST['record'];
-        $ret = isset($_REQUEST['marketing_id']) && $_REQUEST['marketing_id'] ? $_REQUEST['marketing_id'] : getFirstMarketingId($campaignId);
+        $ret = isset($_POST['marketing_id']) && $_POST['marketing_id'] ? $_POST['marketing_id'] : (
+            isset($_REQUEST['marketing_id']) && $_REQUEST['marketing_id'] ? $_REQUEST['marketing_id'] : getFirstMarketingId($campaignId)
+        );
         return $ret;
     }
 

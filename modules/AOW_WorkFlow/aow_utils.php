@@ -54,6 +54,7 @@ function getModuleFields($module, $view='EditView',$value = '', $valid = array()
 
         }
     }
+    asort($fields);
     if($view == 'JSON'){
         return json_encode($fields);
     }

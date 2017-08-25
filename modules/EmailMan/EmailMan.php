@@ -629,7 +629,7 @@ class EmailMan extends SugarBean{
 
 		if (!$this->valid_email_address($module->email1)) {
 			$this->set_as_sent($module->email1, true,null,null,'invalid email');
-			$GLOBALS['log']->fatal('Encountered invalid email address' . $module->email1 . " Emailman id=$this->id");
+			$GLOBALS['log']->fatal('Encountered invalid email address: ' . $module->email1 . " Emailman id=$this->id");
 			return true;
 		}
 
