@@ -399,6 +399,36 @@ class Email extends Basic
     public $notes;
 
     /**
+     * @var string
+     */
+    public $From;
+
+    /**
+     * @var string
+     */
+    public $FromName;
+
+    /**
+     * @var string
+     */
+    public $Subject;
+
+    /**
+     * @var string
+     */
+    public $Body;
+
+    /**
+     * @var string
+     */
+    public $AltBody;
+
+    /**
+     * @var string
+     */
+    public $Body_html;
+
+    /**
      * sole constructor
      */
     public function __construct()
