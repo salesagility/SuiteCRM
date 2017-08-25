@@ -150,6 +150,13 @@ class SugarAuthenticateUser
     }
 
 
+    /**
+     * Returns true if User Need Two Factor Authentication,
+     * Two Factor Authentication checkbox is checked on User Profile Page,
+     * otherwise false.
+     *
+     * @return bool
+     */
     public function isUserNeedFactorAuthentication()
     {
         global $current_user;
@@ -161,6 +168,12 @@ class SugarAuthenticateUser
         return $ret;
     }
 
+    /**
+     * Returns true if User is authenticated by second step of two factor authentication,
+     * otherwise false.
+     *
+     * @return bool
+     */
     public function isUserFactorAuthenticated()
     {
         $ret = true;
@@ -171,6 +184,12 @@ class SugarAuthenticateUser
         return $ret;
     }
 
+    /**
+     * Returns true if user send back the Code for Two Factor Authentication,
+     * otherwise false.
+     *
+     * @return bool
+     */
     public function isUserFactorTokenReceived()
     {
         $ret = false;
@@ -181,6 +200,13 @@ class SugarAuthenticateUser
         return $ret;
     }
 
+    /**
+     * Checking for Two Factor Authentication Code sent back by User.
+     * Returns true if User's code match,
+     * otherwise false.
+     *
+     * @return bool
+     */
     public function factorAuthenticateCheck()
     {
         if ($_SESSION['user_factor_authenticated'] || $_REQUEST['factor_token'] == $_SESSION['factor_token']) {
@@ -192,6 +218,10 @@ class SugarAuthenticateUser
         return $_SESSION['user_factor_authenticated'];
     }
 
+    /**
+     * Shows an input page via the selected Factor Auth Interface
+     * to ask User to send back Code for Authentication.
+     */
     public function showFactorTokenInput()
     {
         global $current_user;
@@ -206,6 +236,13 @@ class SugarAuthenticateUser
         die();
     }
 
+    /**
+     * Checking that Code previously sent to User.
+     * Returns true if Code in the session already,
+     * otherwise false.
+     *
+     * @return bool
+     */
     public function isFactorTokenSent()
     {
         $ret = false;
@@ -216,58 +253,39 @@ class SugarAuthenticateUser
         return $ret;
     }
 
+    /**
+     * Sending Code to User for Authentication,
+     * using selected Factor Authentication Interface on User Profile Page.
+     * Returns true on success,
+     * otherwise false.
+     *
+     * @return bool
+     * @throws \SuiteException
+     */
     public function sendFactorTokenToUser()
     {
-        global $current_user, $sugar_config;
+        global $current_user;
 
-        $ret = true;
+        $ret = false;
 
-        $token = rand(1000, 9999);
+        $token = random_int(1000, 9999);
 
-        $emailTemplate = new EmailTemplate();
-        $emailTemplateId = $sugar_config['passwordsetting']['factoremailtmpl'];
-        $emailTemplate->retrieve($emailTemplateId);
+        $factorAuthClass = $current_user->factor_auth_interface;
+        $factory = new FactorAuthFactory();
+        $factorAuth = $factory->getFactorAuth($factorAuthClass);
 
-        include_once __DIR__ . '/../../../../include/SugarPHPMailer.php';
-        $mailer = new SugarPHPMailer();
-        $mailer->setMailerForSystem();
-
-        $emailObj = new Email();
-        $defaults = $emailObj->getSystemDefaultEmail();
-
-        $mailer->From = $defaults['email'];
-        $mailer->FromName = $defaults['name'];
-
-        $mailer->Subject = from_html($emailTemplate->subject);
-
-        $mailer->Body = from_html($emailTemplate->body_html);
-        $mailer->Body_html = from_html($emailTemplate->body_html);
-        $mailer->AltBody = from_html($emailTemplate->body);
-
-        $mailer->addAddress($current_user->email1, $current_user->full_name);
-
-        $mailer->replace('code', $token);
-
-        if (!$mailer->send()) {
-            $ret = false;
-            $GLOBALS['log']->fatal(
-                'Email sending for two factor email authentication via Email Code failed. Mailer Error Info: ' .
-                $mailer->ErrorInfo
-            );
-        } else {
+        if($factorAuth->sendToken($token)) {
             $ret = true;
-            $GLOBALS['log']->debug('FACTOR AUTH: token sent to user: ' .
-                $current_user->id . ', token: ' . '{$token}' . ' so we store it in the session'
-            );
-
             $_SESSION['user_factor_authenticated'] = false;
             $_SESSION['factor_token'] = $token;
-
         }
 
         return $ret;
     }
 
+    /**
+     * Redirecting to Logout.
+     */
     public function redirectToLogout()
     {
         $GLOBALS['log']->debug('FACTOR AUTH: session destroy and redirect to logout.....');
@@ -277,6 +295,13 @@ class SugarAuthenticateUser
         die();
     }
 
+    /**
+     * Returns true if User trying to Logging out at the moment
+     * via User module's Logout action,
+     * otherwise false.
+     *
+     * @return bool
+     */
     public function isUserLogoutRequest()
     {
         $logout = false;

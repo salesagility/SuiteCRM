@@ -278,7 +278,7 @@ class SugarAuthenticate
         }
 
         $GLOBALS['log']->debug('FACTOR AUTH: -------------------------------------------------------------');
-        $GLOBALS['log']->debug('FACTOR AUTH: --------------------- CHECK FACTOR AUtH ---------------------');
+        $GLOBALS['log']->debug('FACTOR AUTH: --------------------- CHECK FACTOR AUTH ---------------------');
         $GLOBALS['log']->debug('FACTOR AUTH: -------------------------------------------------------------');
 
         //session_destroy(); die();
