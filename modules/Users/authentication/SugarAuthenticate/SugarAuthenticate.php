@@ -270,51 +270,63 @@ class SugarAuthenticate{
 
         //session_destroy(); die();
 
-		if ($this->userAuthenticate->isUserNeedFactorAuthentication()) {
-		    $GLOBALS['log']->fatal('DEBUG: User needs factor auth');
+        if(!$this->userAuthenticate->isUserLogoutRequest()) {
+            $GLOBALS['log']->fatal('DEBUG: User needs factor auth, request is not Logout');
 
+            if ($this->userAuthenticate->isUserNeedFactorAuthentication()) {
+                $GLOBALS['log']->fatal('DEBUG: User needs factor auth, set on User Profile page');
 
+                if (!$this->userAuthenticate->isUserFactorAuthenticated()) {
+                    $GLOBALS['log']->fatal('DEBUG: User is not factor authenticated yet');
 
-            if (!$this->userAuthenticate->isUserFactorAuthenticated()) {
-                $GLOBALS['log']->fatal('DEBUG: User is not factor authenticated yet');
+                    if ($this->userAuthenticate->isUserFactorTokenReceived()) {
+                        $GLOBALS['log']->fatal('DEBUG: User sent back a token in request');
 
-                if($this->userAuthenticate->isUserFactorTokenReceived()) {
-                    $GLOBALS['log']->fatal('DEBUG: User sent back a token in request');
+                        if (!$this->userAuthenticate->factorAuthenticateCheck()) {
+                            $GLOBALS['log']->fatal('DEBUG: User factor auth failed so we show token input form');
 
-                    if(!$this->userAuthenticate->factorAuthenticateCheck()) {
-                        $GLOBALS['log']->fatal('DEBUG: User factor auth failed so we show token input form');
+                            $this->userAuthenticate->showFactorTokenInput();
 
-                        $this->userAuthenticate->showFactorTokenInput();
+                        } else {
+                            $GLOBALS['log']->fatal('DEBUG: User factor auth success!');
+
+                        }
 
                     } else {
-                        $GLOBALS['log']->fatal('DEBUG: User factor auth success!');
+                        $GLOBALS['log']->fatal('DEBUG: User did not sent back the token so we send a new one and redirect to token input form');
+
+                       // if(!$this->userAuthenticate->isFactorTokenSent()) {
+                       //     $GLOBALS['log']->fatal('DEBUG: token is not sent yet, do we send a token to user');
+
+                            if ($this->userAuthenticate->sendFactorTokenToUser()) {
+                                $GLOBALS['log']->fatal('DEBUG: Factor Token sent to User');
+
+                                $this->userAuthenticate->showFactorTokenInput();
+
+                            } else {
+                                $GLOBALS['log']->fatal('DEBUG: failed to send factor token to user so just redirect to the logout url and kick off ');
+
+                                $this->userAuthenticate->redirectToLogout();
+                            }
+
+                       // } else {
+                       //     $GLOBALS['log']->fatal('DEBUG: token already sent');
+                       // }
 
                     }
 
                 } else {
-                    $GLOBALS['log']->fatal('DEBUG: User did not sent back the token so we send a new one and redirect to token input form');
-
-                    if($this->userAuthenticate->sendFactorTokenToUser()) {
-                        $GLOBALS['log']->fatal('DEBUG: Factor Token sent to User');
-
-                        $this->userAuthenticate->showFactorTokenInput();
-
-                    } else {
-                        $GLOBALS['log']->fatal('DEBUG: failed to send factor token to user so just redirect to the logout url and kick off ');
-
-                        $this->userAuthenticate->redirectToLogout();
-                    }
+                    $GLOBALS['log']->fatal('DEBUG: User factor authenticated already');
 
                 }
 
             } else {
-                $GLOBALS['log']->fatal('DEBUG: User factor authenticated already');
+                $GLOBALS['log']->fatal('DEBUG: User does`nt need factor auth');
 
             }
 
         } else {
-		    $GLOBALS['log']->fatal('DEBUG: User does`nt need factor auth');
-
+            $GLOBALS['log']->fatal('DEBUG: User Logout requested');
         }
 
 

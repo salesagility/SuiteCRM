@@ -736,6 +736,13 @@ $dictionary['User'] = array(
             'vname' => 'LBL_FACTOR_AUTH',
             'massupdate' => false,
         ),
+        'factor_auth_interface' => array(
+            'name' => 'factor_auth_interface',
+            'vname' => 'LBL_FACTOR_AUTH_INTERFACE',
+            'type' => 'enum',
+            'options' => 'user_factor_auth_interface_dom',
+        ),
+
     ),
     'indices' => array(
         array(

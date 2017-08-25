@@ -39,7 +39,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-
+include_once __DIR__ . '/FactorAuthFactory.php';
 
 /**
  * This file is where the user authentication occurs. No redirection should happen in this file.
@@ -137,24 +137,27 @@ class SugarAuthenticateUser{
 
 	public function isUserNeedFactorAuthentication() {
 		global $current_user;
+		$ret = false;
 		if ($current_user->factor_auth) {
-			return true;
+			$ret = true;
 		}
-		return false;
+		return $ret;
 	}
 
     public function isUserFactorAuthenticated() {
+		$ret = true;
         if (!isset($_SESSION['user_factor_authenticated']) || !$_SESSION['user_factor_authenticated']) {
-            return false;
+            $ret = false;
         }
-        return true;
+        return $ret;
     }
 
 	public function isUserFactorTokenReceived() {
-		if (isset($_REQUEST['factor_token']) && $_REQUEST['factor_token']) {
-			return true;
+		$ret = false;
+		if (isset($_REQUEST['factor_token'])) {
+			$ret = true;
 		}
-		return false;
+		return $ret;
 	}
 
 	public function factorAuthenticateCheck() {
@@ -167,9 +170,24 @@ class SugarAuthenticateUser{
 	}
 
 	public function showFactorTokenInput() {
+		global $current_user;
+
         $GLOBALS['log']->fatal('DEBUG: redirect to factor token input.....');
-        echo '[TOKEN INPUT FORM HERE]';
+
+        $factorAuthClass = $current_user->factor_auth_interface;
+        $factory = new FactorAuthFactory();
+        $factorAuth = $factory->getFactorAuth($factorAuthClass);
+        $factorAuth->showTokenInput();
+
         die();
+	}
+
+	public function isFactorTokenSent() {
+		$ret = false;
+		if(isset($_SESSION['factor_token']) && $_SESSION['factor_token']) {
+			$ret = true;
+		}
+		return $ret;
 	}
 
 	public function sendFactorTokenToUser() {
@@ -195,6 +213,14 @@ class SugarAuthenticateUser{
 		header('Location: index.php?action=Logout&module=Users');
 		sugar_cleanup(true);
 		die();
+	}
+
+	public function isUserLogoutRequest() {
+		$logout = false;
+		if($_REQUEST['module'] == 'Users' && $_REQUEST['action'] == 'Logout') {
+			$logout = true;
+		}
+		return $logout;
 	}
 
 
