@@ -1053,6 +1053,9 @@ $app_list_strings = array(
 );
 
 $app_strings = array(
+    'LBL_EMAIL_CODE' => 'Email Code:',
+    'LBL_SEND' => 'Send',
+    'LBL_LOGOUT' => 'Logout',
     'LBL_TOUR_NEXT' => 'Next',
     'LBL_TOUR_SKIP' => 'Skip',
     'LBL_TOUR_BACK' => 'Back',

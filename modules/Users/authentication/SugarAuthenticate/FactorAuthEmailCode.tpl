@@ -76,9 +76,9 @@
         <div class="p_login_middle">
             <div id="loginform">
                 <form method="post" action="">
-                    Email Code: <input type="text" name="factor_token"> <input type="submit" value="Send">
+                    {$APP.LBL_EMAIL_CODE} <input type="text" name="factor_token"> <input type="submit" value="{$APP.LBL_SEND}">
                 </form>
-                <a href="index.php?module=Users&action=Logout">logout</a>
+                <a href="index.php?module=Users&action=Logout">{$APP.LBL_LOGOUT}</a>
             </div>
         </div>
 
