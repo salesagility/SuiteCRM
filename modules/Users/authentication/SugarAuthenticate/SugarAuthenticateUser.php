@@ -191,19 +191,54 @@ class SugarAuthenticateUser{
 	}
 
 	public function sendFactorTokenToUser() {
-		global $current_user;
+		global $current_user, $sugar_config;
+
+		$ret = true;
 
 		$token = rand(1000, 9999);
 
-        $GLOBALS['log']->fatal('DEBUG: token sent to user: ' . $current_user->id . ', token: ' . $token . ' so we store it in the session');
+		$emailTemplate = new EmailTemplate();
+		$emailTemplateId = $sugar_config['passwordsetting']['factoremailtmpl'];
+		$emailTemplate->retrieve($emailTemplateId);
 
-        $_SESSION['user_factor_authenticated'] = false;
-		$_SESSION['factor_token'] = $token;
+		include_once __DIR__ . '/../../../../include/SugarPHPMailer.php';
+        $mailer = new SugarPHPMailer();
+        $mailer->setMailerForSystem();
 
-		$GLOBALS['log']->fatal('TODO: implement token sending here....!!!!!!!!!!!!!!!');
-        // todo: return false when token sending failed
+        $emailObj = new Email();
+        $defaults = $emailObj->getSystemDefaultEmail();
 
-        return true;
+        $mailer->From = $defaults['email'];
+        $mailer->FromName = $defaults['name'];
+
+        $mailer->Subject = from_html($emailTemplate->subject);
+
+        $mailer->Body = from_html($emailTemplate->body_html);
+        $mailer->Body_html = from_html($emailTemplate->body_html);
+        $mailer->AltBody = from_html($emailTemplate->body);
+
+        $mailer->addAddress($current_user->email1, $current_user->full_name);
+
+        $mailer->replace('code', $token);
+
+        if(!$mailer->send()) {
+            $ret = false;
+            $GLOBALS['log']->fatal(
+            	'Email sending for two factor email authentication via Email Code failed. Mailer Error Info: ' .
+				$mailer->ErrorInfo
+			);
+		} else {
+			$ret = true;
+            $GLOBALS['log']->fatal(
+            	'DEBUG: token sent to user: ' .
+				$current_user->id . ', token: ' . $token . ' so we store it in the session'
+			);
+
+            $_SESSION['user_factor_authenticated'] = false;
+            $_SESSION['factor_token'] = $token;
+
+        }
+        return $ret;
 	}
 
 	public function redirectToLogout()

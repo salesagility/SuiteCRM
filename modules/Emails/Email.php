@@ -401,6 +401,29 @@ class Email extends Basic
     public $notes;
 
     /**
+     * @var string
+     */
+    public $From;
+
+    /**
+     * @var string
+     */
+    public $FromName;
+
+    /**
+     * @var string
+     */
+    public $Subject;
+
+    /**
+     * @var string
+     */
+    public $Body;
+
+    /**
+     * @var string
+     */
+    public $AltBody;
      * @var mixed
      */
     public $msgNo;

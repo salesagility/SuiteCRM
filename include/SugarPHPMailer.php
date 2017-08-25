@@ -64,6 +64,11 @@ class SugarPHPMailer extends PHPMailer
     public $opensslOpened = true;
 
     /**
+     * @var string
+     */
+    public $Body_html;
+
+    /**
      * Sole constructor
      */
     public function __construct()
@@ -405,6 +410,22 @@ eoq;
         }
 
         return false;
+    }
+
+    /**
+     * Replace an Email Template variable placeholder in the email contents
+     * such as Subject, Body Body_html and BodyAlt.
+     * Call this helper function directly before send the email
+     * to replace variables in email contents.
+     *
+     * @param string $key
+     * @param string $value
+     */
+    public function replace($key, $value) {
+        $this->Subject = preg_replace('/\$' . $key . '\b/', $value, $this->Subject);
+        $this->Body = preg_replace('/\$' . $key . '\b/', $value, $this->Body);
+        $this->Body_html = preg_replace('/\$' . $key . '\b/', $value, $this->Body_html);
+        $this->AltBody = preg_replace('/\$' . $key . '\b/', $value, $this->AltBody);
     }
 
 } // end class definition
