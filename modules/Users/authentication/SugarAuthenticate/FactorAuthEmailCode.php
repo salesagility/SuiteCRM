@@ -44,7 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 include_once __DIR__ . '/FactorAuthInterface.php';
 
-class FactorAuthEmailCode implements FactorAuthInterface {
+class FactorAuthEmailCode implements FactorAuthInterface
+{
 
     public function showTokenInput()
     {
@@ -56,12 +57,12 @@ class FactorAuthEmailCode implements FactorAuthInterface {
 
         $cssPath = $theme->getCSSPath();
         $css = $theme->getCSS();
-        $favicon = $theme->getImageURL('sugar_icon.ico',false);
+        $favicon = $theme->getImageURL('sugar_icon.ico', false);
 
         $ss->assign('APP', $app_strings);
         $ss->assign('cssPath', $cssPath);
         $ss->assign('css', $css);
-        $ss->assign('favicon',getJSPath($favicon));
+        $ss->assign('favicon', getJSPath($favicon));
 
         $ss->display(__DIR__ . '/FactorAuthEmailCode.tpl');
     }

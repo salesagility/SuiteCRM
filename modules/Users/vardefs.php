@@ -761,7 +761,15 @@ $dictionary['User'] = array(
         ),
     ),
     'relationships' => array(
-        'user_direct_reports' => array('lhs_module' => 'Users', 'lhs_table' => 'users', 'lhs_key' => 'id', 'rhs_module' => 'Users', 'rhs_table' => 'users', 'rhs_key' => 'reports_to_id', 'relationship_type' => 'one-to-many'),
+        'user_direct_reports' => array(
+            'lhs_module' => 'Users',
+            'lhs_table' => 'users',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Users',
+            'rhs_table' => 'users',
+            'rhs_key' => 'reports_to_id',
+            'relationship_type' => 'one-to-many'
+        ),
         'users_users_signatures' =>
             array(
                 'lhs_module' => 'Users',
@@ -774,18 +782,31 @@ $dictionary['User'] = array(
             ),
         'users_email_addresses' =>
             array(
-                'lhs_module' => "Users", 'lhs_table' => 'users', 'lhs_key' => 'id',
-                'rhs_module' => 'EmailAddresses', 'rhs_table' => 'email_addresses', 'rhs_key' => 'id',
+                'lhs_module' => "Users",
+                'lhs_table' => 'users',
+                'lhs_key' => 'id',
+                'rhs_module' => 'EmailAddresses',
+                'rhs_table' => 'email_addresses',
+                'rhs_key' => 'id',
                 'relationship_type' => 'many-to-many',
-                'join_table' => 'email_addr_bean_rel', 'join_key_lhs' => 'bean_id', 'join_key_rhs' => 'email_address_id',
+                'join_table' => 'email_addr_bean_rel',
+                'join_key_lhs' => 'bean_id',
+                'join_key_rhs' => 'email_address_id',
                 'relationship_role_column' => 'bean_module',
                 'relationship_role_column_value' => "Users"
             ),
         'users_email_addresses_primary' =>
-            array('lhs_module' => "Users", 'lhs_table' => 'users', 'lhs_key' => 'id',
-                'rhs_module' => 'EmailAddresses', 'rhs_table' => 'email_addresses', 'rhs_key' => 'id',
+            array(
+                'lhs_module' => "Users",
+                'lhs_table' => 'users',
+                'lhs_key' => 'id',
+                'rhs_module' => 'EmailAddresses',
+                'rhs_table' => 'email_addresses',
+                'rhs_key' => 'id',
                 'relationship_type' => 'many-to-many',
-                'join_table' => 'email_addr_bean_rel', 'join_key_lhs' => 'bean_id', 'join_key_rhs' => 'email_address_id',
+                'join_table' => 'email_addr_bean_rel',
+                'join_key_lhs' => 'bean_id',
+                'join_key_rhs' => 'email_address_id',
                 'relationship_role_column' => 'primary_address',
                 'relationship_role_column_value' => '1'
             ),

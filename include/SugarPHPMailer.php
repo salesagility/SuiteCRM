@@ -421,7 +421,8 @@ eoq;
      * @param string $key
      * @param string $value
      */
-    public function replace($key, $value) {
+    public function replace($key, $value)
+    {
         $this->Subject = preg_replace('/\$' . $key . '\b/', $value, $this->Subject);
         $this->Body = preg_replace('/\$' . $key . '\b/', $value, $this->Body);
         $this->Body_html = preg_replace('/\$' . $key . '\b/', $value, $this->Body_html);

@@ -59,25 +59,26 @@
     {$css}
 </head>
 <body>
-    <div class="p_login">
-        <div class="p_login_top">
-            <a title="SuiteCRM" href="http://www.suitecrm.com">SuiteCRM</a>
-        </div>
+<div class="p_login">
+    <div class="p_login_top">
+        <a title="SuiteCRM" href="http://www.suitecrm.com">SuiteCRM</a>
+    </div>
 
-        <div class="p_login_middle">
-            <div id="loginform">
-                <form method="post" action="">
-                    {$APP.LBL_EMAIL_CODE} <input type="text" name="factor_token"> <input type="submit" value="{$APP.LBL_SEND}">
-                </form>
-                <a href="index.php?module=Users&action=Logout">{$APP.LBL_LOGOUT}</a>
-            </div>
-        </div>
-
-        <div class="p_login_bottom">
-            <a id="admin_options">© Supercharged by SuiteCRM</a>
-            <a id="powered_by">© Powered By SugarCRM</a>
+    <div class="p_login_middle">
+        <div id="loginform">
+            <form method="post" action="">
+                {$APP.LBL_EMAIL_CODE} <input type="text" name="factor_token"> <input type="submit"
+                                                                                     value="{$APP.LBL_SEND}">
+            </form>
+            <a href="index.php?module=Users&action=Logout">{$APP.LBL_LOGOUT}</a>
         </div>
     </div>
+
+    <div class="p_login_bottom">
+        <a id="admin_options">© Supercharged by SuiteCRM</a>
+        <a id="powered_by">© Powered By SugarCRM</a>
+    </div>
+</div>
 </body>
 </html>
 

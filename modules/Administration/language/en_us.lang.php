@@ -593,7 +593,7 @@ $mod_strings = array(
     'LBL_REPAIR_DATABASE_DESC' => 'Repairs database based on values defined in vardefs',
     'LBL_REPAIR_DATABASE_PROCESSING' => 'Processing database and vardef comparison...',
     'LBL_REPAIR_DATABASE_DIFFERENCES' => "Differences found between database and vardefs",
-    'LBL_REPAIR_DATABASE_TEXT' =>   "The following script will sync the database structure with the structure defined in the vardefs. You have the option of exporting this script and then running it against your database using external database management tools, or to allow the administration module to run the script. <br><br><strong>NOTE</strong>: any changes you make to the script in the textbox will be reflected in the exported or executed code.<br><br>",
+    'LBL_REPAIR_DATABASE_TEXT' => "The following script will sync the database structure with the structure defined in the vardefs. You have the option of exporting this script and then running it against your database using external database management tools, or to allow the administration module to run the script. <br><br><strong>NOTE</strong>: any changes you make to the script in the textbox will be reflected in the exported or executed code.<br><br>",
     'LBL_REPAIR_DATABASE_SYNCED' => "Database tables are synced with vardefs",
     'LBL_REPAIR_DATABASE_EXECUTE' => "Execute",
     'LBL_REPAIR_DATABASE_EXPORT' => "Export",
@@ -1116,12 +1116,12 @@ $mod_strings = array(
 
     'LBL_BUSINESS_HOURS' => 'Business hours',
     'LBL_BUSINESS_HOURS_DESC' => "Manage Business Hours",
-	'LBL_BUSINESS_HOURS_FROM' => 'From',
-	'LBL_BUSINESS_HOURS_TO' => 'To',
-	'LBL_BUSINESS_HOURS_OPEN' => "Open",
+    'LBL_BUSINESS_HOURS_FROM' => 'From',
+    'LBL_BUSINESS_HOURS_TO' => 'To',
+    'LBL_BUSINESS_HOURS_OPEN' => "Open",
 
-	'LBL_LIST_SYMBOL' => "List Symbol",
-	'LBL_LIST_RATE' => "List Rate",
+    'LBL_LIST_SYMBOL' => "List Symbol",
+    'LBL_LIST_RATE' => "List Rate",
 
     'LBL_SYNC_MESSAGE' => "Sync Inbound Email Account. This may take several minutes. Going away from this page will not cancel the process, so feel free to move on or wait for confirmation...",
     'LBL_SYNC_PROCESSING' => "Processing '%s' Inbound Email Account...",

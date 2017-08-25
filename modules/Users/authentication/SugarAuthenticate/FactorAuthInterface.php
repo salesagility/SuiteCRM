@@ -42,7 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-interface FactorAuthInterface {
+interface FactorAuthInterface
+{
 
     public function showTokenInput();
 

@@ -44,7 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 include_once __DIR__ . '/../../../../include/Exceptions/SuiteException.php';
 
-class FactorAuthFactory {
+class FactorAuthFactory
+{
 
     const DEFAULT_FACTOR_AUTH_INTERFACE = 'FactorAuthEmailCode';
 
@@ -57,7 +58,8 @@ class FactorAuthFactory {
      * @return FactorAuthInterface
      * @throws SuiteException
      */
-    public function getFactorAuth() {
+    public function getFactorAuth()
+    {
         global $current_user;
         if (!$current_user->id) {
             throw new SuiteException('User is not identified for factor authentication.');
@@ -70,6 +72,7 @@ class FactorAuthFactory {
             include_once __DIR__ . DIRECTORY_SEPARATOR . $factorAuthClass . '.php';
             self::$instances[$factorAuthClass] = new $factorAuthClass();
         }
+
         return self::$instances[$factorAuthClass];
     }
 
