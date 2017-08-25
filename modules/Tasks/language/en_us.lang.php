@@ -44,7 +44,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $mod_strings = array (
   'LBL_MODULE_NAME' => 'Tasks',
-  'LBL_TASK' => 'Tasks: ',
   'LBL_MODULE_TITLE' => ' Tasks: Home',
   'LBL_SEARCH_FORM_TITLE' => ' Task Search',
   'LBL_LIST_FORM_TITLE' => ' Task List',
@@ -82,8 +81,6 @@ $mod_strings = array (
   'LNK_NEW_TASK' => 'Create Task',
   'LNK_TASK_LIST' => 'View Tasks',
   'LNK_IMPORT_TASKS' => 'Import Tasks',
-  'LBL_CONTACT_FIRST_NAME'=>'Contact First Name',
-  'LBL_CONTACT_LAST_NAME'=>'Contact Last Name',
   'LBL_LIST_ASSIGNED_TO_NAME' => 'Assigned User',
   'LBL_ASSIGNED_TO_NAME'=>'Assigned to:',
   'LBL_LIST_DATE_MODIFIED' => 'Date Modified',

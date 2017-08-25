@@ -1,41 +1,41 @@
 <?php
-/** 
- * 
- * SugarCRM Community Edition is a customer relationship management program developed by 
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc. 
- * 
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd. 
- * Copyright (C) 2011 - 2017 SalesAgility Ltd. 
- * 
- * This program is free software; you can redistribute it and/or modify it under 
- * the terms of the GNU Affero General Public License version 3 as published by the 
- * Free Software Foundation with the addition of the following permission added 
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK 
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY 
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS. 
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more 
- * details. 
- * 
- * You should have received a copy of the GNU Affero General Public License along with 
- * this program; if not, see http://www.gnu.org/licenses or write to the Free 
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 
- * 02110-1301 USA. 
- * 
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road, 
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com. 
- * 
- * The interactive user interfaces in modified source and object code versions 
- * of this program must display Appropriate Legal Notices, as required under 
- * Section 5 of the GNU Affero General Public License version 3. 
- * 
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3, 
- * these Appropriate Legal Notices must retain the display of the "Powered by 
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not 
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must 
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM". 
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -43,9 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $mod_strings = array(
-	'DESC_MODULES_INSTALLED'					=> 'The following modules have been installed:',
-	'DESC_MODULES_QUEUED'						=> 'The following modules are ready to be installed:',
-
 	'ERR_UW_CANNOT_DETERMINE_GROUP'				=> 'Cannot determine Group',
 	'ERR_UW_CANNOT_DETERMINE_USER'				=> 'Cannot determine Owner',
 	'ERR_UW_CONFIG_WRITE'						=> 'Error updating config.php with new version information.',
@@ -57,17 +54,12 @@ $mod_strings = array(
 	'ERR_UW_FILE_NOT_WRITABLE'					=> 'File cannot be moved or written to',
 	'ERR_UW_FLAVOR_2'							=> 'Upgrade Flavor: ',
 	'ERR_UW_FLAVOR'								=> 'SuiteCRM System Flavor: ',
-	'ERR_UW_LOG_FILE_UNWRITABLE'				=> './upgradeWizard.log could not be created/written to.  Please fix permissions on your SuiteCRM directory.',
-	'ERR_UW_MBSTRING_FUNC_OVERLOAD'				=> 'mbstring.func_overload set to a value higher than 1.  Please change this in your php.ini and restart the web server.',
 	'ERR_UW_LOG_FILE_UNWRITABLE'				=> './upgradeWizard.log could not be created/written to. Please fix permissions on your SuiteCRM directory.',
 	'ERR_UW_MBSTRING_FUNC_OVERLOAD'				=> 'mbstring.func_overload set to a value higher than 1. Please change this in your php.ini and restart the web server.',
-	'ERR_UW_MYSQL_VERSION'						=> 'SuiteCRM requires MySQL version 4.1.2 or newer. Found: ',
-	'ERR_UW_OCI8_VERSION'				        => 'Your version of Oracle is not supported by SuiteCRM. You will need to install a version that is compatible with the SuiteCRM application. Please consult the Compatibility Matrix in the Release Notes for supported Oracle Versions. Current version: ',
 	'ERR_UW_NO_FILE_UPLOADED'					=> 'Please specify a file and try again!',
 	'ERR_UW_NO_FILES'							=> 'An error occurred, no files were found to check.',
 	'ERR_UW_NO_MANIFEST'						=> 'The zip file is missing a manifest.php file. Cannot proceed.',
 	'ERR_UW_NO_VIEW'							=> 'Invalid view specified.',
-	'ERR_UW_NO_VIEW2'							=> 'View not defined. Please go to the Administration home to navigate to this page.',
 	'ERR_UW_NOT_VALID_UPLOAD'					=> 'Not valid upload.',
 	'ERR_UW_NO_CREATE_TMP_DIR'					=> 'Could not create the temp directory. Check file permissions.',
 	'ERR_UW_ONLY_PATCHES'						=> 'You can only upload patches on this page.',
@@ -82,7 +74,6 @@ $mod_strings = array(
 	'LBL_BUTTON_DELETE'							=> 'Delete Package',
 	'LBL_BUTTON_DONE'							=> 'Done',
 	'LBL_BUTTON_EXIT'							=> 'Exit',
-	'LBL_BUTTON_INSTALL'						=> 'Preflight Upgrade',
 	'LBL_BUTTON_NEXT'							=> 'Next >',
 	'LBL_BUTTON_RECHECK'						=> 'Recheck',
 	'LBL_BUTTON_RESTART'						=> 'Restart',
@@ -99,7 +90,6 @@ $mod_strings = array(
 	'LBL_UW_COMMIT_ADD_TASK_NAME'				=> 'Upgrade Process: Manually Merge Files',
 	'LBL_UW_COMMIT_ADD_TASK_OVERVIEW'			=> 'Please use whichever diff method is most familiar to you to merge these files. Until this is complete, your SuiteCRM installation will be in an uncertain state, and the upgrade incomplete.',
 	'LBL_UW_COMPLETE'							=> 'Complete',
-	'LBL_UW_CONTINUE_CONFIRMATION'              => 'This new version of SuiteCRM contains new license agreement. Would you like to continue?',
 	'LBL_UW_COMPLIANCE_ALL_OK'					=> 'All System Settings Requirements Satisfied',
 	'LBL_UW_COMPLIANCE_CALLTIME'				=> 'PHP Setting: Call Time Pass By Reference',
 	'LBL_UW_COMPLIANCE_CURL'					=> 'cURL Module',
@@ -108,12 +98,10 @@ $mod_strings = array(
 	'LBL_UW_COMPLIANCE_MBSTRING_FUNC_OVERLOAD'	=> 'MBStrings mbstring.func_overload Parameter',
 	'LBL_UW_COMPLIANCE_MEMORY'					=> 'PHP Setting: Memory Limit',
     'LBL_UW_COMPLIANCE_STREAM'                  => 'PHP Setting: Stream',
-	'LBL_UW_COMPLIANCE_MYSQL'					=> 'Minimum MySQL Version',
     'LBL_UW_COMPLIANCE_DB'                      => 'Minimum Database Version',
 	'LBL_UW_COMPLIANCE_PHP_INI'					=> 'Location of php.ini',
 	'LBL_UW_COMPLIANCE_PHP_VERSION'				=> 'Minimum PHP Version',
 	'LBL_UW_COMPLIANCE_SAFEMODE'				=> 'PHP Setting: Safe Mode',
-	'LBL_UW_COMPLIANCE_TITLE'					=> 'Server Settings Check',
 	'LBL_UW_COMPLIANCE_TITLE2'					=> 'Detected Settings',
 	'LBL_UW_COMPLIANCE_XML'						=> 'XML Parsing',
 	'LBL_UW_COMPLIANCE_ZIPARCHIVE'				=> 'Zip Support',
@@ -124,7 +112,6 @@ $mod_strings = array(
 	'LBL_UW_DB_CHOICE1'							=> 'Upgrade Wizard Runs SQL',
 	'LBL_UW_DB_CHOICE2'							=> 'Manual SQL Queries',
 	'LBL_UW_DB_ISSUES_PERMS'					=> 'Database Privileges',
-	'LBL_UW_DB_ISSUES'							=> 'Database Issues',
 	'LBL_UW_DB_METHOD'							=> 'Database Update Method',
 	'LBL_UW_DB_NO_ADD_COLUMN'					=> 'ALTER TABLE [table] ADD COLUMN [column]',
 	'LBL_UW_DB_NO_CHANGE_COLUMN'				=> 'ALTER TABLE [table] CHANGE COLUMN [column]',
@@ -139,8 +126,6 @@ $mod_strings = array(
 	'LBL_UW_DB_PERMS'							=> 'Necessary Privilege',
 
 	'LBL_UW_DESC_MODULES_INSTALLED'				=> 'The following upgrade packages have been installed:',
-	'LBL_UW_END_DESC'							=> 'The system has been upgraded.',
-	'LBL_UW_END_DESC2'							=> 'If you have chosen to manually run any steps such as file merges or SQL queries, please do this now. Your system will be in an unstable state until those steps are completed.',
 	'LBL_UW_END_LOGOUT_PRE'						=> 'The upgrade is complete.',
 	'LBL_UW_END_LOGOUT_PRE2'					=> 'Click Done to exit the Upgrade Wizard.',
 	'LBL_UW_END_LOGOUT'							=> 'If you plan to apply another upgrade package using the Upgrade Wizard, log out and log back in prior to doing so.',
@@ -148,7 +133,6 @@ $mod_strings = array(
 	'LBL_UW_FILE_DELETED'						=> " has been removed.<br>",
 	'LBL_UW_FILE_GROUP'							=> 'Group',
 	'LBL_UW_FILE_ISSUES_PERMS'					=> 'File Permissions',
-	'LBL_UW_FILE_ISSUES'						=> 'File Issues',
 	'LBL_UW_FILE_NO_ERRORS'						=> '<b>All Files Writable</b>',
 	'LBL_UW_FILE_OWNER'							=> 'Owner',
 	'LBL_UW_FILE_PERMS'							=> 'Permissions',
@@ -163,7 +147,6 @@ $mod_strings = array(
 	'LBL_UW_INCLUDING'							=> 'Including',
 	'LBL_UW_INCOMPLETE'							=> 'Incomplete',
 	'LBL_UW_MANUAL_MERGE'						=> 'File Merge',
-	'LBL_UW_MODULE_READY_UNINSTALL'				=> "Module is ready to be uninstalled. Click \"Commit\" to proceed with uninstallation.<br>\n",
 	'LBL_UW_MODULE_READY'						=> "Module is ready to be installed. Click \"Commit\" to proceed with installation.",
 	'LBL_UW_NO_INSTALLED_UPGRADES'				=> 'No recorded Upgrades detected.',
 	'LBL_UW_NONE'								=> 'None',
@@ -199,11 +182,6 @@ $mod_strings = array(
 	'LBL_UW_START_DESC3'						=> 'Click Next to perform a check on your system to make sure that the system is ready for the upgrade. The check includes file permissions, database privileges and server settings.',
 	'LBL_UW_START_UPGRADED_UW_DESC'				=> 'The new Upgrade Wizard will now resume the upgrade process. Please continue your upgrade.',
 	'LBL_UW_START_UPGRADED_UW_TITLE'			=> 'Welcome to the new Upgrade Wizard',
-
-	'LBL_UW_SYSTEM_CHECK_CHECKING'				=> 'Now checking, please wait. This could take up to 30 seconds.',
-	'LBL_UW_SYSTEM_CHECK_FILE_CHECK_START'		=> 'Finding all pertinent files to check.',
-	'LBL_UW_SYSTEM_CHECK_FILES'					=> 'Files',
-	'LBL_UW_SYSTEM_CHECK_FOUND'					=> 'Found',
 
 	'LBL_UW_TITLE_CANCEL'						=> 'Cancel',
 	'LBL_UW_TITLE_COMMIT'						=> 'Commit Upgrade',
@@ -252,12 +230,8 @@ $mod_strings = array(
     'LBL_ML_TYPE' => 'Type',
     'LBL_ML_UNINSTALLABLE' => 'Uninstallable',
     'LBL_ML_VERSION' => 'Version',
-	'LBL_ML_INSTALL'=>'Install',
+	'LBL_ML_INSTALL' => 'Install',
 	//adding the string used in tracker. copying from homepage
-	'LBL_CURRENT_PHP_VERSION' => '(Your current php version is ',
-	'LBL_RECOMMENDED_PHP_VERSION' => '. Recommended php version is 5.2.2 or above)',
-
-	'LBL_HOME_PAGE_4_NAME' => 'Tracker',
 	'LBL_CURRENT_PHP_VERSION' => 'Your current php version is: ',
 	'LBL_RECOMMENDED_PHP_VERSION_1' => 'The recommended php version is ',
 	'LBL_RECOMMENDED_PHP_VERSION_2' => ' or above.',
@@ -284,7 +258,8 @@ $mod_strings = array(
 	'LBL_WORKFLOW' => 'Workflow' /*for 508 compliance fix*/,
 	'LBL_UPGRADE' => 'Upgrade' /*for 508 compliance fix*/,
 	'LBL_PROCESSING' => 'Processing' /*for 508 compliance fix*/,
-	'ERROR_NO_VERSION_SET' => 'Compatible version is not set in manifest file',	
+	'ERROR_NO_VERSION_SET' => 'Compatible version is not set in manifest file',
+	'LBL_UPGRD_CSTM_CHK' => 'Upgrade process will update some files but these files also exist in custom/ folder. Please review the changes before continuing:',
 	'ERR_UW_PHP_FILE_ERRORS'					=> array(
 													1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
 													2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
@@ -295,5 +270,4 @@ $mod_strings = array(
 													7 => 'Failed to write file to disk.',
 													8 => 'File upload stopped by extension.',
 ),
-	'LBL_UPGRD_CSTM_CHK' => "Upgrade process will update some files but these files also exist in custom/ folder. Please review the changes before continuing:",
 );
