@@ -268,7 +268,14 @@ class SugarAuthenticateUser
 
         $ret = false;
 
-        $token = random_int(1000, 9999);
+        $min = 10000;
+        $max = 99999;
+
+        if(function_exists('random_int')) {
+            $token = random_int($min, $max);
+        } else {
+            $token = rand($min, $max);
+        }
 
         $factorAuthClass = $current_user->factor_auth_interface;
         $factory = new FactorAuthFactory();
