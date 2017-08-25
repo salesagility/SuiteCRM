@@ -194,7 +194,7 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail {
                              <label for="name">'.$mod_strings['LBL_PROJECT_NAME'].':<span class="required">*</span></label>
                              <input style="margin-bottom:12px; width:95%; padding: .4em;" type="text" name="p_name" id="p_name" class="text ui-widget-content ui-corner-all" />
 
-                             <label for="start_date">'.$mod_strings['LBL_START_DATE'].':</label>
+                             <label for="start_date">'.$mod_strings['LBL_START_DATE'].':<span class="required">*</span></label>
                              <input style="margin-bottom:12px; width:95%; padding: .4em;" type="text" name="start_date" id="start_date" class="text ui-widget-content ui-corner-all" />
 
                              <script type="text/javascript">
@@ -211,7 +211,7 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail {
                                 });
                                 addForm("project_form");
                                 addToValidate("project_form", "p_name", "name", true,"'.$mod_strings['LBL_PROJECT_NAME'].'" );
-                                addToValidate("project_form", "start_date", "date", false,"'.$mod_strings['LBL_START_DATE'].'" );
+                                addToValidate("project_form", "start_date", "date", true,"'.$mod_strings['LBL_START_DATE'].'" );
                             </script>
 							 <label for="copy_all_tasks">'.$mod_strings['LBL_COPY_ALL_TASKS'].':</label>&nbsp;
                              <input type="checkbox" style="position: relative; vertical-align:middle" id="copy_all_tasks" name="copy_all_tasks" value="1" title="" />&nbsp;
