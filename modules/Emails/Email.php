@@ -424,11 +424,6 @@ class Email extends Basic
     public $AltBody;
 
     /**
-     * @var string
-     */
-    public $Body_html;
-
-    /**
      * sole constructor
      */
     public function __construct()

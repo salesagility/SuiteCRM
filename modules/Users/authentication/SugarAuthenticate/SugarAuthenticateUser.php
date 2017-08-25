@@ -172,7 +172,7 @@ class SugarAuthenticateUser{
 	public function showFactorTokenInput() {
 		global $current_user;
 
-        $GLOBALS['log']->fatal('DEBUG: redirect to factor token input.....');
+        $GLOBALS['log']->debug('FACTOR AUTH: redirect to factor token input.....');
 
         $factorAuthClass = $current_user->factor_auth_interface;
         $factory = new FactorAuthFactory();
@@ -229,9 +229,8 @@ class SugarAuthenticateUser{
 			);
 		} else {
 			$ret = true;
-            $GLOBALS['log']->fatal(
-            	'DEBUG: token sent to user: ' .
-				$current_user->id . ', token: ' . $token . ' so we store it in the session'
+            $GLOBALS['log']->debug('FACTOR AUTH: token sent to user: ' .
+				$current_user->id . ', token: ' . '{$token}' . ' so we store it in the session'
 			);
 
             $_SESSION['user_factor_authenticated'] = false;
@@ -243,7 +242,7 @@ class SugarAuthenticateUser{
 
 	public function redirectToLogout()
 	{
-        $GLOBALS['log']->fatal('DEBUG: session destroy and redirect to logout.....');
+        $GLOBALS['log']->debug('FACTOR AUTH: session destroy and redirect to logout.....');
 		session_destroy();
 		header('Location: index.php?action=Logout&module=Users');
 		sugar_cleanup(true);

@@ -41,12 +41,6 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
-<!-- !!!1
-<form method="post" action="">
-    Email Code: <input type="text" name="factor_token"> <input type="submit" value="Send">
-</form>
-<a href="index.php?module=Users&action=Logout">logout</a>
--->
 <!DOCTYPE html>
 <html>
 <head>

@@ -127,13 +127,6 @@ class User extends Person {
 		$this->_loadUserPreferencesFocus();
 	}
 
-	public function __set($key, $value) {
-	    $this->$key = $value;
-	    if($key == 'id' && $value == '1') {
-	        $GLOBALS['log']->fatal('DEBUG: User::' . $key . ' set to '. $value);
-        }
-    }
-
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
