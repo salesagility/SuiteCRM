@@ -2820,6 +2820,7 @@ $app_list_strings['aor_format_options']['Y-m-d'] = 'Y-m-d';
 $app_list_strings['aor_format_options']['Ymd'] = 'Ymd';
 $app_list_strings['aor_format_options']['Y-m'] = 'Y-m';
 $app_list_strings['aor_format_options']['d/m/Y'] = 'd/m/Y';
+$app_list_strings['aor_format_options']['W/Y'] = 'W/Y';
 $app_list_strings['aor_format_options']['Y'] = 'Y';
 $app_list_strings['aor_condition_operator_list']['And'] = 'And';
 $app_list_strings['aor_condition_operator_list']['OR'] = 'OR';
