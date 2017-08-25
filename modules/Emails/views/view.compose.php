@@ -85,7 +85,13 @@ class EmailsViewCompose extends ViewEdit {
         }
 
         $this->ev->ss->assign('TEMP_ID', create_guid());
-        $this->ev->ss->assign('RECORD', isset($_REQUEST['record']) ? $_REQUEST['record'] : '');
+        $record = isset($_REQUEST['record']) ? $_REQUEST['record'] : '';
+        if(empty($record) && !empty($this->bean->id)) {
+            $record = $this->bean->id;
+        }
+        $this->ev->ss->assign('RECORD', $record);
+        $this->ev->ss->assign('ACTION', isset($_REQUEST['action']) ? $_REQUEST['action'] : 'send');
+
         $this->ev->ss->assign('RETURN_MODULE', isset($_GET['return_module']) ? $_GET['return_module'] : '');
         $this->ev->ss->assign('RETURN_ACTION', isset($_GET['return_action']) ? $_GET['return_action'] : '');
         $this->ev->ss->assign('RETURN_ID', isset($_GET['return_id']) ? $_GET['return_id'] : '');

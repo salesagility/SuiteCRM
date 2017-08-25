@@ -295,6 +295,30 @@ class Employee extends Person {
         //return result of search for custom fields
         return $userCustomfields;
     }
+
+    /**
+	 * Override the original save function,
+	 * for checking first is it same user as employee
+	 * and disable to save any employee data for others.
+	 * (admin user is an exception)
+	 *
+     * @param bool $check_notify
+     * @return bool|string
+     */
+    public function save($check_notify = false)
+    {
+        global $current_user;
+        if ($current_user->id) {
+            if (!is_admin($current_user)) {
+                if ($this->id && $current_user->id != $this->id) {
+                	$GLOBALS['log']->security("{$current_user->name} tried to update {$this->name} record with out permission.");
+                    $GLOBALS['log']->fatal("You can change only your own employee data.");
+                    return false;
+                }
+            }
+        }
+        return parent::save($check_notify);
+    }
 }
 
 ?>

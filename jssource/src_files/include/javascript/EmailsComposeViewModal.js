@@ -15,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +33,10 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 (function ($) {
   $.fn.EmailsComposeViewModal = function (options) {
     "use strict";
@@ -48,10 +49,14 @@
       self.emailComposeView = null;
       var opts = $.extend({}, $.fn.EmailsComposeViewModal.defaults);
       var composeBox = $('<div></div>').appendTo(opts.contentSelector);
-      composeBox.messageBox({"showHeader": false, "showFooter": false, "size": 'lg',});
+      composeBox.messageBox({"showHeader": false, "showFooter": false, "size": 'lg'});
       composeBox.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
       composeBox.show();
-      $.ajax({type: "GET", cache: false, url: 'index.php?module=Emails&action=ComposeView&in_popup=1'}).done(function (data) {
+      $.ajax({
+        type: "GET",
+        cache: false,
+        url: 'index.php?module=Emails&action=ComposeView&in_popup=1'
+      }).done(function (data) {
         if (data.length === 0) {
           console.error("Unable to display ComposeView");
           composeBox.setBody(SUGAR.language.translate('', 'ERR_AJAX_LOAD'));
@@ -66,7 +71,8 @@
         $(self.emailComposeView).on('disregardDraft', function (event, composeView) {
           if (typeof messageBox !== "undefined") {
             var mb = messageBox({size: 'lg'});
-            mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_DELETE_EMAIL'));
+            mb.setTitle(SUGAR.language.translate('', 'LBL_CONFIRM_DISREGARD_DRAFT_TITLE'));
+            mb.setBody(SUGAR.language.translate('', 'LBL_CONFIRM_DISREGARD_DRAFT_BODY'));
             mb.on('ok', function () {
               mb.remove();
               composeBox.hide();
@@ -114,10 +120,14 @@
     self.emailComposeView = null;
     var opts = $.extend({}, $.fn.EmailsComposeViewModal.defaults);
     var composeBox = $('<div></div>').appendTo(opts.contentSelector);
-    composeBox.messageBox({"showHeader": false, "showFooter": false, "size": 'lg',});
+    composeBox.messageBox({"showHeader": false, "showFooter": false, "size": 'lg'});
     composeBox.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
     composeBox.show();
-    $.ajax({type: "GET", cache: false, url: 'index.php?module=Emails&action=ComposeView&in_popup=1'}).done(function (data) {
+    $.ajax({
+      type: "GET",
+      cache: false,
+      url: 'index.php?module=Emails&action=ComposeView&in_popup=1'
+    }).done(function (data) {
       if (data.length === 0) {
         console.error("Unable to display ComposeView");
         composeBox.setBody(SUGAR.language.translate('', 'ERR_AJAX_LOAD'));
@@ -127,13 +137,13 @@
       self.emailComposeView = composeBox.controls.modal.body.find('.compose-view').EmailsComposeView();
 
       // Populate fields
-      if($(source).attr('data-record-id') !== '') {
+      if ($(source).attr('data-record-id') !== '') {
         var populateModule = $(source).attr('data-module');
         var populateModuleRecord = $(source).attr('data-record-id');
         var populateModuleName = $(source).attr('data-module-name');
         var populateEmailAddress = $(source).attr('data-email-address');
 
-        if(populateModuleName !== '') {
+        if (populateModuleName !== '') {
           populateEmailAddress = populateModuleName + ' <' + populateEmailAddress + '>';
         }
 
@@ -150,7 +160,8 @@
       $(self.emailComposeView).on('disregardDraft', function (event, composeView) {
         if (typeof messageBox !== "undefined") {
           var mb = messageBox({size: 'lg'});
-          mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_DELETE_EMAIL'));
+          mb.setTitle(SUGAR.language.translate('', 'LBL_CONFIRM_DISREGARD_DRAFT_TITLE'));
+          mb.setBody(SUGAR.language.translate('', 'LBL_CONFIRM_DISREGARD_DRAFT_BODY'));
           mb.on('ok', function () {
             mb.remove();
             composeBox.hide();
