@@ -28,6 +28,10 @@ class SugarFieldCronSchedule extends SugarFieldBase {
 
     }
 
+    protected function padNumbers($x){
+        return str_pad($x,2,'0',STR_PAD_LEFT);
+    }
+
     function setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass = true) {
         global $app_list_strings,$app_strings;
         parent::setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass);
@@ -38,11 +42,6 @@ class SugarFieldCronSchedule extends SugarFieldBase {
         $this->ss->assign('weekdays',get_select_options($weekdays,''));
         $days = $this->getDays();
         $this->ss->assign('days',get_select_options($days,''));
-        if (!function_exists('padNumbers')) {
-            function padNumbers($x){
-                return str_pad($x,2,'0',STR_PAD_LEFT);
-            }
-        }
         $minutes = array_map('padNumbers',range(0,59));
         $hours = array_map('padNumbers',range(0,23));
         $this->ss->assign('minutes',get_select_options($minutes,''));
