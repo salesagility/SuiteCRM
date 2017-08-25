@@ -77,7 +77,7 @@ $filesOut = "
 $isWindows = is_windows();
 foreach($files as $file) {
 	if($isWindows) {
-		if(!is_writable_windows($file)) {
+		if(!is_writable_windows($file) && file_exists($file)) {
 			logThis('WINDOWS: File ['.$file.'] not readable - saving for display');
 			// don't warn yet - we're going to use this to check against replacement files
 			$filesNotWritable[$i] = $file;
@@ -90,7 +90,7 @@ foreach($files as $file) {
 						  "</tr>";
 		}
 	} else {
-		if(!is_writable($file)) {
+		if(!is_writable($file) && file_exists($file)) {
 			logThis('File ['.$file.'] not writable - saving for display');
 			// don't warn yet - we're going to use this to check against replacement files
 			$filesNotWritable[$i] = $file;
@@ -102,7 +102,7 @@ foreach($files as $file) {
 							"<td>{$filesNWPerms[$i]}</td>".
 							"<td>".$owner['name']."</td>".
 							"<td>".$group['name']."</td>".
-						  "</tr>";
+					  	"</tr>";
 		}
 	}
 	$i++;
@@ -176,8 +176,10 @@ $checks = array(
 	//commenting mbstring overload.
 	//'mbstring.func_overload'	=> $mod_strings['LBL_UW_COMPLIANCE_MBSTRING_FUNC_OVERLOAD'],
 );
-if($result['error_found'] == true) {
-	$stop = true;
+if($result['error_found'] == true || $result['warn_found']) {
+	if($result['error_found']) {
+		$stop = true;
+	}
 	$phpIniLocation = get_cfg_var("cfg_file_path");
 
 	$sysCompliance  = "<a href='javascript:void(0); toggleNwFiles(\"sysComp\");'>{$mod_strings['LBL_UW_SHOW_COMPLIANCE']}</a>";

@@ -425,113 +425,6 @@ var refreshListViewCheckbox = function (e) {
 };
 
 $(function () {
-  if (isUserProfilePage()) {
-
-    var tabActiveSelector;
-    var tabFramesLength;
-    var tabFrames;
-
-    if (isEditViewPage()) {
-      tabActiveSelector = '#EditView_tabs.yui-navset.yui-navset-top ul.yui-nav li.selected a';
-      tabFramesLength = 5;
-      tabFrames = {
-        // User Profile
-        'tab1': [
-          // User Profile & Employee Information
-          'form#EditView div#EditView_tabs.yui-navset.yui-navset-top div.yui-content div div#EditView_tabs',
-          // Email Settings
-          '#email_options'
-        ],
-        // Password
-        'tab2': [
-          // Password
-          '#generate_password'
-        ],
-        // Themes
-        'tab3': [
-          // Themes
-          '#themepicker'
-        ],
-        // Advanced
-        'tab4': [
-          // User Settings
-          '#settings',
-          // Layout Options
-          '#layout',
-          // Locale Settings
-          '#locale',
-          // Calendar Options
-          '#calendar_options'
-        ],
-        // External Account
-        'tab5': [
-          '#eapm_area'
-        ]
-      };
-
-    }
-    if (isDetailViewPage()) {
-      tabActiveSelector = '#user_detailview_tabs.yui-navset.detailview_tabs.yui-navset-top ul.yui-nav li.selected a';
-      tabFramesLength = 3;
-      tabFrames = {
-        // User Profile
-        'tab1': [
-          // User Profile & Employee Information
-          'div#user_detailview_tabs.yui-navset.detailview_tabs.yui-navset-top div.yui-content',
-          // Email Settings
-          '#email_options',
-          // Security Groups Management etc..
-          '#subpanel_list'
-        ],
-        // Advanced
-        'tab2': [
-          // User Settings
-          '#settings',
-          // Locale Settings
-          '#locale',
-          // Calendar Options
-          '#calendar_options',
-          // Layout Options
-          '#edit_tabs',
-          // Security Groups Management etc..
-          '#subpanel_list'
-        ],
-        // Access
-        'tab3': [
-          // Security Groups Management etc..
-          '#subpanel_list'
-        ]
-      };
-    }
-
-    var tabsRefresh = function () {
-      // hide all tabs..
-      for (var i = 1; i <= tabFramesLength; i++) {
-        for (var j = 0; j < tabFrames['tab' + i].length; j++) {
-          $(tabFrames['tab' + i][j]).hide();
-        }
-      }
-
-      // show the active only
-      var activeTab = $(tabActiveSelector).first().attr('id');
-      for (i = 0; i < tabFrames[activeTab].length; i++) {
-        $(tabFrames[activeTab][i]).show();
-      }
-    }
-
-    for (var i = 1; i <= tabFramesLength; i++) {
-      $('#tab' + i + ', input[type="button"]').click(function () {
-        setTimeout(function () {
-          tabsRefresh();
-        }, 300);
-      });
-    }
-    setTimeout(function () {
-      tabsRefresh();
-    }, 300);
-
-  }
-
   // Fix for footer position
   if ($('#bootstrap-container footer').length > 0) {
     var clazz = $('#bootstrap-container footer').attr('class');
@@ -544,27 +437,6 @@ $(function () {
     $('#alerts').css({left: 16 - $('#alerts').width() + 'px'});
   }, 100);
 
-  // fix dropdown menu top-position
-  var ddInt = setInterval(function () {
-    if ($('.sugar_action_button span').length > 0) {
-      $('.sugar_action_button span').click(function (e) {
-        var hsum = 0;
-        if (!$(this).closest('.sugar_action_button').find('.subnav').hasClass('upper')) {
-          hsum += 22;
-        }
-        else {
-          $(this).closest('.sugar_action_button').find('.subnav li').each(function (e) {
-            hsum -= $(this).height();
-          });
-        }
-        var _this = $(this);
-        setTimeout(function () {
-          _this.closest('.sugar_action_button').find('.subnav').css('top', hsum);
-        }, 11);
-      });
-      clearInterval(ddInt);
-    }
-  }, 300);
 
   var hideEmptyFormCellsOnTablet = function () {
     if ($(window).width() <= 767) {
@@ -574,7 +446,7 @@ $(function () {
             $(e).html('&nbsp;');
           }
         });
-        if ($(e).html().trim() == '<slot>&nbsp;</slot>') {
+        if ($(e).html().trim() == '<span>&nbsp;</span>') {
           $(e).addClass('hidden');
           $(e).addClass('hiddenOnTablet');
         }
@@ -659,26 +531,6 @@ $(function () {
   };
   setInterval(function () {
     listViewCheckboxInit();
-  }, 100);
-
-
-  setInterval(function () {
-    $('.subnav').each(function (i, e) {
-      if ($(e).hasClass('ddopen')) {
-        $(e).closest('.sugar_action_button').addClass('hover');
-        if (!$(e).hasClass('upper')) {
-          $(e).closest('.sugar_action_button').addClass('opened');
-        }
-      }
-      else {
-        $(e).closest('.sugar_action_button').removeClass('hover');
-        $(e).closest('.sugar_action_button').removeClass('opened');
-      }
-    });
-
-    $('.subnav.upper.ddopen').each(function (i, e) {
-      $(e).css('top', '-' + $(e).height() + 'px');
-    });
   }, 100);
 
 });
