@@ -160,7 +160,6 @@ Alerts.prototype.redirectToLogin = function () {
   return false;
 }
 Alerts.prototype.updateManager = function () {
-  return; // TODO: remove this return, it's only when debugging
   var url = 'index.php?module=Alerts&action=get&to_pdf=1';
   $.ajax(url).done(function (data) {
     if (data == 'lost session') {
@@ -194,7 +193,6 @@ Alerts.prototype.updateManager = function () {
   });
 }
 Alerts.prototype.markAsRead = function (id) {
-  return; // TODO: remove this return, it's only when debugging
   var url = 'index.php?module=Alerts&action=markAsRead&record=' + id + '&to_pdf=1';
   $.ajax(url).done(function (data) {
     Alerts.prototype.updateManager();

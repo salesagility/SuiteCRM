@@ -56,15 +56,11 @@ $.post(url,{module:'Alerts',action:'add',name:name,description:description,url_r
 Alerts.prototype.redirectToLogin=function(){var getQueryParams=function(qs){qs=qs.split('+').join(' ');var params={},tokens,re=/[?&]?([^=]+)=([^&]*)/g;while(tokens=re.exec(qs)){params[decodeURIComponent(tokens[1])]=decodeURIComponent(tokens[2]);}
 return params;};var params=getQueryParams(document.location.search);if(params.entryPoint!='Changenewpassword'&&params.module!='Users'&&params.action!='Login'){document.location.href='index.php?module=Users&action=Login&loginErrorMessage=LBL_SESSION_EXPIRED';return true;}
 return false;}
-Alerts.prototype.updateManager=function(){
-  return; // TODO: remove this return, it's only when debugging
-  var url='index.php?module=Alerts&action=get&to_pdf=1';$.ajax(url).done(function(data){if(data=='lost session'){Alerts.prototype.redirectToLogin();return false;}
+Alerts.prototype.updateManager=function(){var url='index.php?module=Alerts&action=get&to_pdf=1';$.ajax(url).done(function(data){if(data=='lost session'){Alerts.prototype.redirectToLogin();return false;}
 for(replaceMessage in Alerts.prototype.replaceMessages){data=data.replace(Alerts.prototype.replaceMessages[replaceMessage].search,Alerts.prototype.replaceMessages[replaceMessage].replace);}
 $('div#alerts').html(data);$('div.alerts').css('width','200px');var alertCount=$('#alerts').find('div.module-alert').size();$('.alert_count').html(alertCount);if(alertCount>0){$('div#alerts').addClass('has-alerts');$('#desktop_notifications').addClass('has-alerts');$('.alertsButton').removeClass('btn-').addClass('btn-danger');$('.alert_count').removeClass('hidden');}
 else{$('#desktop_notifications').removeClass('has-alerts');$('div#alerts').removeClass('has-alerts');$('.alertsButton').removeClass('btn-danger').addClass('btn-success');$('.alert_count').addClass('hidden');}}).fail(function(){}).always(function(){});}
-Alerts.prototype.markAsRead=function(id){
-  return; // TODO: remove this return, it's only when debugging
-  var url='index.php?module=Alerts&action=markAsRead&record='+id+'&to_pdf=1';$.ajax(url).done(function(data){Alerts.prototype.updateManager();}).fail(function(){}).always(function(){});}
+Alerts.prototype.markAsRead=function(id){var url='index.php?module=Alerts&action=markAsRead&record='+id+'&to_pdf=1';$.ajax(url).done(function(data){Alerts.prototype.updateManager();}).fail(function(){}).always(function(){});}
 function AlertObj(){this.title='Alert';this.options={body:' ',url_redirect:null,target_module:null,type:'info'};}
 $(document).ready(function(){Alerts.prototype.replaceMessages=[{search:SUGAR.language.translate("app","MSG_JS_ALERT_MTG_REMINDER_CALL_MSG"),replace:""},{search:SUGAR.language.translate("app","MSG_JS_ALERT_MTG_REMINDER_MEETING_MSG"),replace:""},];var updateMissed=function(){Alerts.prototype.updateManager();setTimeout(updateMissed,60000);}
 setTimeout(updateMissed,2000);});
