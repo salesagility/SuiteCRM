@@ -6,6 +6,8 @@ class FactorAuthEmailCode implements FactorAuthInterface {
 
     public function showTokenInput()
     {
+        global $app_strings;
+
         $ss = new Sugar_Smarty();
 
         $theme = SugarThemeRegistry::current();
@@ -14,6 +16,7 @@ class FactorAuthEmailCode implements FactorAuthInterface {
         $css = $theme->getCSS();
         $favicon = $theme->getImageURL('sugar_icon.ico',false);
 
+        $ss->assign('APP', $app_strings);
         $ss->assign('cssPath', $cssPath);
         $ss->assign('css', $css);
         $ss->assign('favicon',getJSPath($favicon));
