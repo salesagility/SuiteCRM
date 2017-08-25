@@ -1196,35 +1196,35 @@ class SugarThemeRegistry
         )
     {
         // make sure the we know the sugar version
-        global $sugar_version;
-        if (empty($sugar_version))
-        {
-            include('sugar_version.php');
+        global $suitecrm_version;
+        if (empty($suitecrm_version)) {
+            include('suitecrm_version.php');
         }
 
-        // Assume theme is designed for 5.5.x if not specified otherwise
-        if ( !isset($themedef['version']) )
-            $themedef['version']['regex_matches'] = array('5\.5\.*');
+        if (!isset($themedef['version']['regex_matches'])) {
+            $themedef['version']['regex_matches'] = array('^7\.[0-8][^\d]');
+        }
 
         // Check to see if theme is valid for this version of Sugar; return false if not
-        $version_ok = false;
+
+        $versionOk = false;
         if( isset($themedef['version']['exact_matches']) ){
             $matches_empty = false;
             foreach( $themedef['version']['exact_matches'] as $match ){
-                if( $match == $GLOBALS['sugar_version'] ){
-                    $version_ok = true;
+                if( $match == $GLOBALS['suitecrm_version'] ){
+                    $versionOk = true;
                 }
             }
         }
-        if( !$version_ok && isset($themedef['version']['regex_matches']) ){
+        if( !$versionOk && isset($themedef['version']['regex_matches']) ){
             $matches_empty = false;
             foreach( $themedef['version']['regex_matches'] as $match ){
-                if( preg_match( "/$match/", $GLOBALS['sugar_version'] ) ){
-                    $version_ok = true;
+                if( preg_match( "/$match/", $GLOBALS['suitecrm_version'] ) ){
+                    $versionOk = true;
                 }
             }
         }
-        if ( !$version_ok )
+        if (!$versionOk)
             return false;
 
         $theme = new SugarTheme($themedef);
@@ -1423,6 +1423,9 @@ class SugarThemeRegistry
             $themelist[$themeobject->dirName] = $themeobject->name;
         }
         asort($themelist, SORT_STRING);
+        if (count($themelist)==0) {
+     		$GLOBALS['log']->fatal('availableThemes() is returning an empty array! Check disabled_themes in config.php and config_override.php');
+        }
         return $themelist;
     }
 

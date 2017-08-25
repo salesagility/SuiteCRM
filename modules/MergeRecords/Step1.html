@@ -72,14 +72,14 @@
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list view">
 	<!-- BEGIN: select_module -->
 		<tr>
-			<td width="45%"><slot>{MOD.LBL_SELECT_MODULE}:</slot></td>
-			<td width="5%"><slot>&nbsp;</slot></td>
-			<td width="50%"><slot>&nbsp;</slot></td>
+			<td width="45%"><span>{MOD.LBL_SELECT_MODULE}:</span></td>
+			<td width="5%"><span>&nbsp;</span></td>
+			<td width="50%"><span>&nbsp;</span></td>
 		</tr>
 		<tr>
-			<td width="45%"><slot><select name="selected_module" id="selected_module" onchange="grab_fields();">{MIGRATION_MODULE_OPTIONS}</select></slot></td>
-			<td width="5%"><slot>&nbsp;</slot></td>
-			<td width="50%"><slot>&nbsp;</slot></td>
+			<td width="45%"><span><select name="selected_module" id="selected_module" onchange="grab_fields();">{MIGRATION_MODULE_OPTIONS}</select></span></td>
+			<td width="5%"><span>&nbsp;</span></td>
+			<td width="50%"><span>&nbsp;</span></td>
 		</tr>
 	<!-- END: select_module -->
 		<tr>
@@ -93,7 +93,7 @@
 							<td width="73%"  >{MOD.LBL_FILTER_COND}:</td>
 						</tr>
 						<tr id="multi_select_row">
-							<td id="field_avail_list_td"><slot><div align="left"><select name="field_avail_list[]" id="field_avail_list" multiple="multiple" size="10" >{FIELD_AVAIL_OPTIONS}</select></div></slot></td>
+							<td id="field_avail_list_td"><span><div align="left"><select name="field_avail_list[]" id="field_avail_list" multiple="multiple" size="10" >{FIELD_AVAIL_OPTIONS}</select></div></span></td>
 							<td valign="top" style="padding-right: 2px; padding-left: 2px;">
 							<div align="center">
 								<a onclick="javascript:setselected('field_include_list','field_avail_list');">

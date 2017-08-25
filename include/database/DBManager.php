@@ -1313,9 +1313,14 @@ protected function checkQuery($sql, $object_name = false)
      * @param bool $is_related_query
      * @return string SQL insert statement
      */
-	public function generateInsertSQL(SugarBean $bean, $select_query, $start, $count = -1, $table, $is_related_query = false)
+	public function generateInsertSQL(SugarBean $bean, $select_query, $start, $count = -1, $table = '', $is_related_query = false)
 	{
 		$this->log->info('call to DBManager::generateInsertSQL() is deprecated');
+
+		if (!$table) {
+			$GLOBALS['log']->fatal('empty table name');
+		}
+
 		global $sugar_config;
 
 		$rows_found = 0;
@@ -2526,8 +2531,13 @@ protected function checkQuery($sql, $object_name = false)
 	 * @param  string $tablename      Optional, table name
 	 * @return string SQL column definitions
 	 */
-	protected function columnSQLRep($fieldDefs, $ignoreRequired = false, $tablename)
+	protected function columnSQLRep($fieldDefs, $ignoreRequired, $tablename)
 	{
+		// set $ignoreRequired = false by default
+		if (!is_bool($ignoreRequired)) {
+			$ignoreRequired = false;
+		}
+
 		$columns = array();
 
 		if ($this->isFieldArray($fieldDefs)) {

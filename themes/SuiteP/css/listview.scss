@@ -1661,7 +1661,6 @@ label.selected-actions-label {
 }
 
 div.modal-content {
-  width: 450px;
   margin: 0 auto;
   max-width: 100%;
 }
@@ -3350,6 +3349,27 @@ ul.clickMenu > li > span.searchAppliedAlert {
   background-repeat: no-repeat;
 }
 
+// list-view-action-buttons
+
+.list-view-action-buttons {
+  margin-right: 5px;
+}
+
+.list-view-action-buttons > li {
+  background-color: transparent;
+  display: inline-block;
+  padding: 0 2px 0 2px;
+}
+
+.list-view-action-buttons > li .btn {
+  background-color: $list-view-action-button-bg;
+  border: 0;
+  color: $default-btn-color;
+  font-size: 13px;
+  margin: 0 0 0 0;
+  padding: 5px 8px 4px 8px;
+}
+
 /* search form (and popup search form) */
 
 .modal-content .search_form .view input[type="text"] {
@@ -3548,4 +3568,42 @@ ul.clickMenu > li > span.searchAppliedAlert {
 .filterContainer{
   padding: 10px;
   font-size: 14px;
+}
+
+@media (max-width: $xs-breakpoint) {
+  .list #pagination td .paginationTable .pageNumbers {
+    display: none;
+  }
+
+  .parent-dropdown-handler {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  [name=listViewStartButton] {
+    display: none;
+  }
+
+  [name=listViewEndButton] {
+    display: none;
+  }
+}
+
+@media (max-width: $md-breakpoint) {
+  .selected-actions-label-text {
+    display: none;
+  }
+  .selected-actions-label .glyphicon {
+    display: inline-block;
+  }
+}
+
+@media (min-width: $md-breakpoint) {
+  .selected-actions-label .glyphicon {
+    display: none;
+  }
+
+  .selected-actions-label-text {
+    display: inline-block;
+  }
 }
