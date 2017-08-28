@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array (
+$mod_strings = array(
     'LBL_RECORDS_SKIPPED_DUE_TO_ERROR' => 'rows were not imported due to error',
     'LBL_UPDATE_SUCCESSFULLY' => 'records updated successfully',
     'LBL_SUCCESSFULLY_IMPORTED' => 'records were created',
@@ -57,7 +57,7 @@ $mod_strings = array (
     'LBL_UPDATE_BUTTON' => 'Create new records and update existing records',
     'LBL_CREATE_BUTTON_HELP' => 'Use this option to create new records. Note: Rows in the import file containing values that match the IDs of existing records will not be imported if the values are mapped to the ID field.',
     'LBL_UPDATE_BUTTON_HELP' => 'Use this option to update existing records. The data in the import file will be matched to existing records based on the record ID in the import file.',
-    'LBL_ERROR_INVALID_BOOL'=>'Invalid boolean value',
+    'LBL_ERROR_INVALID_BOOL' => 'Invalid boolean value',
     'LBL_IMPORT_ERROR' => 'Import errors:',
     'LBL_ERROR' => 'Error',
     'LBL_FIELD_NAME' => 'Field Name',
@@ -78,8 +78,8 @@ $mod_strings = array (
     'LBL_ERROR_INVALID_TIME' => 'Invalid time',
     'LBL_ERROR_INVALID_INT' => 'Invalid integer value',
     'LBL_ERROR_INVALID_NUM' => 'Invalid numeric value',
-    'LBL_ERROR_INVALID_EMAIL'=>'Invalid Email address',
-    'LBL_ERROR_INVALID_USER'=>'Invalid user name or ID',
+    'LBL_ERROR_INVALID_EMAIL' => 'Invalid Email address',
+    'LBL_ERROR_INVALID_USER' => 'Invalid user name or ID',
     'LBL_ERROR_INVALID_TEAM' => 'Invalid team name or ID',
     'LBL_ERROR_INVALID_ACCOUNT' => 'Invalid account name or ID',
     'LBL_ERROR_INVALID_RELATE' => 'Invalid relational field',
@@ -90,7 +90,7 @@ $mod_strings = array (
     'LBL_MODULE_NAME' => 'Import',
     'LBL_TRY_AGAIN' => 'Try Again',
     'LBL_IMPORT_ERROR_MAX_REC_LIMIT_REACHED' => 'The import file contains {0} rows. The optimal number of rows is {1}. More rows may slow the import process. Click OK to continue importing. Click Cancel to revise and re-upload the import file.',
-    'ERR_IMPORT_SYSTEM_ADMININSTRATOR'  => 'You cannot import a system administrator user',
+    'ERR_IMPORT_SYSTEM_ADMININSTRATOR' => 'You cannot import a system administrator user',
     'ERR_MULTIPLE' => 'Multiple columns have been defined with the same field name.',
     'ERR_MISSING_REQUIRED_FIELDS' => 'Missing required fields:',
     'ERR_SELECT_FILE' => 'Select a file to upload.',
@@ -190,7 +190,7 @@ $mod_strings = array (
     'LBL_IMPORT_RECORDS_OF' => 'of',
     'LBL_IMPORT_RECORDS_TO' => 'to',
     'LBL_CURRENCY' => 'Currency:',
-	'LBL_CURRENCY_SIG_DIGITS' => 'Currency Significant Digits',
+    'LBL_CURRENCY_SIG_DIGITS' => 'Currency Significant Digits',
     'LBL_NUMBER_GROUPING_SEP' => '1000s separator:',
     'LBL_DECIMAL_SEP' => 'Decimal symbol:',
     'LBL_LOCALE_DEFAULT_NAME_FORMAT' => 'Name Display Format',
@@ -238,4 +238,3 @@ $mod_strings = array (
 );
 
 global $timedate;
-?>

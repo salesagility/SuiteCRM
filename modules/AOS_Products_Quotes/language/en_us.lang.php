@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array (
+$mod_strings = array(
     'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
     'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
     'LBL_ID' => 'ID',
@@ -103,4 +103,4 @@ $mod_strings = array (
     'LBL_AOS_PRODUCTS' => 'Products',
     'LBL_AOS_QUOTES' => 'Quotes',
 );
-?>
+

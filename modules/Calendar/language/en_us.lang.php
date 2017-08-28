@@ -136,7 +136,7 @@ $mod_strings = array(
 
 
 $mod_list_strings = array(
-    'dom_cal_weekdays'=>
+    'dom_cal_weekdays' =>
         array(
             '0' => "Sun",
             '1' => "Mon",
@@ -146,7 +146,7 @@ $mod_list_strings = array(
             '5' => "Fri",
             '6' => "Sat",
         ),
-    'dom_cal_weekdays_long'=>
+    'dom_cal_weekdays_long' =>
         array(
             '0' => "Sunday",
             '1' => "Monday",
@@ -156,7 +156,7 @@ $mod_list_strings = array(
             '5' => "Friday",
             '6' => "Saturday",
         ),
-    'dom_cal_month'=>
+    'dom_cal_month' =>
         array(
             '0' => "",
             '1' => "Jan",
@@ -172,7 +172,7 @@ $mod_list_strings = array(
             '11' => "Nov",
             '12' => "Dec",
         ),
-    'dom_cal_month_long'=>
+    'dom_cal_month_long' =>
         array(
             '0' => "",
             '1' => "January",
@@ -189,4 +189,4 @@ $mod_list_strings = array(
             '12' => "December",
         ),
 );
-?>
+

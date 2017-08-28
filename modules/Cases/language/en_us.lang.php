@@ -129,4 +129,3 @@ $mod_strings = array(
     'LBL_CASE_UPDATE_FORM' => 'Update attachment form',
 );
 
-?>

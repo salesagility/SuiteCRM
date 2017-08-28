@@ -116,4 +116,3 @@ $mod_strings = array(
     'LBL_POST_TITLE' => 'Post Status Update for ',
     'LBL_URL_LINK_TITLE' => 'URL Link to use',
 );
-?>
