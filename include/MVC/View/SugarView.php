@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * Base Sugar view
@@ -377,14 +381,6 @@ class SugarView
                 "URL" => ajaxLink($menu_item[0]),
                 "LABEL" => $menu_item[1],
                 "MODULE_NAME" => $menu_item[2],
-                "IMAGE" => $themeObject->getImage(
-                    $menu_item[2],
-                    "border='0' align='absmiddle'",
-                    null,
-                    null,
-                    '.gif',
-                    $menu_item[1]
-                ),
             );
         }
         $ss->assign("SHORTCUT_MENU", $shortcut_menu);
@@ -655,14 +651,6 @@ class SugarView
                         "URL" => ajaxLink($menu_item[0]),
                         "LABEL" => $menu_item[1],
                         "MODULE_NAME" => $menu_item[2],
-                        "IMAGE" => $themeObject->getImage(
-                            $menu_item[2],
-                            "border='0' align='absmiddle'",
-                            null,
-                            null,
-                            '.gif',
-                            $menu_item[1]
-                        ),
                         "ID" => $menu_item[2] . "_link",
                     );
                 }
@@ -691,14 +679,6 @@ class SugarView
                         "URL" => ajaxLink($menu_item[0]),
                         "LABEL" => $menu_item[1],
                         "MODULE_NAME" => $menu_item[2],
-                        "IMAGE" => $themeObject->getImage(
-                            $menu_item[2],
-                            "border='0' align='absmiddle'",
-                            null,
-                            null,
-                            '.gif',
-                            $menu_item[1]
-                        ),
                         "ID" => $menu_item[2] . "_link",
                     );
                 }
