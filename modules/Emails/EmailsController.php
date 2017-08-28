@@ -155,7 +155,10 @@ class EmailsController extends SugarController
 
         // parse and replace bean variables
         $this->bean = $this->replaceEmailVariables($this->bean, $request);
-
+ 
+        $this->bean->reply_to_name = $inboundEmailAccount->name;
+        $this->bean->from_name = $inboundEmailAccount->name;
+        
         if ($this->bean->send()) {
             $this->bean->status = 'sent';
             $this->bean->save();
@@ -369,7 +372,7 @@ class EmailsController extends SugarController
 
         $data = array();
         foreach ($accounts as $inboundEmailId => $inboundEmail) {
-            if(in_array($inboundEmail->id, $showFolders)) {
+//            if(in_array($inboundEmail->id, $showFolders)) {
                 $storedOptions = unserialize(base64_decode($inboundEmail->stored_options));
                 $isGroupEmailAccount = $inboundEmail->isGroupEmailAccount();
                 $isPersonalEmailAccount = $inboundEmail->isPersonalEmailAccount();
@@ -411,7 +414,7 @@ class EmailsController extends SugarController
                 }
 
                 $data[] = $dataAddress;
-            }
+//            }
         }
 
         $dataEncoded = json_encode(array('data' => $data));
