@@ -90,6 +90,9 @@ if (typeof(ModuleBuilder) == 'undefined') {
               ) {
                 throw "Invalid url";
               }
+              window.location = url;
+              return;
+
             }
 			//Setup the basic ajax request settings
 			Connect.extraParams = {
