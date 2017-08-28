@@ -168,6 +168,18 @@ SUGAR.ajaxUI = {
     {
         if(YAHOO.lang.trim(url) != "")
         {
+
+          // ajaxUILoc XSS protection:
+          // window.location = url; is vulnerable to XSS attack
+          // Check for valid url
+          // Expects url encoded versions of index.php?module=Home&action=index&parentTab=All
+          var testUrl = decodeURIComponent(url);
+          if (
+            /^index.php([A-Z]|[%=+#&\?\[\]\.]|[a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+/i.test(testUrl) === false
+          ) {
+            throw "Invalid url";
+          }
+
             //Don't ajax load certain modules
             var mRegex = /module=([^&]*)/.exec(url);
             var module = mRegex ? mRegex[1] : false;
@@ -175,7 +187,7 @@ SUGAR.ajaxUI = {
             {
                 YAHOO.util.History.navigate('ajaxUILoc',  url);
             } else {
-                window.location = url;
+              window.location = url;
             }
         }
     },
@@ -186,8 +198,21 @@ SUGAR.ajaxUI = {
         if(YAHOO.lang.trim(url) != "")
         {
             var con = YAHOO.util.Connect, ui = SUGAR.ajaxUI;
-            if (ui.lastURL == url)
+            if (ui.lastURL == url) {
                 return;
+            }
+
+          // ajaxUILoc XSS protection:
+          // window.location = url; is vulnerable to XSS attack
+          // Check for valid url
+          // Expects url encoded versions of index.php?module=Home&action=index&parentTab=All
+          var testUrl = decodeURIComponent(url);
+          if (
+            /^index.php([A-Z]|[%=+#&\?\[\]\.]|[a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+/i.test(testUrl) === false
+          ) {
+            throw "Invalid url";
+          }
+
             var inAjaxUI = /action=ajaxui/.exec(window.location);
             if (typeof (window.onbeforeunload) == "function" && window.onbeforeunload())
             {
@@ -214,8 +239,7 @@ SUGAR.ajaxUI = {
             var module = mRegex ? mRegex[1] : false;
             //If we can't ajax load the module (blacklisted), set the URL directly.
             if (!ui.canAjaxLoadModule(module)) {
-                window.location = url;
-                return;
+              window.location = url;
             }
             ui.lastURL = url;
             ui.cleanGlobals();
@@ -227,11 +251,11 @@ SUGAR.ajaxUI = {
             if (!inAjaxUI) {
                 //If we aren't in the ajaxUI yet, we need to reload the page to get setup properly
                 if (!SUGAR.isIE)
-                    window.location.replace("index.php?action=ajaxui#ajaxUILoc=" + encodeURIComponent(url));
+                  window.location.replace("index.php?action=ajaxui#ajaxUILoc=" + encodeURIComponent(url));
                 else {
-                    //if we use replace under IE, it will cache the page as the replaced version and thus no longer load the previous page.
-                    window.location.hash = "#";
-                    window.location.assign("index.php?action=ajaxui#ajaxUILoc=" + encodeURIComponent(url));
+                  //if we use replace under IE, it will cache the page as the replaced version and thus no longer load the previous page.
+                  window.location.hash = "#";
+                  window.location.assign("index.php?action=ajaxui#ajaxUILoc=" + encodeURIComponent(url));
                 }
             }
             else {

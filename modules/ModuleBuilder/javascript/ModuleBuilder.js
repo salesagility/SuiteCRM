@@ -79,8 +79,17 @@ if (typeof(ModuleBuilder) == 'undefined') {
             var aRegex = /#.*ajaxUILoc=([^&]*)/.exec(window.location);
             var ajaxLoc = aRegex ? aRegex[1] : false;
             if (ajaxLoc) {
-                window.location = "index.php?action=ajaxui#ajaxUILoc=" + ajaxLoc;
-                return;
+			  var url = "index.php?action=ajaxui#ajaxUILoc=" + ajaxLoc;
+              // ajaxUILoc XSS protection:
+              // window.location = url; is vulnerable to XSS attack
+              // Check for valid url
+              // Expects url encoded versions of index.php?module=Home&action=index&parentTab=All
+              var testUrl = decodeURIComponent(url);
+              if (
+                /^index.php([A-Z]|[%=+#&\?\[\]\.]|[a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+/i.test(testUrl) === false
+              ) {
+                throw "Invalid url";
+              }
             }
 			//Setup the basic ajax request settings
 			Connect.extraParams = {
