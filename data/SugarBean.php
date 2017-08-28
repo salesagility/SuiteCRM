@@ -1910,9 +1910,6 @@ class SugarBean
             $this->custom_fields->save($isUpdate);
         }
 
-        // use the db independent query generator
-        $this->preprocess_fields_on_save();
-
         $this->_sendNotifications($check_notify);
 
         if ($isUpdate) {
