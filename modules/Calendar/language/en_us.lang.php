@@ -44,6 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $mod_strings = array(
 
+    'LBL_SHAREDWEEK' => 'Shared Week',
+    'LBL_SHAREDMONTH' => 'Shared Month',
     'LBL_MODULE_NAME' => 'Calendar',
     'LBL_MODULE_TITLE' => 'Calendar',
     'LNK_NEW_CALL' => 'Schedule Call',
@@ -61,7 +63,10 @@ $mod_strings = array(
     'LNK_IMPORT_MEETINGS' => 'Import Meetings',
     'LNK_IMPORT_TASKS' => 'Import Tasks',
     'LBL_YEAR' => 'Year',
+    'LBL_MONTH' => 'Month',
+    'LBL_AGENDADAY' => 'Day',
     'LBL_NEXT_MONTH' => 'Next Month',
+    'LBL_AGENDAWEEK' => 'Week',
     'LBL_NEXT_YEAR' => 'Next Year',
     'LBL_NEXT_WEEK' => 'Next Week',
     'LBL_USERS' => 'Users',
