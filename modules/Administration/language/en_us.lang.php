@@ -898,5 +898,24 @@ $mod_strings = array(
     'LBL_PROCESS_OUTPUT_CLEANUP_ERROR' => "Unable to cleanup output file. Please check permission..",
     'LBL_PROCESS_OUTPUT_WRITE_ERROR' => "Unable to write output file. Please check permission..",
     'LBL_IE_NOT_FOUND' => "Error: invalid Inbound Email Account",
+
+    'LBL_PWDSEC_SETS' => 'Password Security Settings',
+//    'LBL_PWDSEC_EXPIRY' => 'Expiration Period after',
+//    'LBL_PWDSEC_EXPIRY_DESC' => 'Password automatically expired after period, users have to change own password for log in. Set value to 0 to switch off this functionality',
+    'LBL_PWDSEC_BLOCK_AFTER' => 'Block users after inactivity period',
+    'LBL_PWDSEC_BLOCK_AFTER_DESC' => 'Block users after inactivity period',
+    'LBL_PWDSEC_MIN_LENGTH' => 'Passwords minimum length',
+    'LBL_PWDSEC_MIN_LENGTH_DESC' => 'Passwords minimum length',
+    'LBL_PWDSEC_UPPERCASE' => 'Password should contains uppercase characters',
+    'LBL_PWDSEC_UPPERCASE_DESC' => 'Password should contains uppercase characters',
+    'LBL_PWDSEC_LOWERCASE' => 'Password should contains lowercase characters',
+    'LBL_PWDSEC_LOWERCASE_DESC' => 'Password should contains lowercase characters',
+    'LBL_PWDSEC_NUMBERS' => 'Password should contains numbers',
+    'LBL_PWDSEC_NUMBERS_DESC' => 'Password should contains numbers',
+    'LBL_PWDSEC_SPECCHAR' => 'Password should contains special characters',
+    'LBL_PWDSEC_SPECCHAR_DESC' => 'Password should contains special characters',
+    'LBL_PWDSEC_DAYS' => 'Days',
+    'LBL_PWDSEC_CHARS' => 'Character',
+
 );
 

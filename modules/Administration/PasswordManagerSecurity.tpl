@@ -5,7 +5,7 @@
         <th align="left" scope="row" colspan="3"><h4>{$MOD.LBL_PWDSEC_SETS}</h4></th>
     </tr>
 
-    <!-- Expiry Period -->
+    <!-- Expiry Period
     <tr>
         <td width="25%" scope="row" valign="middle">
             {$MOD.LBL_PWDSEC_EXPIRY}
@@ -17,6 +17,7 @@
         </td>
         <td>&nbsp;</td><td>&nbsp;</td>
     </tr>
+    -->
 
     <!-- Block After Inactivity --> <!-- TODO: Im not 100% sure, is this a password settings?
     <tr>
@@ -39,20 +40,32 @@
             {sugar_help text=$MOD.LBL_PWDSEC_MIN_LENGTH_DESC}
         </td>
         <td valign="middle">
-            <input name="passwordsetting_minlength" id="passwordsetting_minlength" type="number" value="{$config.passwordsetting.minlength}">
+            <input name="passwordsetting_minpwdlength" id="passwordsetting_minpwdlength" type="number" value="{$config.passwordsetting.minpwdlength}">
             {$MOD.LBL_PWDSEC_CHARS}
         </td>
         <td>&nbsp;</td><td>&nbsp;</td>
     </tr>
 
-    <!-- Password should contains both of uppercase and lowercase characters -->
+    <!-- Password should contains uppercase characters -->
     <tr>
         <td width="25%" scope="row" valign="middle">
             {$MOD.LBL_PWDSEC_UPPERCASE}
             {sugar_help text=$MOD.LBL_PWDSEC_UPPERCASE_DESC}
         </td>
         <td valign="middle">
-            <input name="passwordsetting_uppercase" id="passwordsetting_uppercase" type="checkbox" {if $config.passwordsetting.uppercase}checked="checked"{/if} value="1">
+            <input name="passwordsetting_oneupper" id="passwordsetting_oneupper" type="checkbox" {if $config.passwordsetting.oneupper}checked="checked"{/if} value="1">
+        </td>
+        <td>&nbsp;</td><td>&nbsp;</td>
+    </tr>
+
+    <!-- Password should contains lowercase characters -->
+    <tr>
+        <td width="25%" scope="row" valign="middle">
+            {$MOD.LBL_PWDSEC_LOWERCASE}
+            {sugar_help text=$MOD.LBL_PWDSEC_LOWERCASE_DESC}
+        </td>
+        <td valign="middle">
+            <input name="passwordsetting_onelower" id="passwordsetting_onelower" type="checkbox" {if $config.passwordsetting.onelower}checked="checked"{/if} value="1">
         </td>
         <td>&nbsp;</td><td>&nbsp;</td>
     </tr>
@@ -64,7 +77,7 @@
             {sugar_help text=$MOD.LBL_PWDSEC_NUMBERS_DESC}
         </td>
         <td valign="middle">
-            <input name="passwordsetting_numbers" id="passwordsetting_numbers" type="checkbox" {if $config.passwordsetting.numbers}checked="checked"{/if} value="1">
+            <input name="passwordsetting_onenumber" id="passwordsetting_onenumber" type="checkbox" {if $config.passwordsetting.onenumber}checked="checked"{/if} value="1">
         </td>
         <td>&nbsp;</td><td>&nbsp;</td>
     </tr>
@@ -76,7 +89,7 @@
             {sugar_help text=$MOD.LBL_PWDSEC_SPECCHAR_DESC}
         </td>
         <td valign="middle">
-            <input name="passwordsetting_specchars" id="passwordsetting_specchars" type="checkbox" {if $config.passwordsetting.specchars}checked="checked"{/if} value="1">
+            <input name="passwordsetting_onespecial" id="passwordsetting_onespecial" type="checkbox" {if $config.passwordsetting.onespecial}checked="checked"{/if} value="1">
         </td>
         <td>&nbsp;</td><td>&nbsp;</td>
     </tr>
