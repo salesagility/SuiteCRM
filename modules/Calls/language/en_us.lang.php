@@ -1,11 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,16 +34,13 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array(
     'LBL_BLANK' => ' ',
@@ -78,7 +75,6 @@ $mod_strings = array(
     'LBL_TIME' => 'Start Time:',
     'LBL_HOURS_ABBREV' => 'h',
     'LBL_MINSS_ABBREV' => 'm',
-    'LBL_COLON' => ':',
     'LNK_NEW_CALL' => 'Log Call',
     'LNK_NEW_MEETING' => 'Schedule Meeting',
     'LNK_CALL_LIST' => 'View Calls',
@@ -101,7 +97,6 @@ $mod_strings = array(
     'LBL_EMAIL_REMINDER' => 'Email Reminder',
     'LBL_EMAIL_REMINDER_TIME' => 'Email Reminder Time',
     'LBL_SEND_BUTTON_TITLE' => 'Save & Send Invites',
-    'LBL_SEND_BUTTON_KEY' => 'I',
     'LBL_SEND_BUTTON_LABEL' => 'Save & Send Invites',
     'LBL_DATE_END' => 'End Date',
     'LBL_TIME_END' => 'Time End',
@@ -132,14 +127,6 @@ $mod_strings = array(
     'LBL_REMOVE' => 'rem',
     'LBL_ACCEPT_STATUS' => 'Accept Status',
     'LBL_ACCEPT_LINK' => 'Accept Link',
-    //For export labels
-    'LBL_PARENT_ID' => 'Parent ID',
-    'LBL_EXPORT_MODIFIED_USER_ID' => 'Modified By ID',
-    'LBL_EXPORT_CREATED_BY' => 'Created By ID',
-    'LBL_EXPORT_ASSIGNED_USER_ID' => 'Assigned User ID',
-    'LBL_EXPORT_DATE_START' => 'Start Date and Time',
-    'LBL_EXPORT_PARENT_TYPE' => 'Related To Module',
-    'LBL_EXPORT_REMINDER_TIME' => 'Reminder Time (in minutes)',
 
     // create invitee functionallity
     'LBL_CREATE_INVITEE' => 'Create an invitee',
@@ -180,6 +167,8 @@ $mod_strings = array(
     'LBL_RESCHEDULE_HISTORY' => 'Call Attempt History',
     'LBL_CANCEL' => 'Cancel',
     'LBL_SAVE' => 'Save',
+
+    'LBL_CALLS_RESCHEDULE' => 'Calls Reschedule',
 
 );
 

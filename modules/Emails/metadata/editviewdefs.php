@@ -51,17 +51,16 @@ $viewdefs[$module_name]['EditView'] = array(
 
         'LBL_EMAIL_INFORMATION' => array(
             array(
-                0 => array(
-                    'name' => 'name',
-                    'label' => 'LBL_SUBJECT'
-                ),
+                'assigned_user_name' => array(
+                    'name' => 'assigned_user_name',
+                    'label' => 'LBL_ASSIGNED_TO',
+                )
             ),
-
             array(
-                0 => array(
-                    'name' => 'description',
-                    'label' => 'LBL_BODY'
-                ),
+                'parent_name'
+            ),
+            array (
+                'category_id',
             ),
         )
     )

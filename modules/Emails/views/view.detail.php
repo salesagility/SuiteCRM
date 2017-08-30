@@ -43,8 +43,34 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die ('Not A Valid Entry Point');
 }
 
+require_once 'modules/Emails/include/DetailView/EmailsDetailView.php';
+
 class EmailsViewDetail extends ViewDetail
 {
+    /**
+     * @var Email $bean
+     */
+    public $bean;
+
+    /**
+     * @see SugarView::preDisplay()
+     */
+    public function preDisplay()
+    {
+        $metadataFile = $this->getMetaDataFile();
+        $this->dv = new EmailsDetailView();
+        $this->dv->ss =&  $this->ss;
+        $this->dv->populateBean($_REQUEST);
+        $this->dv->setup(
+            $this->module,
+            $this->bean,
+            $metadataFile
+        );
+    }
+
+    /**
+     * display view
+     */
     public function display()
     {
         switch ($this->bean->status) {

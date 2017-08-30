@@ -78,18 +78,19 @@ SE.accounts = {
     getReplyAddress : function() {
         var primary = '';
 
-        for(var i=0; i<SE.userPrefs.current_user.emailAddresses.length; i++) {
-            var addy = SE.userPrefs.current_user.emailAddresses[i];
+      if(!(document.getElementById('ie_from_name').value = typeof SE === 'undefined' || typeof SE.userPrefs === 'undefined' || typeof SE.userPrefs.current_user === 'undefined' || typeof SE.userPrefs.current_user.full_name === 'undefined')) {
+        for (var i = 0; i < SE.userPrefs.current_user.emailAddresses.length; i++) {
+          var addy = SE.userPrefs.current_user.emailAddresses[i];
 
-            if(addy.primary_address == "1") {
-                primary = addy.email_address;
-            }
+          if (addy.primary_address == "1") {
+            primary = addy.email_address;
+          }
 
-            if(addy.reply_to == "1") {
-                return addy.email_address;
-            }
+          if (addy.reply_to == "1") {
+            return addy.email_address;
+          }
         }
-
+      }
         return primary;
     },
 
@@ -170,15 +171,8 @@ SE.accounts = {
 	            var oColumn = this.getColumn(elCheckbox);
 	          	if(oColumn.key == 'is_active')
 	          	{
-	          		var oRecord = this.getRecord(elCheckbox);
-	          		oRecord.setData("is_active",elCheckbox.checked);
-	          		var t_id = oRecord.getData('id');
-	            	var isGroupFolder = oRecord.getData('has_groupfolder');
 
-	            	if(isGroupFolder)
-	            	    SUGAR.email2.folders.updateSubscriptions();
-	            	else
-    	            	SUGAR.email2.folders.setFolderSelection();
+                SUGAR.email2.folders.setFolderSelection();
 
 	          	}
 	        });
@@ -288,8 +282,8 @@ SE.accounts = {
         	var EAD = this.inboundAccountEditDialog = new YAHOO.widget.Dialog("editAccountDialogue", {
                 modal:true,
 				visible:true,
-            	fixedcenter:true,
-            	constraintoviewport: true,
+            	//fixedcenter:true,
+            	//constraintoviewport: true,
                 width	: "600px",
                 shadow	: true
             });
@@ -685,7 +679,8 @@ SE.accounts = {
 
         document.getElementById('ie_id').value = '';
         document.getElementById('ie_name').value = '';
-        document.getElementById('ie_from_name').value = SE.userPrefs.current_user.full_name;
+      document.getElementById('ie_from_name').value = typeof SE === 'undefined' || typeof SE.userPrefs === 'undefined' || typeof SE.userPrefs.current_user === 'undefined' || typeof SE.userPrefs.current_user.full_name === 'undefined' ? '' : SE.userPrefs.current_user.full_name;
+        //document.getElementById('ie_from_name').value = SE.userPrefs.current_user.full_name;
         document.getElementById('ie_from_addr').value = this.getReplyAddress();
         document.getElementById('reply_to_addr').value = '';
         document.getElementById('server_url').value = '';
@@ -725,6 +720,11 @@ SE.accounts = {
         document.getElementById('group_id').value = o.group_id;
         document.getElementById('mailbox').value = o.mailbox;
 
+
+      if(typeof o.email_account_signatures !== "undefined") {
+        jQuery('#account_signature_id').replaceWith(o.email_account_signatures);
+      }
+      $('#account_signature_id').val(o.email_signatures);
 
         var i = 0;
 
@@ -1022,6 +1022,7 @@ SE.accounts = {
         SUGAR.showMessageBox(app_strings.LBL_EMAIL_SETTINGS_RETRIEVING_ACCOUNT, app_strings.LBL_EMAIL_ONE_MOMENT);
 		var query = "&emailUIAction=getIeAccount&ieId=" + ieId;
 
+        console.log(urlStandard + query);
         AjaxObject.startRequest(callbackIeAccountRetrieve, urlStandard + query);
     },
 
@@ -1164,8 +1165,8 @@ SE.contextMenus = {
          	SE.contextMenus.assignToDialogue = new YAHOO.widget.Dialog("assignToDiv", {
                 modal:true,
 				visible:false,
-            	fixedcenter:true,
-            	constraintoviewport: true,
+            	//fixedcenter:true,
+            	//constraintoviewport: true,
                 width	: "600px",
                 shadow	: true
             });
@@ -2037,19 +2038,7 @@ SE.folders = {
      */
     startEmailAccountCheck : function() {
         // don't do two checks at the same time
-       if(!AjaxObject.requestInProgress()) {
-            SUGAR.showMessageBox(app_strings.LBL_EMAIL_ONE_MOMENT, app_strings.LBL_EMAIL_CHECKING_NEW, 'progress');
-            SE.accounts.ieIds = SE.folders.getIeIds();
-            if (SE.accounts.ieIds.length > 0) {
-            	AjaxObject.startRequest(AjaxObject.accounts.callbackCheckMailProgress, urlStandard +
-                                '&emailUIAction=checkEmailProgress&ieId=' + SE.accounts.ieIds[0] + "&currentCount=0");
-            } else {
-               SUGAR.hideMessageBox();
-            }
-        } else {
-            // wait 5 secs before trying again.
-            SE.folders.checkingMail = setTimeout("SE.folders.startEmailAccountCheck();", 5000);
-        }
+      console.warn("deprecated call startEmailAccountCheck");
     },
 
     /**
@@ -2198,7 +2187,8 @@ SE.folders = {
     	for(i=0;i<a_rs.length;i++)
     	{
     		var t_record = a_rs[i];
-    		var is_active = t_record.getData('is_active');
+    		var is_active = $('#' + t_record._sId + ' input[type="checkbox"]').prop('checked');
+
     		if(is_active)
     			a_active_accnts += ("&ieIdShow[]=" + t_record.getData('id'));
     	}
@@ -2619,8 +2609,6 @@ SE.folders = {
         else {
             SE.listView.populateListFrame(node, node.data.ieId, false);
         }
-       //eval(node.data.click);
-       //debugger;
     },
 
     /**
@@ -2808,6 +2796,7 @@ SE.folders = {
     /**
      * Updates user's group folder subscriptsion (Sugar only)
      * @param ieID The group folder to add to the tree view
+     * @see SE.folders.setFolderSelection()
      */
     retrieveGroupFolderSubscriptions : function() {
 
@@ -2817,6 +2806,7 @@ SE.folders = {
     	for(i=0;i<a_rs.length;i++)
     	{
     		var t_record = a_rs[i];
+    		
     		var is_active = t_record.getData('is_active');
     		var isGroupFolder = t_record.getData('has_groupfolder');
     		var ieID = t_record.getData('id');
@@ -3017,7 +3007,6 @@ SE.listView = {
      * exception handler for data load failures
      */
     loadException : function(dataModel, ex, response) {
-        //debugger;
     },
 
     /**
@@ -3399,7 +3388,6 @@ SE.settings = {
 
         SE.settings.settingsDialog.hide();
     },
-
     /**
      * Shows settings container screen
      */
@@ -3407,11 +3395,10 @@ SE.settings = {
         if(!SE.settings.settingsDialog) {
     		var dlg = SE.settings.settingsDialog = new YAHOO.widget.Dialog("settingsDialog", {
             	modal:true,
-            	visible:false,
-            	fixedcenter:true,
-            	draggable: false,
-            	width:"800px",
-				constraintoviewport: true
+            	visible: false,
+            	fixedcenter:false,
+            	draggable: true,
+				constraintoviewport: false
             });
 			dlg.showEvent.subscribe( function (){
 				var el = this.element;

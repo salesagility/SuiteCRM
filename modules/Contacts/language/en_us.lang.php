@@ -1,11 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,16 +34,13 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array(
     //DON'T CONVERT THESE THEY ARE MAPPINGS
@@ -146,11 +143,9 @@ $mod_strings = array(
     'LBL_OTHER_EMAIL_ADDRESS' => 'Other Email:',
     'LBL_OTHER_PHONE' => 'Other Phone:',
     'LBL_PHONE' => 'Phone:',
-    'LBL_PORTAL_ACTIVE' => 'Portal Active:',
     'LBL_PORTAL_APP' => 'Portal Application:',
     'LBL_PORTAL_INFORMATION' => 'Portal Information',
     'LBL_PORTAL_NAME' => 'Portal Name:',
-    'LBL_PORTAL_PASSWORD_ISSET' => 'Portal Password is Set:',
     'LBL_STREET' => 'Street',
     'LBL_POSTAL_CODE' => 'Postal Code:',
     'LBL_PRIMARY_ADDRESS_CITY' => 'Primary Address City:',
@@ -188,10 +183,6 @@ $mod_strings = array(
     'LNK_NEW_OPPORTUNITY' => 'Create Opportunity',
     'LNK_NEW_TASK' => 'Create Task',
     'LNK_SELECT_ACCOUNT' => "Select Account",
-    'MSG_DUPLICATE' => 'The contact record you are about to create might be a duplicate of a contact record that already exists. Contact records containing similar names are listed below.<br>Click Create Contact to continue creating this new contact, or select an existing contact listed below.',
-    'MSG_SHOW_DUPLICATES' => 'The contact record you are about to create might be a duplicate of a contact record that already exists. Contact records containing similar names are listed below.<br>Click Save to continue creating this new contact, or click Cancel to return to the module without creating the contact.',
-    'NTC_COPY_ALTERNATE_ADDRESS' => 'Copy alternate address to primary address',
-    'NTC_COPY_PRIMARY_ADDRESS' => 'Copy primary address to alternate address',
     'NTC_DELETE_CONFIRMATION' => 'Are you sure you want to delete this record?',
     'NTC_OPPORTUNITY_REQUIRES_ACCOUNT' => 'Creating an opportunity requires an account.\n Please either create a new account or select an existing one.',
     'NTC_REMOVE_CONFIRMATION' => 'Are you sure you want to remove this contact from the case?',
@@ -223,25 +214,10 @@ $mod_strings = array(
     'LBL_CAMPAIGNS_SUBPANEL_TITLE' => 'Campaigns',
     'LNK_IMPORT_CONTACTS' => 'Import Contacts',
 
-    //For export labels
-    'LBL_PHONE_HOME' => 'Phone Home',
-    'LBL_PHONE_MOBILE' => 'Phone Mobile',
-    'LBL_PHONE_WORK' => 'Phone Work',
-    'LBL_PHONE_OTHER' => 'Phone Other',
-    'LBL_PHONE_FAX' => 'Phone Fax',
-
-    'LBL_EXPORT_ASSIGNED_USER_NAME' => 'Assigned User Name',
-    'LBL_EXPORT_ASSIGNED_USER_ID' => 'Assigned User ID',
-    'LBL_EXPORT_MODIFIED_USER_ID' => 'Modified By ID',
-    'LBL_EXPORT_CREATED_BY' => 'Created By ID',
-    'LBL_EXPORT_PHONE_HOME' => 'Home Phone',
-    'LBL_EXPORT_PHONE_MOBILE' => 'Mobile Phone',
     // SNIP
-    'LBL_CONTACT_HISTORY_SUBPANEL_TITLE' => 'Related Contacts\' Emails',
     'LBL_USER_SYNC' => 'User Sync',
 
     'LBL_FP_EVENTS_CONTACTS_FROM_FP_EVENTS_TITLE' => 'Events',
-    'LBL_FP_EVENT_DELEGATES_CONTACTS_1_FROM_FP_EVENT_DELEGATES_TITLE' => 'Delegates',
 
     'LBL_AOP_CASE_UPDATES' => 'Case Updates',
     'LBL_CREATE_PORTAL_USER' => 'Create Portal User',
@@ -257,6 +233,11 @@ $mod_strings = array(
     'LBL_PORTAL_USER_TYPE' => 'Portal User Type',
     'LBL_PORTAL_ACCOUNT_DISABLED' => 'Account Disabled',
     'LBL_JOOMLA_ACCOUNT_ID' => 'Joomla Account ID',
+
+    'LBL_AOS_CONTRACTS' => 'Contracts',
+    'LBL_AOS_INVOICES' => 'Invoices',
+    'LBL_AOS_QUOTES' => 'Quotes',
+    'LBL_PROJECT_CONTACTS_1_FROM_PROJECT_TITLE' => 'Project Contacts from Project Title',
 );
 
 ?>

@@ -594,7 +594,7 @@ EOQ;
 		}
 		$this->yahooSlotCount = $slotCount;
 		$newView = $return_view.$view;
-		$newView = str_replace(array ('<slot>', '</slot>'), array ('', ''), $newView);
+		$newView = str_replace(array ('<span>', '</span>'), array ('', ''), $newView);
 
 		return $newView;
 	}

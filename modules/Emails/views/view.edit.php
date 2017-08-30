@@ -44,5 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 class EmailsViewEdit extends ViewEdit {
-
+    /**
+     * @var Email $bean
+     */
+    public $bean;
 }

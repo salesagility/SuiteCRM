@@ -54,6 +54,12 @@ $searchFields[$module_name] = array(
     ),
     'assigned_user_id' => array('query_type' => 'default'),
 
+    'category_id' => array (
+        'query_type' => 'default',
+        'options' => 'email_category_dom',
+        'template_var' => 'CATEGORY_OPTIONS',
+    ),
+
     //Range Search Support
     'range_date_entered' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
     'start_range_date_entered' => array(

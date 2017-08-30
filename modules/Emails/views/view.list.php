@@ -43,7 +43,20 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die ('Not A Valid Entry Point');
 }
 
+require_once 'modules/Emails/include/ListView/ListViewSmartyEmails.php';
+
 class EmailsViewList extends ViewList
 {
+    /**
+     * @var Email
+     */
+    public $seed;
 
+    /**
+     * setup display
+     */
+    public function preDisplay()
+    {
+        $this->lv = new ListViewSmartyEmails();
+    }
 }

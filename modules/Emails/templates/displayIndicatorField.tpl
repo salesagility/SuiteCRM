@@ -41,7 +41,10 @@
 <div class="email-indicator">
     {if $bean}
         {if $bean.status == 'unread'}
-            <div class="email-new">{$MOD.LBL_NEW}</div>
+            <div class="email-new"></div>
+        {/if}
+        {if $bean.is_imported == true}
+            <div class="email-imported"><span class="glyphicon glyphicon-ok"></span></div>
         {/if}
         {if $bean.flagged == 1}
             <span class="email-flagged">!</span>
