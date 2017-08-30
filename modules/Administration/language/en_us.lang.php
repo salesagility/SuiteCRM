@@ -900,8 +900,6 @@ $mod_strings = array(
     'LBL_IE_NOT_FOUND' => "Error: invalid Inbound Email Account",
 
     'LBL_PWDSEC_SETS' => 'Password Security Settings',
-//    'LBL_PWDSEC_EXPIRY' => 'Expiration Period after',
-//    'LBL_PWDSEC_EXPIRY_DESC' => 'Password automatically expired after period, users have to change own password for log in. Set value to 0 to switch off this functionality',
     'LBL_PWDSEC_BLOCK_AFTER' => 'Block users after inactivity period',
     'LBL_PWDSEC_BLOCK_AFTER_DESC' => 'Block users after inactivity period',
     'LBL_PWDSEC_MIN_LENGTH' => 'Passwords minimum length',
