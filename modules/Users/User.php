@@ -874,7 +874,7 @@ EOQ;
         $oneupper = $sugar_config['passwordsetting']['oneupper'];
         $onelower = $sugar_config['passwordsetting']['onelower'];
         $onenumber = $sugar_config['passwordsetting']['onenumber'];
-        $specchars = $sugar_config['passwordsetting']['specchars'];
+        $onespecial = $sugar_config['passwordsetting']['onespecial'];
 
         if($minpwdlength && strlen($newPassword) < $minpwdlength) {
             $messages[] = sprintf($mod_strings['ERR_PASSWORD_MINPWDLENGTH'], $minpwdlength);
@@ -892,7 +892,7 @@ EOQ;
             $messages[] = $mod_strings['ERR_PASSWORD_ONENUMBER'];
         }
 
-        if($specchars && false !== strpbrk($newPassword, "#$%^&*()+=-[]';,./{}|:<>?~")) {
+        if($onespecial && false !== strpbrk($newPassword, "#$%^&*()+=-[]';,./{}|:<>?~")) {
             $messages[] = $mod_strings['ERR_PASSWORD_SPECCHARS'];
         }
 
