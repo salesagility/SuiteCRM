@@ -284,9 +284,9 @@ function handleSubs($subs, $email, $json) {
         $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getTemplateAttachments");
         if(isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {
 
-
-            $where = "parent_id='{$_REQUEST['parent_id']}'";
-            $order = "";
+            global $db;
+            $where = "parent_id='{$db->quote($_REQUEST['parent_id'])}'";
+            $order = '';
             $seed = new Note();
             $fullList = $seed->get_full_list($order, $where, '');
             $all_fields = array_merge($seed->column_fields, $seed->additional_column_fields);
