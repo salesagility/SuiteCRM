@@ -118,7 +118,7 @@ function query_client_ip()
     } elseif (isset($_SERVER['REMOTE_ADDR'])) {
         return $_SERVER['REMOTE_ADDR'];
     } else {
-        return '';
+        return false;
     }
 }
 
