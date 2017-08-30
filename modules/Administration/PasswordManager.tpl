@@ -805,7 +805,6 @@
       newElement.value = template_id;
       field.options.add(newElement);
     } // else
-    -- >
   }
 
   function testregex(customregex) {
