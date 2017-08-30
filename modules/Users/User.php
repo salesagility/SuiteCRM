@@ -845,6 +845,9 @@ EOQ;
 			$this->error_string = $mod_strings['ERR_PASSWORD_CHANGE_FAILED_1'].$current_user->user_name.$mod_strings['ERR_PASSWORD_CHANGE_FAILED_2'];
 			return false;
 		}
+		if($this->error_string = $this->passwordValidationCheck($new_password)) {
+		    return false;
+        }
 
 
 		//check old password current user is not an admin or current user is an admin editing themselves
@@ -861,6 +864,43 @@ EOQ;
 		$this->setNewPassword($new_password, $system_generated);
 		return true;
 	}
+
+	public function passwordValidationCheck($newPassword) {
+        global $sugar_config, $mod_strings;
+
+        $messages = array();
+
+        $minpwdlength = $sugar_config['passwordsetting']['minpwdlength'];
+        $oneupper = $sugar_config['passwordsetting']['oneupper'];
+        $onelower = $sugar_config['passwordsetting']['onelower'];
+        $onenumber = $sugar_config['passwordsetting']['onenumber'];
+        $specchars = $sugar_config['passwordsetting']['specchars'];
+
+        if($minpwdlength && strlen($newPassword) < $minpwdlength) {
+            $messages[] = sprintf($mod_strings['ERR_PASSWORD_MINPWDLENGTH'], $minpwdlength);
+        }
+
+        if($oneupper && strtolower($newPassword) === $newPassword) {
+            $messages[] = $mod_strings['ERR_PASSWORD_ONEUPPER'];
+        }
+
+        if($onelower && strtoupper($newPassword) === $newPassword) {
+            $messages[] = $mod_strings['ERR_PASSWORD_ONEUPPER'];
+        }
+
+        if($onenumber && !preg_match('/[0-9]/', $newPassword)) {
+            $messages[] = $mod_strings['ERR_PASSWORD_ONENUMBER'];
+        }
+
+        if($specchars && false !== strpbrk($newPassword, "#$%^&*()+=-[]';,./{}|:<>?~")) {
+            $messages[] = $mod_strings['ERR_PASSWORD_SPECCHARS'];
+        }
+
+        $message = implode('<br>', $messages);
+
+        return $message;
+
+    }
 
 
 	function is_authenticated() {
