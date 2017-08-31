@@ -175,7 +175,7 @@ SUGAR.ajaxUI = {
           // Expects url encoded versions of index.php?module=Home&action=index&parentTab=All
           var testUrl = decodeURIComponent(url);
           if (
-            /^index.php([A-Z]|[%=+#&\?\[\]\.]|[a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+/i.test(testUrl) === false
+            /^index.php?(([A-Z]|[a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+[%=+#&\[\]\.]*)+/i.test(testUrl) === false
           ) {
             throw "Invalid url";
           }
@@ -208,7 +208,7 @@ SUGAR.ajaxUI = {
           // Expects url encoded versions of index.php?module=Home&action=index&parentTab=All
           var testUrl = decodeURIComponent(url);
           if (
-            /^index.php([A-Z]|[%=+#&\?\[\]\.]|[a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+/i.test(testUrl) === false
+            /^index.php?(([A-Z]|[a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+[%=+#&\[\]\.]*)+/i.test(testUrl) === false
           ) {
             throw "Invalid url";
           }

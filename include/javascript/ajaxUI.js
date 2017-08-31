@@ -59,12 +59,12 @@ return false;if(typeof(SUGAR.config.addAjaxBannedModules)!='undefined'){bannedMo
 if(typeof(SUGAR.config.overrideAjaxBannedModules)!='undefined'){bannedModules=SUGAR.config.overrideAjaxBannedModules;}
 return SUGAR.util.arrayIndexOf(bannedModules,module)==-1;},loadContent:function(url,params)
 {if(YAHOO.lang.trim(url)!="")
-{var testUrl=decodeURIComponent(url);if(/^index.php([A-Z]|[%=+#&\?\[\]\.]|[a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+/i.test(testUrl)===false){throw"Invalid url";}
+{var testUrl=decodeURIComponent(url);if(/^index.php?(([A-Z]|[a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+[%=+#&\[\]\.]*)+/i.test(testUrl)===false){throw"Invalid url";}
 var mRegex=/module=([^&]*)/.exec(url);var module=mRegex?mRegex[1]:false;if(module&&SUGAR.ajaxUI.canAjaxLoadModule(module))
 {YAHOO.util.History.navigate('ajaxUILoc',url);}else{window.location=url;}}},go:function(url)
 {if(YAHOO.lang.trim(url)!="")
 {var con=YAHOO.util.Connect,ui=SUGAR.ajaxUI;if(ui.lastURL==url){return;}
-var testUrl=decodeURIComponent(url);if(/^index.php([A-Z]|[%=+#&\?\[\]\.]|[a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+/i.test(testUrl)===false){throw"Invalid url";}
+var testUrl=decodeURIComponent(url);if(/^index.php?(([A-Z]|[a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+[%=+#&\[\]\.]*)+/i.test(testUrl)===false){throw"Invalid url";}
 var inAjaxUI=/action=ajaxui/.exec(window.location);if(typeof(window.onbeforeunload)=="function"&&window.onbeforeunload())
 {if(!confirm(window.onbeforeunload()))
 {if(!inAjaxUI)
