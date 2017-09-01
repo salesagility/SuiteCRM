@@ -57,6 +57,7 @@ function getModuleFields($module, $view='EditView',$value = '', $valid = array()
 
                     if (array_key_exists($mod->module_dir, $blockedModuleFields)) {
                         if(in_array($arr['name'], $blockedModuleFields[$mod->module_dir]) && !$current_user->isAdmin()) {
+                            $GLOBALS['log']->debug('hiding ' . $arr['name'] . ' field from '. $current_user->name);
                             continue;
                         }
                     }
@@ -75,7 +76,9 @@ function getModuleFields($module, $view='EditView',$value = '', $valid = array()
             } //End loop.
 
             foreach($unset as $name){
-                if(isset($fields[$name])) unset( $fields[$name]);
+                if(isset($fields[$name])) {
+                    unset( $fields[$name]);
+                }
             }
 
         }
