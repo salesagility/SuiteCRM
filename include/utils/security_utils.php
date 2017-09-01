@@ -72,7 +72,6 @@ function query_module_access_list(&$user)
 	$tabArray = $controller->get_tabs($user); 
 
 	return $tabArray[0];
-		
 }
 
 function query_user_has_roles($user_id)
@@ -105,7 +104,9 @@ function get_user_disallowed_modules($user_id, &$allowed)
 // grabs client ip address and returns its value
 function query_client_ip()
 {
-    if (isset($_SERVER['HTTP_CLIENT_IP'])) {
+    if(!empty($GLOBALS['sugar_config']['ip_variable']) && !empty($_SERVER[$GLOBALS['sugar_config']['ip_variable']])) {
+        return $_SERVER[$GLOBALS['sugar_config']['ip_variable']];
+    } elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
         return $_SERVER['HTTP_CLIENT_IP'];
     } elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
         return $_SERVER['HTTP_X_FORWARDED_FOR'];
