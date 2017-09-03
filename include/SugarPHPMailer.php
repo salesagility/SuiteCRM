@@ -359,7 +359,15 @@ eoq;
      */
     public function smtpConnect($options = array())
     {
-        $connection = parent::smtpConnect();
+        // Proposed Fix for #4146 - Outbound Emails SMTP Connect () 
+        // https://github.com/salesagility/SuiteCRM/issues/4146
+        $option2 = array(
+                'ssl' => array(
+                    'verify_peer' => false
+                )
+            );
+        $mergedArray = array_merge($options, $option2);       
+        $connection = parent::smtpConnect($mergedArray);
         if (!$connection) {
             global $app_strings;
             if (isset($this->oe) && $this->oe->type === 'system') {
