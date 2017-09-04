@@ -686,7 +686,6 @@ class ProjectTask extends SugarBean
 }
 
 function getUtilizationDropdown($focus, $field, $value, $view) {
-	global $app_list_strings;
 
 	if($view == 'EditView') {
 		global $app_list_strings;
@@ -697,4 +696,26 @@ function getUtilizationDropdown($focus, $field, $value, $view) {
     }
 
     return translate('project_task_utilization_options', '', $focus->$field);
+}
+
+/**
+ *
+ * Returns tasks for predecessor
+ *
+ * @return integer highest ID value out of all project tasks, 0 if none found
+ */
+function actionGetPredecessors()
+{
+    global $mod_strings;
+    $project = new Project();
+    $project->retrieve($_REQUEST['project_id']);
+    // Get project tasks
+    $Task = BeanFactory::getBean('ProjectTask');
+    $tasks = $Task->get_full_list("order_number", "project_task.project_id = '" . $project->id . "'");
+    $html = '<option rel="0" value="0">' . $mod_strings['LBL_PROJECT_PREDECESSOR_NONE'] . '</option>';
+    foreach ($tasks as $task) {
+        $html .= '<option rel="' . $task->id . '" value="' . $task->project_task_id . '">' . $task->name . '</opion>';
+    }
+
+    return $html;
 }

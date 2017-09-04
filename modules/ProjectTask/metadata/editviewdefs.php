@@ -1,35 +1,78 @@
 <?php
-$viewdefs ['ProjectTask'] = 
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+$viewdefs ['ProjectTask'] =
 array (
-  'EditView' => 
+  'EditView' =>
   array (
-    'templateMeta' => 
+    'templateMeta' =>
     array (
       'maxColumns' => '2',
-      'widths' => 
+      'widths' =>
       array (
-        0 => 
+        0 =>
         array (
           'label' => '10',
           'field' => '30',
         ),
-        1 => 
+        1 =>
         array (
           'label' => '10',
           'field' => '30',
         ),
       ),
-      'includes' => 
+      'includes' =>
       array (
-        0 => 
+        0 =>
         array (
           'file' => 'modules/ProjectTask/ProjectTask.js',
         ),
       ),
       'useTabs' => false,
-      'tabDefs' => 
+      'tabDefs' =>
       array (
-        'DEFAULT' => 
+        'DEFAULT' =>
         array (
           'newTab' => false,
           'panelDefault' => 'expanded',
@@ -42,78 +85,96 @@ array (
       ),
       'syncDetailEditViews' => false,
     ),
-    'panels' => 
+    'panels' =>
     array (
-      'default' => 
+      'default' =>
       array (
-        0 => 
+        0 =>
         array (
-          0 => 
+          0 =>
           array (
             'name' => 'name',
             'label' => 'LBL_NAME',
           ),
-          1 => 
+          1 =>
           array (
             'name' => 'status',
-            'customCode' => '<select name="{$fields.status.name}" id="{$fields.status.name}" title="" tabindex="s" onchange="update_percent_complete(this.value);">{if isset($fields.status.value) && $fields.status.value != ""}{html_options options=$fields.status.options selected=$fields.status.value}{else}{html_options options=$fields.status.options selected=$fields.status.default}{/if}</select>',
+            'customCode' => '<select name="{$fields.status.name}" id="{$fields.status.name}" title=""
+tabindex="s" onchange="update_percent_complete(this.value);">{if isset($fields.status.value) &&
+$fields.status.value != ""}{html_options options=$fields.status.options selected=$fields.status.value}{else}
+{html_options options=$fields.status.options selected=$fields.status.default}{/if}</select>',
           ),
         ),
-        1 => 
+        1 =>
         array (
-          0 => 
+          0 =>
           array (
             'name' => 'date_start',
           ),
-          1 => 
+          1 =>
           array (
             'name' => 'date_finish',
           ),
         ),
-        2 => 
+        2 =>
         array (
           0 => 'priority',
-          1 => 
+          1 =>
           array (
             'name' => 'percent_complete',
-            'customCode' => '<input type="text" name="{$fields.percent_complete.name}" id="{$fields.percent_complete.name}" size="30" value="{$fields.percent_complete.value}" title="" tabindex="0" onChange="update_status(this.value);" /></tr>',
+            'customCode' => '<input type="text" name="{$fields.percent_complete.name}"
+id="{$fields.percent_complete.name}" size="30" value="{$fields.percent_complete.value}"
+title="" tabindex="0" onChange="update_status(this.value);" /></tr>',
           ),
         ),
-        3 => 
+        3 =>
         array (
-          0 => 
+          0 =>
           array (
             'name' => 'project_name',
             'label' => 'LBL_PROJECT_NAME',
           ),
           1 => 'task_number',
         ),
-        4 => 
+        4 =>
         array (
           0 => 'assigned_user_name',
         ),
-        5 => 
+        5 =>
         array (
-          0 => 
+          0 =>
           array (
             'name' => 'description',
           ),
         ),
+          6 =>
+              array (
+                  0 =>
+                      array (
+                          'name' => 'predecessors',
+                          'label' => 'LBL_PREDECESSORS',
+                      ),
+                  1 =>
+                      array (
+                          'name' => 'duration',
+                          'label' => 'LBL_DURATION',
+                      ),
+              ),
       ),
       'LBL_PANEL_TIMELINE' =>
       array (
-        0 => 
+        0 =>
         array (
           0 => 'estimated_effort',
-          1 => 
+          1 =>
           array (
             'name' => 'actual_effort',
             'label' => 'LBL_ACTUAL_EFFORT',
           ),
         ),
-        1 => 
+        1 =>
         array (
-          0 => 
+          0 =>
           array (
             'name' => 'relationship_type',
             'studio' => 'visible',
@@ -121,7 +182,7 @@ array (
           ),
           1 => 'utilization',
         ),
-        2 => 
+        2 =>
         array (
           0 => 'order_number',
           1 => 'milestone_flag',
@@ -130,4 +191,4 @@ array (
     ),
   ),
 );
-?>
+
