@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,11 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $dictionary['ProjectTask'] = array('audited'=>true,
 	'table' => 'project_task',
@@ -70,7 +72,6 @@ $dictionary['ProjectTask'] = array('audited'=>true,
         'project_id' => array(
             'name' => 'project_id',
             'vname' => 'LBL_PROJECT_ID',
-            'required' => false,
             'type' => 'id',
             'reportable' => false,
             'importable' => 'required',
@@ -87,7 +88,6 @@ $dictionary['ProjectTask'] = array('audited'=>true,
         'name' => array(
             'name' => 'name',
             'vname' => 'LBL_NAME',
-            'required' => true,
             'dbType' => 'varchar',
             'type' => 'name',
             'len' => 50,
@@ -131,6 +131,7 @@ $dictionary['ProjectTask'] = array('audited'=>true,
             'vname' => 'LBL_DATE_START',
             'type' => 'date',
             'validation'=>array('type' => 'isbefore', 'compareto'=>'date_finish', 'blank' => true),
+            'required' => true,
             'audited'=>true,
             'enable_range_search' => true,
         ),
@@ -139,16 +140,12 @@ $dictionary['ProjectTask'] = array('audited'=>true,
             'vname' => 'LBL_TIME_START',
             'type' => 'int',
             'reportable'=>false,
-            //'validation'=>array('type' => 'isbefore', 'compareto'=>'date_due', 'blank' => true),
-            //'audited'=>true,
         ),
         'time_finish' => array(
             'name' => 'time_finish',
             'vname' => 'LBL_TIME_FINISH',
             'type' => 'int',
             'reportable'=>false,
-           // 'validation'=>array('type' => 'isbefore', 'compareto'=>'date_due', 'blank' => true),
-           // 'audited'=>true,
         ),
         'date_finish' => array(
             'name' => 'date_finish',
@@ -320,8 +317,8 @@ $dictionary['ProjectTask'] = array('audited'=>true,
 			'required' => false,
 			'type' => 'int',
 			'validation' => array('type' => 'range', 'min' => 0, 'max' => 100),
-			//'function' => 'getUtilizationDropdown',
-    		'function' => array('name'=>'getUtilizationDropdown', 'returns'=>'html', 'include'=>'modules/ProjectTask/ProjectTask.php'),
+    		'function' => array('name'=>'getUtilizationDropdown', 'returns'=>'html',
+                'include'=>'modules/ProjectTask/ProjectTask.php'),
 			'default' => 100,
 		),
 
@@ -495,6 +492,6 @@ array (
 ),
 );
 
-VardefManager::createVardef('ProjectTask','ProjectTask', array( 'security_groups',
+VardefManager::createVardef('ProjectTask', 'ProjectTask', array('security_groups',
 ));
-?>
+
