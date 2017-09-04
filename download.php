@@ -236,7 +236,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             }
         } else {
             header('Content-type: ' . $mime_type);
-            header("Content-Disposition: attachment; filename=\"" . $name . "\";");
+            header("Content-Disposition: attachment; filename*=UTF-8''" . rawurlencode($name) );
 
         }
         // disable content type sniffing in MSIE
