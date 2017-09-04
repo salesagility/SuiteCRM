@@ -75,6 +75,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 		}
 		@ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
 		@ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0); // required for AD
+                @ldap_start_tls($ldapconn);
 		// If constant is defined, set the timeout (PHP >= 5.3)
 		if (defined('LDAP_OPT_NETWORK_TIMEOUT'))
 		{
@@ -367,6 +368,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 		}
         ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
         ldap_set_option($ldapconn, LDAP_OPT_REFERRALS, 0); // required for AD
+        ldap_start_tls($ldapconn);
         //if we are going to connect anonymously lets at least try to connect with the user connecting
         if(empty($admin_user)){
 			$bind = @ldap_bind($ldapconn, $user_name, $password);
