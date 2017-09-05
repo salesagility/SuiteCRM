@@ -456,7 +456,7 @@ class MysqlManager extends DBManager
 		if(is_array($string)) {
 			return $this->arrayQuote($string);
 		}
-		return mysql_real_escape_string($this->quoteInternal($string), $this->getDatabase());
+		return mysqli_real_escape_string($this->quoteInternal($string), $this->getDatabase());
 	}
 
     /**
