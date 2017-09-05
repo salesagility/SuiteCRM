@@ -14,6 +14,6 @@ function install_aoe() {
     $emailTemp->subject = "You have been invited to \$fp_events_name";
     $emailTemp->body = "Dear \$contact_name,\r\nYou have been invited to \$fp_events_name on \$fp_events_date_start to \$fp_events_date_end\r\n\$fp_events_description\r\nYours Sincerely,\r\n";
     $emailTemp->body_html = "\n<p>Dear \$contact_name,</p>\n<p>You have been invited to \$fp_events_name on \$fp_events_date_start to \$fp_events_date_end</p>\n<p>\$fp_events_description</p>\n<p>If you would like to accept this invititation please click accept.</p>\n<p> \$fp_events_link or \$fp_events_link_declined</p>\n<p>Yours Sincerely,</p>\n";
-    $emailTemp->type = 'email';
+    $emailTemp->type = 'system';
     $emailTemp->save();
 }
