@@ -49,10 +49,8 @@ $mod_strings = array(
     'LBL_DATE_ENTERED' => 'Date Created',
     'LBL_DATE_MODIFIED' => 'Date Modified',
     'LBL_MODIFIED' => 'Modified By',
-    'LBL_MODIFIED_ID' => 'Modified By Id',
     'LBL_MODIFIED_NAME' => 'Modified By Name',
     'LBL_CREATED' => 'Created By',
-    'LBL_CREATED_ID' => 'Created By Id',
     'LBL_DELETED' => 'Deleted',
     'LBL_NAME' => 'Template Name',
     'LBL_CREATED_USER' => 'Created by User',
@@ -70,7 +68,6 @@ $mod_strings = array(
     'LBL_SEARCH_FORM_TITLE' => 'Search Project Templates',
     'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
     'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-    'LBL_AM_PROJECTTEMPLATES_SUBPANEL_TITLE' => 'Project Templates',
     'LBL_NEW_FORM_TITLE' => 'New Project Templates',
     'LBL_STATUS' => 'Status',
     'LBL_PRIORITY' => 'Priority',
@@ -97,7 +94,6 @@ $mod_strings = array(
     'LBL_VIEW_GANTT_TITLE' => 'View Gantt',
     'LBL_VIEW_GANTT_DURATION' => 'Duration',
     'LBL_TASK_TITLE' => 'Edit Task',
-    'LBL_PREDECESSOR_TITLE' => 'Edit Predecessor',
     'LBL_DURATION_TITLE' => 'Edit Duration',
     'LBL_DESCRIPTION' => 'Notes',
     'LBL_ASSIGNED_USER_ID' => 'Assigned To:',
@@ -142,7 +138,6 @@ $mod_strings = array(
 	'LBL_SCHEDULING_FORM_TITLE' => 'Resource List',
 	'LBL_NONE' => 'None',
 
-	'LBL_AOS_PRODUCTS_AM_PROJECTTEMPLATES_1_FROM_AM_PROJECTTEMPLATES_TITLE' => 'Product: Project Templates from Project Templates Title',
 	'LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_PROJECT_TITLE' => 'Project Templates: Project from Project Title',
 
 
