@@ -67,7 +67,7 @@ if (check_php_version() === -1) {
 	$msg .= constant('SUITECRM_PHP_MIN_VERSION').', ';
 	$msg .= 'is not recommended due to the large number of fixed bugs, including security fixes, ';
 	$msg .= 'released in the more modern versions.<br />';
- 	$msg.  = 'You are using PHP version  '. constant('PHP_VERSION').', which is EOL: <a href="http://php.net/eol.php">http://php.net/eol.php</a>.<br />';
+ 	$msg .= 'You are using PHP version  '. constant('PHP_VERSION').', which is EOL: <a href="http://php.net/eol.php">http://php.net/eol.php</a>.<br />';
 	$msg .= 'Please consider upgrading your PHP version. Instructions on <a href="http://php.net/migration70">http://php.net/migration70</a>. ';
     die($msg);
 }
