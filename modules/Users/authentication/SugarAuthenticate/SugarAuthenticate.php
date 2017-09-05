@@ -344,11 +344,13 @@ class SugarAuthenticate{
      * Store message in a session array
      * @param $msg
      */
-    private static function addFactorMessage($msg) {
+    public static function addFactorMessage($msg) {
         if(!isset($_SESSION['factor_message'])) {
             $_SESSION['factor_message'] = array();
         }
-        $_SESSION['factor_message'][] = $msg;
+        if(!in_array($msg, $_SESSION['factor_message'])) {
+            $_SESSION['factor_message'][] = $msg;
+        }
     }
 
     /**
@@ -356,7 +358,7 @@ class SugarAuthenticate{
      * @return bool|string
      * @throws \RuntimeException
      */
-    private static function getFactorMessages($sep = '<br>') {
+    public static function getFactorMessages($sep = '<br>') {
         $factorMessage = false;
         if(isset($_SESSION['factor_message']) && $_SESSION['factor_message']) {
             if(is_array($_SESSION['factor_message']) || is_object($_SESSION['factor_message'])) {

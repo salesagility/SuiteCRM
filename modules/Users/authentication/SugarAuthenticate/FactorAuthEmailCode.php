@@ -29,7 +29,7 @@ class FactorAuthEmailCode implements FactorAuthInterface {
         $ss->assign('css', $css);
         $ss->assign('favicon',getJSPath($favicon));
 
-        $factorMessage = self::getFactorMessages();
+        $factorMessage = SugarAuthenticate::getFactorMessages();
         $ss->assign('factor_message', $factorMessage);
 
         $ss->display(__DIR__ . '/FactorAuthEmailCode.tpl');
