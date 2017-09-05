@@ -73,13 +73,14 @@
             <a title="SuiteCRM" href="http://www.suitecrm.com">SuiteCRM</a>
         </div>
 
-        <div class="p_login_middle">
-            <div id="loginform">
-                <form method="post" action="">
-                    {$APP.LBL_EMAIL_CODE} <input type="text" name="factor_token"> <input type="submit" value="{$APP.LBL_SEND}">
-                </form>
-                <a href="index.php?module=Users&action=Logout">{$APP.LBL_LOGOUT}</a>
-            </div>
+    <div class="p_login_middle">
+        <div id="loginform">
+            <div class="error message">{$factor_message}</div>
+            <form method="post" action="">
+                {$APP.LBL_EMAIL_CODE} <input type="text" name="factor_token">
+                <input type="submit" value="{$APP.LBL_VERIFY}">
+            </form>
+            <a href="index.php?module=Users&action=Logout">{$APP.LBL_CANCEL}</a>
         </div>
 
         <div class="p_login_bottom">

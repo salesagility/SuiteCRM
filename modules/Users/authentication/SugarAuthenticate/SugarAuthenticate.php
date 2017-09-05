@@ -285,6 +285,7 @@ class SugarAuthenticate{
                         if (!$this->userAuthenticate->factorAuthenticateCheck()) {
                             $GLOBALS['log']->fatal('DEBUG: User factor auth failed so we show token input form');
 
+                            self::addFactorMessage('Two Factor Authentication failed');
                             $this->userAuthenticate->showFactorTokenInput();
 
                         } else {
@@ -303,6 +304,10 @@ class SugarAuthenticate{
 
                                 $this->userAuthenticate->showFactorTokenInput();
 
+                            self::addFactorMessage('Two factor authentication code sending error.');
+
+                            $this->userAuthenticate->redirectToLogout();
+                        }
                             } else {
                                 $GLOBALS['log']->fatal('DEBUG: failed to send factor token to user so just redirect to the logout url and kick off ');
 
@@ -330,27 +335,62 @@ class SugarAuthenticate{
         }
 
 
-		$GLOBALS['log']->debug('Current user is: '.$GLOBALS['current_user']->user_name);
-		return true;
-	}
+        $GLOBALS['log']->debug('Current user is: ' . $GLOBALS['current_user']->user_name);
 
-	/**
-	 * Make sure a user isn't stealing sessions so check the ip to ensure that the ip address hasn't dramatically changed
-	 *
-	 */
-	function validateIP() {
-		global $sugar_config;
-		// grab client ip address
-		$clientIP = query_client_ip();
-		$classCheck = 0;
-		// check to see if config entry is present, if not, verify client ip
-		if (!isset ($sugar_config['verify_client_ip']) || $sugar_config['verify_client_ip'] == true) {
-			// check to see if we've got a current ip address in $_SESSION
-			// and check to see if the session has been hijacked by a foreign ip
-			if (isset ($_SESSION["ipaddress"])) {
-				$session_parts = explode(".", $_SESSION["ipaddress"]);
-				$client_parts = explode(".", $clientIP);
-                if(count($session_parts) < 4) {
+        return true;
+    }
+
+    /**
+     * Store message in a session array
+     * @param $msg
+     */
+    private static function addFactorMessage($msg) {
+        if(!isset($_SESSION['factor_message'])) {
+            $_SESSION['factor_message'] = array();
+        }
+        $_SESSION['factor_message'][] = $msg;
+    }
+
+    /**
+     * Read back the session messages and clear it;
+     * @return bool|string
+     * @throws \RuntimeException
+     */
+    private static function getFactorMessages($sep = '<br>') {
+        $factorMessage = false;
+        if(isset($_SESSION['factor_message']) && $_SESSION['factor_message']) {
+            if(is_array($_SESSION['factor_message']) || is_object($_SESSION['factor_message'])) {
+                $factorMessage = implode($sep, $_SESSION['factor_message']);
+            } elseif(is_string($_SESSION['factor_message'])) {
+                $factorMessage = $_SESSION['factor_message'];
+            } else {
+                $msg = 'Incorrect login factor message type.';
+                $GLOBALS['log']->warn($msg);
+                throw new RuntimeException($msg);
+            }
+            unset($_SESSION['factor_message']);
+        }
+        return $factorMessage;
+    }
+
+    /**
+     * Make sure a user isn't stealing sessions so check the ip to ensure that the ip address hasn't dramatically changed
+     *
+     */
+    function validateIP()
+    {
+        global $sugar_config;
+        // grab client ip address
+        $clientIP = query_client_ip();
+        $classCheck = 0;
+        // check to see if config entry is present, if not, verify client ip
+        if (!isset ($sugar_config['verify_client_ip']) || $sugar_config['verify_client_ip'] == true) {
+            // check to see if we've got a current ip address in $_SESSION
+            // and check to see if the session has been hijacked by a foreign ip
+            if (isset ($_SESSION["ipaddress"])) {
+                $session_parts = explode(".", $_SESSION["ipaddress"]);
+                $client_parts = explode(".", $clientIP);
+                if (count($session_parts) < 4) {
                     $classCheck = 0;
                 }
                 else {
