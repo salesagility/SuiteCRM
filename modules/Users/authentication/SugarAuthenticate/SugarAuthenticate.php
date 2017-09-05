@@ -298,6 +298,7 @@ class SugarAuthenticate
                         if (!$this->userAuthenticate->factorAuthenticateCheck()) {
                             $GLOBALS['log']->debug('FACTOR AUTH: User factor auth failed so we show token input form');
 
+                            self::addFactorMessage('Two Factor Authentication failed');
                             $this->userAuthenticate->showFactorTokenInput();
 
                         } else {
@@ -311,10 +312,14 @@ class SugarAuthenticate
                         if ($this->userAuthenticate->sendFactorTokenToUser()) {
                             $GLOBALS['log']->debug('FACTOR AUTH: Factor Token sent to User');
 
+                            self::addFactorMessage('Two factor authentication code sent.');
+
                             $this->userAuthenticate->showFactorTokenInput();
 
                         } else {
                             $GLOBALS['log']->debug('FACTOR AUTH: failed to send factor token to user so just redirect to the logout url and kick off ');
+
+                            self::addFactorMessage('Two factor authentication code sending error.');
 
                             $this->userAuthenticate->redirectToLogout();
                         }
@@ -339,6 +344,39 @@ class SugarAuthenticate
         $GLOBALS['log']->debug('Current user is: ' . $GLOBALS['current_user']->user_name);
 
         return true;
+    }
+
+    /**
+     * Store message in a session array
+     * @param $msg
+     */
+    private static function addFactorMessage($msg) {
+        if(!isset($_SESSION['factor_message'])) {
+            $_SESSION['factor_message'] = array();
+        }
+        $_SESSION['factor_message'][] = $msg;
+    }
+
+    /**
+     * Read back the session messages and clear it;
+     * @return bool|string
+     * @throws \RuntimeException
+     */
+    private static function getFactorMessages($sep = '<br>') {
+        $factorMessage = false;
+        if(isset($_SESSION['factor_message']) && $_SESSION['factor_message']) {
+            if(is_array($_SESSION['factor_message']) || is_object($_SESSION['factor_message'])) {
+                $factorMessage = implode($sep, $_SESSION['factor_message']);
+            } elseif(is_string($_SESSION['factor_message'])) {
+                $factorMessage = $_SESSION['factor_message'];
+            } else {
+                $msg = 'Incorrect login factor message type.';
+                $GLOBALS['log']->warn($msg);
+                throw new RuntimeException($msg);
+            }
+            unset($_SESSION['factor_message']);
+        }
+        return $factorMessage;
     }
 
     /**

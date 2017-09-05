@@ -56,6 +56,7 @@ class FactorAuthEmailCode implements FactorAuthInterface
     /**
      * Shows an input form for email code authentication
      * (like login page for pwd)
+     * @throws \RuntimeException
      */
     public function showTokenInput()
     {
@@ -73,6 +74,9 @@ class FactorAuthEmailCode implements FactorAuthInterface
         $ss->assign('cssPath', $cssPath);
         $ss->assign('css', $css);
         $ss->assign('favicon', getJSPath($favicon));
+
+        $factorMessage = self::getFactorMessages();
+        $ss->assign('factor_message', $factorMessage);
 
         $ss->display(__DIR__ . '/FactorAuthEmailCode.tpl');
     }
@@ -130,4 +134,5 @@ class FactorAuthEmailCode implements FactorAuthInterface
 
         return $ret;
     }
+
 }
