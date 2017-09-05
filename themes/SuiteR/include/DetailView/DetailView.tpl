@@ -131,6 +131,9 @@ class="yui-navset detailview_tabs"
             {{else}}
 			    <td width='12.5%' totalCol="{{$totalColumnos}}" scope="col">
             {{/if}}
+				{{if !empty($colData.field.name)}}
+				    {if !$fields.{{$colData.field.name}}.hidden}
+                {{/if}}
 				{{if isset($colData.field.customLabel)}}
 			       {{$colData.field.customLabel}}
 				{{elseif isset($colData.field.label) && strpos($colData.field.label, '$')}}
