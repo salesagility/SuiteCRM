@@ -43,7 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $mod_strings = array(
-    'ACCOUNT_REMOVE_PROJECT_CONFIRM' => 'Are you sure you want to remove this account from this project?',
     'ERR_DELETE_RECORD' => 'A record number must be specified to delete the account.',
     'LBL_ACCOUNT_NAME' => 'Company Name:',
     'LBL_ACCOUNT' => 'Company:',
@@ -87,9 +86,7 @@ $mod_strings = array(
     'LBL_LIST_EMAIL_ADDRESS' => 'Email Address',
     'LBL_LIST_PHONE' => 'Phone',
     'LBL_LIST_STATE' => 'State',
-    'LBL_LIST_WEBSITE' => 'Website',
     'LBL_MEMBER_OF' => 'Member of:',
-    'LBL_MEMBER_ORG_FORM_TITLE' => 'Member Organizations',
     'LBL_MEMBER_ORG_SUBPANEL_TITLE' => 'Member Organizations',
     'LBL_NAME' => 'Name:',
     'LBL_OTHER_EMAIL_ADDRESS' => 'Other Email:',
@@ -117,10 +114,6 @@ $mod_strings = array(
     'LBL_STATE' => 'State:',
     'LBL_TICKER_SYMBOL' => 'Ticker Symbol:',
     'LBL_TYPE' => 'Type:',
-    'LBL_USERS_ASSIGNED_LINK' => 'Assigned Users',
-    'LBL_USERS_CREATED_LINK' => 'Created By Users',
-    'LBL_USERS_MODIFIED_LINK' => 'Modified Users',
-    'LBL_VIEW_FORM_TITLE' => 'Account View',
     'LBL_WEBSITE' => 'Website:',
 
     'LNK_ACCOUNT_LIST' => 'Accounts',
@@ -129,13 +122,7 @@ $mod_strings = array(
     'MSG_DUPLICATE' => 'The account record you are about to create might be a duplicate of an account record that already exists. Account records containing similar names are listed below.<br>Click Create Account to continue creating this new account, or select an existing account listed below.',
     'MSG_SHOW_DUPLICATES' => 'The account record you are about to create might be a duplicate of an account record that already exists. Account records containing similar names are listed below.<br>Click Save to continue creating this new account, or click Cancel to return to the module without creating the account.',
 
-    'NTC_COPY_BILLING_ADDRESS' => 'Copy billing address to shipping address',
-    'NTC_COPY_BILLING_ADDRESS2' => 'Copy to shipping',
-    'NTC_COPY_SHIPPING_ADDRESS' => 'Copy shipping address to billing address',
-    'NTC_COPY_SHIPPING_ADDRESS2' => 'Copy to billing',
     'NTC_DELETE_CONFIRMATION' => 'Are you sure you want to delete this record?',
-    'NTC_REMOVE_ACCOUNT_CONFIRMATION' => 'Are you sure you want to remove this record?',
-    'NTC_REMOVE_MEMBER_ORG_CONFIRMATION' => 'Are you sure you want to remove this record as a member organization?',
 
     'LBL_EDIT_BUTTON' => 'Edit  ',
     'LBL_REMOVE' => 'Remove',

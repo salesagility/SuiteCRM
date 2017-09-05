@@ -43,13 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $mod_strings = array(
-    //DON'T CONVERT THESE THEY ARE MAPPINGS
-    'db_last_name' => 'LBL_LIST_LAST_NAME',
-    'db_first_name' => 'LBL_LIST_FIRST_NAME',
-    'db_title' => 'LBL_LIST_TITLE',
-    'db_email1' => 'LBL_LIST_EMAIL_ADDRESS',
-    'db_email2' => 'LBL_LIST_OTHER_EMAIL_ADDRESS',
-    //END DON'T CONVERT
     'ERR_DELETE_RECORD' => 'Specify the record number to delete the contact.',
     'LBL_ACCOUNT_ID' => 'Account ID:',
     'LBL_ACCOUNT_NAME' => 'Account Name:',
@@ -92,7 +85,6 @@ $mod_strings = array(
     'LBL_DATE_MODIFIED' => 'Date Modified:',
     'LBL_DEFAULT_SUBPANEL_TITLE' => 'Contacts',
     'LBL_DEPARTMENT' => 'Department:',
-    'LBL_DESCRIPTION_INFORMATION' => 'Description Information',
     'LBL_DESCRIPTION' => 'Description:',
     'LBL_DIRECT_REPORTS_SUBPANEL_TITLE' => 'Direct Reports',
     'LBL_DO_NOT_CALL' => 'Do Not Call:',
@@ -104,7 +96,6 @@ $mod_strings = array(
     'LBL_EXISTING_OPPORTUNITY' => 'Used an existing opportunity',
     'LBL_FAX_PHONE' => 'Fax:',
     'LBL_FIRST_NAME' => 'First Name:',
-    'LBL_FULL_NAME' => 'Full Name:',
     'LBL_HISTORY_SUBPANEL_TITLE' => 'History',
     'LBL_HOME_PHONE' => 'Home:',
     'LBL_ID' => 'ID:',
@@ -122,10 +113,8 @@ $mod_strings = array(
     'LBL_LIST_EMAIL_ADDRESS' => 'Email',
     'LBL_LIST_FIRST_NAME' => 'First Name',
     'LBL_LIST_FORM_TITLE' => 'Contact List',
-    'LBL_VIEW_FORM_TITLE' => 'Contact View',
     'LBL_LIST_LAST_NAME' => 'Last Name',
     'LBL_LIST_NAME' => 'Name',
-    'LBL_LIST_OTHER_EMAIL_ADDRESS' => 'Other Email',
     'LBL_LIST_PHONE' => 'Office Phone',
     'LBL_LIST_TITLE' => 'Title',
     'LBL_MOBILE_PHONE' => 'Mobile:',
@@ -134,7 +123,6 @@ $mod_strings = array(
     'LBL_MODULE_TITLE' => 'Contacts: Home',
     'LBL_NAME' => 'Name:',
     'LBL_NEW_FORM_TITLE' => 'New Contact',
-    'LBL_NEW_PORTAL_PASSWORD' => 'New Portal Password:',
     'LBL_NOTE_SUBJECT' => 'Note Subject',
     'LBL_OFFICE_PHONE' => 'Office Phone:',
     'LBL_OPP_NAME' => 'Opportunity Name:',
@@ -157,7 +145,6 @@ $mod_strings = array(
     'LBL_PRIMARY_ADDRESS_STREET' => 'Primary Address Street:',
     'LBL_PRIMARY_ADDRESS' => 'Primary Address:',
     'LBL_PRODUCTS_TITLE' => 'Products',
-    'LBL_RELATED_CONTACTS_TITLE' => 'Related Contacts',
     'LBL_REPORTS_TO_ID' => 'Reports to ID:',
     'LBL_REPORTS_TO' => 'Reports To:',
     'LBL_RESOURCE_NAME' => 'Resource Name',
@@ -186,9 +173,6 @@ $mod_strings = array(
     'NTC_DELETE_CONFIRMATION' => 'Are you sure you want to delete this record?',
     'NTC_OPPORTUNITY_REQUIRES_ACCOUNT' => 'Creating an opportunity requires an account.\n Please either create a new account or select an existing one.',
     'NTC_REMOVE_CONFIRMATION' => 'Are you sure you want to remove this contact from the case?',
-    'NTC_REMOVE_DIRECT_REPORT_CONFIRMATION' => 'Are you sure you want to remove this record as a direct report?',
-
-    'LBL_USER_PASSWORD' => 'Password:',
 
     'LBL_LEADS_SUBPANEL_TITLE' => 'Leads',
     'LBL_OPPORTUNITIES_SUBPANEL_TITLE' => 'Opportunities',
@@ -200,7 +184,6 @@ $mod_strings = array(
     'LBL_BUGS_SUBPANEL_TITLE' => 'Bugs',
     'LBL_PROJECTS_SUBPANEL_TITLE' => 'Projects',
     'LBL_PROJECTS_RESOURCES' => 'Projects Resources',
-    'LBL_TARGET_OF_CAMPAIGNS' => 'Campaigns (Target of) :',
     'LBL_CAMPAIGNS' => 'Campaigns',
     'LBL_CAMPAIGN_LIST_SUBPANEL_TITLE' => 'Campaigns',
     'LBL_LIST_CITY' => 'City',
@@ -208,10 +191,8 @@ $mod_strings = array(
     'LBL_HOMEPAGE_TITLE' => 'My Contacts',
     'LBL_OPPORTUNITIES' => 'Opportunities',
 
-    'LBL_CHECKOUT_DATE' => 'Checkout Date',
     'LBL_CONTACTS_SUBPANEL_TITLE' => 'Contacts',
     'LBL_PROJECT_SUBPANEL_TITLE' => 'Projects',
-    'LBL_CAMPAIGNS_SUBPANEL_TITLE' => 'Campaigns',
     'LNK_IMPORT_CONTACTS' => 'Import Contacts',
 
     // SNIP
