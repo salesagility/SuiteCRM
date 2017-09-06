@@ -345,7 +345,14 @@ function saveField($field, $id, $module, $value)
             }
         }
 
-        if($bean->ACLAccess("edit") || is_admin($current_user)) {
+        $adminOnlyModules = array('Users');
+
+        $enabled = true;
+        if(in_array($module, $adminOnlyModules) && !is_admin($current_user)) {
+            $enabled = false;
+        }
+
+        if(($bean->ACLAccess("edit") || is_admin($current_user)) && $enabled) {
             if(!$bean->save($check_notify)) {
                 $GLOBALS['log']->fatal("Saving probably failed or bean->save() method did not return with a positive result.");
             }
