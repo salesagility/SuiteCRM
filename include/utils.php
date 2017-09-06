@@ -1201,8 +1201,7 @@ function return_module_language($language, $module, $refresh = false)
 
     // Jenny - Bug 8119: Need to check if $module is not empty
     if (empty($module)) {
-        $stack = debug_backtrace();
-        $GLOBALS['log']->warn('Variable module is not in return_module_language ' . var_export($stack, true));
+        $GLOBALS['log']->warn('Variable module is not in return_module_language ');
 
         return array();
     }
