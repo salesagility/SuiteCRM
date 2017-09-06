@@ -329,11 +329,11 @@ function onLangSelect(e) {
 </html>
 EOQ;
 if (check_php_version() === -1) {
-	if(empty($mod_strings['LBL_MINIMUM_PHP_VERSION'])){
-		$mod_strings['LBL_MINIMUM_PHP_VERSION'] = 'The minimum PHP version required is '.constant('SUITECRM_PHP_MIN_VERSION');
-	}
+    if(empty($mod_strings['LBL_MINIMUM_PHP_VERSION'])){
+        $mod_strings['LBL_MINIMUM_PHP_VERSION'] = 'The minimum PHP version required is '.constant('SUITECRM_PHP_MIN_VERSION');
+    }
 
-$php_verison_warning =<<<eoq
+    $php_verison_warning =<<<eoq
 	    <table width="100%" cellpadding="0" cellpadding="0" border="0" class="Welcome">
 			<tr>
 		      <td colspan="2"  align="center" id="ready_image"><IMG src="include/images/install_themes.jpg" width="698" height="190" alt="Sugar Themes" border="0"></td>
@@ -346,7 +346,7 @@ $php_verison_warning =<<<eoq
 		    </tr>
 	</table>
 eoq;
-	$out = $php_verison_warning;
+    $out = $php_verison_warning;
 }
 echo $out;
 ?>

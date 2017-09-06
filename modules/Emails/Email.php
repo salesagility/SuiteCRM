@@ -1374,7 +1374,12 @@ class Email extends Basic
                 $this->id = create_guid();
                 $this->new_with_id = true;
             }
-            $this->from_addr_name = $this->cleanEmails($this->from_addr_name);
+
+            if ($this->cleanEmails($this->from_addr_name) === '') {
+                $this->from_addr_name = $this->cleanEmails($this->from_name);
+            } else {
+                $this->from_addr_name = $this->cleanEmails($this->from_addr_name);
+            }
             $this->to_addrs_names = $this->cleanEmails($this->to_addrs_names);
             $this->cc_addrs_names = $this->cleanEmails($this->cc_addrs_names);
             $this->bcc_addrs_names = $this->cleanEmails($this->bcc_addrs_names);
@@ -3996,14 +4001,13 @@ eoq;
         }
 
 
-        if (empty($bean->to_addrs)) {
-            if (!empty($request['to_addrs_names'])) {
-                $bean->to_addrs_names = htmlspecialchars_decode($request['to_addrs_names']);
-            }
 
-            if (!empty($bean->to_addrs_names)) {
-                $bean->to_addrs = htmlspecialchars_decode($bean->to_addrs_names);
-            }
+        if (!empty($request['to_addrs_names'])) {
+            $bean->to_addrs_names = htmlspecialchars_decode($request['to_addrs_names']);
+        }
+
+        if (!empty($bean->to_addrs_names)) {
+            $bean->to_addrs = htmlspecialchars_decode($bean->to_addrs_names);
         }
 
 
@@ -4019,8 +4023,9 @@ eoq;
             // Strip out name from email address
             // eg Angel Mcmahon <sales.vegan@example.it>
             if (count($matches) > 3) {
-                $display = trim($matches[1]);
                 $email = $matches[2];
+                $display = (str_replace($email, '', $address));
+                $display = (trim(str_replace('"', '', $display)));
             } else {
                 $email = $address;
                 $display = '';
@@ -4034,7 +4039,7 @@ eoq;
 
             $bean->to_addrs_arr[] = array(
                 'email' => $email,
-                'display' => $display,
+                'display' => mb_encode_mimeheader($display, 'UTF-8', 'Q')
             );
         }
 

@@ -66,6 +66,7 @@ $mod_strings = array(
     'LBL_MONTH' => 'Month',
     'LBL_AGENDADAY' => 'Day',
     'LBL_YEAR' => 'Year',
+
     'LBL_AGENDAWEEK' => 'Week',
     'LBL_PREVIOUS_MONTH' => 'Previous Month',
     'LBL_PREVIOUS_DAY' => 'Previous Day',
