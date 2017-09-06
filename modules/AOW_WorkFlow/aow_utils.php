@@ -42,7 +42,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-function getModuleFields($module, $view='EditView', $value = '', $valid = array())
+/**
+ * Returns HTML of all availible fields in a module.
+ *
+ * @param string $module the module we are getting the fields from
+ * @param string $view
+ * @param string $value
+ * @param array $valid
+ * @return string HTML for availible module fields
+ */
+function getModuleFields($module, $view = 'EditView', $value = '', $valid = array())
 {
     global $app_strings, $beanList, $current_user;
 
@@ -103,13 +112,14 @@ function getModuleFields($module, $view='EditView', $value = '', $valid = array(
                     unset($fields[$name]);
                 }
             }
-
         }
     }
-    if($view == 'JSON'){
+    asort($fields);
+    if ($view == 'JSON') {
         return json_encode($fields);
     }
-    if($view == 'EditView'){
+    if ($view == 'EditView') {
+        $test = get_select_options_with_id($fields, $value);
         return get_select_options_with_id($fields, $value);
     } else {
         return $fields[$value];
