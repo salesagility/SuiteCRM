@@ -131,6 +131,14 @@ class EmailUI {
 		$this->preflightUserCache();
 		$ie = new InboundEmail();
 
+		// focus listView
+		$list = array(
+			'mbox' => 'Home',
+			'ieId' => '',
+			'name' => 'Home',
+			'unreadChecked' => 0,
+			'out' => array(),
+		);
 
 		$this->_generateComposeConfigData('email_compose');
 
@@ -1697,7 +1705,7 @@ function doAssignment($distributeMethod, $ieid, $folder, $uids, $users) {
 			}
 
 			if(!empty($msgNo)) {
-				if ($ie->returnImportedEmail($msgNo, $uid)) {
+				if ($ie->importOneEmail($msgNo, $uid)) {
 					$emailIds[] = $ie->email->id;
 					$ie->deleteMessageOnMailServer($uid);
 					//$ie->retrieve($ieid);

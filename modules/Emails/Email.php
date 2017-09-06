@@ -47,6 +47,7 @@ require_once('include/SugarPHPMailer.php');
 require_once 'include/UploadFile.php';
 require_once 'include/UploadMultipleFiles.php';
 
+
 class Email extends Basic
 {
     /**
@@ -423,6 +424,16 @@ class Email extends Basic
      * @var string
      */
     public $AltBody;
+
+    /**
+     * @var mixed
+     */
+    public $msgNo;
+
+    /**
+     * @var string
+     */
+    public $to_name;
 
     /**
      * sole constructor
@@ -2632,11 +2643,10 @@ class Email extends Basic
             // plain text only
             $this->handleBodyInPlainTextFormat($mail);
         } else {
-            if ($alwaysSendEmailsInPlainText === false && $sendEmailsInPlainText === true) {
-                $this->handleBodyInPlainTextFormat($mail);
-            } else {
-                $this->handleBodyInHTMLformat($mail);
-            }
+            if($alwaysSendEmailsInPlainText === false && $sendEmailsInPlainText === true) {
+            $this->handleBodyInPlainTextFormat($mail);
+        } else {
+            $this->handleBodyInHTMLformat($mail);}
         }
 
         // wp: if plain text version has lines greater than 998, use base64 encoding

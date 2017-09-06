@@ -122,10 +122,22 @@ class aSubPanel
 			$this->canDisplay = $this->load_sub_subpanels () ; //load sub-panel definition.
 		} else
 		{
-			if (!is_dir('modules/' . $this->_instance_properties [ 'module' ])){
+			if(!isset($this->_instance_properties [ 'module' ])) {
+				$GLOBALS['log']->fatal('Undefined index: module');
+                $instancePropertiesModule = null;
+            } else {
+				$instancePropertiesModule = $this->_instance_properties [ 'module' ];
+			}
+			if (!is_dir('modules/' . $instancePropertiesModule)){
 				_pstack_trace();
 			}
-			$def_path = 'modules/' . $this->_instance_properties [ 'module' ] . '/metadata/subpanels/' . $this->_instance_properties [ 'subpanel_name' ] . '.php' ;
+			if(!isset($this->_instance_properties [ 'subpanel_name' ])) {
+				$GLOBALS['log']->fatal('Invalid or missing SubPanelDefinition property: subpanel_name');
+                $def_path = null;
+            } else {
+                $subPanelName = $this->_instance_properties ['subpanel_name'];
+                $def_path = 'modules/' . $this->_instance_properties ['module'] . '/metadata/subpanels/' . $subPanelName . '.php';
+            }
 
 			$orig_exists = is_file($def_path);
 			$loaded = false;
@@ -289,6 +301,10 @@ class aSubPanel
 		if (empty ( $this->sub_subpanels ))
 		{
 			$panels = $this->get_inst_prop_value ( 'collection_list' ) ;
+			if(null === $panels) {
+				$GLOBALS['log']->fatal('Incorrect or missing SubPanelDefinition property: collection_list');
+				$panels = array();
+			}
 			foreach ( $panels as $panel => $properties )
 			{
 				if (array_key_exists ( $properties [ 'module' ], $modListHeader ) or array_key_exists ( $properties [ 'module' ], $modules_exempt_from_availability_check ))
@@ -415,6 +431,7 @@ class aSubPanel
 				}
 			}
 		}
+		return $display_fields;
 	}
 
 	function isDatasourceFunction ()

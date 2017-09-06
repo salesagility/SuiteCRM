@@ -1,0 +1,46 @@
+actor: Tester
+paths:
+    tests: tests
+    log: tests/_output
+    data: tests/_data
+    support: tests/_support
+    envs: tests/_envs
+settings:
+    bootstrap: _bootstrap.php
+    colors: true
+    memory_limit: 1024M
+extensions:
+    enabled:
+        - Codeception\Extension\RunFailed
+coverage:
+    enabled: true
+    remote: false
+    low_limit: 30
+    high_limit: 60
+    include:
+        - data/*
+        - include/*
+        - metadata/*
+        - modules/*
+        - service/*
+        - soap/*
+    exclude:
+        - cache/*
+        # Exclude 3rd party libraries
+        - include/timezone/*
+        - include/SuiteGraphs/*
+        - include/social/*
+        - include/Smarty/*
+        - include/reCaptcha/*
+        - include/phpmailer/*
+        - include/Pear/*
+        - include/pclzip/*
+        - include/nusoap/*
+        - include/HTTP_WebDAV_Server/*
+        - include/HTMLPurifier/*
+        # Exclude non php folders
+        - include/javascript/*
+        - include/images/*
+        - include/fonts/*
+params:
+    - env
