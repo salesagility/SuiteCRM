@@ -348,7 +348,7 @@ class User extends Person
      */
     public function getUserPrivGuid()
     {
-        $userPrivGuid = $this->getPreference('userPrivGuid', $this);
+        $userPrivGuid = $this->getPreference('userPrivGuid', 'global', $this);
         if ($userPrivGuid) {
             return $userPrivGuid;
         } else {
@@ -384,6 +384,7 @@ class User extends Person
 	public function setPreference(
 	    $name,
 	    $value,
+        $nosession = 0,
 	    $category = 'global'
 	    ){
 
@@ -724,7 +725,7 @@ class User extends Person
     public function authenticate_user($password)
     {
         $row = self::findUserPassword($this->user_name, $password);
-        if (null === $row) {
+        if (empty($row)) {
             return false;
         } else {
             $this->id = $row['id'];
