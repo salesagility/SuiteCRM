@@ -42,85 +42,92 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 require_once 'include/SugarObjects/templates/person/Person.php';
 
 // User is used to store customer information.
-
-/**
- * @property string pwd_last_changed
- * @property string pwd_last_changed
- * @property string pwd_last_changed
- */
 class User extends Person
-{
-    // Stored fields
-    public $name = '';
-    public $full_name;
-    public $id;
-    public $user_name;
-    public $user_hash;
-    public $salutation;
-    public $first_name;
-    public $last_name;
-    public $date_entered;
-    public $date_modified;
-    public $modified_user_id;
-    public $created_by;
-    public $created_by_name;
-    public $modified_by_name;
-    public $description;
-    public $phone_home;
-    public $phone_mobile;
-    public $phone_work;
-    public $phone_other;
-    public $phone_fax;
-    public $email1;
-    public $email2;
-    public $address_street;
-    public $address_city;
-    public $address_state;
-    public $address_postalcode;
-    public $address_country;
-    public $status;
-    public $title;
+	{// Stored fields
+	public $name = '';
+	public $full_name;
+	public $id;
+	public $user_name;
+	public $user_hash;
+	public $salutation;
+	public $first_name;
+	public $last_name;
+	public $date_entered;
+	public $date_modified;
+	public $modified_user_id;
+	public $created_by;
+	public $created_by_name;
+	public $modified_by_name;
+	public $description;
+	public $phone_home;
+	public $phone_mobile;
+	public $phone_work;
+	public $phone_other;
+	public $phone_fax;
+	public $email1;
+	public $email2;
+	public $address_street;
+	public $address_city;
+	public $address_state;
+	public $address_postalcode;
+	public $address_country;
+	public $status;
+	public $title;
     public $photo;
-    public $portal_only;
-    public $department;
-    public $authenticated = false;
-    public $error_string;
-    public $is_admin;
-    public $employee_status;
-    public $messenger_id;
-    public $messenger_type;
-    public $is_group;
-    public $accept_status; // to support Meetings
-    //adding a property called team_id so we can populate it for use in the team widget
-    public $team_id;
+	public $portal_only;
+	public $department;
+	public $authenticated = false;
+	public $error_string;
+	public $is_admin;
+	public $employee_status;
+	public $messenger_id;
+	public $messenger_type;
+	public $is_group;
+	public $accept_status; // to support Meetings
+	//adding a property called team_id so we can populate it for use in the team widget
+	public $team_id;
 
-    public $receive_notifications;
+	public $receive_notifications;
 
-    public $reports_to_name;
-    public $reports_to_id;
-    public $team_exists = false;
-    public $table_name = 'users';
-    public $module_dir = 'Users';
-    public $object_name = 'User';
-    public $user_preferences;
+	public $reports_to_name;
+	public $reports_to_id;
+	public $team_exists = false;
+	public $table_name = 'users';
+	public $module_dir = 'Users';
+	public $object_name = 'User';
+	public $user_preferences;
 
-    public $importable = true;
-    public $_userPreferenceFocus;
+	public $importable = true;
+	public $_userPreferenceFocus;
 
-    public $encodeFields = Array('first_name', 'last_name', 'description');
+	public $encodeFields = Array ('first_name', 'last_name', 'description');
 
-    // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = array(
-        'reports_to_name'
-    );
+	// This is used to retrieve related fields from form posts.
+	public $additional_column_fields = array ('reports_to_name'
+	);
 
-    public $emailAddress;
+	public $emailAddress;
 
 
-    public $new_schema = true;
+	public $new_schema = true;
+
+    /**
+     * @var bool
+     */
+    public $factor_auth;
+
+    /**
+     * @var string
+     */
+    public $factor_auth_interface;
+
 
     /**
      * User constructor.
@@ -185,7 +192,7 @@ class User extends Person
     /**
      * retrieves the signatures for a user
      * @param string id ID of user_signature
-     * @return array|bool
+     * @return array|bool ID, signature, and signature_html
      */
     public function getSignature($id)
     {
@@ -202,8 +209,8 @@ class User extends Person
         $q = 'SELECT * FROM users_signatures WHERE user_id = \'' . $this->id . '\' AND deleted = 0 ORDER BY name ASC';
         $r = $this->db->query($q);
 
-        // provide "none"
-        $sig = array('' => '');
+		// provide "none"
+		$sig = array(''=>'');
 
         while ($a = $this->db->fetchByAssoc($r)) {
             $sig[$a['id']] = $a;
@@ -355,28 +362,29 @@ class User extends Person
         $this->setPreference('userPrivGuid', $privGuid, $this);
     }
 
-    /**
-     * Interface for the User object to calling the UserPreference::setPreference() method in modules/UserPreferences/UserPreference.php
-     *
-     * @see UserPreference::setPreference()
-     *
-     * @param string $name Name of the preference to set
-     * @param string $value Value to set preference to
-     * @param string $category Name of the category to retrieve
-     * @internal param int|null $nosession For BC, ignored
+	/**
+	 * Interface for the User object to calling the UserPreference::setPreference() method in modules/UserPreferences/UserPreference.php
+	 *
+	 * @see UserPreference::setPreference()
+	 *
+	 * @param string $name Name of the preference to set
+	 * @param string $value Value to set preference to
+	 * @param  string $category Name of the category to retrieve
+	 * @internal param int|null $nosession For BC, ignored
      */
-    public function setPreference(
-        $name,
-        $value,
-        $category = 'global'
-    ) {
-        // for BC
-        if (func_num_args() > 4) {
-            $user = func_get_arg(4);
-            $GLOBALS['log']->deprecated('User::setPreferences() should not be used statically.');
-        } else {
-            $user = $this;
-        }
+	public function setPreference(
+	    $name,
+	    $value,
+	    $category = 'global'
+	    ){
+
+	    // for BC
+	    if ( func_num_args() > 4 ) {
+	        $user = func_get_arg(4);
+	        $GLOBALS['log']->deprecated('User::setPreferences() should not be used statically.');
+	    }
+	    else{
+	        $user = $this;}
 
         $user->_userPreferenceFocus->setPreference($name, $value, $category);
     }
@@ -560,7 +568,7 @@ class User extends Person
         $isUpdate = !empty($this->id) && !$this->new_with_id;
 
 
-        $query = 'SELECT count(id) as total from users WHERE ' . self::getLicensedUsersWhere();
+		$query = 'SELECT count(id) as total from users WHERE '.self::getLicensedUsersWhere();
 
 
         // is_group & portal should be set to 0 by default
@@ -1289,7 +1297,7 @@ EOQ;
             $count .= '<a href=' . $default . '&type=inbound>' . translate('LBL_LIST_TITLE_MY_INBOX',
                     'Emails') . ': (' . $a['c'] . ' ' . $new . ')</a>';
 
-            if (!in_array($theme, $verts, true)) {
+            if (!in_array($theme, $verts)) {
                 $count .= ' - ';
             }
         }
@@ -1984,7 +1992,7 @@ EOQ;
         $mail->clearReplyTos();
         $mail->Subject = from_html($emailTemp->subject);
         if ($emailTemp->text_only != 1) {
-            $mail->isHTML();
+            $mail->IsHTML(true);
             $mail->Body = from_html($emailTemp->body_html);
             $mail->AltBody = from_html($emailTemp->body);
         } else {

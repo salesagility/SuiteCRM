@@ -37,9 +37,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
 *}
 <form name="ConfigurePasswordSettings" method="POST" action="index.php">
     <input type='hidden' name='action' value='PasswordManager'/>
@@ -355,11 +352,28 @@
                                                            name='edit_lostpasswordtmpl' id='edit_lostpasswordtmpl'
                                                            style="{$EDIT_TEMPLATE}">
 												</span>
+							        		 </td>
+									        <td ></td>
+									        <td ></td>
+										</tr>
+									<tr>
+                        <td scope="row">{$MOD.LBL_TWO_FACTOR_AUTH_EMAIL_TPL}:</td>
+                        <td>
+									<span>
+										<select tabindex='251' id="factoremailtmpl"
+                                                name="passwordsetting_factoremailtmpl" {$IE_DISABLED}>{$TMPL_DRPDWN_FACTOR}</select>
+										<input type="button" class="button"
+                                               onclick="open_email_template_form('factoremailtmpl')"
+                                               value="{$MOD.LBL_PASSWORD_CREATE_TEMPLATE}" {$IE_DISABLED}>
+										<input type="button" value="{$MOD.LBL_PASSWORD_EDIT_TEMPLATE}" class="button"
+                                               onclick="edit_email_template_form('factoremailtmpl')"
+                                               name='edit_factoremailtmpl' id='edit_factoremailtmpl'
+                                               style="{$EDIT_TEMPLATE}">
+									</span>
                         </td>
                         <td></td>
                         <td></td>
-                    </tr>
-                </table>
+                    </tr></table>
 
 
                 {if !empty($settings.system_ldap_enabled)}

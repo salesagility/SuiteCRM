@@ -1,10 +1,11 @@
 <?php
 /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -397,6 +398,31 @@ class Email extends Basic
      * @var Link2 $notes
      */
     public $notes;
+
+    /**
+     * @var string
+     */
+    public $From;
+
+    /**
+     * @var string
+     */
+    public $FromName;
+
+    /**
+     * @var string
+     */
+    public $Subject;
+
+    /**
+     * @var string
+     */
+    public $Body;
+
+    /**
+     * @var string
+     */
+    public $AltBody;
 
     /**
      * sole constructor
@@ -1384,7 +1410,7 @@ class Email extends Basic
             $this->bcc_addrs_names = $this->cleanEmails($this->bcc_addrs_names);
             $this->reply_to_addr = $this->cleanEmails($this->reply_to_addr);
             $this->description = SugarCleaner::cleanHtml($this->description);
-            if(empty($this->description_html)) {
+            if (empty($this->description_html)) {
                 $this->description_html = $this->description;
                 $this->description_html = nl2br($this->description_html);
             }
@@ -1593,7 +1619,7 @@ class Email extends Basic
             $email->retrieveEmailText();
             //$ret->raw_source = SugarCleaner::cleanHtml($ret->raw_source);
             $email->description = $email->description;
-            if(empty($email->description_html)) {
+            if (empty($email->description_html)) {
                 $email->description_html = $email->description;
                 $email->description_html = nl2br($email->description_html);
             }
@@ -2594,21 +2620,23 @@ class Email extends Basic
         global $current_user;
 
         // User preferences should takee precedence over everything else
-        $emailSettings = $current_user->getPreference('emailSettings',  'Emails');
+        $emailSettings = $current_user->getPreference('emailSettings', 'Emails');
         $alwaysSendEmailsInPlainText = $emailSettings['sendPlainText'] === '1';
 
         $sendEmailsInPlainText = false;
-        if(isset($_REQUEST['is_only_plain_text']) && $_REQUEST['is_only_plain_text'] === 'true') {
+        if (isset($_REQUEST['is_only_plain_text']) && $_REQUEST['is_only_plain_text'] === 'true') {
             $sendEmailsInPlainText = true;
         }
 
-        if($alwaysSendEmailsInPlainText === true) {
+        if ($alwaysSendEmailsInPlainText === true) {
             // plain text only
             $this->handleBodyInPlainTextFormat($mail);
-        } else if($alwaysSendEmailsInPlainText === false && $sendEmailsInPlainText === true) {
-            $this->handleBodyInPlainTextFormat($mail);
         } else {
-            $this->handleBodyInHTMLformat($mail);
+            if ($alwaysSendEmailsInPlainText === false && $sendEmailsInPlainText === true) {
+                $this->handleBodyInPlainTextFormat($mail);
+            } else {
+                $this->handleBodyInHTMLformat($mail);
+            }
         }
 
         // wp: if plain text version has lines greater than 998, use base64 encoding
@@ -3728,8 +3756,8 @@ eoq;
 				<div id="user_select" style="width:200px;position:absolute;left:2;top:2;visibility:hidden;z-index:1000;">
 				<table cellpadding="0" cellspacing="0" border="0" class="list view">
 					<tr height="20">
-						<td  colspan="' . $colspan . '" id="hiddenhead" onClick="hideUserSelect();" onMouseOver="this.style.border = \'outset red 1px\';" onMouseOut="this.style.border = \'inset white 0px\';this.style.borderBottom = \'inset red 1px\';">
-							<a href="#" onClick="javascript:hideUserSelect();">' . SugarThemeRegistry::current()->getImage('close',
+						<td  colspan="' . $colspan . ';">
+							<a; href="#" onClick="javascript:hideUserSelect();">' . SugarThemeRegistry::current()->getImage('close',
                 'border="0"', null, null, ".gif", $mod_strings['LBL_CLOSE']) . '</a>
 							' . $mod_strings['LBL_USER_SELECT'] . '
 						</td>
@@ -3915,66 +3943,66 @@ eoq;
         $new = array('<', '>');
 
 
-		// Validation first: we have to check that there is
-		// 'from' email and/or name in the request and
-		// if is not, then use the default one
+        // Validation first: we have to check that there is
+        // 'from' email and/or name in the request and
+        // if is not, then use the default one
 
-		// Let's pretend that everything is ok..
+        // Let's pretend that everything is ok..
 
-		$useDefaultFromAddressName = false;
-		$useDefaultFromAddressEmail = false;
+        $useDefaultFromAddressName = false;
+        $useDefaultFromAddressEmail = false;
 
-		// is from address in the request?
+        // is from address in the request?
 
-		if(!isset($request['from_addr_name']) || !$request['from_addr_name']) {
-			$useDefaultFromAddressName = true;
-		}
+        if (!isset($request['from_addr_name']) || !$request['from_addr_name']) {
+            $useDefaultFromAddressName = true;
+        }
 
-		// is from name in the request?
+        // is from name in the request?
 
-		if(!isset($request['from_addr_email']) || !$request['from_addr_email']) {
-			$useDefaultFromAddressEmail = true;
-		}
+        if (!isset($request['from_addr_email']) || !$request['from_addr_email']) {
+            $useDefaultFromAddressEmail = true;
+        }
 
-		// so, do we have to use any default data?
+        // so, do we have to use any default data?
 
-		if($useDefaultFromAddressName || $useDefaultFromAddressEmail) {
+        if ($useDefaultFromAddressName || $useDefaultFromAddressEmail) {
 
-			// get the default data
-			// (curently the system default will be used)
+            // get the default data
+            // (curently the system default will be used)
 
-			$defaultEmail = $bean->getSystemDefaultEmail();
+            $defaultEmail = $bean->getSystemDefaultEmail();
 
-			// do we have to use the default from address?
+            // do we have to use the default from address?
 
-			if($useDefaultFromAddressEmail) {
+            if ($useDefaultFromAddressEmail) {
 
-				// just make sure are there any default 'from' address set? (validation)
+                // just make sure are there any default 'from' address set? (validation)
 
-				if(!isset($defaultEmail['email']) || !$defaultEmail['email']) {
-					throw new EmailException("No system default 'from' email address", NO_DEFAULT_FROM_ADDR);
-				}
+                if (!isset($defaultEmail['email']) || !$defaultEmail['email']) {
+                    throw new EmailException("No system default 'from' email address", NO_DEFAULT_FROM_ADDR);
+                }
 
-				// use the default one
+                // use the default one
 
-				$request['from_addr_email'] = $defaultEmail['email'];
-			}
+                $request['from_addr_email'] = $defaultEmail['email'];
+            }
 
-			// do we have to use the default name?
+            // do we have to use the default name?
 
-			if($useDefaultFromAddressName) {
+            if ($useDefaultFromAddressName) {
 
-				// just make sure are there any default 'from' address set? (validation)
+                // just make sure are there any default 'from' address set? (validation)
 
-				if(!isset($defaultEmail['name']) || !$defaultEmail['name']) {
-					throw new EmailException("No system default 'from' name", NO_DEFAULT_FROM_NAME);
-				}
+                if (!isset($defaultEmail['name']) || !$defaultEmail['name']) {
+                    throw new EmailException("No system default 'from' name", NO_DEFAULT_FROM_NAME);
+                }
 
-				// use the default one
+                // use the default one
 
-				$request['from_addr_name'] = $defaultEmail['name'];
-			}
-		}
+                $request['from_addr_name'] = $defaultEmail['name'];
+            }
+        }
 
         if (isset($request['from_addr']) && $request['from_addr'] != $request['from_addr_name'] . ' &lt;' . $request['from_addr_email'] . '&gt;') {
             if (false === strpos($request['from_addr'], '&lt;')) { // we have an email only?
@@ -4152,7 +4180,7 @@ eoq;
         // We need to generate a new id
         if (isset($_REQUEST['refer_action']) && !empty($_REQUEST['refer_action'])) {
             $referActions = array('Forward', 'ReplyTo', 'ReplyToAll');
-            if(in_array($_REQUEST['refer_action'], $referActions)) {
+            if (in_array($_REQUEST['refer_action'], $referActions)) {
                 $bean->id = create_guid();
                 $bean->new_with_id = true;
                 $bean->type = 'out';

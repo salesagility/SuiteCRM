@@ -444,7 +444,8 @@ $mod_strings = array(
     'LBL_QS_DISABLED' => '(QuickSearch is not availible for this module. Please use the select button.)',
 
 
-    'LBL_ENTER_FOLDER_NAME' => 'Please enter a folder name',
+
+    'LBL_ENTER_FOLDER_NAME'		=> 'Please enter a folder name',
 
     'LBL_ERROR_SELECT_MODULE' => 'Please select a module for the Related to field',
 
@@ -470,6 +471,7 @@ $mod_strings = array(
     'LBL_DESCRIPTION' => 'Description',
     'LBL_EDIT_ALT_TEXT' => 'Edit Plain Text',
     'LBL_SEND_IN_PLAIN_TEXT' => 'Send in Plain Text',
+
     'LBL_EMAIL_ATTACHMENT' => 'Email Attachment',
     'LBL_EMAIL_SELECTOR_SELECT' => 'Select',
     'LBL_EMAIL_SELECTOR_CLEAR' => 'Clear',
@@ -500,13 +502,14 @@ $mod_strings = array(
     'LBL_MY_EMAILS' => 'My Emails',
     'LBL_NONE' => 'None',
     'LBL_NOT_SENT' => 'Send Error',
+
     'LBL_NOTES_SUBPANEL_TITLE' => 'Attachments',
     'LBL_OPPORTUNITY_SUBPANEL_TITLE' => 'Opportunities',
     'LBL_PROJECT_SUBPANEL_TITLE' => 'Projects',
     'LBL_PROJECT_TASK_SUBPANEL_TITLE' => 'Project Tasks',
     'LBL_RAW' => 'Raw Email',
     'LBL_SAVE_AS_DRAFT_BUTTON_TITLE' => 'Save Draft',
-    'LBL_SEND_ANYWAYS' => 'This email has no subject. Send/save anyway?',
+    'LBL_SEND_ANYWAYS' => 'This email has no subject.  Send/save anyway?',
     'LBL_SEND_BUTTON_LABEL' => 'Send',
     'LBL_SEND_BUTTON_TITLE' => 'Send',
     'LBL_SEND' => 'SEND',
@@ -516,6 +519,7 @@ $mod_strings = array(
     'LBL_TEXT_BODY' => 'Text Body',
     'LBL_TIME' => 'Time Sent:',
     'LBL_TO_ADDRS' => 'To',
+
     'LBL_USERS_SUBPANEL_TITLE' => 'Users',
     'LBL_USERS' => 'Users',
 
@@ -523,6 +527,7 @@ $mod_strings = array(
     'LBL_EMAIL_RELATE' => 'Related To',
     'LNK_EMAIL_TEMPLATE_LIST' => 'View Email Templates',
     'LNK_MEETING_LIST' => 'Meetings',
+
     'LNK_NEW_CALL' => 'Log Call',
     'LNK_NEW_EMAIL_TEMPLATE' => 'Create Email Template',
     'LNK_NEW_EMAIL' => 'Send Email',
@@ -544,10 +549,12 @@ $mod_strings = array(
     'LBL_LIST_FROM_ADDR' => 'From',
     'LBL_LIST_RELATED_TO' => 'Recipient Type',
     'LBL_LIST_SUBJECT' => 'Subject',
+
     'LBL_LIST_TO_ADDR' => 'To',
     'LBL_LIST_TYPE' => 'Type',
 
     'WARNING_SETTINGS_NOT_CONF' => 'Warning: Your email settings are not configured to send email.',
+
 
     // for All emails
     'LBL_BUTTON_RAW_LABEL' => 'Show Raw',
@@ -597,6 +604,7 @@ $mod_strings = array(
     'LBL_TO' => 'To: ',
     'LBL_TOGGLE_ALL' => 'Toggle All',
     'LBL_UNKNOWN' => 'Unknown',
+
     'LBL_USE' => 'Assign:',
     'LBL_ASSIGN_SELECTED_RESULTS_TO' => 'Assign Selected Results To: ',
     'LBL_USER_SELECT' => 'Select Users',
@@ -615,6 +623,7 @@ $mod_strings = array(
     'LNK_MY_INBOX' => 'My Email',
     'LNK_VIEW_MY_INBOX' => 'View My Email',
     'LNK_QUICK_REPLY' => 'Reply',
+
     'LBL_EMAILS_NO_PRIMARY_TEAM_SPECIFIED' => 'No Primary Team specified',
 
     // advanced search
@@ -700,5 +709,9 @@ $mod_strings = array(
     'LBL_PROJECT_USERS_1_FROM_PROJECT_TITLE' => 'Project Users from Project Title',
     'LBL_ROLES' => 'Roles',
     'LBL_SECURITYGROUPS' => 'Security Groups',
+
+    'LBL_FACTOR_AUTH' => 'Two Factor Authentication:',
+    'LBL_FACTOR_AUTH_INTERFACE' => 'Two Factor Authentication Interface:',
+
 ); // END STRINGS DEFS
 
