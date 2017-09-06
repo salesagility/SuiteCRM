@@ -8,7 +8,7 @@
         <a class="alert-link text-{if $result->type != null}{$result->type}{else}info{/if}" href="index.php?module=Alerts&action=redirect&record={$result->id}">
         {/if}
             {if $result->target_module != null }
-                <img src="index.php?entryPoint=getImage&themeName=SuiteR+&imageName={$result->target_module}s.gif"/>
+                <img src="index.php?entryPoint=getImage&themeName=SuiteP&imageName={$result->target_module}s.gif"/>
                 <strong class="text-{if $result->type != null}{$result->type}{else}info{/if}">{$result->target_module}</strong>
             {else}
                 <strong class="text-{if $result->type != null}{$result->type}{else}info{/if}">Alert</strong>
