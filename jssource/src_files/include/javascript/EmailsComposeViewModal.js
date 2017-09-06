@@ -71,7 +71,8 @@
         $(self.emailComposeView).on('disregardDraft', function (event, composeView) {
           if (typeof messageBox !== "undefined") {
             var mb = messageBox({size: 'lg'});
-            mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_DELETE_EMAIL'));
+            mb.setTitle(SUGAR.language.translate('', 'LBL_CONFIRM_DISREGARD_DRAFT_TITLE'));
+            mb.setBody(SUGAR.language.translate('', 'LBL_CONFIRM_DISREGARD_DRAFT_BODY'));
             mb.on('ok', function () {
               mb.remove();
               composeBox.hide();
@@ -159,7 +160,8 @@
       $(self.emailComposeView).on('disregardDraft', function (event, composeView) {
         if (typeof messageBox !== "undefined") {
           var mb = messageBox({size: 'lg'});
-          mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_DELETE_EMAIL'));
+          mb.setTitle(SUGAR.language.translate('', 'LBL_CONFIRM_DISREGARD_DRAFT_TITLE'));
+          mb.setBody(SUGAR.language.translate('', 'LBL_CONFIRM_DISREGARD_DRAFT_BODY'));
           mb.on('ok', function () {
             mb.remove();
             composeBox.hide();
