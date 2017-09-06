@@ -1,0 +1,4 @@
+@mixin hideWhenPrinting() {
+  display: none;
+  visibility: collapse;
+}

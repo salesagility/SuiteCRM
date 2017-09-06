@@ -102,7 +102,7 @@ class ImportFieldSanitize
         else
             $this->addRelatedBean = false;
         
-        $field = $sfh->getSugarField(ucfirst($name));
+        $field = $sfh::getSugarField(ucfirst($name));
         if ( $field instanceOf SugarFieldBase ) {
             $value = $field->importSanitize($value,$vardef,$focus,$this);
         }

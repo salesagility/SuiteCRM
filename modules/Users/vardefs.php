@@ -526,6 +526,17 @@ $dictionary['User'] = array(
             'studio' => false,
         ),
 
+        'editor_type' => array(
+            'name' => 'editor_type',
+            'vname' => 'LBL_EDITOR_TYPE',
+            'type' => 'enum',
+            'options' => 'dom_editor_type',
+            'importable' => false,
+            'reportable' => false,
+            'source' => 'non-db',
+            'studio' => false,
+        ),
+
         'aclroles' => array(
             'name' => 'aclroles',
             'type' => 'link',

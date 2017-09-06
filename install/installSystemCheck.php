@@ -41,7 +41,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $_SESSION['setup_license_accept'] = true;
 
-function runCheck($install_script = false, $mod_strings){
+function runCheck($install_script, $mod_strings){
     installLog("Begin System Check Process *************");
 
     if( !isset( $install_script ) || !$install_script ){
@@ -112,7 +112,9 @@ function runCheck($install_script = false, $mod_strings){
     }
 
 // PHP VERSION
-    if (check_php_version() === -1) {
+
+
+if(check_php_version() = == -1) {
         installLog($mod_strings['ERR_CHECKSYS_PHP_INVALID_VER'].'  '.constant('PHP_VERSION'));
         $phpVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} ".constant('PHP_VERSION')." )</span></b>";
         $error_found = true;
@@ -120,7 +122,6 @@ function runCheck($install_script = false, $mod_strings){
             <p><b>'.$mod_strings['LBL_CHECKSYS_PHPVER'].'</b></p>
             <p><span class="error">'.$phpVersion.'</span></p>
         ';
-
 }
 
 //Php Backward compatibility checks

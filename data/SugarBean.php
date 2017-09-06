@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,22 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-/*********************************************************************************
- * Description:  Defines the base class for all data entities used throughout the
- * application.  The base class including its methods and variables is designed to
- * be overloaded with module-specific methods and variables particular to the
- * module's base entity class.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- *******************************************************************************/
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -75,25 +62,25 @@ class SugarBean
 {
     /**
      * Blowfish encryption key
-     * @var string
+     * @var string $field_key
      */
     protected static $field_key;
     /**
      * Cache of fields which can contain files
      *
-     * @var array
+     * @var array $fileFields
      */
     protected static $fileFields = array();
     /**
      * A pointer to the database object
      *
-     * @var DBManager
+     * @var DBManager $db
      */
     public $db;
     /**
      * Unique object identifier
      *
-     * @var string
+     * @var string $id
      */
     public $id;
     /**
@@ -102,33 +89,33 @@ class SugarBean
      * id, it assumes it is an update.  Setting new_with_id to true will
      * make sure the system performs an insert instead of an update.
      *
-     * @var bool -- default false
+     * @var boolean $new_with_id -- default false
      */
     public $new_with_id = false;
     /**
      * Disable vardefs.  This should be set to true only for beans that do not have vardefs.  Tracker is an example
      *
-     * @var bool -- default false
+     * @var boolean $disable_vardefs -- default false
      */
     public $disable_vardefs = false;
     /**
      * holds the full name of the user that an item is assigned to.  Only used if notifications
      * are turned on and going to be sent out.
      *
-     * @var string
+     * @var string $new_assigned_user_name
      */
     public $new_assigned_user_name;
     /**
      * An array of bool.  This array is cleared out when data is loaded.
      * As date/times are converted, a "1" is placed under the key, the field is converted.
      *
-     * @var bool[] array of bool
+     * @var array $processed_dates_times array of bool
      */
     public $processed_dates_times = array();
     /**
      * Whether to process date/time fields for storage in the database in GMT
      *
-     * @var bool
+     * @var boolean $process_save_dates
      */
     public $process_save_dates = true;
     /**
@@ -136,20 +123,20 @@ class SugarBean
      * Examples of this kind of save are import and mass update.
      * We turn off notifications of this is the case to make things more efficient.
      *
-     * @var bool
+     * @var boolean $save_from_post
      */
     public $save_from_post = true;
     /**
      * When running a query on related items using the method: retrieve_by_string_fields
      * this value will be set to true if more than one item matches the search criteria.
      *
-     * @var bool
+     * @var boolean $duplicates_found
      */
     public $duplicates_found = false;
     /**
      * true if this bean has been deleted, false otherwise.
      *
-     * @var BOOL
+     * @var integer $deleted - 0 === false, 1 === true
      */
     public $deleted = 0;
     /**
@@ -158,7 +145,7 @@ class SugarBean
      * the date modified.  This is only used by sync to allow for updates to be
      * replicated in a way that will not cause them to be replicated back.
      *
-     * @var BOOL
+     * @var boolean $update_date_modified
      */
     public $update_date_modified = true;
     /**
@@ -167,121 +154,254 @@ class SugarBean
      * the modified by column.  This is only used by sync to allow for updates to be
      * replicated in a way that will not cause them to be replicated back.
      *
-     * @var bool
+     * @var boolean $update_modified_by
      */
     public $update_modified_by = true;
     /**
      * Setting this to true allows for updates to overwrite the date_entered
      *
-     * @var bool
+     * @var boolean $update_date_entered
      */
     public $update_date_entered = false;
     /**
      * This allows for seed data to be created without using the current user to set the id.
      * This should be replaced by altering the current user before the call to save.
      *
-     * @var bool
+     * @var boolean $set_created_by
      */
     public $set_created_by = true;
     /**
      * The database table where records of this Bean are stored.
      *
-     * @var String
+     * @var string $table_name
      */
     public $table_name = '';
     /**
      * This is the singular name of the bean.  (i.e. Contact).
      *
-     * @var String
+     * @var string $object_name
      */
     public $object_name = '';
     /** Set this to true if you query contains a sub-select and bean is converting both select statements
      * into count queries.
+     * @var boolean $ungreedy_count
      */
     public $ungreedy_count = false;
+
     /**
      * The name of the module folder for this type of bean.
      *
-     * @var String
+     * @var string $module_dir
      */
     public $module_dir = '';
+
+    /**
+     * @var string $module_name
+     */
     public $module_name = '';
+
+    /**
+     * @var array $field_name_map
+     */
     public $field_name_map;
+
+    /**
+     * @var array $field_defs
+     */
     public $field_defs;
+
+    /**
+     * @var array $custom_fields
+     */
     public $custom_fields;
+
+    /**
+     * @var array $column_fields
+     */
     public $column_fields = array();
+
+    /**
+     * @var array $list_fields
+     */
     public $list_fields = array();
+
+    /**
+     * @var array $additional_column_fields
+     */
     public $additional_column_fields = array();
+
+    /**
+     * @var array $relationship_fields
+     */
     public $relationship_fields = array();
+
+    /**
+     * @var bool $current_notify_user
+     */
     public $current_notify_user;
+
+    /**
+     * @var bool $fetched_row
+     */
     public $fetched_row = false;
+    /**
+     * @var array $fetched_rel_row
+     */
     public $fetched_rel_row = array();
+
+    /**
+     * @var array $layout_def
+     */
     public $layout_def;
+
+    /**
+     * @var bool $force_load_details
+     */
     public $force_load_details = false;
+
+    /**
+     * @var bool $optimistic_lock
+     */
     public $optimistic_lock = false;
+
+    /**
+     * @var bool $disable_custom_fields
+     */
     public $disable_custom_fields = false;
+
+    /**
+     * @var bool $number_formatting_done
+     */
     public $number_formatting_done = false;
+
+    /**
+     * @var bool $process_field_encrypted
+     */
     public $process_field_encrypted = false;
+
+    /**
+     * @var string $acltype
+     */
     public $acltype = 'module';
+
+    /**
+     * @var array $additional_meta_fields
+     */
     public $additional_meta_fields = array();
+
+    /**
+     * @var bool $notify_inworkflow
+     */
     public $notify_inworkflow;
 
-    public $name;
-    public $description;
-    public $date_entered;
-    public $date_modified;
-    public $modified_user_id;
-    public $assigned_user_id;
-    public $created_by;
-    public $created_by_name;
-    public $modified_by_name;
     /**
-     * Set to true in the child beans if the module supports importing
+     * @var string $name
+     */
+    public $name;
+
+    /**
+     * @var string $description
+     */
+    public $description;
+
+    /**
+     * @var string $data_entered
+     */
+    public $date_entered;
+
+    /**
+     * @var string $date_modified
+     */
+    public $date_modified;
+
+    /**
+     * @var string $modified_user_id
+     */
+    public $modified_user_id;
+
+    /**
+     * @var string $assigned_user_id
+     */
+    public $assigned_user_id;
+
+    /**
+     * @var string $created_by
+     */
+    public $created_by;
+
+    /**
+     * @var string $created_by_name
+     */
+    public $created_by_name;
+
+    /**
+     * @var string $modified_by_name
+     */
+    public $modified_by_name;
+
+    /**
+     * @var boolean $importable Set to true in the child beans if the module supports importing
      */
     public $importable = false;
+
     /**
-     * Set to true in the child beans if the module use the special notification template
+     * @var boolean $special_notification Set to true in the child beans if the module use the special notification template
      */
     public $special_notification = false;
+
     /**
-     * Set to true if the bean is being dealt with in a workflow
+     * @var boolean $in_workflow Set to true if the bean is being dealt with in a workflow
      */
     public $in_workflow = false;
+
     /**
      *
-     * By default it will be true but if any module is to be kept non visible
+     * @var boolean $tracker_visibility By default it will be true but if any module is to be kept non visible
      * to tracker, then its value needs to be overridden in that particular module to false.
      *
      */
     public $tracker_visibility = true;
+
     /**
-     * Used to pass inner join string to ListView Data.
+     * @var array $listview_inner_join Used to pass inner join string to ListView Data.
      */
     public $listview_inner_join = array();
+
     /**
-     * Set to true in <modules>/Import/views/view.step4.php if a module is being imported
+     * @var boolean $in_import Set to true in <modules>/Import/views/view.step4.php if a module is being imported
      */
     public $in_import = false;
-    public $in_save;
-    public $logicHookDepth;
+
     /**
-     * How deep logic hooks can go
-     * @var int
+     * @var boolean $in_save
+     */
+    public $in_save;
+
+    /**
+     * @var integer $logicHookDepth
+     */
+    public $logicHookDepth;
+
+    /**
+     * @var int $max_logic_depth  How deep logic hooks can go
      */
     protected $max_logic_depth = 10;
+
     /**
      * A way to keep track of the loaded relationships so when we clone the object we can unset them.
      *
      * @var array
      */
     protected $loaded_relationships = array();
+
     /**
-     * set to true if dependent fields updated
+     * @var boolean $is_updated_dependent_fields set to true if dependent fields updated
      */
     protected $is_updated_dependent_fields = false;
 
     /**
-     * Constructor for the bean, it performs following tasks:
+     * SugarBean constructor.
+     * Performs following tasks:
      *
      * 1. Initialized a database connections
      * 2. Load the vardefs for the module implementing the class. cache the entries
@@ -358,6 +478,7 @@ class SugarBean
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     * @see SugarBean::__construct
      */
     public function SugarBean(){
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
@@ -616,8 +737,11 @@ class SugarBean
      * Internal Function, do not override.
      */
     public static function get_union_related_list($parentbean, $order_by = "", $sort_order = '', $where = "",
-                                                  $row_offset = 0, $limit = -1, $max = -1, $show_deleted = 0, $subpanel_def)
+                                                  $row_offset = 0, $limit = -1, $max = -1, $show_deleted = 0, $subpanel_def = null)
     {
+        if (is_null($subpanel_def)) {
+            $GLOBALS['log']->fatal('subpanel_def is null');
+        }
         $secondary_queries = array();
         global $layout_edit_mode;
 
@@ -908,8 +1032,12 @@ class SugarBean
      * @return array $fetched data.
      */
     public function process_union_list_query($parent_bean, $query,
-                                             $row_offset, $limit = -1, $max_per_page = -1, $where = '', $subpanel_def, $query_row_count = '', $secondary_queries = array())
+                                             $row_offset, $limit = -1, $max_per_page = -1, $where = '', $subpanel_def = null, $query_row_count = '', $secondary_queries = array())
     {
+        if (is_null($subpanel_def)) {
+            $GLOBALS['log']->fatal('subpanel_def is null');
+        }
+
         $db = DBManagerFactory::getInstance('listviews');
         /**
          * if the row_offset is set to 'end' go to the end of the list
@@ -959,7 +1087,12 @@ class SugarBean
 
         if ($performSecondQuery) {
             if (!empty($limit) && $limit != -1 && $limit != -99) {
-                $result = $db->limitQuery($query, $row_offset, $limit, true, "Error retrieving $parent_bean->object_name list: ");
+                if (empty($parent_bean)) {
+                    $objectName = '[empty parent bean]';
+                } else {
+                    $objectName = $parent_bean->object_name;
+                }
+                $result = $db->limitQuery($query, $row_offset, $limit, true, "Error retrieving $objectName list: ");
             } else {
                 $result = $db->query($query, true, "Error retrieving $this->object_name list: ");
             }
@@ -2372,7 +2505,11 @@ class SugarBean
                             $GLOBALS['log']->debug("save_relationship_changes(): From field_defs - add a relationship record returned " . var_export($success, true));
                         }
                     } else {
-                        $GLOBALS['log']->fatal("Failed to load relationship {$linkField} while saving {$this->module_dir}");
+                        $logFunction = 'fatal';
+                        if (isset($this->field_defs[$linkField]['source']) && $this->field_defs[$linkField]['source'] === 'non-db') {
+                            $logFunction = 'warn';
+                        }
+                        $GLOBALS['log']->$logFunction("Failed to load relationship {$linkField} while saving {$this->module_dir}");
                     }
                 }
             }
@@ -4409,7 +4546,7 @@ class SugarBean
      * @param string $where where clause. defaults to ""
      * @param bool $check_dates . defaults to false
      * @param int $show_deleted show deleted records. defaults to 0
-     * @return SugarBean[]
+     * @return null|SugarBean[]
      */
     public function get_full_list($order_by = "", $where = "", $check_dates = false, $show_deleted = 0)
     {
@@ -4427,7 +4564,7 @@ class SugarBean
      * Internal function, do not override.
      * @param string $query query to be processed.
      * @param bool $check_date Optional, default false. if set to true date time values are processed.
-     * @return array Fetched data.
+     * @return null|array Fetched data.
      *
      */
     public function process_full_list_query($query, $check_date = false)

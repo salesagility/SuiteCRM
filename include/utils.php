@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 require_once 'php_version.php';
@@ -1639,6 +1639,7 @@ function get_select_options_with_id_separate_key($label_list, $key_list, $select
     $select_options = '';
 
     //for setting null selection values to human readable --None--
+    get_select_empty_option();
     $pattern = "/'0?'></";
     $replacement = "''>".$app_strings['LBL_NONE'].'<';
     if ($massupdate) {
@@ -1671,6 +1672,76 @@ function get_select_options_with_id_separate_key($label_list, $key_list, $select
     $select_options = preg_replace($pattern, $replacement, $select_options);
 
     return $select_options;
+}
+
+
+/**
+ * @param string $value
+ * @param bool $isSelected
+ * @param string $app_strings_label
+ * @return string as HTML eg <OPTION value="">--None--</OPTION>
+ */
+function get_select_empty_option($value = '', $isSelected = false, $app_strings_label = 'LBL_NONE')
+{
+    global $app_strings;
+
+    $response = '<OPTION value="'.$value.'"';
+
+    if($isSelected === true) {
+        $response .= ' ' . 'selected';
+    }
+
+    $response .= '>' .  $app_strings[$app_strings_label] . '</OPTION>';
+
+    return $response;
+}
+
+function get_select_full_option($value = '', $isSelected = false, $translatedLabel = '----')
+{
+    global $app_strings;
+
+    $response = '<OPTION value="'.$value.'"';
+
+    if($isSelected === true) {
+        $response .= ' ' . 'selected';
+    }
+
+    $response .= '>';
+    $response .= $translatedLabel;
+    $response .= '</OPTION>';
+
+    return $response;
+}
+
+/**
+ * @param array $option_list
+ * @param string $selected_key
+ * @return string as HTML <OPTION value="id1">apple</OPTION><OPTION value="id2">banana</OPTION>
+ */
+function get_select_full_options_with_id($option_list = array(), $selected_key = '')
+{
+    $response = '';
+
+    foreach ($option_list as $option_key => $option_value)
+    {
+        $isSelected = false;
+
+        if(empty($option_key)) {
+         continue;
+        }
+
+        if(empty($option_value)) {
+            continue;
+        }
+
+        if($option_key === $selected_key)
+        {
+            $isSelected = true;
+        }
+
+        $response .= get_select_full_option($option_key, $isSelected, $option_value);
+    }
+    return $response;
 }
 
 /**
@@ -2558,9 +2629,9 @@ function values_to_keys($array)
     return $new_array;
 }
 
-function clone_relationship(&$db, $tables = array(), $from_column, $from_id, $to_id)
+function clone_relationship(&$db, $tables, $from_column, $from_id, $to_id)
 {
-    foreach ($tables as $table) {
+    foreach ((array)$tables as $table) {
         if ($table == 'emails_beans') {
             $query = "SELECT * FROM $table WHERE $from_column='$from_id' and bean_module='Leads'";
         } else {
@@ -2732,9 +2803,15 @@ function number_empty($value)
     return empty($value) && $value != '0';
 }
 
-function get_bean_select_array($add_blank = true, $bean_name, $display_columns, $where = '', $order_by = '', $blank_is_none = false)
+function get_bean_select_array($add_blank, $bean_name, $display_columns, $where = '', $order_by = '', $blank_is_none = false)
 {
     global $beanFiles;
+
+    // set $add_blank = true by default
+    if (!is_bool($add_blank)) {
+        $add_blank = true;
+    }
+
     require_once $beanFiles[$bean_name];
     $focus = new $bean_name();
     $user_array = array();
@@ -3035,37 +3112,37 @@ function decodeJavascriptUTF8($str)
  *
  * @param string Version to check against, defaults to the current environment's.
  *
- * @return  integer  1 if version is greater than the recommended PHP version,
- *                   0 if version is between minimun and recomended PHP versions,
- *                   -1 otherwise (less than minimum or buggy version)
+ * @return integer1 if version is greater than the recommended PHP version,
+ * 0 if version is between minimun and recomended PHP versions,
+ * -1 otherwise (less than minimum or buggy version)
  */
-function check_php_version($sys_php_version = '') {
-    if ($sys_php_version === '') {
-        $sys_php_version = constant('PHP_VERSION');
+function check_php_version($sys_php_version = ''){
+if ($sys_php_version === ''){
+    $sys_php_version =  constant('PHP_VERSION') ;
     }
 
     // versions below MIN_PHP_VERSION are not accepted, so return early.
-    if (version_compare($sys_php_version, constant('SUITECRM_PHP_MIN_VERSION'), '<') === true) {
-        return -1;
+        if ( version_compare($sys_php_version, constant('SUITECRM_PHP_MIN_VERSION'), '<') === true) {
+            return - 1;
+
     }
 
     // If there are some bug ridden versions, we should include them here
-    // and check immediately for one of this versions
-    $bug_php_versions = array();
-
+	// and check immediately for one of this versions
+	$bug_php_versions = array();
     foreach ($bug_php_versions as $v) {
-        if (version_compare($sys_php_version, $v, '=') === true) {
+        if ( version_compare($sys_php_version, $v, '=') === true) {
             return -1;
+
         }
     }
 
-    // If the checked version is between the minimum and recommended versions, return 0
+    //If the checked version is between the minimum and recommended versions, return 0
     if (version_compare($sys_php_version, constant('SUITECRM_PHP_REC_VERSION'), '<') === true) {
         return 0;
     }
 
-    // Everything else is fair game
-    return 1;
+    // Everything else is fair gamereturn 1;
 }
 
 /**
@@ -4119,7 +4196,7 @@ function getTrackerSubstring($name)
     return $chopped;
 }
 
-function generate_search_where($field_list = array(), $values = array(), &$bean, $add_custom_fields = false, $module = '')
+function generate_search_where($field_list, $values, &$bean, $add_custom_fields = false, $module = '')
 {
     $where_clauses = array();
     $like_char = '%';
@@ -5398,4 +5475,16 @@ function suite_strrpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL
     } else {
         return strrpos($haystack, $needle, $offset);
     }
+}
+
+/**
+ * @param string $id
+ * @return bool
+ * @todo add to a separated common validator class
+ */
+function isValidId($id) {
+
+    $valid = is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $id);
+
+    return $valid;
 }

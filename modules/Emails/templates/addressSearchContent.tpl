@@ -48,18 +48,18 @@
 		
         <table >
         <tr>
-            <td width="60%">
+            <td >
                 <div id="addrSearchGrid" ></div>
 	           <div id='dt-pag-nav-addressbook'></div>
 	        </td>
-	        <td width="3%">
+	        <td >
 	           <span style="position:relative; top:1px;">&nbsp;
 	               <div style="overflow: visible; height: 0; position: absolute; width: 0; right:-2em; top:-166px;">
 	                   <h3 style="">{sugar_translate label="LBL_SELECTED_ADDR" module="Emails"}:</h3>
 	               </div>
 	           </span>
 	        </td>
-	        <td width="37%"valign="top">
+	        <td valign="top">
 	           <div id="addrSearchResultGrid"></div>
 	           <div class="yui-pg-container">&nbsp;</div>
 	         </td>
