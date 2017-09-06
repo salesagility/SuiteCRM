@@ -114,7 +114,7 @@ function runCheck($install_script, $mod_strings){
 // PHP VERSION
 
 
-if(check_php_version() = == -1) {
+if(check_php_version() === -1) {
         installLog($mod_strings['ERR_CHECKSYS_PHP_INVALID_VER'].'  '.constant('PHP_VERSION'));
         $phpVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} ".constant('PHP_VERSION')." )</span></b>";
         $error_found = true;
