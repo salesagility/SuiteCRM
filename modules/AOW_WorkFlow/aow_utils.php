@@ -119,7 +119,6 @@ function getModuleFields($module, $view = 'EditView', $value = '', $valid = arra
         return json_encode($fields);
     }
     if ($view == 'EditView') {
-        $test = get_select_options_with_id($fields, $value);
         return get_select_options_with_id($fields, $value);
     } else {
         return $fields[$value];
