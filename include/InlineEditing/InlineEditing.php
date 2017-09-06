@@ -345,7 +345,7 @@ function saveField($field, $id, $module, $value)
             }
         }
 
-        $adminOnlyModules = array('Users');
+        $adminOnlyModules = array('Users', 'Employees');
 
         $enabled = true;
         if(in_array($module, $adminOnlyModules) && !is_admin($current_user)) {
