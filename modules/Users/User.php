@@ -42,10 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
 require_once 'include/SugarObjects/templates/person/Person.php';
 
 // User is used to store customer information.
@@ -202,11 +198,21 @@ class User extends Person
     }
 
     /**
+     * @param bool $useRequestedRecord
      * @return array
+     * @throws \RuntimeException
      */
-    public function getSignaturesArray()
+    public function getSignaturesArray($useRequestedRecord = false)
     {
-        $q = 'SELECT * FROM users_signatures WHERE user_id = \'' . $this->id . '\' AND deleted = 0 ORDER BY name ASC';
+
+        if ($useRequestedRecord) {
+            $user = $this->getRequestedUserRecord();
+            $uid = $user->id;
+        } else {
+            $uid = $this->id;
+        }
+
+        $q = 'SELECT * FROM users_signatures WHERE user_id = \'' . $uid . '\' AND deleted = 0 ORDER BY name ASC';
         $r = $this->db->query($q);
 
 		// provide "none"
@@ -259,15 +265,18 @@ class User extends Person
      * @param string $defaultSig
      * @param bool $forSettings
      * @param string $elementId
+     * @param bool $useRequestedRecord
      * @return string
+     * @throws \RuntimeException
      */
     public function getEmailAccountSignatures(
         $live = false,
         $defaultSig = '',
         $forSettings = false,
-        $elementId = 'account_signature_id'
+        $elementId = 'account_signature_id',
+        $useRequestedRecord = false
     ) {
-        $sig = $this->getSignaturesArray();
+        $sig = $this->getSignaturesArray($useRequestedRecord);
         $sigs = array();
         foreach ($sig as $key => $arr) {
             $sigs[$key] = !empty($arr['name']) ? $arr['name'] : '';
@@ -379,12 +388,12 @@ class User extends Person
 	    ){
 
 	    // for BC
-	    if ( func_num_args() > 4 ) {
+	    if (func_num_args() > 4 ) {
 	        $user = func_get_arg(4);
 	        $GLOBALS['log']->deprecated('User::setPreferences() should not be used statically.');
-	    }
-	    else{
-	        $user = $this;}
+        } else {
+            $user = $this;
+        }
 
         $user->_userPreferenceFocus->setPreference($name, $value, $category);
     }
@@ -430,12 +439,12 @@ class User extends Person
 
     /**
      * Unconditionally reloads user preferences from the DB and updates the session
+     * @param string $category name of the category to retreive, defaults to global scope
      * @return bool successful?
-     * @internal param string $category name of the category to retreive, defaults to global scope
      */
-    public function reloadPreferences()
+    public function reloadPreferences($category = 'global')
     {
-        return $this->_userPreferenceFocus->reloadPreferences($category = 'global');
+        return $this->_userPreferenceFocus->reloadPreferences($category);
     }
 
     /**
@@ -481,6 +490,27 @@ class User extends Person
     }
 
     /**
+     * @return bool|SugarBean
+     * @throws \RuntimeException
+     */
+    public function getRequestedUserRecord()
+    {
+        if (!isset($_REQUEST['record']) || !$_REQUEST['record']) {
+            throw new RuntimeException('Error: requested record is not set');
+        }
+        $user = BeanFactory::getBean('Users', $_REQUEST['record']);
+        if (!$user) {
+            throw new RuntimeException('Error: retrieve requested user record');
+        }
+        $uid = $user->id;
+        if (!$uid) {
+            throw new RuntimeException('Error: retrieve requested user ID');
+        }
+
+        return $user;
+    }
+
+    /**
      * Interface for the User object to calling the UserPreference::setPreference() method in modules/UserPreferences/UserPreference.php
      *
      * @see UserPreference::getPreference()
@@ -488,6 +518,7 @@ class User extends Person
      * @param string $name name of the preference to retreive
      * @param string $category name of the category to retreive, defaults to global scope
      * @return mixed the value of the preference (string, array, int etc)
+     * @internal param bool $useRequestedRecord
      */
     public function getPreference(
         $name,
@@ -554,9 +585,7 @@ class User extends Person
     public static function getLicensedUsersWhere()
     {
         return "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND " . $GLOBALS['db']->convert('user_name',
-                'length') . '>0';
-
-        return '1<>1';
+                'length') . ">0";
     }
 
     /**
@@ -568,7 +597,7 @@ class User extends Person
         $isUpdate = !empty($this->id) && !$this->new_with_id;
 
 
-		$query = 'SELECT count(id) as total from users WHERE '.self::getLicensedUsersWhere();
+		$query = 'SELECT count(id) as total from users WHERE ' . self::getLicensedUsersWhere();
 
 
         // is_group & portal should be set to 0 by default
@@ -672,21 +701,22 @@ class User extends Person
 
     /**
      * @deprecated
+     * @param string $user_name - Must be non null and at least 2 characters
      * @param string $user_password - Must be non null and at least 1 character.
-     * @return string encrypted password for storage in DB and comparison against DB password.
-     * @internal param string $user_name - Must be non null and at least 2 characters
      * @desc Take an unencrypted username and password and return the encrypted password
+     * @return string encrypted password for storage in DB and comparison against DB password.
      */
-    public function encrypt_password($user_password)
+    function encrypt_password($user_password)
     {
         // encrypt the password.
         $salt = substr($this->user_name, 0, 2);
+        $encrypted_password = crypt($user_password, $salt);
 
-        return crypt($user_password, $salt);
+        return $encrypted_password;
     }
 
     /**
-     * Authenicates the user; returns true if successful
+     * Authenticates the user; returns true if successful
      *
      * @param string $password MD5-encoded password
      * @return bool
@@ -1474,26 +1504,22 @@ EOQ;
     /**
      * returns opening <a href=xxxx for a contact, account, etc
      * cascades from User set preference to System-wide default
-     *
-     * @param $emailAddress
-     * @param the $focus
-     * @param string $class
-     * @return string link
-     * @internal param string $contact_id
-     * @internal param string $ret_module
-     * @internal param string $ret_action
-     * @internal param string $ret_id
-     * @internal param the $attribute email addy
-     * @internal param the $focus parent bean
-     * @internal param $contact_id
-     * @internal param $return_module
-     * @internal param $return_action
-     * @internal param $return_id
-     * @internal param $class
+     * @return string    link
+     * @param attribute the email addy
+     * @param focus the parent bean
+     * @param contact_id
+     * @param return_module
+     * @param return_action
+     * @param return_id
+     * @param class
      */
-    public function getEmailLink2(
+    function getEmailLink2(
         $emailAddress,
         &$focus,
+        $contact_id = '',
+        $ret_module = '',
+        $ret_action = 'DetailView',
+        $ret_id = '',
         $class = ''
     ) {
         $emailLink = '';
@@ -1514,7 +1540,7 @@ EOQ;
         if ($client == 'sugar') {
             require_once 'modules/Emails/EmailUI.php';
             $emailUI = new EmailUI();
-            for ($i = 0, $iMax = count($focus->emailAddress->addresses); $i < $iMax; $i++) {
+            for ($i = 0; $i < count($focus->emailAddress->addresses); $i++) {
                 $emailField = 'email' . (string)($i + 1);
                 if ($focus->emailAddress->addresses[$i]['email_address'] === $emailAddress) {
                     $focus->$emailField = $emailAddress;
@@ -1535,26 +1561,22 @@ EOQ;
     /**
      * returns opening <a href=xxxx for a contact, account, etc
      * cascades from User set preference to System-wide default
-     *
-     * @param the $attribute
-     * @param the $focus
-     * @param string $class
-     * @return string link
-     * @internal param string $contact_id
-     * @internal param string $ret_module
-     * @internal param string $ret_action
-     * @internal param string $ret_id
-     * @internal param the $attribute email addy
-     * @internal param the $focus parent bean
-     * @internal param $contact_id
-     * @internal param $return_module
-     * @internal param $return_action
-     * @internal param $return_id
-     * @internal param $class
+     * @return string    link
+     * @param attribute the email addy
+     * @param focus the parent bean
+     * @param contact_id
+     * @param return_module
+     * @param return_action
+     * @param return_id
+     * @param class
      */
-    public function getEmailLink(
+    function getEmailLink(
         $attribute,
         &$focus,
+        $contact_id = '',
+        $ret_module = '',
+        $ret_action = 'DetailView',
+        $ret_id = '',
         $class = ''
     ) {
         require_once 'modules/Emails/EmailUI.php';
@@ -1591,7 +1613,7 @@ EOQ;
      * gets a human-readable explanation of the format macro
      * @return string Human readable name format
      */
-    public function getLocaleFormatDesc()
+    function getLocaleFormatDesc()
     {
         global $locale;
         global $mod_strings;
@@ -1739,7 +1761,7 @@ EOQ;
     {
         static $developerModules;
         if (!isset($_SESSION[$this->user_name . '_get_developer_modules_for_user'])) {
-            $_SESSION[$this->user_name . '_get_developer_modules_for_user'] = $this->_getModulesForACL();
+            $_SESSION[$this->user_name . '_get_developer_modules_for_user'] = $this->_getModulesForACL('dev');
         }
 
         return $_SESSION[$this->user_name . '_get_developer_modules_for_user'];
@@ -1944,7 +1966,7 @@ EOQ;
         // Create random characters for the ones that doesnt have requirements
         for ($i = 0; $i < $length - $condition; $i++)  // loop and create password
         {
-            $password .= $charBKT[rand() % strlen($charBKT)];
+            $password = $password . substr($charBKT, rand() % strlen($charBKT), 1);
         }
 
         return $password;
@@ -2036,14 +2058,14 @@ EOQ;
 
         if (!empty($itemail)) {
             if ($hasRecipients) {
-                $mail->addBCC($itemail);
+                $mail->AddBCC($itemail);
             } else {
-                $mail->addAddress($itemail);
+                $mail->AddAddress($itemail);
             }
             $hasRecipients = true;
         }
         if ($hasRecipients) {
-            $result['status'] = @$mail->send();
+            $result['status'] = @$mail->Send();
         }
 
         if ($result['status'] == true) {
