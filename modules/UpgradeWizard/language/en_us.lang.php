@@ -106,7 +106,6 @@ $mod_strings = array(
     'LBL_UW_COMPLIANCE_XML' => 'XML Parsing',
     'LBL_UW_COMPLIANCE_ZIPARCHIVE' => 'Zip Support',
     'LBL_UW_COMPLIANCE_PCRE_VERSION' => 'PCRE Version',
-
     'LBL_UW_COPIED_FILES_TITLE' => 'Files Copied Successfully',
 
     'LBL_UW_DB_CHOICE1' => 'Upgrade Wizard Runs SQL',
