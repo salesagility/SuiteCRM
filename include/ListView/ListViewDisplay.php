@@ -45,33 +45,34 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/ListView/ListViewData.php');
 require_once('include/MassUpdate.php');
 
-class ListViewDisplay {
+class ListViewDisplay
+{
     static $listViewCounter = 0;
 
-	var $show_mass_update_form = false;
-	var $show_action_dropdown = true;
+	public $show_mass_update_form = false;
+    public $show_action_dropdown = true;
 
 	/**
 	 * @var bool Show Bulk Action button as Delete link
 	 */
-	var $show_action_dropdown_as_delete = false;
+    public $show_action_dropdown_as_delete = false;
 
-	var $rowCount;
-	var $mass = null;
-	var $seed;
-	var $multi_select_popup;
-	var $lvd;
-	var $moduleString;
-	var $export = true;
-	var $multiSelect = true;
-	var $mailMerge = true;
-	var $should_process = true;
-	var $show_plus = false;
+    public $rowCount;
+    public $mass = null;
+    public $seed;
+    public $multi_select_popup;
+    public $lvd;
+    public $moduleString;
+    public $export = true;
+    public $multiSelect = true;
+    public $mailMerge = true;
+    public $should_process = true;
+    public $show_plus = false;
 	/*
 	 * Used in view.popup.php. Sometimes there are fields on the search form that are not referenced in the listviewdefs. If this
 	 * is the case, then the filterFields will be set and the related fields will not be referenced when calling create_new_list_query.
 	 */
-	var $mergeDisplayColumns = false;
+    public $mergeDisplayColumns = false;
     public $actionsMenuExtraItems = array();
 
 	/**
@@ -103,11 +104,11 @@ class ListViewDisplay {
 		if (!empty($_SESSION[$sessionSearchQuery])) {
 			$searching = true;
 		}
-		if(!empty($GLOBALS['sugar_config']['save_query']) && $GLOBALS['sugar_config']['save_query'] == 'populate_only'){
+		if(!empty($GLOBALS['sugar_config']['save_query']) && $GLOBALS['sugar_config']['save_query'] === 'populate_only'){
 		    if(empty($GLOBALS['displayListView'])
 		            && (!empty($_REQUEST['clear_query'])
 		                || $_REQUEST['module'] == $moduleDir
-		                    && ((empty($_REQUEST['query']) || $_REQUEST['query'] == 'MSI' )
+		                    && ((empty($_REQUEST['query']) || $_REQUEST['query'] === 'MSI' )
 		                        && (!$searching)))) {
 				$_SESSION['last_search_mod'] = $_REQUEST['module'] ;
 				$this->should_process = false;
@@ -174,7 +175,7 @@ class ListViewDisplay {
                $filter_fields[strtolower($columnName)] = true;
 
             if(isset($this->seed->field_defs[strtolower($columnName)]['type']) &&
-               strtolower($this->seed->field_defs[strtolower($columnName)]['type']) == 'currency' &&
+               strtolower($this->seed->field_defs[strtolower($columnName)]['type']) === 'currency' &&
                isset($this->seed->field_defs['currency_id'])) {
                     $filter_fields['currency_id'] = true;
             }
@@ -183,7 +184,7 @@ class ListViewDisplay {
                     foreach($def['related_fields'] as $field) {
                         //id column is added by query construction function. This addition creates duplicates
                         //and causes issues in oracle. #10165
-                        if ($field != 'id') {
+                        if ($field !== 'id') {
                             $filter_fields[$field] = true;
                         }
                     }
@@ -392,9 +393,11 @@ class ListViewDisplay {
         $foundEmailField = false;
         // Search for fields that look like an email address
         foreach ($this->seed->field_defs as $field) {
-            if(isset($field['type'])&&$field['type']=='link'
-               &&isset($field['relationship'])&&isset($dictionary[$this->seed->object_name]['relationships'][$field['relationship']])
-               &&$dictionary[$this->seed->object_name]['relationships'][$field['relationship']]['rhs_module']=='EmailAddresses') {
+            if (isset($field['type']) && $field['type'] === 'link' &&
+                isset($field['relationship']) &&
+                isset($dictionary[$this->seed->object_name]['relationships'][$field['relationship']]) &&
+                $dictionary[$this->seed->object_name]
+                ['relationships'][$field['relationship']]['rhs_module'] === 'EmailAddresses') {
                 $foundEmailField = true;
                 break;
             }
@@ -406,13 +409,13 @@ class ListViewDisplay {
 
 		$userPref = $GLOBALS['current_user']->getPreference('email_link_type');
 		$defaultPref = $GLOBALS['sugar_config']['email_default_client'];
-		if($userPref != '') {
+		if($userPref !== '') {
             $client = $userPref;
         } else {
             $client = $defaultPref;
         }
 
-        if($client == 'sugar') {
+        if($client === 'sugar') {
 		    require_once 'modules/Emails/EmailUI.php';
 		    $emailUI =  new EmailUI();
             $script = $emailUI->populateComposeViewFields(). $app_strings['LBL_EMAIL_COMPOSE'];
@@ -471,6 +474,7 @@ class ListViewDisplay {
 	 * The link can be disabled by setting module level duplicate_merge property to false
 	 * in the moudle's vardef file.
 	 *
+     * @param string $loc
 	 * @return string HTML
 	 */
 	protected function buildMergeDuplicatesLink($loc = 'top')
@@ -482,18 +486,20 @@ class ListViewDisplay {
         $return_string.= isset($_REQUEST['action']) ? "&return_action={$_REQUEST['action']}" : "";
         $return_string.= isset($_REQUEST['record']) ? "&return_id={$_REQUEST['record']}" : "";
         //need delete and edit access.
-		if (!(ACLController::checkAccess($this->seed->module_dir, 'edit', true)) or !(ACLController::checkAccess($this->seed->module_dir, 'delete', true))) {
-			return "";
+		if (!(ACLController::checkAccess($this->seed->module_dir, 'edit', true)) ||
+            !(ACLController::checkAccess($this->seed->module_dir, 'delete', true))) {
+			return '';
 		}
 
-        if (isset($dictionary[$this->seed->object_name]['duplicate_merge']) && $dictionary[$this->seed->object_name]['duplicate_merge']==true ) {
+        if (isset($dictionary[$this->seed->object_name]['duplicate_merge']) &&
+            $dictionary[$this->seed->object_name]['duplicate_merge'] === true) {
             return "<a href='javascript:void(0)' ".
                             "class=\"parent-dropdown-action-handler\" id='mergeduplicates_listview_". $loc ."'".
                             "onclick='if (sugarListView.get_checks_count()> 1) {sListView.send_form(true, \"MergeRecords\", \"index.php\", \"{$app_strings['LBL_LISTVIEW_NO_SELECTED']}\", \"{$this->seed->module_dir}\",\"$return_string\");} else {alert(\"{$app_strings['LBL_LISTVIEW_TWO_REQUIRED']}\");return false;}'>".
                             $app_strings['LBL_MERGE_DUPLICATES'].'</a>';
         }
 
-        return "";
+        return '';
      }
     /**
 	 * Builds the mail merge link
@@ -671,7 +677,7 @@ EOF;
             }
 
             //C.L. Fix for 11177
-            if ($this->displayColumns[$columnName]['type'] == 'html') {
+            if ($this->displayColumns[$columnName]['type'] === 'html') {
                 $cField = $this->seed->custom_fields;
                 if (isset($cField) && isset($cField->bean->$seedName)) {
                     $seedName2 = strtoupper($columnName);
@@ -685,7 +691,7 @@ EOF;
             }//fi == 'html'
 
             //Bug 40511, make sure relate fields have the correct module defined
-            if ($this->displayColumns[$columnName]['type'] == "relate" && !empty($seedDef['link']) && empty( $this->displayColumns[$columnName]['module'])) {
+            if ($this->displayColumns[$columnName]['type'] === "relate" && !empty($seedDef['link']) && empty( $this->displayColumns[$columnName]['module'])) {
                 $link = $seedDef['link'];
                 if (!empty($this->lvd->seed->field_defs[$link]) && !empty($this->lvd->seed->field_defs[$seedDef['link']]['module'])) {
                     $this->displayColumns[$columnName]['module'] = $this->lvd->seed->field_defs[$seedDef['link']]['module'];

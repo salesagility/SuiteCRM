@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,57 +34,62 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once("include/Sugarpdf/sugarpdf_config.php");
-class FontManager{
+class FontManager
+{
     /**
      * Contain all the errors generated during the process of FontManager
      * @var String[]
      */
-    var $errors = array();
+    public $errors = array();
     /**
      * store the log string when addFont is call
      * @var String
      */
-    var $log = "";
+    public $log = '';
     /**
      * Current font filename
      * @var String
      */
-    var $filename = "";
+    public $filename = '';
      /**
      * Current font file path
      * @var String
      */
-    var $fontPath = "";
+    public $fontPath = '';
     /**
      * Multidimentional array which contain all the detail of all the available fonts
      * @var Array
      */
-    var $fontList = array();
+    public $fontList = array();
     /**
      * Name of the font of the current font file
      * @var String
      */
-    var $font_name = "";
+    public $font_name = '';
     /**
      * Encoding of the current font
      * @var String
      */
-    var $font_enc = "";
+    public $font_enc = '';
     /**
      * Display name of the current font
      * @var String
      */
-    var $font_displayname = "";
+    public $font_displayname = '';
     /**
      * Type of the current font
      * @var String
      */
-    var $font_type = "";
+    public $font_type = '';
 
     private function setFontPath(){
         if(file_exists(K_PATH_CUSTOM_FONTS.$this->filename)){
@@ -108,7 +113,7 @@ class FontManager{
                 return false;
             }
         }
-        if($this->font_type == "cidfont0" || $this->font_type == "core"){
+        if($this->font_type === "cidfont0" || $this->font_type === "core"){
             return false;
         }
         return true;
@@ -171,7 +176,7 @@ class FontManager{
                 $this->fontList[$this->getFilenameShort()]['enc'] = $this->font_enc;
             }
             if(!empty($this->font_type)){
-                if ($this->font_type == 'cidfont0' || $this->font_type == 'core' || $this->font_type == 'TrueType' || $this->font_type == 'Type1' || $this->font_type == 'TrueTypeUnicode') {
+                if ($this->font_type === 'cidfont0' || $this->font_type === 'core' || $this->font_type == 'TrueType' || $this->font_type == 'Type1' || $this->font_type === 'TrueTypeUnicode') {
                     $this->fontList[$this->getFilenameShort()]['type'] = $this->font_type;
                 }else{
                     array_push($this->errors,  translate("ERR_FONT_UNKNOW_TYPE","Configurator") . " " . $this->font_type);
@@ -196,7 +201,7 @@ class FontManager{
             return false;
         }
         @include($this->fontPath.$this->filename);
-        if ((!isset($type)) OR (!isset($cw))) {
+        if ((!isset($type)) || (!isset($cw))) {
             //The font definition file has a bad format
             return false;
         }
@@ -301,7 +306,7 @@ class FontManager{
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         }
         $this->loadFontFile();
-        if($this->font_type == "core" || $this->fontPath == K_PATH_FONTS){
+        if($this->font_type === "core" || $this->fontPath == K_PATH_FONTS){
             array_push($this->errors, translate("ERR_DELETE_CORE_FILE","Configurator"));
              return false;
         }
@@ -429,5 +434,3 @@ class FontManager{
         return $this->loadFontFile();
     }
 }
-
-?>

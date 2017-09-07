@@ -1,11 +1,11 @@
 <?php
-//if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * Global search
@@ -122,9 +125,7 @@ class SugarSpot
                 if(!empty($row['NAME']))
                 {
                     $name = $row['NAME'];
-                }
-                else if(!empty($row['DOCUMENT_NAME']))
-                {
+                } elseif(!empty($row['DOCUMENT_NAME'])) {
                     $name = $row['DOCUMENT_NAME'];
                 }
                 else
@@ -138,9 +139,7 @@ class SugarSpot
                             {
                                 $name = $v;
                                 break;
-                            }
-                            else if(empty($foundName))
-                            {
+                            } elseif (empty($foundName)) {
                                 $foundName = $v;
                             }
                         }
@@ -555,14 +554,14 @@ class SugarSpot
     protected function _searchKeys($item1, $key, $patterns)
     {
         //make the module name singular....
-        if ($patterns[1][strlen($patterns[1])-1] == 's')
+        if ($patterns[1][strlen($patterns[1])-1] === 's')
         {
             $patterns[1]=substr($patterns[1],0,(strlen($patterns[1])-1));
         }
 
         $module_exists = stripos($key,$patterns[1]); //primary module name.
         $pattern_exists = stripos($key,$patterns[0]); //pattern provided by the user.
-        if ($module_exists !== false and $pattern_exists !== false)
+        if ($module_exists !== false && $pattern_exists !== false)
         {
             $GLOBALS['matching_keys']= array_merge(array(array('NAME'=>$key, 'ID'=>$key, 'VALUE'=>$item1)),$GLOBALS['matching_keys']);
         }
