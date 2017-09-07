@@ -215,7 +215,7 @@ class actionCreateRecord extends actionBase {
                                 if($params['value'][$key][0] == 'now'){
                                     $date = gmdate($dformat);
                                 } else if($params['value'][$key][0] == 'field'){
-                                    $date = $record->fetched_row[$params['field'][$key]];
+                                    $date = $bean->$params['value'][$key][0];
                                 } else if ($params['value'][$key][0] == 'today') {
                                     $date = $params['value'][$key][0];
                                 } else {

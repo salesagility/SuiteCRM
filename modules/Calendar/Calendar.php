@@ -303,6 +303,25 @@ class Calendar {
 					}else{
 						$item = array_merge($item,CalendarUtils::get_time_data($act->sugar_bean));
 					}
+                    
+                    ## START #DEV-224 HACK for Task Durations
+                    if($act->sugar_bean->module_dir == 'Tasks')
+                    {
+                        #$tmp_date_start
+                        $tmp_date_start = $GLOBALS['timedate']->to_db($act->sugar_bean->date_start);
+                        $tmp_date_due = $GLOBALS['timedate']->to_db($act->sugar_bean->date_due);
+                        
+                        $diff = abs( strtotime( $tmp_date_due ) - strtotime( $tmp_date_start ) );
+
+                        $Days = intval( $diff / 86400 );
+                        $Hours = intval( ( $diff % 86400 ) / 3600) + $Days * 24;
+                        $Mins = intval( ( $diff / 60 ) % 60 );
+                        $Seconds = intval( $diff % 60 );
+                        
+                        $item['duration_hours'] = $Hours;
+                        $item['duration_minutes'] = $Mins;
+                    }
+                    ## END #DEV-224 HACK for Task Durations
 
 
 				$shared_calendar_separate = $GLOBALS['current_user']->getPreference('calendar_display_shared_separate');
