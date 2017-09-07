@@ -72,10 +72,11 @@ class SugarFieldHtml extends SugarFieldBase {
     
     function getVardefValue($vardef){
         if(empty($vardef['value'])){
-            if(!empty($vardef['default']))
-                return from_html($vardef['default']);
-            elseif(!empty($vardef['default_value']))
-                return from_html($vardef['default_value']);
+            if(!empty($vardef['default'])) {
+                            return from_html($vardef['default']);
+            } elseif(!empty($vardef['default_value'])) {
+                            return from_html($vardef['default_value']);
+            }
         } else {
             return from_html($vardef['value']);
         }

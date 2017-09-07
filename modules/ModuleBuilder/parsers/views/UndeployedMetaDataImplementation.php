@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -112,7 +114,7 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
 			$this->_sourceFilename = $this->getFileName ( $view, $moduleName, $packageName , $type ) ;
 			if($view == MB_POPUPSEARCH || $view == MB_POPUPLIST){
 				$layout = $this->_loadFromPopupFile ( $this->_sourceFilename , null, $view);
-			}else{
+			} else{
 				$layout = $this->_loadFromFile ( $this->_sourceFilename );
 			}
 			if ( null !== $layout  )
@@ -132,7 +134,7 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
         $sourceFilename = $this->getFileName ( $view, $moduleName, $packageName, MB_BASEMETADATALOCATION );
         if($view == MB_POPUPSEARCH || $view == MB_POPUPLIST){
 			$layout = $this->_loadFromPopupFile ( $sourceFilename , null, $view);
-		}else{
+		} else{
 			$layout = $this->_loadFromFile ($sourceFilename) ;
 		}
 		$this->_originalViewdefs = $layout ;

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -58,8 +60,7 @@ class SugarWidgetFieldcurrency_id extends SugarWidgetFieldEnum
             if (is_array($list))
             {
                 $list = array_merge(array($currency), $list);
-            }
-            else
+            } else
             {
                 $list = array($currency);
             }
@@ -105,8 +106,7 @@ class SugarWidgetFieldcurrency_id extends SugarWidgetFieldEnum
         if (!empty ($field_def['sort_on']))
         {
             $order_by = $layout_def['table_alias'].".".$field_def['sort_on'];
-        }
-        else
+        } else
         {
             $order_by = $this->_get_column_select($layout_def);
         }
@@ -114,8 +114,7 @@ class SugarWidgetFieldcurrency_id extends SugarWidgetFieldEnum
         if (empty ($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a')
         {
             $order_dir = "ASC";
-        }
-        else
+        } else
         {
             $order_dir = "DESC";
         }

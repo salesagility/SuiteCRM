@@ -1,5 +1,7 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -125,8 +127,7 @@ class EmailTemplate extends SugarBean
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -194,8 +195,9 @@ class EmailTemplate extends SugarBean
                             break;
                         }
                     }
-                    if ($dup)
-                        $collection[$collectionKey][] = array("name" => $optionKey, "value" => $optionLabel);
+                    if ($dup) {
+                                            $collection[$collectionKey][] = array("name" => $optionKey, "value" => $optionLabel);
+                    }
                 }
             }
         }
@@ -268,8 +270,9 @@ class EmailTemplate extends SugarBean
                             break;
                         }
                     }
-                    if ($dup)
-                        $collection[$collectionKey][] = array("name" => $optionKey, "value" => $optionLabel);
+                    if ($dup) {
+                                            $collection[$collectionKey][] = array("name" => $optionKey, "value" => $optionLabel);
+                    }
                 }
             }
         }
@@ -341,8 +344,9 @@ class EmailTemplate extends SugarBean
     function parse_tracker_urls($template_text_array, $url_template, $tracked_urls, $removeme_url_template)
     {
         global $beanFiles, $beanList, $app_list_strings, $sugar_config;
-        if (!isset($this->parsed_urls))
-            $this->parsed_urls = array();
+        if (!isset($this->parsed_urls)) {
+                    $this->parsed_urls = array();
+        }
 
         $return_array = $template_text_array;
         if (count($tracked_urls) > 0) {
@@ -423,8 +427,9 @@ class EmailTemplate extends SugarBean
             $user->retrieve($focus->assigned_user_id);
         }
 
-        if (!isset($this->parsed_entities))
-            $this->parsed_entities = array();
+        if (!isset($this->parsed_entities)) {
+                    $this->parsed_entities = array();
+        }
 
         //parse the template and find all the dynamic strings that need replacement.
         // Bug #48111 It's strange why prefix for User module is contact_user (see self::generateFieldDefsJS method)
@@ -806,8 +811,9 @@ class EmailTemplate extends SugarBean
         $template = new EmailTemplate();
         $optionKey = $template->field_defs['type']['options'];
         $options = $GLOBALS['app_list_strings'][$optionKey];
-        if (!is_admin($GLOBALS['current_user']) && isset($options['workflow']))
-            unset($options['workflow']);
+        if (!is_admin($GLOBALS['current_user']) && isset($options['workflow'])) {
+                    unset($options['workflow']);
+        }
 
         return $options;
     }

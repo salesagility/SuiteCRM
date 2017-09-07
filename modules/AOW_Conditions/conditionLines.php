@@ -59,7 +59,9 @@ function display_condition_lines($focus, $field, $value, $view){
                     $condition_name = new AOW_Condition();
                     $condition_name->retrieve($row['id']);
                     $condition_name->module_path = unserialize(base64_decode($condition_name->module_path));
-                    if($condition_name->module_path == '')$condition_name->module_path = $focus->flow_module;
+                    if($condition_name->module_path == '') {
+                        $condition_name->module_path = $focus->flow_module;
+                    }
                     $html .= "flow_fields = \"".trim(preg_replace('/\s+/', ' ', getModuleFields(getRelatedModule($focus->flow_module,$condition_name->module_path[0]))))."\";";
                     if($condition_name->value_type == 'Date'){
                         $condition_name->value = unserialize(base64_decode($condition_name->value));
@@ -72,8 +74,7 @@ function display_condition_lines($focus, $field, $value, $view){
             $html .= "</script>";
         }
 
-    }
-    else if($view == 'DetailView'){
+    } else if($view == 'DetailView'){
         $html .= '<script src="modules/AOW_Conditions/conditionLines.js"></script>';
         $html .= "<table border='0' cellspacing='0' width='100%' id='conditionLines'></table>";
 
@@ -90,7 +91,9 @@ function display_condition_lines($focus, $field, $value, $view){
                 $condition_name = new AOW_Condition();
                 $condition_name->retrieve($row['id']);
                 $condition_name->module_path = unserialize(base64_decode($condition_name->module_path));
-                if(empty($condition_name->module_path))$condition_name->module_path[0] = $focus->flow_module;
+                if(empty($condition_name->module_path)) {
+                    $condition_name->module_path[0] = $focus->flow_module;
+                }
                 $html .= "flow_fields = \"".trim(preg_replace('/\s+/', ' ', getModuleFields(getRelatedModule($focus->flow_module,$condition_name->module_path[0]))))."\";";
                 if($condition_name->value_type == 'Date'){
                     $condition_name->value = unserialize(base64_decode($condition_name->value));

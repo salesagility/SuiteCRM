@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -95,9 +97,9 @@ if(!empty($_POST['saveConfig'])){
 		if (isset($_REQUEST['system_ldap_enabled']) && $_REQUEST['system_ldap_enabled'] == 'on') {
 			$_POST['system_ldap_enabled'] = 1;
 			clearPasswordSettings();
-		} 
-		else 
-			$_POST['system_ldap_enabled'] = 0;
+		} else {
+					$_POST['system_ldap_enabled'] = 0;
+		}
 
 
         if(isset($_REQUEST['authenticationClass']))
@@ -114,18 +116,21 @@ if(!empty($_POST['saveConfig'])){
             $_POST['ldap_group_attr_req_dn'] = 0;
         }
 
-		if (isset($_REQUEST['ldap_group_checkbox']) && $_REQUEST['ldap_group_checkbox'] == 'on') 
-			$_POST['ldap_group'] = 1;
-		else
-			$_POST['ldap_group'] = 0;
+		if (isset($_REQUEST['ldap_group_checkbox']) && $_REQUEST['ldap_group_checkbox'] == 'on') {
+					$_POST['ldap_group'] = 1;
+		} else {
+					$_POST['ldap_group'] = 0;
+		}
 			
-		if (isset($_REQUEST['ldap_authentication_checkbox']) && $_REQUEST['ldap_authentication_checkbox'] == 'on') 
-			$_POST['ldap_authentication'] = 1;
-		else
-		    $_POST['ldap_authentication'] = 0;
+		if (isset($_REQUEST['ldap_authentication_checkbox']) && $_REQUEST['ldap_authentication_checkbox'] == 'on') {
+					$_POST['ldap_authentication'] = 1;
+		} else {
+				    $_POST['ldap_authentication'] = 0;
+		}
 		
-		if( isset($_REQUEST['passwordsetting_lockoutexpirationtime']) && is_numeric($_REQUEST['passwordsetting_lockoutexpirationtime'])  )
-		    $_POST['passwordsetting_lockoutexpiration'] = 2;
+		if( isset($_REQUEST['passwordsetting_lockoutexpirationtime']) && is_numeric($_REQUEST['passwordsetting_lockoutexpirationtime'])  ) {
+				    $_POST['passwordsetting_lockoutexpiration'] = 2;
+		}
 
 		$configurator->saveConfig();
 		
@@ -142,7 +147,9 @@ require_once('include/SugarLogger/SugarLogger.php');
 $sugar_smarty = new Sugar_Smarty();
 
 // if no IMAP libraries available, disable Save/Test Settings
-if(!function_exists('imap_open')) $sugar_smarty->assign('IE_DISABLED', 'DISABLED');
+if(!function_exists('imap_open')) {
+    $sugar_smarty->assign('IE_DISABLED', 'DISABLED');
+}
 
 $config_strings=return_module_language($GLOBALS['current_language'],'Configurator');
 $sugar_smarty->assign('CONF', $config_strings);
@@ -167,7 +174,7 @@ $sugar_smarty->assign('saml_enabled_checked', false);
 if(!function_exists('mcrypt_cbc')){
 	$sugar_smarty->assign("LDAP_ENC_KEY_READONLY", 'readonly');
 	$sugar_smarty->assign("LDAP_ENC_KEY_DESC", $config_strings['LDAP_ENC_KEY_NO_FUNC_DESC']);
-}else{
+} else{
 	$sugar_smarty->assign("LDAP_ENC_KEY_DESC", $config_strings['LBL_LDAP_ENC_KEY_DESC']);
 }
 $sugar_smarty->assign("settings", $focus->settings);
@@ -175,10 +182,10 @@ $sugar_smarty->assign("settings", $focus->settings);
 if ($valid_public_key){
 	if(!empty($focus->settings['captcha_on'])){
 		$sugar_smarty->assign("CAPTCHA_CONFIG_DISPLAY", 'inline');
-	}else{
+	} else{
 		$sugar_smarty->assign("CAPTCHA_CONFIG_DISPLAY", 'none');
 	}
-}else{
+} else{
 	$sugar_smarty->assign("CAPTCHA_CONFIG_DISPLAY", 'inline');
 }
 
@@ -194,9 +201,9 @@ $mail = new SugarPHPMailer();
 $mail->setMailerForSystem();
 if($mail->Mailer == 'smtp' && $mail->Host ==''){
 	$sugar_smarty->assign("SMTP_SERVER_NOT_SET", '1');
-	}
-else
+	} else {
 	$sugar_smarty->assign("SMTP_SERVER_NOT_SET", '0');
+}
 	
 $focus = new InboundEmail();
 $focus->checkImap();

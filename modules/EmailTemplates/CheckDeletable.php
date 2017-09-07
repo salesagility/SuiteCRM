@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -50,8 +52,9 @@ require_once('modules/EmailTemplates/EmailTemplate.php');
 
 $focus = new EmailTemplate();
 if($_REQUEST['from'] == 'DetailView') {
-	if(!isset($_REQUEST['record']))
-		sugar_die("A record number must be specified to delete the template.");
+	if(!isset($_REQUEST['record'])) {
+			sugar_die("A record number must be specified to delete the template.");
+	}
 	$focus->retrieve($_REQUEST['record']);
 	if(check_email_template_in_use($focus)) {
 		echo 'true';

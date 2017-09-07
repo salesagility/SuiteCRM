@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -44,8 +46,7 @@ function getTemplateValidationMessages($templateId) {
     $msgs = array();
     if(!$templateId) {
         $msgs[] = 'LBL_NO_SELECTED_TEMPLATE';
-    }
-    else {
+    } else {
         $template = new EmailTemplate();
         $template->retrieve($templateId);
         if (!$template->subject) {
@@ -67,8 +68,7 @@ $func = isset($_REQUEST['func']) ? $_REQUEST['func'] : null;
 if($func == 'getTemplateValidation') {
     if (!empty($_POST['templateId'])) {
         $templateId = $db->quote($_POST['templateId']);
-    }
-    else {
+    } else {
         if (!$marketingId) {
             if (!empty($_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId']) && $func != 'createEmailMarketing') {
                 $marketingId = $_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'];
@@ -83,8 +83,7 @@ if($func == 'getTemplateValidation') {
     $return['marketingValidationMessages'] = $marketing->validate();
 
     echo json_encode($return);
-}
-else {
+} else {
     if (!$marketingId) {
         if (!empty($_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId']) && $func != 'createEmailMarketing') {
             $marketingId = $_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'];

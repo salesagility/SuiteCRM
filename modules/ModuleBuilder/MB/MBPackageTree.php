@@ -55,8 +55,7 @@ class MBPackageTree{
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -69,13 +68,18 @@ class MBPackageTree{
 
 	function populateTree($nodes, &$parent){
 		foreach($nodes as $node){
-			if(empty($node['label']))$node['label'] = $node['name'];
+			if(empty($node['label'])) {
+			    $node['label'] = $node['name'];
+			}
 			$yn = new Node($parent->id . '/' . $node['name'],$node['label']);
-			if(!empty($node['action']))
-			$yn->set_property('action', $node['action']);
+			if(!empty($node['action'])) {
+						$yn->set_property('action', $node['action']);
+			}
 			$yn->set_property('href', 'javascript:void(0);');
 			$yn->id = $parent->id . '/' . $node['name'];
-			if(!empty($node['children']))$this->populateTree($node['children'], $yn);
+			if(!empty($node['children'])) {
+			    $this->populateTree($node['children'], $yn);
+			}
 			$parent->add_node($yn);
 		}
 	}

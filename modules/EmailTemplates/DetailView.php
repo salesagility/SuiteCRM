@@ -47,8 +47,9 @@ require_once('include/DetailView/DetailView.php');
 
 //Old DetailView compares wrong session variable against new view.list.  Need to sync so that
 //the pagination on the DetailView page will show.
-if(isset($_SESSION['EMAILTEMPLATE_FROM_LIST_VIEW']))
+if(isset($_SESSION['EMAILTEMPLATE_FROM_LIST_VIEW'])) {
     $_SESSION['EMAIL_TEMPLATE_FROM_LIST_VIEW'] = $_SESSION['EMAILTEMPLATE_FROM_LIST_VIEW'];
+}
 
 global $app_strings;
 global $mod_strings;
@@ -123,9 +124,15 @@ $action_button = smarty_function_sugar_action_menu(array(
 
 $xtpl->assign("ACTION_BUTTON", $action_button);
 
-if(isset($_REQUEST['return_module'])) $xtpl->assign("RETURN_MODULE", $_REQUEST['return_module']);
-if(isset($_REQUEST['return_action'])) $xtpl->assign("RETURN_ACTION", $_REQUEST['return_action']);
-if(isset($_REQUEST['return_id'])) $xtpl->assign("RETURN_ID", $_REQUEST['return_id']);
+if(isset($_REQUEST['return_module'])) {
+    $xtpl->assign("RETURN_MODULE", $_REQUEST['return_module']);
+}
+if(isset($_REQUEST['return_action'])) {
+    $xtpl->assign("RETURN_ACTION", $_REQUEST['return_action']);
+}
+if(isset($_REQUEST['return_id'])) {
+    $xtpl->assign("RETURN_ID", $_REQUEST['return_id']);
+}
 $xtpl->assign("GRIDLINE", $gridline);
 $xtpl->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
 $xtpl->assign("ID", $focus->id);
@@ -155,9 +162,9 @@ if($focus->ACLAccess('EditView')) {
 }
 if(!empty($focus->body)) {
 	$xtpl->assign('ALT_CHECKED', 'CHECKED');
-} 
-else 
+} else {
 	$xtpl->assign('ALT_CHECKED', '');
+}
 if( $focus->published == 'on')
 {
 $xtpl->assign("PUBLISHED","CHECKED");

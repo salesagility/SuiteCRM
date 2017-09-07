@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 class AssignGroups {
@@ -14,7 +16,9 @@ function popup_select(&$bean, $event, $arguments)
 		&& empty($bean->fetched_row['id']) && $bean->module_dir != "Users" && $bean->module_dir != "SugarFeed") {		
 		//Upload an attachment to an Email Template and save. If user with multi groups - popup select option
 		//it will redirect to notes instead of EmailTemplate and relationship will fail...check below to avoid
-		if(!empty($_REQUEST['module']) && $_REQUEST['module'] != $bean->module_dir) return;
+		if(!empty($_REQUEST['module']) && $_REQUEST['module'] != $bean->module_dir) {
+		    return;
+		}
 
 		if(!empty($_REQUEST['securitygroup_list'])) {
 			require_once('modules/SecurityGroups/SecurityGroup.php');
@@ -38,9 +42,7 @@ function popup_select(&$bean, $event, $arguments)
 			unset($_SESSION['securitysuite_error']); //to be safe
 			$_SESSION['securitysuite_error'] = $ss_mod_strings['LBL_ERROR_DUPLICATE'];
 		}
-	}
-
-	else if(isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true
+	} else if(isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true
 		&& empty($bean->fetched_row['id']) && $bean->module_dir == "Users"
 		&& isset($_REQUEST['action']) && $_REQUEST['action'] != 'SaveSignature' ) { //Bug: 589
 
@@ -63,7 +65,9 @@ function popup_select(&$bean, $event, $arguments)
 
 function popup_onload($event, $arguments)
 {
-	if(!empty($_REQUEST['to_pdf']) || !empty($_REQUEST['sugar_body_only'])) return;
+	if(!empty($_REQUEST['to_pdf']) || !empty($_REQUEST['sugar_body_only'])) {
+	    return;
+	}
 
 /** //test user popup
 	//always have this loaded
@@ -74,7 +78,9 @@ function popup_onload($event, $arguments)
 	$module = $_REQUEST['module'];
 	$action = $_REQUEST['action'];
 
-	if(isset($action) && ($action == "Save" || $action == "SetTimezone")) return;  
+	if(isset($action) && ($action == "Save" || $action == "SetTimezone")) {
+	    return;
+	}
 
 	if( (
 			//(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true)

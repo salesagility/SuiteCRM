@@ -95,20 +95,25 @@ class ViewResetmodule extends SugarView
     {
         $out = "<script>ajaxStatus.flashStatus(SUGAR.language.get('app_strings', 'LBL_REQUEST_PROCESSED'), 2000);</script>";
         
-        if (!empty($_REQUEST['relationships']))
-            $out .= $this->removeCustomRelationships();
+        if (!empty($_REQUEST['relationships'])) {
+                    $out .= $this->removeCustomRelationships();
+        }
             
-        if (!empty($_REQUEST['fields']))
-            $out .= $this->removeCustomFields();
+        if (!empty($_REQUEST['fields'])) {
+                    $out .= $this->removeCustomFields();
+        }
             
-        if (!empty($_REQUEST['layouts']))
-            $out .= $this->removeCustomLayouts();
+        if (!empty($_REQUEST['layouts'])) {
+                    $out .= $this->removeCustomLayouts();
+        }
 			
-		if (!empty($_REQUEST['labels']))
-            $out .= $this->removeCustomLabels();
+		if (!empty($_REQUEST['labels'])) {
+		            $out .= $this->removeCustomLabels();
+		}
 			
-		if (!empty($_REQUEST['extensions']))
-            $out .= $this->removeCustomExtensions();	
+		if (!empty($_REQUEST['extensions'])) {
+		            $out .= $this->removeCustomExtensions();
+		}
 			
         
         $out .= "Complete!";
@@ -210,8 +215,9 @@ class ViewResetmodule extends SugarView
                 $out .= "Removed relationship $relationshipName<br/>";
             }
         }
-        if ($madeChanges)
-           $relationships->save () ;
+        if ($madeChanges) {
+                   $relationships->save () ;
+        }
         
         return $out;
     }
@@ -223,7 +229,9 @@ class ViewResetmodule extends SugarView
         if (is_dir($languageDir)) {
             $files = scandir($languageDir);
             foreach ($files as $langFile) {
-                if (substr($langFile, 0 ,1) == '.') continue;
+                if (substr($langFile, 0 ,1) == '.') {
+                    continue;
+                }
 				$language = substr($langFile, 0, strlen($langFile) - 9);
 				unlink($languageDir . "/" . $langFile);
 				

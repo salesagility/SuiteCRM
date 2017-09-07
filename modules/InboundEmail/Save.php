@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -79,13 +81,14 @@ if(!empty($_REQUEST['email_password'])) {
 
 $focus->protocol = $_REQUEST['protocol'];
 
-if( isset($_REQUEST['is_create_case']) && $_REQUEST['is_create_case'] == 'on' )
+if( isset($_REQUEST['is_create_case']) && $_REQUEST['is_create_case'] == 'on' ) {
     $focus->mailbox_type = 'createcase';
-else
+} else
 {
-    if( empty($focus->mailbox_type) || $focus->mailbox_type == 'createcase' )
-        $focus->mailbox_type = 'pick';
-}
+    if( empty($focus->mailbox_type) || $focus->mailbox_type == 'createcase' ) {
+            $focus->mailbox_type = 'pick';
+    }
+    }
 
 /////////////////////////////////////////////////////////
 ////	SERVICE STRING CONCATENATION
@@ -176,8 +179,7 @@ if( isset($_REQUEST['is_auto_import']) && $_REQUEST['is_auto_import'] == 'on' )
         $focus->groupfolder_id = $groupFolderId;
     }
     $stored_options['isAutoImport'] = true;
-}
-else
+} else
 {
     $focus->groupfolder_id = "";
     //If the user is turning the auto-import feature off then remove all previous subscriptions.
@@ -195,11 +197,12 @@ else
 
 if (!empty($focus->groupfolder_id))
 {
-	if ($_REQUEST['leaveMessagesOnMailServer'] == "1")
-		$stored_options['leaveMessagesOnMailServer'] = 1;
-	else
-		$stored_options['leaveMessagesOnMailServer'] = 0;
-}
+	if ($_REQUEST['leaveMessagesOnMailServer'] == "1") {
+			$stored_options['leaveMessagesOnMailServer'] = 1;
+	} else {
+			$stored_options['leaveMessagesOnMailServer'] = 0;
+	}
+	}
 
 $focus->stored_options = base64_encode(serialize($stored_options));
 $GLOBALS['log']->info('----->InboundEmail now saving self');
@@ -350,8 +353,9 @@ if( !empty($focus->groupfolder_id) )
     foreach ($monitor_fields as $singleField)
     {
         //Check if the value is being changed during save.
-        if($focus->fetched_row[$singleField] != $focus->$singleField)
-            syncSugarFoldersWithBeanChanges($singleField, $focus);
+        if($focus->fetched_row[$singleField] != $focus->$singleField) {
+                    syncSugarFoldersWithBeanChanges($singleField, $focus);
+        }
     }
 }
 
@@ -361,7 +365,7 @@ if($_REQUEST['module'] == 'Campaigns'){
     if(!empty($error)){
         $_REQUEST['error'] = true;
     }
-}else{
+} else{
 
     //this is a normal Inbound Email save, so set up the url and reirect
     $_REQUEST['return_id'] = $focus->id;
@@ -418,10 +422,11 @@ function syncSugarFoldersWithBeanChanges($fieldName, $focus)
             break;
 
         case 'status':
-            if($focus->status == 'Inactive')
-                $f->clearSubscriptionsForFolder($focus->groupfolder_id);
-            else if($focus->mailbox_type != 'bounce' )
-                $f->addSubscriptionsToGroupFolder();
+            if($focus->status == 'Inactive') {
+                            $f->clearSubscriptionsForFolder($focus->groupfolder_id);
+            } else if($focus->mailbox_type != 'bounce' ) {
+                            $f->addSubscriptionsToGroupFolder();
+            }
             break;
     }
 }

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 require_once('data/SugarBean.php');
@@ -55,8 +57,7 @@ class SecurityGroupUserRelationship extends SugarBean {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -98,10 +99,11 @@ class SecurityGroupUserRelationship extends SugarBean {
         $query = "SELECT id, first_name, last_name, user_name FROM users ";
         $where_auto = "deleted=0";
 
-        if($where != "")
-            $query .= "where $where AND ".$where_auto;
-        else
-            $query .= "where ".$where_auto;
+        if($where != "") {
+                    $query .= "where $where AND ".$where_auto;
+        } else {
+                    $query .= "where ".$where_auto;
+        }
 
         $query .= " ORDER BY last_name, first_name";
 

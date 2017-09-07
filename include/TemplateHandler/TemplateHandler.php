@@ -412,9 +412,11 @@ class TemplateHandler
     {
         $sqs_objects = array();
         require_once('include/QuickSearchDefaults.php');
-        if ($this instanceof TemplateHandler) //If someone calls createQuickSearchCode as a static method (@see ImportViewStep3) $this becomes anoter object, not TemplateHandler
+        if ($this instanceof TemplateHandler) {
+            //If someone calls createQuickSearchCode as a static method (@see ImportViewStep3) $this becomes anoter object, not TemplateHandler
         {
             $qsd = QuickSearchDefaults::getQuickSearchDefaults($this->getQSDLookup());
+        }
         } else {
             $qsd = QuickSearchDefaults::getQuickSearchDefaults(array());
         }

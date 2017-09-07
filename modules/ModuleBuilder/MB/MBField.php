@@ -57,16 +57,28 @@ class MBField{
 			$this->error = 'A name is required to create a field';
 			return false;
 		}		
-		if(empty($this->label))$this->label = $this->name;
+		if(empty($this->label)) {
+		    $this->label = $this->name;
+		}
 		$this->name = strtolower($this->getDBName($this->name));
 		$vardef = array();
 		$vardef['name']=$this->name;
-		if(empty($this->vname))$this->vname = 'LBL_' . strtoupper($this->name);
+		if(empty($this->vname)) {
+		    $this->vname = 'LBL_' . strtoupper($this->name);
+		}
 		$vardef['vname'] = $this->addLabel();
-		if(!empty($this->required))$vardef['required'] = $this->required;
-		if(empty($this->reportable))$vardef['reportable'] = false;
-		if(!empty($this->comment))$vardef['comment'] = $this->comment;
-		if($this->default !== 'MSI1')$vardef['default'] = $this->default;
+		if(!empty($this->required)) {
+		    $vardef['required'] = $this->required;
+		}
+		if(empty($this->reportable)) {
+		    $vardef['reportable'] = false;
+		}
+		if(!empty($this->comment)) {
+		    $vardef['comment'] = $this->comment;
+		}
+		if($this->default !== 'MSI1') {
+		    $vardef['default'] = $this->default;
+		}
 		switch($this->type){
 			case 'date':
 			case 'datetime':

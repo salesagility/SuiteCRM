@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -79,13 +81,16 @@ class UndeployedSubpanelImplementation extends AbstractMetaDataImplementation im
         $templates = & $this->module->config['templates'];
         $template_def="";
          foreach ( $templates as $template => $a ){
-             if($a===1) $template_def = $template;
+             if($a===1) {
+                 $template_def = $template;
+             }
          }
         $template_subpanel_def = 'include/SugarObjects/templates/'.$template_def. '/metadata/subpanels/default.php';
          if (file_exists($template_subpanel_def)){
             include($template_subpanel_def);
-            if (!empty($subpanel_layout['list_fields']))
-                $this->_mergeFielddefs($this->_fielddefs, $subpanel_layout['list_fields']);
+            if (!empty($subpanel_layout['list_fields'])) {
+                            $this->_mergeFielddefs($this->_fielddefs, $subpanel_layout['list_fields']);
+            }
         }
 
         $subpanel_layout = $this->module->getAvailibleSubpanelDef ( $this->_subpanelName ) ;

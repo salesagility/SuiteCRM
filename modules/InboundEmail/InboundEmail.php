@@ -433,7 +433,10 @@ class InboundEmail extends SugarBean
                 return -1;
             }
         });
-        if(!$sortOrder) array_reverse($emailHeaders); // Make it ASC order
+        if(!$sortOrder) {
+            array_reverse($emailHeaders);
+        }
+        // Make it ASC order
 
 
         return array(

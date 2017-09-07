@@ -1,6 +1,7 @@
 <?php
-if (! defined ( 'sugarEntry' ) || ! sugarEntry)
+if (! defined ( 'sugarEntry' ) || ! sugarEntry) {
     die ( 'Not A Valid Entry Point' ) ;
+}
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -75,8 +76,7 @@ class ViewLayoutView extends SugarView
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -269,9 +269,9 @@ class ViewLayoutView extends SugarView
         $ajax = new AjaxCompose ( ) ;
 
         $translatedViewType = '' ;
-		if ( isset ( $labels [ strtolower ( $this->editLayout ) ] ) )
-			$translatedViewType = translate ( $labels [ strtolower( $this->editLayout ) ] , 'ModuleBuilder' ) ;
-        else if (isset($this->sm))
+		if ( isset ( $labels [ strtolower ( $this->editLayout ) ] ) ) {
+					$translatedViewType = translate ( $labels [ strtolower( $this->editLayout ) ] , 'ModuleBuilder' ) ;
+		} else if (isset($this->sm))
         {
             foreach($this->sm->sources as $file => $def)
             {
@@ -284,8 +284,9 @@ class ViewLayoutView extends SugarView
             {
                 $label = "LBL_" . strtoupper($this->editLayout);
                 $translated = translate($label, $this->editModule);
-                if ($translated != $label)
-                    $translatedViewType =  $translated;
+                if ($translated != $label) {
+                                    $translatedViewType =  $translated;
+                }
             }
         }
 

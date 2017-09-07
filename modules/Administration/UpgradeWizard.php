@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -66,8 +68,7 @@ if( $view == "module") {
 	$uploaddLabel = $mod_strings['LBL_UW_UPLOAD_MODULE'];
 	$descItemsQueued = $mod_strings['LBL_UW_DESC_MODULES_QUEUED'];
 	$descItemsInstalled = $mod_strings['LBL_UW_DESC_MODULES_INSTALLED'];
-}
-else {
+} else {
 
 	$uploaddLabel = $mod_strings['LBL_UPLOAD_UPGRADE'];
 	$descItemsQueued = $mod_strings['DESC_FILES_QUEUED'];
@@ -209,8 +210,7 @@ if( isset( $_REQUEST['run'] ) && ($_REQUEST['run'] != "") ){
 
 if( $view == "module") {
 	print( getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_LOADER_TITLE']), false) );
-}
-else {
+} else {
 	print( getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$mod_strings['LBL_UPGRADE_WIZARD_TITLE']), false) );
 }
 
@@ -231,7 +231,7 @@ if(!empty($GLOBALS['sugar_config']['use_common_ml_dir']) && $GLOBALS['sugar_conf
 	$form .= '</table></form>';
 //rrs
 
-}else{
+} else{
     $form =<<<eoq
 <form name="the_form" enctype="multipart/form-data" action="{$form_action}" method="post"  >
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -86,8 +88,7 @@ class EmailMan extends SugarBean{
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -124,10 +125,11 @@ class EmailMan extends SugarBean{
 
                 $where_auto = " $this->table_name.deleted=0";
 
-        if($where != "")
-			$query['where'] = "WHERE $where AND ".$where_auto;
-		else
-			$query['where'] = "WHERE ".$where_auto;
+        if($where != "") {
+        			$query['where'] = "WHERE $where AND ".$where_auto;
+        } else {
+					$query['where'] = "WHERE ".$where_auto;
+		}
 
     	if(isset($params['group_by'])) {
             $query['group_by'] .= " GROUP BY {$params['group_by']}";
@@ -184,10 +186,11 @@ class EmailMan extends SugarBean{
 
                 $where_auto = " $this->table_name.deleted=0";
 
-        if($where != "")
-			$query .= "WHERE $where AND ".$where_auto;
-		else
-			$query .= "WHERE ".$where_auto;
+        if($where != "") {
+        			$query .= "WHERE $where AND ".$where_auto;
+        } else {
+					$query .= "WHERE ".$where_auto;
+		}
 
         $order_by = $this->process_order_by($order_by);
         if (!empty($order_by)) {
@@ -223,10 +226,11 @@ class EmailMan extends SugarBean{
 
                 $where_auto = " $this->table_name.deleted=0";
 
-        if($where != "")
-			$query .= "where $where AND ".$where_auto;
-		else
-			$query .= "where ".$where_auto;
+        if($where != "") {
+        			$query .= "where $where AND ".$where_auto;
+        } else {
+					$query .= "where ".$where_auto;
+		}
 
         $order_by = $this->process_order_by($order_by);
         if (!empty($order_by)) {
@@ -306,7 +310,7 @@ class EmailMan extends SugarBean{
 
 			$query = "DELETE FROM emailman WHERE id = $this->id";
 			$this->db->query($query);
-		}else{
+		} else{
 			//try to send the email again a day later.
 			$query = 'UPDATE ' . $this->table_name . " SET in_queue='1', send_attempts='$this->send_attempts', in_queue_date=". $this->db->now() ." WHERE id = $this->id";
 			$this->db->query($query);
@@ -343,7 +347,9 @@ class EmailMan extends SugarBean{
            //this is to account for changes to email template.
            $upd_ref_email=(!empty($this->ref_email->id) and $this->ref_email->parent_type=='test' and $this->ref_email->parent_id=='test');
           //following condition is for switching back to test mode.
-           if (!$upd_ref_email) $upd_ref_email=($this->test and !empty($this->ref_email->id) and empty($this->ref_email->parent_type) and empty($this->ref_email->parent_id));
+           if (!$upd_ref_email) {
+               $upd_ref_email=($this->test and !empty($this->ref_email->id) and empty($this->ref_email->parent_type) and empty($this->ref_email->parent_id));
+           }
            if (empty($this->ref_email->id) or $upd_ref_email) {
                 //create email record.
                 $this->ref_email->id=$marketing_id;
@@ -801,7 +807,7 @@ class EmailMan extends SugarBean{
 
             if($this->test){
                 $mail->Subject =  $mod_strings['LBL_PREPEND_TEST'] . $template_data['subject'];
-            }else{
+            } else{
                 $mail->Subject =  $template_data['subject'];
             }
 
@@ -815,11 +821,13 @@ class EmailMan extends SugarBean{
                 $mail->IsHTML(false);
                 $mail->Body = $template_data['body'];
 
-            }else{
+            } else{
                 $mail->Body = wordwrap($template_data['body_html'], 900);
                 //BEGIN:this code will trigger for only campaigns pending before upgrade to 4.2.0.
                 //will be removed for the next release.
-                if(!isset($btracker)) $btracker=false;
+                if(!isset($btracker)) {
+                    $btracker=false;
+                }
                 if ($btracker) {
                     $mail->Body .= "<br /><br /><a href='". $tracker_url ."'>" . $tracker_text . "</a><br /><br />";
                 } else {
@@ -899,7 +907,7 @@ class EmailMan extends SugarBean{
 				//log send error. save for next attempt after 24hrs. no campaign log entry will be created.
 				$this->set_as_sent($module->email1,false,null,null,'send error');
 			}
-		}else{
+		} else{
             $success = false;
             $this->target_tracker_key=create_guid();
 
@@ -973,10 +981,11 @@ class EmailMan extends SugarBean{
 
         $where_auto = "( emailman.deleted IS NULL OR emailman.deleted=0 )";
 
-        if($where != "")
-            $query .= "where ($where) AND ".$where_auto;
-        else
-            $query .= "where ".$where_auto;
+        if($where != "") {
+                    $query .= "where ($where) AND ".$where_auto;
+        } else {
+                    $query .= "where ".$where_auto;
+        }
 
         $order_by = $this->process_order_by($order_by);
         if (!empty($order_by)) {

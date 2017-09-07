@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -83,8 +85,7 @@ class Administration extends SugarBean {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -121,10 +122,11 @@ class Administration extends SugarBean {
         }
 
         while($row = $this->db->fetchByAssoc($result)) {
-            if($row['category']."_".$row['name'] == 'ldap_admin_password' || $row['category']."_".$row['name'] == 'proxy_password')
-                $this->settings[$row['category']."_".$row['name']] = $this->decrypt_after_retrieve($row['value']);
-            else
-                $this->settings[$row['category']."_".$row['name']] = $row['value'];
+            if($row['category']."_".$row['name'] == 'ldap_admin_password' || $row['category']."_".$row['name'] == 'proxy_password') {
+                            $this->settings[$row['category']."_".$row['name']] = $this->decrypt_after_retrieve($row['value']);
+            } else {
+                            $this->settings[$row['category']."_".$row['name']] = $row['value'];
+            }
             $this->settings[$row['category']] = true;
         }
         $this->settings[$category] = true;
@@ -135,8 +137,9 @@ class Administration extends SugarBean {
             $oe->getSystemMailerSettings();
 
             foreach ($oe->field_defs as $def) {
-                if (strpos($def, "mail_") !== false)
-                    $this->settings[$def] = $oe->$def;
+                if (strpos($def, "mail_") !== false) {
+                                    $this->settings[$def] = $oe->$def;
+                }
             }
         }
 
@@ -180,13 +183,13 @@ class Administration extends SugarBean {
         $row = $this->db->fetchByAssoc($result);
         $row_count = $row['the_count'];
 
-        if($category."_".$key == 'ldap_admin_password' || $category."_".$key == 'proxy_password')
-            $value = $this->encrpyt_before_save($value);
+        if($category."_".$key == 'ldap_admin_password' || $category."_".$key == 'proxy_password') {
+                    $value = $this->encrpyt_before_save($value);
+        }
 
         if( $row_count == 0){
             $result = $this->db->query("INSERT INTO config (value, category, name) VALUES ('$value','$category', '$key')");
-        }
-        else{
+        } else{
             $result = $this->db->query("UPDATE config SET value = '{$value}' WHERE category = '{$category}' AND name = '{$key}'");
         }
         sugar_cache_clear('admin_settings_cache');

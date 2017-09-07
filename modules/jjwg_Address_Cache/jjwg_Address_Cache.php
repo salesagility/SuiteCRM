@@ -1,7 +1,8 @@
 <?php
 
-if (!defined('sugarEntry') || !sugarEntry)
+if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
+}
 
 require_once('modules/jjwg_Maps/jjwg_Maps.php');
 require_once('modules/jjwg_Address_Cache/jjwg_Address_Cache_sugar.php');
@@ -21,7 +22,9 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar {
 
         parent::__construct();
         // Admin Config Setting
-        if($init) $this->configuration();
+        if($init) {
+            $this->configuration();
+        }
     }
 
     /**
@@ -31,8 +34,7 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($init);

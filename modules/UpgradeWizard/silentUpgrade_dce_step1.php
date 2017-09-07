@@ -65,8 +65,7 @@ function clearCacheSU($thedir, $extension) {
 			if ($children != "." && $children != "..") {
 				if (is_dir($thedir . "/" . $children)) {
 					clearCacheSU($thedir . "/" . $children, $extension);
-				}
-				elseif (is_file($thedir . "/" . $children) && substr_count($children, $extension)) {
+				} elseif (is_file($thedir . "/" . $children) && substr_count($children, $extension)) {
 					unlink($thedir . "/" . $children);
 				}
 			}
@@ -227,8 +226,7 @@ function merge_passwordsetting($sugar_config, $sugar_version) {
 
     if( write_array_to_file( "sugar_config", $sugar_config, "config.php" ) ){
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
@@ -287,8 +285,7 @@ function verifyArguments($argv,$usage_dce,$usage_regular){
             echo "FAILURE\n";
             exit(1);
         }
-    }
-    else if(is_file("{$cwd}/include/entryPoint.php")) {
+    } else if(is_file("{$cwd}/include/entryPoint.php")) {
         //this should be a regular sugar install
         $upgradeType = constant('SUGARCRM_INSTALL');
         //check if this is a valid zip file
@@ -306,8 +303,7 @@ function verifyArguments($argv,$usage_dce,$usage_regular){
             echo "FAILURE\n";
             exit(1);
         }
-    }
-    else {
+    } else {
         //this should be a regular sugar install
         echo "*******************************************************************************\n";
         echo "*** ERROR: Tried to execute in a non-SugarCRM root directory.\n";
@@ -336,7 +332,7 @@ function upgradeDCEFiles($argv,$instanceUpgradePath){
 			$_GET['CONVERT_FILE_ONLY'] = true;
 			if(!class_exists('TemplateConverter')){
 				include($argv[7].'templateConverter.php');
-			}else{
+			} else{
 				TemplateConverter::convertFile($_GET['TEMPLATE_PATH']);
 			}
 
@@ -414,7 +410,9 @@ eoq2;
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	STANDARD REQUIRED SUGAR INCLUDES AND PRESETS
-if(!defined('sugarEntry')) define('sugarEntry', true);
+if(!defined('sugarEntry')) {
+    define('sugarEntry', true);
+}
 
 $_SESSION = array();
 $_SESSION['schema_change'] = 'sugar'; // we force-run all SQL
@@ -522,8 +520,7 @@ if($upgradeType == constant('DCE_INSTANCE')){
 	$_SESSION['instancePath'] = $instancePath;
 	if(file_exists("{$instanceUpgradePath}/modules/UpgradeWizard/uw_utils.php")){
 		require_once("{$instanceUpgradePath}/modules/UpgradeWizard/uw_utils.php");
-	}
-	else{
+	} else{
 		require_once("{$argv[4]}/modules/UpgradeWizard/uw_utils.php");
 	}
     if(function_exists('set_upgrade_vars')){
@@ -583,8 +580,7 @@ if($upgradeType == constant('DCE_INSTANCE')){
 			//$targetFile = clean_path(getcwd() . '/' . $srcFile);
 			    if (strpos($srcFile,".svn") !== false) {
 				  //do nothing
-			    }
-			    else{
+			    } else{
 			     $existsCustomFile = true;
 			     //log the custom file in
 			     logThis($file, $path);
@@ -596,17 +592,14 @@ if($upgradeType == constant('DCE_INSTANCE')){
 				echo 'Stop and Exit Upgrade. There are customized files. Take a look in the upgrade log';
 				logThis("Stop and Exit Upgrade. There are customized files. Take a look in the upgrade log", $path);
 				exit(1);
-			}
-			else{
+			} else{
 			    upgradeDCEFiles($argv,$instanceUpgradePath);
 			}
-    	}
-    	else{
+    	} else{
 			   //copy and update following files from upgrade package
 				upgradeDCEFiles($argv,$instanceUpgradePath);
 		 }
-    }
-    else{
+    } else{
 	   //copy and update following files from upgrade package
 	   upgradeDCEFiles($argv,$instanceUpgradePath);
     }

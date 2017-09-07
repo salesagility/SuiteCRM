@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -253,7 +255,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 	  		$_POST['user_invitees'] .= ','.$_POST['assigned_user_id'].', ';
     		$_POST['user_invitees'] = str_replace(',,', ',', $_POST['user_invitees']);
 	  	}
-  	}elseif (empty($focus->id) ){
+  	} elseif (empty($focus->id) ){
 	  	//this is not from long form so add assigned and current user automatically as there is no invitee list UI.
 	  	//This call could be through an ajax call from subpanels or shortcut bar
         if(!isset($_POST['user_invitees']))
@@ -280,13 +282,13 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
     ){
         $focus->save(true);
         $return_id = $focus->id;
-	}else{
+	} else{
 		if($focus->status == 'Held' && $this->isEmptyReturnModuleAndAction() && !$this->isSaveFromDCMenu()){
     		//if we are closing the meeting, and the request does not have a return module AND return action set and it is not a save
             //being triggered by the DCMenu (shortcut bar) then the request is coming from a dashlet or subpanel close icon and there is no
             //need to process user invitees, just save the current values.
     		$focus->save(true);
-	    }else{
+	    } else{
 	    	///////////////////////////////////////////////////////////////////////////
 	    	////	REMOVE INVITEE RELATIONSHIPS
 	    	if(!empty($_POST['user_invitees'])) {
@@ -336,7 +338,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 	    	while($a = $focus->db->fetchByAssoc($r)) {
 	    		  if(!in_array($a['contact_id'], $contactInvitees)) {
 	    		  	 $deleteContacts[$a['contact_id']] = $a['contact_id'];
-	    		  }	else {
+	    		  } else {
 	    		  	 $acceptStatusContacts[$a['contact_id']] = $a['accept_status'];
 	    		  }
 	    	}
@@ -360,7 +362,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 	    	while($a = $focus->db->fetchByAssoc($r)) {
 	    		  if(!in_array($a['lead_id'], $leadInvitees)) {
 	    		  	 $deleteLeads[$a['lead_id']] = $a['lead_id'];
-	    		  }	else {
+	    		  } else {
 	    		  	 $acceptStatusLeads[$a['lead_id']] = $a['accept_status'];
 	    		  }
 	    	}
@@ -489,8 +491,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 
 	if (isset($_REQUEST['return_module']) && $_REQUEST['return_module'] == 'Home'){
 		header("Location: index.php?module=Home&action=index");
-	}
-	else if($redirect) {
+	} else if($redirect) {
 		handleRedirect($return_id, 'Meetings');
 	} else {
 		return $focus;

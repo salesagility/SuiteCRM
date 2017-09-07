@@ -55,8 +55,9 @@ class ModuleBuilderViewWizard extends SugarView
 
 	function __construct()
 	{
-		if ( isset ( $_REQUEST [ 'view' ] ) )
-			$this->view = $_REQUEST [ 'view' ] ;
+		if ( isset ( $_REQUEST [ 'view' ] ) ) {
+					$this->view = $_REQUEST [ 'view' ] ;
+		}
 
 		$this->editModule = (! empty ( $_REQUEST [ 'view_module' ] ) ) ? $_REQUEST [ 'view_module' ] : null ;
 		$this->buttons = array(); // initialize so that modules without subpanels for example don't result in this being unset and causing problems in the smarty->assign
@@ -115,8 +116,9 @@ class ModuleBuilderViewWizard extends SugarView
 			$this->question = translate('LBL_QUESTION_EDIT') ;
 			$this->title = translate( 'LBL_STUDIO' );
 			global $current_user;
-			if (is_admin($current_user))
-				$this->actions = "<input class=\"button\" type=\"button\" id=\"exportBtn\" name=\"exportBtn\" onclick=\"ModuleBuilder.getContent('module=ModuleBuilder&action=exportcustomizations');\" value=\"" . translate ( 'LBL_BTN_EXPORT' ) . '">' ;
+			if (is_admin($current_user)) {
+							$this->actions = "<input class=\"button\" type=\"button\" id=\"exportBtn\" name=\"exportBtn\" onclick=\"ModuleBuilder.getContent('module=ModuleBuilder&action=exportcustomizations');\" value=\"" . translate ( 'LBL_BTN_EXPORT' ) . '">' ;
+			}
 
 			$this->help = 'studioHelp' ;
 		} else
@@ -178,10 +180,11 @@ class ModuleBuilderViewWizard extends SugarView
 					$this->title = translate( 'LBL_EDIT' ) . " " . $module->name ;
 					$this->help = 'moduleHelp' ;
 					global $current_user;
-					if (is_admin($current_user))
-                        $this->actions = "<input class=\"button\" type=\"button\" id=\"exportBtn\" name=\"exportBtn\" " 
+					if (is_admin($current_user)) {
+					                        $this->actions = "<input class=\"button\" type=\"button\" id=\"exportBtn\" name=\"exportBtn\" " 
                         . "onclick=\"ModuleBuilder.getContent('module=ModuleBuilder&action=resetmodule&view_module=$this->editModule');\" value=\"" 
                         . translate( 'LBL_RESET_MODULE' ) . '">' ;
+					}
 			}
 		}
 	}

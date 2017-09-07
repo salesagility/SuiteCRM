@@ -63,8 +63,7 @@ class AOR_Chart extends Basic {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -226,7 +225,7 @@ class AOR_Chart extends Basic {
         $img = ob_get_clean();
         if($asDataURI){
             return 'data:image/png;base64,'.base64_encode($img);
-        }else{
+        } else{
             return $img;
         }
     }
@@ -359,8 +358,9 @@ EOF;
     {
         $dataArray = json_decode($chartDataValues);
         $grouping = 'grouped'; //$mainGroupField->label; //'grouped';
-        if(!$grouped)
-            $grouping='stacked';
+        if(!$grouped) {
+                    $grouping='stacked';
+        }
         if(!is_array($dataArray)||count($dataArray) < 1)
         {
             return "<h3>$this->noDataMessage</h3>";
@@ -639,9 +639,9 @@ EOF;
         if(strlen($label) > $maxLabelSize)
         {
             return substr($label,0,$maxLabelSize).'...';
+        } else {
+                    return $label;
         }
-        else
-            return $label;
     }
 
 

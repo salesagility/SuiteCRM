@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -56,8 +58,7 @@ class SugarWidgetSubPanelActivitiesStatusField extends SugarWidgetField
 		if(isset($layout_def['varname']))
 		{
 			$key = strtoupper($layout_def['varname']);
-		}
-		else
+		} else
 		{
 			$key = $this->_get_column_alias($layout_def);
 			$key = strtoupper($key);

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -124,8 +126,7 @@ class Opportunity extends SugarBean {
 		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
 		if(isset($GLOBALS['log'])) {
 			$GLOBALS['log']->deprecated($deprecatedMessage);
-		}
-		else {
+		} else {
 			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
 		}
 		self::__construct();
@@ -169,19 +170,21 @@ $query .= 			"LEFT JOIN users
 			($this->rel_account_table.deleted is null OR $this->rel_account_table.deleted=0)
 			AND (accounts.deleted is null OR accounts.deleted=0)
 			AND opportunities.deleted=0";
-		}else 	if($show_deleted == 1){
+		} else 	if($show_deleted == 1){
 				$where_auto = " opportunities.deleted=1";
 		}
 
-		if($where != "")
-			$query .= "where ($where) AND ".$where_auto;
-		else
-			$query .= "where ".$where_auto;
+		if($where != "") {
+					$query .= "where ($where) AND ".$where_auto;
+		} else {
+					$query .= "where ".$where_auto;
+		}
 
-		if($order_by != "")
-			$query .= " ORDER BY $order_by";
-		else
-			$query .= " ORDER BY opportunities.name";
+		if($order_by != "") {
+					$query .= " ORDER BY $order_by";
+		} else {
+					$query .= " ORDER BY opportunities.name";
+		}
 
 		return $query;
 	}
@@ -209,15 +212,17 @@ $query .= 			"LEFT JOIN users
 			AND (accounts.deleted is null OR accounts.deleted=0)
 			AND opportunities.deleted=0";
 
-        if($where != "")
-                $query .= "where $where AND ".$where_auto;
-        else
-                $query .= "where ".$where_auto;
+        if($where != "") {
+                        $query .= "where $where AND ".$where_auto;
+        } else {
+                        $query .= "where ".$where_auto;
+        }
 
-        if($order_by != "")
-                $query .= " ORDER BY opportunities.$order_by";
-        else
-                $query .= " ORDER BY opportunities.name";
+        if($order_by != "") {
+                        $query .= " ORDER BY opportunities.$order_by";
+        } else {
+                        $query .= " ORDER BY opportunities.name";
+        }
         return $query;
     }
 
@@ -344,7 +349,9 @@ $query .= 			"LEFT JOIN users
 	$the_where = "";
 	foreach($where_clauses as $clause)
 	{
-		if($the_where != "") $the_where .= " or ";
+		if($the_where != "") {
+		    $the_where .= " or ";
+		}
 		$the_where .= $clause;
 	}
 
@@ -357,17 +364,20 @@ $query .= 			"LEFT JOIN users
         // Bug 32581 - Make sure the currency_id is set to something
         global $current_user, $app_list_strings;
 
-        if ( empty($this->currency_id) )
-            $this->currency_id = $current_user->getPreference('currency');
-        if ( empty($this->currency_id) )
-            $this->currency_id = -99;
+        if ( empty($this->currency_id) ) {
+                    $this->currency_id = $current_user->getPreference('currency');
+        }
+        if ( empty($this->currency_id) ) {
+                    $this->currency_id = -99;
+        }
 
         //if probablity isn't set, set it based on the sales stage
         if (!isset($this->probability) && !empty($this->sales_stage))
         {
             $prob_arr = $app_list_strings['sales_probability_dom'];
-        	if (isset($prob_arr[$this->sales_stage]))
-        		$this->probability = $prob_arr[$this->sales_stage];
+        	if (isset($prob_arr[$this->sales_stage])) {
+        	        		$this->probability = $prob_arr[$this->sales_stage];
+        	}
         }
 
 		require_once('modules/Opportunities/SaveOverload.php');
@@ -451,7 +461,7 @@ $query .= 			"LEFT JOIN users
 			if(!ACLController::moduleSupportsACL('Accounts') || ACLController::checkAccess('Accounts', 'view', $is_owner, 'module', $in_group)){
         	/* END - SECURITY GROUPS */
 				$array_assign['ACCOUNT'] = 'a';
-			}else{
+			} else{
 				$array_assign['ACCOUNT'] = 'span';
 			}
 

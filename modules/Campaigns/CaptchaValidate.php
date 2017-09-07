@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -54,15 +56,17 @@ $admin=new Administration();
 $admin->retrieveSettings('captcha');
 if($admin->settings['captcha_on']=='1' && !empty($admin->settings['captcha_private_key'])){
 	$privatekey = $admin->settings['captcha_private_key'];
-}else
+} else {
 	die("Captcha settings not found");
+}
 $response = recaptcha_check_answer($privatekey,
 									$_SERVER["REMOTE_ADDR"],
 									$_REQUEST["recaptcha_challenge_field"],
 									$_REQUEST["recaptcha_response_field"]);
 if(!$response->is_valid){
 	die("Invalid captcha entry, go back and fix. ". $response->error. " ");
+} else {
+    echo("Success");
 }
-else echo("Success");
 
 ?>

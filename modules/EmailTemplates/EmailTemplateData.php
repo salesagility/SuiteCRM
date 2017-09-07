@@ -1,5 +1,7 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 function handleAttachmentForRemove() {
     if(!empty($_REQUEST['attachmentsRemove'])) {
@@ -62,8 +64,7 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
                     $marketing = BeanFactory::getBean('EmailMarketing', $marketingId);
                     $marketing->template_id = $emailTemplateId;
                     $marketing->save();
-                }
-                else {
+                } else {
                     // TODO something is not OK, the selected campaign isn't related to this marketing!!
                     $GLOBALS['log']->debug('Selected marketing not found!');
                 }
@@ -77,8 +78,7 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
             foreach($bean as $key => $value) {
                 if(in_array($key, $fields)) {
                     $newBean->$key = $_POST[$key];
-                }
-                else if(in_array($key, $fieldsForCopy)) {
+                } else if(in_array($key, $fieldsForCopy)) {
                     $newBean->$key = $bean->$key;
                 }
             }
@@ -127,16 +127,14 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
                     }
                     $data['attachments'] = $attachments;
                 }
-            }
-            else {
+            } else {
                 $error = 'Email Template not found.';
             }
             break;
     }
 
 
-}
-else {
+} else {
     $error = 'Illegal GUID format.';
 }
 

@@ -1,6 +1,7 @@
 <?php
-if (! defined ( 'sugarEntry' ) || ! sugarEntry)
+if (! defined ( 'sugarEntry' ) || ! sugarEntry) {
     die ( 'Not A Valid Entry Point' ) ;
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -114,10 +115,12 @@ class ParserModifySubPanel extends ParserModifyListView
         $this->defaults = array ( ) ;
         foreach ( $this->listViewDefs as $key => $def )
         {
-            if (! empty ( $def [ 'usage' ] ) && strcmp ( $def [ 'usage' ], 'query_only' ) == 0)
-                continue ;
-            if (! empty ( $def [ 'vname' ] ))
-                $def [ 'label' ] = $def [ 'vname' ] ;
+            if (! empty ( $def [ 'usage' ] ) && strcmp ( $def [ 'usage' ], 'query_only' ) == 0) {
+                            continue ;
+            }
+            if (! empty ( $def [ 'vname' ] )) {
+                            $def [ 'label' ] = $def [ 'vname' ] ;
+            }
             $this->defaults [ $key ] = $def ;
         }
         return $this->defaults ;
@@ -144,11 +147,13 @@ class ParserModifySubPanel extends ParserModifyListView
             foreach ( $this->subPanelParentModule->field_defs as $key => $fieldDefinition )
             {
                 $fieldName = strtolower ( $key ) ;
-                if (! isset ( $lowerFieldList [ $fieldName ] )) // bug 16728 - check this first, so that other conditions (e.g., studio == visible) can't override and add duplicate entries
+                if (! isset ( $lowerFieldList [ $fieldName ] )) {
+                    // bug 16728 - check this first, so that other conditions (e.g., studio == visible) can't override and add duplicate entries
                 {
                     if ((empty ( $fieldDefinition [ 'source' ] ) || $fieldDefinition [ 'source' ] == 'db' || $fieldDefinition [ 'source' ] == 'custom_fields') && $fieldDefinition [ 'type' ] != 'id' && strcmp ( $fieldName, 'deleted' ) != 0 || (isset ( $def [ 'name' ] ) && strpos ( $def [ 'name' ], "_name" ) != false) || ! empty ( $def [ 'custom_type' ] ) && (empty ( $fieldDefinition [ 'dbType' ] ) || $fieldDefinition [ 'dbType' ] != 'id') && (empty ( $fieldDefinition [ 'dbtype' ] ) || $fieldDefinition [ 'dbtype' ] != 'id') || (! empty ( $fieldDefinition [ 'studio' ] ) && $fieldDefinition [ 'studio' ] == 'visible'))
                     {
                         $label = (isset ( $fieldDefinition [ 'vname' ] )) ? $fieldDefinition [ 'vname' ] : (isset ( $fieldDefinition [ 'label' ] ) ? $fieldDefinition [ 'label' ] : $fieldDefinition [ 'name' ]) ;
+                }
                         $this->availableFields [ $fieldName ] = array ( 'width' => '10' , 'label' => $label ) ;
                     }
                 }

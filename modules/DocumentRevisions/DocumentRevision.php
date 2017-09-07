@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -127,8 +129,7 @@ class DocumentRevision extends SugarBean {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -287,7 +288,9 @@ class DocumentRevision extends SugarBean {
 
 	//static function..
 	function get_document_revision_name($doc_revision_id){
-		if (empty($doc_revision_id)) return null;
+		if (empty($doc_revision_id)) {
+		    return null;
+		}
 
 		$db = DBManagerFactory::getInstance();
 		$query="select revision from document_revisions where id='$doc_revision_id' AND deleted=0";
@@ -304,7 +307,9 @@ class DocumentRevision extends SugarBean {
 	//static function.
 	function get_document_revisions($doc_id){
 		$return_array= Array();
-		if (empty($doc_id)) return $return_array;
+		if (empty($doc_id)) {
+		    return $return_array;
+		}
 
 		$db = DBManagerFactory::getInstance();
 		$query="select id, revision from document_revisions where document_id='$doc_id' and deleted=0";

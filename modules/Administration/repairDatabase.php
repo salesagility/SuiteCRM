@@ -1,6 +1,7 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry)
+if (!defined('sugarEntry') || !sugarEntry) {
 	die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -70,8 +71,7 @@ if (is_admin($current_user) || isset ($from_sync_client) || is_admin_for_any_mod
 		    $sql = str_replace('&#039;',"'", $_POST['sql']);
 		    //echo html_entity_decode($_POST['sql']);
 		    echo $sql;
-		}
-		elseif (isset ($_POST['raction']) && strtolower($_POST['raction']) == "execute") {
+		} elseif (isset ($_POST['raction']) && strtolower($_POST['raction']) == "execute") {
 			$sql = str_replace(
 				array(
 					"\n",
@@ -96,8 +96,9 @@ if (is_admin($current_user) || isset ($from_sync_client) || is_admin_for_any_mod
 	} else {
 
 		if (!$export && empty ($_REQUEST['repair_silent'])) {
-			if ( empty($hideModuleMenu) )
-		        echo getClassicModuleTitle($mod_strings['LBL_REPAIR_DATABASE'], array($mod_strings['LBL_REPAIR_DATABASE']), true);
+			if ( empty($hideModuleMenu) ) {
+					        echo getClassicModuleTitle($mod_strings['LBL_REPAIR_DATABASE'], array($mod_strings['LBL_REPAIR_DATABASE']), true);
+			}
 			echo "<h1 id=\"rdloading\">{$mod_strings['LBL_REPAIR_DATABASE_PROCESSING']}</h1>";
 			ob_flush();
 		}
@@ -137,8 +138,9 @@ if (is_admin($current_user) || isset ($from_sync_client) || is_admin_for_any_mod
 
 		foreach ($dictionary as $meta) {
 
-			if ( !isset($meta['table']) || isset($repairedTables[$meta['table']]))
-                continue;
+			if ( !isset($meta['table']) || isset($repairedTables[$meta['table']])) {
+			                continue;
+			}
             
             $tablename = $meta['table'];
 			$fielddefs = $meta['fields'];

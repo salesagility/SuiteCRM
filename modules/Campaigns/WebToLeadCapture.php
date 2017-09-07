@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -157,8 +159,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 		        $lead->campaigns->add($camplog->id);
                 if(!empty($GLOBALS['check_notify'])) {
                     $lead->save($GLOBALS['check_notify']);
-                }
-                else {
+                } else {
                     $lead->save(FALSE);
                 }
             }
@@ -188,14 +189,14 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 				$get_and_post = array_merge($_GET, $_POST);
 				foreach($get_and_post as $param => $value) {
 
-					if($param == 'redirect_url' && $param == 'submit')
-						continue;
+					if($param == 'redirect_url' && $param == 'submit') {
+											continue;
+					}
 					
 					if($first_iteration){
 						$first_iteration = false;
 						$query_string .= $first_char;
-					}
-					else{
+					} else{
 						$query_string .= "&";
 					}
 					$query_string .= "{$param}=".urlencode($value);
@@ -203,8 +204,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 				if(empty($lead)) {
 					if($first_iteration){
 						$query_string .= $first_char;
-					}
-					else{
+					} else{
 						$query_string .= "&";
 					}
 					$query_string .= "error=1";
@@ -229,23 +229,20 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     				}
     				echo '</form><script language="javascript" type="text/javascript">document.redirect.submit();</script>';
     				echo '</body></html>';
-    			}
-				else{
+    			} else{
     				$header_URL = "Location: {$redirect_url}";
 
 					SugarApplication::headerRedirect($header_URL);
 
     				die();
 			    }
-			}
-			else{
+			} else{
 				echo $mod_strings['LBL_THANKS_FOR_SUBMITTING'];
 			}
 			sugar_cleanup();
 			// die to keep code from running into redirect case below
 			die();
-	    }
-	   else{
+	    } else{
 	  	  echo $mod_strings['LBL_SERVER_IS_CURRENTLY_UNAVAILABLE'];
 	  }
 }
@@ -256,8 +253,7 @@ if (!empty($_POST['redirect'])) {
     	echo '<form name="redirect" action="' .$_POST['redirect']. '" method="GET">';
     	echo '</form><script language="javascript" type="text/javascript">document.redirect.submit();</script>';
     	echo '</body></html>';
-    }
-    else{
+    } else{
     	$header_URL = "Location: {$_POST['redirect']}";
 		SugarApplication::headerRedirect($header_URL);
     	die();

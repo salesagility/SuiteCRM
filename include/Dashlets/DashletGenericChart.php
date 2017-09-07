@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -121,10 +123,12 @@ abstract class DashletGenericChart extends Dashlet
         // load language files
         $this->loadLanguage($classname, 'modules/Charts/Dashlets/');
 
-        if ( empty($options['title']) )
-            $this->title = $this->dashletStrings['LBL_TITLE'];
-        if ( isset($options['autoRefresh']) )
-            $this->autoRefresh = $options['autoRefresh'];
+        if ( empty($options['title']) ) {
+                    $this->title = $this->dashletStrings['LBL_TITLE'];
+        }
+        if ( isset($options['autoRefresh']) ) {
+                    $this->autoRefresh = $options['autoRefresh'];
+        }
 
         $this->layoutManager = new LayoutManager();
         $this->layoutManager->setAttribute('context', 'Report');
@@ -140,8 +144,8 @@ abstract class DashletGenericChart extends Dashlet
     public function setRefreshIcon()
     {
     	$additionalTitle = '';
-        if($this->isRefreshable)
-
+        if($this->isRefreshable) {
+        
             $additionalTitle .= '<a href="#" onclick="SUGAR.mySugar.retrieveDashlet(\''
                 . $this->id
                 . '\',\'predefined_chart\'); return false;"><!--not_in_theme!-->'
@@ -154,6 +158,7 @@ abstract class DashletGenericChart extends Dashlet
                     translate('LBL_DASHLET_REFRESH', 'Home')
                 )
                 . '</a>';
+        }
         return $additionalTitle;
     }
 
@@ -200,25 +205,32 @@ abstract class DashletGenericChart extends Dashlet
 
         $options = array();
 
-        foreach($req as $name => $value)
-            if(!is_array($value)) $req[$name] = trim($value);
+        foreach($req as $name => $value) {
+                    if(!is_array($value)) $req[$name] = trim($value);
+        }
 
         foreach($this->_searchFields as $name => $params) {
             $widgetDef = $params;
-            if ( isset($this->getSeedBean()->field_defs[$name]) )
-                $widgetDef = $this->getSeedBean()->field_defs[$name];
-            if ( $widgetDef['type'] == 'date')           // special case date types
+            if ( isset($this->getSeedBean()->field_defs[$name]) ) {
+                            $widgetDef = $this->getSeedBean()->field_defs[$name];
+            }
+            if ( $widgetDef['type'] == 'date') {
+                // special case date types
                 $options[$widgetDef['name']] = $timedate->swap_formats($req['type_'.$widgetDef['name']], $timedate->get_date_format(), $timedate->dbDayFormat);
-            elseif ( $widgetDef['type'] == 'time')       // special case time types
+            } elseif ( $widgetDef['type'] == 'time') {
+                // special case time types
                 $options[$widgetDef['name']] = $timedate->swap_formats($req['type_'.$widgetDef['name']], $timedate->get_time_format(), $timedate->dbTimeFormat);
-            elseif ( $widgetDef['type'] == 'datepicker') // special case datepicker types
+            } elseif ( $widgetDef['type'] == 'datepicker') {
+                // special case datepicker types
                 $options[$widgetDef['name']] = $timedate->swap_formats($req[$widgetDef['name']], $timedate->get_date_format(), $timedate->dbDayFormat);
-            elseif (!empty($req[$widgetDef['name']]))
-                $options[$widgetDef['name']] = $req[$widgetDef['name']];
+            } elseif (!empty($req[$widgetDef['name']])) {
+                            $options[$widgetDef['name']] = $req[$widgetDef['name']];
+            }
         }
 
-        if (!empty($req['dashletTitle']))
-            $options['title'] = $req['dashletTitle'];
+        if (!empty($req['dashletTitle'])) {
+                    $options['title'] = $req['dashletTitle'];
+        }
 
         $options['autoRefresh'] = empty($req['autoRefresh']) ? '0' : $req['autoRefresh'];
 
@@ -241,19 +253,24 @@ abstract class DashletGenericChart extends Dashlet
                     $currentSearchFields[$name] = array();
 
                     $widgetDef = $params;
-                    if ( isset($this->getSeedBean()->field_defs[$name]) )
-                        $widgetDef = $this->getSeedBean()->field_defs[$name];
+                    if ( isset($this->getSeedBean()->field_defs[$name]) ) {
+                                            $widgetDef = $this->getSeedBean()->field_defs[$name];
+                    }
 
-                    if($widgetDef['type'] == 'enum' || $widgetDef['type'] == 'singleenum') $widgetDef['remove_blank'] = true; // remove the blank option for the dropdown
+                    if($widgetDef['type'] == 'enum' || $widgetDef['type'] == 'singleenum') {
+                        $widgetDef['remove_blank'] = true;
+                    }
+                    // remove the blank option for the dropdown
 
-                    if ( empty($widgetDef['input_name0']) )
-                        $widgetDef['input_name0'] = empty($this->$name) ? '' : $this->$name;
+                    if ( empty($widgetDef['input_name0']) ) {
+                                            $widgetDef['input_name0'] = empty($this->$name) ? '' : $this->$name;
+                    }
                     $currentSearchFields[$name]['label'] = translate($widgetDef['vname'], $this->getSeedBean()->module_dir);
-                    if ( $currentSearchFields[$name]['label'] == $widgetDef['vname'] )
-                        $currentSearchFields[$name]['label'] = translate($widgetDef['vname'], 'Charts');
+                    if ( $currentSearchFields[$name]['label'] == $widgetDef['vname'] ) {
+                                            $currentSearchFields[$name]['label'] = translate($widgetDef['vname'], 'Charts');
+                    }
                     $currentSearchFields[$name]['input'] = $this->layoutManager->widgetDisplayInput($widgetDef, true, (empty($this->$name) ? '' : $this->$name));
-                }
-                else { // ability to create spacers in input fields
+                } else { // ability to create spacers in input fields
                     $currentSearchFields['blank' + $count]['label'] = '';
                     $currentSearchFields['blank' + $count]['input'] = '';
                     $count++;
@@ -289,8 +306,9 @@ abstract class DashletGenericChart extends Dashlet
      */
     protected function getSeedBean()
     {
-        if ( !($this->_seedBean instanceof SugarBean) )
-            $this->_seedBean = SugarModule::get($this->_seedName)->loadBean();
+        if ( !($this->_seedBean instanceof SugarBean) ) {
+                    $this->_seedBean = SugarModule::get($this->_seedName)->loadBean();
+        }
 
         return $this->_seedBean;
     }
@@ -412,9 +430,14 @@ abstract class DashletGenericChart extends Dashlet
         }
 
         //if(isset($sortby1[0]) && $sortby1[0]=='') unset($sortby1[0]);//the beginning of lead_source_dom is blank.
-        if(isset($sortby1[0]) && $sortby1[0]==array()) unset($sortby1[0]);//the beginning of month after search is blank.
+        if(isset($sortby1[0]) && $sortby1[0]==array()) {
+            unset($sortby1[0]);
+        }
+        //the beginning of month after search is blank.
 
-        if($ifsort2==false) $sortby2=array(0);
+        if($ifsort2==false) {
+            $sortby2=array(0);
+        }
 
         if($keycolname2!=null) {
             $sortby2 = array();
@@ -438,7 +461,9 @@ abstract class DashletGenericChart extends Dashlet
 
         foreach($sortby1 as $sort1) {
             foreach($sortby2 as $sort2) {
-                if($ifsort2) $a=0;
+                if($ifsort2) {
+                    $a=0;
+                }
                 foreach($data_set as $key => $value){
                     if($value[$keycolname1] == $sort1 && (!$ifsort2 || $value[$keycolname2]== $sort2)) {
                         if($translate1) {
@@ -461,15 +486,13 @@ abstract class DashletGenericChart extends Dashlet
                     if($translate1) {
                         $val[$keycolname1] = $app_list_strings[$keycolname1.'_dom'][$sort1];
                         $val[$keycolname1.'_dom_option'] = $sort1;
-                    }
-                    else {
+                    } else {
                         $val[$keycolname1] = $sort1;
                     }
                     if($translate2) {
                         $val[$keycolname2] = $app_list_strings[$keycolname2.'_dom'][$sort2];
                         $val[$keycolname2.'_dom_option'] = $sort2;
-                    }
-                    elseif($keycolname2!=null) {
+                    } elseif($keycolname2!=null) {
                         $val[$keycolname2] = $sort2;
                     }
                     array_push($data, $val);

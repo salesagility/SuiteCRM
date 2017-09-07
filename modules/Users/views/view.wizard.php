@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -101,10 +103,11 @@ class ViewWizard extends SugarView
 		$this->ss->assign('ADDRESS_COUNTRY', $current_user->address_country);
 		$configurator = new Configurator();
 		if ( $configurator->config['passwordsetting']['SystemGeneratedPasswordON']
-		        || $configurator->config['passwordsetting']['forgotpasswordON'] )
-		    $this->ss->assign('REQUIRED_EMAIL_ADDRESS','1');
-        else
-            $this->ss->assign('REQUIRED_EMAIL_ADDRESS','0');
+		        || $configurator->config['passwordsetting']['forgotpasswordON'] ) {
+				    $this->ss->assign('REQUIRED_EMAIL_ADDRESS','1');
+		} else {
+                    $this->ss->assign('REQUIRED_EMAIL_ADDRESS','0');
+        }
 
 		// get javascript
         ob_start();
@@ -122,8 +125,9 @@ class ViewWizard extends SugarView
 
         // set default settings
         $use_real_names = $current_user->getPreference('use_real_names');
-        if ( empty($use_real_names) )
-            $current_user->setPreference('use_real_names', 'on');
+        if ( empty($use_real_names) ) {
+                    $current_user->setPreference('use_real_names', 'on');
+        }
         $current_user->setPreference('reminder_time', 1800);
         $current_user->setPreference('email_reminder_time', 3600);
         $current_user->setPreference('mailmerge_on', 'on');
@@ -240,8 +244,7 @@ eoq;
                      || empty($systemOutboundEmail->mail_smtppass)))
                {
                     $hide_if_can_use_default = true;
-                }
-                else{
+                } else{
                     $hide_if_can_use_default = false;
                 }
             }

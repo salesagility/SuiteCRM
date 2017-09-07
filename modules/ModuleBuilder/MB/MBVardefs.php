@@ -60,8 +60,7 @@ class MBVardefs{
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($name, $path, $key_name);
@@ -83,7 +82,7 @@ class MBVardefs{
             {
                 if($by_group){
                     $this->vardefs['fields'] [$template]= $vardefs['fields'];
-                }else{
+                } else{
                     $this->vardefs['fields']= array_merge($this->vardefs['fields'], $vardefs['fields']);
                     if(!empty($vardefs['relationships'])){
                         $this->vardefs['relationships']= array_merge($this->vardefs['relationships'], $vardefs['relationships']);
@@ -114,14 +113,16 @@ class MBVardefs{
 			$this->loadTemplate($by_group,$template, $file);
 		}
 		foreach($this->templates as $template=>$val){
-			if($template == 'basic')continue;
+			if($template == 'basic') {
+			    continue;
+			}
 			$file = MB_TEMPLATES . '/' . $template . '/vardefs.php';
 			$this->loadTemplate($by_group,$template, $file);
 		}
 
 		if($by_group){
 			$this->vardefs['fields'][$this->name] = $this->vardef['fields'];
-		}else{
+		} else{
 			$this->vardefs['fields'] = array_merge($this->vardefs['fields'], $this->vardef['fields']);
 		}
 	}

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -200,8 +202,9 @@ class CalendarDisplay {
 			$ss->assign("repeat",$repeat_tpl);
 
 			$repeat_intervals = array();
-			for($i = 1; $i <= 30; $i++)
-				$repeat_intervals[$i] = $i;
+			for($i = 1; $i <= 30; $i++) {
+							$repeat_intervals[$i] = $i;
+			}
 			$ss->assign("repeat_intervals",$repeat_intervals);
 
 
@@ -230,7 +233,7 @@ class CalendarDisplay {
 		foreach($activity as $key => $activityItem){
 			if(isset($GLOBALS['app_list_strings']['moduleList'][ $key ]) && !empty($GLOBALS['app_list_strings']['moduleList'][ $key ]) && !empty($this->cal->activityList[ $key ]) ){
 				$activity[ $key ]['label'] = $GLOBALS['app_list_strings']['moduleList'][ $key ];
-			}else{
+			} else{
 				unset($activity[ $key ]);
 			}
 		}
@@ -261,15 +264,16 @@ class CalendarDisplay {
 		global $timedate;
 
 		$user_default_date_start  = $timedate->asUser($timedate->getNow());
-		if(!isset($time_separator))
-			$time_separator = ":";
+		if(!isset($time_separator)) {
+					$time_separator = ":";
+		}
 		$date_format = $timedate->get_cal_date_format();
 		$time_format = $timedate->get_user_time_format();
 		$TIME_FORMAT = $time_format;
 		$t23 = strpos($time_format, '23') !== false ? '%H' : '%I';
 		if(!isset($match[2]) || $match[2] == '') {
 			$CALENDAR_FORMAT = $date_format . ' ' . $t23 . $time_separator . "%M";
-		}else{
+		} else{
 			$pm = $match[2] == "pm" ? "%P" : "%p";
 			$CALENDAR_FORMAT = $date_format . ' ' . $t23 . $time_separator . "%M" . $pm;
 		}
@@ -286,9 +290,10 @@ class CalendarDisplay {
 			if($d_start_hour == 0){
 				$d_start_hour = 12;
 				$start_m = 'am';
-			}else
-				if($d_start_hour == 12)
-			   		$start_m = 'pm';
+			} else
+				if($d_start_hour == 12) {
+							   		$start_m = 'pm';
+				}
 			if($d_start_hour > 12){
 				$d_start_hour = $d_start_hour - 12;
 			   	$start_m = 'pm';
@@ -297,9 +302,10 @@ class CalendarDisplay {
 			if($d_end_hour == 0){
 				$d_end_hour = 12;
 				$end_m = 'am';
-			}else
-				if($d_end_hour == 12)
-			   		$end_m = 'pm';
+			} else
+				if($d_end_hour == 12) {
+							   		$end_m = 'pm';
+				}
 
 			if($d_end_hour > 12){
 				$d_end_hour = $d_end_hour - 12;
@@ -314,13 +320,14 @@ class CalendarDisplay {
 			$TIME_END_MERIDIEM = get_select_options_with_id($options, $end_m);
 			$TIME_START_MERIDIEM = "<select id='day_start_meridiem' name='day_start_meridiem' tabindex='2'>".$TIME_START_MERIDIEM."</select>";
 			$TIME_END_MERIDIEM = "<select id='day_end_meridiem' name='day_end_meridiem' tabindex='2'>".$TIME_END_MERIDIEM."</select>";
-		}else{
+		} else{
 			$TIME_START_MERIDIEM = $TIME_END_MERIDIEM = "";
 		}
 		for($i = $start_at; $i <= $num_of_hours; $i ++){
 			$i = $i."";
-			if (strlen($i) == 1)
-				$i = "0".$i;
+			if (strlen($i) == 1) {
+							$i = "0".$i;
+			}
 			$hours_arr[$i] = $i;
 		}
 		$TIME_START_HOUR_OPTIONS = get_select_options_with_id($hours_arr, $d_start_hour);
@@ -373,7 +380,7 @@ class CalendarDisplay {
 						break;
 				}
 			}
-		}else
+		} else
 			if($view == 'agendaWeek' || $view == 'sharedWeek') {
 				$first_day = $date_time;
 
@@ -407,7 +414,7 @@ class CalendarDisplay {
 							break;
 					}
 				}
-			}else if($view == 'agendaDay'){
+			} else if($view == 'agendaDay'){
 					$str .= $date_time->get_day_of_week()." ";
 
 					for($i=0; $i<strlen($dateFormat['date']); $i++){
@@ -423,7 +430,7 @@ class CalendarDisplay {
 								break;
 						}
 					}
-			}else if($view == 'mobile'){
+			} else if($view == 'mobile'){
 				$str .= $date_time->get_day_of_week()." ";
 
 				for($i=0; $i<strlen($dateFormat['date']); $i++){
@@ -439,9 +446,9 @@ class CalendarDisplay {
 							break;
 					}
 				}
-			}else if($view == 'year') {
+			} else if($view == 'year') {
 				$str .= $date_time->year;
-			}else{
+			} else{
 				//could be a custom view.
 				$first_day = $date_time;
 
@@ -489,7 +496,7 @@ class CalendarDisplay {
 		if($_REQUEST['module'] == "Calendar"){
 			$str .= "<a href='".ajaxLink("index.php?action=index&module=Calendar&view=".$this->cal->view."&".$this->cal->get_neighbor_date_str("next"))."'>";
 
-		}else{
+		} else{
 			$str .= "<a href='#' onclick='return SUGAR.mySugar.retrieveDashlet(\"".$this->dashlet_id."\", \"index.php?module=Home&action=DynamicAction&DynamicAction=displayDashlet&sugar_body_only=1&".$this->cal->get_neighbor_date_str("next")."&id=".$this->dashlet_id."\")'>";
 		}
 
@@ -506,7 +513,7 @@ class CalendarDisplay {
 		$str = "";
 		if($_REQUEST['module'] == "Calendar"){
 			$str .= "<a href='".ajaxLink("index.php?action=index&module=Calendar&view=".$this->cal->view."&".$this->cal->get_neighbor_date_str("previous")."")."'>";
-		}else{
+		} else{
 			$str .= "<a href='#' onclick='return SUGAR.mySugar.retrieveDashlet(\"".$this->dashlet_id."\", \"index.php?module=Home&action=DynamicAction&DynamicAction=displayDashlet&sugar_body_only=1&".$this->cal->get_neighbor_date_str("previous")."&id=".$this->dashlet_id."\")'>";
 		}
 		$str .= SugarThemeRegistry::current()->getImage('calendar_previous','align="absmiddle" border="0"', null, null, '.gif', ''); //setting alt tag blank on purpose for 508 compliance
@@ -538,7 +545,7 @@ class CalendarDisplay {
 					$tabs_params[$key]['id'] = $key . "-tab";
 					$tabs_params[$key]['link'] = "window.location.href='" . ajaxLink("index.php?module=Calendar&action=index&view=" . $key . $this->cal->date_time->get_date_str()) . "'";
 
-				}else{
+				} else{
 					unset($tabs[$key]);
 				}
 			}
@@ -644,7 +651,7 @@ class CalendarDisplay {
 
             echo '</ul></div></div>';
 
-		}else{
+		} else{
 			echo "<div class='moduleTitle'><h2>". $mod_strings['LBL_MODULE_TITLE'] ."</h2></div>";
 
 		}

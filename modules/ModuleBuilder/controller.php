@@ -64,23 +64,18 @@ class ModuleBuilderController extends SugarController
         if(!empty($_REQUEST['type'])){
             if ( $_REQUEST['type'] == 'studio' ) {
                 return $mod_strings['LBL_STUDIO'];
-            }
-            elseif ( $_REQUEST['type'] == 'sugarportal' ) {
+            } elseif ( $_REQUEST['type'] == 'sugarportal' ) {
                 return $mod_strings['LBL_SUGARPORTAL'];
-            }
-            elseif ( $_REQUEST['type'] == 'mb' ) {
+            } elseif ( $_REQUEST['type'] == 'mb' ) {
                 return $mod_strings['LBL_MODULEBUILDER'];
-            }
-            elseif ( $_REQUEST['type'] == 'dropdowns') {
+            } elseif ( $_REQUEST['type'] == 'dropdowns') {
                 return $mod_strings['LBL_DROPDOWNEDITOR'];
-            }
-            elseif ( $_REQUEST['type'] == 'home' ) {
+            } elseif ( $_REQUEST['type'] == 'home' ) {
                 return $mod_strings['LBL_HOME'];
-            }
-            else {
+            } else {
                 return $mod_strings['LBL_DEVELOPER_TOOLS'];
             }
-        }else{
+        } else{
             return $mod_strings['LBL_DEVELOPER_TOOLS'];
         }
     }
@@ -100,8 +95,7 @@ class ModuleBuilderController extends SugarController
           ($_REQUEST['type']=='studio' && displayStudioForCurrentUser() == true))))
         {
             $this->hasAccess = true;
-        }
-        else
+        } else
         {
             $this->hasAccess = false;
         }
@@ -263,7 +257,9 @@ class ModuleBuilderController extends SugarController
             //bug 44269 - start
             
             //clear workflow admin modules cache
-            if (isset($_SESSION['get_workflow_admin_modules_for_user'])) unset($_SESSION['get_workflow_admin_modules_for_user']);
+            if (isset($_SESSION['get_workflow_admin_modules_for_user'])) {
+                unset($_SESSION['get_workflow_admin_modules_for_user']);
+            }
 
             //clear "is_admin_for_module" cache
             $sessionVar = 'MLA_'.$current_user->user_name;
@@ -348,9 +344,11 @@ class ModuleBuilderController extends SugarController
         require_once 'modules/ModuleBuilder/parsers/parser.label.php' ;
         $parser = new ParserLabel ( $_REQUEST['view_module'] , isset ( $_REQUEST [ 'view_package' ] ) ? $_REQUEST [ 'view_package' ] : null ) ;
         $parser->handleSave ( $_REQUEST, $_REQUEST [ 'selected_lang' ] ) ;
-        if (isset ( $_REQUEST [ 'view_package' ] )) //MODULE BUILDER
+        if (isset ( $_REQUEST [ 'view_package' ] )) {
+            //MODULE BUILDER
         {
             $this->view = 'modulelabels' ;
+        }
         } else //STUDIO
         {
             $this->view = isset ( $_REQUEST [ 'view' ] ) ? 'edit' : 'labels' ; // detect if we are being called by the LayoutEditor rather than the LabelEditor (set in view.layoutlabel.php)
@@ -456,8 +454,9 @@ class ModuleBuilderController extends SugarController
             $module->mbvardefs->save () ;
             // get the module again to refresh the labels we might have saved with the $field->save (e.g., for address fields)
             $module = & $mb->getPackageModule ( $_REQUEST [ 'view_package' ], $_REQUEST [ 'view_module' ] ) ;
-            if (isset ( $_REQUEST [ 'label' ] ) && isset ( $_REQUEST [ 'labelValue' ] ))
-                $module->setLabel ( $GLOBALS [ 'current_language' ], $_REQUEST [ 'label' ], $_REQUEST [ 'labelValue' ] ) ;
+            if (isset ( $_REQUEST [ 'label' ] ) && isset ( $_REQUEST [ 'labelValue' ] )) {
+                            $module->setLabel ( $GLOBALS [ 'current_language' ], $_REQUEST [ 'label' ], $_REQUEST [ 'labelValue' ] ) ;
+            }
             $module->save();
         }
         $this->view = 'modulefields' ;
@@ -552,8 +551,7 @@ class ModuleBuilderController extends SugarController
 			        $parser->handleSaveRelationshipLabels ( $metadata, $selected_lang ) ;
 	            }
             }
-        }
-        else {
+        } else {
             //TODO FOR MB
         }
         $this->view = 'relationships' ;
@@ -596,8 +594,9 @@ class ModuleBuilderController extends SugarController
             if (empty($_REQUEST [ 'view_package' ] ))
             {
                 require_once 'modules/ModuleBuilder/parsers/relationships/DeployedRelationships.php' ;
-                if (!empty($_REQUEST['remove_tables']))
-				    $GLOBALS['mi_remove_tables'] = $_REQUEST['remove_tables'];
+                if (!empty($_REQUEST['remove_tables'])) {
+                				    $GLOBALS['mi_remove_tables'] = $_REQUEST['remove_tables'];
+                }
                 $relationships = new DeployedRelationships ( $_REQUEST [ 'view_module' ] ) ;
             } else
             {
@@ -636,8 +635,9 @@ class ModuleBuilderController extends SugarController
                 $moduleName = $_REQUEST [ 'view_module' ] ;
 
                 // bug 51325 make sure we make this switch or delete will not work
-                if( $moduleName == 'Employees' )
-                    $moduleName = 'Users';
+                if( $moduleName == 'Employees' ) {
+                                    $moduleName = 'Users';
+                }
                 
                 $class_name = $GLOBALS [ 'beanList' ] [ $moduleName ] ;
                 require_once ($GLOBALS [ 'beanFiles' ] [ $class_name ]) ;
@@ -656,8 +656,7 @@ class ModuleBuilderController extends SugarController
                 require_once 'modules/ModuleBuilder/Module/StudioModuleFactory.php' ;
                 $module = StudioModuleFactory::getStudioModule( $moduleName ) ;
             }
-        }
-        else
+        } else
         {
             $mb = new ModuleBuilder ( ) ;
             $module = & $mb->getPackageModule ( $_REQUEST [ 'view_package' ], $_REQUEST [ 'view_module' ] ) ;
@@ -851,10 +850,12 @@ class ModuleBuilderController extends SugarController
 
     function action_editLabels ()
     {
-        if (isset ( $_REQUEST [ 'view_package' ] )) //MODULE BUILDER
+        if (isset ( $_REQUEST [ 'view_package' ] )) {
+            //MODULE BUILDER
         {
             $this->view = 'modulelabels';
-        }else{ //STUDIO
+        }
+        } else{ //STUDIO
             $this->view = 'labels';
         }
     }

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -59,8 +61,7 @@ class SugarWidgetSubPanelIcon extends SugarWidgetField
 		if(isset($layout_def['varname']))
 		{
 			$key = strtoupper($layout_def['varname']);
-		}
-		else
+		} else
 		{
 			$key = $this->_get_column_alias($layout_def);
 			$key = strtoupper($key);
@@ -77,8 +78,7 @@ class SugarWidgetSubPanelIcon extends SugarWidgetField
 			if(empty($layout_def['target_module']))
 			{
 				$module = $layout_def['module'];
-			}
-		else
+			} else
 			{
 				$module = $layout_def['target_module'];
 			}
@@ -87,8 +87,7 @@ class SugarWidgetSubPanelIcon extends SugarWidgetField
 		if(empty($layout_def['target_record_key']))
 		{
 			$record = $layout_def['fields']['ID'];
-		}
-		else
+		} else
 		{
 			$record_key = strtoupper($layout_def['target_record_key']);
 			$record = $layout_def['fields'][$record_key];

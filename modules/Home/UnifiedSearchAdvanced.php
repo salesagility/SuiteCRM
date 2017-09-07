@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -311,8 +313,9 @@ class UnifiedSearchAdvanced {
                 $params = array('custom_select' => "");
                 foreach($innerJoins as $field=>$def) {
                     if (isset($def['db_field'])) {
-                      foreach($def['db_field'] as $dbfield)
-                          $where_clauses[] = $dbfield . " LIKE '" . $GLOBALS['db']->quote($this->query_string) . "%'";
+                      foreach($def['db_field'] as $dbfield) {
+                                                $where_clauses[] = $dbfield . " LIKE '" . $GLOBALS['db']->quote($this->query_string) . "%'";
+                      }
                           $params['custom_select'] .= ", $dbfield";
                           $params['distinct'] = true;
                           //$filterFields[$dbfield] = $dbfield;
@@ -322,8 +325,7 @@ class UnifiedSearchAdvanced {
                 if (count($where_clauses) > 0)
                 {
                     $where = '(('. implode(' ) OR ( ', $where_clauses) . '))';
-                }
-                else
+                } else
                 {
                     /* Clear $where from prev. module
                        if in current module $where_clauses */
@@ -391,8 +393,9 @@ class UnifiedSearchAdvanced {
 
 		foreach($beanList as $moduleName=>$beanName)
 		{
-			if (!isset($beanFiles[$beanName]))
-				continue;
+			if (!isset($beanFiles[$beanName])) {
+							continue;
+			}
 
 			$beanName = BeanFactory::getObjectName($moduleName);
 			$manager = new VardefManager ( );
@@ -401,7 +404,7 @@ class UnifiedSearchAdvanced {
 			// obtain the field definitions used by generateSearchWhere (duplicate code in view.list.php)
 			if(file_exists('custom/modules/'.$moduleName.'/metadata/metafiles.php')){
                 require('custom/modules/'.$moduleName.'/metadata/metafiles.php');
-            }elseif(file_exists('modules/'.$moduleName.'/metadata/metafiles.php')){
+            } elseif(file_exists('modules/'.$moduleName.'/metadata/metafiles.php')){
                 require('modules/'.$moduleName.'/metadata/metafiles.php');
             }
 
@@ -502,8 +505,7 @@ class UnifiedSearchAdvanced {
             if($data['visible'] === true)
             {
                 $json_enabled[] = array("module" => $module, 'label' => $label);
-            }
-            else
+            } else
             {
                 $json_disabled[] = array("module" => $module, 'label' => $label);
             }

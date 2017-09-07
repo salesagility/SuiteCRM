@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -254,7 +256,9 @@ EOQ;
 	//carry forward custom lead fields common to contacts during Lead Conversion
     $tempContact = $this->getContact();
 
-	if (method_exists($contact, 'convertCustomFieldsForm')) $contact->convertCustomFieldsForm($form, $tempContact, $prefix);
+	if (method_exists($contact, 'convertCustomFieldsForm')) {
+	    $contact->convertCustomFieldsForm($form, $tempContact, $prefix);
+	}
 	unset($tempContact);
 
 $form .= <<<EOQ
@@ -389,7 +393,9 @@ function getForm($prefix, $mod=''){
 if(!empty($mod)){
 	global $current_language;
 	$mod_strings = return_module_language($current_language, $mod);
-}else global $mod_strings;
+} else {
+    global $mod_strings;
+}
 global $app_strings;
 
 $lbl_save_button_title = $app_strings['LBL_SAVE_BUTTON_TITLE'];
@@ -444,8 +450,12 @@ function handleSave($prefix, $redirect=true, $useRequired=false){
         if( isset($_POST[$prefix.'old_portal_password']) && !empty($focus->portal_password) && $focus->portal_password != $_POST[$prefix.'old_portal_password']){
             $focus->portal_password = User::getPasswordHash($focus->portal_password);
         }
-		if (!isset($_POST[$prefix.'email_opt_out'])) $focus->email_opt_out = 0;
-		if (!isset($_POST[$prefix.'do_not_call'])) $focus->do_not_call = 0;
+		if (!isset($_POST[$prefix.'email_opt_out'])) {
+		    $focus->email_opt_out = 0;
+		}
+		if (!isset($_POST[$prefix.'do_not_call'])) {
+		    $focus->do_not_call = 0;
+		}
 
 	}
 	if(!$focus->ACLAccess('Save')){
@@ -457,8 +467,7 @@ function handleSave($prefix, $redirect=true, $useRequired=false){
 
 		if (!empty($_POST[$prefix.'sync_contact']) || !empty($focus->sync_contact)){
 			 $focus->contacts_users_id = $current_user->id;
-		}
-		else{
+		} else{
 			if (!isset($focus->users))
 			{
 	      	  	$focus->load_relationship('user_sync');
@@ -470,8 +479,7 @@ function handleSave($prefix, $redirect=true, $useRequired=false){
 
 	if (isset($GLOBALS['check_notify'])) {
 		$check_notify = $GLOBALS['check_notify'];
-	}
-	else {
+	} else {
 		$check_notify = FALSE;
 	}
 
@@ -549,13 +557,13 @@ function handleSave($prefix, $redirect=true, $useRequired=false){
             	ob_clean();
                 $json = getJSONobj();
                 echo $json->encode(array('status' => 'dupe', 'get' => $location));
-            }
-            else if(!empty($_REQUEST['ajax_load']))
+            } else if(!empty($_REQUEST['ajax_load']))
             {
                 echo "<script>SUGAR.ajaxUI.loadContent('index.php?$location');</script>";
-            }
-            else {
-                if(!empty($_POST['to_pdf'])) $location .= '&to_pdf='.urlencode($_POST['to_pdf']);
+            } else {
+                if(!empty($_POST['to_pdf'])) {
+                    $location .= '&to_pdf='.urlencode($_POST['to_pdf']);
+                }
                 header("Location: index.php?$location");
             }
             return null;
@@ -564,9 +572,13 @@ function handleSave($prefix, $redirect=true, $useRequired=false){
 
 	global $current_user;
 	if(is_admin($current_user)){
-		if (!isset($_POST[$prefix.'portal_active'])) $focus->portal_active = '0';
+		if (!isset($_POST[$prefix.'portal_active'])) {
+		    $focus->portal_active = '0';
+		}
 		//if no password is set set account to inactive for portal
-		if(empty($_POST[$prefix.'portal_name']))$focus->portal_active = '0';
+		if(empty($_POST[$prefix.'portal_name'])) {
+		    $focus->portal_active = '0';
+		}
 
 	}
 
@@ -640,7 +652,7 @@ function handleSave($prefix, $redirect=true, $useRequired=false){
 
 	if($redirect){
 		$this->handleRedirect($return_id);
-	}else{
+	} else{
 		return $focus;
 	}
 }
@@ -648,8 +660,7 @@ function handleSave($prefix, $redirect=true, $useRequired=false){
 function handleRedirect($return_id){
 	if(isset($_POST['return_module']) && $_POST['return_module'] != "") {
 		$return_module = urlencode($_POST['return_module']);
-	}
-	else {
+	} else {
 		$return_module = "Contacts";
 	}
 
@@ -664,8 +675,7 @@ function handleRedirect($return_id){
 			// if we "Cancel", we go back to the list view.
 			$return_action = urlencode($_REQUEST['return_action']);
 		}
-	}
-	else {
+	} else {
 		$return_action = "DetailView";
 	}
 
@@ -681,8 +691,7 @@ function handleRedirect($return_id){
 
     if(!empty($_REQUEST['ajax_load'])){
         echo "<script>SUGAR.ajaxUI.loadContent('$redirect_url');</script>\n";
-    }
-    else {
+    } else {
         header("Location: ". $redirect_url);
     }
 }

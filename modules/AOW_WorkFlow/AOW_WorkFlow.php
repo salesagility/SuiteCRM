@@ -66,8 +66,7 @@ class AOW_WorkFlow extends Basic {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($init);
@@ -153,8 +152,9 @@ class AOW_WorkFlow extends Basic {
             $flow = new AOW_WorkFlow();
             while (($row = $bean->db->fetchByAssoc($result)) != null){
                 $flow ->retrieve($row['id']);
-                if($flow->check_valid_bean($bean))
-                    $flow->run_actions($bean, true);
+                if($flow->check_valid_bean($bean)) {
+                                    $flow->run_actions($bean, true);
+                }
             }
         }
         return true;
@@ -380,20 +380,25 @@ class AOW_WorkFlow extends Basic {
 
                 case 'Multi':
                     $sep = ' AND ';
-                    if($condition->operator == 'Equal_To') $sep = ' OR ';
+                    if($condition->operator == 'Equal_To') {
+                        $sep = ' OR ';
+                    }
                     $multi_values = unencodeMultienum($condition->value);
                     if(!empty($multi_values)){
                         $value = '(';
                         if($data['type'] == 'multienum'){
                             $multi_operator =  $condition->operator == 'Equal_To' ? 'LIKE' : 'NOT LIKE';
                             foreach($multi_values as $multi_value){
-                                if($value != '(') $value .= $sep;
+                                if($value != '(') {
+                                    $value .= $sep;
+                                }
                                 $value .= $field." $multi_operator '%^".$multi_value."^%'";
                             }
-                        }
-                        else {
+                        } else {
                             foreach($multi_values as $multi_value){
-                                if($value != '(') $value .= $sep;
+                                if($value != '(') {
+                                    $value .= $sep;
+                                }
                                 $value .= $field.' '.$app_list_strings['aow_sql_operator_list'][$condition->operator]." '".$multi_value."'";
                             }
                         }
@@ -434,7 +439,9 @@ class AOW_WorkFlow extends Basic {
             }
 
 
-            if(!$where_set) $query['where'][] = $field.' '.$app_list_strings['aow_sql_operator_list'][$condition->operator].' '.$value;
+            if(!$where_set) {
+                $query['where'][] = $field.' '.$app_list_strings['aow_sql_operator_list'][$condition->operator].' '.$value;
+            }
         }
 
         return $query;
@@ -589,7 +596,9 @@ class AOW_WorkFlow extends Basic {
                                     $params[3] = 'hours';
                                 default:
                                     $value = strtotime($value.' '.$app_list_strings['aow_date_operator'][$params[1]]." $params[2] ".$params[3]);
-                                    if($dateType == 'date') $value = strtotime(date('Y-m-d', $value));
+                                    if($dateType == 'date') {
+                                        $value = strtotime(date('Y-m-d', $value));
+                                    }
                                     break;
                             }
                         } else {
@@ -600,7 +609,9 @@ class AOW_WorkFlow extends Basic {
                     case 'Multi':
 
                         $value = unencodeMultienum($value);
-                        if($data['type'] == 'multienum') $field = unencodeMultienum($field);
+                        if($data['type'] == 'multienum') {
+                            $field = unencodeMultienum($field);
+                        }
                         switch($condition->operator) {
                             case 'Not_Equal_To';
                                 $condition->operator = 'Not_One_of';
@@ -677,19 +688,25 @@ class AOW_WorkFlow extends Basic {
             case "One_of":
                 if(is_array($var1)){
                     foreach($var1 as $var){
-                        if(in_array($var,$var2)) return true;
+                        if(in_array($var,$var2)) {
+                            return true;
+                        }
                     }
                     return false;
+                } else {
+                    return in_array($var1,$var2);
                 }
-                else return in_array($var1,$var2);
             case "Not_One_of":
                 if(is_array($var1)){
                     foreach($var1 as $var){
-                        if(in_array($var,$var2)) return false;
+                        if(in_array($var,$var2)) {
+                            return false;
+                        }
                     }
                     return true;
+                } else {
+                    return !in_array($var1,$var2);
                 }
-                else return !in_array($var1,$var2);
             case "Equal_To":
             default: return $var1 == $var2;
         }
@@ -697,9 +714,13 @@ class AOW_WorkFlow extends Basic {
 
     function check_in_group($bean_id, $module, $group){
         $sql = "SELECT id FROM securitygroups_records WHERE record_id = '".$bean_id."' AND module = '".$module."' AND securitygroup_id = '".$group."' AND deleted=0";
-        if($module == 'Users')  $sql = "SELECT id FROM securitygroups_users WHERE user_id = '".$bean_id."' AND securitygroup_id = '".$group."' AND deleted=0";
+        if($module == 'Users') {
+            $sql = "SELECT id FROM securitygroups_users WHERE user_id = '".$bean_id."' AND securitygroup_id = '".$group."' AND deleted=0";
+        }
         $id = $this->db->getOne($sql);
-        if($id != '') return true;
+        if($id != '') {
+            return true;
+        }
         return false;
     }
 
@@ -762,8 +783,11 @@ class AOW_WorkFlow extends Basic {
 
         }
 
-        if($pass) $processed->status = 'Complete';
-        else $processed->status = 'Failed';
+        if($pass) {
+            $processed->status = 'Complete';
+        } else {
+            $processed->status = 'Failed';
+        }
         $processed->save(false);
 
         return $pass;

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -93,8 +95,9 @@ class OneToManyRelationship extends AbstractRelationship
      */
     function buildSubpanelDefinitions ()
     {        
-        if ($this->relationship_only)
-            return array () ;
+        if ($this->relationship_only) {
+                    return array () ;
+        }
         
         $source = "";
         if ($this->rhs_module == $this->lhs_module)
@@ -142,8 +145,9 @@ class OneToManyRelationship extends AbstractRelationship
      */
     function buildFieldsToLayouts ()
     {
-        if ($this->relationship_only)
-            return array () ;
+        if ($this->relationship_only) {
+                    return array () ;
+        }
  
         return array( $this->rhs_module =>$this->getValidDBName($this->relationship_name . "_name")); // this must match the name of the relate field from buildVardefs
     }

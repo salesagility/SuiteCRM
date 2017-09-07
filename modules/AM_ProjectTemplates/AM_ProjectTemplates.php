@@ -51,8 +51,7 @@ class AM_ProjectTemplates extends AM_ProjectTemplates_sugar {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -68,7 +67,7 @@ function save($check_notify = FALSE) {
 		){
 			parent::save(true) ; 
 			$return_id = $focus->id;
-		}else{
+		} else{
 
 			if(!empty($_POST['user_invitees'])) {
 			   $userInvitees = explode(',', trim($_POST['user_invitees'], ','));
@@ -125,7 +124,7 @@ function save($check_notify = FALSE) {
 				foreach($contacts as $a) {
 					  if(!in_array($a->id, $contactInvitees)) {
 						 $deleteContacts[$a->id] = $a->id;
-					  }	else {
+					  } else {
 						 $existingContacts[$a->id] = $a->id;
 					  }
 				}

@@ -67,7 +67,9 @@ class ViewHome extends SugarView
 		$smarty->assign('assistant',$assistant);
 		//initialize Assistant's display property.
 		$userPref = $current_user->getPreference('mb_assist', 'Assistant');
-		if(!$userPref) $userPref="na";
+		if(!$userPref) {
+		    $userPref="na";
+		}
 		$smarty->assign('userPref',$userPref);
 		$ajax = new AjaxCompose();
 		$ajax->addSection('center', $mod_strings['LBL_HOME'],$smarty->fetch('modules/ModuleBuilder/tpls/wizard.tpl'));

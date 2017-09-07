@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 global $current_user, $sugar_config;
 global $mod_strings;
@@ -7,7 +9,9 @@ global $app_list_strings;
 global $app_strings;
 global $theme;
 
-if (!is_admin($current_user)) sugar_die("Unauthorized access to administration.");
+if (!is_admin($current_user)) {
+    sugar_die("Unauthorized access to administration.");
+}
 
 require_once('modules/Configurator/Configurator.php');
 
@@ -44,7 +48,7 @@ foreach($days as $day){
     if($bh){
         $bh = $bh[0];
         $drops['open'] = $bh->open;
-    }else{
+    } else{
         $drops['open'] = $day != $mod_strings['LBL_SATURDAY'] && $day != $mod_strings['LBL_SUNDAY'];
     }
     $hours = get_select_options_with_id($app_list_strings['business_hours_list'], ($bh ? $bh->opening_hours : 9));

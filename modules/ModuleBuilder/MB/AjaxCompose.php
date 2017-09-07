@@ -50,8 +50,12 @@ class AjaxCompose{
 	
 	function getJavascript(){
 		if(!empty($this->sections['center'])){
-			 if(empty($this->sections['east']))$this->addSection('east', '', '', 'deactivate');
-			 if(empty($this->sections['east2']))$this->addSection('east2', '', '', 'deactivate');
+			 if(empty($this->sections['east'])) {
+			     $this->addSection('east', '', '', 'deactivate');
+			 }
+			 if(empty($this->sections['east2'])) {
+			     $this->addSection('east2', '', '', 'deactivate');
+			 }
 		}
 		
 		$json = getJSONobj();
@@ -69,18 +73,18 @@ class AjaxCompose{
 		foreach($this->crumbs as $name=>$action){
 			if($name == 'Home'){
 				$crumbs .= "<a onclick='$action' href='javascript:void(0)'>". getStudioIcon('home', 'home', 16, 16) . '</a>';
-			}else if($name=='Assistant'){
+			} else if($name=='Assistant'){
 				$crumbs .= "<a id='showassist' onclick='$action' href='javascript:void(0)'>". getStudioIcon('assistant', 'assistant', 16, 16) . '</a>';
-			}else{
+			} else{
 				if($count > 0){
 					$crumbs .= '&nbsp;>&nbsp;';
-				}else{
+				} else{
 					$crumbs .= '&nbsp;|&nbsp;';
 				}
 				if(empty($action)){
 					$crumbs .="<span class='crumbLink'>$name</span>";
 					$actions[] = "";
-				}else {
+				} else {
 					$crumbs .="<a href='javascript:void(0);' onclick='$action' class='crumbLink'>$name</a>";
 				    $actions[] = $action;
 				}

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -47,7 +49,7 @@ if(is_admin($current_user)){
     		$status = '';
     		if($_POST['activate'] == 'false'){
     			$status = 'Inactive';
-    		}else{
+    		} else{
     			$status = 'Active';
     		}
     	}
@@ -73,18 +75,17 @@ if(is_admin($current_user)){
 				<table cellspacing="{CELLSPACING}" class="otherview">
 					<tr>
 					    <td scope="row" width="30%"><?php echo $mod_strings['LBL_REPAIR_SEED_USERS_TITLE']; ?></td>
-					    <td><input type="submit" name="button" value="<?php if($row['status'] == 'Inactive'){echo $mod_strings['LBL_REPAIR_SEED_USERS_ACTIVATE'];}else{echo $mod_strings['LBL_REPAIR_SEED_USERS_DECACTIVATE'];} ?>"></td>
+					    <td><input type="submit" name="button" value="<?php if($row['status'] == 'Inactive'){echo $mod_strings['LBL_REPAIR_SEED_USERS_ACTIVATE'];} else{echo $mod_strings['LBL_REPAIR_SEED_USERS_DECACTIVATE'];} ?>"></td>
 					</tr>
 				</table>
 				</form>
 				</p>
 			<?php
 
-		}else{
+		} else{
 			echo 'No seed Users';
 		}
-}
-else{
+} else{
 	sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
 }
 ?>

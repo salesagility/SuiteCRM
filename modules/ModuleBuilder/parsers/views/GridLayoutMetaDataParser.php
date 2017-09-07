@@ -1,6 +1,7 @@
 <?php
-if (! defined ( 'sugarEntry' ) || ! sugarEntry)
+if (! defined ( 'sugarEntry' ) || ! sugarEntry) {
     die ( 'Not A Valid Entry Point' ) ;
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -83,23 +84,27 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
         }
 
         $viewdefs = $this->implementation->getViewdefs () ;
-        if (!isset(self::$variableMap [ $view ]))
-            self::$variableMap [ $view ] = $view;
+        if (!isset(self::$variableMap [ $view ])) {
+                    self::$variableMap [ $view ] = $view;
+        }
 
         if (!isset($viewdefs [ self::$variableMap [ $view ]])){
             sugar_die ( get_class ( $this ) . ": incorrect view variable for $view" ) ;
         }
 
         $viewdefs = $viewdefs [ self::$variableMap [ $view ] ] ;
-        if (! isset ( $viewdefs [ 'templateMeta' ] ))
-            sugar_die ( get_class ( $this ) . ": missing templateMeta section in layout definition (case sensitive)" ) ;
+        if (! isset ( $viewdefs [ 'templateMeta' ] )) {
+                    sugar_die ( get_class ( $this ) . ": missing templateMeta section in layout definition (case sensitive)" ) ;
+        }
 
-        if (! isset ( $viewdefs [ 'panels' ] ))
-            sugar_die ( get_class ( $this ) . ": missing panels section in layout definition (case sensitive)" ) ;
+        if (! isset ( $viewdefs [ 'panels' ] )) {
+                    sugar_die ( get_class ( $this ) . ": missing panels section in layout definition (case sensitive)" ) ;
+        }
 
         $this->_viewdefs = $viewdefs ;
-        if ($this->getMaxColumns () < 1)
-            sugar_die ( get_class ( $this ) . ": maxColumns=" . $this->getMaxColumns () . " - must be greater than 0!" ) ;
+        if ($this->getMaxColumns () < 1) {
+                    sugar_die ( get_class ( $this ) . ": maxColumns=" . $this->getMaxColumns () . " - must be greater than 0!" ) ;
+        }
 
         $this->_fielddefs =  $this->implementation->getFielddefs() ;
         $this->_standardizeFieldLabels( $this->_fielddefs );
@@ -112,8 +117,9 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
      */
     function writeWorkingFile ($populate = true)
     {
-        if ($populate)
-            $this->_populateFromRequest ( $this->_fielddefs ) ;
+        if ($populate) {
+                    $this->_populateFromRequest ( $this->_fielddefs ) ;
+        }
         
         $viewdefs = $this->_viewdefs ;
         $viewdefs [ 'panels' ] = $this->_convertToCanonicalForm ( $this->_viewdefs [ 'panels' ] , $this->_fielddefs ) ;
@@ -128,8 +134,9 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
     {
     	$GLOBALS [ 'log' ]->info ( get_class ( $this ) . "->handleSave()" ) ;
 
-        if ($populate)
-            $this->_populateFromRequest ( $this->_fielddefs ) ;
+        if ($populate) {
+                    $this->_populateFromRequest ( $this->_fielddefs ) ;
+        }
 
         $viewdefs = $this->_viewdefs ;
         $viewdefs [ 'panels' ] = $this->_convertToCanonicalForm ( $this->_viewdefs [ 'panels' ] , $this->_fielddefs ) ;
@@ -155,12 +162,10 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                 	if (isset ($this->_fielddefs [ $fieldname ]))
 					{
 						$viewdefs [ $panelID ] [ $rowID ] [ $colID ] = self::_trimFieldDefs( $this->_fielddefs [ $fieldname ] ) ;
-					} 
-					else if (isset($this->_originalViewDef [ $fieldname ]) && is_array($this->_originalViewDef [ $fieldname ]))
+					} else if (isset($this->_originalViewDef [ $fieldname ]) && is_array($this->_originalViewDef [ $fieldname ]))
 					{
 						$viewdefs [ $panelID ] [ $rowID ] [ $colID ] = self::_trimFieldDefs( $this->_originalViewDef [ $fieldname ] ) ;
-					} 
-					else 
+					} else 
 					{
 						$viewdefs [ $panelID ] [ $rowID ] [ $colID ] = array("name" => $fieldname, "label" => $fieldname);
 					}
@@ -187,10 +192,10 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
         && is_bool($this->_viewdefs [ 'templateMeta' ] [ 'tabDefs' ] [ strtoupper($panelID) ] [ 'newTab' ]))
         {
           $tabDefs [ strtoupper($panelID) ] [ 'newTab' ] = $this->_viewdefs [ 'templateMeta' ] [ 'tabDefs' ] [ strtoupper($panelID) ] [ 'newTab' ];
-          if ($tabDefs [ strtoupper($panelID) ] [ 'newTab' ] == true)
-              $this->setUseTabs( true );
-        }
-        else
+          if ($tabDefs [ strtoupper($panelID) ] [ 'newTab' ] == true) {
+                        $this->setUseTabs( true );
+          }
+        } else
         {
           $tabDefs [ strtoupper($panelID) ] [ 'newTab' ] = false;
         }
@@ -200,8 +205,7 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
         && $this->_viewdefs [ 'templateMeta' ] [ 'tabDefs' ] [ strtoupper($panelID) ] [ 'panelDefault' ] == 'collapsed' )
         {
           $tabDefs [ strtoupper($panelID) ] [ 'panelDefault' ] = 'collapsed';
-        }
-        else
+        } else
         {
           $tabDefs [ strtoupper($panelID) ] [ 'panelDefault' ] = 'expanded';
         }
@@ -221,7 +225,7 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
         if (!empty( $this->_viewdefs) && isset($this->_viewdefs [ 'templateMeta' ] [ 'maxColumns' ]))
 		{
 			return $this->_viewdefs [ 'templateMeta' ] [ 'maxColumns' ] ;
-		}else
+		} else
 		{
 			return 2;
 		}
@@ -239,7 +243,7 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                 //If the field original label existing, we should use the original label instead the label in its fielddefs.
             	if(isset($this->_originalViewDef[$key]) && is_array($this->_originalViewDef[$key]) && isset($this->_originalViewDef[$key]['label'])){
                     $availableFields [ $key ] = array ( 'name' => $key , 'label' => $this->_originalViewDef[$key]['label']) ; 
-                }else{
+                } else{
                     $availableFields [ $key ] = array ( 'name' => $key , 'label' => isset($def [ 'label' ]) ? $def [ 'label' ] : $def['vname'] ) ; // layouts use 'label' not 'vname' for the label entry
                 }
 
@@ -277,8 +281,9 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
 
     function getPanelDependency ( $panelID )
     {
-    	if ( ! isset ( $this->_viewdefs [ 'templateMeta' ][ 'dependency' ] ) && ! isset ( $this->_viewdefs [ 'templateMeta' ][ 'dependency' ] [ $panelID ] ) )
-    		return false;
+    	if ( ! isset ( $this->_viewdefs [ 'templateMeta' ][ 'dependency' ] ) && ! isset ( $this->_viewdefs [ 'templateMeta' ][ 'dependency' ] [ $panelID ] ) ) {
+    	    		return false;
+    	}
 
     	return $this->_viewdefs  [ 'templateMeta' ][ 'dependency' ] [ $panelID ] ;
     }
@@ -369,10 +374,11 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
             foreach ( $panel as $rowID => $row )
             {
 
-                foreach ( $row as $colID => $field )
-                    if ($field == $fieldName)
+                foreach ( $row as $colID => $field ) {
+                                    if ($field == $fieldName)
                     {
                         $lastRowTouched = $rowID ;
+                }
                         $this->_viewdefs [ 'panels' ] [ $panelID ] [ $rowID ] [ $colID ] = $this->FILLER [ 'name' ];
                     }
 
@@ -386,15 +392,17 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
 
                 $empty = true ;
 
-                foreach ( $lastRow as $colID => $field )
-                    $empty &=  $field == MBConstants::$EMPTY ['name' ] || $field == $this->FILLER [ 'name' ]  ;
+                foreach ( $lastRow as $colID => $field ) {
+                                    $empty &=  $field == MBConstants::$EMPTY ['name' ] || $field == $this->FILLER [ 'name' ]  ;
+                }
 
                 if ($empty)
                 {
                     unset ( $this->_viewdefs [ 'panels' ] [ $panelID ] [ $lastRowID ] ) ;
                     // if the row was the only one in the panel, and the panel is not the first (default) panel, then remove the panel also
-					if ( count ( $this->_viewdefs [ 'panels' ] [ $panelID ] ) == 0 && $panelID != $firstPanelID )
-						unset ( $this->_viewdefs [ 'panels' ] [ $panelID ] ) ;
+					if ( count ( $this->_viewdefs [ 'panels' ] [ $panelID ] ) == 0 && $panelID != $firstPanelID ) {
+											unset ( $this->_viewdefs [ 'panels' ] [ $panelID ] ) ;
+					}
                 }
 
             }
@@ -409,8 +417,9 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
     function setPanelDependency ( $panelID , $dependency )
     {
     	// only accept dependencies for pre-existing panels
-    	if ( ! isset ( $this->_viewdefs [ 'panels' ] [ $panelID ] ) )
-    		return false;
+    	if ( ! isset ( $this->_viewdefs [ 'panels' ] [ $panelID ] ) ) {
+    	    		return false;
+    	}
 
     	$this->_viewdefs  [ 'templateMeta' ] [ 'dependency' ] [ $panelID ] = $dependency ;
     	return true ;
@@ -484,8 +493,9 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                 	//If this field has a custom definition, copy that over
                 	if ( $pass == 1 )
                 	{
-                		if ( $property == 'name' )
-                    		$this->_viewdefs [ 'panels' ] [ $panelID ] [ $rowID ] [ $colID ] = $value ;
+                		if ( $property == 'name' ) {
+                		                    		$this->_viewdefs [ 'panels' ] [ $panelID ] [ $rowID ] [ $colID ] = $value ;
+                		}
                 	} else
                 	{
                 		// update fielddefs for this property in the provided position
@@ -521,10 +531,10 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
           if ( isset($_REQUEST['tabDefs_'.$panelID.'_newTab']) )
           {
             $tabDefs [ strtoupper($panelID) ] [ 'newTab' ] = ( $_REQUEST['tabDefs_'.$panelID.'_newTab'] == '1' ) ? true : false;
-            if ($tabDefs [ strtoupper($panelID) ] [ 'newTab' ] == true)
-                $this->setUseTabs( true );
-          }
-          else
+            if ($tabDefs [ strtoupper($panelID) ] [ 'newTab' ] == true) {
+                            $this->setUseTabs( true );
+            }
+          } else
           {
             $tabDefs [ strtoupper($panelID) ] [ 'newTab' ] = false;
           }
@@ -533,8 +543,7 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
           if ( isset($_REQUEST['tabDefs_'.$panelID.'_panelDefault']) )
           {
             $tabDefs [ strtoupper($panelID) ] [ 'panelDefault' ] = ( $_REQUEST['tabDefs_'.$panelID.'_panelDefault'] == 'collapsed' ) ? 'collapsed' : 'expanded';
-          }
-          else
+          } else
           {
             $tabDefs [ strtoupper($panelID) ] [ 'panelDefault' ] = 'expanded';
           }
@@ -548,8 +557,7 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
         	if ($_REQUEST['sync_detail_and_edit'] === false || $_REQUEST['sync_detail_and_edit'] === "false")
             {
         	   $this->setSyncDetailEditViews( false );
-            }
-            elseif(!empty($_REQUEST['sync_detail_and_edit']))
+            } elseif(!empty($_REQUEST['sync_detail_and_edit']))
             {
         	   $this->setSyncDetailEditViews( true );
             }
@@ -619,15 +627,16 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                 $newRow = array ( ) ;
                 foreach ( $row as $colID => $fieldname )
                 {
-                	if ($fieldname == null )
-                	   continue;
+                	if ($fieldname == null ) {
+                	                	   continue;
+                	}
                     //Backwards compatibility and a safeguard against multiple calls to _convertToCanonicalForm
                     if(is_array($fieldname))
                     {
 
                     	$newRow [ $colID - $offset ] = $fieldname;
                     	continue;
-                    }else if(!isset($fielddefs[$fieldname])){
+                    } else if(!isset($fielddefs[$fieldname])){
                        continue;
                      }
 
@@ -680,14 +689,12 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
             if (is_array($source))
             {
                 $newRow = $source;
-            }
-            else
+            } else
             {
                 $newRow['name'] = $source;
             }
             $newRow['tabindex'] = $fielddef['tabindex'];
-        }
-        else
+        } else
         {
             $newRow = $source;
         }
@@ -700,8 +707,9 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
      */
     protected function _convertFromCanonicalForm ( $panels , $fielddefs )
     {
-        if (empty ( $panels ))
-            return ;
+        if (empty ( $panels )) {
+                    return ;
+        }
 
         // Fix for a flexibility in the format of the panel sections - if only one panel, then we don't have a panel level defined,
 		// it goes straight into rows
@@ -799,8 +807,7 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
 	                    if (is_array($field) && !empty($field['name']))
 	                    {
 	                        $ret[$field['name']] = $field;  
-	                    }
-	            	    else if(!is_array($field)){
+	                    } else if(!is_array($field)){
                             $ret[$field] = $field;
                         }	                    
 	                }
@@ -819,13 +826,11 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
     			if (!empty($def['studio'][$this->_view]) && $def['studio'][$this->_view] == "required")
     			{
     				return true;
-    }
-    			else if (!empty($def['studio']['required']) && $def['studio']['required'] == true)
+    } else if (!empty($def['studio']['required']) && $def['studio']['required'] == true)
     			{
     				return true;
     			}
-    		}
-    		else if ($def['studio'] == "required" ){
+    		} else if ($def['studio'] == "required" ){
     		  return true;
     		}
     }
@@ -837,14 +842,16 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
 		$ret = array_intersect_key ( $def , 
             array ( 'studio' => true , 'name' => true , 'label' => true , 'displayParams' => true , 'comment' => true , 
                     'customCode' => true , 'customLabel' => true , 'tabindex' => true , 'hideLabel' => true) ) ;
-        if (!empty($def['vname']) && empty($def['label']))
-            $ret['label'] = $def['vname'];
+        if (!empty($def['vname']) && empty($def['label'])) {
+                    $ret['label'] = $def['vname'];
+        }
 		return $ret;
 	}
 	
 	public function getUseTabs(){
-        if (isset($this->_viewdefs  [ 'templateMeta' ]['useTabs']))
-           return $this->_viewdefs  [ 'templateMeta' ]['useTabs'];
+        if (isset($this->_viewdefs  [ 'templateMeta' ]['useTabs'])) {
+                   return $this->_viewdefs  [ 'templateMeta' ]['useTabs'];
+        }
            
         return false;
     }
@@ -857,8 +864,9 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
      * Return whether the Detail & EditView should be in sync.
      */
 	public function getSyncDetailEditViews(){
-        if (isset($this->_viewdefs  [ 'templateMeta' ]['syncDetailEditViews']))
-           return $this->_viewdefs  [ 'templateMeta' ]['syncDetailEditViews'];
+        if (isset($this->_viewdefs  [ 'templateMeta' ]['syncDetailEditViews'])) {
+                   return $this->_viewdefs  [ 'templateMeta' ]['syncDetailEditViews'];
+        }
            
         return false;
     }

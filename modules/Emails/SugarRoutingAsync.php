@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -77,8 +79,9 @@ switch($_REQUEST['routingAction']) {
 	case "getRule":
 		$ret = '';
 		if(isset($_REQUEST['rule_id']) && !empty($_REQUEST['rule_id']) && isset($_REQUEST['bean']) && !empty($_REQUEST['bean'])) {
-			if(!isset($beanList))
-				include("include/modules.php");
+			if(!isset($beanList)) {
+							include("include/modules.php");
+			}
 			
 			$class = $beanList[$_REQUEST['bean']];
 			//$beanList['Groups'] = 'Group';

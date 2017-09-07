@@ -65,8 +65,7 @@ function clearCacheSU($thedir, $extension) {
 			if ($children != "." && $children != "..") {
 				if (is_dir($thedir . "/" . $children)) {
 					clearCacheSU($thedir . "/" . $children, $extension);
-				}
-				elseif (is_file($thedir . "/" . $children) && substr_count($children, $extension)) {
+				} elseif (is_file($thedir . "/" . $children) && substr_count($children, $extension)) {
 					unlink($thedir . "/" . $children);
 				}
 			}
@@ -269,8 +268,7 @@ function merge_passwordsetting($sugar_config, $sugar_version) {
 
     if( write_array_to_file( "sugar_config", $sugar_config, "config.php" ) ){
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
@@ -386,7 +384,9 @@ eoq2;
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	STANDARD REQUIRED SUGAR INCLUDES AND PRESETS
-if(!defined('sugarEntry')) define('sugarEntry', true);
+if(!defined('sugarEntry')) {
+    define('sugarEntry', true);
+}
 
 $_SESSION = array();
 $_SESSION['schema_change'] = 'sugar'; // we force-run all SQL
@@ -500,13 +500,11 @@ if(!function_exists('sugar_cached'))
 	   if(isset($logged_user['id']) && $logged_user['id'] != null){
 		//do nothing
 	    $current_user->retrieve($logged_user['id']);
-	   }
-	   else{
+	   } else{
 	   	echo "FAILURE: Not an admin user in users table. Please provide an admin user\n";
 		exit(1);
 	   }
-	}
-	else {
+	} else {
 		echo "*******************************************************************************\n";
 		echo "*** ERROR: 4th parameter must be a valid admin user.\n";
 		echo $usage;
@@ -771,8 +769,9 @@ if(!didThisStepRunBefore('commit')){
 					include($file);
 					post_install();
 				// cn: only run conversion if admin selects "Sugar runs SQL"
-				if(!empty($_SESSION['allTables']) && $_SESSION['schema_change'] == 'sugar')
-					executeConvertTablesSql($_SESSION['allTables']);
+				if(!empty($_SESSION['allTables']) && $_SESSION['schema_change'] == 'sugar') {
+									executeConvertTablesSql($_SESSION['allTables']);
+				}
 				//set process to done
 				$progArray['post_install']='done';
 				//set_upgrade_progress('commit','in_progress','post_install','done');
@@ -878,8 +877,7 @@ if(!didThisStepRunBefore('commit')){
 
 			if($new_upgrade->description == null){
 				$new_upgrade->description = "Silent Upgrade was used to upgrade the instance";
-			}
-			else{
+			} else{
 				$new_upgrade->description = $new_upgrade->description." Silent Upgrade was used to upgrade the instance.";
 			}
 		   $new_upgrade->save();
@@ -929,8 +927,7 @@ if(!didThisStepRunBefore('commit')){
 	ob_start();
 	if(!isset($_REQUEST['silent'])){
 		$_REQUEST['silent'] = true;
-	}
-	else if(isset($_REQUEST['silent']) && $_REQUEST['silent'] != true){
+	} else if(isset($_REQUEST['silent']) && $_REQUEST['silent'] != true){
 		$_REQUEST['silent'] = true;
 	}
 

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -50,7 +52,7 @@ $rmdir=true;
 $returnArray = array();
 if($json->decode(html_entity_decode($_REQUEST['forQuotes']))){
     $returnArray['forQuotes']="quotes";
-}else{
+} else{
     $returnArray['forQuotes']="company";
 }
 $upload_ok = false;
@@ -95,18 +97,19 @@ if(file_exists($file_name) && is_file($file_name)) {
             $rmdir=false;
             $returnArray['data']='size';
         }
-        if (($test>20 || $test<3)&& $returnArray['forQuotes'] == 'quotes')
-            $returnArray['data']='size';
+        if (($test>20 || $test<3)&& $returnArray['forQuotes'] == 'quotes') {
+                    $returnArray['data']='size';
+        }
         copy($file_name, sugar_cached('images/'.$upload->get_stored_file_name()));
     }
     if(!empty($returnArray['data'])){
         echo $json->encode($returnArray);
-    }else{
+    } else{
         $rmdir=false;
         $returnArray['data']='ok';
         echo $json->encode($returnArray);
     }
-}else{
+} else{
     $returnArray['data']='file_error';
     echo $json->encode($returnArray);
 }
