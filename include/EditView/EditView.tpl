@@ -53,9 +53,9 @@ class="yui-navset"
     {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
     <ul class="yui-nav">
     {{foreach name=section from=$sectionPanels key=label item=panel}}
-        {{counter name="tabCount" print=false}}
         {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
         {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true)}}
+        {{counter name="tabCount" print=false}}
         <li class="selected"><a id="tab{{$tabCount}}" href="javascript:void({{$tabCount}})"><em>{sugar_translate label='{{$label}}' module='{{$module}}'}</em></a></li>
         {{/if}}
     {{/foreach}}
@@ -278,4 +278,7 @@ $(document).ready(function() {ldelim}
     $(".collapseLink,.expandLink").click(function (e) {ldelim} e.preventDefault(); {rdelim});
   {rdelim});
 {rdelim}
+    opened_tab="{{literal}}{$opened_tab}{{/literal}}";
+    if(opened_tab!="")
+        {{$form_name}}_tabs.selectTab(opened_tab.substr(3,4));
 </script>
