@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -68,8 +70,7 @@ class History implements HistoryInterface
         // create the history directory if it does not already exist
         if (!is_dir($this->_dirname)) {
            mkdir_recursive($this->_dirname);
-         }
-        else
+         } else
         {
             // Reconstruct the history from the saved files
             $filenameList = glob($this->getFileByTimestamp('*'));

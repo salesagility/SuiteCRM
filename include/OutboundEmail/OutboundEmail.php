@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -94,8 +96,7 @@ class OutboundEmail {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -118,9 +119,9 @@ class OutboundEmail {
 		  $oe = new OutboundEmail();
 		  $oe->retrieve($row['id']);
 		  return $oe;
+		} else {
+				  return null;
 		}
-		else
-		  return null;
 	}
 
 	/**
@@ -158,12 +159,14 @@ class OutboundEmail {
 	    $ob = $sys->getSystemMailerSettings(); //Dirties '$this'
 
 	    //If auth for system account is disabled or user can use system outbound account return false.
-	    if($ob->mail_smtpauth_req == 0 || $this->isAllowUserAccessToSystemDefaultOutbound() || $this->mail_sendtype == 'sendmail')
-	       return $userCredentialsReq;
+	    if($ob->mail_smtpauth_req == 0 || $this->isAllowUserAccessToSystemDefaultOutbound() || $this->mail_sendtype == 'sendmail') {
+	    	       return $userCredentialsReq;
+	    }
 
 	    $userOverideAccount = $this->getUsersMailerForSystemOverride($user_id);
-	    if( $userOverideAccount == null || empty($userOverideAccount->mail_smtpuser) || empty($userOverideAccount->mail_smtpuser) )
-	       $userCredentialsReq = true;
+	    if( $userOverideAccount == null || empty($userOverideAccount->mail_smtpuser) || empty($userOverideAccount->mail_smtpuser) ) {
+	    	       $userCredentialsReq = true;
+	    }
 
         return $userCredentialsReq;
 
@@ -378,8 +381,9 @@ class OutboundEmail {
             $admin = new Administration();
             $admin->retrieveSettings('',true);
             if (isset($admin->settings['notify_allow_default_outbound'])
-                &&  $admin->settings['notify_allow_default_outbound'] == 2 )
-                $allowAccess = true;
+                &&  $admin->settings['notify_allow_default_outbound'] == 2 ) {
+                            $allowAccess = true;
+            }
         }
 
         return $allowAccess;
@@ -435,10 +439,11 @@ class OutboundEmail {
 					$this->$k = $v;
 				} // else
 			}
-			if ( !empty($a['mail_smtptype']) )
-			    $this->mail_smtpdisplay = $this->_getOutboundServerDisplay($a['mail_smtptype'],$a['mail_smtpserver']);
-			else
-			    $this->mail_smtpdisplay = $a['mail_smtpserver'];
+			if ( !empty($a['mail_smtptype']) ) {
+						    $this->mail_smtpdisplay = $this->_getOutboundServerDisplay($a['mail_smtptype'],$a['mail_smtpserver']);
+			} else {
+						    $this->mail_smtpdisplay = $a['mail_smtpserver'];
+			}
 		}
 
 		return $this;
@@ -608,8 +613,7 @@ class OutboundEmail {
 	        $oe = $this->getUsersMailerForSystemOverride($user->id);
 	        if(!empty($oe) && !empty($oe->id)) {
 	            return $oe;
-	        }
-            else  {
+	        } else  {
                 return $this->getSystemMailerSettings();
             }
 	    }

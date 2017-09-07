@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -93,14 +95,16 @@ class ImportFieldSanitize
         }
         $value = $params[0];
         $vardef = $params[1];
-        if ( isset($params[2]) )
-            $focus = $params[2];
-        else
-            $focus = null;
-        if ( $name == 'relate' && !empty($params[3]) )
-            $this->addRelatedBean = true;
-        else
-            $this->addRelatedBean = false;
+        if ( isset($params[2]) ) {
+                    $focus = $params[2];
+        } else {
+                    $focus = null;
+        }
+        if ( $name == 'relate' && !empty($params[3]) ) {
+                    $this->addRelatedBean = true;
+        } else {
+                    $this->addRelatedBean = false;
+        }
         
         $field = $sfh::getSugarField(ucfirst($name));
         if ( $field instanceOf SugarFieldBase ) {
@@ -128,11 +132,13 @@ class ImportFieldSanitize
 
         $format = $this->dateformat;
 
-        if ( !$timedate->check_matching_format($value, $format) )
-            return false;
+        if ( !$timedate->check_matching_format($value, $format) ) {
+                    return false;
+        }
 
-        if ( !$this->isValidTimeDate($value, $format) )
-            return false;
+        if ( !$this->isValidTimeDate($value, $format) ) {
+                    return false;
+        }
 
         $value = $timedate->swap_formats(
             $value, $format, $timedate->get_date_format());
@@ -199,8 +205,7 @@ class ImportFieldSanitize
                         || $focus_user->retrieve($eachItem)
                 ) {
                     // all good
-                }
-                else {
+                } else {
                     $isValid     = false;
                     $bad_names[] = $eachItem;
                     continue;
@@ -232,11 +237,13 @@ class ImportFieldSanitize
 
         $format = $this->timeformat;
 
-        if ( !$timedate->check_matching_format($value, $format) )
-            return false;
+        if ( !$timedate->check_matching_format($value, $format) ) {
+                    return false;
+        }
 
-        if ( !$this->isValidTimeDate($value, $format) )
-            return false;
+        if ( !$this->isValidTimeDate($value, $format) ) {
+                    return false;
+        }
 
         $value = $timedate->swap_formats(
             $value, $format, $timedate->get_time_format());
@@ -266,47 +273,57 @@ class ImportFieldSanitize
         $reg = $timedate->get_regular_expression($format);
         preg_match('@'.$reg['format'].'@', $value, $dateparts);
 
-        if ( empty($dateparts) )
-            return false;
+        if ( empty($dateparts) ) {
+                    return false;
+        }
         if ( isset($reg['positions']['a'])
-                && !in_array($dateparts[$reg['positions']['a']], array('am','pm')) )
-            return false;
+                && !in_array($dateparts[$reg['positions']['a']], array('am','pm')) ) {
+                    return false;
+        }
         if ( isset($reg['positions']['A'])
-                && !in_array($dateparts[$reg['positions']['A']], array('AM','PM')) )
-            return false;
+                && !in_array($dateparts[$reg['positions']['A']], array('AM','PM')) ) {
+                    return false;
+        }
         if ( isset($reg['positions']['h']) && (
                 !is_numeric($dateparts[$reg['positions']['h']])
                 || $dateparts[$reg['positions']['h']] < 1
-                || $dateparts[$reg['positions']['h']] > 12 ) )
-            return false;
+                || $dateparts[$reg['positions']['h']] > 12 ) ) {
+                    return false;
+        }
         if ( isset($reg['positions']['H']) && (
                 !is_numeric($dateparts[$reg['positions']['H']])
                 || $dateparts[$reg['positions']['H']] < 0
-                || $dateparts[$reg['positions']['H']] > 23 ) )
-            return false;
+                || $dateparts[$reg['positions']['H']] > 23 ) ) {
+                    return false;
+        }
         if ( isset($reg['positions']['i']) && (
                 !is_numeric($dateparts[$reg['positions']['i']])
                 || $dateparts[$reg['positions']['i']] < 0
-                || $dateparts[$reg['positions']['i']] > 59 ) )
-            return false;
+                || $dateparts[$reg['positions']['i']] > 59 ) ) {
+                    return false;
+        }
         if ( isset($reg['positions']['s']) && (
                 !is_numeric($dateparts[$reg['positions']['s']])
                 || $dateparts[$reg['positions']['s']] < 0
-                || $dateparts[$reg['positions']['s']] > 59 ) )
-            return false;
+                || $dateparts[$reg['positions']['s']] > 59 ) ) {
+                    return false;
+        }
         if ( isset($reg['positions']['d']) && (
                 !is_numeric($dateparts[$reg['positions']['d']])
                 || $dateparts[$reg['positions']['d']] < 1
-                || $dateparts[$reg['positions']['d']] > 31 ) )
-            return false;
+                || $dateparts[$reg['positions']['d']] > 31 ) ) {
+                    return false;
+        }
         if ( isset($reg['positions']['m']) && (
                 !is_numeric($dateparts[$reg['positions']['m']])
                 || $dateparts[$reg['positions']['m']] < 1
-                || $dateparts[$reg['positions']['m']] > 12 ) )
-            return false;
+                || $dateparts[$reg['positions']['m']] > 12 ) ) {
+                    return false;
+        }
         if ( isset($reg['positions']['Y']) &&
-                !is_numeric($dateparts[$reg['positions']['Y']]) )
-            return false;
+                !is_numeric($dateparts[$reg['positions']['Y']]) ) {
+                    return false;
+        }
 
         return true;
     }

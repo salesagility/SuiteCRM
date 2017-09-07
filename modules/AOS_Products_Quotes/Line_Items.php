@@ -84,8 +84,7 @@ function display_lines($focus, $field, $value, $view){
             $html .= '<script>insertGroup();</script>';
         }
 
-    }
-    else if($view == 'DetailView'){
+    } else if($view == 'DetailView'){
         $params = array('currency_id' => $focus->currency_id);
 
         $sql = "SELECT pg.id, pg.group_id FROM aos_products_quotes pg LEFT JOIN aos_line_item_groups lig ON pg.group_id = lig.id WHERE pg.parent_type = '".$focus->object_name."' AND pg.parent_id = '".$focus->id."' AND pg.deleted = 0 ORDER BY lig.number ASC, pg.number ASC";
@@ -111,7 +110,9 @@ function display_lines($focus, $field, $value, $view){
 
             if($enable_groups && ($group_id != $row['group_id'] || $i == 0)){
                 $html .= $groupStart.$product.$service.$groupEnd;
-                if($i != 0)$html .= "<tr><td colspan='9' nowrap='nowrap'><br></td></tr>";
+                if($i != 0) {
+                    $html .= "<tr><td colspan='9' nowrap='nowrap'><br></td></tr>";
+                }
                 $groupStart = '';
                 $groupEnd = '';
                 $product = '';
@@ -241,15 +242,13 @@ function get_discount_string($type, $amount, $params, $locale, $sep){
         if($type == 'Amount')
         {
             return currency_format_number($amount,$params )."</td>";
-        }
-        else if($locale->getPrecision())
+        } else if($locale->getPrecision())
         {
             return rtrim(rtrim(format_number($amount), '0'),$sep[1])."%";
         } else{
             return format_number($amount)."%";
         }
-    }
-    else
+    } else
     {
         return "-";
     }
@@ -260,7 +259,9 @@ function display_shipping_vat($focus, $field, $value, $view){
     if($view == 'EditView'){
         global $app_list_strings;
 
-        if($value != '') $value = format_number($value);
+        if($value != '') {
+            $value = format_number($value);
+        }
 
         $html = "<input id='shipping_tax_amt' type='text' tabindex='0' title='' value='".$value."' maxlength='26,6' size='22' name='shipping_tax_amt' onblur='calculateTotal(\"lineItems\");'>";
         $html .= "<select name='shipping_tax' id='shipping_tax' onchange='calculateTotal(\"lineItems\");' >".get_select_options_with_id($app_list_strings['vat_list'], (isset($focus->shipping_tax) ? $focus->shipping_tax : ''))."</select>";

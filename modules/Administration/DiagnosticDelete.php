@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -60,8 +62,7 @@ echo getClassicModuleTitle(
 if(empty($_REQUEST['file']) || empty($_REQUEST['guid']))
 {
 	echo $mod_strings['LBL_DIAGNOSTIC_DELETE_ERROR'];
-}
-else
+} else
 {
     // Make sure the guid and file are valid file names for security purposes
     clean_string($_REQUEST['guid'], "ALPHANUM");
@@ -79,10 +80,10 @@ else
   	  unlink($cachedfile);
   	  rmdir(dirname($cachedfile));
 	  echo $mod_strings['LBL_DIAGNOSTIC_DELETED']."<br><br>";
+	} else {
+		  echo $mod_strings['LBL_DIAGNOSTIC_FILE'] . $_REQUEST['file'].$mod_strings['LBL_DIAGNOSTIC_ZIP'];
 	}
-	else
-	  echo $mod_strings['LBL_DIAGNOSTIC_FILE'] . $_REQUEST['file'].$mod_strings['LBL_DIAGNOSTIC_ZIP'];
-}
+	}
 
 print "<a href=\"index.php?module=Administration&action=index\">" . $mod_strings['LBL_DIAGNOSTIC_DELETE_RETURN'] . "</a><br>";
 

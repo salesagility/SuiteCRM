@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /**
  * SugarWidgetSubPanelEditRoleButton
  *
@@ -70,7 +72,7 @@ class SugarWidgetSubPanelEditSecurityGroupUserButton extends SugarWidgetField
 		if($layout_def['ListView']){
 			return '<a href="' . $href . '"'
 				. 'class="listViewTdToolsS1">' . $edit_icon_html . '&nbsp;' . $app_strings['LNK_EDIT'] .'</a>&nbsp;';
-		}else{
+		} else{
 			return '';
 		}
 	}

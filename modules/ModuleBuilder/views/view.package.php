@@ -73,8 +73,7 @@ class Viewpackage extends SugarView
 			$ajax->addCrumb($GLOBALS['mod_strings']['LBL_PACKAGE_LIST'],'');
  			$ajax->addSection('center', $GLOBALS['mod_strings']['LBL_PACKAGE_LIST'], $smarty->fetch('modules/ModuleBuilder/tpls/wizard.tpl'));
 			echo $ajax->getJavascript();
- 		}
- 		else {
+ 		} else {
  			
  			$name = (!empty($_REQUEST['package']))?$_REQUEST['package']:'';
 			$mb->getPackage($name);
@@ -114,11 +113,14 @@ class Viewpackage extends SugarView
 
 	 		$ajax = new AjaxCompose();
 	 		$ajax->addCrumb($GLOBALS['mod_strings']['LBL_MODULEBUILDER'], 'ModuleBuilder.getContent("module=ModuleBuilder&action=package")');
-			if(empty($name))$name = $mod_strings['LBL_NEW_PACKAGE'];
+			if(empty($name)) {
+			    $name = $mod_strings['LBL_NEW_PACKAGE'];
+			}
 	 		$ajax->addCrumb($name,'');
 	 		$html=$smarty->fetch('modules/ModuleBuilder/tpls/MBPackage/package.tpl');
-	 		if(!empty($_REQUEST['action']) && $_REQUEST['action']=='SavePackage')
-	 			$html.="<script>ModuleBuilder.treeRefresh('ModuleBuilder')</script>";
+	 		if(!empty($_REQUEST['action']) && $_REQUEST['action']=='SavePackage') {
+	 			 			$html.="<script>ModuleBuilder.treeRefresh('ModuleBuilder')</script>";
+	 		}
 	 		$ajax->addSection('center', translate('LBL_SECTION_PACKAGE', 'ModuleBuilder'), $html);
 			echo $ajax->getJavascript();
  		}

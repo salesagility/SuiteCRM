@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -98,8 +100,7 @@ if (isset($_REQUEST['return_id'])) {
 
 if($focus->campaign_id) {
 	$campaign_id=$focus->campaign_id;
-}
-else {
+} else {
 	$campaign_id=$_REQUEST['campaign_id'];
 }
 $xtpl->assign("CAMPAIGN_ID", $campaign_id);
@@ -172,8 +173,7 @@ $subpanel = new SubPanelTiles($focus, 'EmailMarketing');
 
 if ($focus->all_prospect_lists == 1) {
 	$subpanel->subpanel_definitions->exclude_tab('prospectlists');
-}
-else {
+} else {
 	$subpanel->subpanel_definitions->exclude_tab('allprospectlists');
 
 }

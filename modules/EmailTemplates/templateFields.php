@@ -1,5 +1,7 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 function generateFieldDefsJS2()
@@ -47,7 +49,9 @@ function generateFieldDefsJS2()
             $focus = new $beanList[$key];
             $loopControl[$key][$key] = $focus;
             $prefixes[$key] = strtolower($focus->object_name) . '_';
-            if ($focus->object_name == 'Case') $prefixes[$key] = 'a' . strtolower($focus->object_name) . '_';
+            if ($focus->object_name == 'Case') {
+                $prefixes[$key] = 'a' . strtolower($focus->object_name) . '_';
+            }
         }
     }
 
@@ -94,8 +98,9 @@ function generateFieldDefsJS2()
                         break;
                     }
                 }
-                if ($dup)
-                    $collection[$collectionKey][] = array("name" => $optionKey, "value" => $optionLabel);
+                if ($dup) {
+                                    $collection[$collectionKey][] = array("name" => $optionKey, "value" => $optionLabel);
+                }
             }
         }
     }

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -153,8 +155,9 @@ EOQ;
 		if(empty($focus->name)){
 			return null;
 		}	
-        if ( !isset($focus->assigned_user_id) || $focus->assigned_user_id == '' )
-            $focus->assigned_user_id = $GLOBALS['current_user']->id;
+        if ( !isset($focus->assigned_user_id) || $focus->assigned_user_id == '' ) {
+                    $focus->assigned_user_id = $GLOBALS['current_user']->id;
+        }
 	
 		$return_id = $focus->save();
 		if($redirect){

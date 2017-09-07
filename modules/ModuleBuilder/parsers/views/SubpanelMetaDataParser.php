@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -144,9 +146,10 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
     function findInvisibleFields( $viewdefs )
     {
         $invisibleFields = array () ;
-        foreach ( $viewdefs as $name => $def )
-            if ( isset($def [ 'usage' ] ) && ($def [ 'usage'] == 'query_only') )
+        foreach ( $viewdefs as $name => $def ) {
+                    if ( isset($def [ 'usage' ] ) && ($def [ 'usage'] == 'query_only') )
                 $invisibleFields [ $name ] = $def ;
+        }
         return $invisibleFields ;
     }
 

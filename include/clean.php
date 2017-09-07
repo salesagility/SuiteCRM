@@ -238,7 +238,9 @@ class SugarURIFilter extends HTMLPurifier_URIFilter
     public function filter(&$uri, $config, $context)
     {
         // skip non-resource URIs
-        if (!$context->get('EmbeddedURI', true)) return true;
+        if (!$context->get('EmbeddedURI', true)) {
+            return true;
+        }
 
         //if(empty($this->allowed)) return false;
 
@@ -250,7 +252,9 @@ class SugarURIFilter extends HTMLPurifier_URIFilter
     	// relative URLs permitted since email templates use it
 		// if(empty($uri->host)) return false;
 	    // allow URLs with no query
-		if(empty($uri->query)) return true;
+		if(empty($uri->query)) {
+		    return true;
+		}
 
 		// allow URLs for known good hosts
 		foreach($this->allowed as $allow) {
@@ -273,9 +277,13 @@ class SugarURIFilter extends HTMLPurifier_URIFilter
         $query_items = array();
 		parse_str(from_html($uri->query), $query_items);
 	    // weird query, probably harmless
-		if(empty($query_items)) return true;
+		if(empty($query_items)) {
+		    return true;
+		}
     	// suspiciously like SugarCRM query, reject
-		if(!empty($query_items['module']) && !empty($query_items['action'])) return false;
+		if(!empty($query_items['module']) && !empty($query_items['action'])) {
+		    return false;
+		}
     	// looks like non-download entry point - allow only specific entry points
 		if(!empty($query_items['entryPoint']) && !in_array($query_items['entryPoint'], array('download', 'image', 'getImage'))) {
 			return false;

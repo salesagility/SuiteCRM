@@ -55,8 +55,7 @@ class ViewProperty extends SugarView
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -141,8 +140,9 @@ class ViewProperty extends SugarView
         $smarty->assign('APP', $GLOBALS['app_strings']);
         $smarty->assign("view_module", $this->editModule);
         $smarty->assign("subpanel", $this->subpanel);
-        if (isset($this->editPackage))
-            $smarty->assign("view_package", $this->editPackage);
+        if (isset($this->editPackage)) {
+                    $smarty->assign("view_package", $this->editPackage);
+        }
 
         $ajax->addSection('east', translate('LBL_SECTION_PROPERTIES', 'ModuleBuilder'), $smarty->fetch('modules/ModuleBuilder/tpls/editProperty.tpl'));
         echo $ajax->getJavascript();

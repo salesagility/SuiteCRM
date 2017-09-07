@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -58,8 +60,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($layout_manager);
@@ -81,7 +82,9 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
 
 		$report_def_str = $json_obj->decode($this->reporter->report_def_str);
 
-		if(empty($report_def_str['assigned_user_id'])) return null;
+		if(empty($report_def_str['assigned_user_id'])) {
+		    return null;
+		}
 
 		$this->assigned_user = new User();
 		$this->assigned_user->retrieve($report_def_str['assigned_user_id']);
@@ -228,8 +231,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         if ($time=='start') {
             $begin_parts = explode(' ', $begin);
             $be = $begin_parts[0] . ' 00:00:00';
-        }
-        else if ($time=='end') {
+        } else if ($time=='end') {
             $begin_parts = explode(' ', $begin);
             $be = $begin_parts[0] . ' 23:59:59';
         } else {
@@ -529,12 +531,12 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         if (count(explode('-',$content)) == 2){
             return $content;
         // if date field
-        }elseif(substr_count($layout_def['type'], 'date') > 0){
+        } elseif(substr_count($layout_def['type'], 'date') > 0){
             // if date time field
             if(substr_count($layout_def['type'], 'time') > 0 && $this->get_time_part($content)!= false){
                 $td = $timedate->to_display_date_time($content);
                 return $td;
-            }else{// if date only field
+            } else{// if date only field
                 $td = $timedate->to_display_date($content, false); // Avoid PHP notice of returning by reference.
                 return $td;
             }
@@ -650,8 +652,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         if (empty($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a')
         {
             return $orderBy . " ASC\n";
-        }
-        else
+        } else
         {
             return $orderBy . " DESC\n";
         }
@@ -767,8 +768,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         if (empty($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a')
         {
             return $orderBy . " ASC\n";
-        }
-        else
+        } else
         {
             return $orderBy . " DESC\n";
         }

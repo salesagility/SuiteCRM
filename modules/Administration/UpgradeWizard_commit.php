@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -157,14 +159,12 @@ if(isset($_REQUEST['previous_id'])){
 if( $install_type != "module" ){
     if( !isset($_REQUEST['zip_from_dir']) || ($_REQUEST['zip_from_dir'] == "") ){
         $zip_from_dir     = ".";
-    }
-    else{
+    } else{
         $zip_from_dir   = $_REQUEST['zip_from_dir'];
     }
     if( !isset($_REQUEST['zip_to_dir']) || ($_REQUEST['zip_to_dir'] == "") ){
         $zip_to_dir     = ".";
-    }
-    else{
+    } else{
         $zip_to_dir     = $_REQUEST['zip_to_dir'];
     }
 }
@@ -250,10 +250,11 @@ for( $iii = 0; $iii < $_REQUEST['copy_count']; $iii++ ){
 
         $sugar_home_dir = getCwd();
         $dest_file  = clean_path( "$sugar_home_dir/$zip_to_dir/$file_to_copy" );
-        if($zip_to_dir != '.')
-        	$rest_file  = clean_path("$rest_dir/$zip_to_dir/$file_to_copy");
-        else
-        	$rest_file  = clean_path("$rest_dir/$file_to_copy");
+        if($zip_to_dir != '.') {
+                	$rest_file  = clean_path("$rest_dir/$zip_to_dir/$file_to_copy");
+        } else {
+                	$rest_file  = clean_path("$rest_dir/$file_to_copy");
+        }
 
         switch( $mode ){
             case "Install":
@@ -261,8 +262,9 @@ for( $iii = 0; $iii < $_REQUEST['copy_count']; $iii++ ){
 
                 if($install_type=="patch" && is_file($dest_file))
                 {
-	                if(!is_dir(dirname( $rest_file )))
-                		mkdir_recursive( dirname( $rest_file ) );
+	                if(!is_dir(dirname( $rest_file ))) {
+	                                		mkdir_recursive( dirname( $rest_file ) );
+	                }
 
 	                copy( $dest_file, $rest_file);
 	                sugar_touch( $rest_file, filemtime($dest_file) );
@@ -278,8 +280,7 @@ for( $iii = 0; $iii < $_REQUEST['copy_count']; $iii++ ){
                 {
 	                copy( $rest_file, $dest_file);
 	                sugar_touch( $dest_file, filemtime($rest_file) );
-                }
-                elseif(file_exists($dest_file) && !unlink($dest_file))
+                } elseif(file_exists($dest_file) && !unlink($dest_file))
                 {
                     die($mod_strings['ERR_UW_REMOVE_FAILED'].$dest_file);
                 }
@@ -303,8 +304,7 @@ switch( $install_type ){
 
         if( $mode == "Install" || $mode=="Enable" ){
             $sugar_config['languages'] = $sugar_config['languages'] + array( $_REQUEST['new_lang_name'] => $_REQUEST['new_lang_desc'] );
-        }
-        else if( $mode == "Uninstall" || $mode=="Disable" ){
+        } else if( $mode == "Uninstall" || $mode=="Disable" ){
             $new_langs = array();
             $old_langs = $sugar_config['languages'];
             foreach( $old_langs as $key => $value ){
@@ -341,7 +341,7 @@ switch( $install_type ){
             //here we can determine if this is an upgrade or a new version
             	if(!empty($previous_version)){
             		$mi->install( "$unzip_dir", true, $previous_version);
-            	}else{
+            	} else{
                 	$mi->install( "$unzip_dir" );
             	}
 
@@ -354,24 +354,27 @@ switch( $install_type ){
 				}
             	break;
             case "Uninstall":
-                if($remove_tables == 'false')
-                	$GLOBALS['mi_remove_tables'] = false;
-                else
-                	$GLOBALS['mi_remove_tables'] = true;
+                if($remove_tables == 'false') {
+                                	$GLOBALS['mi_remove_tables'] = false;
+                } else {
+                                	$GLOBALS['mi_remove_tables'] = true;
+                }
                 $mi->uninstall( "$unzip_dir" );
                 break;
              case "Disable":
-                if(!$overwrite_files)
-                	$GLOBALS['mi_overwrite_files'] = false;
-                else
-                	$GLOBALS['mi_overwrite_files'] = true;
+                if(!$overwrite_files) {
+                                	$GLOBALS['mi_overwrite_files'] = false;
+                } else {
+                                	$GLOBALS['mi_overwrite_files'] = true;
+                }
                 $mi->disable( "$unzip_dir" );
                 break;
              case "Enable":
-                if(!$overwrite_files)
-                	$GLOBALS['mi_overwrite_files'] = false;
-                else
-                	$GLOBALS['mi_overwrite_files'] = true;
+                if(!$overwrite_files) {
+                                	$GLOBALS['mi_overwrite_files'] = false;
+                } else {
+                                	$GLOBALS['mi_overwrite_files'] = true;
+                }
                 $mi->enable( "$unzip_dir" );
                 break;
             default:
@@ -461,8 +464,9 @@ switch( $mode ){
         	if (!empty($manifest['post_install_url']))
         	{
         		$url_conf = $manifest['post_install_url'];
-        		if (is_string($url_conf))
-        			$url_conf = array('url' => $url_conf);
+        		if (is_string($url_conf)) {
+        		        			$url_conf = array('url' => $url_conf);
+        		}
         		if (isset($url_conf['type']) && $url_conf['type'] == 'popup')
         		{
         			echo '<script type="text/javascript">window.open("' . $url_conf['url']
@@ -531,8 +535,9 @@ echo "<br>";
 print( "<input type=submit value=\"{$mod_strings['LBL_UW_BTN_BACK_TO_MOD_LOADER']}\" /><br>" );
 echo "</div>";
 echo "<br>";
-if(isset($lang_changed_string))
+if(isset($lang_changed_string)) {
 	print($lang_changed_string);
+}
 if ($install_type != "module" && $install_type != "langpack"){
     if( sizeof( $files_to_handle ) > 0 ){
         echo '<div style="text-align: left; cursor: hand; cursor: pointer; text-decoration: underline;" onclick=\'this.style.display="none"; toggleDisplay("more");\' id="all_text">' . SugarThemeRegistry::current()->getImage('advanced_search', '', null, null, ".gif", $mod_strings['LBL_ADVANCED_SEARCH']) . ' '.$mod_strings['LBL_UW_SHOW_DETAILS'].'</div><div id=\'more\' style=\'display: none\'>
@@ -544,8 +549,7 @@ if ($install_type != "module" && $install_type != "langpack"){
         }
         print( "</ul>\n" );
         echo '</div>';
-    }
-    else if( $mode != 'Disable' && $mode !='Enable' ){
+    } else if( $mode != 'Disable' && $mode !='Enable' ){
         print( "{$mod_strings['LBL_UW_NO_FILES_SELECTED']} $file_action.<br>\n" );
     }
 

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -92,10 +94,18 @@ var $selectedCategories = array();
         }
 
 
-        if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'SugarFeed');
-		if(!empty($def['rows']))$this->displayRows = $def['rows'];
-		if(!empty($def['categories']))$this->selectedCategories = $def['categories'];
-		if(!empty($def['userfeed_created'])) $this->userfeed_created = $def['userfeed_created'];
+        if(empty($def['title'])) {
+            $this->title = translate('LBL_HOMEPAGE_TITLE', 'SugarFeed');
+        }
+		if(!empty($def['rows'])) {
+		    $this->displayRows = $def['rows'];
+		}
+		if(!empty($def['categories'])) {
+		    $this->selectedCategories = $def['categories'];
+		}
+		if(!empty($def['userfeed_created'])) {
+		    $this->userfeed_created = $def['userfeed_created'];
+		}
         $this->searchFields = $dashletData['SugarFeedDashlet']['searchFields'];
         $this->columns = $dashletData['SugarFeedDashlet']['columns'];
 
@@ -115,7 +125,7 @@ var $selectedCategories = array();
 		if(count($this->categories) < $catCount){
 			if(!empty($this->selectedCategories)){
 				ACLController::filterModuleList($this->selectedCategories, true);
-			}else{
+			} else{
 				$this->selectedCategories = array_keys($this->categories);
 				unset($this->selectedCategories[0]);
 			}
@@ -130,8 +140,7 @@ var $selectedCategories = array();
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id, $def);
@@ -233,8 +242,7 @@ var $selectedCategories = array();
             {
                 $all_modules = array_merge($regular_modules, $owner_modules, $admin_modules);
                 $module_limiter = " sugarfeed.related_module in ('" . implode("','", $all_modules) . "')";
-            }
-            else if ( count($owner_modules) > 0
+            } else if ( count($owner_modules) > 0
 				) {
                 $module_limiter = " ((sugarfeed.related_module IN ('".implode("','", $regular_modules)."') "
 					.") ";
@@ -276,8 +284,9 @@ var $selectedCategories = array();
                     {
                         $modKey = $modStringMatches[2];
                         $modString = translate($modKey, $modStringMatches[1]);
-                        if( strpos($modString, '{0}') === FALSE || !isset($GLOBALS['app_list_strings']['moduleListSingular'][$data['RELATED_MODULE']]) )
-                            continue;
+                        if( strpos($modString, '{0}') === FALSE || !isset($GLOBALS['app_list_strings']['moduleListSingular'][$data['RELATED_MODULE']]) ) {
+                                                    continue;
+                        }
 
                         $modStringSingular = $GLOBALS['app_list_strings']['moduleListSingular'][$data['RELATED_MODULE']];
                         $modString = string_format($modString, array($modStringSingular) );
@@ -293,8 +302,9 @@ var $selectedCategories = array();
             foreach($this->lvs->data['pageData']['urls'] as $type => $url) {
             	// awu Replacing action=DisplayDashlet with action=DynamicAction&DynamicAction=DisplayDashlet
                 $this->lvs->data['pageData']['urls'][$type] = $url.'&action=DynamicAction&DynamicAction=displayDashlet';
-                if($type != 'orderBy')
-                    $this->lvs->data['pageData']['urls'][$type] = $url.'&action=DynamicAction&DynamicAction=displayDashlet&sugar_body_only=1&id=' . $this->id;
+                if($type != 'orderBy') {
+                                    $this->lvs->data['pageData']['urls'][$type] = $url.'&action=DynamicAction&DynamicAction=displayDashlet&sugar_body_only=1&id=' . $this->id;
+                }
             }
 
             $this->lvs->ss->assign('dashletId', $this->id);
@@ -438,8 +448,9 @@ var $selectedCategories = array();
 		if($rows > 100){
 			$rows = 100;
 		}
-        if ( isset($req['autoRefresh']) )
-            $options['autoRefresh'] = $req['autoRefresh'];
+        if ( isset($req['autoRefresh']) ) {
+                    $options['autoRefresh'] = $req['autoRefresh'];
+        }
         $options['rows'] = $rows;
 		$options['categories'] = $req['categories'];
 		foreach($options['categories'] as $cat){
@@ -564,8 +575,7 @@ enableQS(false);
 
         if($current_user->getPreference('use_real_names') == 'on'){
             $ss->assign('user_name', $current_user->full_name);
-        }
-        else {
+        } else {
             $ss->assign('user_name', $user_name);
         }
         $linkTypesIn = SugarFeed::getLinkTypes();

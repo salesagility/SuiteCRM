@@ -120,8 +120,9 @@ class ViewRelationship extends SugarView
                 
         $cardinality = array ( MB_ONETOONE => translate ( 'LBL_ONETOONE' ) , MB_ONETOMANY => translate ( 'LBL_ONETOMANY' ) , MB_MANYTOONE=> translate ( 'LBL_MANYTOONE' ), MB_MANYTOMANY => translate ( 'LBL_MANYTOMANY' ), ) ;
         
-        if (!$this->fromModuleBuilder)
-            unset($cardinality[MB_MANYTOONE]);
+        if (!$this->fromModuleBuilder) {
+                    unset($cardinality[MB_MANYTOONE]);
+        }
             
         $relationships = $module->getRelationships () ;
         
@@ -136,7 +137,7 @@ class ViewRelationship extends SugarView
 	            $definition['lhs_label'] = isset($modStrings[$relationship->getTitleKey()])?$modStrings[$relationship->getTitleKey()] : $relationship->lhs_module;
 	            $modStrings = return_module_language( $selected_lang, $relationship->lhs_module, true ) ;
 	    		$definition['rhs_label'] = isset($modStrings[$relationship->getTitleKey(true)])?$modStrings[$relationship->getTitleKey(true)] : $relationship->rhs_module ;
-			}else{
+			} else{
 				#30624
 				if(!empty($_REQUEST['rhs_module'])){
 					$definition['rhs_label'] = $_REQUEST['rhs_module'];
@@ -254,12 +255,14 @@ class ViewRelationship extends SugarView
                     }
                     $this->smarty->assign ( 'relationship_role_column_enum', $validRoleColumnFields ) ;
                 }
-                if (! empty ( $relationship->relationship_role_column_value ))
-                    $this->smarty->assign ( 'relationship_role_column_value', $relationship->relationship_role_column_value ) ;
+                if (! empty ( $relationship->relationship_role_column_value )) {
+                                    $this->smarty->assign ( 'relationship_role_column_value', $relationship->relationship_role_column_value ) ;
+                }
                 break ;
             case MB_MANYTOMANY :
-                if (! empty ( $relationship->relationship_role_column_value ))
-                    $this->smarty->assign ( 'relationship_role_column_value', $relationship->relationship_role_column_value ) ;
+                if (! empty ( $relationship->relationship_role_column_value )) {
+                                    $this->smarty->assign ( 'relationship_role_column_value', $relationship->relationship_role_column_value ) ;
+                }
                 break ;
         }
         

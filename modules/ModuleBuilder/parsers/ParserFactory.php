@@ -67,7 +67,9 @@ class ParserFactory
             $packageName = null ;
             //For studio modules, check for view parser overrides
             $parser = self::checkForStudioParserOverride($view, $moduleName, $packageName);
-            if ($parser) return $parser;
+            if ($parser) {
+                return $parser;
+            }
             $sm = StudioModuleFactory::getStudioModule($moduleName);
             //If we didn't find a specofic parser, see if there is a view to type mapping
             foreach($sm->sources as $file => $def)
@@ -117,8 +119,9 @@ class ParserFactory
                 return new ParserVisibility ( $moduleName, $packageName ) ;
             default :
                 $parser = self::checkForParserClass($view, $moduleName, $packageName);
-                if ($parser)
-                    return $parser;
+                if ($parser) {
+                                    return $parser;
+                }
 
         }
 
@@ -171,16 +174,19 @@ class ParserFactory
             {
                 $pName = $def['parser'];
                 $path = "modules/ModuleBuilder/parsers/views/{$pName}.php";
-                if (file_exists("custom/$path"))
-                    require_once("custom/$path");
-                else if (file_exists($path))
-                    require_once($path);
-                if (class_exists ( $pName ))
-                    return new $pName($view, $moduleName, $packageName);
+                if (file_exists("custom/$path")) {
+                                    require_once("custom/$path");
+                } else if (file_exists($path)) {
+                                    require_once($path);
+                }
+                if (class_exists ( $pName )) {
+                                    return new $pName($view, $moduleName, $packageName);
+                }
                 //If it wasn't defined directly, check for a generic parser name for the view
                 $parser = self::checkForParserClass($view, $moduleName, $packageName);
-                if ($parser)
-                    return $parser;
+                if ($parser) {
+                                    return $parser;
+                }
             }
         }
         return false;

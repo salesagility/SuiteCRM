@@ -1,6 +1,7 @@
 <?php
-if (! defined('sugarEntry') || ! sugarEntry)
-die('Not A Valid Entry Point');
+if (! defined('sugarEntry') || ! sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -80,12 +81,10 @@ class ParserModifyLayoutView extends ModuleBuilderParser
         {
             $this->_sourceFile = $this->_workingFile;
             $this->usingWorkingFile = true;
-        }
-        else if (is_file($this->_customFile))
+        } else if (is_file($this->_customFile))
         {
             $this->_sourceFile = $this->_customFile;
-        }
-        else if (! is_file($this->_sourceFile))
+        } else if (! is_file($this->_sourceFile))
         {
             // if we don't have ANY defined metadata then improvise as best we can
             if (strtolower($this->_view) == 'quickcreate')
@@ -97,8 +96,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
                     $this->_sourceFile = "custom/" . $this->_sourceFile;
                 }
                 $this->_sourceView = 'EditView';
-            }
-            else
+            } else
             {
                 $this->_fatalError('parser.modifylayout.php->init(): no metadata for '.$this->_module.' '.$this->_view);
             }
@@ -171,8 +169,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
         {
         	TemplateHandler::clearCache($this->_module,"form_SubPanelQuickCreate_{$this->_module}.tpl");
         	TemplateHandler::clearCache($this->_module,"form_DCQuickCreate_{$this->_module}.tpl");
-        } 
-        else 
+        } else 
         {
         	TemplateHandler::clearCache($this->_module,"{$this->_view}.tpl");
         }
@@ -236,8 +233,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
                 if ($slotComponents ['3'] == 'name' && isset($origFieldDefs [$value]) && is_array($origFieldDefs [$value]))
                 {
                     $this->_viewdefs ['panels'] [$panelID] [$rowID] [$colID] = $origFieldDefs [$value];
-                }
-                else
+                } else
                 {
                     $property = $slotComponents ['3'];
                     if ($value == '(filler)')
@@ -341,8 +337,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
                     foreach ($row as $col_id => $col) {
                         if ($col['name'] == '(filler)') {
                             $this->_viewdefs['panels'][$loop_panelID][$row_id][$col_id] = NULL;
-                        }
-                        elseif ($col['name'] == '(empty)') {
+                        } elseif ($col['name'] == '(empty)') {
                             unset($this->_viewdefs['panels'][$loop_panelID][$row_id][$col_id]);
                         }
                     }
@@ -401,8 +396,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
             {
                 $label = isset($def['vname']) ? $def['vname'] : $def['name'];
                 $modelFields [$field] = array('name' => $field, 'label' => $label);
-            }
-            else
+            } else
             {
                 $GLOBALS['log']->debug( get_class($this)."->_getModelFields(): skipping $field from modelFields as it fails the test for inclusion");
             }
@@ -414,8 +408,9 @@ class ParserModifyLayoutView extends ModuleBuilderParser
     function _parseData ($panels)
     {
         $fields = array();
-        if (empty($panels))
-        return;
+        if (empty($panels)) {
+                return;
+        }
 
         // Fix for a flexibility in the format of the panel sections - if only one panel, then we don't have a panel level defined, it goes straight into rows
         // See EditView2 for similar treatment
@@ -506,8 +501,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
                         if (is_array($fieldDef))
                         {
                             $fieldName = $fieldDef ['name'];
-                        }
-                        else
+                        } else
                         {
                             $fieldName = $fieldDef;
                         }

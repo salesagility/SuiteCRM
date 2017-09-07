@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -66,8 +68,7 @@ class SugarWidgetReportField extends SugarWidgetField
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($layout_manager);
@@ -199,19 +200,20 @@ class SugarWidgetReportField extends SugarWidgetField
  function queryOrderBy($layout_def)
  {
      $field_def = array();
-	if(!empty($this->reporter->all_fields[$layout_def['column_key']])) $field_def = $this->reporter->all_fields[$layout_def['column_key']];
+	if(!empty($this->reporter->all_fields[$layout_def['column_key']])) {
+	    $field_def = $this->reporter->all_fields[$layout_def['column_key']];
+	}
 
     if (!empty($layout_def['group_function']))
     {
         $order_by = $this->_get_column_alias($layout_def);
-    }
-    elseif (!empty($field_def['sort_on']))
+    } elseif (!empty($field_def['sort_on']))
 	{
 			$order_by = $layout_def['table_alias'].".".$field_def['sort_on'];
-            if(!empty($field_def['sort_on2']))
-                $order_by .= ', ' . $layout_def['table_alias'].".".$field_def['sort_on2'];
-    }
-	else {
+            if(!empty($field_def['sort_on2'])) {
+                            $order_by .= ', ' . $layout_def['table_alias'].".".$field_def['sort_on2'];
+            }
+    } else {
 		$order_by = $this->_get_column_alias($layout_def)." \n";
 	}
 

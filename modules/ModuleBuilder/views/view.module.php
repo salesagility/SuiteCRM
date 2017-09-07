@@ -87,11 +87,14 @@ class ViewModule extends SugarView
 		$ajax = new AjaxCompose();
 		$ajax->addCrumb($GLOBALS['mod_strings']['LBL_MODULEBUILDER'], 'ModuleBuilder.main("mb")');
 		$ajax->addCrumb(' '. $package->name,'ModuleBuilder.getContent("module=ModuleBuilder&action=package&package='.$package->name.'")');
-		if(empty($module_name))$module_name = translate('LBL_NEW_MODULE', 'ModuleBuilder');
+		if(empty($module_name)) {
+		    $module_name = translate('LBL_NEW_MODULE', 'ModuleBuilder');
+		}
 		$ajax->addCrumb($module_name, '');
 		$html=$smarty->fetch('modules/ModuleBuilder/tpls/MBModule/module.tpl');
-		if(!empty($_REQUEST['action']) && $_REQUEST['action']=='SaveModule')
-			$html .="<script>ModuleBuilder.treeRefresh('ModuleBuilder')</script>";
+		if(!empty($_REQUEST['action']) && $_REQUEST['action']=='SaveModule') {
+					$html .="<script>ModuleBuilder.treeRefresh('ModuleBuilder')</script>";
+		}
 		$ajax->addSection('center', translate('LBL_SECTION_MODULE', 'ModuleBuilder'), $html);
 		
 		echo $ajax->getJavascript();

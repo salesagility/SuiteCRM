@@ -1,6 +1,7 @@
 <?php
-if (! defined ( 'sugarEntry' ) || ! sugarEntry)
+if (! defined ( 'sugarEntry' ) || ! sugarEntry) {
     die ( 'Not A Valid Entry Point' ) ;
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -68,8 +69,7 @@ class ParserSearchFields extends ModuleBuilderParser
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($moduleName, $packageName);
@@ -100,9 +100,11 @@ class ParserSearchFields extends ModuleBuilderParser
     function getSearchFields()
     {
     	$searchFields = array();
-        if (!empty($this->packageName) && file_exists("custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata/SearchFields.php")) //we are in Module builder
+        if (!empty($this->packageName) && file_exists("custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata/SearchFields.php")) {
+            //we are in Module builder
         {
 			include("custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata/SearchFields.php");
+        }
         } else if(file_exists("custom/modules/{$this->moduleName}/metadata/SearchFields.php")) {
 			include("custom/modules/{$this->moduleName}/metadata/SearchFields.php");
         } else if(file_exists("modules/{$this->moduleName}/metadata/SearchFields.php")) {
@@ -114,9 +116,11 @@ class ParserSearchFields extends ModuleBuilderParser
 
     function saveSearchFields ($searchFields)
     {
-        if (!empty($this->packageName)) //we are in Module builder
+        if (!empty($this->packageName)) {
+            //we are in Module builder
         {
 			$header = file_get_contents('modules/ModuleBuilder/MB/header.php');
+        }
             if(!file_exists("custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata/SearchFields.php"))
             {
                mkdir_recursive("custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/metadata");

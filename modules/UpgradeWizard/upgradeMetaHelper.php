@@ -83,8 +83,7 @@ class UpgradeMetaHelper{
 		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
 		if(isset($GLOBALS['log'])) {
 			$GLOBALS['log']->deprecated($deprecatedMessage);
-		}
-		else {
+		} else {
 			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
 		}
 		self::__construct($dir, $masterCopyDirecotry, $debugMode);
@@ -145,12 +144,10 @@ function saveMatchingFilesQueries($currStep,$value){
 	$file_queries_file = $upgrade_progress_dir.'/files_queries.php';
 	if(file_exists($file_queries_file)){
 		include($file_queries_file);
-	}
-	else{
+	} else{
 		if(function_exists('sugar_fopen')){
 			sugar_fopen($file_queries_file, 'w+');
-		}
-		else{
+		} else{
 			fopen($file_queries_file, 'w+');
 		}
 	}
@@ -176,7 +173,9 @@ function getAllCustomizedModulesBeyondStudio() {
     $modulesAll = getAllModules(); //keep all modules as well
     $allOtherModules = array_diff($modulesAll,$modules);
     foreach($modules as $mod) {
-	  if(!is_dir('modules/'.$mod)) continue;
+	  if(!is_dir('modules/'.$mod)) {
+	      continue;
+	  }
 	  $editView = "modules/$mod/EditView.html";
 	  $detailView ="modules/$mod/DetailView.html";
 	  $exclude_files[]=$editView;
@@ -190,8 +189,7 @@ function getAllCustomizedModulesBeyondStudio() {
 		       	  $fileContents = file_get_contents($file);
 		       	  if(md5($fileContents) != $md5_string['./'.$file]) {
 		       	  	$return_array[$mod][] = $file;
-		       	  }
-		       	  else{
+		       	  } else{
 		       	  	//keep in the array to be deleted later
 		       	  	$_SESSION['removeMd5MatchingFiles'][] = $file;
 		               	  }
@@ -202,7 +200,9 @@ function getAllCustomizedModulesBeyondStudio() {
     //also check out other non-studio modules by taking the difference between
     //allMOdules and
   foreach($allOtherModules as $mod) {
-	  if(!is_dir('modules/'.$mod)) continue;
+	  if(!is_dir('modules/'.$mod)) {
+	      continue;
+	  }
 	  $allModFiles = array();
       $allModFiles = findAllFiles('modules/'.$mod,$allModFiles);
       foreach($allModFiles as $file){
@@ -251,8 +251,7 @@ function getAllCustomizedModules() {
 	               	  	  $return_array[$mod];
 	               	  	  break;
 	               	  }
-               	  }
-               	  else{
+               	  } else{
                	  	// This is a new file in user's version and indicates that module has been
                	  	//customized. Put the module in the customized array.
                        echo 'New File'.$file;
@@ -275,7 +274,9 @@ function getAllCustomizedModules() {
 		$modules = array();
 		$d = dir('modules');
 		while($e = $d->read()){
-			if(substr($e, 0, 1) == '.' || !is_dir('modules/' . $e))continue;
+			if(substr($e, 0, 1) == '.' || !is_dir('modules/' . $e)) {
+			    continue;
+			}
 			if(file_exists('modules/' . $e . '/metadata/studio.php')){
 			   $modules[] = $e;
 			}

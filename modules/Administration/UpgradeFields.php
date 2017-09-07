@@ -1,6 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry)
+if(!defined('sugarEntry') || !sugarEntry) {
 	die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -120,8 +121,9 @@ foreach ($modules as $the_module => $fields) {
 	echo sizeof($fields)." field(s) missing from $mod->table_name"."_cstm<br>";
 	foreach ($fields as $field) {
 		echo "Adding Column $field to $mod->table_name"."_cstm<br>";
-		if (!$simulate)
-			$mod->custom_fields->add_existing_custom_field($field);
+		if (!$simulate) {
+					$mod->custom_fields->add_existing_custom_field($field);
+		}
 	}
 
 }

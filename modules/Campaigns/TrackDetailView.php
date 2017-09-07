@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -129,8 +131,10 @@ if(isset($focus->campaign_type) && $focus->campaign_type == "NewsLetter"){
     	$currency->retrieve($focus->currency_id);
     	if( $currency->deleted != 1){
     		$smarty->assign("CURRENCY", $currency->iso4217 .' '.$currency->symbol );
-    	}else $smarty->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol() );
-    }else{
+    	} else {
+    	    $smarty->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol() );
+    	}
+    } else{
 
     	$smarty->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol() );
 
@@ -154,7 +158,9 @@ if(isset($focus->campaign_type) && $focus->campaign_type == "NewsLetter"){
         //we need to build the dropdown of related marketing values
         $options_str = "<select onchange= \"this.form.module.value='Campaigns';this.form.action.value='TrackDetailView'; submit()\" name='mkt_id'>";
         $latest_marketing_id = '';
-        if(isset($_REQUEST['mkt_id'])) $selected_marketing_id = $_REQUEST['mkt_id'];
+        if(isset($_REQUEST['mkt_id'])) {
+            $selected_marketing_id = $_REQUEST['mkt_id'];
+        }
 
         $options_str .= '<option value="all">'.$app_strings["LBL_CAMPAIGN_NONE"].'</option>';
         //query for all email marketing records related to this campaign
@@ -175,11 +181,11 @@ if(isset($focus->campaign_type) && $focus->campaign_type == "NewsLetter"){
             if (!empty($selected_marketing_id) && $selected_marketing_id == $row['id']) {
                 $options_str .=' selected>'. $row['name'] .'</option>';
             // if the marketing id is empty then set this first option to render as "selected"
-            }elseif(empty($selected_marketing_id) && $focus->campaign_type == 'NewsLetter'){
+            } elseif(empty($selected_marketing_id) && $focus->campaign_type == 'NewsLetter'){
                 $options_str .=' selected>'. $row['name'] .'</option>';
             // if the marketing is not empty, but not same as selected marketing id, then..
             //.. do not set this option to render as "selected"
-            }else{
+            } else{
                 $options_str .='>'. $row['name'] .'</option>';
             }
         }
@@ -190,7 +196,7 @@ if(isset($focus->campaign_type) && $focus->campaign_type == "NewsLetter"){
             //if the marketing id is same as selected marketing id, then set this option to render as "selected"
             if (!empty($selected_marketing_id) && $selected_marketing_id == $row['id']) {
                 $options_str .=' selected>'. $row['name'] .'</option>';
-            }else{
+            } else{
                 $options_str .=' >'. $row['name'] .'</option>';
             }
          }
@@ -213,7 +219,7 @@ $chart= new campaign_charts();
     if(!empty($selected_marketing_id)){$latest_marketing_id = $selected_marketing_id;}
     if(empty($latest_marketing_id) ||  $latest_marketing_id === 'all'){
         $smarty->assign("MY_CHART", $chart->campaign_response_by_activity_type($app_list_strings['campainglog_activity_type_dom'],$app_list_strings['campainglog_target_type_dom'],$focus->id,sugar_cached("xml/$cache_file_name"),true));
-    }else{
+    } else{
         $smarty->assign("MY_CHART", $chart->campaign_response_by_activity_type($app_list_strings['campainglog_activity_type_dom'],$app_list_strings['campainglog_target_type_dom'],$focus->id,sugar_cached("xml/$cache_file_name"),true,$latest_marketing_id));
     }
 
@@ -232,7 +238,7 @@ $subpanel = new SubPanelTiles($focus, 'Campaigns');
     //.. out the chart and subpanels by marketing id
     if(empty($latest_marketing_id) || $latest_marketing_id === 'all'){
         //do nothing, no filtering is needed
-    }else{
+    } else{
 
         // assign selected marketing ID back to request in order to let ListView use it as a part of subpanel base URL
         $_GET['mkt_id'] = $latest_marketing_id;

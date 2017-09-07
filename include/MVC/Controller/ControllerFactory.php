@@ -57,23 +57,23 @@ class ControllerFactory
 			require_once('custom/modules/'.$module.'/controller.php');
 			if(class_exists($customClass)){
 				$controller = new $customClass();
-			}else if(class_exists($class)){
+			} else if(class_exists($class)){
 				$controller = new $class();
 			}
-		}elseif(file_exists('modules/'.$module.'/controller.php')){
+		} elseif(file_exists('modules/'.$module.'/controller.php')){
 			require_once('modules/'.$module.'/controller.php');
 			if(class_exists($customClass)){
 				$controller = new $customClass();
-			}else if(class_exists($class)){
+			} else if(class_exists($class)){
 				$controller = new $class();
 			}
-		}else{
+		} else{
 			if(file_exists('custom/include/MVC/Controller/SugarController.php')){
 				require_once('custom/include/MVC/Controller/SugarController.php');
 			}
 			if(class_exists('CustomSugarController')){
 				$controller = new CustomSugarController();
-			}else{
+			} else{
 			$controller = new SugarController();
 			}
 		}

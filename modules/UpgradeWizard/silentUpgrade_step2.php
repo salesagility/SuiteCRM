@@ -151,8 +151,7 @@ function verifyArguments($argv,$usage_regular){
             echo "FAILURE\n";
             exit(1);
         }
-    }
-    else {
+    } else {
         //this should be a regular sugar install
         echo "*******************************************************************************\n";
         echo "*** ERROR: Tried to execute in a non-SugarCRM root directory.\n";
@@ -217,7 +216,9 @@ eoq2;
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	STANDARD REQUIRED SUGAR INCLUDES AND PRESETS
-if(!defined('sugarEntry')) define('sugarEntry', true);
+if(!defined('sugarEntry')) {
+    define('sugarEntry', true);
+}
 
 $_SESSION = array();
 $_SESSION['schema_change'] = 'sugar'; // we force-run all SQL
@@ -289,13 +290,11 @@ $errors = array();
 	   if(isset($logged_user['id']) && $logged_user['id'] != null){
 		//do nothing
 	    $current_user->retrieve($logged_user['id']);
-	   }
-	   else{
+	   } else{
 	   	echo "Not an admin user in users table. Please provide an admin user\n";
 		exit(1);
 	   }
-	}
-	else {
+	} else {
 		echo "*******************************************************************************\n";
 		echo "*** ERROR: 4th parameter must be a valid admin user.\n";
 		echo $usage;
@@ -489,7 +488,7 @@ if($ce_to_pro_ent) {
 	if(isset($globalteam->name)){
 		echo 'Global '.$mod_strings['LBL_UPGRADE_TEAM_EXISTS'].'<br>';
 		logThis(" Finish Building Global Team", $path);
-	}else{
+	} else{
 		$globalteam->create_team("Global", $mod_strings['LBL_GLOBAL_TEAM_DESC'], $globalteam->global_team);
 	}
 

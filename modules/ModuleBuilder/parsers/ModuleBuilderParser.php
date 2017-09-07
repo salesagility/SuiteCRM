@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -58,8 +60,7 @@ class ModuleBuilderParser
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -131,8 +132,9 @@ class ModuleBuilderParser
 	 */
 	function _writeToFile ($file,$view,$moduleName,$defs,$variables)
 	{
-	        if(file_exists($file))
-	            unlink($file);
+	        if(file_exists($file)) {
+	        	            unlink($file);
+	        }
 
 	        mkdir_recursive ( dirname ( $file ) ) ;
 	        $GLOBALS['log']->debug("ModuleBuilderParser->_writeFile(): file=".$file);
@@ -174,8 +176,7 @@ class ModuleBuilderParser
 //           $GLOBALS['log']->debug("parser.modifylayout.php->_writeFile(): out=".print_r($out,true));
             fputs( $fh, $out);
             fclose( $fh );
-            }
-            else
+            } else
             {
                 $GLOBALS['log']->fatal("ModuleBuilderParser->_writeFile() Could not write new viewdef file ".$file);
             }

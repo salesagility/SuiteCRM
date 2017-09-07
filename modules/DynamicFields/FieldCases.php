@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -130,7 +132,7 @@ function get_widget($type)
 						$file = false;
 						if(file_exists('custom/modules/DynamicFields/templates/Fields/Template'. ucfirst($type) . '.php')){
 							$file  =	'custom/modules/DynamicFields/templates/Fields/Template'. ucfirst($type) . '.php';
-						}else if(file_exists('modules/DynamicFields/templates/Fields/Template'. ucfirst($type) . '.php')){
+						} else if(file_exists('modules/DynamicFields/templates/Fields/Template'. ucfirst($type) . '.php')){
 							$file  =	'modules/DynamicFields/templates/Fields/Template'. ucfirst($type) . '.php';
 						}
 						if(!empty($file)){
@@ -139,11 +141,11 @@ function get_widget($type)
 							$customClass = 'Custom' . $class;
 							if(class_exists($customClass)){
 								$local_temp = new $customClass();
-							}else{
+							} else{
 								$local_temp = new $class();
 							}
 							break;
-						}else{
+						} else{
 							$local_temp = new TemplateText(); break;
 						}
 	}

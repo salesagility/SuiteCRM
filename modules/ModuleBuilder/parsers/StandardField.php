@@ -1,6 +1,7 @@
 <?php
-if (! defined ( 'sugarEntry' ) || ! sugarEntry)
+if (! defined ( 'sugarEntry' ) || ! sugarEntry) {
     die ( 'Not A Valid Entry Point' ) ;
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -55,8 +56,9 @@ class StandardField extends DynamicField
             $bean_name = get_valid_bean_name($this->module);
             $dictionary = array($bean_name => array("fields" => array($field => array())));
             include("$this->base_path/sugarfield_$field.php");
-            if (!empty($dictionary[$bean_name]) && isset($dictionary[$bean_name]["fields"][$field]))
-                $this->custom_def = $dictionary[$bean_name]["fields"][$field];
+            if (!empty($dictionary[$bean_name]) && isset($dictionary[$bean_name]["fields"][$field])) {
+                            $this->custom_def = $dictionary[$bean_name]["fields"][$field];
+            }
     	}
     }
 
@@ -66,8 +68,9 @@ class StandardField extends DynamicField
         {
             $dictionary = array();
             include("modules/{$this->module}/vardefs.php");
-            if (!empty($dictionary[$beanList[$this->module]]) && isset($dictionary[$beanList[$this->module]]["fields"][$field]))
-                $this->base_def = $dictionary[$beanList[$this->module]]["fields"][$field];
+            if (!empty($dictionary[$beanList[$this->module]]) && isset($dictionary[$beanList[$this->module]]["fields"][$field])) {
+                            $this->base_def = $dictionary[$beanList[$this->module]]["fields"][$field];
+            }
         }
     }
     
@@ -81,13 +84,15 @@ class StandardField extends DynamicField
         global $dictionary, $beanList;
         
         
-        if (empty($beanList[$this->module]))
-            return false;
+        if (empty($beanList[$this->module])) {
+                    return false;
+        }
 
         $bean_name = get_valid_bean_name($this->module);
 
-        if (empty($dictionary[$bean_name]) || empty($dictionary[$bean_name]["fields"][$field->name]))
-            return false;
+        if (empty($dictionary[$bean_name]) || empty($dictionary[$bean_name]["fields"][$field->name])) {
+                    return false;
+        }
 
         $currdef = $dictionary[$bean_name]["fields"][$field->name];
 
@@ -115,8 +120,9 @@ class StandardField extends DynamicField
            
         	if ($property == "action" || $property == "label_value" || $property == "label"
             	|| ((substr($property, 0,3) == 'ext' && strlen($property) == 4))
-            ) 
-            	continue;
+            ) {
+        	            	continue;
+        	}
        	 		
             // Bug 37043 - Avoid writing out vardef defintions that are the default value.
             if (isset($newDef[$property]) &&
@@ -129,26 +135,29 @@ class StandardField extends DynamicField
             }
             
             //Remove any orphaned entries
-            if (isset($this->custom_def[$property]) && !isset($newDef[$property]))
-            	unset($this->custom_def[$property]);
+            if (isset($this->custom_def[$property]) && !isset($newDef[$property])) {
+                        	unset($this->custom_def[$property]);
+            }
 
             //Handle overrides of out of the box definitions with empty
             if (!empty($this->base_def[$property]) && !isset($newDef[$property]))
             {
                 //Switch on type of the property to find what the correct 'empty' is.
-                if(is_string($this->base_def[$property]))
-                    $this->custom_def[$property] = "";
-                else if(is_array($this->base_def[$property]))
-                    $this->custom_def[$property] = array();
-                else if(is_bool($this->base_def[$property]))
-                    $this->custom_def[$property] = false;
-                else
-                    $this->custom_def[$property] = null;
+                if(is_string($this->base_def[$property])) {
+                                    $this->custom_def[$property] = "";
+                } else if(is_array($this->base_def[$property])) {
+                                    $this->custom_def[$property] = array();
+                } else if(is_bool($this->base_def[$property])) {
+                                    $this->custom_def[$property] = false;
+                } else {
+                                    $this->custom_def[$property] = null;
+                }
             }
         }
         
-        if (isset($this->custom_def["duplicate_merge_dom_value"]) && !isset($this->custom_def["duplicate_merge"]))
-        	unset($this->custom_def["duplicate_merge_dom_value"]);
+        if (isset($this->custom_def["duplicate_merge_dom_value"]) && !isset($this->custom_def["duplicate_merge"])) {
+                	unset($this->custom_def["duplicate_merge_dom_value"]);
+        }
         
         $this->writeVardefExtension($bean_name, $field, $this->custom_def);
     }

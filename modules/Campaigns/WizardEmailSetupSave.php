@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -101,7 +103,7 @@ if(isset($_REQUEST['wiz_new_mbox']) && ($_REQUEST['wiz_new_mbox']=='1')){
             //and display error message
             $header_URL = "Location: index.php?action=WizardEmailSetup&module=Campaigns&error=true";
         SugarApplication::headerRedirect($header_URL);
-    }else{
+    } else{
         //set navigation details
         $header_URL = "Location: index.php?action=index&module=Campaigns";
         SugarApplication::headerRedirect($header_URL);

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
@@ -87,8 +89,7 @@ if($_REQUEST['select_entire_list'] == '1'){
 	{
 		array_push($uids, $val['id']);
 	}
-}
-else{
+} else{
 	$uids = explode ( ',', $_POST['uids'] );
 }
 
@@ -131,8 +132,7 @@ if ( $relationship != '' ) {
 				$contact->prospect_lists->add($_REQUEST['prospect_list']);
 			}
 			
-		}
-		else{
+		} else{
 			$focus->load_relationship($relationship);
 			$focus->prospect_lists->add($_REQUEST['prospect_list']);
 

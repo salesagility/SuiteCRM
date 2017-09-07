@@ -2,8 +2,9 @@
 
 // custom/modules/Project/ProjectJjwg_MapsLogicHook.php
 
-if (!defined('sugarEntry') || !sugarEntry)
+if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
+}
 
 class ProjectJjwg_MapsLogicHook {
 
@@ -19,8 +20,7 @@ class ProjectJjwg_MapsLogicHook {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();

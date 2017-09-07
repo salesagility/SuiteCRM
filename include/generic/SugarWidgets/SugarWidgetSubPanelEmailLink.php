@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -62,14 +64,23 @@ class SugarWidgetSubPanelEmailLink extends SugarWidgetField {
 
 
 
-			if(isset($_REQUEST['action'])) $action = $_REQUEST['action'];
-			else $action = '';
+			if(isset($_REQUEST['action'])) {
+			    $action = $_REQUEST['action'];
+			} else {
+			    $action = '';
+			}
 
-			if(isset($_REQUEST['module'])) $module = $_REQUEST['module'];
-			else $module = '';
+			if(isset($_REQUEST['module'])) {
+			    $module = $_REQUEST['module'];
+			} else {
+			    $module = '';
+			}
 
-			if(isset($_REQUEST['record'])) $record = $_REQUEST['record'];
-			else $record = '';
+			if(isset($_REQUEST['record'])) {
+			    $record = $_REQUEST['record'];
+			} else {
+			    $record = '';
+			}
 
 			if (!empty($focus->name)) {
 				$name = $focus->name;

@@ -1,6 +1,7 @@
 <?php
-if (! defined ( 'sugarEntry' ) || ! sugarEntry)
+if (! defined ( 'sugarEntry' ) || ! sugarEntry) {
     die ( 'Not A Valid Entry Point' ) ;
+}
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -97,8 +98,9 @@ class AbstractRelationships
         while ( list( $moduleName , $module ) = each($browser->modules) )
         {
             // do not include the submodules of Activities as already have the parent...
-            if (! $includeActivitiesSubmodules && in_array ( $module->module, self::$activities ))
-                continue ;
+            if (! $includeActivitiesSubmodules && in_array ( $module->module, self::$activities )) {
+                            continue ;
+            }
             $providedSubpanels = $module->getProvidedSubpanels();
             if ( $providedSubpanels !== false ) {
                 $relatableModules [ $module->module ] = $providedSubpanels;
@@ -111,8 +113,9 @@ class AbstractRelationships
 
     static function validSubpanel ($filename)
     {
-        if (! file_exists ( $filename ))
-            return false ;
+        if (! file_exists ( $filename )) {
+                    return false ;
+        }
         
         include $filename ;
         return (isset ( $subpanel_layout ) && (isset ( $subpanel_layout [ 'top_buttons' ] ) && isset ( $subpanel_layout [ 'list_fields' ] ))) ;
@@ -127,8 +130,9 @@ class AbstractRelationships
         $list = array ( ) ;
         foreach ( $this->relationships as $name => $relationship )
         {
-            if (! $relationship->deleted ())
-                $list [ $name ] = $name ;
+            if (! $relationship->deleted ()) {
+                            $list [ $name ] = $name ;
+            }
         }
         return $list ;
     }
@@ -172,8 +176,9 @@ class AbstractRelationships
             if ($relationship = $this->get ( $_REQUEST [ 'relationship_name' ] ))
             {
                 unset( $definition[ 'relationship_name' ] ) ; // in case the related modules have changed; this name is probably no longer appropriate
-                if (! $relationship->readonly ())
-                    $this->delete ( $_REQUEST [ 'relationship_name' ] ) ;
+                if (! $relationship->readonly ()) {
+                                    $this->delete ( $_REQUEST [ 'relationship_name' ] ) ;
+                }
         }
         }
         
@@ -298,8 +303,7 @@ class AbstractRelationships
         {
             $name = $basename . '_1' ;
             $suffix = 2 ;
-        }
-        else
+        } else
         {
             $name = $basename ;
             $suffix = 1 ;
@@ -351,9 +355,11 @@ class AbstractRelationships
                     {
                         $metadata = $relationship->$buildMethod () ;
                         
-                        if (count ( $metadata ) > 0) // don't clutter up the filesystem with empty files...
+                        if (count ( $metadata ) > 0) {
+                            // don't clutter up the filesystem with empty files...
                         {
                             $GLOBALS [ 'log' ]->debug ( get_class ( $this ) . ": BUILD is running METHOD $saveMethod" ) ;
+                        }
                             $installDef = $this->$saveMethod ( $basepath, $installDefPrefix, $name, $metadata ) ;
                             
                             // some save methods (e.g., saveRelateFieldDefinition) handle the installDefs internally and so return null
@@ -406,8 +412,9 @@ class AbstractRelationships
         	
         	$filename = "{$basepath}/language/{$definition['module']}.php" ;
     	
-	    	if (file_exists ( $filename ))
-	    		include ($filename);
+	    	if (file_exists ( $filename )) {
+	    		    		include ($filename);
+	    	}
 	    		
             
             //Check for app strings
@@ -415,12 +422,14 @@ class AbstractRelationships
                                       . print_r ( $definition, true ) ) ;
             if ($definition['module'] == 'application') {
             	$app_list_strings[$definition [ 'system_label' ]] = $definition [ 'display_label' ];
-            	foreach ($app_list_strings as $key => $val)
-            		$out .= override_value_to_string_recursive2('app_list_strings', $key, $val);
+            	foreach ($app_list_strings as $key => $val) {
+            	            		$out .= override_value_to_string_recursive2('app_list_strings', $key, $val);
+            	}
             } else {
             	$mod_strings[ $definition [ 'system_label' ]] = $definition [ 'display_label' ];
-            	foreach ($mod_strings as $key => $val)
-            		$out .= override_value_to_string_recursive2('mod_strings', $key, $val);
+            	foreach ($mod_strings as $key => $val) {
+            	            		$out .= override_value_to_string_recursive2('mod_strings', $key, $val);
+            	}
             }
             
             $fh = fopen ( $filename, 'w' ) ;

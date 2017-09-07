@@ -119,11 +119,13 @@ class MBRelationship
     function add ($rel)
     {
         // convert old format definition to new format
-        if (! isset ( $rel [ 'lhs_module' ] ))
-            $rel [ 'lhs_module' ] = $this->moduleName ;
+        if (! isset ( $rel [ 'lhs_module' ] )) {
+                    $rel [ 'lhs_module' ] = $this->moduleName ;
+        }
         $definition = AbstractRelationships::convertFromOldFormat ( $rel ) ;
-        if (! isset ( $definition ['relationship_type']))
-            $definition ['relationship_type'] = 'many-to-many';
+        if (! isset ( $definition ['relationship_type'])) {
+                    $definition ['relationship_type'] = 'many-to-many';
+        }
         // get relationship object from RelationshipFactory
         $relationship = RelationshipFactory::newRelationship ( $definition ) ;
         // add relationship to the set of relationships

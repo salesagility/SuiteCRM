@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -53,13 +55,15 @@ class CalendarDashlet extends Dashlet {
 		$this->isConfigurable = true; 
 		$this->hasScript = true;  
                 
-		if(empty($def['title'])) 
-			$this->title = $this->dashletStrings['LBL_TITLE'];
-		else 
-			$this->title = $def['title'];  
+		if(empty($def['title'])) {
+					$this->title = $this->dashletStrings['LBL_TITLE'];
+		} else {
+					$this->title = $def['title'];
+		}
 			
-		if(!empty($def['view']))
-			$this->view = $def['view'];
+		if(!empty($def['view'])) {
+					$this->view = $def['view'];
+		}
 
 		// seedBean is need to set the calendar icon
 		if($this->seedBean  = BeanFactory::newBean('Calendar')) {
@@ -73,8 +77,9 @@ class CalendarDashlet extends Dashlet {
     function display(){
 		ob_start();
 		
-		if(isset($GLOBALS['cal_strings']))
-			return parent::display() . "Only one Calendar dashlet is allowed.";
+		if(isset($GLOBALS['cal_strings'])) {
+					return parent::display() . "Only one Calendar dashlet is allowed.";
+		}
 			
 		require_once('modules/Calendar/Calendar.php');
 		require_once('modules/Calendar/CalendarDisplay.php');
@@ -83,8 +88,9 @@ class CalendarDashlet extends Dashlet {
 		global $cal_strings, $current_language;
 		$cal_strings = return_module_language($current_language, 'Calendar');
 		
-		if(!ACLController::checkAccess('Calendar', 'list', true))
-			ACLController::displayNoAccess(true);
+		if(!ACLController::checkAccess('Calendar', 'list', true)) {
+					ACLController::displayNoAccess(true);
+		}
 						
 		$cal = new Calendar($this->view);
 		$cal->dashlet = true;

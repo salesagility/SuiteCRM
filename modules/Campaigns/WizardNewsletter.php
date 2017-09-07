@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -80,7 +82,7 @@ $GLOBALS['log']->info("Campaign NewsLetter Wizard");
 
 if( (isset($_REQUEST['wizardtype'])  && $_REQUEST['wizardtype']==1)  ||  ($focus->campaign_type=='NewsLetter')){
     echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_NEWSLETTER WIZARD_TITLE'].$focus->name), true, false);
-}else{
+} else{
     echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_CAMPAIGN'].$focus->name), true, false);   
 }
 
@@ -89,9 +91,15 @@ $ss = new Sugar_Smarty();
 $ss->assign("MOD", $mod_strings);
 $ss->assign("APP", $app_strings);
 
-if (isset($_REQUEST['return_module'])) $ss->assign("RETURN_MODULE", $_REQUEST['return_module']);
-if (isset($_REQUEST['return_action'])) $ss->assign("RETURN_ACTION", $_REQUEST['return_action']);
-if (isset($_REQUEST['return_id'])) $ss->assign("RETURN_ID", $_REQUEST['return_id']);
+if (isset($_REQUEST['return_module'])) {
+    $ss->assign("RETURN_MODULE", $_REQUEST['return_module']);
+}
+if (isset($_REQUEST['return_action'])) {
+    $ss->assign("RETURN_ACTION", $_REQUEST['return_action']);
+}
+if (isset($_REQUEST['return_id'])) {
+    $ss->assign("RETURN_ID", $_REQUEST['return_id']);
+}
 // handle Create $module then Cancel
 if (empty($_REQUEST['return_id'])) {
     $ss->assign("RETURN_ACTION", 'index');
@@ -120,10 +128,10 @@ $campaign_type = 'newsletter';
 if( (isset($_REQUEST['wizardtype'])  && $_REQUEST['wizardtype']==1)  ||  ($focus->campaign_type=='NewsLetter')){
     $campaign_type = 'newsletter';
     $ss->assign("CAMPAIGN_DIAGNOSTIC_LINK", diagnose());    
-}elseif( (isset($_REQUEST['wizardtype'])  && $_REQUEST['wizardtype']==2)  || ($focus->campaign_type=='Email') ){
+} elseif( (isset($_REQUEST['wizardtype'])  && $_REQUEST['wizardtype']==2)  || ($focus->campaign_type=='Email') ){
     $campaign_type = 'email';
     $ss->assign("CAMPAIGN_DIAGNOSTIC_LINK", diagnose());
-}else{
+} else{
     $campaign_type = 'general';
 }
 
@@ -163,8 +171,12 @@ $ss->assign("CAMP_CONTENT", $focus->content);
 $ss->assign("CAMP_NAME", $focus->name);
 $ss->assign("CAMP_RECORD", $focus->id);
 $ss->assign("CAMP_IMPRESSIONS", $focus->impressions);
-if (empty($focus->assigned_user_id) && empty($focus->id))  $focus->assigned_user_id = $current_user->id;
-if (empty($focus->assigned_name) && empty($focus->id))  $focus->assigned_user_name = $current_user->user_name;
+if (empty($focus->assigned_user_id) && empty($focus->id)) {
+    $focus->assigned_user_id = $current_user->id;
+}
+if (empty($focus->assigned_name) && empty($focus->id)) {
+    $focus->assigned_user_name = $current_user->user_name;
+}
 $ss->assign("ASSIGNED_USER_OPTIONS", get_select_options_with_id(get_user_array(TRUE, "Active", $focus->assigned_user_id), $focus->assigned_user_id));
 //$ss->assign("ASSIGNED_USER_NAME", $focus->assigned_user_name);
 
@@ -172,10 +184,11 @@ $focus->list_view_parse_additional_sections($ss);
 
 $ss->assign("ASSIGNED_USER_ID", $focus->assigned_user_id );
 
-if((!isset($focus->status)) && (!isset($focus->id)))
+if((!isset($focus->status)) && (!isset($focus->id))) {
     $ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['campaign_status_dom'], 'Planning'));
-else
+} else {
     $ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['campaign_status_dom'], $focus->status));
+}
 
 //hide frequency options if this is not a newsletter
 if($campaign_type == 'newsletter'){
@@ -183,10 +196,10 @@ if($campaign_type == 'newsletter'){
     $ss->assign("FREQUENCY_LABEL", $mod_strings['LBL_CAMPAIGN_FREQUENCY']);
     if((!isset($focus->frequency)) && (!isset($focus->id))){
         $ss->assign("FREQ_OPTIONS", get_select_options_with_id($app_list_strings['newsletter_frequency_dom'], 'Monthly'));
-    }else{
+    } else{
         $ss->assign("FREQ_OPTIONS", get_select_options_with_id($app_list_strings['newsletter_frequency_dom'], $focus->frequency));
     }
-}else{
+} else{
     $ss->assign("HIDE_FREQUENCY_IF_NEWSLETTER", "input type='hidden'");
     $ss->assign("FREQUENCY_LABEL", '&nbsp;');
 }
@@ -196,12 +209,11 @@ $currency = new ListCurrency();
 if(isset($focus->currency_id) && !empty($focus->currency_id)){
     $selectCurrency = $currency->getSelectOptions($focus->currency_id);
     $ss->assign("CURRENCY", $selectCurrency);
-}
-else if($current_user->getPreference('currency') && !isset($focus->id))
+} else if($current_user->getPreference('currency') && !isset($focus->id))
 {
     $selectCurrency = $currency->getSelectOptions($current_user->getPreference('currency'));
     $ss->assign("CURRENCY", $selectCurrency);
-}else{
+} else{
 
     $selectCurrency = $currency->getSelectOptions();
     $ss->assign("CURRENCY", $selectCurrency);
@@ -233,7 +245,7 @@ if($campaign_type == 'general'){
     foreach($OptionsArr as $key=>$val){
         if($val =='Newsletter' || $val =='Email' || $val =='' ){
             //do not add   
-        }else{
+        } else{
             $myTypeOptionsArr[$key] = $val;
         }
     }
@@ -245,7 +257,7 @@ if($campaign_type == 'general'){
         //if the selected flag is set to true, then just populate
         if($selected){
             $type_option_html .="<option value='$optionKey' >$optionName</option>";
-        }else{//if not selected yet, check to see if this option should be selected
+        } else{//if not selected yet, check to see if this option should be selected
             //if the campaign type is not empty, then select the retrieved type
             if(!empty($focus->campaign_type)){
                 //check to see if key matches campaign type
@@ -254,11 +266,11 @@ if($campaign_type == 'general'){
                     $type_option_html .="<option value='$optionKey' selected>$optionName</option>";
                     //mark as selected for next time
                     $selected=true;
-                }else{
+                } else{
                     //key does not match, just populate
                     $type_option_html .="<option value='$optionKey' >$optionName</option>";
                 }
-            }else{
+            } else{
             //since the campaign type is empty, then select first one                
                 $type_option_html .="<option value='$optionKey' selected>$optionName</option>";    
                 //mark as selected for next time
@@ -269,12 +281,12 @@ if($campaign_type == 'general'){
     //assign the modified dropdown for general campaign creation
     $ss->assign("CAMPAIGN_TYPE_OPTIONS", $type_option_html);
     $ss->assign("SHOULD_TYPE_BE_DISABLED", "select");    
-}elseif($campaign_type == 'email'){
+} elseif($campaign_type == 'email'){
     //Assign Email as type of campaign being created an disable the select widget
     $ss->assign("CAMPAIGN_TYPE_OPTIONS", $mod_strings['LBL_EMAIL']);
     $ss->assign("SHOULD_TYPE_BE_DISABLED", "input type='hidden' value='Email'");
     $ss->assign("HIDE_CAMPAIGN_TYPE", true);
-}else{
+} else{
     //Assign NewsLetter as type of campaign being created an disable the select widget
     $ss->assign("CAMPAIGN_TYPE_OPTIONS", $mod_strings['LBL_NEWSLETTER']);
     $ss->assign("SHOULD_TYPE_BE_DISABLED", "input type='hidden' value='NewsLetter'");
@@ -302,7 +314,7 @@ global $odd_bg, $even_bg, $hilite_bg;
         $ct_focus = new CampaignTracker();
         $ct_focus->retrieve($trkr_id);
       if(isset($ct_focus->tracker_name) && !empty($ct_focus->tracker_name)){
-            if($ct_focus->is_optout){$opt = 'checked';}else{$opt = '';}
+            if($ct_focus->is_optout){$opt = 'checked';} else{$opt = '';}
             $trkr_html .= "<div id='existing_trkr".$trkr_count."'> <table width='100%' border='0' cellspacing='0' cellpadding='0'>" ;
             $trkr_html .= "<tr class='evenListRowS1'><td width='15%'><input name='wiz_step3_is_optout".$trkr_count."' title='".$mod_strings['LBL_EDIT_OPT_OUT'] . $trkr_count ."' id='existing_is_optout". $trkr_count ."' class='checkbox' type='checkbox' $opt  /><input name='wiz_step3_id".$trkr_count."' value='".$ct_focus->id."' id='existing_tracker_id". $trkr_count ."'type='hidden''/></td>";
             $trkr_html .= "<td width='40%'> <input id='existing_tracker_name". $trkr_count ."' type='text' size='20' maxlength='255' name='wiz_step3_tracker_name". $trkr_count ."' title='".$mod_strings['LBL_EDIT_TRACKER_NAME']. $trkr_count ."' value='".$ct_focus->tracker_name."' ></td>";
@@ -317,7 +329,7 @@ global $odd_bg, $even_bg, $hilite_bg;
     }
     
     $trkr_html .= "<div id='no_trackers'></div>";
-    }else{
+    } else{
         $trkr_html .= "<div id='no_trackers'><table width='100%' border='0' cellspacing='0' cellpadding='0'><tr class='evenListRowS1'><td>".$mod_strings['LBL_NONE']."</td></tr></table></div>";
     }
     $ss->assign('EXISTING_TRACKERS', $trkr_html);
@@ -470,7 +482,7 @@ if(count($prospect_lists)>0){
 
 
 
-}else{
+} else{
     //this is not a newlsetter campaign, so fill in target list table
     //create array for javascript, this will help to display the option text, not the value
     $dom_txt =' ';
@@ -498,7 +510,7 @@ if(count($prospect_lists)>0){
         }
 
         $trgt_html  .= "<div id='no_targets'></div>";
-    }else{
+    } else{
         $trgt_html  .= "<div id='no_targets'><table width='100%' border='0' cellspacing='0' cellpadding='0'><tr class='evenListRowS1'><td>".$mod_strings['LBL_NONE']."</td></tr></table></div>";
 
     }
@@ -585,12 +597,11 @@ if($campaign_type == 'general'){
     $ss->assign('NAV_ITEMS',create_wiz_menu_items($_steps,'campaign',$mrkt_string,$summ_url, 'dotlist'));
     $ss->assign('HIDE_CONTINUE','hidden');
 
-}elseif($campaign_type == 'email'){
+} elseif($campaign_type == 'email'){
     $steps = create_email_steps();
     if($focus->id) {
         $summ_url = "index.php?action=WizardHome&module=Campaigns&return_id=" . $focus->id . "&record=" . $focus->id;
-    }
-    else {
+    } else {
         $summ_url = false;
     }
     foreach($steps as $key => $step) {
@@ -601,13 +612,12 @@ if($campaign_type == 'general'){
     $template_id = isset($_REQUEST['template_id']) && $_REQUEST['template_id'] ? $_REQUEST['template_id'] : null;
     $ss->assign('NAV_ITEMS',create_wiz_menu_items($_steps,'email',$mrkt_string,$summ_url, 'dotlist', $campaign_id, $marketing_id, $template_id));
     $ss->assign('HIDE_CONTINUE','submit');
-}else{
+} else{
     $steps = create_newsletter_steps();
 
     if($focus->id) {
         $summ_url = "index.php?action=WizardHome&module=Campaigns&return_id=" . $focus->id . "&record=" . $focus->id;
-    }
-    else {
+    } else {
         $summ_url = false;
     }
     foreach($steps as $key => $step) {
@@ -717,8 +727,7 @@ function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null
             preg_match('/\bhref=\'([^\']*)/', $mrkt_string, $matches);
             if(isset($matches[1])) {
                 $marketingLink = $matches[1] . ($matches[1] ? '&jump=2' : false);
-            }
-            else {
+            } else {
                 $marketingLink = false;
             }
 
@@ -731,8 +740,7 @@ function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null
 
         $nav_html = new DotListWizardMenu($mod_strings, $steps, true);
 
-    }
-    else {
+    } else {
         $nav_html = '<table border="0" cellspacing="0" cellpadding="0" width="100%" >';
         if(isset($steps)  && !empty($steps)){
             $i=1;
@@ -745,7 +753,7 @@ function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null
             $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+1).">$mrkt_string</div></td></tr>";
             $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+2).">".$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL']."</div></li>";
             $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+3).">".$summ_url."</div></td></tr>";
-        }else{
+        } else{
             $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+1).">".$summ_url."</div></td></tr>";
         }
 

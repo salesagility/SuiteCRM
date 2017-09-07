@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -53,10 +55,11 @@ global $locale;
 $return_module = isset($_REQUEST['return_module']) ? $_REQUEST['return_module'] : '';
 $return_action = isset($_REQUEST['return_action']) ? $_REQUEST['return_action'] : '';
 $return_id = isset($_REQUEST['return_id']) ? $_REQUEST['return_id'] : '';
-if(!empty($return_module))
+if(!empty($return_module)) {
     $cancel_location = "index.php?module=".$return_module."&action=".$return_action."&record=".$return_id;
-else
+} else {
     $cancel_location = "index.php?module=Users&action=index";
+}
 
 echo "<h2 class='moduleTitle' style=\"margin-bottom:0px;\">{$mod_strings_users['LBL_REASS_SCRIPT_TITLE']}</h2>";
 
@@ -141,8 +144,7 @@ if(!isset($_SESSION['reassignRecords']['assignedModuleListCache'])){
 	foreach($beanListDup as $m => $p){
 		if(empty($beanFiles[$p])){
 			unset($beanListDup[$m]);
-		}
-		else{
+		} else{
 			require_once($beanFiles[$p]);
 			$obj = new $p();
 			if( !isset($obj->field_defs['assigned_user_id']) ||
@@ -175,9 +177,10 @@ $beanListFlip = array_flip($_SESSION['reassignRecords']['assignedModuleListCache
 asort($beanListFlip);
 $selected = array();
 if(!empty($_SESSION['reassignRecords']['modules'])){
-	foreach($_SESSION['reassignRecords']['modules'] as $mod => $arr)
-		$selected[] = $mod;
-}
+	foreach($_SESSION['reassignRecords']['modules'] as $mod => $arr) {
+			$selected[] = $mod;
+	}
+	}
 echo get_select_options_with_id($beanListFlip, $selected);
 ?>
 </select>
@@ -242,8 +245,7 @@ foreach($moduleFilters as $modFilter => $fieldArray){
 
 <?php
 ///////////////////// END STEP 1 - Select users/modules /////////////////////////
-}
-else if(!isset($_GET['execute'])){
+} else if(!isset($_GET['execute'])){
 ///////////////////// BEGIN STEP 2 - Confirm Selections /////////////////////////
 	if(empty($_POST['modules'])){
 		sugar_die($mod_strings_users['ERR_REASS_SELECT_MODULE']);
@@ -260,10 +262,12 @@ else if(!isset($_GET['execute'])){
 	$query = "select user_name, id from users where id in ('{$_POST['fromuser']}', '{$_POST['touser']}')";
 	$res = $GLOBALS['db']->query($query, true);
 	while($row = $GLOBALS['db']->fetchByAssoc($res)){
-		if($row['id'] == $_POST['fromuser'])
-			$fromusername = $row['user_name'];
-		if($row['id'] == $_POST['touser'])
-			$tousername = $row['user_name'];
+		if($row['id'] == $_POST['fromuser']) {
+					$fromusername = $row['user_name'];
+		}
+		if($row['id'] == $_POST['touser']) {
+					$tousername = $row['user_name'];
+		}
 	}
         echo "{$mod_strings_users['LBL_REASS_DESC_PART2']}\n";
 	echo "<form action=\"index.php?module=Users&action=reassignUserRecords&execute=true\" method=post>\n";
@@ -312,8 +316,9 @@ else if(!isset($_GET['execute'])){
 		if(isset($moduleFilters[$p_module]['fields']) && is_array($moduleFilters[$p_module]['fields'])){
 			$custom_added = false;
 			foreach($moduleFilters[$p_module]['fields'] as $meta){
-				if(!empty($_POST[$meta['name']]))
-					$_SESSION['reassignRecords']['filters'][$meta['name']] = $_POST[$meta['name']];
+				if(!empty($_POST[$meta['name']])) {
+									$_SESSION['reassignRecords']['filters'][$meta['name']] = $_POST[$meta['name']];
+				}
 				$is_custom = isset($meta['custom_table']) && $meta['custom_table'] == true;
 				if($is_custom && !$custom_added){
 					$q_tables .= "inner join {$object->table_name}_cstm on {$object->table_name}.id = {$object->table_name}_cstm.id_c ";
@@ -332,8 +337,9 @@ else if(!isset($_GET['execute'])){
 						$in_string = "";
 						$empty_check = "";
 						foreach($_POST[$meta['name']] as $onevalue){
-							if(empty($onevalue))
-								$empty_check .= " OR {$object->table_name}{$addcstm}.{$meta['dbname']} is null ";
+							if(empty($onevalue)) {
+															$empty_check .= " OR {$object->table_name}{$addcstm}.{$meta['dbname']} is null ";
+							}
 							$in_string .= "'$onevalue', ";
 						}
 						$in_string = substr($in_string, 0, count($in_string) - 3);
@@ -387,8 +393,9 @@ else if(isset($_GET['execute']) && $_GET['execute'] == true){
 	foreach($_SESSION['reassignRecords']['modules'] as $module => $queries){
 		$p_module = $beanListFlip[$module];
 		$workflow = false;
-		if(isset($_POST[$module."_workflow"]) && $_POST[$module."_workflow"] = "on")
-			$workflow = true;
+		if(isset($_POST[$module."_workflow"]) && $_POST[$module."_workflow"] = "on") {
+					$workflow = true;
+		}
 
 		$query = $workflow ? $queries['query'] : $queries['update'];
 
@@ -403,8 +410,7 @@ else if(isset($_GET['execute']) && $_GET['execute'] == true){
 		if(! $workflow){
 			$affected_rows = $GLOBALS['db']->getAffectedRowCount($res);
 			echo "{$mod_strings_users['LBL_UPDATE_FINISH']}: $affected_rows {$mod_strings_users['LBL_AFFECTED']}<BR>\n";
-		}
-		else{
+		} else{
 			$successarr = array();
 			$failarr = array();
 
@@ -426,17 +432,14 @@ else if(isset($_GET['execute']) && $_GET['execute'] == true){
 					$linkname = "record with id {$bean->id}";
 					if(!empty($bean->name)){
 						$linkname = $bean->name;
-					}
-					else if(!empty($bean->last_name)){
+					} else if(!empty($bean->last_name)){
 						$linkname = $locale->getLocaleFormattedName($bean->first_name, $bean->last_name);
-					}
-					else if(!empty($bean->document_name)){
+					} else if(!empty($bean->document_name)){
 						$linkname = $bean->document_name;
 					}
 					$successstr = "{$mod_strings_users['LBL_REASS_SUCCESS_ASSIGN']} {$bean->object_name} \"<i><a href=\"index.php?module={$bean->module_dir}&action=DetailView&record={$bean->id}\">$linkname</a></i>\" {$mod_strings_users['LBL_REASS_FROM']} $fromusername {$mod_strings_users['LBL_REASS_TO']} $tousername";
 					$successarr[] = $successstr;
-				}
-				else{
+				} else{
 					$failarr[] = "{$mod_strings_users['LBL_REASS_FAILED_SAVE']} \"<i><a href=\"index.php?module={$bean->module_dir}&action=DetailView&record={$bean->id}\">$linkname</a></i>\".";
 				}
 			}
@@ -446,17 +449,18 @@ else if(isset($_GET['execute']) && $_GET['execute'] == true){
 				foreach($successarr as $ord){
 					echo "$ord\n<BR>\n";
 				}
-				if(empty($successarr))
-					echo "{$mod_strings_users['LBL_REASS_NONE']}\n<BR>\n";
+				if(empty($successarr)) {
+									echo "{$mod_strings_users['LBL_REASS_NONE']}\n<BR>\n";
+				}
 
 				echo "<h5>{$mod_strings_users['LBL_REASS_THE_FOLLOWING']} {$app_list_strings['moduleList'][$p_module]} {$mod_strings_users['LBL_REASS_CANNOT_PROCESS']}</h5>\n";
 				foreach($failarr as $failure){
 					echo $failure."\n<BR>\n";
 				}
-				if(empty($failarr))
-					echo "{$mod_strings_users['LBL_REASS_NONE']}\n<BR>\n";
-			}
-			else{
+				if(empty($failarr)) {
+									echo "{$mod_strings_users['LBL_REASS_NONE']}\n<BR>\n";
+				}
+			} else{
 				echo "{$mod_strings_users['LBL_REASS_UPDATE_COMPLETE']}\n<BR>\n";
 				echo "&nbsp;&nbsp;".count($successarr)." {$mod_strings_users['LBL_REASS_SUCCESSFUL']}\n<BR>\n";
 				echo "&nbsp;&nbsp;".count($failarr)." {$mod_strings_users['LBL_REASS_FAILED']}\n";

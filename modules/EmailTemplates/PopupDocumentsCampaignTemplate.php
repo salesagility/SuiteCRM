@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -119,8 +121,11 @@ $form->assign('THEME', $theme);
 $form->assign('MODULE_NAME', $currentModule);
 $form->assign('NAME', $name);
 $form->assign('DOCUMENT_NAME', $document_name);
-if(isset($_REQUEST['target'])) $form->assign('DOCUMENT_TARGET', $_REQUEST['target']);
-else $form->assign('DOCUMENT_TARGET', '');
+if(isset($_REQUEST['target'])) {
+    $form->assign('DOCUMENT_TARGET', $_REQUEST['target']);
+} else {
+    $form->assign('DOCUMENT_TARGET', '');
+}
 
 $form->assign('DOCUMENT_REVISION_ID', $document_revision_id);
 

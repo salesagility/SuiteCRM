@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point'); 
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -89,15 +91,19 @@ require_once('modules/DynamicFields/DynamicField.php');
 			$the_field->set($fieldDef);
 				
 				if(!isset($fields[$col]) && $col != 'id_c'){
-					if(!$simulate)$db->query("ALTER TABLE $mod->table_name" . "_cstm DROP COLUMN $col");
+					if(!$simulate) {
+					    $db->query("ALTER TABLE $mod->table_name" . "_cstm DROP COLUMN $col");
+					}
 					unset($fields[$col]);
 					echo "Dropping Column $col from $mod->table_name" . "_cstm for module $the_module<br>";
-				}	else{
+				} else{
 					if($col != 'id_c'){
 					if(trim($the_field->get_db_type()) != trim($type)){
 						
 					echo "Fixing Column Type for $col changing $type to ". $the_field->get_db_type() . "<br>";
-					if(!$simulate)$db->query($the_field->get_db_modify_alter_table($mod->table_name . '_cstm'));		
+					if(!$simulate) {
+					    $db->query($the_field->get_db_modify_alter_table($mod->table_name . '_cstm'));
+					}
 					}
 					}
 					

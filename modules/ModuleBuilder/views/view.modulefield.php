@@ -66,14 +66,17 @@ class ViewModulefield extends SugarView
         )
     {
         $fv = new FieldViewer();
-        if(empty($_REQUEST['field'])&& !empty($_REQUEST['name']))$_REQUEST['field'] = $_REQUEST['name'];
+        if(empty($_REQUEST['field'])&& !empty($_REQUEST['name'])) {
+            $_REQUEST['field'] = $_REQUEST['name'];
+        }
         $field_name = '';
-        if(!empty($this->view_object_map['field_name']))
-            $field_name = $this->view_object_map['field_name'];
-        elseif(!empty($_REQUEST['field']))
-            $field_name = $_REQUEST['field'];
-        else
-            $field_name = '';
+        if(!empty($this->view_object_map['field_name'])) {
+                    $field_name = $this->view_object_map['field_name'];
+        } elseif(!empty($_REQUEST['field'])) {
+                    $field_name = $_REQUEST['field'];
+        } else {
+                    $field_name = '';
+        }
 
         $action = 'saveField'; // tyoung bug 17606: default action is to save as a dynamic field; but for standard OOB
                                // fields we override this so don't create a new dynamic field instead of updating the existing field
@@ -81,16 +84,18 @@ class ViewModulefield extends SugarView
         $isClone = false;
         if(!empty($this->view_object_map['is_clone']) && $this->view_object_map['is_clone']
             && (strcmp($field_name, "name") != 0)   // bug #35767, do not allow cloning of name field
-            )
-            $isClone = true;
+            ) {
+                    $isClone = true;
+        }
 		/*
 		$field_types =  array('varchar'=>'YourField', 'int'=>'Integer', 'float'=>'Decimal','bool'=>'Checkbox','enum'=>'DropDown',
 				'date'=>'Date', 'phone' => 'Phone', 'currency' => 'Currency', 'html' => 'HTML', 'radioenum' => 'Radio',
 				'relate' => 'Relate', 'address' => 'Address', 'text' => 'TextArea', 'url' => 'Link');
 		*/
 		$field_types = $GLOBALS['mod_strings']['fieldTypes'];
-		if (isset($field_types['encrypt']))
-		  unset($field_types['encrypt']);
+		if (isset($field_types['encrypt'])) {
+				  unset($field_types['encrypt']);
+		}
         $field_name_exceptions = array(
             //bug 22264: Field name must not be an SQL keyword.
             //Taken from SQL Server's list of reserved keywords; http://msdn.microsoft.com/en-us/library/aa238507(SQL.80).aspx
@@ -169,12 +174,13 @@ class ViewModulefield extends SugarView
             }
           
             if(empty($vardef['name'])){
-                if(!empty($_REQUEST['type']))
-                    $vardef['type'] = $_REQUEST['type'];
+                if(!empty($_REQUEST['type'])) {
+                                    $vardef['type'] = $_REQUEST['type'];
+                }
                     $fv->ss->assign('hideLevel', 0);
-            }elseif(isset($vardef['custom_module'])){
+            } elseif(isset($vardef['custom_module'])){
                 $fv->ss->assign('hideLevel', 2);
-            }else{
+            } else{
                 $action = 'saveSugarField'; // tyoung - for OOB fields we currently only support modifying the label
                 $fv->ss->assign('hideLevel', 3);
             }
@@ -202,10 +208,14 @@ class ViewModulefield extends SugarView
             	}
                 if (!empty($def['type']) && $def['type'] == "enum" && $field != $vardef['name'])
                 {
-                    if(!empty($def['studio']) && $def['studio'] == "false") continue; //bug51866 
+                    if(!empty($def['studio']) && $def['studio'] == "false") {
+                        continue;
+                    }
+                    //bug51866 
                     $enumFields[$field] = translate($def['vname'], $moduleName);
-                    if (substr($enumFields[$field], -1) == ":")
-                        $enumFields[$field] = substr($enumFields[$field], 0, strlen($enumFields[$field]) - 1);
+                    if (substr($enumFields[$field], -1) == ":") {
+                                            $enumFields[$field] = substr($enumFields[$field], 0, strlen($enumFields[$field]) - 1);
+                    }
                 }
             }
             $fv->ss->assign( 'allowAutoInc', $allowAutoInc);   
@@ -215,8 +225,9 @@ class ViewModulefield extends SugarView
                 $fv->ss->assign('lbl_value', htmlentities(translate($vardef['vname'], $moduleName), ENT_QUOTES, 'UTF-8'));
             }
             $fv->ss->assign('module', $module);
-            if(empty($module->mbvardefs->vardefs['fields']['parent_name']) || (isset($vardef['type']) && $vardef['type'] == 'parent'))
-				$field_types['parent'] = $GLOBALS['mod_strings']['parent'];
+            if(empty($module->mbvardefs->vardefs['fields']['parent_name']) || (isset($vardef['type']) && $vardef['type'] == 'parent')) {
+            				$field_types['parent'] = $GLOBALS['mod_strings']['parent'];
+            }
 
             $edit_or_add = 'editField' ;
 
@@ -238,14 +249,16 @@ class ViewModulefield extends SugarView
             }
 
             if(empty($vardef['name'])){
-                if(!empty($_REQUEST['type']))$vardef['type'] = $_REQUEST['type'];
+                if(!empty($_REQUEST['type'])) {
+                    $vardef['type'] = $_REQUEST['type'];
+                }
                     $fv->ss->assign('hideLevel', 0);
-            }else{
+            } else{
                 if(!empty($module->mbvardefs->vardef['fields'][$vardef['name']])){
                     $fv->ss->assign('hideLevel', 1);
-                }elseif(isset($vardef['custom_module'])){
+                } elseif(isset($vardef['custom_module'])){
                     $fv->ss->assign('hideLevel', 2);
-                }else{
+                } else{
                     $fv->ss->assign('hideLevel', 3); // tyoung bug 17350 - effectively mark template derived fields as readonly
                 }
             }
@@ -262,10 +275,12 @@ class ViewModulefield extends SugarView
             $fv->ss->assign('package', $package);
             $fv->ss->assign('MB','1');
 
-            if(isset($vardef['vname']))
-                $fv->ss->assign('lbl_value', htmlentities($module->getLabel('en_us',$vardef['vname']), ENT_QUOTES, 'UTF-8'));
-			if(empty($module->mbvardefs->vardefs['fields']['parent_name']) || (isset($vardef['type']) && $vardef['type'] == 'parent'))
-				$field_types['parent'] = $GLOBALS['mod_strings']['parent'];
+            if(isset($vardef['vname'])) {
+                            $fv->ss->assign('lbl_value', htmlentities($module->getLabel('en_us',$vardef['vname']), ENT_QUOTES, 'UTF-8'));
+            }
+			if(empty($module->mbvardefs->vardefs['fields']['parent_name']) || (isset($vardef['type']) && $vardef['type'] == 'parent')) {
+							$field_types['parent'] = $GLOBALS['mod_strings']['parent'];
+			}
 
             $enumFields = array();
             if (!empty($module->mbvardefs->vardefs['fields']))
@@ -276,8 +291,9 @@ class ViewModulefield extends SugarView
                     {
                         $enumFields[$field] = isset($module->mblanguage->strings[$current_language][$def['vname']]) ?
                             $this->mbModule->mblanguage->strings[$current_language][$def['vname']] : translate($field);
-                        if (substr($enumFields[$field], -1) == ":")
-                            $enumFields[$field] = substr($enumFields[$field], 0, strlen($enumFields[$field]) -1);
+                        if (substr($enumFields[$field], -1) == ":") {
+                                                    $enumFields[$field] = substr($enumFields[$field], 0, strlen($enumFields[$field]) -1);
+                        }
                     }
                 }
             }
@@ -302,9 +318,11 @@ class ViewModulefield extends SugarView
 		}
 		
         if((!empty($vardef['studio']) && is_array($vardef['studio']) && !empty($vardef['studio']['no_duplicate']) && $vardef['studio']['no_duplicate'] == true)
-           || (strcmp($field_name, "name") == 0) || (isset($vardef['type']) && $vardef['type'] == 'name')) // bug #35767, do not allow cloning of name field
+           || (strcmp($field_name, "name") == 0) || (isset($vardef['type']) && $vardef['type'] == 'name')) {
+            // bug #35767, do not allow cloning of name field
             {
                $fv->ss->assign('no_duplicate', true);
+        }
             }
 
         $fv->ss->assign('action',$action);

@@ -1,6 +1,7 @@
 <?php
-if (! defined ( 'sugarEntry' ) || ! sugarEntry)
+if (! defined ( 'sugarEntry' ) || ! sugarEntry) {
     die ( 'Not A Valid Entry Point' ) ;
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -52,10 +53,11 @@ class ViewDashlet extends ViewListView
     {
         $this->editModule = $_REQUEST [ 'view_module' ] ;
         $this->editLayout = $_REQUEST [ 'view' ] ;
-        if(isset ( $_REQUEST [ 'view_package' ] ) && ! empty ( $_REQUEST [ 'view_package' ] ))
-            $this->editPackage = $_REQUEST [ 'view_package' ];
-        else
-            $this->editPackage = null;
+        if(isset ( $_REQUEST [ 'view_package' ] ) && ! empty ( $_REQUEST [ 'view_package' ] )) {
+                    $this->editPackage = $_REQUEST [ 'view_package' ];
+        } else {
+                    $this->editPackage = null;
+        }
 
         $this->fromModuleBuilder = isset ( $_REQUEST [ 'MB' ] ) || (isset($_REQUEST['view_package']) && $_REQUEST['view_package'] && $_REQUEST['view_package'] != 'studio') ;
 
@@ -121,7 +123,7 @@ class ViewDashlet extends ViewListView
 
             $ViewLabel = ($this->editLayout == MB_DASHLET) ? 'LBL_DASHLETLISTVIEW' : 'LBL_DASHLETSEARCHVIEW';
             $ajax->addCrumb ( translate ($ViewLabel, 'ModuleBuilder' ), '' ) ;
-        }else{
+        } else{
             $ajax->addCrumb ( translate($this->editModule), 'ModuleBuilder.getContent("module=ModuleBuilder&action=module&view_module=' . $this->editModule . '")' ) ;
             $ajax->addCrumb ( translate('LBL_LAYOUTS', 'ModuleBuilder'), 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&layouts=1&view_module=' . $this->editModule . '")');
             $ajax->addCrumb ( translate('LBL_DASHLET', 'ModuleBuilder'), 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view=dashlet&view_module=' . $this->editModule . '")' );
@@ -182,8 +184,9 @@ class ViewDashlet extends ViewListView
 
 
         $histaction = "ModuleBuilder.history.browse(\"{$this->editModule}\", \"{$this->editLayout}\")" ;
-        if (isset($this->searchlayout))
-            $histaction = "ModuleBuilder.history.browse(\"{$this->editModule}\", \"{$this->editLayout}\", \"{$this->searchlayout}\")" ;
+        if (isset($this->searchlayout)) {
+                    $histaction = "ModuleBuilder.history.browse(\"{$this->editModule}\", \"{$this->editLayout}\", \"{$this->searchlayout}\")" ;
+        }
 
         $buttons = array ( ) ;
         if (! $this->fromModuleBuilder)
@@ -221,10 +224,11 @@ class ViewDashlet extends ViewListView
     {
         global $app_list_strings ;
 
-        if ($this->fromModuleBuilder)
-            $title = $this->editModule ;
-        else
-            $title =  $app_list_strings [ 'moduleList' ] [ $this->editModule ] ;
+        if ($this->fromModuleBuilder) {
+                    $title = $this->editModule ;
+        } else {
+                    $title =  $app_list_strings [ 'moduleList' ] [ $this->editModule ] ;
+        }
         
         return $GLOBALS [ 'mod_strings' ] [ 'LBL_LISTVIEW_EDIT' ] . ':&nbsp;' . $title ;
     }

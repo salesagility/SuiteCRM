@@ -87,12 +87,24 @@
 		$row['id'] = '';
 		$row['parent_id'] = $invoice->id;
 		$row['parent_type'] = 'AOS_Invoices';
-		if($row['total_amt'] != null) $row['total_amt'] = format_number($row['total_amt']);
-        if($row['discount_amount'] != null) $row['discount_amount'] = format_number($row['discount_amount']);
-        if($row['subtotal_amount'] != null) $row['subtotal_amount'] = format_number($row['subtotal_amount']);
-        if($row['tax_amount'] != null) $row['tax_amount'] = format_number($row['tax_amount']);
-        if($row['subtotal_tax_amount'] != null) $row['subtotal_tax_amount'] = format_number($row['subtotal_tax_amount']);
-        if($row['total_amount'] != null) $row['total_amount'] = format_number($row['total_amount']);
+		if($row['total_amt'] != null) {
+		    $row['total_amt'] = format_number($row['total_amt']);
+		}
+        if($row['discount_amount'] != null) {
+            $row['discount_amount'] = format_number($row['discount_amount']);
+        }
+        if($row['subtotal_amount'] != null) {
+            $row['subtotal_amount'] = format_number($row['subtotal_amount']);
+        }
+        if($row['tax_amount'] != null) {
+            $row['tax_amount'] = format_number($row['tax_amount']);
+        }
+        if($row['subtotal_tax_amount'] != null) {
+            $row['subtotal_tax_amount'] = format_number($row['subtotal_tax_amount']);
+        }
+        if($row['total_amount'] != null) {
+            $row['total_amount'] = format_number($row['total_amount']);
+        }
 		$group_invoice = new AOS_Line_Item_Groups();
 		$group_invoice->populateFromRow($row);
 		$group_invoice->save();

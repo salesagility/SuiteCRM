@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 	global $db;
 	 
@@ -29,16 +31,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                     
                     $url = $event->accept_redirect;
                     header('Location: ' . $url);    
-                }
-                else{
+                } else{
                     echo 'Thank you for accepting';
                 }   
-    		}
-    		else {
+    		} else {
     			echo 'You have already responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
     		}	
-    	}
-    	else if($response == 'decline'){
+    	} else if($response == 'decline'){
     		//check to see if they have already responded to the email
             $check_q = 'SELECT email_responded FROM fp_events_contacts_c WHERE fp_events_contactsfp_events_ida="'.$event->id.'" AND fp_events_contactscontacts_idb="'.$delegate_id.'"';
              $check = $db->getOne($check_q);
@@ -52,12 +51,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                     $url = $event->decline_redirect;
                     header('Location: ' . $url);    
                     
-                }
-                else{
+                } else{
                     echo 'Thank you for declining';
                 }
-    		}
-    		else {
+    		} else {
     			echo 'You have already responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
     		}
     	}
@@ -79,16 +76,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                     
                     $url = $event->accept_redirect;
                     header('Location: ' . $url);    
-                }
-                else{
+                } else{
                     echo 'Thank you for accepting';
                 }   
-            }
-            else {
+            } else {
                 echo 'You have already responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
             }   
-    	}
-    	else if($response == 'decline'){
+    	} else if($response == 'decline'){
             //check to see if they have already responded to the email
             $check_q = 'SELECT email_responded FROM fp_events_prospects_1_c WHERE fp_events_prospects_1fp_events_ida="'.$event->id.'" AND fp_events_prospects_1prospects_idb="'.$delegate_id.'"';
              $check = $db->getOne($check_q);
@@ -101,12 +95,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                     $url = $event->decline_redirect;
                     header('Location: ' . $url);    
                     
-                }
-                else{
+                } else{
                     echo 'Thank you for declining';
                 }
-            }
-            else {
+            } else {
                 echo 'You have already responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
             }
     	}
@@ -127,16 +119,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                     
                     $url = $event->accept_redirect;
                     header('Location: ' . $url);    
-                }
-                else{
+                } else{
                     echo 'Thank you for accepting';
                 }   
-            }
-            else {
+            } else {
                 echo 'There was a problem with the link please contact the sender of the invite';
             }   
-    	}
-    	else if($response == 'decline'){
+    	} else if($response == 'decline'){
     		//check to see if they have already responded to the email
             $check_q = 'SELECT email_responded FROM fp_events_leads_1_c WHERE fp_events_leads_1fp_events_ida="'.$event->id.'" AND fp_events_leads_1leads_idb="'.$delegate_id.'"';
              $check = $db->getOne($check_q);
@@ -150,12 +139,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                     $url = $event->decline_redirect;
                     header('Location: ' . $url);    
                     
-                }
-                else{
+                } else{
                     echo 'Thank you for declining';
                 }
-            }
-            else {
+            } else {
                 echo 'There was a problem with the link please contact the sender of the invite';
             }
     	}

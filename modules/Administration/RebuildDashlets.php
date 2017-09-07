@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -50,9 +52,10 @@ if(is_admin($current_user)){
 
     $dc = new DashletCacheBuilder();
     $dc->buildCache();
-   if( !$silent ) echo '<br><br><br><br>' . $mod_strings['LBL_REBUILD_DASHLETS_DESC_SUCCESS'];
-}
-else{
+   if( !$silent ) {
+       echo '<br><br><br><br>' . $mod_strings['LBL_REBUILD_DASHLETS_DESC_SUCCESS'];
+   }
+   } else{
 	sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
 }
 ?>

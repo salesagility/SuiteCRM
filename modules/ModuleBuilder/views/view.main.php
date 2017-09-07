@@ -52,8 +52,7 @@ class ViewMain extends SugarView
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -116,7 +115,9 @@ class ViewMain extends SugarView
 			$smarty->assign('TREElabel', $mbt->getName());
 		}
 		$userPref = $current_user->getPreference('mb_assist', 'Assistant');
-		if(!$userPref) $userPref="na";
+		if(!$userPref) {
+		    $userPref="na";
+		}
 		$smarty->assign('userPref',$userPref);
 
 		///////////////////////////////////

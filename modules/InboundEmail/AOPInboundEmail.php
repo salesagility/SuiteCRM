@@ -73,7 +73,7 @@ class AOPInboundEmail extends InboundEmail {
             }
             if($email->description_html) {
                 $c->description = $this->processImageLinks(SugarCleaner::cleanHtml($email->description_html),$noteIds);
-            }else{
+            } else{
                 $c->description = $email->description;
             }
             $c->assigned_user_id = $userId;

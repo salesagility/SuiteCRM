@@ -1,6 +1,7 @@
 <?php
-if (! defined ( 'sugarEntry' ) || ! sugarEntry)
+if (! defined ( 'sugarEntry' ) || ! sugarEntry) {
     die ( 'Not A Valid Entry Point' ) ;
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -243,8 +244,9 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
         
         foreach ( $module->field_defs as $field )
         {
-            if ($field [ 'type' ] == 'relate' && isset ( $field [ 'module' ] ) && $field [ 'module' ] == $sourceModuleName)
-                return $field [ 'name' ] ;
+            if ($field [ 'type' ] == 'relate' && isset ( $field [ 'module' ] ) && $field [ 'module' ] == $sourceModuleName) {
+                            return $field [ 'name' ] ;
+            }
         }
         return null ;
     }
@@ -389,10 +391,11 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
         
         foreach ( $layoutAdditions as $deployedModuleName => $fieldName )
         {
-            if (! in_array ( strtolower ( $deployedModuleName ), $invalidModules ))
-                foreach ( array ( MB_EDITVIEW , MB_DETAILVIEW ) as $view )
+            if (! in_array ( strtolower ( $deployedModuleName ), $invalidModules )) {
+                            foreach ( array ( MB_EDITVIEW , MB_DETAILVIEW ) as $view )
                 {
                     $GLOBALS [ 'log' ]->info ( get_class ( $this ) . ": adding $fieldName to $view layout for module $deployedModuleName" ) ;
+            }
                     $parser = new GridLayoutMetaDataParser ( $view, $deployedModuleName ) ;
                     $parser->addField ( array ( 'name' => $fieldName ) ) ;
                     $parser->handleSave ( false ) ;
@@ -411,8 +414,9 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
     {
         
         // many-to-many relationships don't have fields so if we have a many-to-many we can just skip this...
-        if ($relationship->getType () == MB_MANYTOMANY)
-            return false ;
+        if ($relationship->getType () == MB_MANYTOMANY) {
+                    return false ;
+        }
         
         $successful = true ;
         $layoutAdditions = $relationship->buildFieldsToLayouts () ;

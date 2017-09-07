@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -97,8 +99,7 @@ if(count($beanList) > 0)
         $personTypeList.="<option value='".$count."'>".$b->name."</option>";
         $count++;
     }
-}
-else
+} else
 {
     $personTypeList.="<option value='noPerson'>No matching types</option>";
 }
@@ -133,8 +134,12 @@ $field_defs_js = "var field_defs = {'Contacts':[";
 
 $xtpl->assign("WEB_POST_URL",$web_post_url);
 
-if (empty($focus->assigned_user_id) && empty($focus->id))  $focus->assigned_user_id = $current_user->id;
-if (empty($focus->assigned_name) && empty($focus->id))  $focus->assigned_user_name = $current_user->user_name;
+if (empty($focus->assigned_user_id) && empty($focus->id)) {
+    $focus->assigned_user_id = $current_user->id;
+}
+if (empty($focus->assigned_name) && empty($focus->id)) {
+    $focus->assigned_user_name = $current_user->user_name;
+}
 $xtpl->assign("ASSIGNED_USER_NAME", $focus->assigned_user_name);
 $xtpl->assign("ASSIGNED_USER_ID", $focus->assigned_user_id );
 
@@ -197,8 +202,7 @@ function filterFieldsFromBeans($beans)
                 $col_arr[0]=$cols_name;
                 $col_arr[1]=$field_def['name'];
                 $col_arr[2]=true;
-            }
-            else{
+            } else{
                 $cols_name=$field_def['vname'];
                 $col_arr[0]=$cols_name;
                 $col_arr[1]=$field_def['name'];
@@ -232,8 +236,9 @@ function getListOfExtendingClasses($superclass)
     foreach($GLOBALS['moduleList'] as $mod)
     {
         $item = BeanFactory::getBean($mod);
-        if($item && is_subclass_of($item,$superclass))
-            $subclasses[] = $item;
+        if($item && is_subclass_of($item,$superclass)) {
+                    $subclasses[] = $item;
+        }
     }
     return $subclasses;
 }

@@ -1,5 +1,7 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -64,7 +66,7 @@ class SugarSession{
 		if(empty($session_id)){
 			session_start();
 			self::$sessionId = session_id();
-		}else{
+		} else{
 			self::$sessionId = $session_id;
 		}
 	}

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -186,8 +188,9 @@ if($result['error_found'] == true || $result['warn_found']) {
 	$sysCompliance .= "<div id='sysComp' >";
 	$sysCompliance .= "<table cellpadding='0' cellspacing='0' border='0'>";
 	foreach($result as $k => $v) {
-		if($k == 'error_found')
-			continue;
+		if($k == 'error_found') {
+					continue;
+		}
 		$sysCompliance .= "<tr><td valign='top'>{$checks[$k]}</td>";
 		$sysCompliance .= "<td valign='top'>{$v}</td></tr>";
 	}

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -85,7 +87,7 @@ class ImportFileSplitter
         	if(!is_int($recordThreshold) && is_numeric($recordThreshold)){
         		//cast the string to an int
         		$recordThreshold = (int)$recordThreshold;
-        	}else{
+        	} else{
         		//if not a numeric string, or less than 1, then default to 100
             	$recordThreshold = 100;
         	}
@@ -121,8 +123,9 @@ class ImportFileSplitter
         $has_header = false
         )
     {
-        if (!$this->fileExists())
-            return false;
+        if (!$this->fileExists()) {
+                    return false;
+        }
         $importFile = new ImportFile($this->_sourceFile,$delimiter,$enclosure,false);
         $filecount = 0;
         $fw = sugar_fopen("{$this->_sourceFile}-{$filecount}","w");
@@ -169,8 +172,9 @@ class ImportFileSplitter
      */
     public function getRecordCount()
     {
-        if ( !isset($this->_recordCount) )
-            return false;
+        if ( !isset($this->_recordCount) ) {
+                    return false;
+        }
 
         return $this->_recordCount;
     }
@@ -182,8 +186,9 @@ class ImportFileSplitter
      */
     public function getFileCount()
     {
-        if ( !isset($this->_fileCount) )
-            return false;
+        if ( !isset($this->_fileCount) ) {
+                    return false;
+        }
 
         return $this->_fileCount;
     }
@@ -199,8 +204,9 @@ class ImportFileSplitter
         $filenumber = 0
         )
     {
-        if ( $filenumber >= $this->getFileCount())
-            return false;
+        if ( $filenumber >= $this->getFileCount()) {
+                    return false;
+        }
 
         return "{$this->_sourceFile}-{$filenumber}";
     }

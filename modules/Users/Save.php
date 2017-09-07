@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -56,15 +58,17 @@ parse_str($remove_tabs_def,$REMOVE_ARR);
 
 
 
-if (isset($_POST['id']))
+if (isset($_POST['id'])) {
 	sugar_die("Unauthorized access to administration.");
+}
 if (isset($_POST['record']) && !is_admin($current_user)
      && !$GLOBALS['current_user']->isAdminForModule('Users')
-     && $_POST['record'] != $current_user->id)
-sugar_die("Unauthorized access to administration.");
-elseif (!isset($_POST['record']) && !is_admin($current_user)
-     && !$GLOBALS['current_user']->isAdminForModule('Users'))
-sugar_die ("Unauthorized access to user administration.");
+     && $_POST['record'] != $current_user->id) {
+    sugar_die("Unauthorized access to administration.");
+} elseif (!isset($_POST['record']) && !is_admin($current_user)
+     && !$GLOBALS['current_user']->isAdminForModule('Users')) {
+    sugar_die ("Unauthorized access to user administration.");
+}
 $focus = new User();
 $focus->retrieve($_POST['record']);
 
@@ -106,8 +110,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
             if ($sf != null)
             {
                 $sf->save($focus, $_POST, $fieldName, $field, '');
-            }
-            else
+            } else
             {
                 $GLOBALS['log']->fatal("Field '$fieldName' does not have a SugarField handler");
             }
@@ -157,8 +160,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
             if ($sf != null)
             {
                 $sf->save($focus, $_POST, $fieldName, $field, '');
-            }
-            else
+            } else
             {
                 $GLOBALS['log']->fatal("Field '$fieldName' does not have a SugarField handler");
             }
@@ -171,8 +173,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
             if ($sf != null)
             {
                 $sf->save($focus, $_POST, $fieldName, $field, '');
-            }
-            else
+            } else
             {
                 $GLOBALS['log']->fatal("Field '$fieldName' does not have a SugarField handler");
             }
@@ -181,18 +182,26 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 		$focus->is_group=0;
 		$focus->portal_only=0;
 
-     		if(isset($_POST['status']) && $_POST['status']== "Inactive") $focus->employee_status = "Terminated"; //bug49972
+     		if(isset($_POST['status']) && $_POST['status']== "Inactive") {
+     		    $focus->employee_status = "Terminated";
+     		}
+     		//bug49972
 
 			if(isset($_POST['user_name']))
 		{
 			$focus->user_name = $_POST['user_name'];
 		}
 		if((isset($_POST['is_admin']) && ($_POST['is_admin'] == 'on' || $_POST['is_admin'] == '1')) ||
-           (isset($_POST['UserType']) && $_POST['UserType'] == "Administrator")) $focus->is_admin = 1;
-		elseif(isset($_POST['is_admin']) && empty($_POST['is_admin'])) $focus->is_admin = 0;
+           (isset($_POST['UserType']) && $_POST['UserType'] == "Administrator")) {
+		    $focus->is_admin = 1;
+		} elseif(isset($_POST['is_admin']) && empty($_POST['is_admin'])) {
+		    $focus->is_admin = 0;
+		}
 		//if(empty($_POST['portal_only']) || !empty($_POST['is_admin'])) $focus->portal_only = 0;
 		//if(empty($_POST['is_group'])    || !empty($_POST['is_admin'])) $focus->is_group = 0;
-		if(empty($_POST['receive_notifications'])) $focus->receive_notifications = 0;
+		if(empty($_POST['receive_notifications'])) {
+		    $focus->receive_notifications = 0;
+		}
 
 		if(isset($_POST['mailmerge_on']) && !empty($_POST['mailmerge_on'])) {
 			$focus->setPreference('mailmerge_on','on', 0, 'global');
@@ -203,8 +212,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 	    if(isset($_POST['user_swap_last_viewed']))
 	    {
 	        $focus->setPreference('swap_last_viewed', $_POST['user_swap_last_viewed'], 0, 'global');
-	    }
-	    else
+	    } else
 	    {
 	    	$focus->setPreference('swap_last_viewed', '', 0, 'global');
 	    }
@@ -212,8 +220,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 	    if(isset($_POST['user_swap_shortcuts']))
 	    {
 	        $focus->setPreference('swap_shortcuts', $_POST['user_swap_shortcuts'], 0, 'global');
-	    }
-	    else
+	    } else
 	    {
 	        $focus->setPreference('swap_shortcuts', '', 0, 'global');
 	    }
@@ -221,8 +228,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 	    if(isset($_POST['use_group_tabs']))
 	    {
 	        $focus->setPreference('navigation_paradigm', $_POST['use_group_tabs'], 0, 'global');
-	    }
-	    else
+	    } else
 	    {
 	        $focus->setPreference('navigation_paradigm', 'gm', 0, 'global');
 	    }
@@ -230,8 +236,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 	    if(isset($_POST['user_subpanel_tabs']))
 	    {
 	        $focus->setPreference('subpanel_tabs', $_POST['user_subpanel_tabs'], 0, 'global');
-	    }
-	    else
+	    } else
 	    {
 	        $focus->setPreference('subpanel_tabs', '', 0, 'global');
 	    }
@@ -245,33 +250,32 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
         if(isset($_POST['user_module_favicon']))
 	    {
 	        $focus->setPreference('module_favicon', $_POST['user_module_favicon'], 0, 'global');
-	    }
-	    else
+	    } else
 	    {
 	        $focus->setPreference('module_favicon', '', 0, 'global');
 	    }
 
 		$tabs = new TabController();
-		if(isset($_POST['display_tabs']))
-			$tabs->set_user_tabs($DISPLAY_ARR['display_tabs'], $focus, 'display');
+		if(isset($_POST['display_tabs'])) {
+					$tabs->set_user_tabs($DISPLAY_ARR['display_tabs'], $focus, 'display');
+		}
 		if(isset($HIDE_ARR['hide_tabs'])){
 			$tabs->set_user_tabs($HIDE_ARR['hide_tabs'], $focus, 'hide');
 
-		}else{
+		} else{
 			$tabs->set_user_tabs(array(), $focus, 'hide');
 		}
 		if(is_admin($current_user)){
 			if(isset($REMOVE_ARR['remove_tabs'])){
 				$tabs->set_user_tabs($REMOVE_ARR['remove_tabs'], $focus, 'remove');
-			}else{
+			} else{
 				$tabs->set_user_tabs(array(), $focus, 'remove');
 			}
 		}
 
 	    if(isset($_POST['no_opps'])) {
 	        $focus->setPreference('no_opps',$_POST['no_opps'], 0, 'global');
-	    }
-	    else {
+	    } else {
 	        $focus->setPreference('no_opps','off', 0, 'global');
 	    }
 
@@ -296,27 +300,68 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 
 
 
-		if(isset($_POST['timezone'])) $focus->setPreference('timezone',$_POST['timezone'], 0, 'global');
-		if(isset($_POST['ut'])) $focus->setPreference('ut', '0', 0, 'global');
-		else $focus->setPreference('ut', '1', 0, 'global');
-		if(isset($_POST['currency'])) $focus->setPreference('currency',$_POST['currency'], 0, 'global');
-		if(isset($_POST['default_currency_significant_digits'])) $focus->setPreference('default_currency_significant_digits',$_POST['default_currency_significant_digits'], 0, 'global');
-		if(isset($_POST['num_grp_sep'])) $focus->setPreference('num_grp_sep', $_POST['num_grp_sep'], 0, 'global');
-		if(isset($_POST['dec_sep'])) $focus->setPreference('dec_sep', $_POST['dec_sep'], 0, 'global');
-                if(isset($_POST['fdow'])) $focus->setPreference('fdow', $_POST['fdow'], 0, 'global');
-		if(isset($_POST['dateformat'])) $focus->setPreference('datef',$_POST['dateformat'], 0, 'global');
-		if(isset($_POST['timeformat'])) $focus->setPreference('timef',$_POST['timeformat'], 0, 'global');
-		if(isset($_POST['timezone'])) $focus->setPreference('timezone',$_POST['timezone'], 0, 'global');
-		if(isset($_POST['mail_fromname'])) $focus->setPreference('mail_fromname',$_POST['mail_fromname'], 0, 'global');
-		if(isset($_POST['mail_fromaddress'])) $focus->setPreference('mail_fromaddress',$_POST['mail_fromaddress'], 0, 'global');
-		if(isset($_POST['mail_sendtype'])) $focus->setPreference('mail_sendtype', $_POST['mail_sendtype'], 0, 'global');
-		if(isset($_POST['mail_smtpserver'])) $focus->setPreference('mail_smtpserver',$_POST['mail_smtpserver'], 0, 'global');
-		if(isset($_POST['mail_smtpport'])) $focus->setPreference('mail_smtpport',$_POST['mail_smtpport'], 0, 'global');
-		if(isset($_POST['mail_smtpuser'])) $focus->setPreference('mail_smtpuser',$_POST['mail_smtpuser'], 0, 'global');
-		if(isset($_POST['mail_smtppass'])) $focus->setPreference('mail_smtppass',$_POST['mail_smtppass'], 0, 'global');
-		if(isset($_POST['default_locale_name_format'])) $focus->setPreference('default_locale_name_format',$_POST['default_locale_name_format'], 0, 'global');
-		if(isset($_POST['export_delimiter'])) $focus->setPreference('export_delimiter', $_POST['export_delimiter'], 0, 'global');
-		if(isset($_POST['default_export_charset'])) $focus->setPreference('default_export_charset', $_POST['default_export_charset'], 0, 'global');
+		if(isset($_POST['timezone'])) {
+		    $focus->setPreference('timezone',$_POST['timezone'], 0, 'global');
+		}
+		if(isset($_POST['ut'])) {
+		    $focus->setPreference('ut', '0', 0, 'global');
+		} else {
+		    $focus->setPreference('ut', '1', 0, 'global');
+		}
+		if(isset($_POST['currency'])) {
+		    $focus->setPreference('currency',$_POST['currency'], 0, 'global');
+		}
+		if(isset($_POST['default_currency_significant_digits'])) {
+		    $focus->setPreference('default_currency_significant_digits',$_POST['default_currency_significant_digits'], 0, 'global');
+		}
+		if(isset($_POST['num_grp_sep'])) {
+		    $focus->setPreference('num_grp_sep', $_POST['num_grp_sep'], 0, 'global');
+		}
+		if(isset($_POST['dec_sep'])) {
+		    $focus->setPreference('dec_sep', $_POST['dec_sep'], 0, 'global');
+		}
+                if(isset($_POST['fdow'])) {
+                    $focus->setPreference('fdow', $_POST['fdow'], 0, 'global');
+                }
+		if(isset($_POST['dateformat'])) {
+		    $focus->setPreference('datef',$_POST['dateformat'], 0, 'global');
+		}
+		if(isset($_POST['timeformat'])) {
+		    $focus->setPreference('timef',$_POST['timeformat'], 0, 'global');
+		}
+		if(isset($_POST['timezone'])) {
+		    $focus->setPreference('timezone',$_POST['timezone'], 0, 'global');
+		}
+		if(isset($_POST['mail_fromname'])) {
+		    $focus->setPreference('mail_fromname',$_POST['mail_fromname'], 0, 'global');
+		}
+		if(isset($_POST['mail_fromaddress'])) {
+		    $focus->setPreference('mail_fromaddress',$_POST['mail_fromaddress'], 0, 'global');
+		}
+		if(isset($_POST['mail_sendtype'])) {
+		    $focus->setPreference('mail_sendtype', $_POST['mail_sendtype'], 0, 'global');
+		}
+		if(isset($_POST['mail_smtpserver'])) {
+		    $focus->setPreference('mail_smtpserver',$_POST['mail_smtpserver'], 0, 'global');
+		}
+		if(isset($_POST['mail_smtpport'])) {
+		    $focus->setPreference('mail_smtpport',$_POST['mail_smtpport'], 0, 'global');
+		}
+		if(isset($_POST['mail_smtpuser'])) {
+		    $focus->setPreference('mail_smtpuser',$_POST['mail_smtpuser'], 0, 'global');
+		}
+		if(isset($_POST['mail_smtppass'])) {
+		    $focus->setPreference('mail_smtppass',$_POST['mail_smtppass'], 0, 'global');
+		}
+		if(isset($_POST['default_locale_name_format'])) {
+		    $focus->setPreference('default_locale_name_format',$_POST['default_locale_name_format'], 0, 'global');
+		}
+		if(isset($_POST['export_delimiter'])) {
+		    $focus->setPreference('export_delimiter', $_POST['export_delimiter'], 0, 'global');
+		}
+		if(isset($_POST['default_export_charset'])) {
+		    $focus->setPreference('default_export_charset', $_POST['default_export_charset'], 0, 'global');
+		}
 		if(isset($_POST['use_real_names'])) {
 			$focus->setPreference('use_real_names', 'on', 0, 'global');
 		} elseif(!isset($_POST['use_real_names']) && !isset($_POST['from_dcmenu'])) {
@@ -348,35 +393,45 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 
 		///////////////////////////////////////////////////////////////////////////
 		////	SIGNATURES
-		if(isset($_POST['signature_id']))
-			$focus->setPreference('signature_default', $_POST['signature_id'], 0, 'global');
+		if(isset($_POST['signature_id'])) {
+					$focus->setPreference('signature_default', $_POST['signature_id'], 0, 'global');
+		}
 
-		if(isset($_POST['signature_prepend'])) $focus->setPreference('signature_prepend',$_POST['signature_prepend'], 0, 'global');
+		if(isset($_POST['signature_prepend'])) {
+		    $focus->setPreference('signature_prepend',$_POST['signature_prepend'], 0, 'global');
+		}
 		////	END SIGNATURES
 		///////////////////////////////////////////////////////////////////////////
 
 
-		if(isset($_POST['email_link_type'])) $focus->setPreference('email_link_type', $_REQUEST['email_link_type']);
-		if(isset($_POST['editor_type'])) $focus->setPreference('editor_type', $_REQUEST['editor_type']);
+		if(isset($_POST['email_link_type'])) {
+		    $focus->setPreference('email_link_type', $_REQUEST['email_link_type']);
+		}
+		if(isset($_POST['editor_type'])) {
+		    $focus->setPreference('editor_type', $_REQUEST['editor_type']);
+		}
 		if(isset($_REQUEST['email_show_counts'])) {
 			$focus->setPreference('email_show_counts', $_REQUEST['email_show_counts'], 0, 'global');
 		} else {
 			$focus->setPreference('email_show_counts', 0, 0, 'global');
 		}
-		if(isset($_REQUEST['email_editor_option']))
-			$focus->setPreference('email_editor_option', $_REQUEST['email_editor_option'], 0, 'global');
-		if(isset($_REQUEST['default_email_charset']))
-			$focus->setPreference('default_email_charset', $_REQUEST['default_email_charset'], 0, 'global');
+		if(isset($_REQUEST['email_editor_option'])) {
+					$focus->setPreference('email_editor_option', $_REQUEST['email_editor_option'], 0, 'global');
+		}
+		if(isset($_REQUEST['default_email_charset'])) {
+					$focus->setPreference('default_email_charset', $_REQUEST['default_email_charset'], 0, 'global');
+		}
 
-		if(isset($_POST['calendar_publish_key'])) $focus->setPreference('calendar_publish_key',$_POST['calendar_publish_key'], 0, 'global');
+		if(isset($_POST['calendar_publish_key'])) {
+		    $focus->setPreference('calendar_publish_key',$_POST['calendar_publish_key'], 0, 'global');
+		}
 	}
 
 	if (!$focus->verify_data())
 	{
 		header("Location: index.php?action=Error&module=Users&error_string=".urlencode($focus->error_string));
 		exit;
-	}
-	else
+	} else
 	{	$GLOBALS['sugar_config']['disable_team_access_check'] = true;
 		$focus->save();
 		$GLOBALS['sugar_config']['disable_team_access_check'] = false;
@@ -397,12 +452,12 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 			       header("Location: index.php?action=ChangePassword&module=Users&record=".$_POST['record']."&error_password=".urlencode($focus->error_string));
 			       exit;
 			   }
-		   }
-		   else{
-		   		if ($newUser)
-		   			$new_pwd='3';
-		   		else
-		   			$new_pwd='1';
+		   } else{
+		   		if ($newUser) {
+		   				   			$new_pwd='3';
+		   		} else {
+		   				   			$new_pwd='1';
+		   		}
 		   }
 		}
 
@@ -423,12 +478,12 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
                 $userOverrideOE->mail_smtpuser = $_REQUEST['mail_smtpuser'];
                 $userOverrideOE->mail_smtppass = $_REQUEST['mail_smtppass'];
                 $userOverrideOE->save();
-            }
-            else
+            } else
             {
                 //If a user name and password for the mail account is set, create the users override account.
-                if( ! (empty($_REQUEST['mail_smtpuser']) || empty($_REQUEST['mail_smtppass'])) )
-                    $sysOutboundAccunt->createUserSystemOverrideAccount($focus->id,$_REQUEST['mail_smtpuser'],$_REQUEST['mail_smtppass'] );
+                if( ! (empty($_REQUEST['mail_smtpuser']) || empty($_REQUEST['mail_smtppass'])) ) {
+                                    $sysOutboundAccunt->createUserSystemOverrideAccount($focus->id,$_REQUEST['mail_smtpuser'],$_REQUEST['mail_smtppass'] );
+                }
             }
         }
 
@@ -484,26 +539,34 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
         if($_REQUEST['whatnext']== 'import'){
             header("Location:index.php?module=Import&action=step1&import_module=Administration");
             return;
-        }elseif($_REQUEST['whatnext']== 'users'){
+        } elseif($_REQUEST['whatnext']== 'users'){
             header("Location:index.php?module=Users&action=index");
             return;
-        }elseif($_REQUEST['whatnext']== 'settings'){
+        } elseif($_REQUEST['whatnext']== 'settings'){
             header("Location:index.php?module=Configurator&action=EditView");
             return;
-        }elseif($_REQUEST['whatnext']== 'studio'){
+        } elseif($_REQUEST['whatnext']== 'studio'){
             header("Location:index.php?module=ModuleBuilder&action=index&type=studio");
             return;
-        }else{
+        } else{
             //do nothing, let the navigation continue as normal using code below
         }
 
     }
 
-if(isset($_REQUEST['return_module']) && $_REQUEST['return_module'] != "") $return_module = $_REQUEST['return_module'];
-else $return_module = "Users";
-if(isset($_REQUEST['return_action']) && $_REQUEST['return_action'] != "") $return_action = $_REQUEST['return_action'];
-else $return_action = "DetailView";
-if(isset($_REQUEST['return_id']) && $_REQUEST['return_id'] != "") $return_id = $_REQUEST['return_id'];
+if(isset($_REQUEST['return_module']) && $_REQUEST['return_module'] != "") {
+    $return_module = $_REQUEST['return_module'];
+} else {
+    $return_module = "Users";
+}
+if(isset($_REQUEST['return_action']) && $_REQUEST['return_action'] != "") {
+    $return_action = $_REQUEST['return_action'];
+} else {
+    $return_action = "DetailView";
+}
+if(isset($_REQUEST['return_id']) && $_REQUEST['return_id'] != "") {
+    $return_id = $_REQUEST['return_id'];
+}
 
 $GLOBALS['log']->debug("Saved record with id of ".$return_id);
 

@@ -49,8 +49,7 @@ class FieldViewer{
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -58,7 +57,9 @@ class FieldViewer{
 
 	function getLayout($vardef){
 
-		if(empty($vardef['type']))$vardef['type'] = 'varchar';
+		if(empty($vardef['type'])) {
+		    $vardef['type'] = 'varchar';
+		}
 		$mod = return_module_language($GLOBALS['current_language'], 'DynamicFields');
 		$this->ss->assign('vardef', $vardef);
 		$this->ss->assign('MOD', $mod);
@@ -129,7 +130,7 @@ class FieldViewer{
 				if(!empty($file)){
 					require_once($file);
 					return get_body($this->ss, $vardef);
-				}else{
+				} else{
 					return $this->ss->fetch('modules/DynamicFields/templates/Fields/Forms/varchar.tpl');
 				}
 		}

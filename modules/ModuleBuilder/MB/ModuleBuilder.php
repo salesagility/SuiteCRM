@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -57,8 +59,9 @@ class ModuleBuilder
     function getPackageList ()
     {
         static $list = array ( ) ;
-        if (! empty ( $list ) || ! file_exists ( MB_PACKAGE_PATH ))
-            return $list ;
+        if (! empty ( $list ) || ! file_exists ( MB_PACKAGE_PATH )) {
+                    return $list ;
+        }
         $d = dir ( MB_PACKAGE_PATH ) ;
         while ( $e = $d->read () )
         {
@@ -78,8 +81,9 @@ class ModuleBuilder
      */
     function getPackage ($name)
     {
-        if (empty ( $this->packages [ $name ] ))
-            $this->packages [ $name ] = new MBPackage ( $name ) ;
+        if (empty ( $this->packages [ $name ] )) {
+                    $this->packages [ $name ] = new MBPackage ( $name ) ;
+        }
 
         return $this->packages [ $name ] ;
     }
@@ -90,8 +94,9 @@ class ModuleBuilder
         if (file_exists ( $manifestPath ))
         {
             require( $manifestPath ) ;
-            if(!empty($manifest))
-                return $manifest['key'];
+            if(!empty($manifest)) {
+                            return $manifest['key'];
+            }
         }
         return false ;
     }
@@ -134,8 +139,9 @@ class ModuleBuilder
             $list = $this->getPackageList () ;
             foreach ( $list as $package )
             {
-                if (! empty ( $this->packages [ $package ] ))
-                    continue ;
+                if (! empty ( $this->packages [ $package ] )) {
+                                    continue ;
+                }
                 $this->packages [ $package ] = new MBPackage ( $package ) ;
             }
         }

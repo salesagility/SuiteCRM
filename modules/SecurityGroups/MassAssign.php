@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 require_once('modules/SecurityGroups/SecurityGroup.php');
@@ -12,7 +14,9 @@ $module = $_REQUEST['return_module'];
 $sugarbean = null;
 
 $securitygroup = $_REQUEST['massassign_group'];
-if(!isset($module) || empty($securitygroup) || !isset($securitygroup)) return;
+if(!isset($module) || empty($securitygroup) || !isset($securitygroup)) {
+    return;
+}
 
 if(!empty($GLOBALS['beanList'][$module])){
 	$class = $GLOBALS['beanList'][$module];
@@ -29,7 +33,10 @@ $groupFocus->retrieve($securitygroup);
 
 
 
-if(!empty($_REQUEST['uid'])) $_POST['mass'] = explode(',', $_REQUEST['uid']); // coming from listview
+if(!empty($_REQUEST['uid'])) {
+    $_POST['mass'] = explode(',', $_REQUEST['uid']);
+}
+// coming from listview
 elseif(isset($_REQUEST['entire'])) {
 	if(isset($_SESSION['export_where']) && !empty($_SESSION['export_where'])) { // bug 4679
 		$where = $_SESSION['export_where'];
@@ -41,7 +48,9 @@ elseif(isset($_REQUEST['entire'])) {
 	} else {
 		$where = '';
 	}
-	if(empty($order_by))$order_by = '';
+	if(empty($order_by)) {
+	    $order_by = '';
+	}
 	$query = $sugarbean->create_export_query($order_by,$where);
 	$result = $db->query($query,true);
 
@@ -75,8 +84,7 @@ if(isset($_POST['mass']) && is_array($_POST['mass'])){
 			//}
 
 
-		}
-		else {
+		} else {
 			$sugarbean->retrieve($id);
 
 			//if($sugarbean->ACLAccess('Save')){

@@ -115,8 +115,7 @@ class Employee extends Person {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -145,8 +144,7 @@ class Employee extends Person {
 		if($row != null)
 		{
 			$this->reports_to_name = stripslashes($locale->getLocaleFormattedName($row['first_name'], $row['last_name']));
-		}
-		else
+		} else
 		{
 			$this->reports_to_name = '';
 		}
@@ -178,10 +176,12 @@ class Employee extends Person {
         $user_fields = parent::get_list_view_data();
 
 		// Copy over the reports_to_name
-		if ( isset($GLOBALS['app_list_strings']['messenger_type_dom'][$this->messenger_type]) )
-            $user_fields['MESSENGER_TYPE'] = $GLOBALS['app_list_strings']['messenger_type_dom'][$this->messenger_type];
-		if ( isset($GLOBALS['app_list_strings']['employee_status_dom'][$this->employee_status]) )
-            $user_fields['EMPLOYEE_STATUS'] = $GLOBALS['app_list_strings']['employee_status_dom'][$this->employee_status];
+		if ( isset($GLOBALS['app_list_strings']['messenger_type_dom'][$this->messenger_type]) ) {
+		            $user_fields['MESSENGER_TYPE'] = $GLOBALS['app_list_strings']['messenger_type_dom'][$this->messenger_type];
+		}
+		if ( isset($GLOBALS['app_list_strings']['employee_status_dom'][$this->employee_status]) ) {
+		            $user_fields['EMPLOYEE_STATUS'] = $GLOBALS['app_list_strings']['employee_status_dom'][$this->employee_status];
+		}
 		$user_fields['REPORTS_TO_NAME'] = $this->reports_to_name;
 
         return $user_fields;
@@ -205,15 +205,17 @@ class Employee extends Person {
 
 		$where_auto = " users.deleted = 0";
 
-		if($where != "")
-			$query .= " WHERE $where AND " . $where_auto;
-		else
-			$query .= " WHERE " . $where_auto;
+		if($where != "") {
+					$query .= " WHERE $where AND " . $where_auto;
+		} else {
+					$query .= " WHERE " . $where_auto;
+		}
 
-		if($order_by != "")
-			$query .= " ORDER BY $order_by";
-		else
-			$query .= " ORDER BY users.user_name";
+		if($order_by != "") {
+					$query .= " ORDER BY $order_by";
+		} else {
+					$query .= " ORDER BY users.user_name";
+		}
 
 		return $query;
 	}
@@ -260,7 +262,7 @@ class Employee extends Person {
         //create the filter for portal only users, as they should not be showing up in query results
         if(empty($where)){
             $where = ' users.portal_only = 0 ';
-        }else{
+        } else{
             $where .= ' and users.portal_only = 0 ';
         }
 

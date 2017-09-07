@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -53,8 +55,7 @@ global $mod_strings;
     $campaign_focus = new Campaign();
     if(isset($_REQUEST['record']) && $_REQUEST['record'] && !(isset($_REQUEST['campaign_id']) && $_REQUEST['campaign_id'])) {
         $campaign_focus->retrieve($_REQUEST['record']);
-    }
-    else if(isset($_REQUEST['campaign_id']) && $_REQUEST['campaign_id']) {
+    } else if(isset($_REQUEST['campaign_id']) && $_REQUEST['campaign_id']) {
         $campaign_focus->retrieve($_REQUEST['campaign_id']);
     }
 
@@ -230,7 +231,7 @@ global $mod_strings;
                          $action = 'WizardMarketing';
                         break;
                 }
-            }else{
+            } else{
                 $action = 'WizardHome&record='.$campaign_focus->id;
             }
             //require_once('modules/Campaigns/WizardMarketing.php');
@@ -394,7 +395,7 @@ global $mod_strings;
                         $action = 'WizardHome';
                         break;
                 }
-            }else{
+            } else{
                 $action = 'WizardHome&record='.$campaign_focus->id;
             }
             //require_once('modules/Campaigns/WizardMarketing.php');

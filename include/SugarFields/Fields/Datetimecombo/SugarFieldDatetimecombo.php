@@ -176,8 +176,7 @@ class SugarFieldDatetimecombo extends SugarFieldBase {
             $parts = $timedate->split_date_time($value);
             if(empty($parts[0])) {
                $datepart = $timedate->getNow()->format($settings->dateformat);
-            }
-            else {
+            } else {
                $datepart = $parts[0];
             }
             if(empty($parts[1])) {

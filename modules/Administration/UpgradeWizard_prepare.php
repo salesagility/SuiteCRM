@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -178,8 +180,7 @@ switch( $install_type ){
 		while( $f = $d->read() ){
 			if( $f == "." || $f == ".." ){
 				continue;
-			}
-			else if( preg_match("/(.*)\.lang\.php\$/", $f, $match) ){
+			} else if( preg_match("/(.*)\.lang\.php\$/", $f, $match) ){
 				$new_lang_name = $match[1];
 			}
 		}
@@ -200,8 +201,9 @@ switch( $install_type ){
 		break;
 	case "module":
 		$previous_install = array();
-		if(!empty($id_name) & !empty($version))
-		$previous_install = $uh->determineIfUpgrade($id_name, $version);
+		if(!empty($id_name) & !empty($version)) {
+				$previous_install = $uh->determineIfUpgrade($id_name, $version);
+		}
 		$previous_version = (empty($previous_install['version'])) ? '' : $previous_install['version'];
 		$previous_id = (empty($previous_install['id'])) ? '' : $previous_install['id'];
 		$show_files = false;
@@ -231,15 +233,16 @@ $hidden_fields .= "<input type=hidden name=\"s_manifest\" value='".base64_encode
 <form action="<?php print( $form_action . "_commit" ); ?>" name="files" method="post"  onSubmit="return validateForm(<?php print($require_license); ?>);">
 <?php
 if(empty($new_studio_mod_files)) {
-	if(!empty($mode) && $mode == 'Uninstall')
-	echo $mod_strings['LBL_UW_UNINSTALL_READY'];
-	else if($mode == 'Disable')
-	echo $mod_strings['LBL_UW_DISABLE_READY'];
-	else if($mode == 'Enable')
-	echo $mod_strings['LBL_UW_ENABLE_READY'];
-	else
-	echo $mod_strings['LBL_UW_PATCH_READY'];
-} else {
+	if(!empty($mode) && $mode == 'Uninstall') {
+		echo $mod_strings['LBL_UW_UNINSTALL_READY'];
+	} else if($mode == 'Disable') {
+		echo $mod_strings['LBL_UW_DISABLE_READY'];
+	} else if($mode == 'Enable') {
+		echo $mod_strings['LBL_UW_ENABLE_READY'];
+	} else {
+		echo $mod_strings['LBL_UW_PATCH_READY'];
+	}
+	} else {
 	echo $mod_strings['LBL_UW_PATCH_READY2'];
 	echo '<input type="checkbox" onclick="toggle_these(0, ' . count($new_studio_mod_files) . ', this)"> '.$mod_strings['LBL_UW_CHECK_ALL'];
 	foreach($new_studio_mod_files as $the_file) {
@@ -255,7 +258,7 @@ if($require_license){
 	if($found_readme){
 		if(file_exists($readme_file) && filesize($readme_file) > 0){
 			$readme_contents = file_get_contents($readme_file);
-		}elseif(!empty($manifest['readme'])){
+		} elseif(!empty($manifest['readme'])){
 			$readme_contents = $manifest['readme'];
 		}
 	}
@@ -327,8 +330,7 @@ switch( $mode ){
 		if( $install_type == "langpack" ){
 			print( $mod_strings['LBL_UW_LANGPACK_READY_UNISTALL'] );
 			echo '<br><br>';
-		}
-		else if($install_type != "module"){
+		} else if($install_type != "module"){
 			print( $mod_strings['LBL_UW_FILES_REMOVED'] );
 		}
 		break;
@@ -369,10 +371,11 @@ if( $show_files == true ){
 	$cache_html_files = findAllFilesRelative( sugar_cached("layout"), array());
 
 	foreach($new_files as $the_file) {
-		if(substr(strtolower($the_file), -5, 5) == '.html' && in_array($the_file, $cache_html_files))
-		array_push($new_studio_mod_files, $the_file);
-		else
-		array_push($new_sugar_mod_files, $the_file);
+		if(substr(strtolower($the_file), -5, 5) == '.html' && in_array($the_file, $cache_html_files)) {
+				array_push($new_studio_mod_files, $the_file);
+		} else {
+				array_push($new_sugar_mod_files, $the_file);
+		}
 	}
 
 	echo '<script>
@@ -427,12 +430,10 @@ if( $show_files == true ){
 				print( " (no changes)" );
 			}
 			print( "<br>\n" );
-		}
-		else if( $mode == "Uninstall" && file_exists( $new_file ) ){
+		} else if( $mode == "Uninstall" && file_exists( $new_file ) ){
 			if( md5_file( $unzip_file ) == md5_file( $new_file ) ){
 				$checked = "checked=\"true\"";
-			}
-			else{
+			} else{
 				$highlight_start    = "<font color=red>";
 				$highlight_end      = "</font>";
 			}
@@ -458,7 +459,7 @@ if($mode == "Disable" || $mode == "Enable"){
                 			}
             			}
         				return true;';
-		}else{
+		} else{
 			echo 'return true;';
 		}
 		echo '}</script>';
@@ -472,13 +473,13 @@ if($mode == "Disable" || $mode == "Enable"){
 			print('<li>'.$modified_file.'</li>');
 		}
 		print('</ul>');
-	}else{
+	} else{
 		echo '<script>' .
 	        'function handleFileChange(){';
 		echo 'return true;';
 		echo '}</script>';
 	}
-}else{
+} else{
 	echo '<script>' .
         'function handleFileChange(){';
 	echo 'return true;';

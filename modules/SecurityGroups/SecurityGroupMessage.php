@@ -1,5 +1,7 @@
 <?PHP
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class SecurityGroupMessage extends Basic {
 	var $new_schema = true;
@@ -47,8 +49,7 @@ class SecurityGroupMessage extends Basic {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -106,7 +107,10 @@ class SecurityGroupMessage extends Basic {
 			$securitygroup_id = null; //6.4.0
 		}
 		$message = new SecurityGroupMessage();
-		if(empty($text)) return; // || !$feed->ACLAccess('save', true) )return;
+		if(empty($text)) {
+		    return;
+		}
+		// || !$feed->ACLAccess('save', true) )return;
 
 		$text = strip_tags($text);
 		$message->name = '';
@@ -135,18 +139,18 @@ class SecurityGroupMessage extends Basic {
 		if($weeks == 1){
 			$result = translate('LBL_TIME_LAST_WEEK','SugarFeed').' ';
 			return $result;
-		}else if($weeks > 1){
+		} else if($weeks > 1){
 			$result .= $weeks . ' '.translate('LBL_TIME_WEEKS','SugarFeed').' ';
 			if($days > 0) {
                 $result .= $days . ' '.translate('LBL_TIME_DAYS','SugarFeed').' ';
             }
-		}else{
+		} else{
 			if($days == 1){
 				$result = translate('LBL_TIME_YESTERDAY','SugarFeed').' ';
 				return $result;
-			}else if($days > 1){
+			} else if($days > 1){
 				$result .= $days . ' '. translate('LBL_TIME_DAYS','SugarFeed').' ';
-			}else{
+			} else{
 				if($hours == 1) {
                     $result .= $hours . ' '.translate('LBL_TIME_HOUR','SugarFeed').' ';
                 } else {

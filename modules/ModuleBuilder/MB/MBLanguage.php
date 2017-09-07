@@ -54,8 +54,7 @@ class MBLanguage{
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($name, $path, $label, $key_name);
@@ -72,7 +71,9 @@ class MBLanguage{
             $module = strtoupper($this->name);
             $object_name = strtoupper($this->key_name);
             $_object_name = strtolower($this->name);
-			if(!file_exists($file))return;
+			if(!file_exists($file)) {
+			    return;
+			}
 
 			$d = dir($file);
 			while($e = $d->read()){
@@ -81,7 +82,7 @@ class MBLanguage{
 					if(empty($this->strings[$e])){
 
 						$this->strings[$e] = $mod_strings;
-					}else{
+					} else{
 						$this->strings[$e] = array_merge($this->strings[$e], $mod_strings);
 					}
 
@@ -91,7 +92,9 @@ class MBLanguage{
 		}
 
 	    function loadAppListStrings($file){
-            if(!file_exists($file))return;
+            if(!file_exists($file)) {
+                return;
+            }
 			//we may not need this when loading in the app strings, but there is no harm
 			//in setting it.
 			$object_name = strtolower($this->key_name);
@@ -103,7 +106,7 @@ class MBLanguage{
 					if(empty($this->appListStrings[$e])){
 
 						$this->appListStrings[$e] = $app_list_strings;
-					}else{
+					} else{
 						$this->appListStrings[$e] = array_merge($this->appListStrings[$e], $app_list_strings);
 					}
 
@@ -132,7 +135,9 @@ class MBLanguage{
 			if(!empty($this->strings[$language]) && $language != 'en_us.lang.php'){
 			    return sugarLangArrayMerge($this->strings['en_us.lang.php'], $this->strings[$language]);
 			}
-			if(!empty($this->strings['en_us.lang.php']))return $this->strings['en_us.lang.php'];
+			if(!empty($this->strings['en_us.lang.php'])) {
+			    return $this->strings['en_us.lang.php'];
+			}
 			$empty = array();
 			return $empty;
 		}
@@ -141,7 +146,9 @@ class MBLanguage{
 			if(!empty($this->appListStrings[$language]) && $language != 'en_us.lang.php'){
 			    return sugarLangArrayMerge($this->appListStrings['en_us.lang.php'], $this->appListStrings[$language]);
 			}
-			if(!empty($this->appListStrings['en_us.lang.php']))return $this->appListStrings['en_us.lang.php'];
+			if(!empty($this->appListStrings['en_us.lang.php'])) {
+			    return $this->appListStrings['en_us.lang.php'];
+			}
 			$empty = array();
 			return $empty;
 		}
@@ -225,8 +232,12 @@ class MBLanguage{
 						$appFile .= override_value_to_string_recursive2 ('app_list_strings', $key, $array);
 					}
 					$okey = $key;
-					if($key_changed)$key = str_replace($this->key_name, $key_name, $key);
-					if($key_changed)$key = str_replace(strtolower($this->key_name), strtolower($key_name), $key);
+					if($key_changed) {
+					    $key = str_replace($this->key_name, $key_name, $key);
+					}
+					if($key_changed) {
+					    $key = str_replace(strtolower($this->key_name), strtolower($key_name), $key);
+					}
 					// if we aren't duplicating or the key has changed let's add it
 					if(!$duplicate || $okey != $key){
 						$appFile .= override_value_to_string_recursive2 ('app_list_strings', $key, $array);
@@ -257,8 +268,9 @@ class MBLanguage{
 		}
 
 		function build($path){
-			if(file_exists($this->path.'/language/'))
-			copy_recursive($this->path.'/language/', $path . '/language/');
+			if(file_exists($this->path.'/language/')) {
+						copy_recursive($this->path.'/language/', $path . '/language/');
+			}
 		}
 
 		function loadTemplates() {
@@ -290,11 +302,13 @@ class MBLanguage{
      */
     public function translate($label, $language = "en_us"){
             $language = $language . ".lang.php";
-            if (isset($this->strings[$language][$label]))
-                return $this->strings[$language][$label];
+            if (isset($this->strings[$language][$label])) {
+                            return $this->strings[$language][$label];
+            }
 
-            if (isset($this->appListStrings[$language][$label]))
-                return $this->appListStrings[$language][$label];
+            if (isset($this->appListStrings[$language][$label])) {
+                            return $this->appListStrings[$language][$label];
+            }
 
             return $label;
         }

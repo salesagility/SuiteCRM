@@ -103,8 +103,9 @@ class ViewHistory extends SugarView
         {
             $dbDate = $timedate->fromTimestamp($ts)->asDb();
             $displayTS = $timedate->to_display_date_time ( $dbDate ) ;
-            if ($page * $this->pageSize + $i + 1 == $count)
-                $displayTS = translate("LBL_MB_DEFAULT_LAYOUT");
+            if ($page * $this->pageSize + $i + 1 == $count) {
+                            $displayTS = translate("LBL_MB_DEFAULT_LAYOUT");
+            }
             $snapshots [ $ts ] = $displayTS ;
             $ts = $this->history->getNext () ;
         }
@@ -151,7 +152,7 @@ class ViewHistory extends SugarView
         {
         	require_once ("modules/ModuleBuilder/views/view.dashlet.php") ;
         	$view = new ViewDashlet ( ) ;
-        }  else if ($this->layout == 'popuplist' || $this->layout == 'popupsearch')
+        } else if ($this->layout == 'popuplist' || $this->layout == 'popupsearch')
         {
         	require_once ("modules/ModuleBuilder/views/view.popupview.php") ;
         	$view = new ViewPopupview ( ) ;

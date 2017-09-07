@@ -65,7 +65,9 @@ class Reminder_Invitee extends Basic {
     public static function saveRemindersInviteesData($reminderId, $inviteesData) {
         $savedInviteeIds = array();
         foreach($inviteesData as $k => $inviteeData) {
-            if(isset($_POST['isDuplicate']) && $_POST['isDuplicate']) $inviteeData->id = '';
+            if(isset($_POST['isDuplicate']) && $_POST['isDuplicate']) {
+                $inviteeData->id = '';
+            }
             $reminderInviteeBean = BeanFactory::getBean('Reminders_Invitees', $inviteeData->id);
             $reminderInviteeBean->reminder_id = $reminderId;
             $reminderInviteeBean->related_invitee_module = $inviteeData->module;
@@ -73,8 +75,7 @@ class Reminder_Invitee extends Basic {
             if(!$inviteeData->id) {
                 $reminderInviteeBean->save();
                 $savedInviteeIds[] = $reminderInviteeBean->id;
-            }
-            else {
+            } else {
                 $addedInvitees = BeanFactory::getBean('Reminders_Invitees')->get_full_list("", "reminders_invitees.id != '{$inviteeData->id}' AND reminders_invitees.reminder_id = '{$reminderInviteeBean->reminder_id}' AND reminders_invitees.related_invitee_module = '{$reminderInviteeBean->related_invitee_module}' AND reminders_invitees.related_invitee_module_id = '{$reminderInviteeBean->related_invitee_module_id}'");
                 if (!$addedInvitees) {
                     $reminderInviteeBean->save();
@@ -121,11 +122,9 @@ class Reminder_Invitee extends Basic {
             default:
                 if(isset($bean->first_name) && isset($bean->last_name)) {
                     $retValue = "{$bean->first_name} {$bean->last_name}";
-                }
-                else if(isset($bean->name)) {
+                } else if(isset($bean->name)) {
                     $retValue = $bean->name;
-                }
-                else if(isset($bean->email)) {
+                } else if(isset($bean->email)) {
                     $retValue = $bean->email;
                 }
                 if(!$retValue) {

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -60,7 +62,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
             $_REQUEST['js_rebuild_concat'] = 'rebuild';
             require_once('jssource/minify.php');
          
-        }else{
+        } else{
             $_REQUEST['root_directory'] = getcwd();
             require_once('jssource/minify.php');
         
@@ -68,13 +70,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                 //should replace compressed JS with source js
                 reverseScripts("$from/jssource/src_files","$from");    
     
-            }elseif($_REQUEST['js_admin_repair'] == 'mini'){
+            } elseif($_REQUEST['js_admin_repair'] == 'mini'){
                 //should replace compressed JS with minified version of source js
                 reverseScripts("$from/jssource/src_files","$from");
                 BackUpAndCompressScriptFiles("$from","",false);
                 ConcatenateFiles("$from");
     
-            }elseif($_REQUEST['js_admin_repair'] == 'repair'){
+            } elseif($_REQUEST['js_admin_repair'] == 'repair'){
              //should compress existing javascript (including changes done) without overwriting original source files
                 BackUpAndCompressScriptFiles("$from","",false);
                 ConcatenateFiles("$from");        

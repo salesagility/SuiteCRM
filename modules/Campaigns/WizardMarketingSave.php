@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -56,15 +58,15 @@ if (isset($_REQUEST['wiz_home_next_step']) && !empty($_REQUEST['wiz_home_next_st
     if($_REQUEST['wiz_home_next_step']==3){
         //user has chosen to save and schedule this campaign for email
         $master = 'send';
-    }elseif($_REQUEST['wiz_home_next_step']==2){
+    } elseif($_REQUEST['wiz_home_next_step']==2){
         //user has chosen to save and send this campaign in test mode
         $master = 'test';
-    }else{
+    } else{
         //user has chosen to simply save
         $master  = 'save';        
     }
         
-}else{
+} else{
      //default to just saving and exiting wizard
      $master = 'save';   
 }
@@ -76,8 +78,7 @@ $prefix = 'wiz_step3_';
 $marketing = new EmailMarketing();
 if (isset($_REQUEST['record']) && !empty($_REQUEST['record'])) {
     $marketing->retrieve($_REQUEST['record']);
-}
-else {
+} else {
     if(!empty($_SESSION['campaignWizard'][$_REQUEST['campaign_id']]['defaultSelectedMarketingId'])) {
         $marketing->retrieve($_SESSION['campaignWizard'][$_REQUEST['campaign_id']]['defaultSelectedMarketingId']);
     }
@@ -89,8 +90,7 @@ if(!$marketing->ACLAccess('Save')){
 
 if (!empty($_REQUEST['assigned_user_id']) && ($marketing->assigned_user_id != $_REQUEST['assigned_user_id']) && ($_POST['assigned_user_id'] != $current_user->id)) {
     $check_notify = TRUE;
-}
-else {
+} else {
     $check_notify = FALSE;
 }
 
@@ -127,7 +127,7 @@ foreach($marketing->column_fields as $field)
         } else {
             $marketing->$field = 0;         
         }
-    }else {
+    } else {
         if(isset($_REQUEST[$field]))
         {
             $value = $_REQUEST[$field];
@@ -207,12 +207,10 @@ if(isset($_REQUEST['show_wizard_summary']) && $_REQUEST['show_wizard_summary']) 
         $_POST['wiz_mass'] = $marketing->id;
         if(isset($_REQUEST['sendMarketingEmailTest']) && $_REQUEST['sendMarketingEmailTest']) {
             $_POST['mode'] = 'test';
-        }
-        else if(isset($_REQUEST['sendMarketingEmailSchedule']) && $_REQUEST['sendMarketingEmailSchedule']) {
+        } else if(isset($_REQUEST['sendMarketingEmailSchedule']) && $_REQUEST['sendMarketingEmailSchedule']) {
             $_POST['mode'] = 'send';
             $_SESSION['msg'] = 'LBL_EMAILS_SCHEDULED';
-        }
-        else {
+        } else {
             throw new Exception('request error');
         }
 
@@ -223,8 +221,7 @@ if(isset($_REQUEST['show_wizard_summary']) && $_REQUEST['show_wizard_summary']) 
     }
 
     $header_URL = "Location: index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=" . $marketing->campaign_id . "&campaign_id=" . $marketing->campaign_id . "&jump=3&marketing_id=" . $marketing->id;
-}
-else {
+} else {
     $header_URL = "Location: index.php?action=WizardHome&module=Campaigns&record=".$marketing->campaign_id;
 }
 

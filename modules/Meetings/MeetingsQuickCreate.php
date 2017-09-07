@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -75,12 +77,15 @@ class MeetingsQuickCreate extends QuickCreate {
         $this->javascript->setSugarBean($focus);
         $this->javascript->addAllFields('');
 
-		if (is_null($focus->date_start))
-			$focus->date_start = $timedate->to_display_date(TimeDate::getInstance()->nowDb());
-		if (is_null($focus->time_start))
-			$focus->time_start = $timedate->to_display_time(TimeDate::getInstance()->nowDb(), true);
-		if (!isset ($focus->duration_hours))
-			$focus->duration_hours = "1";
+		if (is_null($focus->date_start)) {
+					$focus->date_start = $timedate->to_display_date(TimeDate::getInstance()->nowDb());
+		}
+		if (is_null($focus->time_start)) {
+					$focus->time_start = $timedate->to_display_time(TimeDate::getInstance()->nowDb(), true);
+		}
+		if (!isset ($focus->duration_hours)) {
+					$focus->duration_hours = "1";
+		}
 
         
         $date_start_array=explode(" ",trim($focus->date_start));

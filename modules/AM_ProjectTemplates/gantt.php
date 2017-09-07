@@ -98,9 +98,7 @@ class Gantt {
                 {
                     if($x==1 && $x != $task_start_day){
                         echo '<td class="inner_td"><div class="cell_width day_block"></div></td>';
-                    }
-
-                    else if($x==1 && $x == $task_start_day){
+                    } else if($x==1 && $x == $task_start_day){
                         if($task->milestone_flag == '1' && ($task_duration == 0 || $task_duration == 1)){
                             echo '<td class="task_td2"><div class="cell_width task_block1">
                                     <div class="task_block_inner">
@@ -109,8 +107,7 @@ class Gantt {
                                         </div>
                                     </div>
                                   </div></td><td class="inner_td"><div class="cell_width day_block"></div></td>';
-                        }
-                        else if($task_duration == 0 || $task_duration == 1){
+                        } else if($task_duration == 0 || $task_duration == 1){
                             echo '<td class="task_td2"><div class="cell_width task_block1">
                                     <div class="task_block_inner">
                                         <div class="task1 link" id="'.$task->id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
@@ -118,8 +115,7 @@ class Gantt {
                                         </div>
                                     </div>
                                   </div></td><td class="inner_td"><div class="cell_width day_block"></div></td>';
-                        }
-                        else {
+                        } else {
                             echo '<td class="task_td" colspan="'.$task_duration.'"><div class="cell_width task_block">
                                     <div class="task_block_inner">
                                         <div class="task link" id="'.$task->id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
@@ -128,8 +124,7 @@ class Gantt {
                                     </div>
                                   </div></td>';
                         }
-                    }
-                    else if($x == $task_start_day && $x == $day_count){
+                    } else if($x == $task_start_day && $x == $day_count){
                         if($task->milestone_flag == '1' && ($task_duration == 0 || $task_duration == 1)){
                             echo '<td class="task_td2"><div class="cell_width task_block1">
                                     <div class="task_block_inner">
@@ -138,8 +133,7 @@ class Gantt {
                                         </div>
                                     </div>
                                   </div></td>';
-                        }
-                        else if($task_duration == 0 || $task_duration == 1){
+                        } else if($task_duration == 0 || $task_duration == 1){
                             echo '<td class="task_td2"><div class="cell_width task_block1">
                                 <div class="task_block_inner">
                                      <div class="task1 link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
@@ -147,8 +141,7 @@ class Gantt {
                                     </div>
                                 </div>
                               </div></td>';
-                        }
-                        else {
+                        } else {
                             echo '<td class="task_td" colspan="'.$task_duration.'"><div class="cell_width task_block">
                                     <div class="task_block_inner">
                                         <div class="task link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
@@ -157,8 +150,7 @@ class Gantt {
                                     </div>
                                   </div></td>';
                         }
-                    }
-                    else if($x == $task_start_day){
+                    } else if($x == $task_start_day){
 
                         if($task->milestone_flag == '1' && ($task_duration == 0 || $task_duration == 1)){
                             echo '<td class="task_td2"><div class="cell_width task_block1">
@@ -168,8 +160,7 @@ class Gantt {
                                         </div>
                                     </div>
                                   </div></td><td class="inner_td"><div class="cell_width day_block"></div></td>';
-                        }
-                        else if($task_duration == 0 || $task_duration == 1){
+                        } else if($task_duration == 0 || $task_duration == 1){
                             echo '<td class="task_td2"><div class="cell_width task_block1">
                                 <div class="task_block_inner">
                                      <div class="task1 link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
@@ -177,8 +168,7 @@ class Gantt {
                                     </div>
                                 </div>
                               </div></td><td class="inner_td"><div class="cell_width day_block"></div></td>';
-                        }
-                        else {
+                        } else {
                             echo '<td class="task_td" colspan="'.$task_duration.'"><div class="cell_width task_block">
                                 <div class="task_block_inner">
                                      <div class="task link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
@@ -187,15 +177,11 @@ class Gantt {
                                 </div>
                               </div></td>';
                         }
-                    }
-                    else if($x == $day_count){
+                    } else if($x == $day_count){
 
-                    }
-                    else if($x > $task_start_day && $x < $task_end_day){
+                    } else if($x > $task_start_day && $x < $task_end_day){
                         //leave blank
-                    }
-
-                    else {
+                    } else {
                           echo '<td class="inner_td"><div class="cell_width day_block"></div></td>';
                     }
                 }

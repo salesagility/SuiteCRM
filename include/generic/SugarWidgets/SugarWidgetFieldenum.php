@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -52,8 +54,7 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($layout_manager);
@@ -110,7 +111,7 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
     function & displayList($layout_def) {
         if(!empty($layout_def['column_key'])){
             $field_def = $this->reporter->all_fields[$layout_def['column_key']];
-        }else if(!empty($layout_def['fields'])){
+        } else if(!empty($layout_def['fields'])){
             $field_def = $layout_def['fields'];
         }
         $cell = $this->displayListPlain($layout_def);
@@ -144,13 +145,13 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
 	function & displayListPlain($layout_def) {
 		if(!empty($layout_def['column_key'])){
 			$field_def = $this->reporter->all_fields[$layout_def['column_key']];
-		}else if(!empty($layout_def['fields'])){
+		} else if(!empty($layout_def['fields'])){
 			$field_def = $layout_def['fields'];
 		}
 
 		if (!empty($layout_def['table_key'] ) &&( empty ($field_def['fields']) || empty ($field_def['fields'][0]) || empty ($field_def['fields'][1]))){
 			$value = $this->_get_list_value($layout_def);
-		}else if(!empty($layout_def['name']) && !empty($layout_def['fields'])){
+		} else if(!empty($layout_def['name']) && !empty($layout_def['fields'])){
 			$key = strtoupper($layout_def['name']);
 			$value = $layout_def['fields'][$key];
 		}
@@ -158,7 +159,7 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
 
 			if(isset($field_def['options'])){
 				$cell = translate($field_def['options'], $field_def['module'], $value);
-			}else if(isset($field_def['type']) && $field_def['type'] == 'enum' && isset($field_def['function'])){
+			} else if(isset($field_def['type']) && $field_def['type'] == 'enum' && isset($field_def['function'])){
 	            global $beanFiles;
 	            if(empty($beanFiles)) {
 	                include('include/modules.php');
@@ -217,18 +218,15 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
         if(!empty($layout_def['remove_blank']) && $layout_def['remove_blank']) {
             if ( isset($layout_def['options']) &&  is_array($layout_def['options']) ) {
                 $ops = $layout_def['options'];
-            }
-            elseif (isset($layout_def['options']) && isset($app_list_strings[$layout_def['options']])){
+            } elseif (isset($layout_def['options']) && isset($app_list_strings[$layout_def['options']])){
             	$ops = $app_list_strings[$layout_def['options']];
                 if(array_key_exists('', $app_list_strings[$layout_def['options']])) {
              	   unset($ops['']);
 	            }
-            }
-            else{
+            } else{
             	$ops = array();
             }
-        }
-        else {
+        } else {
             $ops = $app_list_strings[$layout_def['options']];
         }
 

@@ -54,8 +54,7 @@ class AOS_Product_Categories extends AOS_Product_Categories_sugar {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -72,7 +71,7 @@ class AOS_Product_Categories extends AOS_Product_Categories_sugar {
     function save($check_notify = FALSE){
         if($this->is_parent){
             $this->clearParent();
-        }else{
+        } else{
             $tmp = $this;
             while($tmp && $tmp->parent_category_id){
                 if($tmp->parent_category_id == $this->id){

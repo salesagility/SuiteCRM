@@ -139,7 +139,9 @@ class Configurator {
 		$overideString .= '/***CONFIGURATOR***/';
 
 		$this->saveOverride($overideString);
-		if(isset($this->config['logger']['level']) && $this->logger) $this->logger->setLevel($this->config['logger']['level']);
+		if(isset($this->config['logger']['level']) && $this->logger) {
+		    $this->logger->setLevel($this->config['logger']['level']);
+		}
 	}
 
 	//bug #27947 , if previous $sugar_config['stack_trace_errors'] is true and now we disable it , we should clear all the cache.
@@ -175,8 +177,7 @@ class Configurator {
 		if (file_exists('config_override.php')) {
 			if ( !is_readable('config_override.php') ) {
 				$GLOBALS['log']->fatal("Unable to read the config_override.php file. Check the file permissions");
-			}
-			else {
+			} else {
 				include('config_override.php');
 			}
 		}
@@ -287,20 +288,19 @@ class Configurator {
 					$property = isset( $temp[1])? $temp[1] : array();
 					if(preg_match("/log4php.appender.A2.MaxFileSize=/",$value)){
 						setDeepArrayValue($this->config, 'logger_file_maxSize', rtrim( $property));
-					}
-					elseif(preg_match("/log4php.appender.A2.File=/", $value)){
+					} elseif(preg_match("/log4php.appender.A2.File=/", $value)){
 						$ext = preg_split("/\./",$property);
 						if(preg_match( "/^\./", $property)){ //begins with .
 							setDeepArrayValue($this->config, 'logger_file_ext', isset($ext[2]) ? '.' . rtrim( $ext[2]):'.log');
 							setDeepArrayValue($this->config, 'logger_file_name', rtrim( ".".$ext[1]));
-						}else{
+						} else{
 							setDeepArrayValue($this->config, 'logger_file_ext', isset($ext[1]) ? '.' . rtrim( $ext[1]):'.log');
 							setDeepArrayValue($this->config, 'logger_file_name', rtrim( $ext[0] ));
 						}
-					}elseif(preg_match("/log4php.appender.A2.layout.DateFormat=/",$value)){
+					} elseif(preg_match("/log4php.appender.A2.layout.DateFormat=/",$value)){
 						setDeepArrayValue($this->config, 'logger_file_dateFormat', trim(rtrim( $property), '""'));
 
-					}elseif(preg_match("/log4php.rootLogger=/",$value)){
+					} elseif(preg_match("/log4php.rootLogger=/",$value)){
 						$property = explode(",",$property);
 						setDeepArrayValue($this->config, 'logger_level', rtrim( $property[0]));
 					}
