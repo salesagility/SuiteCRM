@@ -50,7 +50,7 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar {
     /**
      * @var settings array
      */
-    publicvar $settings = array();
+    public $settings = array();
 
 
     /**
