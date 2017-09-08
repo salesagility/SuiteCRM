@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class StoreQuery
 {
-    var $query = array();
+    public $query = array();
 
     function addToQuery($name, $val)
     {

@@ -45,25 +45,25 @@
     class vCal extends SugarBean {
 
         // Stored fields
-        var $id;
-        var $date_modified;
-        var $user_id;
-        var $content;
-        var $deleted;
-        var $type;
-        var $source;
-        var $module_dir = "vCals";
-        var $table_name = "vcals";
+        public $id;
+        public $date_modified;
+        public $user_id;
+        public $content;
+        public $deleted;
+        public $type;
+        public $source;
+        public $module_dir = "vCals";
+        public $table_name = "vcals";
 
-        var $object_name = "vCal";
-        var $tracker_visibility = false;
+        public $object_name = "vCal";
+        public $tracker_visibility = false;
 
-        var $new_schema = true;
+        public $new_schema = true;
 
-        var $field_defs = array();
+        public $field_defs = array();
 
         // This is used to retrieve related fields from form posts.
-        var $additional_column_fields = Array();
+        public $additional_column_fields = Array();
 
         const UTC_FORMAT = 'Ymd\THi00\Z';
         const EOL = "\r\n";

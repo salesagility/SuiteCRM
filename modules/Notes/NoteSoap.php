@@ -44,7 +44,7 @@ require_once('include/upload_file.php');
 
 class NoteSoap
 {
-    var $upload_file;
+    public $upload_file;
 
     function __construct()
     {

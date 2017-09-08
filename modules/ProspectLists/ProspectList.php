@@ -43,45 +43,45 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 class ProspectList extends SugarBean {
-	var $field_name_map;
+    public $field_name_map;
 
 	// Stored fields
-	var $id;
-	var $date_entered;
-	var $date_modified;
-	var $modified_user_id;
-	var $assigned_user_id;
-	var $created_by;
-	var $created_by_name;
-	var $modified_by_name;
-	var $list_type;
-	var $domain_name;
+	public $id;
+	public $date_entered;
+	public $date_modified;
+	public $modified_user_id;
+	public $assigned_user_id;
+	public $created_by;
+	public $created_by_name;
+	public $modified_by_name;
+	public $list_type;
+	public $domain_name;
 
-	var $name;
-	var $description;
+	public $name;
+	public $description;
 
 	// These are related
-	var $assigned_user_name;
-	var $prospect_id;
-	var $contact_id;
-	var $lead_id;
+	public $assigned_user_name;
+	public $prospect_id;
+	public $contact_id;
+	public $lead_id;
 
 	// module name definitions and table relations
-	var $table_name = "prospect_lists";
-	var $module_dir = 'ProspectLists';
-	var $rel_prospects_table = "prospect_lists_prospects";
-	var $object_name = "ProspectList";
+	public $table_name = "prospect_lists";
+	public $module_dir = 'ProspectLists';
+	public $rel_prospects_table = "prospect_lists_prospects";
+	public $object_name = "ProspectList";
 
 	// This is used to retrieve related fields from form posts.
-	var $additional_column_fields = array(
+	public $additional_column_fields = array(
 		'assigned_user_name', 'assigned_user_id', 'campaign_id',
 	);
-	var $relationship_fields = array(
+	public $relationship_fields = array(
 		'campaign_id'=>'campaigns',
 		'prospect_list_prospects' => 'prospects',
 	);
 
-    var $entry_count;
+    public $entry_count;
 
     public function __construct() {
 		global $sugar_config;
@@ -103,7 +103,7 @@ class ProspectList extends SugarBean {
     }
 
 
-	var $new_schema = true;
+	public $new_schema = true;
 
 	function get_summary_text()
 	{

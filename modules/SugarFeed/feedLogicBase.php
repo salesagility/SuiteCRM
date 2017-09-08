@@ -40,7 +40,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 class FeedLogicBase {
-	var $module = '';
+    public $module = '';
 	
 	function pushFeed($bean, $event, $arguments){
 		

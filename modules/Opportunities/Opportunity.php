@@ -44,53 +44,53 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 // Opportunity is used to store customer information.
 class Opportunity extends SugarBean {
-	var $field_name_map;
+	public $field_name_map;
 	// Stored fields
-	var $id;
-	var $lead_source;
-	var $date_entered;
-	var $date_modified;
-	var $modified_user_id;
-	var $assigned_user_id;
-	var $created_by;
-	var $created_by_name;
-	var $modified_by_name;
-	var $description;
-	var $name;
-	var $opportunity_type;
-	var $amount;
-	var $amount_usdollar;
-	var $currency_id;
-	var $date_closed;
-	var $next_step;
-	var $sales_stage;
-	var $probability;
-	var $campaign_id;
+	public $id;
+	public $lead_source;
+	public $date_entered;
+	public $date_modified;
+	public $modified_user_id;
+	public $assigned_user_id;
+	public $created_by;
+	public $created_by_name;
+	public $modified_by_name;
+	public $description;
+	public $name;
+	public $opportunity_type;
+	public $amount;
+	public $amount_usdollar;
+	public $currency_id;
+	public $date_closed;
+	public $next_step;
+	public $sales_stage;
+	public $probability;
+	public $campaign_id;
 
 	// These are related
-	var $account_name;
-	var $account_id;
-	var $contact_id;
-	var $task_id;
-	var $note_id;
-	var $meeting_id;
-	var $call_id;
-	var $email_id;
-	var $assigned_user_name;
+	public $account_name;
+	public $account_id;
+	public $contact_id;
+	public $task_id;
+	public $note_id;
+	public $meeting_id;
+	public $call_id;
+	public $email_id;
+	public $assigned_user_name;
 
-	var $table_name = "opportunities";
-	var $rel_account_table = "accounts_opportunities";
-	var $rel_contact_table = "opportunities_contacts";
-	var $module_dir = "Opportunities";
+	public $table_name = "opportunities";
+	public $rel_account_table = "accounts_opportunities";
+	public $rel_contact_table = "opportunities_contacts";
+	public $module_dir = "Opportunities";
 
-	var $importable = true;
-	var $object_name = "Opportunity";
+	public $importable = true;
+	public $object_name = "Opportunity";
 
 	// This is used to retrieve related fields from form posts.
-	var $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'account_name', 'account_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id'
+	public $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'account_name', 'account_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id'
 	);
 
-	var $relationship_fields = Array('task_id'=>'tasks', 'note_id'=>'notes', 'account_id'=>'accounts',
+	public $relationship_fields = Array('task_id'=>'tasks', 'note_id'=>'notes', 'account_id'=>'accounts',
 									'meeting_id'=>'meetings', 'call_id'=>'calls', 'email_id'=>'emails', 'project_id'=>'project',
 									// Bug 38529 & 40938
 									'currency_id' => 'currencies',
@@ -117,7 +117,7 @@ class Opportunity extends SugarBean {
 		self::__construct();
 	}
 
-	var $new_schema = true;
+	public $new_schema = true;
 
 
 

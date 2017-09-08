@@ -46,7 +46,7 @@ require_once('modules/ModuleBuilder/views/view.modulefield.php');
  
 class ViewModulefields extends SugarView
 {
-    var $mbModule;
+    public $mbModule;
     
     /**
 	 * @see SugarView::_getModuleTitleParams()

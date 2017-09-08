@@ -43,7 +43,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('modules/Administration/Common.php');
 require_once('modules/Administration/QuickRepairAndRebuild.php');
 class DropDownHelper{
-    var $modules = array();
+    public $modules = array();
     function getDropDownModules(){
         $dir = dir('modules');
         while($entry = $dir->read()){

@@ -46,13 +46,13 @@ require_once('include/Dashlets/DashletGeneric.php');
 require_once('include/externalAPI/ExternalAPIFactory.php');
 
 class SugarFeedDashlet extends DashletGeneric {
-var $displayRows = 15;
+    public $displayRows = 15;
 
-var $categories;
+    public $categories;
 
-var $userfeed_created;
+    public $userfeed_created;
 
-var $selectedCategories = array();
+    public $selectedCategories = array();
 
 
     function __construct($id, $def = null) {

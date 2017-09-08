@@ -43,13 +43,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 class MBVardefs{
-	var $templates = array();
-	var $iTemplates = array();
-	var $vardefs = array();
-	var $vardef = array();
-	var $path = '';
-	var $name = '';
-	var $errors = array();
+    public $templates = array();
+    public $iTemplates = array();
+    public $vardefs = array();
+    public $vardef = array();
+    public $path = '';
+    public $name = '';
+    public $errors = array();
 
 	function __construct($name, $path, $key_name){
 		$this->path = $path;

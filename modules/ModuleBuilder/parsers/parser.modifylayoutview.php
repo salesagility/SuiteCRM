@@ -48,18 +48,18 @@ require_once ('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
 class ParserModifyLayoutView extends ModuleBuilderParser
 {
 
-    var $maxColumns; // number of columns in this layout
-    var $usingWorkingFile = false; // if a working file exists (used by view.edit.php among others to determine the title for the layout edit panel)
-    var $language_module; // set to module name for studio, passed to the smarty template and used by sugar_translate
-    var $_sourceFile; // private - the source of the layout defn
-    var $_customFile; // private
-    var $_workingFile; // private
-    var $_originalFile; //private
-    var $_moduleVariable; // private - if set, contains the name of the variable containing the module name in the $viewdef file
-    var $_module; // private
-    var $_view; // private
-    var $_viewdefs; // private
-    var $_fieldDefs; // private
+    public $maxColumns; // number of columns in this layout
+    public $usingWorkingFile = false; // if a working file exists (used by view.edit.php among others to determine the title for the layout edit panel)
+    public $language_module; // set to module name for studio, passed to the smarty template and used by sugar_translate
+    public $_sourceFile; // private - the source of the layout defn
+    public $_customFile; // private
+    public $_workingFile; // private
+    public $_originalFile; //private
+    public $_moduleVariable; // private - if set, contains the name of the variable containing the module name in the $viewdef file
+    public $_module; // private
+    public $_view; // private
+    public $_viewdefs; // private
+    public $_fieldDefs; // private
 
 
     /**
@@ -517,4 +517,3 @@ class ParserModifyLayoutView extends ModuleBuilderParser
     }
 
 }
-?>

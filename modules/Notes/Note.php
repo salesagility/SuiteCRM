@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,62 +34,54 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
-
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/upload_file.php');
 
 // Note is used to store customer information.
 class Note extends SugarBean {
-	var $field_name_map;
+    public $field_name_map;
 	// Stored fields
-	var $id;
-	var $date_entered;
-	var $date_modified;
-	var $modified_user_id;
-	var $assigned_user_id;
-	var $created_by;
-	var $created_by_name;
-	var $modified_by_name;
-	var $description;
-	var $name;
-	var $filename;
+	public $id;
+	public $date_entered;
+	public $date_modified;
+	public $modified_user_id;
+	public $assigned_user_id;
+	public $created_by;
+	public $created_by_name;
+	public $modified_by_name;
+	public $description;
+	public $name;
+	public $filename;
 	// handle to an upload_file object
 	// used in emails
-	var $file;
-	var $embed_flag; // inline image flag
-	var $parent_type;
-	var $parent_id;
-	var $contact_id;
-	var $portal_flag;
+	public $file;
+	public $embed_flag; // inline image flag
+	public $parent_type;
+	public $parent_id;
+	public $contact_id;
+	public $portal_flag;
 
-	var $parent_name;
-	var $contact_name;
-	var $contact_phone;
-	var $contact_email;
-	var $file_mime_type;
-	var $module_dir = "Notes";
-	var $default_note_name_dom = array('Meeting notes', 'Reminder');
-	var $table_name = "notes";
-	var $new_schema = true;
-	var $object_name = "Note";
-	var $importable = true;
+	public $parent_name;
+	public $contact_name;
+	public $contact_phone;
+	public $contact_email;
+	public $file_mime_type;
+	public $module_dir = "Notes";
+	public $default_note_name_dom = array('Meeting notes', 'Reminder');
+	public $table_name = "notes";
+	public $new_schema = true;
+	public $object_name = "Note";
+	public $importable = true;
 
 	// This is used to retrieve related fields from form posts.
-	var $additional_column_fields = Array('contact_name', 'contact_phone', 'contact_email', 'parent_name','first_name','last_name');
+	public $additional_column_fields = Array('contact_name', 'contact_phone', 'contact_email', 'parent_name','first_name','last_name');
 
 
 

@@ -57,12 +57,12 @@ require_once ('modules/ModuleBuilder/parsers/parser.modifylistview.php') ;
 
 class ParserModifySubPanel extends ParserModifyListView
 {
-    
-    var $listViewDefs = false ;
-    var $defaults = array ( ) ;
-    var $additional = array ( ) ;
-    var $available = array ( ) ;
-    var $columns = array ( 'LBL_DEFAULT' => 'getDefaultFields' , 'LBL_HIDDEN' => 'getAvailableFields' ) ;
+
+    public $listViewDefs = false ;
+    public $defaults = array () ;
+    public $additional = array () ;
+    public $available = array () ;
+    public $columns = array ( 'LBL_DEFAULT' => 'getDefaultFields' , 'LBL_HIDDEN' => 'getAvailableFields' ) ;
     
     function init ($module_name , $subPanelName)
     {

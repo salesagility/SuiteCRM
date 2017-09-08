@@ -43,28 +43,28 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 class SecurityGroupMessage extends Basic {
-	var $new_schema = true;
-	var $module_dir = 'SecurityGroups';
-	var $object_name = 'SecurityGroupMessage';
-	var $table_name = 'securitygroups_message';
-	var $importable = false;
+	public $new_schema = true;
+	public $module_dir = 'SecurityGroups';
+	public $object_name = 'SecurityGroupMessage';
+	public $table_name = 'securitygroups_message';
+	public $importable = false;
 
-	var $id;
-	var $name;
-	var $date_entered;
-	var $date_modified;
-	var $modified_user_id;
-	var $modified_by_name;
-	var $created_by;
-	var $created_by_name;
-	var $description;
-	var $deleted;
-	var $created_by_link;
-	var $modified_user_link;
+	public $id;
+	public $name;
+	public $date_entered;
+	public $date_modified;
+	public $modified_user_id;
+	public $modified_by_name;
+	public $created_by;
+	public $created_by_name;
+	public $description;
+	public $deleted;
+	public $created_by_link;
+	public $modified_user_link;
 
 
-	var $additional_column_fields = Array();
-	var $field_defs = array (
+	public $additional_column_fields = Array();
+	public $field_defs = array (
        'id'=>array('name' =>'id', 'type' =>'char', 'len'=>'36', 'default'=>'')
       , 'name'=>array('name' =>'name', 'type' =>'varchar', 'len'=>'255', )
       , 'date_entered'=>array ('name' => 'date_entered','type' => 'datetime')
@@ -225,4 +225,3 @@ class SecurityGroupMessage extends Basic {
 	}
 
 }
-?>

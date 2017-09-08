@@ -47,9 +47,9 @@ require_once ('modules/DynamicFields/DynamicField.php') ;
 
 class StandardField extends DynamicField
 {
-	var $custom_def = array();
-	var $base_def = array();
-	var $baseField;
+    public $custom_def = array();
+    public $base_def = array();
+    public $baseField;
     
     protected function loadCustomDef($field){
     	global $beanList;

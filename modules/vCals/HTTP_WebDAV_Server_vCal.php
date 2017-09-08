@@ -63,11 +63,11 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
          * @access private
          * @var    string
          */
-        var $base = "";
-        var $vcal_focus;
-        var $vcal_type = "";
-        var $source = "";
-        var $publish_key = "";
+        public $base = "";
+        public $vcal_focus;
+        public $vcal_type = "";
+        public $source = "";
+        public $publish_key = "";
 
         function __construct()
         {

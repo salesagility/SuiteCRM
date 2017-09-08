@@ -43,8 +43,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 class MBLanguage{
-		var $iTemplates = array();
-		var $templates = array();
+    public $iTemplates = array();
+    public $templates = array();
 		function __construct( $name, $path, $label, $key_name){
 			$this->path = $path;
 			$this->name = $name;

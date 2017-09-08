@@ -41,48 +41,48 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 // Task is used to store customer information.
 class Task extends SugarBean {
-        var $field_name_map;
+        public $field_name_map;
 
 	// Stored fields
-	var $id;
-	var $date_entered;
-	var $date_modified;
-	var $assigned_user_id;
-	var $modified_user_id;
-	var $created_by;
-	var $created_by_name;
-	var $modified_by_name;
-	var $description;
-	var $name;
-	var $status;
-	var $date_due_flag;
-	var $date_due;
-	var $time_due;
-	var $date_start_flag;
-	var $date_start;
-	var $time_start;
-	var $priority;
-	var $parent_type;
-	var $parent_id;
-	var $contact_id;
+	public $id;
+	public $date_entered;
+	public $date_modified;
+	public $assigned_user_id;
+	public $modified_user_id;
+	public $created_by;
+	public $created_by_name;
+	public $modified_by_name;
+	public $description;
+	public $name;
+	public $status;
+	public $date_due_flag;
+	public $date_due;
+	public $time_due;
+	public $date_start_flag;
+	public $date_start;
+	public $time_start;
+	public $priority;
+	public $parent_type;
+	public $parent_id;
+	public $contact_id;
 
-	var $parent_name;
-	var $contact_name;
-	var $contact_phone;
-	var $contact_email;
-	var $assigned_user_name;
+	public $parent_name;
+	public $contact_name;
+	public $contact_phone;
+	public $contact_email;
+	public $assigned_user_name;
 
 //bug 28138 todo
-//	var $default_task_name_values = array('Assemble catalogs', 'Make travel arrangements', 'Send a letter', 'Send contract', 'Send fax', 'Send a follow-up letter', 'Send literature', 'Send proposal', 'Send quote', 'Call to schedule meeting', 'Setup evaluation', 'Get demo feedback', 'Arrange introduction', 'Escalate support request', 'Close out support request', 'Ship product', 'Arrange reference call', 'Schedule training', 'Send local user group information', 'Add to mailing list');
+//	public $default_task_name_values = array('Assemble catalogs', 'Make travel arrangements', 'Send a letter', 'Send contract', 'Send fax', 'Send a follow-up letter', 'Send literature', 'Send proposal', 'Send quote', 'Call to schedule meeting', 'Setup evaluation', 'Get demo feedback', 'Arrange introduction', 'Escalate support request', 'Close out support request', 'Ship product', 'Arrange reference call', 'Schedule training', 'Send local user group information', 'Add to mailing list');
 
-	var $table_name = "tasks";
+	public $table_name = "tasks";
 
-	var $object_name = "Task";
-	var $module_dir = 'Tasks';
+	public $object_name = "Task";
+	public $module_dir = 'Tasks';
 
-	var $importable = true;
+	public $importable = true;
 	// This is used to retrieve related fields from form posts.
-	var $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'contact_name', 'contact_phone', 'contact_email', 'parent_name');
+	public $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'contact_name', 'contact_phone', 'contact_email', 'parent_name');
 
 
     public function __construct() {
@@ -104,7 +104,7 @@ class Task extends SugarBean {
     }
 
 
-	var $new_schema = true;
+	public $new_schema = true;
 
     function save($check_notify = FALSE)
     {

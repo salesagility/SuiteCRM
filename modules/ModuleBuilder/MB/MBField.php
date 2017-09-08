@@ -43,17 +43,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 class MBField{
-	var $type = 'varchar';
-	var $name = false;
-	var $label = false;
-	var $vname = false;
-	var $options = false;
-	var $length = false;
-	var $error = '';
-	var $required = false;
-	var $reportable = true;
-	var $default = 'MSI1';
-	var $comment = '';
+	public $type = 'publicchar';
+	public $name = false;
+	public $label = false;
+	public $vname = false;
+	public $options = false;
+	public $length = false;
+	public $error = '';
+	public $required = false;
+	public $reportable = true;
+	public $default = 'MSI1';
+	public $comment = '';
 	
 	
 	
@@ -118,4 +118,3 @@ class MBField{
 	}
 	
 }
-?>

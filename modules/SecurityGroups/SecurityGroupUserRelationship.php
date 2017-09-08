@@ -47,20 +47,20 @@ require_once('data/SugarBean.php');
 // Contact is used to store customer information.
 class SecurityGroupUserRelationship extends SugarBean {
     // Stored fields
-    var $id;
-    var $securitygroup_id;
-    var $securitygroup_noninheritable;
-    var $user_id;
-    var $noninheritable;
-    var $primary_group;
+    public $id;
+    public $securitygroup_id;
+    public $securitygroup_noninheritable;
+    public $user_id;
+    public $noninheritable;
+    public $primary_group;
 
     // Related fields
-    var $securitygroup_name;
-    var $user_name;
+    public $securitygroup_name;
+    public $user_name;
 
-    var $table_name = "securitygroups_users";
-    var $object_name = "SecurityGroupUserRelationship";
-    var $column_fields = Array("id"
+    public $table_name = "securitygroups_users";
+    public $object_name = "SecurityGroupUserRelationship";
+    public $column_fields = Array("id"
         ,"securitygroup_id"
         ,"user_id"
         ,"noninheritable"
@@ -68,10 +68,10 @@ class SecurityGroupUserRelationship extends SugarBean {
         ,'date_modified'
         );
 
-    var $new_schema = true;
+    public $new_schema = true;
 
-    var $additional_column_fields = Array();
-        var $field_defs = array (
+    public $additional_column_fields = Array();
+        public $field_defs = array (
        'id'=>array('name' =>'id', 'type' =>'char', 'len'=>'36', 'default'=>'')
       , 'securitygroup_id'=>array('name' =>'securitygroup_id', 'type' =>'char', 'len'=>'36', )
       , 'user_id'=>array('name' =>'user_id', 'type' =>'char', 'len'=>'36',)

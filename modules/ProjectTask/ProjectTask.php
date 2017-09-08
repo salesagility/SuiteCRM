@@ -68,7 +68,7 @@ class ProjectTask extends SugarBean {
 
     public $table_name = 'project_task';
     public $object_name = 'ProjectTask';
-	var $module_dir = 'ProjectTask';
+    public $module_dir = 'ProjectTask';
 
     public $field_name_map;
     public $new_schema = true;

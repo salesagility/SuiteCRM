@@ -45,14 +45,14 @@ require_once 'data/SugarBean.php';
 
 class Tracker extends SugarBean
 {
-    var $module_dir = 'Trackers';
-    var $table_name = 'tracker';
-    var $object_name = 'Tracker';
-    var $disable_var_defs = true;
-    var $acltype = 'Tracker';
-    var $acl_category = 'Trackers';
-    var $disable_custom_fields = true;
-    var $column_fields = Array(
+    public $module_dir = 'Trackers';
+    public $table_name = 'tracker';
+    public $object_name = 'Tracker';
+    public $disable_var_defs = true;
+    public $acltype = 'Tracker';
+    public $acl_category = 'Trackers';
+    public $disable_custom_fields = true;
+    public $column_fields = Array(
         "id",
         "monitor_id",
         "user_id",

@@ -48,7 +48,7 @@ require_once ('modules/ModuleBuilder/MB/MBPackage.php') ;
 
 class ModuleBuilder
 {
-    var $packages = array ( ) ;
+    public $packages = array ( ) ;
 
     function getPackageList ()
     {

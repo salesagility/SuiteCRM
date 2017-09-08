@@ -48,8 +48,8 @@ require_once ('modules/ModuleBuilder/MB/MBPackage.php');
 class ParserSearchFields extends ModuleBuilderParser
 {
 
-	var $searchFields;
-	var $packageKey;
+    public $searchFields;
+    public $packageKey;
 
     function __construct ($moduleName, $packageName='')
     {
