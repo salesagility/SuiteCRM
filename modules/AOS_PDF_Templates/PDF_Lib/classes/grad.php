@@ -2,7 +2,7 @@
 
 class grad {
 
-var $mpdf = null;
+    public $mpdf = null;
 
 function grad(&$mpdf) {
 	$this->mpdf = $mpdf;

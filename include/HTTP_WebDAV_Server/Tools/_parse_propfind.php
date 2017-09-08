@@ -35,7 +35,7 @@ class _parse_propfind
 	 * @var bool
 	 * @access public
 	 */
-	var $success = false;
+    public $success = false;
 
 	/**
 	 * found properties are collected here
@@ -43,7 +43,7 @@ class _parse_propfind
 	 * @var array
 	 * @access public
 	 */
-	var $props = false;
+    public $props = false;
 
 	/**
 	 * internal tag nesting depth counter
@@ -51,7 +51,7 @@ class _parse_propfind
 	 * @var int
 	 * @access private
 	 */
-	var $depth = 0;
+    public $depth = 0;
 
 
 	/**

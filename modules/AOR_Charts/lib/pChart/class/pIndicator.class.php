@@ -25,7 +25,7 @@
  /* pIndicator class definition */
  class pIndicator
   {
-   var $pChartObject;
+     public $pChartObject;
 
    /* Class creator */
    function pIndicator($pChartObject)

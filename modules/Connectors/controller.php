@@ -45,7 +45,7 @@ require_once('include/MVC/Controller/SugarController.php');
 
 class ConnectorsController extends SugarController {
 
-	var $admin_actions = array('ConnectorSettings', 'DisplayProperties', 'MappingProperties', 'ModifyMapping', 'ModifyDisplay', 'ModifyProperties',
+    public $admin_actions = array('ConnectorSettings', 'DisplayProperties', 'MappingProperties', 'ModifyMapping', 'ModifyDisplay', 'ModifyProperties',
 	                           'ModifySearch', 'SearchProperties', 'SourceProperties',
 	                           'SavedModifyDisplay', 'SaveModifyProperties', 'SaveModifySearch', 'RunTest');
 

@@ -2,14 +2,14 @@
 
 class cssmgr {
 
-var $mpdf = null;
+    public $mpdf = null;
 
-var $tablecascadeCSS;
-var $listcascadeCSS;
-var $cascadeCSS;
-var $CSS;
-var $tbCSSlvl;
-var $listCSSlvl;
+    public $tablecascadeCSS;
+    public $listcascadeCSS;
+    public $cascadeCSS;
+    public $CSS;
+    public $tbCSSlvl;
+    public $listCSSlvl;
 
 
 function cssmgr(&$mpdf) {

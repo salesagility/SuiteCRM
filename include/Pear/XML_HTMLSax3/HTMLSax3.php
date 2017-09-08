@@ -47,109 +47,109 @@ class XML_HTMLSax3_StateParser {
     * @var XML_HTMLSax3
     * @access private
     */
-    var $htmlsax;
+    public $htmlsax;
     /**
     * User defined object for handling elements
     * @var object
     * @access private
     */
-    var $handler_object_element;
+    public $handler_object_element;
     /**
     * User defined open tag handler method
     * @var string
     * @access private
     */
-    var $handler_method_opening;
+    public $handler_method_opening;
     /**
     * User defined close tag handler method
     * @var string
     * @access private
     */
-    var $handler_method_closing;
+    public $handler_method_closing;
     /**
     * User defined object for handling data in elements
     * @var object
     * @access private
     */
-    var $handler_object_data;
+    public $handler_object_data;
     /**
     * User defined data handler method
     * @var string
     * @access private
     */
-    var $handler_method_data;
+    public $handler_method_data;
     /**
     * User defined object for handling processing instructions
     * @var object
     * @access private
     */
-    var $handler_object_pi;
+    public $handler_object_pi;
     /**
     * User defined processing instruction handler method
     * @var string
     * @access private
     */
-    var $handler_method_pi;
+    public $handler_method_pi;
     /**
     * User defined object for handling JSP/ASP tags
     * @var object
     * @access private
     */
-    var $handler_object_jasp;
+    public $handler_object_jasp;
     /**
     * User defined JSP/ASP handler method
     * @var string
     * @access private
     */
-    var $handler_method_jasp;
+    public $handler_method_jasp;
     /**
     * User defined object for handling XML escapes
     * @var object
     * @access private
     */
-    var $handler_object_escape;
+    public $handler_object_escape;
     /**
     * User defined XML escape handler method
     * @var string
     * @access private
     */
-    var $handler_method_escape;
+    public $handler_method_escape;
     /**
     * User defined handler object or NullHandler
     * @var object
     * @access private
     */
-    var $handler_default;
+    public $handler_default;
     /**
     * Parser options determining parsing behavior
     * @var array
     * @access private
     */
-    var $parser_options = array();
+    public $parser_options = array();
     /**
     * XML document being parsed
     * @var string
     * @access private
     */
-    var $rawtext;
+    public $rawtext;
     /**
     * Position in XML document relative to start (0)
     * @var int
     * @access private
     */
-    var $position;
+    public $position;
     /**
     * Length of the XML document in characters
     * @var int
     * @access private
     */
-    var $length;
+    public $length;
     /**
     * Array of state objects
     * @var array
     * @access private
     */
-    var $State = array();
+    public $State = array();
 
     /**
     * Constructs XML_HTMLSax3_StateParser setting up states
@@ -478,7 +478,7 @@ class XML_HTMLSax3 {
     * @var XML_HTMLSax3_StateParser
     * @access private
     */
-    var $state_parser;
+    public $state_parser;
 
     /**
     * Constructs XML_HTMLSax3 selecting concrete StateParser subclass
@@ -697,4 +697,3 @@ class XML_HTMLSax3 {
         $this->state_parser->parse($data);
     }
 }
-?>

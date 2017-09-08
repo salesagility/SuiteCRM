@@ -46,10 +46,10 @@ $js_loaded = false;
 require_once("include/templates/Template.php");
 
 class TemplateGroupChooser extends Template {
-    var $args;
-    var $js_loaded = false;
-    var $display_hide_tabs = true;
-    var $display_third_tabs = false;
+    public $args;
+    public $js_loaded = false;
+    public $display_hide_tabs = true;
+    public $display_third_tabs = false;
 
     function __construct() {
     }

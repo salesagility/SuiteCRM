@@ -41,25 +41,25 @@ require_once('include/SugarFields/Fields/Collection/SugarFieldCollection.php');
 
 
 class ViewSugarFieldCollection{
-    var $ss; // Sugar Smarty Object
-    var $bean;
-    var $bean_id;
-    var $name;
-    var $value_name;
-    var $displayParams; // DisplayParams for the collection field (defined in the metadata)
-    var $vardef; // vardef of the collection field.
-    var $related_module; // module name of the related module
-    var $module_dir; // name of the module where the collection field is.
-    var $numFields;
-    var $json;
-    var $tpl_path;
-    var $extra_var;
-    var $skipModuleQuickSearch = false;
-    var $field_to_name_array; //mapping of fields for the return of the select popup
-    var $showSelectButton = true;
-    var $hideShowHideButton = false;
-    var $action_type;
-    var $form_name;
+    public $ss; // Sugar Smarty Object
+    public $bean;
+    public $bean_id;
+    public $name;
+    public $value_name;
+    public $displayParams; // DisplayParams for the collection field (defined in the metadata)
+    public $vardef; // vardef of the collection field.
+    public $related_module; // module name of the related module
+    public $module_dir; // name of the module where the collection field is.
+    public $numFields;
+    public $json;
+    public $tpl_path;
+    public $extra_var;
+    public $skipModuleQuickSearch = false;
+    public $field_to_name_array; //mapping of fields for the return of the select popup
+    public $showSelectButton = true;
+    public $hideShowHideButton = false;
+    public $action_type;
+    public $form_name;
 
     function __construct($fill_data = true){
     	$this->json = getJSONobj();

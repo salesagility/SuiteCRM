@@ -41,7 +41,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('modules/DynamicFields/templates/Fields/TemplateEnum.php');
 require_once('include/utils/array_utils.php');
 class TemplateMultiEnum extends TemplateEnum{
-	var $type = 'text';
+    public $type = 'text';
 
 	function get_html_edit(){
 		$this->prepare();

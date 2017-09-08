@@ -40,9 +40,9 @@
  */
 class Crypt_Blowfish_DefaultKey
 {
-    var $P = array();
+    public $P = array();
 
-    var $S = array();
+    public $S = array();
 
     function __construct()
     {

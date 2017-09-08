@@ -47,35 +47,35 @@ class pdf_parser {
      * Filename
      * @var string
      */
-    var $filename;
+    public $filename;
     
     /**
      * File resource
      * @var resource
      */
-    var $f;
+    public $f;
     
     /**
      * PDF Context
      * @var object pdf_context-Instance
      */
-    var $c;
+    public $c;
     
     /**
      * xref-Data
      * @var array
      */
-    var $xref;
+    public $xref;
 
     /**
      * root-Object
      * @var array
      */
-    var $root;
+    public $root;
 	
     // mPDF 4.0 Added flag to show success on loading file
-    var $success;
-    var $errormsg;
+    public $success;
+    public $errormsg;
 
     /**
      * Constructor

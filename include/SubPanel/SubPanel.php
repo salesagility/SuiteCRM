@@ -46,21 +46,21 @@ require_once('include/SubPanel/registered_layout_defs.php');
  */
 class SubPanel
 {
-	var $hideNewButton = false;
-	var $subpanel_id;
-	var $parent_record_id;
-	var $parent_module;  // the name of the parent module
-	var $parent_bean;  // the instantiated bean of the parent
-	var $template_file;
-	var $linked_fields;
-	var $action = 'DetailView';
-	var $show_select_button = true;
-	var $subpanel_define = null;  // contains the layout_def.php
-	var $subpanel_defs;
-	var $subpanel_query=null;
-    var $layout_def_key='';
-	var $search_query='';
-	var $collections = array();
+    public $hideNewButton = false;
+    public $subpanel_id;
+    public $parent_record_id;
+    public $parent_module;  // the name of the parent module
+    public $parent_bean;  // the instantiated bean of the parent
+    public $template_file;
+    public $linked_fields;
+    public $action = 'DetailView';
+    public $show_select_button = true;
+    public $subpanel_define = null;  // contains the layout_def.php
+    public $subpanel_defs;
+    public $subpanel_query=null;
+    public $layout_def_key='';
+    public $search_query='';
+    public $collections = array();
 
 	function __construct($module, $record_id, $subpanel_id, $subpanelDef, $layout_def_key='', $collections = array() )
 	{

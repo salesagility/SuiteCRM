@@ -66,33 +66,33 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 */
 class soap_transport_http extends nusoap_base {
 
-	var $url = '';
-	var $uri = '';
-	var $digest_uri = '';
-	var $scheme = '';
-	var $host = '';
-	var $port = '';
-	var $path = '';
-	var $request_method = 'POST';
-	var $protocol_version = '1.0';
-	var $encoding = '';
-	var $outgoing_headers = array();
-	var $incoming_headers = array();
-	var $incoming_cookies = array();
-	var $outgoing_payload = '';
-	var $incoming_payload = '';
-	var $response_status_line;	// HTTP response status line
-	var $useSOAPAction = true;
-	var $persistentConnection = false;
-	var $ch = false;	// cURL handle
-	var $ch_options = array();	// cURL custom options
-	var $use_curl = false;		// force cURL use
-	var $proxy = null;			// proxy information (associative array)
-	var $username = '';
-	var $password = '';
-	var $authtype = '';
-	var $digestRequest = array();
-	var $certRequest = array();	// keys must be cainfofile (optional), sslcertfile, sslkeyfile, passphrase, certpassword (optional), verifypeer (optional), verifyhost (optional)
+    public $url = '';
+    public $uri = '';
+    public $digest_uri = '';
+    public $scheme = '';
+    public $host = '';
+    public $port = '';
+    public $path = '';
+    public $request_method = 'POST';
+    public $protocol_version = '1.0';
+    public $encoding = '';
+    public $outgoing_headers = array();
+    public $incoming_headers = array();
+    public $incoming_cookies = array();
+    public $outgoing_payload = '';
+    public $incoming_payload = '';
+    public $response_status_line;	// HTTP response status line
+    public $useSOAPAction = true;
+    public $persistentConnection = false;
+    public $ch = false;	// cURL handle
+    public $ch_options = array();	// cURL custom options
+    public $use_curl = false;		// force cURL use
+    public $proxy = null;			// proxy information (associative array)
+    public $username = '';
+    public $password = '';
+    public $authtype = '';
+    public $digestRequest = array();
+    public $certRequest = array();	// keys must be cainfofile (optional), sslcertfile, sslkeyfile, passphrase, certpassword (optional), verifypeer (optional), verifyhost (optional)
 								// cainfofile: certificate authority file, e.g. '$pathToPemFiles/rootca.pem'
 								// sslcertfile: SSL certificate file, e.g. '$pathToPemFiles/mycert.pem'
 								// sslkeyfile: SSL key file, e.g. '$pathToPemFiles/mykey.pem'

@@ -24,7 +24,7 @@
  /* pRadar class definition */
  class pRadar
   {
-   var $pChartObject;
+     public $pChartObject;
 
    /* Class creator */
    function pRadar()
@@ -580,7 +580,7 @@
         {
          $LabelX = cos(deg2rad($i+$AxisRotation)) * ($EdgeHeight+$LabelPadding+$TicksLength) + $CenterX;
          $LabelY = sin(deg2rad($i+$AxisRotation)) * ($EdgeHeight+$LabelPadding+$TicksLength) + $CenterY;
-         $Label = $i."°";
+         $Label = $i."ï¿½";
 
          if ( $LabelPos == RADAR_LABELS_ROTATED )
           $Object->drawText($LabelX,$LabelY,$Label,array("Angle"=>(360-$i),"Align"=>TEXT_ALIGN_BOTTOMMIDDLE));

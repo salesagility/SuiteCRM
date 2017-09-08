@@ -47,17 +47,17 @@ class EditView {
      * smarty object
      * @var object
      */
-    var $ss;
+    public $ss;
     /**
      * location of template to use
      * @var string
      */
-    var $template;
+    public $template;
     /**
      * Module to use
      * @var string
      */
-    var $module;
+    public $module;
 
     /**
      *

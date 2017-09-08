@@ -52,10 +52,10 @@ require_once('include/MVC/View/ViewFactory.php');
  */
 class SugarApplication
 {
- 	var $controller = null;
- 	var $headerDisplayed = false;
- 	var $default_module = 'Home';
- 	var $default_action = 'index';
+    public $controller = null;
+    public $headerDisplayed = false;
+    public $default_module = 'Home';
+    public $default_action = 'index';
 
  	public function __construct()
  	{}

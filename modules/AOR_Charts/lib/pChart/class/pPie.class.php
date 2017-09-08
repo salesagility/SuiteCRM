@@ -31,9 +31,9 @@
  /* pPie class definition */
  class pPie
   {
-   var $pChartObject;
-   var $pDataObject;
-   var $LabelPos = "" ;
+     public $pChartObject;
+     public $pDataObject;
+     public $LabelPos = "" ;
 
    /* Class creator */
    function pPie($Object,$pDataObject)

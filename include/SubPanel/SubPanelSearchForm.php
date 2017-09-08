@@ -9,7 +9,7 @@ require_once('include/SearchForm/SearchForm2.php');
 
 class SubPanelSearchForm extends SearchForm  {
 
-    var $subPanel; // the instantiated bean of the subPanel
+    public $subPanel; // the instantiated bean of the subPanel
 
     function __construct($seed, $module, $subPanel, $options = array()){
         $this->subPanel = $subPanel;

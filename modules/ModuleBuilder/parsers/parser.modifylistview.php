@@ -42,17 +42,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 require_once ('modules/ModuleBuilder/parsers/ModuleBuilderParser.php') ;
 class ParserModifyListView extends ModuleBuilderParser
 {
-	var $listViewDefs = false ;
-	var $defaults = array ( ) ;
-	var $additional = array ( ) ;
-	var $available = array ( ) ;
-	var $reserved = array(); // fields marked by 'studio'=>false in the listviewdefs; need to be preserved
-	//	var $language_module = '';
-	var $columns = array ( 'LBL_DEFAULT' => 'getDefaultFields' , 'LBL_AVAILABLE' => 'getAdditionalFields' , 'LBL_HIDDEN' => 'getAvailableFields' ) ;
+	public $listViewDefs = false ;
+    public $defaults = array ( ) ;
+    public $additional = array ( ) ;
+    public $available = array ( ) ;
+    public $reserved = array(); // fields marked by 'studio'=>false in the listviewdefs; need to be preserved
+    public $columns = array ( 'LBL_DEFAULT' => 'getDefaultFields' , 'LBL_AVAILABLE' => 'getAdditionalFields' , 'LBL_HIDDEN' => 'getAvailableFields' ) ;
 	function init ( $module_name , $submodule = '' )
 	{
 		global $app_list_strings ;
@@ -339,4 +337,3 @@ class ParserModifyListView extends ModuleBuilderParser
 		TemplateHandler::clearCache ( $this->module_name, "ListView.tpl" ) ; // not currently cached, but here for the future
 	}
 }
-?>

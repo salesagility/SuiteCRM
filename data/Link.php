@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,46 +34,37 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
-* Description:  Defines the base class for new data type, Relationship, methods in the class will
-* be used to manipulate relationship between object instances.
-* Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
-* All Rights Reserved.
-* Contributor(s): ______________________________________..
-********************************************************************************/
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class Link {
 
 	/* Private variables.*/
-	var $_log;
-	var $_relationship_name; //relationship this attribute is tied to.
-	var $_bean; //stores a copy of the bean.
-	var $_relationship= '';
-	var $_bean_table_name;
-	var $_bean_key_name='id';
+    public $_log;
+    public $_relationship_name; //relationship this attribute is tied to.
+    public $_bean; //stores a copy of the bean.
+    public $_relationship= '';
+    public $_bean_table_name;
+    public $_bean_key_name='id';
 	private $relationship_fields = array();
-	var $_db;
-	var $_swap_sides = false;
-	var $_rhs_key_override = false;
-	var $_bean_filter_field = '';
+    public $_db;
+    public $_swap_sides = false;
+    public $_rhs_key_override = false;
+    public $_bean_filter_field = '';
 
 	//if set to true role column will not be added to the filter criteria.
-	var $ignore_role_filter=false;
+    public $ignore_role_filter=false;
 	//if set to true distinct clause will be added to the select list.
-	var $add_distinct=false;
-	//value of this variable dictates the action to be taken when a duplicate relationship record is found.
-	//1-ignore,2-update,3-delete.
-	//var $when_dup_relationship_found=2; // deprecated - only used by Queues, which is also no longer used
+    public $add_distinct=false;
 
 	// a value for duplicate variable is stored by the _relatinship_exists method.
-	var $_duplicate_key;
-	var $_duplicate_where;
+    public $_duplicate_key;
+	public $_duplicate_where;
 
 	/* Parameters:
 	 * 		$_rel_name: use this relationship key.

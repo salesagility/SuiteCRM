@@ -19,8 +19,8 @@
  /* pBubble class definition */
  class pBubble
   {
-   var $pChartObject;
-   var $pDataObject;
+     public $pChartObject;
+     public $pDataObject;
 
    /* Class creator */
    function pBubble($pChartObject,$pDataObject)

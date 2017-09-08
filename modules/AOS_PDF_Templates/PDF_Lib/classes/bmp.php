@@ -2,7 +2,7 @@
 
 class bmp {
 
-var $mpdf = null;
+public $mpdf = null;
 
 function bmp(&$mpdf) {
 	$this->mpdf = $mpdf;

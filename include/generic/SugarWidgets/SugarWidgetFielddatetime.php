@@ -45,8 +45,8 @@ if(!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetFieldDateTime extends SugarWidgetReportField
 {
-	var $reporter;
-	var $assigned_user=null;
+    public $reporter;
+    public $assigned_user=null;
 
     function __construct($layout_manager)
     {

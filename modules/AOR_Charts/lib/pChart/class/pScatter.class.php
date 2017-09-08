@@ -19,8 +19,8 @@
  /* pScatter class definition */
  class pScatter
   {
-   var $pChartObject;
-   var $pDataObject;
+     public $pChartObject;
+     public $pDataObject;
 
    /* Class creator */
    function pScatter($pChartObject,$pDataObject)

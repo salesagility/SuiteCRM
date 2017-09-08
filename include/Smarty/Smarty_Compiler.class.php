@@ -38,41 +38,41 @@ class Smarty_Compiler extends Smarty {
     /**#@+
      * @access private
      */
-    var $_folded_blocks         =   array();    // keeps folded template blocks
-    var $_current_file          =   null;       // the current template being compiled
-    var $_current_line_no       =   1;          // line number for error messages
-    var $_capture_stack         =   array();    // keeps track of nested capture buffers
-    var $_plugin_info           =   array();    // keeps track of plugins to load
-    var $_init_smarty_vars      =   false;
-    var $_permitted_tokens      =   array('true','false','yes','no','on','off','null');
-    var $_db_qstr_regexp        =   null;        // regexps are setup in the constructor
-    var $_si_qstr_regexp        =   null;
-    var $_qstr_regexp           =   null;
-    var $_func_regexp           =   null;
-    var $_reg_obj_regexp        =   null;
-    var $_var_bracket_regexp    =   null;
-    var $_num_const_regexp      =   null;
-    var $_dvar_guts_regexp      =   null;
-    var $_dvar_regexp           =   null;
-    var $_cvar_regexp           =   null;
-    var $_svar_regexp           =   null;
-    var $_avar_regexp           =   null;
-    var $_mod_regexp            =   null;
-    var $_var_regexp            =   null;
-    var $_parenth_param_regexp  =   null;
-    var $_func_call_regexp      =   null;
-    var $_obj_ext_regexp        =   null;
-    var $_obj_start_regexp      =   null;
-    var $_obj_params_regexp     =   null;
-    var $_obj_call_regexp       =   null;
-    var $_cacheable_state       =   0;
-    var $_cache_attrs_count     =   0;
-    var $_nocache_count         =   0;
-    var $_cache_serial          =   null;
-    var $_cache_include         =   null;
+    public $_folded_blocks         =   array();    // keeps folded template blocks
+    public $_current_file          =   null;       // the current template being compiled
+    public $_current_line_no       =   1;          // line number for error messages
+    public $_capture_stack         =   array();    // keeps track of nested capture buffers
+    public $_plugin_info           =   array();    // keeps track of plugins to load
+    public $_init_smarty_vars      =   false;
+    public $_permitted_tokens      =   array('true','false','yes','no','on','off','null');
+    public $_db_qstr_regexp        =   null;        // regexps are setup in the constructor
+    public $_si_qstr_regexp        =   null;
+    public $_qstr_regexp           =   null;
+    public $_func_regexp           =   null;
+    public $_reg_obj_regexp        =   null;
+    public $_var_bracket_regexp    =   null;
+    public $_num_const_regexp      =   null;
+    public $_dvar_guts_regexp      =   null;
+    public $_dvar_regexp           =   null;
+    public $_cvar_regexp           =   null;
+    public $_svar_regexp           =   null;
+    public $_avar_regexp           =   null;
+    public $_mod_regexp            =   null;
+    public $_var_regexp            =   null;
+    public $_parenth_param_regexp  =   null;
+    public $_func_call_regexp      =   null;
+    public $_obj_ext_regexp        =   null;
+    public $_obj_start_regexp      =   null;
+    public $_obj_params_regexp     =   null;
+    public $_obj_call_regexp       =   null;
+    public $_cacheable_state       =   0;
+    public $_cache_attrs_count     =   0;
+    public $_nocache_count         =   0;
+    public $_cache_serial          =   null;
+    public $_cache_include         =   null;
 
-    var $_strip_depth           =   0;
-    var $_additional_newline    =   "\n";
+    public $_strip_depth           =   0;
+    public $_additional_newline    =   "\n";
 
     /**#@-*/
     /**

@@ -42,8 +42,8 @@
 require_once('include/DetailView/DetailView2.php');
 
 class ViewMetadata extends SugarView{
-	var $type ='detail';
-	var $dv;
+    public $type ='detail';
+    public $dv;
 	
 	
  	

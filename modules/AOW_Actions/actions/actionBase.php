@@ -25,7 +25,7 @@
 
 class actionBase {
 
-    var $id;
+    public $id;
 
     function __construct($id = ''){
         $this->id = $id;

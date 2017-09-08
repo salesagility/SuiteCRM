@@ -58,13 +58,13 @@ class CMISRepositoryWrapper
     // Very Little Error Checking
     // Does not work against pre CMIS 1.0 Repos
 
-    var $url;
-    var $username;
-    var $password;
-    var $authenticated;
-    var $workspace;
-    var $last_request;
-    var $do_not_urlencode;
+    public $url;
+    public $username;
+    public $password;
+    public $authenticated;
+    public $workspace;
+    public $last_request;
+    public $do_not_urlencode;
     protected $_addlCurlOptions = array();
 
     static $namespaces = array (
@@ -650,10 +650,10 @@ define("MIME_CMIS_QUERY", 'application/cmisquery+xml');
 
 class CMISService extends CMISRepositoryWrapper
 {
-    var $_link_cache;
-    var $_title_cache;
-    var $_objTypeId_cache;
-    var $_type_cache;
+    public $_link_cache;
+    public $_title_cache;
+    public $_objTypeId_cache;
+    public $_type_cache;
     function __construct($url, $username, $password, $options = null, array $addlCurlOptions = array())
     {
         parent :: __construct($url, $username, $password, $options, $addlCurlOptions);

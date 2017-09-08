@@ -47,36 +47,36 @@ require_once('include/EditView/EditView2.php');
 
 class SearchForm
 {
-    var $seed = null;
-    var $module = '';
-    var $action = 'index';
-    var $searchdefs = array();
-    var $listViewDefs = array();
-    var $lv;
-    var $th;
-    var $tpl;
-    var $view = 'SearchForm';
-    var $displayView = 'basic_search';
-    var $formData;
-    var $fieldDefs;
-    var $customFieldDefs;
-    var $tabs;
-    var $parsedView = 'basic';
+    public $seed = null;
+    public $module = '';
+    public $action = 'index';
+    public $searchdefs = array();
+    public $listViewDefs = array();
+    public $lv;
+    public $th;
+    public $tpl;
+    public $view = 'SearchForm';
+    public $displayView = 'basic_search';
+    public $formData;
+    public $fieldDefs;
+    public $customFieldDefs;
+    public $tabs;
+    public $parsedView = 'basic';
     //may remove
-    var $searchFields;
-    var $displaySavedSearch = true;
+    public $searchFields;
+    public $displaySavedSearch = true;
     //show the advanced tab
-    var $showAdvanced = true;
+    public $showAdvanced = true;
     //show the basic tab
-    var $showBasic = true;
+    public $showBasic = true;
     //array of custom tab to show declare in searchdefs (no custom tab if false)
-    var $showCustom = false;
+    public $showCustom = false;
     // nb of tab to show
-    var $nbTabs = 0;
+    public $nbTabs = 0;
     // hide saved searches drop and down near the search button
-    var $showSavedSearchesOptions = true;
+    public $showSavedSearchesOptions = true;
 
-    var $displayType = 'searchView';
+    public $displayType = 'searchView';
 
     /**
      * @var array

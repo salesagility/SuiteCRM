@@ -26,33 +26,33 @@ class fpdi_pdf_parser extends pdf_parser {
      *
      * @var array
      */
-    var $pages;
+    public $pages;
     
     /**
      * Page count
      * @var integer
      */
-    var $page_count;
+    public $page_count;
     
     /**
      * actual page number
      * @var integer
      */
-    var $pageno;
+    public $pageno;
     
     
     /**
      * FPDI Reference
      * @var object
      */
-    var $fpdi;
+    public $fpdi;
     
     /**
      * Available BoxTypes
      *
      * @var array
      */
-    var $availableBoxes = array("/MediaBox","/CropBox","/BleedBox","/TrimBox","/ArtBox");
+    public $availableBoxes = array("/MediaBox","/CropBox","/BleedBox","/TrimBox","/ArtBox");
         
     /**
      * Constructor

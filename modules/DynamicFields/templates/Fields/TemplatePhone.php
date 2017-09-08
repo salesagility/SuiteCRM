@@ -40,9 +40,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 class TemplatePhone extends TemplateText{
-    var $max_size = 25;
-    var $type='phone';
-    var $supports_unified_search = true;
+    public $max_size = 25;
+    public $type='phone';
+    public $supports_unified_search = true;
     
     /**
      * __construct

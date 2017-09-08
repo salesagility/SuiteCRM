@@ -47,24 +47,24 @@ class SugarChart {
 
 	private $db;
 	protected $ss;
-	var $forceHideDataGroupLink = false;
-	var $data_set = array();
-	var $display_data = array();
-	var $chart_properties = array();
-	var $chart_yAxis = array();
-	var $group_by = array();
-	var $super_set = array();
-	var $colors_list = array();
-	var $base_url = array();
-	var $url_params = array();
-	var $display_labels = array();
+    public $forceHideDataGroupLink = false;
+    public $data_set = array();
+    public $display_data = array();
+    public $chart_properties = array();
+    public $chart_yAxis = array();
+    public $group_by = array();
+    public $super_set = array();
+    public $colors_list = array();
+    public $base_url = array();
+    public $url_params = array();
+    public $display_labels = array();
 
-	var $currency_symbol;
-	var $thousands_symbol;
-	var $is_currency;
-	var $supports_image_export = false;
-	var $print_html_legend_pdf = false;
-	var $image_export_type = "";
+    public $currency_symbol;
+    public $thousands_symbol;
+    public $is_currency;
+    public $supports_image_export = false;
+    public $print_html_legend_pdf = false;
+    public $image_export_type = "";
 
 	public function __construct() {
 		$this->db = DBManagerFactory::getInstance();

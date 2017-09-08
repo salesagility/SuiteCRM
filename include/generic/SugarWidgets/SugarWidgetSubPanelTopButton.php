@@ -47,12 +47,12 @@ if(!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetSubPanelTopButton extends SugarWidget
 {
-    var $module;
-	var $title;
-	var $access_key;
-	var $form_value;
-	var $additional_form_fields;
-	var $acl;
+    public $module;
+    public $title;
+    public $access_key;
+    public $form_value;
+    public $additional_form_fields;
+    public $acl;
 
 //TODO rename defines to layout defs and make it a member variable instead of passing it multiple layers with extra copying.
 

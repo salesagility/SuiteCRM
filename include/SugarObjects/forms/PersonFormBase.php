@@ -55,8 +55,8 @@ require_once('include/SugarObjects/forms/FormBase.php');
 
 abstract class PersonFormBase extends FormBase {
 
-var $moduleName;
-var $objectName;
+    public $moduleName;
+    public $objectName;
     
 /**
  * buildTableForm

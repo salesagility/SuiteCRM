@@ -38,13 +38,13 @@ class XML_HTMLSax3_Trim {
     * @var object
     * @access private
     */
-    var $orig_obj;
+    public $orig_obj;
     /**
     * Original handler method
     * @var string
     * @access private
     */
-    var $orig_method;
+    public $orig_method;
     /**
     * Constructs XML_HTMLSax3_Trim
     * @param object handler object being decorated
@@ -94,19 +94,19 @@ class XML_HTMLSax3_CaseFolding {
     * @var object
     * @access private
     */
-    var $orig_obj;
+    public $orig_obj;
     /**
     * Original open handler method
     * @var string
     * @access private
     */
-    var $orig_open_method;
+    public $orig_open_method;
     /**
     * Original close handler method
     * @var string
     * @access private
     */
-    var $orig_close_method;
+    public $orig_close_method;
     /**
     * Constructs XML_HTMLSax3_CaseFolding
     * @param object handler object being decorated
@@ -151,13 +151,13 @@ class XML_HTMLSax3_Linefeed {
     * @var object
     * @access private
     */
-    var $orig_obj;
+    public $orig_obj;
     /**
     * Original handler method
     * @var string
     * @access private
     */
-    var $orig_method;
+    public $orig_method;
     /**
     * Constructs XML_HTMLSax3_LineFeed
     * @param object handler object being decorated
@@ -193,13 +193,13 @@ class XML_HTMLSax3_Tab {
     * @var object
     * @access private
     */
-    var $orig_obj;
+    public $orig_obj;
     /**
     * Original handler method
     * @var string
     * @access private
     */
-    var $orig_method;
+    public $orig_method;
     /**
     * Constructs XML_HTMLSax3_Tab
     * @param object handler object being decorated
@@ -236,13 +236,13 @@ class XML_HTMLSax3_Entities_Parsed {
     * @var object
     * @access private
     */
-    var $orig_obj;
+    public $orig_obj;
     /**
     * Original handler method
     * @var string
     * @access private
     */
-    var $orig_method;
+    public $orig_method;
     /**
     * Constructs XML_HTMLSax3_Entities_Parsed
     * @param object handler object being decorated
@@ -288,13 +288,13 @@ class XML_HTMLSax3_Entities_Unparsed {
     * @var object
     * @access private
     */
-    var $orig_obj;
+    public $orig_obj;
     /**
     * Original handler method
     * @var string
     * @access private
     */
-    var $orig_method;
+    public $orig_method;
     /**
     * Constructs XML_HTMLSax3_Entities_Unparsed
     * @param object handler object being decorated
@@ -331,13 +331,13 @@ class XML_HTMLSax3_Escape_Stripper {
     * @var object
     * @access private
     */
-    var $orig_obj;
+    public $orig_obj;
     /**
     * Original handler method
     * @var string
     * @access private
     */
-    var $orig_method;
+    public $orig_method;
     /**
     * Constructs XML_HTMLSax3_Entities_Unparsed
     * @param object handler object being decorated

@@ -16,12 +16,12 @@
  /* pData class definition */
  class pBarcode39
   {
-   var $Codes;
-   var $Reverse;
-   var $Result;
-   var $pChartObject;
-   var $CRC;
-   var $MOD43;
+     public $Codes;
+     public $Reverse;
+     public $Result;
+     public $pChartObject;
+     public $CRC;
+     public $MOD43;
 
    /* Class creator */
    function pBarcode39($BasePath="",$EnableMOD43=FALSE)

@@ -52,7 +52,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 class EmailAddress extends SugarEmailAddress
 {
-	var $disable_row_level_security = true;
+    public $disable_row_level_security = true;
 
 	function __construct()
 	{

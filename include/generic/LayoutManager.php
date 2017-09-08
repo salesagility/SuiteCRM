@@ -50,10 +50,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 class LayoutManager
 {
-	var $defs = array();
-	var $widget_prefix = 'SugarWidget';
-	var $default_widget_name = 'Field';
-	var $DBHelper;
+    public $defs = array();
+    public $widget_prefix = 'SugarWidget';
+    public $default_widget_name = 'Field';
+    public $DBHelper;
 
 	function __construct()
 	{

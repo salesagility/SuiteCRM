@@ -50,7 +50,7 @@ require_once('include/vCard.php');
 
 class ViewImportvcard extends SugarView
 {
-	var $type = 'edit';
+    public $type = 'edit';
 
     public function __construct()
     {

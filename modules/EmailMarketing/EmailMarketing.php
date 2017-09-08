@@ -43,33 +43,33 @@ if(!defined('sugarEntry') || !sugarEntry) {
 
 class EmailMarketing extends SugarBean
 {
-	var $field_name_map;
+    public $field_name_map;
 
-	var $id;
-	var $deleted;
-	var $date_entered;
-	var $date_modified;
-	var $modified_user_id;
-	var $created_by;
-	var $name;
-	var $from_addr;
-	var $from_name;
-	var $reply_to_name;
-	var $reply_to_addr;
-	var $date_start;
-	var $time_start;
-	var $template_id;
-	var $campaign_id;
-	var $all_prospect_lists;
-	var $status;
-	var $inbound_email_id;
-	var $outbound_email_id;
+    public $id;
+    public $deleted;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $created_by;
+    public $name;
+    public $from_addr;
+    public $from_name;
+    public $reply_to_name;
+    public $reply_to_addr;
+    public $date_start;
+    public $time_start;
+    public $template_id;
+    public $campaign_id;
+    public $all_prospect_lists;
+    public $status;
+    public $inbound_email_id;
+    public $outbound_email_id;
 
-	var $table_name = 'email_marketing';
-	var $object_name = 'EmailMarketing';
-	var $module_dir = 'EmailMarketing';
+    public $table_name = 'email_marketing';
+    public $object_name = 'EmailMarketing';
+    public $module_dir = 'EmailMarketing';
 
-	var $new_schema = true;
+    public $new_schema = true;
 
     public function __construct()
 	{

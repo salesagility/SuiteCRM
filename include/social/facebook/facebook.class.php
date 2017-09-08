@@ -4,7 +4,7 @@ require_once("include/social/facebook/facebook_sdk/src/facebook.php");
 
 class facebook_helper{
 
-    var $facebook;
+    public $facebook;
 
     function __construct() {
         require_once("custom/modules/Connectors/connectors/sources/ext/rest/facebook/config.php");

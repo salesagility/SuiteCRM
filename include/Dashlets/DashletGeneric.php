@@ -51,68 +51,68 @@ class DashletGeneric extends Dashlet {
      * Fields that are searchable
      * @var array
      */
-    var $searchFields;
+    public $searchFields;
     /**
      * Displayable columns (ones available to display)
      * @var array
      */
-    var $columns;
+    public $columns;
     /**
      * Bean file used in this Dashlet
      * @var bean
      */
-    var $seedBean;
+    public $seedBean;
     /**
      * collection of filters to apply
      * @var array
      */
-    var $filters = null;
+    public $filters = null;
     /**
      * Number of Rows to display
      * @var int
      */
-    var $displayRows = '5';
+    public $displayRows = '5';
     /**
      * Actual columns to display, will be a subset of $columns
      * @var array
      */
-    var $displayColumns = null;
+    public $displayColumns = null;
     /**
      * Flag to display only the current users's items.
      * @var bool
      */
-    var $myItemsOnly = true;
+    public $myItemsOnly = true;
     /**
      * Flag to display "myItemsOnly" checkbox in the DashletGenericConfigure.
      * @var bool
      */
-    var $showMyItemsOnly = true;
+    public $showMyItemsOnly = true;
     /**
      * location of Smarty template file for display
      * @var string
      */
-    var $displayTpl = 'include/Dashlets/DashletGenericDisplay.tpl';
+    public $displayTpl = 'include/Dashlets/DashletGenericDisplay.tpl';
     /**
      * location of smarty template file for configuring
      * @var string
      */
-    var $configureTpl = 'include/Dashlets/DashletGenericConfigure.tpl';
+    public $configureTpl = 'include/Dashlets/DashletGenericConfigure.tpl';
     /**
      * smarty object for the generic configuration template
      * @var string
      */
-    var $configureSS;
+    public $configureSS;
     /** search inputs to be populated in configure template.
      *  modify this after processDisplayOptions, but before displayOptions to modify search inputs
      *  @var array
      */
-    var $currentSearchFields;
+    public $currentSearchFields;
     /**
      * ListView Smarty Class
      * @var Smarty
      */
-    var $lvs;
-    var $layoutManager;
+    public $lvs;
+    public $layoutManager;
 
     function __construct($id, $options = null) {
         parent::__construct($id);

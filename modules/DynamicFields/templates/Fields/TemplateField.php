@@ -47,36 +47,36 @@ class TemplateField{
 		-detail
 		-search
 		*/
-	var $view = 'edit';
-	var $name = '';
-	var $vname = '';
+    public $view = 'edit';
+    public $name = '';
+    public $vname = '';
     public $label = '';
-	var $id = '';
-	var $size = '20';
-	var $len = '255';
-	var $required = false;
-	var $default = null;
-	var $default_value = null;
-	var $type = 'varchar';
-	var $comment = '';
-	var $bean;
-	var $ext1 = '';
-	var $ext2 = '';
-	var $ext3 = '';
-	var $ext4 = '';
-	var $audited= 0;
-    var $inline_edit = 1;
-    var $massupdate = 0;
-	var $importable = 'true' ;
-	var $duplicate_merge=0;
-	var $new_field_definition;
-	var $reportable = true;
-	var $label_value = '';
-	var $help = '';
-	var $formula = '';
-    var $unified_search = 0;
-    var $supports_unified_search = false;
-	var $vardef_map = array(
+    public $id = '';
+    public $size = '20';
+    public $len = '255';
+    public $required = false;
+    public $default = null;
+    public $default_value = null;
+    public $type = 'varchar';
+    public $comment = '';
+    public $bean;
+    public $ext1 = '';
+    public $ext2 = '';
+    public $ext3 = '';
+    public $ext4 = '';
+    public $audited= 0;
+    public $inline_edit = 1;
+    public $massupdate = 0;
+    public $importable = 'true' ;
+    public $duplicate_merge=0;
+    public $new_field_definition;
+    public $reportable = true;
+    public $label_value = '';
+    public $help = '';
+    public $formula = '';
+    public $unified_search = 0;
+    public $supports_unified_search = false;
+    public $vardef_map = array(
 		'name'=>'name',
 		'label'=>'vname',
 	// bug 15801 - need to ALWAYS keep default and default_value consistent as some methods/classes use one, some use another...
@@ -108,7 +108,7 @@ class TemplateField{
 	);
     // Bug #48826
     // fields to decode from post request
-    var $decode_from_request_fields_map = array('formula', 'dependency');
+    public $decode_from_request_fields_map = array('formula', 'dependency');
 
     function __construct(){
     }

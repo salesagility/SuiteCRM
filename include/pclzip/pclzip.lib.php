@@ -205,19 +205,19 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
    class PclZip
   {
     // ----- Filename of the zip file
-    var $zipname = '';
+       public $zipname = '';
 
     // ----- File descriptor of the zip file
-    var $zip_fd = 0;
+       public $zip_fd = 0;
 
     // ----- Internal error handling
-    var $error_code = 1;
-    var $error_string = '';
+       public $error_code = 1;
+       public $error_string = '';
 
     // ----- Current status of the magic_quotes_runtime
     // This value store the php configuration for magic_quotes
     // The class can then disable the magic_quotes and reset it after
-    var $magic_quotes_status;
+       public $magic_quotes_status;
 
   // --------------------------------------------------------------------------------
   // Function : PclZip()

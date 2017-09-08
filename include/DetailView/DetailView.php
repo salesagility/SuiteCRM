@@ -42,10 +42,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 class DetailView extends ListView {
 
-	var $list_row_count = null;
-	var $return_to_list_only=false;
-	var $offset_key_mismatch=false;
-	var $no_record_found=false;
+    public $list_row_count = null;
+    public $return_to_list_only=false;
+    public $offset_key_mismatch=false;
+    public $no_record_found=false;
 
 	function __construct(){
 		parent::__construct();

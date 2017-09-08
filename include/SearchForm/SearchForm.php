@@ -48,37 +48,37 @@ class SearchForm {
      * SearchForm Template to use (xtpl)
      * @var string
      */
-    var $tpl;
+    public $tpl;
     /**
      * SearchField meta data array to use. Populated from moduleDir/metadata/SearchFields
      * @var array
      */
-    var $searchFields;
+    public $searchFields;
     /**
      * Seed bean to use
      * @var bean
      */
-    var $bean;
+    public $bean;
     /**
      * Module the search from is for
      * @var string
      */
-    var $module;
+    public $module;
     /**
      * meta data for the tabs to display
      * @var array
      */
-    var $tabs;
+    public $tabs;
     /**
      * XTPL object
      * @var object
      */
-    var $xtpl;
+    public $xtpl;
     /**
      * Use to determine whether or not to show the saved search options
      * @var boolean
      */
-    var $showSavedSearchOptions = true;
+    public $showSavedSearchOptions = true;
 
     /**
      * loads SearchFields MetaData, sets member variables

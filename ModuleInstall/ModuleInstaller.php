@@ -59,10 +59,10 @@ require_once('ModuleInstall/ModuleScanner.php');
 define('DISABLED_PATH', 'Disabled');
 
 class ModuleInstaller{
-	var $modules = array();
-	var $silent = false;
-	var $base_dir  = '';
-	var $modulesInPackage = array();
+    public $modules = array();
+    public $silent = false;
+    public $base_dir  = '';
+    public $modulesInPackage = array();
 	public $disabled_path = DISABLED_PATH;
     public $id_name;
 	function __construct(){

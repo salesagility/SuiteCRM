@@ -35,7 +35,7 @@ class _parse_proppatch
      * @var
      * @access
      */
-    var $success;
+    public $success;
 
     /**
      *
@@ -43,7 +43,7 @@ class _parse_proppatch
      * @var
      * @access
      */
-    var $props;
+    public $props;
 
     /**
      *
@@ -51,7 +51,7 @@ class _parse_proppatch
      * @var
      * @access
      */
-    var $depth;
+    public $depth;
 
     /**
      *
@@ -59,7 +59,7 @@ class _parse_proppatch
      * @var
      * @access
      */
-    var $mode;
+    public $mode;
 
     /**
      *
@@ -67,7 +67,7 @@ class _parse_proppatch
      * @var
      * @access
      */
-    var $current;
+    public $current;
 
     /**
      * constructor
@@ -210,5 +210,3 @@ class _parse_proppatch
         }
     }
 }
-
-?>

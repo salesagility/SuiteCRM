@@ -40,9 +40,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 class TemplateDecimal extends TemplateFloat{
-	var $type = 'decimal';
-	var $default = null;
-	var $default_value = null;
+    public $type = 'decimal';
+    public $default = null;
+    public $default_value = null;
 
 	function __construct(){
     	parent::__construct();

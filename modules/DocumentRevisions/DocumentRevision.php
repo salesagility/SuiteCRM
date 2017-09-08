@@ -1,13 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,70 +34,52 @@ if(!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description: TODO:  To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/upload_file.php');
 
 // User is used to store Forecast information.
 class DocumentRevision extends SugarBean {
 
-	var $id;
-	var $document_id;
-    var $doc_id;
-    var $doc_type;
-    var $doc_url;
-	var $date_entered;
-	var $created_by;
-	var $filename;
-	var $file_mime_type;
-	var $revision;
-	var $change_log;
-	var $document_name;
-	var $latest_revision;
-	var $file_url;
-	var $file_ext;
-	var $created_by_name;
+	public $id;
+    public $document_id;
+    public $doc_id;
+    public $doc_type;
+    public $doc_url;
+    public $date_entered;
+    public $created_by;
+    public $filename;
+    public $file_mime_type;
+    public $revision;
+    public $change_log;
+    public $document_name;
+    public $latest_revision;
+    public $file_url;
+    public $file_ext;
+    public $created_by_name;
 
-	var $img_name;
-	var $img_name_bare;
+    public $img_name;
+    public $img_name_bare;
 
-	var $table_name = "document_revisions";
-	var $object_name = "DocumentRevision";
-	var $module_dir = 'DocumentRevisions';
-	var $new_schema = true;
-	var $latest_revision_id;
+    public $table_name = "document_revisions";
+    public $object_name = "DocumentRevision";
+    public $module_dir = 'DocumentRevisions';
+    public $new_schema = true;
+    public $latest_revision_id;
 
-	/*var $column_fields = Array("id"
-		,"document_id"
-		,"date_entered"
-		,"created_by"
-		,"filename"
-		,"file_mime_type"
-		,"revision"
-		,"change_log"
-		,"file_ext"
-		);
-*/
-	var $encodeFields = Array();
+    public $encodeFields = Array();
 
 	// This is used to retrieve related fields from form posts.
-	var $additional_column_fields = Array('');
+    public $additional_column_fields = Array('');
 
 	// This is the list of fields that are in the lists.
-	var $list_fields = Array("id"
+    public $list_fields = Array("id"
 		,"document_id"
 		,"date_entered"
 		,"created_by"
@@ -112,7 +92,7 @@ class DocumentRevision extends SugarBean {
 		,"created_by_name"
 		);
 
-	var $required_fields = Array("revision");
+	public $required_fields = Array("revision");
 
 
 

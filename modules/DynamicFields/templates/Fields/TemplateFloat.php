@@ -42,11 +42,11 @@ require_once('modules/DynamicFields/templates/Fields/TemplateRange.php');
 
 class TemplateFloat extends TemplateRange
 {
-	var $type = 'float';
-	var $default = null;
-	var $default_value = null;
-	var $len = '18';
-	var $precision = '8';
+    public $type = 'float';
+    public $default = null;
+    public $default_value = null;
+    public $len = '18';
+    public $precision = '8';
 
 	public function __construct(){
 		parent::__construct();

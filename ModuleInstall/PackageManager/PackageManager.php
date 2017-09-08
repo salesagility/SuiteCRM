@@ -50,7 +50,7 @@ require_once('include/entryPoint.php');
 require_once('ModuleInstall/PackageManager/PackageManagerComm.php');
 
 class PackageManager{
-    var $soap_client;
+    public $soap_client;
 
     /**
      * Constructor: In this method we will initialize the nusoap client to point to the hearbeat server

@@ -46,13 +46,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 class VarDefHandler {
 
-	var $meta_array_name;
-	var $target_meta_array = false;
-	var $start_none = false;
-	var $extra_array = array();					//used to add custom items
-	var $options_array = array();
-	var $module_object;
-	var $start_none_lbl = null;
+    public $meta_array_name;
+    public $target_meta_array = false;
+    public $start_none = false;
+    public $extra_array = array();					//used to add custom items
+    public $options_array = array();
+    public $module_object;
+    public $start_none_lbl = null;
 
 
     function __construct($module, $meta_array_name=null)

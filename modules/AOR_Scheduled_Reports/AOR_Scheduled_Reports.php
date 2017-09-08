@@ -40,29 +40,29 @@
 require_once 'modules/AOR_Scheduled_Reports/lib/Cron/includeCron.php';
 class AOR_Scheduled_Reports extends basic {
 
-    var $new_schema = true;
-    var $module_dir = 'AOR_Scheduled_Reports';
-    var $object_name = 'AOR_Scheduled_Reports';
-    var $table_name = 'aor_scheduled_reports';
-    var $importable = false;
-    var $disable_row_level_security = true;
-    var $id;
-    var $name;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $modified_by_name;
-    var $created_by;
-    var $created_by_name;
-    var $description;
-    var $deleted;
-    var $created_by_link;
-    var $modified_user_link;
-    var $schedule;
-    var $email_recipients;
-    var $status;
-    var $last_run;
-    var $aor_report_id;
+    public $new_schema = true;
+    public $module_dir = 'AOR_Scheduled_Reports';
+    public $object_name = 'AOR_Scheduled_Reports';
+    public $table_name = 'aor_scheduled_reports';
+    public $importable = false;
+    public $disable_row_level_security = true;
+    public $id;
+    public $name;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $modified_by_name;
+    public $created_by;
+    public $created_by_name;
+    public $description;
+    public $deleted;
+    public $created_by_link;
+    public $modified_user_link;
+    public $schedule;
+    public $email_recipients;
+    public $status;
+    public $last_run;
+    public $aor_report_id;
 
 	function __construct(){
         parent::__construct();

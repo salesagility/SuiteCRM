@@ -44,8 +44,8 @@ if(!defined('sugarEntry') || !sugarEntry) {
 
 
  class ConnectorRecord extends MergeRecord{
-	var $object_name = 'ConnectorRecord';
-    var $module_dir = 'Connector';
+     public $object_name = 'ConnectorRecord';
+     public $module_dir = 'Connector';
 
 
     function __construct($merge_module = '', $merge_id = '') {

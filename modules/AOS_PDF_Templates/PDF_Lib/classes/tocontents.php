@@ -2,32 +2,32 @@
 
 class tocontents {
 
-var $mpdf = null;
-var $_toc;
-var $TOCmark;
-var $TOCoutdent;	// mPDF 5.6.31
-var $TOCpreHTML;
-var $TOCpostHTML;
-var $TOCbookmarkText;
-var $TOCusePaging;
-var $TOCuseLinking;
-var $TOCorientation;
-var $TOC_margin_left;
-var $TOC_margin_right;
-var $TOC_margin_top;
-var $TOC_margin_bottom;
-var $TOC_margin_header;
-var $TOC_margin_footer;
-var $TOC_odd_header_name;
-var $TOC_even_header_name;
-var $TOC_odd_footer_name;
-var $TOC_even_footer_name;
-var $TOC_odd_header_value;
-var $TOC_even_header_value;
-var $TOC_odd_footer_value;
-var $TOC_even_footer_value;
-var $TOC_page_selector;
-var $m_TOC; 
+    public $mpdf = null;
+    public $_toc;
+    public $TOCmark;
+    public $TOCoutdent;	// mPDF 5.6.31
+    public $TOCpreHTML;
+    public $TOCpostHTML;
+    public $TOCbookmarkText;
+    public $TOCusePaging;
+    public $TOCuseLinking;
+    public $TOCorientation;
+    public $TOC_margin_left;
+    public $TOC_margin_right;
+    public $TOC_margin_top;
+    public $TOC_margin_bottom;
+    public $TOC_margin_header;
+    public $TOC_margin_footer;
+    public $TOC_odd_header_name;
+    public $TOC_even_header_name;
+    public $TOC_odd_footer_name;
+    public $TOC_even_footer_name;
+    public $TOC_odd_header_value;
+    public $TOC_even_header_value;
+    public $TOC_odd_footer_value;
+    public $TOC_even_footer_value;
+    public $TOC_page_selector;
+    public $m_TOC;
 
 function tocontents(&$mpdf) {
 	$this->mpdf = $mpdf;

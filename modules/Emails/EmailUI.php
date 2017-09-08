@@ -57,20 +57,20 @@ require_once 'include/Exceptions/SuiteException.php';
 
 
 class EmailUI {
-	var $db;
-	var $folder; // place holder for SugarFolder object
-	var $folderStates = array(); // array of folderPath names and their states (1/0)
-	var $smarty;
-	var $addressSeparators = array(";", ",");
-	var $rolloverStyle = "<style>div#rollover {position: relative;float: left;margin: none;text-decoration: none;}div#rollover a:hover {padding: 0;}div#rollover a span {display: none;}div#rollover a:hover span {text-decoration: none;display: block;width: 250px;margin-top: 5px;margin-left: 5px;position: absolute;padding: 10px;color: #333;	border: 1px solid #ccc;	background-color: #fff;	font-size: 12px;z-index: 1000;}</style>\n";
-	var $groupCss = "<span class='groupInbox'>";
-	var $cacheTimeouts = array(
+    public $db;
+    public $folder; // place holder for SugarFolder object
+    public $folderStates = array(); // array of folderPath names and their states (1/0)
+    public $smarty;
+    public $addressSeparators = array(";", ",");
+    public $rolloverStyle = "<style>div#rollover {position: relative;float: left;margin: none;text-decoration: none;}div#rollover a:hover {padding: 0;}div#rollover a span {display: none;}div#rollover a:hover span {text-decoration: none;display: block;width: 250px;margin-top: 5px;margin-left: 5px;position: absolute;padding: 10px;color: #333;	border: 1px solid #ccc;	background-color: #fff;	font-size: 12px;z-index: 1000;}</style>\n";
+    public $groupCss = "<span class='groupInbox'>";
+    public $cacheTimeouts = array(
 		'messages'		=> 86400,	// 24 hours
 		'folders'		=> 300,		// 5 mins
 		'attachments'	=> 86400,	// 24 hours
 	);
-	var $userCacheDir = '';
-	var $coreDynamicFolderQuery = "SELECT emails.id polymorphic_id, 'Emails' polymorphic_module FROM emails
+    public $userCacheDir = '';
+    public $coreDynamicFolderQuery = "SELECT emails.id polymorphic_id, 'Emails' polymorphic_module FROM emails
 								   JOIN emails_text on emails.id = emails_text.email_id
                                    WHERE (type = '::TYPE::' OR status = '::STATUS::') AND assigned_user_id = '::USER_ID::' AND emails.deleted = '0'";
 

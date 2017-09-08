@@ -51,8 +51,8 @@ if(!defined('sugarEntry') || !sugarEntry) {
  */
 class SugarWidget
 {
-	var $layout_manager = null;
-	var $widget_id;
+    public $layout_manager = null;
+    public $widget_id;
     protected $form_value;
     protected $parent_bean;
 

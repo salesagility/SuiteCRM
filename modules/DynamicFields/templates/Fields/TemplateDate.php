@@ -43,9 +43,9 @@ require_once('modules/DynamicFields/templates/Fields/TemplateRange.php');
 
 class TemplateDate extends TemplateRange
 {
-	var $type = 'date';
-	var $len = '';
-	var $dateStrings;
+    public $type = 'date';
+    public $len = '';
+    public $dateStrings;
 
 function __construct() {
 	parent::__construct();

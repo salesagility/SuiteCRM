@@ -1,12 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry)
-	die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry)
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,9 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry)
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/SugarObjects/templates/file/File.php');
 
@@ -45,54 +48,54 @@ require_once('include/SugarObjects/templates/file/File.php');
 // User is used to store Forecast information.
 class Document extends File {
 
-	var $id;
-	var $document_name;
-	var $description;
-	var $category_id;
-	var $subcategory_id;
-	var $status_id;
-	var $status;
-	var $created_by;
-	var $date_entered;
-	var $date_modified;
-	var $modified_user_id;
-    var $assigned_user_id;
-	var $active_date;
-	var $exp_date;
-	var $document_revision_id;
-	var $filename;
-	var $doc_type;
+    public $id;
+    public $document_name;
+    public $description;
+    public $category_id;
+    public $subcategory_id;
+    public $status_id;
+    public $status;
+    public $created_by;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $assigned_user_id;
+    public $active_date;
+    public $exp_date;
+    public $document_revision_id;
+    public $filename;
+    public $doc_type;
 
-	var $img_name;
-	var $img_name_bare;
-	var $related_doc_id;
-	var $related_doc_name;
-	var $related_doc_rev_id;
-	var $related_doc_rev_number;
-	var $is_template;
-	var $template_type;
+    public $img_name;
+    public $img_name_bare;
+    public $related_doc_id;
+    public $related_doc_name;
+    public $related_doc_rev_id;
+    public $related_doc_rev_number;
+    public $is_template;
+    public $template_type;
 
 	//additional fields.
-	var $revision;
-	var $last_rev_create_date;
-	var $last_rev_created_by;
-	var $last_rev_created_name;
-	var $file_url;
-	var $file_url_noimage;
+    public $revision;
+    public $last_rev_create_date;
+    public $last_rev_created_by;
+    public $last_rev_created_name;
+    public $file_url;
+    public $file_url_noimage;
 
-	var $table_name = "documents";
-	var $object_name = "Document";
-	var $user_preferences;
+    public $table_name = "documents";
+    public $object_name = "Document";
+    public $user_preferences;
 
-	var $encodeFields = Array ();
+    public $encodeFields = Array ();
 
 	// This is used to retrieve related fields from form posts.
-	var $additional_column_fields = Array ('revision');
+    public $additional_column_fields = Array ('revision');
 
-	var $new_schema = true;
-	var $module_dir = 'Documents';
+    public $new_schema = true;
+    public $module_dir = 'Documents';
 
-	var $relationship_fields = Array(
+    public $relationship_fields = Array(
 		'contract_id'=>'contracts',
 	 );
 

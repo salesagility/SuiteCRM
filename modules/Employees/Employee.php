@@ -48,59 +48,59 @@ require_once('include/SugarObjects/templates/person/Person.php');
 // Employee is used to store customer information.
 class Employee extends Person {
 	// Stored fields
-	var $name = '';
-	var $id;
-	var $is_admin;
-	var $first_name;
-	var $last_name;
-	var $full_name;
-	var $user_name;
-	var $title;
-	var $description;
-	var $department;
-	var $reports_to_id;
-	var $reports_to_name;
-	var $phone_home;
-	var $phone_mobile;
-	var $phone_work;
-	var $phone_other;
-	var $phone_fax;
-	var $email1;
-	var $email2;
-	var $address_street;
-	var $address_city;
-	var $address_state;
-	var $address_postalcode;
-	var $address_country;
-	var $date_entered;
-	var $date_modified;
-	var $modified_user_id;
-	var $created_by;
-	var $created_by_name;
-	var $modified_by_name;
-	var $status;
-	var $messenger_id;
-	var $messenger_type;
-	var $employee_status;
-	var $error_string;
+    public $name = '';
+    public $id;
+    public $is_admin;
+    public $first_name;
+    public $last_name;
+    public $full_name;
+    public $user_name;
+    public $title;
+    public $description;
+    public $department;
+    public $reports_to_id;
+    public $reports_to_name;
+    public $phone_home;
+    public $phone_mobile;
+    public $phone_work;
+    public $phone_other;
+    public $phone_fax;
+    public $email1;
+    public $email2;
+    public $address_street;
+    public $address_city;
+    public $address_state;
+    public $address_postalcode;
+    public $address_country;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $created_by;
+    public $created_by_name;
+    public $modified_by_name;
+    public $status;
+    public $messenger_id;
+    public $messenger_type;
+    public $employee_status;
+    public $error_string;
     public $person_id;
 
-	var $module_dir = "Employees";
+    public $module_dir = "Employees";
 
 
-	var $table_name = "users";
+    public $table_name = "users";
 
-	var $object_name = "Employee";
-	var $user_preferences;
+    public $object_name = "Employee";
+    public $user_preferences;
 
-	var $encodeFields = Array("first_name", "last_name", "description");
+    public $encodeFields = Array("first_name", "last_name", "description");
 
 	// This is used to retrieve related fields from form posts.
-	var $additional_column_fields = Array('reports_to_name');
+    public $additional_column_fields = Array('reports_to_name');
 
 
 
-	var $new_schema = true;
+    public $new_schema = true;
 
 	function __construct() {
 		parent::__construct();

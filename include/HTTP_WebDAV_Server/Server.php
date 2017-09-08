@@ -42,42 +42,42 @@ class HTTP_WebDAV_Server
      *
      * @var string
      */
-    var $path;
+    public $path;
 
     /**
      * Realm string to be used in authentification popups
      *
      * @var string
      */
-    var $http_auth_realm = "PHP WebDAV";
+    public $http_auth_realm = "PHP WebDAV";
 
     /**
      * String to be used in "X-Dav-Powered-By" header
      *
      * @var string
      */
-    var $dav_powered_by = "";
+    public $dav_powered_by = "";
 
     /**
      * Remember parsed If: (RFC2518/9.4) header conditions
      *
      * @var array
      */
-    var $_if_header_uris = array();
+    public $_if_header_uris = array();
 
     /**
      * HTTP response status/message
      *
      * @var string
      */
-    var $_http_status = "200 OK";
+    public $_http_status = "200 OK";
 
     /**
      * encoding of property values passed in
      *
      * @var string
      */
-    var $_prop_encoding = "utf-8";
+    public $_prop_encoding = "utf-8";
 
     // }}}
 
@@ -1870,4 +1870,4 @@ class HTTP_WebDAV_Server
    * c-basic-offset: 4
    * End:
    */
-?>
+

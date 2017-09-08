@@ -62,22 +62,22 @@ class nusoap_wsdlcache {
 	 *	@var resource
 	 *	@access private
 	 */
-	var $fplock;
+    public $fplock;
 	/**
 	 *	@var integer
 	 *	@access private
 	 */
-	var $cache_lifetime;
+    public $cache_lifetime;
 	/**
 	 *	@var string
 	 *	@access private
 	 */
-	var $cache_dir;
+    public $cache_dir;
 	/**
 	 *	@var string
 	 *	@access public
 	 */
-	var $debug_str = '';
+    public $debug_str = '';
 
 	/**
 	* constructor
