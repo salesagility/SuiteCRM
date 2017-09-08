@@ -1,13 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -18,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -36,10 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class RepairAndClear
 {
@@ -49,77 +50,78 @@ class RepairAndClear
     public $execute;
     protected $module_list_from_cache;
 
-    public function repairAndClearAll($selected_actions, $modules, $autoexecute=false, $show_output=true)
+    public function repairAndClearAll($selected_actions, $modules, $autoexecute = false, $show_output = true)
     {
         global $mod_strings;
-        $this->module_list= $modules;
+        $this->module_list = $modules;
         $this->show_output = $show_output;
         $this->actions = $selected_actions;
         $this->actions[] = 'repairDatabase';
-        $this->execute=$autoexecute;
+        $this->execute = $autoexecute;
 
         //clear vardefs always..
         $this->clearVardefs();
         //first  clear the language cache.
         $this->clearLanguageCache();
         foreach ($this->actions as $current_action) {
-                switch($current_action)
-        {
-            case 'repairDatabase':
-                if(isset($mod_strings['LBL_ALL_MODULES']) && in_array($mod_strings['LBL_ALL_MODULES'], $this->module_list)) {
+            switch ($current_action) {
+                case 'repairDatabase':
+                    if (isset($mod_strings['LBL_ALL_MODULES']) && in_array($mod_strings['LBL_ALL_MODULES'],
+                            $this->module_list)
+                    ) {
+                        $this->repairDatabase();
+                    } else {
+                        $this->repairDatabaseSelectModules();
+                    }
+                    break;
+                case 'rebuildExtensions':
+                    $this->rebuildExtensions();
+                    break;
+                case 'clearTpls':
+                    $this->clearTpls();
+                    break;
+                case 'clearJsFiles':
+                    $this->clearJsFiles();
+                    break;
+                case 'clearDashlets':
+                    $this->clearDashlets();
+                    break;
+                case 'clearSugarFeedCache':
+                    $this->clearSugarFeedCache();
+                    break;
+                case 'clearThemeCache':
+                    $this->clearThemeCache();
+                    break;
+                case 'clearVardefs':
+                    $this->clearVardefs();
+                    break;
+                case 'clearJsLangFiles':
+                    $this->clearJsLangFiles();
+                    break;
+                case 'rebuildAuditTables':
+                    $this->rebuildAuditTables();
+                    break;
+                case 'clearSearchCache':
+                    $this->clearSearchCache();
+                    break;
+                case 'clearAll':
+                    $this->clearTpls();
+                    $this->clearJsFiles();
+                    $this->clearVardefs();
+                    $this->clearJsLangFiles();
+                    $this->clearLanguageCache();
+                    $this->clearDashlets();
+                    $this->clearSugarFeedCache();
+                    $this->clearSmarty();
+                    $this->clearThemeCache();
+                    $this->clearXMLfiles();
+                    $this->clearSearchCache();
+                    $this->clearExternalAPICache();
+                    $this->rebuildExtensions();
+                    $this->rebuildAuditTables();
                     $this->repairDatabase();
-        }
-                } else {
-                    $this->repairDatabaseSelectModules();
-                }
-                break;
-            case 'rebuildExtensions':
-                $this->rebuildExtensions();
-                break;
-            case 'clearTpls':
-                $this->clearTpls();
-                break;
-            case 'clearJsFiles':
-                $this->clearJsFiles();
-                break;
-            case 'clearDashlets':
-                $this->clearDashlets();
-                break;
-            case 'clearSugarFeedCache':
-                $this->clearSugarFeedCache();
-                break;
-            case 'clearThemeCache':
-                $this->clearThemeCache();
-                break;
-            case 'clearVardefs':
-                $this->clearVardefs();
-                break;
-            case 'clearJsLangFiles':
-                $this->clearJsLangFiles();
-                break;
-            case 'rebuildAuditTables':
-                $this->rebuildAuditTables();
-                break;
-            case 'clearSearchCache':
-                $this->clearSearchCache();
-                break;
-            case 'clearAll':
-                $this->clearTpls();
-                $this->clearJsFiles();
-                $this->clearVardefs();
-                $this->clearJsLangFiles();
-                $this->clearLanguageCache();
-                $this->clearDashlets();
-                $this->clearSugarFeedCache();
-                $this->clearSmarty();
-                $this->clearThemeCache();
-                $this->clearXMLfiles();
-                $this->clearSearchCache();
-                $this->clearExternalAPICache();
-                $this->rebuildExtensions();
-                $this->rebuildAuditTables();
-                $this->repairDatabase();
-                break;
+                    break;
+            }
         }
     }
 
