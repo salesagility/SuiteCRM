@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -157,7 +159,7 @@ if(is_admin($current_user) || isset($from_sync_client)){
 			    echo "<b>{$mod_strings['LBL_EXPAND_DATABASE_FINISHED_ERROR']}</b><br>";
 		} //if-else
 	} //if
-}else{
+} else{
 	sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
 }
 

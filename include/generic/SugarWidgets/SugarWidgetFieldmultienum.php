@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -56,8 +58,9 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum {
 			$value = preg_replace("/^'/", "'%", $val, 1);
 			$value = preg_replace("/'$/", "%'", $value, 1);
 			$query .= $value;
-			if ($key != ($arr_count - 1))
-    			$query.= " OR " ;	
+			if ($key != ($arr_count - 1)) {
+			    			$query.= " OR " ;
+			}
     	}
 		return '('.$query.')';        
 	}
@@ -68,7 +71,7 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum {
         foreach ($layout_def['input_name0'] as $value) {
             if($value != ""){
                 array_push($arr, "'".$GLOBALS['db']->quote($value)."'");
-            }else{
+            } else{
                 array_push($arr, "'^^'");
             }
         }
@@ -82,8 +85,9 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum {
 			$value = preg_replace("/^'/", "'%", $val, 1);
 			$value = preg_replace("/'$/", "%'", $value, 1);
 			$query .= $value;
-			if ($key != ($arr_count - 1))
-    			$query.= " OR " ;	
+			if ($key != ($arr_count - 1)) {
+			    			$query.= " OR " ;
+			}
     	}
 		return '('.$query.')';        
 	}

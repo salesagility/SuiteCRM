@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -57,8 +59,7 @@ function get_currency()
         if($current_user->getPreference('currency') )
         {
                 $global_currency_obj->retrieve($current_user->getPreference('currency'));
-        }
-        else
+        } else
         {
                 $global_currency_obj->retrieve('-99');
         }
@@ -81,8 +82,7 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($layout_manager);
@@ -111,13 +111,13 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
 
         if(!empty($layout_def['column_key'])){
             $field_def = $this->reporter->all_fields[$layout_def['column_key']];
-        }else if(!empty($layout_def['fields'])){
+        } else if(!empty($layout_def['fields'])){
             $field_def = $layout_def['fields'];
         }
         $record = '';
-        if ($layout_def['table_key'] == 'self' && isset($layout_def['fields']['PRIMARYID']))
-            $record = $layout_def['fields']['PRIMARYID'];
-        else if (isset($layout_def['fields'][strtoupper($layout_def['table_alias']."_id")])){
+        if ($layout_def['table_key'] == 'self' && isset($layout_def['fields']['PRIMARYID'])) {
+                    $record = $layout_def['fields']['PRIMARYID'];
+        } else if (isset($layout_def['fields'][strtoupper($layout_def['table_alias']."_id")])){
             $record = $layout_def['fields'][strtoupper($layout_def['table_alias']."_id")];
         }
         if (!empty($record)) {
@@ -133,9 +133,9 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
             }
 	        $str .= "</div>";
 	        return $str;
+        } else {
+                    return $display;
         }
-        else
-            return $display;
     }
 
     function displayListPlain($layout_def) {
@@ -215,8 +215,9 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
         }
 
         $real_table = '';
-        if (!empty($this->reporter->all_fields[$layout_def['column_key']]['real_table']))
-            $real_table = $this->reporter->all_fields[$layout_def['column_key']]['real_table'];
+        if (!empty($this->reporter->all_fields[$layout_def['column_key']]['real_table'])) {
+                    $real_table = $this->reporter->all_fields[$layout_def['column_key']]['real_table'];
+        }
 
         $add_currency_id = false;
         if(!empty($table)) {
@@ -249,19 +250,16 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
         {
             $currency_symbol = $layout_def['currency_symbol'];
             $currency_id = $layout_def['currency_id'];
-        }
-        else
+        } else
         {
             $key = strtoupper(isset($layout_def['varname']) ? $layout_def['varname'] : $this->_get_column_alias($layout_def));
             if ( $this->isSystemCurrency($layout_def) )
             {
                 $currency_id = '-99';
-            }
-            elseif (isset($layout_def['fields'][$key.'_CURRENCY']))
+            } elseif (isset($layout_def['fields'][$key.'_CURRENCY']))
             {
                 $currency_id = $layout_def['fields'][$key.'_CURRENCY'];
-            }
-            elseif(isset($layout_def['fields'][$this->getTruncatedColumnAlias($this->_get_column_alias($layout_def)."_currency")]))
+            } elseif(isset($layout_def['fields'][$this->getTruncatedColumnAlias($this->_get_column_alias($layout_def)."_currency")]))
             {
                 $currency_id = $layout_def['fields'][$this->getTruncatedColumnAlias($this->_get_column_alias($layout_def)."_currency")];
             }

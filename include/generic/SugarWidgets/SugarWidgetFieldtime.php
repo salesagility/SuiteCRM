@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -64,8 +66,7 @@ class SugarWidgetFieldTime extends SugarWidgetFieldDateTime
                 if(!empty($date)) { // able to get the date context of the time            	
                 	$td = explode(' ', $timedate->to_display_date_time($date . ' ' . $content));
 	                return $td[1];
-                }
-                else { // assume there is no time context
+                } else { // assume there is no time context
                  	return $timedate->to_display_time($content);
                 }
         }

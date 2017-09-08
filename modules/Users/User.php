@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/SugarObjects/templates/person/Person.php');
 
@@ -123,8 +127,7 @@ class User extends Person {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -141,12 +144,13 @@ class User extends Person {
      */
     public function getSystemUser()
     {
-        if (null === $this->retrieve('1'))
-            // handle cases where someone deleted user with id "1"
+        if (null === $this->retrieve('1')) {
+                    // handle cases where someone deleted user with id "1"
             $this->retrieve_by_string_fields(array(
                 'status' => 'Active',
                 'is_admin' => '1',
                 ));
+        }
 
         return $this;
     }
@@ -337,9 +341,9 @@ class User extends Person {
 	    if ( func_num_args() > 4 ) {
 	        $user = func_get_arg(4);
 	        $GLOBALS['log']->deprecated('User::setPreferences() should not be used statically.');
+	    } else {
+	    	        $user = $this;
 	    }
-	    else
-	        $user = $this;
 
         $user->_userPreferenceFocus->setPreference($name, $value, $category);
 	}
@@ -359,9 +363,9 @@ class User extends Person {
 	    if ( func_num_args() > 1 ) {
 	        $user = func_get_arg(1);
 	        $GLOBALS['log']->deprecated('User::resetPreferences() should not be used statically.');
+	    } else {
+	    	        $user = $this;
 	    }
-	    else
-	        $user = $this;
 
         $user->_userPreferenceFocus->resetPreferences($category);
 	}
@@ -377,9 +381,9 @@ class User extends Person {
 	    if ( func_num_args() > 0 ) {
 	        $user = func_get_arg(0);
 	        $GLOBALS['log']->deprecated('User::savePreferencesToDB() should not be used statically.');
+	    } else {
+	    	        $user = $this;
 	    }
-	    else
-	        $user = $this;
 
         $user->_userPreferenceFocus->savePreferencesToDB();
 	}
@@ -407,9 +411,9 @@ class User extends Person {
 	    if ( func_num_args() > 0 ) {
 	        $user = func_get_arg(0);
 	        $GLOBALS['log']->deprecated('User::getUserDateTimePreferences() should not be used statically.');
+	    } else {
+	    	        $user = $this;
 	    }
-	    else
-	        $user = $this;
 
         return $user->_userPreferenceFocus->getUserDateTimePreferences();
 	}
@@ -430,9 +434,9 @@ class User extends Person {
 	    if ( func_num_args() > 1 ) {
 	        $user = func_get_arg(1);
 	        $GLOBALS['log']->deprecated('User::loadPreferences() should not be used statically.');
+	    } else {
+	    	        $user = $this;
 	    }
-	    else
-	        $user = $this;
 
         return $user->_userPreferenceFocus->loadPreferences($category);
 	}
@@ -455,9 +459,9 @@ class User extends Person {
 	    if ( func_num_args() > 2 ) {
 	        $user = func_get_arg(2);
 	        $GLOBALS['log']->deprecated('User::getPreference() should not be used statically.');
+	    } else {
+	    	        $user = $this;
 	    }
-	    else
-	        $user = $this;
 
         return $user->_userPreferenceFocus->getPreference($name, $category);
 	}
@@ -569,8 +573,9 @@ class User extends Person {
 
 		global $current_user;
 
-		if(empty($user_id))
-			$user_id = $current_user->id;
+		if(empty($user_id)) {
+					$user_id = $current_user->id;
+		}
 
 		// Check the Sugar External Cache to see if this users memberships were cached
 		$role_array = sugar_cache_retrieve("RoleMemberships_".$user_id);
@@ -580,9 +585,9 @@ class User extends Person {
 			// If the Session doesn't contain the values
 			if(!isset($_SESSION['role_memberships'])){
 				// This means the external cache already had it loaded
-				if(!empty($role_array))
-					$_SESSION['role_memberships'] = $role_array;
-				else{
+				if(!empty($role_array)) {
+									$_SESSION['role_memberships'] = $role_array;
+				} else{
 					$_SESSION['role_memberships'] = ACLRole::getUserRoleNames($user_id);
 					$role_array = $_SESSION['role_memberships'];
 				}
@@ -591,8 +596,7 @@ class User extends Person {
 			else{
 				$role_array = $_SESSION['role_memberships'];
 			}
-		}
-		else{
+		} else{
 			// If the external cache didn't contain the values, we get them and put them in cache
 			if(!$role_array){
 				$role_array = ACLRole::getUserRoleNames($user_id);
@@ -601,10 +605,11 @@ class User extends Person {
 		}
 
 		// If the role doesn't exist in the list of the user's roles
-		if(!empty($role_array) && in_array($role_name, $role_array))
-			return true;
-		else
-			return false;
+		if(!empty($role_array) && in_array($role_name, $role_array)) {
+					return true;
+		} else {
+					return false;
+		}
 	}
 
     function get_summary_text() {
@@ -715,8 +720,9 @@ EOQ;
 
 		$GLOBALS['log']->debug("Starting user load for $this->user_name");
 
-		if (!isset ($this->user_name) || $this->user_name == "" || !isset ($user_password) || $user_password == "")
-			return null;
+		if (!isset ($this->user_name) || $this->user_name == "" || !isset ($user_password) || $user_password == "") {
+					return null;
+		}
 
 	    if(!$password_encoded) {
 	        $user_password = md5($user_password);
@@ -731,8 +737,9 @@ EOQ;
 		$this->loadFromRow($row);
 		$this->loadPreferences();
 
-		if ($this->status != "Inactive")
-			$this->authenticated = true;
+		if ($this->status != "Inactive") {
+					$this->authenticated = true;
+		}
 
 		unset ($_SESSION['loginattempts']);
 		return $this;
@@ -775,7 +782,9 @@ EOQ;
 	 */
 	public static function checkPasswordMD5($password_md5, $user_hash)
 	{
-	    if(empty($user_hash)) return false;
+	    if(empty($user_hash)) {
+	        return false;
+	    }
 	    if($user_hash[0] != '$' && strlen($user_hash) == 32) {
 	        // Old way - just md5 password
 	        return strtolower($password_md5) == $user_hash;
@@ -898,8 +907,9 @@ EOQ;
 	{
 	    $userFocus = new User;
 	    $userFocus->retrieve_by_string_fields(array('user_name'=>$user_name));
-	    if ( empty($userFocus->id) )
-	        return false;
+	    if ( empty($userFocus->id) ) {
+	    	        return false;
+	    }
 
         return $userFocus->id;
 	}
@@ -945,7 +955,9 @@ EOQ;
 		}
 
 		$query = "SELECT user_name from users where user_name='$this->user_name' AND deleted=0";
-		if(!empty($this->id))$query .=  " AND id<>'$this->id'";
+		if(!empty($this->id)) {
+		    $query .=  " AND id<>'$this->id'";
+		}
 		$result = $this->db->query($query, true, "Error selecting possible duplicate users: ");
 		$dup_users = $this->db->fetchByAssoc($result);
 
@@ -979,13 +991,16 @@ EOQ;
 
 		$user_fields = parent::get_list_view_data();
 
-		if ($this->is_admin)
-			$user_fields['IS_ADMIN_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '',null,null,'.gif',$mod_strings['LBL_CHECKMARK']);
-		elseif (!$this->is_admin) $user_fields['IS_ADMIN'] = '';
-		if ($this->is_group)
-			$user_fields['IS_GROUP_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '',null,null,'.gif',$mod_strings['LBL_CHECKMARK']);
-		else
-			$user_fields['IS_GROUP_IMAGE'] = '';
+		if ($this->is_admin) {
+					$user_fields['IS_ADMIN_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '',null,null,'.gif',$mod_strings['LBL_CHECKMARK']);
+		} elseif (!$this->is_admin) {
+		    $user_fields['IS_ADMIN'] = '';
+		}
+		if ($this->is_group) {
+					$user_fields['IS_GROUP_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '',null,null,'.gif',$mod_strings['LBL_CHECKMARK']);
+		} else {
+					$user_fields['IS_GROUP_IMAGE'] = '';
+		}
 
 
         if ($this->is_admin) {
@@ -1058,10 +1073,11 @@ EOQ;
 
 		$where_auto = " users.deleted = 0";
 
-		if ($where != "")
-			$query .= " WHERE $where AND ".$where_auto;
-		else
-			$query .= " WHERE ".$where_auto;
+		if ($where != "") {
+					$query .= " WHERE $where AND ".$where_auto;
+		} else {
+					$query .= " WHERE ".$where_auto;
+		}
 
 		// admin for module user is not be able to export a super-admin
 		global $current_user;
@@ -1069,10 +1085,11 @@ EOQ;
 			$query .= " AND users.is_admin=0";
 		}
 
-		if ($order_by != "")
-			$query .= " ORDER BY $order_by";
-		else
-			$query .= " ORDER BY users.user_name";
+		if ($order_by != "") {
+					$query .= " ORDER BY $order_by";
+		} else {
+					$query .= " ORDER BY users.user_name";
+		}
 
 		return $query;
 	}
@@ -1138,8 +1155,12 @@ EOQ;
 				}
 			}
 		}
-		if(in_array($theme, $verts)) $count .= '<br />';
-		if(empty($count)) $count .= '&nbsp;&nbsp;&nbsp;&nbsp;';
+		if(in_array($theme, $verts)) {
+		    $count .= '<br />';
+		}
+		if(empty($count)) {
+		    $count .= '&nbsp;&nbsp;&nbsp;&nbsp;';
+		}
 		$count .= '<a href=index.php?module=Emails&action=ListViewGroup>'.translate('LBL_LIST_TITLE_GROUP_INBOX', 'Emails').': ('.$total.' '.$new.')</a>';
 
 		$out  = '<script type="text/javascript" language="Javascript">';
@@ -1552,7 +1573,7 @@ EOQ;
     	$localeFormat = $locale->getLocaleFormatMacro($this);
 		if ( strpos($localeFormat,'l') > strpos($localeFormat,'f') ) {
                     return false;
-        }else {
+        } else {
         	return true;
         }
 	}
@@ -1589,8 +1610,7 @@ EOQ;
                         if(substr($alias, -5) != '_cstm')
                         {
                             $ljVal ='  LEFT JOIN '.$ljVal.' and '.$alias.'.id is null ';
-                        }
-                        else
+                        } else
                         {
                             $ljVal ='  LEFT JOIN '.$ljVal.' and '.$alias.'.id_c is null ';
                         }
@@ -1653,9 +1673,11 @@ EOQ;
             $length = '6';
 
         // Create random characters for the ones that doesnt have requirements
-        for ($i=0; $i < $length - $condition; $i ++)  // loop and create password
+        for ($i=0; $i < $length - $condition; $i ++) {
+            // loop and create password
         {
             $password = $password . substr ($charBKT, rand() % strlen($charBKT), 1);
+        }
         }
 
         return $password;
@@ -1692,8 +1714,7 @@ EOQ;
         {
             $htmlBody = str_replace('$contact_user_link_guid', $additionalData['url'], $htmlBody);
             $body = str_replace('$contact_user_link_guid', $additionalData['url'], $body);
-        }
-        else
+        } else
         {
             $htmlBody = str_replace('$contact_user_user_hash', $additionalData['password'], $htmlBody);
             $body = str_replace('$contact_user_user_hash', $additionalData['password'], $body);
@@ -1729,8 +1750,7 @@ EOQ;
             $mail->IsHTML(true);
             $mail->Body = from_html($emailTemp->body_html);
             $mail->AltBody = from_html($emailTemp->body);
-        }
-        else
+        } else
         {
             $mail->Body_html = from_html($emailTemp->body_html);
             $mail->Body = from_html($emailTemp->body);
@@ -1755,8 +1775,7 @@ EOQ;
             if ($hasRecipients)
             {
                 $mail->AddBCC($itemail);
-            }
-            else
+            } else
             {
                 $mail->AddAddress($itemail);
             }

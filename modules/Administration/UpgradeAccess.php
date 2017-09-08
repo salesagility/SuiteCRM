@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -48,7 +50,9 @@ $ignoreCase = (substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache/2')
 $htaccess_file   = getcwd() . "/.htaccess";
 $contents = '';
 $basePath = parse_url($sugar_config['site_url'], PHP_URL_PATH);
-if(empty($basePath)) $basePath = '/';
+if(empty($basePath)) {
+    $basePath = '/';
+}
 
 $restrict_str = <<<EOQ
 # BEGIN SUGARCRM RESTRICTIONS
@@ -74,9 +78,15 @@ if(file_exists($htaccess_file)){
     $skip = false;
     while($line = fgets($fp)){
 
-    	if(preg_match('/\s*#\s*BEGIN\s*SUGARCRM\s*RESTRICTIONS/i', $line))$skip = true;
-        if(!$skip)$contents .= $line;
-        if(preg_match('/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i', $line))$skip = false;
+    	if(preg_match('/\s*#\s*BEGIN\s*SUGARCRM\s*RESTRICTIONS/i', $line)) {
+    	    $skip = true;
+    	}
+        if(!$skip) {
+            $contents .= $line;
+        }
+        if(preg_match('/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i', $line)) {
+            $skip = false;
+        }
     }
 }
 if(substr($contents, -1) != "\n") {

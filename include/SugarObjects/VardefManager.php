@@ -96,14 +96,18 @@ class VardefManager{
     }
 
     static function addTemplate($module, $object, $template, $object_name=false){
-        if($template == 'default')$template = 'basic';
+        if($template == 'default') {
+            $template = 'basic';
+        }
         $templates = array();
         $fields = array();
-        if(empty($object_name))$object_name = $object;
+        if(empty($object_name)) {
+            $object_name = $object;
+        }
         $_object_name = strtolower($object_name);
         if(!empty($GLOBALS['dictionary'][$object]['table'])){
             $table_name = $GLOBALS['dictionary'][$object]['table'];
-        }else{
+        } else{
             $table_name = strtolower($module);
         }
 
@@ -112,7 +116,7 @@ class VardefManager{
             if(file_exists($path)){
                 require($path);
                 $templates[$template] = $vardefs;
-            }else{
+            } else{
                 $path = 'include/SugarObjects/implements/' . $template . '/vardefs.php';
                 if(file_exists($path)){
                     require($path);
@@ -122,12 +126,22 @@ class VardefManager{
         }
        
         if(!empty($templates[$template])){
-            if(empty($GLOBALS['dictionary'][$object]['fields']))$GLOBALS['dictionary'][$object]['fields'] = array();
-            if(empty($GLOBALS['dictionary'][$object]['relationships']))$GLOBALS['dictionary'][$object]['relationships'] = array();
-            if(empty($GLOBALS['dictionary'][$object]['indices']))$GLOBALS['dictionary'][$object]['indices'] = array();
+            if(empty($GLOBALS['dictionary'][$object]['fields'])) {
+                $GLOBALS['dictionary'][$object]['fields'] = array();
+            }
+            if(empty($GLOBALS['dictionary'][$object]['relationships'])) {
+                $GLOBALS['dictionary'][$object]['relationships'] = array();
+            }
+            if(empty($GLOBALS['dictionary'][$object]['indices'])) {
+                $GLOBALS['dictionary'][$object]['indices'] = array();
+            }
             $GLOBALS['dictionary'][$object]['fields'] = array_merge($templates[$template]['fields'], $GLOBALS['dictionary'][$object]['fields']);
-            if(!empty($templates[$template]['relationships']))$GLOBALS['dictionary'][$object]['relationships'] = array_merge($templates[$template]['relationships'], $GLOBALS['dictionary'][$object]['relationships']);
-            if(!empty($templates[$template]['indices']))$GLOBALS['dictionary'][$object]['indices'] = array_merge($templates[$template]['indices'], $GLOBALS['dictionary'][$object]['indices']);
+            if(!empty($templates[$template]['relationships'])) {
+                $GLOBALS['dictionary'][$object]['relationships'] = array_merge($templates[$template]['relationships'], $GLOBALS['dictionary'][$object]['relationships']);
+            }
+            if(!empty($templates[$template]['indices'])) {
+                $GLOBALS['dictionary'][$object]['indices'] = array_merge($templates[$template]['indices'], $GLOBALS['dictionary'][$object]['indices']);
+            }
             // maintain a record of this objects inheritance from the SugarObject templates...
             $GLOBALS['dictionary'][$object]['templates'][ $template ] = $template ;
         }
@@ -160,8 +174,9 @@ class VardefManager{
      */
     static function saveCache($module,$object, $additonal_objects= array()){
 
-        if (empty($GLOBALS['dictionary'][$object]))
-            $object = BeanFactory::getObjectName($module);
+        if (empty($GLOBALS['dictionary'][$object])) {
+                    $object = BeanFactory::getObjectName($module);
+        }
 
         //Sometimes bad definitions can get in from left over extensions or file system lag(caching). We need to clean those.
         $data = self::cleanVardefs($GLOBALS['dictionary'][$object]);
@@ -191,7 +206,7 @@ class VardefManager{
         //otherwise go through each module and remove the vardefs.php
         if(!empty($module_dir) && !empty($object_name)){
             VardefManager::_clearCache($module_dir, $object_name);
-        }else{
+        } else{
             global $beanList;
             foreach($beanList as $module_dir => $object_name){
                 VardefManager::_clearCache($module_dir, $object_name);
@@ -310,11 +325,13 @@ class VardefManager{
         }
 
         //Cache link fields for this call in a static variable
-        if (!isset(self::$linkFields))
-            self::$linkFields = array();
+        if (!isset(self::$linkFields)) {
+                    self::$linkFields = array();
+        }
 
-        if (isset(self::$linkFields[$object]))
-            return self::$linkFields[$object];
+        if (isset(self::$linkFields[$object])) {
+                    return self::$linkFields[$object];
+        }
 
         $vardef = $dictionary[$object];
         $links = array();
@@ -337,8 +354,9 @@ class VardefManager{
     {
         $cacheKey = "LFR{$module}{$object}{$relName}";
         $cacheValue = sugar_cache_retrieve($cacheKey);
-        if(!empty($cacheValue))
-            return $cacheValue;
+        if(!empty($cacheValue)) {
+                    return $cacheValue;
+        }
 
         $relLinkFields = self::getLinkFieldsForModule($module, $object);
         $matches = array();
@@ -352,13 +370,15 @@ class VardefManager{
                 }
             }
         }
-        if (empty($matches))
-            return false;
-        if (sizeof($matches) == 1)
-            $results = $matches[0];
-        else
-            //For relationships where both sides are the same module, more than one link will be returned
+        if (empty($matches)) {
+                    return false;
+        }
+        if (sizeof($matches) == 1) {
+                    $results = $matches[0];
+        } else {
+                    //For relationships where both sides are the same module, more than one link will be returned
             $results = $matches;
+        }
 
         sugar_cache_put($cacheKey, $results);
         return $results ;

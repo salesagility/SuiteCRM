@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*
  * Changes to AbstractSubpanelImplementation for DeployedSubpanels
@@ -91,11 +95,12 @@ class DeployedSubpanelImplementation extends AbstractMetaDataImplementation impl
         $this->_viewdefs = array ( ) ;
         $this->_fielddefs = array ( ) ;
         $this->_language = '' ;    
-        if (! empty ( $spd->layout_defs ))
-            if (array_key_exists ( strtolower ( $subpanelName ), $spd->layout_defs [ 'subpanel_setup' ] ))
+        if (! empty ( $spd->layout_defs )) {
+                    if (array_key_exists ( strtolower ( $subpanelName ), $spd->layout_defs [ 'subpanel_setup' ] ))
             {
                 //First load the original defs from the module folder
                 $originalSubpanel = $spd->load_subpanel( $subpanelName , false, true);
+        }
                 $this->_fullFielddefs = $originalSubpanel->get_list_fields ();
                 $this->_mergeFielddefs ( $this->_fielddefs , $this->_fullFielddefs ) ;
                 
@@ -113,8 +118,9 @@ class DeployedSubpanelImplementation extends AbstractMetaDataImplementation impl
                 }
 
                 // don't attempt to access the template_instance property if our subpanel represents a collection, as it won't be there - the sub-sub-panels get this value instead
-                if ( ! $this->_aSubPanelObject->isCollection() )
-                    $this->_language = $this->_aSubPanelObject->template_instance->module_dir ;
+                if ( ! $this->_aSubPanelObject->isCollection() ) {
+                                    $this->_language = $this->_aSubPanelObject->template_instance->module_dir ;
+                }
 
                 // Retrieve a copy of the bean for the parent module of this subpanel - so we can find additional fields for the layout
                 $subPanelParentModuleName = $this->_aSubPanelObject->get_module_name () ;
@@ -130,8 +136,9 @@ class DeployedSubpanelImplementation extends AbstractMetaDataImplementation impl
 
                         if (AbstractMetaDataParser::validField( $def ))
                         {
-                        	if ( ! isset ( $def [ 'label' ] ) )
-                        		$def [ 'label' ] = $def [ 'name' ] ;
+                        	if ( ! isset ( $def [ 'label' ] ) ) {
+                        	                        		$def [ 'label' ] = $def [ 'name' ] ;
+                        	}
                             $this->_fielddefs [ $key ] = $def ;
                         }
                     }

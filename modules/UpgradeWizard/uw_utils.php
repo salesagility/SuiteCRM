@@ -39,7 +39,7 @@
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-	die('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
 
 
@@ -122,8 +122,9 @@ function commitMakeBackupFiles($rest_dir, $install_file, $unzip_dir, $zip_from_d
 		$_SESSION['uw_restore_dir'] = getUploadRelativeName($rest_dir);
 
 		foreach ($newFiles as $file) {
-			if (strpos($file, 'md5'))
-				continue;
+			if (strpos($file, 'md5')) {
+							continue;
+			}
 
 			// get name of current file to place in restore directory
 			$cleanFile = str_replace(clean_path($unzip_dir . '/' . $zip_from_dir), '', $file);
@@ -268,7 +269,9 @@ function removeFileFromPath($file,$path, $deleteNot=array()){
 			$removed++;
 		}
 	}
-	if(!file_exists($path))return $removed;
+	if(!file_exists($path)) {
+	    return $removed;
+	}
 	$d = dir($path);
 	while(false !== ($e = $d->read())){  // Fixed bug. !== is required to literally match the type and value of false, so that a filename that could evaluate and cast to false, ie "false" or "0", still allows the while loop to continue.  From example at http://www.php.net/manual/en/function.dir.php
 		$next = $path . '/'. $e;
@@ -318,8 +321,9 @@ function copyRecursiveBetweenDirectories($from,$to){
 }
 
 function deleteDirectory($dirname,$only_empty=false) {
-	if (!is_dir($dirname))
-		return false;
+	if (!is_dir($dirname)) {
+			return false;
+	}
 	$dscan = array(realpath($dirname));
 	$darr = array();
 	while (!empty($dscan)) {
@@ -327,23 +331,26 @@ function deleteDirectory($dirname,$only_empty=false) {
 		$darr[] = $dcur;
 		if ($d=opendir($dcur)) {
 			while ($f=readdir($d)) {
-				if ($f=='.' || $f=='..')
-					continue;
+				if ($f=='.' || $f=='..') {
+									continue;
+				}
 				$f=$dcur.'/'.$f;
-				if (is_dir($f))
-					$dscan[] = $f;
-				else
-					unlink($f);
+				if (is_dir($f)) {
+									$dscan[] = $f;
+				} else {
+									unlink($f);
+				}
 			}
 			closedir($d);
 		}
 	}
 	$i_until = ($only_empty)? 1 : 0;
 	for ($i=count($darr)-1; $i>=$i_until; $i--) {
-		if (rmdir($darr[$i]))
-			logThis('Success :Copying file to destination: ' . $darr[$i]);
-		else
-			logThis('Copy problem:Copying file to destination: ' . $darr[$i]);
+		if (rmdir($darr[$i])) {
+					logThis('Success :Copying file to destination: ' . $darr[$i]);
+		} else {
+					logThis('Copy problem:Copying file to destination: ' . $darr[$i]);
+		}
 	}
 	return (($only_empty)? (count(scandir)<=2) : (!is_dir($dirname)));
 }
@@ -422,13 +429,13 @@ function recursive_empty_or_remove_directory($directory, $exclude_dirs=null,$exc
 		return FALSE;
 
 		// ... if the path is not readable
-	}elseif(!is_readable($directory))
+	} elseif(!is_readable($directory))
 	{
 		// ... we return false and exit the function
 		return FALSE;
 
 		// ... else if the path is readable
-	}else{
+	} else{
 
 		// we open the directory
 		$handle = opendir($directory);
@@ -447,8 +454,7 @@ function recursive_empty_or_remove_directory($directory, $exclude_dirs=null,$exc
 				//add another check if the dir is in the list to exclude delete
 				if(is_dir($path) && $exclude_dirs != null && in_array($path,$exclude_dirs)){
 					//do nothing
-				}
-				else if(is_dir($path))
+				} else if(is_dir($path))
 				{
 					// we call this function with the new path
 					recursive_empty_or_remove_directory($path);
@@ -458,8 +464,7 @@ function recursive_empty_or_remove_directory($directory, $exclude_dirs=null,$exc
 					// we remove the file
 					if($exclude_files != null && in_array($path,$exclude_files)){
 						//do nothing
-					}
-					else{
+					} else{
 						unlink($path);
 					}
 				}
@@ -509,8 +514,7 @@ function getAllCustomizedModules() {
 					$return_array[$mod];
 					break;
 				}
-			}
-			else{
+			} else{
 				// This is a new file in user's version and indicates that module has been
 				//customized. Put the module in the customized array.
 				echo 'New File'.$file;
@@ -532,7 +536,9 @@ function getAllModules() {
 	$modules = array();
 	$d = dir('modules');
 	while($e = $d->read()){
-		if(substr($e, 0, 1) == '.' || !is_dir('modules/' . $e))continue;
+		if(substr($e, 0, 1) == '.' || !is_dir('modules/' . $e)) {
+		    continue;
+		}
 		$modules[] = $e;
 	}
 	return $modules;
@@ -574,8 +580,9 @@ function commitHandleReminders($skippedFiles, $path='') {
 	global $mod_strings;
 	global $current_user;
 
-	if(empty($mod_strings))
-		$mod_strings = return_module_language('en_us', 'UpgradeWizard');
+	if(empty($mod_strings)) {
+			$mod_strings = return_module_language('en_us', 'UpgradeWizard');
+	}
 
 	if(empty($current_user->id)) {
 		$current_user->getSystemUser();
@@ -868,9 +875,9 @@ function upgradeUWFilesCopy($allFiles, $from_dir)
 				mkdir_recursive(dirname($destFile)); // make sure the directory exists
 			}
 
-			if(stristr($file,'uw_main.tpl'))
-				logThis('Skipping "'.$file.'" - file copy will during commit step.');
-			else {
+			if(stristr($file,'uw_main.tpl')) {
+							logThis('Skipping "'.$file.'" - file copy will during commit step.');
+			} else {
 				logThis('updating UpgradeWizard code: '.$destFile);
 				copy_recursive($file, $destFile);
 			}
@@ -1081,8 +1088,7 @@ function getModuleLanguagePack($lang, $module) {
 		if (file_exists($langPack))
 		{
 			include($langPack);
-		}
-		elseif (file_exists($langPackEn))
+		} elseif (file_exists($langPackEn))
 		{
 			include($langPackEn);
 		}
@@ -1133,8 +1139,7 @@ function checkSystemCompliance() {
 		if (count($canInstall) == 1)
 		{
 			$ret['dbVersion'] = "<b><span class=stop>" . $installer_mod_strings[$canInstall[0]] . "</span></b>";
-		}
-		else
+		} else
 		{
 			$ret['dbVersion'] = "<b><span class=stop>" . sprintf($installer_mod_strings[$canInstall[0]], $canInstall[1]) . "</span></b>";
 		}
@@ -1223,8 +1228,7 @@ function checkSystemCompliance() {
 		if (version_compare(PCRE_VERSION, '7.0') < 0) {
 			$ret['pcreVersion'] = "<b><span class='stop'>{$installer_mod_strings['ERR_CHECKSYS_PCRE_VER']}</span></b>";
 			$ret['error_found'] = true;
-		}
-		else {
+		} else {
 			$ret['pcreVersion'] = "<b><span class='go'>{$installer_mod_strings['LBL_CHECKSYS_OK']}</span></b>";
 		}
 	} else {
@@ -1237,8 +1241,7 @@ function checkSystemCompliance() {
 	if (UploadStream::getSuhosinStatus() == true)
 	{
 		$ret['stream_msg'] = "<b><span class=\"go\">{$installer_mod_strings['LBL_CHECKSYS_OK']}</span></b>";
-	}
-	else
+	} else
 	{
 		$ret['stream_msg'] = "<b><span class=\"stop\">{$app_strings['ERR_SUHOSIN']}</span></b>";
 		$ret['error_found'] = true;
@@ -1293,8 +1296,7 @@ function logThis($entry, $path='') {
 	if(!file_exists($log)) {
 		if(function_exists('sugar_fopen')){
 			$fp = @sugar_fopen($log, 'w+'); // attempts to create file
-		}
-		else{
+		} else{
 			$fp = fopen($log, 'w+'); // attempts to create file
 		}
 		if(!is_resource($fp)) {
@@ -1304,8 +1306,7 @@ function logThis($entry, $path='') {
 	} else {
 		if(function_exists('sugar_fopen')){
 			$fp = @sugar_fopen($log, 'a+'); // write pointer at end of file
-		}
-		else{
+		} else{
 			$fp = @fopen($log, 'a+'); // write pointer at end of file
 		}
 
@@ -1340,7 +1341,9 @@ function updateQuickCreateDefs(){
 	$studio_modules = array();
 
 	while($e = $d->read()){ //collect all studio modules.
-		if(substr($e, 0, 1) == '.' || !is_dir('modules/' . $e))continue;
+		if(substr($e, 0, 1) == '.' || !is_dir('modules/' . $e)) {
+		    continue;
+		}
 		if(file_exists('modules/' . $e . '/metadata/studio.php'))
 		{
 			array_push($studio_modules, $e);
@@ -1373,11 +1376,10 @@ function updateQuickCreateDefs(){
 					}
 					//write back.
 					fclose($fp);
-				}
-				else{
+				} else{
 					$GLOBALS['log']->debug("Failed to replace 'EditView' with QuickCreate because $quickcreatedefs is either not readable or does not exist.");
 				}
-			}else{
+			} else{
 				$GLOBALS['log']->debug("Failed to copy $editviewdefs to $quickcreatedefs!");
 			}
 		}
@@ -1614,8 +1616,7 @@ eoq;
 		//double check whether unzipped .
 		if(file_exists($unzip_dir ."/scripts") && file_exists($unzip_dir."/manifest.php")){
 			//already unzipped
-		}
-		else{
+		} else{
 			unzip( $install_file, $unzip_dir );
 		}
 
@@ -1766,8 +1767,7 @@ eoq;
 		//double check whether unzipped .
 		if(file_exists($unzip_dir ."/scripts") && file_exists($unzip_dir."/manifest.php")){
 			//already unzipped
-		}
-		else{
+		} else{
 			unzip( $install_file, $unzip_dir );
 		}
 
@@ -1834,11 +1834,15 @@ eoq;
 	// file preflight checks
 	logThis('verifying md5 checksums for files...');
 	foreach($upgradeFiles as $file) {
-		if(in_array(str_replace(clean_path("$unzip_dir/$zip_from_dir") . "/", '', $file), $uw_files))
-			continue; // skip already loaded files
+		if(in_array(str_replace(clean_path("$unzip_dir/$zip_from_dir") . "/", '', $file), $uw_files)) {
+					continue;
+		}
+		// skip already loaded files
 
-		if(strpos($file, '.md5'))
-			continue; // skip md5 file
+		if(strpos($file, '.md5')) {
+					continue;
+		}
+		// skip md5 file
 
 		// normalize file paths
 		$file = clean_path($file);
@@ -1867,8 +1871,7 @@ eoq;
 				$fp = '';
 				if(function_exists('sugar_fopen')){
 					$fp = sugar_fopen($destFile, 'r');
-				}
-				else{
+				} else{
 					$fp = fopen($destFile, 'r');
 				}
 				$filesize = filesize($destFile);
@@ -2186,13 +2189,11 @@ if ( !function_exists('validate_manifest') ) {
 					return $mod_strings['ERROR_VERSION_INCOMPATIBLE'] . "<br />" .
 					$mod_strings['ERR_UW_VERSION'] . $sugar_version;
 				}
-			}
-			else {
+			} else {
 				// if neither set reject
 				return $mod_strings['ERROR_NO_VERSION_SET'];
 			}
-		}
-		else {
+		} else {
 			// If sugarcrm version set 'acceptable_sugar_versions', and acceptable_suitecrm_versions set check only on suitecrm version
 			// If sugarcrm version not set 'acceptable_sugar_versions', and acceptable_suitecrm_versions set check only on suitecrm version
 			$version_ok = false;
@@ -2346,45 +2347,61 @@ function uwFindAllFiles($dir, $theArray, $includeDirs=false, $skipDirs=array(), 
 function resetUwSession() {
 	logThis('resetting $_SESSION');
 
-	if(isset($_SESSION['committed']))
-		unset($_SESSION['committed']);
-	if(isset($_SESSION['sugar_version_file']))
-		unset($_SESSION['sugar_version_file']);
-	if(isset($_SESSION['upgrade_complete']))
-		unset($_SESSION['upgrade_complete']);
-	if(isset($_SESSION['allTables']))
-		unset($_SESSION['allTables']);
-	if(isset($_SESSION['alterCustomTableQueries']))
-		unset($_SESSION['alterCustomTableQueries']);
-	if(isset($_SESSION['skip_zip_upload']))
-		unset($_SESSION['skip_zip_upload']);
-	if(isset($_SESSION['install_file']))
-		unset($_SESSION['install_file']);
-	if(isset($_SESSION['unzip_dir']))
-		unset($_SESSION['unzip_dir']);
-	if(isset($_SESSION['zip_from_dir']))
-		unset($_SESSION['zip_from_dir']);
-	if(isset($_SESSION['overwrite_files']))
-		unset($_SESSION['overwrite_files']);
-	if(isset($_SESSION['schema_change']))
-		unset($_SESSION['schema_change']);
-	if(isset($_SESSION['uw_restore_dir']))
-		unset($_SESSION['uw_restore_dir']);
-	if(isset($_SESSION['step']))
-		unset($_SESSION['step']);
-	if(isset($_SESSION['files']))
-		unset($_SESSION['files']);
+	if(isset($_SESSION['committed'])) {
+			unset($_SESSION['committed']);
+	}
+	if(isset($_SESSION['sugar_version_file'])) {
+			unset($_SESSION['sugar_version_file']);
+	}
+	if(isset($_SESSION['upgrade_complete'])) {
+			unset($_SESSION['upgrade_complete']);
+	}
+	if(isset($_SESSION['allTables'])) {
+			unset($_SESSION['allTables']);
+	}
+	if(isset($_SESSION['alterCustomTableQueries'])) {
+			unset($_SESSION['alterCustomTableQueries']);
+	}
+	if(isset($_SESSION['skip_zip_upload'])) {
+			unset($_SESSION['skip_zip_upload']);
+	}
+	if(isset($_SESSION['install_file'])) {
+			unset($_SESSION['install_file']);
+	}
+	if(isset($_SESSION['unzip_dir'])) {
+			unset($_SESSION['unzip_dir']);
+	}
+	if(isset($_SESSION['zip_from_dir'])) {
+			unset($_SESSION['zip_from_dir']);
+	}
+	if(isset($_SESSION['overwrite_files'])) {
+			unset($_SESSION['overwrite_files']);
+	}
+	if(isset($_SESSION['schema_change'])) {
+			unset($_SESSION['schema_change']);
+	}
+	if(isset($_SESSION['uw_restore_dir'])) {
+			unset($_SESSION['uw_restore_dir']);
+	}
+	if(isset($_SESSION['step'])) {
+			unset($_SESSION['step']);
+	}
+	if(isset($_SESSION['files'])) {
+			unset($_SESSION['files']);
+	}
 	if(isset($_SESSION['Upgraded451Wizard'])){
 		unset($_SESSION['Upgraded451Wizard']);
 	}
 	if(isset($_SESSION['Initial_451to500_Step'])){
 		unset($_SESSION['Initial_451to500_Step']);
 	}
-	if(isset($_SESSION['license_shown']))
-		unset($_SESSION['license_shown']);
-	if(isset($_SESSION['sugarMergeRunResults']))
-		unset($_SESSION['sugarMergeRunResults']);
-}
+	if(isset($_SESSION['license_shown'])) {
+			unset($_SESSION['license_shown']);
+	}
+	if(isset($_SESSION['sugarMergeRunResults'])) {
+			unset($_SESSION['sugarMergeRunResults']);
+	}
+	}
 
 /**
  * @deprecated
@@ -2415,8 +2432,9 @@ function printAlterTableSql($tables)
 {
 	$alterTableSql = '';
 
-	foreach($tables as $table)
-		$alterTableSql .= "ALTER TABLE " . $table . " CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;" . "\n";
+	foreach($tables as $table) {
+			$alterTableSql .= "ALTER TABLE " . $table . " CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;" . "\n";
+	}
 
 	return $alterTableSql;
 }
@@ -2474,8 +2492,9 @@ function testThis2($dir, $id=0, $hide=false) {
 	$out .= "<table cellpadding='1' cellspacing='0' style='border:0px solid #ccc'>\n";
 
 	while($file = readdir($dh)) {
-		if($file == '.' || $file == '..' || $file == 'CVS' || $file == '.cvsignore')
-			continue;
+		if($file == '.' || $file == '..' || $file == 'CVS' || $file == '.cvsignore') {
+					continue;
+		}
 
 		if(is_dir($path.'/'.$file)) {
 			$file = $path.'/'.$file;
@@ -2501,8 +2520,9 @@ function testThis2($dir, $id=0, $hide=false) {
 
 
 function testThis3(&$files, $id, $hide, $previousPath = '') {
-	if(!is_array($files) || empty($files))
-		return '';
+	if(!is_array($files) || empty($files)) {
+			return '';
+	}
 
 	$out = '';
 
@@ -2513,8 +2533,9 @@ function testThis3(&$files, $id, $hide, $previousPath = '') {
 		$path = dirname($file);
 		$fileName = basename($file);
 
-		if($fileName == 'CVS' || $fileName == '.cvsignore')
-			continue;
+		if($fileName == 'CVS' || $fileName == '.cvsignore') {
+					continue;
+		}
 
 		if($path == $previousPath) { // same directory
 			// new row for each file
@@ -2679,7 +2700,9 @@ function deletePackageOnCancel(){
 
 function handleExecuteSqlKeys($db, $tableName, $disable)
 {
-	if(empty($tableName)) return true;
+	if(empty($tableName)) {
+	    return true;
+	}
 	if(is_callable(array($db, "supports"))) {
 		// new API
 		return $disable?$db->disableKeys($tableName):$db->enableKeys($tableName);
@@ -2733,8 +2756,7 @@ function parseAndExecuteSqlFile($sqlScript,$forStepQuery='',$resumeFromQuery='')
 										}
 									}//for
 
-								}
-								elseif(strcasecmp(trim($resumeFromQuery),trim($query))==0){
+								} elseif(strcasecmp(trim($resumeFromQuery),trim($query))==0){
 									$resumeAfterFound = true;
 								}
 							}
@@ -2760,8 +2782,7 @@ function parseAndExecuteSqlFile($sqlScript,$forStepQuery='',$resumeFromQuery='')
 								$progQuery[$forStepQuery]=$query;
 								post_install_progress($progQuery,$action='set');
 							}//if
-						}
-						elseif($query != null){
+						} elseif($query != null){
 							$tableName = getAlterTable($query);
 							if($disable_keys)
 							{
@@ -2794,7 +2815,7 @@ function getAlterTable($query){
 		$sqlArray = explode(" ", $query);
 		$key = array_search('table', $sqlArray);
 		return $sqlArray[($key+1)];
-	}else {
+	} else {
 		return '';
 	}
 }
@@ -2808,8 +2829,7 @@ function set_upgrade_vars(){
 	$upgrade_progress_file = $upgrade_progress_dir.'/upgrade_progress.php';
 	if(file_exists($upgrade_progress_file)){
 		include($upgrade_progress_file);
-	}
-	else{
+	} else{
 		fopen($upgrade_progress_file, 'w+');
 	}
 	if(!isset($upgrade_config) || $upgrade_config == null){
@@ -2888,12 +2908,10 @@ function set_upgrade_progress($currStep,$currState,$currStepSub='',$currStepSubS
 	$upgrade_progress_file = $upgrade_progress_dir.'/upgrade_progress.php';
 	if(file_exists($upgrade_progress_file)){
 		include($upgrade_progress_file);
-	}
-	else{
+	} else{
 		if(function_exists('sugar_fopen')){
 			sugar_fopen($upgrade_progress_file, 'w+');
-		}
-		else{
+		} else{
 			fopen($upgrade_progress_file, 'w+');
 		}
 	}
@@ -2914,35 +2932,30 @@ function set_upgrade_progress($currStep,$currState,$currStepSub='',$currStepSubS
 					if($latestStepSub == $currStepSub){
 						$upgrade_config[sizeof($upgrade_config)][$currStep][$latestStepSub]=$currStepSubState;
 						$upgrade_config[sizeof($upgrade_config)][$currStep][$currStep] = $currState;
-					}
-					else{
+					} else{
 						$upgrade_config[sizeof($upgrade_config)][$currStep][$currStepSub]=$currStepSubState;
 						$upgrade_config[sizeof($upgrade_config)][$currStep][$currStep] = $currState;
 					}
-				}
-				else{
+				} else{
 					$currArray = array();
 					$currArray[$currStep] = $currState;
 					$currArray[$currStepSub] = $currStepSubState;
 					$upgrade_config[sizeof($upgrade_config)+1][$currStep] = $currArray;
 				}
-			}
-			else{
+			} else{
 				//get the current upgrade progress
 				$latestStep = get_upgrade_progress();
 				//set the upgrade progress
 				if($latestStep == $currStep){
 					//update the current step with new progress status
 					$upgrade_config[sizeof($upgrade_config)][$latestStep]=$currState;
-				}
-				else{
+				} else{
 					//it's a new step
 					$upgrade_config[sizeof($upgrade_config)+1][$currStep]=$currState;
 				}
 				// now check if there elements within array substeps
 			}
-		}
-		else{
+		} else{
 			//set the upgrade progress  (just starting)
 			$upgrade_config[sizeof($upgrade_config)+1][$currStep]= $currState;
 		}
@@ -2997,8 +3010,7 @@ function currUpgradeState($currState){
 						$currState = $k;
 					}
 				}
-			}
-			else{
+			} else{
 				$currState = $key;
 			}
 		}
@@ -3007,7 +3019,9 @@ function currUpgradeState($currState){
 }
 
 function didThisStepRunBefore($step,$SubStep=''){
-	if($step == null) return;
+	if($step == null) {
+	    return;
+	}
 	$upgrade_progress_dir = sugar_cached('upgrades/temp');
 	$upgrade_progress_file = $upgrade_progress_dir.'/upgrade_progress.php';
 	$currState = '';
@@ -3031,20 +3045,17 @@ function didThisStepRunBefore($step,$SubStep=''){
 												}
 											}
 										}//foreach
-									}
-									elseif($SubStep !=null){
+									} elseif($SubStep !=null){
 										if($SubStep==$k && $v=='done'){
 											$stepRan = true;
 											break;
 										}
-									}
-									elseif($step==$k && $v=='done'){
+									} elseif($step==$k && $v=='done'){
 										$stepRan = true;
 										break;
 									}
 								}//foreach
-							}
-							elseif($val=='done'){
+							} elseif($val=='done'){
 								$stepRan = true;
 							}
 						}
@@ -3074,15 +3085,13 @@ function post_install_progress($progArray='',$action=''){
 			}
 		}
 		return $currProg;
-	}
-	elseif($action=='set'){
+	} elseif($action=='set'){
 		if(!is_dir($upgrade_progress_dir)){
 			mkdir($upgrade_progress_dir);
 		}
 		if(file_exists($upgrade_progress_file)){
 			include($upgrade_progress_file);
-		}
-		else{
+		} else{
 			fopen($upgrade_progress_file, 'w+');
 		}
 		if(!is_array($upgrade_config[sizeof($upgrade_config)]['commit']['post_install'])){
@@ -3394,7 +3403,7 @@ function upgradeTeamColumn($bean, $column_name) {
 
 		if(!empty($GLOBALS['dictionary'][$object]['table'])){
 			$table_name = $GLOBALS['dictionary'][$object]['table'];
-		}else{
+		} else{
 			$table_name = strtolower($module);
 		}
 
@@ -3498,7 +3507,7 @@ function upgradeModulesForTeam() {
 			$user->retrieve($row['id']);
 			$team->new_user_created($user);
 			$team_id = $team->id;
-		}else{
+		} else{
 			$team_id =$assoc['id'];
 		}
 
@@ -3662,8 +3671,7 @@ function fix_dropdown_list() {
 			$contents = file_get_contents($file);
 			if ( !isset($GLOBALS['app_list_strings']) ) {
 				$GLOBALS['app_list_strings'] = $app_list_strings;
-			}
-			else {
+			} else {
 				$GLOBALS['app_list_strings'] = array_merge($app_list_strings, $GLOBALS['app_list_strings']);
 			}
 
@@ -3878,8 +3886,7 @@ function convertImageToText($table_name,$column_name){
 				if($GLOBALS['db']->lastError()){
 					logThis('An error occurred when performing this query-->'.$addContentDataText);
 				}
-			}
-			else{
+			} else{
 				$addContentDataText="update {$table_name} set {$column_name}_temp =
                 convert(varchar(max), convert(varbinary(8000), {$column_name})) where id= '{$row['id']}'";
 				$GLOBALS['db']->query($addContentDataText);
@@ -4288,8 +4295,7 @@ function loadSilentUpgradeVars(){
 		if(!file_exists($cacheFile)){
 			// Set the vars array so it's loaded
 			$silent_upgrade_vars_loaded = array('vars' => array());
-		}
-		else{
+		} else{
 			require_once($cacheFile);
 			$silent_upgrade_vars_loaded = $silent_upgrade_vars_cache;
 		}
@@ -4343,8 +4349,7 @@ function getSilentUpgradeVar($var){
 
 	if(!isset($silent_upgrade_vars_loaded['vars'][$var])){
 		return null;
-	}
-	else{
+	} else{
 		return $silent_upgrade_vars_loaded['vars'][$var];
 	}
 }
@@ -4408,9 +4413,9 @@ function upgradeSugarCache($file)
 		if(!is_dir(dirname($destFile))) {
 			mkdir_recursive(dirname($destFile)); // make sure the directory exists
 		}
-		if ( stristr($file,'uw_main.tpl') )
-			logThis('Skipping "'.$file.'" - file copy will during commit step.');
-		else {
+		if ( stristr($file,'uw_main.tpl') ) {
+					logThis('Skipping "'.$file.'" - file copy will during commit step.');
+		} else {
 			logThis('updating UpgradeWizard code: '.$destFile);
 			copy_recursive($file, $destFile);
 		}
@@ -4531,7 +4536,7 @@ if (!function_exists("getValidDBName"))
 			$tail = substr ( $name, -11) ;
 			$temp = substr($md5str , strlen($md5str)-4 );
 			$result = substr ( $name, 0, 10) . $temp . $tail ;
-		}else if ($len > ($maxLen - 5))
+		} else if ($len > ($maxLen - 5))
 		{
 			$result = substr ( $name, 0, 11) . substr ( $name, 11 - $maxLen + 5);
 		}

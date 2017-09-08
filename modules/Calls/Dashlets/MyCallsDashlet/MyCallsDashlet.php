@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -51,7 +53,9 @@ class MyCallsDashlet extends DashletGeneric {
 
         parent::__construct($id, $def);
 
-        if(empty($def['title'])) $this->title = translate('LBL_LIST_MY_CALLS', 'Calls');
+        if(empty($def['title'])) {
+            $this->title = translate('LBL_LIST_MY_CALLS', 'Calls');
+        }
         $this->searchFields = $dashletData['MyCallsDashlet']['searchFields'];
         if(empty($def['filters'])){
 			if(isset($this->searchFields['status'])){
@@ -76,8 +80,7 @@ class MyCallsDashlet extends DashletGeneric {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id, $def);
@@ -123,13 +126,15 @@ class MyCallsDashlet extends DashletGeneric {
        }
 
         foreach($this->lvs->data['data'] as $rowNum => $row) {
-            if(empty($this->lvs->data['data'][$rowNum]['DURATION_HOURS']))  $this->lvs->data['data'][$rowNum]['DURATION'] = '0' . $mod_strings['LBL_HOURS_ABBREV'];
-            else $this->lvs->data['data'][$rowNum]['DURATION'] = $this->lvs->data['data'][$rowNum]['DURATION_HOURS'] . $mod_strings['LBL_HOURS_ABBREV'];
+            if(empty($this->lvs->data['data'][$rowNum]['DURATION_HOURS'])) {
+                $this->lvs->data['data'][$rowNum]['DURATION'] = '0' . $mod_strings['LBL_HOURS_ABBREV'];
+            } else {
+                $this->lvs->data['data'][$rowNum]['DURATION'] = $this->lvs->data['data'][$rowNum]['DURATION_HOURS'] . $mod_strings['LBL_HOURS_ABBREV'];
+            }
 
             if(empty($this->lvs->data['data'][$rowNum]['DURATION_MINUTES']) || empty($this->seedBean->minutes_values[$this->lvs->data['data'][$rowNum]['DURATION_MINUTES']])) {
                 $this->lvs->data['data'][$rowNum]['DURATION'] .= '00';
-            }
-            else {
+            } else {
                 $this->lvs->data['data'][$rowNum]['DURATION'] .= $this->seedBean->minutes_values[$this->lvs->data['data'][$rowNum]['DURATION_MINUTES']];
             }
             if ($this->lvs->data['data'][$rowNum]['STATUS'] == $app_list_strings['meeting_status_dom']['Planned'])
@@ -137,15 +142,14 @@ class MyCallsDashlet extends DashletGeneric {
                 if ($this->lvs->data['data'][$rowNum]['ACCEPT_STATUS'] == ''){
 					//if no status has been set, then do not show accept options
 					$this->lvs->data['data'][$rowNum]['SET_ACCEPT_LINKS'] = "<div id=\"accept".$this->id."\" ></div>";
-				}elseif($this->lvs->data['data'][$rowNum]['ACCEPT_STATUS'] == 'none')
+				} elseif($this->lvs->data['data'][$rowNum]['ACCEPT_STATUS'] == 'none')
                 {
                     $this->lvs->data['data'][$rowNum]['SET_ACCEPT_LINKS'] = "<div id=\"accept".$this->id."\"><a title=\"".$app_list_strings['dom_meeting_accept_options']['accept'].
                         "\" href=\"javascript:SUGAR.util.retrieveAndFill('index.php?module=Activities&to_pdf=1&action=SetAcceptStatus&id=".$this->id."&object_type=Call&object_id=".$this->lvs->data['data'][$rowNum]['ID'] . "&accept_status=accept', null, null, SUGAR.mySugar.retrieveDashlet, '{$this->id}');\">".
                         SugarThemeRegistry::current()->getImage("accept_inline","border='0'",null,null,'.gif',$app_list_strings['dom_meeting_accept_options']['accept']). "</a>&nbsp;<a title=\"".$app_list_strings['dom_meeting_accept_options']['tentative']."\" href=\"javascript:SUGAR.util.retrieveAndFill('index.php?module=Activities&to_pdf=1&action=SetAcceptStatus&id=".$this->id."&object_type=Call&object_id=".$this->lvs->data['data'][$rowNum]['ID'] . "&accept_status=tentative', null, null, SUGAR.mySugar.retrieveDashlet, '{$this->id}');\">".
                         SugarThemeRegistry::current()->getImage("tentative_inline","border='0'", null,null,'.gif',$app_list_strings['dom_meeting_accept_options']['tentative'])."</a>&nbsp;<a title=\"".$app_list_strings['dom_meeting_accept_options']['decline']. "\" href=\"javascript:SUGAR.util.retrieveAndFill('index.php?module=Activities&to_pdf=1&action=SetAcceptStatus&id=".$this->id."&object_type=Call&object_id=".$this->lvs->data['data'][$rowNum]['ID'] . "&accept_status=decline', null, null, SUGAR.mySugar.retrieveDashlet, '{$this->id}');\">".
                         SugarThemeRegistry::current()->getImage("decline_inline","border='0'", null,null,'.gif',$app_list_strings['dom_meeting_accept_options']['decline'])."</a></div>";
-                }
-                else
+                } else
                 {
                     $this->lvs->data['data'][$rowNum]['SET_ACCEPT_LINKS'] = $app_list_strings['dom_meeting_accept_status'][$this->lvs->data['data'][$rowNum]['ACCEPT_STATUS']];
 

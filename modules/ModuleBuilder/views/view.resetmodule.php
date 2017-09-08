@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,10 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 require_once ('modules/ModuleBuilder/MB/AjaxCompose.php') ;
 require_once ('modules/ModuleBuilder/MB/ModuleBuilder.php') ;
 require_once ('modules/ModuleBuilder/Module/StudioModule.php') ;
@@ -95,20 +99,25 @@ class ViewResetmodule extends SugarView
     {
         $out = "<script>ajaxStatus.flashStatus(SUGAR.language.get('app_strings', 'LBL_REQUEST_PROCESSED'), 2000);</script>";
         
-        if (!empty($_REQUEST['relationships']))
-            $out .= $this->removeCustomRelationships();
+        if (!empty($_REQUEST['relationships'])) {
+                    $out .= $this->removeCustomRelationships();
+        }
             
-        if (!empty($_REQUEST['fields']))
-            $out .= $this->removeCustomFields();
+        if (!empty($_REQUEST['fields'])) {
+                    $out .= $this->removeCustomFields();
+        }
             
-        if (!empty($_REQUEST['layouts']))
-            $out .= $this->removeCustomLayouts();
+        if (!empty($_REQUEST['layouts'])) {
+                    $out .= $this->removeCustomLayouts();
+        }
 			
-		if (!empty($_REQUEST['labels']))
-            $out .= $this->removeCustomLabels();
+		if (!empty($_REQUEST['labels'])) {
+		            $out .= $this->removeCustomLabels();
+		}
 			
-		if (!empty($_REQUEST['extensions']))
-            $out .= $this->removeCustomExtensions();	
+		if (!empty($_REQUEST['extensions'])) {
+		            $out .= $this->removeCustomExtensions();
+		}
 			
         
         $out .= "Complete!";
@@ -210,8 +219,9 @@ class ViewResetmodule extends SugarView
                 $out .= "Removed relationship $relationshipName<br/>";
             }
         }
-        if ($madeChanges)
-           $relationships->save () ;
+        if ($madeChanges) {
+                   $relationships->save () ;
+        }
         
         return $out;
     }
@@ -223,7 +233,9 @@ class ViewResetmodule extends SugarView
         if (is_dir($languageDir)) {
             $files = scandir($languageDir);
             foreach ($files as $langFile) {
-                if (substr($langFile, 0 ,1) == '.') continue;
+                if (substr($langFile, 0 ,1) == '.') {
+                    continue;
+                }
 				$language = substr($langFile, 0, strlen($langFile) - 9);
 				unlink($languageDir . "/" . $langFile);
 				

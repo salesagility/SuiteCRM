@@ -80,7 +80,9 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
             $vardef['type'] = 'varchar';
         }
 
-        if (isset($vardef['precision'])) unset($vardef['precision']);
+        if (isset($vardef['precision'])) {
+            unset($vardef['precision']);
+        }
 
         //$vardef['precision'] = $locale->getPrecedentPreference('default_currency_significant_digits', $current_user);
 
@@ -120,8 +122,9 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
         if (isset($vardef['function'])
             && ($vardef['function'] == 'getEmailAddressWidget'
                 || $vardef['function']['name'] == 'getEmailAddressWidget')
-        )
-            unset($vardef['function']);
+        ) {
+                    unset($vardef['function']);
+        }
 
         if (isset($vardef['name']) && ($vardef['name'] == 'date_modified')) {
             $vardef['name'] = 'aow_temp_date';
@@ -154,8 +157,9 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
         }
 
         // hack to disable one of the js calls in this control
-        if (isset($vardef['function']) && ($vardef['function'] == 'getCurrencyDropDown' || $vardef['function']['name'] == 'getCurrencyDropDown'))
-            $contents .= "{literal}<script>function CurrencyConvertAll() { return; }</script>{/literal}";
+        if (isset($vardef['function']) && ($vardef['function'] == 'getCurrencyDropDown' || $vardef['function']['name'] == 'getCurrencyDropDown')) {
+                    $contents .= "{literal}<script>function CurrencyConvertAll() { return; }</script>{/literal}";
+        }
 
 
 
@@ -191,8 +195,9 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
     $ss->assign('CALENDAR_FDOW', $current_user->get_first_day_of_week());
 
     $fieldlist = array();
-    if (!isset($focus) || !($focus instanceof SugarBean))
-        require_once($beanFiles[$beanList[$module]]);
+    if (!isset($focus) || !($focus instanceof SugarBean)) {
+            require_once($beanFiles[$beanList[$module]]);
+    }
     $focus = new $beanList[$module];
     // create the dropdowns for the parent type fields
     $vardefFields[$fieldname] = $focus->field_defs[$fieldname];
@@ -202,11 +207,13 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
     foreach ($vardefFields as $name => $properties) {
         $fieldlist[$name] = $properties;
         // fill in enums
-        if (isset($fieldlist[$name]['options']) && is_string($fieldlist[$name]['options']) && isset($app_list_strings[$fieldlist[$name]['options']]))
-            $fieldlist[$name]['options'] = $app_list_strings[$fieldlist[$name]['options']];
+        if (isset($fieldlist[$name]['options']) && is_string($fieldlist[$name]['options']) && isset($app_list_strings[$fieldlist[$name]['options']])) {
+                    $fieldlist[$name]['options'] = $app_list_strings[$fieldlist[$name]['options']];
+        }
         // Bug 32626: fall back on checking the mod_strings if not in the app_list_strings
-        elseif (isset($fieldlist[$name]['options']) && is_string($fieldlist[$name]['options']) && isset($mod_strings[$fieldlist[$name]['options']]))
-            $fieldlist[$name]['options'] = $mod_strings[$fieldlist[$name]['options']];
+        elseif (isset($fieldlist[$name]['options']) && is_string($fieldlist[$name]['options']) && isset($mod_strings[$fieldlist[$name]['options']])) {
+                    $fieldlist[$name]['options'] = $mod_strings[$fieldlist[$name]['options']];
+        }
     }
 
     // fill in function return values
@@ -214,8 +221,9 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
         if (!empty($fieldlist[$fieldname]['function']['returns']) && $fieldlist[$fieldname]['function']['returns'] == 'html') {
             $function = $fieldlist[$fieldname]['function']['name'];
             // include various functions required in the various vardefs
-            if (isset($fieldlist[$fieldname]['function']['include']) && is_file($fieldlist[$fieldname]['function']['include']))
-                require_once($fieldlist[$fieldname]['function']['include']);
+            if (isset($fieldlist[$fieldname]['function']['include']) && is_file($fieldlist[$fieldname]['function']['include'])) {
+                            require_once($fieldlist[$fieldname]['function']['include']);
+            }
             $_REQUEST[$fieldname] = $value;
             $value = $function($focus, $fieldname, $value, $view);
 
@@ -323,23 +331,22 @@ function saveField($field, $id, $module, $value)
 
         if ($bean->field_defs[$field]['type'] == "multienum") {
             $bean->$field = encodeMultienumValue($value);
-        }else if ($bean->field_defs[$field]['type'] == "relate" || $bean->field_defs[$field]['type'] == 'parent'){
+        } else if ($bean->field_defs[$field]['type'] == "relate" || $bean->field_defs[$field]['type'] == 'parent'){
             $save_field = $bean->field_defs[$field]['id_name'];
             $bean->$save_field = $value;
             if ($bean->field_defs[$field]['type'] == 'parent') {
                 $bean->parent_type = $_REQUEST['parent_type'];
                 $bean->fill_in_additional_parent_fields(); // get up to date parent info as need it to display name
             }
-        }else if ($bean->field_defs[$field]['type'] == "currency"){
+        } else if ($bean->field_defs[$field]['type'] == "currency"){
 			if (stripos($field, 'usdollar')) {
 				$newfield = str_replace("_usdollar", "", $field);
 				$bean->$newfield = $value;
-			}
-			else{
+			} else{
 				$bean->$field = $value;
 			}
             
-        }else{
+        } else{
             $bean->$field = $value;
         }
 
@@ -501,8 +508,9 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 
         //To fix github bug 880 (the rname was null and was causing a 500 error in the getFieldValueFromModule call to $fieldname
         $fieldName = 'name';//$vardef['name'];
-        if(!is_null($vardef['rname']))
-            $fieldName = $vardef['rname'];
+        if(!is_null($vardef['rname'])) {
+                    $fieldName = $vardef['rname'];
+        }
 
         if($vardef['ext2']){
 
@@ -527,9 +535,9 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 	if($vardef['type'] == "currency"){
 		if($_REQUEST['view'] != "DetailView"){			
 			$value = currency_format_number($value);		
+		} else {
+					$value = format_number($value);
 		}
-		else
-			$value = format_number($value);		
 	}
 	
     return $value;
@@ -538,8 +546,9 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 function getFieldValueFromModule($fieldname, $module, $id)
 {
     //Github bug 880, if the fieldname is null, do no call from bean
-    if(is_null($fieldname))
-        return '';
+    if(is_null($fieldname)) {
+            return '';
+    }
 
     $bean = BeanFactory::getBean($module, $id);
     if (is_object($bean) && $bean->id != "") {
@@ -563,7 +572,7 @@ function checkAccess($bean){
 
     if($bean->ACLAccess('EditView')) {
         return true;
-    }else {
+    } else {
         return false;
     }
 }

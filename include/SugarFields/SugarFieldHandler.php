@@ -54,8 +54,7 @@ class SugarFieldHandler
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -107,10 +106,10 @@ class SugarFieldHandler
         		$file = 'custom/include/SugarFields/Fields/' . $field . '/SugarField' . $field. '.php';
                 $type = $field;
 			//else check the fields directory
-			}else if(file_exists('include/SugarFields/Fields/' . $field . '/SugarField' . $field. '.php')){
+			} else if(file_exists('include/SugarFields/Fields/' . $field . '/SugarField' . $field. '.php')){
            		$file = 'include/SugarFields/Fields/' . $field . '/SugarField' . $field. '.php';
                 $type = $field;
-        	}else{
+        	} else{
                 // No direct class, check the directories to see if they are defined
         		if( $returnNullIfBase &&
                     !is_dir('custom/include/SugarFields/Fields/'.$field) &&
@@ -127,7 +126,7 @@ class SugarFieldHandler
 			$customClass = 'Custom' . $class;
         	if(class_exists($customClass)){
         		$sugarFieldObjects[$field] = new $customClass($field);
-        	}else{
+        	} else{
         		$sugarFieldObjects[$field] = new $class($field);
         	}
         }

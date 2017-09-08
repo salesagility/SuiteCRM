@@ -21,7 +21,9 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
-if(!defined('sugarEntry'))define('sugarEntry', true);
+if(!defined('sugarEntry')) {
+    define('sugarEntry', true);
+}
 require_once 'modules/AOP_Case_Updates/util.php';
 if(!isAOPEnabled()){
     return;
@@ -40,12 +42,12 @@ if(array_key_exists("aop",$sugar_config) && array_key_exists("joomla_url",$sugar
     if(!$res->success){
         $msg = $res->error ? $res->error : $mod_strings['LBL_ENABLE_PORTAL_USER_FAILED'];
         SugarApplication::appendErrorMessage($msg);
-    }else{
+    } else{
         $bean->portal_account_disabled = 0;
         $bean->save(false);
         SugarApplication::appendErrorMessage($mod_strings['LBL_ENABLE_PORTAL_USER_SUCCESS']);
     }
-}else{
+} else{
     SugarApplication::appendErrorMessage($mod_strings['LBL_NO_JOOMLA_URL']);
 }
 

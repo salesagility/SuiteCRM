@@ -41,8 +41,7 @@ class AOS_Invoices extends AOS_Invoices_sugar {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -53,9 +52,15 @@ class AOS_Invoices extends AOS_Invoices_sugar {
         global $sugar_config;
 
         if (empty($this->id)  || $this->new_with_id){
-            if(isset($_POST['group_id'])) unset($_POST['group_id']);
-            if(isset($_POST['product_id'])) unset($_POST['product_id']);
-            if(isset($_POST['service_id'])) unset($_POST['service_id']);
+            if(isset($_POST['group_id'])) {
+                unset($_POST['group_id']);
+            }
+            if(isset($_POST['product_id'])) {
+                unset($_POST['product_id']);
+            }
+            if(isset($_POST['service_id'])) {
+                unset($_POST['service_id']);
+            }
 
             if($sugar_config['dbconfig']['db_type'] == 'mssql'){
                 $this->number = $this->db->getOne("SELECT MAX(CAST(number as INT))+1 FROM aos_invoices");

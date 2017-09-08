@@ -89,8 +89,7 @@ class ListViewDisplay {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -249,8 +248,9 @@ class ListViewDisplay {
 	 */
 	function buildSelectLink($id = 'select_link', $total=0, $pageTotal=0, $location="top") {
 		global $app_strings;
-		if ($pageTotal < 0)
-			$pageTotal = $total;
+		if ($pageTotal < 0) {
+					$pageTotal = $total;
+		}
 
 
         $total_label = "";
@@ -316,27 +316,34 @@ class ListViewDisplay {
             }
 
             // compose email
-            if ( $this->email )
-                $menuItems[] = $this->buildComposeEmailLink($this->data['pageData']['offsets']['total'], $location);
+            if ( $this->email ) {
+                            $menuItems[] = $this->buildComposeEmailLink($this->data['pageData']['offsets']['total'], $location);
+            }
             // mass update
             $mass = $this->getMassUpdate();
             $mass->setSugarBean($this->seed);
-            if ( ( ACLController::checkAccess($this->seed->module_dir,'edit',true) && ACLController::checkAccess($this->seed->module_dir,'massupdate',true) ) && $this->showMassupdateFields && $mass->doMassUpdateFieldsExistForFocus() )
-                $menuItems[] = $this->buildMassUpdateLink($location);
+            if ( ( ACLController::checkAccess($this->seed->module_dir,'edit',true) && ACLController::checkAccess($this->seed->module_dir,'massupdate',true) ) && $this->showMassupdateFields && $mass->doMassUpdateFieldsExistForFocus() ) {
+                            $menuItems[] = $this->buildMassUpdateLink($location);
+            }
             // merge
-            if ( $this->mailMerge )
-                $menuItems[] = $this->buildMergeLink(null, $location);
-            if ( $this->mergeduplicates )
-                $menuItems[] = $this->buildMergeDuplicatesLink($location);
+            if ( $this->mailMerge ) {
+                            $menuItems[] = $this->buildMergeLink(null, $location);
+            }
+            if ( $this->mergeduplicates ) {
+                            $menuItems[] = $this->buildMergeDuplicatesLink($location);
+            }
             // add to target list
-            if ( $this->targetList && ACLController::checkAccess('ProspectLists','edit',true) )
-                $menuItems[] = $this->buildTargetList($location);
+            if ( $this->targetList && ACLController::checkAccess('ProspectLists','edit',true) ) {
+                            $menuItems[] = $this->buildTargetList($location);
+            }
             // export
-            if ( ACLController::checkAccess($this->seed->module_dir,'export',true) && $this->export )
-                $menuItems[] = $this->buildExportLink($location);
+            if ( ACLController::checkAccess($this->seed->module_dir,'export',true) && $this->export ) {
+                            $menuItems[] = $this->buildExportLink($location);
+            }
 
-            foreach ( $this->actionsMenuExtraItems as $item )
-                $menuItems[] = $item;
+            foreach ( $this->actionsMenuExtraItems as $item ) {
+                            $menuItems[] = $item;
+            }
 
 
             if($this->delete && !$this->show_action_dropdown_as_delete) {

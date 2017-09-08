@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,20 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description:
- ********************************************************************************/
-
-
-
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class ProspectList extends SugarBean {
 	var $field_name_map;
@@ -103,8 +96,7 @@ class ProspectList extends SugarBean {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -137,19 +129,21 @@ class ProspectList extends SugarBean {
 			$where_auto = '1=1';
 				if($show_deleted == 0){
                 	$where_auto = "$this->table_name.deleted=0";
-				}else if($show_deleted == 1){
+				} else if($show_deleted == 1){
                 	$where_auto = "$this->table_name.deleted=1";
 				}
 
-		if($where != "")
-			$query .= "where $where AND ".$where_auto;
-		else
-			$query .= "where ".$where_auto;
+		if($where != "") {
+					$query .= "where $where AND ".$where_auto;
+		} else {
+					$query .= "where ".$where_auto;
+		}
 
-		if($order_by != "")
-			$query .= " ORDER BY $order_by";
-		else
-			$query .= " ORDER BY prospect_lists.name";
+		if($order_by != "") {
+					$query .= " ORDER BY $order_by";
+		} else {
+					$query .= " ORDER BY prospect_lists.name";
+		}
 
 		return $query;
 	}
@@ -167,15 +161,17 @@ class ProspectList extends SugarBean {
 
 		$where_auto = " prospect_lists.deleted=0";
 
-        if($where != "")
-                $query .= " WHERE $where AND ".$where_auto;
-        else
-                $query .= " WHERE ".$where_auto;
+        if($where != "") {
+                        $query .= " WHERE $where AND ".$where_auto;
+        } else {
+                        $query .= " WHERE ".$where_auto;
+        }
 
-        if($order_by != "")
-                $query .= " ORDER BY $order_by";
-        else
-                $query .= " ORDER BY prospect_lists.name";
+        if($order_by != "") {
+                        $query .= " ORDER BY $order_by";
+        } else {
+                        $query .= " ORDER BY prospect_lists.name";
+        }
         return $query;
     }
 
@@ -216,8 +212,7 @@ class ProspectList extends SugarBean {
 					if($val['type'] === 'relate') {
 						// show related value in report..
 						$memberarr['fields'][$fieldname] = "'{{$val['type']} from=\"{$val['custom_module']}.{$val['name']}\" to=\"{$val['ext2']}.{$val['ext3']}\"}' AS " . $fieldname;
-					}
-					else {
+					} else {
 						$memberarr['fields'][$fieldname] =
 							strtolower($membername) . '_cstm.' . $fieldname . ' AS ' . $fieldname;
 					}
@@ -313,12 +308,15 @@ FROM prospect_lists_prospects plp
 	function save_relationship_changes($is_update, $exclude = array())
     {
     	parent::save_relationship_changes($is_update, $exclude);
-		if($this->lead_id != "")
-	   		$this->set_prospect_relationship($this->id, $this->lead_id, "lead");
-    	if($this->contact_id != "")
-    		$this->set_prospect_relationship($this->id, $this->contact_id, "contact");
-    	if($this->prospect_id != "")
-    		$this->set_prospect_relationship($this->id, $this->contact_id, "prospect");
+		if($this->lead_id != "") {
+			   		$this->set_prospect_relationship($this->id, $this->lead_id, "lead");
+		}
+    	if($this->contact_id != "") {
+    	    		$this->set_prospect_relationship($this->id, $this->contact_id, "contact");
+    	}
+    	if($this->prospect_id != "") {
+    	    		$this->set_prospect_relationship($this->id, $this->contact_id, "prospect");
+    	}
     }
 
 	function set_prospect_relationship($prospect_list_id, &$link_ids, $link_name)
@@ -376,10 +374,11 @@ FROM prospect_lists_prospects plp
 
 		$row = $this->db->fetchByAssoc($result);
 
-		if($row)
-			return $row['num'];
-		else
-			return 0;
+		if($row) {
+					return $row['num'];
+		} else {
+					return 0;
+		}
 	}
 
 
@@ -401,7 +400,9 @@ FROM prospect_lists_prospects plp
 		$the_where = "";
 		foreach($where_clauses as $clause)
 		{
-			if($the_where != "") $the_where .= " or ";
+			if($the_where != "") {
+			    $the_where .= " or ";
+			}
 			$the_where .= $clause;
 		}
 

@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,17 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
- 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 define ( 'MB_PACKAGE_PATH', 'custom/modulebuilder/packages' ) ;
 define('MB_PACKAGE_BUILD', 'custom' . DIRECTORY_SEPARATOR . 'modulebuilder' . DIRECTORY_SEPARATOR . 'builds');
@@ -57,8 +53,9 @@ class ModuleBuilder
     function getPackageList ()
     {
         static $list = array ( ) ;
-        if (! empty ( $list ) || ! file_exists ( MB_PACKAGE_PATH ))
-            return $list ;
+        if (! empty ( $list ) || ! file_exists ( MB_PACKAGE_PATH )) {
+                    return $list ;
+        }
         $d = dir ( MB_PACKAGE_PATH ) ;
         while ( $e = $d->read () )
         {
@@ -78,8 +75,9 @@ class ModuleBuilder
      */
     function getPackage ($name)
     {
-        if (empty ( $this->packages [ $name ] ))
-            $this->packages [ $name ] = new MBPackage ( $name ) ;
+        if (empty ( $this->packages [ $name ] )) {
+                    $this->packages [ $name ] = new MBPackage ( $name ) ;
+        }
 
         return $this->packages [ $name ] ;
     }
@@ -90,8 +88,9 @@ class ModuleBuilder
         if (file_exists ( $manifestPath ))
         {
             require( $manifestPath ) ;
-            if(!empty($manifest))
-                return $manifest['key'];
+            if(!empty($manifest)) {
+                            return $manifest['key'];
+            }
         }
         return false ;
     }
@@ -134,8 +133,9 @@ class ModuleBuilder
             $list = $this->getPackageList () ;
             foreach ( $list as $package )
             {
-                if (! empty ( $this->packages [ $package ] ))
-                    continue ;
+                if (! empty ( $this->packages [ $package ] )) {
+                                    continue ;
+                }
                 $this->packages [ $package ] = new MBPackage ( $package ) ;
             }
         }

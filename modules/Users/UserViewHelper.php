@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,10 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * This helper handles the rest of the fields for the Users Edit and Detail views.
@@ -158,7 +162,7 @@ class UserViewHelper {
 
         if (isset($GLOBALS['sugar_config']['show_download_tab'])) {
             $enable_download_tab = $GLOBALS['sugar_config']['show_download_tab'];
-        }else{
+        } else{
             $enable_download_tab = true;
         }
 
@@ -175,8 +179,7 @@ class UserViewHelper {
             if ($this->bean->id == $current_user->id) {
                 $reset_pref_warning = translate('LBL_RESET_PREFERENCES_WARNING','Users');
                 $reset_home_warning = translate('LBL_RESET_HOMEPAGE_WARNING','Users');
-            }
-            else {
+            } else {
                 $reset_pref_warning = translate('LBL_RESET_PREFERENCES_WARNING_USER','Users');
                 $reset_home_warning = translate('LBL_RESET_HOMEPAGE_WARNING_USER','Users');
             }
@@ -193,8 +196,12 @@ class UserViewHelper {
             $buttons_footer[]="<input type='button' class='button' id='reset_homepage_footer' onclick='if(confirm(\"{$reset_home_warning}\"))window.location=\"".$_SERVER['PHP_SELF'] .'?'.$the_query_string."&reset_homepage=true\";' value='".translate('LBL_RESET_HOMEPAGE','Users')."' />";
 
         }
-        if (isset($buttons_header)) $this->ss->assign("BUTTONS_HEADER", $buttons_header);
-        if (isset($buttons_footer)) $this->ss->assign("BUTTONS_FOOTER", $buttons_footer);
+        if (isset($buttons_header)) {
+            $this->ss->assign("BUTTONS_HEADER", $buttons_header);
+        }
+        if (isset($buttons_footer)) {
+            $this->ss->assign("BUTTONS_FOOTER", $buttons_footer);
+        }
 
 
 
@@ -388,7 +395,9 @@ class UserViewHelper {
 
         $this->ss->assign('EXPORT_DELIMITER', $this->bean->getPreference('export_delimiter'));
 
-        if($this->bean->receive_notifications ||(!isset($this->bean->id) && $admin->settings['notify_send_by_default'])) $this->ss->assign("RECEIVE_NOTIFICATIONS", "checked");
+        if($this->bean->receive_notifications ||(!isset($this->bean->id) && $admin->settings['notify_send_by_default'])) {
+            $this->ss->assign("RECEIVE_NOTIFICATIONS", "checked");
+        }
 
         //jc:12293 - modifying to use the accessor method which will translate the
         //available character sets using the translation files
@@ -479,7 +488,7 @@ class UserViewHelper {
             $this->ss->assign('EXTERNAL_AUTH_CLASS_1', $sugar_config['authenticationClass']);
             $this->ss->assign('EXTERNAL_AUTH_CLASS', $sugar_config['authenticationClass']);
             $authclass = $sugar_config['authenticationClass'];
-        }else{
+        } else{
             if(!empty($GLOBALS['system_config']->settings['system_ldap_enabled'])){
                 $this->ss->assign('EXTERNAL_AUTH_CLASS_1', translate('LBL_LDAP','Users'));
                 $this->ss
@@ -775,12 +784,10 @@ class UserViewHelper {
         if ($user->is_admin)
         {
             $user->user_type = 'Administrator';
-        }
-        else if ($user->is_group)
+        } else if ($user->is_group)
         {
             $user->user_type = 'GROUP';
-        }
-        else
+        } else
         {
             $user->user_type = 'RegularUser';
         }

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -65,18 +67,24 @@ class SugarWidgetSubPanelTopCreateAccountNameButton extends SugarWidgetSubPanelT
 		}
 		
 		$additionalFormFields = array();
-		if(isset($defines['focus']->billing_address_street)) 
-			$additionalFormFields['primary_address_street'] = $defines['focus']->billing_address_street;
-		if(isset($defines['focus']->billing_address_city)) 
-			$additionalFormFields['primary_address_city'] = $defines['focus']->billing_address_city;						  		
-		if(isset($defines['focus']->billing_address_state)) 
-			$additionalFormFields['primary_address_state'] = $defines['focus']->billing_address_state;
-		if(isset($defines['focus']->billing_address_country)) 
-			$additionalFormFields['primary_address_country'] = $defines['focus']->billing_address_country;
-		if(isset($defines['focus']->billing_address_postalcode)) 
-			$additionalFormFields['primary_address_postalcode'] = $defines['focus']->billing_address_postalcode;
-		if(isset($defines['focus']->phone_office)) 
-			$additionalFormFields['phone_work'] = $defines['focus']->phone_office;
+		if(isset($defines['focus']->billing_address_street)) {
+					$additionalFormFields['primary_address_street'] = $defines['focus']->billing_address_street;
+		}
+		if(isset($defines['focus']->billing_address_city)) {
+					$additionalFormFields['primary_address_city'] = $defines['focus']->billing_address_city;
+		}
+		if(isset($defines['focus']->billing_address_state)) {
+					$additionalFormFields['primary_address_state'] = $defines['focus']->billing_address_state;
+		}
+		if(isset($defines['focus']->billing_address_country)) {
+					$additionalFormFields['primary_address_country'] = $defines['focus']->billing_address_country;
+		}
+		if(isset($defines['focus']->billing_address_postalcode)) {
+					$additionalFormFields['primary_address_postalcode'] = $defines['focus']->billing_address_postalcode;
+		}
+		if(isset($defines['focus']->phone_office)) {
+					$additionalFormFields['phone_work'] = $defines['focus']->phone_office;
+		}
 		
 		
 		$button = $this->_get_form($defines, $additionalFormFields);

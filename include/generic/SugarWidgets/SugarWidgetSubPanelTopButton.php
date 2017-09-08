@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -66,31 +68,38 @@ class SugarWidgetSubPanelTopButton extends SugarWidget
 			$class_details = $module;
 
 			// If keys were passed into the constructor, translate them from keys to values.
-			if(!empty($class_details['module']))
-				$this->module = $class_details['module'];
-			if(!empty($class_details['title']))
-				$this->title = $app_strings[$class_details['title']];
-			if(!empty($class_details['access_key']))
-				$this->access_key = $app_strings[$class_details['access_key']];
-			if(!empty($class_details['form_value']))
-				$this->form_value = translate($class_details['form_value'], $this->module);
-			if(!empty($class_details['additional_form_fields']))
-				$this->additional_form_fields = $class_details['additional_form_fields'];
+			if(!empty($class_details['module'])) {
+							$this->module = $class_details['module'];
+			}
+			if(!empty($class_details['title'])) {
+							$this->title = $app_strings[$class_details['title']];
+			}
+			if(!empty($class_details['access_key'])) {
+							$this->access_key = $app_strings[$class_details['access_key']];
+			}
+			if(!empty($class_details['form_value'])) {
+							$this->form_value = translate($class_details['form_value'], $this->module);
+			}
+			if(!empty($class_details['additional_form_fields'])) {
+							$this->additional_form_fields = $class_details['additional_form_fields'];
+			}
 			if(!empty($class_details['ACL'])){
 				$this->acl = $class_details['ACL'];
 			}
-		}
-		else
+		} else
 		{
 			$this->module = $module;
 
 			// If keys were passed into the constructor, translate them from keys to values.
-			if(!empty($title))
-				$this->title = $app_strings[$title];
-			if(!empty($access_key))
-				$this->access_key = $app_strings[$access_key];
-			if(!empty($form_value))
-				$this->form_value = translate($form_value, $module);
+			if(!empty($title)) {
+							$this->title = $app_strings[$title];
+			}
+			if(!empty($access_key)) {
+							$this->access_key = $app_strings[$access_key];
+			}
+			if(!empty($form_value)) {
+							$this->form_value = translate($form_value, $module);
+			}
 		}
 	}
 
@@ -101,8 +110,7 @@ class SugarWidgetSubPanelTopButton extends SugarWidget
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($module, $title, $access_key, $form_value);
@@ -130,8 +138,7 @@ class SugarWidgetSubPanelTopButton extends SugarWidget
                 if(!empty($defines['focus']->$value))
                 {
                     $additionalFormFields[$key] = $defines['focus']->$value;
-                }
-                else
+                } else
                 {
                     $additionalFormFields[$key] = '';
                 }
@@ -142,8 +149,7 @@ class SugarWidgetSubPanelTopButton extends SugarWidget
 		if(!empty($this->module))
         {
             $defines['child_module_name'] = $this->module;
-        }
-        else
+        } else
         {
             $defines['child_module_name'] = $defines['module'];
         }
@@ -175,7 +181,7 @@ class SugarWidgetSubPanelTopButton extends SugarWidget
 
         if($currentModule == 'Campaigns'){
             $formValues['return_action'] = "DetailView";
-        }else{
+        } else{
             $formValues['return_action'] = $defines['action'];
             if ( $formValues['return_action'] == 'SubPanelViewer' ) {
                 $formValues['return_action'] = 'DetailView';
@@ -209,8 +215,7 @@ class SugarWidgetSubPanelTopButton extends SugarWidget
         {
             if($defines['focus']->object_name=='Contact') {
                 $additionalFormFields['parent_type'] = 'Accounts';
-            }
-            else {
+            } else {
                 $additionalFormFields['parent_type'] = $defines['focus']->module_dir;
             }
         }
@@ -219,8 +224,7 @@ class SugarWidgetSubPanelTopButton extends SugarWidget
             if($defines['focus']->object_name=='Contact') {
                 $additionalFormFields['parent_name'] = $defines['focus']->account_name;
                 $additionalFormFields['account_name'] = $defines['focus']->account_name;
-            }
-            else {
+            } else {
                 $additionalFormFields['parent_name'] = $defines['focus']->name;
             }
         }

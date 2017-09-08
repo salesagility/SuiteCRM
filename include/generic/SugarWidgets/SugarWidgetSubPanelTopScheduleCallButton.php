@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -61,8 +63,7 @@ class SugarWidgetSubPanelTopScheduleCallButton extends SugarWidgetSubPanelTopBut
 				if(!empty($defines['focus']->$value))
 				{
 					$additionalFormFields[$key] = $defines['focus']->$value;
-				}
-				else
+				} else
 				{
 					$additionalFormFields[$key] = '';
 				}
@@ -72,8 +73,7 @@ class SugarWidgetSubPanelTopScheduleCallButton extends SugarWidgetSubPanelTopBut
 		if(!empty($this->module))
 		{
 			$defines['child_module_name'] = $this->module;
-		}
-		else
+		} else
 		{
 			$defines['child_module_name'] = $defines['module'];
 		}
@@ -109,8 +109,7 @@ class SugarWidgetSubPanelTopScheduleCallButton extends SugarWidgetSubPanelTopBut
 		{
 			if($defines['focus']->object_name=='Contact') {
 				$additionalFormFields['parent_type'] = 'Accounts';
-			}
-			else {
+			} else {
 				$additionalFormFields['parent_type'] = $defines['focus']->module_dir;
 			}
 		}
@@ -119,8 +118,7 @@ class SugarWidgetSubPanelTopScheduleCallButton extends SugarWidgetSubPanelTopBut
 			if($defines['focus']->object_name=='Contact') {
 				$additionalFormFields['parent_name'] = $defines['focus']->account_name;
 				$additionalFormFields['account_name'] = $defines['focus']->account_name;
-			}
-			else {
+			} else {
 				$additionalFormFields['parent_name'] = $defines['focus']->name;
 			}
 		}
@@ -129,8 +127,7 @@ class SugarWidgetSubPanelTopScheduleCallButton extends SugarWidgetSubPanelTopBut
 			if($defines['focus']->object_name=='Contact') {
 				$additionalFormFields['parent_id'] = $defines['focus']->account_id;
 				$additionalFormFields['account_id'] = $defines['focus']->account_id;
-			}
-			else {
+			} else {
 				$additionalFormFields['parent_id'] = $defines['focus']->id;
 			}
 		}

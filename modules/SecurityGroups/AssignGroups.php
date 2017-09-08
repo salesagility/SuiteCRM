@@ -1,6 +1,46 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class AssignGroups {
 
@@ -14,7 +54,9 @@ function popup_select(&$bean, $event, $arguments)
 		&& empty($bean->fetched_row['id']) && $bean->module_dir != "Users" && $bean->module_dir != "SugarFeed") {		
 		//Upload an attachment to an Email Template and save. If user with multi groups - popup select option
 		//it will redirect to notes instead of EmailTemplate and relationship will fail...check below to avoid
-		if(!empty($_REQUEST['module']) && $_REQUEST['module'] != $bean->module_dir) return;
+		if(!empty($_REQUEST['module']) && $_REQUEST['module'] != $bean->module_dir) {
+		    return;
+		}
 
 		if(!empty($_REQUEST['securitygroup_list'])) {
 			require_once('modules/SecurityGroups/SecurityGroup.php');
@@ -38,9 +80,7 @@ function popup_select(&$bean, $event, $arguments)
 			unset($_SESSION['securitysuite_error']); //to be safe
 			$_SESSION['securitysuite_error'] = $ss_mod_strings['LBL_ERROR_DUPLICATE'];
 		}
-	}
-
-	else if(isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true
+	} else if(isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true
 		&& empty($bean->fetched_row['id']) && $bean->module_dir == "Users"
 		&& isset($_REQUEST['action']) && $_REQUEST['action'] != 'SaveSignature' ) { //Bug: 589
 
@@ -63,7 +103,9 @@ function popup_select(&$bean, $event, $arguments)
 
 function popup_onload($event, $arguments)
 {
-	if(!empty($_REQUEST['to_pdf']) || !empty($_REQUEST['sugar_body_only'])) return;
+	if(!empty($_REQUEST['to_pdf']) || !empty($_REQUEST['sugar_body_only'])) {
+	    return;
+	}
 
 /** //test user popup
 	//always have this loaded
@@ -74,7 +116,9 @@ function popup_onload($event, $arguments)
 	$module = $_REQUEST['module'];
 	$action = $_REQUEST['action'];
 
-	if(isset($action) && ($action == "Save" || $action == "SetTimezone")) return;  
+	if(isset($action) && ($action == "Save" || $action == "SetTimezone")) {
+	    return;
+	}
 
 	if( (
 			//(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true)

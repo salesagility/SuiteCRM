@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 
@@ -101,8 +105,9 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
         {
         	// attempt to fallback on a basic_search layout...
 
-        	if ( ! isset ( $this->_saved [ 'layout' ] [ self::$variableMap [ MB_BASICSEARCH ] ] ) )
-        		throw new Exception ( get_class ( $this ) . ": {$this->_searchLayout} does not exist for module $moduleName" ) ;
+        	if ( ! isset ( $this->_saved [ 'layout' ] [ self::$variableMap [ MB_BASICSEARCH ] ] ) ) {
+        	        		throw new Exception ( get_class ( $this ) . ": {$this->_searchLayout} does not exist for module $moduleName" ) ;
+        	}
 
         	$this->_saved [ 'layout'] [ MB_ADVANCEDSEARCH ] = $this->_saved [ 'layout' ] [ MB_BASICSEARCH ] ;
         }
@@ -120,10 +125,12 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
 		if(isset($def['type']) && $def['type'] == "assigned_user_name")
 		{
 			$origDefs = $this->getOriginalViewDefs();
-			if (isset($def['group']) && isset($origDefs[$def['group']]))
-				return false;
-			if (!isset($def [ 'studio' ]) || (is_array($def [ 'studio' ]) && !isset($def [ 'studio' ]['searchview'])))
-				return true;
+			if (isset($def['group']) && isset($origDefs[$def['group']])) {
+							return false;
+			}
+			if (!isset($def [ 'studio' ]) || (is_array($def [ 'studio' ]) && !isset($def [ 'studio' ]['searchview']))) {
+							return true;
+			}
 		}
 		
     if (isset($def [ 'studio' ]) && is_array($def [ 'studio' ]) && isset($def [ 'studio' ]['searchview']))
@@ -132,22 +139,26 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
                   ($def [ 'studio' ]['searchview'] === true || $def [ 'studio' ]['searchview'] != 'false');
        }
 		
-    	if (!parent::isValidField($key, $def))
-            return false;
+    	if (!parent::isValidField($key, $def)) {
+    	            return false;
+    	}
     	
         //Special case to prevent multiple copies of assigned, modified, or created by user on the search view
         if (empty ($def[ 'studio' ] ) && $key == "assigned_user_name")
         {
         	$origDefs = $this->getOriginalViewDefs();
-        	if ($key == "assigned_user_name" && isset($origDefs['assigned_user_id']))
-        		return false;
+        	if ($key == "assigned_user_name" && isset($origDefs['assigned_user_id'])) {
+        	        		return false;
+        	}
         }
-        if (substr($key, -8) == "_by_name" &&  isset($def['rname']) && $def['rname'] == "user_name")
-        	return false;
+        if (substr($key, -8) == "_by_name" &&  isset($def['rname']) && $def['rname'] == "user_name") {
+                	return false;
+        }
 
         //Remove image fields (unless studio was set)
-        if (!empty($def [ 'studio' ]) && isset($def['type']) && $def['type'] == "image")
-           return false;
+        if (!empty($def [ 'studio' ]) && isset($def['type']) && $def['type'] == "image") {
+                   return false;
+        }
         
        return true;
     }
@@ -158,8 +169,9 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
      */
     function handleSave ($populate = true)
     {
-        if ($populate)
-            $this->_populateFromRequest() ;
+        if ($populate) {
+                    $this->_populateFromRequest() ;
+        }
             
             
         $this->_saved [ 'layout' ] [ self::$variableMap [ $this->_searchLayout ] ] = $this->convertSearchViewToListView($this->_viewdefs);;
@@ -182,8 +194,7 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
             if (!isset ( $value [ 'name' ] ))
             {
                 $value [ 'name' ] = $key;
-            }
-            else
+            } else
             {
                 $key = $value [ 'name' ] ; // override key with name, needed when the entry lacks a key
             }

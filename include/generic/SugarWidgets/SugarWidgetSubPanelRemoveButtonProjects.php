@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -61,11 +63,9 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
 
 		if ($layout_def['module'] == 'Holidays'){
 			$action = 'DeleteHolidayRelationship';
-		}
-		else if ($layout_def['module'] == 'Users' || $layout_def['module'] == 'Contacts'){
+		} else if ($layout_def['module'] == 'Users' || $layout_def['module'] == 'Contacts'){
 			$action = 'DeleteResourceRelationship';
-		}
-		else{
+		} else{
 			$action = 'DeleteRelationship';
 		}
 
@@ -85,8 +85,7 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
 		
 		if ($current_user->id == $focus->assigned_user_id || is_admin($current_user)){
 			$is_owner = true;
-		}
-		else{
+		} else{
 			$is_owner = false;
 		}
 				
@@ -119,7 +118,7 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
 			. ' class="listViewTdToolsS1"'
 			. " onclick=\"return confirm('$remove_confirmation_text');\""
 			. ">$icon_remove_html&nbsp;$icon_remove_text</a>";
-		}else{
+		} else{
 			return '';
 		}
 	}

@@ -17,7 +17,7 @@ $user_real_names = $current_user->getPreference('use_real_names');
 
 if($user_real_names == 'on'){
     $Name = $full_name;
-}else{
+} else{
     $Name = $current_user->user_name;
 }
 
@@ -153,23 +153,23 @@ switch($time_format)
 //$mins is the minutes option
 $mins = '<select id="date_start_minutes" name="date_start_minutes" class="datetimecombo_time" size="1">';
 //$mins .= '<option></option>';
-    if($min == '00'){$mins .= '<option selected="selected" value="00">00</option>';}else{$mins.= '<option value="00">00</option>';}
-    if($min == '15'){$mins .= '<option selected="selected" value="15">15</option>';}else{$mins.= '<option value="15">15</option>';}
-    if($min == '30'){$mins .= '<option selected="selected" value="30">30</option>';}else{$mins.= '<option value="30">30</option>';}
-    if($min == '45'){$mins .= '<option selected="selected" value="45">45</option>';}else{$mins.= '<option value="45">45</option>';}
+    if($min == '00'){$mins .= '<option selected="selected" value="00">00</option>';} else{$mins.= '<option value="00">00</option>';}
+    if($min == '15'){$mins .= '<option selected="selected" value="15">15</option>';} else{$mins.= '<option value="15">15</option>';}
+    if($min == '30'){$mins .= '<option selected="selected" value="30">30</option>';} else{$mins.= '<option value="30">30</option>';}
+    if($min == '45'){$mins .= '<option selected="selected" value="45">45</option>';} else{$mins.= '<option value="45">45</option>';}
 $mins .= '</select>';
 
 //$merm1 is lower case am / pm
 $merm1 =  '<select id="date_start_meridiem" name="date_start_meridiem" class="datetimecombo_time" size="1">';
 //$merm1 .= '<option></option>';
 
-if($period == 'am'){$merm1 .= '<option selected="selected" value="am">am</option>';}else{$merm1 .= '<option value="am">am</option>'; }
-if($period == 'pm'){$merm1 .= '<option selected="selected" value="pm">pm</option>';}else{$merm1 .= '<option value="pm">pm</option>'; }
+if($period == 'am'){$merm1 .= '<option selected="selected" value="am">am</option>';} else{$merm1 .= '<option value="am">am</option>'; }
+if($period == 'pm'){$merm1 .= '<option selected="selected" value="pm">pm</option>';} else{$merm1 .= '<option value="pm">pm</option>'; }
 $merm1 .= '</select>';
 //$merm2 is used for upper case: AM / PM
 $merm2 =  '<select id="date_start_meridiem" name="date_start_meridiem" class="datetimecombo_time" size="1">';
-    if($period == 'AM'){$merm2 .= '<option selected="selected" value="AM">AM</option>';}else{$merm2 .= '<option value="AM">AM</option>'; }
-    if($period == 'PM'){$merm2 .= '<option selected="selected" value="PM">PM</option>';}else{$merm2 .= '<option value="PM">PM</option>'; }
+    if($period == 'AM'){$merm2 .= '<option selected="selected" value="AM">AM</option>';} else{$merm2 .= '<option value="AM">AM</option>'; }
+    if($period == 'PM'){$merm2 .= '<option selected="selected" value="PM">PM</option>';} else{$merm2 .= '<option value="PM">PM</option>'; }
 $merm2 .= '</select>';
 
 //$hours1 is used when sugar's time/date settings are set to 24 hours
@@ -181,15 +181,13 @@ for($i=0;$i<=23; $i++)
     {
         if($i < 10 ){
             $val = '0'.$i;
-        }
-        else{
+        } else{
             $val = $i;
         }
         if($hour == $val){
 
             $hours1 .= '<option selected="selected" value="'.$val.'">'.$val.'</option>';
-        }
-        else{
+        } else{
             $hours1 .= '<option value="'.$val.'">'.$val.'</option>';
         }
     }
@@ -205,16 +203,14 @@ for($i=1;$i<=12; $i++)
 {
     if($i < 10 ){
         $val = '0'.$i;
-    }
-    else{
+    } else{
         $val = $i;
     }
 
     if($hour == $val){
 
         $hours2 .= '<option selected="selected" value="'.$val.'">'.$val.'</option>';
-    }
-    else{
+    } else{
         $hours2 .= '<option value="'.$val.'">'.$val.'</option>';
     }
 }

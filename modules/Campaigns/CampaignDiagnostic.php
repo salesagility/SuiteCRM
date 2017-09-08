@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -76,14 +78,20 @@ if(isset($_REQUEST['inline']) && $_REQUEST['inline'] == 'inline'){
     {
 
 }
-}else{
+} else{
     //use html if not inline
     $ss = new Sugar_Smarty();
     $ss->assign("MOD", $mod_strings);
     $ss->assign("APP", $app_strings);
-    if (isset($_REQUEST['return_module'])) $ss->assign("RETURN_MODULE", $_REQUEST['return_module']);
-    if (isset($_REQUEST['return_action'])) $ss->assign("RETURN_ACTION", $_REQUEST['return_action']);
-    if (isset($_REQUEST['return_id'])) $ss->assign("RETURN_ID", $_REQUEST['return_id']);
+    if (isset($_REQUEST['return_module'])) {
+        $ss->assign("RETURN_MODULE", $_REQUEST['return_module']);
+    }
+    if (isset($_REQUEST['return_action'])) {
+        $ss->assign("RETURN_ACTION", $_REQUEST['return_action']);
+    }
+    if (isset($_REQUEST['return_id'])) {
+        $ss->assign("RETURN_ID", $_REQUEST['return_id']);
+    }
     // handle Create $module then Cancel
     if (empty($_REQUEST['return_id'])) {
         $ss->assign("RETURN_ACTION", 'index');
@@ -123,7 +131,7 @@ if(isset($mbox) && count($mbox)>0){
         $mboxTable .= "<td>".$details['status']."</td></tr>";
     }
 
-}else{
+} else{
     //if array is empty, then set "bad" message and increment health counter
     $mboxTable .=  "<tr><td colspan='5'><b class='error'>". $mod_strings['LBL_MAILBOX_CHECK1_BAD']."</b></td></tr>";
     $email_health =$email_health +1;
@@ -141,7 +149,7 @@ if (strstr($focus->settings['notify_fromaddress'], 'example.com')){
     //if from address is the default, then set "bad" message and increment health counter
     $conf_msg .= "<tr><td colspan = '5'><b class='error'> ".$mod_strings['LBL_MAILBOX_CHECK2_BAD']." </b></td></td>";
     $email_health =$email_health +1;
-}else{
+} else{
     $conf_msg .= "<tr><td colspan = '5'><b> ".$mod_strings['LBL_MAILBOX_CHECK2_GOOD']."</b></td></tr>";
     $conf_msg .= "<tr><th scope='col' width='20%'><b>".$mod_strings['LBL_WIZ_FROM_NAME']."</b></th>"
                .  " <th scope='col' width='20%'><b>".$mod_strings['LBL_WIZ_FROM_ADDRESS']."</b></th>"
@@ -150,7 +158,7 @@ if (strstr($focus->settings['notify_fromaddress'], 'example.com')){
      $conf_msg .= " <th scope='col' width='20%'><b>".$mod_strings['LBL_MAIL_SMTPSERVER']."</b></th>"
                .  " <th scope='col' width='20%'><b>".$mod_strings['LBL_MAIL_SMTPUSER']."</b></th></tr>";
 
-    }else{$conf_msg .= "</tr>";}
+    } else{$conf_msg .= "</tr>";}
                    
     
 
@@ -161,7 +169,7 @@ if (strstr($focus->settings['notify_fromaddress'], 'example.com')){
         $conf_msg .= "<td>".$focus->settings['mail_smtpserver']."</td>";
         $conf_msg .= "<td>".$focus->settings['mail_smtpuser']."</td></tr>";
 
-    }else{$conf_msg .= "</tr>";}       
+    } else{$conf_msg .= "</tr>";}       
 
 }
           
@@ -171,7 +179,7 @@ $email_setup_wiz_link='';
 if ($email_health>0){
     if (is_admin($current_user)){
         $email_setup_wiz_link="<a href='index.php?module=Campaigns&action=WizardEmailSetup'>".$mod_strings['LBL_EMAIL_SETUP_WIZ']."</a>";
-    }else{
+    } else{
         $email_setup_wiz_link=$mod_strings['LBL_NON_ADMIN_ERROR_MSG'];
     }    
 }
@@ -204,7 +212,7 @@ foreach ($scheds as $funct){
         $sched_mes_body .= "<td style='text-align: left;'>".$funct['status']."</td></tr>";
         if($funct['job']==$check_sched1){
             $check_sched1 ="found";
-        }else{
+        } else{
             $check_sched2 ="found";
         }  
         
@@ -218,7 +226,7 @@ if($sched_mes == 'use'){
     $sched_mes .= "<tr><th scope='col' width='40%'><b>".$mod_strings['LBL_SCHEDULER_NAME']."</b></tH>"
                .  " <th scope='col' width='60%'><b>".$mod_strings['LBL_SCHEDULER_STATUS']."</b></tH></tr>";
             
-}else{
+} else{
     $sched_mes = "<table class='other view' cellspacing='1'>";
     $sched_mes  .= "<tr><td colspan ='3'><font color='red'><b> ".$mod_strings['LBL_SCHEDULER_CHECK_BAD']."</b></font></td></tr>";
     $show_admin_link = true;
@@ -237,7 +245,7 @@ $admin_sched_link='';
 if ($sched_health>0){
     if (is_admin($current_user)){
         $admin_sched_link="<a href='index.php?module=Schedulers&action=index'>".$mod_strings['LBL_SCHEDULER_LINK']."</a>";
-    }else{
+    } else{
      $admin_sched_link=$mod_strings['LBL_NON_ADMIN_ERROR_MSG'];   
     }    
 }    
@@ -269,13 +277,13 @@ function define_image($num, $total)
         return SugarThemeRegistry::current()->getImage('red_camp', "align='absmiddle'", null, null, ".gif", $mod_strings['LBL_INVALID']);
 
 
-    }elseif($num == 0){
+    } elseif($num == 0){
         //if health number is zero, then all checks passed, set green image
         //green
        return SugarThemeRegistry::current()->getImage('green_camp', "align='absmiddle'", null, null, ".gif", $mod_strings['LBL_VALID']);
 
 
-    }else{
+    } else{
         //if health number is between total and num params, then some checks failed but not all, set yellow image
         //yellow
         return SugarThemeRegistry::current()->getImage('yellow_camp', "align='absmiddle'", null, null, ".gif", $mod_strings['LBL_ALERT']);

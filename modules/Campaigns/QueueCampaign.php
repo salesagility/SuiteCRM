@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -85,7 +87,9 @@ $current_date = $campaign->db->now();
 foreach ($_POST['mass'] as $message_id) {
 
 	//fetch email marketing definition.
-	if (!class_exists('EmailMarketing')) require_once('modules/EmailMarketing/EmailMarketing.php');
+	if (!class_exists('EmailMarketing')) {
+	    require_once('modules/EmailMarketing/EmailMarketing.php');
+	}
 
 
 	$marketing = new EmailMarketing();
@@ -203,8 +207,7 @@ $GLOBALS['log']->debug("about to post header URL of: $header_URL");
 if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
 	$href = $matches[1];
 	SugarApplication::redirect($href);
-}
-else {
+} else {
 	header($header_URL);
 }
 

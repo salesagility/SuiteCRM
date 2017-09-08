@@ -1,6 +1,7 @@
 <?php
-if (! defined ( 'sugarEntry' ) || ! sugarEntry)
+if (! defined ( 'sugarEntry' ) || ! sugarEntry) {
     die ( 'Not A Valid Entry Point' ) ;
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -67,11 +68,13 @@ foreach ( $GLOBALS['beanFiles'] as $bean => $file )
         if ( $focus instanceOf SugarBean ) {
             $table_name = $focus->table_name ;
             $empty = array() ;
-            if (empty ( $_REQUEST [ 'silent' ] ))
-                echo $mod_strings [ 'LBL_REBUILD_REL_PROC_META' ] . $focus->table_name . "..." ;
+            if (empty ( $_REQUEST [ 'silent' ] )) {
+                            echo $mod_strings [ 'LBL_REBUILD_REL_PROC_META' ] . $focus->table_name . "..." ;
+            }
             SugarBean::createRelationshipMeta ( $focus->getObjectName (), $db, $table_name, $empty, $focus->module_dir ) ;
-            if (empty ( $_REQUEST [ 'silent' ] ))
-                echo $mod_strings [ 'LBL_DONE' ] . '<br>' ;
+            if (empty ( $_REQUEST [ 'silent' ] )) {
+                            echo $mod_strings [ 'LBL_DONE' ] . '<br>' ;
+            }
         }
     }
 }
@@ -80,7 +83,9 @@ foreach ( $GLOBALS['beanFiles'] as $bean => $file )
 foreach ( $GLOBALS['beanFiles'] as $bean => $file )
 {
 	//skip this file if it does not exist
-	if(!file_exists($file)) continue;
+	if(!file_exists($file)) {
+	    continue;
+	}
 
 	if (! class_exists ( $bean ))
     {
@@ -90,11 +95,13 @@ foreach ( $GLOBALS['beanFiles'] as $bean => $file )
     if ( $focus instanceOf SugarBean ) {
         $table_name = $focus->table_name ;
         $empty = array() ;
-        if (empty ( $_REQUEST [ 'silent' ] ))
-            echo $mod_strings [ 'LBL_REBUILD_REL_PROC_C_META' ] . $focus->table_name . "..." ;
+        if (empty ( $_REQUEST [ 'silent' ] )) {
+                    echo $mod_strings [ 'LBL_REBUILD_REL_PROC_C_META' ] . $focus->table_name . "..." ;
+        }
         SugarBean::createRelationshipMeta ( $focus->getObjectName (), $db, $table_name, $empty, $focus->module_dir, true ) ;
-        if (empty ( $_REQUEST [ 'silent' ] ))
-            echo $mod_strings [ 'LBL_DONE' ] . '<br>' ;
+        if (empty ( $_REQUEST [ 'silent' ] )) {
+                    echo $mod_strings [ 'LBL_DONE' ] . '<br>' ;
+        }
     }
 }
 
@@ -111,24 +118,28 @@ foreach ( $GLOBALS['beanFiles'] as $bean => $file )
     {
         $table = isset($rel_data [ 'table' ]) ? $rel_data [ 'table' ] : "" ;
 
-        if (empty ( $_REQUEST [ 'silent' ] ))
-            echo $mod_strings [ 'LBL_REBUILD_REL_PROC_C_META' ] . $rel_name . "..." ;
+        if (empty ( $_REQUEST [ 'silent' ] )) {
+                    echo $mod_strings [ 'LBL_REBUILD_REL_PROC_C_META' ] . $rel_name . "..." ;
+        }
         SugarBean::createRelationshipMeta ( $rel_name, $db, $table, $rel_dictionary, '' ) ;
-        if (empty ( $_REQUEST [ 'silent' ] ))
-            echo $mod_strings [ 'LBL_DONE' ] . '<br>' ;
+        if (empty ( $_REQUEST [ 'silent' ] )) {
+                    echo $mod_strings [ 'LBL_DONE' ] . '<br>' ;
+        }
     }
 
 //clean relationship cache..will be rebuilt upon first access.
-if (empty ( $_REQUEST [ 'silent' ] ))
+if (empty ( $_REQUEST [ 'silent' ] )) {
     echo $mod_strings [ 'LBL_REBUILD_REL_DEL_CACHE' ] ;
+}
 Relationship::delete_cache () ;
 
 //////////////////////////////////////////////////////////////////////////////
 // Remove the "Rebuild Relationships" red text message on admin logins
 
 
-if (empty ( $_REQUEST [ 'silent' ] ))
+if (empty ( $_REQUEST [ 'silent' ] )) {
     echo $mod_strings [ 'LBL_REBUILD_REL_UPD_WARNING' ] ;
+}
 
 $rel = new Relationship();
 Relationship::delete_cache();
@@ -140,6 +151,7 @@ if (isset ( $_SESSION [ 'rebuild_relationships' ] ))
     unset ( $_SESSION [ 'rebuild_relationships' ] ) ;
 }
 
-if (empty ( $_REQUEST [ 'silent' ] ))
+if (empty ( $_REQUEST [ 'silent' ] )) {
     echo $mod_strings [ 'LBL_DONE' ] ;
+}
 ?>

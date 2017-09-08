@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -108,8 +110,10 @@ if(isset($focus->currency_id) && !empty($focus->currency_id))
 	$currency->retrieve($focus->currency_id);
 	if( $currency->deleted != 1){
 		$xtpl->assign("CURRENCY", $currency->iso4217 .' '.$currency->symbol );
-	}else $xtpl->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol() );
-}else{
+	} else {
+	    $xtpl->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol() );
+	}
+	} else{
 
 	$xtpl->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol() );
 
@@ -185,7 +189,7 @@ $chart= new campaign_charts();
     if(!empty($selected_marketing_id)){$latest_marketing_id = $selected_marketing_id;}
     if(empty($latest_marketing_id) ||  $latest_marketing_id === 'all'){
         $xtpl->assign("MY_CHART_ROI", $chart->campaign_response_roi_popup($app_list_strings['roi_type_dom'],$app_list_strings['roi_type_dom'],$campaign_id,sugar_cached("xml/") . $cache_file_name_roi,true));
-    }else{
+    } else{
 
     $xtpl->assign("MY_CHART_ROI", $chart->campaign_response_roi_popup($app_list_strings['roi_type_dom'],$app_list_strings['roi_type_dom'],$campaign_id,sugar_cached("xml/") .$cache_file_name_roi,true));
     }

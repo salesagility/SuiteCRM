@@ -38,6 +38,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 require_once 'modules/ModuleBuilder/Module/StudioModule.php' ;
 
 /**
@@ -56,8 +60,9 @@ class StudioModuleFactory
      */
     public static function getStudioModule($module)
 	{
-		if (!empty(self::$loadedMods[$module]))
-            return self::$loadedMods[$module];
+		if (!empty(self::$loadedMods[$module])) {
+		            return self::$loadedMods[$module];
+		}
 
         $studioModClass = "{$module}StudioModule";
 		if (file_exists("custom/modules/{$module}/{$studioModClass}.php"))
@@ -70,8 +75,7 @@ class StudioModuleFactory
 			require_once "modules/{$module}/{$studioModClass}.php";
 			$sm = new $studioModClass($module);
 
-		}
-		else 
+		} else 
 		{
 			$sm = new StudioModule($module);
 		}

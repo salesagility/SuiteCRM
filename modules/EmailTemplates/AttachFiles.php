@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -47,8 +49,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/JSON.php');
 require_once('include/upload_file.php');
 
-if (!is_dir($cachedir = sugar_cached('images/')))
+if (!is_dir($cachedir = sugar_cached('images/'))) {
     mkdir_recursive($cachedir);
+}
 
 // cn: bug 11012 - fixed some MIME types not getting picked up.  Also changed array iterator.
 $imgType = array('image/gif', 'image/png', 'image/x-png', 'image/bmp', 'image/jpeg', 'image/jpg', 'image/pjpeg');

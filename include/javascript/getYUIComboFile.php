@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -38,7 +40,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-if (empty($_REQUEST)) die();
+if (empty($_REQUEST)) {
+    die();
+}
 
 $yui_path = array(
     "2.9.0" => "include/javascript/yui",
@@ -58,20 +62,24 @@ $allpath = "";
 foreach ($_REQUEST as $param => $val)
 {
 	//No backtracking in the path
-	if (strpos($param, "..") !== false)
-        continue;
+	if (strpos($param, "..") !== false) {
+	        continue;
+	}
 
 	$version = explode("/", $param);
 	$version = $version[0];
-    if (empty($yui_path[$version])) continue;
+    if (empty($yui_path[$version])) {
+        continue;
+    }
 
     $path = $yui_path[$version] . substr($param, strlen($version));
 
 	$extension = substr($path, strrpos($path, "_") + 1);
 
 	//Only allowed file extensions
-	if (empty($types[$extension]))
-	   continue;
+	if (empty($types[$extension])) {
+		   continue;
+	}
 
 	if (empty($contentType))
     {

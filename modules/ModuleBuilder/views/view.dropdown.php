@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
 
@@ -133,27 +138,30 @@ class ViewDropdown extends SugarView
 			
 			// handle the case where we've saved a dropdown in one language, and now attempt to edit it for another language. The $name exists, but $my_list_strings[$name] doesn't
             // for now, we just treat it as if it was new. A better approach might be to use the first language version as a template for future languages
-            if (!isset($my_list_strings[$name]))
-                $my_list_strings[$name] = array () ;
+            if (!isset($my_list_strings[$name])) {
+                            $my_list_strings[$name] = array () ;
+            }
  
 			$selected_dropdown = (!empty($vardef['options']) && !empty($my_list_strings[$vardef['options']])) ? $my_list_strings[$vardef['options']] : $my_list_strings[$name];
 			$smarty->assign('ul_list', 'list = '.$json->encode(array_keys($selected_dropdown)));
 			$smarty->assign('dropdown_name', (!empty($vardef['options']) ? $vardef['options'] : $_REQUEST['dropdown_name']));
 			$smarty->assign('name', $_REQUEST['dropdown_name']);
 			$smarty->assign('options', $selected_dropdown);
-		}else{
+		} else{
 			$smarty->assign('ul_list', 'list = {}');
 			//we should try to find a name for this dropdown based on the field name.
 			$pre_pop_name = '';
-			if(!empty($_REQUEST['field']))
-				$pre_pop_name = $_REQUEST['field'];
+			if(!empty($_REQUEST['field'])) {
+							$pre_pop_name = $_REQUEST['field'];
+			}
 			//ensure this dropdown name does not already exist
 			$use_name = $pre_pop_name.'_list';
 			for($i = 0; $i < 100; $i++){
-				if(empty($my_list_strings[$use_name]))
-					break;
-				else
-					$use_name = $pre_pop_name.'_'.$i;
+				if(empty($my_list_strings[$use_name])) {
+									break;
+				} else {
+									$use_name = $pre_pop_name.'_'.$i;
+				}
 			}
 			$smarty->assign('prepopulated_name', $use_name);
 		}

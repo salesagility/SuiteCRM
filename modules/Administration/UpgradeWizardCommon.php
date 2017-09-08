@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -54,8 +56,7 @@ if( isset( $_REQUEST['view'] ) && ($_REQUEST['view'] != "") ){
     if( $view != "default" && $view != "module" ){
         die($mod_strings['ERR_UW_INVALID_VIEW']);
     }
-}
-else{
+} else{
     die($mod_strings['ERR_UW_NO_VIEW']);
 }
 $form_action = "index.php?module=Administration&view=" . $view . "&action=UpgradeWizard";

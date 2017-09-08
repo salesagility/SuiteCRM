@@ -63,18 +63,24 @@ class RSSDashlet extends Dashlet
     {
         $this->loadLanguage('RSSDashlet', 'modules/Home/Dashlets/'); // load the language strings here
 
-        if(!empty($def['height'])) // set a default height if none is set
+        if(!empty($def['height'])) {
+            // set a default height if none is set
             $this->height = $def['height'];
+        }
 
-        if(!empty($def['url']))
-            $this->url = $def['url'];
+        if(!empty($def['url'])) {
+                    $this->url = $def['url'];
+        }
 
-        if(!empty($def['title']))
-            $this->title = $def['title'];
-        else
-            $this->title = $this->dashletStrings['LBL_TITLE'];
+        if(!empty($def['title'])) {
+                    $this->title = $def['title'];
+        } else {
+                    $this->title = $this->dashletStrings['LBL_TITLE'];
+        }
 
-        if(isset($def['autoRefresh'])) $this->autoRefresh = $def['autoRefresh'];
+        if(isset($def['autoRefresh'])) {
+            $this->autoRefresh = $def['autoRefresh'];
+        }
 
         parent::__construct($id); // call parent constructor
 
@@ -166,8 +172,9 @@ class RSSDashlet extends Dashlet
         libxml_disable_entity_loader(true);
         $rssdoc = simplexml_load_string($data);
         // return back the error message if the loading wasn't successful
-        if (!$rssdoc)
-            return $this->dashletStrings['ERR_LOADING_FEED'];
+        if (!$rssdoc) {
+                    return $this->dashletStrings['ERR_LOADING_FEED'];
+        }
 
         $output = "<table class='edit view'>";
         if ( isset($rssdoc->channel) ) {
@@ -188,8 +195,7 @@ EOHTML;
                     }
                 }
             }
-        }
-        else {
+        } else {
             foreach ( $rssdoc->entry as $entry ) {
                 $link = trim($entry->link);
                 if ( empty($link) ) {

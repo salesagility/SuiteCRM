@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,11 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class UpgradeMetaHelper{
 
@@ -83,8 +86,7 @@ class UpgradeMetaHelper{
 		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
 		if(isset($GLOBALS['log'])) {
 			$GLOBALS['log']->deprecated($deprecatedMessage);
-		}
-		else {
+		} else {
 			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
 		}
 		self::__construct($dir, $masterCopyDirecotry, $debugMode);
@@ -145,12 +147,10 @@ function saveMatchingFilesQueries($currStep,$value){
 	$file_queries_file = $upgrade_progress_dir.'/files_queries.php';
 	if(file_exists($file_queries_file)){
 		include($file_queries_file);
-	}
-	else{
+	} else{
 		if(function_exists('sugar_fopen')){
 			sugar_fopen($file_queries_file, 'w+');
-		}
-		else{
+		} else{
 			fopen($file_queries_file, 'w+');
 		}
 	}
@@ -176,7 +176,9 @@ function getAllCustomizedModulesBeyondStudio() {
     $modulesAll = getAllModules(); //keep all modules as well
     $allOtherModules = array_diff($modulesAll,$modules);
     foreach($modules as $mod) {
-	  if(!is_dir('modules/'.$mod)) continue;
+	  if(!is_dir('modules/'.$mod)) {
+	      continue;
+	  }
 	  $editView = "modules/$mod/EditView.html";
 	  $detailView ="modules/$mod/DetailView.html";
 	  $exclude_files[]=$editView;
@@ -190,8 +192,7 @@ function getAllCustomizedModulesBeyondStudio() {
 		       	  $fileContents = file_get_contents($file);
 		       	  if(md5($fileContents) != $md5_string['./'.$file]) {
 		       	  	$return_array[$mod][] = $file;
-		       	  }
-		       	  else{
+		       	  } else{
 		       	  	//keep in the array to be deleted later
 		       	  	$_SESSION['removeMd5MatchingFiles'][] = $file;
 		               	  }
@@ -202,7 +203,9 @@ function getAllCustomizedModulesBeyondStudio() {
     //also check out other non-studio modules by taking the difference between
     //allMOdules and
   foreach($allOtherModules as $mod) {
-	  if(!is_dir('modules/'.$mod)) continue;
+	  if(!is_dir('modules/'.$mod)) {
+	      continue;
+	  }
 	  $allModFiles = array();
       $allModFiles = findAllFiles('modules/'.$mod,$allModFiles);
       foreach($allModFiles as $file){
@@ -251,8 +254,7 @@ function getAllCustomizedModules() {
 	               	  	  $return_array[$mod];
 	               	  	  break;
 	               	  }
-               	  }
-               	  else{
+               	  } else{
                	  	// This is a new file in user's version and indicates that module has been
                	  	//customized. Put the module in the customized array.
                        echo 'New File'.$file;
@@ -275,7 +277,9 @@ function getAllCustomizedModules() {
 		$modules = array();
 		$d = dir('modules');
 		while($e = $d->read()){
-			if(substr($e, 0, 1) == '.' || !is_dir('modules/' . $e))continue;
+			if(substr($e, 0, 1) == '.' || !is_dir('modules/' . $e)) {
+			    continue;
+			}
 			if(file_exists('modules/' . $e . '/metadata/studio.php')){
 			   $modules[] = $e;
 			}

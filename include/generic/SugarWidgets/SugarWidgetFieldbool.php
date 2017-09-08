@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -69,8 +71,7 @@ class SugarWidgetFieldBool extends SugarWidgetReportField
             global $app_list_strings;
             if (empty($value)) {
                 $value = $app_list_strings['dom_switch_bool']['off'];
-            }   
-            else {
+            } else {
                 $value = $app_list_strings['dom_switch_bool']['on'];
             } 
             return $value;
@@ -97,11 +98,9 @@ class SugarWidgetFieldBool extends SugarWidgetReportField
         $yes = $no = $default = '';
         if (isset($layout_def['input_name0']) && $layout_def['input_name0'] == 1) {
             $yes = ' selected="selected"';
-        }
-        elseif (isset($layout_def['input_name0']) && $layout_def['input_name0'] == 'off') {
+        } elseif (isset($layout_def['input_name0']) && $layout_def['input_name0'] == 'off') {
             $no = ' selected="selected"';
-        }
-        else {
+        } else {
             $default = ' selected="selected"';
         }
         

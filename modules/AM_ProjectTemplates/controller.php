@@ -19,7 +19,9 @@
  * @author Andrew Mclaughlan <andrew@mclaughlan.info>
  */
 
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if(!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class AM_ProjectTemplatesController extends SugarController {
 
@@ -83,14 +85,14 @@ class AM_ProjectTemplatesController extends SugarController {
 					$end_time = $end_time->modify('+'.$close_h.' Hours');
 
 					$hours = ($end_time->getTimestamp() - $start_time->getTimestamp())/(60*60);
-					if($hours < 0)
-						$hours = 0 - $hours ;
+					if($hours < 0) {
+											$hours = 0 - $hours ;
+					}
 
 					$bhours[$day] = $hours; 	
 
 
-				}
-				else{
+				} else{
 					$bhours[$day] = 0;
 				}
 			}
@@ -171,8 +173,7 @@ class AM_ProjectTemplatesController extends SugarController {
             
 	    if($copy_all == 0 && !in_array( $row['id'],$copy_tasks)) {
             $project_task->assigned_user_id = NULL;
-        }
-        else {
+        } else {
             $project_task->assigned_user_id = $row['assigned_user_id'];
         }
 
@@ -216,8 +217,7 @@ class AM_ProjectTemplatesController extends SugarController {
 		//add one day to let the next task start on next day of it's finish.
                 $enddate_array[$count] = $enddate->modify('+1 Days')->format('Y-m-d');
                 
-            }
-            else {
+            } else {
                 $start_date = $count - 1;
                 $startdate = DateTime::createFromFormat('Y-m-d', $enddate_array[$start_date]);
                 $start = $startdate->format('Y-m-d');
@@ -279,10 +279,11 @@ class AM_ProjectTemplatesController extends SugarController {
         
 		$duration = $db->getOne($query);
 		
-		if( $duration < 31 )
-			$end_date = Date('Y-m-d', strtotime("+30 days"));
-		else
-			$end_date = Date('Y-m-d', strtotime("+ " . $duration . " days"));
+		if( $duration < 31 ) {
+					$end_date = Date('Y-m-d', strtotime("+30 days"));
+		} else {
+					$end_date = Date('Y-m-d', strtotime("+ " . $duration . " days"));
+		}
 
 		//-------------------------------------------
 ?>
@@ -333,8 +334,7 @@ class AM_ProjectTemplatesController extends SugarController {
 
         if($_POST['milestone'] == 'Milestone'){
             $milestone_flag = '1';
-        }
-        else if($_POST['milestone'] == 'Task'){
+        } else if($_POST['milestone'] == 'Task'){
             $milestone_flag = '0';
         }
 
@@ -369,8 +369,7 @@ class AM_ProjectTemplatesController extends SugarController {
         if($percent > 0){
 
             $status = 'In Progress';
-        }
-        else {
+        } else {
             $status = 'Not Started';
         }
 
@@ -383,8 +382,7 @@ class AM_ProjectTemplatesController extends SugarController {
 
         if($this->IsNullOrEmptyString($task_id)){
             $this->create_task($task_name,$start,$enddate,$project_id, $milestone_flag,$status, $tid, $predecessor, $rel_type, $duration,$duration_unit,$resource,$percent,$note,$actual_duration,$tid);
-        }
-        else {
+        } else {
             $this->update_task($task_id,$task_name,$start,$enddate,$project_id, $milestone_flag,$status, $predecessor, $rel_type, $duration,$duration_unit,$resource,$percent,$note,$actual_duration);
         }
     }

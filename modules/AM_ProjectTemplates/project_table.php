@@ -91,8 +91,7 @@ class AM_ProjectTemplatesTable {
 
                         if(ACLController::checkAccess('AM_ProjectTemplates', 'edit', true)){
                             echo '<td class="project_table_cells" ><span class="Task_name" ><a data = "'.$task->id.','.$task->predecessors.','.$task->relationship_type.','.$timeDate->to_display_date($task->date_start, true).','.$task->duration.','.$task->duration_unit.','.$task->assigned_user_id.','.$task->milestone_flag.','.$task->percent_complete.','.$task->description.'" onclick = "edit_task($(this));"title = "'.$mod_strings['LBL_TASK_TITLE'].'" href = "#" >'.$task->name.'</a ></span ></td>';
-                        }
-                        else{
+                        } else{
                             echo '<td class="project_table_cells" ><span class="Task_name" >'.$task->name.'</span ></td>';
                         }
 
@@ -125,8 +124,7 @@ class AM_ProjectTemplatesTable {
                                if($resource->type == 'user'){
                                    echo '<a target="blank" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$resource->name.'</a>';
                                    $rflag = '1';
-                               }
-                               elseif($resource->type == 'contact'){
+                               } elseif($resource->type == 'contact'){
                                    echo '<a target="blank" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$resource->name.'</a>';
                                    $rflag = '1';
                                }
@@ -139,8 +137,7 @@ class AM_ProjectTemplatesTable {
 
                         if($task->milestone_flag == '1'){
                             $checked = $app_list_strings['checkbox_dom']['1'];
-                        }
-                        else {
+                        } else {
                             $checked = $app_list_strings['checkbox_dom']['2'];
                         }
                         echo '</td>
@@ -151,8 +148,7 @@ class AM_ProjectTemplatesTable {
 
                                 if(ACLController::checkAccess('AM_ProjectTemplates', 'delete', true)) {
                                    echo '<button style = "height:20px;width:20px;" class="remove_button" value = "'.$task->id.'" class="gantt_button" > Delete Task </button >';
-                                }
-                                else{
+                                } else{
                                    echo '<button disabled="disabled" style = "height:20px;width:20px;" class="remove_button" value = "'.$task->id.'" class="gantt_button" > Delete Task </button >';
                                 }
                         echo '</span>

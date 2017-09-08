@@ -124,8 +124,7 @@ class ParserModifyListView extends ModuleBuilderParser
 			    if (! isset($def['studio']) || $def['studio'] === true)
 			    {
 			        $this->defaults [ $key ] = $def ;
-			    }
-			    else
+			    } else
 			    // anything which doesn't go into the defaults is a reserved field - this makes sure we don't miss anything
 			    {
 			        $this->reserved [ $key ] = $def;
@@ -170,13 +169,16 @@ class ParserModifyListView extends ModuleBuilderParser
 		foreach ( $modFields as $key => $def )
 		{
 			$fieldName = strtolower ( $key ) ;
-            if ($fieldName == 'currency_id')
-                continue;
-			if (!isset ( $lowerFieldList [ $fieldName ] )) // bug 16728 - check this first, so that other conditions (e.g., studio == visible) can't override and add duplicate entries
+            if ($fieldName == 'currency_id') {
+                            continue;
+            }
+			if (!isset ( $lowerFieldList [ $fieldName ] )) {
+			    // bug 16728 - check this first, so that other conditions (e.g., studio == visible) can't override and add duplicate entries
 			{
             // bug 19656: this test changed after 5.0.0b - we now remove all ID type fields - whether set as type, or dbtype, from the fielddefs
             if ($this->isValidField($key, $def)){
 					$label = (isset ( $def [ 'vname' ] )) ? $def [ 'vname' ] : (isset($def [ 'label' ]) ? $def['label'] : $def['name']) ;
+			}
 					$this->availableFields [ $fieldName ] = array ( 'width' => '10' , 'label' => $label ) ;
 				}
 			}
@@ -193,20 +195,24 @@ class ParserModifyListView extends ModuleBuilderParser
 	
 	function isValidField($key, $def) {
 	    //Allow fields that are studio visible  
-		if (! empty ( $def [ 'studio' ] ) && $def [ 'studio' ] == 'visible')
-		  return true;
+		if (! empty ( $def [ 'studio' ] ) && $def [ 'studio' ] == 'visible') {
+				  return true;
+		}
 		  
 		//No ID fields
-		if  ((!empty ( $def [ 'dbType' ] ) && $def [ 'dbType' ] == 'id') || (!empty ( $def [ 'type' ] ) && $def [ 'type' ] == 'id'))
-		  return false;
+		if  ((!empty ( $def [ 'dbType' ] ) && $def [ 'dbType' ] == 'id') || (!empty ( $def [ 'type' ] ) && $def [ 'type' ] == 'id')) {
+				  return false;
+		}
 		  
 		//only allow DB and custom fields (if a source is specified)
-	    if (!empty($def [ 'source' ]) && $def [ 'source' ] != 'db' && $def [ 'source' ] != 'custom_fields')
-		  return false;
+	    if (!empty($def [ 'source' ]) && $def [ 'source' ] != 'db' && $def [ 'source' ] != 'custom_fields') {
+	    		  return false;
+	    }
 
 		//Dont ever show the "deleted" fields or "_name" fields
-		if (strcmp ( $key, 'deleted' ) == 0 || (isset ( $def [ 'name' ] ) && strpos ( $def [ 'name' ], "_name" ) !== false))
-	       return false;
+		if (strcmp ( $key, 'deleted' ) == 0 || (isset ( $def [ 'name' ] ) && strpos ( $def [ 'name' ], "_name" ) !== false)) {
+			       return false;
+		}
 
 	    //If none of the "ifs" are true, the field is valid
 	    return true;

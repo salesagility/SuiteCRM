@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,12 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class OpportunityFormBase{
 
@@ -65,7 +66,9 @@ function checkForDuplicates($prefix){
 			$i++;
 			$rows[$i] = $row;
 		}
-		if ($i==-1) return null;
+		if ($i==-1) {
+		    return null;
+		}
 		
 		return $rows;		
 	}
@@ -77,7 +80,9 @@ function buildTableForm($rows, $mod='Opportunities'){
 	if(!empty($mod)){
 	global $current_language;
 	$mod_strings = return_module_language($current_language, $mod);
-	}else global $mod_strings;
+	} else {
+	    global $mod_strings;
+	}
 	global $app_strings;
 	$cols = sizeof($rows[0]) * 2 + 1;
 	$form = '<table width="100%"><tr><td>'.$mod_strings['MSG_DUPLICATE']. '</td></tr><tr><td height="20"></td></tr></table>';
@@ -108,14 +113,14 @@ function buildTableForm($rows, $mod='Opportunities'){
 					if(!$wasSet){
 					$form .= "<td scope='row'><a target='_blank' href='index.php?module=Opportunities&action=DetailView&record=${row['id']}'>$value</a></td>";
 					$wasSet = true;
-					}else{
+					} else{
 					$form .= "<td><a target='_blank' href='index.php?module=Opportunities&action=DetailView&record=${row['id']}'>$value</a></td>";
 					}
 				}}
 
 		if($rowColor == 'evenListRowS1'){
 			$rowColor = 'oddListRowS1';
-		}else{
+		} else{
 			 $rowColor = 'evenListRowS1';
 		}
 		$form .= "</tr>";
@@ -136,7 +141,9 @@ function getForm($prefix, $mod='Opportunities'){
 if(!empty($mod)){
 	global $current_language;
 	$mod_strings = return_module_language($current_language, $mod);
-}else global $mod_strings;
+} else {
+    global $mod_strings;
+}
 global $app_strings;
 global $sugar_version, $sugar_config;
 
@@ -286,7 +293,9 @@ $the_form .= <<<EOQ
 EOQ;
 //carry forward custom lead fields to opportunities during Lead Conversion
 	$tempOpp = new Opportunity();
-	if (method_exists($lead, 'convertCustomFieldsForm')) $lead->convertCustomFieldsForm($the_form, $tempOpp, $prefix);
+	if (method_exists($lead, 'convertCustomFieldsForm')) {
+	    $lead->convertCustomFieldsForm($the_form, $tempOpp, $prefix);
+	}
 	unset($tempOpp);
 
 $the_form .= <<<EOQ
@@ -321,7 +330,9 @@ function getFormBody($prefix, $mod='Opportunities', $formname=''){
 if(!empty($mod)){
 	global $current_language;
 	$mod_strings = return_module_language($current_language, $mod);
-}else global $mod_strings;
+} else {
+    global $mod_strings;
+}
 global $app_strings;
 global $app_list_strings;
 global $theme;
@@ -461,7 +472,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false){
 	$GLOBALS['log']->debug("Saved record with id of ".$return_id);
 	if($redirect){
 		handleRedirect($return_id,"Opportunities" );
-	}else{
+	} else{
 		return $focus;
 	}
 }
