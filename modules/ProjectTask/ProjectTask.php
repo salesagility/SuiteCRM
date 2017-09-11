@@ -713,8 +713,11 @@ function actionGetPredecessors()
     $Task = BeanFactory::getBean('ProjectTask');
     $tasks = $Task->get_full_list("order_number", "project_task.project_id = '" . $project->id . "'");
     $html = '<option rel="0" value="0">' . $mod_strings['LBL_PROJECT_PREDECESSOR_NONE'] . '</option>';
-    foreach ($tasks as $task) {
-        $html .= '<option rel="' . $task->id . '" value="' . $task->project_task_id . '">' . $task->name . '</opion>';
+
+    if (!empty($tasks)) {
+        foreach ($tasks as $task) {
+            $html .= '<option rel="' . $task->id . '" value="' . $task->project_task_id . '">' . $task->name . '</opion>';
+        }
     }
 
     return $html;
