@@ -121,7 +121,7 @@
                             <input name="assigned_user_name" id="assigned_user_name" class="text ui-widget-content ui-corner-all" value="{$currentUserName}" type="text">
                             <input name="assigned_user_id" id="assigned_user_id" value="{$currentUserId}" type="hidden">
 
-                            <input name="btn_assigned_user_name" title="{$app.LBL_SELECT_BUTTON_TITLE}" class="button" value="{$app.LBL_SELECT_BUTTON_LABEL}" onclick='open_popup("Users", 600, 400, "", true, false, {literal}{"call_back_function":"set_return","form_name":"Distribute","field_to_name_array":{"id":"assigned_user_id","name":"assigned_user_name"}}{/literal}, "single", true);' type="button">
+                            <input name="btn_assigned_user_name" title="{$app.LBL_SELECT_BUTTON_TITLE}" class="button" value="{$app.LBL_SELECT_BUTTON_LABEL}" onclick='open_popup("Users", 600, 400, "", true, false, {literal}{"call_back_function":"set_return","form_name":"popup_form","field_to_name_array":{"id":"assigned_user_id","user_name":"assigned_user_name"}}{/literal}, "single", true);' type="button">
                             <input name="btn_clr_assigned_user_name" title="{$app.LBL_CLEAR_BUTTON_TITLE}" class="button" value="{$app.LBL_CLEAR_BUTTON_LABEL}" onclick="this.form.assigned_user_name.value = ''; this.form.assigned_user_id.value = '';" type="button">
 
 
