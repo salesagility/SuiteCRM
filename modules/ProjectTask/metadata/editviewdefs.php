@@ -157,6 +157,9 @@ title="" tabindex="0" onChange="update_status(this.value);" /></tr>',
                   1 =>
                       array (
                           'name' => 'duration',
+                          'customCode' => '<input name="duration"  id="duration" type="text" value="">'
+. '<select name="duration_unit"  id="duration_unit"><option value="Days">Days</option>
+<option value="Hours">Hours</option></select>',
                           'label' => 'LBL_DURATION',
                       ),
               ),
@@ -191,4 +194,3 @@ title="" tabindex="0" onChange="update_status(this.value);" /></tr>',
     ),
   ),
 );
-
