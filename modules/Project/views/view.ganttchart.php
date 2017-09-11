@@ -37,25 +37,6 @@ class ProjectViewGanttChart extends ViewDetail
             $_REQUEST['project_id'] = $_REQUEST['record'];
         }
         $project->retrieve($_REQUEST['project_id']);
-        //Get project resources (users & contacts)
-        $resources1 = $project->get_linked_beans('project_users_1', 'User');
-        $resources2 = $project->get_linked_beans('project_contacts_1', 'Contact');
-        //Combine resources into array of objects
-        $resource_array = array();
-        foreach ($resources1 as $user) {
-            $resource = new stdClass;
-            $resource->id = $user->id;
-            $resource->name = $user->name;
-            $resource->type = 'user';
-            $resource_array[] = $resource;
-        }
-        foreach ($resources2 as $contact) {
-            $resource = new stdClass;
-            $resource->id = $contact->id;
-            $resource->name = $contact->name;
-            $resource->type = 'contact';
-            $resource_array[] = $resource;
-        }
 
         parent::display();
 
@@ -64,20 +45,16 @@ class ProjectViewGanttChart extends ViewDetail
         $ss->assign('mod', $mod_strings);
         $ss->assign('theme', SugarThemeRegistry::current());
         $ss->assign('langHeader', get_language_header());
-        $ss->assign("currentUserId", $current_user->id);
-        $ss->assign("currentUserName", $current_user->name);
+        $ss->assign('currentUserId', $current_user->id);
+        $ss->assign('currentUserName', $current_user->name);
         $ss->assign('projectID', $project->id);
         $ss->assign('projectBusinessHours', $project->override_business_hours);
-        $ss->assign("relationshipDropdown",
+        $ss->assign('relationshipDropdown',
             get_select_options_with_id($app_list_strings['relationship_type_list'], ''));
-        $ss->assign("durationDropDown", get_select_options_with_id($app_list_strings['duration_unit_dom'], ''));
-        $ss->assign("resources", $resource_array);
-        $ss->assign("resourceType", $resource->type);
-        $ss->assign("resourceID", $resource->id);
-        $ss->assign("resourceName", $resource->name);
-        $ss->assign('projectTasks', $_REQUEST["record"]);
+        $ss->assign('durationDropDown', get_select_options_with_id($app_list_strings['duration_unit_dom'], ''));
+        $ss->assign('projectTasks', $_REQUEST['record']);
         $ieCompatMode = false;
-        if (isset($sugar_config['meta_tags']) && isset($sugar_config['meta_tags']['ieCompatMode'])) {
+        if (isset($sugar_config['meta_tags']['meta_tags']['ieCompatMode'])) {
             $ieCompatMode = $sugar_config['meta_tags']['ieCompatMode'];
         }
         $ss->assign('ieCompatMode', $ieCompatMode);
@@ -85,10 +62,10 @@ class ProjectViewGanttChart extends ViewDetail
         $ss->assign('charset', $charset);
         $ss->assign('CALENDAR_DATEFORMAT', $timedate->get_cal_date_format());
 
+        $access = false;
+
         if (ACLController::checkAccess('Project', 'edit', true)) {
             $access = true;
-        } else {
-            $access = false;
         }
 
         $ss->assign('showButton', $access);
