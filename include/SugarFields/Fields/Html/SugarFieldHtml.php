@@ -106,6 +106,6 @@ class SugarFieldHtml extends SugarFieldBase
             }
         }
 
-        return $vardef['value'];
+        return utf8_decode($vardef['value']);
     }
 }
