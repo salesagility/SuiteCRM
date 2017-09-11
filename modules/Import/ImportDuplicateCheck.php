@@ -276,9 +276,10 @@ class ImportDuplicateCheck
                     if ($field == 'deleted' ||  !in_array($field,$fieldlist)) {
                                             continue;
                     }
-                    if (!in_array($field,$index_fields)) {
-                                            if (isset($this->_focus->$field) && strlen($this->_focus->$field) > 0)
+                    if (!in_array($field, $index_fields)) {
+                        if (isset($this->_focus->$field) && strlen($this->_focus->$field) > 0) {
                             $index_fields[$field] = $this->_focus->$field;
+                        }
                     }
                 }
 
@@ -364,5 +365,3 @@ class ImportDuplicateCheck
         return $index_array;
     }
 }
-
-?>

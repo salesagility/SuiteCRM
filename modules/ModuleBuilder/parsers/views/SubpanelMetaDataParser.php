@@ -42,8 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-
 require_once ('modules/ModuleBuilder/parsers/views/ListLayoutMetaDataParser.php') ;
 require_once 'modules/ModuleBuilder/parsers/constants.php' ;
 
@@ -147,10 +145,11 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
      */
     function findInvisibleFields( $viewdefs )
     {
-        $invisibleFields = array () ;
-        foreach ( $viewdefs as $name => $def ) {
-                    if ( isset($def [ 'usage' ] ) && ($def [ 'usage'] == 'query_only') )
-                $invisibleFields [ $name ] = $def ;
+        $invisibleFields = array();
+        foreach ($viewdefs as $name => $def) {
+            if (isset($def ['usage']) && ($def ['usage'] == 'query_only')) {
+                $invisibleFields [$name] = $def;
+            }
         }
         return $invisibleFields ;
     }
@@ -201,4 +200,3 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
     }
 
 }
-?>

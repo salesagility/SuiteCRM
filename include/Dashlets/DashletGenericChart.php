@@ -207,8 +207,10 @@ abstract class DashletGenericChart extends Dashlet
 
         $options = array();
 
-        foreach($req as $name => $value) {
-                    if(!is_array($value)) $req[$name] = trim($value);
+        foreach ($req as $name => $value) {
+            if (!is_array($value)) {
+                $req[$name] = trim($value);
+            }
         }
 
         foreach($this->_searchFields as $name => $params) {

@@ -607,14 +607,14 @@ function executemd5($filesmd5, $md5calculated)
 	$md5_directory = create_cache_directory("diagnostic/".$sod_guid."/diagnostic".$curdatetime."/md5/");
 
 	//skip this if the files.md5 didn't exist
-	if(!$skip_md5_diff)
-	{
-		//make sure the files.md5
-		if($filesmd5) {
-					if(!copy('files.md5', $md5_directory."files.md5"))
-				echo "Couldn't copy files.md5 to ".$md5_directory."<br>Skipping md5 checks.<br>";
-		}
-	}
+    if (!$skip_md5_diff) {
+        //make sure the files.md5
+        if ($filesmd5) {
+            if (!copy('files.md5', $md5_directory . "files.md5")) {
+                echo "Couldn't copy files.md5 to " . $md5_directory . "<br>Skipping md5 checks.<br>";
+            }
+        }
+    }
 
 	$md5_string_calculated = generateMD5array('./');
 
@@ -862,5 +862,3 @@ if($dovardefs)
 
 //finish up the last steps
 finishDiag();
-
-?>

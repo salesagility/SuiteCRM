@@ -42,10 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-if (!defined('JSMIN_AS_LIB')) {
-    define('JSMIN_AS_LIB', true);
-}
-
 require_once("include/SugarTheme/cssmin.php");
 require_once("jssource/jsmin.php");
 require_once('include/utils/sugar_file_utils.php');
@@ -961,18 +957,21 @@ EOHTML;
      */
     protected function _getImageFileName(
         $imageName
-        )
-    {
+    ) {
         // return now if the extension matches that of which we are looking for
-        if ( is_file($imageName) ) {
-                    return $imageName;
+        if (is_file($imageName)) {
+            return $imageName;
         }
         $pathParts = pathinfo($imageName);
-        foreach ( $this->imageExtensions as $extension ) {
-                    if ( isset($pathParts['extension']) )
-                if ( ( $extension != $pathParts['extension'] )
-                        && is_file($pathParts['dirname'].'/'.$pathParts['filename'].'.'.$extension) )
-                    return $pathParts['dirname'].'/'.$pathParts['filename'].'.'.$extension;
+        foreach ($this->imageExtensions as $extension) {
+            if (isset($pathParts['extension'])) {
+                if (($extension != $pathParts['extension'])
+                    && is_file($pathParts['dirname'] . '/' . $pathParts['filename'] . '.' . $extension)
+                ) {
+                    return $pathParts['dirname'] . '/' . $pathParts['filename'] . '.' . $extension;
+                }
+
+            }
         }
 
         return '';
@@ -1394,19 +1393,20 @@ class SugarThemeRegistry
                     }
                     $themedef = array();
                     require("./{$dirPath}{$file}/themedef.php");
-                    $themedef = array_merge($themedef,$themedefDefault);
+                    $themedef = array_merge($themedef, $themedefDefault);
                     $themedef['dirName'] = $file;
                     // check for theme already existing in the registry
                     // if so, then it will override the current one
-                    if ( self::exists($themedef['dirName']) ) {
+                    if (self::exists($themedef['dirName'])) {
                         $existingTheme = self::get($themedef['dirName']);
-                        foreach ( SugarTheme::getThemeDefFields() as $field ) {
-                                                    if ( !isset($themedef[$field]) )
+                        foreach (SugarTheme::getThemeDefFields() as $field) {
+                            if (!isset($themedef[$field])) {
                                 $themedef[$field] = $existingTheme->$field;
+                            }
                         }
                         self::remove($themedef['dirName']);
                     }
-                    if ( isset($themedef['name']) ) {
+                    if (isset($themedef['name'])) {
                         self::add($themedef);
                     }
                 }
