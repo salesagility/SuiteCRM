@@ -65,6 +65,13 @@ class SugarFieldHtml extends SugarFieldBase
         return $this->fetch($this->findTemplate('DetailView'));
     }
 
+    /**
+     * @param string $parentFieldArray
+     * @param array $vardef
+     * @param array $displayParams
+     * @param integer $tabindex
+     * @return string
+     */
     public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         $sugarCleaner = new SugarCleaner();
