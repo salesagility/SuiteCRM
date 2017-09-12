@@ -43,9 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $mod_strings = array (
-'LBL_ALLOW_ALL'=>'All',
-'LBL_ALLOW_NONE'=>'None',
-'LBL_ALLOW_OWNER'=>'Owner',
 'LBL_ROLE'=>'Role',
 'LBL_NAME'=>'Name',
 'LBL_DESCRIPTION'=>'Description',

@@ -1,9 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+
+* * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/MVC/View/SugarView.php');
 
@@ -168,12 +174,12 @@ class SugarController
      */
     protected $action_view_map = array();
 
-    /**
-     * This can be set from the application to tell us whether we have authorization to
-     * process the action. If this is set we will default to the noaccess view.
-     * @var bool
+	/**
+	 * This can be set from the application to tell us whether we have authorization to
+	 * process the action. If this is set we will default to the noaccess view.
+	 *@var bool
      */
-    public $hasAccess;
+	public $hasAccess ;
 
     /**
      * Map case sensitive filenames to action.  This is used for linux/unix systems
@@ -185,14 +191,13 @@ class SugarController
         'listview' => 'ListView'
     );
 
-    /**
-     * Constructor. This ie meant to load up the module, action, record as well
-     * as the mapping arrays.
-     */
-    public function __construct()
-    {
-        $this->hasAccess = true;
-    }
+	/**
+	 * Constructor. This ie meant to load up the module, action, record as well
+	 * as the mapping arrays.
+	 */
+	public function __construct()
+	{
+        $this->hasAccess = true;}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
@@ -1097,5 +1102,3 @@ class SugarController
     }
 
 }
-
-?>

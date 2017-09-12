@@ -60,8 +60,6 @@ $mod_strings = array (
 	'LBL_ACTIVE_DATE'=> 'Publish Date',
 	'LBL_EXPIRATION_DATE' => 'Expiration Date',
 	'LBL_FILE_EXTENSION'  => 'File Extension',
-	'LBL_DET_CREATED_BY' => 'Created By:',
-	'LBL_DET_DATE_CREATED' => 'Date Created:',
 
 	'LBL_DOC_NAME' => 'Document Name:',
 	'LBL_DOC_VERSION' => 'Revision:',
