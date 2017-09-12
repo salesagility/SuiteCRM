@@ -46,17 +46,18 @@ require_once('include/EditView/SugarVCR.php');
  */
 class ListViewData {
 
-	var $additionalDetails = true;
-    var $listviewName = null;
-	var $additionalDetailsAllow = null;
-    var $additionalDetailsAjax = true; // leave this true when using filter fields
-    var $additionalDetailsFieldToAdd = 'NAME'; // where the span will be attached to
-    var $base_url = null;
+    public $additionalDetails = true;
+    public $listviewName = null;
+	public $additionalDetailsAllow = null;
+    public $additionalDetailsAjax = true; // leave this true when using filter fields
+    public $additionalDetailsFieldToAdd = 'NAME'; // where the span will be attached to
+    public $base_url = null;
+    public $seed;
     /*
      * If you want overwrite the query for the count of the listview set this to your query
      * otherwise leave it empty and it will use SugarBean::create_list_count_query
      */
-    var $count_query = '';
+    public $count_query = '';
 
 	/**
 	 * Constructor sets the limitName to look up the limit in $sugar_config

@@ -15,6 +15,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      *
      */
     var $settings = array(
+        'google_maps_api_key' => '',
         /**
          * 'valid_geocode_modules' defines the valid module names used with geocoding.
          * @var array
@@ -351,7 +352,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             if (isset($rev['geocoding_api_secret'])) {
                 $this->settings['geocoding_api_secret'] = $rev['geocoding_api_secret'];
             }
-
+            // Set Google Maps API Key
+            $this->settings['google_maps_api_key'] = $rev['google_maps_api_key'];
         }
 
         // Set for Global Use
@@ -371,6 +373,10 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         $category = 'jjwg';
 
         if (!empty($data) && count($data) > 0) {
+
+            if (isset($data['google_maps_api_key'])) {
+                $admin->saveSetting($category, 'google_maps_api_key', $data['google_maps_api_key']);
+            }
 
             if (isset($data['valid_geocode_modules'])) {
                 if (is_array($data['valid_geocode_modules'])) {

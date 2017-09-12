@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,17 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array (
   'LBL_REPLY_ADDR' => '"Reply-to" Address: ',
@@ -67,7 +63,6 @@ $mod_strings = array (
   'LBL_MODIFIED' => 'Modified by: ',
   'LBL_CREATED' => 'Created by: ',
   'LBL_MESSAGE_FOR'	=> 'Send This Message To:',
-  'LBL_MESSAGE_FOR_ID'	=> 'Message For',
 
   'LBL_FROM_NAME' => 'From Name: ',
   'LBL_FROM_ADDR' => 'From Email Address: ',
@@ -78,8 +73,6 @@ $mod_strings = array (
 
   'LBL_MODIFIED_BY' => 'Modified by: ',
   'LBL_CREATED_BY' => 'Created by: ',
-  'LBL_DATE_CREATED' => 'Created date: ',
-  'LBL_DATE_LAST_MODIFIED' => 'Modified date: ',
 
   'LNK_NEW_CAMPAIGN' => 'Create Campaign',
   'LNK_CAMPAIGN_LIST' => 'Campaigns',
@@ -97,17 +90,11 @@ $mod_strings = array (
   'LBL_ALL_PROSPECT_LISTS'=>'Select to choose all Target List(s) in the Campaign.',
   'LBL_RELATED_PROSPECT_LISTS'=>'All Target List(s) related to this message.',
   'LBL_PROSPECT_LIST_NAME'=>'Target List Name',
-  'LBL_LIST_PROSPECT_LIST_NAME'=>'Targeted Lists',
-  'LBL_MODULE_SEND_TEST'=>'Campaign: Send Test',
-  'LBL_MODULE_SEND_EMAILS'=>'Campaign: Send Emails',
-  'LBL_SCHEDULE_MESSAGE_TEST'=>'Please select the campaign messages that you would like to test:',
-  'LBL_SCHEDULE_MESSAGE_EMAILS'=>'Please select the campaign messages that you would like to schedule for distribution on the specified start date and time:',
-  'LBL_SCHEDULE_BUTTON_TITLE'=>'Send',
-  'LBL_SCHEDULE_BUTTON_LABEL'=>'Send',
-  'LBL_SCHEDULE_BUTTON_KEY'=>'T',
-//    'LBL_OUTBOUND_EMAIL_ACCOUNT_DEFAULT' => 'Use System Default',
-//    'LBL_OUTBOUND_EMAIL_ACCOUNT_VIEW' => 'View Outbound Email Accounts',
-    'LBL_ERROR_ON_MARKETING' => 'Missing required field(s)',
+
+  'LBL_CAMPAIGN_ID' => 'Campaign ID',
+  'LBL_OUTBOUND_EMAIL_ACOUNT_ID' => 'Outbound Email Account ID',
+  'LBL_EMAIL_TEMPLATE' => 'Email Template',
+  'LBL_PROSPECT_LISTS' => 'Prospect Lists',
 
 );
 ?>

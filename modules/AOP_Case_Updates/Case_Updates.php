@@ -316,8 +316,12 @@ function display_case_attachments($case)
  */
 function quick_edit_case_updates($case)
 {
-    global $action, $app_strings, $mod_strings;
-
+    global $action;
+    global $app_strings;
+    global $currentModule;
+    global $current_language;
+    $mod_strings = return_module_language($current_language, 'Cases');
+    #
     //on DetailView only
     if ($action !== 'DetailView') {
         return;
@@ -341,7 +345,6 @@ function quick_edit_case_updates($case)
     if (isset($case->internal) && $case->internal) {
         $internalChecked = "checked='checked'";
     }
-    $internal = $app_strings['LBL_AOP_INTERNAL'];
     $saveBtn = $app_strings['LBL_SAVE_BUTTON_LABEL'];
     $saveTitle = $app_strings['LBL_SAVE_BUTTON_TITLE'];
 
@@ -352,7 +355,7 @@ function quick_edit_case_updates($case)
     <textarea id="update_text" name="update_text" cols="80" rows="4"></textarea>
 
     <div><label>{$mod_strings['LBL_INTERNAL']}</label>
-    <input id='internal' type='checkbox' name='internal' tabindex=0 title='' value='1' $internalChecked > $internal</input>
+    <input id='internal' type='checkbox' name='internal' tabindex=0 title='' value='1' $internalChecked ></input>
     </div>
     <input type='button' value='$saveBtn' onclick="caseUpdates('$record')" title="$saveTitle" name="button"> </input>
 

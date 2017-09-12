@@ -1,25 +1,49 @@
 <?php
-/**
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
- * @Package Gantt chart
- * @copyright Andrew Mclaughlan 2014
- * @author Andrew Mclaughlan <andrew@mclaughlan.info>
+/** 
+ * 
+ * SugarCRM Community Edition is a customer relationship management program developed by 
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc. 
+ * 
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd. 
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd. 
+ * 
+ * This program is free software; you can redistribute it and/or modify it under 
+ * the terms of the GNU Affero General Public License version 3 as published by the 
+ * Free Software Foundation with the addition of the following permission added 
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK 
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY 
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS. 
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more 
+ * details. 
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with 
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free 
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 
+ * 02110-1301 USA. 
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road, 
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com. 
+ * 
+ * The interactive user interfaces in modified source and object code versions 
+ * of this program must display Appropriate Legal Notices, as required under 
+ * Section 5 of the GNU Affero General Public License version 3. 
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3, 
+ * these Appropriate Legal Notices must retain the display of the "Powered by 
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not 
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must 
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM". 
  */
 
-class Gantt {
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+class Gantt
+{
 
     private $start_date;
     private $end_date;
@@ -30,18 +54,21 @@ class Gantt {
         $this->start_date = $start_date;
         $this->end_date = $end_date;
         $this->tasks = $tasks;
+        
+        
         //draw the grid
         $this->draw($this->start_date, $this->end_date, $this->tasks);
     }
 
-    public function draw($start_date, $end_date, $tasks){
+    public function draw($start_date, $end_date, $tasks)
+    {
 
-		$day_count = $this->count_days($start_date, $end_date);
-		$diff_interval = 30 - $day_count;
-		if( $diff_interval <= 0 )
-			$time_span = $this->year_month($start_date, $end_date);
-		else
-			$time_span = $this->year_month($start_date, $end_date, $diff_interval);
+        $day_count = $this->count_days($start_date, $end_date);
+        $diff_interval = 30 - $day_count;
+        if ($diff_interval <= 0)
+            $time_span = $this->year_month($start_date, $end_date);
+        else
+            $time_span = $this->year_month($start_date, $end_date, $diff_interval);
 
        // $project_length = $this->time_range($start_date, $end_date);
 
@@ -51,9 +78,10 @@ class Gantt {
         //Generate main table and the first row containing the months
         echo '<table class="main_table"><tr class="month_row">';
 
-        foreach($time_span as $months) {
-
-            foreach($months as $month => $days){
+        foreach ($time_span as $months)
+        {
+            foreach ($months as $month => $days)
+            {
                 echo '<td class="months">'.$month.'</td>';
             }
         }
@@ -62,20 +90,23 @@ class Gantt {
         echo '</tr><tr class="day_row">';
 
         $month_count = 0;//start month count
-        foreach($time_span as $months) {
+        foreach ($time_span as $months)
+        {
             $m=0;
-            foreach($months as $days){
-
+            foreach ($months as $days)
+            {
                 echo '<td class="inner_container">';
                 //Generate a table containing the days in each month
                 echo '<table class="table_inner"><tr>';
 
-                foreach($days as $day => $d){
+                foreach ($days as $day => $d)
+                {
                     echo '<td class="inner_td"><div class="cell_width">'.$day.'</div></td>';//day number shown
                 }
                 echo '</tr><tr>';
 
-                foreach($days as $d){
+                foreach ($days as $d)
+                {
                     echo '<td class="inner_td"><div class="cell_width">'.$this->substr_unicode($d,0,1).'</div></td>';//First letter of the days name shown
                 }
                 echo '</tr></table></td>';//end table containing the days in each month
@@ -86,9 +117,9 @@ class Gantt {
         }
         //for each task generate a row of empty days
         $i=1;
-        if(!is_null($tasks)){
-            foreach($tasks as $task){
-
+        if (!is_null($tasks)) {
+            foreach ($tasks as $task)
+            {
                 echo '</tr><tr class="task_row">';
                 echo '<td colspan="'.$month_count.'"><table id="task'.$i.'" class="table_inner"><tr>';
 
@@ -221,13 +252,18 @@ class Gantt {
         $end = new DateTime( $end_date);
         $end->add(new DateInterval('P'. $diff_interval .'D')); //Add 1 day to include the end date as a day
         
-		$interval = new DateInterval('P1D'); // 1 month interval
+        $interval = new DateInterval('P1D'); // 1 month interval
         $period = new DatePeriod($begin, $interval, $end);
         $aResult = array();
-
+        
         foreach ( $period as $dt )
         {
-            $aResult[$dt->format('Y')][strftime("%B", $dt->getTimestamp())][$dt->format('j')] = strftime("%a", $dt->getTimestamp());
+            $y = $dt->format('Y');
+            $m = $GLOBALS['app_list_strings']['dom_cal_month_short'][$dt->format('n')];
+            $j = $dt->format('j');
+            $d = $GLOBALS['app_list_strings']['dom_cal_day_short'][$dt->format('w')+1];
+
+            $aResult[$y][$m][$j] = $d;
         }
 
         return $aResult;

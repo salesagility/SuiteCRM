@@ -565,7 +565,7 @@ EOF;
 EOF;
 
         $mysqlQueryMeetings = <<<EOF
-        UNION
+        UNION ALL
         SELECT
             'meeting' as type
             , meetings.name
@@ -579,7 +579,7 @@ EOF;
 EOF;
 
         $mysqlQueryTasks = <<<EOF
-        UNION
+        UNION ALL
         SELECT
             'task' as type
             , tasks.name
@@ -605,7 +605,7 @@ EOF;
         WHERE calls.deleted = 0
 EOF;
         $mssqlQueryMeetings = <<<EOF
-        UNION
+        UNION ALL
         SELECT
             'meeting' as type
             , meetings.name
@@ -618,7 +618,7 @@ EOF;
         WHERE meetings.deleted = 0
 EOF;
         $mssqlQueryTasks = <<<EOF
-        UNION
+        UNION ALL
         SELECT
             'task' as type
             , tasks.name

@@ -39,7 +39,7 @@
 
 *}
 <div id="testOutbound">
-		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
+		<table  border="0" cellspacing="0" cellpadding="0" class="edit view">
 			<tr>
 				<td scope="row">
 					{$app_strings.LBL_EMAIL_SETTINGS_FROM_TO_EMAIL_ADDR} 

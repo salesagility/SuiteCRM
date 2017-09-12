@@ -42,6 +42,45 @@ if (!defined('sugarEntry') || !sugarEntry){
     die('Not A Valid Entry Point');
 }
 
+
+/**
+ * handle requested subscriptions
+ *
+ * @param array $subs
+ * @param Email $email
+ * @param JSON $json
+ * @return string JSON
+ */
+function handleSubs($subs, $email, $json) {
+
+    // flows into next case statement
+    global $db;
+    global $current_user;
+
+    $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: setFolderViewSelection");
+    $viewFolders = $subs;
+    $current_user->setPreference('showFolders', base64_encode(serialize($viewFolders)), '', 'Emails');
+    $tree = $email->et->getMailboxNodes(false);
+    $return = $tree->generateNodesRaw();
+    $out = $json->encode($return);
+
+
+    $sub = array();
+    foreach($viewFolders as $f) {
+        $query = 'SELECT * FROM folders WHERE folders.id LIKE "'. $f
+            .'" OR folders.parent_folder LIKE "'. $f .'"';
+        $result = $db->query($query);
+        while(($row = $db->fetchByAssoc($result)))
+        {
+            $sub[] = $row['id'];
+        }
+    }
+
+    $email->et->folder->setSubscriptions($sub);
+
+    return $out;
+}
+
  /*********************************************************************************
 
   * Description:
@@ -241,39 +280,39 @@ if (!defined('sugarEntry') || !sugarEntry){
             die();
         }
     	break;
-    case "getTemplateAttachments":
-        $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getTemplateAttachments");
-        if(isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {
+      case 'getTemplateAttachments':
+          $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getTemplateAttachments");
+          if (isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {
+              global $db;
 
+              $where = "parent_id='{$db->quote($_REQUEST['parent_id'])}'";
+              $order = '';
+              $seed = new Note();
+              $fullList = $seed->get_full_list($order, $where, '');
+              $all_fields = array_merge($seed->column_fields, $seed->additional_column_fields);
 
-            $where = "parent_id='{$_REQUEST['parent_id']}'";
-            $order = "";
-            $seed = new Note();
-            $fullList = $seed->get_full_list($order, $where, '');
-            $all_fields = array_merge($seed->column_fields, $seed->additional_column_fields);
+              $js_fields_arr = array();
 
-            $js_fields_arr = array();
+              $i = 1; // js doesn't like 0 index?
+              if (!empty($fullList)) {
+                  foreach ($fullList as $note) {
+                      $js_fields_arr[$i] = array();
 
-            $i=1; // js doesn't like 0 index?
-            if (!empty($fullList)) {
-                foreach($fullList as $note) {
-                    $js_fields_arr[$i] = array();
+                      foreach ($all_fields as $field) {
+                          if (isset($note->$field)) {
+                              $note->$field = from_html($note->$field);
+                              $note->$field = preg_replace('/\r\n/', '<BR>', $note->$field);
+                              $note->$field = preg_replace('/\n/', '<BR>', $note->$field);
+                              $js_fields_arr[$i][$field] = addslashes($note->$field);
+                          }
+                      }
+                      $i++;
+                  }
+              }
 
-                    foreach($all_fields as $field) {
-                        if(isset($note->$field)) {
-                            $note->$field = from_html($note->$field);
-                            $note->$field = preg_replace('/\r\n/','<BR>',$note->$field);
-                            $note->$field = preg_replace('/\n/','<BR>',$note->$field);
-                            $js_fields_arr[$i][$field] = addslashes($note->$field);
-                        }
-                    }
-                    $i++;
-                }
-            }
-
-            $out = $json->encode($js_fields_arr);
-            echo $out;
-        }
+              $out = $json->encode($js_fields_arr);
+              echo $out;
+          }
         break;
         ////    END COMPOSE REPLY FORWARD
         ///////////////////////////////////////////////////////////////////////////
@@ -368,7 +407,7 @@ if (!defined('sugarEntry') || !sugarEntry){
                 $_REQUEST['uid'] = $ie->getCorrectMessageNoForPop3($_REQUEST['uid']);
             }
 
-            if (!$ie->importOneEmail($_REQUEST['uid'], $uid)) {
+            if (!$ie->returnImportedEmail($_REQUEST['uid'], $uid)) {
             	$ie->getDuplicateEmailId($_REQUEST['uid'], $uid);
             } // id
             $ie->email->retrieve($ie->email->id);
@@ -484,7 +523,7 @@ if (!defined('sugarEntry') || !sugarEntry){
         $out = $email->et->doAssignment($_REQUEST['distribute_method'], $_REQUEST['ieId'], $_REQUEST['folder'], $_REQUEST['uids'], $_REQUEST['users']);
         echo $out;
         break;
-    case "doAssignmentDelete";
+      case "doAssignmentDelete":
     $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: doAssignmentDelete");
     if(isset($_REQUEST['uids']) && !empty($_REQUEST['uids']) &&
     isset($_REQUEST['ieId']) && !empty($_REQUEST['ieId']) &&
@@ -657,9 +696,9 @@ if (!defined('sugarEntry') || !sugarEntry){
             	$uid = $msgNo;
                 if($ie->protocol == 'imap') {
                     $msgNo = imap_msgno($ie->conn, $msgNo);
-                    $status = $ie->importOneEmail($msgNo, $uid);
+                    $status = $ie->returnImportedEmail($msgNo, $uid);
                 } else {
-                	$status = $ie->importOneEmail($ie->getCorrectMessageNoForPop3($msgNo), $uid);
+                	$status = $ie->returnImportedEmail($ie->getCorrectMessageNoForPop3($msgNo), $uid);
                 } // else
             	$return[] = $app_strings['LBL_EMAIL_MESSAGE_NO'] . " " . $count . ", " . $app_strings['LBL_STATUS'] . " " . ($status ? $app_strings['LBL_EMAIL_IMPORT_SUCCESS'] : $app_strings['LBL_EMAIL_IMPORT_FAIL']);
             	$count++;
@@ -672,9 +711,9 @@ if (!defined('sugarEntry') || !sugarEntry){
             $msgNo = $_REQUEST['uid'];
             if($ie->protocol == 'imap') {
                 $msgNo = imap_msgno($ie->conn, $_REQUEST['uid']);
-                $status = $ie->importOneEmail($msgNo, $_REQUEST['uid']);
+                $status = $ie->returnImportedEmail($msgNo, $_REQUEST['uid']);
             } else {
-            	$status = $ie->importOneEmail($ie->getCorrectMessageNoForPop3($msgNo), $_REQUEST['uid']);
+            	$status = $ie->returnImportedEmail($ie->getCorrectMessageNoForPop3($msgNo), $_REQUEST['uid']);
             } // else
             $return[] = $app_strings['LBL_EMAIL_MESSAGE_NO'] . " " . $count . ", " . $app_strings['LBL_STATUS'] . " " . ($status ? $app_strings['LBL_EMAIL_IMPORT_SUCCESS'] : $app_strings['LBL_EMAIL_IMPORT_FAIL']);
 
@@ -939,25 +978,39 @@ eoq;
             $childrenSubs = array();
             //Find all children of the group folder subscribed to and add
             //them to the list of folders to show.
-            foreach ($subs as $singleSub)
+            foreach ($subs as $singleSub) {
                 $email->et->folder->findAllChildren($singleSub, $childrenSubs);
+            }
 
             $subs = array_merge($subs, $childrenSubs);
             $email->et->folder->setSubscriptions($subs);
+
+            $out = handleSubs($subs, $email, $json);
+
         }
         elseif(empty($_REQUEST['subscriptions'])) {
             $email->et->folder->clearSubscriptions();
+        } else {
+            $GLOBALS['log']->fatal('Incorrect request for update subscriptions');
         }
         break;
 
     case "refreshSugarFolders":
-        $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: refreshSugarFolders");
-        $rootNode = new ExtNode('','');
-        $folderOpenState = $current_user->getPreference('folderOpenState', 'Emails');
-        $folderOpenState = (empty($folderOpenState)) ? "" : $folderOpenState;
-        $ret = $email->et->folder->getUserFolders($rootNode, sugar_unserialize($folderOpenState), $current_user, true);
-        $out = $json->encode($ret);
-        echo $out;
+        try {
+            $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: refreshSugarFolders");
+            $rootNode = new ExtNode('', '');
+            $folderOpenState = $current_user->getPreference('folderOpenState', 'Emails');
+            $folderOpenState = (empty($folderOpenState)) ? "" : $folderOpenState;
+            $ret = $email->et->folder->getUserFolders($rootNode, sugar_unserialize($folderOpenState), $current_user, true);
+            $out = $json->encode($ret);
+            echo $out;
+        } catch (SugarFolderEmptyException $e) {
+            $GLOBALS['log']->warn($e);
+            $out = $json->encode(array(
+                'message' => 'No folder selected warning message here...',
+            ));
+            echo $out;
+        }
         break;
 
 
@@ -995,13 +1048,8 @@ eoq;
         }
         break;
 
-    case "setFolderViewSelection": // flows into next case statement
-        $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: setFolderViewSelection");
-        $viewFolders = $_REQUEST['ieIdShow'];
-        $current_user->setPreference('showFolders', base64_encode(serialize($viewFolders)), '', 'Emails');
-        $tree = $email->et->getMailboxNodes(false);
-        $return = $tree->generateNodesRaw();
-        $out = $json->encode($return);
+    case "setFolderViewSelection":
+        $out = handleSubs($_REQUEST['ieIdShow'], $email, $json);
         echo $out;
         break;
 
@@ -1294,6 +1342,18 @@ eoq;
                     $current_user->setPreference('showFolders', $showStore, 0, 'Emails');
                 }
 
+                if(isset($_REQUEST['account_signature_id'])){
+                    $email_signatures = $current_user->getPreference('account_signatures', 'Emails');
+                    $email_signatures = unserialize(base64_decode($email_signatures));
+                    if(empty($email_signatures)) {
+                        $email_signatures = array();
+                    }
+
+                    $email_signatures[$ie->id] = $_REQUEST['account_signature_id'];
+                    $showStore = base64_encode(serialize($email_signatures));
+                    $current_user->setPreference('account_signatures', $showStore, 0, 'Emails');
+                }
+
                 foreach($ie->field_defs as $k => $v) {
                 	if (isset($v['type']) && ($v['type'] == 'link')) {
                 		continue;
@@ -1345,7 +1405,9 @@ eoq;
 
     case "getIeAccount":
         $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getIeAccount");
-        $ie->retrieve($_REQUEST['ieId']);
+        $ieId = $_REQUEST['ieId'];
+        $ie->retrieve($ieId);
+
         if($ie->group_id == $current_user->id) {
             $ret = array();
 
@@ -1370,6 +1432,23 @@ eoq;
                 $ret[$k] = $ie->$k;
             }
             unset($ret['email_password']); // no need to send the password out
+
+            $email_signatures = $current_user->getPreference('account_signatures', 'Emails');
+            $email_signatures = unserialize(base64_decode($email_signatures));
+
+            if(!empty($email_signatures) && isset($email_signatures[$ieId])) {
+                $ret['email_signatures'] = $email_signatures[$ieId];
+            } else {
+                $ret['email_signatures'] = null;
+            }
+
+            global $current_user;
+            $email_default_signatures = $current_user->getPreference('signature_default');
+            $email_account_signatures = $current_user->getEmailAccountSignatures(false, '');
+
+
+            $ret['email_account_signatures'] = $email_account_signatures;
+
 
             $out = $json->encode($ret);
         } else {

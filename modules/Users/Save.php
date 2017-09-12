@@ -102,7 +102,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
         if (isset($field['source']) && $field['source'] == 'custom_fields')
         {
             $type = !empty($field['custom_type']) ? $field['custom_type'] : $field['type'];
-            $sf = $sfh->getSugarField($type);
+            $sf = $sfh::getSugarField($type);
             if ($sf != null)
             {
                 $sf->save($focus, $_POST, $fieldName, $field, '');
@@ -153,7 +153,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
         {
             $field = $focus->field_defs[$fieldName];
             $type = !empty($field['custom_type']) ? $field['custom_type'] : $field['type'];
-            $sf = $sfh->getSugarField($type);
+            $sf = $sfh::getSugarField($type);
             if ($sf != null)
             {
                 $sf->save($focus, $_POST, $fieldName, $field, '');
@@ -167,7 +167,7 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
         {
             $field = $focus->field_defs[$fieldName];
             $type = !empty($field['custom_type']) ? $field['custom_type'] : $field['type'];
-            $sf = $sfh->getSugarField($type);
+            $sf = $sfh::getSugarField($type);
             if ($sf != null)
             {
                 $sf->save($focus, $_POST, $fieldName, $field, '');
@@ -293,7 +293,9 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 		$focus->setPreference('email_reminder_time', $_POST['email_reminder_time'], 0, 'global');
 		$focus->setPreference('reminder_checked', $_POST['reminder_checked'], 0, 'global');
 		$focus->setPreference('email_reminder_checked', $_POST['email_reminder_checked'], 0, 'global');
-		
+
+
+
 		if(isset($_POST['timezone'])) $focus->setPreference('timezone',$_POST['timezone'], 0, 'global');
 		if(isset($_POST['ut'])) $focus->setPreference('ut', '0', 0, 'global');
 		else $focus->setPreference('ut', '1', 0, 'global');
@@ -354,7 +356,8 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 		///////////////////////////////////////////////////////////////////////////
 
 
-		 if(isset($_POST['email_link_type'])) $focus->setPreference('email_link_type', $_REQUEST['email_link_type']);
+		if(isset($_POST['email_link_type'])) $focus->setPreference('email_link_type', $_REQUEST['email_link_type']);
+		if(isset($_POST['editor_type'])) $focus->setPreference('editor_type', $_REQUEST['editor_type']);
 		if(isset($_REQUEST['email_show_counts'])) {
 			$focus->setPreference('email_show_counts', $_REQUEST['email_show_counts'], 0, 'global');
 		} else {
@@ -452,6 +455,27 @@ if(!$current_user->is_admin && !$GLOBALS['current_user']->isAdminForModule('User
 			require_once('modules/Users/GeneratePassword.php');
 		}
 
+
+		if(
+			isset($_REQUEST['emailCheckInterval']) &&
+			isset($_REQUEST['showNumInList']) &&
+			isset($_REQUEST['default_charset']) &&
+			isset($_REQUEST['signature_id'])
+		) {
+			$GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: saveSettingsGeneral");
+			$emailSettings = array();
+			$emailSettings['emailCheckInterval'] = isset($_REQUEST['emailCheckInterval']) ? $_REQUEST['emailCheckInterval'] : null;
+			//$emailSettings['autoImport'] = isset($_REQUEST['autoImport']) ? '1' : '0';
+			$emailSettings['alwaysSaveOutbound'] = '1';
+			$emailSettings['sendPlainText'] = isset($_REQUEST['sendPlainText']) ? '1' : '0';
+			$emailSettings['showNumInList'] = isset($_REQUEST['showNumInList']) ? $_REQUEST['showNumInList'] : null;
+			$emailSettings['defaultOutboundCharset'] = isset($_REQUEST['default_charset']) ? $_REQUEST['default_charset'] : null;
+			$focus->setPreference('emailSettings', $emailSettings, '', 'Emails');
+
+			// signature
+			$focus->setPreference('signature_default', isset($_REQUEST['signature_id']) ? $_REQUEST['signature_id'] : null);
+			$focus->setPreference('signature_prepend', (isset($_REQUEST['signature_prepend'])) ? true : false);
+		}
 	}
 
 
