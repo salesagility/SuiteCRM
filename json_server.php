@@ -39,6 +39,7 @@
 
 
 require_once('soap/SoapHelperFunctions.php');
+require_once('include/json_config.php');
 $GLOBALS['log']->debug("JSON_SERVER:");
 $global_registry_var_name = 'GLOBAL_REGISTRY';
 
@@ -61,17 +62,21 @@ function json_retrieve($request_id, $params) {
 	global $current_user;
 	global $beanFiles,$beanList;
     $json = getJSONobj();
+    $jsonConfig = new json_config();
 
 	$record = $params[0]['record'];
 
 	require_once($beanFiles[$beanList[$params[0]['module']]]);
+    /**
+     * @var SugarBean
+     */
 	$focus = new $beanList[$params[0]['module']];
 	$focus->retrieve($record);
 
 	// to get a simplified version of the sugarbean
-	$module_arr = populateBean($focus);
+	$module_arr = $jsonConfig->populateBean($focus);
 
-	$response = array();
+    $response = array();
 	$response['id'] = $request_id;
 	$response['result'] = array("status"=>"success","record"=>$module_arr);
 	$json_response = $json->encode($response, true);
@@ -82,6 +87,7 @@ function json_query($request_id, $params) {
 	global $response, $sugar_config;
 	global $beanFiles, $beanList;
 	$json = getJSONobj();
+    $jsonConfig = new json_config();
 
 	if($sugar_config['list_max_entries_per_page'] < 31)	// override query limits
 		$sugar_config['list_max_entries_per_page'] = 31;
@@ -124,6 +130,11 @@ function json_query($request_id, $params) {
 		if(!empty($args['limit'])) {
 			$query_limit = (int)$args['limit'];
 		}
+
+		if(isset($args['field_list'])) {
+            $args['field_list'] = $jsonConfig->listFilter($module, $args['field_list']);
+        }
+
 		$query_where = construct_where($args, $focus->table_name,$module);
 		$list_arr = array();
 		if($focus->ACLAccess('ListView', true)) {
@@ -178,34 +189,6 @@ function json_query($request_id, $params) {
 
 ////	END SUPPORTED METHODS
 ///////////////////////////////////////////////////////////////////////////////
-
-// ONLY USED FOR MEETINGS
-// HAS MEETING SPECIFIC CODE:
-function populateBean(&$focus) {
-	$all_fields = $focus->column_fields;
-	// MEETING SPECIFIC
-	$all_fields = array_merge($all_fields,array('required','accept_status','name')); // need name field for contacts and users
-	//$all_fields = array_merge($focus->column_fields,$focus->additional_column_fields);
-
-	$module_arr = array();
-
-	$module_arr['module'] = $focus->object_name;
-
-	$module_arr['fields'] = array();
-
-	foreach($all_fields as $field)
-	{
-		if(isset($focus->$field) && !is_object($focus->$field))
-		{
-			$focus->$field =	from_html($focus->$field);
-			$focus->$field =	preg_replace("/\r\n/","<BR>",$focus->$field);
-			$focus->$field =	preg_replace("/\n/","<BR>",$focus->$field);
-			$module_arr['fields'][$field] = $focus->$field;
-		}
-	}
-	$GLOBALS['log']->debug("JSON_SERVER:populate bean:");
-	return $module_arr;
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	UTILS
