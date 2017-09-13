@@ -478,30 +478,34 @@ class ListViewDisplay {
 	 * The link can be disabled by setting module level duplicate_merge property to false
 	 * in the moudle's vardef file.
 	 *
+     * @param string $loc
 	 * @return string HTML
 	 */
-	protected function buildMergeDuplicatesLink($loc = 'top')
-	{
+    protected function buildMergeDuplicatesLink($loc = 'top')
+    {
         global $app_strings, $dictionary;
 
-        $return_string='';
-        $return_string.= isset($_REQUEST['module']) ? "&return_module={$_REQUEST['module']}" : "";
-        $return_string.= isset($_REQUEST['action']) ? "&return_action={$_REQUEST['action']}" : "";
-        $return_string.= isset($_REQUEST['record']) ? "&return_id={$_REQUEST['record']}" : "";
+        $return_string = '';
+        $return_string .= isset($_REQUEST['module']) ? "&return_module={$_REQUEST['module']}" : "";
+        $return_string .= isset($_REQUEST['action']) ? "&return_action={$_REQUEST['action']}" : "";
+        $return_string .= isset($_REQUEST['record']) ? "&return_id={$_REQUEST['record']}" : "";
         //need delete and edit access.
-		if (!(ACLController::checkAccess($this->seed->module_dir, 'edit', true)) or !(ACLController::checkAccess($this->seed->module_dir, 'delete', true))) {
-			return "";
-		}
-
-        if (isset($dictionary[$this->seed->object_name]['duplicate_merge']) && $dictionary[$this->seed->object_name]['duplicate_merge']==true ) {
-            return "<a href='javascript:void(0)' ".
-                            "class=\"parent-dropdown-action-handler\" id='mergeduplicates_listview_". $loc ."'".
-                            "onclick='if (sugarListView.get_checks_count()> 1) {sListView.send_form(true, \"MergeRecords\", \"index.php\", \"{$app_strings['LBL_LISTVIEW_NO_SELECTED']}\", \"{$this->seed->module_dir}\",\"$return_string\");} else {alert(\"{$app_strings['LBL_LISTVIEW_TWO_REQUIRED']}\");return false;}'>".
-                            $app_strings['LBL_MERGE_DUPLICATES'].'</a>';
+        if (!(ACLController::checkAccess($this->seed->module_dir, 'edit', true)) ||
+            !(ACLController::checkAccess($this->seed->module_dir, 'delete', true))
+        ) {
+            return "";
         }
 
-        return "";
-     }
+        if (isset($dictionary[$this->seed->object_name]['duplicate_merge']) &&
+            $dictionary[$this->seed->object_name]['duplicate_merge'] == true) {
+            return "<a href='javascript:void(0)' " .
+                "class=\"parent-dropdown-action-handler\" id='mergeduplicates_listview_" . $loc . "'" .
+                "onclick='if (sugarListView.get_checks_count()> 1) {sListView.send_form(true, \"MergeRecords\", \"index.php\", \"{$app_strings['LBL_LISTVIEW_NO_SELECTED']}\", \"{$this->seed->module_dir}\",\"$return_string\");} else {alert(\"{$app_strings['LBL_LISTVIEW_TWO_REQUIRED']}\");return false;}'>" .
+                $app_strings['LBL_MERGE_DUPLICATES'] . '</a>';
+        }
+
+        return '';
+    }
     /**
 	 * Builds the mail merge link
 	 *
