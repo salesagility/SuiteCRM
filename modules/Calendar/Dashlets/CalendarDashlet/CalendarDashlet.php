@@ -48,7 +48,7 @@ require_once('include/Dashlets/Dashlet.php');
 
 class CalendarDashlet extends Dashlet
 {
-    var $view = 'week';
+    public $view = 'week';
 
     function CalendarDashlet($id, $def)
     {

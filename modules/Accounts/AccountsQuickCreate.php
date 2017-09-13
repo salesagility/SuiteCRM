@@ -47,7 +47,7 @@ require_once('include/EditView/QuickCreate.php');
 class AccountsQuickCreate extends QuickCreate
 {
 
-    var $javascript;
+    public $javascript;
 
     function process()
     {
@@ -75,5 +75,3 @@ class AccountsQuickCreate extends QuickCreate
         $this->ss->assign('additionalScripts', $this->javascript->getScript(false));
     }
 }
-
-?>

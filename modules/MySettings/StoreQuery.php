@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class StoreQuery
 {
-    var $query = array();
+    public $query = array();
 
     function addToQuery($name, $val)
     {

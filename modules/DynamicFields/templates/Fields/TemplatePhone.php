@@ -1,9 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -37,36 +39,36 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
+class TemplatePhone extends TemplateText
+{
+    public $max_size = 25;
+    public $type = 'phone';
+    public $supports_unified_search = true;
 
-
-class TemplatePhone extends TemplateText{
-    var $max_size = 25;
-    var $type='phone';
-    var $supports_unified_search = true;
-    
     /**
      * __construct
-     * 
+     *
      * Constructor for TemplatePhone class. This constructor ensures that TemplatePhone instances have the
      * validate_usa_format vardef value.
      */
     function __construct()
-	{
-	}	
-	
-	/**
-	 * get_field_def
-	 * 
-	 * @see parent::get_field_def
-	 * This method checks to see if the validate_usa_format key/value entry should be
-	 * added to the vardef entry representing the module
-	 */	
-    function get_field_def(){
-		$def = parent::get_field_def();
-		$def['dbType'] = 'varchar';
-		
-		return $def;	
-	}
+    {
+    }
+
+    /**
+     * get_field_def
+     *
+     * @see parent::get_field_def
+     * This method checks to see if the validate_usa_format key/value entry should be
+     * added to the vardef entry representing the module
+     */
+    function get_field_def()
+    {
+        $def = parent::get_field_def();
+        $def['dbType'] = 'varchar';
+
+        return $def;
+    }
 }
 
 

@@ -46,39 +46,36 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class ProjectTask extends SugarBean
 {
     // database table columns
-    var $id;
-    var $date_entered;
-    var $date_modified;
-    //var $assigned_user_id;
-    //var $modified_user_id;
-    //var $created_by;
-    var $name;
-    var $description;
-    var $project_id;
-    var $project_task_id;
-    var $date_start;
-    var $date_finish;
-    var $duration;
-    var $duration_unit;
-    var $percent_complete;
-    var $parent_task_id;
-    var $predecessors;
-    var $priority;
+    public $id;
+    public $date_entered;
+    public $date_modified;
+    public $name;
+    public $description;
+    public $project_id;
+    public $project_task_id;
+    public $date_start;
+    public $date_finish;
+    public $duration;
+    public $duration_unit;
+    public $percent_complete;
+    public $parent_task_id;
+    public $predecessors;
+    public $priority;
 
     // related information
-    var $assigned_user_name;
-    var $parent_name;
-    var $depends_on_name;
-    var $email_id;
+    public $assigned_user_name;
+    public $parent_name;
+    public $depends_on_name;
+    public $email_id;
 
-    var $table_name = 'project_task';
-    var $object_name = 'ProjectTask';
-    var $module_dir = 'ProjectTask';
+    public $table_name = 'project_task';
+    public $object_name = 'ProjectTask';
+    public $module_dir = 'ProjectTask';
 
-    var $field_name_map;
-    var $new_schema = true;
+    public $field_name_map;
+    public $new_schema = true;
 
-    var $relationship_fields = array(
+    public $relationship_fields = array(
         'email_id' => 'emails',
     );
     /**
@@ -709,5 +706,3 @@ function getUtilizationDropdown($focus, $field, $value, $view)
 
     return translate('project_task_utilization_options', '', $focus->$field);
 }
-
-?>

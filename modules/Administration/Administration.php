@@ -47,12 +47,12 @@ require_once('include/OutboundEmail/OutboundEmail.php');
 
 class Administration extends SugarBean
 {
-    var $settings;
-    var $table_name = "config";
-    var $object_name = "Administration";
-    var $new_schema = true;
-    var $module_dir = 'Administration';
-    var $config_categories = array(
+    public $settings;
+    public $table_name = "config";
+    public $object_name = "Administration";
+    public $new_schema = true;
+    public $module_dir = 'Administration';
+    public $config_categories = array(
         // 'mail', // cn: moved to include/OutboundEmail
         'disclosure', // appended to all outbound emails
         'notify',
@@ -65,8 +65,8 @@ class Administration extends SugarBean
         'sugarpdf',
 
     );
-    var $disable_custom_fields = true;
-    var $checkbox_fields = Array(
+    public $disable_custom_fields = true;
+    public $checkbox_fields = Array(
         "notify_send_by_default",
         "mail_smtpauth_req",
         "notify_on",

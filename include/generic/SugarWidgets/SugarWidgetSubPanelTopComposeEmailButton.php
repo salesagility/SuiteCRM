@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopButton
 {
-    var $form_value = '';
+    public $form_value = '';
 
     function display($defines, $additionalFormFields = null, $nonbutton = false)
     {

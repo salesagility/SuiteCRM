@@ -46,13 +46,12 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
 
 class ParserModifyListView extends ModuleBuilderParser
 {
-    var $listViewDefs = false;
-    var $defaults = array();
-    var $additional = array();
-    var $available = array();
-    var $reserved = array(); // fields marked by 'studio'=>false in the listviewdefs; need to be preserved
-    //	var $language_module = '';
-    var $columns = array(
+    public $listViewDefs = false;
+    public $defaults = array();
+    public $additional = array();
+    public $available = array();
+    public $reserved = array(); // fields marked by 'studio'=>false in the listviewdefs; need to be preserved
+    public $columns = array(
         'LBL_DEFAULT' => 'getDefaultFields',
         'LBL_AVAILABLE' => 'getAdditionalFields',
         'LBL_HIDDEN' => 'getAvailableFields'
@@ -336,5 +335,3 @@ class ParserModifyListView extends ModuleBuilderParser
         return $this->defaults;
     }
 }
-
-?>

@@ -45,27 +45,27 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarFeed extends Basic
 {
-    var $new_schema = true;
-    var $module_dir = 'SugarFeed';
-    var $object_name = 'SugarFeed';
-    var $table_name = 'sugarfeed';
-    var $importable = false;
+    public $new_schema = true;
+    public $module_dir = 'SugarFeed';
+    public $object_name = 'SugarFeed';
+    public $table_name = 'sugarfeed';
+    public $importable = false;
 
-    var $id;
-    var $name;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $modified_by_name;
-    var $created_by;
-    var $created_by_name;
-    var $description;
-    var $deleted;
-    var $created_by_link;
-    var $modified_user_link;
-    var $assigned_user_id;
-    var $assigned_user_name;
-    var $assigned_user_link;
+    public $id;
+    public $name;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $modified_by_name;
+    public $created_by;
+    public $created_by_name;
+    public $description;
+    public $deleted;
+    public $created_by_link;
+    public $modified_user_link;
+    public $assigned_user_id;
+    public $assigned_user_name;
+    public $assigned_user_link;
 
     static function activateModuleFeed($module, $updateDB = true)
     {

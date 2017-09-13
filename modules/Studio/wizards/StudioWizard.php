@@ -45,10 +45,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class StudioWizard
 {
-    var $tplfile = 'modules/Studio/wizards/tpls/wizard.tpl';
-    var $wizard = 'StudioWizard';
-    var $status = '';
-    var $assign = array();
+    public $tplfile = 'modules/Studio/wizards/tpls/wizard.tpl';
+    public $wizard = 'StudioWizard';
+    public $status = '';
+    public $assign = array();
 
     function back()
     {

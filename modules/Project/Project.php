@@ -46,45 +46,45 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class Project extends SugarBean
 {
     // database table columns
-    var $id;
-    var $date_entered;
-    var $date_modified;
-    var $assigned_user_id;
-    var $modified_user_id;
-    var $created_by;
-    var $name;
-    var $description;
-    var $deleted;
+    public $id;
+    public $date_entered;
+    public $date_modified;
+    public $assigned_user_id;
+    public $modified_user_id;
+    public $created_by;
+    public $name;
+    public $description;
+    public $deleted;
 
 
     // related information
-    var $assigned_user_name;
-    var $modified_by_name;
-    var $created_by_name;
+    public $assigned_user_name;
+    public $modified_by_name;
+    public $created_by_name;
 
-    var $account_id;
-    var $contact_id;
-    var $opportunity_id;
-    var $email_id;
-    var $estimated_start_date;
+    public $account_id;
+    public $contact_id;
+    public $opportunity_id;
+    public $email_id;
+    public $estimated_start_date;
 
     // calculated information
-    var $total_estimated_effort;
-    var $total_actual_effort;
+    public $total_estimated_effort;
+    public $total_actual_effort;
 
-    var $object_name = 'Project';
-    var $module_dir = 'Project';
-    var $new_schema = true;
-    var $table_name = 'project';
+    public $object_name = 'Project';
+    public $module_dir = 'Project';
+    public $new_schema = true;
+    public $table_name = 'project';
 
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = array(
+    public $additional_column_fields = array(
         'account_id',
         'contact_id',
         'opportunity_id',
     );
 
-    var $relationship_fields = array(
+    public $relationship_fields = array(
         'account_id' => 'accounts',
         'contact_id' => 'contacts',
         'opportunity_id' => 'opportunities',
@@ -295,7 +295,7 @@ class Project extends SugarBean
         }
 
         if (!empty($order_by)) {
-            //check to see if order by variable already has table name by looking for dot "."
+            //check to see if order by publiciable already has table name by looking for dot "."
             $table_defined_already = strpos($order_by, ".");
 
             if ($table_defined_already === false) {

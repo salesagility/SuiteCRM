@@ -47,16 +47,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class StudioParser
 {
-    var $positions = array();
-    var $rows = array();
-    var $cols = array();
-    var $curFile = '';
-    var $curText = '';
-    var $form;
-    var $labelEditor = true;
-    var $curType = 'detail';
-    var $fieldEditor = true;
-    var $oldMatches = array();
+    public $positions = array();
+    public $rows = array();
+    public $cols = array();
+    public $curFile = '';
+    public $curText = '';
+    public $form;
+    public $labelEditor = true;
+    public $curType = 'detail';
+    public $fieldEditor = true;
+    public $oldMatches = array();
 
     function getParsers($file)
     {

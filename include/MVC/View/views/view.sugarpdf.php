@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -39,66 +40,70 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-
 require_once('include/Sugarpdf/SugarpdfFactory.php');
 
-class ViewSugarpdf extends SugarView{
+class ViewSugarpdf extends SugarView
+{
 
-    var $type ='sugarpdf';
+    public $type = 'sugarpdf';
     /**
      * It is set by the "sugarpdf" request parameter and it is use by SugarpdfFactory to load the good sugarpdf class.
      * @var String
      */
-    var $sugarpdf='default';
+    public $sugarpdf = 'default';
     /**
      * The sugarpdf object (Include the TCPDF object).
      * The atributs of this object are destroy in the output method.
      * @var Sugarpdf object
      */
-    var $sugarpdfBean=NULL;
-
-
-    public function __construct(){
-         parent::__construct();
-         if (isset($_REQUEST["sugarpdf"]))
-         	$this->sugarpdf = $_REQUEST["sugarpdf"];
-         else
-        	header('Location:index.php?module='.$_REQUEST['module'].'&action=DetailView&record='.$_REQUEST['record']);
-     }
+    public $sugarpdfBean = null;
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function ViewSugarpdf(){
+    public function ViewSugarpdf()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
+    public function __construct()
+    {
+        parent::__construct();
+        if (isset($_REQUEST["sugarpdf"])) {
+            $this->sugarpdf = $_REQUEST["sugarpdf"];
+        } else {
+            header('Location:index.php?module=' . $_REQUEST['module'] . '&action=DetailView&record=' . $_REQUEST['record']);
+        }
+    }
 
-     function preDisplay(){
-         $this->sugarpdfBean = SugarpdfFactory::loadSugarpdf($this->sugarpdf, $this->module, $this->bean, $this->view_object_map);
+    function preDisplay()
+    {
+        $this->sugarpdfBean = SugarpdfFactory::loadSugarpdf($this->sugarpdf, $this->module, $this->bean,
+            $this->view_object_map);
 
-         // ACL control
-        if(!empty($this->bean) && !$this->bean->ACLAccess($this->sugarpdfBean->aclAction)){
+        // ACL control
+        if (!empty($this->bean) && !$this->bean->ACLAccess($this->sugarpdfBean->aclAction)) {
             ACLController::displayNoAccess(true);
             sugar_cleanup(true);
         }
 
-        if(isset($this->errors)){
-          $this->sugarpdfBean->errors = $this->errors;
+        if (isset($this->errors)) {
+            $this->sugarpdfBean->errors = $this->errors;
         }
-     }
+    }
 
-    function display(){
+    function display()
+    {
         $this->sugarpdfBean->process();
-        $this->sugarpdfBean->Output($this->sugarpdfBean->fileName,'I');
-     }
+        $this->sugarpdfBean->Output($this->sugarpdfBean->fileName, 'I');
+    }
 
 }
+
 ?>

@@ -46,62 +46,63 @@ require_once('include/SugarObjects/templates/person/Person.php');
 
 class Prospect extends Person
 {
-    var $field_name_map;
+    public $field_name_map;
     // Stored fields
-    var $id;
-    var $name = '';
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $assigned_user_id;
-    var $created_by;
-    var $created_by_name;
-    var $modified_by_name;
-    var $description;
-    var $salutation;
-    var $first_name;
-    var $last_name;
-    var $full_name;
-    var $title;
-    var $department;
-    var $birthdate;
-    var $do_not_call;
-    var $phone_home;
-    var $phone_mobile;
-    var $phone_work;
-    var $phone_other;
-    var $phone_fax;
-    var $email1;
-    var $email2;
-    var $email_and_name1;
-    var $assistant;
-    var $assistant_phone;
-    var $email_opt_out;
-    var $primary_address_street;
-    var $primary_address_city;
-    var $primary_address_state;
-    var $primary_address_postalcode;
-    var $primary_address_country;
-    var $alt_address_street;
-    var $alt_address_city;
-    var $alt_address_state;
-    var $alt_address_postalcode;
-    var $alt_address_country;
-    var $tracker_key;
-    var $lead_id;
-    var $account_name;
-    var $assigned_real_user_name;
-    // These are for related fields
-    var $assigned_user_name;
-    var $module_dir = 'Prospects';
-    var $table_name = "prospects";
-    var $object_name = "Prospect";
-    var $new_schema = true;
-    var $emailAddress;
+    public $id;
+    public $name = '';
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $assigned_user_id;
+    public $created_by;
+    public $created_by_name;
+    public $modified_by_name;
+    public $description;
+    public $salutation;
+    public $first_name;
+    public $last_name;
+    public $full_name;
+    public $title;
+    public $department;
+    public $birthdate;
+    public $do_not_call;
+    public $phone_home;
+    public $phone_mobile;
+    public $phone_work;
+    public $phone_other;
+    public $phone_fax;
+    public $email1;
+    public $email2;
+    public $email_and_name1;
+    public $assistant;
+    public $assistant_phone;
+    public $email_opt_out;
+    public $primary_address_street;
+    public $primary_address_city;
+    public $primary_address_state;
+    public $primary_address_postalcode;
+    public $primary_address_country;
+    public $alt_address_street;
+    public $alt_address_city;
+    public $alt_address_state;
+    public $alt_address_postalcode;
+    public $alt_address_country;
+    public $tracker_key;
+    public $lead_id;
+    public $account_name;
+    public $assigned_real_user_name;
 
-    var $importable = true;
+    // These are for related fields
+    public $assigned_user_name;
+    public $module_dir = 'Prospects';
+    public $table_name = "prospects";
+    public $object_name = "Prospect";
+    public $new_schema = true;
+    public $emailAddress;
+
+    public $importable = true;
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = Array('assigned_user_name');
+    public $additional_column_fields = Array('assigned_user_name');
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

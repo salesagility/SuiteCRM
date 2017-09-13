@@ -45,28 +45,28 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class Relationship extends SugarBean
 {
 
-    var $object_name = 'Relationship';
-    var $module_dir = 'Relationships';
-    var $new_schema = true;
-    var $table_name = 'relationships';
+    public $object_name = 'Relationship';
+    public $module_dir = 'Relationships';
+    public $new_schema = true;
+    public $table_name = 'relationships';
 
-    var $id;
-    var $relationship_name;
-    var $lhs_module;
-    var $lhs_table;
-    var $lhs_key;
-    var $rhs_module;
-    var $rhs_table;
-    var $rhs_key;
-    var $join_table;
-    var $join_key_lhs;
-    var $join_key_rhs;
-    var $relationship_type;
-    var $relationship_role_column;
-    var $relationship_role_column_value;
-    var $reverse;
+    public $id;
+    public $relationship_name;
+    public $lhs_module;
+    public $lhs_table;
+    public $lhs_key;
+    public $rhs_module;
+    public $rhs_table;
+    public $rhs_key;
+    public $join_table;
+    public $join_key_lhs;
+    public $join_key_rhs;
+    public $relationship_type;
+    public $relationship_role_column;
+    public $relationship_role_column_value;
+    public $reverse;
 
-    var $_self_referencing;
+    public $_self_referencing;
 
     static function exists($relationship_name, &$db)
     {

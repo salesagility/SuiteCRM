@@ -45,9 +45,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class SubPanelViewNotes
 {
 
-    var $notes_list = null;
-    var $hideNewButton = false;
-    var $focus;
+    public $notes_list = null;
+    public $hideNewButton = false;
+    public $focus;
 
     function setFocus(&$value)
     {

@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -39,12 +40,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 /*********************************************************************************
-
  * Description:
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
  * Reserved. Contributor(s): ______________________________________..
  *********************************************************************************/
-
 
 
 /**
@@ -52,20 +51,27 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 class EmailAddress extends SugarEmailAddress
 {
-	var $disable_row_level_security = true;
+    public $disable_row_level_security = true;
 
-	function __construct()
-	{
-		parent::__construct();
-	}
+    function __construct()
+    {
+        parent::__construct();
+    }
 
-	function save($id = '', $module = '', $new_addrs=array(), $primary='', $replyTo='', $invalid='', $optOut='', $in_workflow=false)
-	{
-		if ( func_num_args() > 1 ) {
-		    parent::saveEmail($id, $module, $new_addrs, $primary, $replyTo, $invalid, $optOut, $in_workflow);
-		}
-		else {
-		    SugarBean::save($id);
-		}
-	}
+    function save(
+        $id = '',
+        $module = '',
+        $new_addrs = array(),
+        $primary = '',
+        $replyTo = '',
+        $invalid = '',
+        $optOut = '',
+        $in_workflow = false
+    ) {
+        if (func_num_args() > 1) {
+            parent::saveEmail($id, $module, $new_addrs, $primary, $replyTo, $invalid, $optOut, $in_workflow);
+        } else {
+            SugarBean::save($id);
+        }
+    }
 }

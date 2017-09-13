@@ -44,8 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class ConnectorRecord extends MergeRecord
 {
-    var $object_name = 'ConnectorRecord';
-    var $module_dir = 'Connector';
+    public $object_name = 'ConnectorRecord';
+    public $module_dir = 'Connector';
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

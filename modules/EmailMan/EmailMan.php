@@ -44,36 +44,36 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class EmailMan extends SugarBean
 {
-    var $id;
-    var $deleted;
-    var $date_created;
-    var $date_modified;
-    var $module;
-    var $module_id;
-    var $marketing_id;
-    var $campaign_id;
-    var $user_id;
-    var $list_id;
-    var $invalid_email;
-    var $from_name;
-    var $from_email;
-    var $in_queue;
-    var $in_queue_date;
-    var $template_id;
-    var $send_date_time;
-    var $table_name = "emailman";
-    var $object_name = "EmailMan";
-    var $module_dir = "EmailMan";
-    var $send_attempts;
-    var $related_id;
-    var $related_type;
-    var $test = false;
-    var $notes_array = array();
-    var $verified_email_marketing_ids = array();
-    var $additional_column_fields = array();
+    public $id;
+    public $deleted;
+    public $date_created;
+    public $date_modified;
+    public $module;
+    public $module_id;
+    public $marketing_id;
+    public $campaign_id;
+    public $user_id;
+    public $list_id;
+    public $invalid_email;
+    public $from_name;
+    public $from_email;
+    public $in_queue;
+    public $in_queue_date;
+    public $template_id;
+    public $send_date_time;
+    public $table_name = "emailman";
+    public $object_name = "EmailMan";
+    public $module_dir = "EmailMan";
+    public $send_attempts;
+    public $related_id;
+    public $related_type;
+    public $test = false;
+    public $notes_array = array();
+    public $verified_email_marketing_ids = array();
+    public $additional_column_fields = array();
 
     // This is used to retrieve related fields from form posts.
-    var $new_schema = true;
+    public $new_schema = true;
 
     function toString()
     {

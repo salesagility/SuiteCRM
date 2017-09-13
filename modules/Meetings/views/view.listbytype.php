@@ -47,7 +47,7 @@ require_once('modules/EAPM/EAPM.php');
 
 class MeetingsViewListbytype extends ViewList
 {
-    var $options = array(
+    public $options = array(
         'show_header' => false,
         'show_title' => false,
         'show_subpanels' => false,

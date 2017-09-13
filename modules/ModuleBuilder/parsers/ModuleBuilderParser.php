@@ -46,8 +46,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class ModuleBuilderParser
 {
 
-    var $_defMap; // private - mapping from view to variable name inside the viewdef file
-    var $_variables = array(); // private - set of additional variables (other than the viewdefs) found in the viewdef file that need to be added to the file again when it is saved - used by ModuleBuilder
+    public $_defMap; // private - mapping from view to variable name inside the viewdef file
+    public $_variables = array(); // private - set of additional variables (other than the viewdefs) found in the viewdef file that need to be added to the file again when it is saved - used by ModuleBuilder
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

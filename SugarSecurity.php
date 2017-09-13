@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarSecure
 {
-    var $results = array();
+    public $results = array();
 
     function display()
     {
@@ -140,7 +140,7 @@ class ScanFileIncludes extends SugarSecure
 
 class SugarSecureManager
 {
-    var $scanners = array();
+    public $scanners = array();
 
     function registerScan($class)
     {

@@ -53,8 +53,8 @@ require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.p
 
 class LDAPAuthenticate extends SugarAuthenticate
 {
-    var $userAuthenticateClass = 'LDAPAuthenticateUser';
-    var $authenticationDir = 'LDAPAuthenticate';
+    public $userAuthenticateClass = 'LDAPAuthenticateUser';
+    public $authenticationDir = 'LDAPAuthenticate';
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

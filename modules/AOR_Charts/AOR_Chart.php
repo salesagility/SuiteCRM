@@ -45,31 +45,31 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class AOR_Chart extends Basic
 {
 
-    var $colours = "['#1f78b4','#a6cee3','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928','#144c73','#6caed1','#8acf4e','#20641c','#f8514f','#9e1214','#fc9d24','#b35900','#a880bb','#442763','#ffff4d','#733a1a']";
-    var $new_schema = true;
-    var $module_dir = 'AOR_Charts';
-    var $object_name = 'AOR_Chart';
-    var $table_name = 'aor_charts';
-    var $importable = true;
-    var $disable_row_level_security = true;
+    public $colours = "['#1f78b4','#a6cee3','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928','#144c73','#6caed1','#8acf4e','#20641c','#f8514f','#9e1214','#fc9d24','#b35900','#a880bb','#442763','#ffff4d','#733a1a']";
+    public $new_schema = true;
+    public $module_dir = 'AOR_Charts';
+    public $object_name = 'AOR_Chart';
+    public $table_name = 'aor_charts';
+    public $importable = true;
+    public $disable_row_level_security = true;
 
-    var $id;
-    var $name;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $modified_by_name;
-    var $created_by;
-    var $created_by_name;
-    var $description;
-    var $deleted;
-    var $created_by_link;
-    var $modified_user_link;
+    public $id;
+    public $name;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $modified_by_name;
+    public $created_by;
+    public $created_by_name;
+    public $description;
+    public $deleted;
+    public $created_by_link;
+    public $modified_user_link;
 
-    var $type;
-    var $x_field;
-    var $y_field;
-    var $noDataMessage = "No Results";
+    public $type;
+    public $x_field;
+    public $y_field;
+    public $noDataMessage = "No Results";
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

@@ -63,11 +63,11 @@ class HTTP_WebDAV_Server_vCal extends HTTP_WebDAV_Server
      * @access private
      * @var    string
      */
-    var $base = "";
-    var $vcal_focus;
-    var $vcal_type = "";
-    var $source = "";
-    var $publish_key = "";
+    public $base = "";
+    public $vcal_focus;
+    public $vcal_type = "";
+    public $source = "";
+    public $publish_key = "";
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

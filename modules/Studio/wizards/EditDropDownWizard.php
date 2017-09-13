@@ -47,7 +47,7 @@ require_once('modules/Studio/DropDowns/DropDownHelper.php');
 
 class EditDropDownWizard extends StudioWizard
 {
-    var $wizard = 'EditDropDownWizard';
+    public $wizard = 'EditDropDownWizard';
 
     function welcome()
     {

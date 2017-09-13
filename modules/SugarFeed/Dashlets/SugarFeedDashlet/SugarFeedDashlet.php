@@ -47,13 +47,13 @@ require_once('include/externalAPI/ExternalAPIFactory.php');
 
 class SugarFeedDashlet extends DashletGeneric
 {
-    var $displayRows = 15;
+    public $displayRows = 15;
 
-    var $categories;
+    public $categories;
 
-    var $userfeed_created;
+    public $userfeed_created;
 
-    var $selectedCategories = array();
+    public $selectedCategories = array();
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

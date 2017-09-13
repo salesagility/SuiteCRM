@@ -47,29 +47,29 @@ require_once('include/templates/TemplateGroupChooser.php');
 
 class SavedSearch extends SugarBean
 {
-    var $db;
-    var $field_name_map;
+    public $db;
+    public $field_name_map;
 
     // Stored fields
-    var $id;
-    var $date_entered;
-    var $date_modified;
-    var $assigned_user_id;
-    var $assigned_user_name;
-    var $modified_by_name;
-    var $name;
-    var $description;
-    var $content;
-    var $search_module;
+    public $id;
+    public $date_entered;
+    public $date_modified;
+    public $assigned_user_id;
+    public $assigned_user_name;
+    public $modified_by_name;
+    public $name;
+    public $description;
+    public $content;
+    public $search_module;
 
-    var $object_name = 'SavedSearch';
-    var $table_name = 'saved_search';
+    public $object_name = 'SavedSearch';
+    public $table_name = 'saved_search';
 
-    var $module_dir = 'SavedSearch';
-    var $field_defs = array();
-    var $field_defs_map = array();
+    public $module_dir = 'SavedSearch';
+    public $field_defs = array();
+    public $field_defs_map = array();
 
-    var $columns;
+    public $columns;
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
@@ -476,5 +476,3 @@ class SavedSearch extends SugarBean
 
     }
 }
-
-?>

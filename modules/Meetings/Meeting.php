@@ -45,69 +45,69 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class Meeting extends SugarBean
 {
     // Stored fields
-    var $id;
-    var $date_entered;
-    var $date_modified;
-    var $assigned_user_id;
-    var $modified_user_id;
-    var $created_by;
-    var $created_by_name;
-    var $modified_by_name;
-    var $description;
-    var $name;
-    var $location;
-    var $status;
-    var $type;
-    var $date_start;
-    var $time_start;
-    var $date_end;
-    var $duration_hours;
-    var $duration_minutes;
-    var $time_meridiem;
-    var $parent_type;
-    var $parent_type_options;
-    var $parent_id;
-    var $field_name_map;
-    var $contact_id;
-    var $user_id;
-    var $meeting_id;
-    var $reminder_time;
-    var $reminder_checked;
-    var $email_reminder_time;
-    var $email_reminder_checked;
-    var $email_reminder_sent;
-    var $required;
-    var $accept_status;
-    var $parent_name;
-    var $contact_name;
-    var $contact_phone;
-    var $contact_email;
-    var $account_id;
-    var $opportunity_id;
-    var $case_id;
-    var $assigned_user_name;
-    var $outlook_id;
-    var $sequence;
-    var $syncing = false;
-    var $recurring_source;
+    public $id;
+    public $date_entered;
+    public $date_modified;
+    public $assigned_user_id;
+    public $modified_user_id;
+    public $created_by;
+    public $created_by_name;
+    public $modified_by_name;
+    public $description;
+    public $name;
+    public $location;
+    public $status;
+    public $type;
+    public $date_start;
+    public $time_start;
+    public $date_end;
+    public $duration_hours;
+    public $duration_minutes;
+    public $time_meridiem;
+    public $parent_type;
+    public $parent_type_options;
+    public $parent_id;
+    public $field_name_map;
+    public $contact_id;
+    public $user_id;
+    public $meeting_id;
+    public $reminder_time;
+    public $reminder_checked;
+    public $email_reminder_time;
+    public $email_reminder_checked;
+    public $email_reminder_sent;
+    public $required;
+    public $accept_status;
+    public $parent_name;
+    public $contact_name;
+    public $contact_phone;
+    public $contact_email;
+    public $account_id;
+    public $opportunity_id;
+    public $case_id;
+    public $assigned_user_name;
+    public $outlook_id;
+    public $sequence;
+    public $syncing = false;
+    public $recurring_source;
 
-    var $update_vcal = true;
-    var $contacts_arr;
-    var $users_arr;
-    var $meetings_arr;
+    public $update_vcal = true;
+    public $contacts_arr;
+    public $users_arr;
+    public $meetings_arr;
     // when assoc w/ a user/contact:
-    var $minutes_value_default = 15;
-    var $minutes_values = array('0' => '00', '15' => '15', '30' => '30', '45' => '45');
-    var $table_name = "meetings";
-    var $rel_users_table = "meetings_users";
-    var $rel_contacts_table = "meetings_contacts";
-    var $rel_leads_table = "meetings_leads";
-    var $module_dir = "Meetings";
-    var $object_name = "Meeting";
+    public $minutes_value_default = 15;
+    public $minutes_values = array('0' => '00', '15' => '15', '30' => '30', '45' => '45');
+    public $table_name = "meetings";
+    public $rel_users_table = "meetings_users";
+    public $rel_contacts_table = "meetings_contacts";
+    public $rel_leads_table = "meetings_leads";
+    public $module_dir = "Meetings";
+    public $object_name = "Meeting";
 
-    var $importable = true;
+    public $importable = true;
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = array(
+    public $additional_column_fields = array(
         'assigned_user_name',
         'assigned_user_id',
         'contact_id',
@@ -115,7 +115,7 @@ class Meeting extends SugarBean
         'contact_name',
         'accept_status'
     );
-    var $relationship_fields = array(
+    public $relationship_fields = array(
         'account_id' => 'accounts',
         'opportunity_id' => 'opportunity',
         'case_id' => 'case',
@@ -125,9 +125,9 @@ class Meeting extends SugarBean
         'meeting_id' => 'meetings'
     );
     // so you can run get_users() twice and run query only once
-    var $cached_get_users = null;
-    var $new_schema = true;
-    var $date_changed = false;
+    public $cached_get_users = null;
+    public $new_schema = true;
+    public $date_changed = false;
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

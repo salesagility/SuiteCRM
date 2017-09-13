@@ -47,7 +47,7 @@ require_once('modules/SugarFeed/feedLogicBase.php');
 
 class OppFeed extends FeedLogicBase
 {
-    var $module = "Opportunities";
+    public $module = "Opportunities";
 
     function pushFeed($bean, $event, $arguments)
     {
@@ -71,4 +71,3 @@ class OppFeed extends FeedLogicBase
     }
 }
 
-?>

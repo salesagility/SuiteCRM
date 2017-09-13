@@ -51,7 +51,7 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar
     /**
      * @var settings array
      */
-    var $settings = array();
+    public $settings = array();
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

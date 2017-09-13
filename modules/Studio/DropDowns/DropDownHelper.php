@@ -48,7 +48,7 @@ require_once('modules/Administration/QuickRepairAndRebuild.php');
 
 class DropDownHelper
 {
-    var $modules = array();
+    public $modules = array();
 
     function getDropDownModules()
     {

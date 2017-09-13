@@ -47,8 +47,8 @@ require_once('include/SugarObjects/forms/PersonFormBase.php');
 class LeadFormBase extends PersonFormBase
 {
 
-    var $moduleName = 'Leads';
-    var $objectName = 'Lead';
+    public $moduleName = 'Leads';
+    public $objectName = 'Lead';
 
     /**
      * getDuplicateQuery

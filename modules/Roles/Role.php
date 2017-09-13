@@ -45,24 +45,24 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class Role extends SugarBean
 {
 
-    var $field_name_map;
+    public $field_name_map;
 
-    var $id;
-    var $deleted;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $created_by;
-    var $name;
-    var $description;
-    var $modules;
-    var $disable_row_level_security = true;
+    public $id;
+    public $deleted;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $created_by;
+    public $name;
+    public $description;
+    public $modules;
+    public $disable_row_level_security = true;
 
-    var $table_name = 'roles';
-    var $rel_module_table = 'roles_modules';
-    var $object_name = 'Role';
-    var $module_dir = 'Roles';
-    var $new_schema = true;
+    public $table_name = 'roles';
+    public $rel_module_table = 'roles_modules';
+    public $object_name = 'Role';
+    public $module_dir = 'Roles';
+    public $new_schema = true;
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

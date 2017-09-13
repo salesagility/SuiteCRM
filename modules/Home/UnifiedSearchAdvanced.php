@@ -45,13 +45,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class UnifiedSearchAdvanced
 {
 
-    var $query_string = '';
+    public $query_string = '';
 
     /* path to search form */
-    var $searchFormPath = 'include/SearchForm/SearchForm2.php';
+    public $searchFormPath = 'include/SearchForm/SearchForm2.php';
 
     /*search form class name*/
-    var $searchFormClass = 'SearchForm';
+    public $searchFormClass = 'SearchForm';
 
     function __construct()
     {

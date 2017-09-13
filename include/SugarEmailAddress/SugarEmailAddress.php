@@ -47,19 +47,19 @@ require_once("include/JSON.php");
 class SugarEmailAddress extends SugarBean
 {
     static $count = 0;
-    var $table_name = 'email_addresses';
-    var $module_name = "EmailAddresses";
-    var $module_dir = 'EmailAddresses';
+    public $table_name = 'email_addresses';
+    public $module_name = "EmailAddresses";
+    public $module_dir = 'EmailAddresses';
 
     //bug 40068, According to rules in page 6 of http://www.apps.ietf.org/rfc/rfc3696.html#sec-3,
     //allowed special characters ! # $ % & ' * + - / = ?  ^ _ ` . { | } ~ in local part
-    var $object_name = 'EmailAddress';
-    var $regex = "/^(?:['\.\-\+&#!\$\*=\?\^_`\{\}~\/\w]+)@(?:(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|\w+(?:[\.-]*\w+)*(?:\.[\w-]{2,})+)\$/";
-    var $disable_custom_fields = true;
-    var $db;
-        var $smarty; // array of emails
-var $addresses = array();
-    var $view = '';
+    public $object_name = 'EmailAddress';
+    public $regex = "/^(?:['\.\-\+&#!\$\*=\?\^_`\{\}~\/\w]+)@(?:(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|\w+(?:[\.-]*\w+)*(?:\.[\w-]{2,})+)\$/";
+    public $disable_custom_fields = true;
+    public $db;
+        public $smarty; // array of emails
+public $addresses = array();
+    public $view = '';
     public $email_address;
     private $stateBeforeWorkflow;
 

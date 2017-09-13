@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -39,32 +40,33 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-
 require_once('modules/Home/Dashlets/iFrameDashlet/iFrameDashlet.php');
 
-class SugarNewsDashlet extends iFrameDashlet {
-    var $displayTpl = 'modules/Home/Dashlets/SugarNewsDashlet/display.tpl';
-    var $configureTpl = 'modules/Home/Dashlets/SugarNewsDashlet/configure.tpl';
-    var $defaultURL = 'https://suitecrm.com/';
-    var $url;
-
-    function __construct($id, $options = null) {
-        $this->title = translate('LBL_DASHLET_SUGAR_NEWS', 'Home');
-        parent::__construct($id, $options);
-    }
+class SugarNewsDashlet extends iFrameDashlet
+{
+    public $displayTpl = 'modules/Home/Dashlets/SugarNewsDashlet/display.tpl';
+    public $configureTpl = 'modules/Home/Dashlets/SugarNewsDashlet/configure.tpl';
+    public $defaultURL = 'https://suitecrm.com/';
+    public $url;
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarNewsDashlet($id, $options = null){
+    function SugarNewsDashlet($id, $options = null)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id, $options);
+    }
+
+    function __construct($id, $options = null)
+    {
+        $this->title = translate('LBL_DASHLET_SUGAR_NEWS', 'Home');
+        parent::__construct($id, $options);
     }
 
 }

@@ -51,17 +51,17 @@ define('MAX_SESSION_LENGTH', 36);
 class Monitor implements Trackable
 {
 
-    var $metricsFile;
-    var $name;
-    var $stores;
-    var $monitor_id;
-    var $table_name;
-    var $date_start;
-    var $date_end;
-    var $active;
-    var $round_trips;
-    var $seconds;
-    var $session_id;
+    public $metricsFile;
+    public $name;
+    public $stores;
+    public $monitor_id;
+    public $table_name;
+    public $date_start;
+    public $date_end;
+    public $active;
+    public $round_trips;
+    public $seconds;
+    public $session_id;
     protected $metrics;
     protected $cachedStores;
     protected $enabled = true;
@@ -283,5 +283,3 @@ class Monitor implements Trackable
         return $to_arr;
     }
 }
-
-?>

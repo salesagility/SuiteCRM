@@ -47,7 +47,7 @@ require_once('modules/Administration/Common.php');
 
 class TabGroupHelper
 {
-    var $modules = array();
+    public $modules = array();
 
     function getAvailableModules($lang = '')
     {

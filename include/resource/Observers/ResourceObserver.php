@@ -2,7 +2,6 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -43,41 +42,44 @@
  * This class serves as the base class for the notifier/observable pattern used
  * by the resource management framework.
  */
-class ResourceObserver {
+class ResourceObserver
+{
 
-var $module;
-var $limit;
-
-public function __construct($module) {
-	$this->module = $module;
-}
+    public $module;
+    public $limit;
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ResourceObserver($module){
+    function ResourceObserver($module)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($module);
     }
 
-function setLimit($limit) {
-	$this->limit = $limit;
-}
-
-function notify($msg = '') {
-    if($this->dieOnError) {
-       die($GLOBALS['app_strings']['ERROR_NOTIFY_OVERRIDE']);
-    } else {
-       echo($GLOBALS['app_strings']['ERROR_NOTIFY_OVERRIDE']);
+    public function __construct($module)
+    {
+        $this->module = $module;
     }
-}
+
+    function setLimit($limit)
+    {
+        $this->limit = $limit;
+    }
+
+    function notify($msg = '')
+    {
+        if ($this->dieOnError) {
+            die($GLOBALS['app_strings']['ERROR_NOTIFY_OVERRIDE']);
+        } else {
+            echo($GLOBALS['app_strings']['ERROR_NOTIFY_OVERRIDE']);
+        }
+    }
 
 }
 
-?>

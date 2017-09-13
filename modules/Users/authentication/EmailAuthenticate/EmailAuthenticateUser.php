@@ -51,7 +51,7 @@ require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticateUs
 
 class EmailAuthenticateUser extends SugarAuthenticateUser
 {
-    var $passwordLength = 4;
+    public $passwordLength = 4;
 
 
     /**

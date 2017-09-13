@@ -50,7 +50,7 @@ require_once('include/EditView/EditView2.php');
  */
 class SubpanelQuickEdit
 {
-    var $defaultProcess = true;
+    public $defaultProcess = true;
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

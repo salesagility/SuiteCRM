@@ -51,8 +51,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SugarAuthenticate
 {
-    var $userAuthenticateClass = 'SugarAuthenticateUser';
-    var $authenticationDir = 'SugarAuthenticate';
+    public $userAuthenticateClass = 'SugarAuthenticateUser';
+    public $authenticationDir = 'SugarAuthenticate';
 
     /**
      * Encodes a users password. This is a static function and can be called at any time.

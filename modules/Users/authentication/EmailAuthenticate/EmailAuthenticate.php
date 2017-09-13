@@ -53,8 +53,8 @@ require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.p
 
 class EmailAuthenticate extends SugarAuthenticate
 {
-    var $userAuthenticateClass = 'EmailAuthenticateUser';
-    var $authenticationDir = 'EmailAuthenticate';
+    public $userAuthenticateClass = 'EmailAuthenticateUser';
+    public $authenticationDir = 'EmailAuthenticate';
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

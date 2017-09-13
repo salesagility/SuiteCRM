@@ -45,27 +45,27 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class RelationshipHandler extends Relationship
 {
 
-    var $db;                            //Database link by reference
+    public $db;                            //Database link by reference
 
-    var $base_module;                    //name of module
-    var $base_bean;                        //actual object
-    var $base_vardef_field;                //base's vardef field name of relationship with rel1
+    public $base_module;                    //name of module
+    public $base_bean;                        //actual object
+    public $base_vardef_field;                //base's vardef field name of relationship with rel1
 
-    var $rel1_module;                    //name of related module
-    var $rel1_bean;                        //actual related object
-    var $rel1_relationship_name;        //Relationship name between base and rel1
-    var $rel1_vardef_field;                //rel1's vardef field name of relationship with rel2
-    var $rel1_vardef_field_base;        //rel1's vardef field name of relationship with base
+    public $rel1_module;                    //name of related module
+    public $rel1_bean;                        //actual related object
+    public $rel1_relationship_name;        //Relationship name between base and rel1
+    public $rel1_vardef_field;                //rel1's vardef field name of relationship with rel2
+    public $rel1_vardef_field_base;        //rel1's vardef field name of relationship with base
 
-    var $rel2_module;                    //name of related related module
-    var $rel2_bean;                        //actual related related object
-    var $rel2_relationship_name;        //Relationship name between rel1 and rel2
-    var $rel2_vardef_field;                //rel2's vardef field name of relationship with rel1
+    public $rel2_module;                    //name of related related module
+    public $rel2_bean;                        //actual related related object
+    public $rel2_relationship_name;        //Relationship name between rel1 and rel2
+    public $rel2_vardef_field;                //rel2's vardef field name of relationship with rel1
 
 
-    var $base_array;                    //Info array
-    var $rel1_array;                    //Info array
-    var $rel2_array;                    //Info array
+    public $base_array;                    //Info array
+    public $rel1_array;                    //Info array
+    public $rel2_array;                    //Info array
 
 
     /*

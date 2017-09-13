@@ -45,27 +45,27 @@ if (!defined('sugarEntry') || !sugarEntry) {
 // The history of upgrades on the system
 class UpgradeHistory extends SugarBean
 {
-    var $new_schema = true;
-    var $module_dir = 'Administration';
+    public $new_schema = true;
+    public $module_dir = 'Administration';
 
     // Stored fields
-    var $id;
-    var $filename;
-    var $md5sum;
-    var $type;
-    var $version;
-    var $status;
-    var $date_entered;
-    var $name;
-    var $description;
-    var $id_name;
-    var $manifest;
-    var $enabled;
-    var $tracker_visibility = false;
-    var $table_name = "upgrade_history";
-    var $object_name = "UpgradeHistory";
-    var $column_fields = Array("id", "filename", "md5sum", "type", "version", "status", "date_entered");
-    var $disable_custom_fields = true;
+    public $id;
+    public $filename;
+    public $md5sum;
+    public $type;
+    public $version;
+    public $status;
+    public $date_entered;
+    public $name;
+    public $description;
+    public $id_name;
+    public $manifest;
+    public $enabled;
+    public $tracker_visibility = false;
+    public $table_name = "upgrade_history";
+    public $object_name = "UpgradeHistory";
+    public $column_fields = Array("id", "filename", "md5sum", "type", "version", "status", "date_entered");
+    public $disable_custom_fields = true;
 
     function delete()
     {

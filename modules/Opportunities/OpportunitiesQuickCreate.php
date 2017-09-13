@@ -48,7 +48,7 @@ require_once('include/EditView/QuickCreate.php');
 class OpportunitiesQuickCreate extends QuickCreate
 {
 
-    var $javascript;
+    public $javascript;
 
     function process()
     {

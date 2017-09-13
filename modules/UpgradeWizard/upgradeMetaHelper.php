@@ -45,15 +45,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class UpgradeMetaHelper
 {
 
-    var $upgrade_dir;
-    var $debug_mode;
-    var $upgrade_modules;
-    var $customized_modules;
-    var $source_dir;
-    var $dest_dir;
-    var $evparser;
-    var $dvparser;
-    var $path_to_master_copy;
+    public $upgrade_dir;
+    public $debug_mode;
+    public $upgrade_modules;
+    public $customized_modules;
+    public $source_dir;
+    public $dest_dir;
+    public $evparser;
+    public $dvparser;
+    public $path_to_master_copy;
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead

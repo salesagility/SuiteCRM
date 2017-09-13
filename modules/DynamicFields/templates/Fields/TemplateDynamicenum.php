@@ -1,5 +1,7 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -42,8 +44,22 @@ require_once('modules/DynamicFields/templates/Fields/TemplateEnum.php');
 
 class TemplateDynamicenum extends TemplateEnum
 {
-    var $type = 'dynamicenum';
-    var $parentenum = '';
+    public $type = 'dynamicenum';
+    public $parentenum = '';
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function TemplateDynamicenum()
+    {
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if (isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        } else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
 
     function __construct()
     {
@@ -51,26 +67,12 @@ class TemplateDynamicenum extends TemplateEnum
         $this->vardef_map['parentenum'] = 'ext2';
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    function TemplateDynamicenum(){
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
-
-
     function get_field_def()
     {
         $def = parent::get_field_def();
         $def['dbType'] = 'enum';
         $def['parentenum'] = isset($this->ext2) && $this->ext2 != '' ? $this->ext2 : $this->parentenum;
+
         return $def;
     }
 
@@ -95,7 +97,8 @@ class TemplateDynamicenum extends TemplateEnum
         if (empty($this->ext1)) {
             $this->ext1 = $this->options;
         }
-        $returnXTPL[strtoupper('options_' . $this->name)] = get_select_options_with_id($app_list_strings[$this->ext1], $value);
+        $returnXTPL[strtoupper('options_' . $this->name)] = get_select_options_with_id($app_list_strings[$this->ext1],
+            $value);
 
         return $returnXTPL;
 

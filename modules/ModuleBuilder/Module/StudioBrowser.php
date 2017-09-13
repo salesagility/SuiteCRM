@@ -51,7 +51,7 @@ function cmp($a, $b)
 
 class StudioBrowser
 {
-    var $modules = array();
+    public $modules = array();
 
     function loadRelatableModules()
     {

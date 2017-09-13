@@ -47,7 +47,7 @@ require_once('include/EditView/QuickCreate.php');
 class MeetingsQuickCreate extends QuickCreate
 {
 
-    var $javascript;
+    public $javascript;
 
     function process()
     {

@@ -44,8 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class MBLanguage
 {
-    var $iTemplates = array();
-    var $templates = array();
+    public $iTemplates = array();
+    public $templates = array();
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
