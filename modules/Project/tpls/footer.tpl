@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,98 +34,98 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
 </form>
 
 {{if $externalJSFile}}
-	require_once("'".$externalJSFile."'");
+require_once("'".$externalJSFile."'");
 {{/if}}
 
 {$set_focus_block}
 
 {{if isset($scriptBlocks)}}
-	<!-- Begin Meta-Data Javascript -->
-	{{$scriptBlocks}}
-	<!-- End Meta-Data Javascript -->
+<!-- Begin Meta-Data Javascript -->
+{{$scriptBlocks}}
+<!-- End Meta-Data Javascript -->
 {{/if}}
 
 <div class="h3Row" id="scheduler"></div>
 
 <script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
 <script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui2.js'}"></script>
-<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
-  
+<script type="text/javascript"
+        src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
+
 <script type="text/javascript">
-{literal}
+    {literal}
 
-document.getElementById("date_start").value = new Date().toLocaleString(); 
+    document.getElementById("date_start").value = new Date().toLocaleString();
 
-SUGAR.projects = {};
-var projectsLoader = new YAHOO.util.YUILoader({
-    require : ["sugar_grp_project"],
-    // Bug #48940 Skin always must be blank
-    skin: {
+    SUGAR.projects = {};
+    var projectsLoader = new YAHOO.util.YUILoader({
+      require: ["sugar_grp_project"],
+      // Bug #48940 Skin always must be blank
+      skin: {
         base: 'blank',
         defaultSkin: ''
-    },
-    onSuccess: function(){
-		
-		SUGAR.projects.fill_invitees = function() {
-			if (typeof(GLOBAL_REGISTRY) != 'undefined')  {
-				SugarWidgetScheduler.fill_invitees(document.EditView);
-			}
-		}
-		var root_div = document.getElementById('scheduler');
-		var sugarContainer_instance = new SugarContainer(document.getElementById('scheduler'));
-		sugarContainer_instance.start(SugarWidgetScheduler);
-		if ( document.getElementById('save_and_continue') ) {
-			var oldclick = document.getElementById('save_and_continue').attributes['onclick'].nodeValue;
-			document.getElementById('save_and_continue').onclick = function(){
-				SUGAR.projects.fill_invitees();
-				eval(oldclick);
-			}
-		}
-	}
-});
-projectsLoader.addModule({
-    name :"sugar_grp_project",
-    type : "js",
-    fullpath: "cache/include/javascript/sugar_grp_project.js",
-    varName: "global_rpcClient",
-    requires: []
-});
-projectsLoader.insert();
-YAHOO.util.Event.onContentReady("{/literal}{{$form_name}}{literal}",function() {
-    /*
-    var durationHours = document.getElementById('duration_hours');
-    if (durationHours) {
-        document.getElementById('duration_minutes').tabIndex = durationHours.tabIndex;
-    }
+      },
+      onSuccess: function () {
 
-    var reminderChecked = document.getElementsByName('reminder_checked');
-    for(i=0;i<reminderChecked.length;i++) {
-        if (reminderChecked[i].type == 'checkbox' && document.getElementById('reminder_list')) {
-            YAHOO.util.Dom.getFirstChild('reminder_list').tabIndex = reminderChecked[i].tabIndex;
+        SUGAR.projects.fill_invitees = function () {
+          if (typeof(GLOBAL_REGISTRY) != 'undefined') {
+            SugarWidgetScheduler.fill_invitees(document.EditView);
+          }
         }
-    }
-    */
-});
-{/literal}
+        var root_div = document.getElementById('scheduler');
+        var sugarContainer_instance = new SugarContainer(document.getElementById('scheduler'));
+        sugarContainer_instance.start(SugarWidgetScheduler);
+        if (document.getElementById('save_and_continue')) {
+          var oldclick = document.getElementById('save_and_continue').attributes['onclick'].nodeValue;
+          document.getElementById('save_and_continue').onclick = function () {
+            SUGAR.projects.fill_invitees();
+            eval(oldclick);
+          }
+        }
+      }
+    });
+    projectsLoader.addModule({
+      name: "sugar_grp_project",
+      type: "js",
+      fullpath: "cache/include/javascript/sugar_grp_project.js",
+      varName: "global_rpcClient",
+      requires: []
+    });
+    projectsLoader.insert();
+    YAHOO.util.Event.onContentReady("{/literal}{{$form_name}}{literal}", function () {
+        /*
+         var durationHours = document.getElementById('duration_hours');
+         if (durationHours) {
+         document.getElementById('duration_minutes').tabIndex = durationHours.tabIndex;
+         }
+
+         var reminderChecked = document.getElementsByName('reminder_checked');
+         for(i=0;i<reminderChecked.length;i++) {
+         if (reminderChecked[i].type == 'checkbox' && document.getElementById('reminder_list')) {
+         YAHOO.util.Dom.getFirstChild('reminder_list').tabIndex = reminderChecked[i].tabIndex;
+         }
+         }
+         */
+    });
+    {/literal}
 </script>
 </form>
 <div class="buttons">
-{{if !empty($form) && !empty($form.buttons)}}
-   {{foreach from=$form.buttons key=val item=button}}
-      {{sugar_button module="$module" id="$button" location="FOOTER" view="$view"}}
-   {{/foreach}}
-{{else}}
-	{{sugar_button module="$module" id="SAVE" view="$view"}}
-	{{sugar_button module="$module" id="CANCEL" view="$view"}}
-{{/if}}
+    {{if !empty($form) && !empty($form.buttons)}}
+    {{foreach from=$form.buttons key=val item=button}}
+    {{sugar_button module="$module" id="$button" location="FOOTER" view="$view"}}
+    {{/foreach}}
+    {{else}}
+    {{sugar_button module="$module" id="SAVE" view="$view"}}
+    {{sugar_button module="$module" id="CANCEL" view="$view"}}
+    {{/if}}
 
-{{sugar_button module="$module" id="Audit" view="$view"}}
+    {{sugar_button module="$module" id="Audit" view="$view"}}
 </div> 

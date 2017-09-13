@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,71 +34,72 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
 
 <div style='width: 500px'>
-<form name='configure_{$id}' action="index.php" method="post" onSubmit='return SUGAR.dashlets.postForm("configure_{$id}", SUGAR.mySugar.uncoverPage);'>
-<input type='hidden' name='id' value='{$id}'>
-<input type='hidden' name='module' value='Home'>
-<input type='hidden' name='action' value='ConfigureDashlet'>
-<input type='hidden' name='to_pdf' value='true'>
-<input type='hidden' name='configure' value='true'>
-<table width="400" cellpadding="0" cellspacing="0" border="0" class="edit view" align="center">
-<tr>
-    <td valign='top' nowrap class='dataLabel'>{$titleLbl}</td>
-    <td valign='top' class='dataField'>
-    	<input class="text" name="title" size='20' value='{$title}'>
-    </td>
-</tr>
-    <tr>
-        <td scope='row'>{$spotToLoadTitleLbl}</td>
-        <td>
-            <select name="spots" id="spots-{$id}">
-            </select>
-            <script type="text/javascript">
+    <form name='configure_{$id}' action="index.php" method="post"
+          onSubmit='return SUGAR.dashlets.postForm("configure_{$id}", SUGAR.mySugar.uncoverPage);'>
+        <input type='hidden' name='id' value='{$id}'>
+        <input type='hidden' name='module' value='Home'>
+        <input type='hidden' name='action' value='ConfigureDashlet'>
+        <input type='hidden' name='to_pdf' value='true'>
+        <input type='hidden' name='configure' value='true'>
+        <table width="400" cellpadding="0" cellspacing="0" border="0" class="edit view" align="center">
+            <tr>
+                <td valign='top' nowrap class='dataLabel'>{$titleLbl}</td>
+                <td valign='top' class='dataField'>
+                    <input class="text" name="title" size='20' value='{$title}'>
+                </td>
+            </tr>
+            <tr>
+                <td scope='row'>{$spotToLoadTitleLbl}</td>
+                <td>
+                    <select name="spots" id="spots-{$id}">
+                    </select>
+                    <script type="text/javascript">
 
-                {literal}
-
-                $(function() {
-                    {/literal}
-                    var options = "";
-                    $({$spots}).each(function(i,e)
-                    {literal}
-                    {
-                        {/literal}
-                        if("{$spotToLoad}" !==e.id)
-                            options+="<option value='"+ e.id+"'>"+ e.name+"</option>";
-                        else
-                            options+="<option value='"+ e.id+"' selected>"+ e.name+"</option>";
                         {literal}
-                    });
-                    {/literal}
-                    $('#spots-{$id}').empty().append(options);
-                    {literal}
-                    });
 
-                {/literal}
+                        $(function () {
+                            {/literal}
+                          var options = "";
+                          $({$spots}).each(function (i, e)
+                          {literal}
+                          {
+                              {/literal}
+                            if ("{$spotToLoad}" !== e.id)
+                              options += "<option value='" + e.id + "'>" + e.name + "</option>";
+                            else
+                              options += "<option value='" + e.id + "' selected>" + e.name + "</option>";
+                              {literal}
+                          });
+                            {/literal}
+                          $('#spots-{$id}').empty().append(options);
+                            {literal}
+                        });
 
-            </script>
-        </td>
-    </tr>
-    <tr>
-        <td scope='row'>
-            <label for="showGui{$id}">{$showUILbl}</label>
-        </td>
-        <td>
-            <input type='checkbox' id='showGui{$id}' name='showGui' {if $showUI}checked='checked'{/if}>
-        </td>
+                        {/literal}
 
-    </tr>
-<tr>
-    <td align="right" colspan="2">
-        <input type='submit' class='button' value='{$saveLbl}'>
-   	</td>
-</tr>
-</table>
-</form>
+                    </script>
+                </td>
+            </tr>
+            <tr>
+                <td scope='row'>
+                    <label for="showGui{$id}">{$showUILbl}</label>
+                </td>
+                <td>
+                    <input type='checkbox' id='showGui{$id}' name='showGui' {if $showUI}checked='checked'{/if}>
+                </td>
+
+            </tr>
+            <tr>
+                <td align="right" colspan="2">
+                    <input type='submit' class='button' value='{$saveLbl}'>
+                </td>
+            </tr>
+        </table>
+    </form>
 </div>

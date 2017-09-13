@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,25 +34,24 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 *}
 <h3>{sugar_translate label="LBL_REMOVE_CUSTOM"}</h3>
 <form name="remove_custom">
-<input type="hidden" name="module" value="ModuleBuilder">
-<input type="hidden" name="action" value="resetmodule">
-<input type="hidden" name="view_module" value="{$module}">
-<input type="hidden" name="handle" value="execute">
-<ul id="repair_actions">
-{foreach from=$actions item='action'}
-<li>
-    <input type="checkbox" name="{$action.name}" value="{$action.name}" checked="checked" />
-    {$action.label}
-</li> 
-{/foreach}
-</ul>
+    <input type="hidden" name="module" value="ModuleBuilder">
+    <input type="hidden" name="action" value="resetmodule">
+    <input type="hidden" name="view_module" value="{$module}">
+    <input type="hidden" name="handle" value="execute">
+    <ul id="repair_actions">
+        {foreach from=$actions item='action'}
+            <li>
+                <input type="checkbox" name="{$action.name}" value="{$action.name}" checked="checked"/>
+                {$action.label}
+            </li>
+        {/foreach}
+    </ul>
 </form>
 <button id="execute_repair" onclick="this.disabled = true;
 ajaxStatus.showStatus(SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_LOADING'));

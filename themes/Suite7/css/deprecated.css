@@ -1,6 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -11,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -28,98 +32,87 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
-
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /** DEPRECATED STYLES **/
 
-.tabForm
-{
-    background-color:#F6F6F6;
-    color:#000000;
-    border-bottom:1px solid;
-    border-top:2px solid;
-    border-bottom-color:#ABC3D7;
-    border-top-color:#4E8CCF;
-    font-size:12px;
-    margin-bottom:5px;
-    padding:10px 6px 12px 10px;
+.tabForm {
+    background-color: #F6F6F6;
+    color: #000000;
+    border-bottom: 1px solid;
+    border-top: 2px solid;
+    border-bottom-color: #ABC3D7;
+    border-top-color: #4E8CCF;
+    font-size: 12px;
+    margin-bottom: 5px;
+    padding: 10px 6px 12px 10px;
 }
 
-.dataLabel
-{
-    font-size:12px;
-    font-weight:normal;
-    text-align:left;
-    padding:5px;
+.dataLabel {
+    font-size: 12px;
+    font-weight: normal;
+    text-align: left;
+    padding: 5px;
 }
 
-.dataField
-{
-    font-size:12px;
-    font-weight:normal;
+.dataField {
+    font-size: 12px;
+    font-weight: normal;
 }
 
-.tabDetailView
-{
-    border-bottom:2px solid;
-    border-top:2px solid;
-    margin-bottom:10px;
-    margin-top:2px;
-    border-bottom-color:#ABC3D7;
-    border-top-color:#4E8CCF;
+.tabDetailView {
+    border-bottom: 2px solid;
+    border-top: 2px solid;
+    margin-bottom: 10px;
+    margin-top: 2px;
+    border-bottom-color: #ABC3D7;
+    border-top-color: #4E8CCF;
 }
 
-.tabDetailView td table td
-{
+.tabDetailView td table td {
     border: 0;
     background: white;
 }
 
-.tabDetailView tr.pagination td
-{
+.tabDetailView tr.pagination td {
     padding-top: 4px;
     padding-bottom: 4px;
-    border-bottom:1px solid #CBDAE6;
+    border-bottom: 1px solid #CBDAE6;
 }
 
-.tabDetailView tr.pagination td table td
-{
+.tabDetailView tr.pagination td table td {
     border: none;
 }
 
-.tabDetailViewDL
-{
-    background-color:#F6F6F6;
-    color:#000000;
-    border-bottom:1px solid #CBDAE6;
-    font-size:12px;
-    padding:5px 6px;
-    text-align:right;
-    vertical-align:top;
+.tabDetailViewDL {
+    background-color: #F6F6F6;
+    color: #000000;
+    border-bottom: 1px solid #CBDAE6;
+    font-size: 12px;
+    padding: 5px 6px;
+    text-align: right;
+    vertical-align: top;
 }
 
-.tabDetailViewDF
-{
-    background-color:#FFFFFF;
-    color:#444444;
-    border-bottom:1px solid #CBDAE6;
-    font-size:12px;
-    padding:5px 10px 5px 8px;
-    vertical-align:top;
+.tabDetailViewDF {
+    background-color: #FFFFFF;
+    color: #444444;
+    border-bottom: 1px solid #CBDAE6;
+    font-size: 12px;
+    padding: 5px 10px 5px 8px;
+    vertical-align: top;
 }
 
-.listViewThS1
-{
-    background:#EBEBED none repeat scroll 0 0;
-    border-color:#CCCCCC -moz-use-text-color;
-    border-style:solid none;
-    border-width:1px medium;
-    font-size:11px;
-    font-weight:bold;
-    padding:4px 5px;
-    text-align:left;
+.listViewThS1 {
+    background: #EBEBED none repeat scroll 0 0;
+    border-color: #CCCCCC -moz-use-text-color;
+    border-style: solid none;
+    border-width: 1px medium;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 4px 5px;
+    text-align: left;
 }

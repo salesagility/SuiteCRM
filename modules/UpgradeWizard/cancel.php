@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,30 +34,28 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- * *******************************************************************************/
 logThis('[At cancel.php]');
 logThis('cleaning up files and session.  goodbye.');
 
 
 //Check the current step.
 
-if(isset($_SESSION['install_file']) && file_exists(isset($_SESSION['install_file']))){
-	@unlink(isset($_SESSION['install_file']));
+if (isset($_SESSION['install_file']) && file_exists(isset($_SESSION['install_file']))) {
+    @unlink(isset($_SESSION['install_file']));
 }
 unlinkUWTempFiles();
 unlinkUploadFiles();
 resetUwSession();
 
-$uwMain =<<<eoq
+$uwMain = <<<eoq
 <table cellpadding="3" cellspacing="0" border="0">
 	<tr>
 		<td align="left">
@@ -80,15 +78,15 @@ $uwMain =<<<eoq
 eoq;
 
 
-$showBack		= false;
-$showCancel		= false;
-$showRecheck	= false;
-$showNext		= false;
-$showExit       = true;
+$showBack = false;
+$showCancel = false;
+$showRecheck = false;
+$showNext = false;
+$showExit = true;
 
-$stepBack		= $_REQUEST['step'] - 1;
-$stepNext		= $_REQUEST['step'] + 1;
-$stepCancel		= -1;
-$stepRecheck	= $_REQUEST['step'];
+$stepBack = $_REQUEST['step'] - 1;
+$stepNext = $_REQUEST['step'] + 1;
+$stepCancel = -1;
+$stepRecheck = $_REQUEST['step'];
 
 ?>

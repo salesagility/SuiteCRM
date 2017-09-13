@@ -1,11 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,12 +34,23 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-$dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_search' => true, 'full_text_search' => true, 'unified_search_default_enabled' => true, 'duplicate_merge' => true,
-    'comment' => 'Leads are persons of interest early in a sales cycle', 'fields' => array(
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+$dictionary['Lead'] = array(
+    'table' => 'leads',
+    'audited' => true,
+    'unified_search' => true,
+    'full_text_search' => true,
+    'unified_search_default_enabled' => true,
+    'duplicate_merge' => true,
+    'comment' => 'Leads are persons of interest early in a sales cycle',
+    'fields' => array(
 
 
         'converted' =>
@@ -599,10 +610,19 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
             ),
 
     )
-, 'indices' => array(
+,
+    'indices' => array(
         array('name' => 'idx_lead_acct_name_first', 'type' => 'index', 'fields' => array('account_name', 'deleted')),
-        array('name' => 'idx_lead_last_first', 'type' => 'index', 'fields' => array('last_name', 'first_name', 'deleted')),
-        array('name' => 'idx_lead_del_stat', 'type' => 'index', 'fields' => array('last_name', 'status', 'deleted', 'first_name')),
+        array(
+            'name' => 'idx_lead_last_first',
+            'type' => 'index',
+            'fields' => array('last_name', 'first_name', 'deleted')
+        ),
+        array(
+            'name' => 'idx_lead_del_stat',
+            'type' => 'index',
+            'fields' => array('last_name', 'status', 'deleted', 'first_name')
+        ),
         array('name' => 'idx_lead_opp_del', 'type' => 'index', 'fields' => array('opportunity_id', 'deleted',)),
         array('name' => 'idx_leads_acct_del', 'type' => 'index', 'fields' => array('account_id', 'deleted',)),
         array('name' => 'idx_del_user', 'type' => 'index', 'fields' => array('deleted', 'assigned_user_id')),
@@ -613,33 +633,79 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
         array('name' => 'idx_leads_id_del', 'type' => 'index', 'fields' => array('id', 'deleted',)),
 
     )
-, 'relationships' => array(
-        'lead_direct_reports' => array('lhs_module' => 'Leads', 'lhs_table' => 'leads', 'lhs_key' => 'id',
-            'rhs_module' => 'Leads', 'rhs_table' => 'leads', 'rhs_key' => 'reports_to_id',
-            'relationship_type' => 'one-to-many'),
-        'lead_tasks' => array('lhs_module' => 'Leads', 'lhs_table' => 'leads', 'lhs_key' => 'id',
-            'rhs_module' => 'Tasks', 'rhs_table' => 'tasks', 'rhs_key' => 'parent_id',
-            'relationship_type' => 'one-to-many', 'relationship_role_column' => 'parent_type',
-            'relationship_role_column_value' => 'Leads')
-    , 'lead_notes' => array('lhs_module' => 'Leads', 'lhs_table' => 'leads', 'lhs_key' => 'id',
-            'rhs_module' => 'Notes', 'rhs_table' => 'notes', 'rhs_key' => 'parent_id',
-            'relationship_type' => 'one-to-many', 'relationship_role_column' => 'parent_type',
-            'relationship_role_column_value' => 'Leads')
+,
+    'relationships' => array(
+        'lead_direct_reports' => array(
+            'lhs_module' => 'Leads',
+            'lhs_table' => 'leads',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Leads',
+            'rhs_table' => 'leads',
+            'rhs_key' => 'reports_to_id',
+            'relationship_type' => 'one-to-many'
+        ),
+        'lead_tasks' => array(
+            'lhs_module' => 'Leads',
+            'lhs_table' => 'leads',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Tasks',
+            'rhs_table' => 'tasks',
+            'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many',
+            'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'Leads'
+        )
+    ,
+        'lead_notes' => array(
+            'lhs_module' => 'Leads',
+            'lhs_table' => 'leads',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Notes',
+            'rhs_table' => 'notes',
+            'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many',
+            'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'Leads'
+        )
 
-    , 'lead_meetings' => array('lhs_module' => 'Leads', 'lhs_table' => 'leads', 'lhs_key' => 'id',
-            'rhs_module' => 'Meetings', 'rhs_table' => 'meetings', 'rhs_key' => 'parent_id',
-            'relationship_type' => 'one-to-many', 'relationship_role_column' => 'parent_type',
-            'relationship_role_column_value' => 'Leads')
+    ,
+        'lead_meetings' => array(
+            'lhs_module' => 'Leads',
+            'lhs_table' => 'leads',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Meetings',
+            'rhs_table' => 'meetings',
+            'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many',
+            'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'Leads'
+        )
 
-    , 'lead_calls' => array('lhs_module' => 'Leads', 'lhs_table' => 'leads', 'lhs_key' => 'id',
-            'rhs_module' => 'Calls', 'rhs_table' => 'calls', 'rhs_key' => 'parent_id',
-            'relationship_type' => 'one-to-many', 'relationship_role_column' => 'parent_type',
-            'relationship_role_column_value' => 'Leads')
+    ,
+        'lead_calls' => array(
+            'lhs_module' => 'Leads',
+            'lhs_table' => 'leads',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Calls',
+            'rhs_table' => 'calls',
+            'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many',
+            'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'Leads'
+        )
 
-    , 'lead_emails' => array('lhs_module' => 'Leads', 'lhs_table' => 'leads', 'lhs_key' => 'id',
-            'rhs_module' => 'Emails', 'rhs_table' => 'emails', 'rhs_key' => 'parent_id',
-            'relationship_type' => 'one-to-many', 'relationship_role_column' => 'parent_type',
-            'relationship_role_column_value' => 'Leads'),
+    ,
+        'lead_emails' => array(
+            'lhs_module' => 'Leads',
+            'lhs_table' => 'leads',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Emails',
+            'rhs_table' => 'emails',
+            'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many',
+            'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'Leads'
+        ),
         'lead_campaign_log' => array(
             'lhs_module' => 'Leads',
             'lhs_table' => 'leads',
@@ -654,9 +720,14 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
 
     )
     //This enables optimistic locking for Saves From EditView
-, 'optimistic_locking' => true,
+,
+    'optimistic_locking' => true,
 );
 
-VardefManager::createVardef('Leads', 'Lead', array('default', 'assignable', 'security_groups',
-    'person'));
+VardefManager::createVardef('Leads', 'Lead', array(
+    'default',
+    'assignable',
+    'security_groups',
+    'person'
+));
 

@@ -1,9 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,10 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
 require_once('modules/ModuleBuilder/MB/ModuleBuilder.php');
 require_once('modules/ModuleBuilder/Module/StudioModuleFactory.php');
@@ -79,8 +84,8 @@ class ViewRelationship extends SugarView
 
         ksort($relatableModules);
         $lhs_subpanels = $module->getProvidedSubpanels();
-        // Fix to re-add sorting of the subpanel names so that the 'default' subpanel always appears first in the list.
-        // This assumes that subpanels are usually named ForXYZ which is the case currently, and hence 'default' will be sorted first.
+        // Fix to re-add sorting of the subpanel names so that the 'default' subpanel always appears first in the list. 
+        // This assumes that subpanels are usually named ForXYZ which is the case currently, and hence 'default' will be sorted first. 
         //I f this assumption is incorrect, then a better solution would be to remove 'default' from the subpanel list, then sort, and finally array_unshift it back on.
         natcasesort($lhs_subpanels);
 
@@ -121,7 +126,7 @@ class ViewRelationship extends SugarView
             $definition ['lhs_label'] = translate($moduleName);
             $definition ['relationship_type'] = MB_MANYTOMANY;
         }
-        // load the relationship from post - required as we can call view.relationship.php from Ajax when changing the rhs_module for example
+        // load the relationship from post - required as we can call view.relationship.php from Ajax when changing the rhs_module for example           
         $definition = $this->overrideDefinitionFromPOST($definition);
 
         if (empty($definition ['rhs_label'])) {
@@ -138,7 +143,7 @@ class ViewRelationship extends SugarView
 
         if (empty ($_REQUEST ['relationship_name'])) {
             // tidy up the options for the view based on the modules participating in the relationship and the cardinality
-            // some modules (e.g., Knowledge Base/KBDocuments) lack subpanels. That means they can't be the lhs of a 1-many or many-many, or the rhs of a many-many for example
+            // some modules (e.g., Knowledge Base/KBDocuments) lack subpanels. That means they can't be the lhs of a 1-many or many-many, or the rhs of a many-many for example          
 
             // fix up the available cardinality options
             $relationship_type = $relationship->getType();
@@ -179,7 +184,7 @@ class ViewRelationship extends SugarView
         }
 
 
-        // now enforce the relationship_only requirement - that is, only construct the underlying relationship and link fields, and not the UI, if the subpanel code will have troubles displaying the UI
+        // now enforce the relationship_only requirement - that is, only construct the underlying relationship and link fields, and not the UI, if the subpanel code will have troubles displaying the UI                
         $relationships->enforceRelationshipOnly($relationship);
         $this->smarty->assign('view_module', $_REQUEST['view_module']);
         $this->smarty->assign('rel', $relationship->getDefinition());

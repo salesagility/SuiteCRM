@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,54 +34,54 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 *}
-<iframe id="yui-history-iframe" src="index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png" title="index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png"></iframe>
-<input id="yui-history-field" type="hidden"> 
+<iframe id="yui-history-iframe" src="index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png"
+        title="index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png"></iframe>
+<input id="yui-history-field" type="hidden">
 <div class='ytheme-gray' id='mblayout' style="position:relative; height:0px; overflow:visible;">
 </div>
 <div id='mbcenter'>
-<div id='mbtabs'></div>
-{$CENTER}
+    <div id='mbtabs'></div>
+    {$CENTER}
 </div>
 
 <div id='mbeast' class="x-layout-inactive-content">
-{$PROPERTIES}
+    {$PROPERTIES}
 </div>
 <div id='mbeast2' class="x-layout-inactive-content">
 </div>
 <div id='mbhelp' class="x-hidden"></div>
 <div id='mbwest' class="x-hidden">
-<div id='package_tree' class="x-hidden"></div>
-{$TREE}
+    <div id='package_tree' class="x-hidden"></div>
+    {$TREE}
 </div>
 <div id='mbsouth' class="x-hidden">
 </div>
 {$tiny}
 <script>
-ModuleBuilder.setMode('{$TYPE}');
-closeMenus();
-{literal}
+  ModuleBuilder.setMode('{$TYPE}');
+  closeMenus();
+  {literal}
 
-var MBLoader = new YAHOO.util.YUILoader({
-    require : ["layout", "element", "tabview", "treeview", "history", "cookie", "sugarwidgets"],
+  var MBLoader = new YAHOO.util.YUILoader({
+    require: ["layout", "element", "tabview", "treeview", "history", "cookie", "sugarwidgets"],
     loadOptional: true,
-    skin: { base: 'blank', defaultSkin: '' },
-	onSuccess: ModuleBuilder.init,
+    skin: {base: 'blank', defaultSkin: ''},
+    onSuccess: ModuleBuilder.init,
     allowRollup: true,
     base: "include/javascript/yui/build/"
-});
-MBLoader.addModule({
-    name :"sugarwidgets",
-    type : "js",
+  });
+  MBLoader.addModule({
+    name: "sugarwidgets",
+    type: "js",
     fullpath: "include/javascript/sugarwidgets/SugarYUIWidgets.js",
     varName: "YAHOO.SUGAR",
     requires: ["datatable", "dragdrop", "treeview", "tabview"]
-});
-MBLoader.insert();
-{/literal}
+  });
+  MBLoader.insert();
+  {/literal}
 </script>
 {include file='modules/ModuleBuilder/tpls/assistantJavascript.tpl'}

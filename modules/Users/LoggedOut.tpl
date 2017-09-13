@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,10 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
 <link rel="stylesheet" type="text/css" media="all" href="{$STYLESHEET}">
 <table cellpadding="0" align="center" width="100%" cellspacing="0" border="0" style="margin-top: 100px;">
@@ -47,7 +47,9 @@
                     <table cellpadding="0" cellspacing="0" border="0" align="center" width="100%">
                         <tr>
                             <td align="center">
-                                <b>{sugar_translate module="Users" label="LBL_LOGGED_OUT_1"}<a href="{$LOGIN_URL}">{sugar_translate module="Users" label="LBL_LOGGED_OUT_2"}</a>{sugar_translate module="Users" label="LBL_LOGGED_OUT_3"}</b>
+                                <b>{sugar_translate module="Users" label="LBL_LOGGED_OUT_1"}<a
+                                            href="{$LOGIN_URL}">{sugar_translate module="Users" label="LBL_LOGGED_OUT_2"}</a>{sugar_translate module="Users" label="LBL_LOGGED_OUT_3"}
+                                </b>
                             </td>
                         </tr>
                     </table>

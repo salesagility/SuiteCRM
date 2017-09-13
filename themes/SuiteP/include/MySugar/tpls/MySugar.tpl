@@ -1,11 +1,11 @@
 {*
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,13 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
 {literal}
     <style>
@@ -72,11 +68,14 @@
         {foreach from=$dashboardPages key=tabNum item=tab}
             {if $tabNum == 0}
                 <li role="presentation" class="active">
-                    <a id="tab{$tabNum}" href="#tab_content_{$tabNum}" data-toggle="tab" {if !$lock_homepage}ondblclick="renameTab({$tabNum})"{/if} onClick="retrievePage({$tabNum});" class="hidden-xs">
+                    <a id="tab{$tabNum}" href="#tab_content_{$tabNum}" data-toggle="tab"
+                       {if !$lock_homepage}ondblclick="renameTab({$tabNum})"{/if} onClick="retrievePage({$tabNum});"
+                       class="hidden-xs">
                         {$dashboardPages.$tabNum.pageTitle}
                     </a>
 
-                    <a id="xstab{$tabNum}" href="#" class="visible-xs first-tab-xs dropdown-toggle" data-toggle="dropdown">
+                    <a id="xstab{$tabNum}" href="#" class="visible-xs first-tab-xs dropdown-toggle"
+                       data-toggle="dropdown">
                         {$dashboardPages.$tabNum.pageTitle}
                     </a>
                     <ul id="first-tab-menu-xs" class="dropdown-menu">
@@ -84,7 +83,8 @@
                         {foreach from=$dashboardPages key=ta item=xstab}
                             {counter name="tabCountXS" print=false}
                             <li role="presentation">
-                                <a id="tabxs{$tabCountXS}" href="#tab_content_{$tabCountXS}" data-toggle="tab"  onClick="retrievePage({$tabCountXS});">
+                                <a id="tabxs{$tabCountXS}" href="#tab_content_{$tabCountXS}" data-toggle="tab"
+                                   onClick="retrievePage({$tabCountXS});">
                                     {$dashboardPages.$tabCountXS.pageTitle}
                                 </a>
                             </li>
@@ -93,7 +93,9 @@
                 </li>
             {else}
                 <li role="presentation">
-                    <a id="tab{$tabNum}" href="#tab_content_{$tabNum}"  data-toggle="tab"  {if !$lock_homepage}ondblclick="renameTab({$tabNum})"{/if} onClick="retrievePage({$tabNum});" class="hidden-xs">
+                    <a id="tab{$tabNum}" href="#tab_content_{$tabNum}" data-toggle="tab"
+                       {if !$lock_homepage}ondblclick="renameTab({$tabNum})"{/if} onClick="retrievePage({$tabNum});"
+                       class="hidden-xs">
                         {$dashboardPages.$tabNum.pageTitle}
                     </a>
                 </li>
@@ -102,7 +104,8 @@
 
         {if !$lock_homepage}
             <li id="tab-actions" class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">{$dashboardActions}{$APP.LBL_LINK_ACTIONS}</a>
+                <a class="dropdown-toggle" data-toggle="dropdown"
+                   href="#">{$dashboardActions}{$APP.LBL_LINK_ACTIONS}</a>
                 {include file='themes/SuiteP/include/MySugar/tpls/actions_menu.tpl'}
             </li>
         {/if}
@@ -110,28 +113,31 @@
     <div class="clearfix"></div>
     <div class="tab-content">
         {foreach from=$dashboardPages key=tabNum item=tab}
-            {if $tabNum == 0}
-            <div class="tab-pane active fade in" id='tab_content_{$tabNum}'>
+        {if $tabNum == 0}
+        <div class="tab-pane active fade in" id='tab_content_{$tabNum}'>
             {else}
             <div class="tab-pane fade" id='tab_content_{$tabNum}'>
-            {/if}
+                {/if}
                 <img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0" alt="">
             </div>
-        {/foreach}
+            {/foreach}
+        </div>
     </div>
-</div>
     <div class="modal fade modal-add-dashlet" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">{$lblAddDashlets}</h4>
                 </div>
                 <div class="modal-body" id="dashletsList">
-                    <p><img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0" alt=""></p>
+                    <p><img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0"
+                            alt=""></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{$app.LBL_CLOSE_BUTTON_TITLE}</button>
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">{$app.LBL_CLOSE_BUTTON_TITLE}</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -141,15 +147,19 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">{$lblAddTab}</h4>
                 </div>
                 <div class="modal-body" id="dashboardDialog">
-                    <p><img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0" alt=""></p>
+                    <p><img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0"
+                            alt=""></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{$app.LBL_CANCEL_BUTTON_LABEL}</button>
-                    <button type="button" class="btn btn-danger btn-add-dashboard" data-dismiss="modal">{$lblAddTab}</button>
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">{$app.LBL_CANCEL_BUTTON_LABEL}</button>
+                    <button type="button" class="btn btn-danger btn-add-dashboard"
+                            data-dismiss="modal">{$lblAddTab}</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -160,27 +170,31 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">{$app.LBL_EDIT_TAB}</h4>
                 </div>
                 <div class="modal-body">
-                    <p><img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0" alt=""></p>                </div>
-                    <div class="container-fluid">
-                        <div class="panel panel-default panel-template">
-                            <div class="panel-heading">
-                                <div>
-                                    <div class="col-xs-10 col-sm-11 col-md-11">
-                                        <div>
-                                            <img src="themes/SuiteP/images/sub_panel/Tab.svg">
-                                            <span class="panel-title">Untitled</span>
-                                        </div>
+                    <p><img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0"
+                            alt=""></p></div>
+                <div class="container-fluid">
+                    <div class="panel panel-default panel-template">
+                        <div class="panel-heading">
+                            <div>
+                                <div class="col-xs-10 col-sm-11 col-md-11">
+                                    <div>
+                                        <img src="themes/SuiteP/images/sub_panel/Tab.svg">
+                                        <span class="panel-title">Untitled</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{$app.LBL_CLOSE_BUTTON_TITLE}</button></div>
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">{$app.LBL_CLOSE_BUTTON_TITLE}</button>
+                </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
@@ -191,73 +205,73 @@
         <div id="dashletsDialog_c"></div>
     </div>
 
-<script type="text/javascript" src="themes/SuiteP/include/MySugar/javascript/AddRemoveDashboardPages.js"></script>
-<script type="text/javascript" src="themes/SuiteP/include/MySugar/javascript/retrievePage.js"></script>
-<script type="text/javascript">
+    <script type="text/javascript" src="themes/SuiteP/include/MySugar/javascript/AddRemoveDashboardPages.js"></script>
+    <script type="text/javascript" src="themes/SuiteP/include/MySugar/javascript/retrievePage.js"></script>
+    <script type="text/javascript">
 
-    var activePage = {$activePage};
-    var theme = '{$theme}';
-    current_user_id = '{$current_user}';
-    jsChartsArray = new Array();
-    var moduleName = '{$module}';
-    document.body.setAttribute("class", "yui-skin-sam");
-    {literal}
-    var mySugarLoader = new YAHOO.util.YUILoader({
+      var activePage = {$activePage};
+      var theme = '{$theme}';
+      current_user_id = '{$current_user}';
+      jsChartsArray = new Array();
+      var moduleName = '{$module}';
+      document.body.setAttribute("class", "yui-skin-sam");
+      {literal}
+      var mySugarLoader = new YAHOO.util.YUILoader({
         require: ["my_sugar", "sugar_charts"],
         // Bug #48940 Skin always must be blank
         skin: {
-            base: 'blank',
-            defaultSkin: ''
+          base: 'blank',
+          defaultSkin: ''
         },
         onSuccess: function () {
-            initMySugar();
-            initmySugarCharts();
-            SUGAR.mySugar.maxCount =    {/literal}{$maxCount}{literal};
-            SUGAR.mySugar.homepage_dd = new Array();
-            var j = 0;
+          initMySugar();
+          initmySugarCharts();
+          SUGAR.mySugar.maxCount =    {/literal}{$maxCount}{literal};
+          SUGAR.mySugar.homepage_dd = new Array();
+          var j = 0;
 
             {/literal}
-            var dashletIds = {$dashletIds};
+          var dashletIds = {$dashletIds};
 
             {if !$lock_homepage}
-            for (i in dashletIds) {ldelim}
-                SUGAR.mySugar.homepage_dd[j] = new ygDDList('dashlet_' + dashletIds[i]);
-                SUGAR.mySugar.homepage_dd[j].setHandleElId('dashlet_header_' + dashletIds[i]);
-                // Bug #47097 : Dashlets not displayed after moving them
-                // add new property to save real id of dashlet, it needs to have ability reload dashlet by id
-                SUGAR.mySugar.homepage_dd[j].dashletID = dashletIds[i];
-                SUGAR.mySugar.homepage_dd[j].onMouseDown = SUGAR.mySugar.onDrag;
-                SUGAR.mySugar.homepage_dd[j].afterEndDrag = SUGAR.mySugar.onDrop;
-                j++;
-                {rdelim}
+          for (i in dashletIds) {ldelim}
+            SUGAR.mySugar.homepage_dd[j] = new ygDDList('dashlet_' + dashletIds[i]);
+            SUGAR.mySugar.homepage_dd[j].setHandleElId('dashlet_header_' + dashletIds[i]);
+            // Bug #47097 : Dashlets not displayed after moving them
+            // add new property to save real id of dashlet, it needs to have ability reload dashlet by id
+            SUGAR.mySugar.homepage_dd[j].dashletID = dashletIds[i];
+            SUGAR.mySugar.homepage_dd[j].onMouseDown = SUGAR.mySugar.onDrag;
+            SUGAR.mySugar.homepage_dd[j].afterEndDrag = SUGAR.mySugar.onDrop;
+            j++;
+              {rdelim}
             {if $hiddenCounter > 0}
-            for (var wp = 0; wp <= {$hiddenCounter}; wp++) {ldelim}
-                SUGAR.mySugar.homepage_dd[j++] = new ygDDListBoundary('page_' + activePage + '_hidden' + wp);
-                {rdelim}
+          for (var wp = 0; wp <= {$hiddenCounter}; wp++) {ldelim}
+            SUGAR.mySugar.homepage_dd[j++] = new ygDDListBoundary('page_' + activePage + '_hidden' + wp);
+              {rdelim}
             {/if}
-            YAHOO.util.DDM.mode = 1;
+          YAHOO.util.DDM.mode = 1;
             {/if}
             {literal}
-            SUGAR.mySugar.renderDashletsDialog();
-            SUGAR.mySugar.sugarCharts.loadSugarCharts(activePage);
+          SUGAR.mySugar.renderDashletsDialog();
+          SUGAR.mySugar.sugarCharts.loadSugarCharts(activePage);
             {/literal}
             {literal}
         }
-    });
-    mySugarLoader.addModule({
+      });
+      mySugarLoader.addModule({
         name: "my_sugar",
         type: "js",
         fullpath: {/literal}"{sugar_getjspath file='include/MySugar/javascript/MySugar.js'}"{literal},
         varName: "initMySugar",
         requires: []
-    });
-    mySugarLoader.addModule({
+      });
+      mySugarLoader.addModule({
         name: "sugar_charts",
         type: "js",
         fullpath: {/literal}"{sugar_getjspath file="include/SugarCharts/Jit/js/mySugarCharts.js"}"{literal},
         varName: "initmySugarCharts",
         requires: []
-    });
-    mySugarLoader.insert();
-    {/literal}
-</script>
+      });
+      mySugarLoader.insert();
+      {/literal}
+    </script>

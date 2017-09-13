@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,34 +34,42 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-/*********************************************************************************
-
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 -->
 
 <!-- BEGIN: main -->
 <table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
-	<tr height="20" >
-	<td scope="col" width="25%" >{MOD.LBL_LIST_NAME}</td>
-	<td scope="col" width="15%" >{MOD.LBL_LIST_USER_NAME}</td>
-	<td scope="col" width="25%" >{MOD.LBL_LIST_TITLE}</td>
-	<td colspan="2" scope="col" width="35%" >{MOD.LBL_LIST_DEPARTMENT}</td>
-	</tr>
+    <tr height="20">
+        <td scope="col" width="25%">{MOD.LBL_LIST_NAME}</td>
+        <td scope="col" width="15%">{MOD.LBL_LIST_USER_NAME}</td>
+        <td scope="col" width="25%">{MOD.LBL_LIST_TITLE}</td>
+        <td colspan="2" scope="col" width="35%">{MOD.LBL_LIST_DEPARTMENT}</td>
+    </tr>
 
 
-<!-- BEGIN: row -->
-<tr height="20"  class="{ROW_COLOR}S1">
-		<td scope="row" valign=TOP><a href="{URL_PREFIX}index.php?action=DetailView&module=Users&record={USER.ID}"  >{USER.FIRST_NAME} {USER.LAST_NAME}</a></td>
-		<td scope="row" valign=TOP><a href="{URL_PREFIX}index.php?action=DetailView&module=Users&record={USER.ID}"  >{USER.USER_NAME}</a></td>
-		<td scope="row" valign=TOP><a href="{URL_PREFIX}index.php?action=DetailView&module=Users&record={USER.ID}"  >{USER.TITLE}</a></td>
-		<td scope="row" valign=TOP><a href="{URL_PREFIX}index.php?action=DetailView&module=Users&record={USER.ID}"  >{USER.DEPARTMENT}</a></td>
-    	<td nowrap align="right" valign=TOP><a class="listViewTdToolsS1" href="{URL_PREFIX}index.php?action=EditView&module=Users&record={USER.ID}{RETURN_URL}">{EDIT_INLINE_PNG}</a>&nbsp;<a  class="listViewTdToolsS1" href="{URL_PREFIX}index.php?action=EditView&module=Users&record={USER.ID}{RETURN_URL}">{APP.LNK_EDIT}</a> &nbsp; <a class="listViewTdToolsS1" href="{URL_PREFIX}index.php?action=DeleteUserRelationship&module=Roles&record={ROLE_RECORD}&user_id={USER.ID}{RETURN_URL}">{REMOVE_INLINE_PNG}</a>&nbsp;<a  class="listViewTdToolsS1" href="{URL_PREFIX}index.php?action=DeleteUserRelationship&module=Roles&record={ROLE_RECORD}&user_id={USER.ID}{RETURN_URL}">{APP.LNK_REMOVE}</a></td>
-</tr>
-<!-- END: row -->
+    <!-- BEGIN: row -->
+    <tr height="20" class="{ROW_COLOR}S1">
+        <td scope="row" valign=TOP><a href="{URL_PREFIX}index.php?action=DetailView&module=Users&record={USER.ID}">{USER.FIRST_NAME}
+            {USER.LAST_NAME}</a></td>
+        <td scope="row" valign=TOP><a href="{URL_PREFIX}index.php?action=DetailView&module=Users&record={USER.ID}">{USER.USER_NAME}</a>
+        </td>
+        <td scope="row" valign=TOP><a href="{URL_PREFIX}index.php?action=DetailView&module=Users&record={USER.ID}">{USER.TITLE}</a>
+        </td>
+        <td scope="row" valign=TOP><a href="{URL_PREFIX}index.php?action=DetailView&module=Users&record={USER.ID}">{USER.DEPARTMENT}</a>
+        </td>
+        <td nowrap align="right" valign=TOP><a class="listViewTdToolsS1"
+                                               href="{URL_PREFIX}index.php?action=EditView&module=Users&record={USER.ID}{RETURN_URL}">{EDIT_INLINE_PNG}</a>&nbsp;<a
+                class="listViewTdToolsS1"
+                href="{URL_PREFIX}index.php?action=EditView&module=Users&record={USER.ID}{RETURN_URL}">{APP.LNK_EDIT}</a>
+            &nbsp; <a class="listViewTdToolsS1"
+                      href="{URL_PREFIX}index.php?action=DeleteUserRelationship&module=Roles&record={ROLE_RECORD}&user_id={USER.ID}{RETURN_URL}">{REMOVE_INLINE_PNG}</a>&nbsp;<a
+                    class="listViewTdToolsS1"
+                    href="{URL_PREFIX}index.php?action=DeleteUserRelationship&module=Roles&record={ROLE_RECORD}&user_id={USER.ID}{RETURN_URL}">{APP.LNK_REMOVE}</a>
+        </td>
+    </tr>
+    <!-- END: row -->
 
 </table>
 <!-- END: main -->

@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -1421,6 +1421,16 @@ class SugarBean
     }
 
     /**
+     * @param $interface
+     *
+     * @return bool
+     */
+    public function bean_implements($interface)
+    {
+        return false;
+    }
+
+    /**
      * Gets there where statement for checking if a user is an owner
      *
      * @param string $user_id GUID
@@ -2091,16 +2101,6 @@ class SugarBean
     {
         $this->custom_fields = new DynamicField($module_name);
         $this->custom_fields->setup($this);
-    }
-
-    /**
-     * @param $interface
-     *
-     * @return bool
-     */
-    public function bean_implements($interface)
-    {
-        return false;
     }
 
     /**
@@ -3862,7 +3862,7 @@ class SugarBean
         return $this->process_list_query($query, $row_offset, $limit, $max, $where);
     }
 
-        /**
+    /**
      * Processes the list query and return fetched row.
      *
      * Internal function, do not override.
@@ -4290,7 +4290,7 @@ class SugarBean
         return $this->process_detail_query($query, $row_offset, $limit, $max, $where, $offset);
     }
 
-/**
+    /**
      * Applies pagination window to select queries used by detail view,
      * executes the query and returns fetched data.
      *

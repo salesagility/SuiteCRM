@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,20 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
-
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/ListView/ListViewSmarty.php');
 require_once('include/MVC/View/views/view.list.php');
@@ -72,18 +65,18 @@ $params[] = $mod_strings['LBL_STEP2_FORM_TITLE'];
 $params[] = $focus->merge_bean->name;
 echo getClassicModuleTitle($focus->merge_bean->module_dir, $params, true);
 
-       $order_by_name = $focus->merge_module.'2_'.strtoupper($focus->merge_bean->object_name).'_ORDER_BY' ; 
-       $lvso = isset($_REQUEST['lvso'])?$_REQUEST['lvso']:"";
-       $request_order_by_name = isset($_REQUEST[$order_by_name])?$_REQUEST[$order_by_name]:"";
+$order_by_name = $focus->merge_module . '2_' . strtoupper($focus->merge_bean->object_name) . '_ORDER_BY';
+$lvso = isset($_REQUEST['lvso']) ? $_REQUEST['lvso'] : "";
+$request_order_by_name = isset($_REQUEST[$order_by_name]) ? $_REQUEST[$order_by_name] : "";
 
 echo '<form onsubmit="return check_form(\'MassUpdate\');" id="MassUpdate" name="MassUpdate" method="post" action="index.php">'
-    .'<input type="hidden" value="Step2" name="action"/>'
-    .'<input type="hidden" value="true" name="massupdate"/>'
-    .'<input type="hidden" value="false" name="delete"/>'
-    .'<input type="hidden" value="false" name="merge"/>'
-    .'<input type="hidden" value="MergeRecords" name="module"/>'
-    ."<input type='hidden' name='lvso' value='{$lvso}' />"
-    ."<input type='hidden' name='{$order_by_name}' value='{$request_order_by_name}' />";
+    . '<input type="hidden" value="Step2" name="action"/>'
+    . '<input type="hidden" value="true" name="massupdate"/>'
+    . '<input type="hidden" value="false" name="delete"/>'
+    . '<input type="hidden" value="false" name="merge"/>'
+    . '<input type="hidden" value="MergeRecords" name="module"/>'
+    . "<input type='hidden' name='lvso' value='{$lvso}' />"
+    . "<input type='hidden' name='{$order_by_name}' value='{$request_order_by_name}' />";
 
 $focus->populate_search_params($_REQUEST);
 echo $focus->get_inputs_for_search_params($_REQUEST);
@@ -100,52 +93,53 @@ $ListView->delete = false;
 $module = $_REQUEST['merge_module'];
 $metadataFile = null;
 $foundViewDefs = false;
-if(file_exists('custom/modules/' . $module. '/metadata/listviewdefs.php')){
+if (file_exists('custom/modules/' . $module . '/metadata/listviewdefs.php')) {
     $metadataFile = 'custom/modules/' . $module . '/metadata/listviewdefs.php';
     $foundViewDefs = true;
-}else{
-    if(file_exists('custom/modules/'.$module.'/metadata/metafiles.php')){
-        require_once('custom/modules/'.$module.'/metadata/metafiles.php');
-        if(!empty($metafiles[$module]['listviewdefs'])){
+} else {
+    if (file_exists('custom/modules/' . $module . '/metadata/metafiles.php')) {
+        require_once('custom/modules/' . $module . '/metadata/metafiles.php');
+        if (!empty($metafiles[$module]['listviewdefs'])) {
             $metadataFile = $metafiles[$module]['listviewdefs'];
             $foundViewDefs = true;
         }
-    }elseif(file_exists('modules/'.$module.'/metadata/metafiles.php')){
-        require_once('modules/'.$module.'/metadata/metafiles.php');
-        if(!empty($metafiles[$module]['listviewdefs'])){
+    } elseif (file_exists('modules/' . $module . '/metadata/metafiles.php')) {
+        require_once('modules/' . $module . '/metadata/metafiles.php');
+        if (!empty($metafiles[$module]['listviewdefs'])) {
             $metadataFile = $metafiles[$module]['listviewdefs'];
             $foundViewDefs = true;
         }
     }
 }
-if(!$foundViewDefs && file_exists('modules/'.$module.'/metadata/listviewdefs.php')){
-        $metadataFile = 'modules/'.$module.'/metadata/listviewdefs.php';
+if (!$foundViewDefs && file_exists('modules/' . $module . '/metadata/listviewdefs.php')) {
+    $metadataFile = 'modules/' . $module . '/metadata/listviewdefs.php';
 }
 require_once($metadataFile);
 $displayColumns = array();
-if(!empty($_REQUEST['displayColumns'])) {
-    foreach(explode('|', $_REQUEST['displayColumns']) as $num => $col) {
-        if(!empty($listViewDefs[$module][$col])) 
+if (!empty($_REQUEST['displayColumns'])) {
+    foreach (explode('|', $_REQUEST['displayColumns']) as $num => $col) {
+        if (!empty($listViewDefs[$module][$col])) {
             $displayColumns[$col] = $listViewDefs[$module][$col];
-    }    
-}
-else {
-    foreach($listViewDefs[$module] as $col => $params) {
-        if(!empty($params['default']) && $params['default'])
-            $displayColumns[$col] = $params;
+        }
     }
-} 
-$params = array('massupdate' => true, 'export' => false, 'handleMassupdate' => false );
+} else {
+    foreach ($listViewDefs[$module] as $col => $params) {
+        if (!empty($params['default']) && $params['default']) {
+            $displayColumns[$col] = $params;
+        }
+    }
+}
+$params = array('massupdate' => true, 'export' => false, 'handleMassupdate' => false);
 $ListView->displayColumns = $displayColumns;
 $ListView->lvd->listviewName = $focus->merge_module; //27633, this will make the $module to be merge_module instead of 'MergeRecords'. Then the key of  offset and orderby will be correct.
 $where = $focus->generate_where_statement($focus->create_where_statement());
-$ListView->showMassupdateFields=false;
-$ListView->email=false;
+$ListView->showMassupdateFields = false;
+$ListView->email = false;
 $ListView->setup($this->bean, 'include/ListView/ListViewGeneric.tpl', $where, $params);
-$ListView->force_mass_update=true;
-$ListView->show_mass_update_form=false;
-$ListView->show_export_button=false;
-$ListView->keep_mass_update_form_open=true;
+$ListView->force_mass_update = true;
+$ListView->show_mass_update_form = false;
+$ListView->show_export_button = false;
+$ListView->keep_mass_update_form_open = true;
 
 $return_id = $_REQUEST['record'];
 $merge_module = $focus->merge_module;
@@ -154,13 +148,13 @@ $button_title = $current_module_strings['LBL_PERFORM_MERGE_BUTTON_TITLE'];
 $button_key = $current_module_strings['LBL_PERFORM_MERGE_BUTTON_KEY'];
 $button_label = $current_module_strings['LBL_PERFORM_MERGE_BUTTON_LABEL'];
 
-$cancel_title=$app_strings['LBL_CANCEL_BUTTON_TITLE'];
-$cancel_key=$app_strings['LBL_CANCEL_BUTTON_KEY'];
-$cancel_label=$app_strings['LBL_CANCEL_BUTTON_LABEL'];
+$cancel_title = $app_strings['LBL_CANCEL_BUTTON_TITLE'];
+$cancel_key = $app_strings['LBL_CANCEL_BUTTON_KEY'];
+$cancel_label = $app_strings['LBL_CANCEL_BUTTON_LABEL'];
 
-echo ($ListView->display());
+echo($ListView->display());
 
-$error_select=$current_module_strings['LBL_SELECT_ERROR'];
+$error_select = $current_module_strings['LBL_SELECT_ERROR'];
 $form_top = <<<EOQ
 
             <input type="hidden" id="selectCount" name="selectCount[]" value=0>

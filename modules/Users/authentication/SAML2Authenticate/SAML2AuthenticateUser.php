@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -51,6 +51,28 @@ class SAML2AuthenticateUser extends SugarAuthenticateUser
 {
 
     /**
+     * this is called when a user logs in
+     *
+     * @param STRING $name
+     * @param STRING $password
+     * @param STRING $fallback - is this authentication a fallback from a failed authentication
+     * @return boolean
+     */
+    public function loadUserOnLogin($name, $password, $fallback = false, $PARAMS = array())
+    {
+        $GLOBALS['log']->debug("Starting user load for " . $name);
+        $user_id = $this->authenticateUser($name, null, $fallback);
+        if (empty($user_id)) {
+            $GLOBALS['log']->fatal('SECURITY: User authentication for ' . $name . ' failed');
+
+            return false;
+        }
+        $this->loadUserOnSession($user_id);
+
+        return true;
+    }
+
+    /**
      * Does the actual authentication of the user and returns an id that will be used
      * to load the current user (loadUserOnSession)
      *
@@ -60,8 +82,11 @@ class SAML2AuthenticateUser extends SugarAuthenticateUser
      * @param bool $checkPasswordMD5 use md5 check for user_hash before return the user data (SAML2 default is false)
      * @return STRING id - used for loading the user
      */
-    public function authenticateUser($name, $password, $fallback=false, $checkPasswordMD5 = false) {
-        $row = User::findUserPassword($name, null, "(portal_only IS NULL OR portal_only !='1') AND (is_group IS NULL OR is_group !='1') AND status !='Inactive'", $checkPasswordMD5);
+    public function authenticateUser($name, $password, $fallback = false, $checkPasswordMD5 = false)
+    {
+        $row = User::findUserPassword($name, null,
+            "(portal_only IS NULL OR portal_only !='1') AND (is_group IS NULL OR is_group !='1') AND status !='Inactive'",
+            $checkPasswordMD5);
 
         // set the ID in the seed user.  This can be used for retrieving the full user record later
         //if it's falling back on Sugar Authentication after the login failed on an external authentication return empty if the user has external_auth_disabled for them
@@ -70,25 +95,6 @@ class SAML2AuthenticateUser extends SugarAuthenticateUser
         } else {
             return $row['id'];
         }
-    }
-
-    /**
-     * this is called when a user logs in
-     *
-     * @param STRING $name
-     * @param STRING $password
-     * @param STRING $fallback - is this authentication a fallback from a failed authentication
-     * @return boolean
-     */
-    public function loadUserOnLogin($name, $password, $fallback = false, $PARAMS = array()) {
-        $GLOBALS['log']->debug("Starting user load for ". $name);
-        $user_id = $this->authenticateUser($name, null, $fallback);
-        if(empty($user_id)) {
-            $GLOBALS['log']->fatal('SECURITY: User authentication for '.$name.' failed');
-            return false;
-        }
-        $this->loadUserOnSession($user_id);
-        return true;
     }
 
 

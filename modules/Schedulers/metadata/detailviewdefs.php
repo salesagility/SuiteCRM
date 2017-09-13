@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,51 +34,66 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 $viewdefs['Schedulers']['DetailView'] = array(
     'templateMeta' => array(
-                            'maxColumns' => '2',
-                            'widths' => array(
-                                            array('label' => '10', 'field' => '30'),
-                                            array('label' => '10', 'field' => '30'),
-                                           ),
-                            'includes'=> array(
-                                            array('file'=>'modules/Schedulers/Schedulers.js'),
-                                         ),
-                           ),
+        'maxColumns' => '2',
+        'widths' => array(
+            array('label' => '10', 'field' => '30'),
+            array('label' => '10', 'field' => '30'),
+        ),
+        'includes' => array(
+            array('file' => 'modules/Schedulers/Schedulers.js'),
+        ),
+    ),
 
     'panels' => array(
         'default' => array(
             array('name', 'status'),
-            array('date_time_start',
+            array(
+                'date_time_start',
                 array(
                     'name' => 'time_from',
-                    'customCode' => '{$fields.time_from.value|default:$MOD.LBL_ALWAYS}')),
-            array('date_time_end',
+                    'customCode' => '{$fields.time_from.value|default:$MOD.LBL_ALWAYS}'
+                )
+            ),
+            array(
+                'date_time_end',
                 array(
                     'name' => 'time_to',
-                    'customCode' => '{$fields.time_to.value|default:$MOD.LBL_ALWAYS}')),
+                    'customCode' => '{$fields.time_to.value|default:$MOD.LBL_ALWAYS}'
+                )
+            ),
             array(
                 array(
                     'name' => 'last_run',
-                    'customCode' => '{$fields.last_run.value|default:$MOD.LBL_NEVER}'),
-                array(
-                	'name' => 'job_interval',
-                	'customCode' => '{$JOB_INTERVAL}'),
+                    'customCode' => '{$fields.last_run.value|default:$MOD.LBL_NEVER}'
                 ),
+                array(
+                    'name' => 'job_interval',
+                    'customCode' => '{$JOB_INTERVAL}'
+                ),
+            ),
             array('catch_up', 'job'),
             array(
                 array(
                     'name' => 'date_entered',
-                    'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}&nbsp;'),
+                    'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}&nbsp;'
+                ),
                 array(
                     'name' => 'date_modified',
-                    'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}&nbsp;')
-           ))
+                    'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}&nbsp;'
+                )
+            )
+        )
     )
 
 );

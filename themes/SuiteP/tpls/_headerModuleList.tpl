@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
 <!--Start Responsive Top Navigation Menu -->
@@ -55,10 +55,12 @@
                         {foreach from=$modules.modules item=module key=modulekey}
                             <li role="presentation" data-test="1">
                                 {capture name=moduleTabId assign=moduleTabId}moduleTab_{$smarty.foreach.moduleList.index}_{$module}{/capture}
-                                <a href="javascript:void(0)" onclick="window.location.href = '{sugar_link id=$moduleTabId module=$modulekey link_only=1 data=$module extraparams=$extraparams}'">
+                                <a href="javascript:void(0)"
+                                   onclick="window.location.href = '{sugar_link id=$moduleTabId module=$modulekey link_only=1 data=$module extraparams=$extraparams}'">
                                     {$module}
                                     {if $modulekey !='Home' && $modulekey !='Calendar'}
-                                        <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module={$modulekey}'"></span>
+                                        <span class="glyphicon glyphicon-plus"
+                                              onclick="window.location.href = 'index.php?action=EditView&module={$modulekey}'"></span>
                                         {*<span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'http://google.com'"></span>*}
                                     {/if}
                                 </a>
@@ -66,9 +68,11 @@
                         {/foreach}
                         {foreach from=$modules.extra item=submodulename key=submodule}
                             <li role="presentation" data-test="2">
-                                <a href="javascript:void(0)" onclick="window.location.href = '{sugar_link module=$submodule link_only=1 extraparams=$extraparams}'">
+                                <a href="javascript:void(0)"
+                                   onclick="window.location.href = '{sugar_link module=$submodule link_only=1 extraparams=$extraparams}'">
                                     {$submodulename}
-                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module={$submodule}'"></span>
+                                    <span class="glyphicon glyphicon-plus"
+                                          onclick="window.location.href = 'index.php?action=EditView&module={$submodule}'"></span>
                                     {*<span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'http://google.com'"></span>*}
                                 </a>
                             </li>
@@ -83,69 +87,77 @@
                             <span class="modulename" data-toggle="dropdown"
                                   aria-expanded="false">{sugar_link id="moduleTab_$name" module=$name data=$module}
                             </span>
-
-                                <ul class="dropdown-menu" role="menu">
+                            <ul class="dropdown-menu" role="menu">
                                 {if $name !='Home'}
                                     {if count($shortcutTopMenu.$name) > 0}
-                                       <ul>
-                                           {foreach from=$shortcutTopMenu.$name item=item}
-                                               {if $item.URL == "-"}
-                                                   <li class="mobile-action"><a></a><span>&nbsp;</span></li>
-                                               {else}
-                                                   <li class="mobile-action"><a href="{$item.URL}">{$item.LABEL}</a></li>
-                                               {/if}
-                                           {/foreach}
-                                       </ul>
+                                        <ul>
+                                            {foreach from=$shortcutTopMenu.$name item=item}
+                                                {if $item.URL == "-"}
+                                                    <li class="mobile-action"><a></a><span>&nbsp;</span></li>
+                                                {else}
+                                                    <li class="mobile-action"><a href="{$item.URL}">{$item.LABEL}</a>
+                                                    </li>
+                                                {/if}
+                                            {/foreach}
+                                        </ul>
                                     {else}
                                         <li class="mobile-action"><a>{$APP.LBL_NO_SHORTCUT_MENU}</a></li>
                                     {/if}
-                            {/if}
+                                {/if}
 
-                                    {if count($recentRecords) > 0}
-                                        <li class="recent-links-title" role="presentation">
-                                            <a><strong>{$APP.LBL_LAST_VIEWED}</strong></a>
-                                        </li>
-                                        <li role="presentation">
-                                            <ul class="recent-list">
-                                                {foreach from=$recentRecords item=item name=lastViewed }
-                                                    {if $smarty.foreach.lastViewed.iteration < 4} {* limit to 3 results *}
-                                                        <li class="recentlinks" role="presentation">
-                                                            <a title="{$item.module_name}"
-                                                               accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                                               href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}" class="recent-links-detail">
-                                                                <img src="{sugar_getimagepath directory='sidebar/modules' file_name=$item.module_name file_extension='svg' file='sidebar/modules/'.$item.module_name.'.svg' }"><span aria-hidden="true">{$item.item_summary_short}</span>
-                                                            </a>
-                                                            <a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" class="recent-links-edit"><span class=" glyphicon glyphicon-pencil"></a>
-                                                        </li>
-                                                    {/if}
-                                                {/foreach}
-                                            </ul>
-                                         </li>
-                                    {/if}
+                                {if count($recentRecords) > 0}
+                                    <li class="recent-links-title" role="presentation">
+                                        <a><strong>{$APP.LBL_LAST_VIEWED}</strong></a>
+                                    </li>
+                                    <li role="presentation">
+                                        <ul class="recent-list">
+                                            {foreach from=$recentRecords item=item name=lastViewed }
+                                                {if $smarty.foreach.lastViewed.iteration < 4} {* limit to 3 results *}
+                                                    <li class="recentlinks" role="presentation">
+                                                        <a title="{$item.module_name}"
+                                                           accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                                           href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}"
+                                                           class="recent-links-detail">
+                                                            <img src="{sugar_getimagepath directory='sidebar/modules' file_name=$item.module_name file_extension='svg' file='sidebar/modules/'.$item.module_name.'.svg' }"><span
+                                                                    aria-hidden="true">{$item.item_summary_short}</span>
+                                                        </a>
+                                                        <a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}"
+                                                           class="recent-links-edit"><span
+                                                                    class=" glyphicon glyphicon-pencil"></a>
+                                                    </li>
+                                                {/if}
+                                            {/foreach}
+                                        </ul>
+                                    </li>
+                                {/if}
 
-                                    {if count($favoriteRecords) > 0}
-                                        <li class="favorite-links-title" role="presentation">
-                                            <a><strong>{$APP.LBL_FAVORITES}</strong></a>
-                                        </li>
-                                        <li>
-                                            <ul class="favorite-list">
-                                                {foreach from=$favoriteRecords item=item name=lastViewed}
-                                                    {if $smarty.foreach.lastViewed.iteration < 4} {* limit to 3 results *}
-                                                        <li class="favoritelinks" role="presentation">
-                                                            <a title="{$item.module_name}"
-                                                               accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                                               href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}"  class="favorite-links-detail">
-                                                                <img src="{sugar_getimagepath directory='sidebar/modules' file_name=$item.module_name file_extension='svg' file='sidebar/modules/'.$item.module_name.'.svg'}"><span aria-hidden="true">{$item.item_summary_short}</span>
-                                                            </a>
-                                                            <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}" class="favorite-links-edit"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></a>
-                                                        </li>
-                                                    {/if}
-                                                {/foreach}
-                                            </ul>
-                                        </li>
-                                    {/if}
-                                </ul>
-
+                                {if count($favoriteRecords) > 0}
+                                    <li class="favorite-links-title" role="presentation">
+                                        <a><strong>{$APP.LBL_FAVORITES}</strong></a>
+                                    </li>
+                                    <li>
+                                        <ul class="favorite-list">
+                                            {foreach from=$favoriteRecords item=item name=lastViewed}
+                                                {if $smarty.foreach.lastViewed.iteration < 4} {* limit to 3 results *}
+                                                    <li class="favoritelinks" role="presentation">
+                                                        <a title="{$item.module_name}"
+                                                           accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                                           href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}"
+                                                           class="favorite-links-detail">
+                                                            <img src="{sugar_getimagepath directory='sidebar/modules' file_name=$item.module_name file_extension='svg' file='sidebar/modules/'.$item.module_name.'.svg'}"><span
+                                                                    aria-hidden="true">{$item.item_summary_short}</span>
+                                                        </a>
+                                                        <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}"
+                                                           class="favorite-links-edit"><span
+                                                                    class="glyphicon glyphicon-pencil"
+                                                                    aria-hidden="true"></a>
+                                                    </li>
+                                                {/if}
+                                            {/foreach}
+                                        </ul>
+                                    </li>
+                                {/if}
+                            </ul>
                         {/if}
                     {/foreach}
                 </div>
@@ -155,7 +167,8 @@
             {if $USE_GROUP_TABS}
                 <ul class="nav navbar-nav">
                     <li class="navbar-brand-container">
-                            <a class="navbar-brand with-home-icon" href="index.php?module=Home&action=index">{$APP.LBL_BROWSER_TITLE}</a>
+                        <a class="navbar-brand with-home-icon"
+                           href="index.php?module=Home&action=index">{$APP.LBL_BROWSER_TITLE}</a>
                     </li>
                     {assign var="groupSelected" value=false}
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
@@ -182,7 +195,6 @@
                                         {/if}
                                     {/foreach}
                                     {if $foundRecents || $foundFavorits || count($shortcutTopMenu.$name) > 0}
-
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
                                                 <ul>
@@ -191,7 +203,10 @@
                                                             {if $item.URL == "-"}
                                                                 {*<li><a></a><span>&nbsp;</span></li>*}
                                                             {else}
-                                                                <li><a href="{$item.URL}"><span class="topnav-fake-icon">{* fakes the space the icon takes *}</span><span aria-hidden="true">{$item.LABEL}</span></a></li>
+                                                                <li><a href="{$item.URL}"><span
+                                                                                class="topnav-fake-icon">{* fakes the space the icon takes *}</span><span
+                                                                                aria-hidden="true">{$item.LABEL}</span></a>
+                                                                </li>
                                                             {/if}
                                                         {/foreach}
                                                     {/if}
@@ -202,38 +217,40 @@
                                             {counter start=0 name="submoduleRecentRecordsTotal" assign="submoduleRecentRecordsTotal"  print=false}
                                             {foreach from=$recentRecords item=item name=lastViewed}
                                                 {if $item.module_name == $name and $submoduleRecentRecordsTotal == 0}
-                                                    <li class="recent-links-title"><a><strong>{$APP.LBL_LAST_VIEWED}</strong></a></li>
+                                                    <li class="recent-links-title">
+                                                        <a><strong>{$APP.LBL_LAST_VIEWED}</strong></a></li>
                                                     {counter name="submoduleRecentRecordsTotal" print=false}
                                                 {/if}
                                             {/foreach}
-                                                <li>
-                                                    <ul>
-                                                        {* when records are found for the current submodule show the first 3 records *}
-                                                        {counter start=0 name="submoduleRecentRecords" assign="submoduleRecentRecords"  print=false}
-                                                        {foreach from=$recentRecords item=item name=lastViewed}
-                                                            {if $item.module_name == $name and $submoduleRecentRecords < 3}
-                                                                <li class="recentlinks" role="presentation">
-                                                                    <a title="{$item.module_name}"
-                                                                       accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                                                       href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}" class="recent-links-detail">
-                                                                        <span aria-hidden="true">{$item.item_summary_short}</span>
-                                                                    </a>
-                                                                    <a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" class="recent-links-edit"><span class=" glyphicon glyphicon-pencil"></a>
-                                                                </li>
-                                                                {counter name="submoduleRecentRecords" print=false}
-                                                            {/if}
-                                                        {/foreach}
-                                                    </ul>
-                                                </li>
-
-
-
+                                            <li>
+                                                <ul>
+                                                    {* when records are found for the current submodule show the first 3 records *}
+                                                    {counter start=0 name="submoduleRecentRecords" assign="submoduleRecentRecords"  print=false}
+                                                    {foreach from=$recentRecords item=item name=lastViewed}
+                                                        {if $item.module_name == $name and $submoduleRecentRecords < 3}
+                                                            <li class="recentlinks" role="presentation">
+                                                                <a title="{$item.module_name}"
+                                                                   accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                                                   href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}"
+                                                                   class="recent-links-detail">
+                                                                    <span aria-hidden="true">{$item.item_summary_short}</span>
+                                                                </a>
+                                                                <a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}"
+                                                                   class="recent-links-edit"><span
+                                                                            class=" glyphicon glyphicon-pencil"></a>
+                                                            </li>
+                                                            {counter name="submoduleRecentRecords" print=false}
+                                                        {/if}
+                                                    {/foreach}
+                                                </ul>
+                                            </li>
 
 
                                             {counter start=0 name="submoduleFavoriteRecordsTotal" assign="submoduleFavoriteRecordsTotal"  print=false}
                                             {foreach from=$favoriteRecords item=item name=lastViewed}
                                                 {if $item.module_name == $name and $submoduleFavoriteRecordsTotal == 0}
-                                                    <li class="favorite-links-title"><a><strong>{$APP.LBL_FAVORITES}</strong></a></li>
+                                                    <li class="favorite-links-title">
+                                                        <a><strong>{$APP.LBL_FAVORITES}</strong></a></li>
                                                     {counter name="submoduleFavoriteRecordsTotal" print=false}
                                                 {/if}
                                             {/foreach}
@@ -246,10 +263,14 @@
                                                             <li class="favoritelinks" role="presentation">
                                                                 <a title="{$item.module_name}"
                                                                    accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                                                   href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}" class="favorite-links-detail">
+                                                                   href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}"
+                                                                   class="favorite-links-detail">
                                                                     <span aria-hidden="true">{$item.item_summary_short}</span>
                                                                 </a>
-                                                                <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}" class="favorite-links-edit"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
+                                                                <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}"
+                                                                   class="favorite-links-edit"><span
+                                                                            class=" glyphicon glyphicon-pencil"
+                                                                            aria-hidden="true"></a>
                                                             </li>
                                                             {counter name="submoduleFavoriteRecords" print=false}
                                                         {/if}
@@ -257,9 +278,8 @@
                                                 </ul>
                                             </li>
                                         </ul>
-
                                     {/if}
-                                 </li>
+                                </li>
                             {/if}
 
                         {/if}
@@ -290,7 +310,7 @@
                 {* 7.8 Hide filter menu items when the window is too small to display them *}
             {literal}
                 <script>
-                  var windowResize = function() {
+                  var windowResize = function () {
                     // Since the height can be changed in Sass.
                     // Take a measurement of the initial desktop navigation bar height with just one menu item
                     $('.desktop-toolbar ul.navbar-nav > li').not('.all').addClass('hidden');
@@ -301,7 +321,7 @@
 
                     // Remove the each menu item from the end of the toolbar until
                     // the navigation bar is the matches the initial height.
-                    while($('.desktop-toolbar').outerHeight() > dth) {
+                    while ($('.desktop-toolbar').outerHeight() > dth) {
                       ti = $('.desktop-toolbar ul.navbar-nav > li').not('.hidden').not('.all');
                       $(ti).last().addClass('hidden');
                     }
@@ -311,10 +331,10 @@
                 </script>
             {/literal}
             {else}
-
                 <ul class="nav navbar-nav navbar-horizontal-fluid">
                     <li class="navbar-brand-container">
-                        <a class="navbar-brand with-home-icon" href="index.php?module=Home&action=index">{$APP.LBL_BROWSER_TITLE}</a>
+                        <a class="navbar-brand with-home-icon"
+                           href="index.php?module=Home&action=index">{$APP.LBL_BROWSER_TITLE}</a>
                     </li>
                     {foreach from=$groupTabs item=modules key=group name=groupList}
                         {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
@@ -325,7 +345,8 @@
                         {if $submodule != "Home"}
                             <li class="topnav with-actions">
                                 <span class="notCurrentTabLeft">&nbsp;</span>
-                                <span class="dropdown-toggle headerlinks notCurrentTab"> <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a> </span>
+                                <span class="dropdown-toggle headerlinks notCurrentTab"> <a
+                                            href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a> </span>
                                 <span class="notCurrentTabRight">&nbsp;</span>
                                 <ul class="dropdown-menu" role="menu">
                                     {*<li class="action-links-title"><a><strong>{$APP.LBL_LINK_ACTIONS}</strong></a></li>*}
@@ -336,7 +357,9 @@
                                                     {if $item.URL == "-"}
                                                         {*<li><a></a><span>&nbsp;</span></li>*}
                                                     {else}
-                                                        <li><a href="{$item.URL}"><span class="topnav-fake-icon">{* fakes the space the icon takes *}</span><span aria-hidden="true">{$item.LABEL}</span></a></li>
+                                                        <li><a href="{$item.URL}"><span
+                                                                        class="topnav-fake-icon">{* fakes the space the icon takes *}</span><span
+                                                                        aria-hidden="true">{$item.LABEL}</span></a></li>
                                                     {/if}
                                                 {/foreach}
                                             {/if}
@@ -346,7 +369,8 @@
                                     {counter start=0 name="submoduleRecentRecordsTotal" assign="submoduleRecentRecordsTotal"  print=false}
                                     {foreach from=$recentRecords item=item name=lastViewed}
                                         {if $item.module_name == $submodule and $submoduleRecentRecordsTotal == 0}
-                                            <li class="recent-links-title"><a><strong>{$APP.LBL_LAST_VIEWED}</strong></a></li>
+                                            <li class="recent-links-title">
+                                                <a><strong>{$APP.LBL_LAST_VIEWED}</strong></a></li>
                                             {counter name="submoduleRecentRecordsTotal" print=false}
                                         {/if}
                                     {/foreach}
@@ -359,10 +383,13 @@
                                                     <li class="recentlinks" role="presentation">
                                                         <a title="{$item.module_name}"
                                                            accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                                           href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}" class="recent-links-detail">
+                                                           href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}"
+                                                           class="recent-links-detail">
                                                             <span aria-hidden="true">{$item.item_summary_short}</span>
                                                         </a>
-                                                        <a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" class="recent-links-edit"><span class=" glyphicon glyphicon-pencil"></a>
+                                                        <a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}"
+                                                           class="recent-links-edit"><span
+                                                                    class=" glyphicon glyphicon-pencil"></a>
                                                     </li>
                                                     {counter name="submoduleRecentRecords" print=false}
                                                 {/if}
@@ -373,27 +400,32 @@
                                     {counter start=0 name="submoduleFavoriteRecordsTotal" assign="submoduleFavoriteRecordsTotal"  print=false}
                                     {foreach from=$favoriteRecords item=item name=lastViewed}
                                         {if $item.module_name == $submodule and $submoduleFavoriteRecordsTotal == 0}
-                                            <li class="favorite-links-title"><a><strong>{$APP.LBL_FAVORITES}</strong></a></li>
+                                            <li class="favorite-links-title">
+                                                <a><strong>{$APP.LBL_FAVORITES}</strong></a></li>
                                             {counter name="submoduleFavoriteRecordsTotal" print=false}
                                         {/if}
                                     {/foreach}
                                     <li>
                                         <ul>
-                                        {* when records are found for the current submodule show the first 3 records *}
-                                        {counter start=0 name="submoduleFavoriteRecords" assign="submoduleFavoriteRecords" print=false}
-                                        {foreach from=$favoriteRecords item=item name=lastViewed}
-                                            {if $item.module_name == $submodule and $submoduleFavoriteRecords < 3}
-                                                <li class="favoritelinks" role="presentation">
-                                                    <a title="{$item.module_name}"
-                                                       accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                                       href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}" class="favorite-links-detail">
-                                                        <span aria-hidden="true">{$item.item_summary_short}</span>
-                                                    </a>
-                                                    <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}" class="favorite-links-edit"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
-                                                </li>
-                                                {counter name="submoduleFavoriteRecords" print=false}
-                                            {/if}
-                                        {/foreach}
+                                            {* when records are found for the current submodule show the first 3 records *}
+                                            {counter start=0 name="submoduleFavoriteRecords" assign="submoduleFavoriteRecords" print=false}
+                                            {foreach from=$favoriteRecords item=item name=lastViewed}
+                                                {if $item.module_name == $submodule and $submoduleFavoriteRecords < 3}
+                                                    <li class="favoritelinks" role="presentation">
+                                                        <a title="{$item.module_name}"
+                                                           accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                                           href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}"
+                                                           class="favorite-links-detail">
+                                                            <span aria-hidden="true">{$item.item_summary_short}</span>
+                                                        </a>
+                                                        <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}"
+                                                           class="favorite-links-edit"><span
+                                                                    class=" glyphicon glyphicon-pencil"
+                                                                    aria-hidden="true"></a>
+                                                    </li>
+                                                    {counter name="submoduleFavoriteRecords" print=false}
+                                                {/if}
+                                            {/foreach}
                                         </ul>
                                     </li>
                                 </ul>
@@ -408,7 +440,8 @@
                             <!--nav items without actions -->
                             {foreach from=$modules.extra item=submodulename key=submodule}
                                 <li class="topnav without-actions">
-                                    <span class=" notCurrentTab"> <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a> </span>
+                                    <span class=" notCurrentTab"> <a
+                                                href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a> </span>
                                 </li>
                             {/foreach}
                         </ul>
@@ -416,46 +449,45 @@
                 </ul>
                 <div class="hidden hidden-actions"></div>
                 {* Hide nav items when the window size is too small to display them *}
-                {literal}
-                    <script>
-                        var windowResize = function() {
-                            // reset navbar
-                            var $navCollapsedItems = $('ul#overflow-menu > li.with-actions');
-                            if(typeof $navCollapsedItems !== "undefined") {
-                                $($navCollapsedItems).each(function() {
-                                    $(this).addClass('topnav');
-                                    $(this).insertBefore('.overflow-toggle-menu');
-                                });
-                            }
+            {literal}
+                <script>
+                  var windowResize = function () {
+                    // reset navbar
+                    var $navCollapsedItems = $('ul#overflow-menu > li.with-actions');
+                    if (typeof $navCollapsedItems !== "undefined") {
+                      $($navCollapsedItems).each(function () {
+                        $(this).addClass('topnav');
+                        $(this).insertBefore('.overflow-toggle-menu');
+                      });
+                    }
 
 
+                    var $navItemMore = $('.navbar-horizontal-fluid > li.overflow-toggle-menu'),
+                      $navItems = $('.navbar-horizontal-fluid > li.with-actions'),
+                      navItemMoreWidth = navItemWidth = $navItemMore.width(),
+                      windowWidth = $(window).width() - ($(window).width() * 0.55),
+                      navItemMoreLeft, offset, navOverflowWidth;
 
-                            var $navItemMore = $('.navbar-horizontal-fluid > li.overflow-toggle-menu'),
-                                    $navItems = $('.navbar-horizontal-fluid > li.with-actions'),
-                                    navItemMoreWidth = navItemWidth = $navItemMore.width(),
-                                    windowWidth = $(window).width() - ($(window).width()  * 0.55),
-                                    navItemMoreLeft, offset, navOverflowWidth;
+                    $navItems.each(function () {
+                      navItemWidth += $(this).width();
+                    });
 
-                            $navItems.each(function() {
-                                navItemWidth += $(this).width();
-                            });
+                    // Remove nav items that are cause the right hand nav-bar items to wrap
+                    while (navItemWidth > windowWidth) {
+                      navItemWidth -= $navItems.last().width();
+                      $navItems.last().removeClass('topnav');
+                      $navItems.last().prependTo('#overflow-menu');
+                      $navItems.splice(-1, 1);
+                    }
 
-                            // Remove nav items that are cause the right hand nav-bar items to wrap
-                            while (navItemWidth > windowWidth) {
-                                navItemWidth -= $navItems.last().width();
-                                $navItems.last().removeClass('topnav');
-                                $navItems.last().prependTo('#overflow-menu');
-                                $navItems.splice(-1,1);
-                            }
-
-                            navItemMoreLeft = $('.navbar-horizontal-fluid .overflow-toggle-menu').offset().left;
-                            navOverflowWidth = $('#overflow-menu').width();
-                            offset = navItemMoreLeft + navItemMoreWidth - navOverflowWidth;
-                        };
-                        $(window).resize(windowResize);
-                        windowResize();
-                    </script>
-                {/literal}
+                    navItemMoreLeft = $('.navbar-horizontal-fluid .overflow-toggle-menu').offset().left;
+                    navOverflowWidth = $('#overflow-menu').width();
+                    offset = navItemMoreLeft + navItemMoreWidth - navOverflowWidth;
+                  };
+                  $(window).resize(windowResize);
+                  windowResize();
+                </script>
+            {/literal}
 
             {/if}
         </div>
@@ -492,7 +524,8 @@
                     </ul>
                 </li>
                 <li id="" class="dropdown nav navbar-nav navbar-search">
-                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton" data-toggle="dropdown" aria-expanded="true">
+                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton"
+                            data-toggle="dropdown" aria-expanded="true">
                         <!--<span class="glyphicon glyphicon-search"> </span>-->Search
                     </button>
                     <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
@@ -503,9 +536,10 @@
                             <input type="hidden" class="form-control" name="search_form" value="false">
                             <input type="hidden" class="form-control" name="advanced" value="false">
                             <div class="input-group">
-                                <input type="text" class="form-control query_string" name="query_string" id="query_string"
+                                <input type="text" class="form-control query_string" name="query_string"
+                                       id="query_string"
                                        placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
-                            <span class="input-group-btn">
+                                <span class="input-group-btn">
                                 <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
                                                                                     aria-hidden="true"></span>-->Search</button>
                             </span>
@@ -530,7 +564,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                    placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
-                    <span class="input-group-btn">
+                            <span class="input-group-btn">
                         <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
                                                                             aria-hidden="true"></span>-->Search</button>
                     </span>
@@ -539,7 +573,8 @@
                 </li>
                 <li id="globalLinks" class="dropdown nav navbar-nav globalLinks-mobile">
 
-                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed" data-toggle="dropdown"
+                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed"
+                            data-toggle="dropdown"
                             aria-expanded="true">
                     </button>
                     <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu2">
@@ -591,7 +626,8 @@
                     </ul>
                 </li>
                 <li id="" class="dropdown nav navbar-nav navbar-search">
-                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton" data-toggle="dropdown" aria-expanded="true">
+                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton"
+                            data-toggle="dropdown" aria-expanded="true">
                         <!--<span class="glyphicon glyphicon-search"> </span>-->Search
                     </button>
                     <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
@@ -602,9 +638,10 @@
                             <input type="hidden" class="form-control" name="search_form" value="false">
                             <input type="hidden" class="form-control" name="advanced" value="false">
                             <div class="input-group">
-                                <input type="text" class="form-control query_string" name="query_string" id="query_string"
+                                <input type="text" class="form-control query_string" name="query_string"
+                                       id="query_string"
                                        placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
-                            <span class="input-group-btn">
+                                <span class="input-group-btn">
                                 <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
                                                                                     aria-hidden="true"></span>-->Search</button>
                             </span>
@@ -622,7 +659,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                    placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
-                    <span class="input-group-btn">
+                            <span class="input-group-btn">
                         <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
                                                                             aria-hidden="true"></span>-->Search</button>
                     </span>
@@ -638,7 +675,8 @@
                 </li>
                 <li id="globalLinks" class="dropdown nav navbar-nav globalLinks-mobile">
 
-                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed" data-toggle="dropdown"
+                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed"
+                            data-toggle="dropdown"
                             aria-expanded="true">
                     </button>
                     <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu2">
@@ -690,7 +728,8 @@
                     </ul>
                 </li>
                 <li id="" class="dropdown nav navbar-nav navbar-search">
-                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton" data-toggle="dropdown" aria-expanded="true">
+                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton"
+                            data-toggle="dropdown" aria-expanded="true">
                         <!--<span class="glyphicon glyphicon-search"> </span>-->Search
                     </button>
                     <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
@@ -701,9 +740,10 @@
                             <input type="hidden" class="form-control" name="search_form" value="false">
                             <input type="hidden" class="form-control" name="advanced" value="false">
                             <div class="input-group">
-                                <input type="text" class="form-control query_string" name="query_string" id="query_string"
+                                <input type="text" class="form-control query_string" name="query_string"
+                                       id="query_string"
                                        placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
-                            <span class="input-group-btn">
+                                <span class="input-group-btn">
                                 <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
                                                                                     aria-hidden="true"></span>-->Search</button>
                             </span>
@@ -721,7 +761,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control query_string" name="query_string" id="query_string"
                                    placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
-                    <span class="input-group-btn">
+                            <span class="input-group-btn">
                         <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
                                                                             aria-hidden="true"></span>-->Search</button>
                     </span>
@@ -737,7 +777,8 @@
                 </li>
                 <li id="globalLinks" class="dropdown nav navbar-nav globalLinks-desktop">
 
-                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed" data-toggle="dropdown"
+                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed"
+                            data-toggle="dropdown"
                             aria-expanded="true">
                     </button>
 
@@ -773,75 +814,80 @@
     <div id='sidebar_container' class="container-fluid sidebar_container">
 
         <a id="buttontoggle" class="buttontoggle"><span></span></a>
-                
+
         <!--<div class="row">-->
-            <!--<div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}
+        <!--<div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}
                  class="col-sm-3 col-md-2 sidebar">-->
-             <div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}
+        <div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}
              class="sidebar">
-                
-                <div id="actionMenuSidebar" class="actionMenuSidebar">
-                    {foreach from=$moduleTopMenu item=module key=name name=moduleList}
-                        {if $name == $MODULE_TAB}
-                            <ul>
-                                {if count($shortcutTopMenu.$name) > 0}
-                                    <h2 class="recent_h3">{$APP.LBL_LINK_ACTIONS}</h2>
-                                    {foreach from=$shortcutTopMenu.$name item=item}
-                                        {if $item.URL == "-"}
-                                            <li><a></a><span>&nbsp;</span></li>
-                                        {else}
-                                            <li class="actionmenulinks" role="presentation">
-                                                <a href="{$item.URL}" >
-                                                    <div class="side-bar-{$item.MODULE_NAME} side-bar-action-icon"></div>
-                                                    <div class="actionmenulink">{$item.LABEL}</div>
-                                                </a>
-                                            </li>
-                                        {/if}
-                                    {/foreach}
-                                {/if}
-                            </ul>
-                        {/if}
-                    {/foreach}
-                </div>
-                
-                <div id="recentlyViewedSidebar" class="recentlyViewedSidebar">
+
+            <div id="actionMenuSidebar" class="actionMenuSidebar">
+                {foreach from=$moduleTopMenu item=module key=name name=moduleList}
+                    {if $name == $MODULE_TAB}
+                        <ul>
+                            {if count($shortcutTopMenu.$name) > 0}
+                                <h2 class="recent_h3">{$APP.LBL_LINK_ACTIONS}</h2>
+                                {foreach from=$shortcutTopMenu.$name item=item}
+                                    {if $item.URL == "-"}
+                                        <li><a></a><span>&nbsp;</span></li>
+                                    {else}
+                                        <li class="actionmenulinks" role="presentation">
+                                            <a href="{$item.URL}">
+                                                <div class="side-bar-{$item.MODULE_NAME} side-bar-action-icon"></div>
+                                                <div class="actionmenulink">{$item.LABEL}</div>
+                                            </a>
+                                        </li>
+                                    {/if}
+                                {/foreach}
+                            {/if}
+                        </ul>
+                    {/if}
+                {/foreach}
+            </div>
+
+            <div id="recentlyViewedSidebar" class="recentlyViewedSidebar">
                 {if count($recentRecords) > 0}
                     <h2 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h2>
                 {/if}
-                    <ul class="nav nav-pills nav-stacked">
-                        {foreach from=$recentRecords item=item name=lastViewed}
-                            {if $smarty.foreach.lastViewed.index < 5}
+                <ul class="nav nav-pills nav-stacked">
+                    {foreach from=$recentRecords item=item name=lastViewed}
+                        {if $smarty.foreach.lastViewed.index < 5}
                             <div class="recently_viewed_link_container_sidebar">
                                 <li class="recentlinks" role="presentation">
-                                    <a title="{$item.module_name}" accessKey="{$smarty.foreach.lastViewed.iteration}" href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}" class="recent-links-detail">
+                                    <a title="{$item.module_name}" accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                       href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}"
+                                       class="recent-links-detail">
                                         <img src="{sugar_getimagepath directory='sidebar/modules'  file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"/><span>{$item.item_summary_short}</span>
                                     </a>
                                 </li>
                             </div>
-                            {/if}
-                        {/foreach}
-                    </ul>
-                </div>
-     
-                <div id="favoritesSidebar" class="favoritesSidebar">
+                        {/if}
+                    {/foreach}
+                </ul>
+            </div>
+
+            <div id="favoritesSidebar" class="favoritesSidebar">
                 {if count($favoriteRecords) > 0}
                     <h2 class="recent_h3">{$APP.LBL_FAVORITES}</h2>
                 {/if}
-                    <ul class="nav nav-pills nav-stacked">
-                        {foreach from=$favoriteRecords item=item name=lastViewed}
-                            {if $smarty.foreach.lastViewed.index < 5}
+                <ul class="nav nav-pills nav-stacked">
+                    {foreach from=$favoriteRecords item=item name=lastViewed}
+                        {if $smarty.foreach.lastViewed.index < 5}
                             <div class="recently_viewed_link_container_sidebar">
                                 <li class="recentlinks" role="presentation">
-                                    <a title="{$item.module_name}" accessKey="{$smarty.foreach.lastViewed.iteration}" href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}" class="favorite-links-detail">
-                                        <img src="{sugar_getimagepath  directory='sidebar/modules' file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"/><span aria-hidden="true">{$item.item_summary_short}</span>
+                                    <a title="{$item.module_name}" accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                       href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}"
+                                       class="favorite-links-detail">
+                                        <img src="{sugar_getimagepath  directory='sidebar/modules' file_name=$item.module_name file_extension="svg" file='sidebar/modules/'.$item.module_name.".svg"}"/><span
+                                                aria-hidden="true">{$item.item_summary_short}</span>
                                     </a>
                                 </li>
                             </div>
-                            {/if}
-                        {/foreach}
-                    </ul>
-                </div>
+                        {/if}
+                    {/foreach}
+                </ul>
             </div>
+        </div>
         <!--</div>-->
     </div>
     <!--End Responsive Sidebar -->

@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class StoreQuery
 {
@@ -46,67 +49,6 @@ class StoreQuery
     function addToQuery($name, $val)
     {
         $this->query[$name] = $val;
-    }
-
-    /**
-     * SaveQuery
-     *
-     * This function handles saving the query parameters to the user preferences
-     * SavedSearch.php does something very similar when saving saved searches as well
-     *
-     * @see SavedSearch
-     * @param $name String name  to identify this query
-     */
-    function SaveQuery($name)
-    {
-        global $current_user, $timedate;
-        if (isset($this->query['module'])) {
-            $bean = loadBean($this->query['module']);
-            if (!empty($bean)) {
-                foreach ($this->query as $key => $value) {
-                    //Filter date fields to ensure it is saved to DB format, but also avoid empty values
-                    if (!empty($value) && preg_match('/^(start_range_|end_range_|range_)?(.*?)(_advanced|_basic)$/', $key, $match)) {
-                        $field = $match[2];
-                        if (isset($bean->field_defs[$field]['type']) && empty($bean->field_defs[$field]['disable_num_format'])) {
-                            $type = $bean->field_defs[$field]['type'];
-
-                            if (($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && !preg_match('/^\[.*?\]$/', $value)) {
-                                $db_format = $timedate->to_db_date($value, false);
-                                $this->query[$key] = $db_format;
-                            } else if ($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') {
-                                if (preg_match('/[^\d]/', $value)) {
-                                    require_once('modules/Currencies/Currency.php');
-                                    $this->query[$key] = unformat_number($value);
-                                    //Flag this value as having been unformatted
-                                    $this->query[$key . '_unformatted_number'] = true;
-                                    //If the type is of currency and there was a currency symbol (non-digit), save the symbol
-                                    if ($type == 'currency' && preg_match('/^([^\d])/', $value, $match)) {
-                                        $this->query[$key . '_currency_symbol'] = $match[1];
-                                    }
-                                } else {
-                                    //unset any flags
-                                    if (isset($this->query[$key . '_unformatted_number'])) {
-                                        unset($this->query[$key . '_unformatted_number']);
-                                    }
-
-                                    if (isset($this->query[$key . '_currency_symbol'])) {
-                                        unset($this->query[$key . '_currency_symbol']);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        $current_user->setPreference($name . 'Q', $this->query);
-    }
-
-    function clearQuery($name)
-    {
-        $this->query = array();
-        $this->saveQuery($name);
     }
 
     function loadQuery($name)
@@ -120,44 +62,6 @@ class StoreQuery
             }
             if (!empty($this->populate_only) && !empty($this->query['query'])) {
                 $this->query['query'] = 'MSI';
-            }
-        }
-    }
-
-    function populateRequest()
-    {
-        global $timedate;
-
-        if (isset($this->query['module'])) {
-            $bean = loadBean($this->query['module']);
-        }
-
-
-        foreach ($this->query as $key => $value) {
-            // todo wp: remove this
-            if ($key != 'advanced' && $key != 'module' && $key != 'lvso') {
-                //Filter date fields to ensure it is saved to DB format, but also avoid empty values
-                if (!empty($value) && !empty($bean) && preg_match('/^(start_range_|end_range_|range_)?(.*?)(_advanced|_basic)$/', $key, $match)) {
-                    $field = $match[2];
-                    if (isset($bean->field_defs[$field]['type']) && empty($bean->field_defs[$field]['disable_num_format'])) {
-                        $type = $bean->field_defs[$field]['type'];
-
-                        if (($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && preg_match('/^\d{4}-\d{2}-\d{2}$/', $value) && !preg_match('/^\[.*?\]$/', $value)) {
-                            $value = $timedate->to_display_date($value, false);
-                        } else if (($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') && isset($this->query[$key . '_unformatted_number']) && preg_match('/^\d+$/', $value)) {
-                            require_once('modules/Currencies/Currency.php');
-                            $value = format_number($value);
-                            if ($type == 'currency' && isset($this->query[$key . '_currency_symbol'])) {
-                                $value = $this->query[$key . '_currency_symbol'] . $value;
-                            }
-                        }
-                    }
-                }
-
-                // cn: bug 6546 storequery stomps correct value for 'module' in Activities
-                $_REQUEST[$key] = $value;
-                $_GET[$key] = $value;
-
             }
         }
     }
@@ -187,6 +91,64 @@ class StoreQuery
         return $saveType;
     }
 
+    /**
+     * Static method to retrieve the user's stored query for a particular module
+     *
+     * @param string $module
+     * @return array
+     */
+    public static function getStoredQueryForUser($module)
+    {
+        global $current_user;
+
+        return $current_user->getPreference($module . 'Q');
+    }
+
+    function populateRequest()
+    {
+        global $timedate;
+
+        if (isset($this->query['module'])) {
+            $bean = loadBean($this->query['module']);
+        }
+
+
+        foreach ($this->query as $key => $value) {
+            // todo wp: remove this
+            if ($key != 'advanced' && $key != 'module' && $key != 'lvso') {
+                //Filter date fields to ensure it is saved to DB format, but also avoid empty values
+                if (!empty($value) && !empty($bean) && preg_match('/^(start_range_|end_range_|range_)?(.*?)(_advanced|_basic)$/',
+                        $key, $match)
+                ) {
+                    $field = $match[2];
+                    if (isset($bean->field_defs[$field]['type']) && empty($bean->field_defs[$field]['disable_num_format'])) {
+                        $type = $bean->field_defs[$field]['type'];
+
+                        if (($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && preg_match('/^\d{4}-\d{2}-\d{2}$/',
+                                $value) && !preg_match('/^\[.*?\]$/', $value)
+                        ) {
+                            $value = $timedate->to_display_date($value, false);
+                        } else {
+                            if (($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') && isset($this->query[$key . '_unformatted_number']) && preg_match('/^\d+$/',
+                                    $value)
+                            ) {
+                                require_once('modules/Currencies/Currency.php');
+                                $value = format_number($value);
+                                if ($type == 'currency' && isset($this->query[$key . '_currency_symbol'])) {
+                                    $value = $this->query[$key . '_currency_symbol'] . $value;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // cn: bug 6546 storequery stomps correct value for 'module' in Activities
+                $_REQUEST[$key] = $value;
+                $_GET[$key] = $value;
+
+            }
+        }
+    }
 
     function saveFromRequest($name)
     {
@@ -205,21 +167,100 @@ class StoreQuery
                 }
                 $this->saveQuery($name);
 
-            } else if ($saveType == 'all') {
-                // Bug 39580 - Added 'EmailTreeLayout','EmailGridWidths' to the list as these are added merely as side-effects of the fact that we store the entire
-                // $_REQUEST object which includes all cookies.  These are potentially quite long strings as well.
-                $blockVariables = array('mass', 'uid', 'massupdate', 'delete', 'merge', 'selectCount', 'current_query_by_page', 'EmailTreeLayout', 'EmailGridWidths');
-                if (isset($_REQUEST['use_store_query']) && $_REQUEST['use_stored_query']) {
-                    $this->query = array_merge(StoreQuery::getStoredQueryForUser($name), $_REQUEST);
-                } else {
-                    $this->query = $_REQUEST;
+            } else {
+                if ($saveType == 'all') {
+                    // Bug 39580 - Added 'EmailTreeLayout','EmailGridWidths' to the list as these are added merely as side-effects of the fact that we store the entire
+                    // $_REQUEST object which includes all cookies.  These are potentially quite long strings as well.
+                    $blockVariables = array(
+                        'mass',
+                        'uid',
+                        'massupdate',
+                        'delete',
+                        'merge',
+                        'selectCount',
+                        'current_query_by_page',
+                        'EmailTreeLayout',
+                        'EmailGridWidths'
+                    );
+                    if (isset($_REQUEST['use_store_query']) && $_REQUEST['use_stored_query']) {
+                        $this->query = array_merge(StoreQuery::getStoredQueryForUser($name), $_REQUEST);
+                    } else {
+                        $this->query = $_REQUEST;
+                    }
+                    foreach ($blockVariables as $block) {
+                        unset($this->query[$block]);
+                    }
+                    $this->saveQuery($name);
                 }
-                foreach ($blockVariables as $block) {
-                    unset($this->query[$block]);
-                }
-                $this->saveQuery($name);
             }
         }
+    }
+
+    function clearQuery($name)
+    {
+        $this->query = array();
+        $this->saveQuery($name);
+    }
+
+    /**
+     * SaveQuery
+     *
+     * This function handles saving the query parameters to the user preferences
+     * SavedSearch.php does something very similar when saving saved searches as well
+     *
+     * @see SavedSearch
+     * @param $name String name  to identify this query
+     */
+    function SaveQuery($name)
+    {
+        global $current_user, $timedate;
+        if (isset($this->query['module'])) {
+            $bean = loadBean($this->query['module']);
+            if (!empty($bean)) {
+                foreach ($this->query as $key => $value) {
+                    //Filter date fields to ensure it is saved to DB format, but also avoid empty values
+                    if (!empty($value) && preg_match('/^(start_range_|end_range_|range_)?(.*?)(_advanced|_basic)$/',
+                            $key, $match)
+                    ) {
+                        $field = $match[2];
+                        if (isset($bean->field_defs[$field]['type']) && empty($bean->field_defs[$field]['disable_num_format'])) {
+                            $type = $bean->field_defs[$field]['type'];
+
+                            if (($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && !preg_match('/^\[.*?\]$/',
+                                    $value)
+                            ) {
+                                $db_format = $timedate->to_db_date($value, false);
+                                $this->query[$key] = $db_format;
+                            } else {
+                                if ($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') {
+                                    if (preg_match('/[^\d]/', $value)) {
+                                        require_once('modules/Currencies/Currency.php');
+                                        $this->query[$key] = unformat_number($value);
+                                        //Flag this value as having been unformatted
+                                        $this->query[$key . '_unformatted_number'] = true;
+                                        //If the type is of currency and there was a currency symbol (non-digit), save the symbol
+                                        if ($type == 'currency' && preg_match('/^([^\d])/', $value, $match)) {
+                                            $this->query[$key . '_currency_symbol'] = $match[1];
+                                        }
+                                    } else {
+                                        //unset any flags
+                                        if (isset($this->query[$key . '_unformatted_number'])) {
+                                            unset($this->query[$key . '_unformatted_number']);
+                                        }
+
+                                        if (isset($this->query[$key . '_currency_symbol'])) {
+                                            unset($this->query[$key . '_currency_symbol']);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $current_user->setPreference($name . 'Q', $this->query);
     }
 
     function saveFromGet($name)
@@ -239,24 +280,13 @@ class StoreQuery
                 }
                 $this->saveQuery($name);
 
-            } else if ($saveType == 'all') {
-                $this->query = $_GET;
-                $this->saveQuery($name);
+            } else {
+                if ($saveType == 'all') {
+                    $this->query = $_GET;
+                    $this->saveQuery($name);
+                }
             }
         }
-    }
-
-    /**
-     * Static method to retrieve the user's stored query for a particular module
-     *
-     * @param string $module
-     * @return array
-     */
-    public static function getStoredQueryForUser($module)
-    {
-        global $current_user;
-
-        return $current_user->getPreference($module . 'Q');
     }
 }
 

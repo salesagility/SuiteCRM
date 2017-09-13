@@ -1,11 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,33 +34,16 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class ViewAdminsettings extends SugarView
 {
-    /**
-     * @see SugarView::_getModuleTab()
-     */
-    protected function _getModuleTab()
-    {
-        return 'Administration';
-    }
-
-    /**
-     * @see SugarView::_getModuleTitleParams()
-     */
-    protected function _getModuleTitleParams($browserTitle = false)
-    {
-        global $mod_strings;
-
-        return array(
-            "<a href='index.php?module=Administration&action=index'>" . translate('LBL_MODULE_NAME', 'Administration') . "</a>",
-            $mod_strings['LBL_MODULE_NAME'],
-        );
-    }
-
     /**
      * @see SugarView::display()
      */
@@ -74,7 +57,13 @@ class ViewAdminsettings extends SugarView
         // Handle posts
         if (!empty($_REQUEST['process'])) {
             // Check the cleanup logic hook, make sure it is still there
-            check_logic_hook_file('Users', 'after_login', array(1, 'SugarFeed old feed entry remover', 'modules/SugarFeed/SugarFeedFlush.php', 'SugarFeedFlush', 'flushStaleEntries'));
+            check_logic_hook_file('Users', 'after_login', array(
+                1,
+                'SugarFeed old feed entry remover',
+                'modules/SugarFeed/SugarFeedFlush.php',
+                'SugarFeedFlush',
+                'flushStaleEntries'
+            ));
 
             // We have data posted
             if ($_REQUEST['process'] == 'true') {
@@ -114,23 +103,26 @@ class ViewAdminsettings extends SugarView
                     $modulesWithFeeds = SugarFeed::getAllFeedModules();
 
                     foreach ($modulesWithFeeds as $currFeedModule) {
-                        SugarFeed::disableModuleFeed($currFeedModule, FALSE);
+                        SugarFeed::disableModuleFeed($currFeedModule, false);
                     }
                 }
 
-                $admin->retrieveSettings(FALSE, TRUE);
+                $admin->retrieveSettings(false, true);
                 SugarFeed::flushBackendCache();
-            } else if ($_REQUEST['process'] == 'deleteRecords') {
-                if (!isset($db)) {
-                    $db = DBManagerFactory::getInstance();
+            } else {
+                if ($_REQUEST['process'] == 'deleteRecords') {
+                    if (!isset($db)) {
+                        $db = DBManagerFactory::getInstance();
+                    }
+                    $db->query("UPDATE sugarfeed SET deleted = '1'");
+                    echo(translate('LBL_RECORDS_DELETED', 'SugarFeed'));
                 }
-                $db->query("UPDATE sugarfeed SET deleted = '1'");
-                echo(translate('LBL_RECORDS_DELETED', 'SugarFeed'));
             }
 
 
             if ($_REQUEST['process'] == 'true' || $_REQUEST['process'] == 'false') {
                 header('Location: index.php?module=Administration&action=index');
+
                 return;
             }
         }
@@ -177,12 +169,35 @@ class ViewAdminsettings extends SugarView
         echo getClassicModuleTitle(
             "Administration",
             array(
-                "<a href='index.php?module=Administration&action=index'>" . translate('LBL_MODULE_NAME', 'Administration') . "</a>",
+                "<a href='index.php?module=Administration&action=index'>" . translate('LBL_MODULE_NAME',
+                    'Administration') . "</a>",
                 $mod_strings['LBL_MODULE_NAME'],
             ),
             false
         );
         $sugar_smarty->display('modules/SugarFeed/tpls/AdminSettings.tpl');
+    }
+
+    /**
+     * @see SugarView::_getModuleTab()
+     */
+    protected function _getModuleTab()
+    {
+        return 'Administration';
+    }
+
+    /**
+     * @see SugarView::_getModuleTitleParams()
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
+
+        return array(
+            "<a href='index.php?module=Administration&action=index'>" . translate('LBL_MODULE_NAME',
+                'Administration') . "</a>",
+            $mod_strings['LBL_MODULE_NAME'],
+        );
     }
 }
 

@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,14 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
 
 require_once('include/OutboundEmail/OutboundEmail.php');
 require_once('modules/InboundEmail/Overview.php');
@@ -218,7 +217,7 @@ class InboundEmail extends SugarBean
         $this->deleteCache();
     }
 
-        /**
+    /**
      * Deletes all rows for a given instance
      */
     public function deleteCache()
@@ -774,7 +773,7 @@ class InboundEmail extends SugarBean
         return $ret;
     }
 
-public function generateMultiDimArrayFromFlatArray($raw, $delimiter)
+    public function generateMultiDimArrayFromFlatArray($raw, $delimiter)
     {
         // generate a multi-dimensional array to iterate through
         $ret = array();
@@ -811,7 +810,7 @@ public function generateMultiDimArrayFromFlatArray($raw, $delimiter)
         return $ret;
     }
 
-public function retrieveDelimiter()
+    public function retrieveDelimiter()
     {
         $delimiter = $this->get_stored_options('folderDelimiter');
         if (!$delimiter) {
@@ -845,7 +844,7 @@ public function retrieveDelimiter()
         return unserialize(base64_decode($this->stored_options));
     }
 
-        /**
+    /**
      * @param array $options
      */
     public function setStoredOptions($options)
@@ -871,7 +870,7 @@ public function retrieveDelimiter()
         return $default_value;
     }
 
-public function generateFlatArrayFromMultiDimArray($arraymbox, $delimiter)
+    public function generateFlatArrayFromMultiDimArray($arraymbox, $delimiter)
     {
         $ret = array();
         foreach ($arraymbox as $key => $value) {
@@ -893,7 +892,7 @@ public function generateFlatArrayFromMultiDimArray($arraymbox, $delimiter)
         } // if
     }
 
-public function filterMailBoxFromRaw($mailboxArray, $rawArray)
+    public function filterMailBoxFromRaw($mailboxArray, $rawArray)
     {
         $newArray = array_intersect($mailboxArray, $rawArray);
         sort($newArray);
@@ -1062,7 +1061,7 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         );
     }
 
-        /**
+    /**
      * constructs a nicely formatted version of raw source
      * @param int $uid UID of email
      * @return string
@@ -1244,7 +1243,7 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         return true;
     }
 
-        /**
+    /**
      * sends a command down to the POP3 server
      * @param string command
      * @param string args
@@ -1399,6 +1398,88 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
     }
 
     /**
+     * This method returns all the UIDL for this account. This should be called if the protocol is pop3
+     * @return array od messageno to UIDL array
+     */
+    public function pop3_getUIDL()
+    {
+        $UIDLs = array();
+        if ($this->pop3_open()) {
+            // authenticate
+            $this->pop3_sendCommand("USER", $this->email_user);
+            $this->pop3_sendCommand("PASS", $this->email_password);
+
+            // get UIDLs
+            $this->pop3_sendCommand("UIDL", '', false); // leave socket buffer alone until the while()
+            fgets($this->pop3socket, 1024); // handle "OK+";
+            $UIDLs = array();
+
+            $buf = '!';
+
+            if (is_resource($this->pop3socket)) {
+                while (!feof($this->pop3socket)) {
+                    $buf = fgets(
+                        $this->pop3socket,
+                        1024
+                    ); // 8kb max buffer - shouldn't be more than 80 chars via pop3...
+                    //_pp(trim($buf));
+
+                    if (trim($buf) == '.') {
+                        $GLOBALS['log']->debug("*** GOT '.'");
+                        break;
+                    }
+
+                    // format is [msgNo] [UIDL]
+                    $exUidl = explode(" ", $buf);
+                    $UIDLs[$exUidl[0]] = trim($exUidl[1]);
+                } // while
+            } // if
+            $this->pop3_cleanUp();
+        } // if
+
+        return $UIDLs;
+    }
+
+    /**
+     * retrieves cached uidl values.
+     * When dealing with POP3 accounts, the message_id column in email_cache will contain the UIDL.
+     * @return array
+     */
+    public function pop3_getCacheUidls()
+    {
+        $q = "SELECT msgno, message_id FROM email_cache WHERE ie_id = '{$this->id}'";
+        $r = $this->db->query($q);
+
+        $ret = array();
+        while ($a = $this->db->fetchByAssoc($r)) {
+            $ret[$a['msgno']] = $a['message_id'];
+        }
+
+        return $ret;
+    }
+
+    /**
+     * Iterates through msgno and message_id to remove dirty cache entries
+     * @param array diff
+     */
+    public function pop3_shiftCache($diff, $cacheUIDLs)
+    {
+        $msgNos = "";
+        $msgIds = "";
+        $newArray = array();
+        foreach ($diff as $msgNo => $msgId) {
+            if (in_array($msgId, $cacheUIDLs)) {
+                $q1 = "UPDATE email_cache SET imap_uid = {$msgNo}, msgno = {$msgNo} WHERE ie_id = '{$this->id}' AND message_id = '{$msgId}'";
+                $this->db->query($q1);
+            } else {
+                $newArray[$msgNo] = $msgId;
+            }
+        }
+
+        return $newArray;
+    }
+
+    /**
      * merges new info with the saved cached file
      * @param array $array Array of email Overviews
      * @param string $type 'append' or 'remove'
@@ -1531,6 +1612,23 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         $this->currentCache = $ret;
 
         return $ret;
+    }
+
+    /**
+     * Fetches a timestamp
+     */
+    public function getCacheTimestamp($mbox)
+    {
+        $key = $this->db->quote("{$this->id}_{$mbox}");
+        $q = "SELECT ie_timestamp FROM inbound_email_cache_ts WHERE id = '{$key}'";
+        $r = $this->db->query($q);
+        $a = $this->db->fetchByAssoc($r);
+
+        if (empty($a)) {
+            return -1;
+        }
+
+        return $a['ie_timestamp'];
     }
 
     /**
@@ -1730,6 +1828,12 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         }
 
     }
+    ////	END EMAIL 2.0 SPECIFIC
+    ///////////////////////////////////////////////////////////////////////////
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    ////	SERVER MANIPULATION METHODS
 
     /**
      * Special handler for POP3 boxes.  Standard IMAP commands are useless.
@@ -1849,7 +1953,7 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         return array('status' => "done");
     }
 
-/**
+    /**
      * Deletes all the pop3 data which has been deleted from server
      */
     public function deletePop3Cache()
@@ -1873,7 +1977,7 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         } // for
     }
 
-/**
+    /**
      * This function is used by cron job for group mailbox without group folder
      * @param string $msgno for pop
      * @param string $uid for imap
@@ -1940,12 +2044,6 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
 
         return $ret;
     }
-    ////	END EMAIL 2.0 SPECIFIC
-    ///////////////////////////////////////////////////////////////////////////
-
-
-    ///////////////////////////////////////////////////////////////////////////
-    ////	SERVER MANIPULATION METHODS
 
     /**
      * retrieves the mailboxes for a given account in the following format
@@ -1981,7 +2079,7 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         $this->deleteCache();
     }
 
-    /**
+        /**
      * Checks email (local caching too) for one mailbox
      * @param string $mailbox IMAP Mailbox path
      * @param bool $prefetch Flag to prefetch email body on check
@@ -2083,7 +2181,7 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         }
 
         return $ret;
-    }
+    } // fn
 
     /**
      * sets the cache timestamp
@@ -2194,7 +2292,7 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         return false;
     }
 
-        /**
+/**
      * fills InboundEmail->email with an email's details
      * @param int uid Unique ID of email
      * @param bool isMsgNo flag that passed ID is msgNo, default false
@@ -2281,9 +2379,9 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         }
 
         return $ret;
-    } // fn
+    }
 
-    /**
+        /**
      * Imports A Single Email
      * @param $msgNo
      * @param $uid
@@ -2572,7 +2670,7 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         }
 
         return true;
-    }
+    } // fn
 
     /**
      * checks for duplicate emails on polling.  The uniqueness of a given email message is determined by a concatenation
@@ -2755,7 +2853,7 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         } // end foreach
     }
 
-        /**
+/**
      * Return a new note object for attachments.
      *
      * @param string $emailId
@@ -2768,7 +2866,7 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         $attach->parent_type = 'Emails';
 
         return $attach;
-    } // fn
+    }
 
     /**
      * tries to figure out what character set a given filename is using and
@@ -2960,7 +3058,7 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         return $ret;
     }
 
-    /**
+        /**
      * figures out if a plain text email body has UUEncoded attachments
      * @param string string The email body
      * @return bool True if UUEncode is detected.
@@ -2977,7 +3075,7 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         }
 
         return false;
-    }
+    } // fn
 
     /**
      * handles UU Encoded emails - a legacy from pre-RFC 822 which must still be supported (?)
@@ -3027,7 +3125,7 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         return $emailBody;
     }
 
-    /**
+        /**
      * wrapper for UUDecode
      * @param string id Id of the email
      * @param string UUEncode Encode US-ASCII
@@ -3078,9 +3176,9 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         } else {
             $GLOBALS['log']->debug('InboundEmail could not create attachment file: ' . $filename);
         }
-    }
+    } // fn
 
-    /**
+        /**
      * takes the output from imap_mime_hader_decode() and handles multiple types of encoding
      * @param string subject Raw subject string from email
      * @return string ret properly formatted UTF-8 string
@@ -3099,9 +3197,9 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         }
 
         return $ret;
-    }
+    } // fn
 
-        /**
+/**
      * Takes a PHP imap_* object's to/from/cc/bcc address field and converts it
      * to a standard string that SugarCRM expects
      * @param    $arr    an array of email address objects
@@ -3118,7 +3216,7 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
 
             return trim($ret);
         }
-    } // fn
+    }
 
     /**
      * returns the HTML text part of a multi-part message
@@ -3212,7 +3310,7 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         return SugarCleaner::cleanHtml($msgPart, false);
     }
 
-        /**
+/**
      * Builds up the "breadcrumb" trail that imap_fetchbody() uses to return
      * parts of an email message, including attachments and inline images
      * @param    $parts    array of objects
@@ -3245,9 +3343,9 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
                 //_pp('found '.$part->subtype.' instead');
             }
         }
-    } // fn
+    }
 
-        /**
+/**
      * Givin an existing breadcrumb add a cooresponding offset
      *
      * @param string $bc
@@ -3276,7 +3374,7 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         }
 
         return implode(".", $results);
-    } // fn
+    }
 
     /**
      * Get the message text from a single mime section, html or plain.
@@ -3563,7 +3661,7 @@ public function filterMailBoxFromRaw($mailboxArray, $rawArray)
         }
     }
 
-public function handleCaseAssignment($email)
+    public function handleCaseAssignment($email)
     {
         $c = new aCase();
         if ($caseId = $this->getCaseIdFromCaseNumber($email->name, $c)) {
@@ -3582,6 +3680,18 @@ public function handleCaseAssignment($email)
 
         return false;
     }
+
+    /*
+        Primary body types for a part of a mail structure (imap_fetchstructure returned object)
+        0 => text
+        1 => multipart
+        2 => message
+        3 => application
+        4 => audio
+        5 => image
+        6 => video
+        7 => other
+    */
 
     /**
      * For mailboxes of type "Support" parse for '[CASE:%1]'
@@ -3623,7 +3733,7 @@ public function handleCaseAssignment($email)
         return false;
     }
 
-public function isMailBoxTypeCreateCase()
+    public function isMailBoxTypeCreateCase()
     {
         return ($this->mailbox_type == 'createcase' && !empty($this->groupfolder_id));
     }
@@ -3757,18 +3867,6 @@ public function isMailBoxTypeCreateCase()
             return true;
         }
     }
-
-    /*
-        Primary body types for a part of a mail structure (imap_fetchstructure returned object)
-        0 => text
-        1 => multipart
-        2 => message
-        3 => application
-        4 => audio
-        5 => image
-        6 => video
-        7 => other
-    */
 
     /**
      * returns true if subject is NOT "out of the office" type
@@ -3968,23 +4066,6 @@ public function isMailBoxTypeCreateCase()
         } // while
 
         return $ret;
-    }
-
-    /**
-     * Fetches a timestamp
-     */
-    public function getCacheTimestamp($mbox)
-    {
-        $key = $this->db->quote("{$this->id}_{$mbox}");
-        $q = "SELECT ie_timestamp FROM inbound_email_cache_ts WHERE id = '{$key}'";
-        $r = $this->db->query($q);
-        $a = $this->db->fetchByAssoc($r);
-
-        if (empty($a)) {
-            return -1;
-        }
-
-        return $a['ie_timestamp'];
     }
 
     /**
@@ -4237,7 +4318,7 @@ eoq;
         return $ret;
     }
 
-    public function checkEmail2_meta()
+        public function checkEmail2_meta()
     {
         global $sugar_config;
 
@@ -4261,7 +4342,7 @@ eoq;
         }
 
         return $ret;
-    }
+    } // fn
 
     public function getMailboxProcessCount($mailbox)
     {
@@ -4325,7 +4406,7 @@ eoq;
         }
     }
 
-        /**
+/**
      * Special handler for POP3 boxes.  Standard IMAP commands are useless.
      */
     public function pop3_checkEmail()
@@ -4394,7 +4475,7 @@ eoq;
 
             return false;
         }
-    } // fn
+    }
 
     /**
      * Checks email (local caching too) for one mailbox
@@ -4595,7 +4676,7 @@ eoq;
         return $ret;
     }
 
-public function retrieveMailBoxFolders()
+    public function retrieveMailBoxFolders()
     {
         $this->mailboxarray = explode(",", $this->mailbox);
     }
@@ -5024,7 +5105,7 @@ public function retrieveMailBoxFolders()
         return false;
     }
 
-/**
+    /**
      * @param $teamIds
      * @return mixed
      */
@@ -5370,7 +5451,7 @@ public function retrieveMailBoxFolders()
         return '';
     }
 
-public function getFoldersListForMailBox()
+    public function getFoldersListForMailBox()
     {
         $return = array();
         $foldersList = $this->getSessionInboundFoldersString(
@@ -5446,7 +5527,7 @@ public function getFoldersListForMailBox()
         return $selectOptions;
     }
 
-public function handleCreateCase($email, $userId)
+    public function handleCreateCase($email, $userId)
     {
         global $current_user, $mod_strings, $current_language;
         $mod_strings = return_module_language($current_language, "Emails");
@@ -5770,7 +5851,11 @@ public function handleCreateCase($email, $userId)
         ///////////////////////////////////////////////////////////////////
     }
 
-/**
+    /**
+     * Override's SugarBean's
+     */
+
+    /**
      * If the importOneEmail returns false, then findout if the duplicate email
      */
     public function getDuplicateEmailId($msgNo, $uid)
@@ -6197,10 +6282,6 @@ public function handleCreateCase($email, $userId)
 
         return SugarCleaner::cleanHtml($msgPart, false);
     }
-
-    /**
-     * Override's SugarBean's
-     */
 
     /**
      * Used to view non imported emails
@@ -7093,7 +7174,7 @@ public function handleCreateCase($email, $userId)
         return false;
     }
 
-    /**
+        /**
      * Returns a list of emails in a mailbox.
      * @param string mbox Name of mailbox using dot notation paths to display
      * @param string $forceRefresh Flag to use cache or not
@@ -7161,7 +7242,7 @@ public function handleCreateCase($email, $userId)
         $metadata['out'] = $out;
 
         return $metadata;
-    }
+    } // fn
 
     public function displayFetchedSortedListXML($ret, $mbox)
     {
@@ -7243,7 +7324,7 @@ public function handleCreateCase($email, $userId)
         }
     }
 
-        /**
+/**
      * Create a sugar folder for this inbound email account
      * if the Enable Auto Import option is selected
      *
@@ -7269,9 +7350,9 @@ public function handleCreateCase($email, $userId)
         $folder->save($addSubscriptions);
 
         return $guid;
-    } // fn
+    }
 
-public function getMailBoxesForGroupAccount()
+        public function getMailBoxesForGroupAccount()
     {
         $mailboxes = $this->generateMultiDimArrayFromFlatArray(
             explode(",", $this->mailbox),
@@ -7282,9 +7363,9 @@ public function getMailBoxesForGroupAccount()
         $this->saveMailBoxFolders($mailboxesArray);
 
         return $mailboxes;
-    }
+    } // fn
 
-    public function saveMailBoxFolders($value)
+        public function saveMailBoxFolders($value)
     {
         if (is_array($value)) {
             $value = implode(",", $value);
@@ -7293,9 +7374,9 @@ public function getMailBoxesForGroupAccount()
         $value = $this->db->quoted($value);
         $query = "update inbound_email set mailbox = $value where id ='{$this->id}'";
         $this->db->query($query);
-    }
+    } // fn
 
-    public function insertMailBoxFolders($value)
+        public function insertMailBoxFolders($value)
     {
         $query = "select value from config where category='InboundEmail' and name='{$this->id}'";
         $r = $this->db->query($query);
@@ -7310,15 +7391,15 @@ public function getMailBoxesForGroupAccount()
             $query = "INSERT INTO config VALUES('InboundEmail', '{$this->id}', $value)";
             $this->db->query($query);
         } // if
-    }
+    } // fn
 
-        public function saveMailBoxValueOfInboundEmail()
+    public function saveMailBoxValueOfInboundEmail()
     {
         $query = "update Inbound_email set mailbox = '{$this->email_user}'";
         $this->db->query($query);
     } // fn
 
-    /**
+/**
      * Get Email messages IDs from server which aren't in database
      * @return array Ids of messages, which aren't still in database
      */
@@ -7420,9 +7501,9 @@ public function getMailBoxesForGroupAccount()
         $GLOBALS['log']->debug('-----> getNewEmailsForSyncedMailbox() got ' . count($result) . ' unsynced messages');
 
         return $result;
-    } // fn
+    }
 
-        /**
+/**
      * Import new messages from given account.
      */
     public function importMessages()
@@ -7441,9 +7522,9 @@ public function getMailBoxesForGroupAccount()
                 imap_close($this->conn);
                 break;
         }
-    } // fn
+    }
 
-        /**
+/**
      * Import messages from specified mailbox
      *
      * @param string $protocol Mailing protocol
@@ -7473,7 +7554,7 @@ public function getMailBoxesForGroupAccount()
             $GLOBALS['log']->info('Importing message no: ' . $msgNumber);
             $this->returnImportedEmail($msgNumber, $uid, false, false);
         }
-    } // fn
+    }
 
     public function getPop3NewMessagesToDownload()
     {
@@ -7486,88 +7567,6 @@ public function getMailBoxesForGroupAccount()
 
         // get all the keys which are msgnos;
         return array_keys($diff);
-    }
-
-/**
-     * This method returns all the UIDL for this account. This should be called if the protocol is pop3
-     * @return array od messageno to UIDL array
-     */
-    public function pop3_getUIDL()
-    {
-        $UIDLs = array();
-        if ($this->pop3_open()) {
-            // authenticate
-            $this->pop3_sendCommand("USER", $this->email_user);
-            $this->pop3_sendCommand("PASS", $this->email_password);
-
-            // get UIDLs
-            $this->pop3_sendCommand("UIDL", '', false); // leave socket buffer alone until the while()
-            fgets($this->pop3socket, 1024); // handle "OK+";
-            $UIDLs = array();
-
-            $buf = '!';
-
-            if (is_resource($this->pop3socket)) {
-                while (!feof($this->pop3socket)) {
-                    $buf = fgets(
-                        $this->pop3socket,
-                        1024
-                    ); // 8kb max buffer - shouldn't be more than 80 chars via pop3...
-                    //_pp(trim($buf));
-
-                    if (trim($buf) == '.') {
-                        $GLOBALS['log']->debug("*** GOT '.'");
-                        break;
-                    }
-
-                    // format is [msgNo] [UIDL]
-                    $exUidl = explode(" ", $buf);
-                    $UIDLs[$exUidl[0]] = trim($exUidl[1]);
-                } // while
-            } // if
-            $this->pop3_cleanUp();
-        } // if
-
-        return $UIDLs;
-    }
-
-    /**
-     * retrieves cached uidl values.
-     * When dealing with POP3 accounts, the message_id column in email_cache will contain the UIDL.
-     * @return array
-     */
-    public function pop3_getCacheUidls()
-    {
-        $q = "SELECT msgno, message_id FROM email_cache WHERE ie_id = '{$this->id}'";
-        $r = $this->db->query($q);
-
-        $ret = array();
-        while ($a = $this->db->fetchByAssoc($r)) {
-            $ret[$a['msgno']] = $a['message_id'];
-        }
-
-        return $ret;
-    }
-
-    /**
-     * Iterates through msgno and message_id to remove dirty cache entries
-     * @param array diff
-     */
-    public function pop3_shiftCache($diff, $cacheUIDLs)
-    {
-        $msgNos = "";
-        $msgIds = "";
-        $newArray = array();
-        foreach ($diff as $msgNo => $msgId) {
-            if (in_array($msgId, $cacheUIDLs)) {
-                $q1 = "UPDATE email_cache SET imap_uid = {$msgNo}, msgno = {$msgNo} WHERE ie_id = '{$this->id}' AND message_id = '{$msgId}'";
-                $this->db->query($q1);
-            } else {
-                $newArray[$msgNo] = $msgId;
-            }
-        }
-
-        return $newArray;
     }
 
     /**

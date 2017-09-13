@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,60 +33,57 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
- 
 #main #content {
-padding: 0;
+    padding: 0;
 }
+
 .view h4 {
-font-size: 16px;
-color: #C60C30;
+    font-size: 16px;
+    color: #C60C30;
 }
+
 .view h2 {
-text-align: left;
-color: #C60C30;
+    text-align: left;
+    color: #C60C30;
 }
-#welcome 
-{
+
+#welcome {
     background-image: none;
     vertical-align: middle;
-	margin-top: 0px;
-	height: auto;
-	padding: 0;
-	float: none;
-	border: 0px none;
+    margin-top: 0px;
+    height: auto;
+    padding: 0;
+    float: none;
+    border: 0px none;
 }
 
 .dashletPanelMenu .bd .screen {
-	background-color: transparent;
+    background-color: transparent;
     display: none;
     width: 820px;
-	margin: 0px;
-	padding: 0px; 
-	border: 0px none;
+    margin: 0px;
+    padding: 0px;
+    border: 0px none;
 }
 
-.edit td[scope="row"] 
-{
-color: #666;
+.edit td[scope="row"] {
+    color: #666;
 }
 
-.edit tr td[scope="row"],.edit tr th {
-background-color: #fff;
+.edit tr td[scope="row"], .edit tr th {
+    background-color: #fff;
 }
 
-
-div.nav-buttons
-{
+div.nav-buttons {
     margin-top: 1em;
     text-align: right;
 }
 
-div.screen div.edit.view
-{
+div.screen div.edit.view {
     height: 440px;
     width: auto;
     margin-top: 0;
@@ -93,84 +91,89 @@ div.screen div.edit.view
     padding: 20px !important;
 }
 
-div.screen div.edit.view > table
-{
+div.screen div.edit.view > table {
     padding: 0 !important;
 }
 
-div.screen div.edit.view td
-{
+div.screen div.edit.view td {
     text-align: left;
 }
 
-div.screen div.edit.view td i
-{
+div.screen div.edit.view td i {
     display: block;
     padding-bottom: 15px;
 }
 
-div.screen div.edit.view th h2
-{
+div.screen div.edit.view th h2 {
     padding-bottom: 10px;
 }
 
 .dashletPanelMenu .bd .bd-center {
-padding-top: 0px;
+    padding-top: 0px;
 }
 
 .edit, .detail, .detail > table {
-border-color: #aaa;
+    border-color: #aaa;
 }
-button,button[selected],button:focus {
-	border: 1px solid #999;
-	background-color: #fff;
-	color: #999;
-	font-weight: bold;
-	font-size: 16px;
-	}
-	
+
+button, button[selected], button:focus {
+    border: 1px solid #999;
+    background-color: #fff;
+    color: #999;
+    font-weight: bold;
+    font-size: 16px;
+}
+
 button:hover {
-	background-image: none;
-	background-color: #fff;
+    background-image: none;
+    background-color: #fff;
 }
 
 #smtpButtonGroup img {
 }
 
- #smtpButtonGroup button
-{
+#smtpButtonGroup button {
     height: 40px;
 }
-.yui-button .first-child{
-border: none;
+
+.yui-button .first-child {
+    border: none;
 }
 
 .yui-button button, .yui-button a {
-	border: 1px solid #ccc;
-	color: #999;
-	font-weight: bold;
-	font-size: 16px;
+    border: 1px solid #ccc;
+    color: #999;
+    font-weight: bold;
+    font-size: 16px;
 }
+
 .yui-button button:hover, .yui-button a:hover {
-	border: 1px solid #999;
-	color: #999;
-	font-weight: bold;
-	font-size: 16px;
+    border: 1px solid #999;
+    color: #999;
+    font-weight: bold;
+    font-size: 16px;
 }
 
 .yui-button {
-border-width: 0px;
+    border-width: 0px;
 }
 
 .yui-radio-button-checked button, .yui-checkbox-button-checked button {
-	background-color: #fff;
-	color: #999;
+    background-color: #fff;
+    color: #999;
 }
 
-div.screen .view td a 
-{
+div.screen .view td a {
     font-size: 14px;
 }
-.userWizWelcome {margin: 10px -30px 0pt 0pt; width: 770px;}
 
-#userWizFrame {width: 770px; height: 325px; border: none;}
+.userWizWelcome {
+    margin: 10px -30px 0pt 0pt;
+    width: 770px;
+}
+
+#userWizFrame {
+    width: 770px;
+    height: 325px;
+    border: none;
+}

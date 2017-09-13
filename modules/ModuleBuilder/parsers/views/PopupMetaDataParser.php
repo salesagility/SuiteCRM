@@ -42,7 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 require_once('modules/ModuleBuilder/parsers/views/ListLayoutMetaDataParser.php');
 require_once('modules/ModuleBuilder/parsers/views/SearchViewMetaDataParser.php');
 require_once 'modules/ModuleBuilder/parsers/constants.php';
@@ -51,12 +50,6 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
 {
 
     // Columns is used by the view to construct the listview - each column is built by calling the named function
-    public $columns = array(
-        'LBL_DEFAULT' => 'getDefaultFields',
-        'LBL_AVAILABLE' => 'getAdditionalFields',
-        'LBL_HIDDEN' => 'getAvailableFields'
-    );
-
     public static $reserveProperties = array(
         'moduleMain',
         'varName',
@@ -66,9 +59,12 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
         'create',
         'addToReserve'
     );
-
     public static $defsMap = array(MB_POPUPSEARCH => 'searchdefs', MB_POPUPLIST => 'listviewdefs');
-
+    public $columns = array(
+        'LBL_DEFAULT' => 'getDefaultFields',
+        'LBL_AVAILABLE' => 'getAdditionalFields',
+        'LBL_HIDDEN' => 'getAvailableFields'
+    );
     /**
      * @var bool $search
      */
@@ -81,8 +77,8 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
      * $this->columns   Array of 'Column LBL'=>function_to_retrieve_fields_for_this_column() - expected by the view
      *
      * @param string $view
-     * @param string $moduleName     The name of the module to which this listview belongs
-     * @param string $packageName    If not empty, the name of the package to which this listview belongs
+     * @param string $moduleName The name of the module to which this listview belongs
+     * @param string $packageName If not empty, the name of the package to which this listview belongs
      */
     public function __construct($view, $moduleName, $packageName = '')
     {
