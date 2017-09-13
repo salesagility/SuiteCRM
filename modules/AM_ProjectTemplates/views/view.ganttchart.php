@@ -90,10 +90,9 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
                     <fieldset>
 						<table width="100%">
 							<tr><td width="50%">
-							<input type="hidden" name="project_template_id" id="project_template_id" value="
-							<?php echo $project_template->id; ?>">
-							<input type="hidden" name="override_business_hours" id="override_business_hours" value="
-							<?php echo $project_template->override_business_hours; ?>">
+
+							<input type="hidden" name="project_template_id" id="project_template_id" value="<?php echo $project_template->id; ?>">
+							<input type="hidden" name="override_business_hours" id="override_business_hours" value="<?php echo $project_template->override_business_hours; ?>">
 							<input type="hidden" name="Start" id="Start" value="">
 							<input type="hidden" name="Actual_duration" id="Actual_duration" value="0">
 							
@@ -101,21 +100,14 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
 							<input type="radio" name="Milestone" value="Subtask" checked="checked" id="Subtask" />
 							<label id="Subtask_label" for="Subtask"><?php echo $mod_strings['LBL_SUBTASK'];?></label>
 							<input type="radio" name="Milestone" value="Milestone" id="Milestone" />
-							<label id="Milestone_label" for="Milestone">
-                                <?php echo $mod_strings['LBL_MILESTONE_FLAG'];?></label>&nbsp;<br /><br />
-							<label id="parent_task_id" for="parent_task" style="display: none;">
-                                <?php echo $mod_strings['LBL_PARENT_TASK_ID']; ?></label>
-							<input id="parent_task" class="text ui-widget-content ui-corner-all" style="display: none;"
-                                   type="text" name="parent_task" value="" />
+							<label id="Milestone_label" for="Milestone"><?php echo $mod_strings['LBL_MILESTONE_FLAG'];?></label>&nbsp;<br /><br />
+							<label id="parent_task_id" for="parent_task" style="display: none;"><?php echo $mod_strings['LBL_PARENT_TASK_ID']; ?></label>
+							<input id="parent_task" class="text ui-widget-content ui-corner-all" style="display: none;" type="text" name="parent_task" value="" />
 							<label for="task_name"><?php echo $mod_strings['LBL_TASK_NAME']; ?></label>
 							<input type="text" name="task_name" id="task_name" class="text ui-widget-content ui-corner-all" />
 							<label for="Predecessor"><?php echo $mod_strings['LBL_PREDECESSORS'];?></label>
 							<?php
-							echo '<select id="Predecessor" name="Predecessor" class="text ui-widget-content ui-corner-all" />';
-						    foreach ($tasks as $task) {
-								echo '<option rel="'.$task->id.'" value="'.$task->order_number.'">'.$task->name.'</opion>';
-							}
-							echo '</select>';
+                            echo '<select id="Predecessor" name="Predecessor" class="text ui-widget-content ui-corner-all" /></select>';
 							?>
 							<label for="relation_type"><?php echo $mod_strings['LBL_RELATIONSHIP_TYPE'];?></label>
 							<?php
@@ -124,6 +116,7 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
 							</select>';
 
 							?>
+
 
 						</td><td width="50%">
 
@@ -178,18 +171,13 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
         echo '<div style="display: none;" id="dialog-confirm" title="'.$mod_strings['LBL_CREATE_PROJECT_TITLE'].'">
                  <p class="validateTips"></p>
                 <p class="p_form">
-                     <form id="project_form" name="project_form"
-                     action="index.php?module=AM_ProjectTemplates&action=create_project" method="post">
+                     <form id="project_form" name="project_form" action="index.php?module=AM_ProjectTemplates&action=create_project" method="post">
                         <fieldset style="border: none;">
-                             <label for="name">'.$mod_strings['LBL_PROJECT_NAME'].':<span class="required">*</span>
-                             </label>
-                             <input style="margin-bottom:12px; width:95%; padding: .4em;" type="text" name="p_name"
-                             id="p_name" class="text ui-widget-content ui-corner-all" />
+                             <label for="name">'.$mod_strings['LBL_PROJECT_NAME'].':<span class="required">*</span></label>
+                             <input style="margin-bottom:12px; width:95%; padding: .4em;" type="text" name="p_name" id="p_name" class="text ui-widget-content ui-corner-all" />
 
-                             <label for="start_date">'.$mod_strings['LBL_START_DATE'].':<span class="required">*</span>
-                             </label>
-                             <input style="margin-bottom:12px; width:95%; padding: .4em;" type="text" name="start_date"
-                             id="start_date" class="text ui-widget-content ui-corner-all" />
+                             <label for="start_date">'.$mod_strings['LBL_START_DATE'].':<span class="required">*</span></label>
+                             <input style="margin-bottom:12px; width:95%; padding: .4em;" type="text" name="start_date" id="start_date" class="text ui-widget-content ui-corner-all" />
 
                              <script type="text/javascript">
                                 var now = new Date();
@@ -204,17 +192,12 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
                                     startWeekday: 0
                                 });
                                 addForm("project_form");
-                                addToValidate("project_form", "p_name", "name",
-                                true,"'.$mod_strings['LBL_PROJECT_NAME'].'" );
-                                addToValidate("project_form", "start_date", "date",
-                                true,"'.$mod_strings['LBL_START_DATE'].'" );
+                                addToValidate("project_form", "p_name", "name", true,"'.$mod_strings['LBL_PROJECT_NAME'].'" );
+                                addToValidate("project_form", "start_date", "date", true,"'.$mod_strings['LBL_START_DATE'].'" );
                             </script>
 							 <label for="copy_all_tasks">'.$mod_strings['LBL_COPY_ALL_TASKS'].':</label>&nbsp;
-                             <input type="checkbox" style="position: relative; vertical-align:middle"
-                             id="copy_all_tasks" name="copy_all_tasks" value="1" title="" />&nbsp;
-							 <span style="position: relative;"  id="copy_all_tasks_help"><!--not_in_theme!-->
-							 <img border="0" src="themes/SuiteP/images/info_inline.gif"
-							 alt="Help class="info" vertical-align="middle"></span>
+                             <input type="checkbox" style="position: relative; vertical-align:middle" id="copy_all_tasks" name="copy_all_tasks" value="1" title="" />&nbsp;
+							 <span style="position: relative;"  id="copy_all_tasks_help"><!--not_in_theme!--><img border="0" src="themes/SuiteR/images/info_inline.gif" alt="Help class="info" vertical-align="middle"></span>
 							<script type="text/javascript">
 
 									var help = $("#copy_all_tasks_help");
@@ -299,7 +282,14 @@ class="gantt_button">' . $mod_strings['LBL_ADD_NEW_TASK'] . '</button></div>';
 
     }
 
-    //Returns the time span between two dates in years  months and days
+    /**
+     * This function rturns the time span between two dates in years months and days
+     *
+     * @param string $start_date a formatted date string
+     * @param string $end_date a formatted date string
+     *
+     * @return string formmated date string
+     */
     function time_range($start_date, $end_date)
     {
         global $mod_strings;
@@ -308,6 +298,7 @@ class="gantt_button">' . $mod_strings['LBL_ADD_NEW_TASK'] . '</button></div>';
         $datetime2 = new DateTime($end_date);
         $datetime2->add(new DateInterval('P1D')); //Add 1 day to include the end date as a day
         $interval = $datetime1->diff($datetime2);
-        return $interval->format('%m '.$mod_strings['LBL_MONTHS'].', %d '.$mod_strings['LBL_DAYS']);
+
+        return $interval->format('%m ' . $mod_strings['LBL_MONTHS'] . ', %d ' . $mod_strings['LBL_DAYS']);
     }
 }
