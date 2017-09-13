@@ -195,21 +195,27 @@ HTML;
         return $html;
     }
 
-    private static function getFieldEnumRadioGroupHTML($appListStringsFieldOptions, $lead, $fieldName, $colsField, $fieldRequired) {
+    private static function getFieldEnumRadioGroupHTML(
+        $appListStringsFieldOptions,
+        $lead,
+        $fieldName,
+        $colsField,
+        $fieldRequired
+    ) {
         $_required = $fieldRequired ? ' required' : '';
         $html = '';
-        foreach($appListStringsFieldOptions as $field_option_key => $field_option){
-            if($field_option != null){
-                if(!empty($lead->$fieldName) && in_array($field_option_key,unencodeMultienum($lead->$fieldName))) {
+        foreach ($appListStringsFieldOptions as $field_option_key => $field_option) {
+            if ($field_option != null) {
+                if (!empty($lead->$fieldName) && in_array($field_option_key, unencodeMultienum($lead->$fieldName))) {
                     $_checked = ' checked';
                 } else {
                     $_checked = '';
                 }
-                $html .="<input id=\"{$colsField}_$field_option_key\" name=\"$colsField\" value=\"$field_option_key\" type=\"radio\"$_checked$_required>";
-                // todo ??? -->
-                $html .="<span ='document.getElementById('".$lead->field_defs[$colsField]."_$field_option_key').checked =true style='cursor:default'; onmousedown='return false;'>$field_option</span><br>";
+                $html .= "<input id=\"{$colsField}_$field_option_key\" name=\"$colsField\" value=\"$field_option_key\" type=\"radio\"$_checked$_required>";
+                $html .= "<span ='document.getElementById('" . $lead->field_defs[$colsField] . "_$field_option_key').checked =true style='cursor:default'; onmousedown='return false;'>$field_option</span><br>";
             }
         }
+
         return $html;
     }
 

@@ -4744,42 +4744,36 @@
 				oRet[sMappedName] = oSrc[sName];
 			}
 		}
-		
-		
-		/**
-		 * Extend objects - very similar to jQuery.extend, but deep copy objects, and shallow
-		 * copy arrays. The reason we need to do this, is that we don't want to deep copy array
-		 * init values (such as aaSorting) since the dev wouldn't be able to override them, but
-		 * we do want to deep copy arrays.
-		 *  @param {object} oOut Object to extend
-		 *  @param {object} oExtender Object from which the properties will be applied to oOut
-		 *  @returns {object} oOut Reference, just for convenience - oOut === the return.
-		 *  @memberof DataTable#oApi
-		 *  @todo This doesn't take account of arrays inside the deep copied objects.
-		 */
-		function _fnExtend( oOut, oExtender )
-		{
-			var val;
-			
-			for ( var prop in oExtender )
-			{
-				if ( oExtender.hasOwnProperty(prop) )
-				{
-					val = oExtender[prop];
-		
-					if ( typeof oInit[prop] === 'object' && val !== null && $.isArray(val) === false )
-					{
-						$.extend( true, oOut[prop], val );
-					}
-					else
-					{
-						oOut[prop] = val;
-					}
-				}
-			}
-		
-			return oOut;
-		}
+
+
+      /**
+       * Extend objects - very similar to jQuery.extend, but deep copy objects, and shallow
+       * copy arrays. The reason we need to do this, is that we don't want to deep copy array
+       * init values (such as aaSorting) since the dev wouldn't be able to override them, but
+       * we do want to deep copy arrays.
+       *  @param {object} oOut Object to extend
+       *  @param {object} oExtender Object from which the properties will be applied to oOut
+       *  @returns {object} oOut Reference, just for convenience - oOut === the return.
+       *  @memberof DataTable#oApi
+       */
+      function _fnExtend(oOut, oExtender) {
+        var val;
+
+        for (var prop in oExtender) {
+          if (oExtender.hasOwnProperty(prop)) {
+            val = oExtender[prop];
+
+            if (typeof oInit[prop] === 'object' && val !== null && $.isArray(val) === false) {
+              $.extend(true, oOut[prop], val);
+            }
+            else {
+              oOut[prop] = val;
+            }
+          }
+        }
+
+        return oOut;
+      }
 		
 		
 		/**
@@ -10531,31 +10525,23 @@
 		 */
 		"sWidth": null
 	};
-	
-	
-	
-	/**
-	 * DataTables settings object - this holds all the information needed for a
-	 * given table, including configuration, data and current application of the
-	 * table options. DataTables does not have a single instance for each DataTable
-	 * with the settings attached to that instance, but rather instances of the
-	 * DataTable "class" are created on-the-fly as needed (typically by a 
-	 * $().dataTable() call) and the settings object is then applied to that
-	 * instance.
-	 * 
-	 * Note that this object is related to {@link DataTable.defaults} but this 
-	 * one is the internal data store for DataTables's cache of columns. It should
-	 * NOT be manipulated outside of DataTables. Any configuration should be done
-	 * through the initialisation options.
-	 *  @namespace
-	 *  @todo Really should attach the settings object to individual instances so we
-	 *    don't need to create new instances on each $().dataTable() call (if the
-	 *    table already exists). It would also save passing oSettings around and
-	 *    into every single function. However, this is a very significant 
-	 *    architecture change for DataTables and will almost certainly break
-	 *    backwards compatibility with older installations. This is something that
-	 *    will be done in 2.0.
-	 */
+
+
+  /**
+   * DataTables settings object - this holds all the information needed for a
+   * given table, including configuration, data and current application of the
+   * table options. DataTables does not have a single instance for each DataTable
+   * with the settings attached to that instance, but rather instances of the
+   * DataTable "class" are created on-the-fly as needed (typically by a
+   * $().dataTable() call) and the settings object is then applied to that
+   * instance.
+   *
+   * Note that this object is related to {@link DataTable.defaults} but this
+   * one is the internal data store for DataTables's cache of columns. It should
+   * NOT be manipulated outside of DataTables. Any configuration should be done
+   * through the initialisation options.
+   *  @namespace
+   */
 	DataTable.models.oSettings = {
 		/**
 		 * Primary features of DataTables and their enablement state.
@@ -10860,20 +10846,19 @@
 		 *  @default []
 		 */
 		"aoPreSearchCols": [],
-		
-		/**
-		 * Sorting that is applied to the table. Note that the inner arrays are
-		 * used in the following manner:
-		 * <ul>
-		 *   <li>Index 0 - column number</li>
-		 *   <li>Index 1 - current sorting direction</li>
-		 *   <li>Index 2 - index of asSorting for this column</li>
-		 * </ul>
-		 * Note that this parameter will be set by the initialisation routine. To
-		 * set a default use {@link DataTable.defaults}.
-		 *  @type array
-		 *  @todo These inner arrays should really be objects
-		 */
+
+      /**
+       * Sorting that is applied to the table. Note that the inner arrays are
+       * used in the following manner:
+       * <ul>
+       *   <li>Index 0 - column number</li>
+       *   <li>Index 1 - current sorting direction</li>
+       *   <li>Index 2 - index of asSorting for this column</li>
+       * </ul>
+       * Note that this parameter will be set by the initialisation routine. To
+       * set a default use {@link DataTable.defaults}.
+       *  @type array
+       */
 		"aaSorting": null,
 		
 		/**
@@ -11362,25 +11347,23 @@
 				return this.aiDisplay.length;
 			}
 		},
-		
-		/**
-		 * Set the display end point - aiDisplay index
-		 *  @type function
-		 *  @todo Should do away with _iDisplayEnd and calculate it on-the-fly here
-		 */
-		"fnDisplayEnd": function ()
-		{
-			if ( this.oFeatures.bServerSide ) {
-				if ( this.oFeatures.bPaginate === false || this._iDisplayLength == -1 ) {
-					return this._iDisplayStart+this.aiDisplay.length;
-				} else {
-					return Math.min( this._iDisplayStart+this._iDisplayLength, 
-						this._iRecordsDisplay );
-				}
-			} else {
-				return this._iDisplayEnd;
-			}
-		},
+
+      /**
+       * Set the display end point - aiDisplay index
+       *  @type function
+       */
+      "fnDisplayEnd": function () {
+        if (this.oFeatures.bServerSide) {
+          if (this.oFeatures.bPaginate === false || this._iDisplayLength === -1) {
+            return this._iDisplayStart + this.aiDisplay.length;
+          } else {
+            return Math.min(this._iDisplayStart + this._iDisplayLength,
+              this._iRecordsDisplay);
+          }
+        } else {
+          return this._iDisplayEnd;
+        }
+      },
 		
 		/**
 		 * The DataTables object for this table
@@ -12096,4 +12079,3 @@
 }));
 
 }(window, document));
-

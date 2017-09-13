@@ -552,9 +552,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array('1' => '1'), $result);
     }
 
-    /**
-     * @todo: NEEDS REVISION
-     */
     public function testsetStatuses()
     {
         /*
@@ -575,9 +572,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
         $this->markTestIncomplete("Different results for php5 and php7");
     }
 
-    /**
-     * @todo: NEEDS REVISION
-     */
     public function testdeleteMessageFromCache()
     {
         /*
@@ -899,9 +893,6 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($result));
     }
 
-    /**
-     * @todo: NEEDS REVISION
-     */
     public function testupdateOverviewCacheFile()
     {
         /*

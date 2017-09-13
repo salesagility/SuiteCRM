@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,11 +34,16 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('service/v3/SugarWebServiceUtilv3.php');
+
 class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
 {
 
@@ -435,27 +441,30 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
 	}
 
 
-	/**
-	 * Return the field level acl raw value.  We cannot use the hasAccess call as we do not have a valid bean
-	 * record at the moment and therefore can not specify the is_owner flag.  We need the raw access value so we
-	 * can do the computation on the client side.  TODO: Move function into ACLField class.
-	 *
-	 * @param String $module Name of the module
-	 * @param String $field Name of the field
-	 * @return int
-	 */
-	function getFieldLevelACLValue($module, $field, $current_user = null)
-	{
-	    if($current_user == null)
-	       $current_user = $GLOBALS['current_user'];
+    /**
+     * Return the field level acl raw value.  We cannot use the hasAccess call as we do not have a valid bean
+     * record at the moment and therefore can not specify the is_owner flag.  We need the raw access value so we
+     * can do the computation on the client side.
+     *
+     * @param string $module Name of the module
+     * @param string $field Name of the field
+     * @param array $current_user
+     * @return int
+     */
+    function getFieldLevelACLValue($module, $field, $current_user = null)
+    {
+        if ($current_user === null) {
+            $current_user = $GLOBALS['current_user'];
+        }
 
-	    if( is_admin($current_user) )
-	         return 99;
+        if (is_admin($current_user)) {
+            return 99;
+        }
 
-	    if(!isset($_SESSION['ACL'][$current_user->id][$module]['fields'][$field])){
-			 return 99;
-		}
+        if (!isset($_SESSION['ACL'][$current_user->id][$module]['fields'][$field])) {
+            return 99;
+        }
 
-		return $_SESSION['ACL'][$current_user->id][$module]['fields'][$field];
-	}
+        return $_SESSION['ACL'][$current_user->id][$module]['fields'][$field];
+    }
 }

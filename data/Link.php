@@ -646,14 +646,21 @@ class Link {
 	}
 
 
-	/* use this function to create link between 2 objects
-	 * 1:1 will be treated like 1 to many.
-	 * todo handle self referencing relationships
-	 * the function also allows for setting of values for additional field in the table being
-	 * updated to save the relationship, in case of many-to-many relationships this would be the join table.
-	 * the values should be passed as key value pairs with column name as the key name and column value as key value.
-	 */
-	function add($rel_keys,$additional_values=array()) {
+    /**
+     * use this function to create link between 2 objects
+     * 1:1 will be treated like 1 to many.
+     *
+     * the function also allows for setting of values for additional field in the table being
+     * updated to save the relationship, in case of many-to-many relationships this would be the join table.
+     * the values should be passed as key value pairs with column name as the key name and column value as key value.
+     *
+     * @param array $rel_keys array of ids or SugarBean objects. If you have the bean in memory, pass it in.
+     * @param array $additional_values the values should be passed as key value pairs with column name as the key name and column value as key value.
+     *
+     * @return bool|array|void Return true if all relationships were added.  Return an array with the failed keys if any of them failed.
+     */
+    public function add($rel_keys, $additional_values = array())
+    {
 
 		if (!isset($rel_keys) or empty($rel_keys)) {
 			$GLOBALS['log']->fatal("Link.add, Null key passed, no-op, returning... ");
@@ -695,8 +702,7 @@ class Link {
 			}
 
 			//updates the bean passed to the instance....
-			//todo remove this case.
-			if ($this->_relationship->relationship_type=='many-to-one') {
+			if ($this->_relationship->relationship_type === 'many-to-one') {
 				$this->_add_many_to_one_bean_based($key);
 		    }
 
@@ -849,18 +855,23 @@ class Link {
 	}
 
 
-
-	/* This method operates on all related record, takes action based on cardinality of the relationship.
-	 * one-to-one, one-to-many: update the rhs table's parent id with null
-	 * many-to-one: update the lhs table's parent-id with null.
-	 * many-to-many: delete rows from the link table. related table must have deleted and date_modified column.
-	 * If related_id is null, the methods assumes that the parent bean (whose id is passed) is being deleted.
-	 * If both id and related_id are passed, the method unlinks a single relationship.
-	 * parameters: id of the bean being deleted.
-	 *
-	 */
-	function delete($id,$related_id='') {
-		$GLOBALS['log']->debug(sprintf("delete called with these parameter values. id=%s, related_id=%s",$id,$related_id));
+    /**
+     * This method operates on all related record, takes action based on cardinality of the relationship.
+     * one-to-one, one-to-many: update the rhs table's parent id with null
+     * many-to-one: update the lhs table's parent-id with null.
+     * many-to-many: delete rows from the link table. related table must have deleted and date_modified column.
+     * If related_id is null, the methods assumes that the parent bean (whose id is passed) is being deleted.
+     * If both id and related_id are passed, the method unlinks a single relationship.
+     * parameters: id of the bean being deleted.
+     *
+     * @param $id string id of the Parent/Focus SugarBean
+     * @param string $related_id id or SugarBean to unrelate. Pass a SugarBean if you have it.
+     * @return bool true if delete was successful or false if it was not
+     */
+    function delete($id, $related_id = '')
+    {
+        $GLOBALS['log']->debug(sprintf("delete called with these parameter values. id=%s, related_id=%s", $id,
+            $related_id));
 
 		$_relationship=&$this->_relationship;
 		$_bean=&$this->_bean;
@@ -888,21 +899,14 @@ class Link {
     				$query.=" AND ".$_relationship->rhs_table.".id='".$related_id."'";
     			}
 
-    		}
-    		else {
-    			//do nothing because the row that stores the relationship keys is being deleted.
-    			//todo log an error message here.
-    			//if this is the case and related_id is passed then log a message asking the user
-    			//to clear the relationship using the bean.
-    		}
-	    }
+            } elseif (!empty($related_id)) {
+                $GLOBALS['log']->error('Clear the relationship of ID: ' . $related_id . 'using the bean');
+            }
+        }
 
-		if ($_relationship->relationship_type=='many-to-one') {
-    		//do nothing because the row that stores the relationship keys is being deleted.
-			//todo log an error message here.
-   			//if this is the case and related_id is passed then log a message asking the user
-   			//to clear the relationship using the bean.
-		}
+        if ($_relationship->relationship_type === 'many-to-one') {
+            $GLOBALS['log']->error('Clear the relationship of ID: ' . $related_id . 'using the bean');
+        }
 
 		if ($_relationship->relationship_type=='many-to-many' ) {
 			$use_bean_is_lhs = isset($_REQUEST['ajaxSubpanel']) || $this->_swap_sides !== true;
@@ -1110,4 +1114,3 @@ class Link {
 
 
 }
-?>

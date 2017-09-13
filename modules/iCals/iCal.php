@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,11 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/utils.php');
 require_once('modules/Calendar/Calendar.php');
@@ -102,14 +104,14 @@ class iCal extends vCal {
     }
 
     /**
-    * Create a todo entry for the given task.
-    *
-    * @param UserBean $user_bean the current UserBean
-    * @param Task $task the task for the todo entry
-    * @param string $moduleName the name of the task module
-    * @param string $dtstamp the current timestamp
-    * @return string the todo entry for the task
-    */
+     * Create an entry for the given task.
+     *
+     * @param SugarBean $user_bean the current UserBean
+     * @param Task $task the task for the entry
+     * @param string $moduleName the name of the task module
+     * @param string $dtstamp the current timestamp
+     * @return string the entry for the task
+     */
     protected function createSugarIcalTodo($user_bean, $task, $moduleName, $dtstamp)
     {
         global $sugar_config;
@@ -135,11 +137,12 @@ class iCal extends vCal {
             }
         }
         $date_arr = array(
-             'day'=>$dueDay,
-             'month'=>$dueMonth,
-             'hour'=>$dueHour,
-             'min'=>$dueMin,
-             'year'=>$dueYear);
+            'day' => $dueDay,
+            'month' => $dueMonth,
+            'hour' => $dueHour,
+            'min' => $dueMin,
+            'year' => $dueYear
+        );
         $due_date_time = new SugarDateTime();
         $due_date_time->setDate($dueYear, $dueMonth, $dueDay);
         $due_date_time->setTime($dueHour, $dueMin);
@@ -167,24 +170,31 @@ class iCal extends vCal {
         }
         $ical_array[] = array(
             "URL;VALUE=URI",
-            $sugar_config['site_url']."/index.php?module=".$moduleName."&action=DetailView&record=".$task->id
+            $sugar_config['site_url'] . "/index.php?module=" . $moduleName . "&action=DetailView&record=" . $task->id
         );
         if ($task->status == 'Completed') {
             $ical_array[] = array("STATUS", "COMPLETED");
             $ical_array[] = array("PERCENT-COMPLETE", "100");
             $ical_array[] = array("COMPLETED", $this->getUtcDateTime($due_date_time));
-        } else if (!empty($task->percent_complete)) {
-            $ical_array[] = array("PERCENT-COMPLETE", $task->percent_complete);
+        } else {
+            if (!empty($task->percent_complete)) {
+                $ical_array[] = array("PERCENT-COMPLETE", $task->percent_complete);
+            }
         }
         if ($task->priority == "Low") {
             $ical_array[] = array("PRIORITY", "9");
-        } else if ($task->priority == "Medium") {
+        } else {
+            if ($task->priority == "Medium") {
                 $ical_array[] = array("PRIORITY", "5");
-        } else if ($task->priority == "High") {
-                $ical_array[] = array("PRIORITY", "1");
+            } else {
+                if ($task->priority == "High") {
+                    $ical_array[] = array("PRIORITY", "1");
+                }
+            }
         }
         $ical_array[] = array("END", "VTODO");
-        return vCal::create_ical_string_from_array($ical_array,true);
+
+        return vCal::create_ical_string_from_array($ical_array, true);
     }
 
     /**

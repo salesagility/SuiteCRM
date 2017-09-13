@@ -159,76 +159,76 @@ class UnifiedSearchAdvanced {
      *
      * Search function run when user goes to Show All and runs a search again.  This outputs the search results
      * calling upon the various listview display functions for each module searched on.
-     * 
-     * Todo: Sync this up with SugarSpot.php search method.
-     *
      *
      */
-	function search() {
+    function search()
+    {
 
         $unified_search_modules = $this->getUnifiedSearchModules();
-		$unified_search_modules_display = $this->getUnifiedSearchModulesDisplay();
+        $unified_search_modules_display = $this->getUnifiedSearchModulesDisplay();
 
 
-		require_once 'include/ListView/ListViewSmarty.php';
+        require_once 'include/ListView/ListViewSmarty.php';
 
-		global $modListHeader, $beanList, $beanFiles, $current_language, $app_strings, $current_user, $mod_strings;
-		$home_mod_strings = return_module_language($current_language, 'Home');
+        global $beanList, $beanFiles, $current_language, $current_user, $mod_strings;
+        $home_mod_strings = return_module_language($current_language, 'Home');
 
-		$this->query_string = securexss(from_html(clean_string($this->query_string, 'UNIFIED_SEARCH')));
+        $this->query_string = securexss(from_html(clean_string($this->query_string, 'UNIFIED_SEARCH')));
 
-		if(!empty($_REQUEST['advanced']) && $_REQUEST['advanced'] != 'false') {
-			$modules_to_search = array();
-			if(!empty($_REQUEST['search_modules']))
-			{
-			    foreach(explode (',', $_REQUEST['search_modules'] ) as $key)
-	            {
-                    if (isset($unified_search_modules_display[$key]) && !empty($unified_search_modules_display[$key]['visible']))
-                    {
+        if (!empty($_REQUEST['advanced']) && $_REQUEST['advanced'] != 'false') {
+            $modules_to_search = array();
+            if (!empty($_REQUEST['search_modules'])) {
+                foreach (explode(',', $_REQUEST['search_modules']) as $key) {
+                    if (isset($unified_search_modules_display[$key]) &&
+                        !empty($unified_search_modules_display[$key]['visible'])
+                    ) {
                         $modules_to_search[$key] = $beanList[$key];
                     }
-	            }
-			}
+                }
+            }
 
-			$current_user->setPreference('showGSDiv', isset($_REQUEST['showGSDiv']) ? $_REQUEST['showGSDiv'] : 'no', 0, 'search');
-			$current_user->setPreference('globalSearch', $modules_to_search, 0, 'search'); // save selections to user preference
-		} else {
-			$users_modules = $current_user->getPreference('globalSearch', 'search');
-			$modules_to_search = array();
+            $current_user->setPreference('showGSDiv', isset($_REQUEST['showGSDiv']) ? $_REQUEST['showGSDiv'] : 'no', 0,
+                'search');
+            $current_user->setPreference('globalSearch', $modules_to_search, 0,
+                'search'); // save selections to user preference
+        } else {
+            $users_modules = $current_user->getPreference('globalSearch', 'search');
+            $modules_to_search = array();
 
-			if(!empty($users_modules)) {
-				// use user's previous selections
-			    foreach ( $users_modules as $key => $value ) {
-			    	if (isset($unified_search_modules_display[$key]) && !empty($unified_search_modules_display[$key]['visible'])) {
-		            	$modules_to_search[$key] = $beanList[$key];
-		        	}
-			    }
-			} else {
-				foreach($unified_search_modules_display as $module=>$data) {
-				    if (!empty($data['visible']) ) {
-				        $modules_to_search[$module] = $beanList[$module];
-				    }
-				}
-			}
-			$current_user->setPreference('globalSearch', $modules_to_search, 'search');
-		}
+            if (!empty($users_modules)) {
+                // use user's previous selections
+                foreach ($users_modules as $key => $value) {
+                    if (isset($unified_search_modules_display[$key]) &&
+                        !empty($unified_search_modules_display[$key]['visible'])
+                    ) {
+                        $modules_to_search[$key] = $beanList[$key];
+                    }
+                }
+            } else {
+                foreach ($unified_search_modules_display as $module => $data) {
+                    if (!empty($data['visible'])) {
+                        $modules_to_search[$module] = $beanList[$module];
+                    }
+                }
+            }
+            $current_user->setPreference('globalSearch', $modules_to_search, 'search');
+        }
 
 
-		$templateFile = 'modules/Home/UnifiedSearchAdvancedForm.tpl';
-		if(file_exists('custom/' . $templateFile))
-		{
-		   $templateFile = 'custom/'.$templateFile;
-		}
+        $templateFile = 'modules/Home/UnifiedSearchAdvancedForm.tpl';
+        if (file_exists('custom/' . $templateFile)) {
+            $templateFile = 'custom/' . $templateFile;
+        }
 
-		echo $this->getDropDownDiv($templateFile);
+        echo $this->getDropDownDiv($templateFile);
 
-		$module_results = array();
-		$module_counts = array();
-		$has_results = false;
+        $module_results = array();
+        $module_counts = array();
+        $has_results = false;
 
-		if(!empty($this->query_string)) {
-			foreach($modules_to_search as $moduleName => $beanName) {
-                require_once $beanFiles[$beanName] ;
+        if (!empty($this->query_string)) {
+            foreach ($modules_to_search as $moduleName => $beanName) {
+                require_once $beanFiles[$beanName];
                 $seed = new $beanName();
 
                 $lv = new ListViewSmarty();
@@ -236,108 +236,100 @@ class UnifiedSearchAdvanced {
                 $mod_strings = return_module_language($current_language, $seed->module_dir);
 
                 //retrieve the original list view defs and store for processing in case of custom layout changes
-                require('modules/'.$seed->module_dir.'/metadata/listviewdefs.php');
-				$orig_listViewDefs = $listViewDefs;
-
-                if(file_exists('custom/modules/'.$seed->module_dir.'/metadata/listviewdefs.php'))
-                {
-                    require('custom/modules/'.$seed->module_dir.'/metadata/listviewdefs.php');
+                require('modules/' . $seed->module_dir . '/metadata/listviewdefs.php');
+                if (isset($listViewDefs)) {
+                    $orig_listViewDefs = $listViewDefs;
                 }
 
-                if ( !isset($listViewDefs) || !isset($listViewDefs[$seed->module_dir]) )
-                {
+                if (file_exists('custom/modules/' . $seed->module_dir . '/metadata/listviewdefs.php')) {
+                    require('custom/modules/' . $seed->module_dir . '/metadata/listviewdefs.php');
+                }
+
+                if (!isset($listViewDefs) || !isset($listViewDefs[$seed->module_dir])) {
                     continue;
                 }
 
-			    $unifiedSearchFields = array () ;
+                $unifiedSearchFields = array();
                 $innerJoins = array();
-                foreach ( $unified_search_modules[ $moduleName ]['fields'] as $field=>$def )
-                {
-                	$listViewCheckField = strtoupper($field);
-                	//check to see if the field is in listview defs
-					if ( empty($listViewDefs[$seed->module_dir][$listViewCheckField]['default']) ) {
-						//check to see if field is in original list view defs (in case we are using custom layout defs)
-						if (!empty($orig_listViewDefs[$seed->module_dir][$listViewCheckField]['default']) ) {
-							//if we are here then the layout has been customized, but the field is still needed for query creation
-							$listViewDefs[$seed->module_dir][$listViewCheckField] = $orig_listViewDefs[$seed->module_dir][$listViewCheckField];
-						}
+                foreach ($unified_search_modules[$moduleName]['fields'] as $field => $def) {
+                    $listViewCheckField = strtoupper($field);
+                    //check to see if the field is in listview defs
+                    if (empty($listViewDefs[$seed->module_dir][$listViewCheckField]['default'])) {
+                        //check to see if field is in original list view defs (in case we are using custom layout defs)
+                        if (!empty($orig_listViewDefs[$seed->module_dir][$listViewCheckField]['default'])) {
+                            //if we are here then the layout has been customized,
+                            // but the field is still needed for query creation
+                            $listViewDefs[$seed->module_dir][$listViewCheckField] = $orig_listViewDefs
+                            [$seed->module_dir][$listViewCheckField];
+                        }
 
-					}
+                    }
 
-                    //bug: 34125 we might want to try to use the LEFT JOIN operator instead of the INNER JOIN in the case we are
-                    //joining against a field that has not been populated.
-                    if(!empty($def['innerjoin']) )
-                    {
-                        if (empty($def['db_field']) )
-                        {
+                    if (!empty($def['innerjoin'])) {
+                        if (empty($def['db_field'])) {
                             continue;
                         }
                         $innerJoins[$field] = $def;
                         $def['innerjoin'] = str_replace('INNER', 'LEFT', $def['innerjoin']);
                     }
 
-                    if(isset($seed->field_defs[$field]['type']))
-                    {
+                    if (isset($seed->field_defs[$field]['type'])) {
                         $type = $seed->field_defs[$field]['type'];
-                        if($type == 'int' && !is_numeric($this->query_string))
-                        {
+                        if ($type == 'int' && !is_numeric($this->query_string)) {
                             continue;
                         }
                     }
 
-                    $unifiedSearchFields[ $moduleName ] [ $field ] = $def ;
-                    $unifiedSearchFields[ $moduleName ] [ $field ][ 'value' ] = $this->query_string;
+                    $unifiedSearchFields[$moduleName] [$field] = $def;
+                    $unifiedSearchFields[$moduleName] [$field]['value'] = $this->query_string;
                 }
 
                 /*
-                 * Use searchForm2->generateSearchWhere() to create the search query, as it can generate SQL for the full set of comparisons required
-                 * generateSearchWhere() expects to find the search conditions for a field in the 'value' parameter of the searchFields entry for that field
+                 * Use searchForm2->generateSearchWhere() to create the search query,
+                 * as it can generate SQL for the full set of comparisons required
+                 * generateSearchWhere() expects to find the search conditions for a field in the 'value'
+                 * parameter of the searchFields entry for that field
                  */
-                require_once $beanFiles[$beanName] ;
+                require_once $beanFiles[$beanName];
                 $seed = new $beanName();
-                
-				require_once $this->searchFormPath;
-                $searchForm = new $this->searchFormClass ( $seed, $moduleName ) ;
 
-                $searchForm->setup (array ( $moduleName => array() ) , $unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */ ) ;
-                $where_clauses = $searchForm->generateSearchWhere() ;
+                require_once $this->searchFormPath;
+                $searchForm = new $this->searchFormClass ($seed, $moduleName);
+
+                // hack to avoid setup doing further unwanted processing
+                $searchForm->setup(array($moduleName => array()), $unifiedSearchFields, '',
+                    'saved_views');
+                $where_clauses = $searchForm->generateSearchWhere();
                 //add inner joins back into the where clause
                 $params = array('custom_select' => "");
-                foreach($innerJoins as $field=>$def) {
+                foreach ($innerJoins as $field => $def) {
                     if (isset($def['db_field'])) {
-                      foreach($def['db_field'] as $dbfield) {
-                                                $where_clauses[] = $dbfield . " LIKE '" . $GLOBALS['db']->quote($this->query_string) . "%'";
-                      }
-                          $params['custom_select'] .= ", $dbfield";
-                          $params['distinct'] = true;
-                          //$filterFields[$dbfield] = $dbfield;
+                        foreach ($def['db_field'] as $dbfield) {
+                            $where_clauses[] = $dbfield . " LIKE '" . $GLOBALS['db']->quote($this->query_string) . "%'";
+                        }
+                        $params['custom_select'] .= ", $dbfield";
+                        $params['distinct'] = true;
                     }
                 }
 
-                if (count($where_clauses) > 0)
-                {
-                    $where = '(('. implode(' ) OR ( ', $where_clauses) . '))';
-                } else
-                {
-                    /* Clear $where from prev. module
-                       if in current module $where_clauses */
+                if (count($where_clauses) > 0) {
+                    $where = '((' . implode(' ) OR ( ', $where_clauses) . '))';
+                } else {
+                    // Clear $where from prev. module if in current module $where_clauses
                     $where = '';
                 }
                 $displayColumns = array();
-                foreach($listViewDefs[$seed->module_dir] as $colName => $param)
-                {
-                    if(!empty($param['default']) && $param['default'] == true)
-                    {
-                        $param['url_sort'] = true;//bug 27933
+                foreach ($listViewDefs[$seed->module_dir] as $colName => $param) {
+                    if (!empty($param['default']) && $param['default'] == true) {
+                        $param['url_sort'] = true;
                         $displayColumns[$colName] = $param;
                     }
                 }
 
-                if(count($displayColumns) > 0)
-                {
-                	$lv->displayColumns = $displayColumns;
+                if (count($displayColumns) > 0) {
+                    $lv->displayColumns = $displayColumns;
                 } else {
-                	$lv->displayColumns = $listViewDefs[$seed->module_dir];
+                    $lv->displayColumns = $listViewDefs[$seed->module_dir];
                 }
 
                 $lv->export = false;
@@ -350,31 +342,34 @@ class UnifiedSearchAdvanced {
 
                 $lv->setup($seed, 'include/ListView/ListViewNoMassUpdate.tpl', $where, $params, 0, 10);
 
-                $module_results[$moduleName] = '<br /><br />' . get_form_header($GLOBALS['app_list_strings']['moduleList'][$seed->module_dir] . ' (' . $lv->data['pageData']['offsets']['total'] . ')', '', false);
+                $module_results[$moduleName] = '<br /><br />' . get_form_header(
+                        $GLOBALS['app_list_strings']['moduleList'][$seed->module_dir] . ' (' .
+                        $lv->data['pageData']['offsets']['total'] . ')',
+                        '', false);
                 $module_counts[$moduleName] = $lv->data['pageData']['offsets']['total'];
 
-                if($lv->data['pageData']['offsets']['total'] == 0) {
-                    //$module_results[$moduleName] .= "<li class='noBullet' id='whole_subpanel_{$moduleName}'><div id='div_{$moduleName}'><h2>" . $home_mod_strings['LBL_NO_RESULTS_IN_MODULE'] . '</h2></div></li>';
+                if ($lv->data['pageData']['offsets']['total'] == 0) {
                     $module_results[$moduleName] .= '<h2>' . $home_mod_strings['LBL_NO_RESULTS_IN_MODULE'] . '</h2>';
                 } else {
                     $has_results = true;
-                    //$module_results[$moduleName] .= "<li class='noBullet' id='whole_subpanel_{$moduleName}'><div id='div_{$moduleName}'>" . $lv->display(false, false) . '</div></li>';
                     $module_results[$moduleName] .= $lv->display(false, false);
                 }
 
-			}
-		}
+            }
+        }
 
-		if($has_results) {
-			foreach($module_counts as $name=>$value) {
-				echo $module_results[$name];
-			}
-		} else if(empty($_REQUEST['form_only'])) {
-			echo $home_mod_strings['LBL_NO_RESULTS'];
-			echo $home_mod_strings['LBL_NO_RESULTS_TIPS'];
-		}
+        if ($has_results) {
+            foreach ($module_counts as $name => $value) {
+                echo $module_results[$name];
+            }
+        } else {
+            if (empty($_REQUEST['form_only'])) {
+                echo $home_mod_strings['LBL_NO_RESULTS'];
+                echo $home_mod_strings['LBL_NO_RESULTS_TIPS'];
+            }
+        }
 
-	}
+    }
 
 	function buildCache()
 	{

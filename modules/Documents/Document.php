@@ -100,21 +100,24 @@ class Document extends File {
 	 );
 
 
-	function __construct() {
-		parent::__construct();
-		$this->setupCustomFields('Documents'); //parameter is module name
-		$this->disable_row_level_security = false;
-	}
+    function __construct()
+    {
+        parent::__construct();
+        //parameter is module name
+        $this->setupCustomFields('Documents');
+        $this->disable_row_level_security = false;
+    }
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8,
+     * please update your code, use __construct instead
      */
-    function Document(){
+    function Document()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -228,15 +231,13 @@ class Document extends File {
 		$this->fill_in_additional_detail_fields();
 	}
 
-	function fill_in_additional_detail_fields() {
-		global $theme;
-		global $current_language;
-		global $timedate;
-		global $locale;
+    function fill_in_additional_detail_fields()
+    {
+        global $theme, $current_language, $timedate, $locale;
 
-		parent::fill_in_additional_detail_fields();
+        parent::fill_in_additional_detail_fields();
 
-		$mod_strings = return_module_language($current_language, 'Documents');
+        $mod_strings = return_module_language($current_language, 'Documents');
 
         if (!empty($this->document_revision_id)) {
 
@@ -250,63 +251,71 @@ class Document extends File {
             $row = $this->db->fetchByAssoc($result);
 
             //populate name
-            if(isset($this->document_name))
-            {
-            	$this->name = $this->document_name;
+            if (isset($this->document_name)) {
+                $this->name = $this->document_name;
             }
 
-            if(isset($row['filename']))$this->filename = $row['filename'];
+            if (isset($row['filename'])) {
+                $this->filename = $row['filename'];
+            }
             //$this->latest_revision = $row['revision'];
-            if(isset($row['revision']))$this->revision = $row['revision'];
+            if (isset($row['revision'])) {
+                $this->revision = $row['revision'];
+            }
 
-            //image is selected based on the extension name <ext>_icon_inline, extension is stored in document_revisions.
+            //image is selected based on the extension name <ext>_icon_inline,
+            // extension is stored in document_revisions.
             //if file is not found then default image file will be used.
-            global $img_name;
-            global $img_name_bare;
+            global $img_name, $img_name_bare;
             if (!empty ($row['file_ext'])) {
-                $img_name = SugarThemeRegistry::current()->getImageURL(strtolower($row['file_ext'])."_image_inline.gif");
-                $img_name_bare = strtolower($row['file_ext'])."_image_inline";
+                $img_name = SugarThemeRegistry::current()->getImageURL(
+                    strtolower($row['file_ext']) . "_image_inline.gif");
+                $img_name_bare = strtolower($row['file_ext']) . "_image_inline";
             }
         }
 
-		//set default file name.
-		if (!empty ($img_name) && file_exists($img_name)) {
-			$img_name = $img_name_bare;
-		} else {
-			$img_name = "def_image_inline"; //todo change the default image.
-		}
-		if($this->ACLAccess('DetailView')) {
-			if(!empty($this->doc_type) && $this->doc_type != 'Sugar' && !empty($this->doc_url)) {
-                $file_url= "<a href='".$this->doc_url."' target='_blank'>".SugarThemeRegistry::current()->getImage($this->doc_type.'_image_inline', 'border="0"',null,null,'.png',$mod_strings['LBL_LIST_VIEW_DOCUMENT'])."</a>";
-			} else {
-			    $file_url = "<a href='index.php?entryPoint=download&id={$this->document_revision_id}&type=Documents' target='_blank'>".SugarThemeRegistry::current()->getImage($img_name, 'border="0"', null,null,'.gif',$mod_strings['LBL_LIST_VIEW_DOCUMENT'])."</a>";
-			}
+        //set default file name.
+        if (!empty ($img_name) && file_exists($img_name)) {
+            $img_name = $img_name_bare;
+        } else {
+            $img_name = "def_image_inline";
+        }
+        if ($this->ACLAccess('DetailView')) {
+            if (!empty($this->doc_type) && $this->doc_type != 'Sugar' && !empty($this->doc_url)) {
+                $file_url = "<a href='" . $this->doc_url . "' target='_blank'>" .
+                    SugarThemeRegistry::current()->getImage($this->doc_type . '_image_inline',
+                        'border="0"', null, null, '.png', $mod_strings['LBL_LIST_VIEW_DOCUMENT']) . "</a>";
+            } else {
+                $file_url = "<a href='index.php?entryPoint=download&id=
+{$this->document_revision_id}&type=Documents' target='_blank'>" . SugarThemeRegistry::current()->getImage($img_name,
+                        'border="0"', null, null, '.gif', $mod_strings['LBL_LIST_VIEW_DOCUMENT']) . "</a>";
+            }
 
-    		$this->file_url = $file_url;
-    		$this->file_url_noimage = "index.php?entryPoint=download&type=Documents&id={$this->document_revision_id}";
-		}else{
+            $this->file_url = $file_url;
+            $this->file_url_noimage = "index.php?entryPoint=download&type=Documents&id={$this->document_revision_id}";
+        } else {
             $this->file_url = "";
             $this->file_url_noimage = "";
-		}
+        }
 
-		//get last_rev_by user name.
-		if (!empty ($row)) {
-			$this->last_rev_created_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name']);
+        //get last_rev_by user name.
+        if (!empty ($row)) {
+            $this->last_rev_created_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name']);
 
-			$this->last_rev_create_date = $timedate->to_display_date_time($this->db->fromConvert($row['rev_date'], 'datetime'));
-			$this->last_rev_mime_type = $row['file_mime_type'];
-		}
+            $this->last_rev_create_date = $timedate->to_display_date_time($this->db->fromConvert($row['rev_date'],
+                'datetime'));
+            $this->last_rev_mime_type = $row['file_mime_type'];
+        }
 
-		global $app_list_strings;
-	    if(!empty($this->status_id)) {
-	       //_pp($this->status_id);
-	       $this->status = $app_list_strings['document_status_dom'][$this->status_id];
-	    }
+        global $app_list_strings;
+        if (!empty($this->status_id)) {
+            $this->status = $app_list_strings['document_status_dom'][$this->status_id];
+        }
         if (!empty($this->related_doc_id)) {
             $this->related_doc_name = Document::get_document_name($this->related_doc_id);
             $this->related_doc_rev_number = DocumentRevision::get_document_revision_name($this->related_doc_rev_id);
         }
-	}
+    }
 
 	function list_view_parse_additional_sections(&$list_form/*, $xTemplateSection*/) {
 		return $list_form;
@@ -408,4 +417,3 @@ class Document extends File {
 }
 
 require_once('modules/Documents/DocumentExternalApiDropDown.php');
-

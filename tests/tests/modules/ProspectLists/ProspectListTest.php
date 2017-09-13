@@ -71,9 +71,6 @@ class ProspectListTest extends PHPUnit_Framework_TestCase {
 
     }
 
-    /**
-     * @todo: NEEDS FIXING!
-     */
 	public function testcreate_export_members_query()
 	{
         /*
@@ -289,9 +286,3 @@ class ProspectListTest extends PHPUnit_Framework_TestCase {
 	}
 
 }
-
-
-
-
-
-?>

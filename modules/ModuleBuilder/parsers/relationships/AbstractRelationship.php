@@ -91,23 +91,28 @@ class AbstractRelationship
 
     /*
      * Relationship_role_column and relationship_role_column_value:
-     * These two values define an additional condition on the relationship. If present, the value in relationship_role_column in the relationship table must equal relationship_role_column_value
-     * Any update to the relationship made using a link field tied to the relationship (as is proper) will automatically (in Link.php) add in the relationship_role_column_value
+     * These two values define an additional condition on the relationship. If present,
+     * the value in relationship_role_column in the relationship table must equal relationship_role_column_value
+     * Any update to the relationship made using a link field tied to the relationship (as is proper) will automatically
+     * (in Link.php) add in the relationship_role_column_value
      * The relationship table must of course contain a column with the name given in relationship_role_column
      * 
-     * relationship_role_column and relationship_role_column_value are here implemented in a slightly less optimized form than in the standard OOB application
-     * In the OOB application, multiple relationships can, and do, share the same relationship table. Therefore, each variant of the relationship does not require its own table
-     * Here for simplicity in implementation each relationship has its own unique table. Therefore, the relationship_role_column in these tables will only contain the value relationship_role_column_value
-     * In the OOB relationships, the relationship_role_column will contain any of the relationship_role_column_values from the relationships that share the table
-     * TODO: implement this optimization
+     * relationship_role_column and relationship_role_column_value are here implemented in a slightly less optimized
+     * form than in the standard OOB application
+     * In the OOB application, multiple relationships can, and do, share the same relationship table. Therefore,
+     * each variant of the relationship does not require its own table
+     * Here for simplicity in implementation each relationship has its own unique table. Therefore,
+     * the relationship_role_column in these tables will only contain the value relationship_role_column_value
+     * In the OOB relationships, the relationship_role_column will contain any of the relationship_role_column_values
+     * from the relationships that share the table
      * 
      */
-    
-    /*
+
+    /**
      * Constructor
-     * @param string $definition    Definition array for this relationship. Parameters are given in self::keys
+     * @param string $definition Definition array for this relationship. Parameters are given in self::keys
      */
-    function __construct ($definition)
+    function __construct($definition)
     {
         // set any undefined attributes to the default value
         foreach (array(
@@ -122,12 +127,11 @@ class AbstractRelationship
                 $definition [$key] = false;
             }
         }
-        
-        foreach ( self::$definitionKeys as $key )
-        {
-            $this->$key = isset ( $definition [ $key ] ) ? $definition [ $key ] : '' ;
+
+        foreach (self::$definitionKeys as $key) {
+            $this->$key = isset ($definition [$key]) ? $definition [$key] : '';
         }
-        $this->definition = $definition ;
+        $this->definition = $definition;
     }
 
     /*
@@ -617,18 +621,19 @@ class AbstractRelationship
         return $this->lhs_module . "_" . strtolower ( $activitiesSubModuleName ) ;
     }
 
-    /*
+    /**
      * Return a version of $proposed that can be used as a column name in any of our supported databases
-     * Practically this means no longer than 25 characters as the smallest identifier length for our supported DBs is 30 chars for Oracle plus we add on at least four characters in some places (for indicies for example)
-     * TODO: Ideally this should reside in DBHelper as it is such a common db function...
+     * Practically this means no longer than 25 characters as the smallest identifier length for our supported DBs is
+     * 30 chars for Oracle plus we add on at least four characters in some places (for indicies for example)
      * @param string $name Proposed name for the column
-     * @param string $ensureUnique 
+     * @param string|bool $ensureUnique
      * @return string Valid column name trimmed to right length and with invalid characters removed
      */
-    static function getValidDBName ($name, $ensureUnique = true)
+    static function getValidDBName($name, $ensureUnique = true)
     {
 
-        require_once 'modules/ModuleBuilder/parsers/constants.php' ;
+        require_once 'modules/ModuleBuilder/parsers/constants.php';
+
         return getValidDBName($name, $ensureUnique, MB_MAXDBIDENTIFIERLENGTH);
     }
 

@@ -323,23 +323,25 @@
                 bar.bind("dblclick", function(){ splitter.triggerHandler("toggleDock"); })
             }
 
-            // Resize event handler; triggered immediately to set initial position
-            splitter
-                .bind("destroy"+opts.eventNamespace, function(){
-                    $([window, document]).unbind(opts.eventNamespace);
-                    bar.unbind().remove();
-                    panes.removeClass(opts.paneClass);
-                    splitter
-                        .removeClass(opts.splitterClass)
-                        .add(panes)
-                        .unbind(opts.eventNamespace)
-                        .attr("style", function(el){
-                            return this._splitter_style||"";	//TODO: save style
-                        });
-                    splitter = bar = focuser = panes = A = B = opts = args = null;
-                })
-                .bind("resize"+opts.eventNamespace, function(e,size) { resize( size ); } )
-                .trigger("resize" , [initPos]);
+          // Resize event handler; triggered immediately to set initial position
+          splitter
+            .bind("destroy" + opts.eventNamespace, function () {
+              $([window, document]).unbind(opts.eventNamespace);
+              bar.unbind().remove();
+              panes.removeClass(opts.paneClass);
+              splitter
+                .removeClass(opts.splitterClass)
+                .add(panes)
+                .unbind(opts.eventNamespace)
+                .attr("style", function (el) {
+                  return this._splitter_style || "";
+                });
+              splitter = bar = focuser = panes = A = B = opts = args = null;
+            })
+            .bind("resize" + opts.eventNamespace, function (e, size) {
+              resize(size);
+            })
+            .trigger("resize", [initPos]);
         });
     };
 

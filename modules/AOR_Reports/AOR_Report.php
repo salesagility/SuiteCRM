@@ -42,7 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 class AOR_Report extends Basic
 {
     public $new_schema = true;
@@ -105,7 +104,6 @@ class AOR_Report extends Basic
     function save($check_notify = false)
     {
 
-        // TODO: process of saveing the fields and conditions is too long so we will have to make some optimization on save_lines functions
         set_time_limit(3600);
 
         if (empty($this->id)) {

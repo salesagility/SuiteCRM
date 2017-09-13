@@ -41,6 +41,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+
 require_once ('modules/ModuleBuilder/MB/ModuleBuilder.php') ;
 require_once ('modules/ModuleBuilder/parsers/ParserFactory.php') ;
 require_once ('modules/ModuleBuilder/Module/StudioModuleFactory.php');
@@ -537,24 +538,21 @@ class ModuleBuilderController extends SugarController
     }
 
 	function action_SaveRelationshipLabel (){
-            $selected_lang = (!empty($_REQUEST['relationship_lang'])?$_REQUEST['relationship_lang']:$_SESSION['authenticated_user_language']);
-		 if (empty($_REQUEST [ 'view_package' ])){
-            require_once 'modules/ModuleBuilder/parsers/relationships/DeployedRelationships.php' ;
-            $relationships = new DeployedRelationships ( $_REQUEST [ 'view_module' ] ) ;
-            if (! empty ( $_REQUEST [ 'relationship_name' ] ))
-	        {
-	            if ($relationship = $relationships->get ( $_REQUEST [ 'relationship_name' ] )){
-	            	$metadata = $relationship->buildLabels(true);
-	            	 require_once 'modules/ModuleBuilder/parsers/parser.label.php' ;
-			        $parser = new ParserLabel ( $_REQUEST['view_module'] ) ;
-			        $parser->handleSaveRelationshipLabels ( $metadata, $selected_lang ) ;
-	            }
+        $selected_lang = (!empty($_REQUEST['relationship_lang']) ? $_REQUEST['relationship_lang'] : $_SESSION['authenticated_user_language']);
+        if (empty($_REQUEST ['view_package'])) {
+            require_once 'modules/ModuleBuilder/parsers/relationships/DeployedRelationships.php';
+            $relationships = new DeployedRelationships ($_REQUEST ['view_module']);
+            if (!empty ($_REQUEST ['relationship_name'])) {
+                if ($relationship = $relationships->get($_REQUEST ['relationship_name'])) {
+                    $metadata = $relationship->buildLabels(true);
+                    require_once 'modules/ModuleBuilder/parsers/parser.label.php';
+                    $parser = new ParserLabel ($_REQUEST['view_module']);
+                    $parser->handleSaveRelationshipLabels($metadata, $selected_lang);
+                }
             }
-        } else {
-            //TODO FOR MB
         }
-        $this->view = 'relationships' ;
-	}
+        $this->view = 'relationships';
+    }
 
     function action_SaveRelationship ()
     {
@@ -924,4 +922,4 @@ class ModuleBuilderController extends SugarController
     }
 
 }
-?>
+

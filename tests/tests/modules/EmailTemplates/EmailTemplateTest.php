@@ -151,7 +151,6 @@ class EmailTemplateTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo: NEEDS REVISION: _parseUserValues returns different values in php5 and php7
      * for keys:
      *  contact_user_sugar_login, contact_user_is_admin, contact_user_external_auth_only,
      *  contact_user_receive_notifications, contact_user_modified_by_name, contact_user_created_by_name,

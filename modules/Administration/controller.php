@@ -76,13 +76,12 @@ class AdministrationController extends SugarController
     public function action_savelanguages()
     {
         global $sugar_config;
-        $toDecode = html_entity_decode  ($_REQUEST['disabled_langs'], ENT_QUOTES);
+        $toDecode = html_entity_decode($_REQUEST['disabled_langs'], ENT_QUOTES);
         $disabled_langs = json_decode($toDecode);
-        $toDecode = html_entity_decode  ($_REQUEST['enabled_langs'], ENT_QUOTES);
+        $toDecode = html_entity_decode($_REQUEST['enabled_langs'], ENT_QUOTES);
         $enabled_langs = json_decode($toDecode);
         $cfg = new Configurator();
         $cfg->config['disabled_languages'] = join(',', $disabled_langs);
-        // TODO: find way to enforce order
         $cfg->handleOverride();
         header("Location: index.php?module=Administration&action=Languages");
     }

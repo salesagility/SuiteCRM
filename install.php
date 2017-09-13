@@ -1,9 +1,9 @@
 <?php
- /**
-*
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-*
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
  * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,11 +34,12 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
- if(!defined('sugarEntry')) {
-    define('sugarEntry', true);
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
 
 require_once 'include/utils.php';
@@ -97,7 +98,6 @@ $_REQUEST['js_rebuild_concat'] = 'rebuild';
 //Set whether the install is silent or not
 $silentInstall = true;
 
-//Todo, check if there is an instance where goto is not set, but a silent install is in place
 if(isset($_REQUEST['goto']) && $_REQUEST['goto'] != 'SilentInstall') {
     require_once('jssource/minify.php');
     $silentInstall = false;
@@ -267,29 +267,18 @@ if(isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") {
         $result['filepath'] = $filepath;
         $result['errors'] = $errors ? $errors : false;
 
-        // TODO--low: validate file size & image width/height and save, show status result to client js
-
         echo "<script>window.top.window.{$_REQUEST['callback']}(" . json_encode($result) . ");</script>";
         return;
     }
 
-    if(isset($_REQUEST['storeConfig']) && ($_REQUEST['storeConfig'])){
+    if (isset($_REQUEST['storeConfig']) && ($_REQUEST['storeConfig'])) {
         // store configuration by form to session
-        if(!isset($_SESSION)) session_start();
+        if (!isset($_SESSION)) {
+            session_start();
+        }
         $_SESSION = array_merge($_SESSION, $_POST);
 
-        // TODO--low: don't forget the custom type install settings! validate here..
-//        if(count($validation_errors = validate_dbConfig('a')) > 0) {
-//            $si_errors = true;
-//        }
-//        else if(count($validation_errors = validate_siteConfig('a')) > 0) {
-//            $si_errors = true;
-//        }
-//        else if(count($validation_errors = validate_siteConfig('b')) > 0) {
-//            $si_errors = true;
-//        }
-
-        if(!empty($sugar_config['dbconfig'])) {
+        if (!empty($sugar_config['dbconfig'])) {
             try {
                 $db = DBManagerFactory::getInstance();
                 $db->disconnect();
@@ -355,15 +344,7 @@ if (check_php_version() === 0) {
 // use a simple array to map out the steps of the installer page flow
 $workflow[] = 'welcome.php';
 $workflow[] = 'ready.php';
-
-// TODO-g: remove these files..
-//'license.php',
-//'installType.php',
-//);
 $workflow[] = 'installConfig.php';
-//$workflow[] =  'systemOptions.php';
-//$workflow[] = 'dbConfig_a.php';
-//$workflow[] = 'dbConfig_b.php';
 
 //define web root, which will be used as default for site_url
 if($_SERVER['SERVER_PORT']=='80'){
@@ -547,31 +528,23 @@ if($next_clicked) {
                 }
 
                 break;
-            //TODO--low: add this functionality to installConfig.php
-            case 'installType.php':
-                $_SESSION['install_type']   = $_REQUEST['install_type'];
-                if(isset($_REQUEST['setup_license_key']) && !empty($_REQUEST['setup_license_key'])){
-                    $_SESSION['setup_license_key']  = $_REQUEST['setup_license_key'];
-                }
-                $_SESSION['licenseKey_submitted']      = true;
+        case 'installType.php':
+            $_SESSION['install_type'] = $_REQUEST['install_type'];
+            if (isset($_REQUEST['setup_license_key']) && !empty($_REQUEST['setup_license_key'])) {
+                $_SESSION['setup_license_key'] = $_REQUEST['setup_license_key'];
+            }
+            $_SESSION['licenseKey_submitted'] = true;
+            break;
 
+        case 'installConfig.php':
+            if (isset($_REQUEST['setup_db_type'])) {
+                $_SESSION['setup_db_type'] = $_REQUEST['setup_db_type'];
+            }
+            $validation_errors = validate_systemOptions();
+            if (count($validation_errors) > 0) {
+                $next_step--;
+            }
 
-
-                break;
-
-            case 'installConfig.php':
-
-                //case 'systemOptions.php':
-                if(isset($_REQUEST['setup_db_type'])) {
-                    $_SESSION['setup_db_type'] = $_REQUEST['setup_db_type'];
-                }
-                $validation_errors = validate_systemOptions();
-                if(count($validation_errors) > 0) {
-                    $next_step--;
-                }
-                //break;
-
-                //case 'dbConfig_a.php':
                 //validation is now done through ajax call to checkDBSettings.php
                 if(isset($_REQUEST['setup_db_drop_tables'])){
                     $_SESSION['setup_db_drop_tables'] = $_REQUEST['setup_db_drop_tables'];
@@ -796,5 +769,3 @@ installerHook('pre_installFileRequire', array('the_file' => $the_file));
 require('install/' . $the_file);
 
 installerHook('post_installFileRequire', array('the_file' => $the_file));
-
-?>

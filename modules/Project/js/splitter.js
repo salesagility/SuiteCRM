@@ -334,7 +334,7 @@
                         .add(panes)
                         .unbind(opts.eventNamespace)
                         .attr("style", function(el){
-                            return this._splitter_style||"";	//TODO: save style
+                            return this._splitter_style||"";
                         });
                     splitter = bar = focuser = panes = A = B = opts = args = null;
                 })

@@ -937,34 +937,29 @@ class Meeting extends SugarBean {
 } // end class def
 
 // External API integration, for the dropdown list of what external API's are available
-//TODO: do we really need focus, name and view params for this function
 function getMeetingsExternalApiDropDown($focus = null, $name = null, $value = null, $view = null)
 {
-	global $dictionary, $app_list_strings;
+    global $dictionary, $app_list_strings;
 
-	$cacheKeyName = 'meetings_type_drop_down';
+    $cacheKeyName = 'meetings_type_drop_down';
 
     $apiList = sugar_cache_retrieve($cacheKeyName);
-    if ($apiList === null)
-    {
+    if ($apiList === null) {
         require_once('include/externalAPI/ExternalAPIFactory.php');
 
         $apiList = ExternalAPIFactory::getModuleDropDown('Meetings');
-        $apiList = array_merge(array('Sugar'=>$GLOBALS['app_list_strings']['eapm_list']['Sugar']), $apiList);
+        $apiList = array_merge(array('Sugar' => $GLOBALS['app_list_strings']['eapm_list']['Sugar']), $apiList);
         sugar_cache_put($cacheKeyName, $apiList);
     }
 
-	if(!empty($value) && empty($apiList[$value]))
-	{
-		$apiList[$value] = $value;
+    if (!empty($value) && empty($apiList[$value])) {
+        $apiList[$value] = $value;
     }
-	//bug 46294: adding list of options to dropdown list (if it is not the default list)
-    if ($dictionary['Meeting']['fields']['type']['options'] != "eapm_list")
-    {
+    if ($dictionary['Meeting']['fields']['type']['options'] !== "eapm_list") {
         $apiList = array_merge(getMeetingTypeOptions($dictionary, $app_list_strings), $apiList);
     }
 
-	return $apiList;
+    return $apiList;
 }
 
 /**

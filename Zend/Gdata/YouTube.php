@@ -820,7 +820,6 @@ class Zend_Gdata_YouTube extends Zend_Gdata_Media
             }
 
             $messageEntry->setId($this->newId($videoId));
-            // TODO there seems to be a bug where v1 inbox entries dont
             // retain their description...
             $messageEntry->setDescription(
                 new Zend_Gdata_YouTube_Extension_Description($body));

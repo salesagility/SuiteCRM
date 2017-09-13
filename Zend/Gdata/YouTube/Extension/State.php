@@ -92,7 +92,6 @@ class Zend_Gdata_YouTube_Extension_State extends Zend_Gdata_Extension
      * Given a DOMNode representing an attribute, tries to map the data into
      * instance members.  If no mapping is defined, the name and valueare
      * stored in an array.
-     * TODO: Convert attributes to proper types
      *
      * @param DOMNode $attribute The DOMNode attribute needed to be handled
      */

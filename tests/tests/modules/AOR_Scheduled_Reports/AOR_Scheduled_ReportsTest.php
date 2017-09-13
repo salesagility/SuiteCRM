@@ -68,10 +68,6 @@ class AOR_Scheduled_ReportsTest extends PHPUnit_Framework_TestCase {
 		$aorScheduledReports = new AOR_Scheduled_Reports();
 		$aorScheduledReports->schedule = " 8 * * * *";
 
-		//test without a last_run date
-        //@todo: NEEDS FIXING - are we sure?
-		//$this->assertFalse($aorScheduledReports->shouldRun(new DateTime()) );
-
 		//test without a older last_run date
 		$aorScheduledReports->last_run = date("d-m-y H:i:s", mktime(0,0,0,10,3,2014));
 		$this->assertTrue($aorScheduledReports->shouldRun(new DateTime()));

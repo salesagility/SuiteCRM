@@ -104,8 +104,6 @@ abstract class Zend_Gdata_App_BaseMediaSource implements Zend_Gdata_App_MediaSou
      * Alternatively, if no getFoo() is defined, but a $_foo protected variable
      * is defined, this is returned.
      *
-     * TODO Remove ability to bypass getFoo() methods??
-     *
      * @param string $name The variable name sought
      */
     public function __get($name)

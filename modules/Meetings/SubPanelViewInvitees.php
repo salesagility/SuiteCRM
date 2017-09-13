@@ -43,16 +43,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 global $currentModule;
-
 global $mod_strings;
 global $app_strings;
-
 global $theme;
 global $focus;
 global $action;
 global $locale;
-
-
 
 // focus_list is the means of passing data to a SubPanelView.
 global $focus_list;
@@ -84,30 +80,25 @@ $xtpl->assign("RETURN_URL", "&return_module=$currentModule&return_action=DetailV
 $xtpl->assign("MEETING_ID", $focus->id);
 
 $oddRow = true;
-foreach($focus_users_list as $user)
-{
-	$user_fields = array(
-		'USER_NAME' => $user->user_name,
-		'FULL_NAME' => $locale->getLocaleFormattedName($user->first_name, $user->last_name),
-		'ID' => $user->id,
-		'EMAIL' => $user->email1,
-		'PHONE_WORK' => $user->phone_work
-	);
+foreach ($focus_users_list as $user) {
+    $user_fields = array(
+        'USER_NAME' => $user->user_name,
+        'FULL_NAME' => $locale->getLocaleFormattedName($user->first_name, $user->last_name),
+        'ID' => $user->id,
+        'EMAIL' => $user->email1,
+        'PHONE_WORK' => $user->phone_work
+    );
 
-	$xtpl->assign("USER", $user_fields);
+    $xtpl->assign("USER", $user_fields);
 
-	if($oddRow)
-    {
-        //todo move to themes
-		$xtpl->assign("ROW_COLOR", 'oddListRow');
-    } else
-    {
-        //todo move to themes
-		$xtpl->assign("ROW_COLOR", 'evenListRow');
+    if ($oddRow) {
+        $xtpl->assign("ROW_COLOR", 'oddListRow');
+    } else {
+        $xtpl->assign("ROW_COLOR", 'evenListRow');
     }
     $oddRow = !$oddRow;
 
-	$xtpl->parse("users.row");
+    $xtpl->parse("users.row");
 // Put the rows in.
 }
 
@@ -115,35 +106,28 @@ $xtpl->parse("users");
 $xtpl->out("users");
 
 $oddRow = true;
-foreach($focus_contacts_list as $contact)
-{
-	$contact_fields = array(
-		'FIRST_NAME' => $contact->first_name,
-		'LAST_NAME' => $contact->last_name,
-		'ACCOUNT_NAME' => $contact->account_name,
-		'ID' => $contact->id,
-		'EMAIL' => $contact->email1,
-		'PHONE_WORK' => $contact->phone_work
-	);
+foreach ($focus_contacts_list as $contact) {
+    $contact_fields = array(
+        'FIRST_NAME' => $contact->first_name,
+        'LAST_NAME' => $contact->last_name,
+        'ACCOUNT_NAME' => $contact->account_name,
+        'ID' => $contact->id,
+        'EMAIL' => $contact->email1,
+        'PHONE_WORK' => $contact->phone_work
+    );
 
-	$xtpl->assign("CONTACT", $contact_fields);
+    $xtpl->assign("CONTACT", $contact_fields);
 
-	if($oddRow)
-    {
-        //todo move to themes
-		$xtpl->assign("ROW_COLOR", 'oddListRow');
-    } else
-    {
-        //todo move to themes
-		$xtpl->assign("ROW_COLOR", 'evenListRow');
+    if ($oddRow) {
+        $xtpl->assign("ROW_COLOR", 'oddListRow');
+    } else {
+        $xtpl->assign("ROW_COLOR", 'evenListRow');
     }
     $oddRow = !$oddRow;
 
-	$xtpl->parse("contacts.row");
+    $xtpl->parse("contacts.row");
 // Put the rows in.
 }
 
 $xtpl->parse("contacts");
 $xtpl->out("contacts");
-
-?>

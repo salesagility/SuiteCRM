@@ -170,17 +170,27 @@ class Prospect extends Person {
 		return $the_where;
 	}
 
-    function converted_prospect($prospectid, $contactid, $accountid, $opportunityid){
-    	$query = "UPDATE prospects set  contact_id=$contactid, account_id=$accountid, opportunity_id=$opportunityid where  id=$prospectid and deleted=0";
-		$this->db->query($query,true,"Error converting prospect: ");
-		//todo--status='Converted', converted='1',
+    /**
+     * @param string $prospectid
+     * @param string $contactid
+     * @param string $accountid
+     * @param string $opportunityid
+     */
+    public function converted_prospect($prospectid, $contactid, $accountid, $opportunityid)
+    {
+        $query = "UPDATE prospects set  contact_id=$contactid, account_id=$accountid, opportunity_id=$opportunityid where  id=$prospectid and deleted=0";
+        $this->db->query($query, true, "Error converting prospect: ");
     }
-     function bean_implements($interface){
-		switch($interface){
-			case 'ACL':return true;
-		}
-		return false;
-	}
+
+    function bean_implements($interface)
+    {
+        switch ($interface) {
+            case 'ACL':
+                return true;
+        }
+
+        return false;
+    }
 
     /**
      *  This method will be used by Mail Merge in order to retieve the targets as specified in the query

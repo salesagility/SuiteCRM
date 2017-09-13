@@ -279,67 +279,69 @@ echo get_form_header($current_module_strings['LBL_OPEN_ACTIVITIES'], $button, fa
 $xtpl->assign("RETURN_URL", "&return_module=$currentModule&return_action=DetailView&return_id=$focus->id");
 
 $oddRow = true;
-if (count($open_activity_list) > 0) $open_activity_list = array_csort($open_activity_list, 'date_due', SORT_DESC);
-foreach($open_activity_list as $activity)
-{
-	$activity_fields = array(
-		'ID' => $activity['id'],
-		'NAME' => $activity['name'],
-		'MODULE' => $activity['module'],
-		'CONTACT_NAME' => $activity['contact_name'],
-		'CONTACT_ID' => $activity['contact_id'],
-		'PARENT_TYPE' => $activity['parent_type'],
-		'PARENT_NAME' => $activity['parent_name'],
-		'PARENT_ID' => $activity['parent_id'],
-		'DATE' => $activity['date_due']
-	);
+if (count($open_activity_list) > 0) {
+    $open_activity_list = array_csort($open_activity_list, 'date_due', SORT_DESC);
+}
+foreach ($open_activity_list as $activity) {
+    $activity_fields = array(
+        'ID' => $activity['id'],
+        'NAME' => $activity['name'],
+        'MODULE' => $activity['module'],
+        'CONTACT_NAME' => $activity['contact_name'],
+        'CONTACT_ID' => $activity['contact_id'],
+        'PARENT_TYPE' => $activity['parent_type'],
+        'PARENT_NAME' => $activity['parent_name'],
+        'PARENT_ID' => $activity['parent_id'],
+        'DATE' => $activity['date_due']
+    );
 
-	if (empty($activity['direction'])) {
-		$activity_fields['TYPE'] = $app_list_strings['activity_dom'][$activity['type']];
-	}
-	else {
-		$activity_fields['TYPE'] = $app_list_strings['call_direction_dom'][$activity['direction']].' '.$app_list_strings['activity_dom'][$activity['type']];
-	}
-	if (isset($activity['parent_type'])) $activity_fields['PARENT_MODULE'] = $activity['parent_type'];
-	switch ($activity['type']) {
-		case 'Call':
-			$activity_fields['SET_COMPLETE'] = "<a href='index.php?return_module=$currentModule&return_action=$action&return_id=$focus->id&action=EditView&module=Calls&status=Held&record=".$activity['id']."&status=Held'>".SugarThemeRegistry::current()->getImage("close_inline","title=".translate('LBL_LIST_CLOSE','Activities')." border='0'",null,null,'.gif',$mod_strings['LBL_LIST_CLOSE'])."</a>";
-			$activity_fields['STATUS'] = $app_list_strings['call_status_dom'][$activity['status']];
-			break;
-		case 'Meeting':
-			$activity_fields['SET_COMPLETE'] = "<a href='index.php?return_module=$currentModule&return_action=$action&return_id=$focus->id&action=EditView&module=Meetings&status=Held&record=".$activity['id']."&status=Held'>".SugarThemeRegistry::current()->getImage("close_inline","title=".translate('LBL_LIST_CLOSE','Activities')." border='0'", null,null,'.gif',$mod_strings['LBL_LIST_CLOSE'])."</a>";
-			$activity_fields['STATUS'] = $app_list_strings['meeting_status_dom'][$activity['status']];
-			break;
-		case 'Task':
-			$activity_fields['SET_COMPLETE'] = "<a href='index.php?return_module=$currentModule&return_action=$action&return_id=$focus->id&action=EditView&module=Tasks&status=Completed&record=".$activity['id']."&status=Completed'>".SugarThemeRegistry::current()->getImage("close_inline","title=".translate('LBL_LIST_CLOSE','Activities')." border='0'", null,null,'.gif',$mod_strings['LBL_LIST_CLOSE'])."</a>";
-			$activity_fields['STATUS'] = $app_list_strings['task_status_dom'][$activity['status']];
-			break;
-	}
-
- global $odd_bg;
- global $even_bg;
- global $hilite_bg;
- global $click_bg;
-$xtpl->assign("BG_HILITE", $hilite_bg);
-$xtpl->assign("BG_CLICK", $click_bg);
-$xtpl->assign("ACTIVITY_MODULE_PNG", SugarThemeRegistry::current()->getImage($activity_fields['MODULE'].'','border="0"', null,null,'.gif',$activity_fields['NAME']));
-	$xtpl->assign("ACTIVITY", $activity_fields);
-
-	if($oddRow)
-    {
-        //todo move to themes
-		$xtpl->assign("ROW_COLOR", 'oddListRow');
-		$xtpl->assign("BG_COLOR", $odd_bg);
+    if (empty($activity['direction'])) {
+        $activity_fields['TYPE'] = $app_list_strings['activity_dom'][$activity['type']];
+    } else {
+        $activity_fields['TYPE'] = $app_list_strings['call_direction_dom'][$activity['direction']] . ' ' . $app_list_strings['activity_dom'][$activity['type']];
     }
-    else
-    {
-        //todo move to themes
-		$xtpl->assign("ROW_COLOR", 'evenListRow');
-		$xtpl->assign("BG_COLOR", $even_bg);
+    if (isset($activity['parent_type'])) {
+        $activity_fields['PARENT_MODULE'] = $activity['parent_type'];
+    }
+    switch ($activity['type']) {
+        case 'Call':
+            $activity_fields['SET_COMPLETE'] = "<a href='index.php?return_module=$currentModule&return_action=$action&return_id=$focus->id&action=EditView&module=Calls&status=Held&record=" . $activity['id'] . "&status=Held'>" . SugarThemeRegistry::current()->getImage("close_inline",
+                    "title=" . translate('LBL_LIST_CLOSE', 'Activities') . " border='0'", null, null, '.gif',
+                    $mod_strings['LBL_LIST_CLOSE']) . "</a>";
+            $activity_fields['STATUS'] = $app_list_strings['call_status_dom'][$activity['status']];
+            break;
+        case 'Meeting':
+            $activity_fields['SET_COMPLETE'] = "<a href='index.php?return_module=$currentModule&return_action=$action&return_id=$focus->id&action=EditView&module=Meetings&status=Held&record=" . $activity['id'] . "&status=Held'>" . SugarThemeRegistry::current()->getImage("close_inline",
+                    "title=" . translate('LBL_LIST_CLOSE', 'Activities') . " border='0'", null, null, '.gif',
+                    $mod_strings['LBL_LIST_CLOSE']) . "</a>";
+            $activity_fields['STATUS'] = $app_list_strings['meeting_status_dom'][$activity['status']];
+            break;
+        case 'Task':
+            $activity_fields['SET_COMPLETE'] = "<a href='index.php?return_module=$currentModule&return_action=$action&return_id=$focus->id&action=EditView&module=Tasks&status=Completed&record=" . $activity['id'] . "&status=Completed'>" . SugarThemeRegistry::current()->getImage("close_inline",
+                    "title=" . translate('LBL_LIST_CLOSE', 'Activities') . " border='0'", null, null, '.gif',
+                    $mod_strings['LBL_LIST_CLOSE']) . "</a>";
+            $activity_fields['STATUS'] = $app_list_strings['task_status_dom'][$activity['status']];
+            break;
+    }
+
+    global $odd_bg, $even_bg, $hilite_bg, $click_bg;
+    $xtpl->assign("BG_HILITE", $hilite_bg);
+    $xtpl->assign("BG_CLICK", $click_bg);
+    $xtpl->assign("ACTIVITY_MODULE_PNG",
+        SugarThemeRegistry::current()->getImage($activity_fields['MODULE'] . '', 'border="0"', null, null, '.gif',
+            $activity_fields['NAME']));
+    $xtpl->assign("ACTIVITY", $activity_fields);
+
+    if ($oddRow) {
+        $xtpl->assign("ROW_COLOR", 'oddListRow');
+        $xtpl->assign("BG_COLOR", $odd_bg);
+    } else {
+        $xtpl->assign("ROW_COLOR", 'evenListRow');
+        $xtpl->assign("BG_COLOR", $even_bg);
     }
     $oddRow = !$oddRow;
 
-	$xtpl->parse("open_activity.row");
+    $xtpl->parse("open_activity.row");
 // Put the rows in.
 }
 
@@ -386,68 +388,70 @@ echo get_form_header($current_module_strings['LBL_HISTORY'], $button, false);
 $xtpl->assign("RETURN_URL", "&return_module=$currentModule&return_action=DetailView&return_id=$focus->id");
 
 $oddRow = true;
-if (count($history_list) > 0) $history_list = array_csort($history_list, 'date_modified', SORT_DESC);
-foreach($history_list as $activity)
-{
-	$activity_fields = array(
-		'ID' => $activity['id'],
-		'NAME' => $activity['name'],
-		'MODULE' => $activity['module'],
-		'CONTACT_NAME' => $activity['contact_name'],
-		'CONTACT_ID' => $activity['contact_id'],
-		'PARENT_TYPE' => $activity['parent_type'],
-		'PARENT_NAME' => $activity['parent_name'],
-		'PARENT_ID' => $activity['parent_id'],
-		'DATE' => $activity['date_modified'],
-	);
-	if (empty($activity['direction'])) {
-		$activity_fields['TYPE'] = $app_list_strings['activity_dom'][$activity['type']];
-	}
-	else {
-		$activity_fields['TYPE'] = $app_list_strings['call_direction_dom'][$activity['direction']].' '.$app_list_strings['activity_dom'][$activity['type']];
-	}
-
-	switch ($activity['type']) {
-		case 'Call':
-			$activity_fields['STATUS'] = $app_list_strings['call_status_dom'][$activity['status']];
-			break;
-		case 'Meeting':
-			$activity_fields['STATUS'] = $app_list_strings['meeting_status_dom'][$activity['status']];
-			break;
-		case 'Task':
-			$activity_fields['STATUS'] = $app_list_strings['task_status_dom'][$activity['status']];
-			break;
-	}
-
-	if (isset($activity['location'])) $activity_fields['LOCATION'] = $activity['location'];
-	if (isset($activity['filename'])) {
-		$activity_fields['ATTACHMENT'] = "<a href='".$activity['fileurl']."' target='_blank'>".SugarThemeRegistry::current()->getImage("attachment","border='0' align='absmiddle'",null,null,'.gif',$activity['filename'])."</a>";
+if (count($history_list) > 0) {
+    $history_list = array_csort($history_list, 'date_modified', SORT_DESC);
+}
+foreach ($history_list as $activity) {
+    $activity_fields = array(
+        'ID' => $activity['id'],
+        'NAME' => $activity['name'],
+        'MODULE' => $activity['module'],
+        'CONTACT_NAME' => $activity['contact_name'],
+        'CONTACT_ID' => $activity['contact_id'],
+        'PARENT_TYPE' => $activity['parent_type'],
+        'PARENT_NAME' => $activity['parent_name'],
+        'PARENT_ID' => $activity['parent_id'],
+        'DATE' => $activity['date_modified'],
+    );
+    if (empty($activity['direction'])) {
+        $activity_fields['TYPE'] = $app_list_strings['activity_dom'][$activity['type']];
+    } else {
+        $activity_fields['TYPE'] = $app_list_strings['call_direction_dom'][$activity['direction']] . ' ' .
+            $app_list_strings['activity_dom'][$activity['type']];
     }
 
-	if (isset($activity['parent_type'])) $activity_fields['PARENT_MODULE'] = $activity['parent_type'];
-
-	$xtpl->assign("ACTIVITY", $activity_fields);
-	$xtpl->assign("ACTIVITY_MODULE_PNG", SugarThemeRegistry::current()->getImage($activity_fields['MODULE'].'','border="0"', null,null,'.gif',$activity_fields['NAME']));
-
-	if($oddRow)
-    {
-        //todo move to themes
-		$xtpl->assign("ROW_COLOR", 'oddListRow');
-		$xtpl->assign("BG_COLOR", $odd_bg);
+    switch ($activity['type']) {
+        case 'Call':
+            $activity_fields['STATUS'] = $app_list_strings['call_status_dom'][$activity['status']];
+            break;
+        case 'Meeting':
+            $activity_fields['STATUS'] = $app_list_strings['meeting_status_dom'][$activity['status']];
+            break;
+        case 'Task':
+            $activity_fields['STATUS'] = $app_list_strings['task_status_dom'][$activity['status']];
+            break;
     }
-    else
-    {
-        //todo move to themes
-		$xtpl->assign("ROW_COLOR", 'evenListRow');
-		$xtpl->assign("BG_COLOR", $even_bg);
+
+    if (isset($activity['location'])) {
+        $activity_fields['LOCATION'] = $activity['location'];
+    }
+    if (isset($activity['filename'])) {
+        $activity_fields['ATTACHMENT'] = "<a href='" . $activity['fileurl'] . "' target='_blank'>" .
+            SugarThemeRegistry::current()->getImage("attachment",
+                "border='0' align='absmiddle'", null, null, '.gif', $activity['filename']) . "</a>";
+    }
+
+    if (isset($activity['parent_type'])) {
+        $activity_fields['PARENT_MODULE'] = $activity['parent_type'];
+    }
+
+    $xtpl->assign("ACTIVITY", $activity_fields);
+    $xtpl->assign("ACTIVITY_MODULE_PNG",
+        SugarThemeRegistry::current()->getImage($activity_fields['MODULE'] . '', 'border="0"', null, null, '.gif',
+            $activity_fields['NAME']));
+
+    if ($oddRow) {
+        $xtpl->assign("ROW_COLOR", 'oddListRow');
+        $xtpl->assign("BG_COLOR", $odd_bg);
+    } else {
+        $xtpl->assign("ROW_COLOR", 'evenListRow');
+        $xtpl->assign("BG_COLOR", $even_bg);
     }
     $oddRow = !$oddRow;
 
-	$xtpl->parse("history.row");
+    $xtpl->parse("history.row");
 // Put the rows in.
 }
 
 $xtpl->parse("history");
 $xtpl->out("history");
-
-?>

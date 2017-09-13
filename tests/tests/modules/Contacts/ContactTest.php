@@ -59,9 +59,6 @@ class ContactTest extends PHPUnit_Framework_TestCase {
 
 	}
 
-    /**
-     * @todo: NEEDS FIXING!
-     */
 	public function testcreate_new_list_query()
 	{
         /*

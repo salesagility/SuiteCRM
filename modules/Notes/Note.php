@@ -221,24 +221,25 @@ class Note extends SugarBean {
 		$this->fill_in_additional_detail_fields();
 	}
 
-	function fill_in_additional_detail_fields() {
-		parent::fill_in_additional_detail_fields();
-		//TODO:  Seems odd we need to clear out these values so that list views don't show the previous rows value if current value is blank
-		$this->getRelatedFields('Contacts', $this->contact_id, array('name'=>'contact_name', 'phone_work'=>'contact_phone') );
-		if(!empty($this->contact_name)){
+    function fill_in_additional_detail_fields()
+    {
+        parent::fill_in_additional_detail_fields();
+        $this->getRelatedFields('Contacts', $this->contact_id,
+            array('name' => 'contact_name', 'phone_work' => 'contact_phone'));
+        if (!empty($this->contact_name)) {
 
-			$emailAddress = new SugarEmailAddress();
-			$this->contact_email = $emailAddress->getPrimaryAddress(false, $this->contact_id, 'Contacts');
-		}
+            $emailAddress = new SugarEmailAddress();
+            $this->contact_email = $emailAddress->getPrimaryAddress(false, $this->contact_id, 'Contacts');
+        }
 
-		if(isset($this->contact_id) && $this->contact_id != '') {
-		    $contact = new Contact();
-		    $contact->retrieve($this->contact_id);
-		    if(isset($contact->id)) {
-		        $this->contact_name = $contact->full_name;
-		    }
-		}
-	}
+        if (isset($this->contact_id) && $this->contact_id != '') {
+            $contact = new Contact();
+            $contact->retrieve($this->contact_id);
+            if (isset($contact->id)) {
+                $this->contact_name = $contact->full_name;
+            }
+        }
+    }
 
 
 	function get_list_view_data()
@@ -352,5 +353,3 @@ class Note extends SugarBean {
 		return false;
 	}
 }
-
-?>

@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 if(typeof('console') == 'undefined'){
@@ -348,15 +349,17 @@ Studio2 = {
 		return count;
 	},
 
-	newField: function(){ // TODO: use properties to set field contents
-		//This object must exists on the page
-		var newField = document.createElement('div');
-		newField.className ='le_field';
-		newField.id = Studio2.nextId();
-		newField.innerHTML = '<span>'+SUGAR.language.get('ModuleBuilder', 'LBL_FILLER')+'</span>' + // the displayed label
-							 '<span class=\'field_name\'>(filler)</span>'; // the hidden field that identifies this as something to be saved by prepareForSave()
-		return newField;
-	},
+  newField: function () {
+    //This object must exists on the page
+    var newField = document.createElement('div');
+    newField.className = 'le_field';
+    newField.id = Studio2.nextId();
+    // the displayed label
+    newField.innerHTML = '<span>' + SUGAR.language.get('ModuleBuilder', 'LBL_FILLER') + '</span>' +
+      // the hidden field that identifies this as something to be saved by prepareForSave()
+      '<span class=\'field_name\'>(filler)</span>';
+    return newField;
+  },
 
 	newRow: function(titleRequired) {
 		var newRow = document.createElement('div');
@@ -580,16 +583,15 @@ Studio2 = {
 
 	/* ELEMENT FUNCTIONS */
 
-	// TODO: rewrite tidyPanels, tidyRows and tidyFields as a recursive tidy
-	tidyPanels: function() {
-		var panels = document.getElementById('panels');
-		if (Studio2.count(panels) <= 0) {
-			var newPanel = Studio2.newPanel();
-			newPanel.appendChild(Studio2.newRow(false));
-			panels.appendChild(newPanel);
-			Studio2.activateElement(newPanel);
-		}
-	},
+  tidyPanels: function () {
+    var panels = document.getElementById('panels');
+    if (Studio2.count(panels) <= 0) {
+      var newPanel = Studio2.newPanel();
+      newPanel.appendChild(Studio2.newRow(false));
+      panels.appendChild(newPanel);
+      Studio2.activateElement(newPanel);
+    }
+  },
 
 	tidyRows: function(panel) {
 		if (Studio2.count(panel) <= 0) { // no rows left
@@ -623,14 +625,13 @@ Studio2 = {
 		}
 	},
 
-	swapElements: function(el1,el2) {
-		// TODO: record this swap in TRANSACTION
-		var el1Width = Studio2.getFieldWidth(el1);
-		var el2Width = Studio2.getFieldWidth(el2);
-		YAHOO.util.DragDropMgr.swapNode(el1, el2);
-		Studio2.setFieldWidth(el1,el2Width);
-		Studio2.setFieldWidth(el2,el1Width);
-	},
+  swapElements: function (el1, el2) {
+    var el1Width = Studio2.getFieldWidth(el1);
+    var el2Width = Studio2.getFieldWidth(el2);
+    YAHOO.util.DragDropMgr.swapNode(el1, el2);
+    Studio2.setFieldWidth(el1, el2Width);
+    Studio2.setFieldWidth(el2, el1Width);
+  },
 
 	activateElement: function(element) {
 		if (!document.getElementById(element.id)) {

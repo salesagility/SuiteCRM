@@ -608,7 +608,6 @@ if(!empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarke
 }
 
 
-
 //if campaign_id is passed then we assume this is being invoked from the campaign module and in a popup.
 $has_campaign = true;
 $inboundEmail = true;
@@ -618,9 +617,6 @@ if (!isset($_REQUEST['campaign_id']) || empty($_REQUEST['campaign_id'])) {
 if (!isset($_REQUEST['inboundEmail']) || empty($_REQUEST['inboundEmail'])) {
     $inboundEmail = false;
 }
-
-// todo : its for testing, remove this!
-//$has_campaign = false;
 
 include_once 'modules/EmailTemplates/templateFields.php';
 $ss->assign("FIELD_DEFS_JS", generateFieldDefsJS2());
@@ -633,24 +629,25 @@ if ($has_campaign || $inboundEmail) {
 
     $get_campaign_urls = function ($campaign_id) {
 
-            $return_array=array();
+        $return_array = array();
 
-            if (!empty($campaign_id)) {
+        if (!empty($campaign_id)) {
 
-                $db = DBManagerFactory::getInstance();
+            $db = DBManagerFactory::getInstance();
 
-                $campaign_id = $db->quote($campaign_id);
+            $campaign_id = $db->quote($campaign_id);
 
-                $query1="select * from campaign_trkrs where campaign_id='$campaign_id' and deleted=0";
-                $current=$db->query($query1);
-                while (($row=$db->fetchByAssoc($current)) != null) {
-                    $return_array['{'.$row['tracker_name'].'}'] = array(
-                        'text' => $row['tracker_name'] . ' : ' . $row['tracker_url'],
-                        'url' => $row['tracker_url'],
-                        'id' => $row['id']
-                    );
-                }
+            $query1 = "select * from campaign_trkrs where campaign_id='$campaign_id' and deleted=0";
+            $current = $db->query($query1);
+            while (($row = $db->fetchByAssoc($current)) != null) {
+                $return_array['{' . $row['tracker_name'] . '}'] = array(
+                    'text' => $row['tracker_name'] . ' : ' . $row['tracker_url'],
+                    'url' => $row['tracker_url'],
+                    'id' => $row['id']
+                );
             }
+        }
+
         return $return_array;
     };
     if ($has_campaign) {
@@ -667,9 +664,10 @@ if ($has_campaign || $inboundEmail) {
 
             //for setting null selection values to human readable --None--
             $pattern = "/'0?'></";
-            $replacement = "''>".$app_strings['LBL_NONE'].'<';
+            $replacement = "''>" . $app_strings['LBL_NONE'] . '<';
             if ($massupdate) {
-                $replacement .= "/OPTION>\n<OPTION value='__SugarMassUpdateClearField__'><"; // Giving the user the option to unset a drop down list. I.e. none means that it won't get updated
+                // Giving the user the option to unset a drop down list. I.e. none means that it won't get updated
+                $replacement .= "/OPTION>\n<OPTION value='__SugarMassUpdateClearField__'><";
             }
 
             if (empty($key_list)) {
@@ -678,7 +676,8 @@ if ($has_campaign || $inboundEmail) {
             //create the type dropdown domain and set the selected value if $opp value already exists
             foreach ($key_list as $option_key => $option_value) {
 
-                $select_options .= '<OPTION value="'.$option_key.'" data-id="'.$label_list[$option_key]['id'].'" data-url="'.$label_list[$option_key]['url'].'">'.$label_list[$option_key]['text'].'</OPTION>';
+                $select_options .= '<OPTION value="' . $option_key . '" data-id="' . $label_list[$option_key]['id'] .
+                    '" data-url="' . $label_list[$option_key]['url'] . '">' . $label_list[$option_key]['text'] . '</OPTION>';
             }
             $select_options = preg_replace($pattern, $replacement, $select_options);
 
@@ -686,21 +685,18 @@ if ($has_campaign || $inboundEmail) {
         };
 
         $ss->assign("TRACKER_KEY_OPTIONS", $get_tracker_options($campaign_urls, $campaign_urls, null));
-        //$ss->parse("main.NoInbound.tracker_url");
 
         // create tracker URL fields
         $campaignTracker = new CampaignTracker();
-        if(isset($_REQUEST['campaign_tracker_id']) && $_REQUEST['campaign_tracker_id']) {
-            $campaignTracker->retrieve((int) $_REQUEST['campaign_tracker_id']);
+        if (isset($_REQUEST['campaign_tracker_id']) && $_REQUEST['campaign_tracker_id']) {
+            $campaignTracker->retrieve((int)$_REQUEST['campaign_tracker_id']);
         }
-        // todo: hide tracker select if it has no trackers
         $ss->assign("TRACKER_NAME", isset($focus) ? $focus->tracker_name : null);
         $ss->assign("TRACKER_URL", isset($focus) ? $focus->tracker_url : null);
         if (!empty($focus->is_optout) && $focus->is_optout == 1) {
-            $ss->assign("IS_OPTOUT_CHECKED","checked");
-            $ss->assign("TRACKER_URL_DISABLED","disabled");
+            $ss->assign("IS_OPTOUT_CHECKED", "checked");
+            $ss->assign("TRACKER_URL_DISABLED", "disabled");
         }
-
     }
 }
 // create option of "Contact/Lead/Task" from corresponding module
@@ -784,4 +780,3 @@ if(!empty($_REQUEST['func'])) {
     echo '<input type="hidden" id="func" value="'.$_REQUEST['func'].'">';
 }
       $ss->display('modules/Campaigns/WizardMarketing.html');
-?>

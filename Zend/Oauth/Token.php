@@ -256,7 +256,7 @@ abstract class Zend_Oauth_Token
             return;
         }
 
-        // validate body based on acceptable characters...todo
+        // validate body based on acceptable characters...
         $parts = explode('&', $body);
         foreach ($parts as $kvpair) {
             $pair = explode('=', $kvpair);

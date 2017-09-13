@@ -468,8 +468,6 @@ abstract class Zend_Gdata_App_Base
      * Alternatively, if no getFoo() is defined, but a $_foo protected variable
      * is defined, this is returned.
      *
-     * TODO Remove ability to bypass getFoo() methods??
-     *
      * @param string $name The variable name sought
      */
     public function __get($name)
@@ -492,8 +490,6 @@ abstract class Zend_Gdata_App_Base
      *
      * Alternatively, if no setFoo() is defined, but a $_foo protected variable
      * is defined, this is returned.
-     *
-     * TODO Remove ability to bypass getFoo() methods??
      *
      * @param string $name
      * @param string $value

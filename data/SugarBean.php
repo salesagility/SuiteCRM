@@ -698,20 +698,23 @@ class SugarBean
                             } elseif (isset($rel_def[$key])) {
                                 $toInsert[$key] = $rel_def[$key];
                             }
-                            //todo specify defaults if meta not defined.
                         }
 
 
                         $column_list = implode(",", array_keys($toInsert));
                         $value_list = "'" . implode("','", array_values($toInsert)) . "'";
 
-                        //create the record. todo add error check.
+                        if ($column_list === '') {
+                            $GLOBALS['log']->error('No relationships meta set for ' . $module_dir . ', column_list = ' . $column_list);
+                        } elseif ($value_list === '') {
+                            $GLOBALS['log']->error('No relationships meta set for ' . $module_dir . ', value_list = ' . $value_list);
+                        }
                         $insert_string = "INSERT into relationships (" . $column_list . ") values (" . $value_list . ")";
                         $db->query($insert_string, true);
                     }
                 }
             } else {
-                $GLOBALS['log']->info('No relationships meta set for '.$module_dir);
+                $GLOBALS['log']->info('No relationships meta set for ' . $module_dir);
             }
         }
     }
@@ -1956,7 +1959,6 @@ class SugarBean
      *
      * @param bool $check_notify Optional, default false, if set to true assignee of the record is notified via email.
      * @return string
-     * @todo Add support for field type validation and encoding of parameters.
      */
     public function save($check_notify = false)
     {
@@ -2401,8 +2403,6 @@ class SugarBean
 
     /**
      * Handle the preset fields listed in the fixed relationship_fields array hardcoded into the OOB beans
-     *
-     * TODO: remove this mechanism and replace with mechanism exclusively based on the vardefs
      *
      * @api
      * @see save_relationship_changes
@@ -3682,7 +3682,6 @@ class SugarBean
         $next_offset = $row_offset + $max_per_page;
 
         $class = get_class($this);
-        //FIXME: Bug? we should remove the magic number -99
         //use -99 to return all
         $index = $row_offset;
         while ($max_per_page == -99 || ($index < $row_offset + $max_per_page)) {
@@ -4116,7 +4115,6 @@ class SugarBean
      * Sets value from fetched row into the bean.
      *
      * @param array $row Fetched row
-     * @todo loop through vardefs instead
      * @internal runs into an issue when populating from field_defs for users - corrupts user prefs
      *
      * Internal function, do not override.

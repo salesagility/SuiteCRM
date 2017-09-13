@@ -1,11 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,11 +34,16 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-$dictionary['Document'] = array('table' => 'documents',
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+$dictionary['Document'] = array(
+    'table' => 'documents',
     'unified_search' => true,
     'full_text_search' => true,
     'unified_search_default_enabled' => true,
@@ -243,7 +248,6 @@ $dictionary['Document'] = array('table' => 'documents',
             'source' => 'non-db',
             'vname' => 'LBL_CONTRACTS',
         ),
-        //todo remove
         'leads' => array(
             'name' => 'leads',
             'type' => 'link',
@@ -431,22 +435,44 @@ $dictionary['Document'] = array('table' => 'documents',
         array('name' => 'idx_doc_cat', 'type' => 'index', 'fields' => array('category_id', 'subcategory_id')),
     ),
     'relationships' => array(
-        'document_revisions' => array('lhs_module' => 'Documents', 'lhs_table' => 'documents', 'lhs_key' => 'id',
-            'rhs_module' => 'DocumentRevisions', 'rhs_table' => 'document_revisions', 'rhs_key' => 'document_id',
-            'relationship_type' => 'one-to-many')
+        'document_revisions' => array(
+            'lhs_module' => 'Documents',
+            'lhs_table' => 'documents',
+            'lhs_key' => 'id',
+            'rhs_module' => 'DocumentRevisions',
+            'rhs_table' => 'document_revisions',
+            'rhs_key' => 'document_id',
+            'relationship_type' => 'one-to-many'
+        )
 
-    , 'documents_modified_user' =>
-            array('lhs_module' => 'Users', 'lhs_table' => 'users', 'lhs_key' => 'id',
-                'rhs_module' => 'Documents', 'rhs_table' => 'documents', 'rhs_key' => 'modified_user_id',
-                'relationship_type' => 'one-to-many')
+    ,
+        'documents_modified_user' =>
+            array(
+                'lhs_module' => 'Users',
+                'lhs_table' => 'users',
+                'lhs_key' => 'id',
+                'rhs_module' => 'Documents',
+                'rhs_table' => 'documents',
+                'rhs_key' => 'modified_user_id',
+                'relationship_type' => 'one-to-many'
+            )
 
-    , 'documents_created_by' =>
-            array('lhs_module' => 'Users', 'lhs_table' => 'users', 'lhs_key' => 'id',
-                'rhs_module' => 'Documents', 'rhs_table' => 'documents', 'rhs_key' => 'created_by',
-                'relationship_type' => 'one-to-many')
+    ,
+        'documents_created_by' =>
+            array(
+                'lhs_module' => 'Users',
+                'lhs_table' => 'users',
+                'lhs_key' => 'id',
+                'rhs_module' => 'Documents',
+                'rhs_table' => 'documents',
+                'rhs_key' => 'created_by',
+                'relationship_type' => 'one-to-many'
+            )
     ),
 
 );
-VardefManager::createVardef('Documents', 'Document', array('default', 'assignable', 'security_groups',
+VardefManager::createVardef('Documents', 'Document', array(
+    'default',
+    'assignable',
+    'security_groups',
 ));
-?>

@@ -164,7 +164,6 @@ class Zend_Oauth_Http
      * @param  array $params
      * @return Zend_Http_Response
      * @throws Zend_Oauth_Exception on HTTP request errors
-     * @todo   Remove cycling?; Replace with upfront do-or-die configuration
      */
     public function startRequestCycle(array $params)
     {

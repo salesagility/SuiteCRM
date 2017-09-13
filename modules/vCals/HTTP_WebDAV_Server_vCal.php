@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,19 +34,16 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once 'modules/Calendar/Calendar.php';
-
 require_once 'include/HTTP_WebDAV_Server/Server.php';
-
 
     /**
      * Filesystem access using WebDAV
@@ -90,135 +87,113 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
     }
 
 
-
         /**
          * Serve a webdav request
          *
          * @access public
-         * @param  string
+         * @param string|bool $base
+         * @access public
          */
-        function ServeRequest($base = false)
+        public function ServeRequest($base = false)
         {
 
-            global $sugar_config,$current_language;
+            global $sugar_config, $current_language;
 
-            if (!empty($sugar_config['session_dir']))
-            {
-               session_save_path($sugar_config['session_dir']);
+            if (!empty($sugar_config['session_dir'])) {
+                session_save_path($sugar_config['session_dir']);
             }
 
             session_start();
 
-            // clean_incoming_data();
-
 
             $current_language = $sugar_config['default_language'];
 
-            // special treatment for litmus compliance test
-            // reply on its identifier header
-            // not needed for the test itself but eases debugging
-/*
-            foreach(apache_request_headers() as $key => $value) {
-                if(stristr($key,"litmus")) {
-                    error_log("Litmus test $value");
-                    header("X-Litmus-reply: ".$value);
-                }
-            }
-*/
 
             // set root directory, defaults to webserver document root if not set
             if ($base) {
-                $this->base = realpath($base); // TODO throw if not a directory
-            } else if(!$this->base) {
-                $this->base = $_SERVER['DOCUMENT_ROOT'];
+                $this->base = realpath($base);
+            } else {
+                if (!$this->base) {
+                    $this->base = $_SERVER['DOCUMENT_ROOT'];
+                }
             }
 
 
-            $query_arr =  array();
-             // set path
-            if ( empty($_SERVER["PATH_INFO"]))
-            {
-				$this->path = "/";
-				if(strtolower($_SERVER["REQUEST_METHOD"]) == 'get'){
-					$query_arr = $_REQUEST;
-				}else{
-					parse_str($_REQUEST['parms'],$query_arr);
-				}
-            } else{
-              $this->path = $this->_urldecode( $_SERVER["PATH_INFO"]);
+            $query_arr = array();
+            // set path
+            if (empty($_SERVER["PATH_INFO"])) {
+                $this->path = "/";
+                if (strtolower($_SERVER["REQUEST_METHOD"]) === 'get') {
+                    $query_arr = $_REQUEST;
+                } else {
+                    parse_str($_REQUEST['parms'], $query_arr);
+                }
+            } else {
+                $this->path = $this->_urldecode($_SERVER["PATH_INFO"]);
 
-              if(ini_get("magic_quotes_gpc")) {
-               $this->path = stripslashes($this->path);
-              }
+                if (ini_get("magic_quotes_gpc")) {
+                    $this->path = stripslashes($this->path);
+                }
 
-              $query_str = preg_replace('/^\//','',$this->path);
-              $query_arr =  array();
-              parse_str($query_str,$query_arr);
+                $query_str = preg_replace('/^\//', '', $this->path);
+                $query_arr = array();
+                parse_str($query_str, $query_arr);
             }
 
 
-            if ( ! empty($query_arr['type']))
-            {
-              $this->vcal_type = $query_arr['type'];
-            }
-            else {
-              $this->vcal_type = 'vfb';
+            if (!empty($query_arr['type'])) {
+                $this->vcal_type = $query_arr['type'];
+            } else {
+                $this->vcal_type = 'vfb';
             }
 
-            if ( ! empty($query_arr['source']))
-            {
-              $this->source = $query_arr['source'];
-            }
-            else {
-              $this->source = 'outlook';
+            if (!empty($query_arr['source'])) {
+                $this->source = $query_arr['source'];
+            } else {
+                $this->source = 'outlook';
             }
 
-            if ( ! empty($query_arr['key']))
-            {
-              $this->publish_key = $query_arr['key'];
+            if (!empty($query_arr['key'])) {
+                $this->publish_key = $query_arr['key'];
             }
 
             // select user by email
-            if ( ! empty($query_arr['email']))
-            {
+            if (!empty($query_arr['email'])) {
 
 
-              // clean the string!
-              $query_arr['email'] = clean_string($query_arr['email']);
-              //get user info
-              $this->user_focus->retrieve_by_email_address( $query_arr['email']);
+                // clean the string!
+                $query_arr['email'] = clean_string($query_arr['email']);
+                //get user info
+                $this->user_focus->retrieve_by_email_address($query_arr['email']);
 
-            }
-            // else select user by user_name
-            else if ( ! empty($query_arr['user_name']))
-            {
-              // clean the string!
-              $query_arr['user_name'] = clean_string($query_arr['user_name']);
+            } // else select user by user_name
+            else {
+                if (!empty($query_arr['user_name'])) {
+                    // clean the string!
+                    $query_arr['user_name'] = clean_string($query_arr['user_name']);
 
-              //get user info
-              $arr = array('user_name'=>$query_arr['user_name']);
-              $this->user_focus->retrieve_by_string_fields($arr);
-            }
-            // else select user by user id
-            else if ( ! empty($query_arr['user_id']))
-            {
-                $this->user_focus->retrieve($query_arr['user_id']);
+                    //get user info
+                    $arr = array('user_name' => $query_arr['user_name']);
+                    $this->user_focus->retrieve_by_string_fields($arr);
+                } // else select user by user id
+                else {
+                    if (!empty($query_arr['user_id'])) {
+                        $this->user_focus->retrieve($query_arr['user_id']);
+                    }
+                }
             }
 
             // if we haven't found a user, then return 404
-            if ( empty($this->user_focus->id) || $this->user_focus->id == -1)
-            {
+            if (empty($this->user_focus->id) || $this->user_focus->id === -1) {
                 $this->http_status('401 Unauthorized');
                 if (!isset($query_arr['noAuth'])) {
-                    header('WWW-Authenticate: Basic realm="'.($this->http_auth_realm).'"');
+                    header('WWW-Authenticate: Basic realm="' . ($this->http_auth_realm) . '"');
                 }
+
                 return;
             }
 
-//            if(empty($this->user_focus->user_preferences))
-//            {
-                     $this->user_focus->loadPreferences();
-//            }
+            $this->user_focus->loadPreferences();
 
             // let the base class do all the work
             parent::ServeRequest();
@@ -308,51 +283,60 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
                (Not Implemented) response in such cases."
             */
             foreach ($_SERVER as $key => $val) {
-                if (strncmp($key, "HTTP_CONTENT", 11)) continue;
+                if (strncmp($key, "HTTP_CONTENT", 11)) {
+                    continue;
+                }
                 switch ($key) {
-                case 'HTTP_CONTENT_ENCODING': // RFC 2616 14.11
-                    // TODO support this if ext/zlib filters are available
-                    $this->http_status("501 not implemented");
-                    echo "The service does not support '$val' content encoding";
-                    return;
+                    // RFC 2616 14.11
+                    case 'HTTP_CONTENT_ENCODING':
+                        $this->http_status("501 not implemented");
+                        echo "The service does not support '$val' content encoding";
 
-                case 'HTTP_CONTENT_LANGUAGE': // RFC 2616 14.12
-                    // we assume it is not critical if this one is ignored
-                    // in the actual PUT implementation ...
-                    $options["content_language"] = $val;
-                    break;
-
-                case 'HTTP_CONTENT_LOCATION': // RFC 2616 14.14
-                    /* The meaning of the Content-Location header in PUT
-                       or POST requests is undefined; servers are free
-                       to ignore it in those cases. */
-                    break;
-
-                case 'HTTP_CONTENT_RANGE':    // RFC 2616 14.16
-                    // single byte range requests are NOT supported
-                    // the header format is also specified in RFC 2616 14.16
-                    // TODO we have to ensure that implementations support this or send 501 instead
-                        $this->http_status("400 bad request");
-                        echo "The service does only support single byte ranges";
                         return;
 
-                case 'HTTP_CONTENT_MD5':      // RFC 2616 14.15
-                    // TODO: maybe we can just pretend here?
-                    $this->http_status("501 not implemented");
-                    echo "The service does not support content MD5 checksum verification";
-                    return;
+                    // RFC 2616 14.12
+                    case 'HTTP_CONTENT_LANGUAGE':
+                        // we assume it is not critical if this one is ignored
+                        // in the actual PUT implementation ...
+                        $options["content_language"] = $val;
+                        break;
 
-				case 'HTTP_CONTENT_LENGTH': // RFC 2616 14.14
-                    /* The meaning of the Content-Location header in PUT
-                       or POST requests is undefined; servers are free
-                       to ignore it in those cases. */
-                    break;
+                    // RFC 2616 14.14
+                    case 'HTTP_CONTENT_LOCATION':
+                        /* The meaning of the Content-Location header in PUT
+                           or POST requests is undefined; servers are free
+                           to ignore it in those cases. */
+                        break;
 
-                default:
-                    // any other unknown Content-* headers
-                    $this->http_status("501 not implemented");
-                    echo "The service does not support '$key'";
-                    return;
+                    // RFC 2616 14.16
+                    case 'HTTP_CONTENT_RANGE':
+                        // single byte range requests are NOT supported
+                        // the header format is also specified in RFC 2616 14.16
+                        $this->http_status("400 bad request");
+                        echo 'The service does only support single byte ranges';
+
+                        return;
+
+                    // RFC 2616 14.15
+                    case 'HTTP_CONTENT_MD5':
+                        $this->http_status('501 not implemented');
+                        echo 'The service does not support content MD5 checksum verification';
+
+                        return;
+
+                    // RFC 2616 14.14
+                    case 'HTTP_CONTENT_LENGTH':
+                        /* The meaning of the Content-Location header in PUT
+                           or POST requests is undefined; servers are free
+                           to ignore it in those cases. */
+                        break;
+
+                    default:
+                        // any other unknown Content-* headers
+                        $this->http_status('501 not implemented');
+                        echo "The service does not support '$key'";
+
+                        return;
                 }
             }
 
@@ -453,6 +437,3 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
         }
 
     }
-
-
-?>

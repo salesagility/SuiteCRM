@@ -42,17 +42,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-global $timedate;
-global $current_user;
-global $mod_strings;
+global $timedate, $current_user, $mod_strings;
 
 $campaign = new Campaign();
 $campaign->retrieve($_REQUEST['record']);
-$err_messages=array();
+$err_messages = array();
 
-$test=false;
-if (isset($_REQUEST['mode']) && $_REQUEST['mode'] =='test') {
-	$test=true;
+$test = false;
+if (isset($_REQUEST['mode']) && $_REQUEST['mode'] === 'test') {
+    $test = true;
 }
 
 //this is to account for the case of sending directly from summary page in wizards
@@ -85,7 +83,6 @@ foreach ($_POST['mass'] as $message_id) {
 	$marketing->retrieve($message_id);
 
 	//make sure that the marketing message has a mailbox.
-	//
 	if (empty($marketing->inbound_email_id)) {
 
 		echo "<p>";
@@ -153,10 +150,9 @@ foreach ($_POST['mass'] as $message_id) {
 	}
 }
 
-//delete all entries from the emailman table that belong to the exempt list.
-//TODO:SM: may want to move this to query clause above instead
+// delete all entries from the emailman table that belong to the exempt list.
 if (!$test) {
-    $delete_query =  "
+    $delete_query = "
     DELETE FROM emailman WHERE id IN (
         SELECT em.id FROM (
             SELECT emailman.id id
@@ -199,5 +195,3 @@ if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
 } else {
 	header($header_URL);
 }
-
-?>

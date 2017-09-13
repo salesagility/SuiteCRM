@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class StoreQuery
 {
@@ -134,30 +137,39 @@ class StoreQuery
 
 
         foreach ($this->query as $key => $value) {
-            // todo wp: remove this
             if ($key != 'advanced' && $key != 'module' && $key != 'lvso') {
                 //Filter date fields to ensure it is saved to DB format, but also avoid empty values
-                if (!empty($value) && !empty($bean) && preg_match('/^(start_range_|end_range_|range_)?(.*?)(_advanced|_basic)$/', $key, $match)) {
+                if (!empty($value) && !empty($bean) &&
+                    preg_match('/^(start_range_|end_range_|range_)?(.*?)(_advanced|_basic)$/',
+                        $key, $match)
+                ) {
                     $field = $match[2];
-                    if (isset($bean->field_defs[$field]['type']) && empty($bean->field_defs[$field]['disable_num_format'])) {
+                    if (isset($bean->field_defs[$field]['type']) &&
+                        empty($bean->field_defs[$field]['disable_num_format'])
+                    ) {
                         $type = $bean->field_defs[$field]['type'];
 
-                        if (($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && preg_match('/^\d{4}-\d{2}-\d{2}$/', $value) && !preg_match('/^\[.*?\]$/', $value)) {
+                        if (($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') &&
+                            preg_match('/^\d{4}-\d{2}-\d{2}$/',
+                                $value) && !preg_match('/^\[.*?\]$/', $value)
+                        ) {
                             $value = $timedate->to_display_date($value, false);
-                        } else if (($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') && isset($this->query[$key . '_unformatted_number']) && preg_match('/^\d+$/', $value)) {
-                            require_once('modules/Currencies/Currency.php');
-                            $value = format_number($value);
-                            if ($type == 'currency' && isset($this->query[$key . '_currency_symbol'])) {
-                                $value = $this->query[$key . '_currency_symbol'] . $value;
+                        } else {
+                            if (($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') &&
+                                isset($this->query[$key . '_unformatted_number']) && preg_match('/^\d+$/',
+                                    $value)
+                            ) {
+                                require_once('modules/Currencies/Currency.php');
+                                $value = format_number($value);
+                                if ($type == 'currency' && isset($this->query[$key . '_currency_symbol'])) {
+                                    $value = $this->query[$key . '_currency_symbol'] . $value;
+                                }
                             }
                         }
                     }
                 }
-
-                // cn: bug 6546 storequery stomps correct value for 'module' in Activities
                 $_REQUEST[$key] = $value;
                 $_GET[$key] = $value;
-
             }
         }
     }
@@ -259,5 +271,3 @@ class StoreQuery
         return $current_user->getPreference($module . 'Q');
     }
 }
-
-?>

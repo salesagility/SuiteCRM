@@ -320,14 +320,13 @@ class SugarFeedDashlet extends DashletGeneric {
 
         $fetchRecordCount = $this->displayRows + $this->lvs->data['pageData']['offsets']['current'];
 
-        foreach ( $external_modules as $apiName ) {
+        foreach ($external_modules as $apiName) {
             $api = ExternalAPIFactory::loadAPI($apiName);
-            if ( $api !== FALSE ) {
-                // FIXME: Actually calculate the oldest sugar feed we can see, once we get an API that supports this sort of filter.
-                $reply = $api->getLatestUpdates(0,$fetchRecordCount);
-                if ( $reply['success'] && count($reply['messages']) > 0 ) {
+            if ($api !== false) {
+                $reply = $api->getLatestUpdates(0, $fetchRecordCount);
+                if ($reply['success'] && count($reply['messages']) > 0) {
                     array_splice($resortQueue, count($resortQueue), 0, $reply['messages']);
-                } else if ( !$reply['success'] ) {
+                } else if (!$reply['success']) {
                     $feedErrors[] = $reply['errorMessage'];
                 }
             }

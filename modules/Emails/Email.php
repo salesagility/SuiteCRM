@@ -1518,7 +1518,6 @@ class Email extends Basic
 
     function linkEmailToAddress($id, $type)
     {
-        // TODO: make this update?
         $q1 = "SELECT * FROM emails_email_addr_rel WHERE email_id = '{$this->id}' AND email_address_id = '{$id}' AND address_type = '{$type}' AND deleted = 0";
         $r1 = $this->db->query($q1);
         $a1 = $this->db->fetchByAssoc($r1);
@@ -3074,7 +3073,6 @@ class Email extends Basic
             }
         }
 
-        //todo this  isset( $app_list_strings['dom_email_status'][$this->status]) is hack for 3261.
         if (!empty($this->status) && isset($app_list_strings['dom_email_status'][$this->status])) {
             $this->status_name = $app_list_strings['dom_email_status'][$this->status];
         }
@@ -3840,10 +3838,8 @@ eoq;
     }
 
     /**
-     * Bugs 50972, 50973
      * Sets the field def for a field to allow null values
      *
-     * @todo Consider moving to SugarBean to allow other models to set fields to NULL
      * @param string $field The field name to modify
      * @return void
      */

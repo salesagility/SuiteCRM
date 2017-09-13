@@ -896,28 +896,28 @@ class MBModule
             }
     }
 
-    function removeFieldFromLayouts ( $fieldName )
+    /**
+     * @param string $fieldName
+     */
+    function removeFieldFromLayouts($fieldName)
     {
         // hardcoded list of types for now, as also hardcoded in a different form in getNodes
-        // TODO: replace by similar mechanism to StudioModule to determine the list of available views for this module
-        $views = array ( 'editview' , 'detailview' , 'listview' , 'basic_search' , 'advanced_search' , 'dashlet' , 'popuplist');
-        
-    	foreach ($views as $type )
-        {
-            $parser = ParserFactory::getParser( $type , $this->name , $this->package ) ;
-            if ($parser->removeField ( $fieldName ) ) {
-                            $parser->handleSave(false) ;
+        $views = array('editview', 'detailview', 'listview', 'basic_search', 'advanced_search', 'dashlet', 'popuplist');
+
+        foreach ($views as $type) {
+            $parser = ParserFactory::getParser($type, $this->name, $this->package);
+            if ($parser->removeField($fieldName)) {
+                $parser->handleSave(false);
             }
             // don't populate from $_REQUEST, just save as is...
         }
-		//Remove the fields in subpanel
-        $psubs = $this->getProvidedSubpanels() ; 
-        foreach ( $psubs as $sub )
-        {
-			$parser = ParserFactory::getParser( MB_LISTVIEW , $this->name, $this->package ,  $sub) ;
-			if ($parser->removeField ( $fieldName ) ) {
-				            $parser->handleSave(false) ;
-			}
+        //Remove the fields in subpanel
+        $psubs = $this->getProvidedSubpanels();
+        foreach ($psubs as $sub) {
+            $parser = ParserFactory::getParser(MB_LISTVIEW, $this->name, $this->package, $sub);
+            if ($parser->removeField($fieldName)) {
+                $parser->handleSave(false);
+            }
         }
     }
 
@@ -975,4 +975,3 @@ class MBModule
     }
 
 }
-?>

@@ -61,30 +61,31 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
      * @param string moduleName     The name of the module to which this subpanel belongs
      * @param string packageName    If not empty, the name of the package to which this subpanel belongs
      */
-    function __construct ($subpanelName , $moduleName , $packageName = '')
+    function __construct($subpanelName, $moduleName, $packageName = '')
     {
-        $GLOBALS [ 'log' ]->debug ( get_class ( $this ) . ": __construct()" ) ;
+        $GLOBALS ['log']->debug(get_class($this) . ": __construct()");
 
-        // TODO: check the implementations
-        if (empty ( $packageName ))
-        {
-            require_once 'modules/ModuleBuilder/parsers/views/DeployedSubpanelImplementation.php' ;
-            $this->implementation = new DeployedSubpanelImplementation ( $subpanelName, $moduleName ) ;
-            //$this->originalViewDef = $this->implementation->getOriginalDefs ();
-        } else
-        {
-            require_once 'modules/ModuleBuilder/parsers/views/UndeployedSubpanelImplementation.php' ;
-            $this->implementation = new UndeployedSubpanelImplementation ( $subpanelName, $moduleName, $packageName ) ;
+        if (empty ($packageName)) {
+            require_once 'modules/ModuleBuilder/parsers/views/DeployedSubpanelImplementation.php';
+            $this->implementation = new DeployedSubpanelImplementation ($subpanelName, $moduleName);
+        } else {
+            require_once 'modules/ModuleBuilder/parsers/views/UndeployedSubpanelImplementation.php';
+            $this->implementation = new UndeployedSubpanelImplementation ($subpanelName, $moduleName, $packageName);
         }
 
-        $this->_viewdefs = array_change_key_case ( $this->implementation->getViewdefs () ) ; // force to lower case so don't have problems with case mismatches later
-        $this->_fielddefs =  $this->implementation->getFielddefs ();
-        $this->_standardizeFieldLabels( $this->_fielddefs );
-        $GLOBALS['log']->debug ( get_class($this)."->__construct(): viewdefs = ".print_r($this->_viewdefs,true));
-        $GLOBALS['log']->debug ( get_class($this)."->__construct(): viewdefs = ".print_r($this->_viewdefs,true));
-        $this->_invisibleFields = $this->findInvisibleFields( $this->_viewdefs ) ;
+        // force to lower case so don't have problems with case mismatches later
+        $this->_viewdefs = array_change_key_case($this->implementation->getViewdefs());
+        $this->_fielddefs = $this->implementation->getFielddefs();
+        $this->_standardizeFieldLabels($this->_fielddefs);
+        $GLOBALS['log']->debug(get_class($this) .
+            "->__construct(): viewdefs = " . print_r($this->_viewdefs, true));
+        $GLOBALS['log']->debug(get_class($this) .
+            "->__construct(): viewdefs = " . print_r($this->_viewdefs, true));
+        $this->_invisibleFields = $this->findInvisibleFields($this->_viewdefs);
 
-        $GLOBALS['log']->debug ( get_class($this)."->__construct(): invisibleFields = ".print_r($this->_invisibleFields,true));
+        $GLOBALS['log']->debug(get_class($this) . "->__construct(): invisibleFields = " .
+            print_r($this->_invisibleFields,
+                true));
     }
 
     /*
@@ -120,21 +121,17 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
 
     /**
      * Return a list of the default fields for a subpanel
-     * TODO: have this return just a list of fields, without definitions
      * @return array    List of default fields as an array, where key = value = <field name>
      */
-    function getDefaultFields ()
+    function getDefaultFields()
     {
-        $defaultFields = array ( ) ;
-        foreach ( $this->_viewdefs as $key => $def )
-        {
-            if (empty ( $def [ 'usage' ] ) || strcmp ( $def [ 'usage' ], 'query_only' ) == 1)
-            {
-                $defaultFields [ strtolower ( $key ) ] = $this->_viewdefs [ $key ] ;
+        $defaultFields = array();
+        foreach ($this->_viewdefs as $key => $def) {
+            if (empty ($def ['usage']) || strcmp($def ['usage'], 'query_only') === 1) {
+                $defaultFields [strtolower($key)] = $this->_viewdefs [$key];
             }
         }
-
-        return $defaultFields ;
+        return $defaultFields;
     }
 
     /*
@@ -200,3 +197,4 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
     }
 
 }
+

@@ -152,41 +152,40 @@ class AbstractRelationships
         return false ;
     }
 
-    /*
+    /**
      * Construct a relationship from the information in the $_REQUEST array
-     * If a relationship_name is provided, and that relationship is not read only, then modify the existing relationship, overriding the definition with any AbstractRelationship::$definitionkeys entries set in the $_REQUEST
+     * If a relationship_name is provided, and that relationship is not read only,
+     * then modify the existing relationship,
+     * overriding the definition with any AbstractRelationship::$definitionkeys entries set in the $_REQUEST
      * Otherwise, create and add a new relationship with the information in the $_REQUEST
      * @return AbstractRelationship
      */
-    function addFromPost ()
+    function addFromPost()
     {
-        $definition = array ( ) ;
-        
-        require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationship.php' ;
-        foreach ( AbstractRelationship::$definitionKeys as $key )
-        {
-            if (! empty ( $_REQUEST [ $key ] ))
-            {
-                $definition [ $key ] = ($key == 'relationship_type') ? AbstractRelationship::parseRelationshipType ( $_REQUEST [ $key ] ) : $_REQUEST [ $key ] ;
+        $definition = array();
+
+        require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationship.php';
+        foreach (AbstractRelationship::$definitionKeys as $key) {
+            if (!empty ($_REQUEST [$key])) {
+                $definition [$key] = ($key == 'relationship_type') ? AbstractRelationship::parseRelationshipType($_REQUEST [$key]) : $_REQUEST [$key];
             }
         }
-        
+
         // if this is a change to an existing relationship, and it is not readonly, then delete the old one
-        if (! empty ( $_REQUEST [ 'relationship_name' ] ))
-        {
-            if ($relationship = $this->get ( $_REQUEST [ 'relationship_name' ] ))
-            {
-                unset( $definition[ 'relationship_name' ] ) ; // in case the related modules have changed; this name is probably no longer appropriate
-                if (! $relationship->readonly ()) {
-                                    $this->delete ( $_REQUEST [ 'relationship_name' ] ) ;
+        if (!empty ($_REQUEST ['relationship_name'])) {
+            if ($relationship = $this->get($_REQUEST ['relationship_name'])) {
+                // in case the related modules have changed; this name is probably no longer appropriate
+                unset($definition['relationship_name']);
+                if (!$relationship->readonly()) {
+                    $this->delete($_REQUEST ['relationship_name']);
                 }
+            }
         }
-        }
-        
-        $newRelationship = RelationshipFactory::newRelationship ( $definition ) ;
-        // TODO: error handling in case we get a badly formed definition and hence relationship
-        $this->add ( $newRelationship ) ;
-        return $newRelationship ;
+
+        $newRelationship = RelationshipFactory::newRelationship($definition);
+        $this->add($newRelationship);
+
+        return $newRelationship;
     }
 
     /*
@@ -254,30 +253,30 @@ class AbstractRelationships
         write_array_to_file ( 'relationships', $definitions, $basepath . '/relationships.php', 'w', $header ) ;
     }
 
-    /*
+    /**
      * Return all known deployed relationships
      * All are set to read-only - the assumption for now is that we can't directly modify a deployed relationship
-     * However, if it was created through this AbstractRelationships class a modifiable version will be held in the relationships working file,
+     * However, if it was created through this AbstractRelationships class a
+     * modifiable version will be held in the relationships working file,
      * and that one will override the readonly version in load()
      *
-     * TODO: currently we ignore the value of the 'reverse' field in the relationships definition. This is safe to do as only one
-     * relationship (products-products) uses it (and there it makes no difference from our POV) and we don't use it when creating new ones
+     * relationship (products-products) uses it (and there it makes no difference from our POV)
+     * and we don't use it when creating new ones
      * @return array Array of $relationshipName => $relationshipDefinition as an array
      */
-    protected function getDeployedRelationships ()
+    protected function getDeployedRelationships()
     {
-        
-        $db = DBManagerFactory::getInstance () ;
-        $query = "SELECT * FROM relationships WHERE deleted = 0" ;
-        $result = $db->query ( $query ) ;
-        while ( $row = $db->fetchByAssoc ( $result ) )
-        {
+
+        $db = DBManagerFactory::getInstance();
+        $query = "SELECT * FROM relationships WHERE deleted = 0";
+        $result = $db->query($query);
+        while ($row = $db->fetchByAssoc($result)) {
             // set this relationship to readonly
-            $row [ 'readonly' ] = true ;
-            $relationships [ $row [ 'relationship_name' ] ] = $row ;
+            $row ['readonly'] = true;
+            $relationships [$row ['relationship_name']] = $row;
         }
-        
-        return $relationships ;
+
+        return $relationships;
     }
 
     /*
@@ -574,46 +573,43 @@ class AbstractRelationships
     
     }
 
-    /*
+    /**
      * Determine if we're dealing with a deployed or undeployed module based on the name
-     * Undeployed modules are those known to ModuleBuilder; the twist is that the deployed names of modulebuilder modules are keyname_modulename not packagename_modulename
-     * and ModuleBuilder doesn't have any accessor methods based around keys, so we must convert keynames to packagenames
-     * @param $deployedName Name of the module in the deployed form - that is, keyname_modulename or modulename
+     * Undeployed modules are those known to ModuleBuilder;
+     * the twist is that the deployed names of modulebuilder modules are keyname_modulename not packagename_modulename
+     * and ModuleBuilder doesn't have any accessor methods based around keys,
+     * so we must convert keynames to packagenames
+     * @param string $deployedName Name of the module in the deployed form - that is, keyname_modulename or modulename
      * @return array ('moduleName'=>name, 'packageName'=>package) if undeployed, ('moduleName'=>name) if deployed
      */
-    static function parseDeployedModuleName ($deployedName)
+    static function parseDeployedModuleName($deployedName)
     {
-        require_once 'modules/ModuleBuilder/MB/ModuleBuilder.php' ;
-        $mb = new ModuleBuilder ( ) ;
-        
-        $packageName = '' ;
-        $moduleName = $deployedName ;
-        
-        foreach ( $mb->getPackageList () as $name )
-        {
-            // convert the keyName into a packageName, needed for checking to see if this is really an undeployed module, or just a module with a _ in the name...
-            $package = $mb->getPackage ( $name ) ; // seem to need to call getPackage twice to get the key correctly... TODO: figure out why...
-            $key = $mb->getPackage ( $name )->key ;
-            if (strlen ( $key ) < strlen ( $deployedName ))
-            {
-                $position = stripos ( $deployedName, $key ) ;
-                $moduleName = trim( substr( $deployedName , strlen($key) ) , '_' ); //use trim rather than just assuming that _ is between packageName and moduleName in the deployedName
-                if ( $position !== false && $position == 0 && (isset ( $mb->packages [ $name ]->modules [ $moduleName ] )))
-                {
-                    $packageName = $name ;
-                    break ;
+        require_once 'modules/ModuleBuilder/MB/ModuleBuilder.php';
+        $mb = new ModuleBuilder ();
+
+        $packageName = '';
+        $moduleName = $deployedName;
+
+        foreach ($mb->getPackageList() as $name) {
+            // convert the keyName into a packageName,
+            // needed for checking to see if this is really an undeployed module, or just a module with a _ in the name
+            $package = $mb->getPackage($name);
+            $key = $mb->getPackage($name)->key;
+            if (strlen($key) < strlen($deployedName)) {
+                $position = stripos($deployedName, $key);
+                //use trim rather than just assuming that _ is between packageName and moduleName in the deployedName
+                $moduleName = trim(substr($deployedName, strlen($key)), '_');
+                if ($position !== false && $position == 0 && (isset ($mb->packages [$name]->modules [$moduleName]))) {
+                    $packageName = $name;
+                    break;
                 }
             }
         }
-        
-        if (! empty ( $packageName ))
-        {
-            return array ( 'moduleName' => $moduleName , 'packageName' => $packageName ) ;
-        } else
-        {
-            return array ( 'moduleName' => $deployedName ) ;
+
+        if (!empty ($packageName)) {
+            return array('moduleName' => $moduleName, 'packageName' => $packageName);
+        } else {
+            return array('moduleName' => $deployedName);
         }
     }
-
-
 }
