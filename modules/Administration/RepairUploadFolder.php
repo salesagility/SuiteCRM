@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -77,7 +78,7 @@ foreach ($directory as $node) {
     if (!is_guid($node->getFilename())) {
         continue;
     }
-    $stat['total'] ++;
+    $stat['total']++;
 
     $row = false;
     foreach ($validBeans as $bean) {
@@ -101,12 +102,12 @@ foreach ($directory as $node) {
 
     if ($row == false) {
         if (unlink('upload://' . $node->getFilename())) {
-            $stat['removed'] ++;
+            $stat['removed']++;
         }
     } elseif ($row['deleted'] == 1) {
         $bean->populateFromRow($row);
         if ($bean->deleteFiles()) {
-            $stat['removed'] ++;
+            $stat['removed']++;
         }
     }
 

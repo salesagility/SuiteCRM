@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -89,6 +91,20 @@ class Dashlet
     var $autoRefresh = "0";
 
     /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function Dashlet($id)
+    {
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if (isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        } else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id);
+    }
+
+    /**
      * Constructor
      *
      * @param $id
@@ -96,78 +112,6 @@ class Dashlet
     public function __construct($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function Dashlet($id){
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct($id);
-    }
-
-
-    /**
-     * Returns the HTML for the configure icon
-     *
-     * @return string HTML
-     */
-    public function setConfigureIcon()
-    {
-        if($this->isConfigurable) {
-            $additionalTitle = '<td nowrap width="1%" style="padding-right: 0px;"><div class="dashletToolSet"><a href="javascript:void(0)"  aria-label="'.translate('LBL_DASHLET_EDIT', 'Home').'" onclick="SUGAR.mySugar.configureDashlet(\''
-                . $this->id . '\'); return false;">'
-                . SugarThemeRegistry::current()->getImage('dashlet-header-edit','title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null,null,'.gif',translate('LBL_DASHLET_EDIT', 'Home')).'</a>'
-                . '';
-        }
-        else {
-            $additionalTitle = '<td nowrap width="1%" style="padding-right: 0px;"><div class="dashletToolSet">';
-        }
-
-        return $additionalTitle;
-    }
-
-    /**
-     * Returns the HTML for the refresh icon
-     *
-     * @return string HTML
-     */
-    public function setRefreshIcon()
-    {
-        $additionalTitle = '';
-        if($this->isRefreshable) {
-            $additionalTitle .= '<a href="javascript:void(0)" aria-label="'.translate('LBL_DASHLET_REFRESH', 'Home').'" onclick="SUGAR.mySugar.retrieveDashlet(\''
-                . $this->id . '\'); return false;">'
-                . SugarThemeRegistry::current()->getImage('dashlet-header-refresh','border="0" align="absmiddle" title="' . translate('LBL_DASHLET_REFRESH', 'Home') . '"',null,null,'.gif',translate('LBL_DASHLET_REFRESH', 'Home'))
-                . '</a>';
-        }
-
-        return $additionalTitle;
-    }
-
-    /**
-     * Returns the HTML for the delete icon
-     *
-     * @return string HTML
-     */
-    public function setDeleteIcon()
-    {
-        global $sugar_config;
-
-        if (!empty($sugar_config['lock_homepage']) && $sugar_config['lock_homepage'] == true) {
-            return '</div></td></tr></table>';
-        }
-        $additionalTitle = '<a href="javascript:void(0)" aria-label="'.translate('LBL_DASHLET_DELETE', 'Home').'" onclick="SUGAR.mySugar.deleteDashlet(\''
-            . $this->id . '\'); return false;">'
-            . SugarThemeRegistry::current()->getImage('dashlet-header-close','border="0" align="absmiddle" title="' . translate('LBL_DASHLET_DELETE', 'Home') . '"',null,null,'.gif',translate('LBL_DASHLET_DELETE', 'Home'))
-            . '</a></div></td></tr></table>';
-        return $additionalTitle;
     }
 
     /**
@@ -197,15 +141,19 @@ class Dashlet
         $title .= $this->setDeleteIcon();
 
         $str = '<div ';
-        if(empty($sugar_config['lock_homepage']) || $sugar_config['lock_homepage'] == false) $str .= 'onmouseover="this.style.cursor = \'move\';" ';
-        $str .= 'id="dashlet_header_' . $this->id . '" class="hd"><div class="tl"></div><div class="hd-center">' . get_form_header($this->title, $title, false) . '</div><div class="tr"></div></div><div class="bd"><div class="ml"></div><div class="bd-center">';
+        if (empty($sugar_config['lock_homepage']) || $sugar_config['lock_homepage'] == false) {
+            $str .= 'onmouseover="this.style.cursor = \'move\';" ';
+        }
+        $str .= 'id="dashlet_header_' . $this->id . '" class="hd"><div class="tl"></div><div class="hd-center">' . get_form_header($this->title,
+                $title,
+                false) . '</div><div class="tr"></div></div><div class="bd"><div class="ml"></div><div class="bd-center">';
 
 
         $blankImageURL = SugarThemeRegistry::current()->getImageURL('blank.gif');
         $printImageURL = SugarThemeRegistry::current()->getImageURL("print.gif");
-        $helpImageURL  = SugarThemeRegistry::current()->getImageURL("help.gif");
+        $helpImageURL = SugarThemeRegistry::current()->getImageURL("help.gif");
 
-        $keywords = array("/class=\"button\"/","/class='button'/","/class=button/","/<\/form>/");
+        $keywords = array("/class=\"button\"/", "/class='button'/", "/class=button/", "/<\/form>/");
         $match = false;
         foreach ($keywords as $left) {
             if (preg_match($left, $title)) {
@@ -236,28 +184,94 @@ class Dashlet
 //        $template->assign('show_help', $show_help);
         $template->assign('other_text', $title);
         $template->assign('form_title', $this->title);
-        $template->assign('SUGAR_CONFIG',$sugar_config);
+        $template->assign('SUGAR_CONFIG', $sugar_config);
         $template->assign('DASHLET_TITLE', $this->title);
         $template->assign('DASHLET_ID', $this->id);
         $template->assign('CONFIGURE_ICON', $this->setConfigureIcon());
         $template->assign('REFRESH_ICON', $this->setRefreshIcon());
-        $template->assign('DELETE_ICON',$this->setDeleteIcon());
+        $template->assign('DELETE_ICON', $this->setDeleteIcon());
         $moduleName = '';
-        if(!is_object($this->seedBean)) {
+        if (!is_object($this->seedBean)) {
             $GLOBALS['log']->warn('incorrect seed bean');
         } else {
             $moduleName = $this->seedBean->module_name;
         }
         $template->assign('DASHLET_MODULE', $moduleName);
         $template->assign('DASHLET_BUTTON_ARIA_EDIT', translate('LBL_DASHLET_EDIT', 'Home'));
-        $template->assign('DASHLET_BUTTON_ARIA_REFRESH',  translate('LBL_DASHLET_REFRESH', 'Home'));
-        $template->assign('DASHLET_BUTTON_ARIA_DELETE',  translate('LBL_DASHLET_DELETE', 'Home'));
+        $template->assign('DASHLET_BUTTON_ARIA_REFRESH', translate('LBL_DASHLET_REFRESH', 'Home'));
+        $template->assign('DASHLET_BUTTON_ARIA_DELETE', translate('LBL_DASHLET_DELETE', 'Home'));
 
 
         $template->assign('GET_FORM_HEADER', get_form_header($this->title, $title, false));
         $template->assign('HEADER', $str);
 
         return $template->fetch('include/Dashlets/DashletHeader.tpl');
+    }
+
+    /**
+     * Returns the HTML for the configure icon
+     *
+     * @return string HTML
+     */
+    public function setConfigureIcon()
+    {
+        if ($this->isConfigurable) {
+            $additionalTitle = '<td nowrap width="1%" style="padding-right: 0px;"><div class="dashletToolSet"><a href="javascript:void(0)"  aria-label="' . translate('LBL_DASHLET_EDIT',
+                    'Home') . '" onclick="SUGAR.mySugar.configureDashlet(\''
+                . $this->id . '\'); return false;">'
+                . SugarThemeRegistry::current()->getImage('dashlet-header-edit',
+                    'title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null, null,
+                    '.gif', translate('LBL_DASHLET_EDIT', 'Home')) . '</a>'
+                . '';
+        } else {
+            $additionalTitle = '<td nowrap width="1%" style="padding-right: 0px;"><div class="dashletToolSet">';
+        }
+
+        return $additionalTitle;
+    }
+
+    /**
+     * Returns the HTML for the refresh icon
+     *
+     * @return string HTML
+     */
+    public function setRefreshIcon()
+    {
+        $additionalTitle = '';
+        if ($this->isRefreshable) {
+            $additionalTitle .= '<a href="javascript:void(0)" aria-label="' . translate('LBL_DASHLET_REFRESH',
+                    'Home') . '" onclick="SUGAR.mySugar.retrieveDashlet(\''
+                . $this->id . '\'); return false;">'
+                . SugarThemeRegistry::current()->getImage('dashlet-header-refresh',
+                    'border="0" align="absmiddle" title="' . translate('LBL_DASHLET_REFRESH', 'Home') . '"', null, null,
+                    '.gif', translate('LBL_DASHLET_REFRESH', 'Home'))
+                . '</a>';
+        }
+
+        return $additionalTitle;
+    }
+
+    /**
+     * Returns the HTML for the delete icon
+     *
+     * @return string HTML
+     */
+    public function setDeleteIcon()
+    {
+        global $sugar_config;
+
+        if (!empty($sugar_config['lock_homepage']) && $sugar_config['lock_homepage'] == true) {
+            return '</div></td></tr></table>';
+        }
+        $additionalTitle = '<a href="javascript:void(0)" aria-label="' . translate('LBL_DASHLET_DELETE',
+                'Home') . '" onclick="SUGAR.mySugar.deleteDashlet(\''
+            . $this->id . '\'); return false;">'
+            . SugarThemeRegistry::current()->getImage('dashlet-header-close',
+                'border="0" align="absmiddle" title="' . translate('LBL_DASHLET_DELETE', 'Home') . '"', null, null,
+                '.gif', translate('LBL_DASHLET_DELETE', 'Home'))
+            . '</a></div></td></tr></table>';
+
+        return $additionalTitle;
     }
 
     /**
@@ -271,7 +285,7 @@ class Dashlet
 
         $blankImageURL = SugarThemeRegistry::current()->getImageURL('blank.gif');
         $printImageURL = SugarThemeRegistry::current()->getImageURL("print.gif");
-        $helpImageURL  = SugarThemeRegistry::current()->getImageURL("help.gif");
+        $helpImageURL = SugarThemeRegistry::current()->getImageURL("help.gif");
 
         $template = new Sugar_Smarty();
 
@@ -287,12 +301,12 @@ class Dashlet
         $template->assign('helpImageURL', $helpImageURL);
         //        $template->assign('show_help', $show_help);
         $template->assign('form_title', $this->title);
-        $template->assign('SUGAR_CONFIG',$sugar_config);
+        $template->assign('SUGAR_CONFIG', $sugar_config);
         $template->assign('DASHLET_TITLE', $this->title);
         $template->assign('DASHLET_ID', $this->id);
         $template->assign('CONFIGURE_ICON', $this->setConfigureIcon());
         $template->assign('REFRESH_ICON', $this->setRefreshIcon());
-        $template->assign('DELETE_ICON',$this->setDeleteIcon());
+        $template->assign('DELETE_ICON', $this->setDeleteIcon());
 
         return $template->fetch('include/Dashlets/DashletFooter.tpl');
     }
@@ -322,65 +336,6 @@ class Dashlet
     }
 
     /**
-     * Processes and displays the auto refresh code for the dashlet
-     *
-     * @param int $dashletOffset
-     * @return string HTML code
-     */
-    protected function processAutoRefresh($dashletOffset = 0)
-    {
-        global $sugar_config;
-
-        if ( empty($dashletOffset) ) {
-            $dashletOffset = 0;
-            $module = $_REQUEST['module'];
-            if(isset($_REQUEST[$module.'2_'.strtoupper($this->seedBean->object_name).'_offset'])) {
-                $dashletOffset = $_REQUEST[$module.'2_'.strtoupper($this->seedBean->object_name).'_offset'];
-            }
-        }
-
-        if ( !$this->isRefreshable ) {
-            return '';
-        }
-        if ( !empty($sugar_config['dashlet_auto_refresh_min']) && $sugar_config['dashlet_auto_refresh_min'] == -1 ) {
-            return '';
-        }
-        $autoRefreshSS = new Sugar_Smarty();
-        $autoRefreshSS->assign('dashletOffset', $dashletOffset);
-        $autoRefreshSS->assign('dashletId', $this->id);
-        $autoRefreshSS->assign('strippedDashletId', str_replace("-","",$this->id)); //javascript doesn't like "-" in function names
-        $autoRefreshSS->assign('dashletRefreshInterval', $this->getAutoRefresh());
-        $tpl = 'include/Dashlets/DashletGenericAutoRefresh.tpl';
-        if ( $_REQUEST['action'] == "DynamicAction" ) {
-            $tpl = 'include/Dashlets/DashletGenericAutoRefreshDynamic.tpl';
-        }
-
-        return $autoRefreshSS->fetch($tpl);
-    }
-
-    protected function getAutoRefresh()
-    {
-        global $sugar_config;
-
-        if (empty($this->autoRefresh) || $this->autoRefresh == -1)
-        {
-            $autoRefresh = 0;
-        }
-        elseif (!empty($sugar_config['dashlet_auto_refresh_min'])
-            && $this->autoRefresh > 0
-            && $sugar_config['dashlet_auto_refresh_min'] > $this->autoRefresh)
-        {
-            $autoRefresh = $sugar_config['dashlet_auto_refresh_min'];
-        }
-        else
-        {
-            $autoRefresh = $this->autoRefresh;
-        }
-
-        return $autoRefresh * 1000;
-    }
-
-    /**
      * Override this if your dashlet is configurable (this is called when the the configureDashlet form is shown)
      * Filters the array for only the parameters it needs to save
      *
@@ -401,22 +356,22 @@ class Dashlet
     {
         global $current_language, $dashletStrings;
 
-        if(!isset($dashletStrings[$dashletClassname])) {
+        if (!isset($dashletStrings[$dashletClassname])) {
             // load current language strings for current language, else default to english
-            if(is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')
-                || is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php') ) {
-                if(is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')) {
+            if (is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')
+                || is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')
+            ) {
+                if (is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')) {
                     require($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php');
                 }
-                if(is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')) {
+                if (is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')) {
                     require('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php');
                 }
-            }
-            else {
-                if(is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php')) {
+            } else {
+                if (is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php')) {
                     require($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php');
                 }
-                if(is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php')) {
+                if (is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php')) {
                     require('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.en_us.lang.php');
                 }
             }
@@ -449,10 +404,11 @@ class Dashlet
         global $current_user;
 
         $dashletDefs = $current_user->getPreference('dashlets', 'Home'); // load user's dashlets config
-        if(isset($dashletDefs[$this->id]['options']))
+        if (isset($dashletDefs[$this->id]['options'])) {
             return $dashletDefs[$this->id]['options'];
-        else
+        } else {
             return array();
+        }
     }
 
     /**
@@ -466,6 +422,62 @@ class Dashlet
     }
 
     /**
+     * Processes and displays the auto refresh code for the dashlet
+     *
+     * @param int $dashletOffset
+     * @return string HTML code
+     */
+    protected function processAutoRefresh($dashletOffset = 0)
+    {
+        global $sugar_config;
+
+        if (empty($dashletOffset)) {
+            $dashletOffset = 0;
+            $module = $_REQUEST['module'];
+            if (isset($_REQUEST[$module . '2_' . strtoupper($this->seedBean->object_name) . '_offset'])) {
+                $dashletOffset = $_REQUEST[$module . '2_' . strtoupper($this->seedBean->object_name) . '_offset'];
+            }
+        }
+
+        if (!$this->isRefreshable) {
+            return '';
+        }
+        if (!empty($sugar_config['dashlet_auto_refresh_min']) && $sugar_config['dashlet_auto_refresh_min'] == -1) {
+            return '';
+        }
+        $autoRefreshSS = new Sugar_Smarty();
+        $autoRefreshSS->assign('dashletOffset', $dashletOffset);
+        $autoRefreshSS->assign('dashletId', $this->id);
+        $autoRefreshSS->assign('strippedDashletId',
+            str_replace("-", "", $this->id)); //javascript doesn't like "-" in function names
+        $autoRefreshSS->assign('dashletRefreshInterval', $this->getAutoRefresh());
+        $tpl = 'include/Dashlets/DashletGenericAutoRefresh.tpl';
+        if ($_REQUEST['action'] == "DynamicAction") {
+            $tpl = 'include/Dashlets/DashletGenericAutoRefreshDynamic.tpl';
+        }
+
+        return $autoRefreshSS->fetch($tpl);
+    }
+
+    protected function getAutoRefresh()
+    {
+        global $sugar_config;
+
+        if (empty($this->autoRefresh) || $this->autoRefresh == -1) {
+            $autoRefresh = 0;
+        } elseif (!empty($sugar_config['dashlet_auto_refresh_min'])
+            && $this->autoRefresh > 0
+            && $sugar_config['dashlet_auto_refresh_min'] > $this->autoRefresh
+        ) {
+            $autoRefresh = $sugar_config['dashlet_auto_refresh_min'];
+        } else {
+            $autoRefresh = $this->autoRefresh;
+        }
+
+        return $autoRefresh * 1000;
+    }
+
+    /**
      * Returns the available auto refresh settings you can set a dashlet to
      *
      * @return array options available
@@ -474,9 +486,9 @@ class Dashlet
     {
         $options = $GLOBALS['app_list_strings']['dashlet_auto_refresh_options'];
 
-        if ( isset($GLOBALS['sugar_config']['dashlet_auto_refresh_min']) ) {
-            foreach ( $options as $time => $desc ) {
-                if ( $time != -1 && $time < $GLOBALS['sugar_config']['dashlet_auto_refresh_min'] ) {
+        if (isset($GLOBALS['sugar_config']['dashlet_auto_refresh_min'])) {
+            foreach ($options as $time => $desc) {
+                if ($time != -1 && $time < $GLOBALS['sugar_config']['dashlet_auto_refresh_min']) {
                     unset($options[$time]);
                 }
             }
@@ -493,7 +505,7 @@ class Dashlet
     protected function isAutoRefreshable()
     {
         return $this->isRefreshable &&
-        ( isset($GLOBALS['sugar_config']['dashlet_auto_refresh_min']) ?
-            $GLOBALS['sugar_config']['dashlet_auto_refresh_min'] != -1 : true );
+            (isset($GLOBALS['sugar_config']['dashlet_auto_refresh_min']) ?
+                $GLOBALS['sugar_config']['dashlet_auto_refresh_min'] != -1 : true);
     }
 }

@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -39,12 +40,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-
-
 global $app_strings;
 
-$dashletMeta['MyOpportunitiesDashlet'] = array('module'		=> 'Opportunities',
-											   'title'     => translate('LBL_TOP_OPPORTUNITIES', 'Opportunities'), 
-                                               'description' => 'A customizable view into Opportunities',
-                                               'category'    => 'Module Views');
+$dashletMeta['MyOpportunitiesDashlet'] = array(
+    'module' => 'Opportunities',
+    'title' => translate('LBL_TOP_OPPORTUNITIES', 'Opportunities'),
+    'description' => 'A customizable view into Opportunities',
+    'category' => 'Module Views'
+);
 ?>

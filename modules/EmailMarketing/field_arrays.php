@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -39,23 +40,49 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 /*********************************************************************************
-
  * Description:  Contains field arrays that are used for caching
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['EmailMarketing'] = array ('column_fields' => array (
-		'id', 'date_entered', 'date_modified',
-		'modified_user_id', 'created_by', 'name',
-		'from_addr', 'from_name', 'reply_to_name', 'reply_to_addr', 'date_start','time_start', 'template_id', 'campaign_id','status','inbound_email_id','all_prospect_lists',
-	),
-        'list_fields' =>  array (
-		'id','name','date_start','time_start', 'template_id', 'status','all_prospect_lists','campaign_id',
-	),
-    'required_fields' => array (
-		'name'=>1, 'from_name'=>1,'from_addr'=>1, 'date_start'=>1,'time_start'=>1,
-		'template_id'=>1, 'status'=>1,
-	),
+$fields_array['EmailMarketing'] = array(
+    'column_fields' => array(
+        'id',
+        'date_entered',
+        'date_modified',
+        'modified_user_id',
+        'created_by',
+        'name',
+        'from_addr',
+        'from_name',
+        'reply_to_name',
+        'reply_to_addr',
+        'date_start',
+        'time_start',
+        'template_id',
+        'campaign_id',
+        'status',
+        'inbound_email_id',
+        'all_prospect_lists',
+    ),
+    'list_fields' => array(
+        'id',
+        'name',
+        'date_start',
+        'time_start',
+        'template_id',
+        'status',
+        'all_prospect_lists',
+        'campaign_id',
+    ),
+    'required_fields' => array(
+        'name' => 1,
+        'from_name' => 1,
+        'from_addr' => 1,
+        'date_start' => 1,
+        'time_start' => 1,
+        'template_id' => 1,
+        'status' => 1,
+    ),
 );
 ?>

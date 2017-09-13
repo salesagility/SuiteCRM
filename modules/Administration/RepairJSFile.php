@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -38,16 +39,16 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-if(is_admin($current_user)){
-    global $mod_strings; 
+if (is_admin($current_user)) {
+    global $mod_strings;
 
-    
+
     //echo out warning message and msgDiv
-    echo '<br>'.$mod_strings['LBL_REPAIR_JS_FILES_PROCESSING'];
-    echo'<div id="msgDiv"></div>';        
+    echo '<br>' . $mod_strings['LBL_REPAIR_JS_FILES_PROCESSING'];
+    echo '<div id="msgDiv"></div>';
 
     //echo out script that will make an ajax call to process the files via callJSRepair.php
-     echo "<script>
+    echo "<script>
         var ajxProgress;
         var showMSG = 'true';
         //when called, this function will make ajax call to rebuild/repair js files
@@ -67,7 +68,7 @@ if(is_admin($current_user)){
                         
                 //set loading message and create url
                 ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_PROCESSING_REQUEST'));
-                postData = \"module=Administration&action=callJSRepair&js_admin_repair=".$_REQUEST['type']."&root_directory=".urlencode(getcwd())."\";
+                postData = \"module=Administration&action=callJSRepair&js_admin_repair=" . $_REQUEST['type'] . "&root_directory=" . urlencode(getcwd()) . "\";
                  
     
                         
@@ -93,10 +94,8 @@ if(is_admin($current_user)){
         //call function, so it runs automatically    
         callJSRepair();
         </script>";
-        
+
 }
-
-
 
 
 ?>

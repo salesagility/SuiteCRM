@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -39,7 +40,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 /*********************************************************************************
-
  * Description:  TODO: To be written.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
@@ -49,32 +49,27 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('modules/Contacts/ContactOpportunityRelationship.php');
 
 
-
-
 $focus = new ContactOpportunityRelationship();
 
 $focus->retrieve($_REQUEST['record']);
 
-foreach($focus->column_fields as $field)
-{
-	safe_map($field, $focus, true);
+foreach ($focus->column_fields as $field) {
+    safe_map($field, $focus, true);
 }
 
-foreach($focus->additional_column_fields as $field)
-{
-	safe_map($field, $focus, true);
+foreach ($focus->additional_column_fields as $field) {
+    safe_map($field, $focus, true);
 }
 
 // send them to the edit screen.
-if(isset($_REQUEST['record']) && $_REQUEST['record'] != "")
-{
+if (isset($_REQUEST['record']) && $_REQUEST['record'] != "") {
     $recordID = $_REQUEST['record'];
 }
 
 $focus->save();
 $recordID = $focus->id;
 
-$GLOBALS['log']->debug("Saved record with id of ".$recordID);
+$GLOBALS['log']->debug("Saved record with id of " . $recordID);
 
 $header_URL = "Location: index.php?action={$_REQUEST['return_action']}&module={$_REQUEST['return_module']}&record={$_REQUEST['return_id']}";
 $GLOBALS['log']->debug("about to post header URL of: $header_URL");

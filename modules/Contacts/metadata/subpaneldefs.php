@@ -1,5 +1,7 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -201,7 +203,8 @@ $layout_defs['Contacts'] = array(
             'title_key' => 'LBL_LEADS_SUBPANEL_TITLE',
             'top_buttons' => array(
                 array('widget_class' => 'SubPanelTopCreateLeadNameButton'),
-                array('widget_class' => 'SubPanelTopSelectButton',
+                array(
+                    'widget_class' => 'SubPanelTopSelectButton',
                     'popup_module' => 'Opportunities',
                     'mode' => 'MultiSelect',
                 ),
@@ -337,7 +340,13 @@ $layout_defs['Contacts'] = array(
                 ),
         ),
         'securitygroups' => array(
-            'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect'),),
+            'top_buttons' => array(
+                array(
+                    'widget_class' => 'SubPanelTopSelectButton',
+                    'popup_module' => 'SecurityGroups',
+                    'mode' => 'MultiSelect'
+                ),
+            ),
             'order' => 900,
             'sort_by' => 'name',
             'sort_order' => 'asc',

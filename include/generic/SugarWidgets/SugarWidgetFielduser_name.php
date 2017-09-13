@@ -1,9 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -37,18 +39,16 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-
-
-
-
 class SugarWidgetFielduser_name extends SugarWidgetFieldname
 {
- function displayInput(&$layout_def) 
- {
+    function displayInput(&$layout_def)
+    {
         $selected_users = empty($layout_def['input_name0']) ? '' : $layout_def['input_name0'];
- 		$str = '<select multiple="true" size="3" name="' . $layout_def['name'] . '[]">' . get_select_options_with_id(get_user_array(false), $selected_users) . '</select>';
- 		return $str;
- }
+        $str = '<select multiple="true" size="3" name="' . $layout_def['name'] . '[]">' . get_select_options_with_id(get_user_array(false),
+                $selected_users) . '</select>';
+
+        return $str;
+    }
 }
 
 ?>

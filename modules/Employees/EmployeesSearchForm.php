@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -41,14 +42,16 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/SearchForm/SearchForm2.php');
 
-class EmployeesSearchForm extends SearchForm {
+class EmployeesSearchForm extends SearchForm
+{
     /**
      * This builds an EmployeesSearchForm from a classic search form.
      */
-    function __construct( SearchForm $oldSearchForm ) {
+    function __construct(SearchForm $oldSearchForm)
+    {
         parent::__construct($oldSearchForm->seed, $oldSearchForm->module, $oldSearchForm->action);
         $this->setup(
-            // $searchdefs
+        // $searchdefs
             array($oldSearchForm->module => $oldSearchForm->searchdefs),
             // $searchFields
             array($oldSearchForm->module => $oldSearchForm->searchFields),
@@ -58,29 +61,31 @@ class EmployeesSearchForm extends SearchForm {
             $oldSearchForm->displayView,
             // listViewDefs
             $oldSearchForm->listViewDefs);
-        
+
         $this->lv = $oldSearchForm->lv;
-                     
+
     }
-    
-    public function generateSearchWhere($add_custom_fields = false, $module = '') {
+
+    public function generateSearchWhere($add_custom_fields = false, $module = '')
+    {
         $onlyActive = false;
         if (isset($this->searchFields['open_only_active_users']['value'])) {
-            if ( $this->searchFields['open_only_active_users']['value'] == 1) {
+            if ($this->searchFields['open_only_active_users']['value'] == 1) {
                 $onlyActive = true;
             }
             unset($this->searchFields['open_only_active_users']['value']);
         }
         $where_clauses = parent::generateSearchWhere($add_custom_fields, $module);
-        
-        if ( $onlyActive ) {
+
+        if ($onlyActive) {
             $where_clauses[] = "users.employee_status = 'Active'";
         }
-        
+
         // Add in code to remove portal/group/hidden users
         $where_clauses[] = "users.portal_only = 0";
         $where_clauses[] = "(users.is_group = 0 or users.is_group is null)";
         $where_clauses[] = "users.show_on_employees = 1";
+
         return $where_clauses;
     }
 }

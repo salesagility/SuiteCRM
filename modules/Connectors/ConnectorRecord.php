@@ -1,10 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -38,32 +39,31 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-
-
-
- class ConnectorRecord extends MergeRecord{
-	var $object_name = 'ConnectorRecord';
+class ConnectorRecord extends MergeRecord
+{
+    var $object_name = 'ConnectorRecord';
     var $module_dir = 'Connector';
-
-
-    function __construct($merge_module = '', $merge_id = '') {
-       parent::__construct($merge_module, $merge_id);
-    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ConnectorRecord($merge_module = '', $merge_id = ''){
+    function ConnectorRecord($merge_module = '', $merge_id = '')
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($merge_module, $merge_id);
     }
 
+    function __construct($merge_module = '', $merge_id = '')
+    {
+        parent::__construct($merge_module, $merge_id);
+    }
 
- }
+
+}
+
 ?>

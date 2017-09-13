@@ -29,91 +29,85 @@
  */
 require_once('modules/AOS_Contracts/AOS_Contracts_sugar.php');
 
-class AOS_Contracts extends AOS_Contracts_sugar {
+class AOS_Contracts extends AOS_Contracts_sugar
+{
 
-	function __construct(){
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function AOS_Contracts()
+    {
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if (isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        } else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
 
-		parent::__construct();
+    function __construct()
+    {
+
+        parent::__construct();
 
         //Process the default reminder date setting
-        if($this->id == null && $this->renewal_reminder_date == null){
+        if ($this->id == null && $this->renewal_reminder_date == null) {
             global $sugar_config, $timedate;
 
             $default_time = "12:00:00";
 
-            $period = empty($sugar_config['aos'])?false:(int)$sugar_config['aos']['contracts']['renewalReminderPeriod'];
+            $period = empty($sugar_config['aos']) ? false : (int)$sugar_config['aos']['contracts']['renewalReminderPeriod'];
 
             //Calculate renewal date from end_date minus $period days and format this.
-            if($period && !empty($this->end_date)){
+            if ($period && !empty($this->end_date)) {
                 $renewal_date = $timedate->fromUserDate($this->end_date);
 
                 $renewal_date->modify("-$period days");
                 $time_value = $timedate->fromString($default_time);
-                $renewal_date->setTime($time_value->hour,$time_value->min,$time_value->sec);
+                $renewal_date->setTime($time_value->hour, $time_value->min, $time_value->sec);
 
                 $renewal_date = $renewal_date->format($timedate->get_date_time_format());
                 $this->renewal_reminder_date = $renewal_date;
 
             }
         }
-	}
-
-
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    function AOS_Contracts(){
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
     }
 
-	function save($check_notify = FALSE){
-        if (empty($this->id)){
+    function save($check_notify = false)
+    {
+        if (empty($this->id)) {
             unset($_POST['group_id']);
             unset($_POST['product_id']);
             unset($_POST['service_id']);
         }
 
-		if(isset($_POST['renewal_reminder_date']) && !empty($_POST['renewal_reminder_date'])){
-			$this->createReminder();
-		}
+        if (isset($_POST['renewal_reminder_date']) && !empty($_POST['renewal_reminder_date'])) {
+            $this->createReminder();
+        }
 
         require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
 
         perform_aos_save($this);
 
-		parent::save($check_notify);
+        parent::save($check_notify);
 
         require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');
         $productQuoteGroup = new AOS_Line_Item_Groups();
         $productQuoteGroup->save_groups($_POST, $this, 'group_');
 
-		if(isset($_POST['renewal_reminder_date']) && !empty($_POST['renewal_reminder_date'])){
-			$this->createLink();
-		}
+        if (isset($_POST['renewal_reminder_date']) && !empty($_POST['renewal_reminder_date'])) {
+            $this->createLink();
+        }
 
-	}
+    }
 
-	function mark_deleted($id)
-	{
-        $productQuote = new AOS_Products_Quotes();
-        $productQuote->mark_lines_deleted($this);
-        $this->deleteCall();
-		parent::mark_deleted($id);
+    function createReminder()
+    {
+        require_once('modules/Calls/Call.php');
+        $call = new call();
 
-	}
-
-	function createReminder(){
-	    require_once('modules/Calls/Call.php');
-	    $call = new call();
-
-        if($this->renewal_reminder_date != 0){
+        if ($this->renewal_reminder_date != 0) {
 
             $call->id = $this->call_id;
             $call->parent_id = $this->id;
@@ -130,30 +124,42 @@ class AOS_Contracts extends AOS_Contracts_sugar {
             $call->save();
             $this->call_id = $call->id;
         }
-	}
+    }
 
-	function createLink(){
-	    require_once('modules/Calls/Call.php');
-	    $call = new call();
+    function createLink()
+    {
+        require_once('modules/Calls/Call.php');
+        $call = new call();
 
-		if($this->renewal_reminder_date != 0){
+        if ($this->renewal_reminder_date != 0) {
             $call->id = $this->call_id;
             $call->parent_id = $this->contract_account_id;
             $call->parent_type = 'Accounts';
             $call->reminder_time = 60;
             $call->save();
-		}
-	}
+        }
+    }
 
-	function deleteCall(){
-	    require_once('modules/Calls/Call.php');
-	    $call = new call();
+    function mark_deleted($id)
+    {
+        $productQuote = new AOS_Products_Quotes();
+        $productQuote->mark_lines_deleted($this);
+        $this->deleteCall();
+        parent::mark_deleted($id);
 
-		if($this->call_id != null){
+    }
+
+    function deleteCall()
+    {
+        require_once('modules/Calls/Call.php');
+        $call = new call();
+
+        if ($this->call_id != null) {
             $call->id = $this->call_id;
             $call->mark_deleted($call->id);
-		}
-	}
+        }
+    }
 
 }
+
 ?>

@@ -1,9 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -37,20 +39,17 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-
-
-
-
 class SugarWidgetFieldDatePicker extends SugarWidgetFieldDateTime
 {
-	function displayInput($layout_def)
+    function displayInput($layout_def)
     {
         global $timedate;
 
         $cal_dateformat = $timedate->get_cal_date_format();
         $LBL_ENTER_DATE = translate('LBL_ENTER_DATE', 'Charts');
         $jscalendarImage = SugarThemeRegistry::current()->getImageURL('jscalendar.gif');
-        $value = $timedate->swap_formats($layout_def['input_name0'], $timedate->dbDayFormat, $timedate->get_date_format());
+        $value = $timedate->swap_formats($layout_def['input_name0'], $timedate->dbDayFormat,
+            $timedate->get_date_format());
         $str = <<<EOHTML
 <input onblur="parseDate(this, '{$cal_dateformat}');" class="text" name="{$layout_def['name']}" size='12' maxlength='10' id='{$layout_def['name']}' value='{$value}'>
 <!--not_in_theme!--><img src="$jscalendarImage" alt="{$LBL_ENTER_DATE}" id="{$layout_def['name']}_trigger" align="absmiddle">

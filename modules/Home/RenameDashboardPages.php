@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
@@ -50,12 +51,12 @@ if (count($pages) > 1) {
         $html = "<form method='post' name='removepageform'/>";
         $html .= "<table>";
         $html .= "<tr>";
-        $html .= "<td><label for='dashName'>".$GLOBALS['app_strings']['LBL_ENTER_DASHBOARD_NAME']." </label></td>";
-        $html .= "<td><input name='dashName' id='dashName' value='" .$pages[$_POST['page_id']]['pageTitle'] ."'/></td>";
-        $html .= "<input type='hidden' id='page_id' name='page_id' value='" . $_POST['page_id']. "' />";
+        $html .= "<td><label for='dashName'>" . $GLOBALS['app_strings']['LBL_ENTER_DASHBOARD_NAME'] . " </label></td>";
+        $html .= "<td><input name='dashName' id='dashName' value='" . $pages[$_POST['page_id']]['pageTitle'] . "'/></td>";
+        $html .= "<input type='hidden' id='page_id' name='page_id' value='" . $_POST['page_id'] . "' />";
         $html .= "</tr>";
         $html .= "</table>";
-        $html .="</form>";
+        $html .= "</form>";
 
         echo $html;
 
@@ -70,9 +71,9 @@ if (count($pages) > 1) {
             'page_id' => $_POST['page_id'],
         );
 
-       $return_params = json_encode($return_params,true);
+        $return_params = json_encode($return_params, true);
 
-       echo $return_params;
+        echo $return_params;
     }
 
 }

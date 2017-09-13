@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -39,26 +40,41 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 /*********************************************************************************
-
  * Description:  Contains field arrays that are used for caching
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['EmailTemplate'] = array ('column_fields' => Array("id"
-		, "date_entered"
-		, "date_modified"
-		, "modified_user_id"
-		, "created_by"
-		, "description"
-		, "subject"
-		, "body"
-		, "body_html"
-		, "name"
-		, "published"
-		),
-        'list_fields' =>  Array('id', 'name', 'description','date_modified'
-	),
-    'required_fields' => array("name"=>1),
+$fields_array['EmailTemplate'] = array(
+    'column_fields' => Array(
+        "id"
+    ,
+        "date_entered"
+    ,
+        "date_modified"
+    ,
+        "modified_user_id"
+    ,
+        "created_by"
+    ,
+        "description"
+    ,
+        "subject"
+    ,
+        "body"
+    ,
+        "body_html"
+    ,
+        "name"
+    ,
+        "published"
+    ),
+    'list_fields' => Array(
+        'id',
+        'name',
+        'description',
+        'date_modified'
+    ),
+    'required_fields' => array("name" => 1),
 );
 ?>

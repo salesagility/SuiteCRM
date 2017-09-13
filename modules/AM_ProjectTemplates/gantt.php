@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
@@ -18,8 +19,8 @@
  * @copyright Andrew Mclaughlan 2014
  * @author Andrew Mclaughlan <andrew@mclaughlan.info>
  */
-
-class Gantt {
+class Gantt
+{
 
     private $start_date;
     private $end_date;
@@ -34,19 +35,20 @@ class Gantt {
         $this->draw($this->start_date, $this->end_date, $this->tasks);
     }
 
-    public function draw($start_date, $end_date, $tasks){
+    public function draw($start_date, $end_date, $tasks)
+    {
 
         $time_span = $this->year_month($start_date, $end_date);
         $day_count = $this->count_days($start_date, $end_date);
-       // $project_length = $this->time_range($start_date, $end_date);
+        // $project_length = $this->time_range($start_date, $end_date);
 
         //Generate main table and the first row containing the months
         echo '<table class="main_table"><tr class="month_row">';
 
-        foreach($time_span as $months) {
+        foreach ($time_span as $months) {
 
-            foreach($months as $month => $days){
-                echo '<td class="months">'. '&nbsp;' .'</td>'; //$month
+            foreach ($months as $month => $days) {
+                echo '<td class="months">' . '&nbsp;' . '</td>'; //$month
             }
         }
 
@@ -54,25 +56,25 @@ class Gantt {
         echo '</tr><tr class="day_row">';
 
         $month_count = 0;//start month count
-        foreach($time_span as $months) {
-            $m=0;
-			$day_num = 0;
-            foreach($months as $days){
+        foreach ($time_span as $months) {
+            $m = 0;
+            $day_num = 0;
+            foreach ($months as $days) {
 
                 echo '<td class="inner_container">';
                 //Generate a table containing the days in each month
                 echo '<table class="table_inner"><tr>';
 
-				
-                foreach($days as $day => $d){
-                    echo '<td class="inner_td"><div class="cell_width">'.'&nbsp;'.'</div></td>';//day number shown $day
+
+                foreach ($days as $day => $d) {
+                    echo '<td class="inner_td"><div class="cell_width">' . '&nbsp;' . '</div></td>';//day number shown $day
                 }
                 echo '</tr><tr>';
 
-				
-                foreach($days as $d){
-                    $day_num ++;
-					echo '<td class="inner_td"><div class="cell_width">'.$day_num.'</div></td>';//First letter of the days name shown //$this->substr_unicode($d,0,1)
+
+                foreach ($days as $d) {
+                    $day_num++;
+                    echo '<td class="inner_td"><div class="cell_width">' . $day_num . '</div></td>';//First letter of the days name shown //$this->substr_unicode($d,0,1)
                 }
                 echo '</tr></table></td>';//end table containing the days in each month
                 $m++;
@@ -81,12 +83,12 @@ class Gantt {
             $month_count += $m; //total month count
         }
         //for each task generate a row of empty days
-        $i=1;
-        if(!is_null($tasks)){
-            foreach($tasks as $task){
+        $i = 1;
+        if (!is_null($tasks)) {
+            foreach ($tasks as $task) {
 
                 echo '</tr><tr class="task_row">';
-                echo '<td colspan="'.$month_count.'"><table id="task'.$i.'" class="table_inner"><tr>';
+                echo '<td colspan="' . $month_count . '"><table id="task' . $i . '" class="table_inner"><tr>';
 
                 $task_start_day = $this->count_days($start_date, $task->date_start);
                 $task_end_day = $this->count_days($start_date, $task->date_finish);
@@ -94,109 +96,110 @@ class Gantt {
                 $task->predecessors = $task->predecessors == '' ? 0 : $task->predecessors;
 
 
-                for ($x=1; $x<= $day_count; $x++)
-                {
-                    if($x==1 && $x != $task_start_day){
+                for ($x = 1; $x <= $day_count; $x++) {
+                    if ($x == 1 && $x != $task_start_day) {
                         echo '<td class="inner_td"><div class="cell_width day_block"></div></td>';
-                    }
-
-                    else if($x==1 && $x == $task_start_day){
-                        if($task->milestone_flag == '1' && ($task_duration == 0 || $task_duration == 1)){
-                            echo '<td class="task_td2"><div class="cell_width task_block1">
+                    } else {
+                        if ($x == 1 && $x == $task_start_day) {
+                            if ($task->milestone_flag == '1' && ($task_duration == 0 || $task_duration == 1)) {
+                                echo '<td class="task_td2"><div class="cell_width task_block1">
                                     <div class="task_block_inner">
-                                        <div class="milestone link" id="'.$task->id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
+                                        <div class="milestone link" id="' . $task->id . '" pre="' . $task->predecessors . '" link="' . $task->relationship_type . '" rel="' . $task->name . '">
                                            <img src="custom/modules/Project/images/add_milestone.png" />
                                         </div>
                                     </div>
                                   </div></td><td class="inner_td"><div class="cell_width day_block"></div></td>';
-                        }
-                        else if($task_duration == 0 || $task_duration == 1){
-                            echo '<td class="task_td2"><div class="cell_width task_block1">
+                            } else {
+                                if ($task_duration == 0 || $task_duration == 1) {
+                                    echo '<td class="task_td2"><div class="cell_width task_block1">
                                     <div class="task_block_inner">
-                                        <div class="task1 link" id="'.$task->id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
-                                            <div class="task_percent" rel="'.$task->percent_complete.'"></div>
+                                        <div class="task1 link" id="' . $task->id . '" pre="' . $task->predecessors . '" link="' . $task->relationship_type . '" rel="' . $task->name . '">
+                                            <div class="task_percent" rel="' . $task->percent_complete . '"></div>
                                         </div>
                                     </div>
                                   </div></td><td class="inner_td"><div class="cell_width day_block"></div></td>';
-                        }
-                        else {
-                            echo '<td class="task_td" colspan="'.$task_duration.'"><div class="cell_width task_block">
+                                } else {
+                                    echo '<td class="task_td" colspan="' . $task_duration . '"><div class="cell_width task_block">
                                     <div class="task_block_inner">
-                                        <div class="task link" id="'.$task->id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
-                                            <div class="task_percent" rel="'.$task->percent_complete.'">'.$task->name.'</div>
+                                        <div class="task link" id="' . $task->id . '" pre="' . $task->predecessors . '" link="' . $task->relationship_type . '" rel="' . $task->name . '">
+                                            <div class="task_percent" rel="' . $task->percent_complete . '">' . $task->name . '</div>
                                         </div>
                                     </div>
                                   </div></td>';
-                        }
-                    }
-                    else if($x == $task_start_day && $x == $day_count){
-                        if($task->milestone_flag == '1' && ($task_duration == 0 || $task_duration == 1)){
-                            echo '<td class="task_td2"><div class="cell_width task_block1">
+                                }
+                            }
+                        } else {
+                            if ($x == $task_start_day && $x == $day_count) {
+                                if ($task->milestone_flag == '1' && ($task_duration == 0 || $task_duration == 1)) {
+                                    echo '<td class="task_td2"><div class="cell_width task_block1">
                                     <div class="task_block_inner">
-                                        <div class="milestone link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
+                                        <div class="milestone link" id="' . $task->project_task_id . '" pre="' . $task->predecessors . '" link="' . $task->relationship_type . '" rel="' . $task->name . '">
                                             <img src="custom/modules/Project/images/add_milestone.png" />
                                         </div>
                                     </div>
                                   </div></td>';
-                        }
-                        else if($task_duration == 0 || $task_duration == 1){
-                            echo '<td class="task_td2"><div class="cell_width task_block1">
+                                } else {
+                                    if ($task_duration == 0 || $task_duration == 1) {
+                                        echo '<td class="task_td2"><div class="cell_width task_block1">
                                 <div class="task_block_inner">
-                                     <div class="task1 link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
-                                        <div class="task_percent" rel="'.$task->percent_complete.'"></div>
+                                     <div class="task1 link" id="' . $task->project_task_id . '" pre="' . $task->predecessors . '" link="' . $task->relationship_type . '" rel="' . $task->name . '">
+                                        <div class="task_percent" rel="' . $task->percent_complete . '"></div>
                                     </div>
                                 </div>
                               </div></td>';
-                        }
-                        else {
-                            echo '<td class="task_td" colspan="'.$task_duration.'"><div class="cell_width task_block">
+                                    } else {
+                                        echo '<td class="task_td" colspan="' . $task_duration . '"><div class="cell_width task_block">
                                     <div class="task_block_inner">
-                                        <div class="task link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
-                                            <div class="task_percent" rel="'.$task->percent_complete.'">'.$task->name.'</div>
+                                        <div class="task link" id="' . $task->project_task_id . '" pre="' . $task->predecessors . '" link="' . $task->relationship_type . '" rel="' . $task->name . '">
+                                            <div class="task_percent" rel="' . $task->percent_complete . '">' . $task->name . '</div>
                                         </div>
                                     </div>
                                   </div></td>';
-                        }
-                    }
-                    else if($x == $task_start_day){
+                                    }
+                                }
+                            } else {
+                                if ($x == $task_start_day) {
 
-                        if($task->milestone_flag == '1' && ($task_duration == 0 || $task_duration == 1)){
-                            echo '<td class="task_td2"><div class="cell_width task_block1">
+                                    if ($task->milestone_flag == '1' && ($task_duration == 0 || $task_duration == 1)) {
+                                        echo '<td class="task_td2"><div class="cell_width task_block1">
                                     <div class="task_block_inner">
-                                        <div class="milestone link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
+                                        <div class="milestone link" id="' . $task->project_task_id . '" pre="' . $task->predecessors . '" link="' . $task->relationship_type . '" rel="' . $task->name . '">
                                             <img src="custom/modules/Project/images/add_milestone.png" />
                                         </div>
                                     </div>
                                   </div></td><td class="inner_td"><div class="cell_width day_block"></div></td>';
-                        }
-                        else if($task_duration == 0 || $task_duration == 1){
-                            echo '<td class="task_td2"><div class="cell_width task_block1">
+                                    } else {
+                                        if ($task_duration == 0 || $task_duration == 1) {
+                                            echo '<td class="task_td2"><div class="cell_width task_block1">
                                 <div class="task_block_inner">
-                                     <div class="task1 link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
-                                        <div class="task_percent" rel="'.$task->percent_complete.'"></div>
+                                     <div class="task1 link" id="' . $task->project_task_id . '" pre="' . $task->predecessors . '" link="' . $task->relationship_type . '" rel="' . $task->name . '">
+                                        <div class="task_percent" rel="' . $task->percent_complete . '"></div>
                                     </div>
                                 </div>
                               </div></td><td class="inner_td"><div class="cell_width day_block"></div></td>';
-                        }
-                        else {
-                            echo '<td class="task_td" colspan="'.$task_duration.'"><div class="cell_width task_block">
+                                        } else {
+                                            echo '<td class="task_td" colspan="' . $task_duration . '"><div class="cell_width task_block">
                                 <div class="task_block_inner">
-                                     <div class="task link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
-                                        <div class="task_percent" rel="'.$task->percent_complete.'"></div>
+                                     <div class="task link" id="' . $task->project_task_id . '" pre="' . $task->predecessors . '" link="' . $task->relationship_type . '" rel="' . $task->name . '">
+                                        <div class="task_percent" rel="' . $task->percent_complete . '"></div>
                                     </div>
                                 </div>
                               </div></td>';
+                                        }
+                                    }
+                                } else {
+                                    if ($x == $day_count) {
+
+                                    } else {
+                                        if ($x > $task_start_day && $x < $task_end_day) {
+                                            //leave blank
+                                        } else {
+                                            echo '<td class="inner_td"><div class="cell_width day_block"></div></td>';
+                                        }
+                                    }
+                                }
+                            }
                         }
-                    }
-                    else if($x == $day_count){
-
-                    }
-                    else if($x > $task_start_day && $x < $task_end_day){
-                        //leave blank
-                    }
-
-                    else {
-                          echo '<td class="inner_td"><div class="cell_width day_block"></div></td>';
                     }
                 }
 
@@ -212,54 +215,61 @@ class Gantt {
     //Returns an array containing the years, months and days between two dates
     public function year_month($start_date, $end_date)
     {
-        $begin = new DateTime( $start_date );
-        $end = new DateTime( $end_date);
+        $begin = new DateTime($start_date);
+        $end = new DateTime($end_date);
         $end->add(new DateInterval('P1D')); //Add 1 day to include the end date as a day
         $interval = new DateInterval('P1D'); // 1 month interval
         $period = new DatePeriod($begin, $interval, $end);
         $aResult = array();
 
-        foreach ( $period as $dt )
-        {
-            $aResult[$dt->format('Y')][strftime("%B", $dt->getTimestamp())][$dt->format('j')] = strftime("%a", $dt->getTimestamp());
+        foreach ($period as $dt) {
+            $aResult[$dt->format('Y')][strftime("%B", $dt->getTimestamp())][$dt->format('j')] = strftime("%a",
+                $dt->getTimestamp());
         }
 
         return $aResult;
     }
 
     //Returns the total number of days between two dates
-    public function count_days($start_date, $end_date){
+    public function count_days($start_date, $end_date)
+    {
 
         $d1 = new DateTime($start_date);
         $d2 = new DateTime($end_date);
 
         //If the task's end date is before chart's start date return 1 to make sure task starts on first day of the chart
-        if($d2 < $d1){
+        if ($d2 < $d1) {
             return 1;
         }
 
         $d2->add(new DateInterval('P1D')); //Add 1 day to include the end date as a day
         $difference = $d1->diff($d2);
+
         return $difference->days;
 
     }
+
     //Returns the time span between two dates in years  months and days
-    public function time_range($start_date, $end_date){
+    public function time_range($start_date, $end_date)
+    {
 
         $datetime1 = new DateTime($start_date);
         $datetime2 = new DateTime($end_date);
         $datetime2->add(new DateInterval('P1D')); //Add 1 day to include the end date as a day
         $interval = $datetime1->diff($datetime2);
+
         return $interval->format('%y years %m months and %d days');
     }
 
-    public function substr_unicode($str, $s, $l = null) {
+    public function substr_unicode($str, $s, $l = null)
+    {
         return join("", array_slice(
             preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY), $s, $l));
     }
 
     // Function for basic field validation (present and neither empty nor only white space
-    public function IsNullOrEmptyString($question){
-        return (!isset($question) || trim($question)==='');
+    public function IsNullOrEmptyString($question)
+    {
+        return (!isset($question) || trim($question) === '');
     }
 }

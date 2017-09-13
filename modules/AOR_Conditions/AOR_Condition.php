@@ -69,25 +69,24 @@ class AOR_Condition extends Basic
     var $value;
     var $value_type;
 
-    function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOR_Condition(){
+    function AOR_Condition()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
+    function __construct()
+    {
+        parent::__construct();
+    }
 
     function save_lines($post_data, $parent, $key = '')
     {
@@ -113,12 +112,20 @@ class AOR_Condition extends Basic
                                 default:
                                     $post_data[$key . $field_name][$i] = encodeMultienumValue($post_data[$key . $field_name][$i]);
                             }
-                        } else if ($field_name == 'value' && $post_data[$key . 'value_type'][$i] === 'Value') {
-                            $post_data[$key . $field_name][$i] = fixUpFormatting($_REQUEST['report_module'], $condition->field, $post_data[$key . $field_name][$i]);
-                        } else if ($field_name == 'parameter') {
-                            $post_data[$key . $field_name][$i] = isset($post_data[$key . $field_name][$i]);
-                        } else if ($field_name == 'module_path') {
-                            $post_data[$key . $field_name][$i] = base64_encode(serialize(explode(":", $post_data[$key . $field_name][$i])));
+                        } else {
+                            if ($field_name == 'value' && $post_data[$key . 'value_type'][$i] === 'Value') {
+                                $post_data[$key . $field_name][$i] = fixUpFormatting($_REQUEST['report_module'],
+                                    $condition->field, $post_data[$key . $field_name][$i]);
+                            } else {
+                                if ($field_name == 'parameter') {
+                                    $post_data[$key . $field_name][$i] = isset($post_data[$key . $field_name][$i]);
+                                } else {
+                                    if ($field_name == 'module_path') {
+                                        $post_data[$key . $field_name][$i] = base64_encode(serialize(explode(":",
+                                            $post_data[$key . $field_name][$i])));
+                                    }
+                                }
+                            }
                         }
                         if ($field_name == 'parenthesis' && $post_data[$key . $field_name][$i] == 'END') {
                             if (!isset($lastParenthesisStartConditionId)) {
@@ -128,8 +135,10 @@ class AOR_Condition extends Basic
                         } else {
                             $condition->$field_name = $post_data[$key . $field_name][$i];
                         }
-                    } else if ($field_name == 'parameter') {
-                        $condition->$field_name = 0;
+                    } else {
+                        if ($field_name == 'parameter') {
+                            $condition->$field_name = 0;
+                        }
                     }
 
                 }

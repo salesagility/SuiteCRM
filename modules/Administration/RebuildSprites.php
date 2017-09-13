@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -40,13 +41,11 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 global $current_user;
-if(is_admin($current_user))
-{
-    if(!isset($_REQUEST['process']))
-    {
+if (is_admin($current_user)) {
+    if (!isset($_REQUEST['process'])) {
         global $mod_strings;
-        echo '<br>'.$mod_strings['LBL_REPAIR_JS_FILES_PROCESSING'];
-        echo'<div id="msgDiv"></div>';
+        echo '<br>' . $mod_strings['LBL_REPAIR_JS_FILES_PROCESSING'];
+        echo '<div id="msgDiv"></div>';
         $ss = new Sugar_Smarty();
         $ss->display('modules/Administration/templates/RebuildSprites.tpl');
     }

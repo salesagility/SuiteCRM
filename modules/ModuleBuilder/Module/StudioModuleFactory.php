@@ -38,7 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once 'modules/ModuleBuilder/Module/StudioModule.php' ;
+require_once 'modules/ModuleBuilder/Module/StudioModule.php';
 
 /**
  * Class StudioModuleFactory
@@ -48,35 +48,36 @@ class StudioModuleFactory
     /**
      * @var array $loadedMods - array( 'module' => StudioModule )
      */
-	protected static $loadedMods = array();
+    protected static $loadedMods = array();
 
     /**
      * @param string $module name
      * @return StudioModule
      */
     public static function getStudioModule($module)
-	{
-		if (!empty(self::$loadedMods[$module]))
+    {
+        if (!empty(self::$loadedMods[$module])) {
             return self::$loadedMods[$module];
+        }
 
         $studioModClass = "{$module}StudioModule";
-		if (file_exists("custom/modules/{$module}/{$studioModClass}.php"))
-		{
-			require_once "custom/modules/{$module}/{$studioModClass}.php";
-			$sm = new $studioModClass($module);
+        if (file_exists("custom/modules/{$module}/{$studioModClass}.php")) {
+            require_once "custom/modules/{$module}/{$studioModClass}.php";
+            $sm = new $studioModClass($module);
 
-		} else if (file_exists("modules/{$module}/{$studioModClass}.php"))
-		{
-			require_once "modules/{$module}/{$studioModClass}.php";
-			$sm = new $studioModClass($module);
+        } else {
+            if (file_exists("modules/{$module}/{$studioModClass}.php")) {
+                require_once "modules/{$module}/{$studioModClass}.php";
+                $sm = new $studioModClass($module);
 
-		}
-		else 
-		{
-			$sm = new StudioModule($module);
-		}
+            } else {
+                $sm = new StudioModule($module);
+            }
+        }
         self::$loadedMods[$module] = $sm;
+
         return $sm;
-	}
+    }
 }
+
 ?>

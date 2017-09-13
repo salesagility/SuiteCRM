@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -42,64 +43,66 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 //TODO move me out of generic
 
 
-
 /**
  * Generic Sugar widget
  * @api
  */
 class SugarWidget
 {
-	var $layout_manager = null;
-	var $widget_id;
+    var $layout_manager = null;
+    var $widget_id;
     protected $form_value;
     protected $parent_bean;
-
-	function __construct(&$layout_manager)
-	{
-		$this->layout_manager = $layout_manager;
-	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarWidget(&$layout_manager){
+    function SugarWidget(&$layout_manager)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($layout_manager);
     }
 
-	function display($layout_def)
-	{
-		return 'display class undefined';
-	}
+    function __construct(&$layout_manager)
+    {
+        $this->layout_manager = $layout_manager;
+    }
 
-	/**
-	 * getSubpanelWidgetId
-	 * This is a utility function to return a widget's unique id
-	 * @return id String label of the widget's unique id
-	 */
-	public function getWidgetId() {
-	   return $this->widget_id;
-	}
+    function display($layout_def)
+    {
+        return 'display class undefined';
+    }
 
-	/**
-	 * setSubpanelWidgetId
-	 * This is a utility function to set the id for a widget
-	 * @param id String value to set the widget's unique id
-	 */
-	public function setWidgetId($id='') {
-		$this->widget_id = $id;
-	}
+    /**
+     * getSubpanelWidgetId
+     * This is a utility function to return a widget's unique id
+     * @return id String label of the widget's unique id
+     */
+    public function getWidgetId()
+    {
+        return $this->widget_id;
+    }
+
+    /**
+     * setSubpanelWidgetId
+     * This is a utility function to set the id for a widget
+     * @param id String value to set the widget's unique id
+     */
+    public function setWidgetId($id = '')
+    {
+        $this->widget_id = $id;
+    }
 
     public function getDisplayName()
     {
         return $this->form_value;
     }
+
     function getParentBean()
     {
         return $this->parent_bean;
@@ -109,20 +112,21 @@ class SugarWidget
     {
         $this->parent_bean = $parent_bean;
     }
-   /**
-    * getTruncatedColumnAlias
-    * This function ensures that a column alias is no more than 28 characters.  Should the column_name
-    * argument exceed 28 charcters, it creates an alias using the first 22 characters of the column_name
-    * plus an md5 of the first 6 characters of the lowercased column_name value.
-    *
-    */
+
+    /**
+     * getTruncatedColumnAlias
+     * This function ensures that a column alias is no more than 28 characters.  Should the column_name
+     * argument exceed 28 charcters, it creates an alias using the first 22 characters of the column_name
+     * plus an md5 of the first 6 characters of the lowercased column_name value.
+     *
+     */
     protected function getTruncatedColumnAlias($column_name)
     {
-	  	if(empty($column_name) || !is_string($column_name) || strlen($column_name) < 28)
-	  	{
-	  	   return $column_name;
-	  	}
-	    return strtoupper(substr($column_name,0,22) . substr(md5(strtolower($column_name)), 0, 6));
+        if (empty($column_name) || !is_string($column_name) || strlen($column_name) < 28) {
+            return $column_name;
+        }
+
+        return strtoupper(substr($column_name, 0, 22) . substr(md5(strtolower($column_name)), 0, 6));
     }
 }
 

@@ -1,9 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -37,28 +39,24 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
+class SugarWidgetSubPanelTopSelectAccountButton extends SugarWidgetSubPanelTopSelectButton
+{
+    function display($widget_data, $additionalFormFields = null, $nonbutton = false)
+    {
+        /*
+        * i.dymovsky
+        * Because when user role can't edit Accounts, it also can't edit Membership Organizations. Select button leads to change MO list
+        * See bug 25633
+        * Bug25633 code change start
+        */
+        if (!ACLController::checkAccess($widget_data["module"], "edit", true)) {
+            return;
+        }
 
+        /*
+        * Bug25633 code change end
+        */
 
-
-
-
-
-class SugarWidgetSubPanelTopSelectAccountButton extends SugarWidgetSubPanelTopSelectButton {
-	function display($widget_data, $additionalFormFields = NULL, $nonbutton = false)
-	{
-		/*
-		* i.dymovsky
-		* Because when user role can't edit Accounts, it also can't edit Membership Organizations. Select button leads to change MO list
-		* See bug 25633
-		* Bug25633 code change start
-		*/
-		if (!ACLController::checkAccess($widget_data["module"], "edit", true)) {
-			return ;
-		}
-		/*
-		* Bug25633 code change end
-		*/
-		
-		return parent::display($widget_data);
-	}
+        return parent::display($widget_data);
+    }
 }

@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
@@ -40,12 +41,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 global $db;
 
-function getTemplateValidationMessages($templateId) {
+function getTemplateValidationMessages($templateId)
+{
     $msgs = array();
-    if(!$templateId) {
+    if (!$templateId) {
         $msgs[] = 'LBL_NO_SELECTED_TEMPLATE';
-    }
-    else {
+    } else {
         $template = new EmailTemplate();
         $template->retrieve($templateId);
         if (!$template->subject) {
@@ -58,17 +59,17 @@ function getTemplateValidationMessages($templateId) {
             $msgs[] = 'LBL_NO_BODY_CONTENTS';
         }
     }
+
     return $msgs;
 }
 
 $campaignId = $db->quote($_POST['campaignId']);
 $marketingId = $db->quote($_POST['marketingId']);
 $func = isset($_REQUEST['func']) ? $_REQUEST['func'] : null;
-if($func == 'getTemplateValidation') {
+if ($func == 'getTemplateValidation') {
     if (!empty($_POST['templateId'])) {
         $templateId = $db->quote($_POST['templateId']);
-    }
-    else {
+    } else {
         if (!$marketingId) {
             if (!empty($_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId']) && $func != 'createEmailMarketing') {
                 $marketingId = $_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'];
@@ -83,15 +84,16 @@ if($func == 'getTemplateValidation') {
     $return['marketingValidationMessages'] = $marketing->validate();
 
     echo json_encode($return);
-}
-else {
+} else {
     if (!$marketingId) {
         if (!empty($_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId']) && $func != 'createEmailMarketing') {
             $marketingId = $_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'];
-        } else if($func != 'createEmailMarketing') {
-            $marketing = new EmailMarketing();
-            $marketing->save();
-            $marketingId = $marketing->id;
+        } else {
+            if ($func != 'createEmailMarketing') {
+                $marketing = new EmailMarketing();
+                $marketing->save();
+                $marketingId = $marketing->id;
+            }
         }
     }
     if (!empty($_POST['templateId'])) {
@@ -107,7 +109,7 @@ else {
     if (!empty($_POST['templateId'])) {
         $marketing->template_id = $templateId;
     }
-    if($func != 'createEmailMarketing') {
+    if ($func != 'createEmailMarketing') {
         $marketing->save();
     }
 

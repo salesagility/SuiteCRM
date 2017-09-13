@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,7 +38,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 class TemplateHandler
 {
     /**
@@ -61,37 +61,6 @@ class TemplateHandler
     public $ss;
 
     /**
-     * TemplateHandler constructor.
-     */
-    public function __construct()
-    {
-        $this->cacheDir = sugar_cached('');
-    }
-
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function TemplateHandler()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
-
-
-    public function loadSmarty()
-    {
-        if ($this->ss === null) {
-            $this->ss = new Sugar_Smarty();
-        }
-    }
-
-
-    /**
      * clearAll
      * Helper function to remove all .tpl files in the cache directory
      *
@@ -103,7 +72,6 @@ class TemplateHandler
             TemplateHandler::clearCache($module_dir);
         }
     }
-
 
     /**
      * clearCache
@@ -153,6 +121,83 @@ class TemplateHandler
                 }
             }
         }
+    }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function TemplateHandler()
+    {
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if (isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        } else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+    /**
+     * TemplateHandler constructor.
+     */
+    public function __construct()
+    {
+        $this->cacheDir = sugar_cached('');
+    }
+
+    /**
+     * Retrieves and displays a template
+     *
+     * @param string $module module name
+     * @param string $view need (eg DetailView, EditView, etc)
+     * @param string $tpl generic tpl to use
+     * @param boolean $ajaxSave parameter indicating whether or not this is from an Ajax operation
+     * @param array|null $metaDataDefs Optional metadata definition Array
+     * @return string
+     */
+    public function displayTemplate($module, $view, $tpl, $ajaxSave = false, $metaDataDefs = null)
+    {
+        global $theme;
+        $this->loadSmarty();
+        if (!$this->checkTemplate($module, $view)) {
+            $this->buildTemplate($module, $view, $tpl, $ajaxSave, $metaDataDefs);
+        }
+        $file = $this->cacheDir . $this->themeDir . $theme . '/' . $this->templateDir . $module . '/' . $view . '.tpl';
+        if (file_exists($file)) {
+            return $this->ss->fetch($file);
+        } else {
+            global $app_strings;
+            $GLOBALS['log']->fatal($app_strings['ERR_NO_SUCH_FILE'] . ": $file");
+
+            return $app_strings['ERR_NO_SUCH_FILE'] . ": $file";
+        }
+    }
+
+    public function loadSmarty()
+    {
+        if ($this->ss === null) {
+            $this->ss = new Sugar_Smarty();
+        }
+    }
+
+    /**
+     * Checks if a template exists
+     *
+     * @param string $module module name
+     * @param string $view view need (eg DetailView, EditView, etc)
+     * @param bool $checkFormName
+     * @param string $formName
+     * @return bool
+     */
+    public function checkTemplate($module, $view, $checkFormName = false, $formName = '')
+    {
+        global $theme;
+        if (inDeveloperMode() || !empty($_SESSION['developerMode'])) {
+            return false;
+        }
+        $view = $checkFormName ? $formName : $view;
+
+        return file_exists($this->cacheDir . $this->themeDir . $theme . '/' . $this->templateDir . $module . '/' . $view . '.tpl');
     }
 
     /**
@@ -324,79 +369,6 @@ class TemplateHandler
     }
 
     /**
-     * Checks if a template exists
-     *
-     * @param string $module module name
-     * @param string $view view need (eg DetailView, EditView, etc)
-     * @param bool $checkFormName
-     * @param string $formName
-     * @return bool
-     */
-    public function checkTemplate($module, $view, $checkFormName = false, $formName = '')
-    {
-        global $theme;
-        if (inDeveloperMode() || !empty($_SESSION['developerMode'])) {
-            return false;
-        }
-        $view = $checkFormName ? $formName : $view;
-
-        return file_exists($this->cacheDir . $this->themeDir . $theme . '/' . $this->templateDir . $module . '/' . $view . '.tpl');
-    }
-
-    /**
-     * Retrieves and displays a template
-     *
-     * @param string $module module name
-     * @param string $view need (eg DetailView, EditView, etc)
-     * @param string $tpl generic tpl to use
-     * @param boolean $ajaxSave parameter indicating whether or not this is from an Ajax operation
-     * @param array|null $metaDataDefs Optional metadata definition Array
-     * @return string
-     */
-    public function displayTemplate($module, $view, $tpl, $ajaxSave = false, $metaDataDefs = null)
-    {
-        global $theme;
-        $this->loadSmarty();
-        if (!$this->checkTemplate($module, $view)) {
-            $this->buildTemplate($module, $view, $tpl, $ajaxSave, $metaDataDefs);
-        }
-        $file = $this->cacheDir . $this->themeDir . $theme . '/' . $this->templateDir . $module . '/' . $view . '.tpl';
-        if (file_exists($file)) {
-            return $this->ss->fetch($file);
-        } else {
-            global $app_strings;
-            $GLOBALS['log']->fatal($app_strings['ERR_NO_SUCH_FILE'] . ": $file");
-
-            return $app_strings['ERR_NO_SUCH_FILE'] . ": $file";
-        }
-    }
-
-    /**
-     * Deletes an existing template
-     *
-     * @param string $module module name
-     * @param string $view view need (eg DetailView, EditView, etc)
-     * @return boolean true if successful
-     */
-    public function deleteTemplate($module, $view)
-    {
-        global $theme;
-        if (is_file($this->cacheDir . $this->themeDir . $theme . '/' . $this->templateDir . $module . '/' . $view . '.tpl')) {
-            // Bug #54634 : RTC 18144 : Cannot add more than 1 user to role but popup is multi-selectable
-            if (!isset($this->ss)) {
-                $this->loadSmarty();
-            }
-            $cache_file_name = $this->ss->_get_compile_path($this->cacheDir . $this->themeDir . $theme . '/' . $this->templateDir . $module . '/' . $view . '.tpl');
-            SugarCache::cleanFile($cache_file_name);
-
-            return unlink($this->cacheDir . $this->themeDir . $theme . '/' . $this->templateDir . $module . '/' . $view . '.tpl');
-        }
-
-        return false;
-    }
-
-
-    /**
      * createQuickSearchCode
      * This function creates the $sqs_objects array that will be used by the quicksearch Javascript
      * code.  The $sqs_objects array is wrapped in a $json->encode call.
@@ -412,9 +384,11 @@ class TemplateHandler
     {
         $sqs_objects = array();
         require_once('include/QuickSearchDefaults.php');
-        if ($this instanceof TemplateHandler) //If someone calls createQuickSearchCode as a static method (@see ImportViewStep3) $this becomes anoter object, not TemplateHandler
-        {
-            $qsd = QuickSearchDefaults::getQuickSearchDefaults($this->getQSDLookup());
+        if ($this instanceof TemplateHandler) {
+            //If someone calls createQuickSearchCode as a static method (@see ImportViewStep3) $this becomes anoter object, not TemplateHandler
+            {
+                $qsd = QuickSearchDefaults::getQuickSearchDefaults($this->getQSDLookup());
+            }
         } else {
             $qsd = QuickSearchDefaults::getQuickSearchDefaults(array());
         }
@@ -673,7 +647,6 @@ class TemplateHandler
         return '';
     }
 
-
     /**
      * Get lookup array for QuickSearchDefaults custom class
      * @return array
@@ -682,6 +655,30 @@ class TemplateHandler
     protected function getQSDLookup()
     {
         return array();
+    }
+
+    /**
+     * Deletes an existing template
+     *
+     * @param string $module module name
+     * @param string $view view need (eg DetailView, EditView, etc)
+     * @return boolean true if successful
+     */
+    public function deleteTemplate($module, $view)
+    {
+        global $theme;
+        if (is_file($this->cacheDir . $this->themeDir . $theme . '/' . $this->templateDir . $module . '/' . $view . '.tpl')) {
+            // Bug #54634 : RTC 18144 : Cannot add more than 1 user to role but popup is multi-selectable
+            if (!isset($this->ss)) {
+                $this->loadSmarty();
+            }
+            $cache_file_name = $this->ss->_get_compile_path($this->cacheDir . $this->themeDir . $theme . '/' . $this->templateDir . $module . '/' . $view . '.tpl');
+            SugarCache::cleanFile($cache_file_name);
+
+            return unlink($this->cacheDir . $this->themeDir . $theme . '/' . $this->templateDir . $module . '/' . $view . '.tpl');
+        }
+
+        return false;
     }
 }
 

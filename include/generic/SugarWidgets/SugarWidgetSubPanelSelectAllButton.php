@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
@@ -44,9 +45,10 @@ class SugarWidgetSubPanelSelectAllButton extends SugarWidgetSubPanelTopButton
 {
     function display($defines, $additionalFormFields = null)
     {
-        $button  = "<form method='post' action='/index.php?module=MODULE_NAME&action=CUSTOM_ACTION'>";
-       // $button .= "<input id='custom_hidden_1' type='hidden' name='custom_hidden_1' value=''/>";
+        $button = "<form method='post' action='/index.php?module=MODULE_NAME&action=CUSTOM_ACTION'>";
+        // $button .= "<input id='custom_hidden_1' type='hidden' name='custom_hidden_1' value=''/>";
         $button .= "<input class='button' type='submit' name='Custom Save' value='Select All' />\n</form>";
+
         return $button;
     }
 }

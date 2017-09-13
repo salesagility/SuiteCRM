@@ -162,74 +162,52 @@ abstract class AbstractMetaDataImplementation
     }
 
     /**
-     * Load a layout from a file, given a filename
-     * Doesn't do any preprocessing on the viewdefs - just returns them as found for other classes to make sense of
-     * @param string $filename       The full path to the file containing the layout
-     * @return array                The layout, null if the file does not exist
+     * Fielddefs are obtained from two locations:
+     *
+     * 1. The starting point is the module's fielddefs, sourced from the Bean
+     * 2. Second comes any overrides from the layouts themselves. Note though that only visible fields are included in a layoutdef, which
+     *      means fields that aren't present in the current layout may have a layout defined in a lower-priority layoutdef, for example, the base layoutdef
+     *
+     * Thus to determine the current fielddef for any given field, we take the fielddef defined in the module's Bean and then override with first the base layout,
+     * then the customlayout, then finally the working layout...
+     *
+     * The complication is that although generating these merged fielddefs is naturally a method of the implementation, not the parser,
+     * we therefore lack knowledge as to which type of layout we are merging - EditView or ListView. So we can't use internal knowledge of the
+     * layout to locate the field definitions. Instead, we need to look for sections of the layout that match the template for a field definition...
+     *
+     * @param $fielddefs
+     * @param $layout
      */
-    protected function _loadFromFile($filename)
+    function _mergeFielddefs(&$fielddefs, $layout)
     {
-        // BEGIN ASSERTIONS
-        if (!file_exists($filename)) {
-            return null;
-        }
-        // END ASSERTIONS
-        $GLOBALS['log']->debug(get_class($this) . "->_loadFromFile(): reading from " . $filename);
-        require $filename; // loads the viewdef - must be a require not require_once to ensure can reload if called twice in succession
+        foreach ($layout as $key => $def) {
 
-        // Check to see if we have the module name set as a variable rather than embedded in the $viewdef array
-        // If we do, then we have to preserve the module variable when we write the file back out
-        // This is a format used by ModuleBuilder templated modules to speed the renaming of modules
-        // OOB Sugar modules don't use this format
-
-        $moduleVariables = array('module_name', '_module_name', 'OBJECT_NAME', '_object_name');
-
-        $variables = array();
-        foreach ($moduleVariables as $name) {
-            if (isset ($$name)) {
-                $variables [$name] = $$name;
+            if ((string)$key == 'templateMeta') {
+                continue;
             }
-        }
 
-        if(isset($viewdefs[$this->_moduleName])) {
-            // get view name by performing a case insensitive search on each key
-            $key = '';
-            foreach ($viewdefs[$this->_moduleName] as $viewdefKey => $viewdefVal) {
-                if(stristr($viewdefKey, $this->_view) !== false) {
-                    $key = $viewdefKey;
-                    break;
+            if (is_array($def)) {
+                if (isset ($def ['name']) && !is_array($def ['name'])) {
+                    // found a 'name' definition, that is not the definition of a field called name :)
+                    {
+                        // if this is a module field, then merge in the definition, otherwise this is a new field defined in the layout, so just take the definition
+                        $fielddefs [$def ['name']] = (isset ($fielddefs [$def ['name']])) ? array_merge($fielddefs [$def ['name']],
+                            $def) : $def;
+                    }
+                } else {
+                    if (isset ($def ['label']) || isset ($def ['vname']) || isset($def ['widget_class'])) {
+                        // dealing with a listlayout which lacks 'name' keys, but which does have 'label' keys
+                        {
+                            $key = strtolower($key);
+                        }
+                        $fielddefs [$key] = (isset ($fielddefs [$key])) ? array_merge($fielddefs [$key], $def) : $def;
+                    } else {
+                        $this->_mergeFielddefs($fielddefs, $def);
+                    }
                 }
             }
-            if(!empty($key) && isset($viewdefs[$this->_moduleName][$key]['templateMeta'])) {
-                $this->_viewName = $key;
-                $this->_originalViewTemplateDefs = $viewdefs[$this->_moduleName][$key]['templateMeta'];
-            } else {
-                $this->_originalViewTemplateDefs = array();
-            }
         }
 
-        // Extract the layout definition from the loaded file - the layout definition is held under a variable name that varies between the various layout types (e.g., listviews hold it in listViewDefs, editviews in viewdefs)
-        $viewVariable = $this->_fileVariables [$this->_view];
-        $defs = $$viewVariable;
-
-        // Now tidy up the module name in the viewdef array
-        // MB created definitions store the defs under packagename_modulename and later methods that expect to find them under modulename will fail
-
-        if (isset ($variables ['module_name'])) {
-            $mbName = $variables ['module_name'];
-            if ($mbName != $this->_moduleName) {
-                $defs [$this->_moduleName] = $defs [$mbName];
-                unset ($defs [$mbName]);
-            }
-        }
-        $this->_variables = $variables;
-        // now remove the modulename preamble from the loaded defs
-        reset($defs);
-        $temp = each($defs);
-
-        $GLOBALS['log']->debug(get_class($this) . "->_loadFromFile: returning " . print_r($temp['value'], true));
-
-        return $temp['value']; // 'value' contains the value part of 'key'=>'value' part
     }
 
     /**
@@ -308,12 +286,91 @@ abstract class AbstractMetaDataImplementation
     }
 
     /**
+     * Load a layout from a file, given a filename
+     * Doesn't do any preprocessing on the viewdefs - just returns them as found for other classes to make sense of
+     * @param string $filename The full path to the file containing the layout
+     * @return array                The layout, null if the file does not exist
+     */
+    protected function _loadFromFile($filename)
+    {
+        // BEGIN ASSERTIONS
+        if (!file_exists($filename)) {
+            return null;
+        }
+        // END ASSERTIONS
+        $GLOBALS['log']->debug(get_class($this) . "->_loadFromFile(): reading from " . $filename);
+        require $filename; // loads the viewdef - must be a require not require_once to ensure can reload if called twice in succession
+
+        // Check to see if we have the module name set as a variable rather than embedded in the $viewdef array
+        // If we do, then we have to preserve the module variable when we write the file back out
+        // This is a format used by ModuleBuilder templated modules to speed the renaming of modules
+        // OOB Sugar modules don't use this format
+
+        $moduleVariables = array('module_name', '_module_name', 'OBJECT_NAME', '_object_name');
+
+        $variables = array();
+        foreach ($moduleVariables as $name) {
+            if (isset ($$name)) {
+                $variables [$name] = $$name;
+            }
+        }
+
+        if (isset($viewdefs[$this->_moduleName])) {
+            // get view name by performing a case insensitive search on each key
+            $key = '';
+            foreach ($viewdefs[$this->_moduleName] as $viewdefKey => $viewdefVal) {
+                if (stristr($viewdefKey, $this->_view) !== false) {
+                    $key = $viewdefKey;
+                    break;
+                }
+            }
+            if (!empty($key) && isset($viewdefs[$this->_moduleName][$key]['templateMeta'])) {
+                $this->_viewName = $key;
+                $this->_originalViewTemplateDefs = $viewdefs[$this->_moduleName][$key]['templateMeta'];
+            } else {
+                $this->_originalViewTemplateDefs = array();
+            }
+        }
+
+        // Extract the layout definition from the loaded file - the layout definition is held under a variable name that varies between the various layout types (e.g., listviews hold it in listViewDefs, editviews in viewdefs)
+        $viewVariable = $this->_fileVariables [$this->_view];
+        $defs = $$viewVariable;
+
+        // Now tidy up the module name in the viewdef array
+        // MB created definitions store the defs under packagename_modulename and later methods that expect to find them under modulename will fail
+
+        if (isset ($variables ['module_name'])) {
+            $mbName = $variables ['module_name'];
+            if ($mbName != $this->_moduleName) {
+                $defs [$this->_moduleName] = $defs [$mbName];
+                unset ($defs [$mbName]);
+            }
+        }
+        $this->_variables = $variables;
+        // now remove the modulename preamble from the loaded defs
+        reset($defs);
+        $temp = each($defs);
+
+        $GLOBALS['log']->debug(get_class($this) . "->_loadFromFile: returning " . print_r($temp['value'], true));
+
+        return $temp['value']; // 'value' contains the value part of 'key'=>'value' part
+    }
+
+    /**
+     * @param string $view
+     * @param string $moduleName
+     * @param string $type
+     * @return mixed
+     */
+    abstract public function getFileName($view, $moduleName, $type = MB_CUSTOMMETADATALOCATION);
+
+    /**
      * Save a layout to a file
      * Must be the exact inverse of _loadFromFile
      * Obtains the additional variables, such as module_name, to include in beginning of the file (as required by ModuleBuilder) from the internal variable _variables, set in the Constructor
-     * @param string $filename       The full path to the file to contain the layout
-     * @param array $defs        	Array containing the layout definition; the top level should be the definition itself; not the modulename or viewdef= preambles found in the file definitions
-     * @param boolean $useVariables	Write out with placeholder entries for module name and object name - used by ModuleBuilder modules
+     * @param string $filename The full path to the file to contain the layout
+     * @param array $defs Array containing the layout definition; the top level should be the definition itself; not the modulename or viewdef= preambles found in the file definitions
+     * @param boolean $useVariables Write out with placeholder entries for module name and object name - used by ModuleBuilder modules
      * @param bool $forPopup
      */
     protected function _saveToFile($filename, $defs, $useVariables = true, $forPopup = false)
@@ -344,10 +401,10 @@ abstract class AbstractMetaDataImplementation
 
         $out .= ";\n";
 
-        if(!empty($this->_originalViewTemplateDefs)) {
+        if (!empty($this->_originalViewTemplateDefs)) {
             $templateMeta = var_export($this->_originalViewTemplateDefs, true);
-            if(!empty($templateMeta)) {
-                $out .= '$viewdefs[\'' . $this->_moduleName . '\'][\''. $this->_viewName . '\'][\'templateMeta\'] = '.$templateMeta;
+            if (!empty($templateMeta)) {
+                $out .= '$viewdefs[\'' . $this->_moduleName . '\'][\'' . $this->_viewName . '\'][\'templateMeta\'] = ' . $templateMeta;
             }
         }
 
@@ -358,59 +415,6 @@ abstract class AbstractMetaDataImplementation
             $GLOBALS ['log']->fatal(get_class($this) . ": could not write new viewdef file " . $filename);
         }
     }
-
-    /**
-     * Fielddefs are obtained from two locations:
-     *
-     * 1. The starting point is the module's fielddefs, sourced from the Bean
-     * 2. Second comes any overrides from the layouts themselves. Note though that only visible fields are included in a layoutdef, which
-     * 	  means fields that aren't present in the current layout may have a layout defined in a lower-priority layoutdef, for example, the base layoutdef
-     *
-     * Thus to determine the current fielddef for any given field, we take the fielddef defined in the module's Bean and then override with first the base layout,
-     * then the customlayout, then finally the working layout...
-     *
-     * The complication is that although generating these merged fielddefs is naturally a method of the implementation, not the parser,
-     * we therefore lack knowledge as to which type of layout we are merging - EditView or ListView. So we can't use internal knowledge of the
-     * layout to locate the field definitions. Instead, we need to look for sections of the layout that match the template for a field definition...
-     *
-     * @param $fielddefs
-     * @param $layout
-     */
-    function _mergeFielddefs(&$fielddefs, $layout)
-    {
-        foreach ($layout as $key => $def) {
-
-            if ((string)$key == 'templateMeta') {
-                continue;
-            }
-
-            if (is_array($def)) {
-                if (isset ($def ['name']) && !is_array($def ['name'])) // found a 'name' definition, that is not the definition of a field called name :)
-                {
-                    // if this is a module field, then merge in the definition, otherwise this is a new field defined in the layout, so just take the definition
-                    $fielddefs [$def ['name']] = (isset ($fielddefs [$def ['name']])) ? array_merge($fielddefs [$def ['name']],
-                        $def) : $def;
-                } else {
-                    if (isset ($def ['label']) || isset ($def ['vname']) || isset($def ['widget_class'])) // dealing with a listlayout which lacks 'name' keys, but which does have 'label' keys
-                    {
-                        $key = strtolower($key);
-                        $fielddefs [$key] = (isset ($fielddefs [$key])) ? array_merge($fielddefs [$key], $def) : $def;
-                    } else {
-                        $this->_mergeFielddefs($fielddefs, $def);
-                    }
-                }
-            }
-        }
-
-    }
-
-    /**
-     * @param string $view
-     * @param string $moduleName
-     * @param string $type
-     * @return mixed
-     */
-    abstract public function getFileName($view , $moduleName , $type = MB_CUSTOMMETADATALOCATION);
 
 }
 

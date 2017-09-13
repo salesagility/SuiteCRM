@@ -1,5 +1,7 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -110,7 +112,13 @@ $layout_defs['UserRoles'] = array(
     // sets up which panels to show, in which order, and with what linked_fields
     'subpanel_setup' => array(
         'aclroles' => array(
-            'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'ACLRoles', 'mode' => 'MultiSelect'),),
+            'top_buttons' => array(
+                array(
+                    'widget_class' => 'SubPanelTopSelectButton',
+                    'popup_module' => 'ACLRoles',
+                    'mode' => 'MultiSelect'
+                ),
+            ),
             'order' => 20,
             'sort_by' => 'name',
             'sort_order' => 'asc',
@@ -153,7 +161,13 @@ global $modules_exempt_from_availability_check;
 $modules_exempt_from_availability_check['SecurityGroups'] = 'SecurityGroups';
 
 $layout_defs['Users']['subpanel_setup']['securitygroups'] = array(
-    'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect'),),
+    'top_buttons' => array(
+        array(
+            'widget_class' => 'SubPanelTopSelectButton',
+            'popup_module' => 'SecurityGroups',
+            'mode' => 'MultiSelect'
+        ),
+    ),
     'order' => 100,
     'sort_by' => 'name',
     'sort_order' => 'asc',
@@ -165,7 +179,13 @@ $layout_defs['Users']['subpanel_setup']['securitygroups'] = array(
     'title_key' => 'LBL_SECURITYGROUPS_SUBPANEL_TITLE',
 );
 $layout_defs['UserRoles']['subpanel_setup']['securitygroups'] = array(
-    'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect'),),
+    'top_buttons' => array(
+        array(
+            'widget_class' => 'SubPanelTopSelectButton',
+            'popup_module' => 'SecurityGroups',
+            'mode' => 'MultiSelect'
+        ),
+    ),
     'order' => 100,
     'sort_by' => 'name',
     'sort_order' => 'asc',

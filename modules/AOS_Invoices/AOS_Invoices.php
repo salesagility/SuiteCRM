@@ -28,42 +28,51 @@
  * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
 require_once('modules/AOS_Invoices/AOS_Invoices_sugar.php');
-class AOS_Invoices extends AOS_Invoices_sugar {
 
-	function __construct(){
-		parent::__construct();
-	}
+class AOS_Invoices extends AOS_Invoices_sugar
+{
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_Invoices(){
+    function AOS_Invoices()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
+    function __construct()
+    {
+        parent::__construct();
+    }
 
-    function save($check_notify = FALSE){
+    function save($check_notify = false)
+    {
         global $sugar_config;
 
-        if (empty($this->id)  || $this->new_with_id){
-            if(isset($_POST['group_id'])) unset($_POST['group_id']);
-            if(isset($_POST['product_id'])) unset($_POST['product_id']);
-            if(isset($_POST['service_id'])) unset($_POST['service_id']);
+        if (empty($this->id) || $this->new_with_id) {
+            if (isset($_POST['group_id'])) {
+                unset($_POST['group_id']);
+            }
+            if (isset($_POST['product_id'])) {
+                unset($_POST['product_id']);
+            }
+            if (isset($_POST['service_id'])) {
+                unset($_POST['service_id']);
+            }
 
-            if($sugar_config['dbconfig']['db_type'] == 'mssql'){
+            if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
                 $this->number = $this->db->getOne("SELECT MAX(CAST(number as INT))+1 FROM aos_invoices");
             } else {
                 $this->number = $this->db->getOne("SELECT MAX(CAST(number as UNSIGNED))+1 FROM aos_invoices");
             }
 
-            if($this->number < $sugar_config['aos']['invoices']['initialNumber']){
+            if ($this->number < $sugar_config['aos']['invoices']['initialNumber']) {
                 $this->number = $sugar_config['aos']['invoices']['initialNumber'];
             }
         }
@@ -86,4 +95,5 @@ class AOS_Invoices extends AOS_Invoices_sugar {
         parent::mark_deleted($id);
     }
 }
+
 ?>

@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -39,7 +40,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 /*********************************************************************************
-
  * Description:  Saves an Account record and then redirects the browser to the
  * defined return URL.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
@@ -53,9 +53,9 @@ $_REQUEST['name'] = $_REQUEST['groupFolderAddName'];
 $_REQUEST['parent_folder'] = $_REQUEST['groupFoldersAdd'];
 $_REQUEST['group_id'] = $_REQUEST['groupFoldersUser'];
 if (empty($_REQUEST['record'])) {
-	$folder->setFolder($_REQUEST);
+    $folder->setFolder($_REQUEST);
 } else {
-	$folder->updateFolder($_REQUEST);
+    $folder->updateFolder($_REQUEST);
 }
 $body1 = "
 	<script type='text/javascript'>
@@ -65,5 +65,5 @@ $body1 = "
 		} // fn
 		refreshOpener();
 	</script>";
-echo  $body1;
+echo $body1;
 ?>

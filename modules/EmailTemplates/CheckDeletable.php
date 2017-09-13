@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -39,7 +40,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 /*********************************************************************************
-
  * Description:  TODO: To be written.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
@@ -49,39 +49,44 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('modules/EmailTemplates/EmailTemplate.php');
 
 $focus = new EmailTemplate();
-if($_REQUEST['from'] == 'DetailView') {
-	if(!isset($_REQUEST['record']))
-		sugar_die("A record number must be specified to delete the template.");
-	$focus->retrieve($_REQUEST['record']);
-	if(check_email_template_in_use($focus)) {
-		echo 'true';
-		return;
-	}
-	echo 'false';
-} else if($_REQUEST['from'] == 'ListView') {
-	$returnString = '';
-	$idArray = explode(',', $_REQUEST['records']);
-	foreach($idArray as $key => $value) {
-		if($focus->retrieve($value)) {
-			if(check_email_template_in_use($focus)) {
-				$returnString .= $focus->name . ',';
-			}
-		}
-	}
-	$returnString = substr($returnString, 0, -1);
-	echo $returnString;
+if ($_REQUEST['from'] == 'DetailView') {
+    if (!isset($_REQUEST['record'])) {
+        sugar_die("A record number must be specified to delete the template.");
+    }
+    $focus->retrieve($_REQUEST['record']);
+    if (check_email_template_in_use($focus)) {
+        echo 'true';
+
+        return;
+    }
+    echo 'false';
 } else {
-	echo '';
+    if ($_REQUEST['from'] == 'ListView') {
+        $returnString = '';
+        $idArray = explode(',', $_REQUEST['records']);
+        foreach ($idArray as $key => $value) {
+            if ($focus->retrieve($value)) {
+                if (check_email_template_in_use($focus)) {
+                    $returnString .= $focus->name . ',';
+                }
+            }
+        }
+        $returnString = substr($returnString, 0, -1);
+        echo $returnString;
+    } else {
+        echo '';
+    }
 }
 
 function check_email_template_in_use($focus)
 {
-	if($focus->is_used_by_email_marketing()) {
-		return true;
-	}
-	$system = $GLOBALS['sugar_config']['passwordsetting'];
-	if($focus->id == $system['generatepasswordtmpl'] || $focus->id == $system['lostpasswordtmpl']) {
-	    return true;
-	}
+    if ($focus->is_used_by_email_marketing()) {
+        return true;
+    }
+    $system = $GLOBALS['sugar_config']['passwordsetting'];
+    if ($focus->id == $system['generatepasswordtmpl'] || $focus->id == $system['lostpasswordtmpl']) {
+        return true;
+    }
+
     return false;
 }

@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -37,27 +38,22 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-
-
-
-
-
 //TODO Rename this to edit link
 class SugarWidgetSubPanelEditButton extends SugarWidgetField
 {
     protected static $defs = array();
     protected static $edit_icon_html;
 
-	function displayHeaderCell($layout_def)
-	{
-		return '';
-	}
+    function displayHeaderCell($layout_def)
+    {
+        return '';
+    }
 
-	function displayList($layout_def)
-	{
-		global $app_strings;
+    function displayList($layout_def)
+    {
+        global $app_strings;
         global $subpanel_item_count;
-		$unique_id = $layout_def['subpanel_id']."_edit_".$subpanel_item_count; //bug 51512
+        $unique_id = $layout_def['subpanel_id'] . "_edit_" . $subpanel_item_count; //bug 51512
 
         if ($layout_def['EditView']) {
 

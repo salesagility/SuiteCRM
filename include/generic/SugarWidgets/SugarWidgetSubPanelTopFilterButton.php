@@ -1,9 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
@@ -37,16 +39,16 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
+class SugarWidgetSubPanelTopFilterButton extends SugarWidgetSubPanelTopButton
+{
 
-class SugarWidgetSubPanelTopFilterButton  extends SugarWidgetSubPanelTopButton{
-
-    function display($defines, $additionalFormFields = NULL, $nonbutton = false)
+    function display($defines, $additionalFormFields = null, $nonbutton = false)
     {
         global $app_strings;
 
         $button = "<script src='include/SubPanel/SubPanel.js'></script>";
 
-        $button .= "<input class='button' type='button'  value='".$app_strings['LBL_SUBPANEL_FILTER_LABEL']."'  id='". $this->getWidgetId() ."'  name='".$app_strings['LBL_SUBPANEL_FILTER_LABEL']."'  title='".$app_strings['LBL_SUBPANEL_FILTER_LABEL']."' onclick=\"showSearchPanel('" .  strtolower($this->widget_id) . "');return false;\" />";
+        $button .= "<input class='button' type='button'  value='" . $app_strings['LBL_SUBPANEL_FILTER_LABEL'] . "'  id='" . $this->getWidgetId() . "'  name='" . $app_strings['LBL_SUBPANEL_FILTER_LABEL'] . "'  title='" . $app_strings['LBL_SUBPANEL_FILTER_LABEL'] . "' onclick=\"showSearchPanel('" . strtolower($this->widget_id) . "');return false;\" />";
 
         return $button;
     }

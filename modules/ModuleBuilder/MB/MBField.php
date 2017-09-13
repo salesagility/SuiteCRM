@@ -1,8 +1,8 @@
 <?php
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -36,69 +36,89 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
+class MBField
+{
+    var $type = 'varchar';
+    var $name = false;
+    var $label = false;
+    var $vname = false;
+    var $options = false;
+    var $length = false;
+    var $error = '';
+    var $required = false;
+    var $reportable = true;
+    var $default = 'MSI1';
+    var $comment = '';
 
-class MBField{
-	var $type = 'varchar';
-	var $name = false;
-	var $label = false;
-	var $vname = false;
-	var $options = false;
-	var $length = false;
-	var $error = '';
-	var $required = false;
-	var $reportable = true;
-	var $default = 'MSI1';
-	var $comment = '';
-	
-	
-	
-	function getFieldVardef(){
-		if(empty($this->name)){
-			$this->error = 'A name is required to create a field';
-			return false;
-		}		
-		if(empty($this->label))$this->label = $this->name;
-		$this->name = strtolower($this->getDBName($this->name));
-		$vardef = array();
-		$vardef['name']=$this->name;
-		if(empty($this->vname))$this->vname = 'LBL_' . strtoupper($this->name);
-		$vardef['vname'] = $this->addLabel();
-		if(!empty($this->required))$vardef['required'] = $this->required;
-		if(empty($this->reportable))$vardef['reportable'] = false;
-		if(!empty($this->comment))$vardef['comment'] = $this->comment;
-		if($this->default !== 'MSI1')$vardef['default'] = $this->default;
-		switch($this->type){
-			case 'date':
-			case 'datetime':
-			case 'float':
-			case 'int':
-				$vardef['type']=$this->type;
-				return $vardef;
-			case 'bool':
-				$vardef['type'] = 'bool';
-				$vardef['default'] = (empty($vardef['default']))?0:1;
-				return $vardef;
-			case 'enum':
-				$vardef['type']='enum';
-				if(empty($this->options)){
-					$this->options = $this->name . '_list';
-				}
-				$vardef['options'] = $this->addDropdown();
-				return $vardef;
-			default:
-				$vardef['type']='varchar';
-				return $vardef;
-			
-		}
-	}
-	
-	function addDropDown(){
-		return $this->options;
-	}
-	
-	function addLabel(){
-		return $this->vname;
-	}
-	
+
+    function getFieldVardef()
+    {
+        if (empty($this->name)) {
+            $this->error = 'A name is required to create a field';
+
+            return false;
+        }
+        if (empty($this->label)) {
+            $this->label = $this->name;
+        }
+        $this->name = strtolower($this->getDBName($this->name));
+        $vardef = array();
+        $vardef['name'] = $this->name;
+        if (empty($this->vname)) {
+            $this->vname = 'LBL_' . strtoupper($this->name);
+        }
+        $vardef['vname'] = $this->addLabel();
+        if (!empty($this->required)) {
+            $vardef['required'] = $this->required;
+        }
+        if (empty($this->reportable)) {
+            $vardef['reportable'] = false;
+        }
+        if (!empty($this->comment)) {
+            $vardef['comment'] = $this->comment;
+        }
+        if ($this->default !== 'MSI1') {
+            $vardef['default'] = $this->default;
+        }
+        switch ($this->type) {
+            case 'date':
+            case 'datetime':
+            case 'float':
+            case 'int':
+                $vardef['type'] = $this->type;
+
+                return $vardef;
+            case 'bool':
+                $vardef['type'] = 'bool';
+                $vardef['default'] = (empty($vardef['default'])) ? 0 : 1;
+
+                return $vardef;
+            case 'enum':
+                $vardef['type'] = 'enum';
+                if (empty($this->options)) {
+                    $this->options = $this->name . '_list';
+                }
+                $vardef['options'] = $this->addDropdown();
+
+                return $vardef;
+            default:
+                $vardef['type'] = 'varchar';
+
+                return $vardef;
+
+        }
+    }
+
+    function addLabel()
+    {
+        return $this->vname;
+    }
+
+    function addDropDown()
+    {
+        return $this->options;
+    }
+
 }
+
 ?>

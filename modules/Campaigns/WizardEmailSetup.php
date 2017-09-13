@@ -1,9 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -39,7 +40,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 /*********************************************************************************
-
  * Description:  TODO: To be written.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
@@ -49,13 +49,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*************** general UI Stuff ****************/
 
 
+global $mod_strings, $app_list_strings, $app_strings, $current_user;
 
 
-
-global $mod_strings,$app_list_strings,$app_strings,$current_user;
-
-
-if (!is_admin($current_user)&& !is_admin_for_module($GLOBALS['current_user'],'Campaigns')) sugar_die("Unauthorized access to administration.");
+if (!is_admin($current_user) && !is_admin_for_module($GLOBALS['current_user'], 'Campaigns')) {
+    sugar_die("Unauthorized access to administration.");
+}
 
 $params = array();
 $params[] = "<a href='index.php?module=Campaigns&action=index'>{$mod_strings['LBL_MODULE_NAME']}</a>";
@@ -67,9 +66,6 @@ echo getClassicModuleTitle('Campaigns', $params, true);
 global $theme, $currentModule, $sugar_config;
 
 
-
-
-
 //get administration bean for email setup
 $focus = new Administration();
 $focus->retrieveSettings(); //retrieve all admin settings.
@@ -78,21 +74,28 @@ $email = new Email();
 $ss = new Sugar_Smarty();
 $ss->assign("MOD", $mod_strings);
 $ss->assign("APP", $app_strings);
-if (isset($_REQUEST['return_module'])) $ss->assign("RETURN_MODULE", $_REQUEST['return_module']);
-if (isset($_REQUEST['return_action'])) $ss->assign("RETURN_ACTION", $_REQUEST['return_action']);
-if (isset($_REQUEST['return_id'])) $ss->assign("RETURN_ID", $_REQUEST['return_id']);
-
+if (isset($_REQUEST['return_module'])) {
+    $ss->assign("RETURN_MODULE", $_REQUEST['return_module']);
+}
+if (isset($_REQUEST['return_action'])) {
+    $ss->assign("RETURN_ACTION", $_REQUEST['return_action']);
+}
+if (isset($_REQUEST['return_id'])) {
+    $ss->assign("RETURN_ID", $_REQUEST['return_id']);
+}
 
 
 /******** Email Setup UI DIV Stuff **********/
 //get Settings if they exist
 $ss->assign("notify_fromaddress", $focus->settings['notify_fromaddress']);
-$ss->assign("notify_send_from_assigning_user", ($focus->settings['notify_send_from_assigning_user']) ? "checked='checked'" : "");
+$ss->assign("notify_send_from_assigning_user",
+    ($focus->settings['notify_send_from_assigning_user']) ? "checked='checked'" : "");
 $ss->assign("notify_on", ($focus->settings['notify_on']) ? "checked='checked'" : "");
 $ss->assign("notify_fromname", $focus->settings['notify_fromname']);
 $ss->assign("mail_smtpserver", $focus->settings['mail_smtpserver']);
 $ss->assign("mail_smtpport", $focus->settings['mail_smtpport']);
-$ss->assign("mail_sendtype_options", get_select_options_with_id($app_list_strings['notifymail_sendtype'], $focus->settings['mail_sendtype']));
+$ss->assign("mail_sendtype_options",
+    get_select_options_with_id($app_list_strings['notifymail_sendtype'], $focus->settings['mail_sendtype']));
 $ss->assign("mail_smtpuser", $focus->settings['mail_smtpuser']);
 $ss->assign("mail_smtppass", $focus->settings['mail_smtppass']);
 $ss->assign("mail_smtpauth_req", ($focus->settings['mail_smtpauth_req']) ? "checked='checked'" : "");
@@ -101,81 +104,84 @@ $protocol = filterInboundEmailPopSelection($app_list_strings['dom_email_server_t
 $ss->assign('PROTOCOL', get_select_options_with_id($protocol, ''));
 if (isset($focus->settings['massemailer_campaign_emails_per_run']) && !empty($focus->settings['massemailer_campaign_emails_per_run'])) {
     $ss->assign("EMAILS_PER_RUN", $focus->settings['massemailer_campaign_emails_per_run']);
-} else  {
+} else {
     $ss->assign("EMAILS_PER_RUN", 500);
 }
 
-if (!isset($focus->settings['massemailer_tracking_entities_location_type']) or empty($focus->settings['massemailer_tracking_entities_location_type']) or $focus->settings['massemailer_tracking_entities_location_type']=='1') {
+if (!isset($focus->settings['massemailer_tracking_entities_location_type']) or empty($focus->settings['massemailer_tracking_entities_location_type']) or $focus->settings['massemailer_tracking_entities_location_type'] == '1') {
     $ss->assign("DEFAULT_CHECKED", "checked");
     $ss->assign("TRACKING_ENTRIES_LOCATION_STATE", "disabled");
-    $ss->assign("TRACKING_ENTRIES_LOCATION",$mod_strings['TRACKING_ENTRIES_LOCATION_DEFAULT_VALUE']);
-} else  {
+    $ss->assign("TRACKING_ENTRIES_LOCATION", $mod_strings['TRACKING_ENTRIES_LOCATION_DEFAULT_VALUE']);
+} else {
     $ss->assign("USERDEFINED_CHECKED", "checked");
-    $ss->assign("TRACKING_ENTRIES_LOCATION",$focus->settings["massemailer_tracking_entities_location"]);
+    $ss->assign("TRACKING_ENTRIES_LOCATION", $focus->settings["massemailer_tracking_entities_location"]);
 }
 
-$ss->assign("SITEURL",$sugar_config['site_url']);
+$ss->assign("SITEURL", $sugar_config['site_url']);
 
 // Change the default campaign to not store a copy of each message.
-if (!empty($focus->settings['massemailer_email_copy']) and $focus->settings['massemailer_email_copy']=='1') {
+if (!empty($focus->settings['massemailer_email_copy']) and $focus->settings['massemailer_email_copy'] == '1') {
     $ss->assign("YES_CHECKED", "checked='checked'");
-} else  {
+} else {
     $ss->assign("NO_CHECKED", "checked='checked'");
 }
 
-$ss->assign("MAIL_SSL_OPTIONS", get_select_options_with_id($app_list_strings['email_settings_for_ssl'], $focus->settings['mail_smtpssl']));
+$ss->assign("MAIL_SSL_OPTIONS",
+    get_select_options_with_id($app_list_strings['email_settings_for_ssl'], $focus->settings['mail_smtpssl']));
 
 
 /*********** New Mail Box UI DIV Stuff ****************/
 $mbox_qry = "select * from inbound_email where deleted ='0' and mailbox_type = 'bounce'";
 $mbox_res = $focus->db->query($mbox_qry);
-while ($mbox_row = $focus->db->fetchByAssoc($mbox_res)){$mbox[] = $mbox_row;}
+while ($mbox_row = $focus->db->fetchByAssoc($mbox_res)) {
+    $mbox[] = $mbox_row;
+}
 $mbox_msg = ' ';
-$need_mbox = '';  
+$need_mbox = '';
 
 $mboxTable = "<table class='list view' width='100%' border='0' cellspacing='1' cellpadding='1'>";
-if(isset($mbox) && count($mbox)>0){
-    $mboxTable .= "<tr><td colspan='5'><b>" .count($mbox) ." ". $mod_strings['LBL_MAILBOX_CHECK_WIZ_GOOD']." </b>.</td></tr>";
-        $mboxTable .= "<tr class='listViewHRS1'><td width='20%'><b>".$mod_strings['LBL_MAILBOX_NAME']."</b></td>"
-                   .  " <td width='20%'><b>".$mod_strings['LBL_LOGIN']."</b></td>"
-                   .  " <td width='20%'><b>".$mod_strings['LBL_MAILBOX']."</b></td>" 
-                   .  " <td width='20%'><b>".$mod_strings['LBL_SERVER_URL']."</b></td>"
-                   .  " <td width='20%'><b>".$mod_strings['LBL_LIST_STATUS']."</b></td></tr>";
-    $colorclass=' ';
-    foreach($mbox as $details){
-                
-     if( $colorclass == "class='evenListRowS1'"){
-            $colorclass= "class='oddListRowS1'";
-        }else{ 
-            $colorclass= "class='evenListRowS1'";
-        }           
-        
+if (isset($mbox) && count($mbox) > 0) {
+    $mboxTable .= "<tr><td colspan='5'><b>" . count($mbox) . " " . $mod_strings['LBL_MAILBOX_CHECK_WIZ_GOOD'] . " </b>.</td></tr>";
+    $mboxTable .= "<tr class='listViewHRS1'><td width='20%'><b>" . $mod_strings['LBL_MAILBOX_NAME'] . "</b></td>"
+        . " <td width='20%'><b>" . $mod_strings['LBL_LOGIN'] . "</b></td>"
+        . " <td width='20%'><b>" . $mod_strings['LBL_MAILBOX'] . "</b></td>"
+        . " <td width='20%'><b>" . $mod_strings['LBL_SERVER_URL'] . "</b></td>"
+        . " <td width='20%'><b>" . $mod_strings['LBL_LIST_STATUS'] . "</b></td></tr>";
+    $colorclass = ' ';
+    foreach ($mbox as $details) {
+
+        if ($colorclass == "class='evenListRowS1'") {
+            $colorclass = "class='oddListRowS1'";
+        } else {
+            $colorclass = "class='evenListRowS1'";
+        }
+
         $mboxTable .= "<tr $colorclass>";
-        $mboxTable .= "<td>".$details['name']."</td>";
-        $mboxTable .= "<td>".$details['email_user']."</td>";
-        $mboxTable .= "<td>".$details['mailbox']."</td>";
-        $mboxTable .= "<td>".$details['server_url']."</td>";
-        $mboxTable .= "<td>".$details['status']."</td></tr>";
+        $mboxTable .= "<td>" . $details['name'] . "</td>";
+        $mboxTable .= "<td>" . $details['email_user'] . "</td>";
+        $mboxTable .= "<td>" . $details['mailbox'] . "</td>";
+        $mboxTable .= "<td>" . $details['server_url'] . "</td>";
+        $mboxTable .= "<td>" . $details['status'] . "</td></tr>";
     }
 
 
-}else{
-$need_mbox = 'checked';
-$mboxTable .= "<tr><td colspan='5'><b>".$mod_strings['LBL_MAILBOX_CHECK_WIZ_BAD']." </b>.</td></tr>";
-}        
+} else {
+    $need_mbox = 'checked';
+    $mboxTable .= "<tr><td colspan='5'><b>" . $mod_strings['LBL_MAILBOX_CHECK_WIZ_BAD'] . " </b>.</td></tr>";
+}
 $mboxTable .= "</table>";
 $ss->assign("MAILBOXES_DETECTED_MESSAGE", $mboxTable);
-$ss->assign("MBOX_NEEDED", $need_mbox);          
+$ss->assign("MBOX_NEEDED", $need_mbox);
 $ss->assign('ROLLOVER', $email->rolloverStyle);
-if(!function_exists('imap_open')) {
-    $ss->assign('IE_DISABLED', 'DISABLED');   
+if (!function_exists('imap_open')) {
+    $ss->assign('IE_DISABLED', 'DISABLED');
 }
 /**************************** SUMMARY UI DIV Stuff *******************/
 
 /**************************** WIZARD UI DIV Stuff *******************/
-  
+
 //  this is the wizard control script that resides in page    
- $divScript = <<<EOQ
+$divScript = <<<EOQ
  <script type="text/javascript" language="javascript">  
 
     //this function toggles visibility of fields based on selected options
@@ -406,13 +412,13 @@ if(!function_exists('imap_open')) {
 </script>
 EOQ;
 
-if(isset($_REQUEST['error'])){
+if (isset($_REQUEST['error'])) {
     //if there is an error flagged, then we are coming here after a save where there was an error detected
     //on an inbound email save.  Display error to user so they are aware.
-    $errorString = "<div class='error'>".$mod_strings['ERR_NO_OPTS_SAVED']."  <a href='index.php?module=InboundEmail&action=index'>".$mod_strings['ERR_REVIEW_EMAIL_SETTINGS']."</a></div>";
+    $errorString = "<div class='error'>" . $mod_strings['ERR_NO_OPTS_SAVED'] . "  <a href='index.php?module=InboundEmail&action=index'>" . $mod_strings['ERR_REVIEW_EMAIL_SETTINGS'] . "</a></div>";
     $ss->assign('ERROR', $errorString);
     //navigate to inbound email page by default
-    $divScript .=" <script>navigate('next');</script>";
+    $divScript .= " <script>navigate('next');</script>";
 }
 
 $ss->assign("DIV_JAVASCRIPT", $divScript);

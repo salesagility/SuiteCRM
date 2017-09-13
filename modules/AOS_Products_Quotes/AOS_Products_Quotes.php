@@ -43,25 +43,24 @@ require_once('modules/AOS_Products_Quotes/AOS_Products_Quotes_sugar.php');
 class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
 {
 
-    function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_Products_Quotes(){
+    function AOS_Products_Quotes()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
+    function __construct()
+    {
+        parent::__construct();
+    }
 
     function save_lines($post_data, $parent, $groups = array(), $key = '')
     {
@@ -96,7 +95,7 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
         }
     }
 
-    function save($check_notify = FALSE)
+    function save($check_notify = false)
     {
         require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
         perform_aos_save($this);

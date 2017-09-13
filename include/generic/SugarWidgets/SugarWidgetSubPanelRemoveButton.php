@@ -73,6 +73,7 @@ class SugarWidgetSubPanelRemoveButton extends SugarWidgetField
             }
         } elseif ($_REQUEST['module'] === 'Teams' && $current_module === 'Users') {
             // Implicit Team-memberships are not "removeable"
+
             if ($layout_def['fields']['UPLINE'] !== translate('LBL_TEAM_UPLINE_EXPLICIT', 'Users')) {
                 $hideremove = true;
             }
@@ -81,12 +82,14 @@ class SugarWidgetSubPanelRemoveButton extends SugarWidgetField
             $user = new User();
             $user->retrieve($layout_def['fields']['ID']);
             if ($parent_record_id === $user->getPrivateTeamID()) {
+
                 $hideremove = true;
             }
         } elseif ($current_module === 'ACLRoles' && (!ACLController::checkAccess($current_module, 'edit', true))) {
             $hideremove = true;
+        } elseif ($current_module === 'ACLRoles' && (!ACLController::checkAccess($current_module, 'edit', true))) {
+            $hideremove = true;
         }
-
 
         $return_module = $_REQUEST['module'];
         $return_action = 'SubPanelViewer';

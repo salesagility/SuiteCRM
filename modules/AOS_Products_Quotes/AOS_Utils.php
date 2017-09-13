@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /**
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
@@ -25,17 +27,18 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * @author Salesagility Ltd <info@salesagility.com>
  */
 
-function perform_aos_save($focus){
+function perform_aos_save($focus)
+{
 
-    foreach($focus->field_defs as $field){
+    foreach ($focus->field_defs as $field) {
 
         $fieldName = $field['name'];
-        $fieldNameDollar = $field['name'].'_usdollar';
+        $fieldNameDollar = $field['name'] . '_usdollar';
 
-        if(isset($focus->field_defs[$fieldNameDollar])){
+        if (isset($focus->field_defs[$fieldNameDollar])) {
 
             $focus->$fieldNameDollar = '';
-            if(!number_empty($focus->field_defs[$field['name']])){
+            if (!number_empty($focus->field_defs[$field['name']])) {
                 $currency = new Currency();
                 $currency->retrieve($focus->currency_id);
                 $focus->$fieldNameDollar = $currency->convertToDollar(unformat_number($fieldName));
